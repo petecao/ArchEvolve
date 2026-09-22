@@ -82,6 +82,8 @@ def main(argv=None):
     sub.add_argument("--threads", default="1,2,4,8,16", help="thread counts for the timing sweep (default 1,2,4,8,16)")
     sub.add_argument("--trials", type=int, default=5, help="trials per thread count (default 5)")
     sub.add_argument("--timeout", type=float, default=1800, help="timeout in seconds for each timing process")
+    sub.add_argument("--correctness-timeout", type=float, default=None,
+                     help="timeout for the correctness check (default: --timeout); a timeout is recorded, not fatal")
     sub.add_argument("--cachegrind", choices=["auto", "yes", "no"], default="auto",
                      help="run cachegrind single-threaded (auto: only if valgrind is installed)")
     sub.add_argument("--cachegrind-timeout", type=float, default=3600, help="cachegrind timeout in seconds")

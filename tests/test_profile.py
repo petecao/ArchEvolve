@@ -162,12 +162,16 @@ def test_timing_timeout_is_recorded_as_incomplete(records, tmp_path):
     assert prof["bottleneck"]["basis"] == "unknown" and prof["bottleneck"]["value"] is None
 
 
-def test_correctness_timeout_stops_the_profile(records, tmp_path):
+def test_correctness_timeout_is_recorded_as_incomplete(records, tmp_path):
     records.add_stub()
-    result, _ = profile(records, tmp_path, "--cachegrind", "no", "--features", "no", "--timeout", "1",
-                        env={"STUB_SLEEP": "3"})
-    assert result.returncode == 1 and "correctness check failed" in result.stderr
-    assert not (records.path / "profiles").exists()
+    env = {"STUB_SLEEP": "3", "STUB_SLEEP_TIMING": "-3"}   # only the verifying run sleeps
+    result, _ = profile(records, tmp_path, "--cachegrind", "no", "--features", "no", "--correctness-timeout", "1",
+                        env=env)
+    assert result.returncode == 0, result.stderr
+    prof = only_profile(records)
+    part = next(p for p in prof["parts"] if p["part"] == "correctness")
+    assert part["outcome"] == "timed_out" and part["timeout_s"] == 1
+    assert prof["complete"] is False and len(prof["timing"]) == 4
 
 
 def _fake_valgrind_path(tmp_path):

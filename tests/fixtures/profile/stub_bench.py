@@ -14,9 +14,10 @@ import time
 args = sys.argv[1:]
 trials = int(args[args.index("-n") + 1]) if "-n" in args else 16
 threads = int(os.environ.get("OMP_NUM_THREADS", "1"))
-time.sleep(float(os.environ.get("STUB_SLEEP", "0")))
+pause = float(os.environ.get("STUB_SLEEP", "0"))
 if "-v" not in args:
-    time.sleep(float(os.environ.get("STUB_SLEEP_TIMING", "0")))
+    pause += float(os.environ.get("STUB_SLEEP_TIMING", "0"))
+time.sleep(max(pause, 0))
 print("Read Time:           0.00010")
 print("Build Time:          0.00020")
 print("Graph has 8 nodes and 9 undirected edges for degree: 1")

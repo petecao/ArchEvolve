@@ -4,7 +4,8 @@ features, and cachegrind's simulated cache misses.
 
 Steps, each recorded as a `part` with its command and outcome:
   1. build the implementation (and a -g copy for cachegrind) into the run folder;
-  2. run the kernel's correctness check once (a failure stops the profile);
+  2. run the kernel's correctness check once (a failure stops the profile; a timeout is
+     recorded and the profile is marked incomplete);
   3. the timing sweep: one process per thread count, each running --trials trials, timed
      by the benchmark's own timer;
   4. one single-threaded logging run that counts sweeps per call;
@@ -191,11 +192,17 @@ def _run(args, records_dir):
     check = kernel["correctness_check"]
     cmd = check["command"].format(**run_fill)
     entry, text = r.execute("correctness", cmd, env_extra={threads_env: str(max(threads)), **bind_env},
-                            timeout=args.timeout)
-    passed = entry["outcome"] == "complete" and re.search(check["pass_regex"], text) is not None
-    r.record(entry, note=f"pass_regex {check['pass_regex']!r} {'matched' if passed else 'did not match'}.")
-    if not passed:
-        raise Failure(f"the correctness check failed; see {folder / 'correctness.log'}; no profile written")
+                            timeout=args.correctness_timeout or args.timeout)
+    if entry["outcome"] == "timed_out":
+        # The check did not finish (gapbs verifiers are serial; tc's takes hours at scale 22).
+        # Nothing contradicts the implementation, so the profile goes on, marked incomplete.
+        r.record(entry, note="the correctness check did not finish within its timeout; correctness on this "
+                             "input is not established and the profile is incomplete.")
+    else:
+        passed = entry["outcome"] == "complete" and re.search(check["pass_regex"], text) is not None
+        r.record(entry, note=f"pass_regex {check['pass_regex']!r} {'matched' if passed else 'did not match'}.")
+        if not passed:
+            raise Failure(f"the correctness check failed; see {folder / 'correctness.log'}; no profile written")
 
     # 3. timing sweep
     timing, graph_counts = [], {}
