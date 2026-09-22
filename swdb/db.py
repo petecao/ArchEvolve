@@ -5,6 +5,7 @@ cannot drift from them. Tables are documented in docs/database.md.
 """
 
 import json
+import os
 import sqlite3
 import time
 from pathlib import Path
@@ -50,9 +51,11 @@ def is_stale(records_dir, db_path):
     if not db_path.exists():
         return True
     built = db_path.stat().st_mtime
-    newest = max((path.stat().st_mtime for path, _ in record_files(Path(records_dir))), default=0)
-    folder = Path(records_dir).stat().st_mtime   # a deleted record changes the folder
-    return newest > built or folder > built
+    records_dir = Path(records_dir)
+    newest = max((path.stat().st_mtime for path, _ in record_files(records_dir)), default=0)
+    # a deleted or moved record changes the mtime of the folder it was in
+    folders = max((p.stat().st_mtime for p in [records_dir, *records_dir.rglob("*")] if p.is_dir()), default=0)
+    return newest > built or folders > built
 
 
 def _text(value):
@@ -65,7 +68,7 @@ def build(records_dir, db_path):
     store = Store(Path(records_dir))
     db_path = Path(db_path)
     db_path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = db_path.with_suffix(".sqlite.tmp")
+    tmp = db_path.with_name(f".{db_path.name}.{os.getpid()}.tmp")   # unique per process; renamed at the end
     if tmp.exists():
         tmp.unlink()
     con = sqlite3.connect(tmp)

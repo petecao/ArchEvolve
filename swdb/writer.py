@@ -6,7 +6,9 @@ and ID (`<kind plural>/<id>.yaml`). Records from agents are marked draft and car
 `agent_run` provenance entry until a person reviews them.
 """
 
+import contextlib
 import datetime
+import fcntl
 from pathlib import Path
 
 import yaml
@@ -58,6 +60,22 @@ def commit(records_dir, new=(), replace=()):
     whose IDs must be unused); `replace` records overwrite the file their ID lives in.
     Returns the written paths relative to records_dir."""
     records_dir = Path(records_dir)
+    with _locked(records_dir):
+        return _commit(records_dir, new, replace)
+
+
+@contextlib.contextmanager
+def _locked(records_dir):
+    """One writer at a time per records folder (two profiles may finish together)."""
+    with open(records_dir / ".swdb.lock", "a") as handle:
+        fcntl.flock(handle, fcntl.LOCK_EX)
+        try:
+            yield
+        finally:
+            fcntl.flock(handle, fcntl.LOCK_UN)
+
+
+def _commit(records_dir, new, replace):
     store = Store(records_dir)
     extra, replaced, targets = [], {}, []
     for data in new:

@@ -220,7 +220,7 @@ def run(args, records_dir):
     _counts(counts, impl, values, features, sweeps, timing, args.trials)
 
     complete = all(p["outcome"] in {"complete", "skipped"} for p in r.parts)
-    bottleneck = _bottleneck(timing, footprint, machine, sim)
+    bottleneck = _bottleneck(timing if timing_ok else [], footprint, machine, sim)
     provenance = [{"id": "run", "kind": "agent_run" if args.agent else "measurement",
                    "description": f"swdb profile run {run_id} on {host}, started {_stamp(started)} (UTC).",
                    "uri": None}]
