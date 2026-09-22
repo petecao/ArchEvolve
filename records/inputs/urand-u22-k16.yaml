@@ -12,6 +12,10 @@ provenance:
     then ID permutation for Kronecker) and src/command_line.h (-g/-u set symmetrize) and src/builder.h
     (vertex count = largest ID + 1) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8, read 2026-09-22.'
   uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/generator.h
+- id: measured-sizes
+  kind: measurement
+  description: Sizes of the built graph, first measured by swdb profile run gapbs-pr-gs.urand-u22-k16.mbit10.20260922t220115z.
+  uri: null
 name: uniform random graph, scale 22, requested degree 16 (gapbs -u 22 -k 16)
 generator:
   application: gapbs
@@ -27,23 +31,23 @@ properties:
     basis: code_reading
     evidence_refs: [src-gapbs-generator]
   num_nodes:
-    value: null
-    basis: unknown
-    evidence_refs: []
-    note: gapbs's Builder sets the vertex count to the largest vertex ID in the generated edge list +
-      1 (apps/gapbs/src/builder.h:322-323), so it is at most 2^scale and can be smaller when the top IDs
-      get no edge (the scale-22 Kronecker graph has 4194302). Filled in by profiling.
+    value: 4194304
+    basis: measured
+    evidence_refs: [measured-sizes]
+    note: Measured by swdb profile run gapbs-pr-gs.urand-u22-k16.mbit10.20260922t220115z (the benchmark's
+      'Graph has' line and, when run, index_features).
   num_edges_undirected:
-    value: null
-    basis: unknown
-    evidence_refs: []
-    note: The generator draws 67108864 edges; building removes self loops and duplicates, so the count
-      is known only after a run.
+    value: 67108579
+    basis: measured
+    evidence_refs: [measured-sizes]
+    note: Measured by swdb profile run gapbs-pr-gs.urand-u22-k16.mbit10.20260922t220115z (the benchmark's
+      'Graph has' line and, when run, index_features).
   num_edges_directed:
-    value: null
-    basis: unknown
-    evidence_refs: []
-    note: Twice the undirected count (both directions stored); filled in by profiling.
+    value: 134217158
+    basis: measured
+    evidence_refs: [measured-sizes]
+    note: Measured by swdb profile run gapbs-pr-gs.urand-u22-k16.mbit10.20260922t220115z (the benchmark's
+      'Graph has' line and, when run, index_features).
   directed:
     value: false
     basis: code_reading
