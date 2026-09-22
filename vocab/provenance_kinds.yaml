@@ -1,0 +1,13 @@
+name: provenance_kinds
+description: Where a record's information came from.
+values:
+  - value: source_code
+    meaning: Read from source code at a pinned version.
+  - value: measurement
+    meaning: Produced by running a tool on a machine.
+  - value: human_report
+    meaning: Stated by a person, without code or measurement attached.
+  - value: agent_run
+    meaning: Written by an agent; stays draft until a person reviews it.
+  - value: paper
+    meaning: Taken from a published paper.

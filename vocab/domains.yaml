@@ -1,0 +1,13 @@
+name: domains
+description: The application area an application belongs to.
+values:
+  - value: graph
+    meaning: Graph analytics on vertices and edges (for example traversal, ranking, components).
+  - value: sparse_linear_algebra
+    meaning: Operations on matrices that are mostly zeros (for example SpMV, sparse solvers).
+  - value: dense_linear_algebra
+    meaning: Operations on full matrices (for example GEMV, GEMM).
+  - value: particle
+    meaning: Particle simulations (for example DSMC, molecular dynamics).
+  - value: mesh
+    meaning: Computations on structured or unstructured meshes (for example finite elements, stencils).

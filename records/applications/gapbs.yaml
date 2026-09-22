@@ -1,0 +1,31 @@
+kind: application
+schema_version: "0.2"
+id: gapbs
+status: draft
+deprecated_by: null
+created: 2026-09-22
+updated: 2026-09-22
+provenance:
+  - id: src-gapbs-upstream
+    kind: source_code
+    description: >-
+      Upstream master at the pinned commit, read from a shallow clone on 2026-09-22
+      (commit dated 2026-07-28, "update ci"): LICENSE and Makefile.
+    uri: https://github.com/sbeamer/gapbs
+name: GAP Benchmark Suite
+source:
+  origin: upstream
+  uri: https://github.com/sbeamer/gapbs
+  commit: 2972aeb2703165bafd921222f4ed7196f542d3a8
+  local_path: null
+license: BSD-3-Clause
+language: C++11
+parallel_model: openmp
+build:
+  command: make
+  flags: -std=c++11 -O3 -Wall -fopenmp
+domain: graph
+notes:
+  - The Makefile builds the kernels bc, bfs, cc, cc_sv, pr, pr_spmv, sssp, and tc, plus converter.
+  - local_path stays null until the source is copied into the repo (ticket 02).
+extensions: {}

@@ -1,0 +1,15 @@
+name: record_kinds
+description: The kinds of record the database holds; each has its own schema.
+values:
+  - value: application
+    meaning: A program that contains kernels, from one source at one version.
+  - value: kernel
+    meaning: A computation defined by what it computes and by its correctness check.
+  - value: implementation
+    meaning: Code that realizes a kernel and passes its correctness check.
+  - value: input
+    meaning: The data fed to a kernel, generated or from a file, with its properties.
+  - value: machine
+    meaning: A host that runs profiles, as captured from the host itself.
+  - value: profile
+    meaning: Measurements of one implementation on one input, machine, build, and thread count.
