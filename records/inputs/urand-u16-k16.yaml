@@ -12,6 +12,10 @@ provenance:
     then ID permutation for Kronecker) and src/command_line.h (-g/-u set symmetrize) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8,
     read 2026-09-22.'
   uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/generator.h
+- id: measured-sizes
+  kind: measurement
+  description: Sizes of the built graph, first measured by swdb profile run gapbs-pr-gs.urand-u16-k16.mbit10.20260922t212431z.
+  uri: null
 name: uniform random graph, scale 16, requested degree 16 (gapbs -u 16 -k 16)
 generator:
   application: gapbs
@@ -32,16 +36,17 @@ properties:
     evidence_refs: [src-gapbs-generator]
     note: Generator sets num_nodes = 2^scale.
   num_edges_undirected:
-    value: null
-    basis: unknown
-    evidence_refs: []
-    note: The generator draws 1048576 edges; building removes self loops and duplicates, so the count
-      is known only after a run.
+    value: 1048276
+    basis: measured
+    evidence_refs: [measured-sizes]
+    note: Measured by swdb profile run gapbs-pr-gs.urand-u16-k16.mbit10.20260922t212431z (the benchmark's
+      'Graph has' line and, when run, index_features).
   num_edges_directed:
-    value: null
-    basis: unknown
-    evidence_refs: []
-    note: Twice the undirected count (both directions stored); filled in by profiling.
+    value: 2096552
+    basis: measured
+    evidence_refs: [measured-sizes]
+    note: Measured by swdb profile run gapbs-pr-gs.urand-u16-k16.mbit10.20260922t212431z (the benchmark's
+      'Graph has' line and, when run, index_features).
   directed:
     value: false
     basis: code_reading
