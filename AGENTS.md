@@ -30,3 +30,7 @@ Updated: 2026-09-22
 - Code reaches the lab host mbit10 through git only. On mbit10, work under
   `/data1/yanruj/`, never `$HOME`; multi-threaded runs go through the host's socket-lane
   procedure; raw run output stays outside the repo.
+- Rules: `.claude/rules/remote_server.md`. Procedures: the `mbit10-runs` skill — load it
+  before any work on mbit10.
+- Also always on: `.claude/rules/fail_fast.md`, `fact.md`, `timezone.md`, and
+  `local_resources.md` (Mac only).
