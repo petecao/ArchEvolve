@@ -83,7 +83,9 @@ def test_duplicate_pattern_id_fails(repo):
 # --- facts and basis -----------------------------------------------------------------
 
 def test_unknown_basis_with_a_value_fails(repo):
-    edit(repo, KRON, lambda d: d["properties"]["num_edges_directed"].update(value=1234))
+    rel = "inputs/kron-g22-k16.yaml"
+    assert repo.read(rel)["properties"]["num_edges_directed"]["basis"] == "unknown"
+    edit(repo, rel, lambda d: d["properties"]["num_edges_directed"].update(value=1234))
     rejected(repo.validate(), "properties.num_edges_directed.value", "basis unknown requires value: null")
 
 
@@ -213,8 +215,34 @@ def test_formula_with_function_call_fails(repo):
     rejected(repo.validate(), "steps[2].array.element_count", "only + - * //")
 
 
+def every_step_of(data, name):
+    return [s for p in data["access_patterns"] for s in p["steps"] if s["array"]["name"] == name]
+
+
 def test_formula_arithmetic_passes(repo):
-    edit(repo, GS, lambda d: gather(d)["steps"][2]["array"].update(element_count="2 * num_nodes // 2"))
+    edit(repo, GS, lambda d: [s["array"].update(element_count="2 * num_nodes // 2")
+                              for s in every_step_of(d, "outgoing_contrib")])
+    assert repo.validate().returncode == 0
+
+
+def test_unknown_element_count_passes(repo):
+    # a size that depends on the data at run time is null, never a guessed formula
+    edit(repo, GS, lambda d: [s["array"].update(element_count=None) for s in every_step_of(d, "outgoing_contrib")])
+    assert repo.validate().returncode == 0
+
+
+def test_one_array_with_two_sizes_fails(repo):
+    edit(repo, GS, lambda d: gather(d)["steps"][2]["array"].update(element_count="num_nodes + 1"))
+    rejected(repo.validate(), "array 'outgoing_contrib' differs from", "in element_count")
+
+
+def test_one_array_in_two_roles_passes(repo):
+    # the same array may be an index in one step and the target in another (comp[comp[n]])
+    edit(repo, GS, lambda d: d["access_patterns"].append({
+        **gather(d), "id": "contrib-twice",
+        "steps": [gather(d)["steps"][0], gather(d)["steps"][1],
+                  {**gather(d)["steps"][2], "array": {**gather(d)["steps"][2]["array"], "role": "index"}},
+                  {"array": gather(d)["steps"][2]["array"], "address_shape": "pointer_chase"}]}))
     assert repo.validate().returncode == 0
 
 

@@ -2,7 +2,7 @@ name: input_properties
 description: Properties an input record may state; element-count formulas may use the numeric ones as symbols.
 values:
   - value: num_nodes
-    meaning: Number of vertices in the graph as built (integer).
+    meaning: Number of vertices in the graph as built (integer); for gapbs, the largest vertex ID in the edge list + 1.
   - value: num_edges_undirected
     meaning: Number of undirected edges after building (self loops and duplicates removed); gapbs prints it for symmetrized graphs (integer).
   - value: num_edges_directed

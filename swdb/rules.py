@@ -5,8 +5,9 @@ fixture in the tests. Rules run only on records that already passed their schema
 - evidence_refs name provenance entries of the same record, and provenance IDs are unique;
 - every formula uses only symbols from vocabulary input_properties;
 - inside an implementation: loop and pattern IDs are unique, every loop/parent/pattern
-  reference resolves, each chain of steps is well formed, and every code excerpt equals
-  the source file at its recorded lines;
+  reference resolves, each chain of steps is well formed, an array named in several steps
+  has the same type, size, and layout in each, and every code excerpt equals the source
+  file at its recorded lines;
 - a kernel's baseline implementation implements that kernel;
 - a metric's unit is the unit its vocabulary entry gives;
 - a profile's input defines every symbol its implementation's formulas use, and its
@@ -111,7 +112,8 @@ def _implementation(record, ctx):
             yield Problem(rel, f"{where}.loop", f"loop {pattern['loop']!r} is not a loop of this implementation")
         yield from _chain(rel, where, pattern["steps"])
         for j, step in enumerate(pattern["steps"]):
-            yield from _formula(rel, f"{where}.steps[{j}].array.element_count", step["array"]["element_count"], ctx)
+            yield from _formula(rel, f"{where}.steps[{j}].array.element_count", step["array"].get("element_count"), ctx)
+    yield from _same_arrays(rel, data)
     stream = data["run"].get("index_stream")
     if stream and stream["pattern"] not in patterns:
         yield Problem(rel, "run.index_stream.pattern", f"{stream['pattern']!r} is not an access pattern of this implementation")
@@ -121,6 +123,24 @@ def _implementation(record, ctx):
     for i, loop in enumerate(data["loops"]):
         if loop.get("code"):
             yield from _code_ref(record, ctx, loop["code"], f"loops[{i}].code", app)
+
+
+_ARRAY_FACTS = ("element_type", "element_bytes", "element_count", "layout")
+
+
+def _same_arrays(rel, data):
+    """An array named in several steps is one array: its type, size, and layout must agree
+    everywhere (only its role may differ), so footprints and views do not depend on order."""
+    first = {}
+    for i, pattern in enumerate(data["access_patterns"]):
+        for j, step in enumerate(pattern["steps"]):
+            a = step["array"]
+            facts = tuple(a.get(key) for key in _ARRAY_FACTS)
+            seen = first.setdefault(a["name"], (facts, f"access_patterns[{i}].steps[{j}]"))
+            if seen[0] != facts:
+                diff = [key for key, x, y in zip(_ARRAY_FACTS, seen[0], facts) if x != y]
+                yield Problem(rel, f"access_patterns[{i}].steps[{j}].array",
+                              f"array {a['name']!r} differs from {seen[1]} in {', '.join(diff)}")
 
 
 def _unique(rel, where, ids):
@@ -226,8 +246,11 @@ def implementation_symbols(impl):
     names = set()
     for pattern in impl.get("access_patterns", []):
         for step in pattern.get("steps", []):
+            text = step.get("array", {}).get("element_count")
+            if text is None:
+                continue
             try:
-                names.update(formula.symbols(step["array"]["element_count"]))
-            except (formula.FormulaError, KeyError, TypeError):
+                names.update(formula.symbols(text))
+            except (formula.FormulaError, TypeError):
                 pass
     return names

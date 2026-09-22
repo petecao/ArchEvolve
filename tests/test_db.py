@@ -50,14 +50,14 @@ def test_build_refuses_invalid_records(repo):
 
 
 def test_find_by_address_shape(repo):
-    found = out(repo.swdb("find", "--shape", "ranged_indirect", "--format", "json"))
+    found = out(repo.swdb("find", "--shape", "ranged_indirect", "--kernel", "gapbs-pr", "--format", "json"))
     assert {(f["implementation"], f["pattern"]) for f in found} == {
         ("gapbs-pr-gs", "gather-contrib"), ("gapbs-pr-jacobi", "gather-contrib")}
 
 
 def test_find_by_update_kind_and_semantic_value(repo):
     found = out(repo.swdb("find", "--update", "write", "--semantic", "loop_carried_dependencies=true",
-                          "--format", "json"))
+                          "--kernel", "gapbs-pr", "--format", "json"))
     assert [(f["implementation"], f["pattern"]) for f in found] == [("gapbs-pr-gs", "contrib-update")]
 
 

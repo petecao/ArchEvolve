@@ -9,8 +9,8 @@ provenance:
 - id: src-gapbs-generator
   kind: source_code
   description: 'gapbs src/generator.h (Generator: num_nodes = 2^scale, num_edges = num_nodes * degree,
-    then ID permutation for Kronecker) and src/command_line.h (-g/-u set symmetrize) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8,
-    read 2026-09-22.'
+    then ID permutation for Kronecker) and src/command_line.h (-g/-u set symmetrize) and src/builder.h
+    (vertex count = largest ID + 1) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8, read 2026-09-22.'
   uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/generator.h
 name: uniform random graph, scale 22, requested degree 16 (gapbs -u 22 -k 16)
 generator:
@@ -27,10 +27,12 @@ properties:
     basis: code_reading
     evidence_refs: [src-gapbs-generator]
   num_nodes:
-    value: 4194304
-    basis: code_reading
-    evidence_refs: [src-gapbs-generator]
-    note: Generator sets num_nodes = 2^scale.
+    value: null
+    basis: unknown
+    evidence_refs: []
+    note: gapbs's Builder sets the vertex count to the largest vertex ID in the generated edge list +
+      1 (apps/gapbs/src/builder.h:322-323), so it is at most 2^scale and can be smaller when the top IDs
+      get no edge (the scale-22 Kronecker graph has 4194302). Filled in by profiling.
   num_edges_undirected:
     value: null
     basis: unknown

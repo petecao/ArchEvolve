@@ -178,17 +178,25 @@ def run(args, records_dir):
                        "min_s": min(times), "max_s": max(times),
                        "spread": (max(times) - min(times)) / med if med > 0 else 0.0, "command": cmd})
 
-    # 4. sweeps per call
+    # 4. sweeps per call: one step line per sweep (sweep_log_flag), or a printed count (sweep_count_regex)
     sweeps = None
-    if impl["run"].get("sweep_log_flag") and timing_ok:
-        cmd = impl["run"]["command"].format(**run_fill, trials=1) + " " + impl["run"]["sweep_log_flag"]
+    flag, count_regex = impl["run"].get("sweep_log_flag"), impl["run"].get("sweep_count_regex")
+    if (flag or count_regex) and timing_ok:
+        cmd = impl["run"]["command"].format(**run_fill, trials=1) + (f" {flag}" if flag else "")
         entry, text = r.execute("sweeps", cmd, env_extra={threads_env: "1", **bind_env}, timeout=args.timeout)
-        steps = [int(m.group(1)) for m in STEP_LINE.finditer(text)]
-        if entry["outcome"] == "complete" and steps:
-            sweeps = max(steps) + 1
-            r.record(entry, note=f"{len(steps)} step lines; sweeps per call = {sweeps} at 1 thread.")
+        if count_regex:
+            found = re.findall(count_regex, text)
+            if found:
+                sweeps = int(found[-1])
+            how = f"{len(found)} match(es) of {count_regex!r}"
         else:
-            r.record(entry, note="no step lines found" if entry["outcome"] == "complete" else None,
+            steps = [int(m.group(1)) for m in STEP_LINE.finditer(text)]
+            sweeps = max(steps) + 1 if steps else None
+            how = f"{len(steps)} step lines"
+        if entry["outcome"] == "complete" and sweeps is not None:
+            r.record(entry, note=f"{how}; sweeps per call = {sweeps} at 1 thread.")
+        else:
+            r.record(entry, note=how if entry["outcome"] == "complete" else None,
                      outcome="failed" if entry["outcome"] == "complete" else None)
 
     # 5. index-stream features
@@ -212,7 +220,7 @@ def run(args, records_dir):
     metrics, counts = [], {}
     metrics.append(_metric("host_load_1min", env_info.pop("_load"), "load", "measured", note="os.getloadavg() at start"))
     _timing_metrics(metrics, timing)
-    footprint = _footprints(metrics, impl, values, machine)
+    footprint, footprint_exact = _footprints(metrics, impl, values, machine)
     if features:
         _feature_metrics(metrics, features)
     if sim:
@@ -220,7 +228,7 @@ def run(args, records_dir):
     _counts(counts, impl, values, features, sweeps, timing, args.trials)
 
     complete = all(p["outcome"] in {"complete", "skipped"} for p in r.parts)
-    bottleneck = _bottleneck(timing if timing_ok else [], footprint, machine, sim)
+    bottleneck = _bottleneck(timing if timing_ok else [], footprint, footprint_exact, machine, sim)
     provenance = [{"id": "run", "kind": "agent_run" if args.agent else "measurement",
                    "description": f"swdb profile run {run_id} on {host}, started {_stamp(started)} (UTC).",
                    "uri": None}]
@@ -414,38 +422,48 @@ def _timing_metrics(metrics, timing):
 
 
 def _footprints(metrics, impl, values, machine):
-    """Per-array bytes = element_bytes * element_count on the input; arrays that alias another
-    one on an undirected input are counted once. Returns the total, or None if unknown."""
-    arrays = {}
+    """Per-array bytes = element_bytes * element_count on the input. On an undirected input an
+    array and its undirected_alias are one memory, counted once. Returns (total, exact):
+    exact is False when some array's size is unknown, and then the total is a lower bound."""
+    arrays, conditional = {}, set()
     for p in impl["access_patterns"]:
         for s in p["steps"]:
             arrays.setdefault(s["array"]["name"], s["array"])
+            if p.get("condition"):
+                conditional.add(s["array"]["name"])
     undirected = values.get("directed") is False
-    total, unknown = 0, []
+    total, unknown, counted = 0, [], set()
     for name, a in arrays.items():
-        count = formula.evaluate(a["element_count"], values)
-        alias = a.get("undirected_alias")
+        text = a.get("element_count")
+        count = formula.evaluate(text, values) if text is not None else None
         if count is None:
             unknown.append(name)
-            metrics.append(_metric("footprint_bytes", None, "B", "unknown", array=name,
-                                   note=f"element count {a['element_count']} is unknown for this input"))
+            why = f"element count {text} is unknown for this input" if text else "its size depends on the data at run time"
+            metrics.append(_metric("footprint_bytes", None, "B", "unknown", array=name, note=why))
             continue
         size = count * a["element_bytes"]
-        shared = undirected and alias in arrays
-        metrics.append(_metric("footprint_bytes", size, "B", "inferred", array=name,
-                               note=f"{a['element_bytes']} B x ({a['element_count']} = {count})"
-                                    + (f"; the same memory as {alias} on this undirected input" if shared else "")))
+        alias = a.get("undirected_alias")
+        shared = undirected and alias in counted
+        note = f"{a['element_bytes']} B x ({text} = {count})"
+        if shared:
+            note += f"; the same memory as {alias} on this undirected input, counted once"
+        if name in conditional:
+            note += "; used only by a conditional access pattern"
+        metrics.append(_metric("footprint_bytes", size, "B", "inferred", array=name, note=note))
         if not shared:
             total += size
-    if unknown:
-        metrics.append(_metric("total_footprint_bytes", None, "B", "unknown", note=f"unknown arrays: {', '.join(unknown)}"))
-        return None
+            counted.add(name)
     llc = llc_bytes(machine)
-    metrics.append(_metric("total_footprint_bytes", total, "B", "inferred",
-                           note="sum over distinct arrays of the implementation's access patterns"))
+    exact = not unknown
+    what = "sum over distinct arrays of the implementation's access patterns"
+    if not exact:
+        what = f"lower bound: excludes arrays of unknown size ({', '.join(unknown)})"
+    if conditional:
+        what += f"; includes arrays used only conditionally ({', '.join(sorted(conditional))})"
+    metrics.append(_metric("total_footprint_bytes", total, "B", "inferred", note=what))
     metrics.append(_metric("footprint_llc_ratio", round(total / llc, 6), "ratio", "inferred",
-                           note=f"last-level cache of one socket: {llc} B"))
-    return total
+                           note=f"last-level cache of one socket: {llc} B" + ("" if exact else "; a lower bound")))
+    return total, exact
 
 
 def _features(r, args, impl, input_args, cxx, app_dir):
@@ -588,7 +606,7 @@ def _counts(counts, impl, values, features, sweeps, timing, trials):
     if sweeps is not None:
         counts["sweeps"] = {"value": sweeps, "formula": None, "scope": "per_call", "basis": "measured",
                             "evidence_refs": ["run"], "note": "iterations of the outer loop per call, from the "
-                                                              "benchmark's own step log at 1 thread"}
+                                                              "benchmark's own output at 1 thread"}
     if timing:
         counts["repetitions"] = {"value": trials, "formula": None, "scope": "per_run", "basis": "measured",
                                  "evidence_refs": ["run"],
@@ -603,22 +621,22 @@ def _counts(counts, impl, values, features, sweeps, timing, trials):
                 "note": f"trip count of loop {loop['id']} ({tc['formula']}) evaluated on the input"}
 
 
-def _bottleneck(timing, footprint, machine, sim):
+def _bottleneck(timing, footprint, exact, machine, sim):
     """Counter-free inference. Rule, in order:
-    - no timing or unknown footprint: unknown;
+    - no timing, or a footprint that is only a lower bound and fits in the LLC: unknown;
     - footprint above one socket's LLC, and (no cachegrind or simulated kernel LL miss rate at
       least LL_MISS_RATE_LOW): memory_bound; bandwidth if parallel efficiency at the largest
       thread count is below EFFICIENCY_SCALES, else latency;
     - otherwise: compute_bound if that efficiency is at least EFFICIENCY_SCALES, else
       parallelism_bound."""
     rests = ["total_footprint_bytes", "footprint_llc_ratio", "parallel_efficiency"]
-    if not timing or footprint is None or len(timing) < 2:
+    llc = llc_bytes(machine)
+    if not timing or len(timing) < 2 or (not exact and footprint <= llc):
         return {"value": None, "basis": "unknown", "memory_limit": None, "rests_on": rests, "evidence_refs": [],
-                "note": "timing sweep or footprint missing"}
+                "note": "timing sweep incomplete, or the footprint is only a lower bound below the LLC size"}
     top = timing[-1]
     base = timing[0]["median_s"]
     eff = base / top["median_s"] / top["threads"] if top["median_s"] > 0 else 0.0
-    llc = llc_bytes(machine)
     ll_rate = None
     if sim:
         k = sim["kernel"]
@@ -627,7 +645,7 @@ def _bottleneck(timing, footprint, machine, sim):
         rests.append("sim_ll_miss_rate")
     big = footprint > llc
     missy = ll_rate is None or ll_rate >= LL_MISS_RATE_LOW
-    facts = (f"footprint {footprint} B vs LLC {llc} B ({footprint / llc:.2f}x); parallel efficiency at "
+    facts = (f"footprint {'at least ' if not exact else ''}{footprint} B vs LLC {llc} B ({footprint / llc:.2f}x); parallel efficiency at "
              f"{top['threads']} threads {eff:.2f}" + (f"; simulated kernel LL miss rate {ll_rate:.4f}" if ll_rate is not None else ""))
     if big and missy:
         limit = "bandwidth" if eff < EFFICIENCY_SCALES else "latency"

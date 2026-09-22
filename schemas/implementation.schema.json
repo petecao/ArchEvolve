@@ -132,6 +132,13 @@
               ]
             }
           }
+        },
+        "sweep_count_regex": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Python regular expression with one group that captures the number of sweeps per call from the benchmark's output (for benchmarks that print a count instead of one line per sweep)."
         }
       },
       "required": [
@@ -190,6 +197,13 @@
           },
           "code": {
             "$ref": "#/$defs/code_ref"
+          },
+          "condition": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "When this runs only under a condition (e.g. only on directed inputs, only if relabeling is worth it), the condition in words; null or absent means always."
           }
         },
         "required": [
@@ -250,9 +264,12 @@
                       "minimum": 1
                     },
                     "element_count": {
-                      "type": "string",
+                      "type": [
+                        "string",
+                        "null"
+                      ],
                       "minLength": 1,
-                      "description": "Formula over input property symbols, e.g. num_nodes + 1."
+                      "description": "Formula over input property symbols, e.g. num_nodes + 1; null when the size depends on the data at run time (say how in the step's note)."
                     },
                     "layout": {
                       "type": "string",
@@ -263,7 +280,7 @@
                         "string",
                         "null"
                       ],
-                      "description": "Name of an array this one is the same memory as when the input graph is undirected (gapbs stores one CSR for both directions); footprints count it once."
+                      "description": "Name of an array this one is the same memory as when the input graph is undirected (gapbs keeps one CSR for both directions). Footprints count the pair once; mark either side or both."
                     }
                   },
                   "required": [
@@ -482,6 +499,13 @@
               "string",
               "null"
             ]
+          },
+          "condition": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "When this runs only under a condition (e.g. only on directed inputs, only if relabeling is worth it), the condition in words; null or absent means always."
           }
         },
         "required": [

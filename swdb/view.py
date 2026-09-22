@@ -5,8 +5,10 @@ profile into the HW side's workload format (archevolve/hw_ensemble/sparta-sort.i
 schema_version 0.1). Every key of that format is present with the same nesting; unknown
 facts stay explicit (null, or the string "unknown" where that format uses it). Keys the
 format lacks are added, never renamed: `code` and `environment` are filled in, and each
-pattern gains `pattern_class`, `address_chain`, and `semantics_evidence` (the basis of
-each semantic value), and each array `element_count_formula`.
+pattern gains `pattern_class`, `address_chain`, `semantics_evidence` (the basis of each
+semantic value), and `condition` when it runs only sometimes; each array gains
+`element_count_formula` and, where it has one, `undirected_alias`. An array used with two
+roles in one chain appears once per role.
 """
 
 from swdb import formula
@@ -101,12 +103,15 @@ def _pattern(p, impl, values, refs):
     arrays, seen = [], set()
     for step in p["steps"]:
         a = step["array"]
-        if a["name"] in seen:
+        if (a["name"], a["role"]) in seen:   # one entry per array and role: a chain may use one array twice
             continue
-        seen.add(a["name"])
-        arrays.append({"name": a["name"], "role": a["role"], "element_type": a["element_type"],
-                       "element_bytes": a["element_bytes"], "element_count": _evaluate(a["element_count"], values),
-                       "layout": a["layout"], "element_count_formula": a["element_count"]})
+        seen.add((a["name"], a["role"]))
+        entry = {"name": a["name"], "role": a["role"], "element_type": a["element_type"],
+                 "element_bytes": a["element_bytes"], "element_count": _evaluate(a.get("element_count"), values),
+                 "layout": a["layout"], "element_count_formula": a.get("element_count")}
+        if a.get("undirected_alias"):
+            entry["undirected_alias"] = a["undirected_alias"]
+        arrays.append(entry)
     semantics, evidence = {}, {}
     for name, fact in p["semantics"].items():
         unknown = fact["basis"] == "unknown"
@@ -120,7 +125,7 @@ def _pattern(p, impl, values, refs):
             if attr in step:
                 link[attr] = step[attr]
         chain.append(link)
-    return {
+    out = {
         "id": p["id"],
         "expression": p["expression"],
         "memory_operation": _MEMORY_OPERATION.get(p["update_kind"], "read_modify_write"),
@@ -134,9 +139,14 @@ def _pattern(p, impl, values, refs):
         "address_chain": chain,
         "semantics_evidence": evidence,
     }
+    if p.get("condition"):
+        out["condition"] = p["condition"]
+    return out
 
 
 def _evaluate(text, values):
+    if text is None:   # the size depends on the data at run time
+        return None
     try:
         return formula.evaluate(text, values)
     except formula.FormulaError as exc:

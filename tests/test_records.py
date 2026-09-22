@@ -75,7 +75,10 @@ def test_pilot_inputs():
             data = rec(f"inputs/{gen}-{flag}{scale}-k16.yaml")
             assert data["generator"]["arguments"] == f"-{flag} {scale} -k 16"
             props = data["properties"]
-            assert props["num_nodes"] == {**props["num_nodes"], "value": 2 ** scale, "basis": "code_reading"}
+            # gapbs builds N = largest vertex ID + 1 (builder.h:322-323), at most 2^scale: never code reading
+            nodes = props["num_nodes"]
+            assert nodes["basis"] in {"unknown", "measured"}
+            assert nodes["value"] is None or 0 < nodes["value"] <= 2 ** scale
             assert props["requested_degree"]["value"] == 16
             assert props["num_edges_directed"]["basis"] in {"unknown", "measured"}
             assert props["degree_distribution"]["basis"] == "inferred"

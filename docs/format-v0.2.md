@@ -139,27 +139,33 @@ Code that realizes a kernel, with everything about how it touches memory.
 `run`: `command` (template: `{binary}`, `{input_args}`, `{trials}`), `timer` (vocab
 `timer_formats`), `threads_env` (the variable that sets the thread count),
 `sweep_log_flag` (flag that makes the benchmark print one `<step> <value>` line per outer
-iteration, or null), `kernel_symbols` (function names whose simulated misses count as the
+iteration, or null), `sweep_count_regex` (a regular expression whose one group captures a
+sweep count the benchmark prints, or null), `kernel_symbols` (function names whose simulated misses count as the
 kernel's), `index_stream` (or null: `order`, `in_neighbors_by_vertex` or
 `out_neighbors_by_vertex`; `pattern`, the access pattern whose index stream that is;
 `note`).
 
 Each loop: `id`, `description`, `parent` (loop ID or null), `trip_count` (a count),
 `parallel` (`construct` from vocab `parallel_constructs`, `schedule`, `reduction`),
-`code` (a code reference to its lines).
+`code` (a code reference to its lines), and `condition` (in words, when the loop runs only
+sometimes; absent or null means always).
 
 Each access pattern: `id` (unique in the record), `expression`, `loop` (loop ID),
 `steps` (the chain), `update_kind` (vocab `update_kinds`), `update` (`pseudocode`,
-`side_effects`), `semantics`, `evidence_refs`, `note`.
+`side_effects`), `semantics`, `evidence_refs`, `note`, and `condition` (as for loops;
+footprints still count its arrays and say so).
 
 Each step: `array`, `address_shape` (vocab `address_shapes`), its shape's attribute,
 and `note`. The attributes are exclusive: `stream` requires `stride` (in elements; 0
 means the same element is reused); `single_valued_indirect` requires `index_transform`
 (vocab `index_transforms`); `ranged_indirect`, `pointer_chase`, and
 `data_dependent_merge` take neither. `array` holds `name`, `role` (vocab
-`array_roles`), `element_type`, `element_bytes`, `element_count` (a formula), `layout`
-(vocab `layouts`), and optionally `undirected_alias` (the array it is the same memory as
-on an undirected graph, so footprints count it once).
+`array_roles`), `element_type`, `element_bytes`, `element_count` (a formula, or null
+when the size depends on the data at run time; footprints then report a lower bound),
+`layout` (vocab `layouts`), and optionally `undirected_alias` (the array it is the same
+memory as on an undirected graph; footprints count the pair once). An array named in
+several steps is one array: its type, size, and layout must agree in every step; only its
+role may differ.
 
 Chain rules: the first step is a `stream` or a `pointer_chase`; the last step's array
 has role `target` and no other step's does; a `ranged_indirect` or

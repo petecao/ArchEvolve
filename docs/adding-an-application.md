@@ -9,8 +9,9 @@ used here are defined in [CONTEXT.md](../CONTEXT.md). Model records to copy from
 `records/kernels/gapbs-pr.yaml`, `records/implementations/gapbs-pr-gs.yaml` (baseline),
 `records/implementations/gapbs-pr-jacobi.yaml` (non-baseline, code stored next to it).
 
-Run `python3 -m swdb validate` after every step. It names the file, the field, and the
-reason for each error.
+Run `python3 -m swdb validate` after every step (a kernel names its baseline
+implementation, so write the kernel and its baseline implementation before validating
+them together). It names the file, the field, and the reason for each error.
 
 ## What each basis means
 
@@ -41,6 +42,10 @@ Unknown is never false: a semantic field you have not established is
    `domain`. Copy the envelope (`kind` … `provenance`) from an existing record and write
    one `provenance` entry of kind `source_code` saying what you read and when.
 
+Every kernel and implementation record also needs its own `source_code` provenance entry
+(what you read, which lines, the commit, the date), and every `evidence_refs` entry must
+name a provenance `id` of the same record.
+
 ## 2. Each kernel
 
 A kernel is what is computed plus how correctness is checked (ADR 0001), not a function.
@@ -55,7 +60,9 @@ Write `records/kernels/<id>.yaml`:
   e.g. `"{binary} {input_args} -n 1 -v"`), `verifier` (a description and a `code`
   reference to the verifier function, with `lines` and `excerpt` copied exactly),
   `pass_criterion` (in words), `pass_regex` (what the output must match), and `tolerance`
-  (`value`, `measure`; `value: null` if the check is exact).
+  (`value`, `measure`; `value: null` when there is no numeric tolerance, either because
+  results must match exactly or because the check is structural and accepts many valid
+  results, such as any valid BFS tree — say which in `measure`).
 - `baseline_implementation`: the ID of the implementation you write next.
 
 ## 3. Each implementation
@@ -66,40 +73,87 @@ code file in `records/implementations/<id>/` (`root: records`) with its `sha256`
 
 1. `kernel`, `name`, `function`, `origin` (`kind` from `implementation_origins`).
 2. `code`: the function with `root`, `path`, `lines`, and `excerpt` copied exactly.
-   `swdb validate` compares the excerpt with the file.
+   `swdb validate` compares the excerpt with the file. If the kernel spans several
+   functions, add one code entry per function; `code[0]` must be the file that is built.
 3. `build`: `compiler`, `flags`, and `command`, a template with `{cxx}`, `{flags}`,
-   `{source}` (the first code file), `{app}` (the application copy), `{binary}`.
+   `{source}` (the first code file), `{app}` (the application copy), `{binary}`. Code
+   stored next to its record needs the application's headers on the include path:
+   `"{cxx} {flags} -I {app}/src {source} -o {binary}"`.
 4. `run`: `command` (template with `{binary}`, `{input_args}`, `{trials}`), `timer`
-   (vocabulary `timer_formats`), `threads_env`, and optionally `sweep_log_flag` (only if
-   the log prints one `<step number> <value>` line per outer iteration), `kernel_symbols`
-   (function names whose simulated misses count as the kernel), and `index_stream`
-   (only when the extractor's visit order is exactly the kernel's order).
+   (vocabulary `timer_formats`), `threads_env`, and optionally:
+   - `sweep_log_flag`: only if that flag makes the benchmark print exactly one line of two
+     fields, `<step number> <value>`, per outer iteration; sweeps are the largest step + 1.
+   - `sweep_count_regex`: if the benchmark prints the count instead (for example
+     `Shiloach-Vishkin took (\d+) iterations`), a regular expression whose one group
+     captures it.
+   - `kernel_symbols`: every function of the kernel. Cachegrind's kernel-only counts sum
+     the functions whose names match, including their OpenMP outlined bodies; helpers
+     inlined into them count, but library loops with their own outlined bodies (such as
+     `pvector::fill`) do not — say so in `notes`.
+   - `index_stream`: `order` is `in_neighbors_by_vertex` or `out_neighbors_by_vertex`
+     (for u = 0 .. N−1 in order, every neighbor in stored order, as one thread would see
+     it). Set it only when that is exactly the order the kernel reads the pattern's index
+     array in each sweep; traversals that follow a frontier, sample neighbors, or relabel
+     the graph first do not qualify.
 5. `loops`: one entry per loop that matters, outermost first: `id`, `description`,
    `parent`, `trip_count` (a count: a `formula` over input properties or a `value`, a
    `scope` from `count_scopes`, a `basis`), `parallel` (`construct`, `schedule`,
-   `reduction`), and the loop's `code` lines.
-6. `access_patterns`: one per memory-access expression in the loops.
+   `reduction`), the loop's `code` lines, and a `condition` in words if it runs only
+   sometimes (relabeling, directed-only code). A "sweep" (`per_sweep`) is one pass of the
+   kernel's outer iterative loop; for a traversal say in the loop's `description` what
+   one pass is (one BFS level, one bucket, one source). A loop in a helper called from
+   several places names the caller loop it mostly runs under as `parent` and lists the
+   others in its `description`. Counts that depend on run parameters (`-i`, `-d`) are a
+   bare `value` for the default plus a `note`; counts that depend on the data are
+   `basis: unknown` with a note.
+6. `access_patterns`: one per memory-access expression in the loops, each with `id`,
+   `expression`, `loop` (the loop it runs in), `steps`, `update_kind`, `update`
+   (`pseudocode`, `side_effects`), `semantics`, `evidence_refs`, and optional `note` and
+   `condition`. A second read of the same element in the same iteration (already in a
+   register or cache line) needs no pattern of its own; say so in the first one's note.
    - `steps`: the chain from the first array touched to the array read or updated.
      Each step names its `array` (`name`, `role`, `element_type`, `element_bytes`,
      `element_count` as a formula over input property symbols, `layout`) and its
-     `address_shape` with that shape's attribute: `stream` needs `stride`;
-     `single_valued_indirect` needs `index_transform`; `ranged_indirect`,
-     `pointer_chase`, and `data_dependent_merge` take neither.
+     `address_shape` with that shape's attribute: `stream` needs `stride` (whole elements
+     per iteration; for a bit-per-vertex bitmap read through `v // 64`, use a
+     `single_valued_indirect` step with `index_transform: divide`); `single_valued_indirect`
+     needs `index_transform`; `ranged_indirect`, `pointer_chase`, and
+     `data_dependent_merge` take neither.
+     Formulas use `+ - * //`, parentheses, integers, and names from
+     `vocab/input_properties.yaml` (no functions such as `min`). When an array's size
+     depends on the data at run time (per-thread bins), set `element_count: null` and say
+     why in the step's `note`; never put a guessed formula there.
      The chain starts with a `stream` or `pointer_chase`; the last step's array has role
      `target`, the others `index` or `offsets`; a ranged or merge step follows an
-     `offsets` step, a single-valued indirect step follows an `index` step.
+     `offsets` step, a single-valued indirect step follows an `index` step, and a
+     `pointer_chase` may follow any step (it reads the address from its own array).
+     One array may appear in several steps (for example `comp` as the index and then as
+     the target of `comp[comp[n]]`): its type, size, and layout must be identical in every
+     step, only its role changes. Accesses whose addresses come from a random-number
+     generator (sampling) fit no address shape; leave them out and say so in `notes`.
    - `update_kind`: what the pattern does to its target (`read`, `write`, `add_update`,
-     `min_max_update`, `compare_and_swap`, `arbitrary`).
-   - `semantics`: all seven facts (`duplicate_target_indices`,
-     `index_modified_during_loop`, `loop_carried_dependencies`,
-     `shared_target_between_threads`, `atomic_updates_required`, `ordering`,
-     `numerical_requirement`), each with its basis and, for anything not obvious, a
-     `note` that cites the lines.
+     `min_max_update`, `compare_and_swap`, `arbitrary`). Record the mechanism the code
+     uses, and the effect in the note: an atomic min built from a CAS retry loop is
+     `compare_and_swap` with the note "a min-update implemented with CAS". A plain
+     (non-atomic) check-then-store, pointer jumping, bitwise OR, or scaling is `arbitrary`
+     with a note.
+   - `semantics`: all seven facts, each with its basis and, for anything not obvious, a
+     `note` that cites the lines. `duplicate_target_indices`: can two accesses in one
+     execution of the loop hit the same target element. `index_modified_during_loop`: can
+     the loop change the index arrays it reads. `loop_carried_dependencies`: can one
+     iteration of the loop depend on another's result. `shared_target_between_threads`:
+     do several threads touch the same target elements — read-only sharing counts, and
+     the note says whether anyone writes. `atomic_updates_required`: must the updates be
+     atomic for the result to pass the correctness check. `ordering` and
+     `numerical_requirement`: values from their vocabularies.
    - Arrays that are the same memory on an undirected graph (gapbs `out_index_` and
-     `in_index_`) say so with `undirected_alias`, so footprints count them once.
+     `in_index_`) say so with `undirected_alias` on either side (or both); footprints count
+     the pair once.
 
-If an array size depends on something the input records do not state yet, add the
-property name to `vocab/input_properties.yaml` (with its meaning) and to the inputs.
+If an array size depends on an input property that no vocabulary entry names yet, add the
+property name to `vocab/input_properties.yaml` (with its meaning) and give it in every
+input record the implementation is profiled on; a profile whose input lacks a symbol the
+formulas use fails validation.
 
 ## 4. Inputs
 

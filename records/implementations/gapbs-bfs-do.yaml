@@ -1,0 +1,1269 @@
+kind: implementation
+schema_version: '0.2'
+id: gapbs-bfs-do
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: src-gapbs-bfs-do
+  kind: source_code
+  description: gapbs src/bfs.cc lines 46-179 (BUStep, TDStep, QueueToBitmap, BitmapToQueue, InitParent,
+    DOBFS), src/sliding_queue.h (SlidingQueue, QueueBuffer), src/bitmap.h (Bitmap), src/platform_atomics.h
+    (compare_and_swap), src/graph.h (CSRGraph), src/benchmark.h (NodeID), src/util.h (PrintStep) at commit
+    2972aeb2703165bafd921222f4ed7196f542d3a8, read 2026-09-22.
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/bfs.cc#L46-L179
+name: gapbs BFS, direction-optimizing (DOBFS with TDStep and BUStep)
+kernel: gapbs-bfs
+function: DOBFS
+origin:
+  kind: application_source
+  description: The BFS implementation gapbs builds as its bfs binary.
+  derived_from: null
+code:
+- root: application
+  path: src/bfs.cc
+  lines: [122, 179]
+  excerpt: |-
+    pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                          int alpha = 15, int beta = 18) {
+      if (logging_enabled)
+        PrintStep("Source", static_cast<int64_t>(source));
+      Timer t;
+      t.Start();
+      pvector<NodeID> parent = InitParent(g);
+      t.Stop();
+      if (logging_enabled)
+        PrintStep("i", t.Seconds());
+      parent[source] = source;
+      SlidingQueue<NodeID> queue(g.num_nodes());
+      queue.push_back(source);
+      queue.slide_window();
+      Bitmap curr(g.num_nodes());
+      curr.reset();
+      Bitmap front(g.num_nodes());
+      front.reset();
+      int64_t edges_to_check = g.num_edges_directed();
+      int64_t scout_count = g.out_degree(source);
+      while (!queue.empty()) {
+        if (scout_count > edges_to_check / alpha) {
+          int64_t awake_count, old_awake_count;
+          TIME_OP(t, QueueToBitmap(queue, front));
+          if (logging_enabled)
+            PrintStep("e", t.Seconds());
+          awake_count = queue.size();
+          queue.slide_window();
+          do {
+            t.Start();
+            old_awake_count = awake_count;
+            awake_count = BUStep(g, parent, front, curr);
+            front.swap(curr);
+            t.Stop();
+            if (logging_enabled)
+              PrintStep("bu", t.Seconds(), awake_count);
+          } while ((awake_count >= old_awake_count) ||
+                   (awake_count > g.num_nodes() / beta));
+          TIME_OP(t, BitmapToQueue(g, front, queue));
+          if (logging_enabled)
+            PrintStep("c", t.Seconds());
+          scout_count = 1;
+        } else {
+          t.Start();
+          edges_to_check -= scout_count;
+          scout_count = TDStep(g, parent, queue);
+          queue.slide_window();
+          t.Stop();
+          if (logging_enabled)
+            PrintStep("td", t.Seconds(), queue.size());
+        }
+      }
+      #pragma omp parallel for
+      for (NodeID n = 0; n < g.num_nodes(); n++)
+        if (parent[n] < -1)
+          parent[n] = -1;
+      return parent;
+    }
+  sha256: null
+- root: application
+  path: src/bfs.cc
+  lines: [67, 89]
+  excerpt: |-
+    int64_t TDStep(const Graph &g, pvector<NodeID> &parent,
+                   SlidingQueue<NodeID> &queue) {
+      int64_t scout_count = 0;
+      #pragma omp parallel
+      {
+        QueueBuffer<NodeID> lqueue(queue);
+        #pragma omp for reduction(+ : scout_count) nowait
+        for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+          NodeID u = *q_iter;
+          for (NodeID v : g.out_neigh(u)) {
+            NodeID curr_val = parent[v];
+            if (curr_val < 0) {
+              if (compare_and_swap(parent[v], curr_val, u)) {
+                lqueue.push_back(v);
+                scout_count += -curr_val;
+              }
+            }
+          }
+        }
+        lqueue.flush();
+      }
+      return scout_count;
+    }
+  sha256: null
+- root: application
+  path: src/bfs.cc
+  lines: [46, 64]
+  excerpt: |-
+    int64_t BUStep(const Graph &g, pvector<NodeID> &parent, Bitmap &front,
+                   Bitmap &next) {
+      int64_t awake_count = 0;
+      next.reset();
+      #pragma omp parallel for reduction(+ : awake_count) schedule(dynamic, 1024)
+      for (NodeID u=0; u < g.num_nodes(); u++) {
+        if (parent[u] < 0) {
+          for (NodeID v : g.in_neigh(u)) {
+            if (front.get_bit(v)) {
+              parent[u] = v;
+              awake_count++;
+              next.set_bit(u);
+              break;
+            }
+          }
+        }
+      }
+      return awake_count;
+    }
+  sha256: null
+- root: application
+  path: src/bfs.cc
+  lines: [92, 98]
+  excerpt: |-
+    void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+      #pragma omp parallel for
+      for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+        NodeID u = *q_iter;
+        bm.set_bit_atomic(u);
+      }
+    }
+  sha256: null
+- root: application
+  path: src/bfs.cc
+  lines: [100, 112]
+  excerpt: |-
+    void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                       SlidingQueue<NodeID> &queue) {
+      #pragma omp parallel
+      {
+        QueueBuffer<NodeID> lqueue(queue);
+        #pragma omp for nowait
+        for (NodeID n=0; n < g.num_nodes(); n++)
+          if (bm.get_bit(n))
+            lqueue.push_back(n);
+        lqueue.flush();
+      }
+      queue.slide_window();
+    }
+  sha256: null
+- root: application
+  path: src/bfs.cc
+  lines: [114, 120]
+  excerpt: |-
+    pvector<NodeID> InitParent(const Graph &g) {
+      pvector<NodeID> parent(g.num_nodes());
+      #pragma omp parallel for
+      for (NodeID n=0; n < g.num_nodes(); n++)
+        parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+      return parent;
+    }
+  sha256: null
+build:
+  compiler: g++
+  flags: -std=c++11 -O3 -Wall -fopenmp
+  command: '{cxx} {flags} {source} -o {binary}'
+run:
+  command: '{binary} {input_args} -n {trials}'
+  timer: gapbs_trial_time
+  threads_env: OMP_NUM_THREADS
+  sweep_log_flag: null
+  kernel_symbols: [DOBFS, TDStep, BUStep, QueueToBitmap, BitmapToQueue, InitParent]
+  index_stream: null
+loops:
+- id: init-parent
+  description: 'InitParent: parent[n] = -out_degree(n) (or -1) for every vertex'
+  parent: null
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-bfs-do]
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bfs.cc
+    lines: [116, 118]
+    excerpt: |2-
+        #pragma omp parallel for
+        for (NodeID n=0; n < g.num_nodes(); n++)
+          parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+    sha256: null
+- id: step
+  description: 'DOBFS main loop: one top-down step, or one switch to bottom-up with its bottom-up steps,
+    per iteration until the queue is empty'
+  parent: null
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-bfs-do]
+    note: Depends on the source's BFS depth and on the direction switches (alpha = 15, beta = 18, lines
+      143 and 158-159); not measured by the profiler because -l prints labeled lines (see notes).
+  parallel:
+    construct: serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bfs.cc
+    lines: [142, 173]
+    excerpt: |2-
+        while (!queue.empty()) {
+          if (scout_count > edges_to_check / alpha) {
+            int64_t awake_count, old_awake_count;
+            TIME_OP(t, QueueToBitmap(queue, front));
+            if (logging_enabled)
+              PrintStep("e", t.Seconds());
+            awake_count = queue.size();
+            queue.slide_window();
+            do {
+              t.Start();
+              old_awake_count = awake_count;
+              awake_count = BUStep(g, parent, front, curr);
+              front.swap(curr);
+              t.Stop();
+              if (logging_enabled)
+                PrintStep("bu", t.Seconds(), awake_count);
+            } while ((awake_count >= old_awake_count) ||
+                     (awake_count > g.num_nodes() / beta));
+            TIME_OP(t, BitmapToQueue(g, front, queue));
+            if (logging_enabled)
+              PrintStep("c", t.Seconds());
+            scout_count = 1;
+          } else {
+            t.Start();
+            edges_to_check -= scout_count;
+            scout_count = TDStep(g, parent, queue);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled)
+              PrintStep("td", t.Seconds(), queue.size());
+          }
+        }
+    sha256: null
+- id: td-frontier
+  description: 'TDStep: for u in the current frontier (queue window)'
+  parent: step
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-bfs-do]
+    note: 'One sweep = one top-down step: the frontier size queue.size(). Summed over all top-down steps
+      of a call it is at most the number of vertices reached.'
+  parallel:
+    construct: omp_for_in_parallel_region
+    schedule: null
+    reduction: '+ : scout_count'
+  code:
+    root: application
+    path: src/bfs.cc
+    lines: [73, 85]
+    excerpt: |2-
+          #pragma omp for reduction(+ : scout_count) nowait
+          for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+            NodeID u = *q_iter;
+            for (NodeID v : g.out_neigh(u)) {
+              NodeID curr_val = parent[v];
+              if (curr_val < 0) {
+                if (compare_and_swap(parent[v], curr_val, u)) {
+                  lqueue.push_back(v);
+                  scout_count += -curr_val;
+                }
+              }
+            }
+          }
+    sha256: null
+- id: td-edge
+  description: 'TDStep: for v in g.out_neigh(u): try to claim parent[v]'
+  parent: td-frontier
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-bfs-do]
+    note: Sum of the out-degrees of the frontier vertices in one top-down step.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bfs.cc
+    lines: [76, 84]
+    excerpt: |2-
+            for (NodeID v : g.out_neigh(u)) {
+              NodeID curr_val = parent[v];
+              if (curr_val < 0) {
+                if (compare_and_swap(parent[v], curr_val, u)) {
+                  lqueue.push_back(v);
+                  scout_count += -curr_val;
+                }
+              }
+            }
+    sha256: null
+- id: qtb
+  description: 'QueueToBitmap: set front''s bit for every vertex in the queue (at a switch to bottom-up)'
+  parent: step
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-bfs-do]
+    note: The frontier size at the switch; runs once per switch to bottom-up.
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bfs.cc
+    lines: [93, 97]
+    excerpt: |2-
+        #pragma omp parallel for
+        for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+          NodeID u = *q_iter;
+          bm.set_bit_atomic(u);
+        }
+    sha256: null
+- id: bu-repeat
+  description: 'DOBFS: repeat BUStep while the frontier grows or stays above num_nodes / beta'
+  parent: step
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-bfs-do]
+    note: Total bottom-up steps in one call; depends on the input and the source.
+  parallel:
+    construct: serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bfs.cc
+    lines: [150, 159]
+    excerpt: |2-
+            do {
+              t.Start();
+              old_awake_count = awake_count;
+              awake_count = BUStep(g, parent, front, curr);
+              front.swap(curr);
+              t.Stop();
+              if (logging_enabled)
+                PrintStep("bu", t.Seconds(), awake_count);
+            } while ((awake_count >= old_awake_count) ||
+                     (awake_count > g.num_nodes() / beta));
+    sha256: null
+- id: bu-vertex
+  description: 'BUStep: for every vertex u; if unvisited, look for a parent in the frontier'
+  parent: bu-repeat
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_sweep
+    basis: code_reading
+    evidence_refs: [src-gapbs-bfs-do]
+    note: One sweep = one bottom-up step.
+  parallel:
+    construct: omp_parallel_for
+    schedule: dynamic, 1024
+    reduction: '+ : awake_count'
+  code:
+    root: application
+    path: src/bfs.cc
+    lines: [50, 62]
+    excerpt: |2-
+        #pragma omp parallel for reduction(+ : awake_count) schedule(dynamic, 1024)
+        for (NodeID u=0; u < g.num_nodes(); u++) {
+          if (parent[u] < 0) {
+            for (NodeID v : g.in_neigh(u)) {
+              if (front.get_bit(v)) {
+                parent[u] = v;
+                awake_count++;
+                next.set_bit(u);
+                break;
+              }
+            }
+          }
+        }
+    sha256: null
+- id: bu-edge
+  description: 'BUStep: for v in g.in_neigh(u) until the first v in the frontier'
+  parent: bu-vertex
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-bfs-do]
+    note: Only unvisited u scan, and each stops at the first in-neighbor in the frontier (break, line
+      58); at most num_edges_directed per step.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bfs.cc
+    lines: [53, 60]
+    excerpt: |2-
+            for (NodeID v : g.in_neigh(u)) {
+              if (front.get_bit(v)) {
+                parent[u] = v;
+                awake_count++;
+                next.set_bit(u);
+                break;
+              }
+            }
+    sha256: null
+- id: btq
+  description: 'BitmapToQueue: append every vertex whose front bit is set to the queue (at a switch back
+    to top-down)'
+  parent: step
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_sweep
+    basis: code_reading
+    evidence_refs: [src-gapbs-bfs-do]
+    note: Per call of BitmapToQueue, which runs once after each bottom-up phase.
+  parallel:
+    construct: omp_for_in_parallel_region
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bfs.cc
+    lines: [105, 108]
+    excerpt: |2-
+          #pragma omp for nowait
+          for (NodeID n=0; n < g.num_nodes(); n++)
+            if (bm.get_bit(n))
+              lqueue.push_back(n);
+    sha256: null
+- id: final-fix
+  description: 'DOBFS: turn the remaining negative degree codes into -1'
+  parent: null
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-bfs-do]
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bfs.cc
+    lines: [174, 177]
+    excerpt: |2-
+        #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+          if (parent[n] < -1)
+            parent[n] = -1;
+    sha256: null
+access_patterns:
+- id: td-frontier-read
+  expression: u = *q_iter for q_iter in [queue.begin(), queue.end())
+  loop: td-frontier
+  steps:
+  - array:
+      name: queue.shared
+      role: target
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: reads the current frontier window of the SlidingQueue
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: QueueBuffer flushes append at shared_in, past queue.end(); the window being read is not written
+        until slide_window (line 168).
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: All threads read disjoint parts of one queue array (omp for).
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: The window holds one BFS level; slide_window after the step starts the next level.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+  evidence_refs: [src-gapbs-bfs-do]
+- id: td-parent-claim
+  expression: compare_and_swap(parent[v], curr_val, u) for v in g.out_neigh(u)
+  loop: td-edge
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = *q_iter walks the current frontier window of the queue
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: reads out_index_[u] and out_index_[u+1], the bounds of u's out-neighbor range
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: walks out_neighbors_[out_index_[u] .. out_index_[u+1])
+  - array:
+      name: parent
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: reads parent[v]; if negative (unvisited), tries to claim it with a CAS
+  update_kind: compare_and_swap
+  update:
+    pseudocode: 'curr = parent[v]; if curr < 0 and CAS(parent[v], curr, u): lqueue.push_back(v); scout_count
+      += -curr'
+    side_effects: appends v to the thread's QueueBuffer; adds v's out-degree (encoded as -parent[v]) to
+      scout_count (an OpenMP + reduction)
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Many frontier vertices u can share an out-neighbor v, so several iterations read and try to
+        claim the same parent[v] in one step (lines 76-79).
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: The graph is passed as const; its index and neighbor arrays are never written by the kernel.
+        The queue window is not modified during the step.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: 'Level-synchronous: within one top-down step iterations only race to claim; the CAS decides
+        one winner and any winner is valid. Parents set in this step are read as the frontier only after
+        slide_window (line 168).'
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Any thread can claim any v.
+    atomic_updates_required:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: compare_and_swap(parent[v], curr_val, u) (line 79) is __sync_bool_compare_and_swap on int32_t
+        (platform_atomics.h lines 29-32); without it two threads could both push v.
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Levels must complete in order (one step per level); order within a level is free.
+    numerical_requirement:
+      value: any_valid_result
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Whichever frontier vertex wins parent[v] is a valid BFS parent; BFSVerifier accepts any of
+        them.
+  evidence_refs: [src-gapbs-bfs-do]
+  note: parent[v] < 0 encodes an unvisited vertex's negated out-degree (InitParent), so the read also
+    supplies the degree.
+- id: td-queue-push
+  expression: lqueue.push_back(v); lqueue.flush() into queue.shared
+  loop: td-edge
+  steps:
+  - array:
+      name: queue.shared
+      role: target
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: 'QueueBuffer holds up to 16384 IDs per thread and flush() copies them to queue.shared + fetch_and_add(shared_in,
+      n) (sliding_queue.h lines 97-108): each flush writes one contiguous block.'
+  update_kind: write
+  update:
+    pseudocode: 'local_queue[in++] = v; on flush: copy local_queue to shared[fetch_and_add(shared_in,
+      in) ...]'
+    side_effects: advances queue.shared_in atomically
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Each flush writes a range reserved by fetch_and_add; no slot is written twice.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: All threads append into the same queue array, in disjoint reserved ranges.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Element stores are plain; only the tail index shared_in (a scalar) is advanced with fetch_and_add
+        (sliding_queue.h line 105).
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: The order of vertices within the next frontier is schedule-dependent and does not matter.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: The set of IDs written must be exactly the vertices claimed; their order is free.
+  evidence_refs: [src-gapbs-bfs-do]
+- id: qtb-set-bit
+  expression: front.set_bit_atomic(u) for u in the queue
+  loop: qtb
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = *q_iter over the whole frontier
+  - array:
+      name: front.start_
+      role: target
+      element_type: uint64_t (Bitmap word, 64 vertices per word)
+      element_bytes: 8
+      element_count: (num_nodes + 63) // 64
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: divide
+    note: word u / 64, bit u % 64 (bitmap.h lines 43-49, 65-66)
+  update_kind: compare_and_swap
+  update:
+    pseudocode: do { old = word; new = old | (1 << (u % 64)) } while (!CAS(word, old, new))
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: 64 vertices share one word; each vertex appears once in the queue.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Neighboring frontier vertices handled by different threads can share a word.
+    atomic_updates_required:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: set_bit_atomic is an atomic OR implemented as a compare_and_swap retry loop on the 64-bit
+        word (bitmap.h lines 43-49).
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Setting bits commutes.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+  evidence_refs: [src-gapbs-bfs-do]
+- id: bu-parent
+  expression: if (parent[u] < 0) ... parent[u] = v
+  loop: bu-vertex
+  steps:
+  - array:
+      name: parent
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: reads parent[u] for every u; writes it only when a parent is found
+  update_kind: write
+  update:
+    pseudocode: 'if parent[u] < 0: for v in in_neigh(u): if front[v]: parent[u] = v; awake_count++; next.set_bit(u);
+      break'
+    side_effects: adds 1 to awake_count (an OpenMP + reduction)
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Iteration u reads and writes only parent[u]; the frontier it tests is the previous level's
+        bitmap, not this step's writes.
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Each u belongs to one thread's dynamic chunk of 1024 vertices.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Only iteration u writes parent[u] in a bottom-up step; a plain store (line 55).
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Levels must complete in order (front.swap(curr) after each step, line 154).
+    numerical_requirement:
+      value: any_valid_result
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: The first in-neighbor found in the frontier is taken (CSR order); any in-neighbor in the frontier
+        is a valid parent.
+  evidence_refs: [src-gapbs-bfs-do]
+- id: bu-front-test
+  expression: front.get_bit(v) for v in g.in_neigh(u)
+  loop: bu-edge
+  steps:
+  - array:
+      name: g.in_index_
+      role: offsets
+      element_type: NodeID* (pointer into in_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+      undirected_alias: g.out_index_
+    address_shape: stream
+    stride: 1
+    note: reads in_index_[u] and in_index_[u+1]; for a symmetrized (undirected) graph in_index_ is the
+      same array as out_index_ (graph.h lines 138-143)
+  - array:
+      name: g.in_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+      undirected_alias: g.out_neighbors_
+    address_shape: ranged_indirect
+    note: walks in_neighbors_[in_index_[u] .. in_index_[u+1]) until the first frontier hit
+  - array:
+      name: front.start_
+      role: target
+      element_type: uint64_t (Bitmap word, 64 vertices per word)
+      element_bytes: 8
+      element_count: (num_nodes + 63) // 64
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: divide
+    note: word v / 64, bit v % 64 (bitmap.h lines 51-53, 65-66)
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Many u share in-neighbors, and 64 vertices share one word.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: The graph is passed as const; its index and neighbor arrays are never written by the kernel.
+        front is only read in BUStep; next is written.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: front is the previous level's bitmap; this step writes a different bitmap (next).
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: All threads read the whole front bitmap.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: The previous level must be complete before the step reads it.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+  evidence_refs: [src-gapbs-bfs-do]
+  note: Only unvisited u scan (parent[u] < 0), and the scan stops at the first hit (line 58).
+- id: bu-next-set
+  expression: next.set_bit(u)
+  loop: bu-vertex
+  steps:
+  - array:
+      name: curr.start_
+      role: target
+      element_type: uint64_t (Bitmap word, 64 vertices per word)
+      element_bytes: 8
+      element_count: (num_nodes + 63) // 64
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: one bit per vertex u, so the word address advances one word per 64 iterations of u; BUStep's
+      next is DOBFS's curr (line 153)
+  update_kind: arbitrary
+  update:
+    pseudocode: word[u / 64] |= 1 << (u % 64)
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: 64 consecutive vertices share one word.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: 'No: dynamic chunks of 1024 vertices start at multiples of 1024 (line 50), and 1024 is a multiple
+        of 64, so every word belongs to one chunk and one thread.'
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: set_bit is a plain word |= bit (bitmap.h lines 39-41); safe only because no two threads share
+        a word (see shared_target_between_threads).
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Setting bits commutes.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+  evidence_refs: [src-gapbs-bfs-do]
+  note: 'Update kind arbitrary: a non-atomic bitwise-OR read-modify-write, which the update_kinds vocabulary
+    has no value for.'
+- id: bu-next-reset
+  expression: next.reset()
+  loop: bu-repeat
+  steps:
+  - array:
+      name: curr.start_
+      role: target
+      element_type: uint64_t (Bitmap word, 64 vertices per word)
+      element_bytes: 8
+      element_count: (num_nodes + 63) // 64
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: std::fill of every word with 0 (bitmap.h lines 35-37), serial, once per bottom-up step
+  update_kind: write
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Runs on the calling thread before the parallel loop (line 49).
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+  evidence_refs: [src-gapbs-bfs-do]
+- id: btq-get-bit
+  expression: bm.get_bit(n) for n over all vertices
+  loop: btq
+  steps:
+  - array:
+      name: front.start_
+      role: target
+      element_type: uint64_t (Bitmap word, 64 vertices per word)
+      element_bytes: 8
+      element_count: (num_nodes + 63) // 64
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: one bit per vertex n, so the word address advances one word per 64 iterations
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: 64 consecutive vertices share one word.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: With no schedule clause (libgomp defaults to static), chunk boundaries can split a word between
+        two threads; read-only.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+  evidence_refs: [src-gapbs-bfs-do]
+- id: btq-queue-push
+  expression: lqueue.push_back(n); lqueue.flush() into queue.shared
+  loop: btq
+  steps:
+  - array:
+      name: queue.shared
+      role: target
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: QueueBuffer flush copies one contiguous block per flush (sliding_queue.h lines 97-108)
+  update_kind: write
+  update:
+    pseudocode: null
+    side_effects: advances queue.shared_in atomically
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: All threads append into one queue array, in disjoint ranges reserved by fetch_and_add.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Element stores are plain; only the scalar tail shared_in uses fetch_and_add.
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: The set of IDs written must be exactly the vertices in the bitmap; their order is free.
+  evidence_refs: [src-gapbs-bfs-do]
+- id: init-degree-read
+  expression: g.out_degree(n) = out_index_[n+1] - out_index_[n]
+  loop: init-parent
+  steps:
+  - array:
+      name: g.out_index_
+      role: target
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: stream
+    stride: 1
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: The graph is passed as const; its index and neighbor arrays are never written by the kernel.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+  evidence_refs: [src-gapbs-bfs-do]
+- id: init-parent-write
+  expression: 'parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1'
+  loop: init-parent
+  steps:
+  - array:
+      name: parent
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: write
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+  evidence_refs: [src-gapbs-bfs-do]
+- id: final-parent-fix
+  expression: if (parent[n] < -1) parent[n] = -1
+  loop: final-fix
+  steps:
+  - array:
+      name: parent
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: min_max_update
+  update:
+    pseudocode: parent[n] = max(parent[n], -1)
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+      note: Each n is read and written only by its own iteration; plain load and store.
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bfs-do]
+  evidence_refs: [src-gapbs-bfs-do]
+  note: 'The conditional store is a max-update with -1: unvisited vertices still hold -out_degree <= -1.'
+notes:
+- NodeID is int32_t (src/benchmark.h line 31); CSR index arrays hold pointers (DestID_**), 8 bytes per
+  element on 64-bit hosts.
+- Bitmap words are uint64_t, (n + 63) / 64 words for n bits (bitmap.h lines 25-29); front and curr each
+  cover num_nodes bits and swap after every bottom-up step (line 154).
+- SlidingQueue<NodeID> queue(g.num_nodes()) (line 133) holds every vertex added in the call; each QueueBuffer
+  adds a thread-local buffer of 16384 NodeIDs (64 KiB per thread, not graph-sized, not recorded as an
+  array).
+- 'sweep_log_flag is null: with -l DOBFS prints labeled lines through PrintStep ("Source", "i", "e", "bu",
+  "c", "td"; lines 125, 131, 147, 157, 162, 171), which do not have the <integer> <number> form the profiler
+  counts, and a step is not a sweep of a fixed-point loop.'
+- 'index_stream is null: the traversal visits neighbor lists in frontier order, which depends on the source
+  and (for the parallel steps) on the thread schedule, so the extractor''s CSR order (in_neighbors_by_vertex
+  / out_neighbors_by_vertex) is not the kernel''s order.'
+- TDStep reads out_index_/out_neighbors_ and BUStep reads in_index_/in_neighbors_; the pilot inputs are
+  symmetrized, so the in_ arrays carry undirected_alias to the out_ arrays and footprints count them once.
+- front.reset() and curr.reset() (lines 137, 139) and the scalar updates parent[source] = source and scout_count
+  are done once per call outside the loops and have no access pattern.
+- kernel_symbols lists the six kernel functions; the helpers Bitmap::get_bit/set_bit/set_bit_atomic, QueueBuffer::push_back/flush
+  and compare_and_swap are expected to be inlined at -O3 (not checked); if they are not, their simulated
+  misses are not counted as the kernel.
+extensions: {}
