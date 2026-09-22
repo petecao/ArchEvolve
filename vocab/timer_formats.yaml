@@ -1,0 +1,5 @@
+name: timer_formats
+description: How the profiler reads per-call time from a benchmark's own output.
+values:
+  - value: gapbs_trial_time
+    meaning: One line per trial, "Trial Time" then the seconds, printed by gapbs BenchmarkKernel.

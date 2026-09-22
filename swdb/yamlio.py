@@ -39,3 +39,29 @@ def load(path):
     """Parse one YAML file. Raises yaml.YAMLError on bad YAML or a duplicate key."""
     with open(path, encoding="utf-8") as fh:
         return yaml.load(fh, Loader=_Loader)
+
+
+class _Dumper(yaml.SafeDumper):
+    """Readable output: multi-line text as literal blocks, short lists inline, no anchors."""
+
+    def ignore_aliases(self, data):
+        return True
+
+
+def _represent_str(dumper, data):
+    style = "|" if "\n" in data else None
+    return dumper.represent_scalar("tag:yaml.org,2002:str", data, style=style)
+
+
+def _represent_list(dumper, data):
+    short = all(isinstance(x, (int, float)) and not isinstance(x, bool) for x in data) or (
+        len(data) <= 6 and all(isinstance(x, str) and len(x) < 30 and "\n" not in x for x in data))
+    return dumper.represent_sequence("tag:yaml.org,2002:seq", data, flow_style=short)
+
+
+_Dumper.add_representer(str, _represent_str)
+_Dumper.add_representer(list, _represent_list)
+
+
+def dumps(data):
+    return yaml.dump(data, Dumper=_Dumper, sort_keys=False, allow_unicode=True, width=100)

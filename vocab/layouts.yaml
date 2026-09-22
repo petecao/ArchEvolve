@@ -1,0 +1,11 @@
+name: layouts
+description: How an array's elements sit in memory.
+values:
+  - value: contiguous
+    meaning: One C array of elements of the stated size, back to back.
+  - value: array_of_structs
+    meaning: Elements are structs stored back to back; the step reads one field.
+  - value: array_of_pointers
+    meaning: Each element is a pointer into another array (for example gapbs CSR index arrays).
+  - value: unknown
+    meaning: The layout was not established.

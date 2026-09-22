@@ -1,0 +1,509 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "implementation",
+  "title": "Implementation: code that realizes a kernel, with its loops, access patterns, and semantics",
+  "description": "Build and run commands are templates: {cxx}, {flags}, {source}, {app}, {records}, {binary}, {input_args}, {trials} are filled in by swdb profile.",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "implementation"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kernel": {
+      "type": "string",
+      "x-ref": "kernel"
+    },
+    "function": {
+      "type": "string",
+      "minLength": 1
+    },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "x-vocab": "implementation_origins"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "derived_from": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "x-ref": "implementation"
+        }
+      },
+      "required": [
+        "kind",
+        "description"
+      ]
+    },
+    "code": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/code_ref"
+      },
+      "description": "First entry is the file built; with lines and excerpt it is the kernel function as copied."
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "compiler": {
+          "type": "string",
+          "minLength": 1
+        },
+        "flags": {
+          "type": "string"
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "compiler",
+        "flags",
+        "command"
+      ]
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timer": {
+          "type": "string",
+          "x-vocab": "timer_formats"
+        },
+        "threads_env": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sweep_log_flag": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "kernel_symbols": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "index_stream": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "required": [
+            "order",
+            "pattern"
+          ],
+          "properties": {
+            "order": {
+              "type": "string",
+              "enum": [
+                "in_neighbors_by_vertex",
+                "out_neighbors_by_vertex"
+              ]
+            },
+            "pattern": {
+              "$ref": "#/$defs/id"
+            },
+            "note": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "command",
+        "timer",
+        "threads_env"
+      ]
+    },
+    "loops": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parent": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "trip_count": {
+            "$ref": "#/$defs/count"
+          },
+          "parallel": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "construct": {
+                "type": "string",
+                "x-vocab": "parallel_constructs"
+              },
+              "schedule": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "reduction": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "construct"
+            ]
+          },
+          "code": {
+            "$ref": "#/$defs/code_ref"
+          }
+        },
+        "required": [
+          "id",
+          "description",
+          "trip_count",
+          "parallel"
+        ]
+      }
+    },
+    "access_patterns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "expression": {
+            "type": "string",
+            "minLength": 1
+          },
+          "loop": {
+            "type": "string",
+            "minLength": 1
+          },
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "array",
+                "address_shape"
+              ],
+              "properties": {
+                "array": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "role": {
+                      "type": "string",
+                      "x-vocab": "array_roles"
+                    },
+                    "element_type": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "element_bytes": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "element_count": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Formula over input property symbols, e.g. num_nodes + 1."
+                    },
+                    "layout": {
+                      "type": "string",
+                      "x-vocab": "layouts"
+                    },
+                    "undirected_alias": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "description": "Name of an array this one is the same memory as when the input graph is undirected (gapbs stores one CSR for both directions); footprints count it once."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "role",
+                    "element_type",
+                    "element_bytes",
+                    "element_count",
+                    "layout"
+                  ]
+                },
+                "address_shape": {
+                  "type": "string",
+                  "x-vocab": "address_shapes"
+                },
+                "stride": {
+                  "type": "integer"
+                },
+                "index_transform": {
+                  "type": "string",
+                  "x-vocab": "index_transforms"
+                },
+                "note": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "address_shape": {
+                        "const": "stream"
+                      }
+                    },
+                    "required": [
+                      "address_shape"
+                    ]
+                  },
+                  "then": {
+                    "required": [
+                      "stride"
+                    ],
+                    "x-required-reasons": {
+                      "stride": "a stream step needs a stride (0 means reuse)"
+                    },
+                    "not": {
+                      "required": [
+                        "index_transform"
+                      ]
+                    },
+                    "x-reason": "index_transform belongs only to single_valued_indirect steps"
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "address_shape": {
+                        "const": "single_valued_indirect"
+                      }
+                    },
+                    "required": [
+                      "address_shape"
+                    ]
+                  },
+                  "then": {
+                    "required": [
+                      "index_transform"
+                    ],
+                    "x-required-reasons": {
+                      "index_transform": "a single_valued_indirect step needs an index_transform (identity, affine, hash)"
+                    },
+                    "not": {
+                      "required": [
+                        "stride"
+                      ]
+                    },
+                    "x-reason": "stride belongs only to stream steps"
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "address_shape": {
+                        "enum": [
+                          "ranged_indirect",
+                          "pointer_chase",
+                          "data_dependent_merge"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "address_shape"
+                    ]
+                  },
+                  "then": {
+                    "not": {
+                      "anyOf": [
+                        {
+                          "required": [
+                            "stride"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "index_transform"
+                          ]
+                        }
+                      ]
+                    },
+                    "x-reason": "ranged_indirect, pointer_chase, and data_dependent_merge steps take neither stride nor index_transform"
+                  }
+                }
+              ]
+            }
+          },
+          "update_kind": {
+            "type": "string",
+            "x-vocab": "update_kinds"
+          },
+          "update": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "pseudocode": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "side_effects": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "pseudocode",
+              "side_effects"
+            ]
+          },
+          "semantics": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "duplicate_target_indices": {
+                "$ref": "#/$defs/bool_fact"
+              },
+              "index_modified_during_loop": {
+                "$ref": "#/$defs/bool_fact"
+              },
+              "loop_carried_dependencies": {
+                "$ref": "#/$defs/bool_fact"
+              },
+              "shared_target_between_threads": {
+                "$ref": "#/$defs/bool_fact"
+              },
+              "atomic_updates_required": {
+                "$ref": "#/$defs/bool_fact"
+              },
+              "ordering": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/fact"
+                  },
+                  {
+                    "properties": {
+                      "value": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "x-vocab": "orderings"
+                      }
+                    }
+                  }
+                ]
+              },
+              "numerical_requirement": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/fact"
+                  },
+                  {
+                    "properties": {
+                      "value": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "x-vocab": "numerical_requirements"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "required": [
+              "duplicate_target_indices",
+              "index_modified_during_loop",
+              "loop_carried_dependencies",
+              "shared_target_between_threads",
+              "atomic_updates_required",
+              "ordering",
+              "numerical_requirement"
+            ]
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/evidence_refs"
+          },
+          "note": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "expression",
+          "loop",
+          "steps",
+          "update_kind",
+          "semantics"
+        ]
+      }
+    }
+  },
+  "required": [
+    "name",
+    "kernel",
+    "function",
+    "origin",
+    "code",
+    "build",
+    "run",
+    "loops",
+    "access_patterns"
+  ]
+}

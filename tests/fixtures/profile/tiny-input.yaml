@@ -1,0 +1,27 @@
+# A file input for profile tests (Created 2026-09-22): the index_features fixture graph,
+# symmetrized. Its edge counts are unknown until a profile measures them.
+kind: input
+schema_version: "0.2"
+id: tiny-sym
+status: draft
+deprecated_by: null
+created: 2026-09-22
+updated: 2026-09-22
+provenance:
+  - id: src-fixture
+    kind: source_code
+    description: tests/fixtures/index_features/tiny.el.
+    uri: null
+name: Tiny symmetrized fixture graph
+file:
+  path: tests/fixtures/index_features/tiny.el
+  format: gapbs_el
+  sha256: 637349180d78ba8f8f2dc216f14d3806ba9551e0c59cda49e5459390781be7f9
+  arguments: "-s"
+properties:
+  num_nodes: {value: 8, basis: code_reading, evidence_refs: [src-fixture], note: max vertex ID + 1}
+  num_edges_undirected: {value: null, basis: unknown}
+  num_edges_directed: {value: null, basis: unknown}
+  directed: {value: false, basis: code_reading, evidence_refs: [src-fixture]}
+notes: []
+extensions: {}

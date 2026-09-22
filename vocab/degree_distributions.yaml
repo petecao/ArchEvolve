@@ -1,0 +1,9 @@
+name: degree_distributions
+description: The shape of a graph's vertex degree distribution.
+values:
+  - value: power_law
+    meaning: Heavy-tailed; a few vertices have very high degree (for example Kronecker/R-MAT graphs).
+  - value: binomial
+    meaning: Concentrated around the mean with a thin tail (for example uniform-random Erdos-Renyi graphs).
+  - value: regular
+    meaning: Every vertex has the same or nearly the same degree (for example meshes).

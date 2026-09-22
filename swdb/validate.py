@@ -1,13 +1,13 @@
-"""`swdb validate`: check every record file against its kind's schema and the vocabularies."""
+"""`swdb validate`: check every record against its kind's schema, then the rules a schema
+cannot express (references, unique IDs, formulas, code excerpts; see rules.py)."""
 
 import re
 from dataclasses import dataclass, field
 
-import yaml
-
-from swdb import paths, vocab, yamlio
+from swdb import paths, rules, vocab
 from swdb.problems import Problem
 from swdb.schemas import SchemaSet
+from swdb.store import Store
 
 _REQUIRED = re.compile(r"^'(.+)' is a required property$")
 
@@ -16,33 +16,42 @@ _REQUIRED = re.compile(r"^'(.+)' is a required property$")
 class Result:
     count: int = 0
     problems: list = field(default_factory=list)
+    store: Store = None
 
 
-def record_files(records_dir):
-    """Every .yaml/.yml file under records_dir, skipping hidden files and folders."""
-    for path in sorted(records_dir.rglob("*")):
-        rel = path.relative_to(records_dir)
-        if path.is_file() and path.suffix in {".yaml", ".yml"} and not any(p.startswith(".") for p in rel.parts):
-            yield path, rel.as_posix()
-
-
-def validate_records(records_dir):
+def validate_records(records_dir, extra=None, replace=None):
+    """Validate the records folder as it would be after writing `extra` (new store.Record
+    objects) and `replace` ({relative path: new data} for records already on disk)."""
     vocabs, problems = vocab.load_all(paths.VOCAB)
-    result = Result(problems=list(problems))
-    schemas = SchemaSet(paths.SCHEMAS, vocabs)
-    for path, rel in record_files(records_dir):
-        result.count += 1
-        result.problems.extend(sorted(_check_file(path, rel, schemas, vocabs)))
+    store = Store(records_dir)
+    for rel, data in (replace or {}).items():
+        store.replace(rel, data)
+    for record in extra or []:
+        store.add(record)
+    result = Result(count=len(store.records) + len(store.problems), problems=list(problems) + list(store.problems),
+                    store=store)
+    schemas = SchemaSet(paths.SCHEMAS, vocabs, store.index())
+    passed = []
+    seen = {}
+    for record in store.records:
+        found = sorted(_check_record(record, schemas, vocabs))
+        rid = record.id
+        if isinstance(rid, str):
+            if rid in seen:
+                found.append(Problem(record.rel, "id", f"duplicate ID {rid!r}; also used by {seen[rid]}"))
+            else:
+                seen[rid] = record.rel
+        result.problems.extend(found)
+        if not found:
+            passed.append(record)
+    context = rules.Context(store, vocabs, records_dir, paths.HOME)
+    for record in passed:
+        result.problems.extend(sorted(rules.check(record, context)))
     return result
 
 
-def _check_file(path, rel, schemas, vocabs):
-    try:
-        data = yamlio.load(path)
-    except yaml.YAMLError as exc:
-        return [Problem(rel, "-", f"not valid YAML: {' '.join(str(exc).split())}")]
-    if not isinstance(data, dict):
-        return [Problem(rel, "-", "a record must be a YAML mapping")]
+def _check_record(record, schemas, vocabs):
+    data, rel = record.data, record.rel
     kind = data.get("kind")
     if not isinstance(kind, str):
         return [Problem(rel, "kind", "required field is missing or not text")]
@@ -61,7 +70,8 @@ def _describe(rel, error):
     if error.validator == "required":
         match = _REQUIRED.match(error.message)
         name = match.group(1) if match else "?"
-        return [Problem(rel, _join(where, name), schema.get("x-reason", "required field is missing"))]
+        reason = schema.get("x-required-reasons", {}).get(name) or schema.get("x-reason") or "required field is missing"
+        return [Problem(rel, _join(where, name), reason)]
     if error.validator == "additionalProperties" and isinstance(error.instance, dict):
         known = set(schema.get("properties", {}))
         return [
@@ -71,6 +81,8 @@ def _describe(rel, error):
     reason = schema.get("x-reason")
     if reason is None and error.validator == "enum" and "x-vocab" in schema:
         reason = f"{error.instance!r} is not in vocabulary {schema['x-vocab']}"
+    if reason is None and error.validator == "x-ref":
+        reason = error.message
     return [Problem(rel, where or "-", reason or error.message)]
 
 

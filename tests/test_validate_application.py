@@ -131,7 +131,18 @@ def test_deprecated_record_with_replacement_passes(records):
     data["status"] = "deprecated"
     data["deprecated_by"] = "fixture-app-v2"
     records.write("applications/app.yaml", data)
+    replacement = load_fixture("application.yaml")
+    replacement["id"] = "fixture-app-v2"
+    records.write("applications/app-v2.yaml", replacement)
     assert records.validate().returncode == 0
+
+
+def test_deprecated_record_with_missing_replacement_fails(records):
+    data = load_fixture("application.yaml")
+    data["status"] = "deprecated"
+    data["deprecated_by"] = "fixture-app-v2"
+    records.write("applications/app.yaml", data)
+    assert_rejected(records.validate(), "deprecated_by", "does not exist")
 
 
 def test_malformed_yaml_fails(records):

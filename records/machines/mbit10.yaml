@@ -1,0 +1,68 @@
+kind: machine
+schema_version: '0.2'
+id: mbit10
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: capture
+  kind: measurement
+  description: Read-only capture by swdb capture-machine at 2026-09-22T21:03:38Z (UTC).
+  uri: null
+hostname: mbit10
+cpu:
+  model: Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz
+  architecture: x86_64
+  sockets: 2
+  cores_per_socket: 16
+  threads_per_core: 2
+  logical_cpus: 64
+  max_mhz: null
+caches:
+- level: 1
+  type: data
+  size_bytes: 49152
+  instances: 32
+  shared_by: core
+- level: 1
+  type: instruction
+  size_bytes: 32768
+  instances: 32
+  shared_by: core
+- level: 2
+  type: unified
+  size_bytes: 1310720
+  instances: 32
+  shared_by: core
+- level: 3
+  type: unified
+  size_bytes: 25165824
+  instances: 2
+  shared_by: socket
+memory_bytes: 134580494336
+numa_nodes:
+- node: 0
+  cpus: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62
+  memory_bytes: 66950529024
+- node: 1
+  cpus: 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63
+  memory_bytes: 67628957696
+os:
+  kernel: 6.8.0-136-generic
+  distribution: Ubuntu 24.04.4 LTS
+counters:
+  perf_event_paranoid: 4
+  hardware_counters_available:
+    value: false
+    basis: inferred
+    evidence_refs: [capture]
+    note: 'perf_event_paranoid is 4 (above 2, so unprivileged perf events are blocked); the user is not
+      in the vtune group. Rule: counters are available if paranoid <= 2 or the user is in the vtune group.'
+capture:
+  command: ssh mbit10 sh -s < (swdb capture-machine script)
+  date: '2026-09-22T21:03:38Z'
+notes:
+  - Captured 2026-09-22 17:03 ET (21:03 UTC) from the Mac over ssh; nothing was started or written on the host.
+  - The Xeon Gold 6326 max clock is not reported by lscpu on this host (max_mhz null).
+extensions: {}

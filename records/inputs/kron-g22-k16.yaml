@@ -1,0 +1,73 @@
+kind: input
+schema_version: '0.2'
+id: kron-g22-k16
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: src-gapbs-generator
+  kind: source_code
+  description: 'gapbs src/generator.h (Generator: num_nodes = 2^scale, num_edges = num_nodes * degree,
+    then ID permutation for Kronecker) and src/command_line.h (-g/-u set symmetrize) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8,
+    read 2026-09-22.'
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/generator.h
+name: Kronecker (R-MAT a=0.57, b=c=0.19) graph, scale 22, requested degree 16 (gapbs -g 22 -k 16)
+generator:
+  application: gapbs
+  tool: gapbs built-in generator and Builder (inside every gapbs kernel binary)
+  arguments: -g 22 -k 16
+properties:
+  scale:
+    value: 22
+    basis: code_reading
+    evidence_refs: [src-gapbs-generator]
+  requested_degree:
+    value: 16
+    basis: code_reading
+    evidence_refs: [src-gapbs-generator]
+  num_nodes:
+    value: 4194304
+    basis: code_reading
+    evidence_refs: [src-gapbs-generator]
+    note: Generator sets num_nodes = 2^scale.
+  num_edges_undirected:
+    value: null
+    basis: unknown
+    evidence_refs: []
+    note: The generator draws 67108864 edges; building removes self loops and duplicates, so the count
+      is known only after a run.
+  num_edges_directed:
+    value: null
+    basis: unknown
+    evidence_refs: []
+    note: Twice the undirected count (both directions stored); filled in by profiling.
+  directed:
+    value: false
+    basis: code_reading
+    evidence_refs: [src-gapbs-generator]
+    note: CLBase::ParseArgs sets symmetrize for generated graphs, so the graph is undirected.
+  weighted:
+    value: false
+    basis: code_reading
+    evidence_refs: [src-gapbs-generator]
+    note: Unweighted as generated; sssp's WeightedBuilder adds its own weights to the same edges.
+  degree_distribution:
+    value: power_law
+    basis: inferred
+    evidence_refs: [src-gapbs-generator]
+    note: R-MAT recursion with a=0.57, b=c=0.19 concentrates edges on few vertices (heavy-tailed degrees);
+      the profile's degree_skew measures it.
+  index_locality:
+    value: random
+    basis: inferred
+    evidence_refs: [src-gapbs-generator]
+    note: Kronecker vertex IDs are randomly permuted after generation (PermuteIDs).
+  input_density:
+    value: sparse_scattered
+    basis: inferred
+    evidence_refs: [src-gapbs-generator]
+    note: About 32 of 4194304 possible neighbors per vertex in the stored CSR, spread over the ID range.
+notes:
+- Index data far exceeds the 24 MiB L3 of one mbit10 socket (spec pilot input).
+extensions: {}

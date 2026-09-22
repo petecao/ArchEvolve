@@ -1,0 +1,239 @@
+# Hand-computed index-stream features for tiny.el.
+# Created 2026-09-22 (Eastern). Read by tests/test_index_features.py.
+#
+# Ratios are exact fractions written as strings "a/b"; the test compares them
+# with pytest.approx. The coefficient of variation is irrational, so it is
+# given as cv_squared (an exact fraction) and the test compares sqrt of it.
+#
+# ---------------------------------------------------------------------------
+# tiny.el (13 lines, "u v" = directed edge u -> v):
+#   1 0, 2 0, 1 0 (duplicate), 2 1, 3 1, 0 2, 1 2, 5 2, 0 4, 7 4, 3 5,
+#   5 5 (self loop), 2 7
+# Vertex 6 appears in no edge; N = max ID + 1 = 8, so vertex 6 has degree 0.
+#
+# gapbs's Builder removes the duplicate 1 -> 0 and the self loop 5 -> 5 and
+# sorts every neighbor list (SquishCSR). The CSR it actually builds (printed
+# once on 2026-09-22 from a throwaway program that calls Builder::MakeGraph
+# and prints g.in_neigh / g.out_neigh):
+#
+#   directed (no -s): N=8, num_edges_directed=11
+#     in(0)=1 2   in(1)=2 3   in(2)=0 1 5   in(3)=-   in(4)=0 7
+#     in(5)=3     in(6)=-     in(7)=2
+#     out(0)=2 4  out(1)=0 2  out(2)=0 1 7  out(3)=1 5  out(4)=-
+#     out(5)=2    out(6)=-    out(7)=4
+#   symmetrized (-s): N=8, num_edges_directed=18 (0-2 and 1-2 each appear in
+#   both directions in the file and are deduplicated)
+#     n(0)=1 2 4  n(1)=0 2 3  n(2)=0 1 5 7  n(3)=1 5  n(4)=0 7
+#     n(5)=2 3    n(6)=-      n(7)=2 4
+#
+# Line mapping used by these cases: element_bytes 4, line_bytes 8, so
+# line(x) = floor(4x/8) = floor(x/2). The "default_lines" case uses the
+# defaults 4 and 64: line(x) = floor(x/16) = 0 for every x < 8.
+#
+# Reuse distance of an access at position k to x, previous access at p:
+# number of DISTINCT values at positions p+1..k-1. Buckets: b0 = {0},
+# b1 = {1}, b2 = [2,3], b3 = [4,7].
+# ---------------------------------------------------------------------------
+
+directed_in:
+  # args: --order in_neighbors_by_vertex --element-bytes 4 --line-bytes 8 -- -f tiny.el
+  #
+  # Stream (in-lists of u = 0..7 concatenated):
+  #   pos:   0 1 2 3 4 5 6 7 8 9 10
+  #   x:     1 2 2 3 0 1 5 0 7 3 2
+  #   line:  0 1 1 1 0 0 2 0 3 1 1
+  # L = 11. Distinct {0,1,2,3,5,7} -> D = 6. duplicate_ratio = (11-6)/11 = 5/11.
+  #
+  # Steps x[k] -> x[k+1] (10 steps):
+  #   1>2 seq, 2>2 repeat, 2>3 seq, 3>0, 0>1 seq, 1>5, 5>0, 0>7, 7>3, 3>2
+  #   sequential = 3 -> 3/10
+  #   same line: 2>2 (1,1), 2>3 (1,1), 0>1 (0,0), 3>2 (1,1; same line, not
+  #   sequential and not a repeat) -> 4/10
+  #
+  # Element reuse distances:
+  #   pos0 x=1 cold; pos1 x=2 cold
+  #   pos2 x=2 prev 1, between {}              -> 0  b0  (immediate repeat)
+  #   pos3 x=3 cold; pos4 x=0 cold
+  #   pos5 x=1 prev 0, between {2,3,0}          -> 3  b2
+  #   pos6 x=5 cold
+  #   pos7 x=0 prev 4, between {1,5}            -> 2  b2
+  #   pos8 x=7 cold
+  #   pos9 x=3 prev 3, between {0,1,5,7}        -> 4  b3
+  #   pos10 x=2 prev 2, between {3,0,1,5,7}     -> 5  b3
+  #   cold 6; buckets b0=1 b1=0 b2=2 b3=2; 6+1+0+2+2 = 11 = L
+  #
+  # Line reuse distances (line stream 0 1 1 1 0 0 2 0 3 1 1):
+  #   pos0 L0 cold; pos1 L1 cold
+  #   pos2 L1 prev 1 -> 0 b0;  pos3 L1 prev 2 -> 0 b0
+  #   pos4 L0 prev 0, between {1}     -> 1 b1
+  #   pos5 L0 prev 4                  -> 0 b0
+  #   pos6 L2 cold
+  #   pos7 L0 prev 5, between {2}     -> 1 b1
+  #   pos8 L3 cold
+  #   pos9 L1 prev 3, between {0,2,3} -> 3 b2
+  #   pos10 L1 prev 9                 -> 0 b0
+  #   cold 4 (distinct lines 4); b0=4 b1=2 b2=1; 4+4+2+1 = 11
+  #
+  # In-degrees d(0..7) = 2 2 3 0 2 1 0 1; sum 11 = L; mean 11/8; max 3.
+  #   Sorted ascending: 0 0 1 1 2 2 2 3; coefficients 2i-N-1 = -7 -5 -3 -1 1 3 5 7
+  #   numerator = 0 + 0 - 3 - 1 + 2 + 6 + 10 + 21 = 35
+  #   gini = 35 / (8 * 11) = 35/88
+  #   sum d^2 = 0+0+1+1+4+4+4+9 = 23; var = 23/8 - (11/8)^2 = 63/64
+  #   cv^2 = var / mean^2 = (63/64) / (121/64) = 63/121
+  args: [--order, in_neighbors_by_vertex, --element-bytes, "4", --line-bytes, "8", --, -f, tiny.el]
+  graph: {num_nodes: 8, num_edges_directed: 11, directed: true}
+  stream_length: 11
+  distinct_indices: 6
+  duplicate_ratio: "5/11"
+  sequential_fraction: "3/10"
+  same_line_fraction: "4/10"
+  reuse_cold: 6
+  reuse_buckets: [1, 0, 2, 2]
+  line_distinct: 4
+  line_cold: 4
+  line_buckets: [4, 2, 1]
+  degree: {which: in, mean: "11/8", max: 3, gini: "35/88", cv_squared: "63/121"}
+
+directed_out:
+  # args: --order out_neighbors_by_vertex --element-bytes 4 --line-bytes 8 -- -f tiny.el
+  #
+  # Stream (out-lists of u = 0..7 concatenated):
+  #   pos:   0 1 2 3 4 5 6 7 8 9 10
+  #   x:     2 4 0 2 0 1 7 1 5 2 4
+  #   line:  1 2 0 1 0 0 3 0 2 1 2
+  # L = 11. Distinct {0,1,2,4,5,7} -> D = 6. duplicate_ratio = 5/11.
+  #
+  # Steps: 2>4, 4>0, 0>2, 2>0, 0>1 seq, 1>7, 7>1, 1>5, 5>2, 2>4
+  #   sequential = 1 -> 1/10; same line: only 0>1 (0,0) -> 1/10
+  #
+  # Element reuse distances:
+  #   pos0 x=2 cold; pos1 x=4 cold; pos2 x=0 cold
+  #   pos3 x=2 prev 0, between {4,0}          -> 2 b2
+  #   pos4 x=0 prev 2, between {2}            -> 1 b1
+  #   pos5 x=1 cold; pos6 x=7 cold
+  #   pos7 x=1 prev 5, between {7}            -> 1 b1
+  #   pos8 x=5 cold
+  #   pos9 x=2 prev 3, between {0,1,7,5}      -> 4 b3
+  #   pos10 x=4 prev 1, between {0,2,1,7,5}   -> 5 b3
+  #   cold 6; b0=0 b1=2 b2=1 b3=2; 6+0+2+1+2 = 11
+  #
+  # Line reuse distances (line stream 1 2 0 1 0 0 3 0 2 1 2):
+  #   pos0 L1 cold; pos1 L2 cold; pos2 L0 cold
+  #   pos3 L1 prev 0, between {2,0}   -> 2 b2
+  #   pos4 L0 prev 2, between {1}     -> 1 b1
+  #   pos5 L0 prev 4                  -> 0 b0
+  #   pos6 L3 cold
+  #   pos7 L0 prev 5, between {3}     -> 1 b1
+  #   pos8 L2 prev 1, between {0,1,3} -> 3 b2
+  #   pos9 L1 prev 3, between {0,3,2} -> 3 b2
+  #   pos10 L2 prev 8, between {1}    -> 1 b1
+  #   cold 4; b0=1 b1=3 b2=3; 4+1+3+3 = 11
+  #
+  # Out-degrees d(0..7) = 2 2 3 2 0 1 0 1; sum 11; mean 11/8; max 3.
+  #   Sorted: 0 0 1 1 2 2 2 3 (same multiset as the in-degrees), so
+  #   gini = 35/88 and cv^2 = 63/121 as above.
+  args: [--order, out_neighbors_by_vertex, --element-bytes, "4", --line-bytes, "8", --, -f, tiny.el]
+  graph: {num_nodes: 8, num_edges_directed: 11, directed: true}
+  stream_length: 11
+  distinct_indices: 6
+  duplicate_ratio: "5/11"
+  sequential_fraction: "1/10"
+  same_line_fraction: "1/10"
+  reuse_cold: 6
+  reuse_buckets: [0, 2, 1, 2]
+  line_distinct: 4
+  line_cold: 4
+  line_buckets: [1, 3, 3]
+  degree: {which: out, mean: "11/8", max: 3, gini: "35/88", cv_squared: "63/121"}
+
+symmetric_in:
+  # args: --order in_neighbors_by_vertex --element-bytes 4 --line-bytes 8 -- -f tiny.el -s
+  # (for an undirected gapbs graph in_neigh == out_neigh, so the out order
+  # gives the same stream; the test checks that too)
+  #
+  # Stream (neighbor lists of u = 0..7 concatenated):
+  #   pos:   0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17
+  #   x:     1 2 4 0 2 3 0 1 5 7 1  5  0  7  2  3  2  4
+  #   line:  0 1 2 0 1 1 0 0 2 3 0  2  0  3  1  1  1  2
+  # L = 18. Distinct {0,1,2,3,4,5,7} -> D = 7. duplicate_ratio = 11/18.
+  #
+  # Steps (17): 1>2 seq, 2>4, 4>0, 0>2, 2>3 seq, 3>0, 0>1 seq, 1>5, 5>7,
+  #   7>1, 1>5, 5>0, 0>7, 7>2, 2>3 seq, 3>2, 2>4
+  #   sequential = 4 -> 4/17
+  #   same line: 2>3 (1,1), 0>1 (0,0), 2>3 (1,1), 3>2 (1,1) -> 4/17
+  #
+  # Element reuse distances:
+  #   pos0 1, pos1 2, pos2 4, pos3 0 cold
+  #   pos4 x=2 prev 1, between {4,0}             -> 2 b2
+  #   pos5 x=3 cold
+  #   pos6 x=0 prev 3, between {2,3}             -> 2 b2
+  #   pos7 x=1 prev 0, between {2,4,0,3}         -> 4 b3
+  #   pos8 x=5 cold; pos9 x=7 cold
+  #   pos10 x=1 prev 7, between {5,7}            -> 2 b2
+  #   pos11 x=5 prev 8, between {7,1}            -> 2 b2
+  #   pos12 x=0 prev 6, between {1,5,7}          -> 3 b2
+  #   pos13 x=7 prev 9, between {1,5,0}          -> 3 b2
+  #   pos14 x=2 prev 4, between {3,0,1,5,7}      -> 5 b3
+  #   pos15 x=3 prev 5, between {0,1,5,7,2}      -> 5 b3
+  #   pos16 x=2 prev 14, between {3}             -> 1 b1
+  #   pos17 x=4 prev 2, between {0,2,3,1,5,7}    -> 6 b3
+  #   cold 7; b0=0 b1=1 b2=6 b3=4; 7+0+1+6+4 = 18
+  #
+  # Line reuse distances (line stream 0 1 2 0 1 1 0 0 2 3 0 2 0 3 1 1 1 2):
+  #   pos0 L0, pos1 L1, pos2 L2 cold
+  #   pos3 L0 prev 0, between {1,2}    -> 2 b2
+  #   pos4 L1 prev 1, between {2,0}    -> 2 b2
+  #   pos5 L1 prev 4                   -> 0 b0
+  #   pos6 L0 prev 3, between {1}      -> 1 b1
+  #   pos7 L0 prev 6                   -> 0 b0
+  #   pos8 L2 prev 2, between {0,1}    -> 2 b2
+  #   pos9 L3 cold
+  #   pos10 L0 prev 7, between {2,3}   -> 2 b2
+  #   pos11 L2 prev 8, between {3,0}   -> 2 b2
+  #   pos12 L0 prev 10, between {2}    -> 1 b1
+  #   pos13 L3 prev 9, between {0,2}   -> 2 b2
+  #   pos14 L1 prev 5, between {0,2,3} -> 3 b2
+  #   pos15 L1 prev 14                 -> 0 b0
+  #   pos16 L1 prev 15                 -> 0 b0
+  #   pos17 L2 prev 11, between {0,3,1} -> 3 b2
+  #   cold 4; b0=4 b1=2 b2=8; 4+4+2+8 = 18
+  #
+  # Degrees d(0..7) = 3 3 4 2 2 2 0 2; sum 18; mean 18/8 = 9/4; max 4.
+  #   Sorted: 0 2 2 2 2 3 3 4; coefficients -7 -5 -3 -1 1 3 5 7
+  #   numerator = 0 - 10 - 6 - 2 + 2 + 9 + 15 + 28 = 36
+  #   gini = 36 / (8 * 18) = 1/4
+  #   sum d^2 = 0+4+4+4+4+9+9+16 = 50; var = 50/8 - (9/4)^2 = 100/16 - 81/16 = 19/16
+  #   cv^2 = (19/16) / (81/16) = 19/81
+  args: [--order, in_neighbors_by_vertex, --element-bytes, "4", --line-bytes, "8", --, -f, tiny.el, -s]
+  graph: {num_nodes: 8, num_edges_directed: 18, directed: false}
+  stream_length: 18
+  distinct_indices: 7
+  duplicate_ratio: "11/18"
+  sequential_fraction: "4/17"
+  same_line_fraction: "4/17"
+  reuse_cold: 7
+  reuse_buckets: [0, 1, 6, 4]
+  line_distinct: 4
+  line_cold: 4
+  line_buckets: [4, 2, 8]
+  degree: {which: in, mean: "9/4", max: 4, gini: "1/4", cv_squared: "19/81"}
+
+default_lines:
+  # args: -- -f tiny.el   (defaults: in_neighbors_by_vertex, 4-byte elements,
+  # 64-byte lines, so all 8 vertices sit on line 0)
+  # Element features are those of directed_in. Line stream is eleven 0s:
+  #   same_line_fraction = 10/10; one cold line; the other 10 accesses are
+  #   immediate repeats (distance 0) -> b0=10.
+  args: [--, -f, tiny.el]
+  graph: {num_nodes: 8, num_edges_directed: 11, directed: true}
+  stream_length: 11
+  distinct_indices: 6
+  duplicate_ratio: "5/11"
+  sequential_fraction: "3/10"
+  same_line_fraction: "10/10"
+  reuse_cold: 6
+  reuse_buckets: [1, 0, 2, 2]
+  line_distinct: 1
+  line_cold: 1
+  line_buckets: [10]
+  degree: {which: in, mean: "11/8", max: 3, gini: "35/88", cv_squared: "63/121"}
