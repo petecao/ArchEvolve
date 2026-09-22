@@ -16,13 +16,13 @@ Spec: `spec.md` (ready-for-agent). Glossary and ADRs: SW Database `CONTEXT.md` a
 | 07 | Profiling: timing and footprints | 03, 04, 06 | resolved |
 | 08 | Index-stream features | 07 | resolved |
 | 09 | Simulated cache misses (cachegrind) | 07 | resolved |
-| 10 | Pilot on mbit10 | 05, 08, 09 | claimed |
+| 10 | Pilot on mbit10 | 05, 08, 09 | resolved |
 | 11 | Format documentation v0.2 and a contributor procedure | 10 | resolved |
-| 12 | gapbs bfs, bc, sssp | 11 | claimed |
-| 13 | gapbs cc, cc_sv | 11 | claimed |
+| 12 | gapbs bfs, bc, sssp | 11 | resolved |
+| 13 | gapbs cc, cc_sv | 11 | resolved |
 | 14 | gapbs tc | 11 | claimed |
 
-Frontier now: 10, 12, 13, 14 (profiles running on mbit10 node1).
+Frontier now: 14 (tc on kron-g22-k16 re-running on mbit10 node1).
 
 ## Context pointers
 
@@ -37,3 +37,6 @@ Frontier now: 10, 12, 13, 14 (profiles running on mbit10 node1).
 - 08 (2026-09-22): tools/index_features (exact index-stream features) wired into swdb profile.
 - 09 (2026-09-22): cachegrind in swdb profile, simulated basis, timeouts recorded as incomplete.
 - 11 (2026-09-22): docs/format-v0.2.md (+ coverage test), docs/adding-an-application.md.
+- 10 (2026-09-22): pilot answer in issues/10 (bottleneck differs scale 16 vs 22); profiles in records/profiles.
+- 12 (2026-09-22): bfs/bc/sssp records and 12 profiles.
+- 13 (2026-09-22): one cc kernel (Afforest baseline, SV alternative) and 8 profiles.
