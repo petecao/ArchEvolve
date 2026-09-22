@@ -166,11 +166,13 @@ def _environment(machine, prof):
            "llc_bytes_per_socket": llc_bytes(machine), "memory_bytes": machine["memory_bytes"],
            "os_kernel": machine["os"]["kernel"],
            "hardware_counters_available": machine["counters"]["hardware_counters_available"]["value"],
-           "compiler": None, "flags": None, "threads": None, "binding": None, "source_commit": None}
+           "compiler": None, "flags": None, "threads": None, "binding": None, "source_commit": None,
+           "swdb_commit": None}
     if prof:
         env.update({"compiler": prof["build"]["compiler_version"], "flags": prof["build"]["flags"],
                     "threads": sorted({t["threads"] for t in prof["timing"]}),
-                    "binding": prof["environment"]["binding"], "source_commit": prof["build"]["swdb_commit"]})
+                    "binding": prof["environment"]["binding"],
+                    "source_commit": prof["build"]["application_commit"], "swdb_commit": prof["build"]["swdb_commit"]})
     return env
 
 

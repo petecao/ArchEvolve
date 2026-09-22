@@ -4,7 +4,8 @@
 It reads -n (trials), -v (verify), -l (log steps), and ignores the graph arguments. Trial
 times fall with OMP_NUM_THREADS up to 4 threads, then stay flat. STUB_SLEEP=<s> makes it
 sleep before printing, and STUB_SLEEP_TIMING=<s> only when not verifying (to test timeouts);
-STUB_FAIL_VERIFY=1 makes verification fail.
+STUB_FAIL_VERIFY=1 makes verification fail; STUB_FAIL_LOG=1 makes the -l run exit 1 after
+printing its step lines.
 """
 import os
 import sys
@@ -28,3 +29,5 @@ for trial in range(trials):
         print(f"{'Verification:':<21}{'FAIL' if os.environ.get('STUB_FAIL_VERIFY') else 'PASS':>7}")
         print(f"{'Verification Time:':<21}{0.0001:3.5f}")
 print(f"{'Average Time:':<21}{0.05:3.5f}")
+if "-l" in args and os.environ.get("STUB_FAIL_LOG"):
+    sys.exit(1)

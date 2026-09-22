@@ -344,3 +344,20 @@ def test_profile_input_must_define_the_formula_symbols(with_profile):
 def test_unscoped_profile_count_fails(with_profile):
     edit(with_profile, "profiles/p.yaml", lambda d: d["counts"]["iterations"].pop("scope"))
     rejected(with_profile.validate(), "counts.iterations.scope", "every count needs a scope")
+
+
+# --- regular expressions ----------------------------------------------------------------
+
+def test_sweep_count_regex_with_one_group_passes(repo):
+    edit(repo, GS, lambda d: d["run"].update(sweep_count_regex=r"took (\d+) iterations"))
+    assert repo.validate().returncode == 0
+
+
+def test_sweep_count_regex_without_a_group_fails(repo):
+    edit(repo, GS, lambda d: d["run"].update(sweep_count_regex=r"took \d+ iterations"))
+    rejected(repo.validate(), "run.sweep_count_regex", "exactly 1 capture group")
+
+
+def test_invalid_pass_regex_fails(repo):
+    edit(repo, KERNEL, lambda d: d["correctness_check"].update(pass_regex="Verification:\\s+(PASS"))
+    rejected(repo.validate(), "correctness_check.pass_regex", "not a valid regular expression")

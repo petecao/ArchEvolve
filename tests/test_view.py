@@ -123,3 +123,13 @@ def test_no_profile_means_explicitly_unknown_counts_metrics_bottleneck(repo):
 def test_missing_record_fails(repo):
     result, _ = view(repo, "gapbs-pr-gs", "no-such-input", "mbit10")
     assert result.returncode == 1 and "input 'no-such-input' does not exist" in result.stderr
+
+
+def test_view_source_commit_is_the_application_commit(records):
+    records.copy_repo()
+    profiles = sorted((records.path / "profiles").glob("gapbs-pr-gs.kron-g16-k16.*.yaml"))
+    if not profiles:
+        pytest.skip("no pilot profile in the repo yet")
+    _, data = view(records, "gapbs-pr-gs", "kron-g16-k16", "mbit10")
+    assert data["environment"]["source_commit"] == "2972aeb2703165bafd921222f4ed7196f542d3a8"
+    assert data["environment"]["swdb_commit"]

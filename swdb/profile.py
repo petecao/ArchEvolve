@@ -34,7 +34,7 @@ from pathlib import Path
 from swdb import formula, paths, writer, yamlio
 from swdb.cli import Failure
 from swdb.machine import llc_bytes
-from swdb.rules import resolve_code
+from swdb.rules import implementation_symbols, resolve_code
 from swdb.store import Store
 from swdb.validate import validate_records
 
@@ -55,12 +55,38 @@ def _stamp(moment):
     return moment.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+class Interrupted(Exception):
+    pass
+
+
 class Run:
-    """One profile run: its folder, its log of parts, and the helpers that run commands."""
+    """One profile run: its folder, its log of parts, and the helpers that run commands.
+
+    Children run in their own process group (so a timeout can kill a whole benchmark,
+    including shells and valgrind). A SIGTERM, SIGINT, or SIGHUP to swdb kills the running
+    child's group before swdb exits, so no benchmark outlives the lane that admitted it."""
 
     def __init__(self, folder):
         self.folder = folder
         self.parts = []
+        self.child = None
+        for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
+            signal.signal(sig, self._stop)
+
+    def _stop(self, signum, frame):
+        self._kill_child()
+        raise Interrupted(f"stopped by signal {signal.Signals(signum).name}")
+
+    def _kill_child(self):
+        """Kill the child's whole process group (the child leads it), even if the child
+        itself has exited but left helpers behind."""
+        if self.child is None:
+            return
+        try:
+            os.killpg(self.child.pid, signal.SIGKILL)
+        except (ProcessLookupError, PermissionError):
+            pass
+        self.child.wait()
 
     def execute(self, part, command, env_extra=None, timeout=None, log_name=None, shell=True):
         """Run one command (a shell string) with its output in log_name. Returns
@@ -74,13 +100,16 @@ class Run:
             out.flush()
             proc = subprocess.Popen(command, shell=shell, stdout=out, stderr=subprocess.STDOUT, env=env,
                                     cwd=self.folder, start_new_session=True)
+            self.child = proc
             try:
                 code = proc.wait(timeout=timeout)
                 outcome = "complete" if code == 0 else "failed"
             except subprocess.TimeoutExpired:
-                os.killpg(proc.pid, signal.SIGKILL)
-                proc.wait()
+                self._kill_child()
                 code, outcome = None, "timed_out"
+            finally:
+                self._kill_child()   # a child that forked helpers into its group leaves none behind
+                self.child = None
         text = log.read_text(encoding="utf-8", errors="replace")
         entry = {"part": part, "outcome": outcome, "command": command, "started": _stamp(started),
                  "finished": _stamp(_now()), "timeout_s": timeout, "exit_code": code,
@@ -98,6 +127,13 @@ class Run:
 
 
 def run(args, records_dir):
+    try:
+        return _run(args, records_dir)
+    except Interrupted as exc:
+        raise Failure(f"{exc}; the running benchmark was killed and no profile was written") from None
+
+
+def _run(args, records_dir):
     result = validate_records(records_dir)
     if result.problems:
         raise Failure("records do not validate; run swdb validate first:\n" + "\n".join(map(str, result.problems)))
@@ -108,6 +144,10 @@ def run(args, records_dir):
     kernel = _get(store, impl["kernel"], "kernel")
     app = store.application_of(impl)
     threads = _threads(args.threads, machine)
+    missing = sorted(implementation_symbols(impl, loops=True) - set(inp["properties"]))
+    if missing:
+        raise Failure(f"input {inp['id']!r} does not define {', '.join(missing)}, which the implementation's "
+                      "formulas use; add them (unknown is fine) before profiling")
     if args.trials < 1:
         raise Failure("--trials must be at least 1")
     host = socket.gethostname().split(".")[0]
@@ -185,7 +225,7 @@ def run(args, records_dir):
         cmd = impl["run"]["command"].format(**run_fill, trials=1) + (f" {flag}" if flag else "")
         entry, text = r.execute("sweeps", cmd, env_extra={threads_env: "1", **bind_env}, timeout=args.timeout)
         if count_regex:
-            found = re.findall(count_regex, text)
+            found = [m.group(1) for m in re.finditer(count_regex, text)]
             if found:
                 sweeps = int(found[-1])
             how = f"{len(found)} match(es) of {count_regex!r}"
@@ -193,7 +233,9 @@ def run(args, records_dir):
             steps = [int(m.group(1)) for m in STEP_LINE.finditer(text)]
             sweeps = max(steps) + 1 if steps else None
             how = f"{len(steps)} step lines"
-        if entry["outcome"] == "complete" and sweeps is not None:
+        if entry["outcome"] != "complete":
+            sweeps = None   # a partial log is not a measured count
+        if sweeps is not None:
             r.record(entry, note=f"{how}; sweeps per call = {sweeps} at 1 thread.")
         else:
             r.record(entry, note=how if entry["outcome"] == "complete" else None,
@@ -263,6 +305,13 @@ def _get(store, record_id, kind):
     return found
 
 
+def _evaluate(text, values):
+    try:
+        return formula.evaluate(text, values)
+    except formula.FormulaError as exc:
+        raise Failure(str(exc)) from None
+
+
 def _inside(path, parent):
     try:
         path.relative_to(parent)
@@ -292,7 +341,8 @@ def _input_args(inp):
         path = paths.HOME / path
     if not path.is_file():
         raise Failure(f"input file {path} does not exist on this host")
-    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    with open(path, "rb") as handle:
+        digest = hashlib.file_digest(handle, "sha256").hexdigest()
     if digest != inp["file"]["sha256"]:
         raise Failure(f"input file {path} has sha256 {digest}, not the recorded {inp['file']['sha256']}")
     return f"-f {shlex.quote(str(path))} {inp['file'].get('arguments', '')}".strip()
@@ -425,24 +475,32 @@ def _footprints(metrics, impl, values, machine):
     """Per-array bytes = element_bytes * element_count on the input. On an undirected input an
     array and its undirected_alias are one memory, counted once. Returns (total, exact):
     exact is False when some array's size is unknown, and then the total is a lower bound."""
-    arrays, conditional = {}, set()
+    arrays, conditional, pairs = {}, set(), set()
     for p in impl["access_patterns"]:
         for s in p["steps"]:
-            arrays.setdefault(s["array"]["name"], s["array"])
+            name = s["array"]["name"]
+            arrays.setdefault(name, s["array"])
+            if s["array"].get("undirected_alias"):
+                pairs.add(frozenset((name, s["array"]["undirected_alias"])))
             if p.get("condition"):
-                conditional.add(s["array"]["name"])
+                conditional.add(name)
     undirected = values.get("directed") is False
+    same_as = {}   # on an undirected input, each array of a pair names its partner
+    for pair in pairs:
+        if len(pair) == 2 and pair <= set(arrays):
+            a, b = sorted(pair)
+            same_as[a], same_as[b] = b, a
     total, unknown, counted = 0, [], set()
     for name, a in arrays.items():
         text = a.get("element_count")
-        count = formula.evaluate(text, values) if text is not None else None
+        count = _evaluate(text, values) if text is not None else None
         if count is None:
             unknown.append(name)
             why = f"element count {text} is unknown for this input" if text else "its size depends on the data at run time"
             metrics.append(_metric("footprint_bytes", None, "B", "unknown", array=name, note=why))
             continue
         size = count * a["element_bytes"]
-        alias = a.get("undirected_alias")
+        alias = same_as.get(name)
         shared = undirected and alias in counted
         note = f"{a['element_bytes']} B x ({text} = {count})"
         if shared:
@@ -489,7 +547,8 @@ def _features(r, args, impl, input_args, cxx, app_dir):
     entry2, _ = r.execute("index_features", cmd, timeout=args.features_timeout, env_extra={"OMP_NUM_THREADS": "1"})
     entry2["raw_files"] = [entry["raw_files"][0]] + entry2["raw_files"]
     if entry2["outcome"] != "complete" or not out.exists():
-        r.record(entry2, note="the extractor did not finish; its features are missing")
+        r.record(entry2, note="the extractor did not finish or wrote no output; its features are missing",
+                 outcome="failed" if entry2["outcome"] == "complete" else None)
         return None
     r.record(entry2, note=f"built with {cxx} (the kernel's compiler, so Kronecker IDs match); pattern {pattern['id']}",
              raw=[out.name])
@@ -534,7 +593,8 @@ def _cachegrind(r, args, impl, fill, run_fill, threads_env):
     entry2["raw_files"] = [entry["raw_files"][0]] + entry2["raw_files"]
     if entry2["outcome"] != "complete" or not out.exists():
         r.record(entry2, note="cachegrind did not finish within its timeout; simulated misses are missing"
-                 if entry2["outcome"] == "timed_out" else "cachegrind failed")
+                 if entry2["outcome"] == "timed_out" else "cachegrind failed or wrote no output file",
+                 outcome="failed" if entry2["outcome"] == "complete" else None)
         return None
     parsed = parse_cachegrind(out.read_text(errors="replace"), impl["run"].get("kernel_symbols", []))
     config = "; ".join(parsed["desc"])
@@ -614,7 +674,7 @@ def _counts(counts, impl, values, features, sweeps, timing, trials):
     for loop in impl["loops"]:
         tc = loop["trip_count"]
         if tc.get("formula"):
-            value = formula.evaluate(tc["formula"], values)
+            value = _evaluate(tc["formula"], values)
             counts[f"trips_{loop['id']}"] = {
                 "value": value, "formula": tc["formula"] if value is None else None, "scope": tc["scope"],
                 "basis": "inferred" if value is not None else "code_reading", "evidence_refs": ["run"],

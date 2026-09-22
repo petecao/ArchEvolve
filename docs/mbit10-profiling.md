@@ -44,8 +44,10 @@ them. `profile_in_lane.sh` refuses to run if this clone's `socket_lane.sh` or
 ## What `profile_in_lane.sh` does
 
 It refuses to start (exit 3) unless: the host is mbit10; the lane script equals the
-repository version; the chosen socket's lease is free; `/data1` and the runs disk each
-have at least 20 GB free; and no tracked file outside `records/` is modified. It prints
+repository version; the chosen socket's lease and the legacy `mbit10-evaluation` lease
+are free (the legacy lease occupies an unnamed socket, so nothing may start beside it);
+the runs disk keeps 20 GB free after this run's room (`EVOLVESWDB_RUN_GB`, default 5);
+and no tracked file outside `records/` is modified. It prints
 all three leases and `df -h`, then runs
 
 ```
@@ -63,11 +65,14 @@ socket), so hyperthreads stay idle.
 ## Where output goes
 
 Raw output (build logs, timer output, `index_features.json`, `cachegrind.out`, the host
-state) goes to `<runs>/<profile id>/`. The default runs folder is
-`/data/yanruj/EvolveSWDB_runs`: `/data1` had 24 GB free on 2026-09-22, just above its
-20 GB floor, and the GPU campaign holding node 0 asked for EvolveSWDB output on `/data`.
-Set `EVOLVESWDB_RUNS` to change it; the profile record names the folder it used. Raw
-output never goes into git and is never copied to the Mac.
+state) goes to `<runs>/<profile id>/`. By the host rule the runs folder is
+`/data1/yanruj/EvolveSWDB_runs`, or `/data/yanruj/EvolveSWDB_runs` when `/data1` would
+fall under 20 GB free; the script picks one and records why. `EVOLVESWDB_RUNS` and
+`EVOLVESWDB_RUNS_NOTE` override the choice. The 2026-09-22 pilot used
+`EVOLVESWDB_RUNS=/data/yanruj/EvolveSWDB_runs`: `/data1` had 24 GB free, and the GPU
+campaign holding node 0 asked that EvolveSWDB output stay off `/data1`, where its pinned
+builds live. The profile record names the folder it used. Raw output never goes into git
+and is never copied to the Mac.
 
 ## Measurement protocol
 
@@ -81,6 +86,9 @@ output never goes into git and is never copied to the Mac.
   Cachegrind's last-level cache is the host's L3 (24 MiB, 12-way). Kernel-only counts
   sum the functions named in the implementation's `run.kernel_symbols`, including the
   OpenMP outlined bodies; whole-run counts include graph generation and building.
+- Stopping: `swdb profile` kills the running benchmark's whole process group when it
+  gets SIGTERM, SIGINT, or SIGHUP (for example from the outer `timeout`), so no benchmark
+  outlives the lane that admitted it.
 - The host is shared and there is no sudo: the profile records the load, the logged-in
   users, the governor, and turbo state instead of controlling them.
 - No hardware counters (`perf_event_paranoid` = 4): the bottleneck is inferred from

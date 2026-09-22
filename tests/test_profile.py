@@ -246,3 +246,83 @@ def test_real_gapbs_pagerank_profile_with_cachegrind(records, tmp_path):
     assert prof["complete"] is True
     assert metric(prof, "sim_ll_misses", scope="per_call")["basis"] == "simulated"
     assert prof["counts"]["sweeps"]["value"] >= 1
+
+
+def test_sweeps_from_a_failed_log_run_are_not_recorded(records, tmp_path):
+    records.add_stub()
+    result, _ = profile(records, tmp_path, "--cachegrind", "no", "--features", "no", env={"STUB_FAIL_LOG": "1"})
+    assert result.returncode == 0, result.stderr
+    prof = only_profile(records)
+    assert "sweeps" not in prof["counts"]
+    assert next(p for p in prof["parts"] if p["part"] == "sweeps")["outcome"] == "failed"
+    assert prof["complete"] is False
+
+
+def test_sweep_count_regex_reads_a_printed_count(records, tmp_path):
+    records.add_stub()
+    impl = records.read("implementations/stub-impl.yaml")
+    impl["run"]["sweep_log_flag"] = None
+    impl["run"]["sweep_count_regex"] = r"Graph has (\d+) nodes"   # the stub prints 8
+    records.write("implementations/stub-impl.yaml", impl)
+    result, _ = profile(records, tmp_path, "--cachegrind", "no", "--features", "no")
+    assert result.returncode == 0, result.stderr
+    assert only_profile(records)["counts"]["sweeps"]["value"] == 8
+
+
+def test_input_missing_a_formula_symbol_fails_before_running(records, tmp_path):
+    records.add_stub()
+    inp = records.read("inputs/tiny-sym.yaml")
+    del inp["properties"]["num_edges_directed"]
+    records.write("inputs/tiny-sym.yaml", inp)
+    result, runs = profile(records, tmp_path, "--cachegrind", "no")
+    assert result.returncode == 1 and "does not define num_edges_directed" in result.stderr
+    assert not runs.exists()
+
+
+def test_cachegrind_without_output_is_a_failed_part(records, tmp_path):
+    records.add_stub()
+    env = {**_fake_valgrind_path(tmp_path), "FAKE_VALGRIND_NO_OUTPUT": "1"}
+    result, _ = profile(records, tmp_path, "--cachegrind", "yes", "--features", "no", env=env)
+    assert result.returncode == 0, result.stderr
+    prof = only_profile(records)
+    part = [p for p in prof["parts"] if p["part"] == "cachegrind"][-1]
+    assert part["outcome"] == "failed" and prof["complete"] is False
+
+
+@needs_cxx
+def test_alias_marked_on_either_side_is_counted_once(records, tmp_path):
+    records.add_stub()
+    impl = records.read("implementations/stub-impl.yaml")
+    impl["access_patterns"][1]["steps"][0]["array"].pop("undirected_alias")          # g.out_index_
+    for step in impl["access_patterns"][0]["steps"]:
+        if step["array"]["name"] == "g.in_index_":
+            step["array"]["undirected_alias"] = "g.out_index_"
+    records.write("implementations/stub-impl.yaml", impl)
+    result, _ = profile(records, tmp_path, "--cachegrind", "no")
+    assert result.returncode == 0, result.stderr
+    assert metric(only_profile(records), "total_footprint_bytes")["value"] == 72 + 72 + 32
+
+
+def test_sigterm_kills_the_running_benchmark(records, tmp_path):
+    import signal
+    import subprocess
+    import sys
+    import time
+
+    records.add_stub()
+    runs = tmp_path / "runs"
+    env = {**os.environ, "STUB_SLEEP_TIMING": "60"}
+    proc = subprocess.Popen([sys.executable, "-m", "swdb", "profile", "stub-impl", "tiny-sym", "testhost",
+                             "--records", records.path, "--db", tmp_path / "db.sqlite", "--runs-dir", runs,
+                             "--threads", "1", "--trials", "1", "--cachegrind", "no", "--features", "no"],
+                            cwd=REPO, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    deadline = time.time() + 30
+    while not list(runs.glob("*/timing-t1.log")) and time.time() < deadline:
+        time.sleep(0.2)
+    time.sleep(1)
+    proc.send_signal(signal.SIGTERM)
+    _, err = proc.communicate(timeout=30)
+    assert proc.returncode == 1 and "stopped by signal SIGTERM" in err
+    left = subprocess.run(["pgrep", "-f", str(runs)], capture_output=True, text=True).stdout.split()
+    assert left == [], f"benchmark processes survived: {left}"
+    assert not (records.path / "profiles").exists()

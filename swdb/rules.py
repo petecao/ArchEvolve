@@ -8,13 +8,15 @@ fixture in the tests. Rules run only on records that already passed their schema
   reference resolves, each chain of steps is well formed, an array named in several steps
   has the same type, size, and layout in each, and every code excerpt equals the source
   file at its recorded lines;
-- a kernel's baseline implementation implements that kernel;
+- a kernel's baseline implementation implements that kernel, and its pass_regex compiles;
+- an implementation's sweep_count_regex compiles and has exactly one capture group;
 - a metric's unit is the unit its vocabulary entry gives;
 - a profile's input defines every symbol its implementation's formulas use, and its
   bottleneck is not `measured` or `simulated` while the machine has no counters.
 """
 
 import hashlib
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -87,8 +89,19 @@ def _kernel(record, ctx):
     if impl is not None and impl.get("kernel") != data["id"]:
         yield Problem(record.rel, "baseline_implementation",
                       f"{data['baseline_implementation']!r} implements kernel {impl.get('kernel')!r}, not {data['id']!r}")
+    yield from _regex(record.rel, "correctness_check.pass_regex", data["correctness_check"]["pass_regex"])
     code = data["correctness_check"]["verifier"]["code"]
     yield from _code_ref(record, ctx, code, "correctness_check.verifier.code", ctx.store.application_of(data))
+
+
+def _regex(rel, where, text, groups=None):
+    try:
+        compiled = re.compile(text)
+    except re.error as exc:
+        yield Problem(rel, where, f"not a valid regular expression: {exc}")
+        return
+    if groups is not None and compiled.groups != groups:
+        yield Problem(rel, where, f"needs exactly {groups} capture group(s), has {compiled.groups}")
 
 
 # --- implementations ----------------------------------------------------------------
@@ -114,6 +127,9 @@ def _implementation(record, ctx):
         for j, step in enumerate(pattern["steps"]):
             yield from _formula(rel, f"{where}.steps[{j}].array.element_count", step["array"].get("element_count"), ctx)
     yield from _same_arrays(rel, data)
+    count_regex = data["run"].get("sweep_count_regex")
+    if count_regex is not None:
+        yield from _regex(rel, "run.sweep_count_regex", count_regex, groups=1)
     stream = data["run"].get("index_stream")
     if stream and stream["pattern"] not in patterns:
         yield Problem(rel, "run.index_stream.pattern", f"{stream['pattern']!r} is not an access pattern of this implementation")
@@ -242,8 +258,16 @@ def _profile(record, ctx):
                           f"machine {machine['id']!r} has no hardware counters, so a bottleneck can only be inferred, not {data['bottleneck']['basis']}")
 
 
-def implementation_symbols(impl):
+def implementation_symbols(impl, loops=False):
+    """Input symbols the element-count formulas use (and, with loops=True, the trip counts)."""
     names = set()
+    texts = [loop.get("trip_count", {}).get("formula") for loop in impl.get("loops", [])] if loops else []
+    for text in texts:
+        if text:
+            try:
+                names.update(formula.symbols(text))
+            except (formula.FormulaError, TypeError):
+                pass
     for pattern in impl.get("access_patterns", []):
         for step in pattern.get("steps", []):
             text = step.get("array", {}).get("element_count")
