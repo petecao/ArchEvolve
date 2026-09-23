@@ -33,12 +33,15 @@ def test_database_file_is_ignored_by_git():
 
 
 def test_build_starts_from_scratch(repo):
+    data = repo.read("inputs/kron-g16-k16.yaml")
+    data["id"] = "extra-input"
+    repo.write("inputs/extra.yaml", data)
     repo.swdb("build")
-    assert any(r["id"] == "kron-g22-k16" for r in out(repo.swdb("sql", "select id from inputs", "--format", "json")))
-    (repo.path / "inputs" / "kron-g22-k16.yaml").unlink()
+    assert any(r["id"] == "extra-input" for r in out(repo.swdb("sql", "select id from inputs", "--format", "json")))
+    (repo.path / "inputs" / "extra.yaml").unlink()
     assert repo.swdb("build").returncode == 0
     ids = [r["id"] for r in out(repo.swdb("sql", "select id from inputs", "--format", "json"))]
-    assert "kron-g22-k16" not in ids
+    assert "extra-input" not in ids
 
 
 def test_build_refuses_invalid_records(repo):

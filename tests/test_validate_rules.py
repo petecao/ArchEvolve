@@ -84,8 +84,7 @@ def test_duplicate_pattern_id_fails(repo):
 
 def test_unknown_basis_with_a_value_fails(repo):
     rel = "inputs/kron-g22-k16.yaml"
-    assert repo.read(rel)["properties"]["num_edges_directed"]["basis"] == "unknown"
-    edit(repo, rel, lambda d: d["properties"]["num_edges_directed"].update(value=1234))
+    edit(repo, rel, lambda d: d["properties"].update(num_edges_directed={"value": 1234, "basis": "unknown"}))
     rejected(repo.validate(), "properties.num_edges_directed.value", "basis unknown requires value: null")
 
 

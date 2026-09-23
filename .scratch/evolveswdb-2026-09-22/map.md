@@ -20,9 +20,9 @@ Spec: `spec.md` (ready-for-agent). Glossary and ADRs: SW Database `CONTEXT.md` a
 | 11 | Format documentation v0.2 and a contributor procedure | 10 | resolved |
 | 12 | gapbs bfs, bc, sssp | 11 | resolved |
 | 13 | gapbs cc, cc_sv | 11 | resolved |
-| 14 | gapbs tc | 11 | claimed |
+| 14 | gapbs tc | 11 | resolved |
 
-Frontier now: 14 (tc on kron-g22-k16 re-running on mbit10 node1).
+Frontier now: empty; all tickets resolved.
 
 ## Context pointers
 
@@ -40,3 +40,4 @@ Frontier now: 14 (tc on kron-g22-k16 re-running on mbit10 node1).
 - 10 (2026-09-22): pilot answer in issues/10 (bottleneck differs scale 16 vs 22); profiles in records/profiles.
 - 12 (2026-09-22): bfs/bc/sssp records and 12 profiles.
 - 13 (2026-09-22): one cc kernel (Afforest baseline, SV alternative) and 8 profiles.
+- 14 (2026-09-22): tc records and 4 profiles; kron-g22-k16 recorded incomplete (verifier timeout).
