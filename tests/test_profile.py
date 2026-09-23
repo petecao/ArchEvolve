@@ -241,7 +241,9 @@ def test_real_gapbs_pagerank_profile_with_cachegrind(records, tmp_path):
         pytest.skip("not on mbit10")
     inp = records.read("inputs/kron-g16-k16.yaml")
     inp["id"], inp["generator"]["arguments"] = "kron-g10-k16", "-g 10 -k 16"
-    inp["properties"]["num_nodes"]["value"], inp["properties"]["scale"]["value"] = 1024, 10
+    inp["properties"]["scale"]["value"] = 10
+    for name in ("num_nodes", "num_edges_undirected", "num_edges_directed"):   # sizes of the scale-16 graph
+        inp["properties"][name] = {"value": None, "basis": "unknown", "evidence_refs": []}
     records.write("inputs/kron-g10-k16.yaml", inp)
     result = records.swdb("profile", "gapbs-pr-gs", "kron-g10-k16", "mbit10", "--runs-dir", tmp_path / "runs",
                           "--threads", "1,2", "--trials", "2", "--cachegrind", "yes", "--cachegrind-timeout", "600")
