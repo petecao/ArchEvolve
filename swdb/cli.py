@@ -102,6 +102,10 @@ def main(argv=None):
     sub.add_argument("--runs-note", default=None, help="why this runs folder was chosen (recorded in the profile)")
     sub.add_argument("--agent", action="store_true", help="the run is made by an agent (provenance agent_run)")
 
+    sub = command("recompute-cachegrind", "re-read profiles' raw cachegrind output with the current parser "
+                  "(on the host that holds it) and update their simulated metrics", db=True)
+    sub.add_argument("profile", nargs="+")
+
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -163,6 +167,13 @@ def _dispatch(args):
         written = profile.run(args, records)
         info = db.build(records, db_path)
         print(f"OK: wrote {written}; rebuilt {db_path} ({info['records']} records)")
+        return 0
+    if args.command == "recompute-cachegrind":
+        from swdb import profile
+
+        for profile_id in args.profile:
+            print(profile.recompute_cachegrind(records, profile_id))
+        db.build(records, db_path)
         return 0
     raise UsageError(f"unknown command {args.command}")
 

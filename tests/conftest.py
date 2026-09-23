@@ -91,6 +91,7 @@ def records(tmp_path):
             machine = read_yaml(REPO / "records" / "machines" / "mbit10.yaml")
             machine["id"] = "testhost"
             machine["hostname"] = socket.gethostname().split(".")[0]
+            machine["lane_required"] = False   # the stub runs anywhere; lane tests set it back
             self.write("machines/testhost.yaml", machine)
             return self
 

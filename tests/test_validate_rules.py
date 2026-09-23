@@ -360,3 +360,62 @@ def test_sweep_count_regex_without_a_group_fails(repo):
 def test_invalid_pass_regex_fails(repo):
     edit(repo, KERNEL, lambda d: d["correctness_check"].update(pass_regex="Verification:\\s+(PASS"))
     rejected(repo.validate(), "correctness_check.pass_regex", "not a valid regular expression")
+
+
+# --- rules added after the 2026-09-22 spec review: one failing fixture each -------------
+
+def test_deprecated_by_of_another_kind_fails(repo):
+    edit(repo, KRON, lambda d: d.update(status="deprecated", deprecated_by="gapbs-pr"))
+    rejected(repo.validate(), KRON, "deprecated_by", "is a kernel, not a input")
+
+
+def test_deprecated_by_of_the_same_kind_passes(repo):
+    edit(repo, KRON, lambda d: d.update(status="deprecated", deprecated_by="kron-g22-k16"))
+    assert repo.validate().returncode == 0
+
+
+def test_duplicate_provenance_id_fails(repo):
+    edit(repo, GS, lambda d: d["provenance"].append(dict(d["provenance"][0])))
+    rejected(repo.validate(), GS, "provenance[1].id", "duplicate provenance ID 'src-gapbs-pr'")
+
+
+def test_duplicate_loop_id_fails(repo):
+    edit(repo, GS, lambda d: d["loops"].append(dict(d["loops"][0])))
+    rejected(repo.validate(), GS, "duplicate ID 'init' in this record")
+
+
+def test_loop_parent_must_resolve(repo):
+    edit(repo, GS, lambda d: d["loops"][2].update(parent="no-such-loop"))
+    rejected(repo.validate(), GS, "loops[2].parent", "not a loop of this implementation")
+
+
+def test_trip_count_formula_symbol_outside_vocabulary_fails(repo):
+    edit(repo, GS, lambda d: d["loops"][2]["trip_count"].update(formula="num_vertices"))
+    rejected(repo.validate(), "loops[2].trip_count.formula", "symbol 'num_vertices' is not in vocabulary input_properties")
+
+
+def test_index_stream_pattern_must_resolve(repo):
+    edit(repo, GS, lambda d: d["run"]["index_stream"].update(pattern="no-such-pattern"))
+    rejected(repo.validate(), "run.index_stream.pattern", "is not an access pattern")
+
+
+def test_excerpt_without_lines_fails(repo):
+    edit(repo, GS, lambda d: d["code"][0].update(lines=None))
+    rejected(repo.validate(), "code[0].lines", "an excerpt needs its line range")
+
+
+def test_application_code_without_a_local_copy_fails(repo):
+    edit(repo, "applications/gapbs.yaml", lambda d: d["source"].update(local_path=None))
+    rejected(repo.validate(), GS, "has no local copy")
+
+
+# --- extensions are experimental and never checked as core evidence ---------------------
+
+def test_evidence_refs_under_extensions_pass(repo):
+    edit(repo, GS, lambda d: d.update(extensions={"experimental": {"evidence_refs": ["new-plugin:external-doc"]}}))
+    assert repo.validate().returncode == 0
+
+
+def test_evidence_refs_outside_extensions_still_fail(repo):
+    edit(repo, GS, lambda d: d["access_patterns"][0].update(evidence_refs=["new-plugin-doc"]))
+    rejected(repo.validate(), "access_patterns[0].evidence_refs[0]")

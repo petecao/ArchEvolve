@@ -11,6 +11,9 @@ fn=_Z10StubKernelRK8CSRGraphIiiLb1EE
 20 500 0 0 200 20 10 50 5 2
 fn=_Z10StubKernelRK8CSRGraphIiiLb1EE._omp_fn.0
 21 300 0 0 100 30 15
+fl=builder.h
+fn=Builder<int, int>::StubKernel(CSRGraph<int, int, true> const&) [clone ._omp_fn.1]
+40 100 0 0 50 20 10 20 10 50
 fn=_Z13StubKernelOldv
 30 999 0 0 999 999 999 0 0 0
-summary: 2799 1 1 1699 1059 1029 150 7 3
+summary: 2899 1 1 1749 1079 1039 170 17 53

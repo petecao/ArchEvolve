@@ -4,6 +4,7 @@
 cannot drift from them. Tables are documented in docs/database.md.
 """
 
+import hashlib
 import json
 import os
 import sqlite3
@@ -16,6 +17,7 @@ SEMANTIC_FIELDS = ["duplicate_target_indices", "index_modified_during_loop", "lo
                    "shared_target_between_threads", "atomic_updates_required", "ordering", "numerical_requirement"]
 
 SCHEMA = f"""
+CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE TABLE records (id TEXT PRIMARY KEY, kind TEXT NOT NULL, status TEXT, path TEXT NOT NULL, json TEXT NOT NULL);
 CREATE TABLE applications (id TEXT PRIMARY KEY, name TEXT, commit_hash TEXT, language TEXT, parallel_model TEXT,
     domain TEXT, json TEXT NOT NULL);
@@ -43,19 +45,46 @@ CREATE TABLE steps (implementation TEXT NOT NULL, pattern TEXT NOT NULL, positio
 
 
 def default_path(records_dir):
-    return Path(records_dir).resolve().parent / "build" / "swdb.sqlite"
+    """build/swdb.sqlite next to a folder named `records` (the repo's), otherwise
+    build/swdb-<folder name>.sqlite, so sibling records folders get their own files."""
+    records_dir = Path(records_dir).resolve()
+    name = "swdb.sqlite" if records_dir.name == "records" else f"swdb-{records_dir.name}.sqlite"
+    return records_dir.parent / "build" / name
+
+
+def fingerprint(records_dir):
+    """Identifies the exact set of record files: path, size, and modification time of each."""
+    digest = hashlib.sha256()
+    for path, rel in record_files(Path(records_dir)):
+        info = path.stat()
+        digest.update(f"{rel}\0{info.st_size}\0{info.st_mtime_ns}\n".encode())
+    return digest.hexdigest()
+
+
+def _meta(db_path):
+    try:
+        con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+        try:
+            return dict(con.execute("SELECT key, value FROM meta"))
+        finally:
+            con.close()
+    except sqlite3.Error:
+        return {}
 
 
 def is_stale(records_dir, db_path):
+    """True unless the database was built from this very folder in its current state."""
     db_path = Path(db_path)
     if not db_path.exists():
         return True
-    built = db_path.stat().st_mtime
-    records_dir = Path(records_dir)
-    newest = max((path.stat().st_mtime for path, _ in record_files(records_dir)), default=0)
-    # a deleted or moved record changes the mtime of the folder it was in
-    folders = max((p.stat().st_mtime for p in [records_dir, *records_dir.rglob("*")] if p.is_dir()), default=0)
-    return newest > built or folders > built
+    meta = _meta(db_path)
+    return (meta.get("records_dir") != str(Path(records_dir).resolve())
+            or meta.get("fingerprint") != fingerprint(records_dir))
+
+
+def _flag(value):
+    """A boolean fact as 1/0, and NULL when unknown (unknown is never false)."""
+    return None if value is None else int(bool(value))
 
 
 def _text(value):
@@ -71,8 +100,11 @@ def build(records_dir, db_path):
     tmp = db_path.with_name(f".{db_path.name}.{os.getpid()}.tmp")   # unique per process; renamed at the end
     if tmp.exists():
         tmp.unlink()
+    stamp = fingerprint(records_dir)
     con = sqlite3.connect(tmp)
     con.executescript(SCHEMA)
+    con.executemany("INSERT INTO meta VALUES (?, ?)", [("records_dir", str(Path(records_dir).resolve())),
+                                                       ("fingerprint", stamp)])
     kernels = {r.id: r.data for r in store.of_kind("kernel")}
     baselines = {k["baseline_implementation"] for k in kernels.values()}
     for rec in store.records:
@@ -133,7 +165,7 @@ class _Insert:
 
         con.execute("INSERT INTO machines VALUES (?,?,?,?,?,?,?,?)",
                     (d["id"], d["hostname"], d["cpu"]["model"], d["cpu"]["sockets"], d["cpu"]["cores_per_socket"],
-                     llc_bytes(d), int(bool(d["counters"]["hardware_counters_available"]["value"])), json.dumps(d)))
+                     llc_bytes(d), _flag(d["counters"]["hardware_counters_available"]["value"]), json.dumps(d)))
 
     @staticmethod
     def profile(con, d, *_):

@@ -127,3 +127,49 @@ def test_every_table_and_column_is_documented(repo):
         columns = out(repo.swdb("sql", f"select name from pragma_table_info('{table}')", "--format", "json"))
         for column in (c["name"] for c in columns):
             assert f"`{column}`" in doc, f"column {table}.{column} is not documented"
+
+
+def test_sibling_records_folders_never_share_results(tmp_path):
+    # the review's reproduction: query folder a, then folder b; b must answer with b's records
+    from conftest import run_swdb, REPO
+    import shutil
+
+    for name in ("a", "b"):
+        shutil.copytree(REPO / "records" / "applications", tmp_path / name / "applications")
+    b_app = tmp_path / "b" / "applications" / "gapbs.yaml"
+    b_app.write_text(b_app.read_text().replace("id: gapbs", "id: gapbs-b"))
+    first = out(run_swdb("sql", "select id from applications", "--records", tmp_path / "a", "--format", "json"))
+    second = out(run_swdb("sql", "select id from applications", "--records", tmp_path / "b", "--format", "json"))
+    assert first == [{"id": "gapbs"}] and second == [{"id": "gapbs-b"}]
+    # the same file, forced for both folders, is rebuilt for whichever folder asks
+    shared = tmp_path / "shared.sqlite"
+    assert out(run_swdb("sql", "select id from applications", "--records", tmp_path / "a", "--db", shared,
+                        "--format", "json")) == [{"id": "gapbs"}]
+    assert out(run_swdb("sql", "select id from applications", "--records", tmp_path / "b", "--db", shared,
+                        "--format", "json")) == [{"id": "gapbs-b"}]
+
+
+def test_a_changed_record_is_seen_even_with_an_older_timestamp(repo):
+    repo.swdb("build")
+    path = repo.path / "inputs" / "kron-g16-k16.yaml"
+    before = path.stat()
+    path.write_text(path.read_text().replace("name: ", "name: Renamed ", 1))
+    import os
+    os.utime(path, ns=(before.st_atime_ns, before.st_mtime_ns - 10**9))   # pretend it is older
+    rows = out(repo.swdb("sql", "select name from inputs where id = 'kron-g16-k16'", "--format", "json"))
+    assert rows[0]["name"].startswith("Renamed")
+
+
+def test_unknown_counter_availability_stays_null(repo):
+    edit_path = repo.path / "machines" / "mbit10.yaml"
+    import yaml as _yaml
+    data = _yaml.safe_load(edit_path.read_text())
+    data["counters"]["hardware_counters_available"] = {"value": None, "basis": "unknown", "evidence_refs": []}
+    edit_path.write_text(_yaml.safe_dump(data, sort_keys=False))
+    rows = out(repo.swdb("sql", "select counters_available from machines where id = 'mbit10'", "--format", "json"))
+    assert rows == [{"counters_available": None}]
+
+
+def test_known_counter_availability_is_zero_or_one(repo):
+    rows = out(repo.swdb("sql", "select counters_available from machines where id = 'mbit10'", "--format", "json"))
+    assert rows == [{"counters_available": 0}]

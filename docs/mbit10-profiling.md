@@ -55,6 +55,11 @@ socket_lane.sh <node> evolveswdb-<impl>-<input> --record <runs>/lanes/<job>.<sta
   timeout 14400 python3 -m swdb profile <impl> <input> mbit10 --runs-dir <runs> --lane ... "$@"
 ```
 
+The mbit10 machine record sets `lane_required: true`, so `swdb profile` itself refuses to
+start unless a `socket_lane.sh` process (`LACT_SOCKET_LANE_PID`) is its ancestor and its
+CPU affinity is exactly one NUMA node; it records the verified lane and lease generation.
+The lab-host test runs only when pytest itself was started inside a lane.
+
 `socket_lane.sh` re-executes itself under `numactl --cpunodebind=<node> --membind=<node>`,
 takes the lease, applies the load gate, records affinity, memory policy, load, and lease
 generation in the lane JSON, and then runs the command. Every build, run, extractor, and
@@ -90,6 +95,9 @@ and is never copied to the Mac.
   Cachegrind's last-level cache is the host's L3 (24 MiB, 12-way). Kernel-only counts
   sum the functions named in the implementation's `run.kernel_symbols`, including the
   OpenMP outlined bodies; whole-run counts include graph generation and building.
+- Re-reading cachegrind: `swdb recompute-cachegrind <profile>...` (on mbit10) re-parses a
+  profile's raw `cachegrind.out` with the current parser and kernel symbols, and updates its
+  simulated metrics and inferred bottleneck with a provenance entry saying so.
 - Stopping: `swdb profile` kills the running benchmark's whole process group when it
   gets SIGTERM, SIGINT, or SIGHUP (for example from the outer `timeout`), so no benchmark
   outlives the lane that admitted it.

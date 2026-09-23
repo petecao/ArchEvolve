@@ -159,6 +159,8 @@ def _run(args, records_dir):
     if host != machine["hostname"]:
         raise Failure(f"this host is {host!r}, but machine record {machine['id']!r} is for {machine['hostname']!r}")
 
+    lane = _verified_lane(machine, args.lane)
+
     started = _now()
     run_id = f"{impl['id']}.{inp['id']}.{machine['id']}.{started.strftime('%Y%m%dt%H%M%Sz')}"
     runs_dir = Path(args.runs_dir).resolve()
@@ -169,6 +171,7 @@ def _run(args, records_dir):
     (folder / "bin").mkdir()
     r = Run(folder)
     env_info = _environment(folder, args, host, started)
+    env_info["lane"] = lane
 
     input_args = _input_args(inp)
     cxx = args.cxx or impl["build"]["compiler"]
@@ -318,6 +321,56 @@ def _run(args, records_dir):
 
 
 # --- helpers ------------------------------------------------------------------------
+
+def _parent_pid(pid):
+    try:
+        with open(f"/proc/{pid}/status") as fh:
+            for line in fh:
+                if line.startswith("PPid:"):
+                    return int(line.split()[1])
+    except OSError:
+        return None
+    return None
+
+
+def _cpu_set(text):
+    cpus = set()
+    for part in text.replace(" ", ",").split(","):
+        if "-" in part:
+            lo, hi = part.split("-")
+            cpus.update(range(int(lo), int(hi) + 1))
+        elif part.strip():
+            cpus.add(int(part))
+    return cpus
+
+
+def _verified_lane(machine, claimed):
+    """On a machine with lane_required, refuse to run unless this process is inside a socket
+    lane: a MemAcc socket_lane.sh process (LACT_SOCKET_LANE_PID) is an ancestor, and the CPU
+    affinity is exactly one NUMA node's CPUs. Returns the lane as recorded, or `claimed`."""
+    if not machine.get("lane_required"):
+        return claimed
+    where = f"machine {machine['id']!r} requires a socket lane (scripts/mbit10/profile_in_lane.sh)"
+    lane_pid = os.environ.get("LACT_SOCKET_LANE_PID", "")
+    if not lane_pid.isdigit():
+        raise Failure(f"{where}: not started through socket_lane.sh (LACT_SOCKET_LANE_PID is not set)")
+    pid, seen = os.getpid(), 0
+    while pid and pid != int(lane_pid) and seen < 64:
+        pid, seen = _parent_pid(pid), seen + 1
+    if pid != int(lane_pid):
+        raise Failure(f"{where}: socket_lane.sh process {lane_pid} is not an ancestor of this process")
+    if not hasattr(os, "sched_getaffinity"):
+        raise Failure(f"{where}: cannot read the CPU affinity on this platform")
+    allowed = set(os.sched_getaffinity(0))
+    nodes = [n["node"] for n in machine["numa_nodes"] if _cpu_set(n["cpus"]) == allowed]
+    if len(nodes) != 1:
+        raise Failure(f"{where}: CPU affinity {sorted(allowed)} is not exactly one NUMA node")
+    lane = f"mbit10-evaluation-node{nodes[0]}" if machine["id"] == "mbit10" else f"node{nodes[0]}"
+    if claimed and claimed != lane:
+        raise Failure(f"{where}: --lane says {claimed!r} but the process is confined to {lane!r}")
+    generation = os.environ.get("LACT_SOCKET_LANE_GENERATION")
+    return lane + (f" (verified; lease generation {generation})" if generation else " (verified)")
+
 
 def _get(store, record_id, kind):
     found = store.get(record_id, kind)
@@ -623,7 +676,20 @@ def _cachegrind(r, args, impl, fill, run_fill, threads_env):
         r.record(entry2, outcome="failed", raw=[out.name],
                  note=f"no function matched kernel_symbols {impl['run'].get('kernel_symbols')}; config: {config}")
         return None
-    r.record(entry2, raw=[out.name], note=f"simulated caches: {config}; kernel functions: {', '.join(parsed['functions'])}")
+    r.record(entry2, raw=[out.name], note=_cachegrind_note(parsed, impl))
+    return {"metrics": sim_metrics(parsed), "kernel": parsed["kernel"]}
+
+
+def _cachegrind_note(parsed, impl):
+    symbols = impl["run"].get("kernel_symbols", [])
+    unmatched = [s for s in symbols if not any(_symbol_pattern(s).search(fn) for fn in parsed["functions"])]
+    return (f"simulated caches: {'; '.join(parsed['desc'])}; kernel functions: {', '.join(parsed['functions'])}"
+            + (f"; kernel symbols with no function in this run (not called, or inlined into another): "
+               f"{', '.join(unmatched)}" if unmatched else ""))
+
+
+def sim_metrics(parsed):
+    config = "; ".join(parsed["desc"])
     metrics = []
     for scope, totals, what in (("per_call", parsed["kernel"], "kernel functions only (one call)"),
                                 ("per_run", parsed["total"], "whole run, including graph generation and building")):
@@ -639,7 +705,56 @@ def _cachegrind(r, args, impl, fill, run_fill, threads_env):
                             "simulated" if refs else "unknown", **common),
                     _metric("sim_ll_miss_rate", round(ll / refs, 6) if refs else None, "ratio",
                             "simulated" if refs else "unknown", **common)]
-    return {"metrics": metrics, "kernel": parsed["kernel"]}
+    return metrics
+
+
+def _symbol_pattern(symbol):
+    # Mangled names carry the length first (_Z14PageRankPullGS...), which makes the match
+    # exact. Demangled names (cachegrind's default) match as "name(" or "name<", also when
+    # qualified: "BuilderBase<int, int, int, true>::RelabelByDegree(...)".
+    return re.compile(rf"(?<![0-9]){len(symbol)}{re.escape(symbol)}|(?<![A-Za-z0-9_]){re.escape(symbol)}[(<]")
+
+
+def recompute_cachegrind(records_dir, profile_id):
+    """Re-read a profile's raw cachegrind.out with the current parser and the implementation's
+    current kernel_symbols; replace its simulated metrics and re-infer its bottleneck. Runs on
+    the host that holds the raw output."""
+    store = Store(Path(records_dir))
+    prof = _get(store, profile_id, "profile")
+    impl = _get(store, prof["implementation"], "implementation")
+    machine = _get(store, prof["machine"], "machine")
+    host = socket.gethostname().split(".")[0]
+    if host != prof["runs_folder"]["host"]:
+        raise Failure(f"the raw output of {profile_id} is on {prof['runs_folder']['host']}, not {host}")
+    raw = Path(prof["runs_folder"]["path"]) / "cachegrind.out"
+    if not raw.is_file():
+        raise Failure(f"{raw} does not exist")
+    parsed = parse_cachegrind(raw.read_text(errors="replace"), impl["run"].get("kernel_symbols", []))
+    if not parsed["kernel"]:
+        raise Failure(f"no function in {raw} matches kernel_symbols {impl['run'].get('kernel_symbols')}")
+    new = json.loads(json.dumps(prof))
+    before = {(m["name"], m.get("scope")): m["value"] for m in prof["metrics"] if m["name"].startswith("sim_")}
+    new["metrics"] = [m for m in new["metrics"] if not m["name"].startswith("sim_")] + sim_metrics(parsed)
+    for part in new["parts"]:
+        if part["part"] == "cachegrind" and part["outcome"] == "complete":
+            part["note"] = _cachegrind_note(parsed, impl)
+    total = next((m for m in new["metrics"] if m["name"] == "total_footprint_bytes"), None)
+    exact = not any(m["name"] == "footprint_bytes" and m["basis"] == "unknown" for m in new["metrics"])
+    timing_ok = all(p["outcome"] == "complete" for p in new["parts"] if p["part"] == "timing")
+    new["bottleneck"] = _bottleneck(new["timing"] if timing_ok else [], total["value"] if total else None,
+                                    exact, machine, {"kernel": parsed["kernel"]})
+    after = {(m["name"], m.get("scope")): m["value"] for m in new["metrics"] if m["name"].startswith("sim_")}
+    changed = sorted(f"{name} ({scope}): {before.get((name, scope))} -> {value}"
+                     for (name, scope), value in after.items() if before.get((name, scope)) != value)
+    if not changed:
+        return f"{profile_id}: no change"
+    new["provenance"].append({"id": f"recompute-{len(new['provenance'])}", "kind": "measurement",
+                              "description": f"Simulated metrics re-read from {raw} with swdb recompute-cachegrind "
+                                             f"on {writer.today()} (kernel symbol matching fixed for qualified "
+                                             "member functions).", "uri": None})
+    new["updated"] = writer.today()
+    writer.commit(records_dir, replace=[new])
+    return f"{profile_id}: " + "; ".join(changed)
 
 
 def parse_cachegrind(text, symbols):
@@ -647,9 +762,7 @@ def parse_cachegrind(text, symbols):
     name is one of the kernel symbols, including OpenMP outlined bodies (name._omp_fn.N)."""
     events, desc, fn = [], [], None
     total, kernel, functions = {}, {}, []
-    # Mangled names carry the length first (_Z14PageRankPullGS...), which makes the match
-    # exact; demangled names are matched as "name(".
-    patterns = [re.compile(rf"(?<![0-9]){len(s)}{re.escape(s)}|(?<![A-Za-z0-9_:]){re.escape(s)}\(") for s in symbols]
+    patterns = [_symbol_pattern(s) for s in symbols]
     for line in text.splitlines():
         if line.startswith("desc:"):
             desc.append(line[5:].strip())

@@ -14,8 +14,10 @@ from conftest import FIXTURES, REPO, read_yaml
 
 CXX = shutil.which("c++") or shutil.which("g++")
 needs_cxx = pytest.mark.skipif(CXX is None, reason="no C++ compiler to build tools/index_features")
-lab_host = pytest.mark.skipif(shutil.which("valgrind") is None or not shutil.which("g++"),
-                              reason="needs valgrind and g++ (runs on mbit10; valgrind does not run on macOS/arm64)")
+lab_host = pytest.mark.skipif(
+    shutil.which("valgrind") is None or not shutil.which("g++") or not os.environ.get("LACT_SOCKET_LANE_PID"),
+    reason="needs valgrind, g++, and a socket lane: run pytest inside socket_lane.sh on mbit10 "
+           "(valgrind does not run on macOS/arm64)")
 
 
 def profile(records, tmp_path, *extra, env=None):
@@ -216,11 +218,15 @@ def test_cachegrind_misses_are_recorded_as_simulated(records, tmp_path):
     assert result.returncode == 0, result.stderr
     prof = only_profile(records)
     kernel = metric(prof, "sim_ll_misses", scope="per_call")
-    assert kernel["value"] == 27 and kernel["basis"] == "simulated" and kernel["threads"] == 1
+    # StubKernel, its OpenMP body, and the qualified member Builder<int, int>::StubKernel;
+    # not StubKernelOld
+    assert kernel["value"] == 27 + 60 and kernel["basis"] == "simulated" and kernel["threads"] == 1
     assert "LL cache:         25165824 B" in kernel["note"]
-    assert metric(prof, "sim_data_refs", scope="per_call")["value"] == 350
-    assert metric(prof, "sim_d1_misses", scope="per_call")["value"] == 55
-    assert metric(prof, "sim_ll_misses", scope="per_run")["value"] == 1032
+    assert metric(prof, "sim_data_refs", scope="per_call")["value"] == 350 + 70
+    assert metric(prof, "sim_d1_misses", scope="per_call")["value"] == 55 + 30
+    assert metric(prof, "sim_ll_misses", scope="per_run")["value"] == 1032 + 60
+    part = [p for p in prof["parts"] if p["part"] == "cachegrind"][-1]
+    assert "Builder<int, int>::StubKernel" in part["note"]
     assert "sim_ll_miss_rate" in prof["bottleneck"]["rests_on"]
     assert prof["complete"] is True
 
@@ -255,6 +261,48 @@ def test_profile_refuses_threads_beyond_one_socket(records, tmp_path):
     result = records.swdb("profile", "stub-impl", "tiny-sym", "testhost", "--runs-dir", tmp_path / "runs",
                           "--threads", "1,32", "--trials", "1")
     assert result.returncode == 1 and "between 1 and 16" in result.stderr
+
+
+def test_lane_required_machine_refuses_a_run_outside_a_lane(records, tmp_path):
+    records.add_stub()
+    machine = records.read("machines/testhost.yaml")
+    machine["lane_required"] = True
+    records.write("machines/testhost.yaml", machine)
+    env = {"LACT_SOCKET_LANE_PID": ""}
+    result, runs = profile(records, tmp_path, env=env)
+    assert result.returncode == 1 and "requires a socket lane" in result.stderr
+    assert "not started through socket_lane.sh" in result.stderr
+    assert not runs.exists()
+
+
+def test_lane_required_machine_refuses_a_lane_that_is_not_an_ancestor(records, tmp_path):
+    records.add_stub()
+    machine = records.read("machines/testhost.yaml")
+    machine["lane_required"] = True
+    records.write("machines/testhost.yaml", machine)
+    result, runs = profile(records, tmp_path, env={"LACT_SOCKET_LANE_PID": "999999"})
+    assert result.returncode == 1 and "is not an ancestor" in result.stderr
+    assert not runs.exists()
+
+
+def test_recompute_cachegrind_rereads_raw_output(records, tmp_path):
+    records.add_stub()
+    impl = records.read("implementations/stub-impl.yaml")
+    impl["run"]["kernel_symbols"] = ["NoSuchKernel", "StubKernel"]
+    records.write("implementations/stub-impl.yaml", impl)
+    result, _ = profile(records, tmp_path, "--cachegrind", "yes", "--features", "no", env=_fake_valgrind_path(tmp_path))
+    assert result.returncode == 0, result.stderr
+    prof = only_profile(records)
+    assert "kernel symbols with no function in this run" in [p for p in prof["parts"] if p["part"] == "cachegrind"][-1]["note"]
+    # point the symbols at another function, then recompute: the kernel counts follow
+    impl["run"]["kernel_symbols"] = ["StubKernelOld"]
+    records.write("implementations/stub-impl.yaml", impl)
+    again = records.swdb("recompute-cachegrind", prof["id"])
+    assert again.returncode == 0, again.stderr
+    assert "sim_ll_misses (per_call): 87 -> 999" in again.stdout
+    updated = only_profile(records)
+    assert any(p["description"].startswith("Simulated metrics re-read") for p in updated["provenance"])
+    assert records.validate().returncode == 0
 
 
 @lab_host

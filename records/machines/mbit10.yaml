@@ -62,7 +62,11 @@ counters:
 capture:
   command: ssh mbit10 sh -s < (swdb capture-machine script)
   date: '2026-09-22T21:03:38Z'
+lane_required: true
 notes:
-  - Captured 2026-09-22 17:03 ET (21:03 UTC) from the Mac over ssh; nothing was started or written on the host.
-  - The Xeon Gold 6326 max clock is not reported by lscpu on this host (max_mhz null).
+- Captured 2026-09-22 17:03 ET (21:03 UTC) from the Mac over ssh; nothing was started or written on the
+  host.
+- The Xeon Gold 6326 max clock is not reported by lscpu on this host (max_mhz null).
+- 'lane_required is host policy (.claude/rules/remote_server.md: multi-threaded jobs only inside a socket
+  lane), added 2026-09-22 after review; it is not part of the capture.'
 extensions: {}

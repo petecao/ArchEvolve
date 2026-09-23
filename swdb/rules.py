@@ -68,9 +68,13 @@ def _provenance(record):
 
 
 def _evidence_refs(node, where):
+    """Every evidence_refs list in the record, except under `extensions`, whose contents are
+    experimental and free-form (rule 3 of the format)."""
     if isinstance(node, dict):
         for key, value in node.items():
             here = f"{where}.{key}" if where else key
+            if key == "extensions" and not where:
+                continue
             if key == "evidence_refs" and isinstance(value, list):
                 for i, ref in enumerate(value):
                     yield f"{here}[{i}]", ref

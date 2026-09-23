@@ -2,10 +2,12 @@
 
 Updated: 2026-09-22
 
-`swdb build` writes `build/swdb.sqlite` next to the records folder (the repo's `build/` is
-ignored by git). It deletes and recreates every table from the YAML records each time, so
-the file never drifts from them (ADR 0002). `swdb find`, `swdb implementations`, and
-`swdb sql` rebuild it first if any record file is newer than the database.
+`swdb build` writes `build/swdb.sqlite` next to the repo's `records/` folder (another
+records folder `X` gets `build/swdb-X.sqlite`; `build/` is ignored by git). It deletes and
+recreates every table from the YAML records each time, so the file never drifts from them
+(ADR 0002). The `meta` table names the records folder and a fingerprint of its files (path,
+size, and modification time of each); `swdb find`, `swdb implementations`, and `swdb sql`
+rebuild the file first unless both match the folder being queried.
 
 Run your own SQL with `swdb sql "<query>" [--format json]`, or open the file with the
 `sqlite3` shell. Values that are JSON in the records (semantic values, property values)
@@ -14,6 +16,13 @@ are stored as JSON text, so `true`, `false`, and `null` stay distinct: compare w
 (`unknown` never means false).
 
 ## Tables
+
+### `meta`
+
+| Column | Meaning |
+|---|---|
+| `key` | `records_dir` (the absolute records folder the file was built from) or `fingerprint` |
+| `value` | the folder, or the sha256 over every record file's path, size, and modification time |
 
 ### `records`
 
@@ -131,7 +140,7 @@ One row per step of each access pattern's chain, in order.
 | `sockets` | sockets |
 | `cores_per_socket` | physical cores per socket |
 | `llc_bytes` | size of one last-level cache instance |
-| `counters_available` | 1 if hardware counters are available to the profiling user |
+| `counters_available` | 1 if hardware counters are available to the profiling user, 0 if not, NULL if unknown |
 | `json` | the whole record |
 
 ### `profiles`

@@ -15,8 +15,9 @@
    each other by ID only, so files can move.
 2. IDs match `^[a-z0-9][a-z0-9._-]*$`, are unique across all records, and are never
    reused or renamed.
-3. Unknown keys are errors, except under `extensions`, which takes anything. A new field
-   starts there and moves into the schema once it is agreed.
+3. Unknown keys are errors, except under `extensions`, which takes anything; nothing under
+   it is checked (not even `evidence_refs`). A new field starts there and moves into the
+   schema once it is agreed.
 4. Term lists live in `vocab/<name>.yaml`, one file per list, each value with a one-line
    `meaning` (and, for `metrics`, a `unit`). A field marked *vocab X* accepts exactly the
    values in that file; adding a value is a one-file change.
@@ -216,6 +217,7 @@ Captured from the host by `swdb capture-machine`, read-only.
 | `os` | `kernel`, `distribution` |
 | `counters` | `perf_event_paranoid`, `hardware_counters_available` (a boolean fact) |
 | `capture` | `command` and `date` of the capture |
+| `lane_required` | host policy, not captured: when true, `swdb profile` runs only inside a verified socket lane (a MemAcc `socket_lane.sh` ancestor, CPU affinity equal to one NUMA node) |
 
 ## 9. `profile`
 

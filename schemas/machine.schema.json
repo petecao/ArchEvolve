@@ -189,6 +189,10 @@
         "command",
         "date"
       ]
+    },
+    "lane_required": {
+      "type": "boolean",
+      "description": "Host policy, not captured: when true, swdb profile runs only inside a verified socket lane (MemAcc socket_lane.sh ancestor, affinity equal to one NUMA node)."
     }
   },
   "required": [
