@@ -4,8 +4,8 @@ features, and cachegrind's simulated cache misses.
 
 Steps, each recorded as a `part` with its command and outcome:
   1. build the implementation (and a -g copy for cachegrind) into the run folder;
-  2. run the kernel's correctness check once (a failure stops the profile; a timeout is
-     recorded and the profile is marked incomplete);
+  2. run the kernel's correctness check once (a failure or a timeout stops the profile;
+     with --allow-unverified a timeout is recorded and the profile is marked incomplete);
   3. the timing sweep: one process per thread count, each running --trials trials, timed
      by the benchmark's own timer;
   4. one single-threaded logging run that counts sweeps per call;
@@ -144,6 +144,10 @@ def _run(args, records_dir):
     machine = _get(store, args.machine, "machine")
     kernel = _get(store, impl["kernel"], "kernel")
     app = store.application_of(impl)
+    for name in ("timeout", "correctness_timeout", "cachegrind_timeout", "features_timeout"):
+        value = getattr(args, name)
+        if value is not None and value <= 0:
+            raise Failure(f"--{name.replace('_', '-')} must be positive, got {value}")
     threads = _threads(args.threads, machine)
     missing = sorted(implementation_symbols(impl, loops=True) - set(inp["properties"]))
     if missing:
@@ -192,12 +196,22 @@ def _run(args, records_dir):
     check = kernel["correctness_check"]
     cmd = check["command"].format(**run_fill)
     entry, text = r.execute("correctness", cmd, env_extra={threads_env: str(max(threads)), **bind_env},
-                            timeout=args.correctness_timeout or args.timeout)
-    if entry["outcome"] == "timed_out":
-        # The check did not finish (gapbs verifiers are serial; tc's takes hours at scale 22).
-        # Nothing contradicts the implementation, so the profile goes on, marked incomplete.
-        r.record(entry, note="the correctness check did not finish within its timeout; correctness on this "
-                             "input is not established and the profile is incomplete.")
+                            timeout=args.correctness_timeout if args.correctness_timeout is not None else args.timeout)
+    if entry["outcome"] == "timed_out" and re.search(check["pass_regex"], text):
+        r.record(entry, note=f"pass_regex {check['pass_regex']!r} matched before the timeout.")
+    elif entry["outcome"] == "timed_out":
+        # A serial verifier can outlast any sensible timeout (gapbs tc on kron-g22-k16 did not
+        # finish in 30 min), but a hang can also be a real bug. Continue only when asked to,
+        # and never past a failure the partial output already shows.
+        if not args.allow_unverified:
+            r.record(entry)
+            raise Failure(f"the correctness check did not finish within {entry['timeout_s']} s; no profile written "
+                          "(pass --allow-unverified to record an incomplete profile anyway)")
+        if re.search(r"\bFAIL", text):
+            r.record(entry)
+            raise Failure(f"the correctness check printed FAIL before timing out; see {folder / 'correctness.log'}")
+        r.record(entry, note="the correctness check did not finish within its timeout (--allow-unverified); "
+                             "correctness on this input is not established and the profile is incomplete.")
     else:
         passed = entry["outcome"] == "complete" and re.search(check["pass_regex"], text) is not None
         r.record(entry, note=f"pass_regex {check['pass_regex']!r} {'matched' if passed else 'did not match'}.")

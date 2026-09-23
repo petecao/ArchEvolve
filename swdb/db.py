@@ -29,7 +29,7 @@ CREATE TABLE input_properties (input TEXT NOT NULL, name TEXT NOT NULL, value TE
 CREATE TABLE machines (id TEXT PRIMARY KEY, hostname TEXT, cpu_model TEXT, sockets INTEGER, cores_per_socket INTEGER,
     llc_bytes INTEGER, counters_available INTEGER, json TEXT NOT NULL);
 CREATE TABLE profiles (id TEXT PRIMARY KEY, implementation TEXT, input TEXT, machine TEXT, complete INTEGER,
-    started TEXT, bottleneck TEXT, bottleneck_basis TEXT, memory_limit TEXT, json TEXT NOT NULL);
+    correctness TEXT, started TEXT, bottleneck TEXT, bottleneck_basis TEXT, memory_limit TEXT, json TEXT NOT NULL);
 CREATE TABLE metrics (profile TEXT NOT NULL, name TEXT NOT NULL, value REAL, value_json TEXT, unit TEXT,
     basis TEXT, threads INTEGER, array_name TEXT, scope TEXT, tool TEXT);
 CREATE TABLE access_patterns (implementation TEXT NOT NULL, pattern TEXT NOT NULL, kernel TEXT, expression TEXT,
@@ -138,8 +138,10 @@ class _Insert:
     @staticmethod
     def profile(con, d, *_):
         b = d["bottleneck"]
-        con.execute("INSERT INTO profiles VALUES (?,?,?,?,?,?,?,?,?,?)",
+        check = next((p["outcome"] for p in d["parts"] if p["part"] == "correctness"), None)
+        con.execute("INSERT INTO profiles VALUES (?,?,?,?,?,?,?,?,?,?,?)",
                     (d["id"], d["implementation"], d["input"], d["machine"], int(d["complete"]),
+                     {"complete": "passed", None: None}.get(check, "not_established"),
                      d["environment"]["started"], b["value"], b["basis"], b["memory_limit"], json.dumps(d)))
         for m in d["metrics"]:
             number = m["value"] if isinstance(m["value"], (int, float)) and not isinstance(m["value"], bool) else None

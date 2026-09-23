@@ -45,8 +45,11 @@ def workload_view(records_dir, impl_id, input_id, machine_id, profile_id=None):
     if prof is None:
         notes.append("No profile: counts, metrics, and bottleneck are unknown.")
     elif not prof["complete"]:
-        missing = ", ".join(p["part"] for p in prof["parts"] if p["outcome"] != "complete")
+        missing = ", ".join(p["part"] for p in prof["parts"] if p["outcome"] not in {"complete", "skipped"})
         notes.append(f"Profile {prof['id']} is incomplete (parts not complete: {missing}).")
+        if any(p["part"] == "correctness" and p["outcome"] != "complete" for p in prof["parts"]):
+            notes.append("The correctness check did not finish on this input: the implementation is not verified "
+                         "here, so treat its measurements as unverified.")
     return {
         "schema_version": "0.1",
         "workload_id": f"{impl['id']}@{inp['id']}@{machine['id']}",

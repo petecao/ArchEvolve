@@ -25,8 +25,9 @@ Resolved 2026-09-22.
 - Profiles on mbit10 for the four pilot inputs, all valid, views generated for each:
   kron-g16-k16, urand-u16-k16, urand-u22-k16 complete; kron-g22-k16 recorded
   `complete: false` because gapbs's serial TCVerifier did not finish (30 min in the first
-  attempt, which then wrote nothing; the profiler was changed to record a timed-out check,
-  and the re-run recorded `correctness: timed_out` after 900 s). Its timing (3 trials per
+  attempt, which then wrote nothing; the profiler gained `--allow-unverified` to record a timed-out check,
+  and the re-run recorded the correctness part `timed_out` after 900 s; the database's
+  `profiles.correctness` column and the view mark it unverified). Its timing (3 trials per
   thread count, 1800 s timeout each) and cachegrind completed: 85.8 s at 1 thread, 5.87 s at
   16 threads (efficiency 0.91); inferred memory_bound (latency).
 - Records: e6fbf25 (mbit10).

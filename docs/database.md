@@ -143,6 +143,7 @@ One row per step of each access pattern's chain, in order.
 | `input` | input ID |
 | `machine` | machine ID |
 | `complete` | 1 if every part of the run completed (or was skipped on purpose) |
+| `correctness` | `passed`, or `not_established` when the correctness check did not finish (`--allow-unverified`); null if the profile has no correctness part |
 | `started` | UTC start time |
 | `bottleneck` | inferred bottleneck class (vocabulary `bottleneck_classes`) |
 | `bottleneck_basis` | its basis (inferred while counters are unavailable) |

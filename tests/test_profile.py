@@ -162,16 +162,43 @@ def test_timing_timeout_is_recorded_as_incomplete(records, tmp_path):
     assert prof["bottleneck"]["basis"] == "unknown" and prof["bottleneck"]["value"] is None
 
 
-def test_correctness_timeout_is_recorded_as_incomplete(records, tmp_path):
+def test_correctness_timeout_stops_the_profile(records, tmp_path):
+    records.add_stub()   # the check inherits --timeout
+    result, _ = profile(records, tmp_path, "--cachegrind", "no", "--features", "no", "--timeout", "1",
+                        env={"STUB_SLEEP_VERIFY": "3"})
+    assert result.returncode == 1 and "did not finish within 1.0 s" in result.stderr
+    assert not (records.path / "profiles").exists()
+
+
+def test_correctness_timeout_with_allow_unverified_is_recorded_as_incomplete(records, tmp_path):
     records.add_stub()
-    env = {"STUB_SLEEP": "3", "STUB_SLEEP_TIMING": "-3"}   # only the verifying run sleeps
     result, _ = profile(records, tmp_path, "--cachegrind", "no", "--features", "no", "--correctness-timeout", "1",
-                        env=env)
+                        "--allow-unverified", env={"STUB_SLEEP_VERIFY": "3"})
     assert result.returncode == 0, result.stderr
+    assert records.validate().returncode == 0
     prof = only_profile(records)
     part = next(p for p in prof["parts"] if p["part"] == "correctness")
     assert part["outcome"] == "timed_out" and part["timeout_s"] == 1
     assert prof["complete"] is False and len(prof["timing"]) == 4
+    rows = records.swdb("sql", "select correctness from profiles", "--format", "json")
+    assert '"not_established"' in rows.stdout
+    view = records.swdb("view", "stub-impl", "tiny-sym", "testhost")
+    assert "not verified here" in view.stdout
+
+
+def test_correctness_that_prints_fail_then_hangs_stops_even_when_unverified_is_allowed(records, tmp_path):
+    records.add_stub()
+    result, _ = profile(records, tmp_path, "--cachegrind", "no", "--features", "no", "--correctness-timeout", "2",
+                        "--allow-unverified", env={"STUB_FAIL_THEN_HANG": "1"})
+    assert result.returncode == 1 and "printed FAIL" in result.stderr
+    assert not (records.path / "profiles").exists()
+
+
+def test_non_positive_timeouts_are_rejected(records, tmp_path):
+    records.add_stub()
+    result, runs = profile(records, tmp_path, "--correctness-timeout", "0")
+    assert result.returncode == 1 and "--correctness-timeout must be positive" in result.stderr
+    assert not runs.exists()
 
 
 def _fake_valgrind_path(tmp_path):
@@ -241,6 +268,8 @@ def test_real_gapbs_pagerank_profile_with_cachegrind(records, tmp_path):
         pytest.skip("not on mbit10")
     inp = records.read("inputs/kron-g16-k16.yaml")
     inp["id"], inp["generator"]["arguments"] = "kron-g10-k16", "-g 10 -k 16"
+    inp["name"] = "Kronecker graph, scale 10, requested degree 16 (gapbs -g 10 -k 16)"
+    inp["provenance"] = [p for p in inp["provenance"] if p["id"] != "measured-sizes"]
     inp["properties"]["scale"]["value"] = 10
     for name in ("num_nodes", "num_edges_undirected", "num_edges_directed"):   # sizes of the scale-16 graph
         inp["properties"][name] = {"value": None, "basis": "unknown", "evidence_refs": []}

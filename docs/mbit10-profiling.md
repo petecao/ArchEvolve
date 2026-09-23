@@ -80,9 +80,11 @@ and is never copied to the Mac.
   (the graph is built once per process, outside the timed region).
 - Threads: 1, 2, 4, 8, 16 inside one socket.
 - Correctness: the kernel's correctness check runs once at the largest thread count
-  before timing; a failure stops the profile and writes no record. A check that does not
-  finish within `--correctness-timeout` (gapbs's serial tc verifier takes hours at scale
-  22) is recorded as `timed_out` and the profile is marked incomplete.
+  before timing; a failure or a timeout stops the profile and writes no record. With
+  `--allow-unverified`, a check that does not finish within `--correctness-timeout` (and
+  printed no FAIL) is recorded as `timed_out` and the profile is marked incomplete and
+  unverified. Used once: gapbs's serial tc verifier did not finish within 30 min on
+  kron-g22-k16 (2026-09-22), so that profile was recorded after a 900 s check.
 - Cachegrind: single-threaded, one trial, with `--cachegrind-timeout` (default 3600 s).
   A timeout is recorded as a `timed_out` part and the profile is marked incomplete.
   Cachegrind's last-level cache is the host's L3 (24 MiB, 12-way). Kernel-only counts
