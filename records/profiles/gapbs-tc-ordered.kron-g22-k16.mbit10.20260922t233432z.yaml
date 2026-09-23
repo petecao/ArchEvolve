@@ -11,6 +11,11 @@ provenance:
   description: swdb profile run gapbs-tc-ordered.kron-g22-k16.mbit10.20260922t233432z on mbit10, started
     2026-09-22T23:34:32Z (UTC).
   uri: null
+- id: recompute-1
+  kind: measurement
+  description: Simulated metrics re-read from /data/yanruj/EvolveSWDB_runs/gapbs-tc-ordered.kron-g22-k16.mbit10.20260922t233432z/cachegrind.out
+    with swdb recompute-cachegrind on 2026-09-22 (kernel symbol matching fixed for qualified member functions).
+  uri: null
 implementation: gapbs-tc-ordered
 input: kron-g22-k16
 machine: mbit10
@@ -126,8 +131,12 @@ parts:
   raw_files: [cachegrind-build.log, cachegrind.log, cachegrind.out]
   note: 'simulated caches: I1 cache:         32768 B, 64 B, 8-way associative; D1 cache:         49152
     B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative; kernel functions:
-    WorthRelabelling(CSRGraph<int, int, true> const&), Hybrid(CSRGraph<int, int, true> const&), OrderedCount(CSRGraph<int,
-    int, true> const&) [clone ._omp_fn.0]'
+    WorthRelabelling(CSRGraph<int, int, true> const&), BuilderBase<int, int, int, true>::RelabelByDegree(CSRGraph<int,
+    int, true> const&), BuilderBase<int, int, int, true>::RelabelByDegree(CSRGraph<int, int, true> const&)
+    [clone ._omp_fn.0], BuilderBase<int, int, int, true>::RelabelByDegree(CSRGraph<int, int, true> const&)
+    [clone ._omp_fn.1], BuilderBase<int, int, int, true>::RelabelByDegree(CSRGraph<int, int, true> const&)
+    [clone ._omp_fn.2], Hybrid(CSRGraph<int, int, true> const&), OrderedCount(CSRGraph<int, int, true>
+    const&) [clone ._omp_fn.0]'
 timing:
 - threads: 1
   trials: 3
@@ -496,7 +505,7 @@ metrics:
   note: 'last-level cache of one socket: 25165824 B'
   evidence_refs: [run]
 - name: sim_instructions
-  value: 218396172464
+  value: 220156377895
   unit: count
   basis: simulated
   threads: 1
@@ -506,7 +515,7 @@ metrics:
     B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
   evidence_refs: [run]
 - name: sim_data_refs
-  value: 43662390849
+  value: 44584921235
   unit: count
   basis: simulated
   threads: 1
@@ -516,7 +525,7 @@ metrics:
     B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
   evidence_refs: [run]
 - name: sim_d1_misses
-  value: 1934803493
+  value: 2088797368
   unit: count
   basis: simulated
   threads: 1
@@ -526,7 +535,7 @@ metrics:
     B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
   evidence_refs: [run]
 - name: sim_ll_misses
-  value: 870998124
+  value: 898933973
   unit: count
   basis: simulated
   threads: 1
@@ -536,7 +545,7 @@ metrics:
     B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
   evidence_refs: [run]
 - name: sim_d1_miss_rate
-  value: 0.044313
+  value: 0.04685
   unit: ratio
   basis: simulated
   threads: 1
@@ -546,7 +555,7 @@ metrics:
     B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
   evidence_refs: [run]
 - name: sim_ll_miss_rate
-  value: 0.019948
+  value: 0.020162
   unit: ratio
   basis: simulated
   threads: 1
@@ -623,7 +632,7 @@ bottleneck:
   evidence_refs: [run]
   note: 'Counter-free rule (swdb/profile.py _bottleneck, thresholds efficiency 0.5, LL miss rate 0.01):
     footprint 1194263696 B vs LLC 25165824 B (47.46x); parallel efficiency at 16 threads 0.91; simulated
-    kernel LL miss rate 0.0199. Not a counter-based verdict.'
+    kernel LL miss rate 0.0202. Not a counter-based verdict.'
 notes:
 - Raw output is in /data/yanruj/EvolveSWDB_runs/gapbs-tc-ordered.kron-g22-k16.mbit10.20260922t233432z
   on mbit10; it is not in git.
