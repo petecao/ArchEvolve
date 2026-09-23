@@ -11,6 +11,12 @@ provenance:
   description: swdb profile run gapbs-sssp-delta.urand-u22-k16.mbit10.20260922t223550z on mbit10, started
     2026-09-22T22:35:50Z (UTC).
   uri: null
+- id: recompute-1
+  kind: measurement
+  description: 'Simulated metrics re-read from /data/yanruj/EvolveSWDB_runs/gapbs-sssp-delta.urand-u22-k16.mbit10.20260922t223550z/cachegrind.out
+    with swdb recompute-cachegrind on 2026-09-22, kernel_symbols [''DeltaStep'', ''RelaxEdges'']. Reason:
+    note kernel symbols with no function in the run (ticket code review 2026-09-22)'
+  uri: null
 implementation: gapbs-sssp-delta
 input: urand-u22-k16
 machine: mbit10
@@ -127,7 +133,8 @@ parts:
   note: 'simulated caches: I1 cache:         32768 B, 64 B, 8-way associative; D1 cache:         49152
     B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative; kernel functions:
     DeltaStep(CSRGraph<int, NodeWeight<int, int>, true> const&, int, int, bool), DeltaStep(CSRGraph<int,
-    NodeWeight<int, int>, true> const&, int, int, bool) [clone ._omp_fn.0]'
+    NodeWeight<int, int>, true> const&, int, int, bool) [clone ._omp_fn.0]; kernel symbols with no function
+    in this run (not called, or inlined into another): RelaxEdges'
 timing:
 - threads: 1
   trials: 5

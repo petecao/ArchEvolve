@@ -11,6 +11,13 @@ provenance:
   description: swdb profile run gapbs-tc-ordered.urand-u22-k16.mbit10.20260922t232742z on mbit10, started
     2026-09-22T23:27:42Z (UTC).
   uri: null
+- id: recompute-1
+  kind: measurement
+  description: 'Simulated metrics re-read from /data/yanruj/EvolveSWDB_runs/gapbs-tc-ordered.urand-u22-k16.mbit10.20260922t232742z/cachegrind.out
+    with swdb recompute-cachegrind on 2026-09-22, kernel_symbols [''Hybrid'', ''OrderedCount'', ''WorthRelabelling'',
+    ''RelabelByDegree'']. Reason: note kernel symbols with no function in the run (ticket code review
+    2026-09-22)'
+  uri: null
 implementation: gapbs-tc-ordered
 input: urand-u22-k16
 machine: mbit10
@@ -127,7 +134,8 @@ parts:
   note: 'simulated caches: I1 cache:         32768 B, 64 B, 8-way associative; D1 cache:         49152
     B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative; kernel functions:
     WorthRelabelling(CSRGraph<int, int, true> const&), OrderedCount(CSRGraph<int, int, true> const&) [clone
-    ._omp_fn.0], Hybrid(CSRGraph<int, int, true> const&)'
+    ._omp_fn.0], Hybrid(CSRGraph<int, int, true> const&); kernel symbols with no function in this run
+    (not called, or inlined into another): RelabelByDegree'
 timing:
 - threads: 1
   trials: 3
