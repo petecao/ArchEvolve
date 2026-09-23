@@ -94,13 +94,15 @@ def _text(value):
 
 def build(records_dir, db_path):
     started = time.monotonic()
+    # fingerprint first: a record written while the store loads makes the stamp older than
+    # the files, so the next query rebuilds instead of trusting a stale database
+    stamp = fingerprint(records_dir)
     store = Store(Path(records_dir))
     db_path = Path(db_path)
     db_path.parent.mkdir(parents=True, exist_ok=True)
     tmp = db_path.with_name(f".{db_path.name}.{os.getpid()}.tmp")   # unique per process; renamed at the end
     if tmp.exists():
         tmp.unlink()
-    stamp = fingerprint(records_dir)
     con = sqlite3.connect(tmp)
     con.executescript(SCHEMA)
     con.executemany("INSERT INTO meta VALUES (?, ?)", [("records_dir", str(Path(records_dir).resolve())),

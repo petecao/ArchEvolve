@@ -217,7 +217,7 @@ Captured from the host by `swdb capture-machine`, read-only.
 | `os` | `kernel`, `distribution` |
 | `counters` | `perf_event_paranoid`, `hardware_counters_available` (a boolean fact) |
 | `capture` | `command` and `date` of the capture |
-| `lane_required` | host policy, not captured: when true, `swdb profile` runs only inside a verified socket lane (a MemAcc `socket_lane.sh` ancestor, CPU affinity equal to one NUMA node) |
+| `lane_required` | host policy: when true, `swdb profile` runs only inside a verified socket lane (see mbit10-profiling.md); absent means true on a machine with more than one NUMA node, and `swdb capture-machine` writes it |
 
 ## 9. `profile`
 

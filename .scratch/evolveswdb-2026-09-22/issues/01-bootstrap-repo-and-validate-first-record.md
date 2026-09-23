@@ -22,7 +22,7 @@ Ensemble drafts.
 
 ## Comments
 
-- 2026-09-23 (spec review fix): extensions: `evidence_refs` under `extensions` are no longer checked, so experimental keys pass (story 11); tests `test_evidence_refs_under_extensions_pass` and `..._outside_extensions_still_fail`.
+- 2026-09-22 (spec review fix): extensions: `evidence_refs` under `extensions` are no longer checked, so experimental keys pass (story 11); tests `test_evidence_refs_under_extensions_pass` and `..._outside_extensions_still_fail`.
 
 ## Answer
 

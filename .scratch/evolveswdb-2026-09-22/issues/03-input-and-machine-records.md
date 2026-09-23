@@ -16,7 +16,7 @@ so that later a profile can say exactly what data it used and where it ran.
 
 ## Comments
 
-- 2026-09-23 (spec review fix): `counters_available` in SQL is NULL when availability is unknown (unknown is never false). mbit10 now carries `lane_required: true` (host policy, not captured).
+- 2026-09-22 (spec review fix): `counters_available` in SQL is NULL when availability is unknown (unknown is never false). mbit10 now carries `lane_required: true` (host policy, not captured).
 
 ## Answer
 

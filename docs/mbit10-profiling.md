@@ -55,10 +55,15 @@ socket_lane.sh <node> evolveswdb-<impl>-<input> --record <runs>/lanes/<job>.<sta
   timeout 14400 python3 -m swdb profile <impl> <input> mbit10 --runs-dir <runs> --lane ... "$@"
 ```
 
-The mbit10 machine record sets `lane_required: true`, so `swdb profile` itself refuses to
-start unless a `socket_lane.sh` process (`LACT_SOCKET_LANE_PID`) is its ancestor and its
-CPU affinity is exactly one NUMA node; it records the verified lane and lease generation.
-The lab-host test runs only when pytest itself was started inside a lane.
+Lanes are required on mbit10 (`lane_required: true`; the default for any multi-socket
+machine record, and `swdb capture-machine` writes it). `swdb profile` itself refuses to
+start unless, checked from the kernel and the lease files rather than from environment
+strings: the `LACT_SOCKET_LANE_PID` process is its ancestor and runs `socket_lane.sh`; its
+CPU affinity is exactly one NUMA node N and its memory policy is `bind:N`; that process
+holds fd 9 open on `mbit10-evaluation-nodeN.lease`; and the lease metadata says held, by
+that process, with `LACT_SOCKET_LANE_GENERATION`. It records the verified lane. The
+lab-host tests (including forged and stale lane variables) run only when pytest itself was
+started inside a lane.
 
 `socket_lane.sh` re-executes itself under `numactl --cpunodebind=<node> --membind=<node>`,
 takes the lease, applies the load gate, records affinity, memory policy, load, and lease
@@ -95,9 +100,11 @@ and is never copied to the Mac.
   Cachegrind's last-level cache is the host's L3 (24 MiB, 12-way). Kernel-only counts
   sum the functions named in the implementation's `run.kernel_symbols`, including the
   OpenMP outlined bodies; whole-run counts include graph generation and building.
-- Re-reading cachegrind: `swdb recompute-cachegrind <profile>...` (on mbit10) re-parses a
-  profile's raw `cachegrind.out` with the current parser and kernel symbols, and updates its
-  simulated metrics and inferred bottleneck with a provenance entry saying so.
+- Re-reading cachegrind: `swdb recompute-cachegrind <profile>... --reason "<why>"` (on
+  mbit10) re-parses each profile's raw `cachegrind.out` with the current parser and kernel
+  symbols, and updates its simulated metrics, the cachegrind part's note (and outcome, if it
+  failed only because no function matched), completeness, and inferred bottleneck, with a
+  provenance entry that states the reason.
 - Stopping: `swdb profile` kills the running benchmark's whole process group when it
   gets SIGTERM, SIGINT, or SIGHUP (for example from the outer `timeout`), so no benchmark
   outlives the lane that admitted it.

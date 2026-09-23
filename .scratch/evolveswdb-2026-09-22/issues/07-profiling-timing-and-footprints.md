@@ -22,7 +22,7 @@ numbers.
 
 ## Comments
 
-- 2026-09-23 (spec review fix): On mbit10 `swdb profile` itself refuses to run unless a `socket_lane.sh` process is an ancestor and its affinity is exactly one NUMA node (verified positive and negative on mbit10); the lab-host test runs only inside a lane.
+- 2026-09-22 (spec review fix): On mbit10 `swdb profile` itself refuses to run unless a `socket_lane.sh` process is an ancestor and its affinity is exactly one NUMA node (verified positive and negative on mbit10); the lab-host test runs only inside a lane.
 
 ## Answer
 

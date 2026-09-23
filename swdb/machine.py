@@ -103,7 +103,10 @@ def parse(raw, machine_id, command, date):
                      "hardware_counters_available": {"value": counters_ok, "basis": "inferred",
                                                      "evidence_refs": ["capture"], "note": note}},
         "capture": {"command": command, "date": date},
-        "notes": [], "extensions": {},
+        "lane_required": len(numa) > 1,
+        "notes": (["lane_required is host policy, not captured: true on every multi-socket host "
+                   "(multi-threaded profiles run only inside a verified socket lane)."] if len(numa) > 1 else []),
+        "extensions": {},
     }
 
 

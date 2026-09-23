@@ -19,7 +19,7 @@ chains, and semantics. `swdb validate` enforces the rules that keep those facts 
 
 ## Comments
 
-- 2026-09-23 (spec review fix): Added the missing failing fixtures: duplicate provenance and loop IDs, dangling loop parent, trip-count symbol outside the vocabulary, nonexistent `run.index_stream.pattern`, `deprecated_by` of another kind, excerpt without lines, code without a local copy.
+- 2026-09-22 (spec review fix): Added the missing failing fixtures: duplicate provenance and loop IDs, dangling loop parent, trip-count symbol outside the vocabulary, nonexistent `run.index_stream.pattern`, `deprecated_by` of another kind, excerpt without lines, code without a local copy.
 
 ## Answer
 

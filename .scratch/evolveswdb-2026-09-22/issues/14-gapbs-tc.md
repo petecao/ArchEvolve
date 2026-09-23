@@ -14,7 +14,7 @@ data-dependent-merge address shape.
 
 ## Comments
 
-- 2026-09-23 (spec review fix): `RelabelByDegree` (a `BuilderBase` member) was missed by the kernel-symbol match. Recomputed from the raw output: kron-g16 kernel LL misses 105 -> 27,167; kron-g22 870,998,124 -> 898,933,973; inferred bottlenecks unchanged.
+- 2026-09-22 (spec review fix): `RelabelByDegree` (a `BuilderBase` member) was missed by the kernel-symbol match. Recomputed from the raw output: kron-g16 kernel LL misses 105 -> 27,167; kron-g22 870,998,124 -> 898,933,973; inferred bottlenecks unchanged.
 
 ## Answer
 

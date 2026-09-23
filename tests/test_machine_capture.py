@@ -22,6 +22,7 @@ def test_capture_from_file_prints_a_valid_machine_record(records):
     assert data["counters"]["hardware_counters_available"]["value"] is False
     assert "not in the vtune group" in data["counters"]["hardware_counters_available"]["note"]
     assert data["capture"]["date"].endswith("Z")
+    assert data["lane_required"] is True     # two NUMA nodes: profiles only inside a socket lane
     records.write_text("machines/m.yaml", result.stdout)
     assert records.validate().returncode == 0
 

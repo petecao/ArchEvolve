@@ -297,12 +297,78 @@ def test_recompute_cachegrind_rereads_raw_output(records, tmp_path):
     # point the symbols at another function, then recompute: the kernel counts follow
     impl["run"]["kernel_symbols"] = ["StubKernelOld"]
     records.write("implementations/stub-impl.yaml", impl)
-    again = records.swdb("recompute-cachegrind", prof["id"])
+    again = records.swdb("recompute-cachegrind", prof["id"], "--reason", "kernel_symbols changed in the test")
     assert again.returncode == 0, again.stderr
     assert "sim_ll_misses (per_call): 87 -> 999" in again.stdout
     updated = only_profile(records)
-    assert any(p["description"].startswith("Simulated metrics re-read") for p in updated["provenance"])
+    entry = next(p for p in updated["provenance"] if p["description"].startswith("Simulated metrics re-read"))
+    assert "Reason: kernel_symbols changed in the test" in entry["description"] and "StubKernelOld" in entry["description"]
     assert records.validate().returncode == 0
+
+
+def test_recompute_writes_a_note_only_change(records, tmp_path):
+    records.add_stub()
+    impl = records.read("implementations/stub-impl.yaml")
+    impl["run"]["kernel_symbols"] = ["NoSuchKernel", "StubKernel"]
+    records.write("implementations/stub-impl.yaml", impl)
+    result, _ = profile(records, tmp_path, "--cachegrind", "yes", "--features", "no", env=_fake_valgrind_path(tmp_path))
+    assert result.returncode == 0, result.stderr
+    # simulate a record written before unmatched symbols were noted
+    path = next((records.path / "profiles").glob("*.yaml"))
+    data = records.read(f"profiles/{path.name}")
+    part = [p for p in data["parts"] if p["part"] == "cachegrind"][-1]
+    part["note"] = part["note"].split("; kernel symbols with no function")[0]
+    records.write(f"profiles/{path.name}", data)
+    again = records.swdb("recompute-cachegrind", data["id"], "--reason", "add the unmatched-symbol note")
+    assert again.returncode == 0 and "cachegrind part note/outcome" in again.stdout, again.stdout + again.stderr
+    part = [p for p in only_profile(records)["parts"] if p["part"] == "cachegrind"][-1]
+    assert "kernel symbols with no function in this run" in part["note"] and "NoSuchKernel" in part["note"]
+
+
+def test_recompute_repairs_a_part_that_failed_only_for_unmatched_symbols(records, tmp_path):
+    records.add_stub()
+    impl = records.read("implementations/stub-impl.yaml")
+    impl["run"]["kernel_symbols"] = ["NoSuchKernel"]
+    records.write("implementations/stub-impl.yaml", impl)
+    result, _ = profile(records, tmp_path, "--cachegrind", "yes", "--features", "no", env=_fake_valgrind_path(tmp_path))
+    assert result.returncode == 0, result.stderr
+    prof = only_profile(records)
+    assert prof["complete"] is False and not [m for m in prof["metrics"] if m["name"].startswith("sim_")]
+    impl["run"]["kernel_symbols"] = ["StubKernel"]
+    records.write("implementations/stub-impl.yaml", impl)
+    again = records.swdb("recompute-cachegrind", prof["id"], "--reason", "kernel_symbols corrected")
+    assert again.returncode == 0, again.stderr
+    fixed = only_profile(records)
+    part = [p for p in fixed["parts"] if p["part"] == "cachegrind"][-1]
+    assert part["outcome"] == "complete" and fixed["complete"] is True
+    assert metric(fixed, "sim_ll_misses", scope="per_call")["value"] == 87
+    assert records.validate().returncode == 0
+
+
+def test_multi_socket_machine_requires_a_lane_by_default(records, tmp_path):
+    records.add_stub()
+    machine = records.read("machines/testhost.yaml")
+    del machine["lane_required"]            # absent: two NUMA nodes, so lanes are required
+    records.write("machines/testhost.yaml", machine)
+    result, runs = profile(records, tmp_path, env={"LACT_SOCKET_LANE_PID": ""})
+    assert result.returncode == 1 and "requires a socket lane" in result.stderr
+    assert not runs.exists()
+
+
+@lab_host
+def test_forged_lane_variables_are_refused(records, tmp_path):
+    """On mbit10 inside a real lane: forged or stale lane variables must not pass."""
+    records.copy_repo("applications", "kernels", "implementations", "inputs", "machines")
+    import socket as _socket
+    if _socket.gethostname().split(".")[0] != records.read("machines/mbit10.yaml")["hostname"]:
+        pytest.skip("not on mbit10")
+    args = ("profile", "gapbs-pr-gs", "kron-g16-k16", "mbit10", "--runs-dir", tmp_path / "runs", "--threads", "1",
+            "--trials", "1", "--cachegrind", "no", "--features", "no")
+    forged = records.swdb(*args, env={"LACT_SOCKET_LANE_PID": "1"})
+    assert forged.returncode == 1 and "is not socket_lane.sh" in forged.stderr
+    stale = records.swdb(*args, env={"LACT_SOCKET_LANE_GENERATION": "0"})
+    assert stale.returncode == 1 and "is not held by process" in stale.stderr
+    assert not (tmp_path / "runs").exists()
 
 
 @lab_host

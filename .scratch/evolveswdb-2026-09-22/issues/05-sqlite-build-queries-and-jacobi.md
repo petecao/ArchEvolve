@@ -18,7 +18,7 @@ The Jacobi implementation of PageRank shows the "SW specs" query working.
 
 ## Comments
 
-- 2026-09-23 (spec review fix): The SQLite file records its records folder and a fingerprint of the files; queries rebuild unless both match, and sibling folders get their own default file (the reviewer's a/b reproduction is a test).
+- 2026-09-22 (spec review fix): The SQLite file records its records folder and a fingerprint of the files; queries rebuild unless both match, and sibling folders get their own default file (the reviewer's a/b reproduction is a test).
 
 ## Answer
 
