@@ -22,6 +22,8 @@ numbers.
 
 ## Comments
 
+- 2026-09-22 (ticket code review fix): Lane proof hardened after the ticket code review: the lane process must run socket_lane.sh and hold fd 9 on the node's lease with the exported generation, affinity must be one node and memory bound to it; lanes are required by default on multi-socket machines. The reviewer's forgery (`LACT_SOCKET_LANE_PID=1 taskset ...`) is refused on mbit10.
+
 - 2026-09-22 (spec review fix): On mbit10 `swdb profile` itself refuses to run unless a `socket_lane.sh` process is an ancestor and its affinity is exactly one NUMA node (verified positive and negative on mbit10); the lab-host test runs only inside a lane.
 
 ## Answer

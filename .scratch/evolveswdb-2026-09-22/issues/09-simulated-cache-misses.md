@@ -15,6 +15,8 @@ simulated by cachegrind, clearly marked as simulated.
 
 ## Comments
 
+- 2026-09-22 (ticket code review fix): The six profiles whose kernel symbols include an uncalled function (sssp: RelaxEdges; uniform tc: RelabelByDegree) now say so in their cachegrind note (recompute with a recorded reason); `recompute-cachegrind` also repairs a part that failed only because no symbol matched.
+
 - 2026-09-22 (spec review fix): Cachegrind kernel matching now accepts qualified and templated demangled names and notes kernel symbols with no function; `swdb recompute-cachegrind` re-read all 32 profiles: only the Kronecker tc profiles changed (see 14).
 
 ## Answer

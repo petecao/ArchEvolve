@@ -18,6 +18,8 @@ The Jacobi implementation of PageRank shows the "SW specs" query working.
 
 ## Comments
 
+- 2026-09-22 (ticket code review fix): `swdb build` fingerprints the records before loading them, so a record written during a build leaves the database stale rather than stamped current.
+
 - 2026-09-22 (spec review fix): The SQLite file records its records folder and a fingerprint of the files; queries rebuild unless both match, and sibling folders get their own default file (the reviewer's a/b reproduction is a test).
 
 ## Answer
