@@ -34,3 +34,17 @@ Updated: 2026-09-22
   before any work on mbit10.
 - Also always on: `.claude/rules/fail_fast.md`, `fact.md`, `timezone.md`, and
   `local_resources.md` (Mac only).
+
+## Agent skills
+
+### Issue tracker
+
+Local Markdown under `.scratch/<feature-slug>-YYYY-MM-DD/`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The five default role strings, used as the `Status:` value. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` and `docs/adr/` at the root. See `docs/agents/domain.md`.
