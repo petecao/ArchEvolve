@@ -233,7 +233,7 @@ def test_profile_refuses_threads_beyond_one_socket(records, tmp_path):
 @lab_host
 def test_real_gapbs_pagerank_profile_with_cachegrind(records, tmp_path):
     """On mbit10: the real baseline on a small Kronecker graph, cachegrind included."""
-    records.copy_repo()
+    records.copy_repo("applications", "kernels", "implementations", "inputs", "machines")
     import socket
 
     machine = records.read("machines/mbit10.yaml")
