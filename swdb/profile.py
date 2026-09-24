@@ -32,7 +32,7 @@ import subprocess
 import time
 from pathlib import Path
 
-from swdb import formula, paths, writer, yamlio
+from swdb import formula, isa, paths, writer, yamlio
 from swdb.cli import Failure
 from swdb.machine import llc_bytes
 from swdb.rules import implementation_symbols, resolve_code
@@ -143,6 +143,9 @@ def _run(args, records_dir):
     inp = _get(store, args.input, "input")
     machine = _get(store, args.machine, "machine")
     kernel = _get(store, impl["kernel"], "kernel")
+    lacking = isa.machine_lacks(machine, isa.required(impl, store))
+    if lacking:   # before the host check and any build: never run code the machine may not execute
+        raise Failure(lacking)
     app = store.application_of(impl)
     for name in ("timeout", "correctness_timeout", "cachegrind_timeout", "features_timeout"):
         value = getattr(args, name)

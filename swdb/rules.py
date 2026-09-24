@@ -9,7 +9,8 @@ fixture in the tests. Rules run only on records that already passed their schema
   has the same type, size, and layout in each, and every code excerpt equals the source
   file at its recorded lines;
 - a kernel's baseline implementation implements that kernel, and its pass_regex compiles;
-- an implementation's sweep_count_regex compiles and has exactly one capture group;
+- an implementation's sweep_count_regex compiles and has exactly one capture group, and its
+  build flags enable every ISA extension its intrinsics need (swdb/isa.py);
 - a metric's unit is the unit its vocabulary entry gives;
 - a profile's input defines every symbol its implementation's formulas use, and its
   bottleneck is not `measured` or `simulated` while the machine has no counters;
@@ -146,12 +147,30 @@ def _implementation(record, ctx):
     stream = data["run"].get("index_stream")
     if stream and stream["pattern"] not in patterns:
         yield Problem(rel, "run.index_stream.pattern", f"{stream['pattern']!r} is not an access pattern of this implementation")
+    yield from _required_isa(record, ctx)
     app = ctx.store.application_of(data)
     for i, code in enumerate(data["code"]):
         yield from _code_ref(record, ctx, code, f"code[{i}]", app)
     for i, loop in enumerate(data["loops"]):
         if loop.get("code"):
             yield from _code_ref(record, ctx, loop["code"], f"loops[{i}].code", app)
+
+
+def _required_isa(record, ctx):
+    from swdb import isa
+
+    need = isa.required(record.data, ctx.store)
+    if not need:
+        return
+    have, problems = isa.enabled(record.data["build"]["flags"], ctx.vocabs.get("isa_extensions", []))
+    for reason in problems:
+        yield Problem(record.rel, "build.flags", reason)
+    if problems:
+        return
+    for ext in sorted(set(need) - have):
+        yield Problem(record.rel, "build.flags",
+                      f"does not enable {ext}, which {', '.join(need[ext])} needs; add {isa.flag_for(ext)} "
+                      "or a -march value that includes it")
 
 
 _ARRAY_FACTS = ("element_type", "element_bytes", "element_count", "layout")

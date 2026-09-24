@@ -517,6 +517,15 @@
           "semantics"
         ]
       }
+    },
+    "uses_intrinsics": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "x-ref": "intrinsic"
+      },
+      "description": "IDs of the intrinsics the code calls; the implementation's required ISA is the union of their isa_extensions."
     }
   },
   "required": [

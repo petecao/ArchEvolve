@@ -179,6 +179,13 @@ One row per effect item, in order.
 | `strategy` | strategy ID |
 | `intrinsic` | one ID from its `common_intrinsics` |
 
+### `implementation_intrinsics`
+
+| Column | Meaning |
+|---|---|
+| `implementation` | implementation ID |
+| `intrinsic` | one ID from its `uses_intrinsics` |
+
 ### `intrinsics`
 
 | Column | Meaning |

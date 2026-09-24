@@ -42,6 +42,8 @@ Changes from 0.2 (a **minor** release under the rule in section 2: only addition
   prefetches in real code can be recorded as access patterns.
 - New record kind `intrinsic` (section 11), vocabularies `isa_families`, `isa_extensions`,
   and `intrinsic_memory_kinds`, and provenance kind `vendor_reference`.
+- Implementations: optional `uses_intrinsics`, from which the required ISA is derived and
+  checked against `build.flags` and, by `swdb profile`, the machine's `cpu.flags`.
 - Machines: optional `cpu.flags`, the CPU's ISA flags as `lscpu` names them. A machine
   record at 0.3 must list them; `swdb capture-machine` writes 0.3 records with flags.
 
@@ -154,6 +156,7 @@ Code that realizes a kernel, with everything about how it touches memory.
 | `run` | how `swdb profile` runs it (below) |
 | `loops` | the loops, outermost first (below) |
 | `access_patterns` | one per memory-access expression (below) |
+| `uses_intrinsics` | optional list of the intrinsic IDs the code calls; the implementation's required ISA is derived from them (below) |
 
 `run`: `command` (template: `{binary}`, `{input_args}`, `{trials}`), `timer` (vocab
 `timer_formats`), `threads_env` (the variable that sets the thread count),
@@ -192,6 +195,18 @@ has role `target` and no other step's does; a `ranged_indirect` or
 `single_valued_indirect` step follows a step whose role is `index`. The pattern class is
 the steps' address shapes plus the update kind, e.g.
 `stream > ranged_indirect > single_valued_indirect : read`.
+
+**Required ISA.** The required ISA is the union of the `isa_extensions` of the
+intrinsics in `uses_intrinsics`; it is derived, never written by hand. Validation fails
+when `build.flags` does not enable it. An extension is enabled by an explicit
+`-m<extension>` flag (compiler spelling: `-msse4.1` for `sse4_1`) or by a `-march` value
+the tool knows includes it (`x86-64`, `x86-64-v2`/`-v3`/`-v4`, and named Intel and AMD
+cores; the table is in `swdb/isa.py`). SSE and SSE2 are the x86-64 baseline. Enabling an
+extension enables what it implies (`-mavx512f` implies AVX2), flags apply left to right, and
+`-mno-<extension>` removes one. An unknown `-march` value, and `-march=native` (which
+depends on the build host), fail with a message naming them instead of passing silently.
+`swdb profile` refuses, before the host check and before any build, when the machine lists
+no `cpu.flags` or lacks a required extension.
 
 `semantics` holds seven facts, all required:
 

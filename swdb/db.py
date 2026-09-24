@@ -46,6 +46,8 @@ CREATE TABLE strategies (id TEXT PRIMARY KEY, name TEXT, target TEXT, json TEXT 
 CREATE TABLE strategy_effects (strategy TEXT NOT NULL, position INTEGER NOT NULL, kind TEXT NOT NULL, json TEXT NOT NULL,
     PRIMARY KEY (strategy, position));
 CREATE TABLE strategy_intrinsics (strategy TEXT NOT NULL, intrinsic TEXT NOT NULL, PRIMARY KEY (strategy, intrinsic));
+CREATE TABLE implementation_intrinsics (implementation TEXT NOT NULL, intrinsic TEXT NOT NULL,
+    PRIMARY KEY (implementation, intrinsic));
 CREATE TABLE intrinsic_extensions (intrinsic TEXT NOT NULL, extension TEXT NOT NULL, PRIMARY KEY (intrinsic, extension));
 """
 
@@ -144,6 +146,8 @@ class _Insert:
         con.execute("INSERT INTO implementations VALUES (?,?,?,?,?,?,?)",
                     (d["id"], d["name"], d["kernel"], d["function"], d["origin"]["kind"], int(is_baseline),
                      json.dumps(d)))
+        con.executemany("INSERT INTO implementation_intrinsics VALUES (?,?)",
+                        [(d["id"], i) for i in d.get("uses_intrinsics", [])])
         for p in d["access_patterns"]:
             sem = p["semantics"]
             cols = []
