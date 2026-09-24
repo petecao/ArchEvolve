@@ -167,6 +167,13 @@ def test_duplicate_strategy_fails_and_names_the_existing_one(repo):
     rejected(repo.validate(), "strategies/packing-again.yaml", "duplicate strategy: 'packing'")
 
 
+def test_a_schema_invalid_strategy_does_not_break_the_duplicate_rule(repo):
+    repo.write("strategies/broken.yaml", other_strategy(repo, id="broken", effect="tile"))
+    result = repo.validate()
+    rejected(result, "strategies/broken.yaml", "effect")
+    assert "Traceback" not in result.stderr
+
+
 def test_different_effect_is_not_a_duplicate(repo):
     repo.write("strategies/gather-hoist.yaml", other_strategy(repo))
     passes(repo.validate())

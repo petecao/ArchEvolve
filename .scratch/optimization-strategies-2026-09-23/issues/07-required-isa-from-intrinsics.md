@@ -17,6 +17,13 @@ can't run the code.
 
 ## Comments
 
+- 2026-09-23 (ET), code review: build flags are now read as GCC reads them. The last
+  `-march` gives the starting set, and explicit `-m`/`-mno-` flags apply on top of it
+  wherever they appear. `-mno-sse4`, `-mgeneral-regs-only`, and `-m32`/`-m16` are
+  handled. `swdb profile` also refuses when the build flags enable extensions the machine
+  lacks, even without intrinsics (auto-vectorization); there `-march=native` is accepted,
+  because the build runs on the machine. Tests added in `tests/test_required_isa.py`.
+
 ## Answer
 
 Resolved 2026-09-23 (ET) on branch `optimization-strategies`.

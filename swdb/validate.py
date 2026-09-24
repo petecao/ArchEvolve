@@ -44,7 +44,7 @@ def validate_records(records_dir, extra=None, replace=None):
         result.problems.extend(found)
         if not found:
             passed.append(record)
-    context = rules.Context(store, vocabs, records_dir, paths.HOME)
+    context = rules.Context(store, vocabs, records_dir, paths.HOME, valid={id(r) for r in passed})
     for record in passed:
         result.problems.extend(sorted(rules.check(record, context)))
     return result

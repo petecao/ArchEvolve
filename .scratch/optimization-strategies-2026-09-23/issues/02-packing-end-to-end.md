@@ -20,6 +20,10 @@ first real strategy (ADR 0004).
 
 ## Comments
 
+- 2026-09-23 (ET), code review: the duplicate rule now compares only strategies that
+  passed their schema, so a malformed strategy is reported instead of crashing `swdb
+  validate`.
+
 ## Answer
 
 Resolved 2026-09-23 (ET) on branch `optimization-strategies`.

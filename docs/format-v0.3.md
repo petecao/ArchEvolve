@@ -204,7 +204,9 @@ or access-pattern ID of this record, or `input`), and `parameters` (values for t
 strategy's declared parameters, by name: numbers, text, or booleans). The order is the order
 applied, and targets refer to the final code. The target must exist and match the
 strategy's target type (an access-pattern strategy names an access pattern, a loop strategy
-a loop, an input strategy `input`), and every parameter must be one the strategy declares.
+a loop, an input strategy `input`), every parameter must be one the strategy declares, and every parameter the strategy
+declares must be given. When a loop and an access pattern share an ID, the strategy's
+target type decides which one is meant.
 There are no conflict rules between strategies; the kernel's correctness check catches bad
 combinations. An implementation that applies strategies is usually `origin.kind: derived`
 with `derived_from` naming its baseline, whose profiles `swdb implementations --applies`
@@ -215,12 +217,21 @@ intrinsics in `uses_intrinsics`; it is derived, never written by hand. Validatio
 when `build.flags` does not enable it. An extension is enabled by an explicit
 `-m<extension>` flag (compiler spelling: `-msse4.1` for `sse4_1`) or by a `-march` value
 the tool knows includes it (`x86-64`, `x86-64-v2`/`-v3`/`-v4`, and named Intel and AMD
-cores; the table is in `swdb/isa.py`). SSE and SSE2 are the x86-64 baseline. Enabling an
-extension enables what it implies (`-mavx512f` implies AVX2), flags apply left to right, and
-`-mno-<extension>` removes one. An unknown `-march` value, and `-march=native` (which
-depends on the build host), fail with a message naming them instead of passing silently.
+cores; the table is in `swdb/isa.py`). SSE and SSE2 are the x86-64 baseline (not with
+`-m32` or `-m16`). The flags are read as GCC reads them: the last `-march` gives the starting
+set, and explicit `-m<extension>` and `-mno-<extension>` flags apply on top of it wherever
+they appear, later ones winning. Enabling an extension enables what it implies (`-mavx512f`
+implies AVX2 and everything below it), `-mno-<extension>` also removes every extension that
+implies it (`-mno-sse4` removes SSE4.1, SSE4.2, and the AVX family), and
+`-mgeneral-regs-only` removes them all. An unknown `-march` value, and `-march=native`
+(which depends on the build host), fail with a message naming them instead of passing
+silently. When unsure, the tool enables less: a build may be refused, never passed wrongly.
+
 `swdb profile` refuses, before the host check and before any build, when the machine lists
-no `cpu.flags` or lacks a required extension.
+no `cpu.flags` or lacks an extension the code may use: those the intrinsics need, plus
+those the build flags enable beyond the baseline (the compiler may auto-vectorize with
+them). There, `-march=native` adds nothing, because the build runs on the machine itself; an
+unknown `-march` value is refused.
 
 `semantics` holds seven facts, all required:
 

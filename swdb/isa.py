@@ -2,11 +2,12 @@
 what a machine can run. Extensions use the `lscpu` flag names of vocabulary isa_extensions.
 
 The build enables an extension through an explicit `-m<extension>` flag (GCC/Clang
-spelling, e.g. `-msse4.1` for `sse4_1`) or a `-march` value in MARCH. An x86-64 build
-always has SSE and SSE2 (the x86-64 baseline). Flags apply left to right: a later
-`-march` replaces the set, `-mno-<extension>` removes an extension and every extension that
-implies it. A `-march` value not in MARCH (including `native`, which depends on the build
-host) is reported rather than guessed.
+spelling, e.g. `-msse4.1` for `sse4_1`) or a `-march` value in MARCH. An x86-64 build has
+SSE and SSE2 (the x86-64 baseline) unless `-m32` or `-m16` is given. As in GCC, explicit
+`-m`/`-mno-` flags override `-march` wherever they appear; `-mno-<extension>` removes an
+extension and every extension that implies it. A `-march` value not in MARCH (including
+`native`, which depends on the build host) is reported rather than guessed. When unsure,
+the tool enables less, so a build may be refused but is never passed wrongly.
 """
 
 import shlex
@@ -23,6 +24,10 @@ IMPLIES = {
 
 # compiler spelling (after -m) -> lscpu name, where they differ
 SPELLING = {"sse3": "pni", "sse4.1": "sse4_1", "sse4.2": "sse4_2"}
+
+# compiler flags that name several extensions at once (-msse4 is SSE4.1 and SSE4.2; -mno-sse4
+# removes both, and with them everything that implies them)
+GROUPS = {"sse4": ["sse4_1", "sse4_2"]}
 
 def flag_for(ext):
     """The -m flag that enables one extension (lscpu `sse4_1` is `-msse4.1`)."""
@@ -57,47 +62,72 @@ def closure(extensions):
 
 
 def enabled(flags, known):
-    """(extensions the flags enable, [problem]) for a build.flags string. `known` is the
-    vocabulary isa_extensions; -m flags that name no extension (-mtune=, -mfpmath=) are ignored."""
-    have, problems = set(BASELINE), []
+    """(extensions the flags enable, [problem]) for a build.flags string, as GCC and Clang read
+    them: the last `-march` sets the starting set, and explicit `-m<ext>` / `-mno-<ext>` flags
+    apply on top of it wherever they appear, later ones winning. `-mgeneral-regs-only`
+    disables every vector extension, and `-m32`/`-m16` drop the x86-64 SSE/SSE2 baseline.
+    `known` is the vocabulary isa_extensions; -m flags that name no extension (-mtune=,
+    -mfpmath=) are ignored."""
     try:
         words = shlex.split(flags or "")
     except ValueError as exc:
-        return have, [f"cannot split the build flags: {exc}"]
+        return set(BASELINE), [f"cannot split the build flags: {exc}"]
+    base, march, problems, explicit = set(BASELINE), None, [], []
+    general_regs_only = False
     for word in words:
         if word.startswith("-march="):
-            value = word.split("=", 1)[1]
-            if value in MARCH:
-                have = BASELINE | closure(MARCH[value])
-            elif value == "native":
-                problems.append("-march=native depends on the build host, so the tool cannot tell which "
-                                "extensions it enables; use a named -march value or explicit -m<extension> flags")
-            else:
-                problems.append(f"unknown -march value {value!r}: the tool does not know which extensions it "
-                                "enables; use explicit -m<extension> flags or add it to swdb/isa.py")
+            march = word.split("=", 1)[1]
+        elif word in {"-m32", "-m16"}:
+            base = set()
+        elif word == "-mgeneral-regs-only":
+            general_regs_only = True
         elif word.startswith("-mno-"):
-            ext = SPELLING.get(word[5:], word[5:])
-            if ext in known:
-                have = {e for e in have if ext not in closure({e})}
+            explicit.append((False, word[5:]))
         elif word.startswith("-m") and "=" not in word:
-            ext = SPELLING.get(word[2:], word[2:])
-            if ext in known:
+            explicit.append((True, word[2:]))
+    have = set(base)
+    if march is not None:
+        if march in MARCH:
+            have |= closure(MARCH[march])
+        elif march == "native":
+            problems.append("-march=native depends on the build host, so the tool cannot tell which "
+                            "extensions it enables; use a named -march value or explicit -m<extension> flags")
+        else:
+            problems.append(f"unknown -march value {march!r}: the tool does not know which extensions it "
+                            "enables; use explicit -m<extension> flags or add it to swdb/isa.py")
+    for on, spelled in explicit:
+        for ext in GROUPS.get(spelled, [SPELLING.get(spelled, spelled)]):
+            if ext not in known:
+                continue
+            if on:
                 have |= closure({ext})
+            else:
+                have = {e for e in have if ext not in closure({e})}
+    if general_regs_only:
+        have = set()
     return have, problems
 
 
-def required(impl, store):
-    """{extension: [intrinsic IDs that need it]} for an implementation's uses_intrinsics."""
+def build_needs(flags, known):
+    """({extension beyond the x86-64 baseline the build flags enable}, [problem]): what the
+    compiled code may use even without intrinsics (auto-vectorization for a -march)."""
+    have, problems = enabled(flags, known)
+    return have - BASELINE, problems
+
+
+def required(impl, lookup):
+    """{extension: [intrinsic IDs that need it]} for an implementation's uses_intrinsics.
+    lookup(id, kind) returns a record's data or None (store.get, or a rule context's passed)."""
     need = {}
     for iid in impl.get("uses_intrinsics", []):
-        intrinsic = store.get(iid, "intrinsic")
+        intrinsic = lookup(iid, "intrinsic")
         for ext in (intrinsic or {}).get("isa_extensions", []):
             need.setdefault(ext, []).append(iid)
     return need
 
 
 def machine_lacks(machine, need):
-    """Why a machine cannot run code that needs `need` ({extension: intrinsics}), or None."""
+    """Why a machine cannot run code that needs `need` ({extension: [what needs it]}), or None."""
     if not need:
         return None
     flags = machine.get("cpu", {}).get("flags")
@@ -108,6 +138,6 @@ def machine_lacks(machine, need):
     missing = sorted(set(need) - set(flags))
     if missing:
         users = sorted({i for ext in missing for i in need[ext]})
-        return (f"machine {machine['id']!r} lacks {', '.join(missing)}, which the implementation's intrinsics "
-                f"need ({', '.join(users)})")
+        return (f"machine {machine['id']!r} lacks {', '.join(missing)}, which the implementation needs "
+                f"({', '.join(users)})")
     return None

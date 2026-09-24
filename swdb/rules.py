@@ -28,7 +28,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from swdb import formula
+from swdb import formula, isa, strategy
 from swdb.problems import Problem
 
 
@@ -38,6 +38,15 @@ class Context:
     vocabs: object
     records_dir: Path
     home: Path
+    valid: set = None   # id() of every record that passed its schema; None means all of them
+
+    def passed(self, record_id, kind):
+        """The data of a record of this kind that passed its schema, or None: rules read other
+        records' fields only once those fields are known to have their shape."""
+        found = self.store.by_id.get(record_id)
+        if found is None or found.kind != kind or (self.valid is not None and id(found) not in self.valid):
+            return None
+        return found.data
 
 
 def check(record, ctx):
@@ -159,31 +168,38 @@ def _implementation(record, ctx):
             yield from _code_ref(record, ctx, loop["code"], f"loops[{i}].code", app)
 
 
+_NAMED = {"loop": "a loop", "access_pattern": "an access pattern"}
+
+
 def _applies(record, ctx, loops, patterns):
-    kinds = {**{loop: "loop" for loop in loops}, **{p: "access_pattern" for p in patterns}, "input": "input"}
+    ids = {"loop": loops, "access_pattern": patterns}
     for i, applied in enumerate(record.data.get("applies", [])):
         where = f"applies[{i}]"
-        strategy = ctx.store.get(applied["strategy"], "strategy")
-        if strategy is None:
-            continue    # the schema's x-ref already reported it
-        wanted, target = strategy["target"], applied["target"]
-        if target not in kinds:
-            yield Problem(record.rel, f"{where}.target", f"{target!r} is not a loop or access pattern of this "
-                                                          "implementation, nor input")
-        elif kinds[target] != wanted:
-            yield Problem(record.rel, f"{where}.target", f"strategy {strategy['id']!r} targets {wanted}, but "
-                                                          f"{target!r} is {'an' if kinds[target][0] in 'aeiou' else 'a'} {kinds[target]}")
-        declared = {p["name"] for p in strategy.get("parameters", [])}
-        for name in sorted(set(applied["parameters"]) - declared):
+        chosen = ctx.passed(applied["strategy"], "strategy")
+        if chosen is None:
+            continue    # missing (the schema's x-ref reports it) or invalid (reported on its own file)
+        wanted, target = chosen["target"], applied["target"]
+        if wanted == "input":
+            if target != "input":
+                yield Problem(record.rel, f"{where}.target",
+                              f"strategy {chosen['id']!r} targets input, so its target is 'input', not {target!r}")
+        elif target not in ids[wanted]:
+            other = "loop" if wanted == "access_pattern" else "access_pattern"
+            what = _NAMED[other] if target in ids[other] else f"not {_NAMED[wanted]} of this implementation"
+            yield Problem(record.rel, f"{where}.target", f"strategy {chosen['id']!r} targets {wanted}, but {target!r} is {what}")
+        declared = [p["name"] for p in chosen["parameters"]]
+        for name in sorted(set(applied["parameters"]) - set(declared)):
             yield Problem(record.rel, f"{where}.parameters.{name}",
-                          f"strategy {strategy['id']!r} declares no parameter {name!r}"
-                          + (f" (it declares {', '.join(sorted(declared))})" if declared else " (it declares none)"))
+                          f"strategy {chosen['id']!r} declares no parameter {name!r}"
+                          + (f" (it declares {', '.join(declared)})" if declared else " (it declares none)"))
+        for name in declared:
+            if name not in applied["parameters"]:
+                yield Problem(record.rel, f"{where}.parameters",
+                              f"strategy {chosen['id']!r} declares parameter {name!r}; give the value applied")
 
 
 def _required_isa(record, ctx):
-    from swdb import isa
-
-    need = isa.required(record.data, ctx.store)
+    need = isa.required(record.data, ctx.passed)
     if not need:
         return
     have, problems = isa.enabled(record.data["build"]["flags"], ctx.vocabs.get("isa_extensions", []))
@@ -339,9 +355,8 @@ def implementation_symbols(impl, loops=False):
 # --- strategies ---------------------------------------------------------------------
 
 def _strategy(record, ctx):
-    from swdb import strategy
-
-    others = [(r.rel, r.data) for r in ctx.store.of_kind("strategy") if r is not record and "effect" in r.data]
+    others = [(r.rel, r.data) for r in ctx.store.of_kind("strategy")
+              if r is not record and ctx.passed(r.id, "strategy") is r.data]
     for where, reason in strategy.problems(record.data, ctx.vocabs, others):
         yield Problem(record.rel, where, reason)
 

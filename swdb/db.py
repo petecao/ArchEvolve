@@ -54,7 +54,9 @@ CREATE TABLE intrinsic_extensions (intrinsic TEXT NOT NULL, extension TEXT NOT N
 """
 
 
-TABLES = hashlib.sha256(SCHEMA.encode()).hexdigest()   # changes whenever a table changes
+# identifies the code that builds the file: any change to the tables or to how rows are filled
+# (this module and the strategy module it uses) makes older files stale
+BUILDER = hashlib.sha256(Path(__file__).read_bytes() + (Path(__file__).parent / "strategy.py").read_bytes()).hexdigest()
 
 
 def default_path(records_dir):
@@ -86,15 +88,15 @@ def _meta(db_path):
 
 
 def is_stale(records_dir, db_path):
-    """True unless the database was built from this very folder in its current state, by a
-    tool with the same tables (a newer swdb may add tables)."""
+    """True unless the database was built from this very folder in its current state, by the
+    same database code (a newer swdb may add tables or fill them differently)."""
     db_path = Path(db_path)
     if not db_path.exists():
         return True
     meta = _meta(db_path)
     return (meta.get("records_dir") != str(Path(records_dir).resolve())
             or meta.get("fingerprint") != fingerprint(records_dir)
-            or meta.get("tables") != TABLES)
+            or meta.get("builder") != BUILDER)
 
 
 def _flag(value):
@@ -121,7 +123,7 @@ def build(records_dir, db_path):
     con = sqlite3.connect(tmp)
     con.executescript(SCHEMA)
     con.executemany("INSERT INTO meta VALUES (?, ?)", [("records_dir", str(Path(records_dir).resolve())),
-                                                       ("fingerprint", stamp), ("tables", TABLES)])
+                                                       ("fingerprint", stamp), ("builder", BUILDER)])
     kernels = {r.id: r.data for r in store.of_kind("kernel")}
     baselines = {k["baseline_implementation"] for k in kernels.values()}
     for rec in store.records:
@@ -235,18 +237,14 @@ def sql(db_path, query):
     try:
         return [dict(row) for row in con.execute(query)]
     except sqlite3.Error as exc:
-        from swdb.cli import Failure
-
-        raise Failure(f"SQL error: {exc}") from None
+        raise _failure(f"SQL error: {exc}") from None
     finally:
         con.close()
 
 
 def _semantic_column(name):
     if name not in SEMANTIC_FIELDS:
-        from swdb.cli import UsageError
-
-        raise UsageError(f"unknown semantic field {name!r}; one of {', '.join(SEMANTIC_FIELDS)}")
+        raise _usage(f"unknown semantic field {name!r}; one of {', '.join(SEMANTIC_FIELDS)}")
     return name
 
 
@@ -305,24 +303,28 @@ def implementations(db_path, kernel, requirements):
     known basis (unknown is not false, so it never satisfies a requirement)."""
     con = _connect(db_path)
     try:
-        if con.execute("SELECT 1 FROM kernels WHERE id = ?", (kernel,)).fetchone() is None:
-            return None
-        found = []
-        for impl in con.execute("SELECT * FROM implementations WHERE kernel = ? ORDER BY is_baseline DESC, id", (kernel,)):
-            patterns = con.execute("SELECT * FROM access_patterns WHERE implementation = ?", (impl["id"],)).fetchall()
-            failing = []
-            for name, value in requirements:
-                column = _semantic_column(name)
-                for p in patterns:
-                    if p[f"{column}_basis"] == "unknown" or json.loads(p[column]) != value:
-                        failing.append(f"{p['pattern']}.{name} is {json.loads(p[column])!r} ({p[f'{column}_basis']})")
-            if not failing:
-                found.append({"implementation": impl["id"], "name": impl["name"], "function": impl["function"],
-                              "baseline": bool(impl["is_baseline"]), "origin": impl["origin"],
-                              "meets": {name: value for name, value in requirements}})
-        return found
+        return _meeting(con, kernel, requirements)
     finally:
         con.close()
+
+
+def _meeting(con, kernel, requirements):
+    if con.execute("SELECT 1 FROM kernels WHERE id = ?", (kernel,)).fetchone() is None:
+        return None
+    found = []
+    for impl in con.execute("SELECT * FROM implementations WHERE kernel = ? ORDER BY is_baseline DESC, id", (kernel,)):
+        patterns = con.execute("SELECT * FROM access_patterns WHERE implementation = ?", (impl["id"],)).fetchall()
+        failing = []
+        for name, value in requirements:
+            column = _semantic_column(name)
+            for p in patterns:
+                if p[f"{column}_basis"] == "unknown" or json.loads(p[column]) != value:
+                    failing.append(f"{p['pattern']}.{name} is {json.loads(p[column])!r} ({p[f'{column}_basis']})")
+        if not failing:
+            found.append({"implementation": impl["id"], "name": impl["name"], "function": impl["function"],
+                          "baseline": bool(impl["is_baseline"]), "origin": impl["origin"],
+                          "meets": {name: value for name, value in requirements}})
+    return found
 
 
 # --- strategies ---------------------------------------------------------------------
@@ -449,13 +451,14 @@ def _newest_complete(con, impl_id):
 def applying(db_path, kernel, strategy_id, requirements=()):
     """A kernel's implementations that apply one strategy, each with its applies entries, its
     derived_from baseline, and per (input, machine) the newest complete profile of both."""
-    allowed = implementations(db_path, kernel, requirements)
-    if allowed is None:
-        return None
     con = _connect(db_path)
     try:
+        allowed = _meeting(con, kernel, requirements)
+        if allowed is None:
+            return None
         if con.execute("SELECT 1 FROM strategies WHERE id = ?", (strategy_id,)).fetchone() is None:
             raise _failure(f"strategy {strategy_id!r} does not exist")
+        newest = {}   # implementation -> {(input, machine): profile}, each read once
         found = []
         for impl_id in [a["implementation"] for a in allowed]:
             entries = [{"strategy": r["strategy"], "target": r["target"], "parameters": json.loads(r["parameters_json"]),
@@ -464,15 +467,14 @@ def applying(db_path, kernel, strategy_id, requirements=()):
                                             "ORDER BY position", (impl_id, strategy_id))]
             if not entries:
                 continue
-            impl = _implementation(con, impl_id)
-            baseline = impl["origin"].get("derived_from")
-            mine = _newest_complete(con, impl_id)
-            theirs = _newest_complete(con, baseline) if baseline else {}
-            pairs = sorted(set(mine) | set(theirs))
+            baseline = _implementation(con, impl_id)["origin"].get("derived_from")
+            for one in {impl_id, baseline} - {None} - set(newest):
+                newest[one] = _newest_complete(con, one)
+            mine, theirs = newest[impl_id], newest.get(baseline, {})
             found.append({
                 "implementation": impl_id, "applies": entries, "derived_from": baseline,
-                "profiles": [{"input": i, "machine": m, "profile": mine.get((i, m)),
-                              "baseline_profile": theirs.get((i, m))} for i, m in pairs],
+                "profiles": [{"input": i, "machine": m, "profile": mine.get((i, m)), "baseline_profile": theirs.get((i, m))}
+                             for i, m in sorted(set(mine) | set(theirs))],
             })
         return found
     finally:

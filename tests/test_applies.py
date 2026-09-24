@@ -48,16 +48,16 @@ def test_applied_strategy_must_resolve(repo):
 def test_applied_target_must_be_in_the_same_record(repo):
     derived(repo, [{"strategy": "packing", "target": "no-such-pattern", "parameters": {}}])
     rejected(repo.validate(), PACKED, "applies[0].target",
-             "'no-such-pattern' is not a loop or access pattern of this implementation, nor input")
+             "targets access_pattern, but 'no-such-pattern' is not an access pattern of this implementation")
 
 
 def test_applied_target_must_match_the_strategy_target_type(repo):
     derived(repo, [{"strategy": "packing", "target": "sweep", "parameters": {}}])
     rejected(repo.validate(), "applies[0].target", "strategy 'packing' targets access_pattern, but 'sweep' is a loop")
     derived(repo, [{"strategy": "loop_tiling", "target": "gather-contrib", "parameters": {"tile_size": 64}}])
-    rejected(repo.validate(), "applies[0].target", "targets loop, but 'gather-contrib' is an access_pattern")
+    rejected(repo.validate(), "applies[0].target", "targets loop, but 'gather-contrib' is an access pattern")
     derived(repo, [{"strategy": "vertex_reordering", "target": "sweep", "parameters": {}}])
-    rejected(repo.validate(), "applies[0].target", "targets input")
+    rejected(repo.validate(), "applies[0].target", "targets input, so its target is 'input', not 'sweep'")
 
 
 def test_every_target_type_passes(repo):
@@ -73,6 +73,30 @@ def test_undeclared_parameter_fails(repo):
              "strategy 'software_prefetch' declares no parameter 'distnace' (it declares distance)")
     derived(repo, [{"strategy": "packing", "target": "gather-contrib", "parameters": {"block": 8}}])
     rejected(repo.validate(), "declares no parameter 'block' (it declares none)")
+
+
+def test_declared_parameters_must_be_given(repo):
+    derived(repo, [{"strategy": "software_prefetch", "target": "gather-contrib", "parameters": {}}])
+    rejected(repo.validate(), "applies[0].parameters", "declares parameter 'distance'; give the value applied")
+
+
+def test_a_loop_and_a_pattern_may_share_an_id(repo):
+    # gapbs-cc-sv has a loop and an access pattern both called compress-chase: the strategy's
+    # target type decides which one an applies entry names
+    data = repo.read("implementations/gapbs-cc-sv.yaml")
+    assert "compress-chase" in {l["id"] for l in data["loops"]} & {p["id"] for p in data["access_patterns"]}
+    data["applies"] = [{"strategy": "loop_tiling", "target": "compress-chase", "parameters": {"tile_size": 64}},
+                       {"strategy": "software_prefetch", "target": "compress-chase", "parameters": {"distance": 8}}]
+    repo.write("implementations/gapbs-cc-sv.yaml", data)
+    passes(repo.validate())
+
+
+def test_an_invalid_strategy_is_reported_not_a_crash(repo):
+    derived(repo)
+    edit(repo, "strategies/packing.yaml", lambda d: d.pop("target"))
+    result = repo.validate()
+    rejected(result, "strategies/packing.yaml", "target")
+    assert "Traceback" not in result.stderr
 
 
 def profile_copy(repo, name, impl, new_stamp):
@@ -137,7 +161,7 @@ def test_a_database_built_by_an_older_tool_is_rebuilt(repo):
     passes(repo.swdb("build"))
     con = sqlite3.connect(db)
     con.execute("DROP TABLE applied_strategies")
-    con.execute("UPDATE meta SET value = 'old' WHERE key = 'tables'")
+    con.execute("UPDATE meta SET value = 'old' WHERE key = 'builder'")
     con.commit()
     con.close()
     result = repo.swdb("implementations", "gapbs-pr", "--applies", "packing")

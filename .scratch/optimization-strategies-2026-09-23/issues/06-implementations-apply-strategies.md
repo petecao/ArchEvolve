@@ -16,6 +16,16 @@ Ensemble Agent can see whether they helped compared with the baseline.
 
 ## Comments
 
+- 2026-09-23 (ET), code review:
+  - Every declared parameter must now be given.
+  - When a loop and an access pattern share an ID (gapbs-cc-sv's `compress-chase`), the
+    strategy's target type decides which one is meant.
+  - A schema-invalid strategy no longer crashes validation of implementations that apply
+    it.
+  - The database staleness key is now a hash of the database code (`builder`), not only
+    of the table definitions.
+  - `--applies` uses one connection and reads each baseline's profiles once.
+
 ## Answer
 
 Resolved 2026-09-23 (ET) on branch `optimization-strategies`.

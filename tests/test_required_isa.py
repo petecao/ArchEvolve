@@ -65,6 +65,25 @@ def test_later_flags_win(repo):
     rejected(repo.validate(), "does not enable avx512f")
 
 
+@pytest.mark.parametrize("flags", ["-mno-avx512f -march=icelake-server",   # explicit flags beat -march, as in GCC
+                                   "-march=icelake-server -mno-sse4",       # a group flag removes what builds on it
+                                   "-march=icelake-server -mgeneral-regs-only",
+                                   "-m32 -mavx512f -mno-avx2"])
+def test_flags_that_disable_the_extension_fail(repo, flags):
+    uses(repo, ["mm512_i32gather_ps"], flags)
+    rejected(repo.validate(), "does not enable avx512f")
+
+
+def test_explicit_flag_before_march_still_counts(repo):
+    uses(repo, ["mm512_i32gather_ps"], "-mavx512f -march=x86-64")
+    passes(repo.validate())
+
+
+def test_32_bit_build_has_no_sse_baseline(repo):
+    uses(repo, ["mm_prefetch"], "-O3 -m32")
+    rejected(repo.validate(), "does not enable sse")
+
+
 def test_sse_is_part_of_the_x86_64_baseline(repo):
     uses(repo, ["mm_prefetch"], "-std=c++11 -O3 -fopenmp")
     passes(repo.validate())
@@ -100,7 +119,7 @@ def test_profile_refuses_a_machine_without_the_extension(stub, tmp_path):
     edit(stub, "machines/testhost.yaml",
          lambda d: d["cpu"].update(flags=[f for f in d["cpu"]["flags"] if not f.startswith("avx512")]))
     result = run_profile(stub, tmp_path)
-    rejected(result, "machine 'testhost' lacks avx512f, which the implementation's intrinsics need (mm512_i32gather_ps)")
+    rejected(result, "machine 'testhost' lacks avx512f, which the implementation needs (build.flags, mm512_i32gather_ps)")
     assert "this host is" not in result.stderr and not (tmp_path / "runs").exists()
 
 
@@ -116,3 +135,29 @@ def test_profile_refuses_a_machine_that_lists_no_flags(stub, tmp_path):
 
 def test_profile_with_the_extension_reaches_the_host_check(stub, tmp_path):
     rejected(run_profile(stub, tmp_path), "this host is")
+
+
+def test_profile_refuses_a_march_the_machine_cannot_run_even_without_intrinsics(stub, tmp_path):
+    def change(d):
+        d.pop("uses_intrinsics")
+        d["build"]["flags"] = "-O3 -march=icelake-server"   # the compiler may auto-vectorize with AVX-512
+    edit(stub, "implementations/stub-impl.yaml", change)
+    edit(stub, "machines/testhost.yaml",
+         lambda d: d["cpu"].update(flags=[f for f in d["cpu"]["flags"] if not f.startswith("avx512")]))
+    rejected(run_profile(stub, tmp_path), "machine 'testhost' lacks avx512bw, avx512cd, avx512dq, avx512f, avx512vl",
+             "(build.flags)")
+
+
+def test_profile_refuses_an_unknown_march(stub, tmp_path):
+    edit(stub, "implementations/stub-impl.yaml", lambda d: d["build"].update(flags="-march=hal9000"))
+    result = run_profile(stub, tmp_path)
+    # validation catches it first, because the implementation uses an intrinsic
+    rejected(result, "unknown -march value 'hal9000'")
+
+
+def test_profile_accepts_march_native_built_on_the_machine(stub, tmp_path):
+    def change(d):
+        d.pop("uses_intrinsics")
+        d["build"]["flags"] = "-O3 -march=native"
+    edit(stub, "implementations/stub-impl.yaml", change)
+    rejected(run_profile(stub, tmp_path), "this host is")   # past the ISA check, stopped by the host check
