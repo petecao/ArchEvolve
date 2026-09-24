@@ -36,6 +36,8 @@ Changes from 0.2 (a **minor** release under the rule in section 2: only addition
 0.2 record stays valid without an edit):
 
 - `schema_version` may be `"0.3"`; `"0.2"` is still accepted.
+- Machines: optional `cpu.flags`, the CPU's ISA flags as `lscpu` names them. A machine
+  record at 0.3 must list them; `swdb capture-machine` writes 0.3 records with flags.
 
 Changes from 0.1: `option` became `implementation`; code, loops, access patterns, and
 semantics moved from the kernel to the implementation; the `changes` field is gone (every
@@ -220,7 +222,7 @@ Captured from the host by `swdb capture-machine`, read-only.
 | Field | Meaning |
 |---|---|
 | `hostname` | short host name; `swdb profile` refuses to run elsewhere |
-| `cpu` | `model`, `architecture`, `sockets`, `cores_per_socket`, `threads_per_core`, `logical_cpus`, `max_mhz` |
+| `cpu` | `model`, `architecture`, `sockets`, `cores_per_socket`, `threads_per_core`, `logical_cpus`, `max_mhz`, `flags` (the ISA flags from `lscpu`'s `Flags:` line, sorted; optional at 0.2, required on a record that says `"0.3"`) |
 | `caches` | list of `level`, `type` (data, instruction, unified), `size_bytes` (one instance), `instances`, `shared_by` (core or socket) |
 | `memory_bytes` | total memory |
 | `numa_nodes` | list of `node`, `cpus`, `memory_bytes` |

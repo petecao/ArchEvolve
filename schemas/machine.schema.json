@@ -44,6 +44,15 @@
             "number",
             "null"
           ]
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9_.]+$"
+          },
+          "uniqueItems": true,
+          "description": "The CPU's ISA flags as lscpu prints them on its Flags line (the /proc/cpuinfo names), sorted. Optional at 0.2, required at 0.3."
         }
       },
       "required": [
@@ -204,5 +213,31 @@
     "os",
     "counters",
     "capture"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": "0.3"
+          }
+        },
+        "required": [
+          "schema_version"
+        ]
+      },
+      "then": {
+        "properties": {
+          "cpu": {
+            "required": [
+              "flags"
+            ],
+            "x-required-reasons": {
+              "flags": "a machine record at format 0.3 lists its CPU's ISA flags in cpu.flags (swdb capture-machine reads them from lscpu)"
+            }
+          }
+        }
+      }
+    }
   ]
 }

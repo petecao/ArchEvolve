@@ -1,6 +1,6 @@
 """`swdb capture-machine`: a machine record captured from the host itself.
 
-The capture is read-only: it runs `lscpu`, `uname -r`, reads /proc and /etc/os-release,
+The capture is read-only: it runs `lscpu` (whose `Flags:` line gives `cpu.flags`), `uname -r`, reads /proc and /etc/os-release,
 `numactl --hardware`, `perf_event_paranoid`, and `id -nG`, starts no job, and writes
 nothing on the host. It runs locally, over ssh (`--ssh HOST`, the script goes on stdin),
 or parses a saved capture (`--from-file`).
@@ -74,6 +74,7 @@ def parse(raw, machine_id, command, date):
     cores = int(_need(cpu, "Core(s) per socket", "lscpu"))
     threads = int(_need(cpu, "Thread(s) per core", "lscpu"))
     max_mhz = cpu.get("CPU max MHz")
+    flags = sorted(set(_need(cpu, "Flags", "lscpu").split()))
     caches = _caches(part["lscpu-caches"], sockets, cores)
     mem_kb = int(re.search(r"MemTotal:\s+(\d+)\s+kB", part["meminfo"]).group(1))
     numa = _numa(part["numa"])
@@ -86,7 +87,7 @@ def parse(raw, machine_id, command, date):
             + ("; the user is in the vtune group" if "vtune" in groups else "; the user is not in the vtune group")
             + ". Rule: counters are available if paranoid <= 2 or the user is in the vtune group.")
     return {
-        "kind": "machine", "schema_version": "0.2", "id": machine_id, "status": "draft", "deprecated_by": None,
+        "kind": "machine", "schema_version": "0.3", "id": machine_id, "status": "draft", "deprecated_by": None,
         "created": date[:10], "updated": date[:10],
         "provenance": [{"id": "capture", "kind": "measurement",
                         "description": f"Read-only capture by swdb capture-machine at {date} (UTC).", "uri": None}],
@@ -94,7 +95,7 @@ def parse(raw, machine_id, command, date):
         "cpu": {"model": _need(cpu, "Model name", "lscpu"), "architecture": _need(cpu, "Architecture", "lscpu"),
                 "sockets": sockets, "cores_per_socket": cores, "threads_per_core": threads,
                 "logical_cpus": int(_need(cpu, "CPU(s)", "lscpu")),
-                "max_mhz": float(max_mhz) if max_mhz else None},
+                "max_mhz": float(max_mhz) if max_mhz else None, "flags": flags},
         "caches": caches,
         "memory_bytes": mem_kb * 1024,
         "numa_nodes": numa,
