@@ -62,6 +62,8 @@ def main(argv=None):
     sub.add_argument("kernel")
     sub.add_argument("--require", action="append", default=[], metavar="FIELD=VALUE",
                      help="every access pattern must have this known semantic value (repeatable)")
+    sub.add_argument("--applies", metavar="STRATEGY",
+                     help="only implementations that apply this strategy, with their baseline's profiles")
 
     sub = command("view", "print the workload view (HW Ensemble format) of one implementation on one input and machine",
                   fmt=True)
@@ -166,7 +168,11 @@ def _dispatch(args):
         return _emit(found, args.format)
     if args.command == "implementations":
         _ensure_db(records, db_path)
-        found = db.implementations(db_path, args.kernel, [_pair(text) for text in args.require])
+        requirements = [_pair(text) for text in args.require]
+        if args.applies:
+            found = db.applying(db_path, args.kernel, args.applies, requirements)
+        else:
+            found = db.implementations(db_path, args.kernel, requirements)
         if found is None:
             raise Failure(f"kernel {args.kernel!r} does not exist")
         return _emit(found, args.format)
@@ -234,7 +240,8 @@ def _ensure_db(records_dir, db_path):
     if db.is_stale(records_dir, db_path):
         _require_valid(records_dir)
         db.build(records_dir, db_path)
-        print(f"swdb: rebuilt {db_path} (it was missing or older than the records)", file=sys.stderr)
+        print(f"swdb: rebuilt {db_path} (it was missing, older than the records, or built by another swdb version)",
+              file=sys.stderr)
 
 
 def _capture(args):

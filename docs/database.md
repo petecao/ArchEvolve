@@ -6,8 +6,10 @@ Updated: 2026-09-23
 records folder `X` gets `build/swdb-X.sqlite`; `build/` is ignored by git). It deletes and
 recreates every table from the YAML records each time, so the file never drifts from them
 (ADR 0002). The `meta` table names the records folder and a fingerprint of its files (path,
-size, and modification time of each); `swdb find`, `swdb implementations`, and `swdb sql`
-rebuild the file first unless both match the folder being queried.
+size, and modification time of each); `swdb find`, `swdb implementations`, `swdb strategies`, and `swdb sql`
+rebuild the file first unless the folder and the fingerprint match the folder being queried
+and the file was built with the current tool's tables (so a newer `swdb` never queries a
+file that lacks its tables).
 
 Run your own SQL with `swdb sql "<query>" [--format json]`, or open the file with the
 `sqlite3` shell. Values that are JSON in the records (semantic values, property values)
@@ -21,8 +23,8 @@ are stored as JSON text, so `true`, `false`, and `null` stay distinct: compare w
 
 | Column | Meaning |
 |---|---|
-| `key` | `records_dir` (the absolute records folder the file was built from) or `fingerprint` |
-| `value` | the folder, or the sha256 over every record file's path, size, and modification time |
+| `key` | `records_dir` (the absolute records folder the file was built from), `fingerprint`, or `tables` |
+| `value` | the folder; the sha256 over every record file's path, size, and modification time; or the sha256 of the tool's table definitions |
 
 ### `records`
 
@@ -179,6 +181,18 @@ One row per effect item, in order.
 | `strategy` | strategy ID |
 | `intrinsic` | one ID from its `common_intrinsics` |
 
+### `applied_strategies`
+
+One row per `applies` item of each implementation.
+
+| Column | Meaning |
+|---|---|
+| `implementation` | implementation ID |
+| `position` | 0-based position in `applies` (the order applied) |
+| `strategy` | strategy ID |
+| `target` | loop or access-pattern ID, or `input` |
+| `parameters_json` | the parameter values as JSON |
+
 ### `implementation_intrinsics`
 
 | Column | Meaning |
@@ -252,6 +266,14 @@ it is stale.
   `undetermined`), and `unknown_fields`; illegal patterns are left out.
 - `swdb implementations <kernel> [--require FIELD=VALUE]...`: a kernel's implementations
   whose every access pattern has each required value with a known basis.
+- `swdb implementations <kernel> --applies <strategy> [--require FIELD=VALUE]...`: the
+  kernel's implementations that apply the strategy. One entry per implementation with
+  `implementation`, `applies` (its matching `applies` items, each with `strategy`, `target`,
+  `parameters`, and `position`), `derived_from` (the baseline, or null), and `profiles`: one
+  item per (input, machine) pair that either has a complete profile for, with `input`,
+  `machine`, `profile` (the implementation's newest complete profile ID), and
+  `baseline_profile` (the baseline's), each null when missing. Compare their metrics with
+  `swdb sql` or `swdb view` to see whether the strategy helped.
 - `swdb strategies --pattern <implementation>/<pattern>`: every access-pattern strategy,
   one entry each, with `strategy`, `outcome` (`legal`, `illegal`, or `undetermined`),
   `reasons` (why it is illegal), `unknown_fields` (the semantic fields whose basis is

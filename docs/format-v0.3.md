@@ -42,6 +42,8 @@ Changes from 0.2 (a **minor** release under the rule in section 2: only addition
   prefetches in real code can be recorded as access patterns.
 - New record kind `intrinsic` (section 11), vocabularies `isa_families`, `isa_extensions`,
   and `intrinsic_memory_kinds`, and provenance kind `vendor_reference`.
+- Implementations: optional `applies`, the strategies applied in order with their targets and
+  parameter values.
 - Implementations: optional `uses_intrinsics`, from which the required ISA is derived and
   checked against `build.flags` and, by `swdb profile`, the machine's `cpu.flags`.
 - Machines: optional `cpu.flags`, the CPU's ISA flags as `lscpu` names them. A machine
@@ -156,6 +158,7 @@ Code that realizes a kernel, with everything about how it touches memory.
 | `run` | how `swdb profile` runs it (below) |
 | `loops` | the loops, outermost first (below) |
 | `access_patterns` | one per memory-access expression (below) |
+| `applies` | optional ordered list of the strategies it applies (below) |
 | `uses_intrinsics` | optional list of the intrinsic IDs the code calls; the implementation's required ISA is derived from them (below) |
 
 `run`: `command` (template: `{binary}`, `{input_args}`, `{trials}`), `timer` (vocab
@@ -195,6 +198,17 @@ has role `target` and no other step's does; a `ranged_indirect` or
 `single_valued_indirect` step follows a step whose role is `index`. The pattern class is
 the steps' address shapes plus the update kind, e.g.
 `stream > ranged_indirect > single_valued_indirect : read`.
+
+**Applied strategies.** Each `applies` item is `strategy` (a strategy ID), `target` (a loop
+or access-pattern ID of this record, or `input`), and `parameters` (values for the
+strategy's declared parameters, by name: numbers, text, or booleans). The order is the order
+applied, and targets refer to the final code. The target must exist and match the
+strategy's target type (an access-pattern strategy names an access pattern, a loop strategy
+a loop, an input strategy `input`), and every parameter must be one the strategy declares.
+There are no conflict rules between strategies; the kernel's correctness check catches bad
+combinations. An implementation that applies strategies is usually `origin.kind: derived`
+with `derived_from` naming its baseline, whose profiles `swdb implementations --applies`
+shows next to its own.
 
 **Required ISA.** The required ISA is the union of the `isa_extensions` of the
 intrinsics in `uses_intrinsics`; it is derived, never written by hand. Validation fails

@@ -11,6 +11,8 @@ fixture in the tests. Rules run only on records that already passed their schema
 - a kernel's baseline implementation implements that kernel, and its pass_regex compiles;
 - an implementation's sweep_count_regex compiles and has exactly one capture group, and its
   build flags enable every ISA extension its intrinsics need (swdb/isa.py);
+- each strategy an implementation applies targets a loop or access pattern of the same
+  record (or `input`) of the strategy's target type, with only declared parameters;
 - a metric's unit is the unit its vocabulary entry gives;
 - a profile's input defines every symbol its implementation's formulas use, and its
   bottleneck is not `measured` or `simulated` while the machine has no counters;
@@ -148,12 +150,34 @@ def _implementation(record, ctx):
     if stream and stream["pattern"] not in patterns:
         yield Problem(rel, "run.index_stream.pattern", f"{stream['pattern']!r} is not an access pattern of this implementation")
     yield from _required_isa(record, ctx)
+    yield from _applies(record, ctx, set(loops), set(patterns))
     app = ctx.store.application_of(data)
     for i, code in enumerate(data["code"]):
         yield from _code_ref(record, ctx, code, f"code[{i}]", app)
     for i, loop in enumerate(data["loops"]):
         if loop.get("code"):
             yield from _code_ref(record, ctx, loop["code"], f"loops[{i}].code", app)
+
+
+def _applies(record, ctx, loops, patterns):
+    kinds = {**{loop: "loop" for loop in loops}, **{p: "access_pattern" for p in patterns}, "input": "input"}
+    for i, applied in enumerate(record.data.get("applies", [])):
+        where = f"applies[{i}]"
+        strategy = ctx.store.get(applied["strategy"], "strategy")
+        if strategy is None:
+            continue    # the schema's x-ref already reported it
+        wanted, target = strategy["target"], applied["target"]
+        if target not in kinds:
+            yield Problem(record.rel, f"{where}.target", f"{target!r} is not a loop or access pattern of this "
+                                                          "implementation, nor input")
+        elif kinds[target] != wanted:
+            yield Problem(record.rel, f"{where}.target", f"strategy {strategy['id']!r} targets {wanted}, but "
+                                                          f"{target!r} is {'an' if kinds[target][0] in 'aeiou' else 'a'} {kinds[target]}")
+        declared = {p["name"] for p in strategy.get("parameters", [])}
+        for name in sorted(set(applied["parameters"]) - declared):
+            yield Problem(record.rel, f"{where}.parameters.{name}",
+                          f"strategy {strategy['id']!r} declares no parameter {name!r}"
+                          + (f" (it declares {', '.join(sorted(declared))})" if declared else " (it declares none)"))
 
 
 def _required_isa(record, ctx):

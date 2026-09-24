@@ -526,6 +526,41 @@
         "x-ref": "intrinsic"
       },
       "description": "IDs of the intrinsics the code calls; the implementation's required ISA is the union of their isa_extensions."
+    },
+    "applies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "strategy",
+          "target",
+          "parameters"
+        ],
+        "properties": {
+          "strategy": {
+            "type": "string",
+            "x-ref": "strategy"
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A loop or access-pattern ID of this record, or `input`; it must match the strategy's target type."
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "number",
+                "string",
+                "boolean"
+              ]
+            },
+            "description": "Values for the strategy's declared parameters, by name."
+          }
+        }
+      },
+      "description": "The optimization strategies this implementation applies, in the order applied; targets refer to the final code."
     }
   },
   "required": [

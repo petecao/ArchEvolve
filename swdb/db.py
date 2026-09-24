@@ -46,10 +46,15 @@ CREATE TABLE strategies (id TEXT PRIMARY KEY, name TEXT, target TEXT, json TEXT 
 CREATE TABLE strategy_effects (strategy TEXT NOT NULL, position INTEGER NOT NULL, kind TEXT NOT NULL, json TEXT NOT NULL,
     PRIMARY KEY (strategy, position));
 CREATE TABLE strategy_intrinsics (strategy TEXT NOT NULL, intrinsic TEXT NOT NULL, PRIMARY KEY (strategy, intrinsic));
+CREATE TABLE applied_strategies (implementation TEXT NOT NULL, position INTEGER NOT NULL, strategy TEXT NOT NULL,
+    target TEXT NOT NULL, parameters_json TEXT NOT NULL, PRIMARY KEY (implementation, position));
 CREATE TABLE implementation_intrinsics (implementation TEXT NOT NULL, intrinsic TEXT NOT NULL,
     PRIMARY KEY (implementation, intrinsic));
 CREATE TABLE intrinsic_extensions (intrinsic TEXT NOT NULL, extension TEXT NOT NULL, PRIMARY KEY (intrinsic, extension));
 """
+
+
+TABLES = hashlib.sha256(SCHEMA.encode()).hexdigest()   # changes whenever a table changes
 
 
 def default_path(records_dir):
@@ -81,13 +86,15 @@ def _meta(db_path):
 
 
 def is_stale(records_dir, db_path):
-    """True unless the database was built from this very folder in its current state."""
+    """True unless the database was built from this very folder in its current state, by a
+    tool with the same tables (a newer swdb may add tables)."""
     db_path = Path(db_path)
     if not db_path.exists():
         return True
     meta = _meta(db_path)
     return (meta.get("records_dir") != str(Path(records_dir).resolve())
-            or meta.get("fingerprint") != fingerprint(records_dir))
+            or meta.get("fingerprint") != fingerprint(records_dir)
+            or meta.get("tables") != TABLES)
 
 
 def _flag(value):
@@ -114,7 +121,7 @@ def build(records_dir, db_path):
     con = sqlite3.connect(tmp)
     con.executescript(SCHEMA)
     con.executemany("INSERT INTO meta VALUES (?, ?)", [("records_dir", str(Path(records_dir).resolve())),
-                                                       ("fingerprint", stamp)])
+                                                       ("fingerprint", stamp), ("tables", TABLES)])
     kernels = {r.id: r.data for r in store.of_kind("kernel")}
     baselines = {k["baseline_implementation"] for k in kernels.values()}
     for rec in store.records:
@@ -148,6 +155,9 @@ class _Insert:
                      json.dumps(d)))
         con.executemany("INSERT INTO implementation_intrinsics VALUES (?,?)",
                         [(d["id"], i) for i in d.get("uses_intrinsics", [])])
+        con.executemany("INSERT INTO applied_strategies VALUES (?,?,?,?,?)",
+                        [(d["id"], i, a["strategy"], a["target"], json.dumps(a["parameters"]))
+                         for i, a in enumerate(d.get("applies", []))])
         for p in d["access_patterns"]:
             sem = p["semantics"]
             cols = []
@@ -425,5 +435,45 @@ def strategies_for_input(db_path, impl_id):
     try:
         _implementation(con, impl_id)
         return [entry(strategy, "undetermined", [], []) for strategy in _strategies(con, "input")]
+    finally:
+        con.close()
+
+
+def _newest_complete(con, impl_id):
+    """{(input, machine): newest complete profile ID} for one implementation."""
+    rows = con.execute("SELECT id, input, machine FROM profiles WHERE implementation = ? AND complete = 1 "
+                       "ORDER BY started, id", (impl_id,)).fetchall()
+    return {(r["input"], r["machine"]): r["id"] for r in rows}   # later rows win: the newest
+
+
+def applying(db_path, kernel, strategy_id, requirements=()):
+    """A kernel's implementations that apply one strategy, each with its applies entries, its
+    derived_from baseline, and per (input, machine) the newest complete profile of both."""
+    allowed = implementations(db_path, kernel, requirements)
+    if allowed is None:
+        return None
+    con = _connect(db_path)
+    try:
+        if con.execute("SELECT 1 FROM strategies WHERE id = ?", (strategy_id,)).fetchone() is None:
+            raise _failure(f"strategy {strategy_id!r} does not exist")
+        found = []
+        for impl_id in [a["implementation"] for a in allowed]:
+            entries = [{"strategy": r["strategy"], "target": r["target"], "parameters": json.loads(r["parameters_json"]),
+                        "position": r["position"]}
+                       for r in con.execute("SELECT * FROM applied_strategies WHERE implementation = ? AND strategy = ? "
+                                            "ORDER BY position", (impl_id, strategy_id))]
+            if not entries:
+                continue
+            impl = _implementation(con, impl_id)
+            baseline = impl["origin"].get("derived_from")
+            mine = _newest_complete(con, impl_id)
+            theirs = _newest_complete(con, baseline) if baseline else {}
+            pairs = sorted(set(mine) | set(theirs))
+            found.append({
+                "implementation": impl_id, "applies": entries, "derived_from": baseline,
+                "profiles": [{"input": i, "machine": m, "profile": mine.get((i, m)),
+                              "baseline_profile": theirs.get((i, m))} for i, m in pairs],
+            })
+        return found
     finally:
         con.close()
