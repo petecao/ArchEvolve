@@ -17,6 +17,7 @@ def repo(records):
     ("inputs/urand-u16-k16.yaml", lambda d: d.update(properties="many"), "properties"),
     ("implementations/gapbs-pr-jacobi.yaml", lambda d: d.update(access_patterns="some"), "access_patterns"),
     ("applications/gapbs.yaml", lambda d: d.update(source="github"), "source"),
+    ("kernels/gapbs-pr.yaml", lambda d: d.update(application=["gapbs"]), "application"),
     ("intrinsics/mm512_i32gather_ps.yaml", lambda d: d.update(isa_extensions="avx512f"), "isa_extensions"),
 ])
 def test_a_malformed_record_is_reported_not_a_crash(repo, rel, change, field):

@@ -49,9 +49,15 @@ class Context:
         return found.data
 
     def application(self, data):
-        """The application behind a record, if it passed its schema."""
-        app = self.store.application_of(data)
-        return app if app is not None and self.passed(app.get("id"), "application") is app else None
+        """The application behind a kernel, implementation, or profile, following each link only
+        through records that passed their schema (or None)."""
+        for field, kind in (("implementation", "implementation"), ("kernel", "kernel"), ("application", "application")):
+            if data is None or data.get("kind") == "application":
+                break
+            if data.get("kind") in {"profile", "implementation", "kernel"} and field in data:
+                ref = data[field]
+                data = self.passed(ref, kind) if isinstance(ref, str) else None
+        return data if data is not None and data.get("kind") == "application" else None
 
 
 def check(record, ctx):
