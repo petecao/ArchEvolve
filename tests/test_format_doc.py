@@ -1,10 +1,11 @@
-"""The format document covers every field the schemas define. Created 2026-09-22."""
+"""The format document covers every field the schemas define. Created 2026-09-22;
+updated 2026-09-23 to check the v0.3 document."""
 
 import json
 
 from conftest import REPO
 
-DOC = REPO / "docs" / "format-v0.2.md"
+DOC = REPO / "docs" / "format-v0.3.md"
 
 
 def schema_fields():

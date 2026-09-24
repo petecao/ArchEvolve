@@ -1,6 +1,6 @@
 # EvolveSWDB
 
-Updated: 2026-09-22
+Updated: 2026-09-23
 
 The Software Database of ArchEvolve: records of applications, their kernels, the
 implementations of those kernels, inputs, machines, and profiles, plus the `swdb` tool
@@ -50,6 +50,7 @@ Errors print to stderr as `file: field: reason`.
 - Glossary: [CONTEXT.md](CONTEXT.md)
 - Decisions: [docs/adr/](docs/adr/)
 - Spec and tickets: [.scratch/evolveswdb-2026-09-22/](.scratch/evolveswdb-2026-09-22/)
-- Database tables: [docs/database.md](docs/database.md)
+- Record format (enforced): [docs/format-v0.3.md](docs/format-v0.3.md)
+- Database tables and queries: [docs/database.md](docs/database.md)
 - Profiling on mbit10: [docs/mbit10-profiling.md](docs/mbit10-profiling.md)
 - Format proposal v0.1 (superseded where the spec differs): [docs/format-proposal-v0.1.md](docs/format-proposal-v0.1.md)
