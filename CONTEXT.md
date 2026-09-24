@@ -1,11 +1,11 @@
 # ArchEvolve — Software Database
 
-Updated: 2026-09-22
+Updated: 2026-09-23
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
-measured, and which implementations exist. Glossary only — no implementation
-detail, no status.
+measured, which implementations exist, and which optimization strategies can
+change them. Glossary only — no implementation detail, no status.
 
 ## Language
 
@@ -50,13 +50,33 @@ _Avoid_: access type, stride pattern
 
 **Update kind**:
 What an access pattern does to the final array of its chain: read, write,
-add-update, min/max-update, compare-and-swap, or arbitrary.
+add-update, min/max-update, compare-and-swap, arbitrary, or prefetch (a non-binding
+early access that returns no data).
 _Avoid_: memory type, RMW type
 
 **Pattern class**:
 The category of an access pattern: the address shapes of its steps plus its
 update kind.
 _Avoid_: pattern (alone), access type
+
+### Optimization
+
+**Optimization strategy**:
+A reusable technique for changing how code touches memory, identified by its
+target (access pattern, loop, or input) and its effect on that target; numbers such as
+tile size or prefetch distance are its parameters. It is not code and never runs.
+_Avoid_: optimization (alone), transformation, technique, variant
+
+**Strategy effect**:
+The typed changes an optimization strategy makes to its target: reshape an address
+shape, add an access pattern, add a hint, widen the lanes per access, reorder indices,
+or restructure a loop. Together with the target, it is the strategy's identity.
+_Avoid_: benefit, speedup
+
+**Intrinsic**:
+One ISA instruction wrapper that code can call (for example `_mm512_i32gather_ps`),
+with the ISA extension it needs and the memory access it performs.
+_Avoid_: builtin, instruction (alone)
 
 ### Evidence
 
