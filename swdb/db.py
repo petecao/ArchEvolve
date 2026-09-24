@@ -54,10 +54,9 @@ CREATE TABLE intrinsic_extensions (intrinsic TEXT NOT NULL, extension TEXT NOT N
 """
 
 
-# identifies the code that builds the file: any change to the tables or to how rows are filled
-# (this module and the strategy module it uses) makes older files stale
-BUILDER = hashlib.sha256(Path(__file__).read_bytes() + (Path(__file__).parent / "strategy.py").read_bytes()).hexdigest()
-
+# identifies the code that builds the file: any change to the swdb package (tables, how rows
+# are filled, which records load) makes older files stale; a rebuild takes about a second
+BUILDER = hashlib.sha256(b"".join(p.read_bytes() for p in sorted(Path(__file__).parent.glob("*.py")))).hexdigest()
 
 def default_path(records_dir):
     """build/swdb.sqlite next to a folder named `records` (the repo's), otherwise

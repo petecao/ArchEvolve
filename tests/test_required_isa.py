@@ -16,7 +16,10 @@ def repo(records):
 
 def uses(repo, intrinsics, flags):
     def change(d):
-        d["uses_intrinsics"] = intrinsics
+        if intrinsics:
+            d["uses_intrinsics"] = intrinsics
+        else:
+            d.pop("uses_intrinsics", None)
         d["build"]["flags"] = flags
     edit(repo, JAC, change)
 
@@ -148,11 +151,27 @@ def test_profile_refuses_a_march_the_machine_cannot_run_even_without_intrinsics(
              "(build.flags)")
 
 
+def test_unknown_march_fails_validation_even_without_intrinsics(repo):
+    uses(repo, [], "-O3 -march=hal9000")
+    rejected(repo.validate(), "build.flags", "unknown -march value 'hal9000'")
+
+
+def test_march_native_without_intrinsics_validates(repo):
+    uses(repo, [], "-O3 -march=native")
+    passes(repo.validate())
+
+
+def test_a_later_m64_restores_the_baseline(repo):
+    uses(repo, ["mm_prefetch"], "-m32 -O3 -m64")
+    passes(repo.validate())
+
+
 def test_profile_refuses_an_unknown_march(stub, tmp_path):
-    edit(stub, "implementations/stub-impl.yaml", lambda d: d["build"].update(flags="-march=hal9000"))
+    # validation refuses it first (profile validates the records before anything else)
+    edit(stub, "implementations/stub-impl.yaml", lambda d: (d.pop("uses_intrinsics"), d["build"].update(flags="-march=hal9000")))
     result = run_profile(stub, tmp_path)
-    # validation catches it first, because the implementation uses an intrinsic
     rejected(result, "unknown -march value 'hal9000'")
+    assert "this host is" not in result.stderr
 
 
 def test_profile_accepts_march_native_built_on_the_machine(stub, tmp_path):

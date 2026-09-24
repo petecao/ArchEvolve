@@ -17,6 +17,7 @@ class Result:
     count: int = 0
     problems: list = field(default_factory=list)
     store: Store = None
+    vocabs: dict = None
 
 
 def validate_records(records_dir, extra=None, replace=None):
@@ -44,7 +45,8 @@ def validate_records(records_dir, extra=None, replace=None):
         result.problems.extend(found)
         if not found:
             passed.append(record)
-    context = rules.Context(store, vocabs, records_dir, paths.HOME, valid={id(r) for r in passed})
+    result.vocabs = vocabs
+    context = rules.Context(store, vocabs, records_dir, paths.HOME, valid={r.rel for r in passed})
     for record in passed:
         result.problems.extend(sorted(rules.check(record, context)))
     return result

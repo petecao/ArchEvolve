@@ -61,13 +61,14 @@ def closure(extensions):
     return found
 
 
-def enabled(flags, known):
+def enabled(flags, known, native_ok=False):
     """(extensions the flags enable, [problem]) for a build.flags string, as GCC and Clang read
     them: the last `-march` sets the starting set, and explicit `-m<ext>` / `-mno-<ext>` flags
     apply on top of it wherever they appear, later ones winning. `-mgeneral-regs-only`
     disables every vector extension, and `-m32`/`-m16` drop the x86-64 SSE/SSE2 baseline.
     `known` is the vocabulary isa_extensions; -m flags that name no extension (-mtune=,
-    -mfpmath=) are ignored."""
+    -mfpmath=) are ignored. With native_ok (the build runs on the machine that will run the
+    code), -march=native is accepted and adds nothing the tool can name."""
     try:
         words = shlex.split(flags or "")
     except ValueError as exc:
@@ -79,6 +80,8 @@ def enabled(flags, known):
             march = word.split("=", 1)[1]
         elif word in {"-m32", "-m16"}:
             base = set()
+        elif word in {"-m64", "-mx32"}:
+            base = set(BASELINE)
         elif word == "-mgeneral-regs-only":
             general_regs_only = True
         elif word.startswith("-mno-"):
@@ -90,8 +93,9 @@ def enabled(flags, known):
         if march in MARCH:
             have |= closure(MARCH[march])
         elif march == "native":
-            problems.append("-march=native depends on the build host, so the tool cannot tell which "
-                            "extensions it enables; use a named -march value or explicit -m<extension> flags")
+            if not native_ok:
+                problems.append("-march=native depends on the build host, so the tool cannot tell which "
+                                "extensions it enables; use a named -march value or explicit -m<extension> flags")
         else:
             problems.append(f"unknown -march value {march!r}: the tool does not know which extensions it "
                             "enables; use explicit -m<extension> flags or add it to swdb/isa.py")
@@ -108,10 +112,10 @@ def enabled(flags, known):
     return have, problems
 
 
-def build_needs(flags, known):
+def build_needs(flags, known, native_ok=False):
     """({extension beyond the x86-64 baseline the build flags enable}, [problem]): what the
     compiled code may use even without intrinsics (auto-vectorization for a -march)."""
-    have, problems = enabled(flags, known)
+    have, problems = enabled(flags, known, native_ok)
     return have - BASELINE, problems
 
 

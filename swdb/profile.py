@@ -32,7 +32,7 @@ import subprocess
 import time
 from pathlib import Path
 
-from swdb import formula, isa, paths, vocab, writer, yamlio
+from swdb import formula, isa, paths, writer, yamlio
 from swdb.cli import Failure
 from swdb.machine import llc_bytes
 from swdb.rules import implementation_symbols, resolve_code
@@ -143,7 +143,7 @@ def _run(args, records_dir):
     inp = _get(store, args.input, "input")
     machine = _get(store, args.machine, "machine")
     kernel = _get(store, impl["kernel"], "kernel")
-    _check_isa(impl, machine, store)   # before the host check and any build
+    _check_isa(impl, machine, store, result.vocabs.get("isa_extensions", []))   # before the host check and any build
     app = store.application_of(impl)
     for name in ("timeout", "correctness_timeout", "cachegrind_timeout", "features_timeout"):
         value = getattr(args, name)
@@ -419,15 +419,12 @@ def _verified_lane(machine, claimed):
     return f"{lease} (verified: affinity, bind:{node}, lease held, generation {generation})"
 
 
-def _check_isa(impl, machine, store):
+def _check_isa(impl, machine, store, known):
     """Never build or run code the machine may not execute: the extensions its intrinsics need,
     plus what its build flags let the compiler use (auto-vectorizing for a -march). The build
     runs on the machine itself, so -march=native adds nothing the machine lacks."""
     need = isa.required(impl, store.get)
-    known = vocab.load_all(paths.VOCAB)[0].get("isa_extensions", [])
-    flags = impl["build"]["flags"]
-    extra, problems = isa.build_needs(flags, known)
-    problems = [p for p in problems if not p.startswith("-march=native")]
+    extra, problems = isa.build_needs(impl["build"]["flags"], known, native_ok=True)
     if problems:
         raise Failure(f"implementation {impl['id']!r}: {problems[0]}")
     for ext in sorted(extra):

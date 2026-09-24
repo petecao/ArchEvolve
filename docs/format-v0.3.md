@@ -223,9 +223,10 @@ set, and explicit `-m<extension>` and `-mno-<extension>` flags apply on top of i
 they appear, later ones winning. Enabling an extension enables what it implies (`-mavx512f`
 implies AVX2 and everything below it), `-mno-<extension>` also removes every extension that
 implies it (`-mno-sse4` removes SSE4.1, SSE4.2, and the AVX family), and
-`-mgeneral-regs-only` removes them all. An unknown `-march` value, and `-march=native`
-(which depends on the build host), fail with a message naming them instead of passing
-silently. When unsure, the tool enables less: a build may be refused, never passed wrongly.
+`-mgeneral-regs-only` removes them all; `-m32`/`-m16` drop the baseline and a later
+`-m64` restores it. An unknown `-march` value always fails validation with a message naming
+it, instead of passing silently; `-march=native` (which depends on the build host) fails
+only when intrinsics need an extension. When unsure, the tool enables less: a build may be refused, never passed wrongly.
 
 `swdb profile` refuses, before the host check and before any build, when the machine lists
 no `cpu.flags` or lacks an extension the code may use: those the intrinsics need, plus

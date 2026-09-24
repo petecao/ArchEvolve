@@ -38,15 +38,20 @@ class Context:
     vocabs: object
     records_dir: Path
     home: Path
-    valid: set = None   # id() of every record that passed its schema; None means all of them
+    valid: set   # paths of the records that passed their schema
 
     def passed(self, record_id, kind):
-        """The data of a record of this kind that passed its schema, or None: rules read other
-        records' fields only once those fields are known to have their shape."""
+        """The data of a record of this kind that passed its schema, or None. Rules read other
+        records only through this, so a malformed record is reported, never crashed on."""
         found = self.store.by_id.get(record_id)
-        if found is None or found.kind != kind or (self.valid is not None and id(found) not in self.valid):
+        if found is None or found.kind != kind or found.rel not in self.valid:
             return None
         return found.data
+
+    def application(self, data):
+        """The application behind a record, if it passed its schema."""
+        app = self.store.application_of(data)
+        return app if app is not None and self.passed(app.get("id"), "application") is app else None
 
 
 def check(record, ctx):
@@ -70,11 +75,11 @@ def _deprecated_by(record, ctx):
     target = record.data.get("deprecated_by")
     if target is None:
         return
-    found = ctx.store.get(target)
+    found = ctx.store.by_id.get(target)
     if found is None:
         yield Problem(record.rel, "deprecated_by", f"replacement {target!r} does not exist")
-    elif found["kind"] != record.kind:
-        yield Problem(record.rel, "deprecated_by", f"replacement {target!r} is a {found['kind']}, not a {record.kind}")
+    elif found.kind != record.kind:
+        yield Problem(record.rel, "deprecated_by", f"replacement {target!r} is a {found.kind}, not a {record.kind}")
 
 
 def _provenance(record):
@@ -110,13 +115,13 @@ def _evidence_refs(node, where):
 
 def _kernel(record, ctx):
     data = record.data
-    impl = ctx.store.get(data["baseline_implementation"], "implementation")
+    impl = ctx.passed(data["baseline_implementation"], "implementation")
     if impl is not None and impl.get("kernel") != data["id"]:
         yield Problem(record.rel, "baseline_implementation",
                       f"{data['baseline_implementation']!r} implements kernel {impl.get('kernel')!r}, not {data['id']!r}")
     yield from _regex(record.rel, "correctness_check.pass_regex", data["correctness_check"]["pass_regex"])
     code = data["correctness_check"]["verifier"]["code"]
-    yield from _code_ref(record, ctx, code, "correctness_check.verifier.code", ctx.store.application_of(data))
+    yield from _code_ref(record, ctx, code, "correctness_check.verifier.code", ctx.application(data))
 
 
 def _regex(rel, where, text, groups=None):
@@ -160,7 +165,7 @@ def _implementation(record, ctx):
         yield Problem(rel, "run.index_stream.pattern", f"{stream['pattern']!r} is not an access pattern of this implementation")
     yield from _required_isa(record, ctx)
     yield from _applies(record, ctx, set(loops), set(patterns))
-    app = ctx.store.application_of(data)
+    app = ctx.application(data)
     for i, code in enumerate(data["code"]):
         yield from _code_ref(record, ctx, code, f"code[{i}]", app)
     for i, loop in enumerate(data["loops"]):
@@ -183,6 +188,9 @@ def _applies(record, ctx, loops, patterns):
             if target != "input":
                 yield Problem(record.rel, f"{where}.target",
                               f"strategy {chosen['id']!r} targets input, so its target is 'input', not {target!r}")
+        elif wanted not in ids:
+            yield Problem(record.rel, f"{where}.target", f"strategy {chosen['id']!r} targets {wanted}, which "
+                                                          "implementations cannot apply yet")
         elif target not in ids[wanted]:
             other = "loop" if wanted == "access_pattern" else "access_pattern"
             what = _NAMED[other] if target in ids[other] else f"not {_NAMED[wanted]} of this implementation"
@@ -199,10 +207,12 @@ def _applies(record, ctx, loops, patterns):
 
 
 def _required_isa(record, ctx):
+    """The build flags must be readable (no unknown -march), and must enable every extension
+    the intrinsics need. -march=native is fine unless intrinsics need something: then the
+    tool cannot tell whether the build enables it."""
     need = isa.required(record.data, ctx.passed)
-    if not need:
-        return
-    have, problems = isa.enabled(record.data["build"]["flags"], ctx.vocabs.get("isa_extensions", []))
+    have, problems = isa.enabled(record.data["build"]["flags"], ctx.vocabs.get("isa_extensions", []),
+                                 native_ok=not need)
     for reason in problems:
         yield Problem(record.rel, "build.flags", reason)
     if problems:
@@ -275,7 +285,7 @@ def resolve_code(code, records_dir, home, app):
     if code["root"] == "records":
         return Path(records_dir) / code["path"], None
     if app is None:
-        return None, "its application record is missing"
+        return None, "its application record is missing or does not pass its schema"
     local = app["source"].get("local_path")
     if not local:
         return None, f"application {app['id']!r} has no local copy (source.local_path is null)"
@@ -315,14 +325,14 @@ def _profile(record, ctx):
         entry = ctx.vocabs.entry("metrics", metric["name"])
         if entry and metric["unit"] != entry["unit"]:
             yield Problem(rel, f"metrics[{i}].unit", f"metric {metric['name']} is measured in {entry['unit']!r}, not {metric['unit']!r}")
-    impl = ctx.store.get(data["implementation"], "implementation")
-    inp = ctx.store.get(data["input"], "input")
+    impl = ctx.passed(data["implementation"], "implementation")
+    inp = ctx.passed(data["input"], "input")
     if impl and inp:
         defined = set(inp.get("properties", {}))
         for name in sorted(implementation_symbols(impl)):
             if name not in defined:
                 yield Problem(rel, "input", f"input {inp['id']!r} does not define {name!r}, which the implementation's formulas use")
-    machine = ctx.store.get(data["machine"], "machine")
+    machine = ctx.passed(data["machine"], "machine")
     if machine:
         available = machine.get("counters", {}).get("hardware_counters_available", {}).get("value")
         if available is not True and data["bottleneck"]["basis"] in {"measured", "simulated"}:
@@ -355,8 +365,7 @@ def implementation_symbols(impl, loops=False):
 # --- strategies ---------------------------------------------------------------------
 
 def _strategy(record, ctx):
-    others = [(r.rel, r.data) for r in ctx.store.of_kind("strategy")
-              if r is not record and ctx.passed(r.id, "strategy") is r.data]
+    others = [(r.rel, r.data) for r in ctx.store.of_kind("strategy") if r is not record and r.rel in ctx.valid]
     for where, reason in strategy.problems(record.data, ctx.vocabs, others):
         yield Problem(record.rel, where, reason)
 

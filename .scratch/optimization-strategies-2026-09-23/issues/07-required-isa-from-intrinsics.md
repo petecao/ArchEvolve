@@ -17,6 +17,15 @@ can't run the code.
 
 ## Comments
 
+- 2026-09-23 (ET), second review pass:
+  - An unknown `-march` now fails validation even without intrinsics, and a later `-m64`
+    restores the baseline.
+  - `-march=native` is accepted structurally (`native_ok`): always by `swdb profile`, and
+    by validation when no intrinsic needs an extension.
+  - Every rule reads other records only through `Context.passed`, so a malformed
+    referenced record is reported instead of crashing (`tests/test_invalid_references.py`).
+  - The database staleness key hashes the whole `swdb` package.
+
 - 2026-09-23 (ET), code review: build flags are now read as GCC reads them. The last
   `-march` gives the starting set, and explicit `-m`/`-mno-` flags apply on top of it
   wherever they appear. `-mno-sse4`, `-mgeneral-regs-only`, and `-m32`/`-m16` are

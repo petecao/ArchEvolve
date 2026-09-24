@@ -8,8 +8,8 @@ recreates every table from the YAML records each time, so the file never drifts 
 (ADR 0002). The `meta` table names the records folder and a fingerprint of its files (path,
 size, and modification time of each); `swdb find`, `swdb implementations`, `swdb strategies`, and `swdb sql`
 rebuild the file first unless the folder and the fingerprint match the folder being queried
-and the file was built by the current database code (so a newer `swdb` never queries a
-file that lacks its tables or fills them differently).
+and the file was built by the same `swdb` code (so a newer `swdb` never queries a file that
+lacks its tables or fills them differently).
 
 Run your own SQL with `swdb sql "<query>" [--format json]`, or open the file with the
 `sqlite3` shell. Values that are JSON in the records (semantic values, property values)
@@ -24,7 +24,7 @@ are stored as JSON text, so `true`, `false`, and `null` stay distinct: compare w
 | Column | Meaning |
 |---|---|
 | `key` | `records_dir` (the absolute records folder the file was built from), `fingerprint`, or `builder` |
-| `value` | the folder; the sha256 over every record file's path, size, and modification time; or the sha256 of the code that builds the database (`swdb/db.py` and `swdb/strategy.py`) |
+| `value` | the folder; the sha256 over every record file's path, size, and modification time; or the sha256 of the `swdb` package's code, so any change to the tool rebuilds the file |
 
 ### `records`
 
