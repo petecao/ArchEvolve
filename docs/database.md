@@ -1,6 +1,6 @@
 # The SQLite database
 
-Updated: 2026-09-22
+Updated: 2026-09-23
 
 `swdb build` writes `build/swdb.sqlite` next to the repo's `records/` folder (another
 records folder `X` gets `build/swdb-X.sqlite`; `build/` is ignored by git). It deletes and
@@ -31,7 +31,7 @@ One row per record, whatever its kind.
 | Column | Meaning |
 |---|---|
 | `id` | record ID |
-| `kind` | record kind (application, kernel, implementation, input, machine, profile) |
+| `kind` | record kind (application, kernel, implementation, input, machine, profile, strategy, intrinsic) |
 | `status` | draft, reviewed, or deprecated |
 | `path` | file path relative to the records folder |
 | `json` | the whole record as JSON (query it with `json_extract`) |
@@ -143,6 +143,56 @@ One row per step of each access pattern's chain, in order.
 | `counters_available` | 1 if hardware counters are available to the profiling user, 0 if not, NULL if unknown |
 | `json` | the whole record |
 
+### `machine_flags`
+
+One row per ISA flag of each machine (`cpu.flags`; empty for a 0.2 machine without flags).
+
+| Column | Meaning |
+|---|---|
+| `machine` | machine ID |
+| `flag` | one `lscpu` flag name, e.g. `avx512f` |
+
+### `strategies`
+
+| Column | Meaning |
+|---|---|
+| `id` | strategy ID |
+| `name` | human name |
+| `target` | vocabulary `strategy_targets` |
+| `json` | the whole record: effect, parameters, preconditions, benefits_when |
+
+### `strategy_effects`
+
+One row per effect item, in order.
+
+| Column | Meaning |
+|---|---|
+| `strategy` | strategy ID |
+| `position` | 0-based position in `effect` |
+| `kind` | vocabulary `effect_kinds` |
+| `json` | the effect item |
+
+### `intrinsics`
+
+| Column | Meaning |
+|---|---|
+| `id` | intrinsic ID (the C name without leading underscores) |
+| `name` | exact C name |
+| `isa_family` | vocabulary `isa_families` |
+| `isa_extensions` | JSON list of the extensions it needs (also one row each in `intrinsic_extensions`) |
+| `header` | the header that declares it |
+| `memory_kind` | vocabulary `intrinsic_memory_kinds` |
+| `address_shape` | the address shape the instruction forms, or null |
+| `element_bits`, `lanes` | element width and elements per call, or null |
+| `json` | the whole record |
+
+### `intrinsic_extensions`
+
+| Column | Meaning |
+|---|---|
+| `intrinsic` | intrinsic ID |
+| `extension` | one ISA extension it needs (vocabulary `isa_extensions`) |
+
 ### `profiles`
 
 | Column | Meaning |
@@ -176,12 +226,35 @@ One row per metric of each profile.
 | `scope` | count scope, where one applies |
 | `tool` | the tool that produced it |
 
+## Queries
+
+Every query prints YAML, or JSON with `--format json`, and rebuilds the database first when
+it is stale.
+
+- `swdb find [--shape S]... [--update U] [--semantic FIELD=VALUE]... [--kernel K]`: access
+  patterns with their steps and semantics.
+- `swdb find --strategy <id> [other filters]`: where an access-pattern strategy could apply.
+  One entry per access pattern with `implementation`, `pattern`, `outcome` (`legal` or
+  `undetermined`), and `unknown_fields`; illegal patterns are left out.
+- `swdb implementations <kernel> [--require FIELD=VALUE]...`: a kernel's implementations
+  whose every access pattern has each required value with a known basis.
+- `swdb strategies --pattern <implementation>/<pattern>`: every access-pattern strategy,
+  one entry each, with `strategy`, `outcome` (`legal`, `illegal`, or `undetermined`),
+  `reasons` (why it is illegal), `unknown_fields` (the semantic fields whose basis is
+  unknown, when undetermined), `check_by_hand` (the strategy's unchecked preconditions,
+  always listed), and `benefits_when` (reported benefit conditions, shown and never used to
+  filter). Legality rules: [format-v0.3.md](format-v0.3.md), section 12.
+
 ## Examples
 
 ```
 # the kernels whose implementations include a ranged-indirect gather
 swdb sql "select distinct kernel, implementation from steps join access_patterns using (implementation, pattern)
           where address_shape = 'ranged_indirect'"
+
+# intrinsics a machine can run (every extension is among its flags)
+swdb sql "select i.id from intrinsics i where not exists (select 1 from intrinsic_extensions e
+          where e.intrinsic = i.id and e.extension not in (select flag from machine_flags where machine = 'mbit10'))"
 
 # median time per thread count for one implementation on every input
 swdb sql "select p.input, m.threads, m.value from metrics m join profiles p on p.id = m.profile

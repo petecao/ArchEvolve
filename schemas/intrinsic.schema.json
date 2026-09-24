@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "intrinsic",
+  "title": "Intrinsic: one ISA instruction wrapper that code can call",
+  "description": "The ID is the C name without its leading underscores (the ID rule allows no leading underscore); `name` keeps the exact C name.",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "intrinsic"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^_*[A-Za-z][A-Za-z0-9_]*$",
+      "description": "The exact C name, e.g. _mm512_i32gather_ps."
+    },
+    "isa_family": {
+      "type": "string",
+      "x-vocab": "isa_families"
+    },
+    "isa_extensions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "x-vocab": "isa_extensions"
+      },
+      "description": "Every extension the intrinsic needs, as lscpu flag names; a machine can run it when its cpu.flags include all of them."
+    },
+    "header": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The header that declares it, e.g. immintrin.h."
+    },
+    "memory_kind": {
+      "type": "string",
+      "x-vocab": "intrinsic_memory_kinds"
+    },
+    "address_shape": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-vocab": "address_shapes",
+      "description": "The address shape the instruction itself forms (a gather's per-lane indices are single_valued_indirect); null when it takes one address the caller computed, or touches no memory."
+    },
+    "element_bits": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "description": "Width of one element in bits; null when the intrinsic has no elements (a prefetch moves a cache line)."
+    },
+    "lanes": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "description": "Elements per call; null when the intrinsic has no elements."
+    }
+  },
+  "required": [
+    "name",
+    "isa_family",
+    "isa_extensions",
+    "header",
+    "memory_kind",
+    "address_shape",
+    "element_bits",
+    "lanes"
+  ]
+}

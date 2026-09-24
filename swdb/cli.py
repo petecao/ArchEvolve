@@ -47,6 +47,12 @@ def main(argv=None):
     sub.add_argument("--semantic", action="append", default=[], metavar="FIELD=VALUE",
                      help="a semantic value the pattern must have, e.g. loop_carried_dependencies=false (repeatable)")
     sub.add_argument("--kernel", help="only this kernel's implementations")
+    sub.add_argument("--strategy", help="an access-pattern strategy: report where it is legal or undetermined "
+                                        "(illegal patterns are left out)")
+
+    sub = command("strategies", "list optimization strategies with their legality for one target", db=True, fmt=True)
+    which = sub.add_mutually_exclusive_group(required=True)
+    which.add_argument("--pattern", metavar="IMPL/PATTERN", help="access-pattern strategies for one access pattern")
 
     sub = command("implementations", "list a kernel's implementations whose semantics meet the requirements",
                   db=True, fmt=True)
@@ -143,8 +149,12 @@ def _dispatch(args):
     if args.command == "find":
         _ensure_db(records, db_path)
         found = db.find(db_path, shapes=args.shape, update=args.update,
-                        semantics=[_pair(text) for text in args.semantic], kernel=args.kernel)
+                        semantics=[_pair(text) for text in args.semantic], kernel=args.kernel,
+                        strategy=args.strategy)
         return _emit(found, args.format)
+    if args.command == "strategies":
+        _ensure_db(records, db_path)
+        return _emit(db.strategies_for_pattern(db_path, args.pattern), args.format)
     if args.command == "implementations":
         _ensure_db(records, db_path)
         found = db.implementations(db_path, args.kernel, [_pair(text) for text in args.require])

@@ -12,7 +12,12 @@ fixture in the tests. Rules run only on records that already passed their schema
 - an implementation's sweep_count_regex compiles and has exactly one capture group;
 - a metric's unit is the unit its vocabulary entry gives;
 - a profile's input defines every symbol its implementation's formulas use, and its
-  bottleneck is not `measured` or `simulated` while the machine has no counters.
+  bottleneck is not `measured` or `simulated` while the machine has no counters;
+- a strategy's effects suit its target, its preconditions name real semantic fields and
+  values, its benefits are reported and sourced, and no other strategy has the same target
+  and effect (swdb/strategy.py);
+- an intrinsic's ID is its C name without leading underscores, it cites a vendor reference
+  with a URI, and a memory_kind of none goes with address_shape null.
 """
 
 import hashlib
@@ -43,6 +48,10 @@ def check(record, ctx):
         yield from _implementation(record, ctx)
     elif kind == "profile":
         yield from _profile(record, ctx)
+    elif kind == "intrinsic":
+        yield from _intrinsic(record)
+    elif kind == "strategy":
+        yield from _strategy(record, ctx)
 
 
 def _deprecated_by(record, ctx):
@@ -282,3 +291,27 @@ def implementation_symbols(impl, loops=False):
             except (formula.FormulaError, TypeError):
                 pass
     return names
+
+
+# --- strategies ---------------------------------------------------------------------
+
+def _strategy(record, ctx):
+    from swdb import strategy
+
+    others = [(r.rel, r.data) for r in ctx.store.of_kind("strategy") if r is not record and "effect" in r.data]
+    for where, reason in strategy.problems(record.data, ctx.vocabs, others):
+        yield Problem(record.rel, where, reason)
+
+
+# --- intrinsics ---------------------------------------------------------------------
+
+def _intrinsic(record):
+    data, rel = record.data, record.rel
+    expected = data["name"].lstrip("_")
+    if data["id"] != expected:
+        yield Problem(rel, "id", f"an intrinsic's ID is its C name without leading underscores: {expected!r}")
+    if not any(p["kind"] == "vendor_reference" and p.get("uri") for p in data["provenance"]):
+        yield Problem(rel, "provenance", "an intrinsic cites a vendor reference: a provenance entry of kind "
+                                         "vendor_reference with a uri")
+    if data["memory_kind"] == "none" and data["address_shape"] is not None:
+        yield Problem(rel, "address_shape", "an intrinsic that touches no memory has address_shape null")

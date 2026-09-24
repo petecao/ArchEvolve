@@ -1,0 +1,5 @@
+name: strategy_targets
+description: What an optimization strategy acts on.
+values:
+  - value: access_pattern
+    meaning: One access pattern of an implementation; legality is checked against its steps and semantics.

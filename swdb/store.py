@@ -12,7 +12,8 @@ from swdb import yamlio
 from swdb.problems import Problem
 
 PLURAL = {"application": "applications", "kernel": "kernels", "implementation": "implementations",
-          "input": "inputs", "machine": "machines", "profile": "profiles"}
+          "input": "inputs", "machine": "machines", "profile": "profiles",
+          "strategy": "strategies", "intrinsic": "intrinsics"}
 
 
 @dataclass

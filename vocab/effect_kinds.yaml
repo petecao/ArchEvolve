@@ -1,0 +1,7 @@
+name: effect_kinds
+description: The typed changes an optimization strategy makes to its target (its strategy effect).
+values:
+  - value: reshape
+    meaning: Changes the address shape of one step of the target access pattern (field step, shape_before, shape_after).
+  - value: add_pattern
+    meaning: Adds an access pattern, such as a packing pass, whose pattern class it states (fields address_shapes, update_kind).

@@ -36,6 +36,10 @@ Changes from 0.2 (a **minor** release under the rule in section 2: only addition
 0.2 record stays valid without an edit):
 
 - `schema_version` may be `"0.3"`; `"0.2"` is still accepted.
+- New record kind `strategy` (section 12) and vocabularies `strategy_targets` and
+  `effect_kinds` (ADR 0004).
+- New record kind `intrinsic` (section 11), vocabularies `isa_families`, `isa_extensions`,
+  and `intrinsic_memory_kinds`, and provenance kind `vendor_reference`.
 - Machines: optional `cpu.flags`, the CPU's ISA flags as `lscpu` names them. A machine
   record at 0.3 must list them; `swdb capture-machine` writes 0.3 records with flags.
 
@@ -273,3 +277,80 @@ semantic values appear as values, with their basis and evidence under the added 
 profile and are explicitly unknown when there is none. Added keys (`address_chain`,
 `pattern_class`, `element_count_formula`, `semantics_evidence`, and the filled `code` and
 `environment`) extend the format without renaming anything.
+
+## 11. `intrinsic`
+
+One ISA instruction wrapper that code can call, recorded once and shared by every strategy
+and implementation that names it. Folder `intrinsics/`.
+
+| Field | Meaning |
+|---|---|
+| `name` | the exact C name, e.g. `_mm512_i32gather_ps`; the record's `id` is this name without its leading underscores (`mm512_i32gather_ps`), because IDs cannot start with `_` |
+| `isa_family` | vocab `isa_families` (`x86` now; Arm and RISC-V are new values, not a schema change) |
+| `isa_extensions` | the extensions it needs, vocab `isa_extensions`, named as `lscpu` prints them (`avx512f`, `sse`); a machine can run it when its `cpu.flags` include all of them |
+| `header` | the header that declares it, e.g. `immintrin.h` |
+| `memory_kind` | vocab `intrinsic_memory_kinds` (gather, scatter, masked_load, masked_store, prefetch, non_temporal_store, load, store, none) |
+| `address_shape` | vocab `address_shapes`: the shape the instruction itself forms (a gather's per-lane indices are `single_valued_indirect`); null when it takes one address the caller computed (a prefetch, a plain load) or touches no memory |
+| `element_bits` | width of one element in bits, or null (a prefetch moves a cache line) |
+| `lanes` | elements per call, or null |
+
+Rules: the ID equals `name` without leading underscores; at least one provenance entry of
+kind `vendor_reference` with a `uri` (for x86, the Intel Intrinsics Guide entry); a
+`memory_kind` of `none` has `address_shape: null`.
+
+## 12. `strategy`
+
+An optimization strategy: a reusable technique for changing how code touches memory. It
+holds no code and never runs (ADR 0004). Folder `strategies/`. Its identity is its
+`target` plus its `effect`; parameters (distances, tile sizes, lanes) never make a new
+strategy.
+
+| Field | Meaning |
+|---|---|
+| `name` | human name |
+| `target` | vocab `strategy_targets`: what it acts on (`access_pattern`) |
+| `effect` | a non-empty list of typed changes (below) |
+| `parameters` | list of `name` (lower case, `_`), `meaning`, `unit` (or null); values are given where the strategy is applied |
+| `preconditions` | `requires_shapes`, `requires_update_kinds`, `requires_semantics`, `unchecked` (below) |
+| `benefits_when` | optional list of reported benefit conditions (below) |
+
+Each `effect` item has a `kind` (vocab `effect_kinds`), that kind's fields, and an optional
+`note`; a field of another kind is an error.
+
+| Kind | Fields | Meaning |
+|---|---|---|
+| `reshape` | `step`, `shape_before`, `shape_after` | the step at position `step` changes its address shape (vocab `address_shapes`) from `shape_before` to `shape_after`; `step` counts from 0 at the first step, and a negative `step` counts from the end (`-1` is the target step) |
+| `add_pattern` | `address_shapes`, `update_kind` | the strategy adds an access pattern of this pattern class (its steps' shapes, first to last, and its update kind), such as a packing pass |
+
+Effects must suit the target: an `access_pattern` strategy takes `reshape` and
+`add_pattern`.
+
+`preconditions`:
+
+- `requires_shapes`: address shapes some step of the target pattern must have.
+- `requires_update_kinds` (optional): the update kinds the target pattern may have; absent
+  or empty means any.
+- `requires_semantics`: list of `field` (one of the seven semantic facts of section 6) and
+  `value` (true or false for the boolean facts; a vocab `orderings` or
+  `numerical_requirements` value for the other two). An unknown field or value is an error.
+- `unchecked`: conditions the tool cannot check, in words. They are always listed as
+  "check by hand".
+
+Each `benefits_when` item: `condition` (in words), `terms` (the profile metrics, input
+properties, or machine cache sizes `l1d_bytes`, `l2_bytes`, `llc_bytes` the condition is
+written in), `basis` (always `reported`), and `source` (the ID of this record's provenance
+entry that reports it, of kind `paper`, `human_report`, or `vendor_reference`). A strategy
+stores only reported benefit; measured benefit comes from profiles.
+
+Rules: every strategy has at least one provenance entry of kind `paper`, `human_report`, or
+`vendor_reference`; parameter names are unique; a reshape changes the shape; and no two
+strategies have equal targets and equal effect sets (each item's kind and fields,
+ignoring notes and parameter names and values). A duplicate fails and names the existing
+strategy.
+
+**Legality** of an access-pattern strategy for one access pattern (`swdb strategies`,
+`swdb find --strategy`): `illegal` when a required shape is absent, the update kind is not
+allowed, an effect's `step` does not exist or (for `reshape`) does not have
+`shape_before`, or a required semantic value is known and different; otherwise
+`undetermined` when a required semantic value has basis `unknown` (those fields are named);
+otherwise `legal`. Unknown never counts as false.

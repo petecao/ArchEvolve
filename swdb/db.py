@@ -12,9 +12,7 @@ import time
 from pathlib import Path
 
 from swdb.store import Store, record_files
-
-SEMANTIC_FIELDS = ["duplicate_target_indices", "index_modified_during_loop", "loop_carried_dependencies",
-                   "shared_target_between_threads", "atomic_updates_required", "ordering", "numerical_requirement"]
+from swdb.strategy import SEMANTIC_FIELDS, entry, pattern_outcome
 
 SCHEMA = f"""
 CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
@@ -41,6 +39,13 @@ CREATE TABLE access_patterns (implementation TEXT NOT NULL, pattern TEXT NOT NUL
 CREATE TABLE steps (implementation TEXT NOT NULL, pattern TEXT NOT NULL, position INTEGER NOT NULL,
     array_name TEXT, role TEXT, element_type TEXT, element_bytes INTEGER, element_count TEXT, layout TEXT,
     address_shape TEXT, stride INTEGER, index_transform TEXT, PRIMARY KEY (implementation, pattern, position));
+CREATE TABLE machine_flags (machine TEXT NOT NULL, flag TEXT NOT NULL, PRIMARY KEY (machine, flag));
+CREATE TABLE intrinsics (id TEXT PRIMARY KEY, name TEXT, isa_family TEXT, isa_extensions TEXT, header TEXT,
+    memory_kind TEXT, address_shape TEXT, element_bits INTEGER, lanes INTEGER, json TEXT NOT NULL);
+CREATE TABLE strategies (id TEXT PRIMARY KEY, name TEXT, target TEXT, json TEXT NOT NULL);
+CREATE TABLE strategy_effects (strategy TEXT NOT NULL, position INTEGER NOT NULL, kind TEXT NOT NULL, json TEXT NOT NULL,
+    PRIMARY KEY (strategy, position));
+CREATE TABLE intrinsic_extensions (intrinsic TEXT NOT NULL, extension TEXT NOT NULL, PRIMARY KEY (intrinsic, extension));
 """
 
 
@@ -168,6 +173,20 @@ class _Insert:
         con.execute("INSERT INTO machines VALUES (?,?,?,?,?,?,?,?)",
                     (d["id"], d["hostname"], d["cpu"]["model"], d["cpu"]["sockets"], d["cpu"]["cores_per_socket"],
                      llc_bytes(d), _flag(d["counters"]["hardware_counters_available"]["value"]), json.dumps(d)))
+        con.executemany("INSERT INTO machine_flags VALUES (?,?)", [(d["id"], f) for f in d["cpu"].get("flags", [])])
+
+    @staticmethod
+    def strategy(con, d, *_):
+        con.execute("INSERT INTO strategies VALUES (?,?,?,?)", (d["id"], d["name"], d["target"], json.dumps(d)))
+        con.executemany("INSERT INTO strategy_effects VALUES (?,?,?,?)",
+                        [(d["id"], i, e["kind"], json.dumps(e)) for i, e in enumerate(d["effect"])])
+
+    @staticmethod
+    def intrinsic(con, d, *_):
+        con.execute("INSERT INTO intrinsics VALUES (?,?,?,?,?,?,?,?,?,?)",
+                    (d["id"], d["name"], d["isa_family"], json.dumps(d["isa_extensions"]), d["header"],
+                     d["memory_kind"], d["address_shape"], d["element_bits"], d["lanes"], json.dumps(d)))
+        con.executemany("INSERT INTO intrinsic_extensions VALUES (?,?)", [(d["id"], e) for e in d["isa_extensions"]])
 
     @staticmethod
     def profile(con, d, *_):
@@ -215,7 +234,9 @@ def _semantic_column(name):
     return name
 
 
-def find(db_path, shapes=(), update=None, semantics=(), kernel=None):
+def find(db_path, shapes=(), update=None, semantics=(), kernel=None, strategy=None):
+    """Access patterns matching the filters. With `strategy` (an access-pattern strategy ID),
+    each is reported with its legality outcome instead, and illegal ones are left out."""
     where, args = [], []
     for shape in shapes:
         where.append("EXISTS (SELECT 1 FROM steps s WHERE s.implementation = p.implementation "
@@ -237,7 +258,16 @@ def find(db_path, shapes=(), update=None, semantics=(), kernel=None):
     con = _connect(db_path)
     try:
         rows = con.execute(query + " ORDER BY p.implementation, p.pattern", args).fetchall()
-        return [_pattern_out(con, row) for row in rows]
+        if strategy is None:
+            return [_pattern_out(con, row) for row in rows]
+        chosen = _strategy(con, strategy, "access_pattern")
+        found = []
+        for row in rows:
+            outcome, _, unknown = pattern_outcome(chosen, _pattern_facts(con, row))
+            if outcome != "illegal":
+                found.append({"implementation": row["implementation"], "pattern": row["pattern"],
+                              "outcome": outcome, "unknown_fields": unknown})
+        return found
     finally:
         con.close()
 
@@ -275,5 +305,60 @@ def implementations(db_path, kernel, requirements):
                               "baseline": bool(impl["is_baseline"]), "origin": impl["origin"],
                               "meets": {name: value for name, value in requirements}})
         return found
+    finally:
+        con.close()
+
+
+# --- strategies ---------------------------------------------------------------------
+
+def _usage(message):
+    from swdb.cli import UsageError
+
+    return UsageError(message)
+
+
+def _failure(message):
+    from swdb.cli import Failure
+
+    return Failure(message)
+
+
+def _strategy(con, strategy_id, target):
+    row = con.execute("SELECT json FROM strategies WHERE id = ?", (strategy_id,)).fetchone()
+    if row is None:
+        raise _failure(f"strategy {strategy_id!r} does not exist")
+    data = json.loads(row["json"])
+    if data["target"] != target:
+        raise _usage(f"strategy {strategy_id!r} targets {data['target']}, not {target}")
+    return data
+
+
+def _strategies(con, target):
+    return [json.loads(r["json"]) for r in con.execute("SELECT json FROM strategies WHERE target = ? ORDER BY id", (target,))]
+
+
+def _pattern_facts(con, row):
+    steps = con.execute("SELECT address_shape FROM steps WHERE implementation = ? AND pattern = ? ORDER BY position",
+                        (row["implementation"], row["pattern"])).fetchall()
+    return {"steps": [{"address_shape": s["address_shape"]} for s in steps], "update_kind": row["update_kind"],
+            "semantics": json.loads(row["semantics_json"])}
+
+
+def _split(text, what):
+    if "/" not in text:
+        raise _usage(f"expected <implementation>/<{what}>, got {text!r}")
+    return text.split("/", 1)
+
+
+def strategies_for_pattern(db_path, target):
+    """Every access-pattern strategy, with its legality for one access pattern."""
+    impl, pattern = _split(target, "pattern")
+    con = _connect(db_path)
+    try:
+        row = con.execute("SELECT * FROM access_patterns WHERE implementation = ? AND pattern = ?", (impl, pattern)).fetchone()
+        if row is None:
+            raise _failure(f"access pattern {target!r} does not exist")
+        facts = _pattern_facts(con, row)
+        return [entry(s, *pattern_outcome(s, facts)) for s in _strategies(con, "access_pattern")]
     finally:
         con.close()

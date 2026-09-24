@@ -13,3 +13,7 @@ values:
     meaning: A host that runs profiles, as captured from the host itself.
   - value: profile
     meaning: Measurements of one implementation on one input, machine, build, and thread count.
+  - value: strategy
+    meaning: An optimization strategy, a reusable technique identified by its target and effect; it holds no code.
+  - value: intrinsic
+    meaning: One ISA instruction wrapper that code can call, with the ISA extensions it needs and the memory access it performs.
