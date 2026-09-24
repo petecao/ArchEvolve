@@ -1,8 +1,8 @@
 # Spec: Optimization strategies and intrinsics
 
 - Created: 2026-09-23
-- Updated: 2026-09-23
-- Status: ready-for-agent
+- Updated: 2026-09-24
+- Status: resolved (all seven tickets; see `map.md`)
 - Owner: Yan-Ru Jhou
 - Glossary: `CONTEXT.md` (Optimization strategy, Strategy effect, Intrinsic; update kind
   `prefetch`). Decisions: ADR 0001 (kernel identity), ADR 0002 (YAML master copy),

@@ -1,7 +1,7 @@
 # Map: Optimization strategies and intrinsics
 
 Created: 2026-09-23
-Updated: 2026-09-23
+Updated: 2026-09-24
 Spec: `spec.md` (ready-for-agent). Glossary: `CONTEXT.md`. Decision: ADR 0004.
 
 | # | Ticket | Blocked by | Status |
@@ -14,7 +14,15 @@ Spec: `spec.md` (ready-for-agent). Glossary: `CONTEXT.md`. Decision: ADR 0004.
 | 06 | Implementations apply strategies | 04 | resolved |
 | 07 | Required ISA from intrinsics | 03, 05 | resolved |
 
-Frontier now: 01. After 01: 02, 03, 05 in parallel.
+All seven tickets resolved 2026-09-23/24 (ET) on branch `optimization-strategies`, merged
+into `main`. Two code-review passes were addressed (ticket Comments on 02, 06, 07).
+
+Evaluation (2026-09-24 00:18 ET): the full suite passes on the Mac (312 passed, 3 skipped)
+and on mbit10 at commit 9c3d616 (313 passed, 2 skipped, including the lab-host profile
+tests). The mbit10 run was inside socket lane node1 (lease generation 358, load 1.85 at
+start). The other lane held a MemAcc job. It used system jsonschema 4.10.3 and pytest from
+`/data1/yanruj/venvs/evolveswdb-test`. Raw output:
+`/data1/yanruj/EvolveSWDB_runs/evolveswdb-optstrat-suite-20260924t040553z/`.
 
 ## Context pointers
 
