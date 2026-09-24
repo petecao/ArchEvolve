@@ -1,0 +1,54 @@
+kind: strategy
+schema_version: '0.3'
+id: vertex_reordering
+status: draft
+deprecated_by: null
+created: '2026-09-23'
+updated: '2026-09-23'
+provenance:
+- id: wei-2016
+  kind: paper
+  description: 'H. Wei, J. X. Yu, C. Lu, and X. Lin, "Speedup Graph Processing by Graph Ordering"
+    (Gorder), SIGMOD 2016, pp. 1813-1828: finds a permutation of the nodes "keeping nodes that will be
+    frequently accessed together locally, to minimize the CPU cache miss ratio", "without changing the
+    graph algorithms (implementations) and the data structures used", by renumbering node IDs; reports a
+    best speedup above 2 over nine other orderings; orderings are computed offline.'
+  uri: https://doi.org/10.1145/2882903.2915220
+- id: balaji-2018
+  kind: paper
+  description: 'V. Balaji and B. Lucia, "When is Graph Reordering an Optimization? Studying the Effect of
+    Lightweight Graph Reordering Across Applications and Input Graphs," IISWC 2018, pp. 203-214: "an
+    input graph must be skewed and its hubs must not already be tightly-packed before reordering";
+    pull-mode applications that process a large fraction of edges per iteration (PageRank, Radii)
+    benefit most, while push-style ones and ones that process few edges per iteration (BC, SSSP delta
+    stepping, BFS, KCore) do not; Gorder''s reordering took about 15 hours to cut one PageRank run from
+    12 s to 5 s, so it pays off only after thousands of runs.'
+  uri: https://doi.org/10.1109/IISWC.2018.8573478
+name: Vertex reordering
+target: input
+effect:
+- kind: reorder
+  properties:
+  - index_locality
+  index_locality: clustered
+  note: Vertex IDs are renumbered so vertices used together get nearby IDs (and neighbor lists are sorted
+    by the new IDs); the graph itself is unchanged.
+parameters: []
+preconditions:
+  requires_shapes: []
+  requires_semantics: []
+  unchecked:
+  - The kernel's result does not depend on vertex IDs, or it is mapped back to the original IDs before
+    the correctness check compares it.
+  - The input graph is skewed (a few hub vertices hold many edges) and its hubs are not already packed
+    together.
+  - The reordering cost is paid back over the runs that use the reordered graph.
+benefits_when:
+- condition: The graph's degree distribution is skewed and its hubs are not already packed together
+    (Balaji and Lucia predict no significant speedup when the hubs' Packing Factor is below 4).
+  terms:
+  - degree_distribution
+  - index_locality
+  - degree_skew
+  basis: reported
+  source: balaji-2018

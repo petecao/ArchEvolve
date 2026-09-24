@@ -43,6 +43,12 @@ def query(repo, *args):
     return json.loads(result.stdout)
 
 
+def packing_entry(repo, target):
+    """The packing entry of `swdb strategies --pattern <target>` (other strategies are listed too)."""
+    found = query(repo, "strategies", "--pattern", target)
+    return next(e for e in found if e["strategy"] == "packing")
+
+
 def other_strategy(repo, **changes):
     """A second strategy, different from packing, to vary."""
     data = repo.read(PACKING)
@@ -166,8 +172,7 @@ def test_different_effect_is_not_a_duplicate(repo):
     passes(repo.validate())
 
 
-def test_access_pattern_strategy_takes_only_pattern_effects(repo):
-    # loop and input effects arrive with their target types; add_pattern suits every target
+def test_target_must_be_in_the_vocabulary(repo):
     edit(repo, PACKING, lambda d: d.update(target="nowhere"))
     rejected(repo.validate(), "target", "not in vocabulary strategy_targets")
 
@@ -179,7 +184,7 @@ def test_add_writes_a_strategy_to_its_folder(repo, tmp_path):
     path.write_text(yaml.safe_dump(other_strategy(repo), sort_keys=False))
     passes(repo.swdb("add", path))
     assert (repo.path / "strategies" / "gather-hoist.yaml").is_file()
-    rows = query(repo, "sql", "select id, target from strategies order by id")
+    rows = query(repo, "sql", "select id, target from strategies where id in ('gather-hoist', 'packing') order by id")
     assert rows == [{"id": "gather-hoist", "target": "access_pattern"}, {"id": "packing", "target": "access_pattern"}]
 
 
@@ -206,7 +211,7 @@ def test_add_agent_duplicate_is_rejected_with_the_existing_id(repo, tmp_path):
 # --- legality queries ---------------------------------------------------------------
 
 def test_legal_for_a_read_only_gather_without_loop_carried_dependencies(repo):
-    [found] = query(repo, "strategies", "--pattern", "gapbs-pr-jacobi/gather-contrib")
+    found = packing_entry(repo, "gapbs-pr-jacobi/gather-contrib")
     assert found["strategy"] == "packing" and found["outcome"] == "legal"
     assert found["reasons"] == [] and found["unknown_fields"] == []
     assert len(found["check_by_hand"]) == len(repo.read(PACKING)["preconditions"]["unchecked"]) > 0
@@ -215,14 +220,14 @@ def test_legal_for_a_read_only_gather_without_loop_carried_dependencies(repo):
 
 
 def test_illegal_when_a_known_semantic_value_differs(repo):
-    [found] = query(repo, "strategies", "--pattern", "gapbs-pr-gs/gather-contrib")
+    found = packing_entry(repo, "gapbs-pr-gs/gather-contrib")
     assert found["outcome"] == "illegal"
     assert found["reasons"] == ["loop_carried_dependencies is true (code_reading), needs false"]
     assert found["check_by_hand"]     # prose is listed with every outcome
 
 
 def test_illegal_when_a_required_shape_is_absent(repo):
-    [found] = query(repo, "strategies", "--pattern", "gapbs-pr-jacobi/score-update")
+    found = packing_entry(repo, "gapbs-pr-jacobi/score-update")
     assert found["outcome"] == "illegal"
     assert "no step has address shape single_valued_indirect" in found["reasons"]
 
@@ -230,13 +235,13 @@ def test_illegal_when_a_required_shape_is_absent(repo):
 def test_illegal_when_the_reshaped_step_has_another_shape(repo):
     # bc's pbfs-succ-set ends in a ranged_indirect step, so step -1 cannot be reshaped
     edit(repo, PACKING, lambda d: d["preconditions"].update(requires_update_kinds=[]))
-    [found] = query(repo, "strategies", "--pattern", "gapbs-bc-brandes/pbfs-succ-set")
+    found = packing_entry(repo, "gapbs-bc-brandes/pbfs-succ-set")
     assert found["outcome"] == "illegal"
     assert "reshape needs step -1 to be single_valued_indirect, but it is ranged_indirect" in found["reasons"]
 
 
 def test_illegal_when_the_update_kind_is_not_allowed(repo):
-    [found] = query(repo, "strategies", "--pattern", "gapbs-bfs-do/td-parent-claim")
+    found = packing_entry(repo, "gapbs-bfs-do/td-parent-claim")
     assert found["outcome"] == "illegal"
     assert found["reasons"] == ["update kind is compare_and_swap, needs read"]
 
@@ -249,7 +254,7 @@ def unknown_loop_dependencies(repo):
 
 def test_undetermined_when_a_required_value_is_unknown(repo):
     unknown_loop_dependencies(repo)
-    [found] = query(repo, "strategies", "--pattern", "gapbs-pr-jacobi/gather-contrib")
+    found = packing_entry(repo, "gapbs-pr-jacobi/gather-contrib")
     assert found["outcome"] == "undetermined"
     assert found["unknown_fields"] == ["loop_carried_dependencies"] and found["reasons"] == []
     assert found["check_by_hand"]
@@ -261,14 +266,14 @@ def test_known_contradiction_beats_unknown(repo):
         sem["loop_carried_dependencies"] = {"value": None, "basis": "unknown"}
         sem["index_modified_during_loop"] = {"value": True, "basis": "code_reading"}
     edit(repo, JAC, change)
-    [found] = query(repo, "strategies", "--pattern", "gapbs-pr-jacobi/gather-contrib")
+    found = packing_entry(repo, "gapbs-pr-jacobi/gather-contrib")
     assert found["outcome"] == "illegal" and found["unknown_fields"] == []
 
 
 def test_strategies_query_prints_yaml_by_default(repo):
     result = repo.swdb("strategies", "--pattern", "gapbs-pr-jacobi/gather-contrib")
     passes(result)
-    assert yaml.safe_load(result.stdout)[0]["outcome"] == "legal"
+    assert {e["strategy"]: e["outcome"] for e in yaml.safe_load(result.stdout)}["packing"] == "legal"
 
 
 def test_strategies_query_names_a_missing_pattern(repo):

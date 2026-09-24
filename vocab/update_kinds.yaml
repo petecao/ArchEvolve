@@ -13,3 +13,5 @@ values:
     meaning: Replaces the element only if it still holds an expected value, as one atomic step.
   - value: arbitrary
     meaning: Any other read-modify-write of the element.
+  - value: prefetch
+    meaning: A non-binding early access that returns no data (a software prefetch); it never changes the element.

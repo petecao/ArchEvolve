@@ -36,8 +36,10 @@ Changes from 0.2 (a **minor** release under the rule in section 2: only addition
 0.2 record stays valid without an edit):
 
 - `schema_version` may be `"0.3"`; `"0.2"` is still accepted.
-- New record kind `strategy` (section 12) and vocabularies `strategy_targets` and
-  `effect_kinds` (ADR 0004).
+- New record kind `strategy` (section 12) and vocabularies `strategy_targets`,
+  `effect_kinds`, and `loop_restructures` (ADR 0004).
+- Update kind `prefetch`: a non-binding early access that returns no data, so software
+  prefetches in real code can be recorded as access patterns.
 - New record kind `intrinsic` (section 11), vocabularies `isa_families`, `isa_extensions`,
   and `intrinsic_memory_kinds`, and provenance kind `vendor_reference`.
 - Machines: optional `cpu.flags`, the CPU's ISA flags as `lscpu` names them. A machine
@@ -308,11 +310,12 @@ strategy.
 | Field | Meaning |
 |---|---|
 | `name` | human name |
-| `target` | vocab `strategy_targets`: what it acts on (`access_pattern`) |
+| `target` | vocab `strategy_targets`: what it acts on (`access_pattern`, `loop`, or `input`) |
 | `effect` | a non-empty list of typed changes (below) |
 | `parameters` | list of `name` (lower case, `_`), `meaning`, `unit` (or null); values are given where the strategy is applied |
 | `preconditions` | `requires_shapes`, `requires_update_kinds`, `requires_semantics`, `unchecked` (below) |
 | `benefits_when` | optional list of reported benefit conditions (below) |
+| `common_intrinsics` | optional list of intrinsic IDs commonly used to apply it (suggestions); each must be an existing intrinsic |
 
 Each `effect` item has a `kind` (vocab `effect_kinds`), that kind's fields, and an optional
 `note`; a field of another kind is an error.
@@ -321,9 +324,15 @@ Each `effect` item has a `kind` (vocab `effect_kinds`), that kind's fields, and 
 |---|---|---|
 | `reshape` | `step`, `shape_before`, `shape_after` | the step at position `step` changes its address shape (vocab `address_shapes`) from `shape_before` to `shape_after`; `step` counts from 0 at the first step, and a negative `step` counts from the end (`-1` is the target step) |
 | `add_pattern` | `address_shapes`, `update_kind` | the strategy adds an access pattern of this pattern class (its steps' shapes, first to last, and its update kind), such as a packing pass |
+| `hint` | `step` | the step at position `step` is accessed early (a software prefetch); what the code computes is unchanged |
+| `widen` | `lanes` | several accesses of the pattern happen in one instruction; `lanes` is a number (at least 2) or the name of one of the strategy's parameters, and it is not part of the identity |
+| `reorder` | `properties`, optional `index_locality` | the input's order changes; `properties` names the input properties it changes (vocab `input_properties`), and `index_locality` (vocab `index_localities`, or null) the locality after; stating `index_locality` requires listing it in `properties` |
+| `restructure_loop` | `restructure` | the loop nest is restructured (vocab `loop_restructures`: tile, interchange, split, fuse) |
 
-Effects must suit the target: an `access_pattern` strategy takes `reshape` and
-`add_pattern`.
+Effects must suit the target: an `access_pattern` strategy takes `reshape`, `add_pattern`,
+`hint`, and `widen`; a `loop` strategy takes `restructure_loop` and `add_pattern`; an
+`input` strategy takes `reorder`. An input strategy's preconditions are prose only: its
+`requires_shapes`, `requires_update_kinds`, and `requires_semantics` are empty.
 
 `preconditions`:
 
@@ -354,3 +363,10 @@ allowed, an effect's `step` does not exist or (for `reshape`) does not have
 `shape_before`, or a required semantic value is known and different; otherwise
 `undetermined` when a required semantic value has basis `unknown` (those fields are named);
 otherwise `legal`. Unknown never counts as false.
+
+A **loop strategy** is checked against one loop (`swdb strategies --loop`): every access
+pattern in that loop and in its child loops, at any depth, must meet the preconditions.
+It is `illegal` when any pattern is illegal (each reason is prefixed with the pattern ID),
+otherwise `undetermined` when any required value is unknown (named `<pattern>.<field>`) or
+when the loops record no access patterns, otherwise `legal`. An **input strategy** is always
+`undetermined`: its preconditions are prose, listed in `check_by_hand`.

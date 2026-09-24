@@ -45,6 +45,7 @@ CREATE TABLE intrinsics (id TEXT PRIMARY KEY, name TEXT, isa_family TEXT, isa_ex
 CREATE TABLE strategies (id TEXT PRIMARY KEY, name TEXT, target TEXT, json TEXT NOT NULL);
 CREATE TABLE strategy_effects (strategy TEXT NOT NULL, position INTEGER NOT NULL, kind TEXT NOT NULL, json TEXT NOT NULL,
     PRIMARY KEY (strategy, position));
+CREATE TABLE strategy_intrinsics (strategy TEXT NOT NULL, intrinsic TEXT NOT NULL, PRIMARY KEY (strategy, intrinsic));
 CREATE TABLE intrinsic_extensions (intrinsic TEXT NOT NULL, extension TEXT NOT NULL, PRIMARY KEY (intrinsic, extension));
 """
 
@@ -180,6 +181,7 @@ class _Insert:
         con.execute("INSERT INTO strategies VALUES (?,?,?,?)", (d["id"], d["name"], d["target"], json.dumps(d)))
         con.executemany("INSERT INTO strategy_effects VALUES (?,?,?,?)",
                         [(d["id"], i, e["kind"], json.dumps(e)) for i, e in enumerate(d["effect"])])
+        con.executemany("INSERT INTO strategy_intrinsics VALUES (?,?)", [(d["id"], i) for i in d.get("common_intrinsics", [])])
 
     @staticmethod
     def intrinsic(con, d, *_):
@@ -360,5 +362,64 @@ def strategies_for_pattern(db_path, target):
             raise _failure(f"access pattern {target!r} does not exist")
         facts = _pattern_facts(con, row)
         return [entry(s, *pattern_outcome(s, facts)) for s in _strategies(con, "access_pattern")]
+    finally:
+        con.close()
+
+
+def _implementation(con, impl_id):
+    row = con.execute("SELECT json FROM implementations WHERE id = ?", (impl_id,)).fetchone()
+    if row is None:
+        raise _failure(f"implementation {impl_id!r} does not exist")
+    return json.loads(row["json"])
+
+
+def loop_and_children(impl, loop_id):
+    """The loop's ID and every loop nested under it, at any depth."""
+    found, frontier = {loop_id}, [loop_id]
+    while frontier:
+        parent = frontier.pop()
+        for loop in impl["loops"]:
+            if loop.get("parent") == parent and loop["id"] not in found:
+                found.add(loop["id"])
+                frontier.append(loop["id"])
+    return found
+
+
+def strategies_for_loop(db_path, target):
+    """Every loop strategy, checked against every access pattern in the loop and its child
+    loops: legal only when all of them pass, illegal when any known value contradicts,
+    otherwise undetermined, naming `<pattern>.<field>` for each unknown."""
+    impl_id, loop_id = _split(target, "loop")
+    con = _connect(db_path)
+    try:
+        impl = _implementation(con, impl_id)
+        if loop_id not in {loop["id"] for loop in impl["loops"]}:
+            raise _failure(f"loop {target!r} does not exist")
+        loops = loop_and_children(impl, loop_id)
+        rows = con.execute(f"SELECT * FROM access_patterns WHERE implementation = ? AND loop IN "
+                           f"({','.join('?' * len(loops))}) ORDER BY pattern", (impl_id, *sorted(loops))).fetchall()
+        patterns = [(row["pattern"], _pattern_facts(con, row)) for row in rows]
+        found = []
+        for strategy in _strategies(con, "loop"):
+            reasons, unknown = [], []
+            for name, facts in patterns:
+                _, why, missing = pattern_outcome(strategy, facts)
+                reasons += [f"{name}: {text}" for text in why]
+                unknown += [f"{name}.{field}" for field in missing]
+            outcome = "illegal" if reasons else "undetermined" if unknown or not patterns else "legal"
+            extra = [] if patterns else [f"loop {loop_id} and its child loops record no access patterns"]
+            found.append(entry(strategy, outcome, reasons, unknown, extra))
+        return found
+    finally:
+        con.close()
+
+
+def strategies_for_input(db_path, impl_id):
+    """Every input strategy for one implementation's input. Their preconditions are prose, so
+    each is undetermined and its conditions are listed to check by hand."""
+    con = _connect(db_path)
+    try:
+        _implementation(con, impl_id)
+        return [entry(strategy, "undetermined", [], []) for strategy in _strategies(con, "input")]
     finally:
         con.close()

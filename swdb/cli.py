@@ -53,6 +53,9 @@ def main(argv=None):
     sub = command("strategies", "list optimization strategies with their legality for one target", db=True, fmt=True)
     which = sub.add_mutually_exclusive_group(required=True)
     which.add_argument("--pattern", metavar="IMPL/PATTERN", help="access-pattern strategies for one access pattern")
+    which.add_argument("--loop", metavar="IMPL/LOOP",
+                       help="loop strategies for one loop (every access pattern in it and its child loops must pass)")
+    which.add_argument("--input", metavar="IMPL", help="input strategies for one implementation's input")
 
     sub = command("implementations", "list a kernel's implementations whose semantics meet the requirements",
                   db=True, fmt=True)
@@ -154,7 +157,13 @@ def _dispatch(args):
         return _emit(found, args.format)
     if args.command == "strategies":
         _ensure_db(records, db_path)
-        return _emit(db.strategies_for_pattern(db_path, args.pattern), args.format)
+        if args.pattern:
+            found = db.strategies_for_pattern(db_path, args.pattern)
+        elif args.loop:
+            found = db.strategies_for_loop(db_path, args.loop)
+        else:
+            found = db.strategies_for_input(db_path, args.input)
+        return _emit(found, args.format)
     if args.command == "implementations":
         _ensure_db(records, db_path)
         found = db.implementations(db_path, args.kernel, [_pair(text) for text in args.require])

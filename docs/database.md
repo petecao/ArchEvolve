@@ -172,6 +172,13 @@ One row per effect item, in order.
 | `kind` | vocabulary `effect_kinds` |
 | `json` | the effect item |
 
+### `strategy_intrinsics`
+
+| Column | Meaning |
+|---|---|
+| `strategy` | strategy ID |
+| `intrinsic` | one ID from its `common_intrinsics` |
+
 ### `intrinsics`
 
 | Column | Meaning |
@@ -244,6 +251,17 @@ it is stale.
   unknown, when undetermined), `check_by_hand` (the strategy's unchecked preconditions,
   always listed), and `benefits_when` (reported benefit conditions, shown and never used to
   filter). Legality rules: [format-v0.3.md](format-v0.3.md), section 12.
+- `swdb strategies --loop <implementation>/<loop>`: every loop strategy, in the same entry
+  shape, checked against every access pattern in the loop and its child loops. It is legal
+  only when all of them pass, illegal when any known value contradicts (each reason starts
+  with the pattern ID), and otherwise undetermined, with `unknown_fields` as
+  `<pattern>.<field>`.
+- `swdb strategies --input <implementation>`: every input strategy, in the same entry shape.
+  Input preconditions are prose, so each entry is `undetermined` with its conditions in
+  `check_by_hand`.
+
+`find --strategy` takes only access-pattern strategies; `--pattern`, `--loop`, and `--input`
+list only strategies of that target.
 
 ## Examples
 

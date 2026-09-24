@@ -51,6 +51,42 @@
             "type": "string",
             "x-vocab": "update_kinds"
           },
+          "lanes": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 2
+              },
+              {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              }
+            ],
+            "x-reason": "lanes is a number of at least 2 or the name of a parameter",
+            "description": "Accesses per instruction: a number, or the name of one of the strategy's parameters."
+          },
+          "properties": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "x-vocab": "input_properties"
+            },
+            "description": "The input properties the reordering changes."
+          },
+          "index_locality": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "x-vocab": "index_localities",
+            "description": "The index locality after reordering, or null if not stated."
+          },
+          "restructure": {
+            "type": "string",
+            "x-vocab": "loop_restructures"
+          },
           "note": {
             "type": [
               "string",
@@ -124,6 +160,119 @@
                   "note"
                 ],
                 "x-reason": "an add_pattern effect has only kind, address_shapes, update_kind, and note"
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "hint"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "step"
+              ],
+              "x-required-reasons": {
+                "step": "a hint effect needs step"
+              },
+              "propertyNames": {
+                "enum": [
+                  "kind",
+                  "step",
+                  "note"
+                ],
+                "x-reason": "a hint effect has only kind, step, and note"
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "widen"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "lanes"
+              ],
+              "x-required-reasons": {
+                "lanes": "a widen effect needs lanes"
+              },
+              "propertyNames": {
+                "enum": [
+                  "kind",
+                  "lanes",
+                  "note"
+                ],
+                "x-reason": "a widen effect has only kind, lanes, and note"
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "reorder"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "properties"
+              ],
+              "x-required-reasons": {
+                "properties": "a reorder effect needs properties"
+              },
+              "propertyNames": {
+                "enum": [
+                  "kind",
+                  "properties",
+                  "index_locality",
+                  "note"
+                ],
+                "x-reason": "a reorder effect has only kind, properties, index_locality, and note"
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "restructure_loop"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "restructure"
+              ],
+              "x-required-reasons": {
+                "restructure": "a restructure_loop effect needs restructure"
+              },
+              "propertyNames": {
+                "enum": [
+                  "kind",
+                  "restructure",
+                  "note"
+                ],
+                "x-reason": "a restructure_loop effect has only kind, restructure, and note"
               }
             }
           }
@@ -251,6 +400,15 @@
           "condition": "a reported benefit states its condition"
         }
       }
+    },
+    "common_intrinsics": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "x-ref": "intrinsic"
+      },
+      "description": "Intrinsics commonly used to apply the strategy (suggestions)."
     }
   },
   "required": [

@@ -17,6 +17,8 @@ python3 -m swdb validate                          # check every record in record
 python3 -m swdb build                             # regenerate build/swdb.sqlite from the records
 python3 -m swdb find --shape ranged_indirect      # access patterns by shape, update kind, semantics
 python3 -m swdb implementations gapbs-pr --require loop_carried_dependencies=false
+python3 -m swdb strategies --pattern gapbs-pr-jacobi/gather-contrib   # which strategies are legal here
+python3 -m swdb find --strategy packing        # where one strategy could apply
 python3 -m swdb sql "select * from steps"         # your own SQL (tables: docs/database.md)
 python3 -m swdb view gapbs-pr-gs kron-g16-k16 mbit10   # workload view for the HW Ensemble Agent
 python3 -m swdb add new-record.yaml [--agent]     # validate, write to its canonical place, rebuild
@@ -51,6 +53,7 @@ Errors print to stderr as `file: field: reason`.
 - Decisions: [docs/adr/](docs/adr/)
 - Spec and tickets: [.scratch/evolveswdb-2026-09-22/](.scratch/evolveswdb-2026-09-22/)
 - Record format (enforced): [docs/format-v0.3.md](docs/format-v0.3.md)
+- Adding a strategy or an intrinsic: [docs/adding-a-strategy.md](docs/adding-a-strategy.md)
 - Database tables and queries: [docs/database.md](docs/database.md)
 - Profiling on mbit10: [docs/mbit10-profiling.md](docs/mbit10-profiling.md)
 - Format proposal v0.1 (superseded where the spec differs): [docs/format-proposal-v0.1.md](docs/format-proposal-v0.1.md)
