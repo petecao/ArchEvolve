@@ -67,3 +67,16 @@ def test_capture_without_a_flags_line_fails(tmp_path):
     broken.write_text("\n".join(line for line in CAPTURE.read_text().splitlines() if not line.startswith("Flags:")))
     result = run_swdb("capture-machine", "--id", "x", "--from-file", broken)
     assert result.returncode == 1 and "Flags" in result.stderr
+
+
+def test_record_dates_are_eastern(tmp_path):
+    # added 2026-09-24: 02:37 UTC on 09-24 is 22:37 EDT on 09-23
+    late = tmp_path / "late.txt"
+    text = CAPTURE.read_text()
+    date_line = text.split("### date", 1)[1].strip().splitlines()[0]
+    late.write_text(text.replace(date_line, "2026-09-24T02:37:12Z"))
+    result = run_swdb("capture-machine", "--id", "x", "--from-file", late)
+    assert result.returncode == 0, result.stderr
+    data = yaml.safe_load(result.stdout)
+    assert (data["created"], data["updated"]) == ("2026-09-23", "2026-09-23")
+    assert data["capture"]["date"] == "2026-09-24T02:37:12Z"      # the machine timestamp stays as produced

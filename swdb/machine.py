@@ -88,7 +88,7 @@ def parse(raw, machine_id, command, date):
             + ". Rule: counters are available if paranoid <= 2 or the user is in the vtune group.")
     return {
         "kind": "machine", "schema_version": "0.3", "id": machine_id, "status": "draft", "deprecated_by": None,
-        "created": date[:10], "updated": date[:10],
+        "created": eastern_date(date), "updated": eastern_date(date),
         "provenance": [{"id": "capture", "kind": "measurement",
                         "description": f"Read-only capture by swdb capture-machine at {date} (UTC).", "uri": None}],
         "hostname": part["hostname"].split()[0],
@@ -109,6 +109,20 @@ def parse(raw, machine_id, command, date):
                    "(multi-threaded profiles run only inside a verified socket lane)."] if len(numa) > 1 else []),
         "extensions": {},
     }
+
+
+def eastern_date(utc):
+    """The Eastern (America/New_York) date of a UTC capture time like 2026-09-24T02:37:12Z; record
+    dates are Eastern, and a capture after 20:00 EDT is already the next day in UTC."""
+    import datetime
+
+    when = datetime.datetime.strptime(utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=datetime.timezone.utc)
+    try:
+        from zoneinfo import ZoneInfo
+
+        return when.astimezone(ZoneInfo("America/New_York")).date().isoformat()
+    except Exception:   # no tz database: fall back to UTC-4, the EDT offset (as writer.today does)
+        return (when - datetime.timedelta(hours=4)).date().isoformat()
 
 
 def _caches(text, sockets, cores):

@@ -16,7 +16,7 @@ from swdb.cli import Failure
 from swdb.machine import llc_bytes
 from swdb.store import Store
 
-_MEMORY_OPERATION = {"read": "read", "write": "write"}
+_MEMORY_OPERATION = {"read": "read", "write": "write", "prefetch": "read"}   # a prefetch only reads a line
 _UPDATE_KIND = {"arbitrary": "arbitrary_function"}
 _TEXT_FIELDS = {"ordering", "numerical_requirement"}   # the HW format writes these as "unknown" when unknown
 

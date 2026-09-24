@@ -1,7 +1,7 @@
 # SW Database record format, version 0.3
 
 - Version: 0.3, 2026-09-23 (0.2 of 2026-09-22 plus the additions in "Changes from 0.2")
-- Updated: 2026-09-23
+- Updated: 2026-09-24
 - Author: Yan-Ru Jhou
 - Status: enforced. `swdb validate` checks every rule on this page; the schemas in
   `schemas/` and the vocabularies in `vocab/` are the machine-readable form. Supersedes
@@ -319,7 +319,9 @@ semantic values appear as values, with their basis and evidence under the added 
 `semantics_evidence`; counts, metrics, and bottleneck come from the newest complete
 profile and are explicitly unknown when there is none. Added keys (`address_chain`,
 `pattern_class`, `element_count_formula`, `semantics_evidence`, and the filled `code` and
-`environment`) extend the format without renaming anything.
+`environment`) extend the format without renaming anything. An access pattern's `memory_operation` is
+`read` for update kinds `read` and `prefetch` (a prefetch reads a line and stores nothing),
+`write` for `write`, and `read_modify_write` otherwise.
 
 ## 11. `intrinsic`
 

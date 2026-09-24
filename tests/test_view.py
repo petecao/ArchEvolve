@@ -133,3 +133,16 @@ def test_view_source_commit_is_the_application_commit(records):
     _, data = view(records, "gapbs-pr-gs", "kron-g16-k16", "mbit10")
     assert data["environment"]["source_commit"] == "2972aeb2703165bafd921222f4ed7196f542d3a8"
     assert data["environment"]["swdb_commit"]
+
+
+def test_a_prefetch_pattern_is_a_read_in_the_view(repo):
+    # added 2026-09-24: a software prefetch reads a cache line and stores nothing
+    rel = "implementations/gapbs-pr-jacobi.yaml"
+    data = repo.read(rel)
+    gather = next(p for p in data["access_patterns"] if p["id"] == "gather-contrib")
+    data["access_patterns"].append({**json.loads(json.dumps(gather)), "id": "prefetch-contrib", "update_kind": "prefetch"})
+    repo.write(rel, data)
+    result, view_data = view(repo, "gapbs-pr-jacobi", "kron-g16-k16", "mbit10")
+    assert result.returncode == 0, result.stderr
+    prefetch = next(p for p in view_data["patterns"] if p["id"] == "prefetch-contrib")
+    assert prefetch["memory_operation"] == "read" and prefetch["update"]["kind"] == "prefetch"
