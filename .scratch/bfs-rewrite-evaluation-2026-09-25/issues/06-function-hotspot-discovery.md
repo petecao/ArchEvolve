@@ -13,6 +13,8 @@ Updated: 2026-09-25 (Eastern Time)
 
 **Verification progress (2026-09-25):** Six local compiler/public-workflow cases passed, including actual compiled toy nested accounting and fresh queries. The first real mbit10 profile (`bfs-profile-smoke-20260925-a1.baseline-profile`) failed closed because standalone libclang did not discover the system C++ headers. Its durable failure metadata is retained in Git commit `80d3220fdd7dc20207bbc0ef826de8d91ae0f872`; no successful regions or dynamic counts were fabricated. The collector now resolves the actual compiler's header search paths explicitly. Real acceptance remains open pending the next bounded attempt.
 
+**Additional verification (2026-09-25):** Attempt `bfs-profile-smoke-20260925-a2.baseline-profile` failed closed on GCC-only prefix `__restrict__` syntax; metadata is retained in commit `82868c6a6d568076d63da0b690d6bbe7d51a386a`. The metadata parser now explicitly erases that qualifier for GCC inputs, without changing source bytes or executable compiler settings and without inferring alias semantics. A complete pinned DX100 translation-unit check has zero parser diagnostics locally (11 functions, 20 loops); real collection still requires another bounded mbit10 attempt. Future generated sources and binaries use a unique build directory under `/data1/yanruj`, with raw logs/results kept in `/data`.
+
 ## What to build
 
 Extend the native BFS profiling/query path to discover and rank expensive functions in BFS and its helpers from execution evidence, then return source context for those functions. A manually maintained list of kernel symbols may be a hint but cannot determine the complete set of eligible functions. Keep this slice focused on function attribution; loop discovery follows separately.

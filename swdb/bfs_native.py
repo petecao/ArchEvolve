@@ -350,6 +350,25 @@ def _request(request):
     return threads, repetitions, sources, budget
 
 
+def build_directory(request, host, rid, raw_folder, records):
+    """Reserve a unique external build directory, honoring the lab disk policy."""
+    supplied = request.get("build_directory")
+    if supplied is not None and (not isinstance(supplied, str) or not Path(supplied).is_absolute()):
+        raise Failure("build_directory must be an absolute external directory")
+    directory = Path(supplied) if supplied is not None else (
+        Path("/data1/yanruj/EvolveSWDB_builds") / rid if host == "mbit10" else raw_folder / "build")
+    directory = directory.resolve()
+    if directory == paths.HOME or paths.HOME in directory.parents:
+        raise Failure("build_directory must be outside the repository")
+    records = Path(records).resolve()
+    if directory == records or records in directory.parents:
+        raise Failure("build_directory must be outside records")
+    if host == "mbit10" and Path("/data1/yanruj") not in directory.parents:
+        raise Failure("mbit10 builds must live under /data1/yanruj")
+    directory.mkdir(parents=True, exist_ok=False)
+    return directory
+
+
 def run(args):
     """Public `swdb evaluate REQUEST --runs-dir DIR` boundary."""
     store = _require_valid(args.records)
@@ -408,6 +427,8 @@ def run(args):
             raise Failure("evaluation raw output must not be inside records")
         folder.mkdir(exist_ok=False)
         data["raw_artifacts"].append({"host": host, "path": str(folder), "kind": "evaluation_run"})
+        build_folder = build_directory(request, host, rid, folder, args.records)
+        data["raw_artifacts"].append({"host": host, "path": str(build_folder), "kind": "evaluation_build"})
         session = Session(args, data, folder, budget["total_seconds"])
         session.install_handlers()
         session.begin("source_resolution")
@@ -466,12 +487,12 @@ def run(args):
                 store, request, candidate, actual_build={"compiler": compiler, "flags": flags, "adapter": adapter},
                 actual_lane=lane, actual_instrumentation=data["context"]["instrumentation"])
         session.finish()
-        wrapper = folder / "native_driver.cc"
+        wrapper = build_folder / "native_driver.cc"
         template = DRIVER.read_text()
         wrapper.write_text(template.replace("#include SWDB_SOURCE_INCLUDE", "#include " + json.dumps(str(source))))
-        binary = folder / "bfs-native"
+        binary = build_folder / "bfs-native"
         command = [compiler, *flags, *(f"-I{p}" for p in includes), str(wrapper), "-o", str(binary)]
-        data["build"] = {"compiler": compiler, "flags": flags, "command": command,
+        data["build"] = {"directory": str(build_folder), "compiler": compiler, "flags": flags, "command": command,
                          "wrapper_sha256": artifacts.file_hash(wrapper), "template_sha256": artifacts.file_hash(DRIVER)}
         version_log = session.execute("compiler_identity", [compiler, "--version"], min(30, budget["build_seconds"]))
         data["build"]["compiler_version"] = version_log.read_text(errors="replace").splitlines()[:2]

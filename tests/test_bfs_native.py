@@ -21,6 +21,22 @@ from conftest import REPO
 from test_proposals import proposal_setup
 
 
+def test_build_directory_is_unique_external_and_enforces_host_disk_policy(tmp_path):
+    from swdb.bfs_native import build_directory
+    from swdb.cli import Failure
+    raw = tmp_path/'raw'; records = tmp_path/'records'
+    target = tmp_path/'separate-build'
+    actual = build_directory({'build_directory':str(target)}, 'local-test', 'id', raw, records)
+    assert actual == target and target.is_dir()
+    with pytest.raises(FileExistsError):
+        build_directory({'build_directory':str(target)}, 'local-test', 'id', raw, records)
+    for supplied, message in [(str(records/'build'),'outside records'),(str(REPO/'build'),'outside the repository'),('relative','absolute external')]:
+        with pytest.raises(Failure, match=message):
+            build_directory({'build_directory':supplied}, 'local-test', 'id', raw, records)
+    with pytest.raises(Failure, match='under /data1/yanruj'):
+        build_directory({'build_directory':str(tmp_path/'unsafe-mbit-build')}, 'mbit10', 'id', raw, records)
+
+
 PROGRAM = r'''#!/usr/bin/env python3
 import json, os, signal, subprocess, sys, time
 from collections import deque

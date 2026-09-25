@@ -95,7 +95,7 @@ def discover(source, arguments, library):
         for i in range(lib.clang_getNumDiagnostics(tu)):
             diagnostic = lib.clang_getDiagnostic(tu, i)
             diagnostics.append({"severity": lib.clang_getDiagnosticSeverity(diagnostic),
-                                "message": string(lib.clang_formatDiagnostic(diagnostic, 0))})
+                                "message": string(lib.clang_formatDiagnostic(diagnostic, 3))})
             lib.clang_disposeDiagnostic(diagnostic)
         if any(d["severity"] >= 3 for d in diagnostics):
             raise ValueError("compiler discovery diagnostics: " + "; ".join(d["message"] for d in diagnostics))
@@ -181,15 +181,18 @@ def discover(source, arguments, library):
         for region in regions:
             region["callers"] = sorted({r["function"] for r in regions if r["function"] != region["function"]
                                          and region["function"] in r["helpers"]})
+        adaptations = (["GNU __restrict__ erased for source inventory only; alias semantics are not inferred; actual builds retain original source and qualifiers"]
+                       if "-D__restrict__=" in arguments else [])
         return {"backend": "libclang-cindex", "version": string(lib.clang_getClangVersion()),
                 "library": str(library), "arguments": arguments, "diagnostics": diagnostics,
+                "parser_adaptations": adaptations,
                 "regions": regions, "unresolved": unresolved,
                 "scope": "free functions and ordinary loops defined in the BFS translation-unit source file",
                 "limitations": ["header-defined, library, virtual/member and compiler-outlined code is not independently attributed",
                     "inlined source scopes remain source scopes, not machine-code symbols",
                     "OpenMP-disabled metadata inventory preserves _OPENMP; actual diagnostic execution retains original OpenMP flags",
                     "metadata parser substitutes Clang builtin/OpenMP declarations in the compiler-private header slot while preserving actual system-library search order; execution uses original compiler headers",
-                    "transformation-specific OpenMP pragmas and macro-generated loop extents may remain unresolved"]}
+                    "transformation-specific OpenMP pragmas and macro-generated loop extents may remain unresolved"] + adaptations}
     finally:
         if tu.value: lib.clang_disposeTranslationUnit(tu)
         lib.clang_disposeIndex(index)

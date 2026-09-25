@@ -78,3 +78,17 @@ def test_missing_remote_artifacts_are_exposed_as_unverified(package_setup, tmp_p
                     if a["path"] == evaluation["build"]["binary"])
     assert artifact["state"] == "remote_unverified"
     assert report["external_verification_complete"] is False
+
+
+@pytest.mark.parametrize("field", ["request", "workload", "check"])
+def test_malformed_retained_failure_evidence_does_not_hide_history(package_setup, tmp_path, field):
+    records, _, evaluation, _, _ = package_setup
+    if field == "request": evaluation["request"] = ["invalid request retained for diagnosis"]
+    elif field == "workload": evaluation["context"]["workload"] = "unavailable"
+    else: evaluation["correctness"]["checks"] = [{"passed": True, "binding": None}]
+    records.write("evaluations/package-evaluation.yaml", evaluation)
+    report = _report(records, tmp_path)
+    assert report["acceptance"] == "incomplete" and not report["gain_claim"]
+    retained = next(row for row in report["history"]["evaluation"] if row["id"] == evaluation["id"])
+    assert retained["request"] == evaluation["request"]
+    assert any(row["evaluation"] == evaluation["id"] and not row["qualified"] for row in report["unassigned_evaluations"])

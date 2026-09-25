@@ -13,6 +13,16 @@ Dependent preparation claimed 2026-09-25 by the identity/coverage worker. The
 public report and negative acceptance checks proceed while Tickets 16–20 supply
 their real execution evidence. Missing obligations remain visible and unresolved.
 
+Preparation progress 2026-09-25: `bfs-coverage` now reconstructs all eight cells,
+source-specific acceleration minima, author/control obligations, frozen comparison
+decisions, AC01–AC20, complete retained history, and external artifact availability.
+Eleven public subprocess tests passed (32.81 seconds) for empty/missing evidence,
+fixture promotion, functional API timing, incorrect ROI, missing correctness,
+unsupported gain labels, remote artifact availability, cache regeneration, and
+malformed retained failures. Simulator aggregates require exact complete component
+profiles and independently bound correctness. These tests establish rejection and
+retrieval behavior only; real acceptance and the final handoff remain pending.
+
 ## What to build
 
 Provide public retrieval of the complete BFS acceptance report and a collaborator handoff containing the versioned profile-package, rewrite-proposal, and evaluation-result contracts with realistic linked examples.

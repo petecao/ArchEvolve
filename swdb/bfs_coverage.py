@@ -20,9 +20,14 @@ CASES = {
 REVISION = "e4fc4afdf894f295442cef3604667a469fab8e62"
 
 
+def _mapping(value):
+    return value if isinstance(value, dict) else {}
+
+
 def _real(evaluation):
     return (evaluation.get("evidence_kind") == "execution"
-            and evaluation.get("request", {}).get("fixture") is not True)
+            and isinstance(evaluation.get("request"), dict)
+            and evaluation["request"].get("fixture") is not True)
 
 
 def _artifact_refs(data):
@@ -201,10 +206,19 @@ def _comparison(store, comparison, allowed, mode=None):
         if comparison.get("metrics", {}).get("attribution") != attribution or not profile_package._same(
                 comparison.get("metrics", {}).get("disclosed_differences"), p["settings"]["differences"]):
             reasons.append("comparison causal attribution does not match its software/hardware/configuration differences")
-        protocol._region_comparisons(a, b, p["settings"])
+        regions = protocol._region_comparisons(a, b, p["settings"])
+        if not profile_package._same(comparison.get("region_comparisons"), regions):
+            reasons.append("recorded region ratios differ from their selected scope and attribution")
         limit = p["settings"]["profitability"]["maximum_relative_spread"]
         noisy = any(value > limit for rows in metrics["relative_spread"].values() for value in rows.values())
         gain = not noisy and metrics["confidence_interval"]["lower"] > p["settings"]["profitability"]["minimum_speedup"]
+        expected_state = ("inconclusive" if noisy else "gain" if gain else
+                          "regression" if metrics["confidence_interval"]["upper"] < 1 else "no_gain")
+        if comparison.get("decision", {}).get("state") != expected_state:
+            reasons.append("recorded decision does not follow the frozen profitability policy")
+        for key in ("confidence_interval", "relative_spread", "per_source_position_speedup"):
+            if not profile_package._same(comparison.get("metrics", {}).get(key), metrics[key]):
+                reasons.append(f"recorded {key} differs from the actual sample calculation")
         if bool(comparison.get("gain_claim")) != gain:
             reasons.append("recorded gain claim does not follow the frozen profitability policy")
         return {"id": comparison["id"], "qualified": not reasons, "reasons": reasons, "protocol": p["id"],
@@ -212,7 +226,7 @@ def _comparison(store, comparison, allowed, mode=None):
                 "comparison_baseline": a.get("implementation"), "candidate_implementation": b.get("implementation"),
                 "workload": wid, "gain": gain and not reasons, "metrics": metrics,
                 "differences": p["settings"]["differences"], "decision": comparison["decision"]}
-    except (Failure, KeyError, TypeError, ValueError, OverflowError) as exc:
+    except (Failure, KeyError, TypeError, ValueError, OverflowError, AttributeError) as exc:
         reasons.append(str(exc))
         return {"id": comparison["id"], "qualified": False, "reasons": reasons,
                 "protocol": comparison.get("protocol"), "decision": comparison.get("decision"), "gain": False}
@@ -239,7 +253,8 @@ def _evaluation(store, evaluation, comparisons, current):
     context = evaluation.get("context", {})
     if context.get("basis") == "measured" and any(flag.startswith("-DMAA") for flag in evaluation.get("build", {}).get("flags", [])):
         reasons.append("functional accelerator host runtime cannot satisfy native or simulated accelerator acceptance")
-    inputs = [evaluation, *(packages or []), *([candidate] if candidate else [])]
+    diagnostics = [store.get(package.get("region_profile"), "region_profile") for package in packages]
+    inputs = [evaluation, *packages, *(item for item in diagnostics if item), *([candidate] if candidate else [])]
     availability = _availability(inputs, context.get("host"))
     if any(ref["state"] in {"changed", "missing", "unreadable"} for ref in availability):
         reasons.append("required local raw/source artifacts are missing, unreadable, or changed")
@@ -262,8 +277,20 @@ def report(args):
         protocol._fail(isinstance(values, list) and all(isinstance(v, str) for v in values) and len(values) == len(set(values)), f"{name} must contain unique record IDs")
     missing = [rid for rid in current if store.get(rid, "protocol") is None]
     results = [_comparison(store, r.data, current) for r in store.of_kind("comparison_result")]
-    evaluations = {r.id: _evaluation(store, r.data, results, current) for r in store.of_kind("evaluation")
-                   if r.data.get("implementation") in SOURCES and r.data.get("candidate")}
+    evaluations = {}
+    for record in store.of_kind("evaluation"):
+        if record.data.get("implementation") not in SOURCES or not record.data.get("candidate"):
+            continue
+        try:
+            evaluations[record.id] = _evaluation(store, record.data, results, current)
+        except (Failure, KeyError, TypeError, ValueError, OverflowError, AttributeError) as exc:
+            evaluations[record.id] = {"evaluation": record.id, "proposal": record.data.get("proposal"),
+                "candidate": record.data.get("candidate"), "qualified": False,
+                "reasons": ["incomplete or malformed retained evidence: " + str(exc)],
+                "outcome": record.data.get("outcome"), "correctness": record.data.get("correctness"),
+                "basis": record.data.get("context", {}).get("basis"), "profile_packages": [], "rejected_packages": [],
+                "comparisons": [], "acceleration": {"executed": False, "cases": {}}, "artifacts": [],
+                "external_verification": "unverified"}
     cells = []
     for source in SOURCES:
         for route in ("instruction", "supplied_code"):
@@ -273,9 +300,10 @@ def report(args):
                 for rid, observation in evaluations.items():
                     evaluation = store.get(rid, "evaluation")
                     proposal = store.get(observation["proposal"], "proposal") if observation["proposal"] else None
-                    wid = evaluation.get("context", {}).get("workload", {}).get("id")
+                    wid = _mapping(evaluation.get("context", {}).get("workload")).get("id")
                     workload = store.get(wid, "workload")
-                    if evaluation.get("implementation") != source or not proposal or proposal.get("request", {}).get("payload", {}).get("kind") != payload:
+                    requested_payload = _mapping(_mapping((proposal or {}).get("request")).get("payload"))
+                    if evaluation.get("implementation") != source or not proposal or requested_payload.get("kind") != payload:
                         continue
                     if not workload or workload["definition"]["family"] != family:
                         continue
@@ -333,6 +361,9 @@ def report(args):
                         if context.get("model", {}).get("revision") != REVISION or any(config.get(k) != v for k, v in expected.items()):
                             row["reasons"].append(f"{role} does not retain the authors' exact BASE/MAA configuration")
                 record_set = [store.get(row["baseline_evaluation"], "evaluation"), accelerated]
+                reference_packages = [package for evaluation in record_set for package in _packages(store, evaluation)[0]]
+                record_set.extend(reference_packages)
+                record_set.extend(store.get(package["region_profile"], "region_profile") for package in reference_packages)
                 row["artifacts"] = _availability(record_set, accelerated.get("context", {}).get("host"))
                 if any(ref["state"] in {"missing", "changed", "unreadable"} for ref in row["artifacts"]):
                     row["reasons"].append("reference raw evidence is unavailable or changed")
@@ -383,12 +414,18 @@ def report(args):
         previous = store.get((diagnostic or {}).get("correspondence", {}).get("previous_profile"), "region_profile")
         if not previous or not _real(store.get(previous.get("evaluation"), "evaluation") or {}):
             continue
+        old_functions = {r.get("function") for r in previous["regions"] if r.get("kind") == "function"}
         old_regions = {(r.get("kind"), r.get("function"), r.get("source_sha256")) for r in previous["regions"]}
         rankings = package["evidence"].get("rankings", [])
         top = {rid for ranking in rankings for rid in ranking["regions"][:5]}
-        new_regions.extend({"profile_package": package["id"], "region": r["id"]} for r in package["regions"]
-                           if r["kind"] in {"function", "loop"} and (r["kind"], r.get("function"), r.get("source_sha256")) not in old_regions
-                           and r["id"] in top and profile_package._timing_quantity(r))
+        for region in package["regions"]:
+            introduced = region.get("function") not in old_functions
+            if region["kind"] == "loop" and not introduced:
+                loops = lambda rows: [r for r in rows if r.get("kind") == "loop" and r.get("function") == region.get("function")]
+                introduced = (len(loops(package["regions"])) > len(loops(previous["regions"]))
+                              and ("loop", region.get("function"), region.get("source_sha256")) not in old_regions)
+            if introduced and region["id"] in top and profile_package._timing_quantity(region):
+                new_regions.append({"profile_package": package["id"], "region": region["id"]})
     mark(3, bool(new_regions), "a new helper or loop absent from prior compiler discovery must appear among the five highest measured regions of its kind")
     criterion["AC03"]["evidence"] = new_regions
     query_checks = []
@@ -405,7 +442,8 @@ def report(args):
     for proposal in rejected_proposals:
         reason = str(proposal["outcome"].get("reason", "")).lower()
         request_data = proposal.get("request", {})
-        source = store.get(request_data.get("source_snapshot"), "source_snapshot") if isinstance(request_data, dict) else None
+        request_data = request_data if isinstance(request_data, dict) else {}
+        source = store.get(request_data.get("source_snapshot"), "source_snapshot")
         if source and request_data.get("source_sha256") != source["artifact"]["sha256"]:
             rejected_groups["source"].append(proposal["id"])
         if any(term in reason for term in ("operation", "capabilit", "unsupported")) and request_data.get("required_operations"):
@@ -446,11 +484,11 @@ def report(args):
     criterion["AC19"]["evidence"] = supported
     handoff = request.get("handoff", {})
     proposal_ids = {a["proposal"] for a in good}
-    producers = [store.get(rid, "proposal")["request"]["producer"] for rid in proposal_ids]
+    producers = [store.get(rid, "proposal").get("request", {}).get("producer", {}) for rid in proposal_ids]
     handoff_artifacts = _availability([handoff], socket.gethostname().split(".")[0])
     contracts = {"profile_package": "1.0", "rewrite_proposal": "1.0", "evaluation_result": "1.0"}
-    handoff_ok = (all_cells and {p["role"] for p in producers} >= {"sw", "hw"}
-                  and all(p["test_client"] is True for p in producers)
+    handoff_ok = (all_cells and {p.get("role") for p in producers} >= {"sw", "hw"}
+                  and all(p.get("test_client") is True for p in producers)
                   and handoff.get("live_collaborator_integration") is False
                   and handoff.get("contracts") == contracts and set(handoff.get("examples", [])) >= proposal_ids
                   and bool(handoff_artifacts) and all(a["state"] == "verified" for a in handoff_artifacts))
@@ -466,7 +504,8 @@ def report(args):
               "unassigned_evaluations": [value for key, value in evaluations.items() if key not in assigned],
               "comparison_assessments": results,
               "missing_protocols": missing, "live_collaborator_integration": False, "handoff_artifacts": handoff_artifacts,
-              "acceptance": "incomplete", "gain_claim": bool(gains),
+              "acceptance": "incomplete", "gain_claim": any(a["external_verification"] == "verified"
+                  and any(c.get("gain") for c in a["comparisons"]) for a in good),
               "limits": ["Unestablished contract, changed-source, and collaborator handoff criteria remain incomplete.",
                          "Remote raw artifacts remain unverified on a host that cannot read them.",
                          "No gain over the authors' accelerated implementation is required."]}

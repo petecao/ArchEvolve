@@ -82,6 +82,12 @@ def _discovery_settings(request, compiler, flags, includes, macro_log):
     # macro from the actual compiler while disabling only the metadata parser.
     macro = re.search(r"^#define _OPENMP (\d+)$", macro_log.read_text(), re.M)
     if macro: arguments.append("-D_OPENMP=" + macro.group(1))
+    # GCC accepts a prefix __restrict__ qualifier that Clang rejects as a
+    # qualification of the pointee. Inventory control-flow/source extents only;
+    # do not infer alias semantics from this metadata-only parser adaptation.
+    macros = macro_log.read_text()
+    if re.search(r"^#define __GNUC__ ", macros, re.M) and not re.search(r"^#define __clang__ ", macros, re.M):
+        arguments.append("-D__restrict__=")
     arguments += ["-fno-openmp", "-Wno-unknown-pragmas"]
     if resource: arguments += ["-resource-dir", str(resource)]
     extra = settings.get("arguments", [])
@@ -206,6 +212,8 @@ def run(args):
             raise Failure("mbit10 raw artifacts require /data1/yanruj or /data/yanruj")
         folder.mkdir(exist_ok=False)
         data["raw_artifacts"].append({"host": host, "path": str(folder), "kind": "diagnostic_profile"})
+        build_folder = native.build_directory(request, host, rid, folder, args.records)
+        data["raw_artifacts"].append({"host": host, "path": str(build_folder), "kind": "diagnostic_build"})
         session = native.Session(args, data, folder, budget["total_seconds"])
         session.install_handlers()
         data["context"] = copy.deepcopy(evaluation["context"])
@@ -246,17 +254,17 @@ def run(args):
         data["discovery"]["library_sha256"] = artifacts.file_hash(library.resolve())
         data["discovery"]["pass_sha256"] = artifacts.file_hash(bfs_discovery.__file__)
         data["discovery"]["collector_sha256"] = artifacts.file_hash(__file__)
-        diagnostic_source = folder / "instrumented_bfs.cc"
+        diagnostic_source = build_folder / "instrumented_bfs.cc"
         diagnostic_source.write_bytes(bfs_discovery.instrument(source, rows))
-        runtime = folder / "runtime.hpp"
+        runtime = build_folder / "runtime.hpp"
         runtime.write_bytes(RUNTIME.read_bytes())
         prefix = f'#define SWDB_REGION_COUNT {len(rows)}\n#include ' + json.dumps(str(runtime))
-        driver = folder / "regions_driver.cc"
+        driver = build_folder / "regions_driver.cc"
         driver.write_text(_wrapper(diagnostic_source, prefix, "::swdb_profile::start();", "::swdb_profile::stop();",
             '::swdb_profile::write((std::string(argv[3]) + ".regions.json").c_str());'))
-        binary = folder / "bfs-regions"
+        binary = build_folder / "bfs-regions"
         command = [compiler, *flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary)]
-        data["build"] = {"compiler": compiler, "compiler_version": evaluation["build"]["compiler_version"], "flags": flags,
+        data["build"] = {"directory": str(build_folder), "compiler": compiler, "compiler_version": evaluation["build"]["compiler_version"], "flags": flags,
             "command": command, "wrapper_sha256": artifacts.file_hash(driver), "runtime_sha256": artifacts.file_hash(runtime),
             "instrumented_source_sha256": artifacts.file_hash(diagnostic_source)}
         session.execute("region_build", command, budget["build_seconds"])
@@ -345,11 +353,12 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
                  "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
                  "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses"}
     folder = session.folder
-    driver = folder / "memory_driver.cc"
+    build_folder = Path(data["build"]["directory"])
+    driver = build_folder / "memory_driver.cc"
     driver.write_text(_wrapper(source, '#include <valgrind/callgrind.h>',
         "CALLGRIND_START_INSTRUMENTATION; CALLGRIND_ZERO_STATS;",
         "CALLGRIND_STOP_INSTRUMENTATION; CALLGRIND_DUMP_STATS;", ""))
-    binary = folder / "bfs-memory"
+    binary = build_folder / "bfs-memory"
     memory_flags = list(flags)
     if "-g" not in memory_flags: memory_flags.append("-g")
     command = [compiler, *memory_flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary)]

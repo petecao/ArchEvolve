@@ -64,6 +64,16 @@ Verification: 27 public protocol workflow tests passed after final integration
 verify workflow behavior only. Baseline calibration and real comparisons belong to
 Tickets 15 and 16.
 
+Simulation campaign integration added 2026-09-25: dispatch binds each explicit
+source-position/repetition cell to the actual build, target, instrumentation,
+registered SG representation, and frozen policy. `aggregate-evaluations` retains
+distinct execution IDs/content hashes and accepts only the complete actual sample
+grid. Missing/duplicate cells, failed or incompatible executions, fixture promotion,
+and later component edits cannot produce compatible comparison evidence. Fifteen
+aggregation/format public tests passed (112.02 seconds); simulator-shaped durations
+remain explicit contract fixtures. Real driver/model integration belongs to the
+simulator and campaign tickets.
+
 Context: `swdb/bfs_protocol.py`, `swdb/sg_stream.py`,
 `tools/bfs_native/sg_identity.cc`, `docs/bfs-protocol.md`,
 `tests/test_bfs_protocol.py`, and `tests/test_bfs_sg_stream.py`.

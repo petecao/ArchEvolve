@@ -2,7 +2,7 @@
 
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
-Status: Ticket 03 implementation prepared; real execution acceptance remains pending.
+Status: Ticket 03 implemented; real native correctness diagnostic passed on mbit10.
 
 This design binds the native evaluator to the candidate artifact produced by
 Ticket 02. It supports DX100 scalar top-down BFS first and upstream GAPBS
@@ -67,6 +67,10 @@ The request has these required meanings:
 
 These numbers illustrate explicit bounded diagnostic settings, not the later
 performance protocol. A protocol-less evaluation always has `gain_claim: false`.
+Optional `build_directory` selects a unique absolute directory outside the repository
+and records. On mbit10 it must be under `/data1/yanruj` and defaults to
+`/data1/yanruj/EvolveSWDB_builds/<evaluation-id>`. Generated wrappers and binaries live
+there; graph inputs, logs, and result files remain in `--runs-dir`.
 The host, lane, source, binary, and executable capabilities are verified rather
 than accepted from request labels. Timeout values must be positive and finite;
 repetitions and thread count must be positive integers, excluding booleans. Instead

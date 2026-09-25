@@ -14,7 +14,7 @@ from conftest import REPO
 from test_bfs_native import evaluation_setup, evaluate
 from test_proposals import proposal_setup
 from swdb.bfs_discovery import discover, instrument
-from swdb.bfs_profiling import parse_callgrind
+from swdb.bfs_profiling import parse_callgrind, _discovery_settings
 from swdb.cli import Failure
 
 
@@ -91,6 +91,45 @@ for(int i=0;i<4;++i) a[i]=i;
     changed=instrument(source,result['regions']).decode()
     assert '#pragma omp parallel for\nfor(int i=0;i<4;++i) {' in changed
     assert changed.count('a[i]=i;')==1
+
+
+def test_gcc_prefix_restrict_inventory_keeps_original_source_extents(tmp_path):
+    library, args = compiler_inventory()
+    source = tmp_path/'gnu.cc'
+    original = 'unsigned f(unsigned *input){__restrict__ unsigned *p=input;for(unsigned i=0;i<4;++i)p[i]+=1;return p[0];}\n'
+    source.write_text(original)
+    with pytest.raises(ValueError, match=r'gnu.cc:1:.*restrict'):
+        discover(source, args, library)
+    macros = tmp_path/'macros.log'; macros.write_text('#define __GNUC__ 13\n#define _OPENMP 201511\n')
+    _, adapted = _discovery_settings({'discovery': {'library': library, 'arguments': args}}, 'g++', ['-std=c++11'], [], macros)
+    assert '-D__restrict__=' in adapted
+    result = discover(source, adapted, library)
+    assert result['parser_adaptations'] and 'alias semantics are not inferred' in result['parser_adaptations'][0]
+    assert len([r for r in result['regions'] if r['kind']=='loop']) == 1
+    rewritten = instrument(source, result['regions']).decode()
+    assert '__restrict__ unsigned *p=input;' in rewritten and source.read_text()==original
+    macros.write_text('#define __GNUC__ 4\n#define __clang__ 1\n')
+    _, clang_args = _discovery_settings({'discovery': {'library': library}}, 'clang++', [], [], macros)
+    assert '-D__restrict__=' not in clang_args
+
+
+def test_pinned_dx100_complete_translation_unit_has_no_parser_errors(tmp_path):
+    library, args = compiler_inventory()
+    source = REPO/'apps/dx100/benchmarks/gapbs/src/bfs.cc'
+    if not source.is_file(): pytest.skip('pinned DX100 checkout unavailable')
+    compiler = shutil.which('clang++') or shutil.which('g++')
+    if not compiler: pytest.skip('C++ compiler unavailable')
+    probe = subprocess.run([compiler, '-dM', '-E', '-v', '-x', 'c++', '/dev/null'], capture_output=True, text=True, check=True)
+    macro = tmp_path/'macros.log'; macro.write_text(probe.stdout+probe.stderr)
+    # This verifies the GCC-authored pinned source even on the Mac/Clang test host.
+    _, adapted = _discovery_settings({'discovery': {'library': library, 'arguments': args+['-D__restrict__=','-D_OPENMP=201511']}},
+        compiler, ['-std=c++11','-DFUNC'], [source.parent, REPO/'apps/dx100/benchmarks/API'], macro)
+    original = source.read_bytes()
+    result = discover(source, adapted, library)
+    assert not any(d['severity']>=3 for d in result['diagnostics'])
+    assert {'DOBFS','TDStep'} <= {r['name'] for r in result['regions'] if r['kind']=='function'}
+    assert any(r['kind']=='loop' for r in result['regions'])
+    assert source.read_bytes()==original
 
 
 def test_callgrind_dynamic_counts_and_missing_events(tmp_path):

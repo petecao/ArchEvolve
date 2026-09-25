@@ -29,9 +29,32 @@ verification. Available local files are rehashed. Remote unavailable files are
 `remote_unverified`; missing local or changed artifacts are explicit. Neither an
 unavailable file nor an absent metric is a neutral speedup. The final report cannot
 claim complete acceptance while required obligations or verification are absent.
+Simulator aggregates retain the actual component execution IDs and hashes. A
+complete profile package is required for every component; one successful trial's
+profile cannot fill missing source/repetition coverage. Each structural check
+retains its own sealed ROI and binary/workload execution binding. The query checks
+actual diagnostic binary and raw-output references as well as primary artifacts.
+
+For the expensive-new-region demonstration, the reporting policy uses the top
+five executed regions in the function or loop ranking. A changed existing
+function alone does not prove a newly introduced helper. A new loop in an
+existing function requires both a new source fragment and an increased discovered
+loop count. This conservative policy exposes its selected evidence in AC03.
+Observed full/tail/competing-parent coverage requires positive numeric counts in
+the corresponding observation objects; an `unobserved` label never passes.
 
 AC01–AC20 are reported individually. Criteria requiring additional contract or
 handoff demonstrations remain incomplete until identified evidence exists; green
 fixture tests cannot satisfy real native/simulator execution. The report supplies
 evidence to the proposal owner and does not launch strategy search. Prepared SW/HW
 test clients do not establish live Peter/Josh integration.
+
+The optional `handoff` request contains a hashed document `path` and `sha256`,
+`contracts` mapping `profile_package`, `rewrite_proposal`, and `evaluation_result`
+to version `1.0`, linked proposal `examples`, and
+`live_collaborator_integration: false`. Acceptance requires the four real payload
+forms and both labeled test-client roles. The output exposes all AC01–AC20
+criteria, unassigned evaluations, comparison assessments, and complete retained
+proposal/evaluation/comparison history. Malformed or missing evidence remains an
+explicit nonqualifying attempt. A fresh query cannot claim a verified gain from
+raw artifacts it cannot read.

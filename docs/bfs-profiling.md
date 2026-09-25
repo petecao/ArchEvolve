@@ -27,6 +27,15 @@ slot, which may otherwise contain GCC-only builtin and attribute syntax. The C++
 library's wrappers retain their preceding position in the search order. This parser
 difference is recorded; the diagnostic executable still uses the original compiler
 and headers.
+For GCC inputs the metadata parser also erases the GNU `__restrict__` alias
+qualifier, whose prefix spelling in the pinned DX100 source GCC accepts and Clang
+rejects. This adaptation is recorded in `parser_adaptations`; inventory does not
+infer alias semantics. Source bytes and all actual executable builds retain the
+original qualifier.
+`build_directory` optionally selects a unique absolute directory outside the
+repository and records. On mbit10 it must be under `/data1/yanruj` and defaults to
+`/data1/yanruj/EvolveSWDB_builds/<profile-id>`. Instrumented sources, wrappers, and
+binaries live there; collector logs and observation files remain in `--runs-dir`.
 Execution retains the primary compiler, version, and OpenMP build flags. Any parser
 error fails discovery. Transformation-specific/continued OpenMP pragmas and
 macro-generated loops without safe source extents remain unresolved. Header,
