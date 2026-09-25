@@ -392,3 +392,14 @@ build:
       libstdc++6 14.2.0-4ubuntu2~24.04.1
 
       '
+  generated_tracked_object_cleanup:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/generated-object-cleanup.json
+    sha256: 499bf0d84fe8de84c510d9da6e17737a971d51ed27ee89c0d8085ac61707d4a3
+    details:
+      updated: '2026-09-25'
+      path: /data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/m5op.o
+      produced_sha256: cf9603b9885f508eefc6d7a7bee3da2f862a9a5184e855cd966501e1e9a2dea1
+      restored_sha256: e499961a7ce141943c41b333edebf486f3ef9e5bad2ba197a41253b826e77b8a
+      action: Restored only generated tracked object to pinned HEAD after linking.
+        Linked BFS and simulator hashes rechecked unchanged. Original build receipt
+        retained.
