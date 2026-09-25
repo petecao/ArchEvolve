@@ -1,7 +1,8 @@
 # Kernel identity spans sources, and comparisons name their baseline
 
 Date: 2026-09-25
-Status: accepted design; implementation pending separate authorization
+Updated: 2026-09-25
+Status: accepted; source-context and explicit-comparator interfaces implemented after authorization
 
 Upstream GAPBS and DX100 BFS realize one computation and correctness check, so they
 share a kernel identity while each implementation retains its exact application
@@ -19,6 +20,8 @@ code rewritten and does not implicitly select the comparator.
 - Supersedes the ADR 0004 consequence that computes measured benefit implicitly
   against `derived_from`. A comparison may select that ancestor, a source baseline,
   or an author reference, but must identify the comparator and comparison protocol.
-- The current single-application kernel schema and inherited application resolution
-  do not implement this design. Record layout, migration, and evaluator bindings
-  remain to be designed; this ADR authorizes no code changes or execution.
+- The additive format 0.4 interface names application ownership and evaluator
+  bindings on implementations while preserving historical kernel defaults for
+  format 0.2/0.3 records. See [the compatibility contract](../bfs-source-identity.md).
+  The user separately authorized implementation and execution on 2026-09-25;
+  fixture comparison behavior does not establish experimental acceptance.

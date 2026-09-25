@@ -145,6 +145,9 @@ def _run(args, records_dir):
     kernel = _get(store, impl["kernel"], "kernel")
     _check_isa(impl, machine, store, result.vocabs.get("isa_extensions", []))   # before the host check and any build
     app = store.application_of(impl)
+    evaluator = store.source_context(impl)["evaluator"]
+    if evaluator["backend"] != "native":
+        raise Failure(f"evaluator backend {evaluator['backend']!r} requires the evaluation workflow")
     for name in ("timeout", "correctness_timeout", "cachegrind_timeout", "features_timeout"):
         value = getattr(args, name)
         if value is not None and value <= 0:
@@ -197,7 +200,7 @@ def _run(args, records_dir):
     bind_env = {"OMP_PLACES": "cores", "OMP_PROC_BIND": "close"}
 
     # 2. correctness check
-    check = kernel["correctness_check"]
+    check = evaluator
     cmd = check["command"].format(**run_fill)
     entry, text = r.execute("correctness", cmd, env_extra={threads_env: str(max(threads)), **bind_env},
                             timeout=args.correctness_timeout if args.correctness_timeout is not None else args.timeout)

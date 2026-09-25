@@ -27,7 +27,7 @@ def workload_view(records_dir, impl_id, input_id, machine_id, profile_id=None):
     inp = _get(store, input_id, "input")
     machine = _get(store, machine_id, "machine")
     kernel = _get(store, impl["kernel"], "kernel")
-    app = _get(store, kernel["application"], "application")
+    app = store.application_of(impl)
     prof = _pick_profile(store, impl_id, input_id, machine_id, profile_id)
 
     refs = _Refs()

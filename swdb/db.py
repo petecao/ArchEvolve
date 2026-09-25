@@ -23,6 +23,8 @@ CREATE TABLE kernels (id TEXT PRIMARY KEY, name TEXT, application TEXT, baseline
     json TEXT NOT NULL);
 CREATE TABLE implementations (id TEXT PRIMARY KEY, name TEXT, kernel TEXT, function TEXT, origin TEXT,
     is_baseline INTEGER NOT NULL, json TEXT NOT NULL);
+CREATE TABLE implementation_contexts (implementation TEXT PRIMARY KEY, application TEXT NOT NULL,
+    source_ancestor TEXT, source_baseline TEXT, comparison_baseline TEXT, json TEXT NOT NULL);
 CREATE TABLE inputs (id TEXT PRIMARY KEY, name TEXT, generator_arguments TEXT, file_path TEXT, json TEXT NOT NULL);
 CREATE TABLE input_properties (input TEXT NOT NULL, name TEXT NOT NULL, value TEXT, basis TEXT NOT NULL,
     PRIMARY KEY (input, name));
@@ -131,6 +133,11 @@ def build(records_dir, db_path):
         d = rec.data
         con.execute("INSERT INTO records VALUES (?,?,?,?,?)", (rec.id, rec.kind, d.get("status"), rec.rel, json.dumps(d)))
         getattr(_Insert, rec.kind, lambda *a: None)(con, d, rec.id in baselines, kernels)
+        if rec.kind == "implementation":
+            context = store.source_context(d)
+            con.execute("INSERT INTO implementation_contexts VALUES (?,?,?,?,?,?)",
+                        (rec.id, context["application"], context["source_ancestor"], context["source_baseline"],
+                         context["comparison_baseline"], json.dumps(context)))
     con.commit()
     con.close()
     tmp.replace(db_path)
@@ -320,8 +327,11 @@ def _meeting(con, kernel, requirements):
                 if p[f"{column}_basis"] == "unknown" or json.loads(p[column]) != value:
                     failing.append(f"{p['pattern']}.{name} is {json.loads(p[column])!r} ({p[f'{column}_basis']})")
         if not failing:
+            context = json.loads(con.execute("SELECT json FROM implementation_contexts WHERE implementation = ?",
+                                             (impl["id"],)).fetchone()["json"])
             found.append({"implementation": impl["id"], "name": impl["name"], "function": impl["function"],
                           "baseline": bool(impl["is_baseline"]), "origin": impl["origin"],
+                          "source_context": context,
                           "meets": {name: value for name, value in requirements}})
     return found
 
@@ -472,9 +482,23 @@ def applying(db_path, kernel, strategy_id, requirements=()):
             mine, theirs = newest[impl_id], newest.get(baseline, {})
             found.append({
                 "implementation": impl_id, "applies": entries, "derived_from": baseline,
+                "pairing_kind": "historical_ancestry", "gain_claim": False,
+                "source_context": next(a["source_context"] for a in allowed if a["implementation"] == impl_id),
                 "profiles": [{"input": i, "machine": m, "profile": mine.get((i, m)), "baseline_profile": theirs.get((i, m))}
                              for i, m in sorted(set(mine) | set(theirs))],
             })
         return found
+    finally:
+        con.close()
+
+
+def compare(db_path, implementation, baseline, profile, baseline_profile, protocol):
+    """Compare exactly selected evidence; ancestry is never a substitute comparator."""
+    from swdb.comparison import compare_records
+
+    con = _connect(db_path)
+    try:
+        records = {row["id"]: json.loads(row["json"]) for row in con.execute("SELECT id, json FROM records")}
+        return compare_records(records, implementation, baseline, profile, baseline_profile, protocol)
     finally:
         con.close()

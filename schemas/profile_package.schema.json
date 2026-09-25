@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "profile_package",
+  "title": "Profile Package",
+  "description": "Workflow format introduced 2026-09-25. Metadata is authoritative YAML; external artifacts carry content identity.",
+  "properties": {
+    "kind": {
+      "const": "profile_package"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "message_version": {
+      "const": "1.0"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "sw",
+            "hw",
+            "operator",
+            "worker"
+          ]
+        },
+        "test_client": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "role",
+        "test_client"
+      ]
+    },
+    "implementation": {
+      "$ref": "#/$defs/id",
+      "x-ref": "implementation"
+    },
+    "source_snapshot": {
+      "$ref": "#/$defs/id",
+      "x-ref": "source_snapshot"
+    },
+    "context": {
+      "type": "object"
+    },
+    "completeness": {
+      "enum": [
+        "fixture",
+        "incomplete",
+        "complete"
+      ]
+    },
+    "regions": {
+      "type": "array"
+    },
+    "dynamic_memory": {
+      "type": "array"
+    },
+    "constraints": {
+      "type": "object"
+    },
+    "evidence": {
+      "type": "object"
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "required": [
+    "message_version",
+    "producer",
+    "implementation",
+    "source_snapshot",
+    "context",
+    "completeness",
+    "regions",
+    "dynamic_memory",
+    "constraints",
+    "evidence",
+    "reasons"
+  ]
+}

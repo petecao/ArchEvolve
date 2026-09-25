@@ -3,11 +3,20 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 02
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
-**Execution hold:** Publishing this ticket does not authorize implementation, builds, installations, benchmark/simulator runs, or remote execution. Wait for explicit user authorization.
+**Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
+
+**Progress (2026-09-25):** Tickets 01/02 are resolved. The native evaluator,
+protected driver, evaluation schema, and public request/result tests are prepared.
+Seventeen current cases passed across the public outcome suite and focused
+process-cleanup, budget, macro-integrity, and real C++ fixture-driver checks.
+Fixture durations remain contract evidence. This ticket awaits the coordinated
+real native DX100 scalar diagnostic before resolution. Its initial real budgets
+are build 180 seconds, each execution 30 seconds, total evaluation 300 seconds,
+inside a 900-second lane budget; no gain assessment is authorized by this smoke.
 
 ## What to build
 

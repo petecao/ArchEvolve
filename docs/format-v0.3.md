@@ -1,7 +1,7 @@
 # SW Database record format, version 0.3
 
 - Version: 0.3, 2026-09-23 (0.2 of 2026-09-22 plus the additions in "Changes from 0.2")
-- Updated: 2026-09-24
+- Updated: 2026-09-25
 - Author: Yan-Ru Jhou
 - Status: enforced. `swdb validate` checks every rule on this page; the schemas in
   `schemas/` and the vocabularies in `vocab/` are the machine-readable form. Supersedes
@@ -10,6 +10,19 @@
   (kernel identity), [ADR 0002](adr/0002-yaml-in-git-is-the-master-copy-sqlite-is-generated.md)
   (YAML master copy), [ADR 0003](adr/0003-access-pattern-is-a-chain-of-steps.md) (chains of steps),
   [ADR 0004](adr/0004-optimization-strategy-is-a-record-identified-by-its-effect.md) (strategy identity).
+
+## Additive format 0.4 source-context fields
+
+Format 0.4 is also accepted; 0.2 and 0.3 records remain supported without migration.
+See [source contexts and comparisons](bfs-source-identity.md) for the complete
+compatibility contract. An implementation at 0.4 requires `application`,
+`source_baseline`, `evaluator`, and `verification`. The optional
+`comparison_baseline` is independent of `origin.derived_from`.
+Its `evaluator` provides `backend`, `command`, `pass_regex`, and `verifier` with
+its own `description` and `code`. Its `verification` provides `status` (unchecked,
+passed, or failed), `evidence` (profile IDs), and `scope`. Passed status requires
+successful correctness evidence for that same implementation. Source catalog
+membership establishes no correctness beyond those named observations.
 
 ## 1. Rules that hold everywhere
 

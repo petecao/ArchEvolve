@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "proposal",
+  "title": "Proposal",
+  "description": "Workflow format introduced 2026-09-25. Metadata is authoritative YAML; external artifacts carry content identity.",
+  "properties": {
+    "kind": {
+      "const": "proposal"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "message_version": {
+      "const": "1.0"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "sw",
+            "hw",
+            "operator",
+            "worker"
+          ]
+        },
+        "test_client": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "role",
+        "test_client"
+      ]
+    },
+    "request": {},
+    "payload_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "submitted",
+            "rejected",
+            "unresolved",
+            "candidate_created",
+            "failed"
+          ]
+        },
+        "stage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "state",
+        "stage",
+        "reason"
+      ]
+    },
+    "source_snapshot": {
+      "$ref": "#/$defs/id",
+      "x-ref": "source_snapshot"
+    },
+    "profile_package": {
+      "$ref": "#/$defs/id",
+      "x-ref": "profile_package"
+    },
+    "candidate": {
+      "$ref": "#/$defs/id",
+      "x-ref": "candidate"
+    },
+    "attempts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "raw_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "provider": {
+      "type": "object"
+    },
+    "interpretation": {
+      "type": "object"
+    },
+    "repair_budget": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "message_version",
+    "producer",
+    "request",
+    "payload_sha256",
+    "outcome",
+    "attempts",
+    "raw_artifacts"
+  ]
+}

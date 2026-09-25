@@ -13,7 +13,11 @@ from swdb.problems import Problem
 
 PLURAL = {"application": "applications", "kernel": "kernels", "implementation": "implementations",
           "input": "inputs", "machine": "machines", "profile": "profiles",
-          "strategy": "strategies", "intrinsic": "intrinsics"}
+          "strategy": "strategies", "intrinsic": "intrinsics",
+          "source_snapshot": "source_snapshots", "profile_package": "profile_packages",
+          "proposal": "proposals", "candidate": "candidates", "evaluation": "evaluations",
+          "operation": "operations", "hardware_target": "hardware_targets",
+          "workload": "workloads", "protocol": "protocols", "comparison_result": "comparison_results"}
 
 
 @dataclass
@@ -93,12 +97,36 @@ class Store:
         if kind == "kernel":
             return self.get(data.get("application"), "application")
         if kind == "implementation":
+            if "application" in data:
+                return self.get(data["application"], "application")
             kernel = self.get(data.get("kernel"), "kernel")
             return self.application_of(kernel) if kernel else None
         if kind == "profile":
             impl = self.get(data.get("implementation"), "implementation")
             return self.application_of(impl) if impl else None
         return None
+
+    def source_context(self, data):
+        """Resolve one implementation's source and evaluator without cross-source defaults."""
+        kernel = self.get(data.get("kernel"), "kernel")
+        app = self.application_of(data)
+        if kernel is None or app is None:
+            raise ValueError(f"implementation {data.get('id')!r} has unresolved source context")
+        modern = data.get("schema_version") == "0.4"
+        if modern and any(key not in data for key in ("application", "source_baseline", "evaluator", "verification")):
+            raise ValueError(f"implementation {data.get('id')!r} lacks explicit source context")
+        return {
+            "application": app["id"], "source": app["source"], "code": data["code"],
+            "build": data["build"], "run": data["run"],
+            "evaluator": data["evaluator"] if modern else {"backend": "native", **kernel["correctness_check"]},
+            "source_ancestor": data["origin"].get("derived_from"),
+            "source_baseline": data["source_baseline"] if modern else kernel["baseline_implementation"],
+            "comparison_baseline": data.get("comparison_baseline"),
+            "verification": data["verification"] if modern else {
+                "status": "legacy_unspecified", "evidence": [],
+                "scope": "Historical source catalog entry; consult individual profiles for workload-specific correctness."},
+            "context_resolution": "explicit" if modern else "legacy_kernel_defaults",
+        }
 
 
 def canonical_path(kind, record_id):

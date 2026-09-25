@@ -561,6 +561,112 @@
         }
       },
       "description": "The optimization strategies this implementation applies, in the order applied; targets refer to the final code."
+    },
+    "application": {
+      "type": "string",
+      "x-ref": "application"
+    },
+    "source_baseline": {
+      "type": "string",
+      "x-ref": "implementation"
+    },
+    "comparison_baseline": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-ref": "implementation"
+    },
+    "evaluator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "backend",
+        "command",
+        "pass_regex",
+        "verifier"
+      ],
+      "properties": {
+        "backend": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Template run by the profiler; {binary} and {input_args} are filled in."
+        },
+        "pass_regex": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Python regular expression; the check passes when the command exits 0 and its output matches."
+        },
+        "verifier": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "code": {
+              "$ref": "#/$defs/code_ref"
+            }
+          },
+          "required": [
+            "description",
+            "code"
+          ]
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "evidence",
+        "scope"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "unchecked",
+            "passed",
+            "failed"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "x-ref": "profile"
+          },
+          "uniqueItems": true
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "passed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "required": [
@@ -573,5 +679,58 @@
     "run",
     "loops",
     "access_patterns"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": "0.4"
+          }
+        },
+        "required": [
+          "schema_version"
+        ]
+      },
+      "then": {
+        "required": [
+          "application",
+          "source_baseline",
+          "evaluator",
+          "verification"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "application"
+              ]
+            },
+            {
+              "required": [
+                "source_baseline"
+              ]
+            },
+            {
+              "required": [
+                "comparison_baseline"
+              ]
+            },
+            {
+              "required": [
+                "evaluator"
+              ]
+            },
+            {
+              "required": [
+                "verification"
+              ]
+            }
+          ]
+        }
+      }
+    }
   ]
 }

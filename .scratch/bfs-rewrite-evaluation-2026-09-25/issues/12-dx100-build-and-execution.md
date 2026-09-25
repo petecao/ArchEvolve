@@ -3,13 +3,17 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 03
 **Spec:** `../spec.md`
 
-**Execution hold:** Publishing this ticket does not authorize implementation, builds, installations, benchmark/simulator runs, or remote execution. Wait for explicit user authorization.
+**Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
 ## What to build
+
+Preparation claimed 2026-09-25 by `host_dx100`. Pinned source and bounded build
+helper are prepared; real execution remains gated on ticket 03 acceptance and
+root-coordinated lane assignment.
 
 Add bounded DX100 build, checkpoint, and execution support to the public evaluation workflow. An identified pinned BFS executable and simulated target can produce a durable execution result with raw artifacts, even when correctness and complete profiling have not yet been attached. Establish a real BFS-only smoke path; do not treat that smoke run as a verified implementation or a performance acceptance result.
 

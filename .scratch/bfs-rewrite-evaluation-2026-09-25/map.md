@@ -4,29 +4,29 @@ Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** ticket map
 **Status:** ready-for-agent
-**Blocked by:** Explicit user authorization before implementation or experiment execution.
+**Blocked by:** None — user authorized implementation and execution on 2026-09-25.
 **Spec:** [Refined specification](spec.md)
 
-The spec and approved tickets are published in the project's local Markdown tracker. The user's approval authorizes ticket publication only; code changes, builds, installations, benchmark/simulator runs, and remote execution remain on hold. Ready-for-agent records preparedness, not permission to begin. The parent spec is unchanged; this map records the subsequent authorization and publication of tickets.
+The user authorized autonomous implementation of all 21 tickets and all necessary builds, installations, benchmark/simulator runs, external access, Git, and Claude Code on 2026-09-25. This supersedes the publication-only hold. The two-lane mbit10 rules and evidence requirements remain in force.
 
 ## Approved tickets
 
-The user approved this 21-ticket decomposition on 2026-09-25. Each link is one independently reviewable ticket. Blockers are ticket dependencies; the separate execution hold applies to every row, including a row with no ticket blockers. No ticket is claimed or resolved.
+The user approved this 21-ticket decomposition on 2026-09-25. Each link is one independently reviewable ticket. Blockers are ticket dependencies. Status and evidence are synchronized as work proceeds; acceptance is not inferred from fixture tests.
 
 | # | Ticket | Blocked by | Status |
 |---|---|---|---|
-| 01 | [Shared BFS identity and explicit baselines](issues/01-shared-bfs-identity-and-baselines.md) | None | ready-for-agent |
-| 02 | [Patch proposal to durable candidate](issues/02-patch-proposal-to-candidate.md) | 01 | ready-for-agent |
-| 03 | [Native BFS evaluation](issues/03-native-bfs-evaluation.md) | 02 | ready-for-agent |
-| 04 | [Instruction-based rewriting and bounded repair](issues/04-instruction-rewriting-and-repair.md) | 03 | ready-for-agent |
+| 01 | [Shared BFS identity and explicit baselines](issues/01-shared-bfs-identity-and-baselines.md) | None | resolved |
+| 02 | [Patch proposal to durable candidate](issues/02-patch-proposal-to-candidate.md) | 01 | resolved |
+| 03 | [Native BFS evaluation](issues/03-native-bfs-evaluation.md) | 02 | claimed |
+| 04 | [Instruction-based rewriting and bounded repair](issues/04-instruction-rewriting-and-repair.md) | 03 | claimed |
 | 05 | [Annotated-source rewriting](issues/05-annotated-source-rewriting.md) | 04 | ready-for-agent |
 | 06 | [Automatic function hotspot discovery](issues/06-function-hotspot-discovery.md) | 03 | ready-for-agent |
 | 07 | [Loop discovery and changed-region profiling](issues/07-loop-discovery-and-reprofiling.md) | 06 | ready-for-agent |
 | 08 | [Dynamic memory observations](issues/08-dynamic-memory-observations.md) | 06 | ready-for-agent |
 | 09 | [Complete profile packages and strategy lookup](issues/09-profile-packages-and-strategy-lookup.md) | 07, 08 | ready-for-agent |
-| 10 | [Queryable DX100 operation contracts](issues/10-dx100-operation-contracts.md) | 02 | ready-for-agent |
-| 11 | [Reproducible workloads and comparison protocols](issues/11-workloads-and-comparison-protocols.md) | 03 | ready-for-agent |
-| 12 | [DX100 build and execution path](issues/12-dx100-build-and-execution.md) | 03 | ready-for-agent |
+| 10 | [Queryable DX100 operation contracts](issues/10-dx100-operation-contracts.md) | 02 | resolved |
+| 11 | [Reproducible workloads and comparison protocols](issues/11-workloads-and-comparison-protocols.md) | 03 | claimed |
+| 12 | [DX100 build and execution path](issues/12-dx100-build-and-execution.md) | 03 | claimed |
 | 13 | [Correctness of the timed DX100 binary](issues/13-dx100-timed-binary-correctness.md) | 12 | ready-for-agent |
 | 14 | [DX100 region timing and memory profiling](issues/14-dx100-region-and-memory-profiling.md) | 09, 12 | ready-for-agent |
 | 15 | [Baseline pilot and protocol freeze](issues/15-baseline-pilot-and-protocol-freeze.md) | 11, 13, 14 | ready-for-agent |
@@ -107,6 +107,14 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | Master records, collaborator fixtures, public workflow tests, authorization | 26–27, 53–60 | D02–D03, D14–D15 | AC07, AC09, AC18, AC20; publication gate |
 
 ## Context pointers
+
+- 2026-09-25: [Ticket 10](issues/10-dx100-operation-contracts.md) resolved: seven pinned source-backed operation contracts and 14 passing public capability/proposal tests. [Capability contract](../../docs/bfs-capabilities.md) separates model/interface support from executable readiness; no DX100 execution is yet claimed.
+
+- 2026-09-25: [Ticket 02](issues/02-patch-proposal-to-candidate.md) resolved with 10 passing public subprocess tests: actual patch materialization, protected-source rejection, stable candidate identity, and fresh-process/index retrieval. [Workflow format](../../docs/format-v0.4.md) and `schemas/messages/rewrite-proposal.schema.json` define the provisional contract; no correctness or performance claim follows from candidate creation.
+
+- 2026-09-25: [Ticket 01](issues/01-shared-bfs-identity-and-baselines.md) resolved: additive 0.4 source/evaluator ownership, scoped verification, and explicit comparison baselines. See [source contract](../../docs/bfs-source-identity.md), `tests/test_bfs_identity.py` (22 passing public workflow tests), and `apps/dx100/PROVENANCE.md` for the pinned unmodified import. DX100 source remains unchecked until real evaluation.
+
+- 2026-09-25: Execution authorized; [implementation plan](implementation-plan.md) records assumptions and module ownership. Ticket 01 claimed. Review baseline: `1bdb7d4037916dea782c40239a6415b61a47f3c1`. A thread heartbeat checks progress, worker health, and evaluation state every 30 minutes.
 
 - 2026-09-25: The user approved publication of 21 vertical-slice tickets. One file per ticket records exact blockers, externally observable acceptance, verification, and the execution hold. No ticket was started, claimed, or resolved.
 

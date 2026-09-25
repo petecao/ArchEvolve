@@ -1,6 +1,6 @@
 # The SQLite database
 
-Updated: 2026-09-23
+Updated: 2026-09-25
 
 `swdb build` writes `build/swdb.sqlite` next to the repo's `records/` folder (another
 records folder `X` gets `build/swdb-X.sqlite`; `build/` is ignored by git). It deletes and
@@ -73,6 +73,12 @@ One row per record, whatever its kind.
 | `json` | the whole record: code, build, run, loops, access patterns |
 
 ### `access_patterns`
+
+The adjacent `implementation_contexts` table stores each implementation's resolved
+`application`, `source_ancestor`, `source_baseline`, `comparison_baseline`, and full
+context `json`. These are regenerated from authoritative source records. Its
+`implementation` key identifies the same row in `implementations`; the older
+`is_baseline` column retains its historical kernel-default meaning.
 
 One row per access pattern of each implementation.
 

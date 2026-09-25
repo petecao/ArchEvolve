@@ -1,10 +1,10 @@
 kind: implementation
-schema_version: '0.2'
+schema_version: '0.4'
 id: gapbs-bfs-do
 status: draft
 deprecated_by: null
 created: '2026-09-22'
-updated: '2026-09-22'
+updated: '2026-09-25'
 provenance:
 - id: src-gapbs-bfs-do
   kind: source_code
@@ -1267,3 +1267,29 @@ notes:
   and compare_and_swap are expected to be inlined at -O3 (not checked); if they are not, their simulated
   misses are not counted as the kernel.
 extensions: {}
+application: gapbs
+source_baseline: gapbs-bfs-do
+evaluator:
+  backend: native
+  command: '{binary} {input_args} -n 1 -v'
+  pass_regex: Verification:\s+PASS
+  verifier:
+    description: 'BFSVerifier: a serial BFS from the same source computes depths; then parent[source]
+      must equal source, every other reached vertex''s parent must be an in-neighbor whose depth is one
+      less, and a vertex must have parent -1 exactly when the serial BFS does not reach it.'
+    code:
+      root: application
+      path: src/bfs.cc
+      lines:
+      - 196
+      - 247
+      sha256: 7c32c3c8dc43bf7be417fc5c530b4578bfe3697d8eb47a161cdb142487823f73
+verification:
+  status: passed
+  evidence:
+  - gapbs-bfs-do.kron-g16-k16.mbit10.20260922t221109z
+  - gapbs-bfs-do.kron-g22-k16.mbit10.20260922t221513z
+  - gapbs-bfs-do.urand-u16-k16.mbit10.20260922t221125z
+  - gapbs-bfs-do.urand-u22-k16.mbit10.20260922t221934z
+  scope: Historical mbit10 workloads named by the referenced 2026-09-22 profiles only; no new target or
+    workload is certified.

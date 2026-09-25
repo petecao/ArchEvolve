@@ -8,6 +8,13 @@ from conftest import REPO
 DOC = REPO / "docs" / "format-v0.3.md"
 
 
+def documentation():
+    """Additive formats and workflow contracts keep their own dated documents."""
+    paths = sorted((REPO / "docs").glob("format-v*.md"))
+    paths += sorted((REPO / "docs").glob("bfs-*.md"))
+    return "\n".join(path.read_text() for path in paths)
+
+
 def schema_fields():
     names = {}
 
@@ -31,20 +38,20 @@ def schema_fields():
 
 
 def test_every_schema_field_is_in_the_format_document():
-    doc = DOC.read_text()
+    doc = documentation()
     missing = sorted(f"{where}.{name}" for name, where in schema_fields().items() if f"`{name}`" not in doc)
     assert not missing, f"fields not documented in {DOC.name}: {missing}"
 
 
 def test_the_check_would_catch_a_missing_field(tmp_path):
     # negative control: the same check on a document without one field fails
-    doc = DOC.read_text().replace("`undirected_alias`", "undirected alias")
+    doc = documentation().replace("`undirected_alias`", "undirected alias")
     missing = [name for name in schema_fields() if f"`{name}`" not in doc]
     assert missing == ["undirected_alias"]
 
 
 def test_every_vocabulary_a_schema_uses_is_named_in_the_document():
-    doc = DOC.read_text()
+    doc = documentation()
     used = set()
 
     def walk(node):

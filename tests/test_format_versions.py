@@ -1,4 +1,4 @@
-"""Format versions: 0.2 and 0.3 are accepted, anything else is not. Created 2026-09-23."""
+"""Format versions: 0.2, 0.3, and 0.4 are accepted, anything else is not. Created 2026-09-23; updated 2026-09-25."""
 
 import pytest
 
@@ -25,7 +25,7 @@ def test_a_record_at_0_3_passes(repo):
 
 def test_an_unsupported_version_fails(repo):
     data = repo.read(KRON)
-    data["schema_version"] = "0.4"
+    data["schema_version"] = "99.0"
     repo.write(KRON, data)
     result = repo.validate()
     assert result.returncode == 1

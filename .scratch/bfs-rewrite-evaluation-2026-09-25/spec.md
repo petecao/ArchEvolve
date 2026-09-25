@@ -4,12 +4,12 @@ Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** spec
 **Status:** ready-for-agent
-**Blocked by:** Explicit user authorization before implementation, builds, installations, benchmark/simulator runs, or implementation-ticket decomposition.
+**Blocked by:** None — implementation and execution authorized by the user on 2026-09-25.
 Owner: Yan-Ru Jhou
 Requirements: Agreed in the 2026-09-25 design discussion.
 Testing boundary: Public SWDB workflow, confirmed by the user on 2026-09-25.
 
-The triage label records specification readiness. It does not override the implementation hold. This publication authorizes documentation only. Native evaluation, a working DX100 build, and candidate speedups remain future work.
+The user explicitly authorized implementation and execution on 2026-09-25, superseding the earlier publication-only hold. Acceptance still requires the actual native and DX100 evidence defined below; authorization is not evidence of completion.
 
 ## Problem Statement
 
@@ -386,8 +386,8 @@ The planned lab host is mbit10, subject to live capability/resource checks and t
 
 ### References and document authority
 
-This spec supersedes the working requirements draft in the same tracker entry. The accompanying map provides acceptance navigation and current source/test evidence pointers; there are no implementation tickets yet.
+This spec supersedes the working requirements draft in the same tracker entry. The accompanying map provides acceptance navigation and the 21 implementation tickets approved on 2026-09-25.
 
 The project glossary and ADRs 0001–0005 govern domain terminology, persistence, strategy identity, and cross-source comparison semantics. Current source evidence includes the [pinned DX100 artifact](https://github.com/arkhadem/DX100/tree/e4fc4afdf894f295442cef3604667a469fab8e62), the inspected Extensa evaluation conventions, and live SWDB code/test inspection on 2026-09-25. Source inspection is not execution evidence.
 
-The public workflow testing boundary was explicitly confirmed during spec refinement. All implementation and experiment execution remains subject to the user's separate authorization.
+The public workflow testing boundary was explicitly confirmed during spec refinement. Implementation and experiment execution were explicitly authorized by the user on 2026-09-25; host and evidence rules remain in force.

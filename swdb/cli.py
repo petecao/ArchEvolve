@@ -65,6 +65,13 @@ def main(argv=None):
     sub.add_argument("--applies", metavar="STRATEGY",
                      help="only implementations that apply this strategy, with their baseline's profiles")
 
+    sub = command("compare", "compare an explicit baseline and exact compatible profile pair", db=True, fmt=True)
+    sub.add_argument("implementation")
+    sub.add_argument("--baseline", help="explicit comparison baseline (or the implementation's recorded selection)")
+    sub.add_argument("--profile", required=True)
+    sub.add_argument("--baseline-profile", required=True)
+    sub.add_argument("--protocol", required=True)
+
     sub = command("view", "print the workload view (HW Ensemble format) of one implementation on one input and machine",
                   fmt=True)
     sub.add_argument("implementation")
@@ -120,6 +127,51 @@ def main(argv=None):
     sub.add_argument("profile", nargs="+")
     sub.add_argument("--reason", required=True, help="why the profiles are re-read (goes into their provenance)")
 
+    sub = command("source-snapshot", "retain an exact buildable source snapshot and evaluator protections", db=True, fmt=True)
+    sub.add_argument("implementation")
+    sub.add_argument("--runs-dir", type=Path, required=True)
+    sub.add_argument("--id")
+
+    sub = command("fixture-package", "create a labeled contract fixture package without execution evidence", db=True, fmt=True)
+    sub.add_argument("snapshot")
+    sub.add_argument("--id", required=True)
+
+    sub = command("submit", "retain a rewrite proposal and produce a candidate or explicit rejection", db=True, fmt=True)
+    sub.add_argument("file", type=Path)
+    sub.add_argument("--runs-dir", type=Path, required=True)
+    sub.add_argument("--provider-config", type=Path)
+
+    sub = command("repair", "produce a bounded repair of a failed build or correctness evaluation", db=True, fmt=True)
+    sub.add_argument("evaluation")
+    sub.add_argument("--runs-dir", type=Path, required=True)
+    sub.add_argument("--provider-config", type=Path, required=True)
+
+    for name in ("dx100-build", "dx100-execute"):
+        sub = command(name, "run a bounded DX100 backend stage with durable evidence", db=True, fmt=True)
+        sub.add_argument("file", type=Path)
+        sub.add_argument("--runs-dir", type=Path, required=True)
+        sub.add_argument("--lane", type=int, required=True)
+
+    sub = command("capabilities", "query source-backed operations and executable readiness of a target", fmt=True)
+    sub.add_argument("target")
+
+    sub = command("evaluate", "build and evaluate an identified native BFS candidate", db=True, fmt=True)
+    sub.add_argument("file", type=Path)
+    sub.add_argument("--runs-dir", type=Path, required=True)
+    sub.add_argument("--lane")
+
+    for name, help_text in (
+        ("register-workload", "register graph representations after checking canonical adjacency identity"),
+        ("freeze-protocol", "freeze an immutable workload and comparison protocol"),
+        ("compare-evaluations", "compare explicit evaluation evidence under a frozen protocol"),
+    ):
+        sub = command(name, help_text, db=True, fmt=True)
+        sub.add_argument("file", type=Path)
+
+    sub = command("get", "retrieve an authoritative record through the generated query index", db=True, fmt=True)
+    sub.add_argument("id")
+    sub.add_argument("--chain", action="store_true", help="include linked proposal, candidate, source, and package records")
+
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -139,6 +191,41 @@ def _dispatch(args):
         return _validate(records)
     if args.command == "capture-machine":
         return _capture(args)
+
+    if args.command == "capabilities":
+        from swdb import capabilities
+
+        return _emit(capabilities.query(args), args.format)
+
+    if args.command in {"dx100-build", "dx100-execute"}:
+        from swdb import dx100
+
+        result = getattr(dx100, args.command.removeprefix("dx100-"))(args)
+        _emit(result, args.format)
+        return 0 if result.get("outcome", {}).get("state") == "complete" else 1
+
+    if args.command == "evaluate":
+        from swdb import bfs_native
+
+        result = bfs_native.run(args)
+        _emit(result, args.format)
+        return 0 if result.get("outcome", {}).get("state") == "complete" else 1
+
+    if args.command in {"register-workload", "freeze-protocol", "compare-evaluations"}:
+        from swdb import bfs_protocol
+
+        result = getattr(bfs_protocol, args.command.replace("-", "_"))(args)
+        _emit(result, args.format)
+        return 1 if result.get("decision", {}).get("state") == "rejected" else 0
+
+    workflow_commands = {"source-snapshot": "snapshot", "fixture-package": "fixture_package",
+                         "submit": "submit", "repair": "repair", "get": "get_record"}
+    if args.command in workflow_commands:
+        from swdb import workflow
+
+        result = getattr(workflow, workflow_commands[args.command])(args)
+        _emit(result, args.format)
+        return 1 if args.command in {"submit", "repair"} and result.get("outcome", {}).get("state") in {"rejected", "unresolved", "failed"} else 0
 
     from swdb import db
 
@@ -176,6 +263,10 @@ def _dispatch(args):
         if found is None:
             raise Failure(f"kernel {args.kernel!r} does not exist")
         return _emit(found, args.format)
+    if args.command == "compare":
+        _ensure_db(records, db_path)
+        return _emit(db.compare(db_path, args.implementation, args.baseline, args.profile,
+                                args.baseline_profile, args.protocol), args.format)
     if args.command == "view":
         from swdb import view
 

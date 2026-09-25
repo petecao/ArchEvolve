@@ -34,6 +34,7 @@ intrinsics it calls; its required ISA is derived from those intrinsics.
   computed from profiles. The original rule implicitly selected the `derived_from`
   baseline; [ADR 0005](0005-kernel-identity-spans-sources-and-comparisons-name-their-baseline.md)
   supersedes that selection with an explicit comparison baseline in the accepted
-  design. Implementation of that change is pending separate authorization.
+  design. The separately authorized format 0.4 comparison interface now implements
+  explicit selection; historical `--applies` ancestry pairing remains labeled as such.
 - Machine records at format 0.3 must list CPU flags so the ISA check can run; `swdb profile`
   refuses ISA-dependent code on a machine that lists none.

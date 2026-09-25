@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "candidate",
+  "title": "Candidate",
+  "description": "Workflow format introduced 2026-09-25. Metadata is authoritative YAML; external artifacts carry content identity.",
+  "properties": {
+    "kind": {
+      "const": "candidate"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "message_version": {
+      "const": "1.0"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "sw",
+            "hw",
+            "operator",
+            "worker"
+          ]
+        },
+        "test_client": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "role",
+        "test_client"
+      ]
+    },
+    "proposal": {
+      "$ref": "#/$defs/id",
+      "x-ref": "proposal"
+    },
+    "source_snapshot": {
+      "$ref": "#/$defs/id",
+      "x-ref": "source_snapshot"
+    },
+    "implementation": {
+      "$ref": "#/$defs/id",
+      "x-ref": "implementation"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "executable": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "path",
+              "sha256",
+              "bytes",
+              "executable"
+            ]
+          }
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "files"
+      ]
+    },
+    "diff": {
+      "type": "string",
+      "minLength": 1
+    },
+    "diff_sha256": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "enum": [
+        "unverified",
+        "incomplete",
+        "incorrect",
+        "checked"
+      ]
+    },
+    "protections": {
+      "type": "array"
+    },
+    "context": {
+      "type": "object"
+    },
+    "parent_candidate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-ref": "candidate"
+    }
+  },
+  "required": [
+    "message_version",
+    "producer",
+    "proposal",
+    "source_snapshot",
+    "implementation",
+    "artifact",
+    "diff",
+    "diff_sha256",
+    "state",
+    "protections",
+    "context"
+  ]
+}

@@ -17,3 +17,23 @@ values:
     meaning: An optimization strategy, a reusable technique identified by its target and effect; it holds no code.
   - value: intrinsic
     meaning: One ISA instruction wrapper that code can call, with the ISA extensions it needs and the memory access it performs.
+  - value: source_snapshot
+    meaning: An identified buildable source copy with evaluator-owned protections.
+  - value: profile_package
+    meaning: A versioned source and workload-specific handoff with explicit completeness.
+  - value: proposal
+    meaning: A retained rewrite request and stage outcomes, including rejection.
+  - value: candidate
+    meaning: Unverified code materialized from an identified rewrite proposal.
+  - value: evaluation
+    meaning: Durable stage outcomes and evidence for an exact candidate execution.
+  - value: operation
+    meaning: Source-backed accelerator operation semantics and resource requirements.
+  - value: hardware_target
+    meaning: A versioned hardware model, software interface, and evaluator backend configuration.
+  - value: workload
+    meaning: A graph with verified equivalent representations and an ordered traversal-source list.
+  - value: protocol
+    meaning: An immutable versioned set of workload and comparison settings.
+  - value: comparison_result
+    meaning: A retained compatibility and profitability decision for explicit evaluation evidence.

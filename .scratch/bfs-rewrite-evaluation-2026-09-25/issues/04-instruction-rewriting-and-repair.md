@@ -3,11 +3,11 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 03
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
-**Execution hold:** Publishing this ticket does not authorize implementation, builds, installations, benchmark/simulator runs, or remote execution. Wait for explicit user authorization.
+**Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
 ## What to build
 
@@ -35,3 +35,7 @@ Use public instruction submission, candidate/evaluation execution, and fresh-pro
 ## Dependencies and boundaries
 
 Ticket 03 supplies native evaluation and durable outcomes, including explicit verifier failure. Complete profile generation, DX100 builds, and full performance workloads are not prerequisites. This ticket does not choose strategies, synthesize a new hardware operation, promise success for arbitrary prose, or require live collaborator agents. Annotated-source interpretation is the next slice and reuses this worker behavior.
+
+## Implementation progress
+
+2026-09-25: Provider and repair design is recorded in `docs/bfs-rewrite-worker.md`. Worker preparation proceeds against the stable candidate interface while native evaluation acceptance completes; this ticket cannot resolve before Ticket 03. Root owns the bounded provider/repair integration and instruction/annotation route tests.

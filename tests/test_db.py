@@ -1,4 +1,4 @@
-"""`swdb build`, `sql`, `find`, and `implementations` (ADR 0002). Created 2026-09-22."""
+"""`swdb build`, `sql`, `find`, and `implementations` (ADR 0002). Updated 2026-09-25."""
 
 import json
 import re
@@ -135,7 +135,9 @@ def test_sibling_records_folders_never_share_results(tmp_path):
     import shutil
 
     for name in ("a", "b"):
-        shutil.copytree(REPO / "records" / "applications", tmp_path / name / "applications")
+        destination = tmp_path / name / "applications"
+        destination.mkdir(parents=True)
+        shutil.copy(REPO / "records" / "applications" / "gapbs.yaml", destination / "gapbs.yaml")
     b_app = tmp_path / "b" / "applications" / "gapbs.yaml"
     b_app.write_text(b_app.read_text().replace("id: gapbs", "id: gapbs-b"))
     first = out(run_swdb("sql", "select id from applications", "--records", tmp_path / "a", "--format", "json"))

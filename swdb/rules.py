@@ -51,13 +51,18 @@ class Context:
     def application(self, data):
         """The application behind a kernel, implementation, or profile, following each link only
         through records that passed their schema (or None)."""
-        for field, kind in (("implementation", "implementation"), ("kernel", "kernel"), ("application", "application")):
-            if data is None or data.get("kind") == "application":
-                break
-            if data.get("kind") in {"profile", "implementation", "kernel"} and field in data:
-                ref = data[field]
-                data = self.passed(ref, kind) if isinstance(ref, str) else None
-        return data if data is not None and data.get("kind") == "application" else None
+        if data is None:
+            return None
+        kind = data.get("kind")
+        if kind == "application":
+            return data
+        if kind in {"kernel", "implementation"} and "application" in data:
+            return self.passed(data["application"], "application")
+        if kind == "implementation":
+            return self.application(self.passed(data.get("kernel"), "kernel"))
+        if kind == "profile":
+            return self.application(self.passed(data.get("implementation"), "implementation"))
+        return None
 
 
 def check(record, ctx):
@@ -75,6 +80,10 @@ def check(record, ctx):
         yield from _intrinsic(record)
     elif kind == "strategy":
         yield from _strategy(record, ctx)
+    elif kind in {"workload", "protocol"}:
+        from swdb.bfs_protocol import validate_record
+
+        yield from validate_record(record, ctx)
 
 
 def _deprecated_by(record, ctx):
@@ -172,11 +181,44 @@ def _implementation(record, ctx):
     yield from _required_isa(record, ctx)
     yield from _applies(record, ctx, set(loops), set(patterns))
     app = ctx.application(data)
+    yield from _implementation_context(record, ctx, app)
     for i, code in enumerate(data["code"]):
         yield from _code_ref(record, ctx, code, f"code[{i}]", app)
     for i, loop in enumerate(data["loops"]):
         if loop.get("code"):
             yield from _code_ref(record, ctx, loop["code"], f"loops[{i}].code", app)
+
+
+def _implementation_context(record, ctx, app):
+    data = record.data
+    for field, target in (("origin.derived_from", data["origin"].get("derived_from")),
+                          ("source_baseline", data.get("source_baseline")),
+                          ("comparison_baseline", data.get("comparison_baseline"))):
+        other = ctx.passed(target, "implementation")
+        if other is None:
+            continue
+        if other["kernel"] != data["kernel"]:
+            yield Problem(record.rel, field, f"{target!r} implements a different kernel")
+        if field == "source_baseline":
+            other_app = ctx.application(other)
+            if app is not None and other_app is not None and app["id"] != other_app["id"]:
+                yield Problem(record.rel, field, "source baseline belongs to a different application")
+            if other["origin"]["kind"] not in {"application_source", "upstream_alternative"}:
+                yield Problem(record.rel, field, "source baseline must be found in the application's source")
+    evaluator = data.get("evaluator")
+    if evaluator:
+        yield from _regex(record.rel, "evaluator.pass_regex", evaluator["pass_regex"])
+        yield from _code_ref(record, ctx, evaluator["verifier"]["code"], "evaluator.verifier.code", app)
+    verification = data.get("verification", {})
+    for i, reference in enumerate(verification.get("evidence", [])):
+        profile = ctx.passed(reference, "profile")
+        if profile is None:
+            continue
+        if profile["implementation"] != data["id"]:
+            yield Problem(record.rel, f"verification.evidence[{i}]", "correctness evidence belongs to another implementation")
+        if verification["status"] == "passed" and not any(
+                p["part"] == "correctness" and p["outcome"] == "complete" for p in profile["parts"]):
+            yield Problem(record.rel, f"verification.evidence[{i}]", "profile has no successful correctness check")
 
 
 _NAMED = {"loop": "a loop", "access_pattern": "an access pattern"}
