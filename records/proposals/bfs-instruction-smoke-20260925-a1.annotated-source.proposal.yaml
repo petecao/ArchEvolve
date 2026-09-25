@@ -1,0 +1,391 @@
+kind: proposal
+schema_version: '0.4'
+id: bfs-instruction-smoke-20260925-a1.annotated-source.proposal
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb-bounded-instruction-diagnostic-client
+  role: sw
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-instruction-smoke-20260925-a1.annotated-source.proposal
+  producer:
+    name: swdb-bounded-instruction-diagnostic-client
+    role: sw
+    test_client: true
+  implementation: gapbs-bfs-do
+  source_snapshot: bfs-instruction-smoke-20260925-a1.annotated-source.source
+  profile_package: bfs-instruction-smoke-20260925-a1.annotated-source.package
+  source_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+  regions:
+  - src/bfs.cc:122-179:437882a50dcae474
+  - src/bfs.cc:67-89:7a1d3944e43bdd6d
+  - src/bfs.cc:46-64:29b8637691f58e1c
+  - src/bfs.cc:92-98:ecf6e1693c797afe
+  - src/bfs.cc:100-112:a80c4416a9fcc609
+  - src/bfs.cc:114-120:8258dcb0ac11957d
+  intent: 'Interpret the annotation at DOBFS: change only default alpha from 15 to 16.'
+  parameters:
+    old_alpha: 15
+    new_alpha: 16
+  constraints:
+    editable_files: [src/bfs.cc]
+    preserve_correctness: true
+    preserve_roi: true
+  payload:
+    kind: annotated_source
+    content:
+      files:
+        src/bfs.cc: |
+          // Copyright (c) 2015, The Regents of the University of California (Regents)
+          // See LICENSE.txt for license details
+
+          #include <iostream>
+          #include <vector>
+
+          #include "benchmark.h"
+          #include "bitmap.h"
+          #include "builder.h"
+          #include "command_line.h"
+          #include "graph.h"
+          #include "platform_atomics.h"
+          #include "pvector.h"
+          #include "sliding_queue.h"
+          #include "timer.h"
+
+
+          /*
+          GAP Benchmark Suite
+          Kernel: Breadth-First Search (BFS)
+          Author: Scott Beamer
+
+          Will return parent array for a BFS traversal from a source vertex
+
+          This BFS implementation makes use of the Direction-Optimizing approach [1].
+          It uses the alpha and beta parameters to determine whether to switch search
+          directions. For representing the frontier, it uses a SlidingQueue for the
+          top-down approach and a Bitmap for the bottom-up approach. To reduce
+          false-sharing for the top-down approach, thread-local QueueBuffer's are used.
+
+          To save time computing the number of edges exiting the frontier, this
+          implementation precomputes the degrees in bulk at the beginning by storing
+          them in the parent array as negative numbers. Thus, the encoding of parent is:
+            parent[x] < 0 implies x is unvisited and parent[x] = -out_degree(x)
+            parent[x] >= 0 implies x been visited
+
+          [1] Scott Beamer, Krste Asanović, and David Patterson. "Direction-Optimizing
+              Breadth-First Search." International Conference on High Performance
+              Computing, Networking, Storage and Analysis (SC), Salt Lake City, Utah,
+              November 2012.
+          */
+
+
+          using namespace std;
+
+          int64_t BUStep(const Graph &g, pvector<NodeID> &parent, Bitmap &front,
+                         Bitmap &next) {
+            int64_t awake_count = 0;
+            next.reset();
+            #pragma omp parallel for reduction(+ : awake_count) schedule(dynamic, 1024)
+            for (NodeID u=0; u < g.num_nodes(); u++) {
+              if (parent[u] < 0) {
+                for (NodeID v : g.in_neigh(u)) {
+                  if (front.get_bit(v)) {
+                    parent[u] = v;
+                    awake_count++;
+                    next.set_bit(u);
+                    break;
+                  }
+                }
+              }
+            }
+            return awake_count;
+          }
+
+
+          int64_t TDStep(const Graph &g, pvector<NodeID> &parent,
+                         SlidingQueue<NodeID> &queue) {
+            int64_t scout_count = 0;
+            #pragma omp parallel
+            {
+              QueueBuffer<NodeID> lqueue(queue);
+              #pragma omp for reduction(+ : scout_count) nowait
+              for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                NodeID u = *q_iter;
+                for (NodeID v : g.out_neigh(u)) {
+                  NodeID curr_val = parent[v];
+                  if (curr_val < 0) {
+                    if (compare_and_swap(parent[v], curr_val, u)) {
+                      lqueue.push_back(v);
+                      scout_count += -curr_val;
+                    }
+                  }
+                }
+              }
+              lqueue.flush();
+            }
+            return scout_count;
+          }
+
+
+          void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+            #pragma omp parallel for
+            for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+              NodeID u = *q_iter;
+              bm.set_bit_atomic(u);
+            }
+          }
+
+          void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                             SlidingQueue<NodeID> &queue) {
+            #pragma omp parallel
+            {
+              QueueBuffer<NodeID> lqueue(queue);
+              #pragma omp for nowait
+              for (NodeID n=0; n < g.num_nodes(); n++)
+                if (bm.get_bit(n))
+                  lqueue.push_back(n);
+              lqueue.flush();
+            }
+            queue.slide_window();
+          }
+
+          pvector<NodeID> InitParent(const Graph &g) {
+            pvector<NodeID> parent(g.num_nodes());
+            #pragma omp parallel for
+            for (NodeID n=0; n < g.num_nodes(); n++)
+              parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+            return parent;
+          }
+
+          pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                                /* SWDB REQUEST: change this alpha default from 15 to 16; preserve all other code. */ int alpha = 15, int beta = 18) {
+            if (logging_enabled)
+              PrintStep("Source", static_cast<int64_t>(source));
+            Timer t;
+            t.Start();
+            pvector<NodeID> parent = InitParent(g);
+            t.Stop();
+            if (logging_enabled)
+              PrintStep("i", t.Seconds());
+            parent[source] = source;
+            SlidingQueue<NodeID> queue(g.num_nodes());
+            queue.push_back(source);
+            queue.slide_window();
+            Bitmap curr(g.num_nodes());
+            curr.reset();
+            Bitmap front(g.num_nodes());
+            front.reset();
+            int64_t edges_to_check = g.num_edges_directed();
+            int64_t scout_count = g.out_degree(source);
+            while (!queue.empty()) {
+              if (scout_count > edges_to_check / alpha) {
+                int64_t awake_count, old_awake_count;
+                TIME_OP(t, QueueToBitmap(queue, front));
+                if (logging_enabled)
+                  PrintStep("e", t.Seconds());
+                awake_count = queue.size();
+                queue.slide_window();
+                do {
+                  t.Start();
+                  old_awake_count = awake_count;
+                  awake_count = BUStep(g, parent, front, curr);
+                  front.swap(curr);
+                  t.Stop();
+                  if (logging_enabled)
+                    PrintStep("bu", t.Seconds(), awake_count);
+                } while ((awake_count >= old_awake_count) ||
+                         (awake_count > g.num_nodes() / beta));
+                TIME_OP(t, BitmapToQueue(g, front, queue));
+                if (logging_enabled)
+                  PrintStep("c", t.Seconds());
+                scout_count = 1;
+              } else {
+                t.Start();
+                edges_to_check -= scout_count;
+                scout_count = TDStep(g, parent, queue);
+                queue.slide_window();
+                t.Stop();
+                if (logging_enabled)
+                  PrintStep("td", t.Seconds(), queue.size());
+              }
+            }
+            #pragma omp parallel for
+            for (NodeID n = 0; n < g.num_nodes(); n++)
+              if (parent[n] < -1)
+                parent[n] = -1;
+            return parent;
+          }
+
+
+          void PrintBFSStats(const Graph &g, const pvector<NodeID> &bfs_tree) {
+            int64_t tree_size = 0;
+            int64_t n_edges = 0;
+            for (NodeID n : g.vertices()) {
+              if (bfs_tree[n] >= 0) {
+                n_edges += g.out_degree(n);
+                tree_size++;
+              }
+            }
+            cout << "BFS Tree has " << tree_size << " nodes and ";
+            cout << n_edges << " edges" << endl;
+          }
+
+
+          // BFS verifier does a serial BFS from same source and asserts:
+          // - parent[source] = source
+          // - parent[v] = u  =>  depth[v] = depth[u] + 1 (except for source)
+          // - parent[v] = u  => there is edge from u to v
+          // - all vertices reachable from source have a parent
+          bool BFSVerifier(const Graph &g, NodeID source,
+                           const pvector<NodeID> &parent) {
+            pvector<int> depth(g.num_nodes(), -1);
+            depth[source] = 0;
+            vector<NodeID> to_visit;
+            to_visit.reserve(g.num_nodes());
+            to_visit.push_back(source);
+            for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+              NodeID u = *it;
+              for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                  depth[v] = depth[u] + 1;
+                  to_visit.push_back(v);
+                }
+              }
+            }
+            for (NodeID u : g.vertices()) {
+              if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                  if (!((parent[u] == u) && (depth[u] == 0))) {
+                    cout << "Source wrong" << endl;
+                    return false;
+                  }
+                  continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                  if (v == parent[u]) {
+                    if (depth[v] != depth[u] - 1) {
+                      cout << "Wrong depths for " << u << " & " << v << endl;
+                      return false;
+                    }
+                    parent_found = true;
+                    break;
+                  }
+                }
+                if (!parent_found) {
+                  cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                  return false;
+                }
+              } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+              }
+            }
+            return true;
+          }
+
+
+          int main(int argc, char* argv[]) {
+            CLApp cli(argc, argv, "breadth-first search");
+            if (!cli.ParseArgs())
+              return -1;
+            Builder b(cli);
+            Graph g = b.MakeGraph();
+            SourcePicker<Graph> sp(g, cli.start_vertex());
+            auto BFSBound = [&sp,&cli] (const Graph &g) {
+              return DOBFS(g, sp.PickNext(), cli.logging_en());
+            };
+            SourcePicker<Graph> vsp(g, cli.start_vertex());
+            auto VerifierBound = [&vsp] (const Graph &g, const pvector<NodeID> &parent) {
+              return BFSVerifier(g, vsp.PickNext(), parent);
+            };
+            BenchmarkKernel(cli, g, BFSBound, PrintBFSStats, VerifierBound);
+            return 0;
+          }
+  required_operations: []
+payload_sha256: 0baf5d09161fac759d8f9d8a6377e95a5ea7d9a212ca3364096b08e599d23890
+outcome:
+  state: failed
+  stage: rewriting
+  reason: |-
+    patch application failed: error: patch failed: src/bfs.cc:120
+    error: src/bfs.cc: patch does not apply
+attempts:
+- number: 1
+  stage: rewriting
+  state: failed
+  provider:
+    provider:
+      kind: claude
+      command:
+      - /data1/yanruj/.npm-global/bin/claude
+      timeout_s: 300
+      max_repairs: 1
+      total_seconds: 600
+      budget_usd: 5
+    command:
+    - /data1/yanruj/.npm-global/bin/claude
+    - -p
+    - --safe-mode
+    - --tools
+    - ''
+    - --strict-mcp-config
+    - --mcp-config
+    - '{"mcpServers":{}}'
+    - --no-session-persistence
+    - --output-format
+    - json
+    - --json-schema
+    - '{"type": "object", "additionalProperties": false, "required": ["interpretation", "patch", "unresolved"],
+      "properties": {"interpretation": {"type": "string"}, "patch": {"type": "string"}, "unresolved":
+      {"type": "array", "items": {"type": "string"}}}}'
+    - --max-budget-usd
+    - '5'
+    timeout_s: 300
+    classification: rewrite_provider
+    prompt_sha256: ca6ef9efbc4df88a3803405575462857ac1aab52d1019dcbce7b550b8988d6a4
+    state: completed
+    executable_sha256: 5c4735937844e84f8a93306e841a5b0e12252909b07870f789b190468da147ab
+    version: 2.1.278 (Claude Code)
+    returncode: 0
+    host_wall_s: 15.863698285073042
+  reason: |-
+    patch application failed: error: patch failed: src/bfs.cc:120
+    error: src/bfs.cc: patch does not apply
+raw_artifacts:
+- path: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a1.annotated-source.proposal
+  stage: rewriting
+source_snapshot: bfs-instruction-smoke-20260925-a1.annotated-source.source
+profile_package: bfs-instruction-smoke-20260925-a1.annotated-source.package
+provider:
+  kind: claude
+  command:
+  - /data1/yanruj/.npm-global/bin/claude
+  timeout_s: 300
+  max_repairs: 1
+  total_seconds: 600
+  budget_usd: 5
+repair_budget:
+  max_repairs: 1
+  total_seconds: 600
+  used_seconds: 15.863698285073042
+  repairs: 0
+interpretation:
+  interpretation: 'Applied the submitted intent exactly: changed the default value of the alpha parameter
+    in DOBFS (src/bfs.cc) from 15 to 16, leaving beta, the DOBFS body, and all other regions (BUStep,
+    TDStep, QueueToBitmap, BitmapToQueue, InitParent, BFSVerifier) untouched. This is a single default-argument
+    literal edit; no control flow, ROI boundaries, or verifier logic were touched.'
+  patch: "--- a/src/bfs.cc\n+++ b/src/bfs.cc\n@@ -120,7 +120,7 @@\n }\n \n pvector<NodeID> DOBFS(const\
+    \ Graph &g, NodeID source, bool logging_enabled = false,\n-                      int alpha = 15, int\
+    \ beta = 18) {\n+                      int alpha = 16, int beta = 18) {\n   if (logging_enabled)\n\
+    \     PrintStep(&quot;Source&quot;, static_cast&lt;int64_t&gt;(source));\n   Timer t;\n"
+  unresolved: []
