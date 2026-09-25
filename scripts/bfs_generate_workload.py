@@ -7,6 +7,7 @@ import argparse
 import json
 import os
 import resource
+import re
 import signal
 import socket
 import struct
@@ -60,6 +61,10 @@ def main():
     p.add_argument('--records',type=Path,default=ROOT/'records')
     p.add_argument('--lane',required=True)
     a=p.parse_args()
+    if not re.fullmatch(r'[a-z0-9][a-z0-9._-]*',a.id):
+        raise SystemExit('workload ID must use the record identifier syntax')
+    if a.sources is not None and any(v<0 or v>=2**a.scale for v in a.sources):
+        raise SystemExit('requested source is outside the generated vertex range')
     if socket.gethostname().split('.')[0]!='mbit10':
         raise SystemExit('this measurement driver requires mbit10')
     if a.scale==22 and a.family!='uniform_random':
@@ -72,6 +77,10 @@ def main():
     if not any(base in runs.parents for base in [Path('/data1/yanruj'),Path('/data/yanruj')]):
         raise SystemExit('raw output must use the authorized host volumes')
     runs.mkdir(exist_ok=False);build.mkdir(exist_ok=False)
+    def interrupted(signum,_frame):
+        raise InterruptedError(f'workload preparation interrupted by signal {signum}')
+    for sig in (signal.SIGTERM,signal.SIGINT,signal.SIGHUP):
+        signal.signal(sig,interrupted)
     receipt={'id':a.id,'state':'running','family':a.family,'scale':a.scale,'edge_factor':16,
              'sources':a.sources,'lane':a.lane,'stages':[],
              'bounds':{'compile_s':180,'generate_s':900,'register_s':2400,'address_space_gib':48,'threads':4}}

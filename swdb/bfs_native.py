@@ -289,7 +289,7 @@ def _compile_settings(request, candidate, root):
     return executable, flags, includes, source, "dx100_scalar_func" if dx100 else "gapbs_native"
 
 
-def _protect_driver_macros(candidate, root):
+def _protect_driver_macros(candidate, root, *, extra_text=""):
     """Reject preprocessor substitution of the trusted driver after source inclusion.
 
     Scan all UTF-8 candidate inputs, including .inc files and extensionless
@@ -297,9 +297,9 @@ def _protect_driver_macros(candidate, root):
     the relevant preprocessing phases. This does not claim to sandbox hostile C++.
     """
     template = DRIVER.read_text()
-    suffix = template.split("#undef main", 1)[1]
+    suffix = template.split("#undef main", 1)[1] + "\n" + extra_text
     identifiers = set(re.findall(r"\b[A-Za-z_]\w*\b", suffix)) | {"main", "_OPENMP"}
-    trusted_headers = set(re.findall(r"#include <([^>]+)>", template)) | {"omp.h"}
+    trusted_headers = {Path(name).name for name in re.findall(r"#include <([^>]+)>", template + "\n" + extra_text)} | {"omp.h"}
     lexical = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/')
 
     def strip_comment(match):

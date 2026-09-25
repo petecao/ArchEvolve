@@ -60,6 +60,17 @@ def _discovery_settings(request, compiler, flags, includes, macro_log):
         found = sorted(parent.glob("*")) if parent.is_dir() else []
         if found: resource = str(found[-1])
     arguments = [f for f in flags if f != "-fopenmp"] + [f"-I{p}" for p in includes]
+    # A standalone libclang distribution need not find the GCC C++ standard
+    # library chosen by the real compiler. Preserve its reported search paths
+    # explicitly rather than silently discovering against another standard library.
+    search = re.search(r"#include <\.\.\.> search starts here:\n(.*?)End of search list\.", macro_log.read_text(), re.S)
+    if search:
+        for line in search.group(1).splitlines():
+            entry = line.strip()
+            framework = entry.endswith(" (framework directory)")
+            if framework: entry = entry.removesuffix(" (framework directory)")
+            if entry and Path(entry).is_dir():
+                arguments += ["-iframework" if framework else "-isystem", entry]
     # CIndex suppresses OpenMP captured loop bodies. Keep exact feature-selection
     # macro from the actual compiler while disabling only the metadata parser.
     macro = re.search(r"^#define _OPENMP (\d+)$", macro_log.read_text(), re.M)
@@ -164,9 +175,12 @@ def run(args):
         if artifacts.file_hash(evaluation["build"]["binary"]) != evaluation["build"]["binary_sha256"]:
             raise Failure("primary timed binary changed or is unavailable")
         artifacts.check_protections(root, candidate["protections"])
-        native._protect_driver_macros(candidate, root)
+        native._protect_driver_macros(candidate, root, extra_text=RUNTIME.read_text() +
+            "\n#include <valgrind/callgrind.h>\nCALLGRIND_START_INSTRUMENTATION CALLGRIND_STOP_INSTRUMENTATION CALLGRIND_ZERO_STATS CALLGRIND_DUMP_STATS")
         machine = store.get(data["machine"], "machine")
         host = socket.gethostname().split(".")[0]
+        if artifacts.digest(machine) != evaluation["context"]["machine_sha256"]:
+            raise Failure("machine record changed since the primary evaluation")
         if host != machine["hostname"] or host != evaluation["context"]["host"]:
             raise Failure("profile must execute on the evaluation's native host")
         if host == "mbit10" and not profile.lane_required(machine):
@@ -211,7 +225,7 @@ def run(args):
         version = session.execute("compiler_identity", [compiler, "--version"], 30)
         if version.read_text(errors="replace").splitlines()[:2] != evaluation["build"]["compiler_version"]:
             raise Failure("compiler version changed since primary evaluation")
-        macro = session.execute("preprocessor_identity", [compiler, *flags, "-dM", "-E", "-x", "c++", "/dev/null"], 30)
+        macro = session.execute("preprocessor_identity", [compiler, *flags, "-dM", "-E", "-v", "-x", "c++", "/dev/null"], 30)
         library, arguments = _discovery_settings(request, compiler, flags, includes, macro)
         discovery_request = folder / "discovery-request.json"
         discovery_request.write_text(json.dumps({"source": str(source), "arguments": arguments, "library": str(library)}))

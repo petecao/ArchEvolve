@@ -20,6 +20,8 @@ Discovery uses the compiler's source extents for free functions and ordinary loo
 in the current BFS translation-unit source file. Names are not an eligibility
 catalog. The metadata parser disables OpenMP while retaining the actual compiler's
 `_OPENMP` feature macro, because CIndex otherwise hides captured loop bodies.
+The actual compiler's verbose system-header search paths are supplied explicitly
+to standalone libclang, whose installation may otherwise omit GCC's C++ headers.
 Execution retains the primary compiler, version, and OpenMP build flags. Any parser
 error fails discovery. Transformation-specific/continued OpenMP pragmas and
 macro-generated loops without safe source extents remain unresolved. Header,
