@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import re
 import signal
 import subprocess
 import time
@@ -34,6 +35,21 @@ def digest(path):
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             value.update(chunk)
     return value.hexdigest()
+
+
+def disk_usage_kib(path):
+    """Account for an active build tree, retaining harmless unlink races."""
+    result = subprocess.run(["du", "-sk", str(path)], capture_output=True, text=True,
+                            timeout=30, env=dict(os.environ, LC_ALL="C"))
+    warnings = result.stderr.splitlines()
+    vanished = (result.returncode == 1 and warnings and all(
+        re.fullmatch(r"du: cannot access '.+': No such file or directory", line) for line in warnings))
+    if result.returncode and not vanished:
+        raise subprocess.CalledProcessError(result.returncode, result.args, result.stdout, result.stderr)
+    fields = result.stdout.strip().split(maxsplit=1)
+    if len(fields) != 2 or fields[1] != str(path):
+        raise ValueError("disk monitor did not report the requested directory total")
+    return int(fields[0]), warnings
 
 
 def group_rss_kib(pgid):
@@ -155,11 +171,15 @@ def main():
                     elif rss > args.memory_gib * 1024 * 1024:
                         reason = "memory_budget_exhausted"
                     if time.monotonic() >= next_disk_check:
-                        used = int(output(["du", "-sk", str(source)]).split()[0])
+                        used, warnings = disk_usage_kib(source)
                         stage["source_storage_kib"] = used
+                        if warnings:
+                            stage.setdefault("storage_monitor_warnings", []).append(warnings)
                         if used > args.storage_gib * 1024 * 1024:
                             reason = "build_storage_budget_exhausted"
-                        raw_used = int(output(["du", "-sk", str(directory)]).split()[0])
+                        raw_used, warnings = disk_usage_kib(directory)
+                        if warnings:
+                            stage.setdefault("storage_monitor_warnings", []).append(warnings)
                         if raw_used > 2 * 1024 * 1024:
                             reason = "raw_storage_budget_exhausted"
                         next_disk_check = time.monotonic() + 30

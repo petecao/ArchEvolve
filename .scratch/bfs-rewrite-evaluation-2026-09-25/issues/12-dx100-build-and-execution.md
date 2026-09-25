@@ -43,3 +43,9 @@ Ticket 03 provides the public evaluation/result foundation and durable outcome h
 ## Implementation evidence — 2026-09-25
 
 The public build/checkpoint/execution adapter and bounded build helper are implemented in `swdb/dx100.py` and `scripts/dx100_build.py`, with request and evidence rules in `docs/bfs-dx100-execution.md`. `python3 -m pytest tests/test_dx100.py -q` passed 7 public contract-fixture tests in 17.02 seconds. These cover build success/failure/budget, exact checkpoint bindings, missing statistics, changed binaries and simulator timeout with prior evidence retained. Real model build and smoke acceptance have not yet run; this ticket remains claimed.
+
+## Real attempt 1 and diagnosed retry — 2026-09-25
+
+The public first build ran on mbit10 lane 0 (lease generation 265) at 17:40:46–17:41:39 ET from SWDB `4a9383316eb8b2a5dfb53a02bb6c9a4c30a31b8d`. It stopped during Ramulator CMake configuration because `du` traversed a CMake temporary file concurrently removed by CMake. This was an explicitly recorded monitor failure, not a compiler/model failure. Raw receipt and stage logs remain under `/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a1/`; public evaluation `bfs-dx100-build-20260925-a1` is retained. Lane 0 released cleanly.
+
+The monitor now accepts only a complete `du` directory total accompanied exclusively by explicit vanished-file warnings, retaining those warnings; permission or other errors still fail closed. `tests/test_dx100_build.py` passes three cases, including the observed race and a permission-denied failure. Request `requests/dx100-build-a2.yaml` retains the same declared budget for the diagnosed second attempt. No simulator execution is implied.
