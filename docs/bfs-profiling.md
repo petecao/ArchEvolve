@@ -22,6 +22,11 @@ catalog. The metadata parser disables OpenMP while retaining the actual compiler
 `_OPENMP` feature macro, because CIndex otherwise hides captured loop bodies.
 The actual compiler's verbose system-header search paths are supplied explicitly
 to standalone libclang, whose installation may otherwise omit GCC's C++ headers.
+Clang's resource/intrinsic/OpenMP declarations replace the compiler-private header
+slot, which may otherwise contain GCC-only builtin and attribute syntax. The C++
+library's wrappers retain their preceding position in the search order. This parser
+difference is recorded; the diagnostic executable still uses the original compiler
+and headers.
 Execution retains the primary compiler, version, and OpenMP build flags. Any parser
 error fails discovery. Transformation-specific/continued OpenMP pragmas and
 macro-generated loops without safe source extents remain unresolved. Header,
@@ -51,7 +56,9 @@ explicit model is I1 32768/8/64, D1 49152/12/64, and LL 25165824/12/64
 (bytes/associativity/line bytes); `memory_model` may set `I1`, `D1`, `LL`, and
 `collector`. Cache state starts cold at instrumentation start. Collection is enabled for all
 threads, instrumentation is globally bounded to the ROI, and the dump combines
-thread events; no per-thread collection toggle can omit new OpenMP workers. These are model
+thread events; no per-thread collection toggle can omit new OpenMP workers.
+Valgrind schedules threads differently from native execution; the cache model
+uses virtual addresses and excludes kernel/other-process cache effects. These are model
 parameters, not claimed current hardware counters. No source-order proxy is
 substituted for actual BFS accesses. No address trace, per-loop memory behavior, or
 causal bottleneck explanation is inferred from these ROI counters.

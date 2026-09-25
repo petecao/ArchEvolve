@@ -185,8 +185,11 @@ int main(){return 99;}
     file=tmp_path/'profile.yaml';file.write_text(yaml.safe_dump(request))
     result=call('bfs-profile',file,'--runs-dir',runs)
     assert result['outcome']['state']=='partial',result['outcome']
+    assert '-isystem' in result['discovery']['arguments']
     ranking=call('bfs-hotspots',result['id'],'--kind','function','--evaluation',evaluation['id'])
     assert any(r['name']=='UncataloguedHelper' and r['metrics']['invocations']==2 for r in ranking['regions'])
+    assert ranking['ranking']['metric']=='exclusive_function_thread_cpu_seconds'
+    assert all(r['metrics']['exclusive_function_thread_cpu_seconds']>=r['metrics']['exclusive_thread_cpu_seconds'] for r in ranking['regions'])
     loops=call('bfs-hotspots',result['id'],'--kind','loop')
     assert any(r['function']=='UncataloguedHelper' for r in loops['regions'])
     assert len(result['executions'])==2 and all(x['correctness']['passed'] for x in result['executions'])

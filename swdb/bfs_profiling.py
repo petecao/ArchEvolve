@@ -65,11 +65,18 @@ def _discovery_settings(request, compiler, flags, includes, macro_log):
     # explicitly rather than silently discovering against another standard library.
     search = re.search(r"#include <\.\.\.> search starts here:\n(.*?)End of search list\.", macro_log.read_text(), re.S)
     if search:
+        seen_headers = set()
         for line in search.group(1).splitlines():
             entry = line.strip()
             framework = entry.endswith(" (framework directory)")
             if framework: entry = entry.removesuffix(" (framework directory)")
-            if entry and Path(entry).is_dir():
+            # Preserve C++ library wrappers before C/compiler headers. Replace
+            # only the compiler-private slot, rather than prepending it above
+            # libc++ (which requires its own stddef.h wrapper to be found first).
+            if resource and re.search(r"/(?:lib|lib64)/(?:gcc/[^/]+/[^/]+|clang/[^/]+)/include(?:-fixed)?$", entry):
+                entry = str(Path(resource) / "include")
+            if entry and Path(entry).is_dir() and str(Path(entry).resolve()) not in seen_headers:
+                seen_headers.add(str(Path(entry).resolve()))
                 arguments += ["-iframework" if framework else "-isystem", entry]
     # CIndex suppresses OpenMP captured loop bodies. Keep exact feature-selection
     # macro from the actual compiler while disabling only the metadata parser.
@@ -335,7 +342,8 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
     version = session.execute("memory_collector_identity", [valgrind, "--version"], 30)
     collector = {"name": "Callgrind", "version": version.read_text().strip(), "cache_model": model,
                  "initial_state": "instrumentation starts at ROI; caches initially empty", "hardware_counters": False,
-                 "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump"}
+                 "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+                 "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses"}
     folder = session.folder
     driver = folder / "memory_driver.cc"
     driver.write_text(_wrapper(source, '#include <valgrind/callgrind.h>',

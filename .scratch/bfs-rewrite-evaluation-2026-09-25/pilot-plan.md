@@ -36,11 +36,18 @@ processes. Source/builds remain under `/data1/yanruj`; raw outputs use the recor
 - Model bring-up: at most two attempts, each 7,200 seconds, eight build jobs,
   48 GiB aggregate process RSS, 10 GiB build tree, and 2 GiB logs. A retry requires
   a diagnosed build/dependency correction and a distinct retained attempt.
-- Candidate-size calibration: generator scales 14 and, only if scale 14 fails to
-  establish required full/tail accelerator coverage, 16; edge factor 16 for both
-  Kronecker and uniform-random families. No arbitrary scale sweep follows a
-  negative result. Generate each permitted graph once per pinned generator and
-  retain SG32/SG64 representation hashes and canonical loaded adjacency identity.
+- Candidate-size calibration: scale 14 establishes correctness and accelerator
+  coverage; scale 18 is the preferred performance pilot, with scale 16 permitted
+  only when scale 18 exceeds the declared cost bounds. Use edge factor 16 for both
+  Kronecker and uniform-random families. Before deduplication, scale 16 outgoing
+  CSR and parent storage is approximately 4–5 MiB, while scale 18 is approximately
+  18 MiB; the smaller graph could fit in the modeled 8 MiB LLC. These are planning
+  estimates, not measured working sets. Retain actual adjacency bytes, sources,
+  and memory observations before selecting the size. No arbitrary scale sweep
+  follows a negative result. Generate each permitted graph once per pinned
+  generator and retain SG32/SG64 representation hashes and canonical loaded
+  adjacency identity. Size selection uses unchanged baseline/reference cost and
+  coverage, never candidate gains; the 12-hour pilot cap remains unchanged.
 - Ordered diagnostic sources: `[0, 1234, 7777]` for these scales. Retain isolated
   sources and their outcomes. A source replacement requires a versioned workload
   with a coverage-based reason before any candidate assessment.
@@ -73,8 +80,11 @@ continue while an empirical gate remains unresolved.
 
 ## Settings selected after baseline observations
 
-Select the smallest permitted size establishing full-block and tail execution,
-competing parent updates, both families, and exact timed-binary correctness. The
+Select scale 18 for performance when it satisfies the declared cost bounds,
+full-block and tail execution, competing parent updates, both families, and exact
+timed-binary correctness. A cost-bounded fallback to scale 16 must retain the
+scale-18 failure and explicitly qualify any cache-resident workload limitation.
+Scale 14 remains a correctness and coverage diagnostic. The
 selected-region mapping must come from automatic source discovery. Record whether
 measurements are inclusive or exclusive and per invocation or accumulated. Freeze
 actual source/binary/model identities, source list, graph identity, CPU/cache/memory

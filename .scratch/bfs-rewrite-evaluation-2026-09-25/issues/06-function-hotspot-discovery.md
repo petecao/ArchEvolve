@@ -11,6 +11,8 @@ Updated: 2026-09-25 (Eastern Time)
 
 **Progress (2026-09-25):** Claimed for the shared automatic source discovery and diagnostic collector. Ticket 03 has real native acceptance; dependent slices remain open until their own real evidence is collected.
 
+**Verification progress (2026-09-25):** Six local compiler/public-workflow cases passed, including actual compiled toy nested accounting and fresh queries. The first real mbit10 profile (`bfs-profile-smoke-20260925-a1.baseline-profile`) failed closed because standalone libclang did not discover the system C++ headers. Its durable failure metadata is retained in Git commit `80d3220fdd7dc20207bbc0ef826de8d91ae0f872`; no successful regions or dynamic counts were fabricated. The collector now resolves the actual compiler's header search paths explicitly. Real acceptance remains open pending the next bounded attempt.
+
 ## What to build
 
 Extend the native BFS profiling/query path to discover and rank expensive functions in BFS and its helpers from execution evidence, then return source context for those functions. A manually maintained list of kernel symbols may be a hint but cannot determine the complete set of eligible functions. Keep this slice focused on function attribution; loop discovery follows separately.

@@ -188,6 +188,7 @@ def discover(source, arguments, library):
                 "limitations": ["header-defined, library, virtual/member and compiler-outlined code is not independently attributed",
                     "inlined source scopes remain source scopes, not machine-code symbols",
                     "OpenMP-disabled metadata inventory preserves _OPENMP; actual diagnostic execution retains original OpenMP flags",
+                    "metadata parser substitutes Clang builtin/OpenMP declarations in the compiler-private header slot while preserving actual system-library search order; execution uses original compiler headers",
                     "transformation-specific OpenMP pragmas and macro-generated loop extents may remain unresolved"]}
     finally:
         if tu.value: lib.clang_disposeTranslationUnit(tu)

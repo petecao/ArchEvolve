@@ -52,7 +52,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--id',required=True)
     p.add_argument('--family',choices=['kronecker','uniform_random'],required=True)
-    p.add_argument('--scale',type=int,choices=[14,16,22],required=True)
+    p.add_argument('--scale',type=int,choices=[14,16,18,22],required=True)
     sources=p.add_mutually_exclusive_group(required=True)
     sources.add_argument('--sources',type=int,nargs='+')
     sources.add_argument('--artifact-default-source',action='store_true')
