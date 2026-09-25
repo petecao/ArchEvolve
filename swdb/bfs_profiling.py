@@ -13,6 +13,8 @@ import sys
 import uuid
 from pathlib import Path
 
+import yaml
+
 from swdb import artifacts, bfs_discovery, bfs_native as native, paths, profile, workflow, yamlio
 from swdb.cli import Failure, _require_valid
 
@@ -97,7 +99,7 @@ def _region_observations(path, regions):
     if not isinstance(rows, list) or len(rows) != len(regions):
         raise native.StageFailure("missing_observation", "region counter inventory differs")
     for index, row in enumerate(rows):
-        if (row.get("index") != index or any(type(row.get(key)) is not int or row[key] < 0
+        if (type(row.get("index")) is not int or row["index"] != index or any(type(row.get(key)) is not int or row[key] < 0
                 for key in ("inclusive_ns", "exclusive_ns", "invocations"))
                 or row["exclusive_ns"] > row["inclusive_ns"]):
             raise native.StageFailure("missing_observation", "invalid region counters")
@@ -130,7 +132,11 @@ def _correspondence(data, prior):
 
 def run(args):
     store = _require_valid(args.records)
-    request = yamlio.load(Path(args.file))
+    try:
+        raw = Path(args.file).read_text()
+        request = {"parse_error": "profile request exceeds 10 MiB"} if len(raw.encode()) > native.MAX_REQUEST_BYTES else yaml.load(raw, Loader=yamlio._Loader)
+    except (yaml.YAMLError, OSError) as error:
+        request = {"parse_error": str(error)}
     rid = request.get("id") if isinstance(request, dict) else None
     if not isinstance(rid, str) or not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", rid):
         rid = "region-profile-invalid-" + uuid.uuid4().hex
@@ -143,6 +149,8 @@ def run(args):
     try:
         if not isinstance(request, dict) or request.get("message_version") != "1.0":
             raise Failure("bfs-profile requires message_version 1.0")
+        if request.get("id") != rid:
+            raise Failure("profile id must use the record identifier syntax")
         evaluation = store.get(request.get("evaluation"), "evaluation")
         if not evaluation or evaluation["outcome"]["state"] != "complete" or evaluation["correctness"]["state"] != "passed":
             raise Failure("profiling requires a complete independently checked native evaluation")
@@ -215,6 +223,8 @@ def run(args):
         if len(rows) > 10000: raise Failure("source region inventory exceeds 10000 supported scopes")
         data["discovery"] = discovered
         data["discovery"]["library_sha256"] = artifacts.file_hash(library.resolve())
+        data["discovery"]["pass_sha256"] = artifacts.file_hash(bfs_discovery.__file__)
+        data["discovery"]["collector_sha256"] = artifacts.file_hash(__file__)
         diagnostic_source = folder / "instrumented_bfs.cc"
         diagnostic_source.write_bytes(bfs_discovery.instrument(source, rows))
         runtime = folder / "runtime.hpp"
@@ -237,6 +247,14 @@ def run(args):
             row.update(metrics={"inclusive_thread_cpu_seconds": 0.0, "exclusive_thread_cpu_seconds": 0.0, "invocations": 0},
                        basis="measured", scope="accumulated within diagnostic complete-call ROI", artifact_sha256=binary_hash,
                        source_artifact_sha256=candidate["artifact"]["sha256"])
+        for row in rows:
+            enclosing = [function for function in rows if function["kind"] == "function"
+                         and function["byte_range"][0] <= row["byte_range"][0]
+                         and function["byte_range"][1] >= row["byte_range"][1]]
+            if enclosing:
+                function = min(enclosing, key=lambda f: f["byte_range"][1]-f["byte_range"][0])
+                row["function_region"] = function["id"]
+                row["referenced_types"] = list(function.get("referenced_types", []))
         data["regions"] = rows
         env = dict(os.environ, **evaluation["build"]["execution_environment"])
         threads = evaluation["context"]["threads"]
@@ -252,6 +270,11 @@ def run(args):
                     row["metrics"]["inclusive_thread_cpu_seconds"] += observed["inclusive_ns"] / 1e9
                     row["metrics"]["exclusive_thread_cpu_seconds"] += observed["exclusive_ns"] / 1e9
                     row["metrics"]["invocations"] += observed["invocations"]
+                for function in rows:
+                    if function["kind"] == "function":
+                        function["metrics"]["exclusive_function_thread_cpu_seconds"] = sum(
+                            r["metrics"]["exclusive_thread_cpu_seconds"] for r in rows
+                            if r.get("function_region") == function["id"])
                 data["executions"].append({"kind": "regions", "source": source_id, "source_position": position,
                     "repetition": repetition, "binary_sha256": binary_hash, "output": str(output),
                     "region_output": str(output)+".regions.json", "region_output_sha256": artifacts.file_hash(str(output)+".regions.json"), **check})
@@ -351,10 +374,11 @@ def query(args):
     requested = getattr(args, "kind", None)
     regions = [r for r in data["regions"] if (requested is None or r["kind"] == requested)
                and r.get("metrics", {}).get("invocations", 0) > 0]
-    regions.sort(key=lambda r: r["metrics"]["exclusive_thread_cpu_seconds"], reverse=True)
+    metric = "exclusive_function_thread_cpu_seconds" if requested == "function" else "exclusive_thread_cpu_seconds"
+    regions.sort(key=lambda r: r["metrics"].get(metric, r["metrics"]["exclusive_thread_cpu_seconds"]), reverse=True)
     return {"profile": data["id"], "evaluation": data.get("evaluation"), "candidate": data.get("candidate"),
         "context": data.get("context"), "outcome": data["outcome"], "regions": regions,
-        "ranking": {"metric": "exclusive_thread_cpu_seconds", "unit": "seconds", "scope": "accumulated across diagnostic executions",
+        "ranking": {"metric": metric, "unit": "seconds", "scope": "accumulated across diagnostic executions",
                     "inclusive": "nested source scopes overlap; do not sum inclusive values", "unexecuted": "discovered but unexecuted scopes remain in the durable record"},
         "correspondence": data.get("correspondence"), "dynamic_memory": data["dynamic_memory"],
         "coverage": data.get("discovery"), "reasons": data["reasons"], "gain_claim": False}

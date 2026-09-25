@@ -31,7 +31,12 @@ The separately built region binary inserts nested RAII guards automatically.
 seconds. Each thread has its own stack, so nested source scopes are subtracted once
 from their enclosing scope's exclusive contribution. OpenMP loop bodies are guarded
 on the worker executing each iteration; their invocation unit is an iteration.
-Other loops count loop entries, and functions count calls. Concurrent thread CPU
+Other loops count loop entries, and functions count calls. Function rankings use
+`exclusive_function_thread_cpu_seconds`: the sum of nonoverlapping exclusive source
+scopes belonging to that function, including its loops and worker iterations. This
+includes its own loop work while excluding separately guarded helper functions.
+The source-scope inclusive and exclusive counters remain separately available.
+Concurrent thread CPU
 seconds are not complete-call wall seconds. Instrumentation overhead is included,
 not guessed or subtracted. Inlined functions retain source-scope identity. Function
 and loop inclusive values overlap and must not be summed as exclusive work.
@@ -60,7 +65,7 @@ The durable `region_profile` record contains `request`, `evaluation`, `candidate
 `artifacts`, `outcome`, `stages`, `regions`, `dynamic_memory`, `executions`,
 `correspondence`, `raw_artifacts`, `reasons`, and `gain_claim: false`. Regions include
 current `path`, `lines`, `byte_range`, `source_sha256`, `text`, `function`, `usr`,
-`helpers`, `callers`, `invocation_unit`, `metrics`, `basis`, `scope`,
+`helpers`, `callers`, compiler-derived `referenced_types`, `invocation_unit`, `metrics`, `basis`, `scope`,
 `artifact_sha256`, and `source_artifact_sha256`. Executions record output/counter
 hashes and structural correctness. Missing collectors and failed observations retain
 available region evidence and explicit reasons. Every supported source subset is

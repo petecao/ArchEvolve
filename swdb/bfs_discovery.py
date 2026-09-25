@@ -151,6 +151,12 @@ def discover(source, arguments, library):
                     add("loop", loops[cursor.kind], start, (end[0], end[1], finish), begin, finish, function, None)
                 else:
                     unresolved.append({"kind": "loop", "line": start[1], "reason": "macro expansion has no editable loop statement"})
+            if local and cursor.kind in (43, 45) and function:
+                referenced = lib.clang_getCursorReferenced(cursor)
+                type_name = string(lib.clang_getCursorSpelling(referenced)) or name
+                for region in regions:
+                    if region["kind"] == "function" and region["function"] == function and type_name:
+                        if type_name not in region["referenced_types"]: region["referenced_types"].append(type_name)
             if local and cursor.kind == 103 and function:
                 referenced = lib.clang_getCursorReferenced(cursor)
                 helper = string(lib.clang_getCursorSpelling(referenced))
@@ -170,7 +176,7 @@ def discover(source, arguments, library):
                 "name": name, "path": str(source), "lines": [start[1], end[1]],
                 "byte_range": [start[2], end[2]], "insertion_range": [begin, finish],
                 "source_sha256": sha, "text": fragment.decode(errors="replace"),
-                "function": function, "usr": usr, "helpers": [], "callers": [], "invocation_unit": "function call" if kind == "function" else "loop entry"})
+                "function": function, "usr": usr, "helpers": [], "callers": [], "referenced_types": [], "invocation_unit": "function call" if kind == "function" else "loop entry"})
         walk(lib.clang_getTranslationUnitCursor(tu))
         for region in regions:
             region["callers"] = sorted({r["function"] for r in regions if r["function"] != region["function"]
