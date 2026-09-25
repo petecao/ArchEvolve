@@ -47,7 +47,9 @@ read/write references; `D1mr`, `D1mw`, `DLmr`, and `DLmw` are modeled cache miss
 All observations have `basis: simulated` and whole-ROI attribution. The default
 explicit model is I1 32768/8/64, D1 49152/12/64, and LL 25165824/12/64
 (bytes/associativity/line bytes); `memory_model` may set `I1`, `D1`, `LL`, and
-`collector`. Cache state starts cold at instrumentation start. These are model
+`collector`. Cache state starts cold at instrumentation start. Collection is enabled for all
+threads, instrumentation is globally bounded to the ROI, and the dump combines
+thread events; no per-thread collection toggle can omit new OpenMP workers. These are model
 parameters, not claimed current hardware counters. No source-order proxy is
 substituted for actual BFS accesses. No address trace, per-loop memory behavior, or
 causal bottleneck explanation is inferred from these ROI counters.

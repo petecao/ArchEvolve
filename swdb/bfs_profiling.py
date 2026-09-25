@@ -320,12 +320,13 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
         raise Failure("cache model must specify positive size,associativity,line_bytes")
     version = session.execute("memory_collector_identity", [valgrind, "--version"], 30)
     collector = {"name": "Callgrind", "version": version.read_text().strip(), "cache_model": model,
-                 "initial_state": "instrumentation starts at ROI; caches initially empty", "hardware_counters": False}
+                 "initial_state": "instrumentation starts at ROI; caches initially empty", "hardware_counters": False,
+                 "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump"}
     folder = session.folder
     driver = folder / "memory_driver.cc"
     driver.write_text(_wrapper(source, '#include <valgrind/callgrind.h>',
-        "CALLGRIND_START_INSTRUMENTATION; CALLGRIND_ZERO_STATS; CALLGRIND_TOGGLE_COLLECT;",
-        "CALLGRIND_TOGGLE_COLLECT; CALLGRIND_DUMP_STATS; CALLGRIND_STOP_INSTRUMENTATION;", ""))
+        "CALLGRIND_START_INSTRUMENTATION; CALLGRIND_ZERO_STATS;",
+        "CALLGRIND_STOP_INSTRUMENTATION; CALLGRIND_DUMP_STATS;", ""))
     binary = folder / "bfs-memory"
     memory_flags = list(flags)
     if "-g" not in memory_flags: memory_flags.append("-g")
@@ -337,7 +338,7 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
     for position, source_id in enumerate(data["context"]["sources"]):
         output = folder / f"memory-{position}.json"
         raw = folder / f"callgrind-{position}.out"
-        command = [valgrind, "--tool=callgrind", "--cache-sim=yes", "--collect-atstart=no", "--instr-atstart=no",
+        command = [valgrind, "--tool=callgrind", "--cache-sim=yes", "--collect-atstart=yes", "--instr-atstart=no", "--separate-threads=no",
                    *(f"--{key}={value}" for key,value in model.items()), f"--callgrind-out-file={raw}",
                    str(binary), str(graph_path), str(source_id), str(output)]
         session.execute("memory_execution", command, budget["run_seconds"], env)
