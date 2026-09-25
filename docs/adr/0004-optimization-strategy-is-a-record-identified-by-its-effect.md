@@ -1,6 +1,7 @@
 # An optimization strategy is its own record, identified by its target and effect
 
 Date: 2026-09-23
+Updated: 2026-09-25
 
 Optimization strategies (packing, software prefetch, SIMD gather, vertex reordering,
 tiling) and intrinsics are their own record kinds, not implementations: a strategy holds
@@ -30,6 +31,9 @@ intrinsics it calls; its required ISA is derived from those intrinsics.
 - A strategy's legality for a pattern is `legal`, `illegal`, or `undetermined`; unknown
   semantic values never count as false.
 - A strategy stores only reported benefit (`basis: reported`); measured benefit is
-  computed from an implementation's profiles against its `derived_from` baseline's.
+  computed from profiles. The original rule implicitly selected the `derived_from`
+  baseline; [ADR 0005](0005-kernel-identity-spans-sources-and-comparisons-name-their-baseline.md)
+  supersedes that selection with an explicit comparison baseline in the accepted
+  design. Implementation of that change is pending separate authorization.
 - Machine records at format 0.3 must list CPU flags so the ISA check can run; `swdb profile`
   refuses ISA-dependent code on a machine that lists none.
