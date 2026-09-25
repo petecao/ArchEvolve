@@ -1,0 +1,638 @@
+kind: source_snapshot
+schema_version: '0.4'
+id: bfs-instruction-smoke-20260925-a2.annotated-source.source
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+implementation: gapbs-bfs-do
+application: gapbs
+revision: 2972aeb2703165bafd921222f4ed7196f542d3a8
+artifact:
+  path: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.source/source
+  sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+  files:
+  - path: .gitignore
+    sha256: c1e1604b4875b8fd8a7f7bf2376c1d28c1b3f5c1fdfd21be8b1c3829dc120565
+    bytes: 150
+    executable: false
+  - path: CONTRIBUTING.md
+    sha256: 6417e50a419e1e1e078e1756a47b9f48584e591f5ee386c4ac6856b8f297c3c1
+    bytes: 990
+    executable: false
+  - path: LICENSE
+    sha256: bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3
+    bytes: 1499
+    executable: false
+  - path: Makefile
+    sha256: 1f6e1d74efdefcd72c2862828d7edcb607cf0351ed1f7e4d0d3cb39b8e26d1fa
+    bytes: 611
+    executable: false
+  - path: PROVENANCE.md
+    sha256: cf85b090f38c693b694268d5da7638b5d6b92cd98b140b85a83147883f4d0814
+    bytes: 669
+    executable: false
+  - path: README.md
+    sha256: ae3cbf4a19667ce645939f6b64f0aeeef92ce15666ea7037a5fb231eb268cbdc
+    bytes: 5707
+    executable: false
+  - path: benchmark/bench.mk
+    sha256: 8795f4eedb9ed2136c43badb9c2e9a023468a79b4897e23c9b014d921f5f714e
+    bytes: 4558
+    executable: false
+  - path: src/bc.cc
+    sha256: 6df4e8a1947925456983d149918e5c505db959ff42633f5442f6e1a9ec4d8e8c
+    bytes: 8357
+    executable: false
+  - path: src/benchmark.h
+    sha256: a1a477adfee41eddf8fdc9781d776030ca40492f0e875205c23c85ec633d3c9f
+    bytes: 3380
+    executable: false
+  - path: src/bfs.cc
+    sha256: 7c32c3c8dc43bf7be417fc5c530b4578bfe3697d8eb47a161cdb142487823f73
+    bytes: 7845
+    executable: false
+  - path: src/bitmap.h
+    sha256: fac674c673a1eef84e27a22667a31421f36ae8078e66ee910be4ff344a8e5e24
+    bytes: 1523
+    executable: false
+  - path: src/builder.h
+    sha256: 113e724b86bc7012d9eff83caeb0df4c30023645c36a10d099897c1f3fabd676
+    bytes: 15138
+    executable: false
+  - path: src/cc.cc
+    sha256: 0986d8a21cf79e85c88b4615ef1b8aacc1ec1090784b2437d92ee22ae1163fd6
+    bytes: 7422
+    executable: false
+  - path: src/cc_sv.cc
+    sha256: f239bd71cee27cba37f3824ae7b2520c291b116ccc83a329d09484b631c599ee
+    bytes: 4994
+    executable: false
+  - path: src/command_line.h
+    sha256: 4df78a89d4e4435500623bea2ab4a4cbd034586d85617ca1408041daebeb51a6
+    bytes: 7812
+    executable: false
+  - path: src/converter.cc
+    sha256: 43b8ea897387f185365c2aa4f4aef4e36198ba3a25b76cf3873fb5072aef4e9a
+    bytes: 723
+    executable: false
+  - path: src/generator.h
+    sha256: 6c92c5bc9fc7903e2e1009fe9701683daf9096320930bd26f71ae59c5249b860
+    bytes: 5724
+    executable: false
+  - path: src/graph.h
+    sha256: 49d5d25bb7db8b724590aa3df43f0cf4a62c848c06aa319907b3fb335e7482bb
+    bytes: 7381
+    executable: false
+  - path: src/platform_atomics.h
+    sha256: 1183b25883d497c038e70359eaf0ebcffdc7f097c7091e10af58c7415473d2b4
+    bytes: 4133
+    executable: false
+  - path: src/pr.cc
+    sha256: f738c225d50dd361596ffbd96c2c88ba551b53492c5ca120b4e24f7b9f33f8b5
+    bytes: 3513
+    executable: false
+  - path: src/pr_spmv.cc
+    sha256: ea1e58b6957b0bcc1e76f4fde54131aa52bdefd2014dae604a9b7d9d1a5dae70
+    bytes: 3540
+    executable: false
+  - path: src/pvector.h
+    sha256: d72027605ae123653c09b1eb8d5b7a26cffe4945b22cbe002d910847893628d7
+    bytes: 3788
+    executable: false
+  - path: src/reader.h
+    sha256: 951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1
+    bytes: 9268
+    executable: false
+  - path: src/sliding_queue.h
+    sha256: f8389900181f1a63c0354e274561336191bbc0e4cfb5f34f70da3abc07e4d443
+    bytes: 2077
+    executable: false
+  - path: src/sssp.cc
+    sha256: fb61be24b84d1cfd6f58acad7d5f19af0e436c41ffcccafbf3a82f53b0c8bba1
+    bytes: 7846
+    executable: false
+  - path: src/tc.cc
+    sha256: de3a1a453e1e632ab2338a36c5a8f846a078a096f5c9ab7e7320b9448bbb43cb
+    bytes: 4327
+    executable: false
+  - path: src/timer.h
+    sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+    bytes: 1161
+    executable: false
+  - path: src/util.h
+    sha256: a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6
+    bytes: 1953
+    executable: false
+  - path: src/writer.h
+    sha256: 3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea
+    bytes: 2898
+    executable: false
+  - path: test/graphs/4.el
+    sha256: e5b87f7f3c0403dbaab751efdc4d806ad715e5fcfd7a3d0b62a69b6e8a37f3f6
+    bytes: 1115
+    executable: false
+  - path: test/graphs/4.gr
+    sha256: d9100df37bf32071162bffac796912f6916c82c88a9df45c5c7d2ee76c42e3bb
+    bytes: 2604
+    executable: false
+  - path: test/graphs/4.graph
+    sha256: 9a3b48651be698f9d1a954fb0f09834d289b36107e027da5294b9f8e6216864f
+    bytes: 154
+    executable: false
+  - path: test/graphs/4.mtx
+    sha256: 796c139b1c42686669b2a521b3b21a105cfdb316b3fc4faef320d3a1fa924413
+    bytes: 1216
+    executable: false
+  - path: test/graphs/4.wel
+    sha256: b152d7ec0f5fdf6c0294960d4de37a047908302fb9109b3819862bc455526743
+    bytes: 2019
+    executable: false
+  - path: test/graphs/4w.graph
+    sha256: 938ed02cecb27a060875c68a349fe26ced29c114c9e639a7ddc6622736a4de96
+    bytes: 327
+    executable: false
+  - path: test/graphs/4w.mtx
+    sha256: 0a104e0d7c4940d4fbe70565c1af56d06d61d9d56783204e13db4ab48c84621a
+    bytes: 2120
+    executable: false
+  - path: test/reference/graph-4.el.out
+    sha256: e772a414e5c9d5772deba136918566c3223c77680de7d01831d8ea6de43b860b
+    bytes: 55
+    executable: false
+  - path: test/reference/graph-4.gr.out
+    sha256: e772a414e5c9d5772deba136918566c3223c77680de7d01831d8ea6de43b860b
+    bytes: 55
+    executable: false
+  - path: test/reference/graph-4.graph.out
+    sha256: e772a414e5c9d5772deba136918566c3223c77680de7d01831d8ea6de43b860b
+    bytes: 55
+    executable: false
+  - path: test/reference/graph-4.mtx.out
+    sha256: e772a414e5c9d5772deba136918566c3223c77680de7d01831d8ea6de43b860b
+    bytes: 55
+    executable: false
+  - path: test/reference/graph-4.wel.out
+    sha256: e772a414e5c9d5772deba136918566c3223c77680de7d01831d8ea6de43b860b
+    bytes: 55
+    executable: false
+  - path: test/reference/graph-4w.graph.out
+    sha256: e772a414e5c9d5772deba136918566c3223c77680de7d01831d8ea6de43b860b
+    bytes: 55
+    executable: false
+  - path: test/reference/graph-4w.mtx.out
+    sha256: e772a414e5c9d5772deba136918566c3223c77680de7d01831d8ea6de43b860b
+    bytes: 55
+    executable: false
+  - path: test/reference/graph-g10.out
+    sha256: 05c0a8ca955c30dd0cbf36f1289bdaf945744f5889477789a55f80ce232c3f16
+    bytes: 63
+    executable: false
+  - path: test/reference/graph-u10.out
+    sha256: 6e79ba13c49438984a07633d7087f9aa36f8a89ae1e12c06df570e529447d55c
+    bytes: 63
+    executable: false
+  - path: test/test.mk
+    sha256: a9a13dca919bdab33e8dae4de40e32392538807d169b8309b1664b5542570625
+    bytes: 2533
+    executable: false
+context:
+  application: gapbs
+  source:
+    origin: upstream
+    uri: https://github.com/sbeamer/gapbs
+    commit: 2972aeb2703165bafd921222f4ed7196f542d3a8
+    local_path: apps/gapbs
+  code:
+  - root: application
+    path: src/bfs.cc
+    lines: [122, 179]
+    excerpt: |-
+      pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                            int alpha = 15, int beta = 18) {
+        if (logging_enabled)
+          PrintStep("Source", static_cast<int64_t>(source));
+        Timer t;
+        t.Start();
+        pvector<NodeID> parent = InitParent(g);
+        t.Stop();
+        if (logging_enabled)
+          PrintStep("i", t.Seconds());
+        parent[source] = source;
+        SlidingQueue<NodeID> queue(g.num_nodes());
+        queue.push_back(source);
+        queue.slide_window();
+        Bitmap curr(g.num_nodes());
+        curr.reset();
+        Bitmap front(g.num_nodes());
+        front.reset();
+        int64_t edges_to_check = g.num_edges_directed();
+        int64_t scout_count = g.out_degree(source);
+        while (!queue.empty()) {
+          if (scout_count > edges_to_check / alpha) {
+            int64_t awake_count, old_awake_count;
+            TIME_OP(t, QueueToBitmap(queue, front));
+            if (logging_enabled)
+              PrintStep("e", t.Seconds());
+            awake_count = queue.size();
+            queue.slide_window();
+            do {
+              t.Start();
+              old_awake_count = awake_count;
+              awake_count = BUStep(g, parent, front, curr);
+              front.swap(curr);
+              t.Stop();
+              if (logging_enabled)
+                PrintStep("bu", t.Seconds(), awake_count);
+            } while ((awake_count >= old_awake_count) ||
+                     (awake_count > g.num_nodes() / beta));
+            TIME_OP(t, BitmapToQueue(g, front, queue));
+            if (logging_enabled)
+              PrintStep("c", t.Seconds());
+            scout_count = 1;
+          } else {
+            t.Start();
+            edges_to_check -= scout_count;
+            scout_count = TDStep(g, parent, queue);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled)
+              PrintStep("td", t.Seconds(), queue.size());
+          }
+        }
+        #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+          if (parent[n] < -1)
+            parent[n] = -1;
+        return parent;
+      }
+    sha256: null
+  - root: application
+    path: src/bfs.cc
+    lines: [67, 89]
+    excerpt: |-
+      int64_t TDStep(const Graph &g, pvector<NodeID> &parent,
+                     SlidingQueue<NodeID> &queue) {
+        int64_t scout_count = 0;
+        #pragma omp parallel
+        {
+          QueueBuffer<NodeID> lqueue(queue);
+          #pragma omp for reduction(+ : scout_count) nowait
+          for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+            NodeID u = *q_iter;
+            for (NodeID v : g.out_neigh(u)) {
+              NodeID curr_val = parent[v];
+              if (curr_val < 0) {
+                if (compare_and_swap(parent[v], curr_val, u)) {
+                  lqueue.push_back(v);
+                  scout_count += -curr_val;
+                }
+              }
+            }
+          }
+          lqueue.flush();
+        }
+        return scout_count;
+      }
+    sha256: null
+  - root: application
+    path: src/bfs.cc
+    lines: [46, 64]
+    excerpt: |-
+      int64_t BUStep(const Graph &g, pvector<NodeID> &parent, Bitmap &front,
+                     Bitmap &next) {
+        int64_t awake_count = 0;
+        next.reset();
+        #pragma omp parallel for reduction(+ : awake_count) schedule(dynamic, 1024)
+        for (NodeID u=0; u < g.num_nodes(); u++) {
+          if (parent[u] < 0) {
+            for (NodeID v : g.in_neigh(u)) {
+              if (front.get_bit(v)) {
+                parent[u] = v;
+                awake_count++;
+                next.set_bit(u);
+                break;
+              }
+            }
+          }
+        }
+        return awake_count;
+      }
+    sha256: null
+  - root: application
+    path: src/bfs.cc
+    lines: [92, 98]
+    excerpt: |-
+      void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+        #pragma omp parallel for
+        for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+          NodeID u = *q_iter;
+          bm.set_bit_atomic(u);
+        }
+      }
+    sha256: null
+  - root: application
+    path: src/bfs.cc
+    lines: [100, 112]
+    excerpt: |-
+      void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                         SlidingQueue<NodeID> &queue) {
+        #pragma omp parallel
+        {
+          QueueBuffer<NodeID> lqueue(queue);
+          #pragma omp for nowait
+          for (NodeID n=0; n < g.num_nodes(); n++)
+            if (bm.get_bit(n))
+              lqueue.push_back(n);
+          lqueue.flush();
+        }
+        queue.slide_window();
+      }
+    sha256: null
+  - root: application
+    path: src/bfs.cc
+    lines: [114, 120]
+    excerpt: |-
+      pvector<NodeID> InitParent(const Graph &g) {
+        pvector<NodeID> parent(g.num_nodes());
+        #pragma omp parallel for
+        for (NodeID n=0; n < g.num_nodes(); n++)
+          parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+        return parent;
+      }
+    sha256: null
+  build:
+    compiler: g++
+    flags: -std=c++11 -O3 -Wall -fopenmp
+    command: '{cxx} {flags} {source} -o {binary}'
+  run:
+    command: '{binary} {input_args} -n {trials}'
+    timer: gapbs_trial_time
+    threads_env: OMP_NUM_THREADS
+    sweep_log_flag: null
+    kernel_symbols: [DOBFS, TDStep, BUStep, QueueToBitmap, BitmapToQueue, InitParent]
+    index_stream: null
+  evaluator:
+    backend: native
+    command: '{binary} {input_args} -n 1 -v'
+    pass_regex: Verification:\s+PASS
+    verifier:
+      description: 'BFSVerifier: a serial BFS from the same source computes depths; then parent[source]
+        must equal source, every other reached vertex''s parent must be an in-neighbor whose depth is
+        one less, and a vertex must have parent -1 exactly when the serial BFS does not reach it.'
+      code:
+        root: application
+        path: src/bfs.cc
+        lines: [196, 247]
+        sha256: 7c32c3c8dc43bf7be417fc5c530b4578bfe3697d8eb47a161cdb142487823f73
+  source_ancestor: null
+  source_baseline: gapbs-bfs-do
+  comparison_baseline: null
+  verification:
+    status: passed
+    evidence:
+    - gapbs-bfs-do.kron-g16-k16.mbit10.20260922t221109z
+    - gapbs-bfs-do.kron-g22-k16.mbit10.20260922t221513z
+    - gapbs-bfs-do.urand-u16-k16.mbit10.20260922t221125z
+    - gapbs-bfs-do.urand-u22-k16.mbit10.20260922t221934z
+    scope: Historical mbit10 workloads named by the referenced 2026-09-22 profiles only; no new target
+      or workload is certified.
+  context_resolution: explicit
+regions:
+- id: src/bfs.cc:122-179:437882a50dcae474
+  path: src/bfs.cc
+  lines: [122, 179]
+  source_sha256: 437882a50dcae474f7a602c8042acf9272eb0272128d04db8d117a44d69cee71
+  text: |
+    pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                          int alpha = 15, int beta = 18) {
+      if (logging_enabled)
+        PrintStep("Source", static_cast<int64_t>(source));
+      Timer t;
+      t.Start();
+      pvector<NodeID> parent = InitParent(g);
+      t.Stop();
+      if (logging_enabled)
+        PrintStep("i", t.Seconds());
+      parent[source] = source;
+      SlidingQueue<NodeID> queue(g.num_nodes());
+      queue.push_back(source);
+      queue.slide_window();
+      Bitmap curr(g.num_nodes());
+      curr.reset();
+      Bitmap front(g.num_nodes());
+      front.reset();
+      int64_t edges_to_check = g.num_edges_directed();
+      int64_t scout_count = g.out_degree(source);
+      while (!queue.empty()) {
+        if (scout_count > edges_to_check / alpha) {
+          int64_t awake_count, old_awake_count;
+          TIME_OP(t, QueueToBitmap(queue, front));
+          if (logging_enabled)
+            PrintStep("e", t.Seconds());
+          awake_count = queue.size();
+          queue.slide_window();
+          do {
+            t.Start();
+            old_awake_count = awake_count;
+            awake_count = BUStep(g, parent, front, curr);
+            front.swap(curr);
+            t.Stop();
+            if (logging_enabled)
+              PrintStep("bu", t.Seconds(), awake_count);
+          } while ((awake_count >= old_awake_count) ||
+                   (awake_count > g.num_nodes() / beta));
+          TIME_OP(t, BitmapToQueue(g, front, queue));
+          if (logging_enabled)
+            PrintStep("c", t.Seconds());
+          scout_count = 1;
+        } else {
+          t.Start();
+          edges_to_check -= scout_count;
+          scout_count = TDStep(g, parent, queue);
+          queue.slide_window();
+          t.Stop();
+          if (logging_enabled)
+            PrintStep("td", t.Seconds(), queue.size());
+        }
+      }
+      #pragma omp parallel for
+      for (NodeID n = 0; n < g.num_nodes(); n++)
+        if (parent[n] < -1)
+          parent[n] = -1;
+      return parent;
+    }
+  association: declared_source_region
+- id: src/bfs.cc:67-89:7a1d3944e43bdd6d
+  path: src/bfs.cc
+  lines: [67, 89]
+  source_sha256: 7a1d3944e43bdd6d736c5e71da4c51362401ee7dba455bddb61c6efa97ae9dc1
+  text: |
+    int64_t TDStep(const Graph &g, pvector<NodeID> &parent,
+                   SlidingQueue<NodeID> &queue) {
+      int64_t scout_count = 0;
+      #pragma omp parallel
+      {
+        QueueBuffer<NodeID> lqueue(queue);
+        #pragma omp for reduction(+ : scout_count) nowait
+        for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+          NodeID u = *q_iter;
+          for (NodeID v : g.out_neigh(u)) {
+            NodeID curr_val = parent[v];
+            if (curr_val < 0) {
+              if (compare_and_swap(parent[v], curr_val, u)) {
+                lqueue.push_back(v);
+                scout_count += -curr_val;
+              }
+            }
+          }
+        }
+        lqueue.flush();
+      }
+      return scout_count;
+    }
+  association: declared_source_region
+- id: src/bfs.cc:46-64:29b8637691f58e1c
+  path: src/bfs.cc
+  lines: [46, 64]
+  source_sha256: 29b8637691f58e1c1ed01dd1f20203feab7f66945891794357e0e44a87d06967
+  text: |
+    int64_t BUStep(const Graph &g, pvector<NodeID> &parent, Bitmap &front,
+                   Bitmap &next) {
+      int64_t awake_count = 0;
+      next.reset();
+      #pragma omp parallel for reduction(+ : awake_count) schedule(dynamic, 1024)
+      for (NodeID u=0; u < g.num_nodes(); u++) {
+        if (parent[u] < 0) {
+          for (NodeID v : g.in_neigh(u)) {
+            if (front.get_bit(v)) {
+              parent[u] = v;
+              awake_count++;
+              next.set_bit(u);
+              break;
+            }
+          }
+        }
+      }
+      return awake_count;
+    }
+  association: declared_source_region
+- id: src/bfs.cc:92-98:ecf6e1693c797afe
+  path: src/bfs.cc
+  lines: [92, 98]
+  source_sha256: ecf6e1693c797afe40375bcfdb7316a26d367c15dec1c727ab745c2e90fc2e97
+  text: |
+    void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+      #pragma omp parallel for
+      for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+        NodeID u = *q_iter;
+        bm.set_bit_atomic(u);
+      }
+    }
+  association: declared_source_region
+- id: src/bfs.cc:100-112:a80c4416a9fcc609
+  path: src/bfs.cc
+  lines: [100, 112]
+  source_sha256: a80c4416a9fcc609928b7cae81e955d07ade1cd8dabe9badb725f92b40254322
+  text: |
+    void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                       SlidingQueue<NodeID> &queue) {
+      #pragma omp parallel
+      {
+        QueueBuffer<NodeID> lqueue(queue);
+        #pragma omp for nowait
+        for (NodeID n=0; n < g.num_nodes(); n++)
+          if (bm.get_bit(n))
+            lqueue.push_back(n);
+        lqueue.flush();
+      }
+      queue.slide_window();
+    }
+  association: declared_source_region
+- id: src/bfs.cc:114-120:8258dcb0ac11957d
+  path: src/bfs.cc
+  lines: [114, 120]
+  source_sha256: 8258dcb0ac11957d10a298f7e430707d75817fa608d9939b7eb170701a57f00f
+  text: |
+    pvector<NodeID> InitParent(const Graph &g) {
+      pvector<NodeID> parent(g.num_nodes());
+      #pragma omp parallel for
+      for (NodeID n=0; n < g.num_nodes(); n++)
+        parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+      return parent;
+    }
+  association: declared_source_region
+protections:
+- path: src/bfs.cc
+  kind: verifier
+  text: |
+    // BFS verifier does a serial BFS from same source and asserts:
+    // - parent[source] = source
+    // - parent[v] = u  =>  depth[v] = depth[u] + 1 (except for source)
+    // - parent[v] = u  => there is edge from u to v
+    // - all vertices reachable from source have a parent
+    bool BFSVerifier(const Graph &g, NodeID source,
+                     const pvector<NodeID> &parent) {
+      pvector<int> depth(g.num_nodes(), -1);
+      depth[source] = 0;
+      vector<NodeID> to_visit;
+      to_visit.reserve(g.num_nodes());
+      to_visit.push_back(source);
+      for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+        NodeID u = *it;
+        for (NodeID v : g.out_neigh(u)) {
+          if (depth[v] == -1) {
+            depth[v] = depth[u] + 1;
+            to_visit.push_back(v);
+          }
+        }
+      }
+      for (NodeID u : g.vertices()) {
+        if ((depth[u] != -1) && (parent[u] != -1)) {
+          if (u == source) {
+            if (!((parent[u] == u) && (depth[u] == 0))) {
+              cout << "Source wrong" << endl;
+              return false;
+            }
+            continue;
+          }
+          bool parent_found = false;
+          for (NodeID v : g.in_neigh(u)) {
+            if (v == parent[u]) {
+              if (depth[v] != depth[u] - 1) {
+                cout << "Wrong depths for " << u << " & " << v << endl;
+                return false;
+              }
+              parent_found = true;
+              break;
+            }
+          }
+          if (!parent_found) {
+            cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+            return false;
+          }
+        } else if (depth[u] != parent[u]) {
+          cout << "Reachability mismatch" << endl;
+          return false;
+        }
+      }
+      return true;
+    }
+- path: src/benchmark.h
+  kind: file
+  sha256: a1a477adfee41eddf8fdc9781d776030ca40492f0e875205c23c85ec633d3c9f
+- path: src/command_line.h
+  kind: file
+  sha256: 4df78a89d4e4435500623bea2ab4a4cbd034586d85617ca1408041daebeb51a6
+- path: src/timer.h
+  kind: file
+  sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
