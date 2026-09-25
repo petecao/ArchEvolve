@@ -22,10 +22,10 @@ def main():
     p.add_argument('--id', required=True)
     p.add_argument('--build-evaluation', required=True)
     p.add_argument('--runs-dir', type=Path, required=True)
-    p.add_argument('--lane', required=True)
+    p.add_argument('--lane', type=int, choices=(0, 1), required=True)
     a = p.parse_args()
     store = Store(ROOT / 'records')
-    profile._verified_lane(store.get('mbit10', 'machine'), a.lane)
+    profile._verified_lane(store.get('mbit10', 'machine'), f'mbit10-evaluation-node{a.lane}')
     build = store.get(a.build_evaluation, 'evaluation')
     if build['outcome']['state'] != 'complete' or build['outcome']['stage'] != 'build':
         raise SystemExit('a completed real model build is required')
@@ -56,7 +56,7 @@ def main():
     path.write_text(json.dumps(request, indent=2) + '\n')
     with (folder / 'evaluation.stdout.json').open('w') as out, (folder / 'evaluation.stderr').open('w') as err:
         result = subprocess.run([sys.executable, '-m', 'swdb', 'dx100-execute', str(path),
-            '--runs-dir', str(a.runs_dir), '--lane', a.lane, '--format', 'json'],
+            '--runs-dir', str(a.runs_dir), '--lane', str(a.lane), '--format', 'json'],
             cwd=ROOT, stdout=out, stderr=err, timeout=1150)
     print((folder / 'evaluation.stdout.json').read_text())
     raise SystemExit(result.returncode)

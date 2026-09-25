@@ -31,6 +31,7 @@ def main():
     parser.add_argument('--records', type=Path, default=ROOT / 'records')
     parser.add_argument('--lane', required=True)
     args = parser.parse_args()
+    args.records = args.records.resolve()
     if not re.fullmatch(r'[a-z0-9][a-z0-9._-]*', args.id):
         parser.error('id must use record identifier syntax')
     if socket.gethostname().split('.')[0] != 'mbit10':

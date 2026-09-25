@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 05, 10, 15
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -39,3 +39,7 @@ Run the actual annotated-source → rewrite → compile → independent correctn
 Ticket 05 provides annotation interpretation through the shared worker; 10 provides operation contracts and capability checks; 15 provides the frozen protocol and verified backend/profile prerequisites.
 
 Only selected BFS phases need use DX100. No new hardware operation, automatic strategy replacement, all-phase acceleration, or individual speedup requirement is introduced.
+
+## Implementation progress
+
+2026-09-25: Root owns dependent preparation of the representative proposal and public campaign driver. No candidate performance assessment begins before Ticket 15 freezes compatible protocols. Actual acceptance remains pending; preparation does not satisfy the listed blockers.

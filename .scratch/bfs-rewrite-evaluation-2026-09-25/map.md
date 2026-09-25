@@ -18,8 +18,8 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 01 | [Shared BFS identity and explicit baselines](issues/01-shared-bfs-identity-and-baselines.md) | None | resolved |
 | 02 | [Patch proposal to durable candidate](issues/02-patch-proposal-to-candidate.md) | 01 | resolved |
 | 03 | [Native BFS evaluation](issues/03-native-bfs-evaluation.md) | 02 | resolved |
-| 04 | [Instruction-based rewriting and bounded repair](issues/04-instruction-rewriting-and-repair.md) | 03 | claimed |
-| 05 | [Annotated-source rewriting](issues/05-annotated-source-rewriting.md) | 04 | claimed |
+| 04 | [Instruction-based rewriting and bounded repair](issues/04-instruction-rewriting-and-repair.md) | 03 | resolved |
+| 05 | [Annotated-source rewriting](issues/05-annotated-source-rewriting.md) | 04 | resolved |
 | 06 | [Automatic function hotspot discovery](issues/06-function-hotspot-discovery.md) | 03 | claimed |
 | 07 | [Loop discovery and changed-region profiling](issues/07-loop-discovery-and-reprofiling.md) | 06 | claimed |
 | 08 | [Dynamic memory observations](issues/08-dynamic-memory-observations.md) | 06 | claimed |
@@ -30,23 +30,23 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 13 | [Correctness of the timed DX100 binary](issues/13-dx100-timed-binary-correctness.md) | 12 | claimed |
 | 14 | [DX100 region timing and memory profiling](issues/14-dx100-region-and-memory-profiling.md) | 09, 12 | claimed |
 | 15 | [Baseline pilot and protocol freeze](issues/15-baseline-pilot-and-protocol-freeze.md) | 11, 13, 14 | claimed |
-| 16 | [Artifact reference and controlled comparisons](issues/16-artifact-reference-and-controls.md) | 11, 13, 14 | ready-for-agent |
-| 17 | [DX100 BFS: instruction-route acceptance](issues/17-dx100-instruction-route-acceptance.md) | 04, 10, 15 | ready-for-agent |
-| 18 | [DX100 BFS: patch-route acceptance](issues/18-dx100-patch-route-acceptance.md) | 15 | ready-for-agent |
-| 19 | [Upstream BFS: instruction-route acceptance](issues/19-upstream-instruction-route-acceptance.md) | 04, 15 | ready-for-agent |
-| 20 | [Upstream BFS: annotated-source route acceptance](issues/20-upstream-annotated-route-acceptance.md) | 05, 10, 15 | ready-for-agent |
-| 21 | [Coverage, ROI gain, and collaborator handoff](issues/21-coverage-roi-gain-and-handoff.md) | 16, 17, 18, 19, 20 | ready-for-agent |
+| 16 | [Artifact reference and controlled comparisons](issues/16-artifact-reference-and-controls.md) | 11, 13, 14 | claimed |
+| 17 | [DX100 BFS: instruction-route acceptance](issues/17-dx100-instruction-route-acceptance.md) | 04, 10, 15 | claimed |
+| 18 | [DX100 BFS: patch-route acceptance](issues/18-dx100-patch-route-acceptance.md) | 15 | claimed |
+| 19 | [Upstream BFS: instruction-route acceptance](issues/19-upstream-instruction-route-acceptance.md) | 04, 15 | claimed |
+| 20 | [Upstream BFS: annotated-source route acceptance](issues/20-upstream-annotated-route-acceptance.md) | 05, 10, 15 | claimed |
+| 21 | [Coverage, ROI gain, and collaborator handoff](issues/21-coverage-roi-gain-and-handoff.md) | 16, 17, 18, 19, 20 | claimed |
 
-Ticket 01 is the dependency frontier after explicit implementation authorization. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
+Tickets 01–05, 10, and 11 are resolved; the current empirical frontier is native profiling and simulator verification. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
 
 ### Assigned acceptance cases
 
 | Ticket | Starting implementation | Payload / producer | Execution requirement | Graph coverage |
 |---|---|---|---|---|
-| 17 | DX100 scalar top-down BFS | Natural-language instructions / SW test client | Correct candidate with proven DX100 accelerator execution | Kronecker and uniform-random |
-| 18 | DX100 scalar top-down BFS | Supplied patch / test client | Real native CPU evaluation and reprofiling | Kronecker and uniform-random |
-| 19 | Upstream direction-optimizing BFS | Structured instructions / test client | Real native CPU evaluation and reprofiling | Kronecker and uniform-random |
-| 20 | Upstream direction-optimizing BFS | Annotated source / HW test client | Correct candidate with proven DX100 accelerator execution | Kronecker and uniform-random |
+| 17 | DX100 scalar top-down BFS | Natural-language instructions / SW test client | Correct candidate with proven DX100 accelerator execution | claimed |
+| 18 | DX100 scalar top-down BFS | Supplied patch / test client | Real native CPU evaluation and reprofiling | claimed |
+| 19 | Upstream direction-optimizing BFS | Structured instructions / test client | Real native CPU evaluation and reprofiling | claimed |
+| 20 | Upstream direction-optimizing BFS | Annotated source / HW test client | Correct candidate with proven DX100 accelerator execution | claimed |
 
 These four cases cover all eight source/route/graph cells, all four payload forms, and both source-specific accelerator minima. Ticket 16 separately supplies the actual artifact reference and controlled comparison evidence. A candidate or result may cover multiple obligations only when its source, workload, protocol, target, and required evidence match.
 
@@ -179,3 +179,7 @@ commit `283467878fcce65a988f7dc28f151cc6d022d520`. This is pre-freeze diagnostic
 evidence; automatic function/loop/memory collection remains tickets 06–09.
 
 - 2026-09-25: [Ticket 11](issues/11-workloads-and-comparison-protocols.md) resolved with 27 protocol tests, 8 compiled streaming-SG tests, and 12 add/document checks. [Protocol contract](../../docs/bfs-protocol.md), `swdb/bfs_protocol.py`, `swdb/sg_stream.py`, and `tools/bfs_native/sg_identity.cc` define immutable workload identity and comparison enforcement. This is contract acceptance, not a candidate gain or empirical protocol freeze.
+
+### Instruction and annotated-source acceptance — 2026-09-25
+
+Tickets [04](issues/04-instruction-rewriting-and-repair.md) and [05](issues/05-annotated-source-rewriting.md) are resolved: real Claude source changes for natural-language, structured, and annotated inputs each have a three-source independently verified native diagnostic. The ten-test bounded rewrite suite passes, and earlier failed attempts remain linked. See [handoff](../../docs/bfs-handoff.md) for exact record IDs. Tickets 17–20 remain separate frozen-workload acceptance obligations.

@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 04, 15
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -39,3 +39,7 @@ Run the complete real structured-instruction → rewrite → native evaluation �
 Ticket 04 provides structured-instruction rewriting and bounded repairs. Ticket 15 provides the native evaluator, profile packaging, and frozen experiment protocol through its dependency chain. The case does not require tickets 17 or 18 to complete; scheduling must still respect the agreed DX100-first starting order and lab resource limits.
 
 Ticket 20 owns the upstream-source accelerator minimum. A native gain in this case is useful but is not an individual completion condition.
+
+## Implementation progress
+
+2026-09-25: Root owns dependent preparation of the representative proposal and public campaign driver. No candidate performance assessment begins before Ticket 15 freezes compatible protocols. Actual acceptance remains pending; preparation does not satisfy the listed blockers.

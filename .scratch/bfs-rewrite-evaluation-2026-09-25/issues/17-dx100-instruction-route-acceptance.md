@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 04, 10, 15
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -39,3 +39,7 @@ Run the real query → proposal → rewrite → check → DX100 measurement/prof
 Ticket 04 supplies instruction rewriting and bounded repair; 10 supplies operation contracts and capability checks; 15 supplies the frozen candidate protocol and verified evaluator/profiling prerequisites. Complete profile packages and the simulation backend are inherited through those dependencies.
 
 Do not require every BFS phase to accelerate. Do not require a gain in this case or a win over the authors' accelerated version. No new hardware operation, live collaborator integration, or entire-paper campaign is included.
+
+## Implementation progress
+
+2026-09-25: Root owns dependent preparation of the representative proposal and public campaign driver. No candidate performance assessment begins before Ticket 15 freezes compatible protocols. Actual acceptance remains pending; preparation does not satisfy the listed blockers.

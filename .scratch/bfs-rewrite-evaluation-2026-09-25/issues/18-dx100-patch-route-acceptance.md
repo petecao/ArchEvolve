@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 15
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -39,3 +39,7 @@ Use the real patch-to-native-evaluation workflow for both graph families, includ
 Ticket 15 transitively supplies source resolution, patch handling, native evaluation, complete profile packages, and the frozen protocol. No instruction or annotation worker is required for a supplied patch, so tickets 04 and 05 are not additional blockers.
 
 A performance gain is optional for this case. Ticket 17 owns the DX100-source accelerator minimum; this case need not run the patch under the accelerator.
+
+## Implementation progress
+
+2026-09-25: Root owns dependent preparation of the representative proposal and public campaign driver. No candidate performance assessment begins before Ticket 15 freezes compatible protocols. Actual acceptance remains pending; preparation does not satisfy the listed blockers.
