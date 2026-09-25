@@ -162,3 +162,19 @@ def test_unmodified_baseline_is_evaluated_without_fabricated_proposal(evaluation
     assert 'proposal' not in evaluated
     chain = json.loads(records.swdb('get',evaluated['id'],'--chain','--format','json').stdout)['records']
     assert baseline['id'] in chain and not any(d['kind']=='proposal' for d in chain.values())
+
+
+def test_out_of_scope_repair_remains_explicitly_unresolved(evaluation_setup,provider):
+    records,runs,_,base=evaluation_setup
+    result,failed=evaluate(evaluation_setup,mode='build_fail')
+    assert result.returncode==1
+    result=records.swdb('repair',failed['id'],'--provider-config',
+        provider(unresolved=['The trusted driver failure is outside editable source.']),
+        '--runs-dir',runs,'--format','json')
+    data=json.loads(result.stdout)
+    assert result.returncode==1 and data['outcome']['state']=='unresolved'
+    assert data['candidate']==base['candidate']
+    assert data['attempts'][-1]['state']=='unresolved'
+    assert data['repair_budget']['repairs']==1 and data['repair_budget']['used_seconds']>0
+    later=records.swdb('get',data['id'],'--chain','--format','json')
+    assert failed['id'] in json.loads(later.stdout)['records']

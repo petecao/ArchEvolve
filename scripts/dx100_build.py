@@ -161,7 +161,7 @@ def main():
         try:
             with Path(stage["log"]).open("w") as log:
                 process = subprocess.Popen(command, cwd=source, env=env, stdout=log, stderr=subprocess.STDOUT,
-                                           start_new_session=True)
+                                           stdin=subprocess.DEVNULL, start_new_session=True)
                 while process.poll() is None:
                     elapsed = time.monotonic() - start
                     rss = group_rss_kib(process.pid)
@@ -210,6 +210,9 @@ def main():
         receipt["dependencies"] = {name: output(["git", "rev-parse", "HEAD"], ramulator / "ext" / name)
                                    for name in ("yaml-cpp", "spdlog", "argparse")}
         receipt["resolved_kconfig"] = (source / "build/X86/gem5.build/config").read_text()
+        receipt["runtime_dependencies"] = {path: output(["ldd", str(source / path)])
+            for path in ("build/X86/gem5.opt", "benchmarks/gapbs/bfs", "benchmarks/gapbs/bfs_maa")}
+        receipt["libc_version"] = output(["ldd", "--version"])
     except (OSError, subprocess.SubprocessError) as exc:
         receipt.update(state="failed", reason=f"build_artifact_identity_failure: {exc}",
                        ended_unix=time.time(), host_wall_seconds=time.monotonic() - start)

@@ -138,11 +138,12 @@ def test_missing_or_stale_required_evidence_stays_incomplete(package_setup, tmp_
     assert not package["gain_claim"]
 
 
-@pytest.mark.parametrize("field", ["sources", "source_sha256", "canonical_graph_sha256", "target_configuration", "threads", "roi"])
+@pytest.mark.parametrize("field", ["sources", "source_sha256", "canonical_graph_sha256", "target_configuration", "threads", "roi", "boolean-threads"])
 def test_exact_context_does_not_fall_back_to_other_evidence(package_setup, tmp_path, field):
     records, request, _, _, _ = package_setup
-    request["context"][field] = {"sources": [4], "source_sha256": "0"*64, "canonical_graph_sha256": "f"*64,
-                                 "target_configuration": {"other": True}, "threads": 7, "roi": "other"}[field]
+    key = "threads" if field == "boolean-threads" else field
+    request["context"][key] = {"sources": [4], "source_sha256": "0"*64, "canonical_graph_sha256": "f"*64,
+                               "target_configuration": {"other": True}, "threads": 7, "roi": "other", "boolean-threads": True}[field]
     result = records.swdb("profile-package", _payload(tmp_path, "bad-context", request), "--format", "json")
     assert result.returncode == 1 and "differs from evaluation" in result.stderr
     assert not list((records.path / "profile_packages").glob("assembled*.yaml"))
@@ -207,3 +208,35 @@ def test_query_rejects_changed_package_under_retained_identity(package_setup, tm
     records.write(f"profile_packages/{package['id']}.yaml", package)
     result = records.swdb("profile-strategies", package["id"], "--format", "json")
     assert result.returncode == 1 and "retained identity" in result.stderr
+
+
+def test_raw_add_cannot_claim_assembled_completeness(package_setup, tmp_path):
+    records, request, _, _, _ = package_setup
+    package = _assemble(records, tmp_path, request)
+    package.update(id="invented-complete", completeness="complete")
+    added = records.swdb("add", _payload(tmp_path, "invented", package))
+    assert added.returncode == 1 and "created through profile-package" in added.stderr
+
+
+def test_new_snapshot_of_a_prior_rewrite_does_not_restore_baseline_semantics(package_setup, tmp_path):
+    records, request, evaluation, profile, _ = package_setup
+    first = _assemble(records, tmp_path, request)
+    result = records.swdb("baseline-candidate", first["source_snapshot"], "--id", "rebased-start",
+                          "--runs-dir", tmp_path / "rebased", "--format", "json")
+    assert result.returncode == 0, result.stderr
+    next_candidate = json.loads(result.stdout)
+    evaluate = copy.deepcopy(evaluation["request"])
+    evaluate.update(id="rebased-evaluation", candidate=next_candidate["id"])
+    result = records.swdb("evaluate", _payload(tmp_path, "rebased-evaluate", evaluate),
+                          "--runs-dir", tmp_path / "rebased-runs", "--format", "json")
+    assert result.returncode == 0, result.stderr
+    next_eval = json.loads(result.stdout)
+    profile.update(id="rebased-diagnostics", evaluation=next_eval["id"], candidate=next_candidate["id"],
+                   source_snapshot=next_candidate["source_snapshot"],
+                   context={**copy.deepcopy(next_eval["context"]), "primary_binary_sha256": next_eval["build"]["binary_sha256"]})
+    added = records.swdb("add", _payload(tmp_path, "rebased-profile", profile))
+    assert added.returncode == 0, added.stderr
+    request.update(id="rebased-package", evaluation=next_eval["id"], region_profile=profile["id"])
+    second = _assemble(records, tmp_path, request)
+    assert second["strategies"]
+    assert all(row["source_correspondence"] == "unresolved_after_rewrite" for row in second["strategies"])

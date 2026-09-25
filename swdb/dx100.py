@@ -16,7 +16,7 @@ import uuid
 
 import yaml
 
-from swdb import artifacts, paths, profile, workflow, yamlio
+from swdb import artifacts, bfs_protocol, paths, profile, workflow, yamlio
 from swdb.bfs_native import Session, StageFailure, Stopped, _integer, _now
 from swdb.cli import Failure, _require_valid
 
@@ -64,7 +64,12 @@ def _prepare(args, action, store, request, data):
     if not isinstance(request, dict) or request.get("message_version") != "1.0":
         raise Failure("DX100 request requires message_version 1.0")
     fields = {"message_version", "id", "machine", "hardware_target", "model_root", "budget", "fixture"}
-    fields |= {"fixture_command"} if action == "build" else {"simulator", "binary", "workload", "configuration", "checkpoint_manifest", "build_evaluation", "verification"}
+    if action == "build":
+        fields |= {"fixture_command"}
+    elif action == "compile":
+        fields |= {"candidate", "build_evaluation", "function", "accelerated", "roi", "fixture_compiler"}
+    else:
+        fields |= {"simulator", "binary", "workload", "configuration", "checkpoint_manifest", "build_evaluation", "verification", "candidate", "candidate_build"}
     if request.keys() - fields:
         raise Failure(f"unknown DX100 request fields: {sorted(request.keys() - fields)}")
     if not isinstance(request.get("fixture", False), bool):
@@ -102,6 +107,10 @@ def _prepare(args, action, store, request, data):
         _integer(budget.get("jobs"), "budget.jobs", maximum=8)
         if storage > 10 or set(budget) != {"total_seconds", "memory_gib", "storage_gib", "jobs"}:
             raise Failure("build budget requires total_seconds,memory_gib,storage_gib<=10,jobs")
+    elif action == "compile":
+        _integer(budget.get("build_seconds"), "budget.build_seconds", maximum=1800)
+        if storage > 10 or set(budget) != {"total_seconds", "memory_gib", "storage_gib", "build_seconds"}:
+            raise Failure("candidate compile budget requires total_seconds,memory_gib,storage_gib<=10,build_seconds")
     elif set(budget) != {"total_seconds", "memory_gib", "storage_gib", "checkpoint_seconds", "run_seconds"}:
         raise Failure("execution budget requires total_seconds,memory_gib,storage_gib,checkpoint_seconds,run_seconds")
     destination = Path(args.runs_dir).resolve()
@@ -242,6 +251,11 @@ def build(args):
     return _finish(args, data, session, error)
 
 
+def compile_candidate(args):
+    from swdb.dx100_candidate import compile_candidate as compile_impl
+    return compile_impl(args)
+
+
 def _configuration(request, target, root):
     config = request.get("configuration")
     if not isinstance(config, dict) or set(config) != {"mode", "l3_size_mb", "l3_assoc", "tile_elements"}:
@@ -297,7 +311,7 @@ def _correctness(session, request, result_folder, log, completed):
     _file(request["simulator"], "simulator")
     _file(request["workload"]["representation"], "graph representation")
     _file(data["context"]["verification_driver"], "verification driver")
-    counters = {}
+    counters, interval_values = {}, {}
     intervals = ends = 0
     with stats.open(errors="replace") as stream:
         for line in stream:
@@ -308,9 +322,12 @@ def _correctness(session, request, result_folder, log, completed):
             match = re.match(r"(\S*maa\S*\.numInst(?:_[A-Z]+)?)\s+(\d+)(?:\s|$)", line)
             if match:
                 counters[match[1]] = int(match[2])
+            match = re.match(r"(simTicks|finalTick)\s+(\d+)(?:\s|$)", line)
+            if match:
+                interval_values[match[1]] = match[2]
     if intervals != 1 or ends != 1:
         raise StageFailure("missing_observation", "sealed ROI must contain exactly one guest statistics interval")
-    verdicts, trace_ends, sealed_markers = [], {}, 0
+    verdicts, trace_ends, sealed_markers, parent_results = [], {}, 0, []
     with log.open(errors="replace") as stream:
         for number, line in enumerate(stream, 1):
             if line.strip() == "SWDB_DX100_ROI_SEALED":
@@ -318,16 +335,24 @@ def _correctness(session, request, result_folder, log, completed):
             found = re.match(r"^\s*Verification\s*:\s*(PASS|FAIL)\s*$", line)
             if found:
                 verdicts.append({"verdict": found[1], "line": number, "after_seal": sealed_markers == 1})
-            if not sealed_markers:
-                found = re.search(r"\b([SIAR])\[\d+\] End \[", line)
-                if found:
-                    trace_ends[found[1]] = trace_ends.get(found[1], 0) + 1
+            found = re.fullmatch(r"SWDB_BFS_RESULT source=(\d+) vertices=(\d+) parent_count=(\d+) parent_fnv1a64=([a-f0-9]{16})\s*", line)
+            if found:
+                parent_results.append({"source": int(found[1]), "vertices": int(found[2]), "parent_count": int(found[3]),
+                    "parent_fnv1a64": found[4], "line": number, "after_seal": sealed_markers == 1,
+                    "fingerprint_kind": "noncryptographic FNV-1a over little-endian signed32 parent values"})
     terminal = seal.get("verification", {})
     explicit_failure = any(item["verdict"] == "FAIL" for item in verdicts)
     valid = (completed and len(verdicts) == 1 and verdicts[0]["after_seal"] and sealed_markers == 1
              and terminal.get("state") == "finished" and terminal.get("exit_code") == 0
              and terminal.get("exit_cause") == "exiting with last active thread context")
+    if data["context"].get("candidate_build"):
+        valid = (valid and len(parent_results) == 1 and parent_results[0]["after_seal"]
+            and parent_results[0]["source"] == data["context"]["source"]
+            and parent_results[0]["vertices"] == parent_results[0]["parent_count"])
     state = "failed" if explicit_failure else "passed" if valid else "unverified"
+    from swdb.dx100_coverage import observe
+    coverage = observe(log, interval_values, request["configuration"]["tile_elements"])
+    trace_ends = coverage["completed_trace_units"]
     acceleration = (request["configuration"]["mode"] == "MAA"
         and any(value > 0 for key, value in counters.items() if key.endswith(".numInst"))
         and all(trace_ends.get(unit, 0) > 0 for unit in ("S", "I", "R", "A")))
@@ -340,9 +365,8 @@ def _correctness(session, request, result_folder, log, completed):
         "sealed_roi": {"path": str(seal_path), "sha256": artifacts.file_hash(seal_path)},
         "output": {"path": str(log), "sha256": artifacts.file_hash(log)},
         "requested_checks": 1, "observed_verdicts": verdicts, "continuation": terminal,
-        "coverage": {"accelerator_executed": acceleration, "instruction_counters": counters,
-            "completed_trace_units": trace_ends, "full_tiles": "unobserved", "tail_tiles": "unobserved",
-            "competing_parent_updates": "unobserved"},
+        "parent_results": parent_results,
+        "coverage": {**coverage, "accelerator_executed": acceleration, "instruction_counters": counters},
         "scope": "This execution only; finite graph/source checking is not a proof for all inputs."}]}
     session.save()
     if explicit_failure:
@@ -363,6 +387,20 @@ def execute(args):
         session.begin("execution_identity")
         simulator = _file(request.get("simulator"), "simulator")
         binary = _file(request.get("binary"), "BFS binary")
+        compiled = None
+        if "candidate_build" in request:
+            compiled = store.get(request["candidate_build"], "evaluation")
+            if (not compiled or compiled.get("outcome", {}).get("state") != "complete"
+                    or compiled["outcome"]["stage"] != "candidate_build"
+                    or compiled.get("candidate") != request.get("candidate")
+                    or compiled["context"].get("model_build") != request.get("build_evaluation")
+                    or compiled["evidence_kind"] != data["evidence_kind"]
+                    or compiled["context"]["target"] != target["id"]):
+                raise Failure("candidate_build does not identify this source/model/evidence kind")
+            if request["binary"] != {"path": compiled["build"]["binary"], "sha256": compiled["build"]["binary_sha256"]}:
+                raise Failure("candidate binary differs from its compilation receipt")
+            for name in ("driver", "m5ops"):
+                _file(compiled["build"][name], f"candidate build {name}")
         if not request.get("fixture"):
             build_id = request.get("build_evaluation")
             if not isinstance(build_id, str):
@@ -376,7 +414,7 @@ def execute(args):
             if receipt.get("revision") != REVISION or receipt.get("state") != "completed":
                 raise Failure("build receipt does not match the pinned completed build")
             available = {(ref["path"], ref["sha256"]) for ref in receipt["binaries"]}
-            if any((request[key]["path"], request[key]["sha256"]) not in available for key in ("simulator", "binary")):
+            if any((request[key]["path"], request[key]["sha256"]) not in available for key in (("simulator",) if compiled else ("simulator", "binary"))):
                 raise Failure("simulator or BFS binary was not produced by the selected build receipt")
         if not os.access(simulator, os.X_OK) or not os.access(binary, os.X_OK):
             raise Failure("simulator and BFS binary must be executable")
@@ -387,6 +425,40 @@ def execute(args):
             raise Failure("workload id must be nonempty")
         source = _integer(workload["source"], "BFS source", minimum=0)
         graph = _file(workload["representation"], "graph representation")
+        application = compiled["context"]["application"] if compiled else "dx100-gapbs"
+        if store.get(workload["id"], "workload"):
+            registered = bfs_protocol.workload_representation(store, workload["id"], application)
+            representation = registered["representation"]
+            if (representation["path"] != str(graph) or representation["sha256"] != workload["representation"]["sha256"]
+                    or source not in registered["sources"]):
+                raise Failure("execution graph/source differs from its registered workload")
+            data["context"]["workload"] = registered
+        source_file = root / "benchmarks/gapbs/src/bfs.cc"
+        if source_file.is_file():
+            data["context"]["timed_source"] = {"path": str(source_file),
+                "sha256": artifacts.file_hash(source_file), "model_revision": REVISION}
+        if "candidate" in request:
+            candidate = store.get(request["candidate"], "candidate")
+            if not candidate:
+                raise Failure("unknown candidate source identity")
+            artifacts.verify(candidate["artifact"])
+            if compiled:
+                if candidate["artifact"]["sha256"] != compiled["context"]["candidate_sha256"]:
+                    raise Failure("candidate source differs from its compilation receipt")
+                data["context"].update(roi=compiled["context"]["roi"], timed_source=compiled["context"]["timed_source"],
+                    verifier_source=compiled["context"]["verifier_source"], candidate_build=compiled["id"],
+                    candidate_driver=compiled["context"]["driver"],
+                    suppressed_internal_events=compiled["context"]["suppressed_internal_events"])
+            else:
+                code_files = [entry for entry in candidate["artifact"]["files"]
+                              if Path(entry["path"]).suffix in {".cc", ".cpp", ".c", ".h", ".hpp", ".S"}]
+                if not code_files:
+                    raise Failure("candidate has no code to bind to the pinned build")
+                for entry in code_files:
+                    _file({"path": str(root / artifacts.relative_path(entry["path"])), "sha256": entry["sha256"]},
+                          "candidate source in the pinned model build")
+            data.update(candidate=candidate["id"], source_snapshot=candidate["source_snapshot"], implementation=candidate["implementation"])
+            data["context"]["candidate_sha256"] = candidate["artifact"]["sha256"]
         if any(character.isspace() for character in str(graph)):
             raise Failure("this pinned gem5 option parser cannot safely pass whitespace in graph paths")
         settings, configured = _configuration(request, target, root)
@@ -396,28 +468,33 @@ def execute(args):
         options = f"-f {graph} -l -n 1 -v -r {source}"
         binding = {"model_revision": REVISION, "simulator": request["simulator"], "binary": request["binary"],
             "workload": workload, "guest_cores": 4, "guest_memory": "16GB", "options": options,
-            "entry_script_sha256": artifacts.file_hash(script)}
-        data["context"].update(configuration=configured, execution_binding=binding,
-                              execution_binding_sha256=artifacts.digest(binding), source=source)
+            "entry_script_sha256": artifacts.file_hash(script), "roi": data["context"]["roi"],
+            "candidate_build": compiled["id"] if compiled else None}
+        data["context"].update(configuration=configured, backend_configuration=configured, execution_binding=binding,
+                              execution_binding_sha256=artifacts.digest(binding), source=source, sources=[source], threads=4)
         data["build"] = {"binary": str(binary), "binary_sha256": request["binary"]["sha256"],
                          "simulator": str(simulator), "simulator_sha256": request["simulator"]["sha256"]}
         env = dict(os.environ, OMP_NUM_THREADS="4", OMP_PROC_BIND="false", OMP_DYNAMIC="FALSE")
         verify = request.get("verification")
         driver = paths.HOME / "scripts/dx100_verify.py"
         if verify is not None:
-            if not isinstance(verify, dict) or set(verify) != {"checker", "max_ticks"} or verify["checker"] != "dx100.bfs.verifier.v1":
+            if (not isinstance(verify, dict) or set(verify) - {"checker", "max_ticks", "coverage"}
+                    or verify.get("checker") != "dx100.bfs.verifier.v1" or "max_ticks" not in verify):
                 raise Failure("verification requires checker dx100.bfs.verifier.v1 and max_ticks")
+            if type(verify.get("coverage", False)) is not bool:
+                raise Failure("verification.coverage must be boolean")
             _integer(verify["max_ticks"], "verification.max_ticks", maximum=10**15)
-            source_file = root / "benchmarks/gapbs/src/bfs.cc"
-            harness = root / "benchmarks/gapbs/src/benchmark.h"
-            if not source_file.is_file() or not harness.is_file():
-                raise Failure("timed BFS/verifier source identity is missing")
-            data["context"].update(
-                verification_driver={"path": str(driver), "sha256": artifacts.file_hash(driver)},
-                timed_source={"path": str(source_file), "sha256": artifacts.file_hash(source_file), "model_revision": REVISION},
-                verifier_source={"path": str(source_file), "sha256": artifacts.file_hash(source_file),
-                    "symbol": "BFSVerifier", "lines": [463, 508],
-                    "harness": {"path": str(harness), "sha256": artifacts.file_hash(harness)}})
+            if not compiled:
+                source_file = root / "benchmarks/gapbs/src/bfs.cc"
+                harness = root / "benchmarks/gapbs/src/benchmark.h"
+                if not source_file.is_file() or not harness.is_file():
+                    raise Failure("timed BFS/verifier source identity is missing")
+                data["context"].update(
+                    timed_source={"path": str(source_file), "sha256": artifacts.file_hash(source_file), "model_revision": REVISION},
+                    verifier_source={"path": str(source_file), "sha256": artifacts.file_hash(source_file),
+                        "symbol": "BFSVerifier", "lines": [463, 508],
+                        "harness": {"path": str(harness), "sha256": artifacts.file_hash(harness)}})
+            data["context"]["verification_driver"] = {"path": str(driver), "sha256": artifacts.file_hash(driver)}
             env.update(SWDB_DX100_MODEL_ROOT=str(root),
                 SWDB_DX100_EXECUTION_BINDING_SHA256=data["context"]["execution_binding_sha256"],
                 SWDB_DX100_VERIFY_MAX_TICKS=str(verify["max_ticks"]))
@@ -460,7 +537,9 @@ def execute(args):
         _file(workload["representation"], "graph representation")
         result_folder = session.folder / "simulation"
         result_folder.mkdir()
-        command = [str(simulator), "--debug-flags=MAATrace", f"--outdir={result_folder}", str(driver if verify else script), *settings,
+        debug_flags = "MAATrace,MAARangeFuser,MAAIndirect" if verify and verify.get("coverage") else "MAATrace"
+        data["context"]["debug_flags"] = debug_flags
+        command = [str(simulator), f"--debug-flags={debug_flags}", f"--outdir={result_folder}", str(driver if verify else script), *settings,
                    "--cmd", str(binary), "--options", options, "--checkpoint-dir", str(checkpoint), "-r", "1"]
         completed = False
         log = session.folder / f"{len(data['stages']):03d}-simulation.log"

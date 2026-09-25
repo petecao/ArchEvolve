@@ -3,11 +3,15 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 16, 17, 18, 19, 20
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
+
+Dependent preparation claimed 2026-09-25 by the identity/coverage worker. The
+public report and negative acceptance checks proceed while Tickets 16–20 supply
+their real execution evidence. Missing obligations remain visible and unresolved.
 
 ## What to build
 

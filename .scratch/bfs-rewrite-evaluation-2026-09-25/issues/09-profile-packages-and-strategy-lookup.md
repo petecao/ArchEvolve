@@ -39,3 +39,21 @@ Use public profile/query, strategy lookup, proposal submission, and fresh-proces
 ## Dependencies and boundaries
 
 Ticket 07 supplies loop discovery and changed-source associations; ticket 08 supplies actual memory observations. Their prerequisite chain supplies native execution and patch submission. DX100-specific operations and backend readiness may still be explicitly unavailable until later slices; that does not block native packages. Do not require live agents, a particular transport, full traces, or a general-purpose optimization selector.
+
+## Implementation progress
+
+2026-09-25: Public `profile-package`, `profile-strategies`, and `strategy-regions`
+are implemented in `swdb/profile_package.py`. Assemblies bind exact current source,
+primary evaluation, diagnostic binaries/outputs, workload/source sequence, and
+target/ROI context. Missing observations remain incomplete; fixtures remain fixtures.
+Collection completeness is separate from correctness. New source snapshots retain
+the profiled candidate for the next proposal; baseline semantics are not copied
+across rewrite generations. Sealed package identities survive index rebuilding and
+are checked before proposal submission. Raw `add` cannot fabricate assembled
+completeness. See `docs/bfs-profile-packages.md`.
+
+Verification: 23 public package tests passed (79.08 seconds), covering both query
+directions, patch handoff, stale/missing evidence, fixture separation, simulated
+attribution, immutable versions, and multiple rewrite generations. A preceding
+34-test package/add/format run passed. Real discovery and memory-profile acceptance
+from Tickets 07/08 is still required before resolving this ticket.

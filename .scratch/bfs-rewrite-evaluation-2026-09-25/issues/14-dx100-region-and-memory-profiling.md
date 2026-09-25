@@ -39,3 +39,7 @@ Ticket 09 supplies actionable profile packages, source/region mappings, and publ
 ## Dependent preparation — 2026-09-25
 
 Claimed while tickets 09 and 12 prepare shared packages and the executable model. The collector reuses automatically discovered source regions, consumes the actual sealed statistics interval and log, and binds all observations to the exact binary/workload/configuration. Source-inferred memory behavior and contract fixtures cannot satisfy real acceptance.
+
+## Initial collector implementation — 2026-09-25
+
+`swdb/dx100_profile.py` implements strict interval/clock conversion, actual ROI-wide memory counters, source-verified automatic region reuse and partial selected-loop timing; `docs/bfs-dx100-profiling.md` describes its limits. The combined DX100 fixture suite passed 23 tests in 87.32 seconds, including seven public collector cases for altered tick frequency, multiple intervals, missing memory, truncated/changed statistics, invalid clocks and stale region mappings. Complete function/exclusive-loop attribution and real simulator acceptance remain outstanding; the collector explicitly returns partial.

@@ -158,11 +158,12 @@ def test_same_simulation_continuation_seals_roi_and_retains_explicit_verdict(cas
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text("// Explicit verifier source identity fixture.\n")
     (model / "configs/deprecated/example/se.py").write_text(
-        "import m5\nevent=m5.simulate()\nprint('Exiting @ tick 31400 because '+event.getCause())\n")
+        "import m5,sys,pathlib\nassert sys.path[0] == str(pathlib.Path(__file__).parent)\n"
+        "event=m5.simulate()\nprint('Exiting @ tick 31400 because '+event.getCause())\n")
     simulator = Path(data["simulator"]["path"])
     text = simulator.read_text()
     text = text.replace("    print('Exiting @ tick 31400 because m5_exit instruction encountered')", '''    import runpy,types
-    (out/'stats.txt').write_text('---------- Begin Simulation Statistics ----------\\nsimTicks 31300\\nsimFreq 1000000000000\\nsystem.maa.numInst 4\\n---------- End Simulation Statistics ----------\\n')
+    (out/'stats.txt').write_text('---------- Begin Simulation Statistics ----------\\nsimTicks 31300\\nfinalTick 31400\\nsimFreq 1000000000000\\nsystem.maa.numInst 4\\n---------- End Simulation Statistics ----------\\n')
     for unit in 'SIAR':
         print(f'30000: system.maa: {unit}[0] End [fixture instruction]')
     counter=[0]
@@ -202,5 +203,5 @@ def test_same_simulation_continuation_seals_roi_and_retains_explicit_verdict(cas
     assert check["binding"]["binary"] == data["binary"]
     assert check["requested_checks"] == 1
     assert check["coverage"]["accelerator_executed"] is True
-    assert check["coverage"]["full_tiles"] == "unobserved"
+    assert check["coverage"]["full_tiles"]["state"] == "unobserved"
     assert check["sealed_roi"]["sha256"]

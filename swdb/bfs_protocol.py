@@ -447,11 +447,190 @@ def _timestamp(value):
         raise Failure("invalid evidence timestamp") from None
 
 
+def validate_protocol_for_simulation(store, request, candidate, *, actual_target,
+                                     actual_configuration, actual_build, actual_instrumentation,
+                                     actual_threads, actual_roi, actual_verifier):
+    """Bind one actual simulator traversal to a frozen source/repetition cell.
+
+    Returns None for an explicitly diagnostic request without a protocol. A
+    campaign later aggregates separate completed executions; this helper never
+    turns a requested repetition count into completed evidence.
+    """
+    if not request.get("protocol"):
+        return None
+    frozen = _get(store, request["protocol"], "protocol")
+    fingerprint = verify_immutable(frozen)
+    settings = frozen["settings"]
+    _validate_settings(settings, store)
+    _fail(settings["mode"] in {"artifact_reference", "controlled_simulator"}, "simulator execution requires a simulated protocol")
+    role = request.get("protocol_role")
+    _fail(role in {"baseline", "candidate"}, "protocol_role must be baseline or candidate")
+    workload_request = request.get("workload", {})
+    wid = workload_request.get("id")
+    _fail(wid in frozen["workload_identities"], "simulation workload is outside frozen settings")
+    workload = _get(store, wid, "workload")
+    _fail(verify_immutable(workload) == frozen["workload_identities"][wid], "registered simulation workload changed")
+    definition = workload["definition"]
+    trial = request.get("protocol_trial")
+    _fail(isinstance(trial, dict) and set(trial) == {"source_position", "repetition"},
+          "simulation requires an explicit protocol_trial source_position/repetition")
+    position = _integer(trial["source_position"], "source_position", 0)
+    repetition = _integer(trial["repetition"], "repetition", 0)
+    _fail(position < len(definition["sources"]) and repetition < settings["sampling"]["repetitions"], "simulation trial is outside frozen coverage")
+    source = definition["sources"][position]
+    _fail(type(workload_request.get("source")) is int and workload_request["source"] == source,
+          "simulation source differs from its frozen source position")
+    app = store.application_of(_get(store, candidate["implementation"], "implementation"))
+    representation = workload_representation(store, wid, app["id"])["representation"]
+    _fail(workload_request.get("representation") == {"path": representation["path"], "sha256": representation["sha256"]},
+          "simulation representation differs from registered loaded adjacency")
+    target = settings["targets"][role]
+    _fail(actual_target == target["id"] and artifacts.digest(actual_configuration) == artifacts.digest(target["configuration"]),
+          "actual simulator target/configuration differs from frozen settings")
+    _fail(actual_threads == settings["threads"] and actual_roi == settings["roi"] and actual_verifier == settings["correctness"]["verifier"],
+          "actual simulator threads/ROI/verifier differs from frozen settings")
+    expected_build = settings["builds"][role]
+    _fail(all(artifacts.digest(actual_build.get(key)) == artifacts.digest(expected_build[key])
+              for key in ("compiler", "compiler_version", "flags", "adapter")), "actual simulator guest build differs from frozen settings")
+    _fail(artifacts.digest(actual_instrumentation) == artifacts.digest(settings["instrumentation"][role]),
+          "actual simulator instrumentation differs from frozen treatment")
+    _fail(_get(store, candidate["implementation"], "implementation")["kernel"] == settings["kernel"], "simulation candidate kernel differs")
+    binding = {"protocol": frozen["id"], "frozen_sha256": fingerprint, "workload_id": wid,
+               "workload_sha256": workload["identity_sha256"], "role": role, "frozen_at": frozen["frozen_at"],
+               "bound_at": _now(), "settings_sha256": artifacts.digest(settings)}
+    return {"binding": binding, "build": copy.deepcopy(actual_build), "context": {
+        "protocol": frozen["id"], "protocol_binding": binding, "protocol_trial": copy.deepcopy(trial),
+        "target": actual_target, "backend_configuration": copy.deepcopy(actual_configuration),
+        "instrumentation": copy.deepcopy(actual_instrumentation), "adapter": actual_build["adapter"],
+        "threads": actual_threads, "roi": actual_roi, "verifier": actual_verifier, "basis": "simulated",
+        "sources": [source], "repetitions": 1, "candidate_sha256": candidate["artifact"]["sha256"],
+        "workload": {"id": wid, "canonical_sha256": definition["canonical_sha256"], "sources": [source],
+                     "family": definition["family"], "representation": copy.deepcopy(representation)}}}
+
+
+def aggregate_evaluations(args):
+    """Retain a complete sample grid or an explicit failed aggregation of real trials."""
+    request = _request(args)
+    store = _require_valid(args.records)
+    _fail(store.get(request["id"]) is None, "aggregation ID already exists")
+    ids = request.get("evaluations")
+    _fail(isinstance(ids, list) and ids and all(isinstance(rid, str) for rid in ids), "evaluations must be a nonempty ID list")
+    data = workflow.record("evaluation", request["id"], request=copy.deepcopy(request),
+        outcome={"state": "submitted", "stage": "aggregation", "reason": None}, stages=[], timing=[],
+        correctness={"state": "unverified", "checks": []}, profiling={"state": "component_profiles", "regions": []},
+        raw_artifacts=[], component_evaluations=[], gain_claim=False, evidence_kind="contract_fixture")
+    try:
+        _fail(len(ids) == len(set(ids)), "aggregation has duplicate execution IDs")
+        components = []
+        for rid in ids:
+            component = _get(store, rid, "evaluation")
+            data["component_evaluations"].append({"evaluation": rid, "sha256": artifacts.digest(component)})
+            components.append(component)
+        first = components[0]
+        frozen = _get(store, request.get("protocol"), "protocol")
+        verify_immutable(frozen)
+        _validate_settings(frozen["settings"], store)
+        _fail(frozen["settings"]["mode"] != "native", "native evaluations already own their sample grid")
+        role = request.get("protocol_role")
+        _fail(role in {"baseline", "candidate"}, "aggregation needs an explicit protocol_role")
+        for key in ("candidate", "proposal", "source_snapshot", "implementation", "machine", "comparison_baseline", "profile_package"):
+            if key in first: data[key] = first[key]
+        data["build"] = copy.deepcopy(first["build"])
+        data["context"] = copy.deepcopy(first["context"])
+        data["context"]["component_bindings"] = {}
+        data["context"]["component_contexts"] = {}
+        data["evidence_kind"] = first["evidence_kind"]
+        if first.get("request", {}).get("fixture") is True: data["request"]["fixture"] = True
+        wid = first["context"]["workload"]["id"]
+        workload = _get(store, wid, "workload")
+        _fail(wid in frozen["workload_identities"] and verify_immutable(workload) == frozen["workload_identities"][wid], "aggregation workload is not frozen")
+        definition = workload["definition"]
+        cells = set()
+        expected = {(position, rep) for position in range(len(definition["sources"]))
+                    for rep in range(frozen["settings"]["sampling"]["repetitions"])}
+        common_keys = ("target", "backend_configuration", "instrumentation", "adapter", "threads", "roi", "verifier", "basis", "candidate_sha256", "model", "interface")
+        earliest = None
+        cases = set()
+        for component in components:
+            context = component["context"]
+            _fail(component.get("outcome", {}).get("state") == "complete" and component.get("correctness", {}).get("state") == "passed", "component execution failed, is incomplete, or lacks correctness")
+            _fail(not component.get("component_evaluations"), "nested aggregation is not an actual distinct simulator execution")
+            _fail(all(component.get(key) == first.get(key) for key in ("candidate", "implementation", "source_snapshot", "machine", "evidence_kind")), "component candidate/source/machine/evidence identities differ")
+            _fail(artifacts.digest(component["build"]) == artifacts.digest(first["build"]), "component timed binaries or build/model identity differ")
+            _fail(all(artifacts.digest(context.get(key)) == artifacts.digest(first["context"].get(key)) for key in common_keys), "component target/configuration/ROI/source identity differs")
+            binding = context.get("protocol_binding", {})
+            _fail(binding.get("protocol") == frozen["id"] and binding.get("frozen_sha256") == frozen["identity_sha256"]
+                  and binding.get("settings_sha256") == artifacts.digest(frozen["settings"]) and binding.get("role") == role
+                  and binding.get("workload_id") == wid and binding.get("workload_sha256") == workload["identity_sha256"],
+                  "component lacks this exact protocol/workload/role binding")
+            bound = _timestamp(binding.get("bound_at"))
+            _fail(bound >= _timestamp(frozen["frozen_at"]), "component predates protocol freeze")
+            earliest = min(earliest, bound) if earliest else bound
+            trial = context.get("protocol_trial", {})
+            cell = (trial.get("source_position"), trial.get("repetition"))
+            _fail(all(type(v) is int for v in cell) and cell in expected and cell not in cells, "component trial cell is missing, duplicate, or outside the frozen sample grid")
+            source = definition["sources"][cell[0]]
+            _fail(context.get("sources") == [source] and context.get("repetitions") == 1
+                  and context.get("workload", {}).get("canonical_sha256") == definition["canonical_sha256"], "component does not identify one actual frozen graph/source traversal")
+            _fail(len(component.get("timing", [])) == 1, "each component must contain one actual timed traversal")
+            row = copy.deepcopy(component["timing"][0])
+            _fail((row.get("source_position"), row.get("repetition")) == cell and row.get("source") == source, "component timing does not match its assigned source/repetition cell")
+            checks = component["correctness"]["checks"]
+            _fail(len(checks) == 1 and checks[0].get("passed") is True
+                  and all(checks[0].get(key) == row.get(key) for key in ("source", "source_position", "repetition", "binary_sha256", "output_sha256"))
+                  and checks[0].get("graph_sha256") == definition["canonical_sha256"], "component structural check is not linked to its exact timed graph/source/binary/output")
+            _fail(row.get("binary_sha256") == component["build"].get("binary_sha256") and row.get("verified") is True
+                  and row.get("basis") == "simulated" and row.get("quantity") == "simulated_roi_seconds" and row.get("roi") == frozen["settings"]["roi"], "component duration is not verified simulated ROI time")
+            _fail(component.get("request", {}).get("fixture") is not True or component["evidence_kind"] == "contract_fixture", "fixture component was relabeled real execution")
+            cells.add(cell)
+            data["timing"].append(row)
+            data["correctness"]["checks"].append(copy.deepcopy(checks[0]))
+            data["stages"].extend({**copy.deepcopy(stage), "component_evaluation": component["id"]} for stage in component["stages"])
+            data["raw_artifacts"].extend(copy.deepcopy(component.get("raw_artifacts", [])))
+            data["context"]["component_bindings"][component["id"]] = copy.deepcopy(context.get("execution_binding"))
+            data["context"]["component_contexts"][component["id"]] = copy.deepcopy(context)
+            cases.update(context.get("correctness_cases", []))
+        _fail(cells == expected, "aggregation is missing required frozen source/repetition executions")
+        data["context"].update(sources=definition["sources"], repetitions=frozen["settings"]["sampling"]["repetitions"], correctness_cases=sorted(cases))
+        data["context"]["workload"]["sources"] = definition["sources"]
+        data["context"]["protocol_binding"]["bound_at"] = earliest.isoformat()
+        data["context"].pop("protocol_trial", None)
+        data["request"]["protocol"] = frozen["id"]
+        data["correctness"]["state"] = "passed"
+        data["outcome"] = {"state": "complete", "stage": "aggregation", "reason": "Exact completed simulator executions; no synthetic repetitions."}
+        _evaluation_samples(store, data, frozen, role)
+    except (Failure, KeyError, TypeError, ValueError, OverflowError) as exc:
+        data["outcome"] = {"state": "incompatible", "stage": "aggregation", "reason": str(exc)}
+        data["correctness"]["state"] = "unverified"
+    return workflow.persist(args.records, data, getattr(args, "db", None), create=True)
+
+
 def _evaluation_samples(store, evaluation, protocol, role):
     settings = protocol["settings"]
     _fail(evaluation.get("outcome", {}).get("state") == "complete", "evaluation is incomplete or failed")
     _fail(evaluation.get("correctness", {}).get("state") == "passed", "evaluation lacks passed correctness")
     context = evaluation.get("context", {})
+    components = evaluation.get("component_evaluations", [])
+    if components:
+        _fail(settings["mode"] != "native", "native evaluations cannot masquerade as simulator aggregates")
+        component_ids = [item["evaluation"] for item in components]
+        _fail(len(set(component_ids)) == len(component_ids), "aggregate repeats a component execution")
+        retained_timing, retained_checks = [], []
+        for identity in components:
+            component = _get(store, identity["evaluation"], "evaluation")
+            _fail(artifacts.digest(component) == identity["sha256"], "aggregate component evidence changed")
+            _fail(not component.get("component_evaluations"), "nested aggregates are not separate simulator executions")
+            _fail(component.get("outcome", {}).get("state") == "complete"
+                  and component.get("correctness", {}).get("state") == "passed", "aggregate retains a failed component")
+            _fail(artifacts.digest(context.get("component_contexts", {}).get(component["id"])) == artifacts.digest(component.get("context")),
+                  "aggregate component context changed")
+            _fail(artifacts.digest(context.get("component_bindings", {}).get(component["id"])) == artifacts.digest(component.get("context", {}).get("execution_binding")),
+                  "aggregate component execution binding changed")
+            retained_timing.extend(component.get("timing", []))
+            retained_checks.extend(component.get("correctness", {}).get("checks", []))
+        _fail(artifacts.digest(retained_timing) == artifacts.digest(evaluation.get("timing"))
+              and artifacts.digest(retained_checks) == artifacts.digest(evaluation["correctness"].get("checks")),
+              "aggregate observations differ from their actual component evidence")
     binding = context.get("protocol_binding", {})
     _fail(isinstance(binding, dict) and binding.get("protocol") == protocol["id"]
           and binding.get("frozen_sha256") == protocol["identity_sha256"]

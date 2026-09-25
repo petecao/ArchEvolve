@@ -137,8 +137,34 @@ Sealed ROI evidence survives a later verifier timeout or failure. Live terminal
 statistics can change during verification without altering the sealed interval.
 
 Path evidence counts completed MAA trace units and positive instruction counters
-from the sealed ROI. Both are required for `accelerator_executed: true`; source
-presence and scalar fallback do not qualify. Full/tail tile and competing-parent
-coverage remain `unobserved` until separately established by bounded real cases.
+from the sealed `finalTick - simTicks` through `finalTick` interval. Both are
+required for `accelerator_executed: true`; source presence, a `td_maa` label,
+and scalar fallback do not qualify. With `verification.coverage: true`, explicit
+RangeFuser and indirect-store debug traces record full and tail output tiles.
+Competing-parent coverage requires the returned parent's actual virtual base,
+matching vector-store instruction base, and distinct values written to the same
+observed physical word. Graph topology alone does not establish that case.
 Fixture PASS is always `contract_fixture` evidence. The real continuation and
 accelerated acceptance criteria remain open until executed on the actual model.
+
+## Compiling a changed candidate
+
+`dx100-compile FILE --runs-dir DIR --lane NODE` accepts an identified `candidate`,
+completed `build_evaluation`, selected BFS `function`, explicit `accelerated`
+boolean, and `roi: bfs.complete_call.v1`, alongside the ordinary host/model and
+budget fields. The compilation budget uses `total_seconds`, `build_seconds`,
+`memory_gib`, and `storage_gib`. GCC 13 compiles the candidate against the pinned
+model API and m5ops assembly without rebuilding the simulator. The result is a
+`candidate_build` evaluation identifying the source artifact, compiler, flags,
+generated driver, assembly, and binary. An execute request names that evaluation
+as `candidate_build` and repeats the exact `candidate` and binary identity.
+
+The trusted outer driver times initialization, traversal, and normalization in
+one complete call. It suppresses source-internal reset/dump/work/exit m5 events
+using protected evaluator macros and rejects candidate overrides. The unchanged
+author executable retains its separately named traversal ROI. After the outer
+ROI is sealed, the same returned parent array receives length/range validation
+before the protected structural verifier. Output includes its source, length,
+actual storage address, and a clearly labeled noncryptographic FNV-1a fingerprint;
+the enclosing output itself has a SHA-256 identity. A successful compilation
+does not establish accelerator execution, correctness, or performance.

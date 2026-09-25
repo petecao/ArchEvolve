@@ -43,6 +43,9 @@ def main():
     m5.simulate = observe
     try:
         sys.argv[0] = str(entry)
+        # m5.util.addToPath resolves relative config imports against sys.path[0],
+        # which gem5 initially sets to this wrapper's directory.
+        sys.path[0] = str(entry.parent)
         runpy.run_path(str(entry), run_name="__m5_main__")
     finally:
         m5.simulate = original

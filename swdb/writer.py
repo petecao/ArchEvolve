@@ -52,6 +52,8 @@ def add(records_dir, file, agent=False, agent_name="agent"):
         raise Failure(f"{file}: a record must be a mapping with text fields kind and id")
     if data["kind"] in {"workload", "protocol"}:
         raise Failure("sealed workload/protocol records must be created through register-workload/freeze-protocol")
+    if data["kind"] == "profile_package" and (data.get("completeness") != "fixture" or "package_version" in data):
+        raise Failure("assembled profile packages must be created through profile-package; raw add accepts explicit fixtures only")
     if agent:
         mark_agent(data, agent_name)
     return commit(records_dir, new=[data])[0]

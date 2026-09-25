@@ -13,6 +13,10 @@ Packages use independent message version 1.0 and record format 0.4. Their
 `package_version`, `requested_id`, and `identity_sha256` identify a retained
 assembly. A new request creates a new version rather than overwriting an earlier
 package. Evidence references and content identities survive index regeneration.
+Public `add` accepts only explicit legacy fixture packages; assembled completeness
+must pass the public assembly checks. Source semantics are transferred only when
+the candidate matches the implementation's application snapshot, including after
+multiple rewrite generations.
 
 The package's source snapshot identifies the current evaluated candidate, including
 the full buildable application. Selected regions retain exact source text and

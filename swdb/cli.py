@@ -151,7 +151,7 @@ def main(argv=None):
     sub.add_argument("--runs-dir", type=Path, required=True)
     sub.add_argument("--provider-config", type=Path, required=True)
 
-    for name in ("dx100-build", "dx100-execute"):
+    for name in ("dx100-build", "dx100-execute", "dx100-compile"):
         sub = command(name, "run a bounded DX100 backend stage with durable evidence", db=True, fmt=True)
         sub.add_argument("file", type=Path)
         sub.add_argument("--runs-dir", type=Path, required=True)
@@ -190,10 +190,14 @@ def main(argv=None):
     sub.add_argument("strategy")
     sub.add_argument("--package")
 
+    sub = command("bfs-coverage", "reconstruct the fixed BFS acceptance matrix and retained history", db=True, fmt=True)
+    sub.add_argument("file", type=Path)
+
     for name, help_text in (
         ("register-workload", "register graph representations after checking canonical adjacency identity"),
         ("freeze-protocol", "freeze an immutable workload and comparison protocol"),
         ("compare-evaluations", "compare explicit evaluation evidence under a frozen protocol"),
+        ("aggregate-evaluations", "combine completed simulator trials with exact protocol coverage"),
     ):
         sub = command(name, help_text, db=True, fmt=True)
         sub.add_argument("file", type=Path)
@@ -227,10 +231,11 @@ def _dispatch(args):
 
         return _emit(capabilities.query(args), args.format)
 
-    if args.command in {"dx100-build", "dx100-execute"}:
+    if args.command in {"dx100-build", "dx100-execute", "dx100-compile"}:
         from swdb import dx100
 
-        result = getattr(dx100, args.command.removeprefix("dx100-"))(args)
+        method = "compile_candidate" if args.command == "dx100-compile" else args.command.removeprefix("dx100-")
+        result = getattr(dx100, method)(args)
         _emit(result, args.format)
         return 0 if result.get("outcome", {}).get("state") == "complete" else 1
 
@@ -248,11 +253,13 @@ def _dispatch(args):
         _emit(result, args.format)
         return 0 if result.get("outcome", {}).get("state") == "complete" else 1
 
-    if args.command in {"register-workload", "freeze-protocol", "compare-evaluations"}:
+    if args.command in {"register-workload", "freeze-protocol", "compare-evaluations", "aggregate-evaluations"}:
         from swdb import bfs_protocol
 
         result = getattr(bfs_protocol, args.command.replace("-", "_"))(args)
         _emit(result, args.format)
+        if args.command == "aggregate-evaluations":
+            return 0 if result.get("outcome", {}).get("state") == "complete" else 1
         return 1 if result.get("decision", {}).get("state") == "rejected" else 0
 
     if args.command in {"bfs-profile", "bfs-hotspots"}:
@@ -269,6 +276,12 @@ def _dispatch(args):
         result = getattr(profile_package, method)(args)
         _emit(result, args.format)
         return 1 if result.get("outcome", {}).get("state") in {"failed", "rejected", "unresolved"} else 0
+
+    if args.command == "bfs-coverage":
+        from swdb import bfs_coverage
+
+        _emit(bfs_coverage.report(args), args.format)
+        return 0
 
     workflow_commands = {"source-snapshot": "snapshot", "fixture-package": "fixture_package",
                          "baseline-candidate": "baseline_candidate",

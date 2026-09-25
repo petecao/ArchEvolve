@@ -11,16 +11,26 @@ from swdb.cli import Failure, _require_valid
 
 
 def _context(evaluation):
-    context = evaluation["context"]
-    return {"source_sha256": context["candidate_sha256"],
-            "canonical_graph_sha256": context["workload"]["canonical_sha256"],
-            "sources": context["sources"], "target": context["target"],
-            "target_configuration": context.get("backend_configuration", context.get("configuration", {})),
-            "threads": context["threads"], "roi": context["roi"]}
+    try:
+        context = evaluation["context"]
+        return {"source_sha256": context["candidate_sha256"],
+                "canonical_graph_sha256": context["workload"]["canonical_sha256"],
+                "sources": context["sources"], "target": context["target"],
+                "target_configuration": context.get("backend_configuration", context.get("configuration", {})),
+                "threads": context["threads"], "roi": context["roi"]}
+    except (KeyError, TypeError):
+        raise Failure("evaluation lacks a complete source/workload/target context") from None
 
 
 def _number(value):
     return type(value) in (int, float) and math.isfinite(value) and value >= 0
+
+
+def _same(left, right):
+    try:
+        return artifacts.digest(left) == artifacts.digest(right)
+    except (TypeError, ValueError):
+        return False
 
 
 def _timing_quantity(region):
@@ -53,9 +63,9 @@ def _profile_check(profile, evaluation, candidate):
         if profile.get(key) != expected:
             reasons.append(f"region profile has incompatible {key}")
     try:
-        if _context(profile) != _context(evaluation):
+        if not _same(_context(profile), _context(evaluation)):
             reasons.append("region profile has incompatible source/workload/target/sources/threads/ROI")
-    except (KeyError, TypeError):
+    except (Failure, KeyError, TypeError):
         reasons.append("region profile lacks exact context identity")
     if profile.get("context", {}).get("primary_binary_sha256") != evaluation.get("build", {}).get("binary_sha256"):
         reasons.append("region profile names a different or unidentified primary binary")
@@ -66,6 +76,8 @@ def _profile_check(profile, evaluation, candidate):
 
 def _region(row, root):
     row = copy.deepcopy(row)
+    _fail(isinstance(row.get("id"), str) and row["id"] and row.get("kind") in {"function", "loop"},
+          "region needs an identified function or loop")
     path = Path(row.get("path", ""))
     path = path if path.is_absolute() else root / artifacts.relative_path(str(path))
     try:
@@ -80,7 +92,8 @@ def _region(row, root):
     fragment = raw[extent[0]:extent[1]]
     _fail(hashlib.sha256(fragment).hexdigest() == row.get("source_sha256"), "region source extent is stale")
     _fail(fragment.decode(errors="replace") == row.get("text"), "region source text is stale")
-    row.update(path=relative.as_posix(), source_association="verified_current_candidate")
+    row.update(path=relative.as_posix(), source_association="verified_current_candidate",
+               lines=[raw[:extent[0]].count(b"\n") + 1, raw[:extent[1]-1].count(b"\n") + 1])
     return row
 
 
@@ -167,7 +180,8 @@ def _check_observations(profile, evaluation, candidate):
     for kind in ("regions", "memory"):
         matching = [run for run in executions if run.get("kind") == kind]
         expected = {(position, source) for position, source in enumerate(evaluation["context"]["sources"])}
-        covered = {(run.get("source_position"), run.get("source")) for run in matching}
+        covered = {(run.get("source_position"), run.get("source")) for run in matching
+                   if type(run.get("source_position")) is int and type(run.get("source")) is int}
         if not expected <= covered:
             reasons.append(f"{kind} observations do not cover the requested source sequence")
         for run in matching:
@@ -218,13 +232,17 @@ def assemble(args):
     candidate = _get(store, evaluation.get("candidate"), "candidate")
     impl = _get(store, request.get("implementation"), "implementation")
     _fail(impl["id"] == evaluation["implementation"] == candidate["implementation"], "requested implementation differs from evaluation")
-    _fail(candidate["artifact"]["sha256"] == evaluation["context"]["candidate_sha256"], "evaluation source identity differs from candidate")
-    _fail(request.get("context") == _context(evaluation), "requested exact source/workload/target/sources/threads/ROI differs from evaluation")
+    _fail(candidate["artifact"]["sha256"] == _context(evaluation)["source_sha256"], "evaluation source identity differs from candidate")
+    _fail(_same(request.get("context"), _context(evaluation)), "requested exact source/workload/target/sources/threads/ROI differs from evaluation")
     root = artifacts.verify(candidate["artifact"])
     machine = _get(store, evaluation.get("machine"), "machine")
     if evaluation["context"].get("machine_sha256"):
         _fail(artifacts.digest(machine) == evaluation["context"]["machine_sha256"], "machine metadata changed after evaluation")
     original = _get(store, candidate["source_snapshot"], "source_snapshot")
+    try:
+        unchanged_application = candidate["artifact"]["sha256"] == artifacts.identify(artifacts.source_root(store, impl))["sha256"]
+    except (Failure, OSError):
+        unchanged_application = False
     reasons, regions, dynamic = [], [], []
     profile = store.get(request.get("region_profile"), "region_profile")
     if request.get("region_profile") and profile is None:
@@ -273,9 +291,14 @@ def assemble(args):
                    workload=copy.deepcopy(evaluation["context"]["workload"]),
                    build=copy.deepcopy(evaluation["build"]))
     source_id = f"{request['id']}.v{version}.source"
+    source_context = copy.deepcopy(candidate["context"])
+    if regions:
+        source_context["code"] = [{"root": "application", "path": r["path"], "lines": r["lines"],
+                                   "excerpt": r["text"], "sha256": artifacts.file_hash(root / r["path"])}
+                                  for r in regions]
     snapshot = workflow.record("source_snapshot", source_id, implementation=impl["id"],
         application=original["application"], revision=original["revision"], artifact=copy.deepcopy(candidate["artifact"]),
-        context=copy.deepcopy(candidate["context"]), regions=copy.deepcopy(regions), protections=copy.deepcopy(candidate["protections"]))
+        context=source_context, regions=copy.deepcopy(regions), protections=copy.deepcopy(candidate["protections"]))
     evidence = {"classification": classification, "evaluation_sha256": artifacts.digest(evaluation),
                 "region_profile_sha256": artifacts.digest(profile) if profile else None,
                 "primary_correctness": copy.deepcopy(evaluation.get("correctness")),
@@ -294,7 +317,11 @@ def assemble(args):
     for kind in ("function", "loop"):
         for quantity in ("thread_cpu", "simulated"):
             metric = f"exclusive_{quantity}_seconds"
-            ranked = sorted((r for r in regions if r["kind"] == kind and _timing_quantity(r) == quantity),
+            available = [r for r in regions if r["kind"] == kind and _timing_quantity(r) == quantity]
+            if kind == "function" and quantity == "thread_cpu" and available and all(
+                    _number(r["metrics"].get("exclusive_function_thread_cpu_seconds")) for r in available):
+                metric = "exclusive_function_thread_cpu_seconds"
+            ranked = sorted(available,
                             key=lambda r: (-r["metrics"][metric], r["id"]))
             if ranked:
                 evidence["rankings"].append({"kind": kind, "metric": metric,
@@ -319,9 +346,10 @@ def assemble(args):
         implementation=impl["id"], source_snapshot=source_id, candidate=candidate["id"], evaluation=evaluation["id"],
         context=context, completeness=completeness, regions=regions, dynamic_memory=dynamic,
         constraints={"protections": copy.deepcopy(candidate["protections"]), "preserve_correctness": True,
-                     "preserve_roi": True, "verification": copy.deepcopy(impl.get("verification")),
+                     "preserve_roi": True, "verification": copy.deepcopy(evaluation.get("correctness")),
+                     "baseline_verification": copy.deepcopy(impl.get("verification")),
                      "editable_files": sorted({r["path"] for r in regions})}, evidence=evidence, reasons=reasons,
-        strategies=_forward(store, impl, regions, candidate["artifact"]["sha256"] == original["artifact"]["sha256"]),
+        strategies=_forward(store, impl, regions, unchanged_application),
         hardware=hardware, gain_claim=False)
     if profile:
         package["region_profile"] = profile["id"]

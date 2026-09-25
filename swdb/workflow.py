@@ -9,6 +9,7 @@ import fnmatch
 import hashlib
 import json
 import re
+import socket
 import subprocess
 import uuid
 from pathlib import Path
@@ -22,6 +23,13 @@ from swdb.store import Store
 
 VERSION = "1.0"
 OPERATOR = {"name": "swdb", "role": "operator", "test_client": False}
+
+
+def _source_destination(runs_dir, rid):
+    """Keep buildable source on mbit10's source/build volume (2026-09-25)."""
+    base = (Path('/data1/yanruj/EvolveSWDB_sources')
+            if socket.gethostname().split('.')[0] == 'mbit10' else Path(runs_dir))
+    return artifacts.external_directory(base) / rid / 'source'
 
 
 def record(kind, rid, **fields):
@@ -56,7 +64,7 @@ def snapshot(args):
         raise Failure(f"record {rid!r} already exists")
     context = store.source_context(impl)
     source = artifacts.source_root(store, impl)
-    destination = artifacts.external_directory(args.runs_dir) / rid / "source"
+    destination = _source_destination(args.runs_dir, rid)
     if source == destination or source in destination.parents:
         raise Failure("a source snapshot cannot be materialized inside its input source")
     artifact = artifacts.copy_snapshot(source, destination)
@@ -101,7 +109,7 @@ def baseline_candidate(args):
     if not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", args.id) or store.get(args.id):
         raise Failure("baseline candidate needs a new valid record identifier")
     root = artifacts.verify(source["artifact"])
-    artifact = artifacts.copy_snapshot(root, artifacts.external_directory(args.runs_dir) / args.id / "source")
+    artifact = artifacts.copy_snapshot(root, _source_destination(args.runs_dir, args.id))
     artifacts.check_protections(Path(artifact["path"]), source["protections"])
     if artifact["sha256"] != source["artifact"]["sha256"]:
         raise Failure("baseline materialization changed the starting source")
@@ -130,6 +138,10 @@ def get_record(args):
                         "protocol", "candidate_evaluation", "baseline_evaluation", "comparison_baseline",
                         "evaluation", "region_profile"):
                 target = store.get(d.get(key))
+                if target:
+                    visit(target)
+            for component in d.get('component_evaluations', []):
+                target = store.get(component.get('evaluation'))
                 if target:
                     visit(target)
             if d["kind"] == "proposal":
@@ -291,10 +303,11 @@ def submit(args):
                 raise Failure("rewrite interpretation must produce actual edits and explain them")
             data["attempts"][-1]["stage"] = stage
             persist(args.records, data, args.db)
-        candidate_artifact = apply_patch(source_path, run_dir / "source", patch,
+        candidate_source = _source_destination(args.runs_dir, rid)
+        candidate_artifact = apply_patch(source_path, candidate_source, patch,
                                          request["constraints"]["editable_files"], source["protections"])
         if config is not None:
-            rewrite.require_code_change(source_path, run_dir / "source")
+            rewrite.require_code_change(source_path, candidate_source)
         artifacts.verify(source["artifact"])
         (run_dir / "candidate.diff").write_text(patch)
         candidate = record("candidate", f"{rid}.candidate-1", producer=request["producer"], proposal=rid,
@@ -386,12 +399,16 @@ def repair(args):
             budget["used_seconds"] += meta["host_wall_s"]
             attempt.update(interpretation=response, provider=meta)
             if response["unresolved"]:
-                raise Failure("unresolved repair requirements: " + "; ".join(response["unresolved"]))
+                reason = "unresolved repair requirements: " + "; ".join(response["unresolved"])
+                attempt.update(state="unresolved", reason=reason)
+                data["outcome"] = {"state": "unresolved", "stage": "repair", "reason": reason}
+                return persist(args.records, data, args.db)
             if not response["interpretation"].strip() or not response["patch"].strip():
                 raise Failure("repair must explain its interpretation and produce actual code edits")
-            artifact = apply_patch(source_path, folder / "source", response["patch"],
+            candidate_source = _source_destination(args.runs_dir, f"{proposal_id}.repair-{number}")
+            artifact = apply_patch(source_path, candidate_source, response["patch"],
                                    data["request"]["constraints"]["editable_files"], prior["protections"])
-            rewrite.require_code_change(source_path, folder / "source")
+            rewrite.require_code_change(source_path, candidate_source)
             artifacts.verify(prior["artifact"])
             diff = folder / "candidate.diff"
             diff.write_text(response["patch"])

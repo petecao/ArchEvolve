@@ -1,0 +1,165 @@
+"""Compile identified BFS candidates against a pinned executable model.
+
+Updated: 2026-09-25. Trusted outer instrumentation uses the complete-call ROI.
+"""
+
+import json
+from pathlib import Path
+import re
+import shutil
+import subprocess
+
+from swdb import artifacts, workflow
+from swdb.bfs_native import StageFailure, Stopped, _protect_driver_macros
+from swdb.cli import Failure
+from swdb.dx100 import REVISION, _bounded_process, _file, _finish, _prepare, _request
+
+ROI = "bfs.complete_call.v1"
+SUPPRESSED = ["m5_reset_stats", "m5_dump_stats", "m5_work_begin", "m5_work_end", "m5_exit"]
+
+
+def driver(source, model, function):
+    prefix = "\n".join(f"#define {name}(...) ((void)0)" for name in SUPPRESSED)
+    suffix = "\n".join(f"#undef {name}" for name in SUPPRESSED)
+    return f'''// Trusted generated evaluator, 2026-09-25. Complete BFS call only.
+#include <cstdint>
+#include <cstdio>
+#include <iostream>
+#include {json.dumps(str(model / 'include/gem5/m5ops.h'))}
+{prefix}
+#define main swdb_gem5_original_main
+#include {json.dumps(str(source))}
+#undef main
+{suffix}
+int main(int argc, char **argv) {{
+  CLApp cli(argc, argv, "SWDB complete-call BFS");
+  if (!cli.ParseArgs()) return 2;
+  Builder builder(cli);
+  Graph graph = builder.MakeGraph();
+  const int64_t source = cli.start_vertex();
+  if (source < 0 || source >= graph.num_nodes()) return 3;
+  m5_checkpoint(0, 0);
+  std::cout << "ROI started: 4 configured threads" << std::endl;
+  m5_work_begin(0, 0);
+  m5_reset_stats(0, 0);
+  auto parent = {function}(graph, static_cast<NodeID>(source), cli.logging_en());
+  m5_dump_stats(0, 0);
+  m5_work_end(0, 0);
+  std::printf("SWDB_BFS_PARENT_STORAGE address=%llx count=%llu element_bytes=4\\n",
+      static_cast<unsigned long long>(reinterpret_cast<uintptr_t>(parent.data())),
+      static_cast<unsigned long long>(parent.size()));
+  std::cout << "ROI End!!!" << std::endl;
+  m5_exit(0);
+  // Continuation sees precisely the parent object returned by the timed call.
+  bool valid = parent.size() == static_cast<size_t>(graph.num_nodes());
+  uint64_t digest = UINT64_C(14695981039346656037);
+  for (size_t i = 0; i < parent.size(); ++i) {{
+    const int64_t value = parent[i];
+    if (value < -1 || value >= graph.num_nodes()) valid = false;
+    uint32_t bits = static_cast<uint32_t>(value);
+    for (unsigned b = 0; b < 4; ++b) {{
+      digest ^= (bits >> (8 * b)) & 255u;
+      digest *= UINT64_C(1099511628211);
+    }}
+  }}
+  if (valid) valid = BFSVerifier(graph, static_cast<NodeID>(source), parent);
+  std::printf("SWDB_BFS_RESULT source=%lld vertices=%lld parent_count=%llu parent_fnv1a64=%016llx\\n",
+      static_cast<long long>(source), static_cast<long long>(graph.num_nodes()),
+      static_cast<unsigned long long>(parent.size()), static_cast<unsigned long long>(digest));
+  std::printf("Verification: %s\\n", valid ? "PASS" : "FAIL");
+  std::fflush(stdout);
+  return valid ? 0 : 4;
+}}
+'''
+
+
+def compile_candidate(args):
+    store, request, data = _request(args, "compile")
+    session = None
+    error = None
+    try:
+        session, target, model = _prepare(args, "compile", store, request, data)
+        if request.get("roi") != ROI:
+            raise Failure("candidate compilation supports only the trusted complete-call ROI")
+        function = request.get("function")
+        if not isinstance(function, str) or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", function):
+            raise Failure("selected BFS function must be one C++ identifier")
+        if type(request.get("accelerated")) is not bool:
+            raise Failure("accelerated must be explicit boolean; it does not establish observed path coverage")
+        candidate = store.get(request.get("candidate"), "candidate")
+        if not candidate:
+            raise Failure("candidate source is unavailable")
+        original = store.get(candidate["source_snapshot"], "source_snapshot")
+        if original["application"] not in {"gapbs", "dx100-gapbs"}:
+            raise Failure("candidate application has no supported trusted BFS driver")
+        source_root = artifacts.verify(candidate["artifact"])
+        artifacts.check_protections(source_root, candidate["protections"])
+        for entry in candidate["artifact"]["files"]:
+            if Path(entry["path"]).suffix not in {".h", ".hpp", ".cc", ".cpp", ".c"}:
+                continue
+            if Path(entry["path"]).name in {"m5ops.h", "MAA_gem5.hpp", "MAA.hpp"}:
+                pinned = model / entry["path"]
+                if not pinned.is_file() or artifacts.file_hash(pinned) != entry["sha256"]:
+                    raise Failure("candidate shadows the pinned model interface header")
+        source_path = "src/bfs.cc" if original["application"] == "gapbs" else "benchmarks/gapbs/src/bfs.cc"
+        source = source_root / source_path
+        if not source.is_file():
+            raise Failure("candidate BFS translation unit is missing")
+        driver_text = driver(source, model, function)
+        _protect_driver_macros(candidate, source_root, extra_text=driver_text)
+        model_build = store.get(request.get("build_evaluation"), "evaluation")
+        if (not model_build or model_build.get("outcome", {}).get("state") != "complete"
+                or model_build["outcome"]["stage"] != "build"
+                or model_build["context"]["model"]["revision"] != REVISION
+                or (not request.get("fixture") and model_build["evidence_kind"] != "execution")):
+            raise Failure("candidate compilation requires a completed compatible model build")
+        if not request.get("fixture"):
+            _file({"path": model_build["build"]["receipt"], "sha256": model_build["build"]["receipt_sha256"]}, "model build receipt")
+        if request.get("fixture"):
+            compiler = _file(request.get("fixture_compiler"), "fixture compiler")
+        else:
+            if "fixture_compiler" in request:
+                raise Failure("fixture compiler cannot produce real candidate evidence")
+            compiler = Path(shutil.which("g++-13") or "")
+            if not compiler.is_absolute():
+                raise Failure("GCC 13 candidate compiler is unavailable")
+        driver_path = session.folder / "complete_call.cc"
+        driver_path.write_text(driver_text)
+        binary = session.folder / "bfs"
+        m5_source = model / "util/m5/build/x86/abi/x86/m5op.S"
+        if not m5_source.is_file():
+            raise Failure("pinned model m5ops assembly is unavailable")
+        flags = ["-std=c++11", "-O3", "-Wall", "-g", "-fopenmp", "-DGEM5", "-DNUM_CORES=4",
+                 f"-DTILE_SIZE={target['configuration']['tile_elements']}"]
+        if request["accelerated"]:
+            flags += ["-DMAA"]
+        command = [str(compiler), *flags, "-I" + str(model / "include"), "-I" + str(model / "util/m5/src"),
+            "-I" + str(model / "benchmarks/API"), "-I" + str(source.parent),
+            str(driver_path), str(m5_source), "-o", str(binary)]
+        data.update(candidate=candidate["id"], source_snapshot=candidate["source_snapshot"], implementation=candidate["implementation"])
+        verifier = next((guard for guard in candidate["protections"] if guard["kind"] == "verifier"), None)
+        if not verifier or verifier["path"] != source_path:
+            raise Failure("candidate has no protected BFS verifier in its translation unit")
+        data["context"].update(candidate_sha256=candidate["artifact"]["sha256"], roi=ROI, application=original["application"],
+            source_path=source_path, function=function, accelerated_requested=request["accelerated"],
+            model_build=model_build["id"], suppressed_internal_events=SUPPRESSED,
+            driver={"path": str(driver_path), "sha256": artifacts.file_hash(driver_path)},
+            timed_source={"path": str(source), "sha256": artifacts.file_hash(source)},
+            verifier_source={"path": str(source), "sha256": artifacts.file_hash(source),
+                "symbol": "BFSVerifier", "protected_text_sha256": artifacts.digest(verifier["text"]),
+                "bounds_check": "trusted driver validates parent length and values before BFSVerifier"})
+        data["build"] = {"compiler": str(compiler), "compiler_sha256": artifacts.file_hash(compiler), "flags": flags,
+            "driver": data["context"]["driver"], "m5ops": {"path": str(m5_source), "sha256": artifacts.file_hash(m5_source)},
+            "binary": str(binary), "source_artifact": candidate["artifact"]}
+        session.save()
+        _bounded_process(session, "candidate_compile", command, request["budget"]["build_seconds"],
+                         request["budget"]["memory_gib"], request["budget"]["storage_gib"])
+        artifacts.verify(candidate["artifact"])
+        if not binary.is_file():
+            raise StageFailure("missing_observation", "compiler produced no candidate binary")
+        data["build"]["binary_sha256"] = artifacts.file_hash(binary)
+        data["raw_artifacts"].append({"kind": "candidate_build", "artifact": artifacts.identify(session.folder)})
+        data["outcome"] = {"state": "complete", "stage": "candidate_build", "reason": "Identified candidate compiled; no simulated correctness or timing inferred."}
+    except (Failure, StageFailure, Stopped, OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as exc:
+        error = exc
+    return _finish(args, data, session, error)

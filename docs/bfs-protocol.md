@@ -4,7 +4,7 @@ Date: 2026-09-25
 
 This contract implements Ticket 11 using Ticket 03's durable evaluations.
 The public operations are `register-workload`, `freeze-protocol`,
-and `compare-evaluations`, each taking a version 1.0 YAML request file. Records use
+`aggregate-evaluations`, and `compare-evaluations`, each taking a version 1.0 YAML request file. Records use
 format 0.4 and remain retrievable through `get`. Rejected comparisons are retained.
 
 Workload registration reads actual JSON/edge-list and GAPBS little-endian SG
@@ -64,6 +64,24 @@ exceed the predeclared minimum speedup; excessive spread yields an inconclusive
 outcome. These are an admissibility floor and an explicit algorithm, not empirical
 calibration: Ticket 15 must choose actual counts and thresholds from baseline pilots.
 Fixture evidence always yields fixture outcomes and `gain_claim: false`.
+
+A simulator dispatch binds an explicit `protocol_trial` containing
+`source_position` and `repetition` before execution. The adapter supplies the
+actual target configuration, guest compiler/version/flags/adapter, instrumentation,
+thread count, ROI, and verifier to `validate_protocol_for_simulation`; any mismatch
+rejects the binding. The source and registered SG file must match the frozen
+loaded-adjacency identity. Diagnostic requests without a protocol remain diagnostic.
+
+`aggregate-evaluations` takes an `id`, `protocol`, `protocol_role`, and an
+`evaluations` list of distinct execution IDs. Each component must retain exactly
+one timed traversal and its matching structural check. The completed grid must
+cover every frozen source position and repetition, with identical candidate,
+binary, build, model, target configuration, instrumentation, and ROI. Guest trial
+arguments do not stand in for completed executions. The result retains
+`component_evaluations` with content hashes, each original execution binding and
+context, raw artifacts, and stages. Comparisons revalidate those component hashes
+and observations. Missing cells, failed components, duplicate cells, and identity
+mismatches produce a retained incompatible aggregation with no gain claim.
 
 The workload `definition` contains the kernel, family, generator, normalization,
 ordered sources, representation references, computed canonical hash, and realized
