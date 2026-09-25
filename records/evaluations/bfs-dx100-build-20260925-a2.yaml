@@ -1,0 +1,394 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs-dx100-build-20260925-a2
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-dx100-build-20260925-a2
+  machine: mbit10
+  hardware_target: dx100-e4fc4af-4c
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  budget:
+    total_seconds: 7200
+    memory_gib: 48
+    storage_gib: 10
+    jobs: 8
+outcome:
+  state: complete
+  stage: build
+  reason: Build evidence only; no BFS execution or correctness verdict.
+stages:
+- stage: model_build
+  state: complete
+  started: '2026-09-25T21:47:23.436437+00:00'
+  command:
+  - /usr/bin/python3
+  - /data1/yanruj/EvolveSWDB_dx100_20260925_a1/scripts/dx100_build.py
+  - --source
+  - /data1/yanruj/DX100-bfs-e4fc4af
+  - --output
+  - /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build
+  - --lane
+  - '0'
+  - --jobs
+  - '8'
+  - --wall-seconds
+  - '7200'
+  - --memory-gib
+  - '48'
+  - --storage-gib
+  - '10'
+  timeout_s: 7220
+  log: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/000-model_build.log
+  finished: '2026-09-25T22:17:37.363775+00:00'
+  host_wall_s: 1804.542668223381
+  returncode: 0
+  log_sha256: 9cec365354786fe667494c97f56ceff1d5ed9c7213ea9759ea9a43e388e3b12c
+  reason: null
+timing: []
+correctness:
+  state: unverified
+  checks: []
+profiling:
+  state: incomplete
+  reasons:
+  - BFS ROI, regions, and memory metrics require the profile collector.
+raw_artifacts:
+- host: mbit10
+  path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2
+  kind: dx100_build
+gain_claim: false
+evidence_kind: execution
+machine: mbit10
+context:
+  backend: dx100-gem5-se
+  target: dx100-e4fc4af-4c
+  target_sha256: 93f54ec1684d6d92c092d1ffd7e41b96f859c18fdc7c654b1cd8df3c7ca8e890
+  model:
+    id: dx100-gem5
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  interface:
+    id: dx100-mmio
+    version: 1.0-e4fc4af
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  host: mbit10
+  lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation
+    266)'
+  budget:
+    total_seconds: 7200
+    memory_gib: 48
+    storage_gib: 10
+    jobs: 8
+  load_average:
+  - 12.98876953125
+  - 9.9130859375
+  - 8.9736328125
+  roi: bfs.dx100.traversal.v1
+  basis: simulated
+build:
+  receipt: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/build-receipt.json
+  model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  receipt_sha256: c465447ddc5cc37faa7cb3127a7f9f00b6b557c326e8319e5d694ee9933f8d6c
+  details:
+    binaries:
+    - bytes: 676472872
+      path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+      sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+    - bytes: 1146480
+      path: /data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs
+      sha256: 70301ad2e587c2dd55a730da5e0135337cb6b46ddd72999a843f86fd4b070dd1
+    - bytes: 1146496
+      path: /data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs_maa
+      sha256: 6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d
+    - bytes: 1146416
+      path: /data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs_maa_1K
+      sha256: aa039418a0534277d9cb4202eec2b5392d4904876d94bc1e4166c1c16c979af8
+    - bytes: 1131784
+      path: /data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/converter
+      sha256: 268d35cd10937578e85506ad5f53b636e28fe33e95ca6dc148685fc56878759c
+    - bytes: 177789736
+      path: /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/libramulator.so
+      sha256: 46b5dbd87a77845ebadd1854e990d8e5c04c41253ad76315a766d61b77ca43dd
+    classification: build_only
+    dependencies:
+      argparse: 997da9255618311d1fcb0135ce86022729d1f1cb
+      spdlog: ad0e89cbfb4d0c1ce4d097e134eb7be67baebb36
+      yaml-cpp: 0579ae3d976091d7d664aa9d2527e0d0cff25763
+    ended_unix: 1790374656.2418761
+    environment:
+      compiler: 'g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+
+        Copyright (C) 2023 Free Software Foundation, Inc.
+
+        This is free software; see the source for copying conditions.  There is NO
+
+        warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.'
+      disks: 'Filesystem      Size  Used Avail Use% Mounted on
+
+        /dev/sdd1       1.8T  1.7T   22G  99% /data1
+
+        /dev/sdb1       1.8T  1.6T  198G  89% /data'
+      load: 14.50 10.32 9.11 10/1739 402485
+      python: Python 3.12.3
+      scons: "SCons by Steven Knight et al.:\n\tSCons: v4.5.2.120fd4f633e9ef3cafbc0fec35306d7555ffd1db,\
+        \ Tue, 21 Mar 2023 12:11:27 -0400, by bdbaddog on M1DOG2021\n\tSCons path:\
+        \ ['/usr/lib/python3/dist-packages/SCons']\nCopyright (c) 2001 - 2023 The\
+        \ SCons Foundation"
+      uname:
+        machine: x86_64
+        node: mbit10
+        processor: x86_64
+        release: 6.8.0-136-generic
+        system: Linux
+        version: '#136-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 21:53:05 UTC 2026'
+    host: mbit10
+    host_wall_seconds: 1803.3479566732422
+    lane: 0
+    lease:
+      active_session: null
+      attempt_pid: null
+      attempt_start_token: null
+      heartbeat_at: '2026-09-25T21:47:09Z'
+      lease:
+        acquired_at: '2026-09-25T21:47:09Z'
+        daemon_pid: 227143
+        daemon_start_token: sh227143-1790372829
+        generation: 266
+        host: mbit10
+        lease_name: mbit10-evaluation-node0
+        mode: measure
+        session_id: null
+      recovered_from_generation: null
+      released_at: null
+      session_note: null
+      session_state: none
+      state: held
+      writer: hostlock.sh
+    limits:
+      jobs: 8
+      memory_gib: 48
+      raw_storage_gib: 2
+      storage_gib: 10
+      wall_seconds: 7200
+    resolved_kconfig: '# BATCH is not set
+
+      M5_BUILD_CACHE=""
+
+      # USE_EFENCE is not set
+
+      HAVE_FENV=y
+
+      HAVE_PNG=y
+
+      HAVE_VALGRIND=y
+
+      HAVE_DEPRECATED_NAMESPACE=y
+
+      HAVE_POSIX_CLOCK=y
+
+      # USE_POSIX_CLOCK is not set
+
+      HAVE_HDF5=y
+
+
+      #
+
+      # Ruby
+
+      #
+
+      # RUBY is not set
+
+      # end of Ruby
+
+
+      HAVE_PROTOBUF=y
+
+      HAVE_TUNTAP=y
+
+      BUILD_ISA=y
+
+
+      #
+
+      # ISA
+
+      #
+
+      # USE_ARM_ISA is not set
+
+
+      #
+
+      # Fast Model
+
+      #
+
+      # end of Fast Model
+
+
+      # USE_MIPS_ISA is not set
+
+      # USE_POWER_ISA is not set
+
+      # USE_RISCV_ISA is not set
+
+      # USE_SPARC_ISA is not set
+
+      USE_X86_ISA=y
+
+      # end of ISA
+
+
+      KVM_ISA="x86"
+
+      USE_KVM=y
+
+      HAVE_SYSTEMC=y
+
+      # USE_SYSTEMC is not set
+
+      # BUILD_GPU is not set
+
+      '
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    source: /data1/yanruj/DX100-bfs-e4fc4af
+    stages:
+    - command:
+      - cmake
+      - -S
+      - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2
+      - -B
+      - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/build
+      - -G
+      - Unix Makefiles
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_C_COMPILER=gcc-13
+      - -DCMAKE_CXX_COMPILER=g++-13
+      ended_unix: 1790372861.247164
+      log: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/ramulator-configure.log
+      name: ramulator-configure
+      peak_group_rss_kib: 158640
+      returncode: 0
+      source_storage_kib: 221144
+      started_unix: 1790372853.0329618
+      state: completed
+    - command:
+      - cmake
+      - --build
+      - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/build
+      - --target
+      - ramulator
+      - --parallel
+      - '8'
+      ended_unix: 1790372957.3661437
+      log: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/ramulator-build.log
+      name: ramulator-build
+      peak_group_rss_kib: 5787876
+      returncode: 0
+      source_storage_kib: 912556
+      started_unix: 1790372861.2483513
+      state: completed
+    - command:
+      - scons
+      - -C
+      - util/m5
+      - build/x86/out/m5
+      - -j8
+      ended_unix: 1790372961.5161948
+      log: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/m5ops-build.log
+      name: m5ops-build
+      peak_group_rss_kib: 63232
+      returncode: 0
+      source_storage_kib: 1063612
+      started_unix: 1790372957.367782
+      state: completed
+    - command:
+      - scons
+      - defconfig
+      - build/X86
+      - build_opts/X86
+      ended_unix: 1790373384.2368562
+      log: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/gem5-configure.log
+      name: gem5-configure
+      peak_group_rss_kib: 323524
+      returncode: 0
+      source_storage_kib: 1067092
+      started_unix: 1790372961.5174592
+      state: completed
+    - command:
+      - scons
+      - setconfig
+      - build/X86
+      - RUBY=n
+      - USE_SYSTEMC=n
+      ended_unix: 1790373471.9642658
+      log: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/gem5-prune-unused-components.log
+      name: gem5-prune-unused-components
+      peak_group_rss_kib: 281088
+      returncode: 0
+      source_storage_kib: 1069380
+      started_unix: 1790373384.2383401
+      state: completed
+    - command:
+      - scons
+      - build/X86/gem5.opt
+      - -j8
+      - CXX=g++-13
+      - CC=gcc-13
+      ended_unix: 1790374651.2728858
+      log: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/gem5-build.log
+      name: gem5-build
+      peak_group_rss_kib: 5871224
+      returncode: 0
+      source_storage_kib: 4588016
+      started_unix: 1790373471.9658003
+      state: completed
+    - command:
+      - make
+      - -C
+      - benchmarks/gapbs
+      - -j4
+      - CXX=g++-13
+      - CXX_FLAGS=-std=c++11 -O3 -Wall -g3 -fopenmp -DGEM5
+      - bfs
+      - bfs_maa
+      - bfs_maa_1K
+      - converter
+      ended_unix: 1790374655.444094
+      log: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/bfs-build.log
+      name: bfs-build
+      peak_group_rss_kib: 759284
+      returncode: 0
+      source_storage_kib: 5203044
+      started_unix: 1790374651.2745595
+      state: completed
+    started_unix: 1790372852.893927
+    state: completed
+    version: '1.0'
+  runtime_dependencies:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/runtime-dependencies.json
+    sha256: ae7389a0b6848fa21eae7c527211948a88e3010f9a5135754a2241dc6f5542c4
+    packages: 'libc6 2.39-0ubuntu8.9
+
+      libc6 2.39-0ubuntu8.9
+
+      libgomp1 14.2.0-4ubuntu2~24.04.1
+
+      libstdc++6 14.2.0-4ubuntu2~24.04.1
+
+      libstdc++6 14.2.0-4ubuntu2~24.04.1
+
+      '
