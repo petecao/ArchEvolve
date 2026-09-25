@@ -144,3 +144,21 @@ def test_successful_evaluation_cannot_trigger_performance_tuning(evaluation_setu
     assert result.returncode == 1
     assert 'regressions do not trigger tuning' in data['outcome']['reason']
     assert len(data['attempts']) == 1
+
+
+def test_unmodified_baseline_is_evaluated_without_fabricated_proposal(evaluation_setup):
+    records,runs,_,_ = evaluation_setup
+    result = records.swdb('baseline-candidate','test-source','--id','unchanged-baseline',
+                         '--runs-dir',runs,'--format','json')
+    assert result.returncode == 0, result.stderr
+    baseline = json.loads(result.stdout)
+    source = json.loads(records.swdb('get','test-source','--format','json').stdout)
+    assert baseline['artifact_role'] == 'source_baseline'
+    assert baseline['artifact']['sha256'] == source['artifact']['sha256']
+    assert 'proposal' not in baseline and 'diff' not in baseline
+    result, evaluated = evaluate(evaluation_setup,candidate=baseline['id'])
+    assert result.returncode == 0, result.stderr
+    assert evaluated['correctness']['state'] == 'passed'
+    assert 'proposal' not in evaluated
+    chain = json.loads(records.swdb('get',evaluated['id'],'--chain','--format','json').stdout)['records']
+    assert baseline['id'] in chain and not any(d['kind']=='proposal' for d in chain.values())

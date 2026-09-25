@@ -109,16 +109,34 @@ def _sg_graph(raw, width):
             "edges": [[u, v] for u, row in enumerate(outgoing) for v in row]}
 
 
-def _representation(rep, normalization):
+def _representation(rep, normalization, parser=None, allow_streaming=True):
     _fail(isinstance(rep, dict), "representation must be a mapping")
     _text(rep.get("id"), "representation.id")
     path = Path(_text(rep.get("path"), "representation.path"))
     _fail(path.is_absolute() and path.is_file() and not path.is_symlink(), "representation must be an absolute regular file")
-    _fail(path.stat().st_size <= MAX_FILE_BYTES, "representation exceeds the 512 MiB parser limit")
-    raw = path.read_bytes()
+    size = path.stat().st_size
     actual = artifacts.file_hash(path)
     _fail(rep.get("sha256") == actual, "representation content hash differs from its declaration")
     kind = rep.get("format")
+    _fail(normalization == NORMALIZATION, "unsupported graph normalization; use the declared simple-graph policy")
+    description = {key: rep[key] for key in ("id", "path", "sha256", "format", "application") if key in rep}
+    if kind in {"gapbs_sg32le", "gapbs_sg64le"}:
+        width = 4 if kind == "gapbs_sg32le" else 8
+        with path.open("rb") as handle:
+            header = handle.read(1 + width*2)
+        dimensions = struct.unpack_from("<" + ("i" if width == 4 else "q")*2, header, 1) if len(header) == 1+width*2 else (0, 0)
+        large = size > MAX_FILE_BYTES or dimensions[0] > MAX_EDGES or dimensions[1] > MAX_VERTICES
+        if large or parser is not None:
+            _fail(allow_streaming, "registered graph exceeds native materialization limits; use its external SG representation")
+            from swdb.sg_stream import inspect
+            canonical = inspect(path, width, parser)
+            _fail(artifacts.file_hash(path) == actual, "representation changed during streaming verification")
+            description.update(canonical_sha256=canonical["canonical_sha256"], bytes=size,
+                               loader="swdb.gapbs-representation.v1", adjacency_verified=True,
+                               verification=canonical["verification"])
+            return canonical, description
+    _fail(size <= MAX_FILE_BYTES, "non-SG representation exceeds the 512 MiB parser limit")
+    raw = path.read_bytes()
     try:
         if kind in {"gapbs_sg32le", "gapbs_sg64le"}:
             graph = _sg_graph(raw, 4 if kind == "gapbs_sg32le" else 8)
@@ -143,9 +161,7 @@ def _representation(rep, normalization):
         raise Failure(f"invalid graph representation: {exc}") from None
     _fail(isinstance(graph, dict) and isinstance(graph.get("edges"), list)
           and len(graph["edges"]) <= MAX_EDGES, "graph exceeds the parser edge limit or has no edge list")
-    _fail(normalization == NORMALIZATION, "unsupported graph normalization; use the declared simple-graph policy")
     canonical = _canonical(graph)
-    description = {key: rep[key] for key in ("id", "path", "sha256", "format", "application") if key in rep}
     if kind == "edge_list":
         description.update(num_vertices=graph["num_vertices"], directed=graph["directed"])
     description.update(canonical_sha256=artifacts.digest(canonical), bytes=len(raw),
@@ -229,7 +245,7 @@ def register_workload(args):
     _fail(isinstance(representations, list) and representations, "representations must be a nonempty list")
     rows, reference, ids = [], None, set()
     for rep in representations:
-        canonical, row = _representation(rep, request["normalization"])
+        canonical, row = _representation(rep, request["normalization"], request.get("parser"))
         _get(store, rep.get("application"), "application")
         expected_format = {"gapbs": "gapbs_sg64le", "dx100-gapbs": "gapbs_sg32le"}.get(rep["application"])
         if row["format"].startswith("gapbs_sg") and expected_format:
@@ -238,19 +254,24 @@ def register_workload(args):
         ids.add(row["id"])
         if reference is None:
             reference = canonical
-        _fail(canonical == reference, "representations do not load equivalent canonical adjacency")
+        reference_hash = reference.get("canonical_sha256") if reference.get("_streaming") else artifacts.digest(reference)
+        _fail(row["canonical_sha256"] == reference_hash, "representations do not load equivalent canonical adjacency")
         rows.append(row)
     for source in sources:
         _fail(_integer(source, "source", 0) < reference["num_vertices"], "source vertex is outside the graph")
-    degrees = [len(row) for row in reference["adjacency"]]
-    incoming = {v for row in reference["adjacency"] for v in row}
+    if reference.get("_streaming"):
+        realized = reference["realized"]
+    else:
+        degrees = [len(row) for row in reference["adjacency"]]
+        incoming = {v for row in reference["adjacency"] for v in row}
+        realized = {"num_vertices": reference["num_vertices"], "num_directed_edges": sum(degrees),
+                    "directed": reference["directed"],
+                    "isolated_vertices": sum(degree == 0 and u not in incoming for u, degree in enumerate(degrees)),
+                    "minimum_out_degree": min(degrees), "maximum_out_degree": max(degrees)}
     definition = {"kernel": kernel["id"], "family": family, "generator": generator,
                   "normalization": NORMALIZATION, "sources": sources, "representations": rows,
-                  "canonical_sha256": artifacts.digest(reference), "canonical_format": "swdb.bfs.adjacency.v1",
-                  "realized": {"num_vertices": reference["num_vertices"], "num_directed_edges": sum(degrees),
-                               "directed": reference["directed"],
-                               "isolated_vertices": sum(degree == 0 and u not in incoming for u, degree in enumerate(degrees)),
-                               "minimum_out_degree": min(degrees), "maximum_out_degree": max(degrees)},
+                  "canonical_sha256": reference_hash, "canonical_format": "swdb.bfs.adjacency.v1",
+                  "realized": realized,
                   "metadata_basis": "operator_declared", "adjacency_basis": "parsed_representation"}
     return _save_immutable(args, request, "workload", definition=definition)
 
@@ -259,12 +280,30 @@ def materialize_workload(store, workload_id):
     data = _get(store, workload_id, "workload")
     verify_immutable(data)
     definition = data["definition"]
-    canonical, _ = _representation(definition["representations"][0], definition["normalization"])
+    canonical, _ = _representation(definition["representations"][0], definition["normalization"], allow_streaming=False)
     _fail(artifacts.digest(canonical) == definition["canonical_sha256"], "registered adjacency changed")
     graph = {"num_vertices": canonical["num_vertices"], "directed": canonical["directed"],
              "edges": [[u, v] for u, row in enumerate(canonical["adjacency"]) for v in row]}
     return {"id": data["id"], "family": definition["family"], "generator": definition["generator"],
             "graph": graph, "loaded_adjacency_sha256": definition["canonical_sha256"]}
+
+
+def workload_representation(store, workload_id, application):
+    """Select the already adjacency-verified serialized input for a backend loader."""
+    data = _get(store, workload_id, "workload")
+    verify_immutable(data)
+    definition = data["definition"]
+    matches = [rep for rep in definition["representations"] if rep.get("application") == application
+               and rep["format"] in {"gapbs_sg32le", "gapbs_sg64le"}]
+    _fail(len(matches) == 1, "workload needs exactly one serialized representation for the selected application")
+    rep = matches[0]
+    path = Path(rep["path"])
+    _fail(path.is_absolute() and path.is_file() and not path.is_symlink()
+          and artifacts.file_hash(path) == rep["sha256"], "registered serialized representation is unavailable or changed")
+    _fail(rep.get("adjacency_verified") is True and rep["canonical_sha256"] == definition["canonical_sha256"],
+          "serialized representation has no compatible loaded-adjacency verification")
+    return {"id": data["id"], "workload_sha256": data["identity_sha256"], "canonical_sha256": definition["canonical_sha256"],
+            "sources": definition["sources"], "realized": definition["realized"], "representation": copy.deepcopy(rep)}
 
 
 def _validate_settings(settings, store):
@@ -502,6 +541,8 @@ def _statistics(baseline, candidate, policy):
         _positive(ratio, "representable source duration ratio")
     spreads = {role: {position: (max(values) - min(values)) / statistics.median(values)
                       for position, values in samples.items()} for role, samples in (("baseline", baseline), ("candidate", candidate))}
+    _fail(all(math.isfinite(value) for rows in spreads.values() for value in rows.values()),
+          "timing spread exceeds representable numeric range")
     rng = random.Random(policy["bootstrap_seed"])
     draws = []
     for _ in range(policy["bootstrap_resamples"]):
@@ -536,7 +577,8 @@ def _region_comparisons(a, b, settings):
             _fail(row.get("basis") == evaluation["context"]["basis"], "region timing basis differs from evaluation")
             _integer(row.get("invocations"), "region invocation count")
             durations.append(_positive(row.get("duration_s"), "region duration"))
-        results.append({**pair, "duration_ratio": durations[0] / durations[1], "primary_bfs_roi": False,
+        ratio = _positive(durations[0] / durations[1], "representable region duration ratio")
+        results.append({**pair, "duration_ratio": ratio, "primary_bfs_roi": False,
                         "gain_claim": False, "note": "Scoped region ratio; the primary BFS result is reported separately."})
     return results
 

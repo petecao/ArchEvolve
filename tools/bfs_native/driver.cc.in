@@ -8,6 +8,9 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 #define main swdb_unused_application_main
 #include SWDB_SOURCE_INCLUDE

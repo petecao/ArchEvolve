@@ -75,6 +75,41 @@
         "type": "string",
         "minLength": 1
       }
+    },
+    "requested_id": {
+      "$ref": "#/$defs/id"
+    },
+    "package_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "identity_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "candidate": {
+      "$ref": "#/$defs/id",
+      "x-ref": "candidate"
+    },
+    "evaluation": {
+      "$ref": "#/$defs/id",
+      "x-ref": "evaluation"
+    },
+    "region_profile": {
+      "$ref": "#/$defs/id",
+      "x-ref": "region_profile"
+    },
+    "strategies": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "hardware": {
+      "type": "object"
+    },
+    "gain_claim": {
+      "const": false
     }
   },
   "required": [

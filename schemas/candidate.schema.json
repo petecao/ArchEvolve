@@ -128,19 +128,51 @@
         "null"
       ],
       "x-ref": "candidate"
+    },
+    "artifact_role": {
+      "enum": [
+        "source_baseline",
+        "rewrite"
+      ],
+      "description": "Source baseline is an unchanged independently materialized snapshot, not a rewrite."
     }
   },
   "required": [
     "message_version",
     "producer",
-    "proposal",
     "source_snapshot",
     "implementation",
     "artifact",
-    "diff",
-    "diff_sha256",
     "state",
     "protections",
     "context"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "artifact_role": {
+            "const": "source_baseline"
+          }
+        },
+        "required": [
+          "artifact_role"
+        ]
+      },
+      "then": {
+        "properties": {
+          "proposal": false,
+          "diff": false,
+          "diff_sha256": false
+        }
+      },
+      "else": {
+        "required": [
+          "proposal",
+          "diff",
+          "diff_sha256"
+        ]
+      }
+    }
   ]
 }

@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
@@ -35,3 +35,7 @@ Drive protocol registration, real model executions, correctness checking, profil
 ## Dependencies and boundaries
 
 Ticket 11 supplies explicit protocol/comparison enforcement; tickets 13 and 14 supply exact timed-binary correctness and actual simulated profiling. Ticket 15 is deliberately not a dependency. This slice owns its separate protocol freeze and may proceed alongside the candidate-matrix pilot. It does not select candidate workloads, rewrite code to beat the author result, run DMP/DAE or parameter sweeps unless separately scoped, or reproduce benchmarks beyond the required BFS path.
+
+## Implementation progress
+
+2026-09-25: Root is preparing the independent reference/control batch. `../artifact-reference-plan.md` records source-backed configuration, graph/source selection, bounded execution, and distinct ROI scope before measurement. Actual execution awaits Tickets 13 and 14.

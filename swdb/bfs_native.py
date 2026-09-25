@@ -378,9 +378,11 @@ def run(args):
         candidate = store.get(request["candidate"], "candidate")
         if not candidate or candidate["state"] == "incomplete":
             raise Failure("candidate is missing or incomplete")
-        data.update(candidate=candidate["id"], proposal=candidate["proposal"],
+        data.update(candidate=candidate["id"],
                     source_snapshot=candidate["source_snapshot"], implementation=candidate["implementation"])
-        proposal = store.get(candidate["proposal"], "proposal")
+        if candidate.get("proposal"):
+            data["proposal"] = candidate["proposal"]
+        proposal = store.get(candidate.get("proposal"), "proposal")
         if proposal and proposal.get("profile_package"):
             data["profile_package"] = proposal["profile_package"]
         machine = store.get(request["machine"], "machine")

@@ -2,8 +2,8 @@
 
 Date: 2026-09-25
 
-This contract is being implemented under Ticket 11, with Ticket 03 as its
-acceptance gate. The public operations are `register-workload`, `freeze-protocol`,
+This contract implements Ticket 11 using Ticket 03's durable evaluations.
+The public operations are `register-workload`, `freeze-protocol`,
 and `compare-evaluations`, each taking a version 1.0 YAML request file. Records use
 format 0.4 and remain retrievable through `get`. Rejected comparisons are retained.
 
@@ -17,6 +17,19 @@ adjacency; registration does not silently repair an invalid serialized graph.
 Graph family and generator metadata are operator declarations; realized counts
 and adjacency hashes are computed. Ordered sources are retained separately from
 repetitions. Different representation hashes can identify one verified graph.
+
+Artifact-size SG registration uses a bounded C++ CSR reader that maps the input
+read-only, checks every outgoing/inverse edge by exact sorted-row membership, and
+streams canonical JSON into SHA256. It does not construct Python adjacency lists.
+The request's `parser` mapping supplies an external `work_dir`, plus optional
+`compile_timeout_s` (default 60, maximum 600) and `timeout_s` (default 900, maximum
+7200). On mbit10 that directory belongs under `/data1/yanruj/`. Supplying this mapping
+also enables streaming for small graphs. Inputs exceeding the native parser's
+2,000,000 vertices, 5,000,000 edges, or 512 MiB require it. The canonical hash is
+identical across parsers and offset widths. The representation retains parser
+source identity and verification method. Native inline graph materialization
+retains its size limit; simulator dispatch can use `workload_representation` to
+select and rehash the verified external SG file for its application.
 
 A protocol freezes explicit workloads and their fingerprints, per-role build and
 target definitions, threads, semantic ROI, correctness coverage, instrumentation,

@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 09, 12
 **Spec:** `../spec.md`
 
@@ -35,3 +35,7 @@ Exercise the public workflow with deterministic simulator-output fixtures for in
 ## Dependencies and boundaries
 
 Ticket 09 supplies actionable profile packages, source/region mappings, and public retrieval. Ticket 12 supplies the executable model and identified raw execution artifacts. Ticket 13 is deliberately not a dependency; correctness and collection remain independent evidence stages. This slice does not create a second discovery engine, implement new hardware operations, freeze final workload/noise settings, perform the full artifact campaign, or establish a candidate gain.
+
+## Dependent preparation — 2026-09-25
+
+Claimed while tickets 09 and 12 prepare shared packages and the executable model. The collector reuses automatically discovered source regions, consumes the actual sealed statistics interval and log, and binds all observations to the exact binary/workload/configuration. Source-inferred memory behavior and contract fixtures cannot satisfy real acceptance.

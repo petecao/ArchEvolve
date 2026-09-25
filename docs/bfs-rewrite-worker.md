@@ -58,3 +58,11 @@ The evaluator-owned verifier, canonical graph input, trusted driver, and ROI
 definition remain unchanged through generation and repairs. Passing a build or
 producing a candidate is distinct from passing the structural correctness check;
 profitability additionally requires the frozen comparison protocol.
+
+## Unmodified baselines
+
+The `baseline-candidate` command materializes a verified source snapshot without a
+rewrite proposal or fabricated diff. Its `artifact_role` is `source_baseline`, and
+its content hash must equal the starting snapshot. It remains `unverified` until
+the independent evaluator checks actual timed results. The absence of `proposal`
+means that repair and rewrite-route coverage do not apply to this artifact.

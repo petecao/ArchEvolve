@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
@@ -35,3 +35,7 @@ Use public requests to conduct the real bounded pilot, register its observations
 ## Dependencies and boundaries
 
 Ticket 11 supplies workload/protocol identity and enforcement. Ticket 13 supplies exact timed-binary correctness; ticket 14 supplies simulated region/memory profiling and, through ticket 09's ancestry, the native profiling/evaluation foundation. No dependency on ticket 16 is introduced: the candidate matrix and artifact/reference work own separately frozen protocols. This slice does not generate rewrite proposals, assess candidate profitability, execute all coverage cells, or reproduce the full artifact campaign.
+
+## Implementation progress
+
+2026-09-25: Root owns dependent pilot preparation. The pre-execution limits and baseline-only selection rules are in `../pilot-plan.md`. Actual calibration awaits Tickets 11, 13, and 14; this ticket is not accepted or frozen by the plan.

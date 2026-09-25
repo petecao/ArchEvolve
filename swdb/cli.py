@@ -136,6 +136,11 @@ def main(argv=None):
     sub.add_argument("snapshot")
     sub.add_argument("--id", required=True)
 
+    sub = command("baseline-candidate", "materialize unchanged starting source for baseline evaluation", db=True, fmt=True)
+    sub.add_argument("snapshot")
+    sub.add_argument("--id", required=True)
+    sub.add_argument("--runs-dir", type=Path, required=True)
+
     sub = command("submit", "retain a rewrite proposal and produce a candidate or explicit rejection", db=True, fmt=True)
     sub.add_argument("file", type=Path)
     sub.add_argument("--runs-dir", type=Path, required=True)
@@ -152,6 +157,10 @@ def main(argv=None):
         sub.add_argument("--runs-dir", type=Path, required=True)
         sub.add_argument("--lane", type=int, required=True)
 
+    sub = command("dx100-profile", "collect sealed simulated BFS region and memory observations", db=True, fmt=True)
+    sub.add_argument("file", type=Path)
+    sub.add_argument("--runs-dir", type=Path, required=True)
+
     sub = command("capabilities", "query source-backed operations and executable readiness of a target", fmt=True)
     sub.add_argument("target")
 
@@ -159,6 +168,27 @@ def main(argv=None):
     sub.add_argument("file", type=Path)
     sub.add_argument("--runs-dir", type=Path, required=True)
     sub.add_argument("--lane")
+
+    sub = command("bfs-profile", "collect automatic native BFS region and memory observations", db=True, fmt=True)
+    sub.add_argument("file", type=Path)
+    sub.add_argument("--runs-dir", type=Path, required=True)
+    sub.add_argument("--lane")
+
+    sub = command("bfs-hotspots", "retrieve attributable BFS function or loop observations", db=True, fmt=True)
+    sub.add_argument("id")
+    sub.add_argument("--kind", choices=["function", "loop"], required=True)
+    sub.add_argument("--evaluation")
+
+    sub = command("profile-package", "assemble an exact-context BFS profile package", db=True, fmt=True)
+    sub.add_argument("file", type=Path)
+
+    sub = command("profile-strategies", "query strategy relevance and legality for a profile package", db=True, fmt=True)
+    sub.add_argument("package")
+    sub.add_argument("--region")
+
+    sub = command("strategy-regions", "query profiled regions relevant to a strategy", db=True, fmt=True)
+    sub.add_argument("strategy")
+    sub.add_argument("--package")
 
     for name, help_text in (
         ("register-workload", "register graph representations after checking canonical adjacency identity"),
@@ -204,6 +234,13 @@ def _dispatch(args):
         _emit(result, args.format)
         return 0 if result.get("outcome", {}).get("state") == "complete" else 1
 
+    if args.command == "dx100-profile":
+        from swdb import dx100_profile
+
+        result = dx100_profile.collect(args)
+        _emit(result, args.format)
+        return 1 if result.get("outcome", {}).get("state") in {"failed", "rejected", "unresolved"} else 0
+
     if args.command == "evaluate":
         from swdb import bfs_native
 
@@ -218,7 +255,23 @@ def _dispatch(args):
         _emit(result, args.format)
         return 1 if result.get("decision", {}).get("state") == "rejected" else 0
 
+    if args.command in {"bfs-profile", "bfs-hotspots"}:
+        from swdb import bfs_profiling
+
+        result = bfs_profiling.run(args) if args.command == "bfs-profile" else bfs_profiling.query(args)
+        _emit(result, args.format)
+        return 1 if result.get("outcome", {}).get("state") in {"failed", "rejected", "unresolved"} else 0
+
+    if args.command in {"profile-package", "profile-strategies", "strategy-regions"}:
+        from swdb import profile_package
+
+        method = {"profile-package": "assemble", "profile-strategies": "strategies", "strategy-regions": "regions"}[args.command]
+        result = getattr(profile_package, method)(args)
+        _emit(result, args.format)
+        return 1 if result.get("outcome", {}).get("state") in {"failed", "rejected", "unresolved"} else 0
+
     workflow_commands = {"source-snapshot": "snapshot", "fixture-package": "fixture_package",
+                         "baseline-candidate": "baseline_candidate",
                          "submit": "submit", "repair": "repair", "get": "get_record"}
     if args.command in workflow_commands:
         from swdb import workflow

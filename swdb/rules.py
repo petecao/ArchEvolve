@@ -84,6 +84,14 @@ def check(record, ctx):
         from swdb.bfs_protocol import validate_record
 
         yield from validate_record(record, ctx)
+    elif kind == "profile_package":
+        from swdb.cli import Failure
+        from swdb.profile_package import verify
+
+        try:
+            verify(record.data)
+        except (Failure, KeyError, TypeError, ValueError) as exc:
+            yield Problem(record.rel, "identity_sha256", str(exc))
 
 
 def _deprecated_by(record, ctx):

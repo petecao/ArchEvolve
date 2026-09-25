@@ -3,11 +3,15 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 07, 08
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
+
+Dependent preparation claimed 2026-09-25 by the identity/profile-package worker.
+Tickets 07 and 08 remain acceptance gates; the public assembly and lookup contract
+is prepared alongside their collector implementation.
 
 ## What to build
 

@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 02
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -13,8 +13,8 @@ Updated: 2026-09-25 (Eastern Time)
 protected driver, evaluation schema, and public request/result tests are prepared.
 Seventeen current cases passed across the public outcome suite and focused
 process-cleanup, budget, macro-integrity, and real C++ fixture-driver checks.
-Fixture durations remain contract evidence. This ticket awaits the coordinated
-real native DX100 scalar diagnostic before resolution. Its initial real budgets
+Fixture durations remain contract evidence. The coordinated real native DX100
+scalar diagnostic passed on mbit10. Its real budgets
 are build 180 seconds, each execution 30 seconds, total evaluation 300 seconds,
 inside a 900-second lane budget; no gain assessment is authorized by this smoke.
 
@@ -30,14 +30,14 @@ Use DX100 scalar top-down BFS for the first real native integration case, preser
 
 ## Acceptance criteria
 
-- [ ] Public evaluation consumes the identified candidate and returns a durable result identifying its proposal, source, binary, build settings, graph and actual traversal sources, native target, thread count, and declared ROI.
-- [ ] Real native BFS code builds and executes on small diagnostic correctness cases; the structural check accepts different valid BFS parent trees while rejecting invalid predecessor, depth, source, or reachability results.
-- [ ] Correctness evidence covers the code and workloads actually executed. An explicit verifier failure, including one accompanied by process exit zero, cannot become a successful correctness result.
-- [ ] The evaluator preserves protected correctness and ROI inputs and records native ROI duration separately from outside-ROI diagnostics. Work inside a declared complete-BFS-call ROI remains timed.
-- [ ] Build failure, correctness failure, timeout, exhausted execution budget, and missing observations remain retrievable with completed evidence. Incorrect candidates are not promoted to verified implementations.
-- [ ] Result retrieval distinguishes an incomplete evaluation from a complete one, identifies unavailable region/profile metrics, and never represents missing evidence as a speedup of one.
-- [ ] The explicitly chosen comparison baseline is retained independently of ancestry; obviously incompatible workload, target, or ROI evidence cannot produce a valid comparison. Pre-freeze results are diagnostic, not gain claims.
-- [ ] A fresh process retrieves stage outcomes and raw-artifact references after success or failure, including completed evidence if the evaluating caller is interrupted.
+- [x] Public evaluation consumes the identified candidate and returns a durable result identifying its proposal, source, binary, build settings, graph and actual traversal sources, native target, thread count, and declared ROI.
+- [x] Real native BFS code builds and executes on small diagnostic correctness cases; the structural check accepts different valid BFS parent trees while rejecting invalid predecessor, depth, source, or reachability results.
+- [x] Correctness evidence covers the code and workloads actually executed. An explicit verifier failure, including one accompanied by process exit zero, cannot become a successful correctness result.
+- [x] The evaluator preserves protected correctness and ROI inputs and records native ROI duration separately from outside-ROI diagnostics. Work inside a declared complete-BFS-call ROI remains timed.
+- [x] Build failure, correctness failure, timeout, exhausted execution budget, and missing observations remain retrievable with completed evidence. Incorrect candidates are not promoted to verified implementations.
+- [x] Result retrieval distinguishes an incomplete evaluation from a complete one, identifies unavailable region/profile metrics, and never represents missing evidence as a speedup of one.
+- [x] The explicitly chosen comparison baseline is retained independently of ancestry; obviously incompatible workload, target, or ROI evidence cannot produce a valid comparison. Pre-freeze results are diagnostic, not gain claims.
+- [x] A fresh process retrieves stage outcomes and raw-artifact references after success or failure, including completed evidence if the evaluating caller is interrupted.
 
 ## Verification
 
@@ -46,3 +46,27 @@ Drive submission, evaluation, and subsequent retrieval through public commands/m
 ## Dependencies and boundaries
 
 Ticket 02 provides candidates, protected source context, and durable proposal outcomes. This ticket does not require automatic profiling, the live package generator, a working simulator, or the final workload set. It must expose incomplete profiling honestly until those capabilities arrive. Later graph/protocol enforcement and the baseline/reference pilot provide the gate for candidate performance assessment; this slice does not bypass that gate.
+
+## Answer
+
+Resolved 2026-09-25 (Eastern Time). `swdb evaluate` now builds and executes the
+exact candidate through an evaluator-owned complete-call ROI driver, verifies the
+returned parent vector structurally, and durably records every stage and failure.
+See [native evaluator design](../../../docs/bfs-native-evaluator-design.md).
+
+Seventeen public contract cases cover alternate valid trees, invalid depth/edge/
+source/reachability, build and execution failure, missing observations, timeout,
+interruption with retained work, exhausted budgets, and protected driver inputs.
+The real `bfs-native-smoke-20260925-a1.evaluation` then executed DX100 scalar BFS
+from checkpoint `84cb783686e8206b8af218f9e307a375d07200e8` on mbit10 lane 1,
+lease generation 375. Sources `[0, 3, 8]` each passed independent structural
+verification in the timed binary. The fresh public chain query recovered six
+records; the run exited zero and released its lease at 17:36:38 Eastern.
+
+Five metadata records were returned through Git commit
+`283467878fcce65a988f7dc28f151cc6d022d520`; raw build, parent, trial, lane, and
+before/after host artifacts remain under
+`/data/yanruj/EvolveSWDB_runs/bfs-native-smoke-20260925/`. The three diagnostic
+ROI samples are 0.000246703, 0.000224942, and 0.000204676 seconds. There is no
+protocol freeze or gain claim, and missing function/loop/memory profiling remains
+explicitly unavailable pending tickets 06–09.

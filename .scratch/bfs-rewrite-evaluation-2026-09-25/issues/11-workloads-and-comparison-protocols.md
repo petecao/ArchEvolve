@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 03
 **Spec:** `../spec.md`
 
@@ -22,15 +22,15 @@ Implements D01, D03, D11–D14 and AC13–AC16. Preserve canonical graph identit
 
 ## Acceptance criteria
 
-- [ ] A public request records and later retrieves graph family, generator parameters/revision, normalization, realized graph properties, canonical graph identity, actual ordered BFS source vertices, and each representation's content identity. Equivalent loaded adjacency is checked before representations are accepted as the same logical graph.
-- [ ] A comparison explicitly identifies baseline and candidate evaluation evidence, independently of source ancestry. A candidate whose ancestor differs from its selected comparison baseline resolves the declared comparator.
-- [ ] Protocols record target/configuration, builds, thread count, workload/source sequence, named semantic ROI, correctness coverage, instrumentation treatment, repetitions/aggregation, and profitability criteria. A frozen protocol has an immutable identity and a retrievable record of the selected values.
-- [ ] Native, artifact-reference, and controlled-simulator comparisons enforce their declared requirements. Controlled comparisons match CPU/cache/memory/workload settings and enumerate remaining software/accelerator differences; artifact comparisons retain their disclosed configuration differences.
-- [ ] Incompatible workloads, sources, ROI boundaries, targets, threads, or correctness evidence produce explicit non-success outcomes. Native and simulated durations cannot be divided, and diagnostic runtime or simulator host cost cannot silently replace primary ROI duration.
-- [ ] Selected-region speedups require identified corresponding regions and declared per-invocation or accumulated scope, including inclusive/exclusive attribution. A local region gain is not relabeled as BFS ROI gain.
-- [ ] Candidate performance assessment and successful gain claims require the applicable frozen settings. Missing, invalid, incomplete, or unverified evidence remains distinguishable and never becomes a neutral speedup of one.
-- [ ] Changing a frozen workload or protocol creates a new version and identifies the comparisons that need fresh evidence. Existing results remain retrievable rather than being overwritten to hide an unfavorable case.
-- [ ] A fresh process can retrieve the workload, protocol, explicit comparison baseline, compatibility decision, and evidence references through the public interface.
+- [x] A public request records and later retrieves graph family, generator parameters/revision, normalization, realized graph properties, canonical graph identity, actual ordered BFS source vertices, and each representation's content identity. Equivalent loaded adjacency is checked before representations are accepted as the same logical graph.
+- [x] A comparison explicitly identifies baseline and candidate evaluation evidence, independently of source ancestry. A candidate whose ancestor differs from its selected comparison baseline resolves the declared comparator.
+- [x] Protocols record target/configuration, builds, thread count, workload/source sequence, named semantic ROI, correctness coverage, instrumentation treatment, repetitions/aggregation, and profitability criteria. A frozen protocol has an immutable identity and a retrievable record of the selected values.
+- [x] Native, artifact-reference, and controlled-simulator comparisons enforce their declared requirements. Controlled comparisons match CPU/cache/memory/workload settings and enumerate remaining software/accelerator differences; artifact comparisons retain their disclosed configuration differences.
+- [x] Incompatible workloads, sources, ROI boundaries, targets, threads, or correctness evidence produce explicit non-success outcomes. Native and simulated durations cannot be divided, and diagnostic runtime or simulator host cost cannot silently replace primary ROI duration.
+- [x] Selected-region speedups require identified corresponding regions and declared per-invocation or accumulated scope, including inclusive/exclusive attribution. A local region gain is not relabeled as BFS ROI gain.
+- [x] Candidate performance assessment and successful gain claims require the applicable frozen settings. Missing, invalid, incomplete, or unverified evidence remains distinguishable and never becomes a neutral speedup of one.
+- [x] Changing a frozen workload or protocol creates a new version and identifies the comparisons that need fresh evidence. Existing results remain retrievable rather than being overwritten to hide an unfavorable case.
+- [x] A fresh process can retrieve the workload, protocol, explicit comparison baseline, compatibility decision, and evidence references through the public interface.
 
 ## Verification
 
@@ -39,3 +39,31 @@ Exercise the public command/message workflow against isolated records. Use small
 ## Dependencies and boundaries
 
 Ticket 03 supplies native evaluation and durable results to compare. No simulator execution dependency is added here: target/protocol rules can be checked using declared configuration records and clearly labeled fixtures. Tickets 15 and 16 populate the rules with independently frozen real-run protocols. This ticket does not select profitable workloads, choose a rewrite strategy, run the coverage matrix, or claim a gain. Any future calibration or execution requires explicit budgets and the repository's applicable host/lane procedures.
+
+## Answer
+
+Resolved 2026-09-25 after Ticket 03's real native evaluation acceptance.
+
+Implemented public `register-workload`, `freeze-protocol`, and
+`compare-evaluations` with content-addressed versions, actual representation parsing,
+explicit baseline evidence, dispatch-time frozen bindings, and retained comparison
+rejections. Native ratios require verified whole-call ROI trials and sufficient
+predeclared repetitions; controlled/artifact simulator modes preserve configuration
+and attribution boundaries. Region comparisons remain separate from primary ROI
+claims, and fixtures never establish performance gains. Public `add` cannot bypass
+workload registration or protocol freezing.
+
+Artifact-size SG32/SG64 graphs use a bounded mmap CSR validator with exact inverse
+or symmetry checks and streaming canonical SHA256. The parser records its source
+identity and enforces compile/run wall budgets. Native materialization retains its
+small-graph limit; simulator consumers select verified external representations.
+
+Verification: 27 public protocol workflow tests passed after final integration
+(147.64 seconds); 8 compiled streaming/parser public tests passed (34.84 seconds);
+12 existing add/format-document tests passed. These deterministic fixture timings
+verify workflow behavior only. Baseline calibration and real comparisons belong to
+Tickets 15 and 16.
+
+Context: `swdb/bfs_protocol.py`, `swdb/sg_stream.py`,
+`tools/bfs_native/sg_identity.cc`, `docs/bfs-protocol.md`,
+`tests/test_bfs_protocol.py`, and `tests/test_bfs_sg_stream.py`.

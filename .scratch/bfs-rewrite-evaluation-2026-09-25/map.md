@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** ticket map
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** None — user authorized implementation and execution on 2026-09-25.
 **Spec:** [Refined specification](spec.md)
 
@@ -17,19 +17,19 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 |---|---|---|---|
 | 01 | [Shared BFS identity and explicit baselines](issues/01-shared-bfs-identity-and-baselines.md) | None | resolved |
 | 02 | [Patch proposal to durable candidate](issues/02-patch-proposal-to-candidate.md) | 01 | resolved |
-| 03 | [Native BFS evaluation](issues/03-native-bfs-evaluation.md) | 02 | claimed |
+| 03 | [Native BFS evaluation](issues/03-native-bfs-evaluation.md) | 02 | resolved |
 | 04 | [Instruction-based rewriting and bounded repair](issues/04-instruction-rewriting-and-repair.md) | 03 | claimed |
-| 05 | [Annotated-source rewriting](issues/05-annotated-source-rewriting.md) | 04 | ready-for-agent |
-| 06 | [Automatic function hotspot discovery](issues/06-function-hotspot-discovery.md) | 03 | ready-for-agent |
-| 07 | [Loop discovery and changed-region profiling](issues/07-loop-discovery-and-reprofiling.md) | 06 | ready-for-agent |
-| 08 | [Dynamic memory observations](issues/08-dynamic-memory-observations.md) | 06 | ready-for-agent |
-| 09 | [Complete profile packages and strategy lookup](issues/09-profile-packages-and-strategy-lookup.md) | 07, 08 | ready-for-agent |
+| 05 | [Annotated-source rewriting](issues/05-annotated-source-rewriting.md) | 04 | claimed |
+| 06 | [Automatic function hotspot discovery](issues/06-function-hotspot-discovery.md) | 03 | claimed |
+| 07 | [Loop discovery and changed-region profiling](issues/07-loop-discovery-and-reprofiling.md) | 06 | claimed |
+| 08 | [Dynamic memory observations](issues/08-dynamic-memory-observations.md) | 06 | claimed |
+| 09 | [Complete profile packages and strategy lookup](issues/09-profile-packages-and-strategy-lookup.md) | 07, 08 | claimed |
 | 10 | [Queryable DX100 operation contracts](issues/10-dx100-operation-contracts.md) | 02 | resolved |
-| 11 | [Reproducible workloads and comparison protocols](issues/11-workloads-and-comparison-protocols.md) | 03 | claimed |
+| 11 | [Reproducible workloads and comparison protocols](issues/11-workloads-and-comparison-protocols.md) | 03 | resolved |
 | 12 | [DX100 build and execution path](issues/12-dx100-build-and-execution.md) | 03 | claimed |
-| 13 | [Correctness of the timed DX100 binary](issues/13-dx100-timed-binary-correctness.md) | 12 | ready-for-agent |
-| 14 | [DX100 region timing and memory profiling](issues/14-dx100-region-and-memory-profiling.md) | 09, 12 | ready-for-agent |
-| 15 | [Baseline pilot and protocol freeze](issues/15-baseline-pilot-and-protocol-freeze.md) | 11, 13, 14 | ready-for-agent |
+| 13 | [Correctness of the timed DX100 binary](issues/13-dx100-timed-binary-correctness.md) | 12 | claimed |
+| 14 | [DX100 region timing and memory profiling](issues/14-dx100-region-and-memory-profiling.md) | 09, 12 | claimed |
+| 15 | [Baseline pilot and protocol freeze](issues/15-baseline-pilot-and-protocol-freeze.md) | 11, 13, 14 | claimed |
 | 16 | [Artifact reference and controlled comparisons](issues/16-artifact-reference-and-controls.md) | 11, 13, 14 | ready-for-agent |
 | 17 | [DX100 BFS: instruction-route acceptance](issues/17-dx100-instruction-route-acceptance.md) | 04, 10, 15 | ready-for-agent |
 | 18 | [DX100 BFS: patch-route acceptance](issues/18-dx100-patch-route-acceptance.md) | 15 | ready-for-agent |
@@ -168,3 +168,14 @@ Pinned artifact revision: e4fc4afdf894f295442cef3604667a469fab8e62.
 | [BFS adapter](/Users/yanrujhou/CLionProjects/MemAcc/AgenticRefiner/adapters/gapbs-bfs.yaml) | Protected source surfaces and kernel timing scope |
 
 The spec preserves these evidence boundaries. It does not import historical timings, fixed noise thresholds, or unverified current host capabilities as new results.
+
+### Native evaluation acceptance — 2026-09-25
+
+Ticket [03](issues/03-native-bfs-evaluation.md) is resolved: evaluator-owned native
+ROI and structural correctness, durable failure stages, 17 contract cases, and a
+real three-source mbit10 lane-1 DX100 scalar diagnostic. See
+[native evaluator design](../../docs/bfs-native-evaluator-design.md) and metadata
+commit `283467878fcce65a988f7dc28f151cc6d022d520`. This is pre-freeze diagnostic
+evidence; automatic function/loop/memory collection remains tickets 06–09.
+
+- 2026-09-25: [Ticket 11](issues/11-workloads-and-comparison-protocols.md) resolved with 27 protocol tests, 8 compiled streaming-SG tests, and 12 add/document checks. [Protocol contract](../../docs/bfs-protocol.md), `swdb/bfs_protocol.py`, `swdb/sg_stream.py`, and `tools/bfs_native/sg_identity.cc` define immutable workload identity and comparison enforcement. This is contract acceptance, not a candidate gain or empirical protocol freeze.

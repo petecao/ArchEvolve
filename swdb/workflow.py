@@ -92,6 +92,24 @@ def fixture_package(args):
         reasons=["Explicit contract fixture: no execution, correctness, profiling, or gain evidence."]), args.db, create=True)
 
 
+def baseline_candidate(args):
+    """Materialize the exact starting source for a baseline or reference execution."""
+    store = _require_valid(args.records)
+    source = store.get(args.snapshot, "source_snapshot")
+    if not source:
+        raise Failure("source snapshot does not exist")
+    if not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", args.id) or store.get(args.id):
+        raise Failure("baseline candidate needs a new valid record identifier")
+    root = artifacts.verify(source["artifact"])
+    artifact = artifacts.copy_snapshot(root, artifacts.external_directory(args.runs_dir) / args.id / "source")
+    artifacts.check_protections(Path(artifact["path"]), source["protections"])
+    if artifact["sha256"] != source["artifact"]["sha256"]:
+        raise Failure("baseline materialization changed the starting source")
+    return persist(args.records, record("candidate", args.id, artifact_role="source_baseline",
+        implementation=source["implementation"], source_snapshot=source["id"], artifact=artifact,
+        state="unverified", protections=source["protections"], context=source["context"]), args.db, create=True)
+
+
 def get_record(args):
     _require_valid(args.records)
     if db.is_stale(args.records, args.db or db.default_path(args.records)):
@@ -109,7 +127,8 @@ def get_record(args):
                 return
             seen[d["id"]] = d
             for key in ("proposal", "candidate", "source_snapshot", "profile_package", "parent_candidate",
-                        "protocol", "candidate_evaluation", "baseline_evaluation", "comparison_baseline"):
+                        "protocol", "candidate_evaluation", "baseline_evaluation", "comparison_baseline",
+                        "evaluation", "region_profile"):
                 target = store.get(d.get(key))
                 if target:
                     visit(target)
@@ -221,6 +240,8 @@ def submit(args):
         package = store.get(request["profile_package"], "profile_package")
         if not source or not package:
             raise Failure("source snapshot or profile package is missing")
+        from swdb.profile_package import verify as verify_package
+        verify_package(package)
         if source["implementation"] != request["implementation"] or package["implementation"] != request["implementation"]:
             raise Failure("conflicting implementation/source/profile-package identities")
         if package["source_snapshot"] != source["id"] or source["artifact"]["sha256"] != request["source_sha256"]:
