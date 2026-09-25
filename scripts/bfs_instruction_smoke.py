@@ -16,6 +16,9 @@ def main():
     parser.add_argument('--runs-dir',type=Path,required=True)
     parser.add_argument('--records',type=Path,default=Path('records'))
     parser.add_argument('--lane',required=True)
+    parser.add_argument('--routes',nargs='+',choices=['natural_language','structured_instructions','annotated_source'],
+                        default=['natural_language','structured_instructions','annotated_source'])
+    parser.add_argument('--reevaluate',help='retain a new evaluation of an existing candidate after an evaluator fix')
     args=parser.parse_args()
     root=Path(__file__).resolve().parents[1]
     args.runs_dir=args.runs_dir.resolve()
@@ -41,9 +44,23 @@ def main():
                 return {'outcome':{'state':'failed','reason':result.stderr},'_cli_failed':True}
         return json.loads(result.stdout)
     summary=[]
+    if args.reevaluate:
+        previous=call('get',args.reevaluate)
+        request=dict(previous['request'])
+        request['id']=args.id+'.evaluator-fixed'
+        path=folder/'reevaluate.json';path.write_text(json.dumps(request,indent=2))
+        evaluated=call('evaluate',path,'--runs-dir',args.runs_dir,'--lane',args.lane)
+        call('get',evaluated['id'],'--chain')
+        summary.append({'route':'retained_candidate_evaluation','previous_evaluation':args.reevaluate,
+            'evaluation':evaluated['id'],'correctness':evaluated.get('correctness',{}).get('state'),
+            'accepted':evaluated.get('correctness',{}).get('state')=='passed' and
+                       len(evaluated.get('timing',[]))==3 and not evaluated.get('gain_claim'),
+            'trials':len(evaluated.get('timing',[])),'gain_claim':False})
     for route,implementation in [('natural_language','dx100-bfs-scalar'),
                                   ('structured_instructions','gapbs-bfs-do'),
                                   ('annotated_source','gapbs-bfs-do')]:
+        if route not in args.routes:
+            continue
         rid=args.id+'.'+route.replace('_','-')
         source=call('source-snapshot',implementation,'--id',rid+'.source','--runs-dir',args.runs_dir)
         if 'artifact' not in source:
@@ -108,7 +125,7 @@ def main():
                         'records_retrieved':len(chain.get('records',{}))})
     (folder/'summary.json').write_text(json.dumps(summary,indent=2))
     print(json.dumps(summary,indent=2))
-    return 0 if len(summary)==3 and all(x.get('accepted') for x in summary) else 1
+    return 0 if len(summary)==len(set(args.routes))+bool(args.reevaluate) and all(x.get('accepted') for x in summary) else 1
 
 if __name__=='__main__':
     raise SystemExit(main())

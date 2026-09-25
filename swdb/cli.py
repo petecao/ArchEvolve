@@ -260,7 +260,7 @@ def _dispatch(args):
 
         result = bfs_profiling.run(args) if args.command == "bfs-profile" else bfs_profiling.query(args)
         _emit(result, args.format)
-        return 1 if result.get("outcome", {}).get("state") in {"failed", "rejected", "unresolved"} else 0
+        return 0 if args.command == "bfs-hotspots" or result.get("outcome", {}).get("state") in {"complete", "partial"} else 1
 
     if args.command in {"profile-package", "profile-strategies", "strategy-regions"}:
         from swdb import profile_package
