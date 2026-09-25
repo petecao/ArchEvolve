@@ -7,8 +7,9 @@ The public `dx100-build` and `dx100-execute` commands persist ordinary evaluatio
 records before starting external work. `swdb get ID` retrieves them in another
 process. A completed build means identified binaries exist; completed smoke
 execution means the expected ROI exit and raw statistics/configuration exist.
-Both leave `correctness.state: unverified` and `gain_claim: false`. Ticket 13
-adds exact timed-binary checking; ticket 14 adds complete profile collection.
+Builds and unchecked smoke runs leave `correctness.state: unverified`.
+Optional same-process continuation attaches an explicit structural verdict;
+all cases retain `gain_claim: false`. Ticket 14 adds complete profile collection.
 
 ## Build request
 
@@ -65,6 +66,7 @@ same version, ID, machine, target and clean model-root fields, plus:
 | `workload` | Nonempty logical `id`, hashed graph `representation` with `path`/`sha256`, and actual integer BFS `source` |
 | `configuration` | `mode` (`BASE` or `MAA`), `l3_size_mb`, `l3_assoc`, and `tile_elements` matching the selected target |
 | `checkpoint_manifest` | Optional absolute `path`/`sha256` for a previously completed compatible checkpoint manifest |
+| `verification` | Optional `checker: dx100.bfs.verifier.v1` and positive integer `max_ticks` (at most 10^15) |
 | `budget` | Positive integer `total_seconds`, `memory_gib`, `storage_gib`, `checkpoint_seconds`, and `run_seconds` limits |
 
 The current adapter instantiates four X86O3CPU guest cores, 16 GB guest memory,
@@ -92,7 +94,7 @@ before simulation. Existing statistics never suppress a new execution.
 Restore creates a fresh simulation directory and retains the actual config.ini,
 statistics, exact command, simulator exit cause/tick, logs and host execution
 cost. The expected `m5_exit instruction encountered` event occurs before the
-author harness's verifier; the record therefore remains unverified even with
+author harness's verifier; an unchecked smoke run therefore remains unverified even with
 exit status zero. No ROI duration or neutral speedup is invented from missing
 or incomplete evidence. Checkpoint and completed-stage evidence survive later
 simulator failure, missing statistics, timeout or budget exhaustion.
@@ -107,3 +109,36 @@ requirement but keeps hash, configuration, checkpoint, failure and retention
 checks. Fixture checkpoints cannot be reused as real execution evidence and
 fixture builds never update executable target readiness. These tests exercise
 the public workflow; they do not complete real BFS/DX100 acceptance.
+
+## Exact guest verification
+
+With `verification` enabled, `scripts/dx100_verify.py` executes the unmodified
+pinned simulator entry script and observes its actual exit event. At the first
+successful ROI exit, it copies the already guest-dumped and flushed statistics
+into `roi-stats.txt`, records its hash and execution binding in `roi-seal.json`,
+and resumes the same instantiated machine with one bounded `m5.simulate` call.
+The timed binary returns its existing parent array to its enclosing
+`BFSVerifier`. No different functional executable certifies that array.
+
+The pinned verifier reconstructs BFS depths, checks the source parent, valid
+predecessor edges and depths, and unreachable vertices. It accepts different
+valid parent trees. The adapter records exact binary and simulator identities,
+model/source/harness hashes, graph identity and representation, actual source,
+configuration, driver hash, execution ID, seal, raw output, observed verdict
+lines, final exit cause, and requested versus observed check counts.
+
+Exactly one PASS after the seal and a successful final guest exit are required
+for `correctness.state: passed`. Any printed FAIL yields failed correctness
+and an `incorrect` execution outcome, including when the process exits zero.
+Absent or ambiguous output, a simulation tick limit, interruption, or missing
+seal cannot certify the execution. The simulation wall/memory/storage budget
+also covers continuation, and its guest tick cap is explicit in `max_ticks`.
+Sealed ROI evidence survives a later verifier timeout or failure. Live terminal
+statistics can change during verification without altering the sealed interval.
+
+Path evidence counts completed MAA trace units and positive instruction counters
+from the sealed ROI. Both are required for `accelerator_executed: true`; source
+presence and scalar fallback do not qualify. Full/tail tile and competing-parent
+coverage remain `unobserved` until separately established by bounded real cases.
+Fixture PASS is always `contract_fixture` evidence. The real continuation and
+accelerated acceptance criteria remain open until executed on the actual model.

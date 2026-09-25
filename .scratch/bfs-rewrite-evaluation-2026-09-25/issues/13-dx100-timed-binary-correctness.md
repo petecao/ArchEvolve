@@ -39,3 +39,7 @@ Ticket 12 supplies identified binaries, simulator execution, raw ROI artifacts, 
 ## Dependent preparation — 2026-09-25
 
 Claimed for exact-binary continuation implementation while ticket 12 builds the pinned model. Acceptance remains blocked by the real bounded build and execution. The planned driver seals the guest-emitted ROI statistics before resuming the same simulator and guest binary for the enclosing structural verifier. Contract fixtures remain explicitly classified and cannot satisfy the real accelerated-path criteria.
+
+## Implementation evidence — 2026-09-25
+
+The continuation driver in `scripts/dx100_verify.py` seals the actual guest-dumped interval and resumes the same machine once. `swdb/dx100.py` binds explicit verifier results and observed MAA path evidence to exact execution identities while retaining incomplete/failing outcomes. `python3 -m pytest tests/test_dx100.py -q` passed 13 tests in 37.04 seconds, including direct driver execution with fake gem5 events for PASS, FAIL with exit zero, absent/ambiguous verdict, unexpected terminal cause, and post-seal timeout. These are contract fixtures; actual model continuation and applicable accelerated coverage remain unaccepted.
