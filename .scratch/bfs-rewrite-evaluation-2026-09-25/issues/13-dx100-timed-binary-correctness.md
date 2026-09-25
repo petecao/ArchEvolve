@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 12
 **Spec:** `../spec.md`
 
@@ -35,3 +35,7 @@ Drive the public evaluation/result workflow with valid and invalid BFS-output ca
 ## Dependencies and boundaries
 
 Ticket 12 supplies identified binaries, simulator execution, raw ROI artifacts, and durable unverified outcomes. This ticket does not depend on ticket 14's profile collector or ticket 11's full comparison protocols: it can retain direct path/check evidence for a bounded, explicitly identified execution. It does not move ROI boundaries, select a new strategy, run the full workload matrix, or prove profitability. Candidate-specific checks later reuse this mechanism for the workloads actually timed.
+
+## Dependent preparation — 2026-09-25
+
+Claimed for exact-binary continuation implementation while ticket 12 builds the pinned model. Acceptance remains blocked by the real bounded build and execution. The planned driver seals the guest-emitted ROI statistics before resuming the same simulator and guest binary for the enclosing structural verifier. Contract fixtures remain explicitly classified and cannot satisfy the real accelerated-path criteria.

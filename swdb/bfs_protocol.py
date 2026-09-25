@@ -154,7 +154,7 @@ def _representation(rep, normalization):
 
 
 def _identity_payload(data):
-    fields = ["requested_id", "version", "supersedes"]
+    fields = ["requested_id", "version", "supersedes", "invalidated_comparisons"]
     fields += ["definition"] if data["kind"] == "workload" else ["settings", "workload_identities", "frozen_at", "state"]
     return {key: data[key] for key in fields}
 
@@ -216,6 +216,7 @@ def register_workload(args):
     request = _request(args)
     store = _require_valid(args.records)
     kernel = _get(store, request.get("kernel"), "kernel")
+    _fail(kernel["id"] == "gapbs-bfs", "BFS workload registration requires the shared BFS kernel")
     family = _text(request.get("family"), "family")
     generator = request.get("generator")
     _fail(isinstance(generator, dict) and isinstance(generator.get("parameters"), dict), "generator parameters are required")
@@ -230,6 +231,9 @@ def register_workload(args):
     for rep in representations:
         canonical, row = _representation(rep, request["normalization"])
         _get(store, rep.get("application"), "application")
+        expected_format = {"gapbs": "gapbs_sg64le", "dx100-gapbs": "gapbs_sg32le"}.get(rep["application"])
+        if row["format"].startswith("gapbs_sg") and expected_format:
+            _fail(row["format"] == expected_format, "serialized offset width conflicts with the application's loader")
         _fail(row["id"] not in ids, "representation IDs must be unique")
         ids.add(row["id"])
         if reference is None:
@@ -239,11 +243,13 @@ def register_workload(args):
     for source in sources:
         _fail(_integer(source, "source", 0) < reference["num_vertices"], "source vertex is outside the graph")
     degrees = [len(row) for row in reference["adjacency"]]
+    incoming = {v for row in reference["adjacency"] for v in row}
     definition = {"kernel": kernel["id"], "family": family, "generator": generator,
                   "normalization": NORMALIZATION, "sources": sources, "representations": rows,
                   "canonical_sha256": artifacts.digest(reference), "canonical_format": "swdb.bfs.adjacency.v1",
                   "realized": {"num_vertices": reference["num_vertices"], "num_directed_edges": sum(degrees),
-                               "directed": reference["directed"], "isolated_vertices": degrees.count(0),
+                               "directed": reference["directed"],
+                               "isolated_vertices": sum(degree == 0 and u not in incoming for u, degree in enumerate(degrees)),
                                "minimum_out_degree": min(degrees), "maximum_out_degree": max(degrees)},
                   "metadata_basis": "operator_declared", "adjacency_basis": "parsed_representation"}
     return _save_immutable(args, request, "workload", definition=definition)
@@ -265,7 +271,7 @@ def _validate_settings(settings, store):
     _fail(isinstance(settings, dict), "settings must be a mapping")
     mode = settings.get("mode")
     _fail(mode in {"native", "artifact_reference", "controlled_simulator"}, "unsupported comparison mode")
-    _get(store, settings.get("kernel"), "kernel")
+    _fail(_get(store, settings.get("kernel"), "kernel")["id"] == "gapbs-bfs", "BFS protocols require the shared BFS kernel")
     _text(settings.get("roi"), "roi")
     _integer(settings.get("threads"), "threads")
     workloads = settings.get("workloads")
@@ -285,6 +291,10 @@ def _validate_settings(settings, store):
         if mode == "native":
             machine = _get(store, target["id"], "machine")
             _fail(target.get("machine_sha256") == artifacts.digest(machine), "frozen native machine record changed")
+            if machine.get("lane_required"):
+                _fail(isinstance(target["configuration"].get("lane"), str)
+                      and re.fullmatch(r"mbit10-evaluation-node[01]", target["configuration"]["lane"]),
+                      "lane-managed native target must freeze its exact socket lane")
         else:
             _fail(all(key in target["configuration"] for key in ("cpu", "cache", "memory", "clock_hz", "model_revision")),
                   "simulated targets must describe CPU, cache, memory, clock, and model revision")
@@ -295,6 +305,7 @@ def _validate_settings(settings, store):
         _text(build.get("adapter"), "build.adapter")
         _fail(isinstance(build.get("compiler_version"), list) and build["compiler_version"], "build.compiler_version is required")
         _fail(isinstance(settings["instrumentation"][role], dict) and settings["instrumentation"][role], "instrumentation treatment is required")
+        _text(settings["instrumentation"][role].get("treatment"), "instrumentation.treatment")
     if mode == "native":
         _fail(settings["targets"]["baseline"] == settings["targets"]["candidate"], "native comparison requires the same configured target")
     if mode == "controlled_simulator":
@@ -303,7 +314,8 @@ def _validate_settings(settings, store):
               "controlled simulator comparison must match CPU/cache/memory/clock/model")
     differences = settings.get("differences")
     _fail(isinstance(differences, dict) and set(differences) == {"software", "accelerator", "configuration"}
-          and all(isinstance(values, list) for values in differences.values()), "software/accelerator/configuration differences must be enumerated")
+          and all(isinstance(values, list) and all(isinstance(value, str) and value.strip() for value in values)
+                  for values in differences.values()), "software/accelerator/configuration differences must be enumerated")
     if settings["targets"]["baseline"] != settings["targets"]["candidate"]:
         _fail(bool(differences["configuration"] or differences["accelerator"]), "different targets need disclosed differences")
     correctness = settings.get("correctness")
@@ -349,7 +361,7 @@ def freeze_protocol(args):
                            frozen_at=_now(), state="frozen")
 
 
-def validate_protocol_for_evaluation(store, request, candidate, actual_build=None):
+def validate_protocol_for_evaluation(store, request, candidate, actual_build=None, actual_lane=None, actual_instrumentation=None):
     if request.get("protocol") is None:
         return None
     protocol = _get(store, request["protocol"], "protocol")
@@ -374,10 +386,14 @@ def validate_protocol_for_evaluation(store, request, candidate, actual_build=Non
     target = settings["targets"][role]
     _fail(request.get("machine") == target["id"] and request.get("target_configuration", {}) == target["configuration"],
           "target or configuration differs from frozen settings")
+    if "lane" in target["configuration"]:
+        _fail(actual_lane == target["configuration"]["lane"], "verified socket lane differs from frozen target")
     _fail(_get(store, candidate["implementation"], "implementation")["kernel"] == settings["kernel"], "candidate kernel differs from protocol")
     if actual_build is not None:
         expected = settings["builds"][role]
         _fail(all(actual_build.get(key) == expected[key] for key in ("compiler", "flags", "adapter")), "actual build differs from frozen settings")
+    if actual_instrumentation is not None:
+        _fail(actual_instrumentation == settings["instrumentation"][role], "actual instrumentation differs from frozen treatment")
     return {"protocol": protocol["id"], "frozen_sha256": digest, "workload_id": wid,
             "workload_sha256": workload["identity_sha256"], "role": role,
             "frozen_at": protocol["frozen_at"], "bound_at": _now(), "settings_sha256": artifacts.digest(settings)}
@@ -402,6 +418,8 @@ def _evaluation_samples(store, evaluation, protocol, role):
           and binding.get("frozen_sha256") == protocol["identity_sha256"]
           and binding.get("settings_sha256") == artifacts.digest(settings) and binding.get("role") == role,
           "evaluation has no matching immutable protocol binding")
+    _fail(context.get("protocol") == protocol["id"] and evaluation.get("request", {}).get("protocol") == protocol["id"],
+          "evaluation request/context contradict the bound protocol")
     _fail(_timestamp(binding.get("bound_at")) >= _timestamp(protocol["frozen_at"]), "evaluation predates protocol freeze")
     starts = [stage.get("started") for stage in evaluation.get("stages", []) if stage.get("started")]
     _fail(starts and min(map(_timestamp, starts)) >= _timestamp(protocol["frozen_at"]), "evaluation started before protocol freeze")
@@ -428,6 +446,8 @@ def _evaluation_samples(store, evaluation, protocol, role):
           "evaluation target configuration differs from protocol")
     if settings["mode"] == "native":
         _fail(context.get("machine_sha256") == target["machine_sha256"], "native target machine identity changed")
+        if "lane" in target["configuration"]:
+            _fail(context.get("lane") == target["configuration"]["lane"], "verified socket lane differs from frozen target")
     build = evaluation.get("build", {})
     expected = settings["builds"][role]
     _fail(all(build.get(key) == expected[key] for key in ("compiler", "flags", "compiler_version"))
@@ -446,6 +466,7 @@ def _evaluation_samples(store, evaluation, protocol, role):
           "a fixture evaluation cannot be relabeled execution evidence")
     _fail(context.get("basis") == basis, "native and simulated evidence cannot be divided")
     checks = evaluation["correctness"].get("checks", [])
+    _fail(all(check.get("passed") is True for check in checks), "evaluation retains a failed or unverified correctness case")
     expected_cells = {(position, repetition) for position in range(len(definition["sources"]))
                       for repetition in range(settings["sampling"]["repetitions"])}
     observations = {}
@@ -477,6 +498,8 @@ def _geomean(values):
 
 def _statistics(baseline, candidate, policy):
     ratios = {position: statistics.median(baseline[position]) / statistics.median(candidate[position]) for position in baseline}
+    for ratio in ratios.values():
+        _positive(ratio, "representable source duration ratio")
     spreads = {role: {position: (max(values) - min(values)) / statistics.median(values)
                       for position, values in samples.items()} for role, samples in (("baseline", baseline), ("candidate", candidate))}
     rng = random.Random(policy["bootstrap_seed"])

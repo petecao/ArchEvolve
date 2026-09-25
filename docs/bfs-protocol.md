@@ -33,6 +33,9 @@ a workload, protocol, or comparison result. A changed version links its predeces
 and names existing comparisons that need new evidence. These checks protect the
 workflow's history; they are not a signature against a maintainer rewriting all
 authoritative records and evidence.
+The public `add` operation rejects these two sealed kinds: workload registration
+must parse the real representations, and protocol creation must run the freeze
+checks. The normal writer still persists both operations as authoritative YAML.
 
 Comparison requires complete correctness for every timed graph/source/repetition,
 the actual timed binary, compatible quantities and scope, and a protocol frozen

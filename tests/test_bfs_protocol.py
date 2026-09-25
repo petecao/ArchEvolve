@@ -5,15 +5,17 @@ Their durations never establish experimental performance.
 """
 
 import copy
+import datetime
 import hashlib
 import json
+import shutil
 import struct
 from pathlib import Path
 
 import pytest
 import yaml
 
-from conftest import REPO
+from conftest import REPO, records as records_fixture
 from test_proposals import proposal_setup
 from test_bfs_native import PROGRAM, evaluation_setup
 
@@ -93,8 +95,7 @@ def _settings(base, workload):
             "region_pairs": []}
 
 
-@pytest.fixture
-def protocol_setup(evaluation_setup, tmp_path):
+def _seed_protocol(evaluation_setup, tmp_path):
     records, runs, evaluate_request, base = evaluation_setup
     # The external compiler fixture emits the graph's real structural result and
     # an explicitly artificial duration selected by the test client.
@@ -121,11 +122,29 @@ def protocol_setup(evaluation_setup, tmp_path):
     return records, workload, protocol, protocol_request, evaluations, comparison
 
 
+@pytest.fixture(scope="module")
+def protocol_seed(tmp_path_factory):
+    # Run the expensive end-to-end evaluation boundary once. Each test receives
+    # isolated authoritative records and performs fresh public CLI requests.
+    path = tmp_path_factory.mktemp("protocol-seed")
+    records = records_fixture.__wrapped__(path)
+    proposal = proposal_setup.__wrapped__(records, path)
+    evaluation = evaluation_setup.__wrapped__(proposal, path)
+    return _seed_protocol(evaluation, path)
+
+
+@pytest.fixture
+def protocol_setup(records, protocol_seed):
+    seed, *data = protocol_seed
+    shutil.copytree(seed.path, records.path, dirs_exist_ok=True)
+    return (records, *copy.deepcopy(data))
+
+
 def test_graph_representations_are_actually_equivalent_and_retrievable(protocol_setup):
     records, workload, *_ = protocol_setup
     definition = workload["definition"]
     assert definition["realized"] == {"num_vertices": 5, "num_directed_edges": 4, "directed": True,
-                                       "isolated_vertices": 2, "minimum_out_degree": 0, "maximum_out_degree": 2}
+                                       "isolated_vertices": 1, "minimum_out_degree": 0, "maximum_out_degree": 2}
     assert definition["sources"] == [0, 4]
     assert {row["canonical_sha256"] for row in definition["representations"]} == {definition["canonical_sha256"]}
     assert len({row["sha256"] for row in definition["representations"]}) == 3
@@ -203,12 +222,144 @@ def test_raw_add_cannot_recompute_content_under_old_frozen_id(protocol_setup, tm
     forged["id"] = "forged-policy"
     forged["settings"]["sampling"]["repetitions"] = 99
     result = records.swdb("add", _payload(tmp_path, "forged", forged))
-    assert result.returncode == 1 and "content changed" in result.stderr
+    assert result.returncode == 1 and "register-workload/freeze-protocol" in result.stderr
+
+
+def _add_record(records, tmp_path, record):
+    result = records.swdb("add", _payload(tmp_path, record["id"], record))
+    assert result.returncode == 0, result.stderr
+
+
+def _fixture_rebind(evaluation, protocol, role, name):
+    """Explicit metadata fixture for a nonexecuted simulator/region protocol."""
+    data = copy.deepcopy(evaluation)
+    data["id"] = name
+    settings = protocol["settings"]
+    now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    binding = data["context"]["protocol_binding"]
+    binding.update(protocol=protocol["id"], frozen_sha256=protocol["identity_sha256"],
+                   settings_sha256=hashlib.sha256(json.dumps(settings, sort_keys=True, separators=(",", ":")).encode()).hexdigest(),
+                   frozen_at=protocol["frozen_at"], bound_at=now, role=role)
+    data["request"].update(protocol=protocol["id"], protocol_role=role, fixture=True)
+    data["context"].update(protocol=protocol["id"], target=settings["targets"][role]["id"],
+                           backend_configuration=settings["targets"][role]["configuration"])
+    for stage in data["stages"]:
+        stage.update(started=now, finished=now)
+    if settings["mode"] != "native":
+        data["context"]["basis"] = "simulated"
+        for timing in data["timing"]:
+            timing.update(basis="simulated", quantity="simulated_roi_seconds")
+    data["provenance"].append({"id": "comparison-fixture", "kind": "agent_run",
+                               "description": "Explicit simulator/region metadata fixture; this protocol was not executed."})
+    return data
+
+
+def test_comparator_differs_from_candidate_source_ancestor(protocol_setup, tmp_path):
+    records, _, _, _, evaluations, comparison = protocol_setup
+    # A second catalog identity of the same source is sufficient to check the
+    # explicit comparison relationship; these remain metadata contract fixtures.
+    implementation = records.read("implementations/gapbs-bfs-do.yaml")
+    implementation.update(id="fixture-reference", name="Fixture comparison reference")
+    implementation["origin"] = {"kind": "collaborator", "derived_from": None, "description": "Explicit identity fixture."}
+    _add_record(records, tmp_path, implementation)
+    snapshot = records.read("source_snapshots/test-source.yaml")
+    snapshot.update(id="fixture-reference-source", implementation=implementation["id"])
+    _add_record(records, tmp_path, snapshot)
+    baseline_candidate = records.read("candidates/test-proposal.candidate-1.yaml")
+    baseline_candidate.update(id="fixture-reference-candidate", implementation=implementation["id"], source_snapshot=snapshot["id"])
+    _add_record(records, tmp_path, baseline_candidate)
+    baseline = copy.deepcopy(evaluations["baseline"])
+    baseline.update(id="eval-reference", implementation=implementation["id"], candidate=baseline_candidate["id"], source_snapshot=snapshot["id"])
+    _add_record(records, tmp_path, baseline)
+    candidate = copy.deepcopy(evaluations["candidate"])
+    candidate.update(id="eval-selected-reference", comparison_baseline=implementation["id"])
+    _add_record(records, tmp_path, candidate)
+    comparison.update(baseline_evaluation=baseline["id"], candidate_evaluation=candidate["id"], comparison_baseline=implementation["id"])
+    result = _command(records, "compare-evaluations", _payload(tmp_path, "explicit-reference", comparison))
+    assert result["source_ancestor"] == "gapbs-bfs-do"
+    assert result["comparison_baseline"] == "fixture-reference"
+    assert result["metrics"]["fixture_ratio"] == pytest.approx(2) and not result["gain_claim"]
+
+
+def _sim_settings(settings):
+    data = copy.deepcopy(settings)
+    data["mode"] = "controlled_simulator"
+    common = {"cpu": {"model": "fixture-timing-cpu", "cores": 4}, "cache": {"llc_kib": 4096},
+              "memory": {"kind": "fixture-ddr", "size_gib": 4}, "clock_hz": 1e9, "model_revision": "fixture-v1"}
+    data["targets"] = {role: {"id": "fixture-sim-target", "configuration": {**copy.deepcopy(common), "accelerator": role == "candidate"}}
+                       for role in ("baseline", "candidate")}
+    data["differences"]["accelerator"] = ["Existing accelerator enabled on candidate target; fixture metadata only."]
+    return data
+
+
+def test_controlled_and_artifact_simulator_protocols_keep_distinct_attribution(protocol_setup, tmp_path):
+    records, _, _, request, evaluations, comparison = protocol_setup
+    controlled = _sim_settings(request["settings"])
+    mismatch = copy.deepcopy(controlled)
+    mismatch["targets"]["candidate"]["configuration"]["cache"]["llc_kib"] = 16384
+    request.update(id="incompatible-control", settings=mismatch)
+    result = records.swdb("freeze-protocol", _payload(tmp_path, "bad-control", request), "--format", "json")
+    assert result.returncode == 1 and "CPU/cache/memory" in result.stderr
+    for mode, settings in (("controlled_simulator", controlled), ("artifact_reference", mismatch)):
+        settings["mode"] = mode
+        if mode == "artifact_reference":
+            settings["differences"]["configuration"] = ["Authors' baseline LLC is 4 MiB; accelerated LLC is 16 MiB."]
+        request.update(id="policy-" + mode, settings=settings)
+        protocol = _command(records, "freeze-protocol", _payload(tmp_path, "freeze-" + mode, request))
+        for role in ("baseline", "candidate"):
+            data = _fixture_rebind(evaluations[role], protocol, role, "eval-" + mode + "-" + role)
+            _add_record(records, tmp_path, data)
+            comparison[role + "_evaluation"] = data["id"]
+        comparison.update(id="compare-" + mode, protocol=protocol["id"])
+        result = _command(records, "compare-evaluations", _payload(tmp_path, "compare-" + mode, comparison))
+        assert result["decision"]["state"] == "fixture_comparison" and not result["gain_claim"]
+        assert result["metrics"]["attribution"] == ("joint_hardware_software" if mode == "controlled_simulator" else "artifact_configuration_pair")
+
+
+def test_corresponding_region_ratio_is_separate_from_bfs_roi(protocol_setup, tmp_path):
+    records, workload, _, request, evaluations, comparison = protocol_setup
+    request.update(id="region-policy")
+    request["settings"]["region_pairs"] = [{"semantic_region": "edge-expansion", "baseline": "before-loop", "candidate": "after-helper",
+                                             "scope": "accumulated", "attribution": "exclusive"}]
+    protocol = _command(records, "freeze-protocol", _payload(tmp_path, "region-freeze", request))
+    for role, region, duration in (("baseline", "before-loop", 0.5), ("candidate", "after-helper", 0.1)):
+        data = _fixture_rebind(evaluations[role], protocol, role, "region-eval-" + role)
+        data["profiling"]["regions"] = [{"id": region, "semantic_region": "edge-expansion", "scope": "accumulated",
+                                          "attribution": "exclusive", "roi": protocol["settings"]["roi"],
+                                          "binary_sha256": data["build"]["binary_sha256"],
+                                          "workload_sha256": workload["definition"]["canonical_sha256"],
+                                          "basis": "measured", "invocations": 10, "duration_s": duration}]
+        _add_record(records, tmp_path, data)
+        comparison[role + "_evaluation"] = data["id"]
+    comparison.update(id="region-compare", protocol=protocol["id"])
+    result = _command(records, "compare-evaluations", _payload(tmp_path, "region-compare", comparison))
+    assert result["metrics"]["fixture_ratio"] == pytest.approx(2)
+    assert result["region_comparisons"][0]["duration_ratio"] == pytest.approx(5)
+    assert result["region_comparisons"][0]["primary_bfs_roi"] is False
+    bad = records.read("evaluations/region-eval-candidate.yaml")
+    bad["id"] = "region-wrong-scope"
+    bad["profiling"]["regions"][0]["attribution"] = "inclusive"
+    _add_record(records, tmp_path, bad)
+    comparison.update(id="region-scope-rejected", candidate_evaluation=bad["id"])
+    result = _command(records, "compare-evaluations", _payload(tmp_path, "region-scope-rejected", comparison), succeeds=False)
+    assert "attribution scopes" in result["decision"]["reasons"][0]
+
+
+def test_new_workload_version_marks_comparison_for_fresh_evidence(protocol_setup, tmp_path):
+    records, workload, _, _, _, comparison = protocol_setup
+    old = _command(records, "compare-evaluations", _payload(tmp_path, "old-comparison", comparison))
+    request = _workload_request(records, tmp_path, {"num_vertices": 5, "directed": True, "edges": [[0,1], [0,4]]}, name="graph-v2")
+    request.update(id=workload["requested_id"], version=2, supersedes=workload["id"])
+    updated = _command(records, "register-workload", _payload(tmp_path, "workload-v2", request))
+    assert updated["definition"]["canonical_sha256"] != workload["definition"]["canonical_sha256"]
+    assert updated["invalidated_comparisons"] == [old["id"]]
+    assert json.loads(records.swdb("get", old["id"], "--format", "json").stdout) == old
 
 
 @pytest.mark.parametrize("fault", ["wrong-offset-width", "wrong-adjacency", "wrong-inverse", "truncated", "wrong-hash"])
-def test_registration_rejects_non_equivalent_or_invalid_files(evaluation_setup, tmp_path, fault):
-    records, _, _, base = evaluation_setup
+def test_registration_rejects_non_equivalent_or_invalid_files(records, tmp_path, fault):
+    records.copy_repo()
+    base = {"workload": {"graph": {"num_vertices": 5, "directed": True, "edges": [[0,1], [0,2], [1,3], [2,3]]}}}
     request = _workload_request(records, tmp_path, base["workload"]["graph"])
     representation = request["representations"][1]
     path = Path(representation["path"])
@@ -232,11 +383,12 @@ def test_registration_rejects_non_equivalent_or_invalid_files(evaluation_setup, 
     assert not list((records.path / "workloads").glob("*.yaml"))
 
 
-def test_frozen_dispatch_rejects_wrong_sources_before_build(protocol_setup, evaluation_setup):
-    records, workload, protocol, *_ = protocol_setup
-    _, runs, request, _ = evaluation_setup
-    result = records.swdb("evaluate", request(id="eval-wrong-source", protocol=protocol["id"], protocol_role="candidate",
-                          workload={"id": workload["id"]}, sources=[1], repetitions=5), "--runs-dir", runs, "--format", "json")
+def test_frozen_dispatch_rejects_wrong_sources_before_build(protocol_setup, tmp_path):
+    records, workload, protocol, _, evaluations, _ = protocol_setup
+    request = copy.deepcopy(evaluations["candidate"]["request"])
+    request.update(id="eval-wrong-source", protocol=protocol["id"], protocol_role="candidate",
+                   workload={"id": workload["id"]}, sources=[1], repetitions=5)
+    result = records.swdb("evaluate", _payload(tmp_path, "wrong-source", request), "--runs-dir", tmp_path / "runs", "--format", "json")
     assert result.returncode == 1, result.stderr
     data = json.loads(result.stdout)
     assert "source sequence" in data["outcome"]["reason"]

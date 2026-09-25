@@ -461,7 +461,8 @@ def run(args):
             except ImportError:
                 raise Failure("frozen protocol validation is unavailable") from None
             data["context"]["protocol_binding"] = validate_protocol_for_evaluation(
-                store, request, candidate, actual_build={"compiler": compiler, "flags": flags, "adapter": adapter})
+                store, request, candidate, actual_build={"compiler": compiler, "flags": flags, "adapter": adapter},
+                actual_lane=lane, actual_instrumentation=data["context"]["instrumentation"])
         session.finish()
         wrapper = folder / "native_driver.cc"
         template = DRIVER.read_text()

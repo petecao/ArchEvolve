@@ -4,7 +4,6 @@ Updated: 2026-09-25. Build/smoke evidence never certifies a timed binary.
 """
 
 import json
-import math
 import os
 from pathlib import Path
 import re
@@ -65,7 +64,7 @@ def _prepare(args, action, store, request, data):
     if not isinstance(request, dict) or request.get("message_version") != "1.0":
         raise Failure("DX100 request requires message_version 1.0")
     fields = {"message_version", "id", "machine", "hardware_target", "model_root", "budget", "fixture"}
-    fields |= {"fixture_command"} if action == "build" else {"simulator", "binary", "workload", "configuration", "checkpoint_manifest"}
+    fields |= {"fixture_command"} if action == "build" else {"simulator", "binary", "workload", "configuration", "checkpoint_manifest", "build_evaluation", "verification"}
     if request.keys() - fields:
         raise Failure(f"unknown DX100 request fields: {sorted(request.keys() - fields)}")
     if not isinstance(request.get("fixture", False), bool):
@@ -118,7 +117,7 @@ def _prepare(args, action, store, request, data):
         "model_root": str(model_root), "host": host, "lane": lane, "budget": budget,
         "load_average": list(os.getloadavg()), "roi": ROI, "basis": "simulated"})
     data["raw_artifacts"].append({"host": host, "path": str(folder), "kind": f"dx100_{action}"})
-    session = Session(args, data, folder, total + (30 if action == "build" else 0))
+    session = Session(args, data, folder, total + (30 if action == "build" and not request.get("fixture") else 0))
     session.install_handlers()
     return session, target, model_root
 
@@ -221,7 +220,7 @@ def build(args):
                 "--storage-gib", str(budget["storage_gib"])]
         data["build"] = {"receipt": str(output / "build-receipt.json"), "model_revision": REVISION}
         try:
-            _bounded_process(session, "model_build", command, budget["total_seconds"] + 20,
+            _bounded_process(session, "model_build", command, budget["total_seconds"] + (0 if request.get("fixture") else 20),
                              budget["memory_gib"], 2)
         finally:
             receipt = output / "build-receipt.json"
@@ -230,8 +229,15 @@ def build(args):
                 session.save()
         if not request.get("fixture") and data["build"].get("details", {}).get("state") != "completed":
             raise StageFailure("missing_observation", "build helper did not retain a completed build receipt")
+        if not request.get("fixture"):
+            for reference in data["build"]["details"]["binaries"]:
+                _file({"path": reference["path"], "sha256": reference["sha256"]}, "built binary")
+            target["backend"].update(readiness="built", build_evidence=[{
+                "uri": f"ssh://{data['context']['host']}{data['build']['receipt']}",
+                "sha256": data["build"]["receipt_sha256"]}])
+            workflow.persist(args.records, target, getattr(args, "db", None))
         data["outcome"] = {"state": "complete", "stage": "build", "reason": "Build evidence only; no BFS execution or correctness verdict."}
-    except (Failure, StageFailure, Stopped, OSError, ValueError, subprocess.SubprocessError) as exc:
+    except (Failure, StageFailure, Stopped, OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as exc:
         error = exc
     return _finish(args, data, session, error)
 
@@ -268,6 +274,83 @@ def _configuration(request, target, root):
         "command_arguments": settings}
 
 
+def _correctness(session, request, result_folder, log, completed):
+    """Retain sealed ROI and explicit post-ROI verdict, even after interruption."""
+    data = session.data
+    seal_path = result_folder / "roi-seal.json"
+    if not seal_path.is_file():
+        data["correctness"]["checks"].append({"state": "unverified", "reason": "No sealed ROI receipt was produced."})
+        session.save()
+        return
+    seal = json.loads(seal_path.read_text())
+    if (seal.get("format") != "swdb.dx100.roi-seal.v1"
+            or seal.get("execution_binding_sha256") != data["context"]["execution_binding_sha256"]
+            or seal.get("driver_sha256") != data["context"]["verification_driver"]["sha256"]
+            or seal.get("roi_exit_cause") != "m5_exit instruction encountered"):
+        raise StageFailure("incompatible", "sealed ROI does not identify this execution and verification driver")
+    stats = _file(seal.get("statistics"), "sealed ROI statistics")
+    if stats != result_folder / "roi-stats.txt":
+        raise StageFailure("incompatible", "sealed statistics must belong to this execution directory")
+    data["context"]["sealed_roi"] = {"path": str(seal_path), "sha256": artifacts.file_hash(seal_path), **seal}
+    data["context"]["statistics"] = seal["statistics"]
+    _file(request["binary"], "timed BFS binary")
+    _file(request["simulator"], "simulator")
+    _file(request["workload"]["representation"], "graph representation")
+    _file(data["context"]["verification_driver"], "verification driver")
+    counters = {}
+    intervals = ends = 0
+    with stats.open(errors="replace") as stream:
+        for line in stream:
+            if "Begin Simulation Statistics" in line:
+                intervals += 1
+            if "End Simulation Statistics" in line:
+                ends += 1
+            match = re.match(r"(\S*maa\S*\.numInst(?:_[A-Z]+)?)\s+(\d+)(?:\s|$)", line)
+            if match:
+                counters[match[1]] = int(match[2])
+    if intervals != 1 or ends != 1:
+        raise StageFailure("missing_observation", "sealed ROI must contain exactly one guest statistics interval")
+    verdicts, trace_ends, sealed_markers = [], {}, 0
+    with log.open(errors="replace") as stream:
+        for number, line in enumerate(stream, 1):
+            if line.strip() == "SWDB_DX100_ROI_SEALED":
+                sealed_markers += 1
+            found = re.match(r"^\s*Verification\s*:\s*(PASS|FAIL)\s*$", line)
+            if found:
+                verdicts.append({"verdict": found[1], "line": number, "after_seal": sealed_markers == 1})
+            if not sealed_markers:
+                found = re.search(r"\b([SIAR])\[\d+\] End \[", line)
+                if found:
+                    trace_ends[found[1]] = trace_ends.get(found[1], 0) + 1
+    terminal = seal.get("verification", {})
+    explicit_failure = any(item["verdict"] == "FAIL" for item in verdicts)
+    valid = (completed and len(verdicts) == 1 and verdicts[0]["after_seal"] and sealed_markers == 1
+             and terminal.get("state") == "finished" and terminal.get("exit_code") == 0
+             and terminal.get("exit_cause") == "exiting with last active thread context")
+    state = "failed" if explicit_failure else "passed" if valid else "unverified"
+    acceleration = (request["configuration"]["mode"] == "MAA"
+        and any(value > 0 for key, value in counters.items() if key.endswith(".numInst"))
+        and all(trace_ends.get(unit, 0) > 0 for unit in ("S", "I", "R", "A")))
+    data["correctness"] = {"state": state, "checks": [{"state": state,
+        "checker": "dx100.bfs.verifier.v1", "execution": data["id"],
+        "binding": data["context"]["execution_binding"],
+        "target": data["context"]["target"], "configuration": data["context"]["configuration"],
+        "timed_source": data["context"]["timed_source"],
+        "verifier_source": data["context"]["verifier_source"],
+        "sealed_roi": {"path": str(seal_path), "sha256": artifacts.file_hash(seal_path)},
+        "output": {"path": str(log), "sha256": artifacts.file_hash(log)},
+        "requested_checks": 1, "observed_verdicts": verdicts, "continuation": terminal,
+        "coverage": {"accelerator_executed": acceleration, "instruction_counters": counters,
+            "completed_trace_units": trace_ends, "full_tiles": "unobserved", "tail_tiles": "unobserved",
+            "competing_parent_updates": "unobserved"},
+        "scope": "This execution only; finite graph/source checking is not a proof for all inputs."}]}
+    session.save()
+    if explicit_failure:
+        raise StageFailure("incorrect", "BFS structural verifier printed FAIL, independently of process exit status")
+    if not valid and completed:
+        raise StageFailure("missing_observation", "missing, ambiguous, interrupted, or incomplete post-ROI verifier outcome")
+
+
 def execute(args):
     store, request, data = _request(args, "execute")
     session = None
@@ -280,6 +363,21 @@ def execute(args):
         session.begin("execution_identity")
         simulator = _file(request.get("simulator"), "simulator")
         binary = _file(request.get("binary"), "BFS binary")
+        if not request.get("fixture"):
+            build_id = request.get("build_evaluation")
+            if not isinstance(build_id, str):
+                raise Failure("real execution requires an identified build_evaluation")
+            prior = store.get(build_id, "evaluation")
+            if (not prior or prior.get("outcome", {}).get("state") != "complete"
+                    or prior["outcome"]["stage"] != "build" or prior["evidence_kind"] != "execution"):
+                raise Failure("build_evaluation does not identify a completed real model/BFS build")
+            receipt_path = _file({"path": prior["build"]["receipt"], "sha256": prior["build"]["receipt_sha256"]}, "build receipt")
+            receipt = json.loads(receipt_path.read_text())
+            if receipt.get("revision") != REVISION or receipt.get("state") != "completed":
+                raise Failure("build receipt does not match the pinned completed build")
+            available = {(ref["path"], ref["sha256"]) for ref in receipt["binaries"]}
+            if any((request[key]["path"], request[key]["sha256"]) not in available for key in ("simulator", "binary")):
+                raise Failure("simulator or BFS binary was not produced by the selected build receipt")
         if not os.access(simulator, os.X_OK) or not os.access(binary, os.X_OK):
             raise Failure("simulator and BFS binary must be executable")
         workload = request.get("workload")
@@ -304,6 +402,25 @@ def execute(args):
         data["build"] = {"binary": str(binary), "binary_sha256": request["binary"]["sha256"],
                          "simulator": str(simulator), "simulator_sha256": request["simulator"]["sha256"]}
         env = dict(os.environ, OMP_NUM_THREADS="4", OMP_PROC_BIND="false", OMP_DYNAMIC="FALSE")
+        verify = request.get("verification")
+        driver = paths.HOME / "scripts/dx100_verify.py"
+        if verify is not None:
+            if not isinstance(verify, dict) or set(verify) != {"checker", "max_ticks"} or verify["checker"] != "dx100.bfs.verifier.v1":
+                raise Failure("verification requires checker dx100.bfs.verifier.v1 and max_ticks")
+            _integer(verify["max_ticks"], "verification.max_ticks", maximum=10**15)
+            source_file = root / "benchmarks/gapbs/src/bfs.cc"
+            harness = root / "benchmarks/gapbs/src/benchmark.h"
+            if not source_file.is_file() or not harness.is_file():
+                raise Failure("timed BFS/verifier source identity is missing")
+            data["context"].update(
+                verification_driver={"path": str(driver), "sha256": artifacts.file_hash(driver)},
+                timed_source={"path": str(source_file), "sha256": artifacts.file_hash(source_file), "model_revision": REVISION},
+                verifier_source={"path": str(source_file), "sha256": artifacts.file_hash(source_file),
+                    "symbol": "BFSVerifier", "lines": [463, 508],
+                    "harness": {"path": str(harness), "sha256": artifacts.file_hash(harness)}})
+            env.update(SWDB_DX100_MODEL_ROOT=str(root),
+                SWDB_DX100_EXECUTION_BINDING_SHA256=data["context"]["execution_binding_sha256"],
+                SWDB_DX100_VERIFY_MAX_TICKS=str(verify["max_ticks"]))
         if not request.get("fixture"):
             env.update(TMPDIR=str(root / ".tmp"), XDG_CACHE_HOME=str(root / ".cache"))
             Path(env["TMPDIR"]).mkdir(exist_ok=True)
@@ -314,7 +431,8 @@ def execute(args):
             session.begin("checkpoint_resolution")
             manifest_path = _file(reference, "checkpoint manifest")
             manifest = json.loads(manifest_path.read_text())
-            if not isinstance(manifest, dict) or manifest.get("binding") != binding:
+            if (not isinstance(manifest, dict) or manifest.get("format") != "swdb.dx100.checkpoint.v1"
+                    or manifest.get("binding") != binding):
                 raise StageFailure("incompatible", "checkpoint binding differs from exact binary/workload/source/model/options")
             checkpoint = artifacts.verify(manifest["artifact"])
             session.finish()
@@ -342,17 +460,31 @@ def execute(args):
         _file(workload["representation"], "graph representation")
         result_folder = session.folder / "simulation"
         result_folder.mkdir()
-        command = [str(simulator), "--debug-flags=MAATrace", f"--outdir={result_folder}", str(script), *settings,
+        command = [str(simulator), "--debug-flags=MAATrace", f"--outdir={result_folder}", str(driver if verify else script), *settings,
                    "--cmd", str(binary), "--options", options, "--checkpoint-dir", str(checkpoint), "-r", "1"]
-        log = _bounded_process(session, "simulation", command, run_seconds, budget["memory_gib"], budget["storage_gib"], env)
+        completed = False
+        log = session.folder / f"{len(data['stages']):03d}-simulation.log"
+        try:
+            _bounded_process(session, "simulation", command, run_seconds, budget["memory_gib"], budget["storage_gib"], env)
+            completed = True
+        finally:
+            if verify is not None:
+                _correctness(session, request, result_folder, log, completed)
         session.begin("execution_observations")
-        stats = result_folder / "stats.txt"
-        output = log.read_text(errors="replace")
-        causes = re.findall(r"Exiting @ tick (\d+) because ([^\r\n]+)", output)
+        stats = result_folder / ("roi-stats.txt" if verify else "stats.txt")
+        causes = []
+        with log.open(errors="replace") as stream:
+            for line in stream:
+                found = re.search(r"Exiting @ tick (\d+) because ([^\r\n]+)", line)
+                if found:
+                    causes = [found.groups()]
         if not causes or causes[-1][1].strip() != "m5_exit instruction encountered":
             raise StageFailure("missing_observation", "simulator did not report the expected BFS ROI exit")
-        if not stats.is_file() or "Begin Simulation Statistics" not in stats.read_text(errors="replace"):
+        if not stats.is_file():
             raise StageFailure("missing_observation", "simulation produced no readable statistics interval")
+        with stats.open(errors="replace") as stream:
+            if not any("Begin Simulation Statistics" in line for line in stream):
+                raise StageFailure("missing_observation", "simulation produced no readable statistics interval")
         actual_config = result_folder / "config.ini"
         if not actual_config.is_file():
             raise StageFailure("missing_observation", "simulation produced no actual configuration file")
@@ -361,7 +493,10 @@ def execute(args):
             statistics={"path": str(stats), "sha256": artifacts.file_hash(stats)})
         data["raw_artifacts"].append({"kind": "simulation", "artifact": artifacts.identify(result_folder)})
         session.finish()
-        data["outcome"] = {"state": "complete", "stage": "execution", "reason": "Unverified smoke execution: explicit timed-binary correctness and complete profiling remain required."}
-    except (Failure, StageFailure, Stopped, OSError, ValueError, KeyError, subprocess.SubprocessError) as exc:
+        data["outcome"] = {"state": "complete", "stage": "execution", "reason": (
+            "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+            if data["correctness"]["state"] == "passed" else
+            "Unverified smoke execution: explicit timed-binary correctness and complete profiling remain required.")}
+    except (Failure, StageFailure, Stopped, OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as exc:
         error = exc
     return _finish(args, data, session, error)

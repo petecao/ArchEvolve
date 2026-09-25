@@ -50,6 +50,8 @@ def add(records_dir, file, agent=False, agent_name="agent"):
         raise Failure(f"cannot read {file}: {' '.join(str(exc).split())}") from None
     if not isinstance(data, dict) or not isinstance(data.get("kind"), str) or not isinstance(data.get("id"), str):
         raise Failure(f"{file}: a record must be a mapping with text fields kind and id")
+    if data["kind"] in {"workload", "protocol"}:
+        raise Failure("sealed workload/protocol records must be created through register-workload/freeze-protocol")
     if agent:
         mark_agent(data, agent_name)
     return commit(records_dir, new=[data])[0]

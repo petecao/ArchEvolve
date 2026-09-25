@@ -39,3 +39,7 @@ Use the public workflow for deterministic external build/simulator fixtures cove
 ## Dependencies and boundaries
 
 Ticket 03 provides the public evaluation/result foundation and durable outcome handling. Ticket 13 independently adds exact timed-binary correctness; ticket 14 adds complete simulated ROI/region/memory profiling. Neither is a prerequisite for recording an explicitly unverified smoke result here. This slice does not wait for ticket 11's complete comparison machinery or ticket 15's candidate protocol freeze. Its own small execution definition and budgets must still be explicit before running. Do not reproduce unrelated benchmarks, tune for a speedup, or run without a bound until the model works.
+
+## Implementation evidence — 2026-09-25
+
+The public build/checkpoint/execution adapter and bounded build helper are implemented in `swdb/dx100.py` and `scripts/dx100_build.py`, with request and evidence rules in `docs/bfs-dx100-execution.md`. `python3 -m pytest tests/test_dx100.py -q` passed 7 public contract-fixture tests in 17.02 seconds. These cover build success/failure/budget, exact checkpoint bindings, missing statistics, changed binaries and simulator timeout with prior evidence retained. Real model build and smoke acceptance have not yet run; this ticket remains claimed.

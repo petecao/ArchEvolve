@@ -6,6 +6,7 @@ Updated: 2026-09-25. Providers return proposed edits; SWDB applies protections.
 import fnmatch
 import json
 import os
+import re
 import shutil
 import signal
 import subprocess
@@ -21,6 +22,22 @@ OUTPUT_SCHEMA = {
     "properties": {"interpretation": {"type": "string"}, "patch": {"type": "string"},
                    "unresolved": {"type": "array", "items": {"type": "string"}}},
 }
+
+
+def require_code_change(before, after):
+    """Reject annotation-only copies while preserving strings in the comparison."""
+    tokens = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/|\S')
+    def code(root):
+        result = {}
+        for entry in artifacts.identify(root)["files"]:
+            path = entry["path"]
+            if Path(path).suffix not in {".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".inc"}:
+                continue
+            result[path] = [token for token in tokens.findall((Path(root) / path).read_text())
+                            if not token.startswith(("//", "/*"))]
+        return result
+    if code(before) == code(after):
+        raise Failure("interpreted rewrite changed only comments or formatting; actual code edits are required")
 
 
 def configuration(path):
@@ -116,10 +133,11 @@ def interpret(config, prompt, folder, remaining_s=None):
     def interrupted(signum, _frame):
         raise InterruptedError(f"rewrite provider interrupted by signal {signum}")
     previous = {sig: signal.signal(sig, interrupted) for sig in (signal.SIGTERM, signal.SIGINT)}
-    with (folder / "stdout.txt").open("w") as stdout, (folder / "stderr.txt").open("w") as stderr, (folder / "prompt.txt").open() as stdin:
-        child = subprocess.Popen(cmd, cwd=folder, stdin=stdin, stdout=stdout, stderr=stderr,
-                                 text=True, start_new_session=True)
-        try:
+    child = None
+    try:
+        with (folder / "stdout.txt").open("w") as stdout, (folder / "stderr.txt").open("w") as stderr, (folder / "prompt.txt").open() as stdin:
+            child = subprocess.Popen(cmd, cwd=folder, stdin=stdin, stdout=stdout, stderr=stderr,
+                                     text=True, start_new_session=True)
             while child.poll() is None:
                 if time.monotonic() - started > timeout:
                     raise subprocess.TimeoutExpired(cmd, timeout)
@@ -127,7 +145,8 @@ def interpret(config, prompt, folder, remaining_s=None):
                     raise Failure("rewrite provider output exceeds the 10 MiB limit")
                 time.sleep(0.1)
             meta.update(state="completed" if child.returncode == 0 else "failed", returncode=child.returncode)
-        except BaseException:
+    except BaseException:
+        if child is not None:
             try:
                 os.killpg(child.pid, signal.SIGTERM)
             except ProcessLookupError:
@@ -135,15 +154,18 @@ def interpret(config, prompt, folder, remaining_s=None):
             try:
                 child.wait(timeout=2)
             except subprocess.TimeoutExpired:
-                os.killpg(child.pid, signal.SIGKILL)
+                try:
+                    os.killpg(child.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
                 child.wait()
-            meta.update(state="interrupted_or_timeout")
-            raise
-        finally:
-            for sig, handler in previous.items():
-                signal.signal(sig, handler)
-            meta["host_wall_s"] = time.monotonic() - started
-            (folder / "provider.json").write_text(json.dumps(meta, indent=2))
+        meta.update(state="interrupted_or_timeout")
+        raise
+    finally:
+        for sig, handler in previous.items():
+            signal.signal(sig, handler)
+        meta["host_wall_s"] = time.monotonic() - started
+        (folder / "provider.json").write_text(json.dumps(meta, indent=2))
     if child.returncode:
         raise Failure(f"rewrite provider exited {child.returncode}; retained {folder}")
     if (folder / "stdout.txt").stat().st_size > 10 * 1024 * 1024:

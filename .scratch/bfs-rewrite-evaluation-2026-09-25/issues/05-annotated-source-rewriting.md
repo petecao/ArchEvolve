@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 04
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -34,3 +34,7 @@ Drive annotated-source submission through the public workflow and retrieve the r
 ## Dependencies and boundaries
 
 Ticket 04 supplies instruction interpretation and shared repair; the patch, candidate, and native evaluation paths are inherited through it. Labeled fixture profile packages remain sufficient to exercise this route before ticket 09. Do not introduce a separate strategy-selection worker, require live Peter/Josh agents, or treat this slice as authorization for the later campaign.
+
+## Implementation progress
+
+2026-09-25: Root is preparing the annotated-source interface and tests against the shared bounded worker while Ticket 04 acceptance runs. This is dependent preparation; resolution requires Tickets 03 and 04 and real source-changing evaluation.

@@ -113,6 +113,15 @@ def get_record(args):
                 target = store.get(d.get(key))
                 if target:
                     visit(target)
+            if d["kind"] == "proposal":
+                for attempt in d["attempts"]:
+                    for key in ("candidate", "parent_candidate", "trigger_evaluation"):
+                        target = store.get(attempt.get(key))
+                        if target:
+                            visit(target)
+                for evaluation in store.of_kind("evaluation"):
+                    if evaluation.data.get("proposal") == d["id"]:
+                        visit(evaluation.data)
         visit(data)
         return {"root": data["id"], "records": seen}
     return data
@@ -263,6 +272,8 @@ def submit(args):
             persist(args.records, data, args.db)
         candidate_artifact = apply_patch(source_path, run_dir / "source", patch,
                                          request["constraints"]["editable_files"], source["protections"])
+        if config is not None:
+            rewrite.require_code_change(source_path, run_dir / "source")
         artifacts.verify(source["artifact"])
         (run_dir / "candidate.diff").write_text(patch)
         candidate = record("candidate", f"{rid}.candidate-1", producer=request["producer"], proposal=rid,
@@ -281,6 +292,12 @@ def submit(args):
         data["outcome"] = {"state": "rejected" if stage == "validation" else "failed", "stage": stage, "reason": str(exc)}
         if data["attempts"]:
             data["attempts"][-1].update(state="failed", reason=str(exc))
+            if "provider" in data and "provider" not in data["attempts"][-1]:
+                metadata = run_dir / "provider-1" / "provider.json"
+                if metadata.is_file():
+                    meta = json.loads(metadata.read_text())
+                    data["attempts"][-1]["provider"] = meta
+                    data["repair_budget"]["used_seconds"] += meta.get("host_wall_s", 0)
     return persist(args.records, data, args.db)
 
 
@@ -349,8 +366,11 @@ def repair(args):
             attempt.update(interpretation=response, provider=meta)
             if response["unresolved"]:
                 raise Failure("unresolved repair requirements: " + "; ".join(response["unresolved"]))
+            if not response["interpretation"].strip() or not response["patch"].strip():
+                raise Failure("repair must explain its interpretation and produce actual code edits")
             artifact = apply_patch(source_path, folder / "source", response["patch"],
                                    data["request"]["constraints"]["editable_files"], prior["protections"])
+            rewrite.require_code_change(source_path, folder / "source")
             artifacts.verify(prior["artifact"])
             diff = folder / "candidate.diff"
             diff.write_text(response["patch"])
