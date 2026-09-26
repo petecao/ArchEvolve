@@ -7,7 +7,29 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 18:13 ET
+## Current checkpoint — 2026-09-26 19:27 ET
+
+The fixed DX100 A2 run and exact completed-artifact reader passed with actual
+full/tail/competing-parent coverage; see [actual readback](../observations/dx100-coverage-a2-completed-readback-20260926.json).
+Its three canonical records were synchronized through Git and independently
+rehashed locally. The earlier failed coverage remains retained.
+
+Native collection remains complete: 240 primary checks, four unchanged-code
+controls, 24 spread groups and four diagnostic packages passed. Neither consumed
+standalone readback qualified it. The second failed before reader creation
+because of a retained checkout-root pytest cache. Both failures and that cache
+remain intact. There is no third standalone readback. Qualification will occur
+inside the separately bounded, already-required source-specific prepare/publish
+operations after actual T15 simulator packages exist; see
+[continuation](../../../docs/bfs-native-qualification-continuation-20260926.md).
+
+The native campaign's generated SQLite cache is now explicitly inside accounted
+raw output; the real CLI regression and independent review pass. T15 simulator
+collection, two native protocols and separate source-specific controlled-simulator
+protocols remain pending. This ticket stays claimed, with no qualified gain or
+final candidate acceptance.
+
+## Historical checkpoint — 2026-09-26 18:13 ET
 
 The [native readback attempt](../observations/native-readback-failure-20260926.json)
 failed before evidence validation: the generated launcher passed a string to

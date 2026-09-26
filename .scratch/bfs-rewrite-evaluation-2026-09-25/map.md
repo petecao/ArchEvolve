@@ -4,7 +4,7 @@ Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-26 (Eastern Time)
 **Type:** ticket map
 **Status:** claimed
-**Blocked by:** Remaining empirical verification, calibration, artifact/control comparisons, and final acceptance. All three originally approved transfers are complete. The new six-file result sync and context-supplemented provider payload await exact approval.
+**Blocked by:** Remaining empirical verification, calibration, artifact/control comparisons, and final acceptance. All three originally approved transfers are complete. The new six-file provider-result packet, 24-file native evidence packet, and context-supplemented provider payload await payload-specific approval after automatic review rejected their transfer. Local/host evaluation continues independently.
 **Spec:** [Refined specification](spec.md)
 
 The user authorized autonomous implementation of all 21 tickets and all necessary builds, installations, benchmark/simulator runs, external access, Git, and Claude Code on 2026-09-25. This supersedes the publication-only hold. The two-lane mbit10 rules and evidence requirements remain in force.
@@ -27,7 +27,7 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 10 | [Queryable DX100 operation contracts](issues/10-dx100-operation-contracts.md) | 02 | resolved |
 | 11 | [Reproducible workloads and comparison protocols](issues/11-workloads-and-comparison-protocols.md) | 03 | resolved |
 | 12 | [DX100 build and execution path](issues/12-dx100-build-and-execution.md) | 03 | resolved |
-| 13 | [Correctness of the timed DX100 binary](issues/13-dx100-timed-binary-correctness.md) | 12 | claimed |
+| 13 | [Correctness of the timed DX100 binary](issues/13-dx100-timed-binary-correctness.md) | 12 | resolved |
 | 14 | [DX100 region timing and memory profiling](issues/14-dx100-region-and-memory-profiling.md) | 09, 12 | resolved |
 | 15 | [Baseline pilot and protocol freeze](issues/15-baseline-pilot-and-protocol-freeze.md) | 11, 13, 14 | claimed |
 | 16 | [Artifact reference and controlled comparisons](issues/16-artifact-reference-and-controls.md) | 11, 13, 14 | claimed |
@@ -37,7 +37,7 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 20 | [Upstream BFS: annotated-source route acceptance](issues/20-upstream-annotated-route-acceptance.md) | 05, 10, 15 | claimed |
 | 21 | [Coverage, ROI gain, and collaborator handoff](issues/21-coverage-roi-gain-and-handoff.md) | 16, 17, 18, 19, 20 | claimed |
 
-Tickets 01–12 and 14 are resolved (13/21). Ticket 11 was resolved again at 14:00 ET after its native runtime-policy correction and independent review. The empirical frontier remains simulator verification and the shared calibration gate. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
+Tickets 01–14 are resolved (14/21). T13 closed after actual A2 full/tail/competing-update coverage and exact completed readback at 19:17 ET. Ticket 11 was resolved again at 14:00 ET after its native runtime-policy correction and independent review. The empirical frontier is now shared calibration, reference/control comparisons and candidate assessment. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
 
 ### Assigned acceptance cases
 
@@ -92,7 +92,9 @@ selected ROI. The independent terminal audit checked all 14 retained PID/start
 identities twice: 13 absent, with only the exact completed pane a zero-RSS zombie;
 node 0 generation 329 is released. Peak sampled RSS was 34,732,048,384 bytes.
 See [actual readback](observations/dx100-coverage-a2-completed-readback-20260926.json).
-This establishes finite coverage, not a candidate gain or final acceptance.
+T13 is resolved against all eight ticket criteria; its [Answer](issues/13-dx100-timed-binary-correctness.md#answer) records the evidence and limits. This establishes finite coverage, not a candidate gain or final acceptance.
+The three source-free canonical records (64,110 bytes) were pushed as `21d58c4`,
+imported locally as `916043c`, and rehashed against the [exact inventory](observations/dx100-coverage-a2-record-inventory-20260926.json).
 
 The future native campaign now routes every public CLI database into its
 accounted raw driver directory, preventing a generated checkout-root `build/`

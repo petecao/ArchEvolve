@@ -3,11 +3,11 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 12
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 18:28 ET
+## Historical checkpoint — 2026-09-26 18:28 ET
 
 The [new A2 Linux admission checks](../observations/a2-linux-fixtures-20260926-a1.json)
 ran against exact `67313d9` with separate supervisor `3f38a2b`. The two owned
@@ -103,14 +103,14 @@ Implements D08, D10, D14 and AC09–AC11. The inspected DX100 BFS path reaches a
 
 ## Acceptance criteria
 
-- [ ] Every attached correctness result identifies the exact timed binary/source, graph representation and logical workload, actual BFS source vertex, target/configuration, execution, and verifier/check version. Evidence from a different functional build cannot silently certify that binary.
-- [ ] The check enforces BFS structure: the source is its own parent, reachable vertices have valid predecessor edges at the preceding BFS depth, and unreachable vertices are represented correctly. Different valid parent trees pass.
-- [ ] A real bounded accelerated BFS execution produces explicit structural-correctness evidence and evidence that acceleration actually executed. Presence of accelerator calls in source, successful compilation, or a scalar-fallback run alone is insufficient.
-- [ ] The declared correctness cases exercise applicable full/tail tiles and competing parent updates, with graph/source identities and observed path coverage retained. A finite checked workload set is not presented as a proof for all graphs.
-- [ ] The selected correctness mechanism preserves the intended ROI and seals the timing evidence before any excluded verification. Its runtime behavior is validated; source inspection alone does not establish that post-ROI continuation or another mechanism works.
-- [ ] A printed verifier failure yields a failed correctness outcome even with a successful process exit. Missing, interrupted, or ambiguous verifier output remains incomplete/unverified and cannot promote a candidate to an implementation or support a successful gain claim.
-- [ ] Public result retrieval exposes the explicit verdict, path coverage, raw verifier evidence, and sealed ROI association in a fresh process. Previously retained unverified execution evidence is not discarded when checking fails.
-- [ ] Verification and retry attempts have predeclared limits and obey host/lane/resource procedures. Requested repetitions are reconciled with actual completed checks rather than inferred from a guest trial argument.
+- [x] Every attached correctness result identifies the exact timed binary/source, graph representation and logical workload, actual BFS source vertex, target/configuration, execution, and verifier/check version. Evidence from a different functional build cannot silently certify that binary.
+- [x] The check enforces BFS structure: the source is its own parent, reachable vertices have valid predecessor edges at the preceding BFS depth, and unreachable vertices are represented correctly. Different valid parent trees pass.
+- [x] A real bounded accelerated BFS execution produces explicit structural-correctness evidence and evidence that acceleration actually executed. Presence of accelerator calls in source, successful compilation, or a scalar-fallback run alone is insufficient.
+- [x] The declared correctness cases exercise applicable full/tail tiles and competing parent updates, with graph/source identities and observed path coverage retained. A finite checked workload set is not presented as a proof for all graphs.
+- [x] The selected correctness mechanism preserves the intended ROI and seals the timing evidence before any excluded verification. Its runtime behavior is validated; source inspection alone does not establish that post-ROI continuation or another mechanism works.
+- [x] A printed verifier failure yields a failed correctness outcome even with a successful process exit. Missing, interrupted, or ambiguous verifier output remains incomplete/unverified and cannot promote a candidate to an implementation or support a successful gain claim.
+- [x] Public result retrieval exposes the explicit verdict, path coverage, raw verifier evidence, and sealed ROI association in a fresh process. Previously retained unverified execution evidence is not discarded when checking fails.
+- [x] Verification and retry attempts have predeclared limits and obey host/lane/resource procedures. Requested repetitions are reconciled with actual completed checks rather than inferred from a guest trial argument.
 
 ## Verification
 
@@ -304,3 +304,59 @@ A2 launched at 19:09:05.775756 ET on mbit10 node 0 generation 329, exact code
 retains actual argv, process identities and completed generation/registration.
 Compilation is running. This ticket remains claimed pending actual full/tail/
 competing-update results and independent terminal audit; no retry is implied.
+
+## Answer
+
+Resolved: 2026-09-26 19:17 ET, after the completed-evidence readback passed.
+The earlier checkpoints above remain historical observations; no failed or
+unused attempt is replaced.
+
+The [actual A2 readback](../observations/dx100-coverage-a2-completed-readback-20260926.json)
+completed at 19:17:53 ET using exact
+`5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f`. It reopens the actual executable,
+simulator, source/build and request identities, canonical original graph,
+sealed ROI, protected verifier output and trace, and terminal process/resource
+evidence. Evaluation `bfs-dx100-coverage-20260926-a2.execute` has canonical
+SHA-256 `c213c93028e8bfcb85aaad4772cc1034953e0cd9e757c4d77c02c2b9f3f90bc6`
+(YAML-file SHA-256 `06c14337c23210cf86c848f803956deddf1afce94fe3d71f1482f8597526eb4c`).
+The retained host readback SHA-256 is
+`deabf45fe14b64f12574c700d396edf4bbff2bdd8bb17293927095010943eba1`;
+its terminal audit is
+`6df37b96da525b36e79a351096bf8e565550a61050f247d798e8366f9a1f3815`.
+
+This actual unchanged-author MAA execution checks source vertex 0 on the fixed
+8,212-vertex, 147,492-directed-entry graph. The `dx100.complete_call.v2` wrapper
+checks the exact returned parent buffer against independently loaded original
+adjacency after sealing `bfs.complete_call.v1`; the explicit
+`dx100.bfs.verifier.v2` outcome passes. In the sealed tick interval
+`[5622403663, 5912526180]`, the reopened trace contains **8 full tiles, 8 tail
+tiles and 14,546 competing-parent updates** at capacity 16,384, with completed
+S/I/R/A instruction counts 8/96/24/16. Parent-address binding distinguishes
+guest virtual addresses from physical trace words. These are observed finite
+cases, not inferred coverage from graph topology or a proof for all graphs.
+
+The [original-adjacency checker](../../../docs/bfs-original-graph-oracle-20260926.md)
+and compiled tests cover source/self-parent, reachability, preceding-depth
+edges, alternative valid trees, and candidate graph mutation. Public adapter
+tests retain FAIL with exit zero as incorrect and absent/ambiguous outcomes as
+unverified; the [durable interruption checks](../observations/dx100-durable-interruption-verification-20260926.json)
+retain failure before optional postmortem work. These tests establish contract
+behavior; the actual A2 supplies accelerated execution evidence. The earlier
+[a3 witness](../observations/dx100-witness-a3-terminal-20260926.json) separately
+establishes the unchanged author-traversal continuation treatment. Its explicit
+exit witness is not relabeled as observed normal guest termination.
+
+The A2 driver already ran a fresh public `get` process. Its completed reader
+requires exit zero, reaping and exact equality of that result with execution
+output, the canonical record and the audited evaluation. No additional
+`get --chain` is needed for this ticket's retrieval criterion. The one-attempt
+3,600-second outer/30-second cleanup, 48 GiB sampled-RSS and 4 GiB artifact
+bounds remain fixed. Generation 329 is released; the audited 14-identity union
+has no live owned work, retaining only the exact zero-RSS pane zombie. The
+checker records one completed check rather than assuming a guest trial count.
+
+This closes T13's correctness mechanism under D10 and its stated slice of
+AC09–AC11. Full source/graph-family candidate coverage, complete profiling,
+protocol freezes, comparisons and gain remain obligations of later tickets.
+The result explicitly has `gain_claim: false`; neither this resolution nor
+the successful readback qualifies the native pilot or promotes older failures.
