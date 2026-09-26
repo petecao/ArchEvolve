@@ -137,6 +137,7 @@ def evaluation(tmp_path):
         item.write_text('// Explicit contract fixture.\n')
         return {'path': str(item), 'sha256': hashlib.sha256(item.read_bytes()).hexdigest()}
     driver, source, harness = artifact('driver.py'), artifact('bfs.cc'), artifact('benchmark.h')
+    observer = artifact('observer.py')
     from swdb.artifacts import digest
     continuation = {'state': 'finished', 'checker': CHECKER, 'exit_tick': 150, 'exit_code': 0,
         'exit_cause': 'simulate() limit reached', 'stop_reason': 'exit_witness',
@@ -152,6 +153,7 @@ def evaluation(tmp_path):
     seal = {'format': 'swdb.dx100.roi-seal.v1', 'roi_exit_tick': 100,
         'roi_exit_cause': 'm5_exit instruction encountered', 'execution_binding_sha256': digest(binding),
         'driver_sha256': driver['sha256'], 'verification': continuation,
+        'host_memory_observer_sha256': observer['sha256'],
         'verification_parser': {'path': str(parser), 'sha256': continuation['parser_sha256']}}
     seal_path = tmp_path / 'roi-seal.json'
     seal_path.write_text(json.dumps(seal))
@@ -172,7 +174,10 @@ def evaluation(tmp_path):
                     'simulator': simulator, 'workload': workload},
         'build': {'binary': binary['path'], 'binary_sha256': binary['sha256'], 'simulator_sha256': simulator['sha256']},
         'context': {'verifier': CHECKER, 'source': 0, 'roi': binding['roi'],
-            'instrumentation': {'post_roi_trace': {**treatment, 'chunk_ticks': 10**9}},
+            'instrumentation': {'post_roi_trace': {**treatment, 'chunk_ticks': 10**9},
+                'verifier_runtime': {'driver_sha256': driver['sha256'],
+                    'parser_sha256': continuation['parser_sha256'], 'observer_sha256': observer['sha256']}},
+            'host_memory_observer': observer,
             'verification_driver': driver, 'timed_source': source, 'verifier_source': {**source, 'harness': harness},
             'verification_parser': {'path': str(parser), 'sha256': hashlib.sha256(parser.read_bytes()).hexdigest()},
             'post_roi_trace': trace_ref, 'execution_binding': binding,
@@ -189,6 +194,27 @@ def test_completed_witness_does_not_require_normal_guest_exit(tmp_path):
     assert data == original
     data['outcome']['state'] = 'running'
     assert validate_completed_witness(data, require_complete_evaluation=False)['completed'] is True
+
+
+@pytest.mark.parametrize('field', ['driver_sha256', 'parser_sha256', 'observer_sha256'])
+def test_frozen_runtime_instrumentation_must_match_retained_helpers(tmp_path, field):
+    from swdb.cli import Failure
+    data = evaluation(tmp_path)
+    data['context']['instrumentation']['verifier_runtime'][field] = '0' * 64
+    with pytest.raises(Failure, match='runtime instrumentation'):
+        validate_completed_witness(data, verify_artifacts=False)
+
+
+def test_runtime_identity_and_sealed_observer_cannot_be_omitted_or_changed(tmp_path):
+    from swdb.cli import Failure
+    data = evaluation(tmp_path)
+    missing = copy.deepcopy(data)
+    missing['context']['instrumentation'].pop('verifier_runtime')
+    with pytest.raises(Failure, match='verifier_runtime'):
+        validate_completed_witness(missing, verify_artifacts=False)
+    data['context']['sealed_roi']['host_memory_observer_sha256'] = '0' * 64
+    with pytest.raises(Failure, match='sealed host memory observer'):
+        validate_completed_witness(data, verify_artifacts=False)
 
 
 @pytest.mark.parametrize('mutation', [
@@ -255,7 +281,7 @@ def test_record_witness_rechecks_available_artifacts_without_changing_data(tmp_p
     original = copy.deepcopy(data)
     found = validate_record_witness(data)
     assert found['availability']['state'] == 'verified'
-    assert len(found['availability']['artifacts']) == 8
+    assert len(found['availability']['artifacts']) == 9
     assert all(row['state'] == 'verified' for row in found['availability']['artifacts'])
     assert data == original
 
@@ -320,7 +346,7 @@ def test_available_artifact_mismatch_rejects_even_if_others_are_remote(tmp_path,
         validate_record_witness(data)
 
 
-@pytest.mark.parametrize('artifact', ['output', 'trace', 'timed_source', 'protected_wrapper', 'seal'])
+@pytest.mark.parametrize('artifact', ['output', 'trace', 'timed_source', 'protected_wrapper', 'seal', 'host_memory_observer'])
 def test_local_artifact_tampering_is_rejected(tmp_path, artifact):
     from swdb.cli import Failure
     data = evaluation(tmp_path)

@@ -1,6 +1,6 @@
 """Public, durable proposal workflow. Source changes never imply correctness.
 
-Updated: 2026-09-25. YAML records remain authoritative; raw artifacts are external.
+Updated: 2026-09-26. YAML records remain authoritative; raw artifacts are external.
 """
 
 import copy
@@ -147,8 +147,18 @@ def get_record(args):
             linked = [d.get(key) for key in (
                 "proposal", "candidate", "source_snapshot", "profile_package", "parent_candidate",
                 "protocol", "candidate_evaluation", "baseline_evaluation", "comparison_baseline",
-                "evaluation", "region_profile")]
+                "evaluation", "region_profile", "implementation", "application", "kernel",
+                "machine", "hardware_target")]
             request, build, settings = (mapping(d.get(key)) for key in ("request", "build", "settings"))
+            context = mapping(d.get("context"))
+            linked.extend(owner.get("protocol") for owner in (request, context))
+            linked.append(context.get("target"))
+            for owner in (d, request, context):
+                workload = owner.get("workload")
+                linked.append(workload if isinstance(workload, str) else mapping(workload).get("id"))
+            linked.extend(mapping(d.get("workload_identities")))
+            if isinstance(settings.get("workloads"), list):
+                linked.extend(settings["workloads"])
             linked.extend(request.get(key) for key in (
                 "build_evaluation", "candidate_build", "diagnostic_evaluation", "checkpoint_evaluation"))
             linked.extend(mapping(request.get("region_packages")).values())

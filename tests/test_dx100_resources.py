@@ -1,4 +1,4 @@
-"""Bounded host-only observation controls. Updated: 2026-09-25."""
+"""Bounded host-only observation controls. Updated: 2026-09-26."""
 import json
 from pathlib import Path
 import runpy
@@ -103,4 +103,5 @@ def test_sealed_roi_rejects_different_host_observer_before_accepting_verdict(tmp
         'execution_binding_sha256': 'execution', 'verification_driver': {'sha256': 'driver'},
         'host_memory_observer': {'sha256': 'expected-observer'}}})
     with pytest.raises(StageFailure, match='sealed ROI does not identify'):
-        _correctness(session, {}, tmp_path, tmp_path / 'unused.log', True)
+        _correctness(session, {'verification': {'checker': 'dx100.bfs.verifier.v1'}},
+                     tmp_path, tmp_path / 'unused.log', True)

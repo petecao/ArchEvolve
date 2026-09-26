@@ -263,6 +263,7 @@ def _witness_artifacts(data):
     rows = [('seal', context['sealed_roi']), ('parser', context['verification_parser']),
             ('trace', context['post_roi_trace']), ('output', check['output']),
             ('verification_driver', context['verification_driver']),
+            ('host_memory_observer', context['host_memory_observer']),
             ('timed_source', context['timed_source']), ('verifier_source', context['verifier_source'])]
     rows.append(('protected_wrapper', context['candidate_driver'] if context.get('candidate_build')
                  else context['verifier_source']['harness']))
@@ -332,6 +333,16 @@ def validate_completed_witness(evaluation, *, verify_artifacts=True, require_com
             _integer(source, 'BFS source')
         _need(seal['format'] == 'swdb.dx100.roi-seal.v1' and seal['roi_exit_cause'] == 'm5_exit instruction encountered'
               and seal['driver_sha256'] == context['verification_driver']['sha256'], 'ROI seal or driver identity differs')
+        runtime = context['instrumentation']['verifier_runtime']
+        expected_runtime = {
+            'driver_sha256': context['verification_driver']['sha256'],
+            'parser_sha256': context['verification_parser']['sha256'],
+            'observer_sha256': context['host_memory_observer']['sha256']}
+        _need(_same(runtime, expected_runtime)
+              and all(isinstance(value, str) and _HASH.fullmatch(value) for value in expected_runtime.values()),
+              'verifier runtime instrumentation differs from retained helper identities')
+        _need(seal['host_memory_observer_sha256'] == expected_runtime['observer_sha256'],
+              'sealed host memory observer identity differs')
         _need(check['sealed_roi'] == {key: seal[key] for key in ('path', 'sha256')}, 'check names another ROI seal')
         verdicts = check['observed_verdicts']
         _need(len(verdicts) == 1 and verdicts[0].get('verdict') == 'PASS' and verdicts[0].get('after_seal') is True,

@@ -2,6 +2,7 @@
 from copy import deepcopy
 import json
 from pathlib import Path
+import shutil
 import sys
 
 import pytest
@@ -130,6 +131,46 @@ def test_public_v2_requires_explicit_trace_before_execution(case):
     assert result['outcome']['state'] == 'failed'
     assert 'explicit post_roi_trace' in result['outcome']['reason']
     assert not any(stage['stage'] in {'checkpoint', 'simulation'} for stage in result['stages'])
+
+
+def test_public_v2_retains_trusted_runtime_after_checkout_helpers_change(case, records, monkeypatch):
+    from swdb import bfs_coverage
+    from swdb.dx100_witness import validate_completed_witness
+    data = v2_request(case, 'witness')
+    _, invoke, folder = case
+    repo = Path(__file__).resolve().parents[1]
+    checkout = folder / 'helper-checkout'
+    for name in ('schemas', 'vocab'):
+        shutil.copytree(repo / name, checkout / name)
+    names = ('scripts/dx100_verify.py', 'scripts/dx100_host_memory.py', 'swdb/dx100_witness.py')
+    for name in names:
+        target = checkout / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(repo / name, target)
+    monkeypatch.setenv('SWDB_HOME', str(checkout))
+    result = invoke('dx100-execute', data)
+    assert result['outcome']['state'] == 'complete', result['outcome']
+    context = result['context']
+    runtime = context['verification_runtime']
+    assert runtime['source_paths_are_provenance_only'] is True
+    snapshots = folder / 'runs' / data['id'] / 'verification-runtime'
+    for name, row in zip(names, runtime['files']):
+        assert row['source'] == {'code_root': str(checkout), 'repository_relative_path': name,
+                                 'copied_sha256': reference(checkout / name)['sha256']}
+        assert row['snapshot'] == reference(snapshots / name)
+        assert row['source']['copied_sha256'] == row['snapshot']['sha256']
+        (checkout / name).write_text('# Changed temporary checkout helper after execution.\n')
+    assert Path(context['verification_driver']['path']) == snapshots / names[0]
+    assert Path(context['host_memory_observer']['path']) == snapshots / names[1]
+    assert Path(context['verification_parser']['path']) == snapshots / names[2]
+    assert context['instrumentation']['verifier_runtime'] == {
+        'driver_sha256': context['verification_driver']['sha256'],
+        'parser_sha256': context['verification_parser']['sha256'],
+        'observer_sha256': context['host_memory_observer']['sha256']}
+    assert validate_completed_witness(result)['completed'] is True
+    assert_downstream_verifier_contract(result)
+    availability = bfs_coverage._availability([result], context['host'])
+    assert availability and all(row['state'] == 'verified' for row in availability), availability
 
 
 @pytest.mark.parametrize('behavior', ['candidate', 'candidate-missing-parent', 'candidate-wrong-source', 'candidate-after-pass'])

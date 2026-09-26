@@ -268,6 +268,21 @@ def test_new_protocol_version_preserves_comparison_and_marks_rerun(protocol_setu
     assert "binding" in refused["decision"]["reasons"][0]
 
 
+def test_fresh_result_chain_retains_registered_workload_identity(protocol_setup):
+    records, workload, frozen, _, evaluations, _ = protocol_setup
+    for root in (evaluations['baseline']['id'], evaluations['candidate']['id'], frozen['id']):
+        result = records.swdb('get', root, '--chain', '--format', 'json')
+        assert result.returncode == 0, result.stderr
+        chain = json.loads(result.stdout)
+        assert chain['root'] == root
+        assert chain['records'].get(workload['id']) == workload
+        assert chain['records'].get(frozen['id']) == frozen
+        if root != frozen['id']:
+            evaluation = next(row for row in evaluations.values() if row['id'] == root)
+            for field in ('implementation', 'machine'):
+                assert evaluation[field] in chain['records']
+
+
 def test_public_protocol_rejects_different_contents_under_same_logical_version(protocol_setup, tmp_path):
     records, _, original, request, _, _ = protocol_setup
     request.update(version=2, supersedes=original['id'])

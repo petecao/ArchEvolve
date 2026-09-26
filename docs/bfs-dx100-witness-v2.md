@@ -64,6 +64,17 @@ clean simulator process and a passed protected completion sequence:
 - Candidate execution: one post-seal parent-result record for the exact source
   and parent count, then PASS, tied to the protected source and wrapper.
 
+Each new v2 execution retains exact driver, parser, and host memory observer
+bytes under its own `verification-runtime` directory. The authoritative
+`verification_driver`, `verification_parser`, and `host_memory_observer`
+references point to these copies. `instrumentation.verifier_runtime` contains
+only their `driver_sha256`, `parser_sha256`, and `observer_sha256` digests, so a
+frozen instrumentation policy binds the actual checker code without binding
+per-run paths. Qualification requires all three digests to match the retained
+references and the seal's driver, parser, and observer identities. The
+`verification_runtime` copy receipt records original repository locations as
+provenance; changing a later checkout does not change the retained runtime.
+
 Available output is streamed with a 2 GiB bound and its completion observations
 are reconstructed from the same bytes that are hashed. Trace bytes are reparsed;
 seal JSON and source/wrapper/parser hashes are rechecked. Metadata-only mode

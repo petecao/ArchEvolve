@@ -38,6 +38,47 @@ def _file(reference, name):
     return path
 
 
+def _verification_runtime(session):
+    """Preserve the exact trusted v2 helpers beyond a later checkout update."""
+    folder = session.folder / 'verification-runtime'
+    folder.mkdir(exist_ok=False)
+    rows = []
+    for relative in ('scripts/dx100_verify.py', 'scripts/dx100_host_memory.py',
+                     'swdb/dx100_witness.py'):
+        source = paths.HOME / relative
+        original = {'path': str(source), 'sha256': artifacts.file_hash(source)}
+        _file(original, 'trusted verification helper')
+        if source.stat().st_size > 1024 * 1024:
+            raise Failure('trusted verification helper exceeds 1 MiB')
+        contents = source.read_bytes()
+        if len(contents) > 1024 * 1024:
+            raise Failure('trusted verification helper exceeds 1 MiB')
+        destination = folder / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        with destination.open('xb') as stream:
+            stream.write(contents)
+            stream.flush()
+            os.fsync(stream.fileno())
+        snapshot = {'path': str(destination), 'sha256': artifacts.file_hash(destination)}
+        if snapshot['sha256'] != original['sha256']:
+            raise Failure('trusted verification helper changed during snapshot')
+        _file(original, 'trusted verification helper')
+        rows.append({'source': {'code_root': str(paths.HOME),
+                                'repository_relative_path': relative,
+                                'copied_sha256': original['sha256']},
+                     'snapshot': snapshot})
+    for directory in (folder / 'scripts', folder / 'swdb', folder, session.folder):
+        descriptor = os.open(str(directory), os.O_RDONLY)
+        try:
+            os.fsync(descriptor)
+        finally:
+            os.close(descriptor)
+    session.data['context']['verification_runtime'] = {
+        'format': 'swdb.dx100.verification-runtime.v1', 'files': rows,
+        'source_paths_are_provenance_only': True}
+    return folder
+
+
 def _request(args, action):
     store = _require_valid(args.records)
     try:
@@ -631,11 +672,14 @@ def execute(args):
                     verifier_source={"path": str(source_file), "sha256": artifacts.file_hash(source_file),
                         "symbol": "BFSVerifier", "lines": [463, 508],
                         "harness": {"path": str(harness), "sha256": artifacts.file_hash(harness)}})
-            data["context"]["verification_driver"] = {"path": str(driver), "sha256": artifacts.file_hash(driver)}
-            if verify['checker'] == 'dx100.bfs.verifier.v2':
-                parser = paths.HOME / 'swdb/dx100_witness.py'
-                data['context']['verification_parser'] = {'path': str(parser), 'sha256': artifacts.file_hash(parser)}
             observer = paths.HOME / 'scripts/dx100_host_memory.py'
+            if verify['checker'] == 'dx100.bfs.verifier.v2':
+                runtime = _verification_runtime(session)
+                driver = runtime / 'scripts/dx100_verify.py'
+                observer = runtime / 'scripts/dx100_host_memory.py'
+                parser = runtime / 'swdb/dx100_witness.py'
+                data['context']['verification_parser'] = {'path': str(parser), 'sha256': artifacts.file_hash(parser)}
+            data["context"]["verification_driver"] = {"path": str(driver), "sha256": artifacts.file_hash(driver)}
             data['context']['host_memory_observer'] = {'path': str(observer),
                 'sha256': artifacts.file_hash(observer), 'sample_interval_seconds': 5,
                 'scope': 'host process group and bounded phase observations; no modeled changes'}
@@ -649,6 +693,11 @@ def execute(args):
             'roi': data['context']['roi'], 'suppressed_internal_events': compiled['context']['suppressed_internal_events'] if compiled else [],
             'verification': 'same_guest_post_roi' if verify else 'none',
             'debug_flags': 'MAATrace,MAARangeFuser,MAAIndirect' if verify and verify.get('coverage') else 'MAATrace'}
+        if verify and verify['checker'] == 'dx100.bfs.verifier.v2':
+            instrumentation['verifier_runtime'] = {
+                'driver_sha256': data['context']['verification_driver']['sha256'],
+                'parser_sha256': data['context']['verification_parser']['sha256'],
+                'observer_sha256': data['context']['host_memory_observer']['sha256']}
         if verify and 'post_roi_trace' in verify:
             instrumentation['post_roi_trace'] = {
                 'flag': verify['post_roi_trace'], 'scope': 'post-seal verifier continuation only'}

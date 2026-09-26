@@ -1,4 +1,4 @@
-"""Actual patch application and durable public workflow behavior. Updated 2026-09-25."""
+"""Actual patch application and durable public workflow behavior. Updated 2026-09-26."""
 
 import difflib
 import json
@@ -56,7 +56,8 @@ def test_real_patch_creates_unverified_candidate_and_survives_rebuild(proposal_s
     assert "int alpha = 14" in (Path(candidate["artifact"]["path"]) / "src/bfs.cc").read_text()
     assert "int alpha = 15" in (Path(snapshot["artifact"]["path"]) / "src/bfs.cc").read_text()
     assert chain["test-package"]["completeness"] == "fixture"
-    assert set(chain) == {"test-source", "test-package", "test-proposal", candidate["id"]}
+    assert set(chain) == {"test-source", "test-package", "test-proposal", candidate["id"],
+                          "gapbs-bfs-do", "gapbs", "gapbs-bfs"}
 
 
 @pytest.mark.parametrize("case", ["stale", "wrong_source", "protected", "conflict", "operation", "scope", "invalid_producer"])
