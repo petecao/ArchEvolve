@@ -213,3 +213,12 @@ and an independently discovered receipt-write timing issue are under review;
 no full-suite pass is claimed. Native progress is 183/240 with three controls
 passed. Acceptance remains 0/8 with no qualified gain. Final all-ticket review
 and synchronization remain outstanding.
+
+## Fixture repair checkpoint — 2026-09-26 17:33 ET
+
+The corrected broad run at `7fe4c34` exposed 16 old campaign fixture seals;
+all 16 targeted repaired cases pass. The initial exact export `c0df79e` has
+two related reassessment fixture failures under repair. Both original results
+remain retained; no broad green result or code push is claimed. Native controls
+have 237/240 checked trials. See the [full audit](../observations/health-20260926-1733.json).
+Acceptance remains 0/8, with 13 resolved and eight claimed tickets.

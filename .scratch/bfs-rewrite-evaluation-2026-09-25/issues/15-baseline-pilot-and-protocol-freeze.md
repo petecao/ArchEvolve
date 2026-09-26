@@ -357,3 +357,10 @@ The fourth cell has 3/60 checked. See the [health audit](../observations/health-
 and [third-cell analysis](../observations/native-one-thread-third-cell-20260926.json).
 The original hard stop is unchanged. All four controls and fresh diagnostics
 remain required before empirical freeze; this ticket remains claimed.
+
+## Continued one-thread controls — 2026-09-26 17:33 ET
+
+The [full health audit](../observations/health-20260926-1733.json) has 237/240
+checked trials and three passed controls. The fourth control and all fresh
+diagnostics remain outstanding. The original hard stop and single occupied
+socket are unchanged. No empirical freeze or candidate gain is established.

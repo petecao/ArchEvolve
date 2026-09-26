@@ -127,6 +127,27 @@ before the final exception-note delta; all six affected final-delta cases pass.
 Actual Linux admission and final acceptance remain outstanding. The separate
 A2 fixture route must bind its old tested runtime and new supervisor explicitly.
 
+## Progress check — 2026-09-26 17:33 ET
+
+The [full health audit](observations/health-20260926-1733.json) confirms native
+progress at 237/240 checked trials, with three fixed controls passed and the
+fourth still running. The pilot retains exact code `319645e`, socket 1 generation
+402, empty stderr and the original 20:11:35 ET hard end. Recent sampled peak RSS
+is 1.18 GiB. Socket 0 generation 325 and legacy generation 77 are released;
+all historical receipt hashes, PID/start unions and runtime/helper pins pass.
+Free build/raw space is 16.38/181.16 GiB. All three workers are responsive;
+next full check is 18:03 ET. No additional host job or checkout change occurred.
+
+The corrected broad suite at `7fe4c34` exposed 16 campaign fixture failures:
+old synthetic execution-class packages lack the now-required assembly seal.
+The repaired module passes all 16 cases while preserving semantic negative
+checks. The separate exact export `c0df79e` has two related reassessment fixture
+failures under repair. Both runs continue and their original failures remain
+retained. The 54-file export inventory passed independent review but is not
+pushed; its updated test fixtures will receive a fresh explicit export check.
+Production package-seal enforcement is unchanged. Counts remain **13/21
+resolved and 0/8 final cells**, with no empirical freeze or qualified gain.
+
 ## Independent fixture closure preparation — 2026-09-26
 
 The [post-exit proof auditor](observations/linux-fixture-audit-preparation-20260926.json)
