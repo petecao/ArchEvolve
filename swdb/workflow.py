@@ -355,6 +355,25 @@ def submit(args):
     return persist(args.records, data, args.db)
 
 
+def _repairable_build_failure(evaluation, candidate):
+    outcome = evaluation.get("outcome", {})
+    if outcome.get("state") != "failed":
+        return False
+    if outcome.get("stage") == "build":
+        return True
+    if outcome.get("stage") != "candidate_compile":
+        return False
+    context = evaluation.get("context", {})
+    return (context.get("backend") == "dx100-gem5-se"
+            and context.get("candidate_sha256") == candidate["artifact"]["sha256"]
+            and evaluation.get("request", {}).get("candidate") == candidate["id"]
+            and evaluation.get("source_snapshot") == candidate["source_snapshot"]
+            and evaluation.get("build", {}).get("adapter") == "dx100.complete_call.v1"
+            and any(stage.get("stage") == "candidate_compile" and stage.get("state") == "failed"
+                    and type(stage.get("returncode")) is int and stage["returncode"] != 0
+                    and stage.get("log_sha256") for stage in evaluation.get("stages", [])))
+
+
 def repair(args):
     """Retain a new repair candidate without changing strategy or discarding failures."""
     from swdb import rewrite
@@ -378,9 +397,9 @@ def repair(args):
         seconds = min(budget["total_seconds"], config["total_seconds"]) - budget["used_seconds"]
         prior = store.get(evaluation.get("candidate"), "candidate")
         reason = None
-        if not prior or prior["id"] != data.get("candidate"):
+        if not prior or prior["id"] != data.get("candidate") or prior.get("proposal") != proposal_id:
             reason = "repair evaluation does not name the latest candidate of this proposal"
-        elif not ((evaluation["outcome"]["stage"] == "build" and evaluation["outcome"]["state"] == "failed")
+        elif not (_repairable_build_failure(evaluation, prior)
                   or evaluation["correctness"]["state"] == "failed"):
             reason = "only build or correctness failures admit repairs; regressions do not trigger tuning"
         elif budget["repairs"] >= maximum or seconds <= 0:

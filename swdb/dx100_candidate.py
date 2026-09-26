@@ -123,6 +123,10 @@ def compile_candidate(args):
         candidate = store.get(request.get("candidate"), "candidate")
         if not candidate:
             raise Failure("candidate source is unavailable")
+        data.update(candidate=candidate["id"], source_snapshot=candidate["source_snapshot"],
+                    implementation=candidate["implementation"])
+        if candidate.get("proposal"):
+            data["proposal"] = candidate["proposal"]
         original = store.get(candidate["source_snapshot"], "source_snapshot")
         implementation = store.get(candidate['implementation'], 'implementation')
         expected_function = original.get('context', {}).get('function', implementation.get('function'))
@@ -197,7 +201,6 @@ def compile_candidate(args):
         driver_path.write_text(driver_text)
         command = [str(compiler), *flags, *('-I' + str(path) for path in includes),
             str(driver_path), str(m5_source), "-o", str(binary)]
-        data.update(candidate=candidate["id"], source_snapshot=candidate["source_snapshot"], implementation=candidate["implementation"])
         verifier = next((guard for guard in candidate["protections"] if guard["kind"] == "verifier"), None)
         if not verifier or verifier["path"] != source_path:
             raise Failure("candidate has no protected BFS verifier in its translation unit")

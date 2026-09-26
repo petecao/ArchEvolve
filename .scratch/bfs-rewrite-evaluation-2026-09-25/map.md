@@ -108,6 +108,12 @@ These four cases cover all eight source/route/graph cells, all four payload form
 
 ## Context pointers
 
+- 2026-09-25 23:46 ET: isolated fixed-commit validation at `d9c4c10` passed
+  **765 tests with 3 skips and no failures**, in 1660.57 seconds. The checkout
+  remained clean and unchanged throughout. The actual run was 23:15:16–23:42:57 ET;
+  logs and the earlier Python-selection setup failure are preserved in
+  `docs/evidence/bfs-validation-20260925-d9c4c10.yaml`. Later fixes are covered by
+  separately recorded focused tests; this is not a full-suite claim for later HEAD.
 - 2026-09-25 23:40 ET: twelve tickets are resolved. Ticket12 now meets its
   explicitly unverified checkpoint-to-ROI smoke scope: a6's simulator stage
   completed within wall/RSS bounds and sealed the actual ROI. Its overall

@@ -54,6 +54,14 @@ candidate identity. It records the trigger, interpretation, changed source, and
 parent candidate. Budget exhaustion retains all prior candidates and evaluations.
 A valid regression is returned as an outcome; it does not trigger tuning.
 
+DX100 candidate compiler failures retain the originating proposal and candidate.
+A failed `candidate_compile` subprocess can enter the same repair path only when
+its request/source hash, source snapshot, complete-call adapter, nonzero compiler
+return code and retained log identity agree. Model builds, source validation,
+discovery failures, timeouts and resource exhaustion do not become compiler-repair
+opportunities merely because they precede execution. The original failed record
+remains unchanged and the repair still consumes the proposal's existing limit.
+
 The evaluator-owned verifier, canonical graph input, trusted driver, and ROI
 definition remain unchanged through generation and repairs. Passing a build or
 producing a candidate is distinct from passing the structural correctness check;

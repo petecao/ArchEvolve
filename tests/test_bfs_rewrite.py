@@ -10,6 +10,7 @@ import yaml
 
 from test_proposals import proposal_setup
 from test_bfs_native import evaluation_setup, evaluate
+from test_dx100 import case
 
 
 @pytest.fixture
@@ -178,3 +179,60 @@ def test_out_of_scope_repair_remains_explicitly_unresolved(evaluation_setup,prov
     assert data['repair_budget']['repairs']==1 and data['repair_budget']['used_seconds']>0
     later=records.swdb('get',data['id'],'--chain','--format','json')
     assert failed['id'] in json.loads(later.stdout)['records']
+
+
+def test_public_dx100_compiler_failure_keeps_proposal_and_allows_one_repair(evaluation_setup, case, provider):
+    from test_dx100 import reference
+    records, runs, _, base = evaluation_setup
+    request, invoke, folder = case
+    model = request('repair-model-build')
+    model['fixture_command'] = [sys.executable, '-c', "print('explicit model fixture')"]
+    assert invoke('dx100-build', model)['outcome']['state']=='complete'
+    assembly = Path(model['model_root'])/'util/m5/src/abi/x86/m5op.S'
+    assembly.parent.mkdir(parents=True); assembly.write_text('// fixture assembly\n')
+    compiler = folder/'failing-dx-compiler'
+    compiler.write_text(f'#!{sys.executable}\nprint("fixture C++ syntax error")\nraise SystemExit(7)\n')
+    compiler.chmod(0o755)
+    candidate = json.loads(records.swdb('get', base['candidate'], '--format', 'json').stdout)
+    build = request('repair-candidate-build')
+    build.update(candidate=candidate['id'], build_evaluation=model['id'], function='DOBFS',
+        accelerated=False, roi='bfs.complete_call.v1', fixture_compiler=reference(compiler),
+        budget={'total_seconds':60,'build_seconds':10,'memory_gib':1,'storage_gib':1})
+    failed = invoke('dx100-compile', build)
+    assert failed['outcome']['stage']=='candidate_compile' and failed['outcome']['state']=='failed'
+    assert failed['proposal']==candidate['proposal']
+    assert failed['stages'][-1]['returncode']==7 and failed['stages'][-1]['log_sha256']
+    original = (Path(candidate['artifact']['path'])/'src/bfs.cc').read_text()
+    config = provider(patch_between(original,original.replace('int alpha = 14','int alpha = 13')))
+    before = records.path/'evaluations'/f"{failed['id']}.yaml"
+    retained = before.read_bytes()
+    result = records.swdb('repair',failed['id'],'--provider-config',config,'--runs-dir',runs,'--format','json')
+    assert result.returncode==0,result.stderr
+    repaired = json.loads(result.stdout)
+    assert repaired['repair_budget']['repairs']==1
+    assert repaired['attempts'][-1]['trigger_evaluation']==failed['id']
+    assert repaired['attempts'][-1]['parent_candidate']==candidate['id']
+    assert before.read_bytes()==retained
+    chain = json.loads(records.swdb('get',repaired['candidate'],'--chain','--format','json').stdout)
+    assert failed['id'] in chain['records'] and candidate['id'] in chain['records']
+
+
+def test_dx100_repair_eligibility_excludes_noncompiler_failures():
+    import copy
+    from swdb.workflow import _repairable_build_failure
+    candidate={'id':'c','artifact':{'sha256':'a'*64},'source_snapshot':'s'}
+    evaluation={'outcome':{'state':'failed','stage':'candidate_compile'},
+        'request':{'candidate':'c'},'source_snapshot':'s',
+        'context':{'backend':'dx100-gem5-se','candidate_sha256':'a'*64},
+        'build':{'adapter':'dx100.complete_call.v1'},
+        'stages':[{'stage':'candidate_compile','state':'failed','returncode':7,'log_sha256':'b'*64}]}
+    assert _repairable_build_failure(evaluation,candidate)
+    for field,value in [('stage','validation'),('stage','candidate_compiler_identity'),
+                        ('stage','diagnostic_discovery'),('state','timed_out'),('state','budget_exhausted')]:
+        bad=copy.deepcopy(evaluation);bad['outcome'][field]=value
+        assert not _repairable_build_failure(bad,candidate)
+    for field,value in [('returncode',0),('returncode',None),('log_sha256',None)]:
+        bad=copy.deepcopy(evaluation);bad['stages'][0][field]=value
+        assert not _repairable_build_failure(bad,candidate)
+    bad=copy.deepcopy(evaluation);bad['context']['candidate_sha256']='c'*64
+    assert not _repairable_build_failure(bad,candidate)
