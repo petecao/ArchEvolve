@@ -213,3 +213,28 @@ covers serial and paired modes and verifies that paired primary collection occur
 before diagnostic collection. Both cases passed separately and are included in
 the 213-case group. The original full-suite run is preserved unchanged; it is not
 reported as green or as verification of the later driver checkpoint.
+
+## Full-suite result and documentation repair — 2026-09-26 10:20 ET
+
+The isolated run at **`721fa72` finished with 1,164 passed, 3 failed, and
+3 skipped in 2,474.56 seconds**. Its unchanged log is
+`/private/tmp/bfs-full-suite-20260926-0939-721fa72.log`, SHA-256
+`a2eac04e206f2a11fc1054f56ba7db25ef35ead5e3dfbb0306370ca910f09185`.
+The three failures are exactly the campaign fixture described above and two
+format-document checks. No other test failure occurred.
+
+The document checks identified missing explicit definitions for six paired
+receipt fields. [The paired contract](bfs-native-paired.md) now documents the
+request/schedule/receipt digests, observations, preparation timestamp, and the
+remaining paired fields, including incomplete outcomes. Its calibration link
+also reflects the implemented separate admission reader. Independent review
+confirmed the descriptions against the schema and collector. All four format
+checks pass in 0.03 seconds; the original two-failure reproduction remains in
+`/private/tmp/bfs-format-paired-regression-20260926.log`, while the passing log is
+`/private/tmp/bfs-format-paired-corrected-20260926.log`, SHA-256
+`988344a7589dd35ded61b8e784dcd5bc43cb64ba0f19a2bda1a7ec44b380abcb`.
+
+The fixture correction and document checks are targeted post-failure evidence,
+not a relabeled full-suite pass at a newer commit. The new explicit campaign
+candidate-reuse path is under separate implementation/review and is not covered
+by the pinned full run. No new remote evaluation occurred.

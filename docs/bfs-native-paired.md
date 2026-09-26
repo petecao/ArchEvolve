@@ -28,6 +28,28 @@ retain partial observations and stop the pair; they cannot produce a complete
 receipt or qualify a comparison. Total pair time includes both builds, checking,
 and persistence, and each ordinary evaluation retains its own total bound.
 
+The format 0.4 `evaluation_pair` record uses the ordinary record identity fields
+and these paired-evaluation fields:
+
+| Field | Meaning |
+|---|---|
+| `message_version`, `producer` | Public request version and evaluator producer identity |
+| `request`, `request_sha256` | Exact submitted request and its canonical content digest |
+| `collection` | Collection method and prospective order seed |
+| `schedule`, `schedule_sha256` | Complete planned trial order and its canonical content digest |
+| `observations` | Completed trial entries in schedule order, with member evaluation, timing, and correctness bindings; partial after a failure |
+| `baseline_evaluation`, `candidate_evaluation` | IDs of the two ordinary member evaluation records |
+| `evaluation_identities` | Canonical content digest for each retained member evaluation |
+| `started`, `prepared_at`, `finished` | Pair start, completion of both preparations, and finalization timestamps; a preparation failure can omit `prepared_at` |
+| `outcome` | Running, complete, failed, or interrupted state, stage, and retained reason |
+| `evidence_kind` | `execution` or explicitly labeled `contract_fixture` evidence |
+| `gain_claim` | Always false; collection does not decide profitability |
+| `receipt_sha256` | Canonical digest of the finalized record excluding this digest field itself |
+
+Complete admission requires the exact request, schedule, receipt, and member
+identities, as well as every scheduled observation. Optional schema fields do
+not allow an unfinished or partial record to qualify a comparison.
+
 A paired frozen native protocol explicitly adds
 `sampling.collection: {method: native_paired.v1, order_seed: INTEGER}` and
 `sampling.analysis: paired_repetition_block_bootstrap.v1`. Its existing
@@ -56,12 +78,14 @@ each member including its waiting time, with the existing 180-second build and
 60-second process limits. Its enclosing campaign budget still applies. These
 new-mode bounds do not increase any earlier pilot's allowance.
 
-This interface does not qualify paired pilot evidence for the existing pilot
-publisher, reset the expired pilot, or establish empirical readiness. A future
-calibration plan must predeclare its finite count and budget; ten pairs can
+The collector alone does not qualify paired pilot evidence, reset the expired
+pilot, or establish empirical readiness. The separate
+[prospective calibration plan](bfs-native-paired-pilot-20260926.md) and
+[admission reader](bfs-pilot-freeze.md) predeclare and enforce a finite count and
+budget; ten pairs can
 provide exact role-order balance, but a passing A/A control alone does not prove
 95% interval coverage or statistical power. Old failed controls remain retained.
 The collector never makes a gain claim or decides calibration readiness. Any
 numerical A/A gain is a failed negative control, not a candidate improvement;
-the later pilot reader must retain both label directions and the fixed false-gain
+the pilot reader retains both label directions and the fixed false-gain
 veto before paired evidence can qualify protocol publication.

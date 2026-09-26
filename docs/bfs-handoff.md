@@ -1,7 +1,7 @@
 # BFS workflow handoff
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 
 This handoff describes the implemented interfaces and the evidence available during
 implementation. Campaign acceptance is still pending. The final coverage query,
@@ -29,6 +29,7 @@ original format. The contracts are:
 | Proposal result | `schemas/proposal.schema.json` | Original payload, interpretation, provider, bounds, attempts, rejection/failure/candidate outcome |
 | Candidate | `schemas/candidate.schema.json` | Actual changed artifact or explicitly unchanged source baseline; no implicit correctness |
 | Evaluation result | `schemas/evaluation.schema.json` | Exact candidate/binary/workload, stage outcomes, correctness, native/simulated quantities and raw references |
+| Paired native collection | `schemas/evaluation_pair.schema.json` and [paired contract](bfs-native-paired.md) | Prospective adjacent trial schedule, two member evaluations, and retained execution receipt; no gain claim from collection |
 | Workload and protocol | `schemas/workload.schema.json`, `schemas/protocol.schema.json` | Content-addressed registration/freeze with version and supersession links |
 | Explicit comparison | `schemas/comparison_result.schema.json` | Compatible baseline/candidate evidence, frozen policy, gain/regression/inconclusive/rejected result |
 
@@ -61,6 +62,8 @@ that the file exists on another host.
 6. Before candidate performance assessment, register equivalent graph
    representations and freeze the concrete comparison protocol.
 7. Evaluate the returned candidate and reprofile its actual current source.
+   A native protocol declaring `native_paired.v1` uses `evaluate-pair` for fresh
+   baseline/candidate observations; collect diagnostic profiles after the pair.
    Use `repair EVALUATION` only for retained build/correctness failures within the
    fixed proposal budget. A valid regression is returned without performance tuning.
 8. Use `compare-evaluations` with explicit
