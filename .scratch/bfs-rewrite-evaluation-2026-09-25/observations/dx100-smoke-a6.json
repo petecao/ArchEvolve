@@ -1,0 +1,560 @@
+{
+  "automatic_retry_allowed": false,
+  "capacity": [
+    {
+      "eligible": false,
+      "estimated_available_kib": 53873544,
+      "global_available_kib": 110309088,
+      "node": 0,
+      "receipt": {
+        "bytes": 47502,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6-capacity-check8-node0.json",
+        "sha256": "7be69a85416378f044c747a962c92dc5489de88c5cf5b7dc9d6dc7f4691749cc"
+      }
+    },
+    {
+      "eligible": true,
+      "estimated_available_kib": 54544948,
+      "global_available_kib": 110300116,
+      "node": 1,
+      "receipt": {
+        "bytes": 47450,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6-capacity-check8-node1.json",
+        "sha256": "ed97aec8254c9ee00d0c2e51e61bbec7192da9f81511b426db6debe82d207483"
+      }
+    },
+    {
+      "eligible": true,
+      "estimated_available_kib": 55016988,
+      "global_available_kib": 111087228,
+      "node": 1,
+      "receipt": {
+        "bytes": 47450,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6-dispatch4-capacity-preclaim.json",
+        "sha256": "462254cd67330bc2cd4cbf442b8280c0340c1cc6e968cf8f4073ee090e128936"
+      }
+    },
+    {
+      "eligible": true,
+      "estimated_available_kib": 55080236,
+      "global_available_kib": 111136368,
+      "node": 1,
+      "receipt": {
+        "bytes": 47473,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6-dispatch4-capacity-inlane.json",
+        "sha256": "090e9d676ab7f97d6fddf6c1de1a62efa4d8793434238d68a8f1842a7f4704d8"
+      }
+    }
+  ],
+  "checkpoint": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a4/checkpoint-manifest.json",
+    "sha256": "e3ddfe24fc06bdf8a5d36fdcfbd2a940c49e8b3500b45fa027e53576c4199601"
+  },
+  "checkpoint_process_diagnosis": {
+    "checkpoint": {
+      "bytes": 361986,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a4/checkpoint/cpt.2117142500/m5.cpt",
+      "sha256": "32342dae8e9da39b8183da8ac19e42912c75a67d5ab64590bb4543a7e60ad701"
+    },
+    "configured_workloads": {
+      "cpu": [
+        {
+          "path": "system.cpu0",
+          "workload_paths": [
+            "system.cpu0.workload"
+          ]
+        },
+        {
+          "path": "system.cpu1",
+          "workload_paths": [
+            "system.cpu0.workload"
+          ]
+        },
+        {
+          "path": "system.cpu2",
+          "workload_paths": [
+            "system.cpu0.workload"
+          ]
+        },
+        {
+          "path": "system.cpu3",
+          "workload_paths": [
+            "system.cpu0.workload"
+          ]
+        }
+      ],
+      "switch_cpus": [
+        {
+          "path": "system.switch_cpus0",
+          "workload_paths": [
+            "system.cpu0.workload"
+          ]
+        },
+        {
+          "path": "system.switch_cpus1",
+          "workload_paths": [
+            "system.cpu0.workload"
+          ]
+        },
+        {
+          "path": "system.switch_cpus2",
+          "workload_paths": [
+            "system.cpu0.workload"
+          ]
+        },
+        {
+          "path": "system.switch_cpus3",
+          "workload_paths": [
+            "system.cpu0.workload"
+          ]
+        }
+      ]
+    },
+    "identity_key_matches": [
+      {
+        "key": "_pid",
+        "section": "[system.cpu3]",
+        "value": "4294967295"
+      },
+      {
+        "key": "_pid",
+        "section": "[system.cpu2]",
+        "value": "4294967295"
+      },
+      {
+        "key": "_pid",
+        "section": "[system.cpu1]",
+        "value": "4294967295"
+      },
+      {
+        "key": "_pid",
+        "section": "[system.cpu0]",
+        "value": "4294967295"
+      }
+    ],
+    "inference": "Initial configuration points all CPUs to the one process; checkpoint lacks clone process identity fields. This is not direct runtime ThreadContext state evidence.",
+    "restored_configuration": {
+      "bytes": 409375,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a6/simulation/config.json",
+      "sha256": "de1f55d5b8670324c45eab75bc314b8c7859f4fabfb38a63f5e3c5fa1e9c21fb"
+    },
+    "thread_and_process_sections": [
+      "[system.cpu3.xc.0]",
+      "[system.cpu2.xc.0]",
+      "[system.cpu1.xc.0]",
+      "[system.cpu0.xc.0]",
+      "[system.cpu0.workload]",
+      "[system.workload]"
+    ]
+  },
+  "correctness": "unverified",
+  "created": "2026-09-25",
+  "evaluation": "bfs-dx100-smoke-20260925-a6",
+  "evidence_kind": "execution",
+  "gain_claim": false,
+  "interpretation": "The fixed model fit within 48 GiB and sealed the ROI, then the same guest printed PASS. Continuation ended at the declared simulated-tick limit without normal guest termination; correctness and performance acceptance remain unverified. Tiny frontiers do not establish accelerated execution or larger-workload coverage.",
+  "kind": "bounded_simulator_feasibility",
+  "lane": {
+    "ended_utc": "2026-09-26T03:31:10Z",
+    "exit_code": 1,
+    "generation": 395,
+    "node": 1,
+    "receipt": {
+      "bytes": 1112,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/lane-smoke-a6-dispatch4.json",
+      "sha256": "a01dc50f43236686db3f9104b5270fe7cb053ce90681642f5980888ec2cbc2a2"
+    },
+    "started_utc": "2026-09-26T03:24:14Z"
+  },
+  "limits": {
+    "checkpoint_seconds": 300,
+    "memory_gib": 48,
+    "run_seconds": 750,
+    "storage_gib": 2,
+    "total_seconds": 1100
+  },
+  "memory_samples": 74,
+  "model": {
+    "id": "dx100-gem5",
+    "revision": "e4fc4afdf894f295442cef3604667a469fab8e62"
+  },
+  "outcome": {
+    "reason": "missing, ambiguous, interrupted, or incomplete post-ROI verifier outcome",
+    "stage": "simulation",
+    "state": "missing_observation"
+  },
+  "peak_sampled_rss_kib": 33719536,
+  "phase_observations": [
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 9747464,
+        "generic.heap_size": 12591104,
+        "tcmalloc.central_cache_free_bytes": 398904,
+        "tcmalloc.pageheap_free_bytes": 1572864,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 871872
+      },
+      "elapsed_s": 5.529820919036865e-05,
+      "observation_seconds": 0.00019555725157260895,
+      "phase": "wrapper_start",
+      "process_status": {
+        "RssAnon": "31060 kB",
+        "RssFile": "44348 kB",
+        "VmHWM": "75408 kB",
+        "VmRSS": "75408 kB",
+        "VmSize": "128644 kB"
+      }
+    },
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 10567640,
+        "generic.heap_size": 12591104,
+        "tcmalloc.central_cache_free_bytes": 534592,
+        "tcmalloc.pageheap_free_bytes": 450560,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 887016
+      },
+      "elapsed_s": 0.07246226072311401,
+      "observation_seconds": 0.00021626707166433334,
+      "phase": "instantiate_begin",
+      "process_status": {
+        "RssAnon": "33528 kB",
+        "RssFile": "44664 kB",
+        "VmHWM": "78192 kB",
+        "VmRSS": "78192 kB",
+        "VmSize": "130964 kB"
+      }
+    },
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 30393716720,
+        "generic.heap_size": 30611120128,
+        "tcmalloc.central_cache_free_bytes": 213928008,
+        "tcmalloc.pageheap_free_bytes": 1671168,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 1217480
+      },
+      "elapsed_s": 77.30555857624859,
+      "observation_seconds": 0.00029298849403858185,
+      "phase": "instantiate_end",
+      "process_status": {
+        "RssAnon": "30063376 kB",
+        "RssFile": "47408 kB",
+        "VmHWM": "30110784 kB",
+        "VmRSS": "30110784 kB",
+        "VmSize": "46955696 kB"
+      }
+    },
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 30393716752,
+        "generic.heap_size": 30611120128,
+        "tcmalloc.central_cache_free_bytes": 213915912,
+        "tcmalloc.pageheap_free_bytes": 1662976,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 1237736
+      },
+      "elapsed_s": 77.30725751444697,
+      "observation_seconds": 0.00019560102373361588,
+      "phase": "requestor_vector",
+      "process_status": {
+        "RssAnon": "30063376 kB",
+        "RssFile": "47408 kB",
+        "VmHWM": "30110784 kB",
+        "VmRSS": "30110784 kB",
+        "VmSize": "46955696 kB"
+      },
+      "requestors": 50
+    },
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 30395384592,
+        "generic.heap_size": 30611120128,
+        "tcmalloc.central_cache_free_bytes": 213837808,
+        "tcmalloc.pageheap_free_bytes": 57344,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 1256704
+      },
+      "elapsed_s": 77.30882018059492,
+      "observation_seconds": 0.00018135085701942444,
+      "phase": "simulate_begin",
+      "process_status": {
+        "RssAnon": "30064188 kB",
+        "RssFile": "47408 kB",
+        "VmHWM": "30111596 kB",
+        "VmRSS": "30111596 kB",
+        "VmSize": "46955696 kB"
+      }
+    },
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 30396979640,
+        "generic.heap_size": 30613217280,
+        "tcmalloc.central_cache_free_bytes": 213828608,
+        "tcmalloc.pageheap_free_bytes": 548864,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 1277512
+      },
+      "cause": "simulate() limit reached",
+      "elapsed_s": 78.06669250689447,
+      "observation_seconds": 0.00034312158823013306,
+      "phase": "simulate_end",
+      "process_status": {
+        "RssAnon": "30065844 kB",
+        "RssFile": "49008 kB",
+        "VmHWM": "30114852 kB",
+        "VmRSS": "30114852 kB",
+        "VmSize": "46957744 kB"
+      },
+      "tick": 2117152500
+    },
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 30396965664,
+        "generic.heap_size": 30613217280,
+        "tcmalloc.central_cache_free_bytes": 213826048,
+        "tcmalloc.pageheap_free_bytes": 548864,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 1301216
+      },
+      "elapsed_s": 78.06777592096478,
+      "observation_seconds": 0.00018854625523090363,
+      "phase": "simulate_begin",
+      "process_status": {
+        "RssAnon": "30065844 kB",
+        "RssFile": "49008 kB",
+        "VmHWM": "30114852 kB",
+        "VmRSS": "30114852 kB",
+        "VmSize": "46957744 kB"
+      }
+    },
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 30448056728,
+        "generic.heap_size": 30665646080,
+        "tcmalloc.central_cache_free_bytes": 214776352,
+        "tcmalloc.pageheap_free_bytes": 974848,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 1274952
+      },
+      "elapsed_s": 84.97982228174806,
+      "observation_seconds": 0.0002633891999721527,
+      "phase": "statistics_dump_begin",
+      "process_status": {
+        "RssAnon": "30119876 kB",
+        "RssFile": "50916 kB",
+        "VmHWM": "30170792 kB",
+        "VmRSS": "30170792 kB",
+        "VmSize": "47008944 kB"
+      }
+    },
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 33914973752,
+        "generic.heap_size": 34259116032,
+        "tcmalloc.central_cache_free_bytes": 340805456,
+        "tcmalloc.pageheap_free_bytes": 638976,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 2069112
+      },
+      "elapsed_s": 113.46289148554206,
+      "observation_seconds": 0.00023373402655124664,
+      "phase": "statistics_dump_end",
+      "process_status": {
+        "RssAnon": "33655480 kB",
+        "RssFile": "51300 kB",
+        "VmHWM": "33706780 kB",
+        "VmRSS": "33706780 kB",
+        "VmSize": "50550960 kB"
+      }
+    },
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 33915013200,
+        "generic.heap_size": 34259116032,
+        "tcmalloc.central_cache_free_bytes": 340922272,
+        "tcmalloc.pageheap_free_bytes": 671744,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 1746448
+      },
+      "cause": "m5_exit instruction encountered",
+      "elapsed_s": 113.50382346380502,
+      "observation_seconds": 0.0002485644072294235,
+      "phase": "simulate_end",
+      "process_status": {
+        "RssAnon": "33655488 kB",
+        "RssFile": "51428 kB",
+        "VmHWM": "33706916 kB",
+        "VmRSS": "33706916 kB",
+        "VmSize": "50550960 kB"
+      },
+      "tick": 2187360749
+    },
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 33915004976,
+        "generic.heap_size": 34261229568,
+        "tcmalloc.central_cache_free_bytes": 340922272,
+        "tcmalloc.pageheap_free_bytes": 2785280,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 1754672
+      },
+      "elapsed_s": 113.51236178632826,
+      "observation_seconds": 0.00014165323227643967,
+      "phase": "verification_begin",
+      "process_status": {
+        "RssAnon": "33656488 kB",
+        "RssFile": "51428 kB",
+        "VmHWM": "33707916 kB",
+        "VmRSS": "33707916 kB",
+        "VmSize": "50553024 kB"
+      }
+    },
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 33925640544,
+        "generic.heap_size": 34269618176,
+        "tcmalloc.central_cache_free_bytes": 341115712,
+        "tcmalloc.pageheap_free_bytes": 155648,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 1933152
+      },
+      "cause": "simulate() limit reached",
+      "elapsed_s": 341.0391008546576,
+      "observation_seconds": 0.0002644956111907959,
+      "phase": "verification_end",
+      "process_status": {
+        "RssAnon": "33666568 kB",
+        "RssFile": "51932 kB",
+        "VmHWM": "33718500 kB",
+        "VmRSS": "33718500 kB",
+        "VmSize": "50561216 kB"
+      },
+      "tick": 1002187360749
+    },
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 33925634704,
+        "generic.heap_size": 34269618176,
+        "tcmalloc.central_cache_free_bytes": 341115712,
+        "tcmalloc.pageheap_free_bytes": 155648,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 1938992
+      },
+      "elapsed_s": 341.0422558579594,
+      "observation_seconds": 0.0001896573230624199,
+      "phase": "statistics_dump_begin",
+      "process_status": {
+        "RssAnon": "33666572 kB",
+        "RssFile": "51932 kB",
+        "VmHWM": "33718504 kB",
+        "VmRSS": "33718504 kB",
+        "VmSize": "50561216 kB"
+      }
+    },
+    {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 33925634704,
+        "generic.heap_size": 34270666752,
+        "tcmalloc.central_cache_free_bytes": 341195232,
+        "tcmalloc.pageheap_free_bytes": 688128,
+        "tcmalloc.pageheap_unmapped_bytes": 0,
+        "tcmalloc.thread_cache_free_bytes": 2309520
+      },
+      "elapsed_s": 367.6968626752496,
+      "observation_seconds": 0.00023142341524362564,
+      "phase": "statistics_dump_end",
+      "process_status": {
+        "RssAnon": "33667604 kB",
+        "RssFile": "51932 kB",
+        "VmHWM": "33719536 kB",
+        "VmRSS": "33719536 kB",
+        "VmSize": "50562240 kB"
+      }
+    }
+  ],
+  "raw": {
+    "a6-fresh-chain-20260925.json": {
+      "bytes": 73642,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/a6-fresh-chain-20260925.json",
+      "sha256": "1e8df9a262e550c7d6ca9a0d9d427e71219bc0a9c70a044f2137968ed16d3658"
+    },
+    "bfs-dx100-smoke-20260925-a6.driver/driver.json": {
+      "bytes": 1771,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a6.driver/driver.json",
+      "sha256": "c846074ab02d74994e6586d34c02ac8d27b95cf655e6966775de661ad845807c"
+    },
+    "bfs-dx100-smoke-20260925-a6/002-simulation.log": {
+      "bytes": 531301,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a6/002-simulation.log",
+      "sha256": "8d17b2130b83f907aebc113d4f56c56a1ce4ac33adfd1ade9fce6e5a81f6c388"
+    },
+    "bfs-dx100-smoke-20260925-a6/002-simulation.memory.jsonl": {
+      "bytes": 22697,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a6/002-simulation.memory.jsonl",
+      "sha256": "e8f2f9c851d4c9135ef7a6d970bfccff62941349e8fb3707ba252553436196ba"
+    },
+    "bfs-dx100-smoke-20260925-a6/simulation/host-memory-phases.jsonl": {
+      "bytes": 10260,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a6/simulation/host-memory-phases.jsonl",
+      "sha256": "811a1b61aadd91af35173fd71c25d5d308d0a4bef03dcd60a5dd3b497d935d34"
+    },
+    "smoke-a6-dispatch4-driver.log": {
+      "bytes": 5472,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6-dispatch4-driver.log",
+      "sha256": "bec3985e6523b281232fa0b4656aadf8d9d3ce97933457b5e270b17b19f7e1b9"
+    },
+    "smoke-a6-dispatch4.exit": {
+      "bytes": 2,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6-dispatch4.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    }
+  },
+  "retained_guest_output": [
+    {
+      "line": 209,
+      "text": "SWDB_DX100_ROI_SEALED"
+    },
+    {
+      "line": 212,
+      "text": "Verification:           PASS"
+    },
+    {
+      "line": 213,
+      "text": "Verification Time:   0.00001"
+    },
+    {
+      "line": 214,
+      "text": "Average Time:        0.00006"
+    },
+    {
+      "line": 4215,
+      "text": "SWDB_DX100_VERIFICATION_END {\"exit_cause\": \"simulate() limit reached\", \"exit_code\": 0, \"exit_tick\": 1002187360749, \"max_ticks\": 1000000000000, \"state\": \"finished\"}"
+    }
+  ],
+  "sealed_roi": {
+    "driver_sha256": "9aab633b6936315c70fdb334adbc41e4e83988c9a8bbcfeb26bf4df704cce733",
+    "execution_binding_sha256": "02935e448d9fe0db73115425508daf007f665006bed0fdaac345e817c7469e70",
+    "format": "swdb.dx100.roi-seal.v1",
+    "host_memory_observer_sha256": "655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd",
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a6/simulation/roi-seal.json",
+    "roi_exit_cause": "m5_exit instruction encountered",
+    "roi_exit_tick": 2187360749,
+    "sha256": "671a91899e45dfc351d68853f754a6a4a59d4af491d3c21cda511519f6d878e8",
+    "statistics": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a6/simulation/roi-stats.txt",
+      "sha256": "033b9f68a05a9f1301f40423e50cfb6e123cce0c967062dcc6e921aa440328c9"
+    },
+    "verification": {
+      "exit_cause": "simulate() limit reached",
+      "exit_code": 0,
+      "exit_tick": 1002187360749,
+      "max_ticks": 1000000000000,
+      "state": "finished"
+    }
+  },
+  "simulator_attempts_consumed": 1,
+  "state": "unverified_post_roi_exit",
+  "swdb_revision": "08a373d14a64ed2b935601fd7f9ec47b137115a3",
+  "timezone": "America/Detroit"
+}
