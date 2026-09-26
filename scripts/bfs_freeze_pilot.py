@@ -177,8 +177,9 @@ def repeatability_control(spec, packets, store, identities, gates):
                 'repeatability evaluations and exact driver_receipt are required')
         mapping = selected['evaluations']
         require(isinstance(mapping, dict) and set(mapping) == {item['evaluation']['id'] for item in packets}
-                and len(mapping) == len(set(mapping.values())) == 2,
-                'repeatability mapping must name exactly both selected first-block evaluations')
+                and len(mapping) == len(set(mapping.values())) == len(packets)
+                and len(packets) in (2, 4),
+                'repeatability mapping must name exactly the selected first-block evaluations')
         plan = json.loads(repeat.PLAN.read_text()); repeat.validate_plan(plan)
         cells = {cell['first_evaluation']: cell for cell in plan['cells']}
         require(all(first in cells and cells[first]['id'] == second for first, second in mapping.items()),
@@ -345,9 +346,42 @@ def prepare(spec, store):
     for values in (configurations, builds, instruments):
         require(artifacts.digest(values[0]) == artifacts.digest(values[1]), 'native graph pilots used different target/build/instrumentation')
     gates = []
+    paired_mode = 'paired_calibration' in spec
+    historical_gates = []
     if any(row['relative_spread'] > ceiling for item in observations for row in item['samples']):
-        gates.append('observed native baseline spread exceeds the fixed supplied ceiling; no automatic relaxation')
-    control = repeatability_control(spec, packets, store, identities, gates)
+        (historical_gates if paired_mode else gates).append(
+            'observed native baseline spread exceeds the fixed supplied ceiling; no automatic relaxation')
+    historical_packets = packets
+    if paired_mode:
+        from scripts.bfs_paired_calibration import historical_packets as read_historical_packets
+        historical_packets = read_historical_packets(spec, packets, store)
+        for item in historical_packets:
+            identities.update(item['record_identities'])
+    control = repeatability_control(spec, historical_packets, store, identities,
+                                    historical_gates if paired_mode else gates)
+    historical_control, paired_primary = None, []
+    if paired_mode:
+        from scripts.bfs_paired_calibration import qualify
+        require(control.get('state') in {'no_numerical_gain_detected', 'numerical_gain_detected'},
+                'paired publication must retain a revalidated historical serial control, including its failures')
+        # The collection/analysis changed prospectively. Retain the old failed
+        # controls, including their vetoes, instead of relabeling them as paired.
+        historical_control = {'control': control, 'unmet_gates': historical_gates,
+            'admitted_for_new_sampling': False,
+            'review_spread_ceiling': ceiling, 'original_spread_policy_frozen': False,
+            'scope': 'historical serial collection; retained without promoting or excluding its observations; '
+                'spread diagnostics use the supplied prospective ceiling, not a retroactive historical freeze'}
+        control, paired_primary = qualify(spec, packets, store, identities, gates)
+        for item, primary in zip(packets, paired_primary):
+            historical = item['evaluation']
+            require(all(primary['context'].get(key) == historical['context'].get(key)
+                        for key in ('candidate_sha256', 'application', 'function', 'adapter',
+                                    'target', 'machine_sha256', 'backend_configuration', 'instrumentation',
+                                    'sources', 'threads', 'roi', 'verifier'))
+                    and all(primary['build'].get(key) == historical['build'].get(key)
+                            for key in (*BUILD_FIELDS, 'template_sha256', 'wrapper_sha256',
+                                        'binary_sha256', 'execution_environment')),
+                    'paired primary differs from the source/build/target treatment of its retained diagnostic package')
     rejected = []
     for rid in selection.get('rejected_evaluations', []):
         row = store.get(rid, 'evaluation')
@@ -375,6 +409,10 @@ def prepare(spec, store):
         'plans': [{'path': str(path), 'sha256': artifacts.file_hash(path)} for path in PLANS],
         'scope': 'native protocol only; no candidate acceptance, artifact reproduction, or Ticket15 completion',
         'region_comparisons': 'baseline attribution retained; no candidate region mapping or regional speedup invented'}
+    if paired_mode:
+        calibration.update(historical_serial_control=historical_control,
+            diagnostic_scope='native_pilots retain their historical five-trial primary and collector overhead; '
+                'new paired grids alone supply the prospective sampling readiness evidence')
     settings = {'mode': 'native', 'kernel': 'gapbs-bfs', 'workloads': [item['workload']['id'] for item in packets],
         'targets': {role: copy.deepcopy(configurations[0]) for role in ('baseline', 'candidate')},
         'builds': {role: copy.deepcopy(builds[0]) for role in ('baseline', 'candidate')},
@@ -385,6 +423,9 @@ def prepare(spec, store):
         'sampling': {'repetitions': 5, 'warmups': 0, 'aggregation': 'geomean_source_median_ratio'},
         'profitability': policy, 'differences': {'software': ['Explicit source rewrite evaluated after this freeze'],
             'accelerator': [], 'configuration': []}, 'region_pairs': [], 'calibration': calibration}
+    if paired_mode:
+        settings['sampling'] = copy.deepcopy(control['sampling'])
+        settings['correctness']['supporting_pilot_evidence'] = control['selected_primary_evaluations']
     bfs_protocol._validate_settings(settings, store)
     request['settings'] = settings
     result = {'format': 'swdb.bfs.native-pilot-freeze-review.v1', 'input': spec, 'publishable': not gates,

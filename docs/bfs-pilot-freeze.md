@@ -2,6 +2,34 @@
 
 Updated: 2026-09-26 (Eastern Time).
 
+The original serial pilot remains incomplete. A separately planned paired mode
+is being implemented under [the finite paired study](bfs-native-paired-pilot-20260926.md).
+It does not reinterpret or replenish the expired serial pilot. The serial
+contract below remains supported for its original records.
+
+For paired publication, retain the two source-specific diagnostic `packages`
+and add `paired_calibration` containing `pairs` (all four fixed new pair IDs,
+in planned order), `historical_packages` (all four original profile-package IDs,
+in the original fixed cell order), and `driver_receipt: {path, sha256}` for the
+complete new study. The existing `repeatability.evaluations` mapping then names
+all four original first/second evaluations. Both old directions and every old
+cell are reconstructed, including the failed DX100 uniform control when preparing
+an upstream protocol. Missing or changed historical evidence blocks publication.
+
+Paired admission requires every new pair, all raw parent checks, both label
+directions, and the prospective 0.10 spread ceiling. The frozen sampling uses ten
+repetitions, `native_paired.v1` with order seed 20260926, and
+`paired_repetition_block_bootstrap.v1`; the 1.05/95%/2,000/20260925 profitability
+policy is unchanged. Historical serial failures remain under
+`calibration.historical_serial_control` with the original numerical-gain veto.
+Historical spread diagnostics name the newly supplied ceiling explicitly; the
+old pilot never froze its own spread policy. These observations are not
+inputs to the new paired statistics. Old diagnostics and overhead stay tied to
+their actual five-trial evaluations; matching new source/build/binary/target
+treatment is required before retaining them as supporting evidence. Every
+shared accelerator gate below still applies. A passing native negative control
+alone cannot publish a protocol or complete Ticket 15.
+
 `scripts/bfs_freeze_pilot.py prepare SELECTION.json --records RECORDS --output NEW_DIR`
 prepares a review and exact public `freeze-protocol` request from two complete real
 native packages. It does not publish a protocol. The packages must describe one

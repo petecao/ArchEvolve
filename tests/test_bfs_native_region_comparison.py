@@ -207,13 +207,15 @@ def test_public_freeze_rejects_incompatible_native_diagnostic_contract(native_se
     assert any(word in result.stderr + result.stdout for word in ('region', 'diagnostic'))
 
 
-def test_campaign_collects_current_baseline_packages_before_passing_region_map(tmp_path, monkeypatch):
+@pytest.mark.parametrize('paired', [False, True])
+def test_campaign_collects_current_baseline_packages_before_passing_region_map(tmp_path, monkeypatch, paired):
     from scripts import bfs_native_campaign as client
     proposal = {'id': 'proposal', 'implementation': 'dx100-bfs-scalar', 'payload': {'kind': 'patch'}}
     proposal_path = tmp_path / 'proposal.json'; proposal_path.write_text(json.dumps(proposal))
     source = tmp_path / 'source'; source.mkdir(); (source / 'bfs.cc').write_text('// fixture source\n')
     frozen = {'id': 'frozen', 'identity_sha256': 'a' * 64,
-              'settings': {'region_pairs': [{'evidence': 'native_diagnostic_profile.v1', 'diagnostic_repetitions': 2}]}}
+              'settings': {'region_pairs': [{'evidence': 'native_diagnostic_profile.v1', 'diagnostic_repetitions': 2}],
+                           'sampling': {'collection': {'method': 'native_paired.v1', 'order_seed': 20260926}} if paired else {}}}
     rows = {family: {'candidate': {'id': 'baseline-source'}, 'workload': {'id': family},
                     'package': {'id': 'old-' + family + '.package', 'region_profile': 'old-' + family + '.profile'}}
             for family in ('kronecker', 'uniform_random')}
@@ -230,7 +232,7 @@ def test_campaign_collects_current_baseline_packages_before_passing_region_map(t
     monkeypatch.setattr(client, 'validate_inputs', lambda *args: rows)
     monkeypatch.setattr(client.artifacts, 'source_root', lambda *args: source)
     monkeypatch.setattr(client.subprocess, 'check_output', lambda *args, **kwargs: 'fixture\n')
-    comparisons, collected = [], {}
+    comparisons, collected, pairs = [], {}, []
 
     def request(command, value, *args, **kwargs):
         if command == 'submit': return {'outcome': {'state': 'candidate_created'}, 'candidate': 'selected-candidate'}
@@ -240,6 +242,8 @@ def test_campaign_collects_current_baseline_packages_before_passing_region_map(t
 
     def collect(prefix, evaluation, previous, repetitions):
         assert previous.startswith('old-') and repetitions == 2
+        if paired:
+            assert any(evaluation['id'] in members for members in pairs)
         package = {'id': prefix + '.package', 'completeness': 'fixture'}
         collected[evaluation['id']] = package['id']
         return package
@@ -247,8 +251,15 @@ def test_campaign_collects_current_baseline_packages_before_passing_region_map(t
     driver.request = request
     driver.collect = collect
     driver.evaluate = lambda name, *args: {'id': name, 'outcome': {'state': 'complete'}, 'correctness': {'state': 'passed'}}
+    def evaluate_pair(prefix, *args):
+        baseline = driver.evaluate(prefix + '.baseline.evaluation')
+        candidate = driver.evaluate(prefix + '.evaluation')
+        pairs.append({baseline['id'], candidate['id']})
+        return {'id': prefix + '.pair'}, baseline, candidate
+    driver.evaluate_pair = evaluate_pair
     driver.run()
     assert len(collected) == 4 and len(comparisons) == 2
+    assert len(pairs) == (2 if paired else 0)
     for request in comparisons:
         assert request['region_packages'] == {request[key]: collected[request[key]]
             for key in ('baseline_evaluation', 'candidate_evaluation')}

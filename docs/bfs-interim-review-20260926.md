@@ -149,3 +149,67 @@ SHA-256 `466b0e6f8091c79d3b2b75cb66c51e295b5fc61afdcf9f79b625aa1c29657d64`.
 That run predates the three repairs in this section; their focused checks must
 not be presented as a full-suite run of a later checkpoint. Actual acceptance
 and the required final independent review remain incomplete.
+
+## Parser and paired-collection review — 2026-09-26 09:44 ET
+
+The actual a1 v2 run failed because the pinned simulator emits unconditional
+CPU progress lines into its redirected debug trace. Commit `b3a2cbe` retains
+those observations under a strict grammar without allowing them to supply exit
+evidence. Independent review found and closed a metadata-only progress/exit tick
+ordering gap. The combined parser/adapter/probe group passed **121 tests in
+57.30 seconds**, retained at
+`/private/tmp/bfs-progress-parser-corrective-20260926.log`. The actual failed run
+stays failed; its corrected a2 follow-up was not dispatched before its cutoff.
+
+Commit `721fa72` adds paired native collection and whole-repetition analysis.
+Independent review reproduced admission of a consistently rehashed raw output
+whose parent vector was empty. Admission now revalidates registered graph bytes
+and reruns structural verification on every reopened parent vector. The original
+public reproduction rejects, and the combined paired/campaign suite passed
+**30 tests in 136.68 seconds**, retained at
+`/private/tmp/bfs-paired-core-final-20260926.log`. The existing clean managed
+validation checkout is running the full suite at this exact commit; completion
+is not yet claimed. Its log is
+`/private/tmp/bfs-full-suite-20260926-0939-721fa72.log`.
+
+The separately uncommitted pilot reader preserves all four historical controls,
+including the known false gain when preparing an upstream protocol, and retains
+the shared accelerator gate. Its history/gate tests passed **22 cases in
+4.46 seconds**. A root integration of those cases and five numerical-control
+cases passed **27 tests in 4.65 seconds**, retained at
+`/private/tmp/bfs-paired-publisher-focused-20260926.log`. These overlap earlier
+groups; they are synthetic contract fixtures, not empirical calibration.
+
+The new finite driver and its resource/receipt admission remain under review.
+Review has identified sampled-monitoring gaps, process ownership checks, and a
+signal race during failed-run persistence. No native paired study, empirical
+freeze, final acceptance cell, or final post-acceptance review is claimed.
+
+## Paired pilot admission repairs — 2026-09-26 10:03 ET
+
+Independent driver and publisher reviews are complete for the prospective paired
+study. Repairs cover descendant ownership, sampled-resource freshness and guard
+duration, cleanup signal races, full startup timing, exact lane evidence,
+inherited runtime metadata, and request/result/runtime artifact bindings. The
+publisher requires all four historical and prospective cells; selecting an
+upstream protocol cannot hide the earlier DX100 failed control. The shared
+accelerator gates remain required. Reviewers reported no remaining actionable
+finding in these paths after the repairs. This is interim review, not the final
+post-acceptance Standards/Spec review of the whole deliverable.
+
+The final combined driver, admission, history, numerical-control, freeze, and
+region-comparison group passed **213 tests in 158.00 seconds**. Its log is
+`/private/tmp/bfs-paired-pilot-final-20260926.log`, SHA-256
+`a33720198706f1ab61e18750c7110c3d360d42d79b151a105c38c32285a61721`.
+These are local contract and subprocess checks; no new mbit10 measurement or
+provider invocation occurred. Current catalog validation reports 186 valid
+records.
+
+The full suite at pinned `721fa72` is still running and has one failure so far:
+an old campaign test mocked protocol validation while omitting the newly read
+mandatory sampling field. The failure was reproduced separately and retained in
+`/private/tmp/bfs-paired-region-regression-20260926.log`. The fixture now explicitly
+covers serial and paired modes and verifies that paired primary collection occurs
+before diagnostic collection. Both cases passed separately and are included in
+the 213-case group. The original full-suite run is preserved unchanged; it is not
+reported as green or as verification of the later driver checkpoint.
