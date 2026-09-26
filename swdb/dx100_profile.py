@@ -143,8 +143,8 @@ def memory(interval, evidence, execution):
     rows = []
     for name, raw in interval["values"].items():
         definition = None
-        if re.fullmatch(r"system\..*(?:cache|l2|l3).*\.(?:overallAccesses|overallHits|overallMisses)::total", name):
-            definition = "Modeled cache access, hit, or miss count at the named cache; totals retain its request semantics."
+        if re.fullmatch(r"system\..*(?:cache|l2|l3).*\.(?:overallAccesses|overallHits|overallMisses)(?:_T)?::total", name):
+            definition = "Modeled cache access, hit, or miss count at the named cache across all command regions and requestors; totals retain its request semantics."
         elif re.fullmatch(r"system\.maa\.port_(?:cache|mem)_(?:RD|WR)_packets", name):
             definition = "DX100 MAA packet count on the named cache-side or memory-side read/write port; not element accesses."
         if definition:

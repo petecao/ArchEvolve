@@ -9,6 +9,14 @@ The collector reopens hashed statistics, log, and actual configuration files. It
 
 Available cache access/hit/miss totals and MAA cache-side/memory-side packet counts become dynamic memory observations. Each names its model counter, unit, definition, collector, simulated basis, exact interval and raw hash, and entire-BFS-ROI attribution. Packet counts do not become element counts or loop-specific measurements. Missing counters remain unavailable and prevent complete packages.
 
+The pinned cache implementation names its all-command-region totals
+`overallAccesses_T::total`, `overallHits_T::total`, and
+`overallMisses_T::total`. The collector recognizes these exact total suffixes
+and retains generic unsuffixed totals for compatible fixtures. Numbered buckets
+such as `overallAccesses_7::total` are excluded because their command-region
+identity does not establish whole-ROI or source-loop attribution. BASE execution
+can therefore provide actual cache observations without any MAA packet counter.
+
 Primary `td`/`td_maa` logging can associate accumulated inclusive Start-to-Stop observations with a compiler-discovered enclosing traversal loop. These timer intervals include called work, queue advancement and any logging between their endpoints; their printed resolution is 0.00001 seconds. They do not establish exclusive time or the duration of every function/loop. `td_maa` is not evidence of acceleration because the author prints it even on scalar fallback. This logging-only route returns `partial`.
 
 For complete source-scope attribution, `dx100-compile` accepts `diagnostic_regions: true` and optional `discovery: {library: PATH, resource_dir: PATH}`. The shared compiler discovery receives the actual GEM5/DMAA build flags and compiler-reported system header order. User-supplied preprocessor overrides are excluded. Its ordinary functions and loops receive nested scope guards using `m5_rpns`; generated source, runtime, and binary live under `/data1/yanruj/EvolveSWDB_builds/ID` on mbit10. Logs and discovery receipts remain in the chosen raw folder.

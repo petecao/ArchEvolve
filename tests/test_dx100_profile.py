@@ -13,7 +13,8 @@ from test_dx100 import case, execution_request, reference
 
 
 @pytest.mark.parametrize("mode", ["normal", "missing-memory", "truncated", "changed-stats", "multiple-intervals", "wrong-clock", "stale-region",
-    "diagnostic", "diagnostic-source-mismatch", "diagnostic-invalid-counters", "diagnostic-outside-roi"])
+    "diagnostic", "diagnostic-source-mismatch", "diagnostic-invalid-counters", "diagnostic-outside-roi",
+    "pinned-cache-totals", "pinned-region-only"])
 def test_public_simulated_collector_retains_identity_and_incomplete_attribution(case, records, mode):
     records.copy_repo("applications")
     repository = Path(__file__).resolve().parents[1]
@@ -56,7 +57,12 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
     program = simulator.read_text().replace("[fixture]\\nkind=contract_fixture\\n",
         "[system.cpu_clk_domain]\\ntype=SrcClockDomain\\nclock=313\\n")
     stats = "---------- Begin Simulation Statistics ----------\nsimTicks 1000\nsimFreq 1000000\n"
-    if mode != "missing-memory":
+    if mode in {'pinned-cache-totals', 'pinned-region-only'}:
+        data['configuration'].update(mode='BASE', l3_size_mb=10, l3_assoc=20)
+        stats += 'system.cpu0.dcache.overallAccesses_7::total 99\n'
+        if mode == 'pinned-cache-totals':
+            stats += 'system.cpu0.dcache.overallAccesses_T::total 23\n'
+    elif mode != "missing-memory":
         stats += "system.maa.port_mem_RD_packets 23\n"
     if mode != "truncated":
         stats += "---------- End Simulation Statistics ----------\n"
@@ -110,6 +116,11 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
     assert run.returncode in {0,1}, run.stderr
     assert run.stdout, run.stderr
     profile = json.loads(run.stdout)
+    if mode == 'pinned-cache-totals':
+        assert [row['metric'] for row in profile['dynamic_memory']] == ['system.cpu0.dcache.overallAccesses_T::total']
+        assert profile['dynamic_memory'][0]['value'] == 23
+    elif mode == 'pinned-region-only':
+        assert profile['dynamic_memory'] == []
     assert json.loads(records.swdb("get", "profile", "--format", "json").stdout) == profile
     retrieved = json.loads(records.swdb("get", evaluation["id"], "--format", "json").stdout)
     assert retrieved["correctness"]["state"] == "unverified"
@@ -139,5 +150,5 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
             assert profile["regions"][0]["metrics"] == {}
             assert profile["regions"][1]["metrics"]["inclusive_simulated_seconds"] == 0.0004
             assert "exclusive_simulated_seconds" not in profile["regions"][1]["metrics"]
-        assert bool(profile["dynamic_memory"]) == (mode != "missing-memory")
+        assert bool(profile["dynamic_memory"]) == (mode not in {'missing-memory', 'pinned-region-only'})
         assert profile["executions"][0]["evidence_kind"] == "contract_fixture"
