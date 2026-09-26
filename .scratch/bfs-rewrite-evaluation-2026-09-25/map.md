@@ -149,6 +149,24 @@ unchanged. No Linux fixture, auditor, compilation or measurement ran during
 this preparation. The original malformed preparation receipt is retained;
 an additive valid JSON receipt preserves its reference and unchanged facts.
 
+## A2 admission prepared — 2026-09-26 19:07 ET
+
+The [full prelaunch validation](observations/a2-admission-prepared-20260926.json)
+passed at exact `5a0b15f` with both actual Linux proofs. The first metadata
+check found three missing historical coverage-a1 records. Their
+[exact published Git blobs](observations/a2-fixed-records-preparation-review-20260926.json)
+were materialized without overwriting records or changing HEAD, runtime,
+tests, plan or proof identities. All nine fixed record digests now agree.
+This preparation check did not consume the simulator attempt. The same
+unused A2 case is authorized after fresh host checks, within its original
+21:00 ET launch cutoff and 3,600-second allowance.
+
+The separate [native readback a2 failure](observations/native-readback-a2-failure-20260926.json)
+retains zero reader events, the untouched pytest cache, both terminal process
+checks and the released lease. Its four observed identities are complete
+relative to retained telemetry; unobserved short-lived startup processes remain
+an explicit sampling limitation. It supplies no qualification result.
+
 ## Progress check — 2026-09-26 19:03 ET
 
 The [full host audit](observations/health-20260926-1903.json) reports released
