@@ -23,7 +23,7 @@ Covers AC06–AC10, AC12–AC14, AC16, AC18, AC20 and contributes evidence towar
 
 - [x] Retrieve the baseline profile package for the exact DX100 scalar source and declared native workload. Use the package's source, region, build, correctness, and ROI context in the proposal.
 - [x] Submit an actual patch in the versioned proposal envelope, naming its optimization intent, exact source identity, required capabilities, and preservation constraints. Record test-client provenance.
-- [ ] Materialize changed CPU-runnable BFS code with recorded supporting edits, candidate/binary identities, diff, and any bounded repairs. Preserve evaluator-owned correctness and timing boundaries.
+- [x] Materialize changed CPU-runnable BFS code with recorded supporting edits, candidate/binary identities, diff, and any bounded repairs. Preserve evaluator-owned correctness and timing boundaries.
 - [ ] Execute the candidate and its explicitly selected unaccelerated native baseline on both graph families using ticket 15's frozen graph/source, thread, target, ROI, and repetition rules.
 - [ ] Retain structural BFS correctness evidence for the timed code and every workload supporting a timing claim. Verification remains outside the declared ROI, while required work inside that ROI remains charged.
 - [ ] Retrieve actual native BFS ROI timing, selected-region timing, and refreshed dynamic memory evidence with the diagnostic collector's identity, attribution scope, and differences from the timed artifact.
@@ -86,3 +86,17 @@ The proposal and candidate YAML file hashes also match the current local master
 copies: `ab3bd889417ab02e3a882d8a6cda86823fa42768e376456bbdaecc38ccbd9d43`
 and `f426dd9eca7563b0cf66c161ca93f6d5fc4342160cc8bfca5a6a1da807ff9252`,
 respectively. Matching record bytes do not verify their external artifact bytes.
+
+## Explicit new-configuration reassessment — 2026-09-26
+
+The reviewed `--reassessment` route in commit `e2e9c02` preserves the original
+candidate, proposal payload, source snapshot, protected regions, and exact patch
+replay while separately binding the two original and two fresh baseline packages
+and a new frozen one-thread protocol. It cannot submit or invoke a provider or
+repair. Unknown original runtime inputs remain unknown. The author group passed
+88 tests and the independent group passed 45; see the
+[reassessment receipt](../observations/native-reassessment-verification-20260926.json).
+These are contract tests, not candidate assessment. The materialization checkbox
+now reflects the already-retained actual primary/diagnostic compilation and
+independent source audit; all frozen execution and profiling obligations remain
+open. No new strategy or candidate was selected.

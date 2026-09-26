@@ -83,6 +83,31 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Progress check — 2026-09-26 15:03 ET
+
+The [full health audit](observations/health-20260926-1503.json) found both socket
+leases and the legacy lease released, all kernel locks empty, and every retained
+owned PID/start identity absent. The earlier coverage-pane zombie is gone.
+Available node/global capacity is 57.29/58.54/117.73 GiB; free `/data1` and `/data`
+space is 16.39/182.29 GiB. Historical checkouts and all 15 receipt hashes match.
+All three delegated workers are healthy; next full check is 15:33 ET.
+
+The [two actual Linux cleanup cases](observations/native-one-thread-linux-20260926.json)
+passed at exact native client pin `319645eab0a25c815fa03fe1c372d32b4ba45d10`,
+with zero skips/errors, outer exit zero, and independently absent child/parent
+identities. This supersedes the unlaunched `d484afb` preparation; fresh admission
+is still required before the sole native pilot starts. Counts remain **13/21
+resolved and 0/8 final acceptance cells**, with no empirical freeze or gain.
+
+| Case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| Four-thread pilot | Unqualified | mbit10 / 1 released | 240 correctness checks; 7/24 spread failures | Retain unchanged |
+| One-thread pilot | Linux checks passed; admission pending | mbit10 / 1 planned | Exact319 cleanup proof; no pilot result | Fresh admission and one attempt |
+| DX100 witness a3 | Passed, tiny scope | mbit10 / 0 released | Timed-binary witness; no full coverage | Larger coverage still required |
+| DX100 coverage a1 | Failed and retained | mbit10 / 0 released | RSS monitor failure; zero admitted timings | Review fixed a2 client |
+| T17 candidate | Build complete | mbit10 / 0 released | Fresh public build/result chain; cleanup verified | Correctness and performance pending |
+| Candidate reassessment | Implemented and reviewed | Local | 88 author and 45 independent tests passed | Use only with fresh qualified packages/freeze |
+
 ## T17 build and native pilot export — 2026-09-26 14:47 ET
 
 The [actual T17 build](observations/t17-build-only-terminal-20260926.json) completed
@@ -935,7 +960,7 @@ new evidence export packet.
 
 ## Context pointers
 
-### Reviewed runtime fixes and verification — 2026-09-26 15:07 ET
+### Reviewed runtime fixes and verification — 2026-09-26 15:04 ET
 
 - Native one-thread client phase accounting is serialized before any attempt. The
   superseding code export is `319645eab0a25c815fa03fe1c372d32b4ba45d10`; the prior
