@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 09, 12
 **Spec:** `../spec.md`
 
@@ -19,14 +19,14 @@ Implements the simulated portions of D04–D06, D11, D14 and AC02–AC04, AC09, 
 
 ## Acceptance criteria
 
-- [ ] A real bounded simulation yields retrievable BFS ROI duration from an identified statistics interval, preserving raw ticks/time, units, clock configuration, binary/workload/target identity, and raw evidence. The supplied parser's hardcoded tick conversion is checked rather than assumed valid for every configuration.
-- [ ] Selected-region durations are reported separately from BFS ROI duration, with exact region/source association, per-invocation or accumulated scope, and inclusive/exclusive attribution. Call counts or other attribution coverage and unavailable information remain explicit.
-- [ ] The collector integrates with automatically discovered regions and refreshed source mappings, including changed or split/fused regions. A region comparison requires a stated correspondence and cannot copy baseline observations onto altered code.
-- [ ] Each complete simulated profile package contains at least one actual dynamic memory-behavior observation, such as access counts or cache behavior. An all-unavailable metric set, source-derived description, or fabricated source-order traversal cannot satisfy this criterion.
-- [ ] Every memory metric records its definition, units, model/collector, evidence basis, collection interval, workload/binary/configuration identity, and attribution granularity. ROI-wide counts are not presented as loop-specific measurements or native hardware observations.
-- [ ] Any separate diagnostic execution identifies differences from the primary timed artifact, traversal, or modeled target. Diagnostic runtime and simulator host cost do not replace primary ROI timing; instrumentation overhead and unresolved attribution are exposed for protocol calibration.
-- [ ] Measurements can be retained and queried without ticket 13's verdict, but correctness remains unknown/unverified and no successful implementation or gain claim is produced. Compatible correctness can subsequently be linked without erasing the original measurement provenance.
-- [ ] Missing/malformed statistics, unsupported metrics, partial collection, timeout, and budget exhaustion return explicit stage outcomes with available evidence. A fresh process retrieves the profile and its incompleteness reasons; a complete package cannot silently omit all dynamic memory observations.
+- [x] A real bounded simulation yields retrievable BFS ROI duration from an identified statistics interval, preserving raw ticks/time, units, clock configuration, binary/workload/target identity, and raw evidence. The supplied parser's hardcoded tick conversion is checked rather than assumed valid for every configuration.
+- [x] Selected-region durations are reported separately from BFS ROI duration, with exact region/source association, per-invocation or accumulated scope, and inclusive/exclusive attribution. Call counts or other attribution coverage and unavailable information remain explicit.
+- [x] The collector integrates with automatically discovered regions and refreshed source mappings, including changed or split/fused regions. A region comparison requires a stated correspondence and cannot copy baseline observations onto altered code.
+- [x] Each complete simulated profile package contains at least one actual dynamic memory-behavior observation, such as access counts or cache behavior. An all-unavailable metric set, source-derived description, or fabricated source-order traversal cannot satisfy this criterion.
+- [x] Every memory metric records its definition, units, model/collector, evidence basis, collection interval, workload/binary/configuration identity, and attribution granularity. ROI-wide counts are not presented as loop-specific measurements or native hardware observations.
+- [x] Any separate diagnostic execution identifies differences from the primary timed artifact, traversal, or modeled target. Diagnostic runtime and simulator host cost do not replace primary ROI timing; instrumentation overhead and unresolved attribution are exposed for protocol calibration.
+- [x] Measurements can be retained and queried without ticket 13's verdict, but correctness remains unknown/unverified and no successful implementation or gain claim is produced. Compatible correctness can subsequently be linked without erasing the original measurement provenance.
+- [x] Missing/malformed statistics, unsupported metrics, partial collection, timeout, and budget exhaustion return explicit stage outcomes with available evidence. A fresh process retrieves the profile and its incompleteness reasons; a complete package cannot silently omit all dynamic memory observations.
 
 ## Verification
 
@@ -156,3 +156,38 @@ collection/package continuations retain their prior hashes. The final package
 receipt remains `a66864e…`; recent package and fresh-chain stderr logs are empty.
 No profiling job remains. No new measurement, correctness result, record import,
 or evidence export occurred; the exact 14-file packet approval remains pending.
+
+
+## Answer
+
+2026-09-26 11:03 ET: resolved after the user explicitly approved the exact
+14-file transfer. Remote evidence commit `ee7af80a16eb92a42f4eef757cf1bdfa988d74d2`
+was verified on `codex/bfs-evidence-sync-20260926-a1` and imported locally as
+`332ec960db66e98ba17d641de7e613ae68e5b749`. All 14 file sizes and SHA-256 values
+match the prepared inventory exactly; no raw run files were copied to the Mac.
+The prior export hold is cleared for this packet; its rejection history remains.
+
+The [import and query audit](../observations/t14-approved-import-20260926.json)
+records 197 valid catalog records and successful fresh public retrieval of the
+17-record package chain, including the registered workload. Function and loop
+hotspot queries return three and five observed regions respectively, with
+exclusive accumulated per-thread **simulated elapsed time**, not CPU service
+time. The complete package retains all 31 source regions, 39 actual ROI-wide
+memory metrics, and primary ROI duration **49.313463 microseconds**. The earlier
+independent raw/source audit and contract tests above establish interval,
+clock, source, observation, malformed-input and failure-retention behavior.
+
+This resolves collection and retrieval only. The collector's unresolved unused
+SIMD scope and other unavailable observations remain explicit. Both actual
+executions retain their original `missing_observation` outcomes and unverified
+correctness; all gain flags remain false. The failed original orchestration is
+preserved. No simulator rerun, verifier promotion, accelerated coverage,
+calibration freeze, final matrix cell, or gain is claimed by this resolution.
+
+
+An independent post-import reviewer rehashed the same 14 files, verified the
+package/evaluation/profile content identities, and independently repeated the
+197-record validation and all three public queries with matching output hashes.
+It confirmed 8 executed / 23 unobserved regions and 39/39 available metrics with
+explicit identity and scope. No collection-resolution blocker was found; this
+follow-up did not re-audit remote raw files or change correctness.

@@ -1,7 +1,7 @@
 {
   "created": "2026-09-26",
   "prepared_at_et": "2026-09-26 10:05 ET",
-  "state": "prepared_not_exported",
+  "state": "exported_remote_tip_verified",
   "supersedes_code_inventory": "code-export-20260926-0925.json",
   "destination": {
     "repository": "git@github.com:ruchou/EvolveSWDB.git",
@@ -195,5 +195,17 @@
       "bytes": 2396,
       "sha256": "8eac4386f39a4d586d13d36a3e06ed53945fd31e94a4459cf652c2d246ac9317"
     }
-  ]
+  ],
+  "updated": "2026-09-26",
+  "explicit_transfer_approval": {
+    "date_et": "2026-09-26",
+    "scope": "User explicitly named this exact prepared transfer, destination repository and branch.",
+    "supersedes": "Earlier automatic-review rejection for this transfer only; history retained.",
+    "prior_state": "prepared_not_exported"
+  },
+  "transfer_result": {
+    "state": "success",
+    "verified_remote_tip": "6346189b55132f195b02544b729f34100d10ba92",
+    "verified_date_et": "2026-09-26"
+  }
 }

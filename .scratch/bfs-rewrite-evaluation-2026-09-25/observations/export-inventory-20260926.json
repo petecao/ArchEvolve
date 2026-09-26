@@ -1,5 +1,5 @@
 {
-  "state": "commit_prepared_export_rejected_specific_approval_pending",
+  "state": "exported_and_imported_exact_bytes_verified",
   "destination": {
     "repository": "git@github.com:ruchou/EvolveSWDB.git",
     "visibility": "private",
@@ -131,5 +131,20 @@
     "result": "rejected after exact commit and destination verification",
     "reason": "Automatic review requires explicit sensitive packet and destination approval; broad approval was not accepted.",
     "follow_up": "Explicit packet/destination question pending; no export or bypass performed."
+  },
+  "updated": "2026-09-26",
+  "explicit_transfer_approval": {
+    "date_et": "2026-09-26",
+    "scope": "User explicitly named this exact prepared transfer, destination repository and branch.",
+    "supersedes": "Earlier automatic-review rejection for this transfer only; history retained.",
+    "prior_state": "commit_prepared_export_rejected_specific_approval_pending"
+  },
+  "transfer_result": {
+    "state": "success",
+    "verified_remote_tip": "ee7af80a16eb92a42f4eef757cf1bdfa988d74d2",
+    "verified_date_et": "2026-09-26",
+    "local_import_commit": "332ec960db66e98ba17d641de7e613ae68e5b749",
+    "exact_files_verified": 14,
+    "exact_bytes_verified": 1118269
   }
 }

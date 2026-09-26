@@ -207,3 +207,28 @@ The agent usage limit prevented observation from approximately 02:04 through
 that worker or host checks occurred. Recovery checks found no owned live
 measurement process. See the map's 08:10 recovery entry for the actual read-only
 host snapshot and the outstanding synchronization approvals.
+
+
+## Paired preflight correction — 2026-09-26 11:06 ET
+
+The four-commit transfer through `6346189` completed after explicit approval.
+Read-only remote preflight found a compiler invocation defect before any new
+run ID, output root or primary sample existed: resolving `/usr/bin/g++` changes
+the executable's argv0-sensitive version banner. The declared compiler path
+still produces exactly the frozen banner from the same resolved executable.
+
+The narrow correction invokes the original path for both version checking and
+builds while separately retaining/rechecking the resolved executable hash.
+Its regression uses an actual argv0-sensitive executable symlink and rejects
+an alternate readback invocation. Five targeted and seven admission tests
+passed. Root independently reviewed the change; main commit `83125b4` was
+cherry-picked onto approved `6346189` as the isolated three-file `98b5f50` and
+pushed to `codex/bfs-paired-compiler-fix-20260926`. The two exact transfer branches
+retain their approved tips.
+
+Remote preflight also verified all four first-record/source/template/compiler
+bindings and 80 retained artifact references; all 12 new IDs and output/build
+paths were unused. The plan remains `f0be176d…`, with the same latest launch
+11:58 ET, hard end 15:00 ET, 240 observations, four threads, ten repetitions,
+resource caps, and no retry. This correction changes no measurement condition.
+The next step is fresh preflight and actual dispatch at the corrected code tip.

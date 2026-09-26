@@ -272,3 +272,29 @@ was corrected. Its summary is retained at
 tool output was truncated, so no complete raw log is claimed. Independent scoped
 review reports no remaining actionable finding. These local checks do not
 execute the actual Ticket 18 candidate or complete any empirical acceptance cell.
+
+
+## Compiler invocation repair and integrated regression — 2026-09-26 11:09 ET
+
+Read-only mbit10 preflight reproduced an argv0-sensitive compiler-version
+mismatch before native paired execution. The pilot had resolved `/usr/bin/g++`
+then invoked its target name, while the retained build/version used the declared
+path. Commit `83125b4` preserves the declared invocation and separately verifies
+the resolved executable hash. Five focused compiler/request/reader cases and
+seven admission cases passed. An actual symlink fixture reproduces the banner
+difference, and readback rejects a substituted invocation alias. Root reviewed
+the diff independently. The isolated remote-ready commit is `98b5f50` atop
+approved `6346189`; only three files changed.
+
+A full regression is now running in an isolated worktree pinned to `83125b4`,
+which also includes the campaign reuse and earlier format/fixture repairs.
+The initial launcher selected Python 3.14 without pytest and exited before
+collecting tests; its unchanged log is
+`/private/tmp/bfs-full-suite-20260926-1110-83125b4.log`, SHA-256
+`c99d342a1664b93a03868ad56a22451965948da811503ce3b0d29ae5123b9dbb`.
+The corrected launcher explicitly selects repository Python 3.12.6, with a
+3,600-second timeout and 30-second cleanup allowance. It started at about
+11:08 ET; its log is `/private/tmp/bfs-full-suite-20260926-1110b-83125b4.log`.
+The filename is an identifier, not a claim that it started at 11:10. No full
+result is claimed until the process finishes. New work after `83125b4` is not
+covered by this pinned run.

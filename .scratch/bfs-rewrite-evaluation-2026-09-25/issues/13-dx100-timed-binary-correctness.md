@@ -7,7 +7,14 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 12
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 10:04 ET
+## Current checkpoint — 2026-09-26 11:06 ET
+
+Exact code transfer is complete. The read-only corrected-parser diagnosis passed;
+its evidence and limits are appended below. A1 remains failed, a2 expired unused,
+and a3 is prospectively scheduled after paired calibration with latest launch
+15:20 ET / hard end 15:40 ET. No new simulator correctness result is claimed.
+
+## Historical checkpoint — 2026-09-26 10:04 ET
 
 The a2 10:00 ET window ended unused after its 09:40 ET launch cutoff. No reparse,
 dispatch, or new correctness result occurred. The read-only 10:04–10:05 ET audit
@@ -151,3 +158,23 @@ Fewer than 1,200 seconds remain in its fixed 10:00 ET window, so dispatch is
 prohibited under that plan. The rejected export is not retried and the deadline
 is not extended. Local paired calibration implementation and fixed-commit
 regression verification continue independently.
+
+
+## Retained-trace diagnosis and next window — 2026-09-26 11:06 ET
+
+After the exact code transfer was explicitly approved and completed, a bounded
+read-only diagnosis used the approved `6346189` parser on the unchanged a1
+trace. It completed in 0.062 seconds within a 30-second cap. The record, seal,
+retained parser/driver/observer and 2,761-byte trace hashes matched their prior
+pins. The corrected grammar accepted exactly 30 lines with four progress rows;
+the exit call/return remained at lines 19/20, tick 2,222,725,680, within the
+original interval [2,187,360,749, 3,187,360,749]. There were no pending or initial
+partial calls. An earlier filename typo in the read-only precheck was corrected
+before parsing; no execution was retried.
+
+This is `diagnostic_reparse` only. A1 remains failed/unverified with zero admitted
+timings and unchanged raw/record bytes. A2 remains expired and unexecuted.
+The [new prospective a3 plan](../../../docs/bfs-dx100-witness-continuation-20260926.md)
+waits for paired native calibration and provider generation to terminate,
+retains one actual attempt and the same 1,200-second/resource caps, and has a
+15:20 ET latest launch / 15:40 ET absolute end. No a3 simulation has run.

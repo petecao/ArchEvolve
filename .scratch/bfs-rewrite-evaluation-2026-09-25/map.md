@@ -4,7 +4,7 @@ Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-26 (Eastern Time)
 **Type:** ticket map
 **Status:** claimed
-**Blocked by:** Exact code/evidence/provider export approvals after automatic approval-review rejections; remaining empirical dependencies and expired pilot windows. Remote code remains at the previously synchronized checkpoint; local work continues.
+**Blocked by:** Remaining empirical verification, calibration, artifact/control comparisons, and final acceptance. The three exact transfer holds were explicitly cleared; both Git transfers are verified and provider submissions are proceeding.
 **Spec:** [Refined specification](spec.md)
 
 The user authorized autonomous implementation of all 21 tickets and all necessary builds, installations, benchmark/simulator runs, external access, Git, and Claude Code on 2026-09-25. This supersedes the publication-only hold. The two-lane mbit10 rules and evidence requirements remain in force.
@@ -28,7 +28,7 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 11 | [Reproducible workloads and comparison protocols](issues/11-workloads-and-comparison-protocols.md) | 03 | resolved |
 | 12 | [DX100 build and execution path](issues/12-dx100-build-and-execution.md) | 03 | resolved |
 | 13 | [Correctness of the timed DX100 binary](issues/13-dx100-timed-binary-correctness.md) | 12 | claimed |
-| 14 | [DX100 region timing and memory profiling](issues/14-dx100-region-and-memory-profiling.md) | 09, 12 | claimed |
+| 14 | [DX100 region timing and memory profiling](issues/14-dx100-region-and-memory-profiling.md) | 09, 12 | resolved |
 | 15 | [Baseline pilot and protocol freeze](issues/15-baseline-pilot-and-protocol-freeze.md) | 11, 13, 14 | claimed |
 | 16 | [Artifact reference and controlled comparisons](issues/16-artifact-reference-and-controls.md) | 11, 13, 14 | claimed |
 | 17 | [DX100 BFS: instruction-route acceptance](issues/17-dx100-instruction-route-acceptance.md) | 04, 10, 15 | claimed |
@@ -37,7 +37,7 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 20 | [Upstream BFS: annotated-source route acceptance](issues/20-upstream-annotated-route-acceptance.md) | 05, 10, 15 | claimed |
 | 21 | [Coverage, ROI gain, and collaborator handoff](issues/21-coverage-roi-gain-and-handoff.md) | 16, 17, 18, 19, 20 | claimed |
 
-Tickets 01–12 are resolved (12/21); the current empirical frontier is simulator verification and the shared calibration gate. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
+Tickets 01–12 and 14 are resolved (13/21); the current empirical frontier is simulator verification and the shared calibration gate. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
 
 ### Assigned acceptance cases
 
@@ -82,6 +82,56 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC18 — Full coverage including failed/regressing cases | 17–21 |
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
+
+## Progress and approved synchronization — 2026-09-26 11:03 ET
+
+The user explicitly approved the exact four code commits through `6346189`,
+the prepared 14-file evidence packet, and the three named Claude source/profile
+payloads. The code branch now points to `6346189b55132f195b02544b729f34100d10ba92`;
+the evidence branch points to `ee7af80a16eb92a42f4eef757cf1bdfa988d74d2`.
+Both remote tips were verified. The evidence packet was imported at `332ec96`
+and all 14 files / 1,118,269 bytes matched their preapproved hashes. Updated
+[code](observations/code-export-20260926-1005.json) and
+[evidence](observations/export-inventory-20260926.json) inventories preserve the
+prior rejection history. Later local commits were excluded from the four-commit
+code transfer.
+
+Ticket [14](issues/14-dx100-region-and-memory-profiling.md#answer) is resolved by
+the actual collection evidence, prior independent raw/source audit, exact import,
+and fresh public query audit. Status is now **13 resolved / 8 claimed**,
+**0/8 final cells**, no qualified gain, and no empirical freeze.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 13 | Failed a1 retained; a2 expired unused | mbit10 / released | Existing failure/trace hashes unchanged | Read-only parser diagnosis, then separately bounded future proof |
+| 14 | Resolved: collection and retrieval | mbit10 evidence, local queries | 31 regions, 39 memory metrics, 17-record chain; correctness unverified | Preserve evidence boundary for downstream calibration |
+| 15 | Paired preflight found compiler argv0 mismatch | mbit10 / socket 1 planned | Same executable, different version banner after symlink resolution; zero samples | Narrow tested fix, fresh preflight, dispatch by 11:58 ET, hard end 15:00 ET |
+| 17/19/20 | Exact initial payload submissions authorized | mbit10 / socket 0 planned | Source/package/prompt hashes checked; finite $25 / 1,500 provider-second caps | Three initial submissions; no repair/retry/evaluation in this batch |
+| 16–21 | Reference/control and matrix acceptance pending | Not running | No final cells or qualified gain | Complete remaining empirical gates |
+
+Fresh health at **11:02:38 ET** found socket 0, socket 1, and legacy leases
+released at generations **317/399/77**, with their recorded daemon PIDs absent.
+No owned BFS/gem5/provider job was found. Two unrelated long-lived Claude tail
+watchers were identified and left untouched. Load was 0.13/0.21/0.11; free
+space was **17/184 GiB** on `/data1` and `/data`; estimated node availability
+was 57.33/58.53 GiB and global availability 117.77 GiB, with zero pressure
+averages. Historical DX `5802a5a`, native `41303ed7`, and witness `51df061`
+checkouts remain pinned. Helper `42ce8dc` equals freshly fetched upstream and
+its lane script hash remains `00c269b4…`. All owned workers are responsive;
+completed workers finished normally, with no stranded agent found.
+
+Native receipt `26ea5d69…`, profiling package receipt `a66864e…`, a1 audit
+`4d228a78…`, simulator log `607b6f69…`, and trace `f6ad616e…` remain unchanged.
+The same line-27 failure remains in a1; all a2 paths remain absent. Paired raw
+and dispatch paths were absent at this observation. The native preflight failed
+before creating run IDs or measurements. The next full health check is due by
+**11:32 ET** (or the next heartbeat if earlier).
+
+Provider generation may share the host on socket 0 during socket-1 native
+calibration; its process presence will be recorded. The heavy a3 simulator
+proof will be deferred until after calibration under a newly recorded finite
+window. The unexecuted 11:35/11:55 a3 proposal does not extend the expired a2
+window and is not selected for dispatch.
 
 ## Heartbeat check — 2026-09-26 10:29 ET
 
