@@ -83,6 +83,32 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Failed coverage and reviewed monitor correction — 2026-09-26 14:25 ET
+
+The actual fixed coverage a1 ended unsuccessfully at 14:01 ET after the resource
+monitor reported unavailable owned-process RSS. It has zero admitted timings and
+unverified correctness. The public interrupted-stage record retains its stale
+`running` top-level outcome; an additive terminal audit records 14 observed
+PID/start identities, 13 absent and the exact original pane zombie with zero RSS,
+plus released node-0 generation 321. This is not accepted accelerator coverage.
+The [terminal and Git import receipt](observations/dx100-coverage-terminal-20260926.json)
+binds all four unchanged metadata files (46,426 bytes) imported from `238e5daa`.
+
+The 14:03 ET health check found both socket and legacy metadata released, all
+kernel locks empty, no live owned evaluation work, 16.42 GiB free on `/data1` and
+182.29 GiB on `/data`. All three workers remain active. The next full check is
+14:33 ET. Ticket counts remain 13 resolved and eight claimed; final coverage is
+0/8 and no policy-qualified gain or empirical freeze exists.
+
+A deterministic local reproduction exposes the old sampler's cross-file exit
+race; it is a supported explanation for the actual failure, not a proved cause.
+The [new observer](../../docs/bfs-owned-rss-20260926.md) reads one identity-bound
+stat record and passes 12 local checks plus independent review, with one Linux
+case still skipped. Its minimal export is `a8b89115` on
+`codex/bfs-owned-rss-20260926`; actual Linux validation remains required before
+new clients run. The one-thread native pilot and T17 build client are under
+review and have not been dispatched. Historical measured checkouts stay pinned.
+
 ## Runtime contract restored — 2026-09-26 14:00 ET
 
 T11 is resolved again after its requested runtime-input correction and two

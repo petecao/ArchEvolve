@@ -237,3 +237,19 @@ actual a3 and its terminal audit; its 15:45 ET latest launch and 16:45 ET end
 remain fixed. No coverage run, Linux cleanup test or simulator batch has been
 dispatched at this checkpoint. Native pilot spread failure blocks T15's freeze
 but does not itself block this independent correctness work or T16.
+
+## Actual witness and failed coverage — 2026-09-26 14:25 ET
+
+The actual tiny a3 continuation passed at 13:37 ET, with structural correctness
+and an exit witness for the original timed binary. Its exact metadata is synced
+in `aa6da989` (local `44180a0`); see the
+[witness receipt](../observations/dx100-witness-a3-terminal-20260926.json).
+This 64-vertex result does not establish full/tail/competing accelerator coverage.
+
+The separate 8,212-vertex coverage a1 was actually dispatched and failed in its
+resource monitor. No timing or correctness sample is accepted, despite a retained
+guest seal. The [terminal/import receipt](../observations/dx100-coverage-terminal-20260926.json)
+preserves the interrupted stage, stale public outcome, failed driver and verified
+cleanup. A prospective observer correction is locally tested and independently
+reviewed; Linux verification and a distinct corrective attempt remain outstanding.
+This ticket stays claimed. No existing failure or acceptance requirement is waived.

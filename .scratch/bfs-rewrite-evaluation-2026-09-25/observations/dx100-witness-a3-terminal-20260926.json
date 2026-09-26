@@ -42,5 +42,21 @@
   "prior_a1_unchanged": true,
   "a2": "expired_unexecuted",
   "basis": "Actual host execution and independent terminal audit reported by host worker; raw artifacts remain on mbit10.",
-  "next_action": "Import exact one-record Git commit into idle acceptance checkout, preserve code hashes, then actual Linux cleanup fixtures and fixed coverage."
+  "next_action": "Import exact one-record Git commit into idle acceptance checkout, preserve code hashes, then actual Linux cleanup fixtures and fixed coverage.",
+  "metadata_sync": {
+    "date": "2026-09-26",
+    "source_commit": "aa6da989cb83200b7a6aaf024986e56d8381ebdd",
+    "remote_branch": "codex/bfs-dx100-witness-a3-evidence-20260926",
+    "remote_sha_verified": true,
+    "local_commit": "44180a092902562052cf6aaeb33b5fc4d122167b",
+    "file_bytes": 41265,
+    "file_sha256": "cc5abf12f324a47b998c9aa516b57ceecd5a6f0c30b2064d612a74468c1aac11",
+    "bytes_match": true,
+    "content_inventory": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/witness-a3-dispatch1/a3-export-content-review.json",
+      "bytes": 1395,
+      "sha256": "3d32dea903dccff1715294f9db148f6f3600235af7fb60a8d13491b6c2eba1c9"
+    },
+    "scope": "Exactly one source-free evaluation metadata record; no raw artifacts or held provider packet."
+  }
 }
