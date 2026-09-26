@@ -21,6 +21,16 @@ def write_junit(path,names,fault=None):
     path.write_bytes(XML.tostring(root))
 
 
+def test_corrected_routes_pin_new_tested_commit_and_fresh_attempts():
+    from scripts import bfs_linux_fixture_audit as audit
+    assert runner.TESTED_COMMIT == '5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f'
+    assert {kind:value[0] for kind,value in runner.SELECTIONS.items()} == {
+        'owned_cleanup':'bfs-a2-owned-linux-20260926-a2',
+        'dx100_interruption':'bfs-a2-interruption-linux-20260926-a2'}
+    assert repr(runner.TESTED_COMMIT) in runner.runtime_command()[2]
+    assert audit.a2 is runner  # Post-exit admission derives the same fixed route.
+
+
 @pytest.mark.parametrize('kind',runner.SELECTIONS)
 def test_exact_two_commands_preserve_venv_and_fixed_unskipped_selection(tmp_path,kind):
     argv=runner.command(kind,tmp_path)
@@ -214,13 +224,14 @@ def test_tested_checkout_is_separate_fixed_historical_identity(monkeypatch,fault
     assert calls == ([(runner.TESTED_COMMIT,root)] if fault=='wrong_commit' else [])
 
 
-def test_runtime_output_is_bounded_and_exact(tmp_path):
+@pytest.mark.parametrize('wrong_commit', ['a'*40, '67313d9b2a45d9f0fb23d935b56e755a3a19fa7f'])
+def test_runtime_output_is_bounded_and_exact(tmp_path, wrong_commit):
     path=tmp_path/'runtime.json';root=tmp_path/'tested'
     value={'repository_commit':runner.TESTED_COMMIT,'root':str(root),'files':{},
         'python':runner.reference(Path(sys.executable).resolve()),'python_version':sys.version,
         'a2_plan':{},'project_config':{},'test_files':{}}
     path.write_text(json.dumps(value));assert runner.read_runtime(path,root)==value
-    value['repository_commit']='a'*40;path.write_text(json.dumps(value))
+    value['repository_commit']=wrong_commit;path.write_text(json.dumps(value))
     with pytest.raises(ValueError,match='exact tested'):runner.read_runtime(path,root)
     path.write_bytes(b' '* (runner.RUNTIME_OUTPUT_BYTES+1))
     with pytest.raises(ValueError,match='exceeded4MiB'):runner.read_runtime(path,root)

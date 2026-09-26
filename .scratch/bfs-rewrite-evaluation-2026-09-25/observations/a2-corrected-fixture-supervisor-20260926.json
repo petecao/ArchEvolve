@@ -1,0 +1,51 @@
+{
+  "created": "2026-09-26T18:44:49.916354-04:00",
+  "state": "corrected_fixture_routes_ready_for_independent_review",
+  "scope": "Three owned supervisor/test/doc paths only; auditor implementation unchanged",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_a2_linux_fixture.py",
+      "bytes": 15972,
+      "sha256": "0642c530d3b620691692e95708b99fc8204eb90ba0501f6c07abd94df73cfae6"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_a2_linux_fixture.py",
+      "bytes": 14372,
+      "sha256": "d2e82e00fcfcccf4681870d0360265c221c6eaf0da0673bf2dcba0e88be21804"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-a2-linux-fixture-20260926.md",
+      "bytes": 6471,
+      "sha256": "0d11bb8ac12c6b722d24892c9d74aaef9905d892f0f9527303fec09fce8ec1f7"
+    }
+  ],
+  "tested_commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+  "routes": {
+    "owned_cleanup": "bfs-a2-owned-linux-20260926-a2",
+    "dx100_interruption": "bfs-a2-interruption-linux-20260926-a2"
+  },
+  "changes": [
+    "Supervisor onlychanges fixedtestedcommit,twofreshrawIDs anddocstring terminology.",
+    "Narrow test pins exactnewcommit/routeIDs and confirms auditor imports that same module. Read-runtime regression explicitly rejectsold673, while positive shape/bounds remain checked.",
+    "Dated doc preservesoriginala1success+failure and673/3f38, describesmandatoryfreshbothproofs andunchanged21:00/3600A2."
+  ],
+  "tests": {
+    "command": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_a2_linux_fixture.py tests/test_bfs_linux_fixture_audit.py -q --basetemp /private/tmp/bfs-a2-fixture-corrected-routes-20260926",
+    "log": {
+      "path": "/private/tmp/bfs-a2-fixture-corrected-routes-20260926.log",
+      "bytes": 190,
+      "sha256": "dc65b48a125872ea9fa0c57588c10ae57c81cfd71b2835106328d4f39b6c04a5"
+    },
+    "result": "76passed1Linuxskip1.46s"
+  },
+  "auditor_unchanged": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_linux_fixture_audit.py",
+    "bytes": 22656,
+    "sha256": "c2fb516cf83152f23875da8782cb4701972cc47b87555d317179bd6d403afca6"
+  },
+  "limits": [
+    "No commit,export,hostcommand or fixture rerun.",
+    "Same selectors/case sets,90soriginalclock,shared30cleanup,512MiB limits; no newcleanup reserve or altered proof validation.",
+    "ActualcorrectedLinuxproofs stillpending; originalproofs cannot satisfynewruntimeequality."
+  ]
+}

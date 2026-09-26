@@ -10,25 +10,31 @@ finite simulator-calibration plan and the independent author-reference batch.
 Neither small case substitutes for performance-workload evidence. This document
 does not start a budget clock or select an execution window.
 
-## Execution update — 2026-09-26 18:03 ET
+## Execution update — 2026-09-26 18:49 ET
 
-The planning boundaries below predate the completed tiny a3 witness and the
-failed coverage a1 attempt. Their outcomes are retained in the
-[ticket map](../.scratch/bfs-rewrite-evaluation-2026-09-25/map.md); a3 proves only
-its tiny timed-binary case, and coverage a1 has zero admitted timings. The
-[fixed coverage A2 plan](bfs-dx100-coverage-a2-plan-20260926.md) supplies the
-reviewed prospective continuation, with actual Linux admission checks still
-pending. It waits for terminal cleanup of the active native pilot.
+The tiny a3 witness passed only its tiny timed-binary case; coverage a1 failed
+with zero admitted timings. Both remain in the
+[ticket map](../.scratch/bfs-rewrite-evaluation-2026-09-25/map.md).
+The unused coverage A2 retains its original 21:00 ET launch cutoff and
+3,600-second allowance. Its first actual Linux interruption fixture failed
+host-policy validation. The [reviewed prelaunch correction](bfs-a2-interruption-prelaunch-revision-20260926.md)
+preserves mandatory mbit10 lane checks; both fixture selections require fresh
+proofs against the new exact tested revision before any A2 dispatch.
 
-The four-thread paired study failed its fixed spread gates. The separate
-one-thread pilot completed all 240 primary checks, four fixed controls and four
-fresh diagnostic packages. Its independent terminal audit found all 131 owned
-identities absent and socket 1 generation 402 released. One bounded publisher
-readback remains; there is no empirical freeze. The
-[bounded simulator plans](bfs-simulator-batches-20260926.md) now provide the
-T15/T16 coordinator, common resource accounting and prospective admission
-requirements described below. Their actual Linux checks, absolute windows and
-empirical prerequisites remain outstanding. The older deadlines below remain
+The separate one-thread native pilot completed 240 primary checks, all four
+fixed controls and four diagnostic packages, with all 131 owned identities
+absent after termination. Its first independent readback failed before
+qualification because the generated reader passed a string to the historical
+Store API. That failure remains preserved. The corrected reader's real Linux
+fast-exit test passed, retaining its actual process identity before reap;
+the [separate bounded readback](bfs-native-readback-correction-20260926.md)
+remains prospective. No empirical protocol is frozen.
+
+The [bounded simulator plans](bfs-simulator-batches-20260926.md) provide the
+T15/T16 coordinator and common resource accounting. Actual prerequisites,
+final campaign code identity, Linux admission proofs and absolute windows
+remain outstanding. Native collection and code-fixture success do not substitute
+for the required simulator executions. Historical deadlines below remain
 historical constraints, not authority to dispatch under an expired clock.
 
 ## Boundaries that remain in force
