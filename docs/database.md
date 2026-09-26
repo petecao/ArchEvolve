@@ -11,6 +11,12 @@ rebuild the file first unless the folder and the fingerprint match the folder be
 and the file was built by the same `swdb` code (so a newer `swdb` never queries a file that
 lacks its tables or fills them differently).
 
+Record loading uses PyYAML's safe LibYAML parser when that optional extension is
+installed, with the Python safe parser as a fallback. Both preserve dates as text
+and reject repeated mapping keys; neither constructs Python objects from YAML.
+This reduces metadata parsing overhead without caching authoritative records or
+changing validation, write locking, or index freshness checks.
+
 Run your own SQL with `swdb sql "<query>" [--format json]`, or open the file with the
 `sqlite3` shell. Values that are JSON in the records (semantic values, property values)
 are stored as JSON text, so `true`, `false`, and `null` stay distinct: compare with

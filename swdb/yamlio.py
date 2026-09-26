@@ -3,6 +3,9 @@
 1. Dates stay text: a bare `2026-09-22` is the string "2026-09-22", not a date object,
    so schemas can check it like any other string.
 2. A key repeated in one mapping is an error, not a silent overwrite.
+
+Updated: 2026-09-25. Use the optional LibYAML safe parser for large evidence
+records; installations without it retain the same Python safe-parser policy.
 """
 
 import yaml
@@ -10,13 +13,16 @@ import yaml
 _TIMESTAMP = "tag:yaml.org,2002:timestamp"
 
 
-class _Loader(yaml.SafeLoader):
+_SafeLoader = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+
+
+class _Loader(_SafeLoader):
     pass
 
 
 _Loader.yaml_implicit_resolvers = {
     first: [(tag, regexp) for tag, regexp in resolvers if tag != _TIMESTAMP]
-    for first, resolvers in yaml.SafeLoader.yaml_implicit_resolvers.items()
+    for first, resolvers in _SafeLoader.yaml_implicit_resolvers.items()
 }
 
 
