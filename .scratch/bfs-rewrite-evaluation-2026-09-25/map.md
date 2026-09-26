@@ -83,6 +83,16 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## One-thread pilot running — 2026-09-26 15:07 ET
+
+The [sole native attempt](observations/native-one-thread-start-20260926.json)
+started on mbit10 socket 1, generation 402, at exact `319645e`. Both actual Linux
+cleanup tests, fresh historical/T17 terminal gates, 74 artifact references, and
+20 unused record IDs passed admission. Its original hard stop is **20:11 ET**
+(18,240 seconds); all primary/diagnostic sublimits remain fixed. The first
+DX100 uniform-random pair is running. This start is not qualification or a
+freeze. Coverage a2 must wait for whole-client independent terminal cleanup.
+
 ## Progress check — 2026-09-26 15:03 ET
 
 The [full health audit](observations/health-20260926-1503.json) found both socket
