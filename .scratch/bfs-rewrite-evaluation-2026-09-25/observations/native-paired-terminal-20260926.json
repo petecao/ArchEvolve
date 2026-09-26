@@ -188,7 +188,31 @@
   "gain_claim": false,
   "protocol_freeze": false,
   "ticket15_complete": false,
-  "readback": "One separately bounded prepare requested; no result asserted in this receipt.",
+  "readback": {
+    "state": "timed_out",
+    "started_at_et": "2026-09-26 13:29:20.573 ET",
+    "finished_at_et": "2026-09-26 13:32:15.602 ET",
+    "elapsed_seconds": 175.028874,
+    "exit_code": 124,
+    "review_produced": false,
+    "freeze_request_produced": false,
+    "retried": false,
+    "terminal_verified": true,
+    "lane_generation": 401,
+    "lane_state": "released",
+    "timeout_process_group_empty": true,
+    "terminal_audit": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-review-20260926-a1/prepare-terminal-validation.json",
+      "bytes": 3340,
+      "sha256": "2deb2eaf3699e1c030e4e27d3413eaf14cd5677e71e3b99997b2a6dd0147534f"
+    },
+    "receipt": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-review-20260926-a1/prepare-receipt.json",
+      "sha256": "2cf5845cb0a908d7503d52796b89f1f2e712ddfbdb1274ecd6568a993f161a50"
+    },
+    "selection_sha256": "9aebd8a565b55c117d49626caa0ee58fb7ee7c51ef31d06b3a53825a0e26dceb",
+    "basis": "Host worker retained actual exit and independent cleanup; no completed public protocol revalidation or qualification."
+  },
   "final_resource_summary": {
     "reported_host_wall_seconds": 7824.3898,
     "peak_sampled_rss_bytes": 1218088960,
@@ -196,5 +220,22 @@
     "maximum_guard_seconds": 3.651,
     "precision_note": "Numeric summaries are rounded as reported by the host worker; exact values remain in the hashed final driver."
   },
-  "case_analysis_scope": "Per-cell analysis fields preserve their observation-time values, including earlier whole-study incomplete labels; the terminal study state is collection_complete_calibration_unqualified."
+  "case_analysis_scope": "Per-cell analysis fields preserve their observation-time values, including earlier whole-study incomplete labels; the terminal study state is collection_complete_calibration_unqualified.",
+  "updated": "2026-09-26",
+  "metadata_sync": {
+    "date": "2026-09-26",
+    "commit": "b722d132e0aba20a5b7fd524a3d2b31034e12a6e",
+    "destination": "git@github.com:ruchou/EvolveSWDB.git",
+    "branch": "codex/bfs-native-paired-evidence-20260926-a1",
+    "files": 12,
+    "bytes": 1047987,
+    "pushed": true,
+    "remote_sha_verified": true,
+    "inventory": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/native12-export-inventory.json",
+      "bytes": 14011,
+      "sha256": "d428cd292cada978987affeac8aa9be5939c82988cc002621f0e60dba6c25635"
+    },
+    "scope": "Four evaluation-pair and eight evaluation metadata records only; excludes source excerpts, patches, provider payloads and raw artifacts."
+  }
 }

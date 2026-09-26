@@ -83,6 +83,38 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Progress check — 2026-09-26 13:33 ET
+
+The [health receipt](observations/progress-20260926-1333.json) records released
+socket and legacy metadata, no live native owned processes, 16.44 GiB free on
+`/data1`, 182.57 GiB on `/data`, and sufficient memory. The separate 13:34 a3
+prelaunch checked all three kernel locks; that later observation is explicitly
+separate from the 13:33 metadata check. All workers were responsive or completed,
+with no stranded worker. Next full check is 14:03 ET.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 15 native pilot | Complete; calibration failed | mbit10 / socket 1 released | 240 checks, 7/24 spreads over 0.10 | Retain failure and assess future design |
+| Native prepare | Timed out | mbit10 / socket 1 released | Exit 124, no review/freeze request | No retry |
+| 13 witness a3 | Ready at this observation | mbit10 / socket 0 free | Native/provider/readback terminal barriers passed | One authorized dispatch |
+| 11 runtime policy | Fix under verification | Local | Tests and independent review pending | Resolve only after checks |
+| Overall | 12 resolved / 9 claimed | — | 0/8 final cells; no gain or freeze | Continue independent work |
+
+## DX100 witness and native readback — 2026-09-26 13:38 ET
+
+The [single a3 witness](observations/dx100-witness-a3-terminal-20260926.json)
+passed actual guest correctness and the independent terminal audit; all four
+process exits are zero and socket 0 generation 319 is released. Its tiny graph
+does not establish accelerated full/tail/competing-parent coverage or a gain.
+T13 remains claimed while the fixed coverage case is prepared.
+
+The one native prepare timed out after 175.028874 seconds, exit 124, with no
+review or freeze request. Cleanup passed; no retry occurred. The exact 12
+source-free paired metadata records were pushed to the private
+`codex/bfs-native-paired-evidence-20260926-a1` branch at `b722d132`, with remote
+SHA verified. Raw artifacts and the separately held provider packet are excluded.
+Counts remain **12 resolved / 9 claimed**, **0/8 final acceptance cells**.
+
 ## Native pilot terminal — 2026-09-26 13:23 ET
 
 The original paired study finished at **13:23:55 ET** with all **240/240**
@@ -104,7 +136,7 @@ label-direction checks have lower confidence bounds at most 1.05, so there is
 no numerical A/A gain; this does not override the spread veto. Collection is
 complete and calibration is unqualified. No samples or policy changed, and
 no protocol is published. T15 remains claimed; the independent T13 sequence
-continues after one bounded unpublishable readback. The new 12-record commit
+continues after the separately bounded readback attempt. The new 12-record commit
 `b722d132e0aba20a5b7fd524a3d2b31034e12a6e` remains host-local at this check.
 Current tracker counts are **12 resolved / 9 claimed** because T11's local
 runtime-policy correction is pending independent verification.

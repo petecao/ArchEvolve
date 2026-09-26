@@ -7,7 +7,20 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 12
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 11:42 ET
+## Current checkpoint — 2026-09-26 13:38 ET
+
+The single a3 execution passed its exact timed-guest structural verifier and
+independent terminal audit. Driver, observer, supervisor and outer exits are
+zero; socket 0 generation 319 is released. The retained author-traversal ROI
+is 29.122772 microseconds. The explicit v2 exit witness completed; actual normal
+termination remains false and is not inferred. See the
+[a3 terminal receipt](../observations/dx100-witness-a3-terminal-20260926.json).
+
+The tiny graph does not establish accelerated full/tail/competing-parent
+coverage. Those actual observations remain required before resolving T13.
+A1 remains failed and a2 expired unused.
+
+## Historical checkpoint — 2026-09-26 11:42 ET
 
 Exact code transfer is complete. The read-only corrected-parser diagnosis passed;
 its evidence and limits are appended below. A1 remains failed, a2 expired unused,

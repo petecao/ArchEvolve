@@ -19,8 +19,10 @@ bounds are at most 1.05. All observations, including the failed groups, remain
 retained and no protocol is published. See the
 [terminal evidence](../observations/native-paired-terminal-20260926.json).
 
-One bounded prepare readback is a separate pending audit, not a new measurement
-or publish action. The original study receives no retry, threshold change or
+The one bounded prepare readback timed out at 13:32:15 ET after 175.028874
+seconds (exit 124), producing no review or freeze request. Its owned process
+group is empty and socket 1 generation 401 is released. This is an incomplete
+public revalidation, not a generated protocol review. No retry occurred. The original study receives no retry, threshold change or
 extension. A later design needs its own prospective review and fresh evidence.
 T15 simulator collection remains held; independent T13/T16 work proceeds under
 its own actual correctness, cleanup and resource prerequisites.
