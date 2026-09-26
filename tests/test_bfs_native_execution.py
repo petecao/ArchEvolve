@@ -103,6 +103,51 @@ def test_successful_early_exit_still_charges_spawn_time(tmp_path,monkeypatch):
         for child in children:child.wait(timeout=2)
 
 
+def test_initial_receipt_time_cannot_borrow_cleanup_for_child_work(tmp_path,monkeypatch):
+    save=bfs_process.save_receipt;popen=subprocess.Popen;children=[];first=True
+    def delayed(folder,receipt):
+        nonlocal first
+        if first:
+            first=False;time.sleep(.20)
+        save(folder,receipt)
+    def launch(*args,**kwargs):
+        child=popen(*args,**kwargs);children.append(child);return child
+    monkeypatch.setattr(bfs_process,'save_receipt',delayed)
+    monkeypatch.setattr(subprocess,'Popen',launch)
+    outer=time.monotonic()+2
+    try:
+        with pytest.raises(subprocess.TimeoutExpired):
+            bfs_process.run_stage({'stages':[]},tmp_path,[sys.executable,'-c',
+                'import time;time.sleep(.20);print("explicit local clock fixture")'],
+                timeout=.30,deadline=outer,cwd=tmp_path)
+        assert len(children)==1 and children[0].returncode is not None
+        with pytest.raises(ChildProcessError):os.waitpid(children[0].pid,os.WNOHANG)
+        row=json.loads((tmp_path/'driver.json').read_text())['stages'][0]
+        assert row['state']=='interrupted_or_timeout' and 'TimeoutExpired' in row['reason']
+        assert 0 < row['timeout_s'] < .15
+        assert row['host_wall_s'] >= .20 and time.monotonic() < outer
+    finally:
+        for child in children:child.wait(timeout=2)
+
+
+def test_initial_receipt_exhaustion_rejects_before_spawning(tmp_path,monkeypatch):
+    save=bfs_process.save_receipt;first=True
+    def delayed(folder,receipt):
+        nonlocal first
+        if first:
+            first=False;time.sleep(.08)
+        save(folder,receipt)
+    def forbidden(*args,**kwargs):pytest.fail('exhausted stage launched a child')
+    monkeypatch.setattr(bfs_process,'save_receipt',delayed)
+    monkeypatch.setattr(subprocess,'Popen',forbidden)
+    with pytest.raises(TimeoutError,match='time budget exhausted'):
+        bfs_process.run_stage({'stages':[]},tmp_path,[sys.executable,'-c','pass'],
+            timeout=.02,deadline=time.monotonic()+2,cwd=tmp_path)
+    row=json.loads((tmp_path/'driver.json').read_text())['stages'][0]
+    assert row['state']=='interrupted_or_timeout' and row['returncode'] is None
+    assert row['host_wall_s'] >= .08
+
+
 class FakeBudget:
     def __init__(self,path,binding,deadline):self.path=Path(path);self.binding=binding;self.deadline=deadline;self.spent=0
     @staticmethod

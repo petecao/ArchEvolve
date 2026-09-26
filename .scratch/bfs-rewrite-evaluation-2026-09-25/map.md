@@ -127,6 +127,18 @@ before the final exception-note delta; all six affected final-delta cases pass.
 Actual Linux admission and final acceptance remain outstanding. The separate
 A2 fixture route must bind its old tested runtime and new supervisor explicitly.
 
+## Local regression repair — 2026-09-26
+
+The [three full-suite failures and clock follow-up](observations/c2-regression-repair-20260926.json)
+are repaired. Smoke children use the work cutoff while cleanup retains the
+original outer deadline; initial persistence now consumes the work allowance.
+The witness fixture uses isolated prelaunch records. The focused repaired group
+passed 47 tests; the final clock/cleanup group passed 66 with two Linux-only
+skips. Independent review of the clock correction is clean. The failed broad
+run remains retained, and a corrected isolated broad recheck is still required.
+The [A2 wrapper and shared import guard](observations/a2-linux-fixture-preparation-20260926.json)
+also pass scoped review. Neither result supplies actual Linux or empirical proof.
+
 ## Progress check — 2026-09-26 17:03 ET
 
 The [full health audit](observations/health-20260926-1703.json) confirms native

@@ -77,6 +77,8 @@ def save_receipt(folder, receipt):
 def run_stage(receipt, folder, command, *, timeout, deadline, cwd, env=None,
               output=None, stderr=None, monitor=None):
     """Stream logs; on interruption allow the evaluator to reap nested groups."""
+    before = time.monotonic()
+    until = min(deadline, before+timeout)
     folder = Path(folder)
     step = f"{len(receipt['stages']):02d}"
     out = Path(output) if output is not None else folder / (step + '.stdout')
@@ -85,19 +87,17 @@ def run_stage(receipt, folder, command, *, timeout, deadline, cwd, env=None,
            'stderr': str(err), 'state': 'running'}
     receipt['stages'].append(row)
     save_receipt(folder, receipt)
-    before = time.monotonic()
     child = None
     original_error = cleanup_error = None
     try:
         with out.open('w') as stdout, err.open('w') as errors:
-            allowed = min(timeout, deadline - time.monotonic())
+            allowed = until - time.monotonic()
             if allowed <= 0:
                 raise TimeoutError('driver total time budget exhausted')
             row['timeout_s'] = allowed
             child = subprocess.Popen(row['command'], cwd=cwd, env=env, stdout=stdout,
                                      stderr=errors, start_new_session=True)
             try:
-                until = min(deadline, before+timeout)
                 while child.poll() is None:
                     if monitor is not None:
                         monitor()
