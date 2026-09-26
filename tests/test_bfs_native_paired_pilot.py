@@ -1,4 +1,4 @@
-"""Bounded paired-driver contract fixtures; no calibration. Created: 2026-09-26 ET."""
+"""Bounded paired-driver contract fixtures; no calibration. Created/updated: 2026-09-26 ET."""
 import copy
 from datetime import datetime, timedelta
 import json
@@ -36,7 +36,31 @@ def test_all_retained_first_blocks_generate_the_exact_new_unchanged_pair_request
             assert member['repetitions'] == 10 and member.get('warmups', 0) == 0
             assert member.get('protocol') is None
             assert member['budget']['total_seconds'] == 2400
+            assert member['build']['compiler'] == first['build']['compiler']
         assert first == before
+
+
+def test_compiler_preflight_preserves_symlink_argv0_banner_and_hashes_target(tmp_path):
+    compiler = tmp_path / 'target-compiler'
+    compiler.write_text('#!/bin/sh\nprintf "%s fixture compiler\\nCopyright fixture\\n" "${0##*/}"\n')
+    compiler.chmod(0o755)
+    declared = tmp_path / 'g++'
+    declared.symlink_to(compiler)
+    first = {'build': {'compiler': str(declared),
+                       'compiler_version': ['g++ fixture compiler', 'Copyright fixture']}}
+    output = tmp_path / 'version.txt'
+    calls = []
+
+    def stage(command, timeout, destination):
+        calls.append(command)
+        with destination.open('w') as stream:
+            subprocess.run(command, stdout=stream, check=True, timeout=timeout)
+
+    assert subprocess.check_output([str(compiler), '--version'], text=True).splitlines()[:2] != first['build']['compiler_version']
+    result = driver.observe_compiler(first, output, stage)
+    assert calls == [[str(declared), '--version']]
+    assert output.read_text().splitlines()[:2] == first['build']['compiler_version']
+    assert result == {'compiler_resolved': str(compiler.resolve()), 'compiler_sha256': artifacts.file_hash(compiler)}
 
 
 @pytest.mark.parametrize('fault', ['id', 'lane', 'count', 'order', 'retry', 'warmup-bool',
@@ -233,7 +257,7 @@ def driver_receipt_fixture(tmp_path, monkeypatch):
                  'started': (started + timedelta(seconds=2 + 5 * cell_index)).isoformat(),
                  'finished': (started + timedelta(seconds=6 + 5 * cell_index)).isoformat()}
         receipt['cells'].append(entry)
-        stage([compiler, '--version'], folder / (cell['id'] + '.compiler-version.txt'),
+        stage([first['build']['compiler'], '--version'], folder / (cell['id'] + '.compiler-version.txt'),
               '\n'.join(first['build']['compiler_version']) + '\n', 30)
     for cell, entry in zip(plan['cells'], receipt['cells']):
         result = {'id': cell['id'], 'evidence_kind': 'fixture', 'gain_claim': False,
@@ -260,6 +284,17 @@ def test_driver_reader_reopens_all_metadata_and_preserves_fixture_boundary(tmp_p
     assert all(artifacts.file_hash(ref['path']) == ref['sha256'] for ref in refs)
     assert all(json.loads(Path(row['output']).read_text())['evidence_kind'] == 'fixture' for row in receipt['stages'][5:])
     assert receipt['gain_claim'] is False
+
+
+def test_driver_reader_rejects_another_invocation_path_to_the_same_compiler(tmp_path, monkeypatch):
+    plan, receipt, _ = driver_receipt_fixture(tmp_path, monkeypatch)
+    compiler = receipt['cells'][0]['compiler_resolved']
+    alias = tmp_path / 'same-compiler-other-name'
+    alias.symlink_to(compiler)
+    assert artifacts.file_hash(alias) == receipt['cells'][0]['compiler_sha256']
+    receipt['stages'][1]['command'][0] = str(alias)
+    with pytest.raises(ValueError, match='preflight command/path differs'):
+        driver.validate_driver_receipt(receipt, plan)
 
 
 @pytest.mark.parametrize('fault', ['elapsed', 'absolute', 'late-start', 'command', 'request', 'result',
