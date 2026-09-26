@@ -1,7 +1,7 @@
 # BFS baseline variability and fixed-recipe review
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 
 The completed pilots establish native scale-18 feasibility and checked results,
 but do not establish a cause for their timing variation or adequate precision for
@@ -67,7 +67,7 @@ attributed to YAML, verification, scheduler load, or any other cause here.
 Instrumented thread-CPU observations come from different binaries and cannot
 be substituted for missing CPU/preemption measurements of the primary calls.
 
-**Finite proposed follow-up, requiring separate dispatch authorization.** The
+**Finite follow-up, authorized for checkpoint review and coordinated dispatch.** The
 existing [pilot plan](../.scratch/bfs-rewrite-evaluation-2026-09-25/pilot-plan.md)
 allows at most two complete unchanged calibration blocks per size/family. One
 successful block exists for each native cell. Use only the remaining second
@@ -117,6 +117,71 @@ Kalibera and Jones distinguish repetition levels and require uncertainty to be
 estimated at the relevant level; their steady-state examples have a different
 objective from this ROI ([author manuscript, sections 6–9](https://kar.kent.ac.uk/33611/45/p63-kaliber.pdf)).
 No claim of statistical power or guaranteed 5% detectability is made.
+
+The coordinator authorized this one remaining block on 2026-09-26, within the
+existing two-block and 12-hour limits. The exact order and record identities are
+in [the request plan](../.scratch/bfs-rewrite-evaluation-2026-09-25/requests/native-repeatability-20260926-a1.json).
+All four new IDs start with `bfs-native-repeatability-20260926-a1`:
+
+| Order | Evaluation suffix | First-block prefix |
+|---:|---|---|
+| 1 | `.dx100.uniform-random.evaluation` | `bfs-native-pilot-20260925-dx10018-a1` |
+| 2 | `.upstream.uniform-random.evaluation` | `bfs-native-pilot-20260925-upstream18-a2` |
+| 3 | `.dx100.kronecker.evaluation` | `bfs-native-pilot-20260925-dx10018-a1` |
+| 4 | `.upstream.kronecker.evaluation` | `bfs-native-pilot-20260925-upstream18-a2` |
+
+The [bounded public-workflow driver](../scripts/bfs_native_repeatability.py)
+checks all four first-block records, unchanged source artifacts, registered
+graphs, retained raw hashes, compiler versions, and trusted driver template before
+dispatching any trial. It pins the earlier resolved compiler and flags in each
+new public `evaluate` request. Each completed evaluation must retain fifteen
+independently checked samples in the prescribed order and the identical primary
+binary and wrapper hash. A changed binary or failed evaluation stops the remaining
+cells; no retry or additional profiling follows. Per-source medians and spread
+are descriptive. The driver does not run a gain test or create a comparison.
+
+The first block did not retain a compiler executable hash or all inherited
+OpenMP/GNU runtime knobs, so historical equality of those details cannot be
+asserted. The second block records the current executable hash and selected
+inherited runtime settings. It also preserves both evaluator-module identities:
+validation and metadata handling changed since the first block, while the trusted
+timed driver and resulting primary binary are required to match. No known change
+is silently labeled execution noise.
+
+After the reviewed Git checkpoint and fresh host/lease checks, the prospective
+inner command is:
+
+```sh
+python3 scripts/bfs_native_repeatability.py \
+  --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-native-repeatability-20260926 \
+  --records "$PWD/records" --lane mbit10-evaluation-node1 \
+  --pilot-remaining-seconds REMAINING_SECONDS
+```
+
+The last argument is computed immediately before dispatch from the hard deadline
+`2026-09-26 05:56:38 ET`. The coordinator conservatively counts the entire calendar
+interval since the pilot plan's first commit, `a7d8d153`, at
+`2026-09-25 17:56:38 ET`, including idle and engineering time. This predates the
+earliest actual native pilot. The driver independently checks this deadline and
+requires at least 5,400 seconds remaining; the argument cannot reset the clock.
+Use the normal
+socket-lane helper in a named tmux session and an outer 5,520-second timeout.
+The 5,400-second internal deadline includes preflight, with at most 1,260 seconds
+for each public evaluator and its cleanup. The evaluator itself retains its
+180/60/1,200-second bounds. Logs stream to retained files and owned process groups
+receive TERM, a grace period, then KILL on interruption. A second invocation
+cannot overwrite or resume these fixed IDs. No measurement has been dispatched
+by this preparation.
+
+The run directory must initially be empty and dedicated to this block. Its four
+evaluations and driver logs have a separate 4 GiB apparent-byte ceiling, sampled
+at nominal five-second subprocess intervals (plus guard overhead) along with free-space,
+lane, and deadline checks. Crossing the sampled ceiling terminates the owned
+stage and retains its failure and raw output; it does not delete evidence or
+increase the allowance. This batch bound leaves the original 40 GiB combined
+pilot-output cap and 30/10 GiB free-space reserves unchanged. Dispatch receipts
+from the outer lane helper belong in a separate sibling directory so they do not
+violate the initial empty-directory condition.
 
 **Fixed recipes and acceptance limits.** The review found no new demonstrated
 source-semantics defect in the literal patch or the requested transformations.

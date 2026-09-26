@@ -1,0 +1,123 @@
+{
+  "message_version": "1.0",
+  "id": "bfs-native-repeatability-20260926-a1",
+  "created": "2026-09-26",
+  "updated": "2026-09-26",
+  "role": "second_unchanged_native_calibration_block",
+  "lane": "mbit10-evaluation-node1",
+  "sources": [
+    0,
+    1234,
+    7777
+  ],
+  "bounds": {
+    "driver_seconds": 5400,
+    "outer_seconds": 5520,
+    "evaluation_seconds": 1200,
+    "evaluation_cli_seconds": 1260,
+    "build_seconds": 180,
+    "run_seconds": 60,
+    "trials": 60,
+    "threads": 4,
+    "repetitions": 5,
+    "warmups": 0,
+    "retries": 0,
+    "batch_raw_bytes": 4294967296
+  },
+  "candidate_assessment": false,
+  "protocol_freeze": false,
+  "profiling": false,
+  "execution_order": "repetition-major within each evaluation, source positions 0,1,2; four evaluations in the listed order",
+  "budget_authority": "Remaining second block under pilot-plan.md; coordinator must attest at least 5400 seconds remain within its original 43200-second global cap. No reset of that cap.",
+  "first_block_limitations": [
+    "Compiler versions and resolved compiler paths were retained; executable compiler hashes were not.",
+    "Only the four configured OpenMP environment settings were retained, not all inherited runtime settings.",
+    "Full native evaluator module hashes may differ because validation and metadata handling were fixed; driver template and generated primary binary must still match."
+  ],
+  "cells": [
+    {
+      "id": "bfs-native-repeatability-20260926-a1.dx100.uniform-random.evaluation",
+      "first_evaluation": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.evaluation",
+      "first_evaluation_sha256": "fb1887b0117c875eb483065cb5ad6f1faa106d0026fb32aca292295e3e03522e",
+      "implementation": "dx100-bfs-scalar",
+      "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+      "workload": "bfs-20260925-uniform18.cd2169a5c421baf7",
+      "source_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+      "canonical_graph_sha256": "7d7dd24c2397071f4ad8fb3125079a4e42ecdbaa853745d84161bcd410d0164b",
+      "primary_binary_sha256": "42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424",
+      "compiler": "/usr/bin/g++",
+      "flags": [
+        "-std=c++11",
+        "-O3",
+        "-Wall",
+        "-fopenmp",
+        "-pthread",
+        "-DFUNC"
+      ],
+      "driver_template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+    },
+    {
+      "id": "bfs-native-repeatability-20260926-a1.upstream.uniform-random.evaluation",
+      "first_evaluation": "bfs-native-pilot-20260925-upstream18-a2.uniform-random.evaluation",
+      "first_evaluation_sha256": "a9f8516c6a38ecf743b338e6351c6bf73cd4adccc5bb8c1483b717adc4d770f1",
+      "implementation": "gapbs-bfs-do",
+      "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+      "workload": "bfs-20260925-uniform18.cd2169a5c421baf7",
+      "source_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+      "canonical_graph_sha256": "7d7dd24c2397071f4ad8fb3125079a4e42ecdbaa853745d84161bcd410d0164b",
+      "primary_binary_sha256": "741493a212d925d2a382dacabb7cd171895db2384ed799387e9631d842cb56b3",
+      "compiler": "/usr/bin/g++",
+      "flags": [
+        "-std=c++11",
+        "-O3",
+        "-Wall",
+        "-fopenmp"
+      ],
+      "driver_template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+    },
+    {
+      "id": "bfs-native-repeatability-20260926-a1.dx100.kronecker.evaluation",
+      "first_evaluation": "bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation",
+      "first_evaluation_sha256": "8566de7181de7c8fa042c683392f959d788a7f02cfbe2d0d166f5d2f8182149c",
+      "implementation": "dx100-bfs-scalar",
+      "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+      "workload": "bfs-20260925-kronecker18.48de8267ac2098d5",
+      "source_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+      "canonical_graph_sha256": "cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7",
+      "primary_binary_sha256": "42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424",
+      "compiler": "/usr/bin/g++",
+      "flags": [
+        "-std=c++11",
+        "-O3",
+        "-Wall",
+        "-fopenmp",
+        "-pthread",
+        "-DFUNC"
+      ],
+      "driver_template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+    },
+    {
+      "id": "bfs-native-repeatability-20260926-a1.upstream.kronecker.evaluation",
+      "first_evaluation": "bfs-native-pilot-20260925-upstream18-a2.kronecker.evaluation",
+      "first_evaluation_sha256": "923b409064c9665d882eb5673faee9fcc594b23b3f36d3dfad0bfee8022fc9ff",
+      "implementation": "gapbs-bfs-do",
+      "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+      "workload": "bfs-20260925-kronecker18.48de8267ac2098d5",
+      "source_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+      "canonical_graph_sha256": "cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7",
+      "primary_binary_sha256": "741493a212d925d2a382dacabb7cd171895db2384ed799387e9631d842cb56b3",
+      "compiler": "/usr/bin/g++",
+      "flags": [
+        "-std=c++11",
+        "-O3",
+        "-Wall",
+        "-fopenmp"
+      ],
+      "driver_template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+    }
+  ],
+  "raw_storage_scope": "Dedicated initially empty run directory; all four evaluations and driver logs. Sample apparent bytes at nominal5s subprocess intervals plus guard overhead; stop and preserve failure at4GiB. The separate global40GiB pilot cap remains unchanged.",
+  "pilot_deadline_et": "2026-09-26T05:56:38-04:00",
+  "pilot_clock_origin_et": "2026-09-25T17:56:38-04:00",
+  "pilot_clock_basis": "Conservative entire calendar interval since pilot-plan.md first commit a7d8d153, including idle/engineering time; original12h cap."
+}
