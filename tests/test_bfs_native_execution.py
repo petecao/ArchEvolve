@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import signal
+import shutil
 import subprocess
 import sys
 import time
@@ -16,6 +17,47 @@ import pytest
 from scripts import bfs_native_campaign as campaign, bfs_process
 from swdb import artifacts, processes
 from test_bfs_campaign_cleanup import driver
+
+
+def test_public_get_uses_raw_database_and_preserves_runtime(tmp_path, monkeypatch):
+    source = Path(campaign.__file__).resolve().parents[1]
+    checkout = tmp_path / 'checkout'; checkout.mkdir()
+    paths = subprocess.check_output(['git', 'ls-files', '--', 'scripts', 'swdb', 'schemas',
+        'vocab', 'tools/bfs_native', 'tests', 'pyproject.toml'], cwd=source, text=True).splitlines()
+    for name in paths:
+        target = checkout / name; target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source / name, target)
+    (checkout / 'records/machines').mkdir(parents=True)
+    shutil.copyfile(source / 'records/machines/mbit10.yaml', checkout / 'records/machines/mbit10.yaml')
+    subprocess.run(['git', 'init', '-q'], cwd=checkout, check=True)
+    subprocess.run(['git', 'add', '.'], cwd=checkout, check=True)
+    subprocess.run(['git', '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+        'commit', '-qm', 'Disposable runtime fixture'], cwd=checkout, check=True)
+    commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=checkout, text=True).strip()
+    before = campaign.campaign_runtime(commit, root=checkout)
+    runs, sources, builds = (tmp_path / name for name in ('raw', 'sources', 'builds'))
+    for path in (runs, sources, builds): path.mkdir()
+    args = SimpleNamespace(id='db-cache-contract', protocol='unused-fixture-protocol',
+        lane='fixture-lane', total_seconds=60, runs_dir=runs, source_runs_dir=sources,
+        build_root=builds, records=checkout / 'records', repair_config=None)
+    monkeypatch.setattr(campaign, 'ROOT', checkout)
+    # Host admission alone is synthetic. Public get, SQLite creation, runtime
+    # identity and raw storage accounting use their production implementations.
+    monkeypatch.setattr(campaign.profile, '_verified_lane', lambda *_: 'fixture-lane')
+    monkeypatch.setattr(campaign.os, 'statvfs',
+        lambda _: SimpleNamespace(f_bavail=100 * 1024**3, f_frsize=1))
+    worker = campaign.Driver(args)
+    accounting = campaign.NativeSupervision.__new__(campaign.NativeSupervision)
+    accounting.args = args; accounting.remaining = lambda *_: 60
+    initial_bytes = accounting.account()['artifact_bytes']
+    for _ in range(2):
+        assert worker.call('get', 'mbit10', timeout=20)['id'] == 'mbit10'
+        assert campaign.campaign_runtime(commit, root=checkout) == before
+    database = worker.folder / 'swdb.sqlite'
+    assert database.is_file() and not (checkout / 'build').exists()
+    saved = json.loads((worker.folder / 'driver.json').read_text())
+    assert saved['database'] == str(database)
+    assert accounting.account()['artifact_bytes'] - initial_bytes >= database.stat().st_size
 
 
 @pytest.mark.parametrize('route',['campaign','shared'])
