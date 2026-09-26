@@ -37,7 +37,7 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 20 | [Upstream BFS: annotated-source route acceptance](issues/20-upstream-annotated-route-acceptance.md) | 05, 10, 15 | claimed |
 | 21 | [Coverage, ROI gain, and collaborator handoff](issues/21-coverage-roi-gain-and-handoff.md) | 16, 17, 18, 19, 20 | claimed |
 
-Tickets 01–05, 10, and 11 are resolved; the current empirical frontier is native profiling and simulator verification. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
+Tickets 01–07, 10, and 11 are resolved (9/21); the current empirical frontier is corrected dynamic-memory collection and simulator verification. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
 
 ### Assigned acceptance cases
 
@@ -116,6 +116,19 @@ These four cases cover all eight source/route/graph cells, all four payload form
 These entries retain historical milestones. The ticket table and each ticket's latest
 evidence describe current acceptance; earlier publication-only or unexecuted notes
 do not override the subsequent authorization and execution evidence.
+
+- 2026-09-25 20:56 ET: all three workers remain responsive and the 30-minute
+  heartbeat remains active. The 20:54 ET host check found the unrelated lane-0
+  owner alive, lane 1 and the legacy lease released, 104 GiB available memory,
+  17 GiB free on `/data1`, and 198 GiB free on `/data`. The real Callgrind control
+  completed in seven seconds: STOP-before-DUMP reproduced unsigned wraparound
+  with one and four threads; DUMP-before-STOP passed strict counter checks at
+  both thread counts. Corrected BFS recollection still gates Tickets 08–09.
+  Checkpoint `13fb89a` binds simulator checkpoint reuse to exact modeled settings;
+  the six focused compatibility tests passed. The earlier full suite completed
+  with 522 passed, three skipped, and three capability-fixture failures; those
+  three assumptions were fixed in `dc12a01`, and all 14 capability tests passed
+  separately. There is no full-suite rerun claim or qualified ROI gain.
 
 - 2026-09-25 20:30 ET: all three workers responsive; mbit10 lane 0 remains held by
   another task, lane 1 is running the bounded simulator smoke, and the legacy lease
