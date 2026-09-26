@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 07, 08
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -23,14 +23,14 @@ This slice contributes AC01–AC05, AC07, and AC20 through D01–D06 and D14–D
 
 ## Acceptance criteria
 
-- [ ] A public request for an exact implementation/source, graph and traversal sources, target/configuration, threads, and ROI returns a stable, versioned package whose evidence belongs to that requested context.
-- [ ] A complete package contains automatically discovered function/loop rankings, timing scope and attribution coverage, actual dynamic memory observations, source/build context, correctness/edit constraints, and applicable strategy/hardware information with explicit unknowns.
-- [ ] A package with missing required timing or dynamic-memory evidence is returned as incomplete or unavailable with reasons; source-only facts or an entirely unavailable dynamic metric set cannot qualify it as complete.
-- [ ] The package provides selected-region source plus necessary callers/helpers, types/headers, and access to the full buildable application snapshot. Source associations reflect current candidate code and preserve unresolved correspondence honestly.
-- [ ] Forward lookup returns strategy records relevant to an implementation/profile/region with checked legality conditions, unresolved conditions, and reported benefit distinguished from measured outcomes.
-- [ ] Reverse lookup from strategy requirements/effect returns relevant stored implementations and regions, distinguishing static applicability from matches backed by compatible profiling evidence.
-- [ ] Unknown semantic facts or hardware support are not treated as satisfied requirements, and neither query direction guarantees performance or silently substitutes another workload or source.
-- [ ] A package can be referenced by the established public patch workflow, and later result retrieval recovers that exact input package and its evidence. Regenerating the query index preserves these links.
+- [x] A public request for an exact implementation/source, graph and traversal sources, target/configuration, threads, and ROI returns a stable, versioned package whose evidence belongs to that requested context.
+- [x] A complete package contains automatically discovered function/loop rankings, timing scope and attribution coverage, actual dynamic memory observations, source/build context, correctness/edit constraints, and applicable strategy/hardware information with explicit unknowns.
+- [x] A package with missing required timing or dynamic-memory evidence is returned as incomplete or unavailable with reasons; source-only facts or an entirely unavailable dynamic metric set cannot qualify it as complete.
+- [x] The package provides selected-region source plus necessary callers/helpers, types/headers, and access to the full buildable application snapshot. Source associations reflect current candidate code and preserve unresolved correspondence honestly.
+- [x] Forward lookup returns strategy records relevant to an implementation/profile/region with checked legality conditions, unresolved conditions, and reported benefit distinguished from measured outcomes.
+- [x] Reverse lookup from strategy requirements/effect returns relevant stored implementations and regions, distinguishing static applicability from matches backed by compatible profiling evidence.
+- [x] Unknown semantic facts or hardware support are not treated as satisfied requirements, and neither query direction guarantees performance or silently substitutes another workload or source.
+- [x] A package can be referenced by the established public patch workflow, and later result retrieval recovers that exact input package and its evidence. Regenerating the query index preserves these links.
 
 ## Verification
 
@@ -73,3 +73,53 @@ seconds plus both audit-location checks in 29.07 seconds. Original observations
 remain retrievable. `scripts/bfs_package_handoff.py` prepares the public real-data
 assembly/query/rebuild/patch-handoff sequence, with an actual Git patch-application
 check for exact output source identity; it has not yet established real acceptance.
+
+## Answer
+
+Resolved 2026-09-25 after corrected Ticket 08 collection and the actual public
+handoff at checkpoint `342fcff84b16dae86e42e70169929c2211143bd1` on mbit10.
+`scripts/bfs_package_handoff.py` completed all 19 public stages with exit 0 in
+257.74 seconds. This metadata-only sequence assembled existing real observations;
+it did not compile, remeasure, or establish a performance gain.
+
+| Package | Current source regions | Valid memory rows | Forward matches | Current query evidence |
+|---|---:|---:|---:|---|
+| `bfs-package-smoke-20260925-a1.before.package.v1.1187f3a8ca4968d0` | 11 functions, 20 loops | 18 | 155 | Valid |
+| `bfs-package-smoke-20260925-a1.after.package.v1.81772095f055cd8b` | 12 functions, 22 loops | 18 | 170 | Valid |
+
+Both exact packages are complete execution evidence with no assembly reasons.
+Their source contexts, complete-call primary timings, independent correctness,
+separate diagnostic binaries, collector raw hashes, partial attribution limits,
+callers/helpers, referenced types, supporting headers, full application, and edit
+protections remain retrievable. The ten-vertex diagnostic workload uses sources
+`[0, 3, 8]`, one thread, and one repetition. The earlier source is the previously
+measured candidate, not an unchanged application baseline or calibration pilot.
+
+Forward queries retain unknown semantic conditions for every returned match;
+`performance_guarantee` is false. Reverse `loop_tiling` queries return the exact
+31 and 34 current regions as `compatible_profile_evidence`, separately from
+static matches. Fresh query validation reports `valid` with no reasons on mbit10.
+Unchanged package metadata retrieved elsewhere exposes unavailable remote raw
+artifacts rather than asserting fresh local validation.
+
+The public patch handoff created `bfs-package-smoke-20260925-a1.proposal` and
+`bfs-package-smoke-20260925-a1.proposal.candidate-1` from the before package. Its
+final source SHA256 is
+`e6e789e6942776ad88cbc3ba8377d09be8f8b8eee63e511230d7a9957a2490fd`, exactly the
+already demonstrated changed candidate. The patch expresses that retained delta
+against the measured input package. A new query index and fresh `get --chain`
+recovered 14 linked records, including the exact package and underlying evidence;
+fresh package retrieval returned identical sealed records.
+
+Evidence commit `4629782c2b70362f26947aa1209ef9e47249f6c7` contains six new records
+and the bounded receipt in `docs/evidence/bfs-package-handoff-20260925-a1.yaml`.
+All 115 records validated before Git synchronization. Raw command outputs remain
+on mbit10 under `/data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925`;
+receipt SHA256 is `c9c00f9c6b9fcbd9920ecf1153f678832f237976bf625ed445882ee390196f73`.
+Earlier incomplete/audited observations remain intact. Public negative tests and
+freshness regressions cover missing, stale, inconsistent, fixture, and unavailable
+evidence; complete real acceptance uses the corrected a4 profiles above.
+
+Context: `swdb/profile_package.py`, `docs/bfs-profile-packages.md`,
+`scripts/bfs_package_handoff.py`, `tests/test_profile_packages.py`,
+`tests/test_profile_package_freshness.py`, and the bounded evidence receipt.
