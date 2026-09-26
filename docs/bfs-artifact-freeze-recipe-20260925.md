@@ -5,8 +5,9 @@ Date: 2026-09-25 (Eastern Time)
 This is a reviewable operator recipe for Ticket 16. It does not freeze a protocol,
 dispatch a simulator, or claim reference acceptance. The prescribed run plan is
 [artifact-reference-plan.md](../.scratch/bfs-rewrite-evaluation-2026-09-25/artifact-reference-plan.md).
-Use public records and commands below; replace every angle-bracket input with an
-actual returned identifier or observed value before execution.
+The concrete version-1 request files are prepared and validated against current
+records; neither has been frozen or executed. Returned protocol, replay, aggregate
+and package identifiers remain unavailable until their public operations succeed.
 
 | Input | Current evidence or unresolved value |
 |---|---|
@@ -20,7 +21,7 @@ actual returned identifier or observed value before execution.
 | Runtime package receipt | Recorded JSON SHA256 `ae7389a0b6848fa21eae7c527211948a88e3010f9a5135754a2241dc6f5542c4`; system package versions do not establish unrecorded file hashes |
 | Workload and source | `bfs-20260925-uniform22.f23b09bb0c0601b5`; actual pinned SourcePicker source2796003, degree40; uniform scale22/degree16/seed27491095 with effective symmetrization |
 | Fixed reference candidates | `bfs-author-scalar-compile-20260925-a1.candidate` and `bfs-author-maa-compile-20260925-a1.candidate`; unchanged public source candidates audited in `observations/dx100-compile-extension-a1.json` |
-| Region correspondence | **Unresolved:** compiler-discovered scalar/MAA region IDs, actual diagnostic library/pass/runtime hashes and explicit semantic mapping |
+| Region correspondence | Actual author diagnostic builds select the top-down step and outer frontier traversal loop, as detailed below |
 | Protocol IDs and results | **Unresolved:** two independently frozen protocols and their actual replay/aggregate/package IDs |
 
 The registered graph has 4194304 vertices, 134217158 directed adjacency entries,
@@ -29,8 +30,12 @@ are in [the preparation receipt](../.scratch/bfs-rewrite-evaluation-2026-09-25/o
 and its public workload record. Generation and source selection are complete;
 simulator feasibility and the two frozen comparisons remain pending.
 
-The listed hashes are retained build metadata, not a fresh remote file check.
-Rehash them on mbit10 before dispatch. Current scale18 registrations, native pilot
+A read-only mbit10 check at 23:21:18 ET rehashed the simulator, both original
+author binaries, Ramulator shared library and both author diagnostic binaries.
+The tracked model checkout was clean at the pinned revision. The
+[configuration and hash receipt](../.scratch/bfs-rewrite-evaluation-2026-09-25/observations/author-freeze-inputs-20260925.json)
+retains the full adapter configurations and helper identity. Rehash again before
+dispatch; this observation does not authorize changing an active checkout. Current scale18 registrations, native pilot
 durations and fixture comparisons do not fill any unresolved author scale22 input.
 
 ## Prepare actual inputs
@@ -86,54 +91,43 @@ configured smoke run. Retain the actual instantiated gem5 config after execution
 and verify it agrees. Use target `dx100-e4fc4af-4c`, four threads and
 `roi: bfs.dx100.traversal.v1` throughout.
 
-Both requests have this shape; values marked `<...>` are unresolved inputs:
+The concrete requests are:
 
-```yaml
-message_version: '1.0'
-id: <new-requested-protocol-name>
-version: 1
-settings:
-  mode: <artifact_reference-or-controlled_simulator>
-  kernel: gapbs-bfs
-  workloads: [bfs-20260925-uniform22.f23b09bb0c0601b5]
-  targets:
-    baseline: {id: dx100-e4fc4af-4c, configuration: <full-BASE-mapping>}
-    candidate: {id: dx100-e4fc4af-4c, configuration: <full-MAA-mapping>}
-  simulation_identity:
-    version: '1.0'
-    model_build: {evaluation: bfs-dx100-build-20260925-a2, sha256: <whole-record-digest>}
-    simulator: {path: <absolute-gem5.opt>, sha256: <receipt-simulator-hash>}
-  reference_artifacts:
-    baseline: <fixed-scalar-source-and-binary-identity>
-    candidate: <fixed-MAA-source-and-binary-identity>
-  builds:
-    baseline: <author-scalar-compiler-version-flags-adapter>
-    candidate: <author-MAA-compiler-version-flags-adapter>
-  instrumentation:
-    baseline: {treatment: primary, roi: bfs.dx100.traversal.v1, suppressed_internal_events: [], verification: same_guest_post_roi, debug_flags: MAATrace}
-    candidate: {treatment: primary, roi: bfs.dx100.traversal.v1, suppressed_internal_events: [], verification: same_guest_post_roi, debug_flags: 'MAATrace,MAARangeFuser,MAAIndirect'}
-  threads: 4
-  roi: bfs.dx100.traversal.v1
-  correctness:
-    coverage: every_timed_trial
-    verifier: dx100.bfs.verifier.v1
-    required_cases: []
-    required_accelerator_cases: {baseline: [], candidate: [executed]}
-  sampling: {repetitions: 2, warmups: 0, aggregation: geomean_source_median_ratio}
-  profitability: {minimum_speedup: 1.05, maximum_relative_spread: <reviewed-explicit-limit>, confidence: 0.95, bootstrap_resamples: 2000, bootstrap_seed: <fixed-seed>}
-  differences:
-    software: [Pinned scalar DOBFS versus pinned author DOBFSMAA.]
-    accelerator: [MAA enabled only for the candidate role.]
-    configuration: [<actual-LLC-difference-or-explicit-matched-settings>]
-  region_pairs:
-    - semantic_region: <reviewed-correspondence>
-      baseline: <scalar-discovered-region-id>
-      candidate: <MAA-discovered-region-id>
-      scope: accumulated
-      attribution: <inclusive-or-exclusive>
-      evidence: simulated_diagnostic_profile
-      collector: {backend: libclang-cindex, collector: dx100.m5_rpns.source_scopes.v1, library_sha256: <actual>, pass_sha256: <actual>, runtime_sha256: <actual>}
-```
+- [Author artifact policy](../.scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-reference-freeze-v1.yaml), requested name `bfs-author-reference-20260925`.
+- [Matched cache control](../.scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-matched-control-freeze-v1.yaml), requested name `bfs-author-matched-control-20260925`.
+
+Both use maximum relative spread `0.10`, bootstrap seed `20260925`, two replays,
+zero warmups, minimum speedup `1.05`, and the existing 95%/2000-resample policy.
+These choices precede all reference timing. The requested names are inputs, not
+claims of returned protocol IDs. The canonical model-build record digest is
+`13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea`.
+
+Reuse `bfs-author-scalar-compile-20260925-a1.diagnostic.build` for the baseline
+and `bfs-author-maa-compile-20260925-a1.diagnostic.build` for the MAA role through
+`--diagnostic-build`. Their binary hashes are respectively
+`0b28af6ac6a32c31f38d7b28062f57b7f4db4917aae2a196db117d846d29b47a`
+and `c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5`.
+Both retain collector `dx100.m5_rpns.source_scopes.v1`, library SHA256
+`27b38bfdb37d164878767c40c8ce9538c96e801a37d2a67234bee043945de139`,
+pass SHA256 `9bee90040d1c4defa96793774ca877d2d26c351303d8e1927448ba0ef0d20ffb`,
+and runtime SHA256 `618d8e874eccaf2914a87462e46a1d36a42194e98f1bbfde1f91eadd3818c31d`.
+A newer discovery pass is a different collector identity; do not silently rebuild
+these diagnostics after freezing.
+
+| Semantic correspondence | Scalar region | MAA region | Attribution |
+|---|---|---|---|
+| Top-down frontier step | `function:bfs.cc:10396:92351720b886b03a` (`TDStep`, lines227–259) | `function:bfs.cc:2157:ba2f8e639d5daef5` (`TDStepMAA`, lines66–225) | Accumulated inclusive |
+| Complete frontier traversal loop | `loop:bfs.cc:14239:db5227d6bf4ba808` (`DOBFS`, lines343–352) | `loop:bfs.cc:16664:d6668c43308db1a5` (`DOBFSMAA`, lines418–431) | Accumulated inclusive |
+
+The mapping is a pre-execution source judgment: each step consumes the current
+frontier and appends newly discovered vertices; each outer loop repeats that work,
+advances the queue and emits step logging until the frontier is empty. Both pinned
+implementations use top-down traversal. The loop includes its nested step, so the
+two quantities must not be added. Diagnostic guards report accumulated simulated
+elapsed intervals, including waiting and nested work, not CPU service or primary
+ROI speedup. The enclosing `DOBFS`/`DOBFSMAA` calls begin before author ROI
+activation and are deliberately not selected. The OpenMP transformation loop at
+line189 remains unresolved; full source coverage is not claimed.
 
 Every fixed-source identity mapping contains `candidate`, `candidate_sha256`
 (digest of that record), `source_snapshot`, `source_snapshot_sha256`,
@@ -182,7 +176,9 @@ sealed packages and a public aggregate. It cannot reuse one MAA evaluation under
 two different frozen protocol IDs; use fresh MAA replays for the second policy.
 
 Explicit author bounds are `--checkpoint-seconds 3600 --run-seconds 14400
---memory-gib 48 --storage-gib 15`, with a reviewed `--verification-ticks` allowance.
+--memory-gib 48 --storage-gib 15`, with explicit `--verification-ticks 100000000000000` (the existing series default,
+selected before timing). This is a raw simulated-tick ceiling; the wall-clock
+execution and shared batch deadlines still apply independently.
 Diagnostic executions currently have their separate bounded 600-second maximum;
 failure to finish is retained and leaves regional evidence incomplete. Do not
 silently raise this or substitute primary wall time. The outer operator must share
