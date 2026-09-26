@@ -108,6 +108,18 @@ These four cases cover all eight source/route/graph cells, all four payload form
 
 ## Context pointers
 
+- 2026-09-25 22:11 ET: all three workers are responsive. Native upstream pilot
+  a2 holds lane 1, generation 392, at exact commit `9fff245`; actual uniform-18
+  materialization passed without changing the graph or reducing its scale. Lane 0
+  remains held by its live external owner; the legacy lease is released. Free
+  capacity is 17 GiB on `/data1`, 198 GiB on `/data`, and 42 GiB locally. The
+  simulator a6 attempt remains unused. A real compile-only primary/diagnostic
+  smoke is queued separately. All 124 catalog records validate. The full local
+  suite is still running; known fixture timestamp and catalog-empty assertions
+  were corrected and passed focused checks, without a full-suite success claim.
+  The isolated public failure-contract demonstration completed 25 stages with
+  synthetic timings explicitly excluded from empirical regression, matrix cells,
+  and gain acceptance. No frozen candidate protocol or qualified gain exists yet.
 - 2026-09-25 21:47 ET: all three workers are responsive. The live external
   lane-0 owner and Spatter child remain active; lane 1 and the legacy lease are
   released. Host free space is 17 GiB on `/data1` and 198 GiB on `/data`; raw
