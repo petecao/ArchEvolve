@@ -82,11 +82,22 @@ def read_reference(ref, maximum=32*1024**2):
     return json.loads(raw)
 
 
+def validate_root_entries(root, commit):
+    """Reject ignored or untracked root entries that can shadow Python imports."""
+    tracked = subprocess.check_output(['git','ls-tree','--name-only',commit],
+                                      cwd=root,text=True,timeout=10).splitlines()
+    require(tracked and len(tracked) <= 4096, 'tested root Git inventory is missing or oversized')
+    actual = {entry.name for entry in Path(root).iterdir()}
+    require(actual <= set(tracked) | {'.git'}, 'tested root contains an untracked import or metadata entry')
+    return sorted(actual)
+
+
 def campaign_runtime(commit, root=ROOT):
     require(isinstance(commit,str) and re.fullmatch('[a-f0-9]{40}',commit), 'prospective code commit required')
     paths = ('scripts','swdb','schemas','vocab','tools/bfs_native','tests','pyproject.toml')
     def git(*args): return subprocess.check_output(['git',*args],cwd=root,timeout=10)
     require(git('rev-parse','HEAD').decode().strip() == commit, 'campaign checkout differs from reviewed commit')
+    validate_root_entries(root, commit)
     names = git('ls-tree','-r','--name-only',commit,'--',*paths).decode().splitlines()
     actual = {'pyproject.toml'} | {str(p.relative_to(root)) for folder in paths[:-1]
         for p in (root/folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts}
