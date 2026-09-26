@@ -16,7 +16,7 @@ import yaml
 from swdb import yamlio
 from swdb.cli import Failure
 from swdb.store import PLURAL, Record, Store, canonical_path
-from swdb.validate import validate_records
+from swdb.validate import _validate_store
 
 
 def today():
@@ -59,13 +59,14 @@ def add(records_dir, file, agent=False, agent_name="agent"):
     return commit(records_dir, new=[data])[0]
 
 
-def commit(records_dir, new=(), replace=()):
+def commit(records_dir, new=(), replace=(), upsert=()):
     """Validate and write: `new` records go to their canonical place (which must be free and
     whose IDs must be unused); `replace` records overwrite the file their ID lives in.
-    Returns the written paths relative to records_dir."""
+    `upsert` chooses create or replace from the fresh store while holding the lock.
+    Returns the written paths relative to records_dir. Updated: 2026-09-25."""
     records_dir = Path(records_dir)
     with _locked(records_dir):
-        return _commit(records_dir, new, replace)
+        return _commit(records_dir, new, replace, upsert)
 
 
 @contextlib.contextmanager
@@ -79,8 +80,11 @@ def _locked(records_dir):
             fcntl.flock(handle, fcntl.LOCK_UN)
 
 
-def _commit(records_dir, new, replace):
+def _commit(records_dir, new, replace, upsert=()):
     store = Store(records_dir)
+    new, replace = list(new), list(replace)
+    for data in upsert:
+        (replace if store.get(data['id']) is not None else new).append(data)
     extra, replaced, targets = [], {}, []
     for data in new:
         kind = data.get("kind")
@@ -99,7 +103,7 @@ def _commit(records_dir, new, replace):
             raise Failure(f"cannot replace {data['id']!r}: no such record")
         replaced[rel] = data
         targets.append((rel, data))
-    result = validate_records(records_dir, extra=extra, replace=replaced)
+    result = _validate_store(store, extra=extra, replace=replaced)
     if result.problems:
         details = "\n".join(str(p) for p in result.problems)
         raise Failure(f"validation failed; nothing written:\n{details}")

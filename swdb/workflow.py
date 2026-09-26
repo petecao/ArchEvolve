@@ -42,9 +42,8 @@ def record(kind, rid, **fields):
 
 def persist(records, data, db_path=None, *, create=False):
     """Commit metadata first; an index error reports that the durable record survives."""
-    old = None if create else Store(records).get(data["id"])
     data["updated"] = writer.today()
-    writer.commit(records, replace=[data] if old else [], new=[] if old else [data])
+    writer.commit(records, new=[data] if create else [], upsert=[] if create else [data])
     try:
         db.build(records, db_path or db.default_path(records))
     except (OSError, ValueError, db.sqlite3.Error) as exc:
@@ -143,10 +142,23 @@ def get_record(args):
             if d["id"] in seen:
                 return
             seen[d["id"]] = d
-            for key in ("proposal", "candidate", "source_snapshot", "profile_package", "parent_candidate",
-                        "protocol", "candidate_evaluation", "baseline_evaluation", "comparison_baseline",
-                        "evaluation", "region_profile"):
-                target = store.get(d.get(key))
+            def mapping(value):
+                return value if isinstance(value, dict) else {}
+            linked = [d.get(key) for key in (
+                "proposal", "candidate", "source_snapshot", "profile_package", "parent_candidate",
+                "protocol", "candidate_evaluation", "baseline_evaluation", "comparison_baseline",
+                "evaluation", "region_profile")]
+            request, build, settings = (mapping(d.get(key)) for key in ("request", "build", "settings"))
+            linked.extend(request.get(key) for key in (
+                "build_evaluation", "candidate_build", "diagnostic_evaluation", "checkpoint_evaluation"))
+            linked.extend(mapping(request.get("region_packages")).values())
+            linked.append(mapping(build.get("model_build")).get("evaluation"))
+            simulation = mapping(settings.get("simulation_identity"))
+            linked.append(mapping(simulation.get("model_build")).get("evaluation"))
+            for reference in mapping(settings.get("reference_artifacts")).values():
+                linked.extend(mapping(reference).get(key) for key in ("candidate", "source_snapshot"))
+            for record_id in linked:
+                target = store.get(record_id) if isinstance(record_id, str) else None
                 if target:
                     visit(target)
             for component in d.get('component_evaluations', []):

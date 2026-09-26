@@ -23,8 +23,17 @@ class Result:
 def validate_records(records_dir, extra=None, replace=None):
     """Validate the records folder as it would be after writing `extra` (new store.Record
     objects) and `replace` ({relative path: new data} for records already on disk)."""
+    return _validate_store(Store(records_dir), extra=extra, replace=replace)
+
+
+def _validate_store(store, extra=None, replace=None):
+    """Validate one freshly loaded store, applying the proposed changes in memory.
+
+    The writer calls this only with the store it loaded under its current lock;
+    this is not a cache and must not be reused across independent writes.
+    Updated: 2026-09-25.
+    """
     vocabs, problems = vocab.load_all(paths.VOCAB)
-    store = Store(records_dir)
     for rel, data in (replace or {}).items():
         store.replace(rel, data)
     for record in extra or []:
@@ -46,7 +55,7 @@ def validate_records(records_dir, extra=None, replace=None):
         if not found:
             passed.append(record)
     result.vocabs = vocabs
-    context = rules.Context(store, vocabs, records_dir, paths.HOME, valid={r.rel for r in passed})
+    context = rules.Context(store, vocabs, store.dir, paths.HOME, valid={r.rel for r in passed})
     for record in passed:
         result.problems.extend(sorted(rules.check(record, context)))
     return result
