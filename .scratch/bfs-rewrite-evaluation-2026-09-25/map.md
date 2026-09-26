@@ -149,6 +149,26 @@ unchanged. No Linux fixture, auditor, compilation or measurement ran during
 this preparation. The original malformed preparation receipt is retained;
 an additive valid JSON receipt preserves its reference and unchanged facts.
 
+## Progress check — 2026-09-26 19:03 ET
+
+The [full host audit](observations/health-20260926-1903.json) reports released
+socket/legacy generations 328/406/77, empty kernel locks, no live owned jobs,
+and sufficient current memory/disk capacity. All three workers are responsive.
+The exact local regression passed with 2,075 tests and 19 skips. The two corrected
+A2 Linux proofs passed and have independent review; empirical A2 remains unused.
+Counts remain 13 resolved/eight claimed and 0/8 final acceptance. Next full check:
+19:33 ET.
+
+Native standalone readback a2 failed before reader spawn because its checkout
+contained `.pytest_cache`, created by the manual Linux test at 18:42:49 ET.
+The entry and both failed attempts remain preserved. Independent closure found
+no live retained process and released generation 328. No third standalone
+invocation will occur. Spec and Standards independently confirmed that this
+readback is not a prerequisite to A2 or T15 collection: native qualification
+remains mandatory inside the separately bounded source-specific protocol
+prepare/publish steps after actual simulator calibration. No guard is relaxed
+and no cache or failure evidence is deleted.
+
 ## Full regression passed — 2026-09-26 18:55 ET
 
 The isolated [exact `e4c4015` run](observations/full-regression-e4c4015-20260926.json)

@@ -243,3 +243,15 @@ Later reader/fixture changes retain separate focused and actual Linux evidence.
 Original failures remain preserved. Counts remain 13 resolved/eight claimed,
 0/8 final acceptance and no qualified gain; final all-ticket reviews follow
 completion of the remaining actual evaluations and synchronization.
+
+
+## Complete evidence-gap checkpoint — 2026-09-26 19:03 ET
+
+The [all-ticket checkpoint](../../../docs/bfs-remaining-evidence-gaps-20260926.md)
+retains every remaining obligation, including source-specific controlled
+simulator freezes and the unresolved HW candidate. The [host audit](../observations/health-20260926-1903.json)
+found no live owned jobs and both lanes free; A2 remains unexecuted. Native
+readback failures are preserved and qualification is deferred to mandatory
+publication steps, with no third standalone attempt. Final acceptance remains
+0/8 and no qualified gain is claimed. This checkpoint is not the final
+post-completion Standards/Spec review.

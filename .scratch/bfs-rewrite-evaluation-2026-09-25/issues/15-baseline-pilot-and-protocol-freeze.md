@@ -410,3 +410,16 @@ The single bounded a2 metadata readback is independently reviewed and scheduled
 after 19:00 ET. Collection remains complete; qualification and all shared
 simulator gates remain outstanding. The original failed readback is preserved.
 No native or simulator protocol is published.
+
+
+## Qualification continuation — 2026-09-26 19:03 ET
+
+Standalone readback a2 failed before reader spawn on the manual test's retained
+`.pytest_cache` entry; its node 0 generation 328 was released and independently
+closed. Both standalone failures remain evidence. No third standalone readback
+will run. The [independently checked continuation](../../../docs/bfs-native-qualification-continuation-20260926.md)
+keeps full native validation inside the already-required, separately bounded
+prepare/publish operations after actual simulator packages exist. These steps
+must run from a pristine future checkout; import guards and policy stay intact.
+A2 and T15/T16 collection do not depend on standalone qualification. Native
+qualification and the native/controlled-simulator freezes remain outstanding.
