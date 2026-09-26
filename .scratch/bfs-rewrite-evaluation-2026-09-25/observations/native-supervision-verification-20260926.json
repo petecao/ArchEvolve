@@ -1,0 +1,131 @@
+{
+  "format": "swdb.bfs.native-campaign-preparation.v1",
+  "date": "2026-09-26",
+  "timezone": "America/New_York",
+  "state": "local_focused_validation_complete_linux_proof_pending",
+  "evidence_kind": "contract_fixture",
+  "head": "df6ff7988f0ce06562b376adfc2faf93cf0fe58d",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_native_campaign.py",
+      "bytes": 71895,
+      "sha256": "2cd7de6ec91b5181373e8a235f568b0a308e0c04962ce04bea38050559fa1043"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_process.py",
+      "bytes": 6350,
+      "sha256": "099d70e7332c5a25f4ba96d0b6f6ee9c70931d6ecae0c664ed46787c0775f284"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_native_execution.py",
+      "bytes": 19894,
+      "sha256": "14f7ca1d07eec09042c75307c4620bd9b6e2868f26536a92533410beb4a681ae"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_campaign_cleanup.py",
+      "bytes": 4960,
+      "sha256": "960ac48c502b9862527691f7acf66407bc83a54a096ea606434fbb6ed0e96a97"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_owned_process_cleanup.py",
+      "bytes": 7462,
+      "sha256": "25a8e1c4dc3137a9f5a3f64757442160ee036f834d4a24de95d2d2de9643d173"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-native-reassessment-20260926.md",
+      "bytes": 10817,
+      "sha256": "e8d33e279ea9442794cf572d55dee11b27ea4f6bd93c6bbf07d25fbaa94d1e59"
+    }
+  ],
+  "fixed_bounds": {
+    "outer_seconds": 14400,
+    "work_seconds": 14370,
+    "cleanup_seconds": 30,
+    "sampled_rss_bytes": 17179869184,
+    "artifact_bytes": 17179869184,
+    "build_bytes": 4294967296,
+    "node_available_bytes": 21474836480,
+    "global_available_bytes": 25769803776,
+    "raw_reserve_bytes": 32212254720,
+    "build_reserve_bytes": 10737418240,
+    "sample_interval_seconds": 5,
+    "sample_gap_seconds": 30
+  },
+  "validation": [
+    {
+      "command": "python3 -m pytest tests/test_bfs_native_execution.py tests/test_bfs_native_campaign.py tests/test_bfs_campaign_reuse.py tests/test_bfs_native_reassessment.py -q",
+      "result": "124 passed, 2 Linux-only skipped in 38.63s",
+      "log": {
+        "path": "/private/tmp/bfs-native-supervision-stable-20260926.log",
+        "bytes": 192,
+        "sha256": "a080a3a0f00029a864ad310702cfadb2a4f96e9cb273c787c432719d344bb868"
+      },
+      "scope_note": "Before final generic early-exit timeout guard; later focused run below covers exact repaired bytes."
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_native_execution.py /private/tmp/test_native_supervision_review_20260926.py /private/tmp/test_bfs_native_hash_preservation_20260926.py -q",
+      "result": "41 passed, 2 Linux-only skipped in 1.38s",
+      "log": {
+        "path": "/private/tmp/bfs-native-supervision-final-repair-20260926.log",
+        "bytes": 110,
+        "sha256": "dcb9f523a17ac63f6b4c16ecd6e14a52317aa5590faad2feb2281c7a6a6bfe2e"
+      }
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_campaign_cleanup.py tests/test_owned_process_cleanup.py -q",
+      "result": "21 passed in 68.07s",
+      "log": {
+        "path": "/private/tmp/bfs-native-legacy-cleanup-corrected-20260926.log",
+        "bytes": 110,
+        "sha256": "edd47eb56c29196285d88494873bde96073da655e5ea674638677822250e413b"
+      },
+      "scope_note": "Intentional compatibility boundary no longer signals reaped numeric process groups; later hash and early-exit repairs covered above."
+    }
+  ],
+  "preserved_before_evidence": [
+    {
+      "path": "/private/tmp/bfs-native-reassessment-execution-spec-review-20260926.json",
+      "bytes": 4510,
+      "sha256": "6075c844ae9a1a61e6499e3ac10fe8915a84020de3394a69952bda617d8141ea"
+    },
+    {
+      "path": "/private/tmp/bfs-native-reassessment-execution-spec-probes-20260926.log",
+      "bytes": 9278,
+      "sha256": "27cc0e7170a05cb322c5e1f73cd32fa47f3996b0343cf5333e2f002228b36358"
+    },
+    {
+      "path": "/private/tmp/bfs-native-execution-initial-20260926.log",
+      "bytes": 2086,
+      "sha256": "114ded1ae678bd243b111b02501543f76e2bb9cf4918c15dc6ba454f738139fb"
+    },
+    {
+      "path": "/private/tmp/bfs-native-hash-preservation-before-20260926.log",
+      "bytes": 6091,
+      "sha256": "7bb6c35be3931bd05ad6a874d8f095e70bf3dda4bf4615375f5bb51fc3fabe32"
+    },
+    {
+      "path": "/private/tmp/bfs-native-supervision-review-failure-20260926.log",
+      "bytes": 1402,
+      "sha256": "74cac7a500673f65174f6830dd9d12ebc75aa94673512581f9ed5c63bd54a5a4"
+    }
+  ],
+  "independent_review": {
+    "path": "/private/tmp/bfs-readiness-finalizer-native-review-20260926-final.json",
+    "bytes": 3077,
+    "sha256": "5002b6f6e438af5b86eb68653373faa49238c1c9dc9563bc72e368c5074f84de"
+  },
+  "limitations": [
+    "No host dispatch, provider call, repair, export, or commit was performed.",
+    "Two Linux-only cases skipped on macOS; an exact-code <=90-second real Linux fixture receipt is mandatory before actual dispatch.",
+    "Sampled RSS and storage guards are not hard kernel quotas or true-peak measurements.",
+    "Legacy helper cannot establish post-reap descendant ownership; actual existing-candidate campaigns must use Linux Owned supervision.",
+    "Independent post-exit terminal audit must reopen all direct/sample/cleanup/ancestry identities, original outer exit and released lane; driver cannot attest its own reaping.",
+    "Original strategy, origin source, frozen runtime/gain policy and provider spending are unchanged."
+  ],
+  "source_preparation_receipt": {
+    "path": "/private/tmp/bfs-native-campaign-supervision-preparation-20260926.json",
+    "bytes": 5609,
+    "sha256": "c4e8e5e09c4348fe6c53b6bd9262d7c16b8b465ac83b9b42d24059cdc05181d5"
+  },
+  "root_verification": "All named file/log hashes reopened locally on2026-09-26; execution and acceptance remain pending."
+}

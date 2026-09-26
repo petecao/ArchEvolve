@@ -2,6 +2,7 @@
 """Bounded real-model compatibility smoke through the public adapter.
 
 Created: 2026-09-25 (Eastern Time). Tiny uniform graph is diagnostic only.
+Updated: 2026-09-26 (Eastern Time).
 """
 import argparse
 import hashlib
@@ -29,7 +30,8 @@ def main():
 
 
 def run():
-    deadline = time.monotonic() + OUTER_SECONDS - CLEANUP_RESERVE_SECONDS
+    deadline = time.monotonic() + OUTER_SECONDS
+    work_deadline = deadline - CLEANUP_RESERVE_SECONDS
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--id', required=True)
     p.add_argument('--build-evaluation', required=True)
@@ -75,7 +77,7 @@ def run():
                 raise SystemExit('converter changed since the selected build')
             graph = folder / 'uniform64.sg'
             run_stage(receipt, folder, [str(converter), '-u', '6', '-k', '4', '-b', str(graph)],
-                      output=folder / 'generate.log', timeout=60, deadline=deadline,
+                      output=folder / 'generate.log', timeout=min(60, work_deadline-time.monotonic()), deadline=deadline,
                       cwd=ROOT, env={**os.environ, 'OMP_NUM_THREADS': '1'})
             workload = {'id': a.id + '.uniform64-diagnostic', 'source': 0, 'representation': ref(graph)}
         request = {'message_version': '1.0', 'id': a.id, 'machine': 'mbit10',
@@ -96,7 +98,7 @@ def run():
         run_stage(receipt, folder, [sys.executable, '-m', 'swdb', 'dx100-execute', str(path),
                   '--runs-dir', str(a.runs_dir), '--lane', str(a.lane), '--format', 'json'],
                   output=folder / 'evaluation.stdout.json', stderr=folder / 'evaluation.stderr',
-                  cwd=ROOT, timeout=1150, deadline=deadline)
+                  cwd=ROOT, timeout=min(1150, work_deadline-time.monotonic()), deadline=deadline)
         receipt['state'] = 'complete'
     except BaseException as exc:
         receipt.update(state='failed', reason=f'{type(exc).__name__}: {exc}')
