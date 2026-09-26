@@ -32,6 +32,23 @@ packages containing inconsistent Callgrind counter groups or failed memory audit
 The negative test preserves the original sealed package and raw values while
 reporting rejection; a valid seal alone does not establish observation validity.
 
+Additional contract demonstration, 2026-09-25: the public operator driver retained
+three rejected proposal classes and five evaluation failure classes, including an
+actual fixture process that exited zero after printing a misleading pass label
+while independent structural verification failed. A frozen fixture comparison
+used a separately registered unchanged source reference and retained an unfavorable
+synthetic ratio of 0.5. AC08, AC09, and AC14 now have durable contract metadata;
+the report separately labels these fixtures and leaves empirical regression,
+all eight campaign cells, AC17, and overall acceptance incomplete. The valid
+run completed 25 public stages in 382.0 seconds. Its exact records, raw hashes,
+verified local archive and restoration instructions are in
+[the contract evidence receipt](../../../docs/evidence/bfs-contract-demonstrations-20260925-a3.yaml).
+No fixture duration is empirical performance or accelerator evidence. Twenty-three
+public coverage tests passed after fixing comparator-identity and verdict-process
+classification; an independently mutated comparator remains retrievable but no
+longer satisfies AC14. Ticket 21 remains claimed pending the actual Tickets 16–20
+evidence and final handoff.
+
 ## What to build
 
 Provide public retrieval of the complete BFS acceptance report and a collaborator handoff containing the versioned profile-package, rewrite-proposal, and evaluation-result contracts with realistic linked examples.

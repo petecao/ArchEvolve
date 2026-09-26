@@ -1,0 +1,66 @@
+kind: proposal
+schema_version: '0.4'
+id: bfs-contract-20260925-a3.protected-verifier
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb-contract-demonstration-client
+  role: sw
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  producer:
+    name: swdb-contract-demonstration-client
+    role: sw
+    test_client: true
+  implementation: gapbs-bfs-do
+  source_snapshot: bfs-contract-20260925-a3.source
+  source_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+  profile_package: bfs-contract-20260925-a3.fixture-package
+  regions:
+  - src/bfs.cc:122-179:437882a50dcae474
+  intent: Explicit contract fixture; no empirical timing or strategy benefit is claimed.
+  parameters:
+    evidence_classification: contract_fixture
+  constraints:
+    editable_files: [src/bfs.cc]
+    preserve_correctness: true
+    preserve_roi: true
+  payload:
+    kind: patch
+    content: |
+      --- a/src/bfs.cc
+      +++ b/src/bfs.cc
+      @@ -198,7 +198,7 @@
+       // - parent[v] = u  =>  depth[v] = depth[u] + 1 (except for source)
+       // - parent[v] = u  => there is edge from u to v
+       // - all vertices reachable from source have a parent
+      -bool BFSVerifier(const Graph &g, NodeID source,
+      +bool AlteredVerifier(const Graph &g, NodeID source,
+                        const pvector<NodeID> &parent) {
+         pvector<int> depth(g.num_nodes(), -1);
+         depth[source] = 0;
+  required_operations: []
+  id: bfs-contract-20260925-a3.protected-verifier
+payload_sha256: 1f8ca6c17affb8379365d4a27a2ccfb9f2d7d0644314aad8f58f5abb3986e659
+outcome:
+  state: failed
+  stage: rewriting
+  reason: 'protected evaluator/ROI input changed: src/bfs.cc (verifier)'
+attempts:
+- number: 1
+  stage: rewriting
+  state: failed
+  reason: 'protected evaluator/ROI input changed: src/bfs.cc (verifier)'
+raw_artifacts:
+- path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.protected-verifier
+  stage: rewriting
+source_snapshot: bfs-contract-20260925-a3.source
+profile_package: bfs-contract-20260925-a3.fixture-package
