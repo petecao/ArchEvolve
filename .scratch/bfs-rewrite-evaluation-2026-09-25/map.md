@@ -149,6 +149,43 @@ unchanged. No Linux fixture, auditor, compilation or measurement ran during
 this preparation. The original malformed preparation receipt is retained;
 an additive valid JSON receipt preserves its reference and unchanged facts.
 
+## Native readback failed before validation — 2026-09-26 18:13 ET
+
+The [single readback attempt](observations/native-readback-failure-20260926.json)
+started at 18:10:50 ET and exited one before validation. The generated launcher
+passed a JSON string to the original collector's `Store`, which requires a
+`Path`; `.rglob` raised `AttributeError`. No control/package admission or protocol
+freeze resulted. Socket 0 generation 326 is released. The fast child's PID/start
+identity was not captured, so the retained receipt explicitly declines a full
+historical process-closure claim. A current exact-argv scan found no live reader;
+only the recorded zero-RSS pane zombie remains. The native measurements and their
+independent 131-identity closure remain unchanged. The failed attempt is consumed,
+without retry; the launcher repair and child-identity retention are under review.
+A separately retained 18:14 ET supplement scans every current own-user process
+born in a conservatively expanded launch interval on two passes. It finds only
+the exact zero-RSS pane zombie. Independent review accepts this current inactivity
+for separate A2 fixture admission after fresh normal host gates; it does not
+change the incomplete historical reader-identity record.
+
+The [original full regression](observations/full-regression-7fe4c34-20260926.json)
+finished at 18:11:32 ET: **2,004 passed, 18 skipped, 25 failed** in 3,329 seconds.
+All failures are the three independently repaired package-fixture groups. Its
+original log and pin are retained; the separate corrected `e4c4015` run continues.
+
+## Native readback prepared and synchronized — 2026-09-26 18:09 ET
+
+The [single-readback preparation](observations/native-readback-preparation-20260926.json)
+retains six author and five independent accounting probes. The exact recipe,
+selection and preflight were pushed to the private auxiliary branch at `39d330f`
+and its remote ref verified. The three-file packet contains 15,105 bytes and has
+sole parent `3f38a2b`; supervisor and collector HEADs remain unchanged. A prelaunch
+reference-shape omission was corrected additively: V2 includes the sealed driver
+reference's byte count. Historical refs and all four package IDs/order match.
+The fixed bound is 990 seconds: one original 900+30 reader and 60 cumulative
+seconds for other checks. No retry, measurement, protocol publication or gain
+is authorized by this readback. Its actual result and external cleanup audit
+remain outstanding at this checkpoint.
+
 ## Progress check — 2026-09-26 18:03 ET
 
 The [full host audit](observations/health-20260926-1803.json) confirms the completed

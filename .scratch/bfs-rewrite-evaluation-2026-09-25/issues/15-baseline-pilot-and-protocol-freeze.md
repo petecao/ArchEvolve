@@ -7,7 +7,19 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 17:58 ET
+## Current checkpoint — 2026-09-26 18:13 ET
+
+The [native readback attempt](../observations/native-readback-failure-20260926.json)
+failed before evidence validation: the generated launcher passed a string to
+`Store` instead of a `Path`. Its result remains pending, outer/helper exit one,
+and socket 0 generation 326 released. The fast reader's full PID/start history
+was not captured; current absence observations do not substitute for that history.
+The actual completed native study and its separate complete cleanup audit remain
+unchanged. The failed attempt is retained with no retry. A launcher repair with
+real subprocess coverage and a child-identity retention design are under review.
+No empirical freeze or final acceptance is claimed; this ticket remains claimed.
+
+## Historical checkpoint — 2026-09-26 17:58 ET
 
 The [one-thread collector and independent terminal audit](../observations/native-one-thread-terminal-20260926.json)
 completed successfully. All 240 primary structural checks, four unchanged-code
