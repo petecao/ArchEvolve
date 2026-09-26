@@ -142,6 +142,13 @@ new separate checkout. Actual Linux fixtures and independent host closure
 remain pending until whole native completion. This sync establishes no final
 acceptance cell, empirical freeze or gain.
 
+At 17:45 ET, [Git-only preparation](observations/supervision-checkout-preparation-20260926.json)
+verified pristine detached `3f38a2b` in the separate mbit10 supervisor checkout.
+The collector `319645e` and historical A2 tested checkout `67313d9` remain
+unchanged. No Linux fixture, auditor, compilation or measurement ran during
+this preparation. The original malformed preparation receipt is retained;
+an additive valid JSON receipt preserves its reference and unchanged facts.
+
 ## All one-thread primary controls passed — 2026-09-26 17:38 ET
 
 The [fourth retained control](observations/native-one-thread-fourth-cell-20260926.json)
@@ -162,8 +169,9 @@ after deliberate mutations. Production validation is unchanged. All 16 campaign
 and 45 reassessment cases pass; independent cross-reviews confirm the intended
 semantic checks, unknown-origin fields and failed-build/no-repair behavior.
 The original unpublished `c0df79e` check remains **558 passed, nine skipped,
-two failed** with exact files unchanged. A superseding export will include these
-two fixture corrections and receive its own affected-module/catalog check.
+two failed** with exact files unchanged. The superseding `3f38a2b` export includes
+these two fixture corrections; its affected-module/catalog checks and private
+branch synchronization are recorded above.
 
 ## Progress check — 2026-09-26 17:33 ET
 
