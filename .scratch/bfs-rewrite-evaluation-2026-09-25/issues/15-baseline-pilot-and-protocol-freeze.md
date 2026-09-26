@@ -7,7 +7,25 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 13:03 ET
+## Current outcome — 2026-09-26 13:23 ET
+
+The fixed paired study finished at 13:23:55 ET with all 240 correctness checks
+passed, outer exit zero, released socket-1 lease generation 400, and no live
+owned work in the independent 83-identity audit. Calibration remains
+**unqualified**: seven of 24 role/source spreads exceed 0.10. Upstream
+Kronecker's final two failures are candidate source 7777 at 0.12719239 and
+baseline source 0 at 0.12456670. All eight directional A/A lower confidence
+bounds are at most 1.05. All observations, including the failed groups, remain
+retained and no protocol is published. See the
+[terminal evidence](../observations/native-paired-terminal-20260926.json).
+
+One bounded prepare readback is a separate pending audit, not a new measurement
+or publish action. The original study receives no retry, threshold change or
+extension. A later design needs its own prospective review and fresh evidence.
+T15 simulator collection remains held; independent T13/T16 work proceeds under
+its own actual correctness, cleanup and resource prerequisites.
+
+## Historical checkpoint — 2026-09-26 13:03 ET
 
 The unchanged paired study has 201/240 observations. Three cells completed all
 60 checks; upstream Kronecker has 21/60. The study is already unqualified:

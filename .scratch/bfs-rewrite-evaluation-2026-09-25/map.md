@@ -83,6 +83,32 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Native pilot terminal — 2026-09-26 13:23 ET
+
+The original paired study finished at **13:23:55 ET** with all **240/240**
+structural checks passed and outer exit zero. Its independent 83-identity audit
+found no live owned work, with only the exact original zero-RSS tmux pane zombie
+remaining. Socket 1 generation 400 is released. The
+[terminal receipt](observations/native-paired-terminal-20260926.json) retains
+exact driver, cleanup, all four numerical analyses and same-host Git-view pins.
+
+| Cell | Checks | Fixed spread gate | Next action |
+|---|---:|---|---|
+| DX100 uniform | 60/60 | Pass | Retain pilot evidence |
+| Upstream uniform | 60/60 | Fail | Retain unchanged failure |
+| DX100 Kronecker | 60/60 | Fail | Retain unchanged failure |
+| Upstream Kronecker | 60/60 | Fail | Retain unchanged failure |
+
+Seven of 24 role/source groups exceed the fixed 0.10 ceiling. All eight
+label-direction checks have lower confidence bounds at most 1.05, so there is
+no numerical A/A gain; this does not override the spread veto. Collection is
+complete and calibration is unqualified. No samples or policy changed, and
+no protocol is published. T15 remains claimed; the independent T13 sequence
+continues after one bounded unpublishable readback. The new 12-record commit
+`b722d132e0aba20a5b7fd524a3d2b31034e12a6e` remains host-local at this check.
+Current tracker counts are **12 resolved / 9 claimed** because T11's local
+runtime-policy correction is pending independent verification.
+
 ## Runtime-policy correction — 2026-09-26 13:15 ET
 
 [Ticket 11](issues/11-workloads-and-comparison-protocols.md) is claimed again
