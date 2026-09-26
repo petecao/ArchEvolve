@@ -58,3 +58,11 @@ The six-file result packet was committed on mbit10 as `5f1b802`, but automatic
 approval review rejected its new GitHub packet/branch. Exact approval is pending;
 canonical proposal/candidate records have not been imported into this checkout.
 See [the concrete inventory](../observations/provider-export-inventory-20260926.json).
+
+## Prospective build-only preparation — 2026-09-26
+
+The [bounded build-only plan](../t17-build-only-plan-20260926.md) retains an exact
+public request for the existing initial candidate and metadata-only host binding
+checks. It remains undispatched, follows native/a3/fixed-coverage cleanup, and
+permits one compilation without a provider call, retry, or repair. Compilation
+does not establish correctness, actual acceleration, or this ticket's acceptance.
