@@ -71,3 +71,24 @@ explicit metadata-export approval remains pending. Record successful or failed
 observations through the public evaluator, then audit fresh public retrieval.
 Any later candidate-wrapper or accelerated-profile validation needs its own
 prospective reviewed plan.
+
+## Authorized continuation window — 2026-09-26
+
+At 08:54 ET the user explicitly approved all pending code, evidence, and provider
+transfers. Reviewed code through `5f4ffdf` has been pushed to the named private
+repository. The original pilot's 05:56:38 ET deadline remains expired and its
+incomplete outcome is preserved. This separate continuation authorizes only the
+previously unconsumed tiny author v2 proof above, with an absolute stop at
+**2026-09-26 10:00 ET**. The outer timeout is the smaller of 1,200 seconds and
+the remaining window, retaining the existing cleanup reserve. Preparation and
+capacity refusals consume the window; they do not extend it.
+
+There is still exactly one actual simulation attempt, with the same request,
+input and checkpoint hashes, 48 GiB RSS, 2 GiB raw limit, 750-second simulation
+limit, and 1,100-second adapter limit. No graph generation, native third block,
+candidate measurement, protocol freeze, resource increase, or automatic retry
+is authorized by this continuation. A new compact Git checkout preserves the
+historical evaluator paths. Record the selected lane and exact checkout commit
+before dispatch; collect and synchronize successful or failed evidence afterward.
+This scope isolates verifier-mechanism feasibility from the still-unresolved
+native repeatability and simulator-calibration gates.
