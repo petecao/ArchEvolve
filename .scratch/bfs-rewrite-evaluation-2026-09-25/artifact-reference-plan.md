@@ -18,8 +18,25 @@ artifact pipeline. `scripts/sim.py` selects BFS scale 22 and invokes scalar `bfs
 or accelerated `bfs_maa` with `-f serialized_graph_22.sg -l -n 1`.
 `benchmarks/gapbs/run_g_gen.sh` generates it with `converter -u 22 -b ...`;
 `command_line.h` defaults to degree 16, and the pinned generator's seed is 27491095.
-There is no `-s` symmetrization flag. The actual realized dimensions, directedness,
-deduplication, graph bytes and loaded adjacency must still be measured and recorded.
+There is no explicit `-s` flag, but this does **not** make the generated graph
+directed: pinned `command_line.h:76–77` forces `symmetrize_ = true` whenever a
+synthetic scale is supplied (`-u` or `-g`). `builder.h:332–333` then constructs an
+undirected CSR graph. The first scale-18 registrations incorrectly recorded the
+effective generator parameter as `parameters.symmetrize: false`. Retain those
+immutable records and supersede them through public version-2 registration with
+`symmetrize: true`, `explicit_symmetrize_flag: false`, and the retained generator
+command. This is a metadata correction using the same graph files and hashes;
+it does not authorize regeneration.
+Realized dimensions, deduplication, graph bytes, directedness, and loaded adjacency
+remain independently checked from the generated serialization. Uniform-18 already
+realized 262144 vertices and 8388040 directed adjacency entries with `directed: false`;
+this smaller observation does not substitute for generation of the prescribed scale 22.
+Kronecker-18 realized 262143 vertices, 7610898 directed adjacency entries, and
+88159 isolated vertices. The builder derives its vertex count from
+`FindMaxNodeID(el) + 1` (`builder.h:313–321`); the synthetic path does not override
+that count with `2**scale` (`builder.h:339–354`). An absent highest vertex therefore
+reduces the realized range, while isolated vertices below that maximum remain.
+Preserve these actual counts and all isolates in the workload identity.
 
 The main runner uses four X86O3CPU cores at 3.2 GHz, 16GB guest memory, Ramulator2
 with its pinned example configuration, two memory channels, 64-byte lines,

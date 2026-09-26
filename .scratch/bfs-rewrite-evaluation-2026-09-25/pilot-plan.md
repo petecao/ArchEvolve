@@ -39,15 +39,26 @@ processes. Source/builds remain under `/data1/yanruj`; raw outputs use the recor
 - Candidate-size calibration: scale 14 establishes correctness and accelerator
   coverage; scale 18 is the preferred performance pilot, with scale 16 permitted
   only when scale 18 exceeds the declared cost bounds. Use edge factor 16 for both
-  Kronecker and uniform-random families. Before deduplication, scale 16 outgoing
-  CSR and parent storage is approximately 4–5 MiB, while scale 18 is approximately
-  18 MiB; the smaller graph could fit in the modeled 8 MiB LLC. These are planning
-  estimates, not measured working sets. Retain actual adjacency bytes, sources,
-  and memory observations before selecting the size. No arbitrary scale sweep
+  Kronecker and uniform-random families. The pinned generator forces
+  symmetrization for either synthetic family even without an explicit `-s` flag
+  (`command_line.h:76–77`); resulting graphs are undirected. Before deduplication,
+  outgoing neighbor entries, 64-bit CSR row pointers, and 32-bit parents total
+  approximately 8.75 MiB at scale 16 and 35 MiB at scale 18. These estimates exclude
+  queues, bitmaps, and runtime storage; deduplication can reduce the footprint,
+  particularly for Kronecker. The scale-16 subset is close to the modeled 8 MiB
+  LLC, so its cache behavior must be observed. Retain actual adjacency bytes,
+  sources, and memory observations before selecting the size. No arbitrary scale sweep
   follows a negative result. Generate each permitted graph once per pinned
   generator and retain SG32/SG64 representation hashes and canonical loaded
   adjacency identity. Size selection uses unchanged baseline/reference cost and
   coverage, never candidate gains; the 12-hour pilot cap remains unchanged.
+  The pinned builder sets the realized vertex count to `FindMaxNodeID(el) + 1`
+  (`builder.h:313–321,339–354`), so it can be below `2**scale`. The retained
+  Kronecker-18 graph has 262143 vertices, 7610898 directed adjacency entries, and
+  88159 isolates; uniform-18 has 262144 vertices, 8388040 entries, and no isolates.
+  Preserve all realized vertices and isolates. Version-2 registration corrects
+  the first records' erroneous `symmetrize: false` to the effective `true`, with
+  explicit CLI flag absence recorded separately and the graph files unchanged.
 - Ordered diagnostic sources: `[0, 1234, 7777]` for these scales. Retain isolated
   sources and their outcomes. A source replacement requires a versioned workload
   with a coverage-based reason before any candidate assessment.

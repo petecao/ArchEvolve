@@ -111,7 +111,8 @@ def main():
         compiler='g++';binary=build/'converter'
         bounded('compile',[compiler,'-std=c++11','-O3','-fopenmp',source/'converter.cc','-o',binary],180)
         sg32=runs/'graph.sg32';sg64=runs/'graph.sg64'
-        bounded('generate',[binary,'-u' if a.family=='uniform_random' else '-g',str(a.scale),'-k','16','-b',sg32],900)
+        generator_command=[str(binary),'-u' if a.family=='uniform_random' else '-g',str(a.scale),'-k','16','-b',str(sg32)]
+        bounded('generate',generator_command,900)
         widen_sg(sg32,sg64)
         if a.artifact_default_source:
             picker_source=build/'pick-source.cc'
@@ -132,7 +133,11 @@ def main():
             for name,app,path,fmt in [('dx100','dx100-gapbs',sg32,'gapbs_sg32le'),('upstream','gapbs',sg64,'gapbs_sg64le')]]
         request={'message_version':'1.0','id':a.id,'kernel':'gapbs-bfs','family':a.family,
             'generator':{'name':'DX100 GAPBS converter','revision':'e4fc4afdf894f295442cef3604667a469fab8e62',
-                'parameters':{'scale':a.scale,'edge_factor':16,'seed':27491095,'symmetrize':False,
+                'command':generator_command,
+                # CLBase::ParseArgs enables this for both synthetic families,
+                # including commands that do not explicitly request -s.
+                'parameters':{'scale':a.scale,'edge_factor':16,'seed':27491095,'symmetrize':True,
+                    'explicit_symmetrize_flag':False,
                     'binary_sha256':artifacts.file_hash(binary),'source_sha256':receipt['generator_source_sha256']}},
             'sources':a.sources,'normalization':bfs_protocol.NORMALIZATION,'representations':representations,
             'parser':{'work_dir':str(build),'compile_timeout_s':60,'timeout_s':900}}
