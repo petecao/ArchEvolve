@@ -333,6 +333,9 @@ def report(args):
                 rows.append({"id": rid, "qualified": False, "reasons": ["comparison record is missing"]}); continue
             row = _comparison(store, comp, [comp.get("protocol")], mode)
             if row["qualified"]:
+                if (row.get("comparison_baseline") != "dx100-bfs-scalar"
+                        or row.get("candidate_implementation") != "dx100-bfs-maa-reference"):
+                    row["reasons"].append("reference pair must identify scalar DOBFS and the fixed author DOBFSMAA implementation separately")
                 for eid in (row["baseline_evaluation"], row["candidate_evaluation"]):
                     evaluation = store.get(eid, "evaluation")
                     if _correctness(evaluation) or not _packages(store, evaluation)[0]:
@@ -387,13 +390,42 @@ def report(args):
     all_acceleration = all(a["state"] != "incomplete" for a in acceleration)
     all_reference = all(r["state"] != "incomplete" for r in reference_results.values())
     good = [a for c in cells for a in c["attempts"] if a["qualified"]]
+    # Discovery and native execution are independent demonstrations. They need
+    # actual source-bound measurements, but do not themselves assert a speedup.
+    demonstrations = []
+    demonstration_packages = {}
+    for record in store.of_kind("evaluation"):
+        evaluation = record.data
+        try:
+            if (not _real(evaluation) or evaluation.get("implementation") not in SOURCES
+                    or evaluation.get("outcome", {}).get("state") != "complete" or _correctness(evaluation)):
+                continue
+            if (evaluation.get("context", {}).get("basis") == "measured"
+                    and any(flag.startswith("-DMAA") for flag in evaluation.get("build", {}).get("flags", []))):
+                continue
+            packages, _ = _packages(store, evaluation)
+            if not packages:
+                continue
+            candidate = protocol._get(store, evaluation.get("candidate"), "candidate")
+            inputs = [evaluation, candidate, *packages,
+                      *(store.get(package["region_profile"], "region_profile") for package in packages)]
+            availability = _availability(inputs, evaluation.get("context", {}).get("host"))
+            if any(item["state"] in {"changed", "missing", "unreadable"} for item in availability):
+                continue
+            demonstrations.append({"evaluation": evaluation["id"], "profile_packages": [package["id"] for package in packages],
+                "basis": evaluation["context"].get("basis"), "artifacts": availability,
+                "external_verification": "verified" if availability and all(item["state"] == "verified" for item in availability) else "unverified",
+                "gain_claim": False})
+            demonstration_packages.update({package["id"]: package for package in packages})
+        except (Failure, KeyError, TypeError, ValueError, AttributeError):
+            continue
     criterion = {f"AC{i:02d}": {"state": "incomplete", "reason": "required demonstration evidence has not been established"} for i in range(1, 21)}
     def mark(number, condition, reason):
         criterion[f"AC{number:02d}"] = {"state": "satisfied_by_retained_metadata" if condition else "incomplete", "reason": reason}
     source_records = [store.get(source, "implementation") for source in SOURCES]
     mark(1, all(source_records) and {store.application_of(s)["id"] for s in source_records} == {"gapbs", "dx100-gapbs"}, "shared BFS source contexts are queried independently")
-    mark(2, bool(good), "complete real packages retain discovered function/loop rankings and coverage")
-    mark(4, bool(good), "qualifying packages contain dynamic memory observations tied to diagnostic execution")
+    mark(2, bool(demonstrations), "complete real packages retain discovered function/loop rankings and coverage")
+    mark(4, bool(demonstrations), "qualifying packages contain dynamic memory observations tied to diagnostic execution")
     mark(6, all_cells, "all eight fixed source/payload/family cells must qualify")
     mark(7, bool(good), "qualifying cells require a changed candidate and retained proposal chain")
     case_names = ("full_tiles", "tail_tiles", "competing_parent_updates")
@@ -401,13 +433,14 @@ def report(args):
     mark(10, bool(accelerated_good) and all(any(a["acceleration"]["cases"].get(case) for a in accelerated_good) for case in case_names),
          "timed structural checks plus observed full/tail/parent-update cases are required")
     mark(11, all_acceleration, "one identical correct accelerated candidate per source must cover both families")
-    mark(12, any(a["basis"] == "measured" for a in good), "real native CPU execution requires independent checks and complete dynamic profiling")
-    mark(13, bool(good), "qualified cases retain primary ROI separately from diagnostic region and memory quantities")
+    mark(12, any(a["basis"] == "measured" for a in demonstrations), "real native CPU execution requires independent checks and complete dynamic profiling")
+    mark(13, bool(demonstrations), "actual profiling demonstrations retain primary ROI separately from diagnostic region and memory quantities")
     mark(15, all_reference, "artifact-reference and controlled-reference comparisons are distinct obligations")
     mark(16, all_cells, "every accepted cell binds its actual workload and settings to a current immutable pre-execution protocol")
     mark(17, bool(gains), "at least one generated correct candidate must pass its frozen profitability policy against its unaccelerated source baseline")
     mark(18, all_cells and all_reference and all_acceleration, "all required cases, reference obligations, failures, and regressions must be accounted for")
-    accepted_packages = {pid: store.get(pid, "profile_package") for a in good for pid in a["profile_packages"]}
+    accepted_packages = {**demonstration_packages,
+                         **{pid: store.get(pid, "profile_package") for a in good for pid in a["profile_packages"]}}
     new_regions = []
     for package in accepted_packages.values():
         diagnostic = store.get(package.get("region_profile"), "region_profile")
@@ -501,6 +534,7 @@ def report(args):
     result = {"message_version": "1.0", "id": request["id"], "request": request, "matrix": cells,
               "source_acceleration_minima": acceleration, "reference_obligations": reference_results,
               "qualifying_candidate_gains": gains, "criteria": criterion, "history": history,
+              "profiling_demonstrations": demonstrations,
               "unassigned_evaluations": [value for key, value in evaluations.items() if key not in assigned],
               "comparison_assessments": results,
               "missing_protocols": missing, "live_collaborator_integration": False, "handoff_artifacts": handoff_artifacts,
@@ -511,6 +545,7 @@ def report(args):
                          "No gain over the authors' accelerated implementation is required."]}
     all_criteria = all(item["state"] == "satisfied_by_retained_metadata" for item in criterion.values())
     external_verified = (bool(good) and all(a["external_verification"] == "verified" for a in good)
+                         and all(a["external_verification"] == "verified" for a in demonstrations)
                          and all(all(ref["state"] == "verified" for ref in c.get("artifacts", []))
                                  for obligation in reference_results.values() for c in obligation["comparisons"]))
     result["acceptance"] = "complete" if all_criteria and external_verified and not missing else "incomplete"

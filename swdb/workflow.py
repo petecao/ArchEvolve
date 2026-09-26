@@ -130,6 +130,15 @@ def get_record(args):
     if getattr(args, "chain", False):
         store = Store(args.records)
         seen = {}
+        downstream = {}
+        for kind, keys in (("evaluation", ("candidate", "proposal")),
+                           ("region_profile", ("evaluation",)),
+                           ("profile_package", ("evaluation",))):
+            for row in store.of_kind(kind):
+                for key in keys:
+                    parent = row.data.get(key)
+                    if parent:
+                        downstream.setdefault(parent, []).append(row.data)
         def visit(d):
             if d["id"] in seen:
                 return
@@ -144,15 +153,14 @@ def get_record(args):
                 target = store.get(component.get('evaluation'))
                 if target:
                     visit(target)
+            for target in downstream.get(d["id"], []):
+                visit(target)
             if d["kind"] == "proposal":
                 for attempt in d["attempts"]:
                     for key in ("candidate", "parent_candidate", "trigger_evaluation"):
                         target = store.get(attempt.get(key))
                         if target:
                             visit(target)
-                for evaluation in store.of_kind("evaluation"):
-                    if evaluation.data.get("proposal") == d["id"]:
-                        visit(evaluation.data)
         visit(data)
         return {"root": data["id"], "records": seen}
     return data

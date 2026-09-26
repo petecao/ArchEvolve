@@ -36,6 +36,9 @@ original qualifier.
 repository and records. On mbit10 it must be under `/data1/yanruj` and defaults to
 `/data1/yanruj/EvolveSWDB_builds/<profile-id>`. Instrumented sources, wrappers, and
 binaries live there; collector logs and observation files remain in `--runs-dir`.
+The diagnostic `load_average` is sampled for this profile; `primary_load_average`
+retains the timed evaluation's original host-load observation. Both region and
+memory collectors honor the requested repetitions and ordered traversal sources.
 Execution retains the primary compiler, version, and OpenMP build flags. Any parser
 error fails discovery. Transformation-specific/continued OpenMP pragmas and
 macro-generated loops without safe source extents remain unresolved. Header,

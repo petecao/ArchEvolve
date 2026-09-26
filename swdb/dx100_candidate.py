@@ -100,6 +100,10 @@ def compile_candidate(args):
         if not candidate:
             raise Failure("candidate source is unavailable")
         original = store.get(candidate["source_snapshot"], "source_snapshot")
+        implementation = store.get(candidate['implementation'], 'implementation')
+        expected_function = original.get('context', {}).get('function', implementation.get('function'))
+        if function != expected_function:
+            raise Failure('selected BFS function differs from the identified source implementation')
         if original["application"] not in {"gapbs", "dx100-gapbs"}:
             raise Failure("candidate application has no supported trusted BFS driver")
         source_root = artifacts.verify(candidate["artifact"])

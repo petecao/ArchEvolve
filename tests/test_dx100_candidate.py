@@ -14,7 +14,7 @@ from swdb.dx100_candidate import driver
 from test_dx100 import case, reference, execution_request
 
 
-@pytest.mark.parametrize("override", [False, True])
+@pytest.mark.parametrize("override", [False, True, 'function'])
 @pytest.mark.parametrize('diagnostic', [False, True])
 def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_driver_override(case, records, override, diagnostic):
     request, invoke, folder = case
@@ -32,7 +32,7 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
     source = root / "benchmarks/gapbs/src/bfs.cc"
     source.parent.mkdir(parents=True)
     verifier = "bool BFSVerifier() { return true; }"
-    source.write_text("// Contract fixture source\n" + verifier + "\n" + ("#define m5_dump_stats(...) ((void)0)\n" if override else ""))
+    source.write_text("// Contract fixture source\n" + verifier + "\n" + ("#define m5_dump_stats(...) ((void)0)\n" if override is True else ""))
     artifact = artifacts.identify(root)
     protections = [{"path": "benchmarks/gapbs/src/bfs.cc", "kind": "verifier", "text": verifier}]
     snapshot = workflow.record("source_snapshot", "source", implementation="dx100-bfs-scalar", application="dx100-gapbs",
@@ -54,12 +54,16 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
     compile_request.update(candidate="candidate", build_evaluation="model-build", function="DOBFS", accelerated=False,
         roi="bfs.complete_call.v1", fixture_compiler=reference(compiler),
         budget={"total_seconds": 60, "memory_gib": 1, "storage_gib": 1, "build_seconds": 10})
+    if override == 'function':
+        compile_request['function'] = 'DOBFSMAA'
     if diagnostic:
         from test_bfs_profiling import compiler_inventory
         library, arguments = compiler_inventory()
         compile_request.update(diagnostic_regions=True, discovery={'library': library})
     result = invoke("dx100-compile", compile_request)
     assert result["outcome"]["state"] == ("failed" if override else "complete"), result["outcome"]
+    if override == 'function':
+        assert 'function differs' in result['outcome']['reason']
     if not override:
         assert result["build"]["binary_sha256"]
         assert result["context"]["candidate_sha256"] == artifact["sha256"]

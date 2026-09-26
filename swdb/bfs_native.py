@@ -397,6 +397,10 @@ def run(args):
         candidate = store.get(request["candidate"], "candidate")
         if not candidate or candidate["state"] == "incomplete":
             raise Failure("candidate is missing or incomplete")
+        implementation = store.get(candidate["implementation"], "implementation")
+        if (implementation.get("kernel") != "gapbs-bfs" or implementation.get("function") != "DOBFS"
+                or candidate["context"].get("function", implementation["function"]) != "DOBFS"):
+            raise Failure("native complete-call adapter supports the identified DOBFS entry point only")
         data.update(candidate=candidate["id"],
                     source_snapshot=candidate["source_snapshot"], implementation=candidate["implementation"])
         if candidate.get("proposal"):
@@ -447,6 +451,7 @@ def run(args):
                 raise Failure("explicit comparison baseline is missing or realizes a different kernel")
             data["comparison_baseline"] = baseline
         data["context"] = {"candidate_sha256": candidate["artifact"]["sha256"],
+                           "function": "DOBFS",
                            "source_revision": candidate["context"]["source"]["commit"],
                            "application": candidate["context"]["application"], "adapter": adapter,
                            "target": machine["id"], "machine_sha256": artifacts.digest(machine),

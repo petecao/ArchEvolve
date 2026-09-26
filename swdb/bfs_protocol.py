@@ -615,21 +615,38 @@ def _evaluation_samples(store, evaluation, protocol, role):
         _fail(settings["mode"] != "native", "native evaluations cannot masquerade as simulator aggregates")
         component_ids = [item["evaluation"] for item in components]
         _fail(len(set(component_ids)) == len(component_ids), "aggregate repeats a component execution")
-        retained_timing, retained_checks = [], []
+        retained_timing, retained_checks, retained_stages = [], [], []
         for identity in components:
             component = _get(store, identity["evaluation"], "evaluation")
             _fail(artifacts.digest(component) == identity["sha256"], "aggregate component evidence changed")
             _fail(not component.get("component_evaluations"), "nested aggregates are not separate simulator executions")
             _fail(component.get("outcome", {}).get("state") == "complete"
                   and component.get("correctness", {}).get("state") == "passed", "aggregate retains a failed component")
+            _fail(all(component.get(key) == evaluation.get(key) for key in
+                      ("candidate", "implementation", "source_snapshot", "machine", "evidence_kind"))
+                  and artifacts.digest(component.get("build")) == artifacts.digest(evaluation.get("build")),
+                  "aggregate source/binary identity differs from its components")
+            component_context = component.get("context", {})
+            _fail(all(artifacts.digest(component_context.get(key)) == artifacts.digest(context.get(key)) for key in
+                      ("target", "backend_configuration", "instrumentation", "adapter", "threads", "roi", "verifier", "basis", "candidate_sha256", "model", "interface")),
+                  "aggregate target/configuration differs from its components")
+            component_binding = component_context.get("protocol_binding", {})
+            _fail(component_binding.get("protocol") == protocol["id"]
+                  and component_binding.get("frozen_sha256") == protocol["identity_sha256"]
+                  and component_binding.get("settings_sha256") == artifacts.digest(settings)
+                  and component_binding.get("role") == role, "aggregate component has another frozen policy or role")
+            _fail(len(component.get("timing", [])) == 1 and len(component.get("correctness", {}).get("checks", [])) == 1,
+                  "aggregate component is not one actual traversal")
             _fail(artifacts.digest(context.get("component_contexts", {}).get(component["id"])) == artifacts.digest(component.get("context")),
                   "aggregate component context changed")
             _fail(artifacts.digest(context.get("component_bindings", {}).get(component["id"])) == artifacts.digest(component.get("context", {}).get("execution_binding")),
                   "aggregate component execution binding changed")
             retained_timing.extend(component.get("timing", []))
             retained_checks.extend(component.get("correctness", {}).get("checks", []))
+            retained_stages.extend({**stage, "component_evaluation": component["id"]} for stage in component.get("stages", []))
         _fail(artifacts.digest(retained_timing) == artifacts.digest(evaluation.get("timing"))
-              and artifacts.digest(retained_checks) == artifacts.digest(evaluation["correctness"].get("checks")),
+              and artifacts.digest(retained_checks) == artifacts.digest(evaluation["correctness"].get("checks"))
+              and artifacts.digest(retained_stages) == artifacts.digest(evaluation.get("stages")),
               "aggregate observations differ from their actual component evidence")
     binding = context.get("protocol_binding", {})
     _fail(isinstance(binding, dict) and binding.get("protocol") == protocol["id"]

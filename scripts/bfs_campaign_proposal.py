@@ -139,10 +139,13 @@ def main():
         raise ValueError('the package pair must cover both required graph families')
     for package, source, evaluation, workload in zip(packages, sources, evaluations, workloads):
         bfs_protocol.verify_immutable(workload)
+        expected_context = profile_package._context(evaluation)
         if (evaluation.get('evidence_kind') != 'execution' or evaluation.get('request', {}).get('fixture') is True
                 or evaluation['outcome']['state'] != 'complete' or evaluation['correctness']['state'] != 'passed'
                 or package['evidence']['evaluation_sha256'] != artifacts.digest(evaluation)
-                or package['context'] != profile_package._context(evaluation)
+                or any(artifacts.digest(package['context'].get(key)) != artifacts.digest(value) for key, value in expected_context.items())
+                or package['context'].get('primary_binary_sha256') != evaluation.get('build', {}).get('binary_sha256')
+                or artifacts.digest(package['context'].get('build')) != artifacts.digest(evaluation.get('build'))
                 or evaluation['context']['workload']['canonical_sha256'] != workload['definition']['canonical_sha256']):
             raise ValueError('baseline package evaluation or canonical workload identity changed')
         baseline = query('get', evaluation['candidate'])

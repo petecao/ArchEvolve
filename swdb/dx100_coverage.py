@@ -37,6 +37,7 @@ def observe(log, values, tile_elements):
                 base = re.search(r"baseAddr\(0x([a-f0-9]+)\)", instruction)
                 current[int(issued[1])] = (int(base[1], 16) if base and "opcode(INDIR_ST_VECTOR)" in instruction
                     and "datatype(INT32)" in instruction else None)
+                blocks.pop(int(issued[1]), None)
             received = re.search(r"\bI\[(\d+)\] \w+: \d+ entries received for addr\(0x([a-f0-9]+)\)", line)
             if received:
                 blocks[int(received[1])] = int(received[2], 16)
@@ -63,6 +64,12 @@ def observe(log, values, tile_elements):
     full = tile_sizes.get(tile_elements, 0)
     tail = sum(count for size, count in tile_sizes.items() if 0 < size < tile_elements)
     return {"state": "observed", "tick_interval": [start, end], "completed_trace_units": units,
+        "address_space_contract": {"model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+            "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+            "recvData_addr": "translated physical cache line; compared only with other physical words",
+            "source_evidence": [
+                {"path": "src/mem/MAA/IF.cc", "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561", "lines": [38, 63]},
+                {"path": "src/mem/MAA/IndirectAccess.cc", "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db", "lines": [494, 505]}]},
         "range_output_tile_sizes": {str(size): count for size, count in tile_sizes.items()},
         "full_tiles": {"state": "observed" if full else "unobserved", "count": full, "capacity": tile_elements},
         "tail_tiles": {"state": "observed" if tail else "unobserved", "count": tail, "capacity": tile_elements},

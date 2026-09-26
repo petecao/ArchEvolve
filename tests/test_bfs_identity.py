@@ -55,6 +55,32 @@ def test_vendored_dx100_snapshot_matches_manifest():
         assert hashlib.sha256((folder / rel).read_bytes()).hexdigest() == digest
 
 
+def test_author_accelerated_reference_has_its_own_function_and_unchanged_source(repo, tmp_path):
+    found = {row["implementation"]: row["source_context"] for row in query(repo)}
+    scalar, reference = found["dx100-bfs-scalar"], found["dx100-bfs-maa-reference"]
+    assert scalar["function"] == "DOBFS" and reference["function"] == "DOBFSMAA"
+    assert reference["application"] == scalar["application"] == "dx100-gapbs"
+    assert reference["source"] == scalar["source"] and reference["code"] == scalar["code"]
+    assert reference["source_baseline"] == "dx100-bfs-maa-reference" and reference["source_ancestor"] is None
+    assert reference["comparison_baseline"] == "dx100-bfs-scalar"
+    assert reference["build"]["compiler"] == "g++-13"
+    assert reference["build"]["flags"].split() == ["-std=c++11", "-O3", "-Wall", "-g3", "-fopenmp", "-DGEM5", "-DMAA", "-DNUM_CORES=4", "-DTILE_SIZE=16384"]
+    assert reference["run"]["timer"] == "gem5_roi_ticks"
+    assert reference["evaluator"]["backend"] == "dx100.author_artifact.v1"
+    assert reference["verification"]["status"] == "unchecked" and not reference["verification"]["evidence"]
+    runs = tmp_path / "reference-sources"
+    source = output(repo.swdb("source-snapshot", "dx100-bfs-maa-reference", "--id", "author-reference-source", "--runs-dir", runs, "--format", "json"))
+    candidate = output(repo.swdb("baseline-candidate", source["id"], "--id", "author-reference-baseline", "--runs-dir", runs, "--format", "json"))
+    assert candidate["artifact_role"] == "source_baseline" and candidate["artifact"]["sha256"] == source["artifact"]["sha256"]
+    assert candidate["context"]["function"] == "DOBFSMAA" and candidate["implementation"] == "dx100-bfs-maa-reference"
+    assert "proposal" not in candidate
+    result = repo.swdb("profile", "dx100-bfs-maa-reference", "kron-g16-k16", "mbit10", "--runs-dir", runs)
+    assert result.returncode == 1 and "requires the evaluation workflow" in result.stderr
+    assert repo.swdb("build").returncode == 0
+    again = {row["implementation"]: row["source_context"] for row in query(repo)}
+    assert again["dx100-bfs-maa-reference"] == reference
+
+
 def test_legacy_source_defaults_keep_meaning(repo):
     data = repo.read("implementations/gapbs-bfs-do.yaml")
     data["schema_version"] = "0.2"

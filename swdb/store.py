@@ -117,7 +117,7 @@ class Store:
         if modern and any(key not in data for key in ("application", "source_baseline", "evaluator", "verification")):
             raise ValueError(f"implementation {data.get('id')!r} lacks explicit source context")
         return {
-            "application": app["id"], "source": app["source"], "code": data["code"],
+            "application": app["id"], "source": app["source"], "code": data["code"], "function": data["function"],
             "build": data["build"], "run": data["run"],
             "evaluator": data["evaluator"] if modern else {"backend": "native", **kernel["correctness_check"]},
             "source_ancestor": data["origin"].get("derived_from"),

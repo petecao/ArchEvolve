@@ -173,6 +173,20 @@ def test_package_rewrites_current_candidate_and_links_survive_rebuild(package_se
     assert "int alpha = 13" in (Path(chain[submitted["candidate"]]["artifact"]["path"]) / "src/bfs.cc").read_text()
 
 
+def test_result_query_discovers_refreshed_profiles_and_packages(package_setup, tmp_path):
+    records, request, evaluation, profile, candidate = package_setup
+    package = _assemble(records, tmp_path, request)
+    assert records.swdb("build").returncode == 0
+    for root in (evaluation['id'], candidate['id']):
+        result = records.swdb('get', root, '--chain', '--format', 'json')
+        assert result.returncode == 0, result.stderr
+        chain = json.loads(result.stdout)['records']
+        assert chain[evaluation['id']] == evaluation
+        assert chain[profile['id']] == profile
+        assert chain[package['id']] == package
+        assert chain[package['source_snapshot']]['artifact']['sha256'] == candidate['artifact']['sha256']
+
+
 def test_new_version_preserves_old_package(package_setup, tmp_path):
     records, request, _, _, _ = package_setup
     first = _assemble(records, tmp_path, request)
@@ -240,3 +254,38 @@ def test_new_snapshot_of_a_prior_rewrite_does_not_restore_baseline_semantics(pac
     second = _assemble(records, tmp_path, request)
     assert second["strategies"]
     assert all(row["source_correspondence"] == "unresolved_after_rewrite" for row in second["strategies"])
+
+
+@pytest.mark.parametrize('fault', [None, 'diagnostic-position', 'diagnostic-repetition', 'primary-position'])
+def test_simulated_component_preserves_global_frozen_trial_cell(package_setup, tmp_path, fault):
+    records, request, evaluation, profile, _ = package_setup
+    trial = {'source_position': 2, 'repetition': 1}
+    evaluation['context'].update(basis='simulated', protocol_trial=trial, repetitions=1)
+    for row in evaluation['timing']:
+        row.update(**trial, basis='simulated', quantity='simulated_roi_seconds')
+    for row in evaluation['correctness']['checks']:
+        row.update(**trial)
+    profile['context'].update(basis='simulated', protocol_trial=trial, repetitions=1)
+    for row in profile['regions']:
+        row['basis'] = 'simulated'
+        row['metrics'] = {'inclusive_simulated_seconds': 0.02, 'exclusive_simulated_seconds': 0.01, 'invocations': 3}
+    for row in profile['executions']:
+        row.update(**trial)
+    for row in profile['dynamic_memory']:
+        row['execution'].update(**trial)
+    if fault == 'diagnostic-position':
+        for row in profile['executions']: row['source_position'] = 0
+    elif fault == 'diagnostic-repetition':
+        for row in profile['executions']: row['repetition'] = 0
+    elif fault == 'primary-position':
+        for row in evaluation['timing']: row['source_position'] = 0
+    records.write('evaluations/package-evaluation.yaml', evaluation)
+    records.write('region_profiles/package-diagnostics.yaml', profile)
+    result = _assemble(records, tmp_path, request)
+    assert result['completeness'] == ('incomplete' if fault else 'fixture')
+    assert not result['gain_claim']
+    if fault:
+        assert any('source sequence' in reason for reason in result['reasons'])
+    else:
+        assert result['evidence']['diagnostic_executions'][0]['source_position'] == 2
+        assert result['evidence']['primary_timing'][0]['repetition'] == 1

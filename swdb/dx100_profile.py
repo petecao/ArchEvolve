@@ -61,7 +61,8 @@ def diagnostic_regions(store, request, evaluation, candidate, root):
                          'quantity': definition['quantity'], 'limitations': definition['difference']})
         regions.append(row)
     source = diagnostic['context']['source']
-    run = {'kind': 'regions', 'evaluation': diagnostic['id'], 'source': source, 'source_position': 0, 'repetition': 0,
+    trial = evaluation['context'].get('protocol_trial', {'source_position': 0, 'repetition': 0})
+    run = {'kind': 'regions', 'evaluation': diagnostic['id'], 'source': source, **trial,
         'binary_sha256': diagnostic['build']['binary_sha256'], 'output': str(log), 'output_sha256': stage['log_sha256'],
         'region_output': str(log), 'region_output_sha256': stage['log_sha256'],
         'evidence_kind': diagnostic['evidence_kind'], 'correctness': copy.deepcopy(diagnostic['correctness']),
@@ -271,11 +272,12 @@ def collect(args):
             data['artifacts'] = {'primary_binary_sha256': evaluation['build']['binary_sha256'],
                 'region_binary': binary, 'memory_binary': {'path': evaluation['build']['binary'],
                     'sha256': evaluation['build']['binary_sha256'], 'difference': 'actual primary modeled memory counters'}}
-            data['executions'][0].update(kind='memory', source=context['source'], source_position=0, repetition=0,
+            trial = context.get('protocol_trial', {'source_position': 0, 'repetition': 0})
+            data['executions'][0].update(kind='memory', source=context['source'], **trial,
                 output=str(log), output_sha256=log_reference['sha256'], raw_artifact=str(stats), raw_sha256=stats_reference['sha256'])
             for row in data['dynamic_memory']:
                 row.update(artifact_sha256=evaluation['build']['binary_sha256'], source_artifact_sha256=candidate['artifact']['sha256'],
-                    execution={'source': context['source'], 'source_position': 0, 'repetition': 0},
+                    execution={'source': context['source'], **trial},
                     raw_artifact=str(stats), raw_sha256=stats_reference['sha256'])
             if not data['dynamic_memory']:
                 data['reasons'].append('No supported actual dynamic memory counter appears in the primary interval.')

@@ -167,6 +167,24 @@ def test_distinct_valid_parent_trees_both_pass(evaluation_setup):
     assert left["correctness"]["state"] == right["correctness"]["state"] == "passed"
 
 
+@pytest.mark.parametrize("changed", ["implementation", "candidate_context"])
+def test_native_adapter_cannot_label_dobfs_as_another_entry_point(evaluation_setup, changed):
+    records, _, _, base = evaluation_setup
+    if changed == "implementation":
+        item = records.read("implementations/gapbs-bfs-do.yaml")
+        item["function"] = "DOBFSMAA"
+        records.write("implementations/gapbs-bfs-do.yaml", item)
+    else:
+        path = "candidates/" + base["candidate"] + ".yaml"
+        item = records.read(path)
+        item["context"]["function"] = "DOBFSMAA"
+        records.write(path, item)
+    result, data = evaluate(evaluation_setup)
+    assert result.returncode == 1
+    assert "DOBFS entry point only" in data["outcome"]["reason"]
+    assert data["timing"] == [] and data["correctness"]["state"] == "unverified"
+
+
 def test_exhausted_total_budget_retains_no_invented_timing(evaluation_setup):
     result, data = evaluate(evaluation_setup, budget={"build_seconds": 10, "run_seconds": 5, "total_seconds": 0.001})
     assert result.returncode == 1 and data["outcome"]["state"] == "budget_exhausted"

@@ -71,6 +71,8 @@ def _profile_check(profile, evaluation, candidate):
         reasons.append("region profile names a different or unidentified primary binary")
     if profile.get("source_snapshot") != candidate["source_snapshot"]:
         reasons.append("region profile names a different source ancestor")
+    if not _same(profile.get("context", {}).get("protocol_trial"), evaluation.get("context", {}).get("protocol_trial")):
+        reasons.append("region profile names a different frozen source/repetition trial")
     return reasons
 
 
@@ -172,18 +174,31 @@ def _memory(rows):
     return available
 
 
+def _source_positions(evaluation):
+    context = evaluation["context"]
+    trial = context.get("protocol_trial")
+    if trial is None:
+        return {(position, source) for position, source in enumerate(context["sources"])}, None
+    _fail(isinstance(trial, dict) and set(trial) == {"source_position", "repetition"}
+          and all(type(value) is int and value >= 0 for value in trial.values())
+          and context.get("basis") == "simulated" and len(context["sources"]) == 1
+          and context.get("repetitions") == 1, "protocol trial must identify one actual simulated traversal")
+    return {(trial["source_position"], context["sources"][0])}, trial["repetition"]
+
+
 def _check_observations(profile, evaluation, candidate):
     """Bind diagnostics to actual executions rather than accepting standalone numbers."""
     reasons = []
     executions = profile.get("executions", [])
     fixture = profile.get("request", {}).get("fixture") is True
+    expected, repetition = _source_positions(evaluation)
     for kind in ("regions", "memory"):
         matching = [run for run in executions if run.get("kind") == kind]
-        expected = {(position, source) for position, source in enumerate(evaluation["context"]["sources"])}
         covered = {(run.get("source_position"), run.get("source")) for run in matching
-                   if type(run.get("source_position")) is int and type(run.get("source")) is int}
+                   if type(run.get("source_position")) is int and type(run.get("source")) is int
+                   and (repetition is None or run.get("repetition") == repetition)}
         if not expected <= covered:
-            reasons.append(f"{kind} observations do not cover the requested source sequence")
+            reasons.append(f"{kind} observations do not cover the requested source sequence or frozen repetition")
         for run in matching:
             for path_key, hash_key in (("output", "output_sha256"),
                                        ("region_output", "region_output_sha256") if kind == "regions" else ("raw_artifact", "raw_sha256")):
@@ -279,9 +294,10 @@ def assemble(args):
             and row.get("basis") == basis and row.get("quantity") == quantity
             and row.get("binary_sha256") == evaluation["build"].get("binary_sha256") for row in timing):
         reasons.append("primary evaluation lacks identified ROI timing")
-    if not {(position, source) for position, source in enumerate(evaluation["context"]["sources"])} <= {
-            (row.get("source_position"), row.get("source")) for row in timing}:
-        reasons.append("primary ROI timing does not cover the requested source sequence")
+    expected, repetition = _source_positions(evaluation)
+    if not expected <= {(row.get("source_position"), row.get("source")) for row in timing
+                        if repetition is None or row.get("repetition") == repetition}:
+        reasons.append("primary ROI timing does not cover the requested source sequence or frozen repetition")
     fixture = (evaluation.get("evidence_kind") != "execution" or evaluation.get("request", {}).get("fixture") is True
                or (profile or {}).get("request", {}).get("fixture") is True)
     classification = "contract_fixture" if fixture else "execution"

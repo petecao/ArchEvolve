@@ -49,6 +49,14 @@ fixture tests cannot satisfy real native/simulator execution. The report supplie
 evidence to the proposal owner and does not launch strategy search. Prepared SW/HW
 test clients do not establish live Peter/Josh integration.
 
+`profiling_demonstrations` accounts for actual discovery, dynamic-memory, and
+native-execution evidence independently of the comparison matrix. A checked real
+profile of a new expensive helper can establish those capabilities without being
+a protocol-qualified gain or a completed campaign cell. These demonstrations
+still require an exact complete package, unchanged primary/profile identities,
+and explicit artifact verification. Frozen workload and profitability requirements
+continue to govern every comparison and candidate gain.
+
 The optional `handoff` request contains a hashed document `path` and `sha256`,
 `contracts` mapping `profile_package`, `rewrite_proposal`, and `evaluation_result`
 to version `1.0`, linked proposal `examples`, and

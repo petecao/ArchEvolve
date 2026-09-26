@@ -17,10 +17,27 @@ is labeled historical pairing, not a performance comparison. A 0.4 implementatio
 never borrows the shared kernel's executable evaluator or application context.
 
 `Store.source_context(implementation)` and public `implementations` results expose
-the application source URI, commit, local source root, implementation code, build,
+the application source URI, commit, local source root, implementation code, `function`, build,
 run, evaluator, verification, source ancestor, source baseline, and selected
 comparison baseline. Public queries resolve from the generated index. Deleting and
 rebuilding the index preserves these fields because YAML remains authoritative.
+
+The pinned DX100 file contains two distinct cataloged functions.
+`dx100-bfs-scalar` selects `DOBFS`; `dx100-bfs-maa-reference` selects the unchanged
+author `DOBFSMAA` with the original `bfs_maa` build flags, four cores, and 16384-element
+tiles. They share the same source-file hash and SG32 application identity, while
+their selected function, build, and evaluator differ. The author entry names itself
+as its source baseline and explicitly selects the scalar entry as comparison
+baseline. Creating an unchanged candidate preserves the entire source manifest and
+requires no fabricated rewrite proposal.
+
+The author entry uses evaluator backend `dx100.author_artifact.v1` and timing
+format `gem5_roi_ticks`: sealed ROI `simTicks` divided by `simFreq`. The original
+artifact ROI is `bfs.dx100.traversal.v1`. A complete-call wrapper around the same
+function must disclose its distinct flags, instrumentation, and ROI. Generic native
+profiling cannot execute this backend, and source catalog membership never proves
+accelerator use or correctness. In particular, the unchanged author code retains
+its original tile3 wait; any generated tile5-wait repair is a separate candidate.
 
 `swdb compare IMPLEMENTATION --baseline BASELINE --profile PROFILE
 --baseline-profile BASELINE_PROFILE --protocol PROTOCOL` compares an exact pair.

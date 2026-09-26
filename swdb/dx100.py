@@ -100,7 +100,7 @@ def _prepare(args, action, store, request, data):
     budget = request.get("budget")
     if not isinstance(budget, dict):
         raise Failure("DX100 request requires explicit budget")
-    total = _integer(budget.get("total_seconds"), "budget.total_seconds", maximum=7200)
+    total = _integer(budget.get("total_seconds"), "budget.total_seconds", maximum=18000 if action == 'execute' else 7200)
     memory = _integer(budget.get("memory_gib"), "budget.memory_gib", maximum=48)
     storage = _integer(budget.get("storage_gib"), "budget.storage_gib", maximum=20)
     if action == "build":
@@ -396,7 +396,7 @@ def execute(args):
         session, target, root = _prepare(args, "execute", store, request, data)
         budget = request["budget"]
         checkpoint_seconds = _integer(budget["checkpoint_seconds"], "checkpoint_seconds", maximum=7200)
-        run_seconds = _integer(budget["run_seconds"], "run_seconds", maximum=7200)
+        run_seconds = _integer(budget["run_seconds"], "run_seconds", maximum=14400)
         session.begin("execution_identity")
         simulator = _file(request.get("simulator"), "simulator")
         binary = _file(request.get("binary"), "BFS binary")
@@ -458,6 +458,7 @@ def execute(args):
             if not candidate:
                 raise Failure("unknown candidate source identity")
             artifacts.verify(candidate["artifact"])
+            implementation = store.get(candidate['implementation'], 'implementation')
             if compiled:
                 if candidate["artifact"]["sha256"] != compiled["context"]["candidate_sha256"]:
                     raise Failure("candidate source differs from its compilation receipt")
@@ -466,6 +467,9 @@ def execute(args):
                     candidate_driver=compiled["context"]["driver"],
                     suppressed_internal_events=compiled["context"]["suppressed_internal_events"])
             else:
+                expected_function = 'DOBFS' if binary.name == 'bfs' else 'DOBFSMAA'
+                if not request.get('fixture') and implementation.get('function') != expected_function:
+                    raise Failure('author executable selection differs from the candidate implementation function')
                 code_files = [entry for entry in candidate["artifact"]["files"]
                               if Path(entry["path"]).suffix in {".cc", ".cpp", ".c", ".h", ".hpp", ".S"}]
                 if not code_files:

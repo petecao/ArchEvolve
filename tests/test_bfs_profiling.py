@@ -142,6 +142,38 @@ def test_callgrind_dynamic_counts_and_missing_events(tmp_path):
     with pytest.raises(Failure,match='summary'): parse_callgrind(raw)
 
 
+def test_memory_collector_repeats_each_ordered_source_without_reusing_outputs(tmp_path):
+    from swdb.bfs_profiling import _memory
+    source = tmp_path/'source.cc'; source.write_text('/* contract fixture */')
+    build = tmp_path/'build'; build.mkdir()
+    data = {'build':{'directory':str(build)},'artifacts':{},'executions':[],'dynamic_memory':[],
+            'context':{'sources':[0,1],'repetitions':2,'threads':1,'candidate_sha256':'fixture'}}
+    class FixtureSession:
+        folder = tmp_path
+        count = 0
+        def execute(self, stage, command, timeout, env=None, **details):
+            if stage=='memory_collector_identity':
+                path=tmp_path/'version.log'; path.write_text('fixture collector'); return path
+            if stage=='memory_build': Path(command[-1]).write_text('fixture binary')
+            if stage=='memory_execution':
+                self.count += 1
+                assert details['source']==int(command[-2])
+                output = Path(command[-1]); assert not output.exists()
+                output.write_text(json.dumps({'format':'swdb.bfs.native.trial.v1','roi':'bfs.complete_call.v1',
+                    'source':details['source'],'configured_threads':1,'duration_s':0.01,
+                    'parents':[details['source'],details['source']]}))
+                raw = Path(next(c.split('=',1)[1] for c in command if c.startswith('--callgrind-out-file=')))
+                assert not raw.exists()
+                raw.write_text(f'events: Ir Dr Dw D1mr D1mw DLmr DLmw\nsummary: 100 {self.count} 2 0 0 0 0\n')
+        def save(self): pass
+    session = FixtureSession()
+    _memory(session,data,{'memory_model':{'collector':shutil.which('python3')}},source,[], 'fixture-cxx',[],
+            tmp_path/'unused-graph',{'num_vertices':2,'adjacency':[[1],[0]]},{},{'build_seconds':1,'run_seconds':1})
+    assert [(x['repetition'],x['source_position']) for x in data['executions']]==[(0,0),(0,1),(1,0),(1,1)]
+    assert [x['value'] for x in data['dynamic_memory'] if x['metric']=='Dr']==[1,2,3,4]
+    assert len({x['raw_artifact'] for x in data['executions']})==4
+
+
 def test_public_profile_rejects_fixture_execution_and_retains_reason(evaluation_setup,tmp_path):
     records,runs,_,_=evaluation_setup
     _,evaluation=evaluate(evaluation_setup,sources=[0])
@@ -225,6 +257,8 @@ int main(){return 99;}
     result=call('bfs-profile',file,'--runs-dir',runs)
     assert result['outcome']['state']=='partial',result['outcome']
     assert '-isystem' in result['discovery']['arguments']
+    assert result['context']['primary_load_average']==evaluation['context']['load_average']
+    assert len(result['context']['load_average'])==3
     ranking=call('bfs-hotspots',result['id'],'--kind','function','--evaluation',evaluation['id'])
     assert any(r['name']=='UncataloguedHelper' and r['metrics']['invocations']==2 for r in ranking['regions'])
     assert ranking['ranking']['metric']=='exclusive_function_thread_cpu_seconds'

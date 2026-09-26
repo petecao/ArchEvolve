@@ -76,6 +76,7 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
         "discovery_profile": "discovery", "budget": {"total_seconds": 60}}
     if mode.startswith('diagnostic'):
         evaluation['context']['workload'] = {'canonical_sha256': 'a' * 64}
+        evaluation['context']['protocol_trial'] = {'source_position': 2, 'repetition': 1}
         records.write('evaluations/' + evaluation['id'] + '.yaml', evaluation)
         diagnostic = copy.deepcopy(evaluation)
         diagnostic['id'] = 'diagnostic'
@@ -125,6 +126,8 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
             assert profile['executions'][1]['correctness']['state'] == 'unverified'
             assert profile['artifacts']['region_binary']['sha256'] != profile['artifacts']['memory_binary']['sha256']
             assert profile['dynamic_memory'][0]['raw_sha256'] == evaluation['context']['statistics']['sha256']
+            assert all(run['source_position'] == 2 and run['repetition'] == 1 for run in profile['executions'])
+            assert retrieved['timing'][0]['source_position'] == 2 and retrieved['timing'][0]['repetition'] == 1
         else:
             assert profile["regions"][0]["metrics"] == {}
             assert profile["regions"][1]["metrics"]["inclusive_simulated_seconds"] == 0.0004

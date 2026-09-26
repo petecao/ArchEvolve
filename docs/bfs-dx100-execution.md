@@ -144,6 +144,12 @@ RangeFuser and indirect-store debug traces record full and tail output tiles.
 Competing-parent coverage requires the returned parent's actual virtual base,
 matching vector-store instruction base, and distinct values written to the same
 observed physical word. Graph topology alone does not establish that case.
+The address spaces are distinct: pinned `IF.cc` prints the instruction's virtual
+`baseAddr`; `IndirectAccess.cc:494` adds the element offset before translating the
+resulting virtual block at line 498. Only that virtual base is compared with the
+guest's parent pointer. `recvData` addresses are physical cache lines and are
+used only to match repeated physical words. The coverage record carries the
+source hashes and line references for this contract.
 Fixture PASS is always `contract_fixture` evidence. The real continuation and
 accelerated acceptance criteria remain open until executed on the actual model.
 
@@ -179,3 +185,10 @@ modeled configuration, instrumentation, workload, source, and ROI against the
 frozen role. Each execution retains exactly one real source/repetition timing
 and corresponding detailed structural check. A later public aggregation joins
 separate completed executions; requested repetitions do not become evidence.
+
+Execution budgets may explicitly reserve up to 14,400 seconds for the simulator
+stage and 18,000 seconds total, accommodating the declared bounded author u22
+reference. Model builds retain the 7,200-second total cap. Candidate compilation
+requires its selected function to match the identified source implementation;
+an unchanged author binary additionally requires the matching scalar `DOBFS`
+or accelerated `DOBFSMAA` identity when a candidate is attached.

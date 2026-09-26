@@ -3,6 +3,7 @@
 Updated: 2026-09-25. Diagnostic artifacts never replace primary native ROI timing.
 """
 import copy
+import itertools
 import json
 import math
 import os
@@ -219,6 +220,7 @@ def run(args):
         data["context"] = copy.deepcopy(evaluation["context"])
         data["context"].update(primary_binary_sha256=evaluation["build"]["binary_sha256"],
             primary_evaluation=data["evaluation"], repetitions=repetitions, lane=lane, budget=budget,
+            primary_load_average=evaluation["context"].get("load_average"), load_average=list(os.getloadavg()),
             timing_basis="diagnostic accumulated thread CPU seconds; primary ROI wall timing remains in evaluation",
             overhead_treatment="scope instrumentation overhead is included; no synthetic subtraction or gain claim")
         if candidate["artifact"]["sha256"] != evaluation["context"]["candidate_sha256"]:
@@ -366,13 +368,15 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
     binary_hash = artifacts.file_hash(binary)
     data["artifacts"]["memory_binary"] = {"path": str(binary), "sha256": binary_hash, "flags": memory_flags,
         "wrapper_sha256": artifacts.file_hash(driver), "difference": "original candidate source; client ROI guards and debug info, no region guards"}
-    for position, source_id in enumerate(data["context"]["sources"]):
-        output = folder / f"memory-{position}.json"
-        raw = folder / f"callgrind-{position}.out"
+    for repetition, (position, source_id) in itertools.product(
+            range(data["context"]["repetitions"]), enumerate(data["context"]["sources"])):
+        output = folder / f"memory-{repetition}-{position}.json"
+        raw = folder / f"callgrind-{repetition}-{position}.out"
         command = [valgrind, "--tool=callgrind", "--cache-sim=yes", "--collect-atstart=yes", "--instr-atstart=no", "--separate-threads=no",
                    *(f"--{key}={value}" for key,value in model.items()), f"--callgrind-out-file={raw}",
                    str(binary), str(graph_path), str(source_id), str(output)]
-        session.execute("memory_execution", command, budget["run_seconds"], env)
+        session.execute("memory_execution", command, budget["run_seconds"], env,
+                        repetition=repetition, source_position=position, source=source_id)
         check = _trial_output(output, graph, source_id, data["context"]["threads"])
         nonzero = []
         for file in sorted(folder.glob(raw.name+"*")):
@@ -381,7 +385,7 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
         if len(nonzero) != 1:
             raise native.StageFailure("missing_observation", "expected exactly one nonempty explicit Callgrind ROI dump")
         file, events = nonzero[0]
-        execution = {"kind": "memory", "source": source_id, "source_position": position, "repetition": 0,
+        execution = {"kind": "memory", "source": source_id, "source_position": position, "repetition": repetition,
             "binary_sha256": binary_hash, "output": str(output), "raw_artifact": str(file),
             "raw_sha256": artifacts.file_hash(file), "collector": collector, **check}
         data["executions"].append(execution)
@@ -391,7 +395,7 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
                 "value": events.get(metric), "unit": "references" if metric in ("Dr", "Dw") else "misses",
                 "definition": definition, "basis": "simulated", "scope": "ROI", "attribution_granularity": "whole BFS call",
                 "collector": collector, "artifact_sha256": binary_hash, "source_artifact_sha256": data["context"]["candidate_sha256"],
-                "execution": {"source": source_id, "source_position": position, "repetition": 0},
+                "execution": {"source": source_id, "source_position": position, "repetition": repetition},
                 "raw_artifact": str(file), "raw_sha256": artifacts.file_hash(file),
                 "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof"})
         session.save()

@@ -135,3 +135,17 @@ def test_changed_component_invalidates_later_comparison(simulation_setup, tmp_pa
     result = _command(records, "compare-evaluations", _payload(tmp_path, request["id"], request), succeeds=False)
     assert result["decision"]["state"] == "rejected"
     assert "component evidence changed" in str(result["decision"]["reasons"])
+
+
+def test_aggregate_cannot_relabel_component_provenance(simulation_setup, tmp_path):
+    records, frozen, components = simulation_setup
+    baseline = _aggregate(records, tmp_path, frozen, "baseline", components["baseline"])
+    candidate = _aggregate(records, tmp_path, frozen, "candidate", components["candidate"])
+    # Keep the sealed policy, timing rows, and all component hashes intact while
+    # inventing a different compiler command around the same purported binary.
+    candidate["build"]["command"] = ["different-build-provenance"]
+    records.write(f"evaluations/{candidate['id']}.yaml", candidate)
+    request = {"message_version": "1.0", "id": "relabeled-aggregate-comparison", "protocol": frozen["id"],
+               "baseline_evaluation": baseline["id"], "candidate_evaluation": candidate["id"], "comparison_baseline": "gapbs-bfs-do"}
+    result = _command(records, "compare-evaluations", _payload(tmp_path, request["id"], request), succeeds=False)
+    assert "source/binary identity differs" in str(result["decision"]["reasons"])

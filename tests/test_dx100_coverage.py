@@ -29,6 +29,10 @@ SWDB_BFS_PARENT_STORAGE address=4000 count=20 element_bytes=4
     assert coverage["tail_tiles"]["count"] == 1
     assert coverage["competing_parent_updates"]["count"] == 1
     assert coverage["competing_parent_updates"]["samples"][0]["physical_word_address"] == 0x8008
+    original = log.read_text()
+    log.write_text(original.replace('address=4000', 'address=8000'))
+    assert observe(log, {"simTicks": "100", "finalTick": "200"}, 16384)["competing_parent_updates"]["state"] == "unobserved"
+    log.write_text(original)
     # A graph/source annotation without the observed returned parent address
     # cannot turn generic repeated stores into parent-conflict evidence.
     log.write_text(log.read_text().replace("SWDB_BFS_PARENT_STORAGE", "unavailable"))

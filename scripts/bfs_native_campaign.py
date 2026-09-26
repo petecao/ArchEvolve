@@ -47,8 +47,11 @@ def validate_inputs(packages, frozen, proposal, get, lane):
         if (evaluation['outcome']['state'] != 'complete' or evaluation['correctness']['state'] != 'passed'
                 or evaluation['evidence_kind'] != 'execution' or evaluation['request'].get('fixture') is True):
             raise ValueError('baseline package has no real passed primary evaluation')
+        expected_context = profile_package._context(evaluation)
         if (package['evidence']['evaluation_sha256'] != artifacts.digest(evaluation)
-                or package['context'] != profile_package._context(evaluation)
+                or any(artifacts.digest(package['context'].get(key)) != artifacts.digest(value) for key, value in expected_context.items())
+                or package['context'].get('primary_binary_sha256') != evaluation.get('build', {}).get('binary_sha256')
+                or artifacts.digest(package['context'].get('build')) != artifacts.digest(evaluation.get('build'))
                 or evaluation.get('candidate') != candidate['id']):
             raise ValueError('baseline package primary source/context evidence changed')
         if candidate.get('artifact_role') != 'source_baseline' or candidate['artifact']['sha256'] != source['artifact']['sha256']:

@@ -135,6 +135,22 @@ def test_changed_binary_is_rejected_before_checkpoint(case):
     assert not any(stage["stage"] == "checkpoint" for stage in result["stages"])
 
 
+def test_reference_execution_accepts_explicit_four_hour_stage_but_keeps_build_cap(case):
+    request, invoke, _ = case
+    data = execution_request(case)
+    data['budget'].update(total_seconds=18000, checkpoint_seconds=3600, run_seconds=14400)
+    result = invoke('dx100-execute', data)
+    assert result['outcome']['state'] == 'complete'
+    assert result['context']['budget']['run_seconds'] == 14400
+    build = request('oversized-build')
+    build['budget']['total_seconds'] = 18000
+    build['fixture_command'] = [sys.executable, '-c', 'print("must not execute")']
+    rejected = invoke('dx100-build', build)
+    assert rejected['outcome']['state'] == 'failed'
+    assert 'budget.total_seconds' in rejected['outcome']['reason']
+    assert not rejected['stages']
+
+
 def test_simulation_timeout_preserves_checkpoint_and_failed_stage(case):
     data = execution_request(case, "timeout")
     data["budget"]["run_seconds"] = 1
