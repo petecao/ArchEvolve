@@ -250,12 +250,7 @@ def run(args):
         graph_path = Path(evaluation["context"]["workload"]["canonical_path"])
         if artifacts.file_hash(graph_path) != evaluation["context"]["workload"]["canonical_file_sha256"]:
             raise Failure("evaluation canonical graph changed")
-        tokens = graph_path.read_text().split()
-        n, count, directed = map(int, tokens[1:4])
-        if tokens[0] != "SWDBGRAPH1" or len(tokens) != 4+2*count:
-            raise Failure("canonical graph representation malformed")
-        graph, facts = native.canonical_graph({"graph": {"num_vertices": n, "directed": bool(directed),
-            "edges": [[int(tokens[i]), int(tokens[i+1])] for i in range(4,len(tokens),2)]}})
+        graph, facts = native.read_canonical_graph(graph_path)
         if facts["canonical_sha256"] != evaluation["context"]["workload"]["canonical_sha256"]:
             raise Failure("canonical graph identity differs")
         compiler, flags, includes, source, adapter = native._compile_settings(evaluation["request"], candidate, root)

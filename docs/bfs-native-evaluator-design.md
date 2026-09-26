@@ -81,8 +81,16 @@ The host, lane, source, binary, and executable capabilities are verified rather
 than accepted from request labels. Timeout values must be positive and finite;
 repetitions and thread count must be positive integers, excluding booleans. Instead
 of inline `graph`, `workload` may name an absolute JSON `graph_file` plus its
-`graph_sha256`; that file contains the same vertex/edge mapping. Registered
-workloads can use `workload: {id: ...}` once Ticket 11 supplies materialization.
+`graph_sha256`; that file contains the same vertex/edge mapping. A graph can instead
+provide `adjacency`, with exactly one sorted, distinct, in-range neighbor list per
+vertex, no self loops, and exact symmetry when undirected. It cannot also provide
+`edges`. Both forms have the same canonical identity. Registered workloads use
+`workload: {id: ...}`; SG materialization verifies the retained serialized hash and
+canonical identity, then carries adjacency directly under the native limits of
+2,000,000 vertices, 32,000,000 directed adjacency entries, and 512 MiB of input.
+The evaluation retains the original serialized representation identity. Diagnostic
+reloads read the evaluator's sorted adjacency file incrementally under the same
+vertex/edge bounds. Neither path expands CSR into millions of temporary edge pairs.
 `build` optionally overrides `compiler` and a bounded `flags` argument list.
 `fixture: true` labels external benchmark/compiler fixtures explicitly; their
 durations are contract evidence and cannot establish native BFS performance.

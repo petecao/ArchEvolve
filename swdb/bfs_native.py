@@ -19,6 +19,7 @@ import subprocess
 import time
 import uuid
 from collections import deque
+from bisect import bisect_left
 from pathlib import Path
 
 import yaml
@@ -33,6 +34,7 @@ DRIVER = paths.HOME / "tools" / "bfs_native" / "driver.cc.in"
 MAX_REQUEST_BYTES = 10 * 1024 * 1024
 MAX_VERTICES = 2_000_000
 MAX_DIRECTED_EDGES = 32_000_000
+MAX_GRAPH_BYTES = 512 * 1024 * 1024
 
 
 def _now():
@@ -79,7 +81,7 @@ def canonical_graph(workload):
         path = Path(workload["graph_file"])
         if not path.is_absolute() or path.is_symlink() or not path.is_file():
             raise Failure("graph_file must be an absolute regular file, not a symlink")
-        if path.stat().st_size > 512 * 1024 * 1024:
+        if path.stat().st_size > MAX_GRAPH_BYTES:
             raise Failure("graph_file exceeds the native evaluator's 512 MiB input limit")
         actual = artifacts.file_hash(path)
         if workload.get("graph_sha256") != actual:
@@ -92,21 +94,48 @@ def canonical_graph(workload):
     directed = graph.get("directed")
     if not isinstance(directed, bool):
         raise Failure("graph.directed must be explicit boolean")
-    edges = graph.get("edges")
-    if not isinstance(edges, list) or len(edges) > MAX_DIRECTED_EDGES:
-        raise Failure("graph.edges must be a bounded list of vertex pairs")
-    adjacency = [set() for _ in range(n)]
-    for edge in edges:
-        if not isinstance(edge, list) or len(edge) != 2:
-            raise Failure("each edge must contain two vertex IDs")
-        u = _integer(edge[0], "edge source", minimum=0, maximum=n-1)
-        v = _integer(edge[1], "edge destination", minimum=0, maximum=n-1)
-        # GAPBS builds simple graphs: discard self loops and duplicate edges.
-        if u != v:
-            adjacency[u].add(v)
-            if not directed:
-                adjacency[v].add(u)
-    adjacency = [sorted(row) for row in adjacency]
+    if "adjacency" in graph:
+        if "edges" in graph:
+            raise Failure("graph must use either edges or adjacency")
+        adjacency = graph["adjacency"]
+        if not isinstance(adjacency, list) or len(adjacency) != n:
+            raise Failure("graph.adjacency must contain one bounded row per vertex")
+        count = 0
+        for u, row in enumerate(adjacency):
+            if not isinstance(row, list):
+                raise Failure("graph.adjacency rows must be lists")
+            count += len(row)
+            if count > MAX_DIRECTED_EDGES:
+                raise Failure("normalized graph exceeds the supported directed edge limit")
+            previous = -1
+            for v in row:
+                _integer(v, "adjacency destination", minimum=0, maximum=n-1)
+                if v == u or v <= previous:
+                    raise Failure("graph.adjacency must be sorted, distinct, and free of self loops")
+                previous = v
+        if not directed:
+            for u, row in enumerate(adjacency):
+                for v in row:
+                    reverse = adjacency[v]
+                    position = bisect_left(reverse, u)
+                    if position == len(reverse) or reverse[position] != u:
+                        raise Failure("undirected graph.adjacency must be symmetric")
+    else:
+        edges = graph.get("edges")
+        if not isinstance(edges, list) or len(edges) > MAX_DIRECTED_EDGES:
+            raise Failure("graph.edges must be a bounded list of vertex pairs")
+        adjacency = [set() for _ in range(n)]
+        for edge in edges:
+            if not isinstance(edge, list) or len(edge) != 2:
+                raise Failure("each edge must contain two vertex IDs")
+            u = _integer(edge[0], "edge source", minimum=0, maximum=n-1)
+            v = _integer(edge[1], "edge destination", minimum=0, maximum=n-1)
+            # GAPBS builds simple graphs: discard self loops and duplicate edges.
+            if u != v:
+                adjacency[u].add(v)
+                if not directed:
+                    adjacency[v].add(u)
+        adjacency = [sorted(row) for row in adjacency]
     m = sum(map(len, adjacency))
     if m > MAX_DIRECTED_EDGES:
         raise Failure("normalized graph exceeds the supported directed edge limit")
@@ -124,6 +153,41 @@ def canonical_graph(workload):
              "canonical_sha256": digest, "adjacency_order_sha256": digest,
              "num_vertices": n, "num_directed_edges": m, "directed": directed}
     return canonical, facts
+
+
+def read_canonical_graph(path):
+    """Read the evaluator's bounded sorted adjacency without edge-pair objects."""
+    path = Path(path)
+    if path.stat().st_size > MAX_GRAPH_BYTES:
+        raise Failure("canonical graph exceeds the native evaluator's 512 MiB input limit")
+    with path.open() as handle:
+        header = handle.readline(256).split()
+        if len(header) != 4 or header[0] != "SWDBGRAPH1":
+            raise Failure("canonical graph representation malformed")
+        try:
+            n, count, directed = map(int, header[1:])
+        except ValueError:
+            raise Failure("canonical graph header must contain integers") from None
+        _integer(n, "canonical graph vertices", maximum=MAX_VERTICES)
+        _integer(count, "canonical graph edges", minimum=0, maximum=MAX_DIRECTED_EDGES)
+        if directed not in (0, 1):
+            raise Failure("canonical graph directed flag must be zero or one")
+        adjacency = [[] for _ in range(n)]
+        previous_source = -1
+        for _ in range(count):
+            try:
+                u, v = map(int, handle.readline(64).split())
+            except ValueError:
+                raise Failure("canonical graph edge must contain two integers") from None
+            _integer(u, "canonical edge source", minimum=0, maximum=n-1)
+            if u < previous_source:
+                raise Failure("canonical graph source rows must be ordered")
+            adjacency[u].append(v)
+            previous_source = u
+        if handle.read(1):
+            raise Failure("canonical graph has trailing data")
+    return canonical_graph({"graph": {"num_vertices": n, "directed": bool(directed),
+                                      "adjacency": adjacency}})
 
 
 def verify_parents(adjacency, source, parents):
@@ -469,13 +533,17 @@ def run(args):
         session.finish()
         session.begin("workload_resolution")
         supplied_workload = request.get("workload")
+        registered_representation = None
         if isinstance(supplied_workload, dict) and set(supplied_workload) == {"id"}:
             try:
                 from swdb.bfs_protocol import materialize_workload
             except ImportError:
                 raise Failure("registered-workload materialization is unavailable") from None
             supplied_workload = materialize_workload(store, supplied_workload["id"])
+            registered_representation = supplied_workload["registered_representation"]
         canonical, workload = canonical_graph(supplied_workload)
+        if registered_representation is not None:
+            workload["representation"] = registered_representation
         if any(source >= canonical["num_vertices"] for source in sources):
             raise Failure("requested BFS source outside canonical graph")
         graph_path = folder / "graph.swdb"

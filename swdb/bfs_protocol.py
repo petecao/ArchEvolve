@@ -2,12 +2,14 @@
 
 import copy
 import datetime
+import hashlib
 import json
 import math
 import random
 import re
 import statistics
 import struct
+from bisect import bisect_left
 from pathlib import Path
 
 import yaml
@@ -73,13 +75,14 @@ def _canonical(graph):
     return canonical_graph({"graph": graph})[0]
 
 
-def _sg_graph(raw, width):
+def _sg_graph(raw, width, edge_limit=None):
     """Read the actual unweighted GAPBS binary format, including inverse CSR."""
     offset_format = "i" if width == 4 else "q"
     _fail(len(raw) >= 1 + 2 * width and raw[0] in (0, 1), "invalid SG header")
     directed = bool(raw[0])
     m, n = struct.unpack_from("<" + offset_format * 2, raw, 1)
-    _fail(0 < n <= MAX_VERTICES and 0 <= m <= MAX_EDGES, "SG dimensions exceed parser limits")
+    _fail(0 < n <= MAX_VERTICES and 0 <= m <= (MAX_EDGES if edge_limit is None else edge_limit),
+          "SG dimensions exceed parser limits")
     block_bytes = (n + 1) * width + m * 4
     _fail(len(raw) == 1 + 2 * width + block_bytes * (2 if directed else 1), "truncated or trailing SG data")
 
@@ -88,28 +91,31 @@ def _sg_graph(raw, width):
         position += (n + 1) * width
         _fail(offsets[0] == 0 and offsets[-1] == m and all(0 <= a <= b <= m for a, b in zip(offsets, offsets[1:])),
               "invalid SG CSR offsets")
-        neighbors = [item[0] for item in struct.iter_unpack("<i", raw[position:position+m*4])]
-        rows = [neighbors[offsets[u]:offsets[u+1]] for u in range(n)]
+        rows = [[item[0] for item in struct.iter_unpack("<i", memoryview(raw)[position+offsets[u]*4:position+offsets[u+1]*4])]
+                for u in range(n)]
         for u, row in enumerate(rows):
             _fail(all(0 <= v < n and v != u for v in row), "SG neighbor is outside graph or a self loop")
-            _fail(row == sorted(set(row)), "SG adjacency must already be sorted and deduplicated")
+            _fail(all(a < b for a, b in zip(row, row[1:])), "SG adjacency must already be sorted and deduplicated")
         return rows
 
     position = 1 + 2 * width
     outgoing = csr(position)
-    reverse = [[] for _ in range(n)]
-    for u, row in enumerate(outgoing):
-        for v in row:
-            reverse[v].append(u)
     if directed:
-        _fail(csr(position + block_bytes) == reverse, "SG inverse adjacency does not match outgoing edges")
-    else:
-        _fail(outgoing == reverse, "undirected SG adjacency is not symmetric")
+        incoming = csr(position + block_bytes)
+        # Both CSR blocks have exactly m distinct arcs. Membership therefore
+        # proves inverse equivalence without constructing another edge list.
+        for v, row in enumerate(incoming):
+            for u in row:
+                at = bisect_left(outgoing[u], v)
+                _fail(at < len(outgoing[u]) and outgoing[u][at] == v,
+                      "SG inverse adjacency does not match outgoing edges")
     return {"num_vertices": n, "directed": directed,
-            "edges": [[u, v] for u, row in enumerate(outgoing) for v in row]}
+            "adjacency": outgoing}
 
 
 def _representation(rep, normalization, parser=None, allow_streaming=True):
+    from swdb.bfs_native import MAX_DIRECTED_EDGES
+
     _fail(isinstance(rep, dict), "representation must be a mapping")
     _text(rep.get("id"), "representation.id")
     path = Path(_text(rep.get("path"), "representation.path"))
@@ -125,7 +131,8 @@ def _representation(rep, normalization, parser=None, allow_streaming=True):
         with path.open("rb") as handle:
             header = handle.read(1 + width*2)
         dimensions = struct.unpack_from("<" + ("i" if width == 4 else "q")*2, header, 1) if len(header) == 1+width*2 else (0, 0)
-        large = size > MAX_FILE_BYTES or dimensions[0] > MAX_EDGES or dimensions[1] > MAX_VERTICES
+        edge_limit = MAX_EDGES if allow_streaming else MAX_DIRECTED_EDGES
+        large = size > MAX_FILE_BYTES or dimensions[0] > edge_limit or dimensions[1] > MAX_VERTICES
         if large or parser is not None:
             _fail(allow_streaming, "registered graph exceeds native materialization limits; use its external SG representation")
             from swdb.sg_stream import inspect
@@ -137,9 +144,10 @@ def _representation(rep, normalization, parser=None, allow_streaming=True):
             return canonical, description
     _fail(size <= MAX_FILE_BYTES, "non-SG representation exceeds the 512 MiB parser limit")
     raw = path.read_bytes()
+    _fail(hashlib.sha256(raw).hexdigest() == actual, "representation changed during materialization")
     try:
         if kind in {"gapbs_sg32le", "gapbs_sg64le"}:
-            graph = _sg_graph(raw, 4 if kind == "gapbs_sg32le" else 8)
+            graph = _sg_graph(raw, 4 if kind == "gapbs_sg32le" else 8, edge_limit)
         elif kind == "json_graph":
             graph = json.loads(raw)
         elif kind == "edge_list":
@@ -159,8 +167,9 @@ def _representation(rep, normalization, parser=None, allow_streaming=True):
             raise Failure(f"unsupported graph representation {kind!r}")
     except (ValueError, UnicodeError, struct.error) as exc:
         raise Failure(f"invalid graph representation: {exc}") from None
-    _fail(isinstance(graph, dict) and isinstance(graph.get("edges"), list)
-          and len(graph["edges"]) <= MAX_EDGES, "graph exceeds the parser edge limit or has no edge list")
+    if kind not in {"gapbs_sg32le", "gapbs_sg64le"}:
+        _fail(isinstance(graph, dict) and isinstance(graph.get("edges"), list)
+              and len(graph["edges"]) <= MAX_EDGES, "graph exceeds the parser edge limit or has no edge list")
     canonical = _canonical(graph)
     if kind == "edge_list":
         description.update(num_vertices=graph["num_vertices"], directed=graph["directed"])
@@ -280,12 +289,13 @@ def materialize_workload(store, workload_id):
     data = _get(store, workload_id, "workload")
     verify_immutable(data)
     definition = data["definition"]
-    canonical, _ = _representation(definition["representations"][0], definition["normalization"], allow_streaming=False)
+    canonical, representation = _representation(definition["representations"][0], definition["normalization"], allow_streaming=False)
     _fail(artifacts.digest(canonical) == definition["canonical_sha256"], "registered adjacency changed")
     graph = {"num_vertices": canonical["num_vertices"], "directed": canonical["directed"],
-             "edges": [[u, v] for u, row in enumerate(canonical["adjacency"]) for v in row]}
+             "adjacency": canonical["adjacency"]}
     return {"id": data["id"], "family": definition["family"], "generator": definition["generator"],
-            "graph": graph, "loaded_adjacency_sha256": definition["canonical_sha256"]}
+            "graph": graph, "loaded_adjacency_sha256": definition["canonical_sha256"],
+            "registered_representation": representation}
 
 
 def workload_representation(store, workload_id, application):

@@ -24,11 +24,15 @@ streams canonical JSON into SHA256. It does not construct Python adjacency lists
 The request's `parser` mapping supplies an external `work_dir`, plus optional
 `compile_timeout_s` (default 60, maximum 600) and `timeout_s` (default 900, maximum
 7200). On mbit10 that directory belongs under `/data1/yanruj/`. Supplying this mapping
-also enables streaming for small graphs. Inputs exceeding the native parser's
-2,000,000 vertices, 5,000,000 edges, or 512 MiB require it. The canonical hash is
+also enables streaming for small graphs. Registration inputs exceeding
+2,000,000 vertices, 5,000,000 adjacency entries, or 512 MiB require it. The canonical hash is
 identical across parsers and offset widths. The representation retains parser
-source identity and verification method. Native inline graph materialization
-retains its size limit; simulator dispatch can use `workload_representation` to
+source identity and verification method. Native registered-SG materialization has
+its separate evaluator bounds of 2,000,000 vertices, 32,000,000 directed adjacency
+entries, and 512 MiB. It rehashes the serialized bytes and canonical adjacency and
+passes strict adjacency rows directly, preserving isolates and avoiding temporary
+edge-pair expansion. The registration streaming threshold is not a native size
+limit. Simulator dispatch can use `workload_representation` to
 select and rehash the verified external SG file for its application.
 
 A protocol freezes explicit workloads and their fingerprints, per-role build and
