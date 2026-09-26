@@ -83,6 +83,17 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Evidence-integrity review correction — 2026-09-26
+
+Independent Standards review reproduced a profile-package seal downgrade: a
+missing version field bypassed identity checking. The [T09 repair](observations/profile-package-identity-repair-20260926.json)
+now rejects that downgrade and removal of all seal fields under an assembly ID.
+The public package suite passes 49 tests and all 213 catalog records validate;
+all six explicit legacy fixtures remain retrievable. Independent recheck is
+clean. T09 remains resolved. Independent Spec review separately found a paired
+coverage statistics/provenance error; its repair is undergoing regression.
+The full local suite is running at isolated `c2f987b`, before these two fixes.
+
 ## Prospective supervision reviewed — 2026-09-26
 
 The [simulator supervisor verification](observations/simulator-supervision-verification-20260926.json)

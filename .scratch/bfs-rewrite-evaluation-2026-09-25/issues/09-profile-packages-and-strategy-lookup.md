@@ -1,7 +1,7 @@
 # 09 — Retrieve actionable profile packages and bidirectional strategy matches
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 07, 08
@@ -123,3 +123,15 @@ evidence; complete real acceptance uses the corrected a4 profiles above.
 Context: `swdb/profile_package.py`, `docs/bfs-profile-packages.md`,
 `scripts/bfs_package_handoff.py`, `tests/test_profile_packages.py`,
 `tests/test_profile_package_freshness.py`, and the bounded evidence receipt.
+
+## Answer addendum — 2026-09-26
+
+Independent review reproduced an assembly identity bypass: removing only
+`package_version` admitted changed source text under a retained sealed ID.
+Verification now permits the unsealed path only for explicit contract fixtures
+without assembly identity fields or the reserved assembly ID suffix. The public
+retrieval/index-rebuild regressions failed before the fix; the corrected package
+suite passes 49 tests, the catalog validates all 213 records, and all six existing
+legacy fixtures remain readable. Independent recheck is clean. See the
+[identity repair receipt](../observations/profile-package-identity-repair-20260926.json).
+Original failure artifacts remain retained; no canonical evidence record changed.
