@@ -83,6 +83,29 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Final-pin checks and future baseline builds — 2026-09-26 19:53 ET
+
+The independently verified campaign export `d11dc04` is published and installed
+in a pristine mbit10 checkout. A complete local regression started at 19:40 ET
+on that exact pin, with a 7,200-second limit; [start receipt](observations/full-regression-d11dc04-start-20260926.json).
+Its result is pending. Both actual standard Linux selections finished with
+exit zero and have independent passed audits: four ownership cases and two
+interruption cases. Both leases released before their original 90-second ends.
+The next step is actual sealed admission and fresh capacity checks, not a new
+code revision. The earlier wrapper newline concern was disproved by byte-level
+and actual local render checks; [independent review](observations/standard-fixture-render-standards-review-20260926.json).
+No change or attempt resulted from that rejected concern.
+
+Four necessary unchanged-scalar v2 primary/diagnostic [build requests](requests/scalar-v2-20260926-a1.preparation.json)
+are prepared for the DX100 and upstream baselines. They retain each historical
+120-second build / 240-second API / 16-GiB RSS / 1-GiB artifact bound. A separately
+proposed 1,200-second compile-only envelope accounts four calls and one shared
+cleanup reserve; it does not replenish earlier attempts. Four real local
+entrypoint probes stopped at host mismatch before any build, and 222 temporary
+records validated; [receipt](observations/scalar-v2-request-validation-20260926.json).
+These are prepared requests, not host compilation evidence. Their execution
+clock and host/runtime gates remain unsealed, and they cannot take a third lane.
+
 ## Progress check and actual T16 freezes — 2026-09-26 19:33 ET
 
 The [host audit](observations/health-20260926-1933.json) found both socket leases
