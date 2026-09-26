@@ -19,9 +19,9 @@ Implements D10–D13 and the pilot gates supporting AC10–AC13, AC16–AC18. Us
 
 ## Acceptance criteria
 
-- [ ] Before execution, publish a bounded pilot plan with permitted baseline/reference artifacts, run/attempt and wall-time limits, resource/storage budgets, explicit stop conditions, and required host/lane checks. A budget expiry preserves evidence and an incomplete outcome rather than triggering an unbounded search for a gain.
+- [x] Before execution, publish a bounded pilot plan with permitted baseline/reference artifacts, run/attempt and wall-time limits, resource/storage budgets, explicit stop conditions, and required host/lane checks. A budget expiry preserves evidence and an incomplete outcome rather than triggering an unbounded search for a gain.
 - [ ] Real baseline/reference executions calibrate correctness-case and performance-workload sizes for both graph families. Selection reasons cite cost, coverage, and observed accelerator execution, without using performance gains from candidates being assessed.
-- [ ] Workload records retain generator parameters/revision, normalization, realized graph properties, canonical identities, actual ordered traversal source IDs, and representation hashes. Equivalent loaded adjacency is checked across upstream and DX100 applications rather than inferred from a shared extension.
+- [x] Workload records retain generator parameters/revision, normalization, realized graph properties, canonical identities, actual ordered traversal source IDs, and representation hashes. Equivalent loaded adjacency is checked across upstream and DX100 applications rather than inferred from a shared extension.
 - [ ] Real pilot evidence establishes relevant accelerator full/tail and parent-update coverage, exact timed-binary correctness, BFS ROI and selected-region timing, and actual dynamic memory observations. Scalar fallback alone cannot justify accelerated coverage.
 - [ ] Native timing variability and repeated identical simulation replays inform the recorded repetition/aggregation and profitability policies. Report actual completed executions, distinguish repeated graph/source pairs from different traversal sources, and do not assume deterministic timings or successful repetitions from a guest trial count.
 - [ ] Freeze candidate-workload identities, vertices, native/simulated threads and targets, concrete configurations, semantic ROI definitions, correctness coverage, region/collector attribution, instrumentation treatment, repetitions/aggregation, and profitability criteria before candidate performance assessment. Initialization within a chosen complete-BFS-call ROI remains timed.
@@ -49,3 +49,21 @@ rejected cases, and justifications remain inside frozen settings. The fixed
 targeted calibration-cell and missing-evidence checks passed (0.17 seconds), with
 fixtures establishing guard behavior only. See `docs/bfs-pilot-freeze.md`. No
 empirical protocol or Ticket15 completion is claimed by this preparation.
+
+2026-09-25: The bounded plan preceded execution. Both fixed graph families now
+have actual scale-14 and scale-18 registrations with equivalent SG32/SG64 loaded
+adjacency, retained generator commands, realized vertices/isolates, and ordered
+sources `[0, 1234, 7777]`. Scale-18 version 2 corrects the effective generator
+symmetrization metadata while retaining version 1 and the unchanged graph bytes.
+See `docs/evidence/bfs-workloads14-20260925.yaml` and
+`docs/evidence/bfs-workloads18-20260925.yaml` (repository-root paths).
+
+The first unchanged upstream native pilot stopped during workload resolution,
+before compilation or timing, because registration's five-million-edge streaming
+threshold was incorrectly reused as the native materialization bound. Its source,
+candidate, failed evaluation, and receipt remain in `f6df56b`. Fix `9fff245` reads
+validated CSR directly within the existing native two-million-vertex,
+32-million-adjacency-entry, and 512 MiB bounds. The real-size regression contains
+5,005,448 adjacency entries and agrees with the independent streaming parser.
+This interface failure does not justify selecting scale 16, freezing a protocol,
+or claiming timing evidence; the bounded retry retains the same scale-18 graphs.
