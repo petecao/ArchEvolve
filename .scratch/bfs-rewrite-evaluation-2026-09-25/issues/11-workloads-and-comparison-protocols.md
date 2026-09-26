@@ -3,9 +3,16 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 03
 **Spec:** `../spec.md`
+
+## Runtime-policy resolution — 2026-09-26 14:00 ET
+
+The reproduced gap and two independent review findings are corrected. The
+[verification receipt](../observations/native-runtime-fix-verification-20260926.json)
+retains exact source, test and review identities. This restores this ticket's
+contract acceptance; it does not qualify the failed pilot or resolve T15.
 
 ## Reopened runtime-policy gap — 2026-09-26 13:15 ET
 
@@ -118,3 +125,28 @@ remain supported. The test seed now materializes a genuinely unchanged baseline
 through the public API. Protocol/aggregation checks passed 46 cases in 141.56
 seconds; dependent coverage/native-campaign/simulator-series checks passed 43 cases
 in 19.53 seconds. Fixtures verify rejection and comparison contracts only.
+
+## Answer — runtime enforcement correction, 2026-09-26 14:00 ET
+
+Resolved again after implementation and independent review. New native freezes
+require an exact versioned map of eight requested OpenMP/GOMP inputs, with null
+meaning an observed unset. Evaluation constructs that child environment, paired
+A/A reuse and comparison check it, diagnostics replay the primary policy, and
+packages retain compatible runtime evidence. Both campaign baseline primaries
+must match the frozen policy before provider or candidate assessment. The paired
+publisher checks all eight members and rejects boolean/float version aliases.
+Historical records remain readable; missing runtime inputs cannot authorize new
+empirical promotion. No historical observation or active host pin changed.
+
+Verification includes 80 runtime/publisher/format checks, 135 compatibility
+checks, 13 simulator compatibility checks, and the separately retained compiled
+profile/integration cases. Two earlier assertion failures and all reproduced
+review failures remain recorded. After corrections, all 41 publisher tests,
+six independent public CLI cases, and 47 campaign/reuse/cleanup admission tests
+passed. Groups overlap and are not summed. The synchronized catalog independently
+validated 209 records. See the linked receipt for exact scope, logs and hashes.
+
+Context: `swdb/bfs_native.py`, `swdb/bfs_protocol.py`,
+`scripts/bfs_freeze_pilot.py`, `scripts/bfs_native_campaign.py`,
+`swdb/bfs_profiling.py`, `swdb/profile_package.py`,
+`swdb/bfs_region_comparison.py`, and `docs/bfs-native-runtime-20260926.md`.

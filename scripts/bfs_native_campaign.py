@@ -41,6 +41,8 @@ def validate_inputs(packages, frozen, proposal, get, lane, expected_artifact):
         raise ValueError('exactly two distinct baseline packages are required')
     bfs_protocol.verify_immutable(frozen)
     settings = frozen['settings']
+    from swdb.bfs_native import validate_runtime_policy
+    frozen_runtime = validate_runtime_policy(settings.get('native_runtime'), settings['threads'])
     if settings['mode'] != 'native' or settings['targets']['baseline'] != settings['targets']['candidate']:
         raise ValueError('campaign requires an already-frozen native comparison on one target')
     target = settings['targets']['candidate']
@@ -61,6 +63,10 @@ def validate_inputs(packages, frozen, proposal, get, lane, expected_artifact):
         if (evaluation['outcome']['state'] != 'complete' or evaluation['correctness']['state'] != 'passed'
                 or evaluation['evidence_kind'] != 'execution' or evaluation['request'].get('fixture') is True):
             raise ValueError('baseline package has no real passed primary evaluation')
+        primary_runtime = validate_runtime_policy(
+            evaluation.get('build', {}).get('native_runtime'), settings['threads'])
+        if artifacts.digest(primary_runtime) != artifacts.digest(frozen_runtime):
+            raise ValueError('baseline package primary native runtime differs from the frozen assessment')
         expected_context = profile_package._context(evaluation)
         if (package['evidence']['evaluation_sha256'] != artifacts.digest(evaluation)
                 or any(artifacts.digest(package['context'].get(key)) != artifacts.digest(value) for key, value in expected_context.items())

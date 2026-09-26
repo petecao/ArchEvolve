@@ -28,6 +28,7 @@ def simulation_seed(protocol_seed, tmp_path_factory):
     request["id"] = "simulated-fixture-policy"
     settings = request["settings"]
     settings["mode"] = "controlled_simulator"
+    settings.pop("native_runtime", None)
     settings["sampling"]["repetitions"] = 2
     configuration = {"cpu": "fixture_cpu", "cache": "fixture_cache", "memory": "fixture_memory",
                      "clock_hz": 1000000000, "model_revision": "fixture_revision"}

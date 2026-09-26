@@ -25,7 +25,7 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 08 | [Dynamic memory observations](issues/08-dynamic-memory-observations.md) | 06 | resolved |
 | 09 | [Complete profile packages and strategy lookup](issues/09-profile-packages-and-strategy-lookup.md) | 07, 08 | resolved |
 | 10 | [Queryable DX100 operation contracts](issues/10-dx100-operation-contracts.md) | 02 | resolved |
-| 11 | [Reproducible workloads and comparison protocols](issues/11-workloads-and-comparison-protocols.md) | 03 | claimed |
+| 11 | [Reproducible workloads and comparison protocols](issues/11-workloads-and-comparison-protocols.md) | 03 | resolved |
 | 12 | [DX100 build and execution path](issues/12-dx100-build-and-execution.md) | 03 | resolved |
 | 13 | [Correctness of the timed DX100 binary](issues/13-dx100-timed-binary-correctness.md) | 12 | claimed |
 | 14 | [DX100 region timing and memory profiling](issues/14-dx100-region-and-memory-profiling.md) | 09, 12 | resolved |
@@ -37,7 +37,7 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 20 | [Upstream BFS: annotated-source route acceptance](issues/20-upstream-annotated-route-acceptance.md) | 05, 10, 15 | claimed |
 | 21 | [Coverage, ROI gain, and collaborator handoff](issues/21-coverage-roi-gain-and-handoff.md) | 16, 17, 18, 19, 20 | claimed |
 
-Tickets 01–10, 12 and 14 are resolved (12/21). Ticket 11 reopened at 13:15 ET for a reproduced native runtime-policy enforcement gap; its fix and independent check are pending. The empirical frontier remains simulator verification and the shared calibration gate. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
+Tickets 01–12 and 14 are resolved (13/21). Ticket 11 was resolved again at 14:00 ET after its native runtime-policy correction and independent review. The empirical frontier remains simulator verification and the shared calibration gate. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
 
 ### Assigned acceptance cases
 
@@ -82,6 +82,25 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC18 — Full coverage including failed/regressing cases | 17–21 |
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
+
+## Runtime contract restored — 2026-09-26 14:00 ET
+
+T11 is resolved again after its requested runtime-input correction and two
+independently reproduced admission fixes. The
+[verification receipt](observations/native-runtime-fix-verification-20260926.json)
+links the exact code and before/after checks. Counts are **13 resolved / 8 claimed**;
+final acceptance remains **0/8**, with no empirical freeze or qualified gain.
+The failed four-thread study and all earlier failures remain unchanged.
+
+## Fixed accelerator coverage running — 2026-09-26 13:56 ET
+
+The one [fixed correctness case](observations/dx100-coverage-start-20260926.json)
+started at 13:56:02 ET on socket 0, generation 321, from clean `53f2e768`.
+Both actual Linux cleanup cases passed on that exact code before dispatch.
+Capacity, generation and registration passed; compilation was active at this
+observation. The graph has 8,212 vertices and 147,492 adjacency entries, source 0.
+Its own hard outer stop is 14:56:02 ET; no retry is permitted. Execution and
+independent terminal coverage checks remain required before any T13 resolution.
 
 ## Progress check — 2026-09-26 13:33 ET
 

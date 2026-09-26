@@ -1,4 +1,4 @@
-"""Exact evidence assembly and bidirectional strategy lookup. Updated 2026-09-25."""
+"""Exact evidence assembly and bidirectional strategy lookup. Updated 2026-09-26."""
 
 import copy
 import hashlib
@@ -69,6 +69,9 @@ def _profile_check(profile, evaluation, candidate):
         reasons.append("region profile lacks exact context identity")
     if profile.get("context", {}).get("primary_binary_sha256") != evaluation.get("build", {}).get("binary_sha256"):
         reasons.append("region profile names a different or unidentified primary binary")
+    runtime = evaluation.get("build", {}).get("native_runtime")
+    if runtime is not None and not _same(profile.get("build", {}).get("native_runtime"), runtime):
+        reasons.append("region profile has incompatible native runtime inputs")
     if profile.get("source_snapshot") != candidate["source_snapshot"]:
         reasons.append("region profile names a different source ancestor")
     if not _same(profile.get("context", {}).get("protocol_trial"), evaluation.get("context", {}).get("protocol_trial")):

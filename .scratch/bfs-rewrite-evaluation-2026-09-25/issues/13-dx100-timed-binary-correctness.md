@@ -7,7 +7,17 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 12
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 13:38 ET
+## Current checkpoint — 2026-09-26 13:56 ET
+
+The [fixed full/tail/competing-parent case](../observations/dx100-coverage-start-20260926.json)
+started at 13:56:02 ET on socket 0 generation 321 from `53f2e768`. Both actual
+Linux cleanup fixtures passed on that exact code first. Capacity, graph
+generation and public registration passed; compilation is running at this
+observation. No accelerated-coverage or ticket-completion claim is made before
+actual execution and the independent terminal audit. The hard outer stop is
+14:56:02 ET, with no retry.
+
+## Historical checkpoint — 2026-09-26 13:38 ET
 
 The single a3 execution passed its exact timed-guest structural verifier and
 independent terminal audit. Driver, observer, supervisor and outer exits are

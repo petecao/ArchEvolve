@@ -1,4 +1,4 @@
-"""Native campaign admission guards; metadata fixtures only. Updated: 2026-09-25."""
+"""Native campaign admission guards; metadata fixtures only. Updated: 2026-09-26."""
 import copy
 import runpy
 
@@ -6,6 +6,8 @@ import pytest
 
 from conftest import REPO
 from swdb import artifacts, bfs_protocol, profile_package
+from swdb.bfs_native import RUNTIME_INHERITED, controlled_environment
+from swdb.cli import Failure
 
 
 def seal(kind, name, **payload):
@@ -36,7 +38,9 @@ def inputs(tmp_path):
         evaluation = {'id': 'eval-' + family, 'implementation': implementation['id'],
             'outcome': {'state': 'complete'}, 'correctness': {'state': 'passed'},
             'evidence_kind': 'execution', 'request': {}, 'candidate': 'baseline',
-            'build': {'binary_sha256': 'b' * 64, 'flags': ['-O3']},
+            'build': {'binary_sha256': 'b' * 64, 'flags': ['-O3'],
+                      'native_runtime': {'version': 1, 'environment': {
+                          **controlled_environment(4), **dict.fromkeys(RUNTIME_INHERITED)}}},
             'context': {'candidate_sha256': artifact['sha256'], 'workload': {'id': workload['id'], 'canonical_sha256': 'a' * 64},
                         'sources': [0, 1], 'target': 'mbit10', 'backend_configuration': {'lane': lane},
                         'threads': 4, 'roi': 'bfs.complete_call.v1'}}
@@ -48,6 +52,7 @@ def inputs(tmp_path):
             'source_snapshot': 'source', 'implementation': implementation['id'], 'completeness': 'complete',
             'context': context, 'evidence': {'classification': 'execution', 'evaluation_sha256': artifacts.digest(evaluation)}})
     frozen = seal('protocol', 'fixture-policy', settings={'mode': 'native', 'targets': {'baseline': target, 'candidate': target},
+        'native_runtime': {'version': 1, 'environment': {**controlled_environment(4), **dict.fromkeys(RUNTIME_INHERITED)}},
         'roi': 'bfs.complete_call.v1', 'threads': 4, 'workloads': [w['id'] for w in workloads]},
         workload_identities={w['id']: w['identity_sha256'] for w in workloads},
         frozen_at='2026-09-25T20:00:00-04:00', state='frozen')
@@ -65,6 +70,25 @@ def validate(inputs):
 
 def test_enriched_package_context_remains_usable(inputs):
     assert set(validate(inputs)) == {'kronecker', 'uniform_random'}
+
+
+@pytest.mark.parametrize('package_index', [0, 1])
+@pytest.mark.parametrize('fault', ['missing', 'different', 'boolean-version', 'float-version'])
+def test_resealed_primary_runtime_must_match_frozen_policy_before_dispatch(inputs, package_index, fault):
+    _, packages, _, _, records, _, _ = inputs
+    package = packages[package_index]
+    evaluation = records[package['evaluation']]
+    if fault == 'missing':
+        evaluation['build'].pop('native_runtime')
+    elif fault == 'different':
+        evaluation['build']['native_runtime']['environment']['OMP_WAIT_POLICY'] = 'PASSIVE'
+    else:
+        evaluation['build']['native_runtime']['version'] = True if fault == 'boolean-version' else 1.0
+    # Reseal both copies: equality with the package's own primary is insufficient.
+    package['context']['build'] = copy.deepcopy(evaluation['build'])
+    package['evidence']['evaluation_sha256'] = artifacts.digest(evaluation)
+    with pytest.raises((Failure, ValueError), match='runtime'):
+        validate(inputs)
 
 
 @pytest.mark.parametrize('fault', ['pinned-source', 'source-function', 'candidate-function',

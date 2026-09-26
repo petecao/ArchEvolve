@@ -437,6 +437,10 @@ def _validate_settings(settings, store, *, require_simulation_identity=False):
     _fail(_get(store, settings.get("kernel"), "kernel")["id"] == "gapbs-bfs", "BFS protocols require the shared BFS kernel")
     _text(settings.get("roi"), "roi")
     _integer(settings.get("threads"), "threads")
+    if "native_runtime" in settings:
+        from swdb.bfs_native import validate_runtime_policy
+        _fail(mode == "native", "native_runtime applies only to native protocols")
+        validate_runtime_policy(settings["native_runtime"], settings["threads"])
     workloads = settings.get("workloads")
     _fail(isinstance(workloads, list) and workloads and all(isinstance(wid, str) for wid in workloads)
           and len(set(workloads)) == len(workloads), "unique workload IDs are required")
@@ -561,6 +565,9 @@ def freeze_protocol(args):
                 target["machine_sha256"] = artifacts.digest(_get(store, target.get("id"), "machine"))
     try:
         _validate_settings(settings, store, require_simulation_identity=True)
+        if settings["mode"] == "native":
+            from swdb.bfs_native import validate_runtime_policy
+            validate_runtime_policy(settings.get("native_runtime"), settings["threads"])
     except (KeyError, TypeError, ValueError) as exc:
         raise Failure(f"invalid protocol settings: {exc}") from None
     identities = {wid: verify_immutable(_get(store, wid, "workload")) for wid in settings["workloads"]}
@@ -624,6 +631,9 @@ def validate_protocol_for_evaluation(store, request, candidate, actual_build=Non
     _fail(request.get("sources") == workload["definition"]["sources"], "source sequence differs from frozen workload")
     _fail(request.get("threads") == settings["threads"] and request.get("repetitions") == settings["sampling"]["repetitions"],
           "threads/repetitions differ from frozen settings")
+    if request.get("fixture") is not True or "native_runtime" in settings:
+        from swdb.bfs_native import validate_runtime_policy
+        validate_runtime_policy(settings.get("native_runtime"), settings["threads"])
     _fail(request.get("roi", "bfs.complete_call.v1") == settings["roi"], "ROI differs from frozen settings")
     target = settings["targets"][role]
     _fail(request.get("machine") == target["id"] and request.get("target_configuration", {}) == target["configuration"],
@@ -953,6 +963,13 @@ def _evaluation_samples(store, evaluation, protocol, role):
                   "verified socket lane differs from frozen target")
     build = evaluation.get("build", {})
     expected = settings["builds"][role]
+    if settings["mode"] == "native" and (evaluation.get("evidence_kind") != "contract_fixture" or "native_runtime" in settings):
+        from swdb.bfs_native import controlled_environment, validate_runtime_policy
+        policy = validate_runtime_policy(settings.get("native_runtime"), settings["threads"])
+        validate_runtime_policy(build.get("native_runtime"), settings["threads"])
+        _fail(build["native_runtime"] == policy, "evaluation runtime inputs differ from the frozen native policy")
+        _fail(build.get("execution_environment") == controlled_environment(settings["threads"]),
+              "evaluation controlled runtime inputs contradict the native policy")
     _fail(all(build.get(key) == expected[key] for key in ("compiler", "flags", "compiler_version"))
           and context.get("adapter") == expected["adapter"], "evaluation build differs from frozen build definition")
     if settings["mode"] != "native":

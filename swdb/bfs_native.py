@@ -34,6 +34,52 @@ MAX_REQUEST_BYTES = 10 * 1024 * 1024
 MAX_VERTICES = 2_000_000
 MAX_DIRECTED_EDGES = 32_000_000
 MAX_GRAPH_BYTES = 512 * 1024 * 1024
+RUNTIME_INHERITED = ("OMP_THREAD_LIMIT", "OMP_WAIT_POLICY", "GOMP_SPINCOUNT", "GOMP_CPU_AFFINITY")
+
+
+def controlled_environment(threads):
+    return {"OMP_NUM_THREADS": str(_integer(threads, "threads")), "OMP_DYNAMIC": "FALSE",
+            "OMP_PROC_BIND": "close", "OMP_PLACES": "cores"}
+
+
+def validate_runtime_policy(policy, threads):
+    """Validate declared runtime inputs; null means unset, never unknown."""
+    controlled = controlled_environment(threads)
+    if not isinstance(policy, dict) or set(policy) != {"version", "environment"} or type(policy["version"]) is not int or policy["version"] != 1:
+        raise Failure("native_runtime requires version 1 and its exact environment map")
+    environment = policy["environment"]
+    if not isinstance(environment, dict) or set(environment) != set(controlled) | set(RUNTIME_INHERITED):
+        raise Failure("native_runtime requires all eight declared runtime inputs")
+    if any(value is not None and (not isinstance(value, str) or not value or "\0" in value or len(value) > 4096)
+           for value in environment.values()):
+        raise Failure("native_runtime values must be nonempty strings or explicit null")
+    if any(environment[key] != value for key, value in controlled.items()):
+        raise Failure("native_runtime controlled inputs differ from the declared threads/binding")
+    limit = environment['OMP_THREAD_LIMIT']
+    if limit is not None and (not re.fullmatch(r'\s*\+?[0-9]+\s*', limit, re.ASCII)
+                              or not threads <= int(limit) <= 2**32 - 1):
+        raise Failure("native_runtime OMP_THREAD_LIMIT must be a positive 32-bit integer at least the declared threads")
+    waiting = environment['OMP_WAIT_POLICY']
+    if waiting is not None and not re.fullmatch(r'\s*(ACTIVE|PASSIVE)\s*', waiting, re.ASCII | re.IGNORECASE):
+        raise Failure("native_runtime OMP_WAIT_POLICY must be ACTIVE, PASSIVE, or unset")
+    return policy
+
+
+def runtime_environment(threads, policy=None, *, environ=None, required=False):
+    """Construct one child environment and retain exactly its eight runtime inputs."""
+    environment = dict(os.environ if environ is None else environ)
+    if policy is None:
+        if required:
+            raise Failure("native runtime inputs are unknown; a new supported calibration/protocol is required")
+        policy = {"version": 1, "environment": {**controlled_environment(threads),
+                  **{key: environment.get(key) for key in RUNTIME_INHERITED}}}
+    validate_runtime_policy(policy, threads)
+    for key, value in policy["environment"].items():
+        if value is None:
+            environment.pop(key, None)
+        else:
+            environment[key] = value
+    return environment, copy.deepcopy(policy)
 
 
 def _now():
@@ -598,6 +644,7 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
                     output.write(f"{u} {v}\n")
         workload.update(sources=sources, canonical_path=str(graph_path), canonical_file_sha256=artifacts.file_hash(graph_path))
         data["context"]["workload"] = workload
+        frozen_runtime = None
         if request.get("protocol"):
             try:
                 from swdb.bfs_protocol import validate_protocol_for_evaluation
@@ -607,6 +654,9 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
                 store, request, candidate, actual_build={"compiler": compiler, "flags": flags, "adapter": adapter},
                 actual_lane=lane, actual_instrumentation=data["context"]["instrumentation"],
                 actual_collection=pairing["collection"] if pairing else None)
+            frozen_runtime = store.get(request["protocol"], "protocol")["settings"].get("native_runtime")
+        env, actual_runtime = runtime_environment(threads, frozen_runtime,
+            required=bool(request.get("protocol")) and request.get("fixture") is not True)
         session.finish()
         wrapper = build_folder / "native_driver.cc"
         template = DRIVER.read_text()
@@ -621,7 +671,7 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
             session.execute("build", command, budget["build_seconds"])
         else:
             if (reuse["candidate"] != candidate["id"] or reuse["build"]["compiler"] != compiler
-                    or reuse["build"]["flags"] != flags):
+                    or reuse["build"]["flags"] != flags or reuse["build"].get("native_runtime") != actual_runtime):
                 raise Failure("A/A executable reuse requires identical candidate and build settings")
             session.begin("build_reuse", evaluation=reuse["id"])
             data["build"] = copy.deepcopy(reuse["build"])
@@ -634,10 +684,8 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
             raise Failure("build did not produce an executable")
         data["build"].update(binary=str(binary), binary_sha256=artifacts.file_hash(binary))
         artifacts.verify(candidate["artifact"])
-        env = dict(os.environ)
-        env.update(OMP_NUM_THREADS=str(threads), OMP_DYNAMIC="FALSE", OMP_PROC_BIND="close", OMP_PLACES="cores")
-        data["build"]["execution_environment"] = {name: env[name] for name in
-                                                   ("OMP_NUM_THREADS", "OMP_DYNAMIC", "OMP_PROC_BIND", "OMP_PLACES")}
+        data["build"]["execution_environment"] = controlled_environment(threads)
+        data["build"]["native_runtime"] = actual_runtime
         session.save()
         slot = yield data
         for repetition in range(repetitions):

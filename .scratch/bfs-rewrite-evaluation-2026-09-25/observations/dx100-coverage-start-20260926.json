@@ -1,0 +1,53 @@
+{
+  "created": "2026-09-26",
+  "id": "bfs-dx100-coverage-20260926-a1",
+  "state_at_observation": "running_compile",
+  "started_at_et": "2026-09-26 13:56:02.635836 ET",
+  "host": "mbit10",
+  "lane": 0,
+  "lease_generation": 321,
+  "driver": {
+    "pid": 3053412,
+    "start_ticks": 494729579
+  },
+  "pane": {
+    "pid": 3053339,
+    "start_ticks": 494729548
+  },
+  "code_commit": "53f2e7686a41d3472c9e0824a0a9b09117884e0b",
+  "graph": {
+    "vertices": 8212,
+    "adjacency_entries": 147492,
+    "source": 0
+  },
+  "completed_stages_at_observation": [
+    "capacity",
+    "generate",
+    "register-workload"
+  ],
+  "outer_deadline_et": "2026-09-26 14:56:02.635836 ET",
+  "absolute_plan_deadline_et": "2026-09-26 16:45 ET",
+  "effective_work_seconds": 3569.749956,
+  "cleanup_seconds": 30,
+  "automatic_retry": false,
+  "admission": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/admission2.json",
+    "bytes": 55473,
+    "sha256": "ce7a55bc403024d41e788c51d1c0fbf6581c56116172f9ac8abe3093e87c4ecc",
+    "observed_at_et": "2026-09-26 13:53:37 ET",
+    "node_available_gib": 57.31,
+    "global_available_gib": 117.76,
+    "build_free_gib": 16.43,
+    "raw_free_gib": 182.56,
+    "all_kernel_and_metadata_leases_free": true
+  },
+  "dispatch": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/dispatch-command.json",
+    "bytes": 6804,
+    "sha256": "937acbd5ba013a25701bd3779f25f7ba3cfdd89c8d44abde66951694a867418d"
+  },
+  "earlier_preflight": "An unavailable governor-file observation caused a preflight-only FileNotFoundError retained in admission.json; admission2 records the value as unavailable. No evaluation had been dispatched by that earlier check.",
+  "acceptance_claim": false,
+  "gain_claim": false,
+  "basis": "Actual host worker dispatch and live-stage report; independent final artifact and cleanup audit still required."
+}
