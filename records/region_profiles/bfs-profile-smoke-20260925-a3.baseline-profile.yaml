@@ -2853,3 +2853,16 @@ artifacts:
     - -g
     wrapper_sha256: f4de2d06a2f2f1b8a5aa5a8be19aa3cb57ec403cf4c0bc7923a3464d94e4cba4
     difference: original candidate source; client ROI guards and debug info, no region guards
+extensions:
+  post_collection_audit:
+    scope: dynamic_memory
+    state: invalid
+    audited_at: '2026-09-26T00:33:31.778723+00:00'
+    reason: Callgrind summary contains unsigned-underflow counts near 2^64 and conflicts with the file
+      totals; no memory observation from this attempt qualifies as valid evidence.
+    original_observations_retained: true
+    raw_artifacts_retained: true
+    region_observations_affected: false
+    references:
+    - https://valgrind.org/docs/manual/cl-format.html
+    - https://valgrind.org/docs/manual/cl-manual.html
