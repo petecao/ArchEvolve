@@ -56,7 +56,7 @@ def _request(args, action):
         profiling={"state": "incomplete", "reasons": ["BFS ROI, regions, and memory metrics require the profile collector."]},
         raw_artifacts=[], gain_claim=False,
         evidence_kind="contract_fixture" if isinstance(request, dict) and request.get("fixture") is True else "execution")
-    workflow.persist(args.records, data, getattr(args, "db", None))
+    workflow.persist(args.records, data, getattr(args, "db", None), create=True)
     return store, request, data
 
 
@@ -543,6 +543,10 @@ def execute(args):
                               execution_binding_sha256=artifacts.digest(binding), source=source, sources=[source], threads=4)
         data["build"] = {"binary": str(binary), "binary_sha256": request["binary"]["sha256"],
                          "simulator": str(simulator), "simulator_sha256": request["simulator"]["sha256"]}
+        if request.get("build_evaluation"):
+            model_build = store.get(request["build_evaluation"], "evaluation")
+            if model_build:
+                data["build"]["model_build"] = {"evaluation": model_build["id"], "sha256": artifacts.digest(model_build)}
         if compiled:
             data['build'].update({key: compiled['build'][key] for key in ('compiler', 'compiler_version', 'flags', 'adapter')})
         elif not request.get('fixture'):

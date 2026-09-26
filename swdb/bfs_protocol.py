@@ -198,6 +198,9 @@ def validate_record(record, ctx):
     """Cross-record validation hook: raw `add` cannot admit a mismatched freeze hash."""
     try:
         verify_immutable(record.data)
+        _fail(not any(other.id != record.id and other.data.get("requested_id") == record.data.get("requested_id")
+                      and other.data.get("version") == record.data.get("version") for other in ctx.store.of_kind(record.kind)),
+              "immutable logical name/version already exists; use a new version with supersedes")
         if record.kind == "protocol":
             _validate_settings(record.data["settings"], ctx.store)
             for wid, digest in record.data["workload_identities"].items():
@@ -234,7 +237,7 @@ def _save_immutable(args, request, kind, **fields):
     data["identity_sha256"] = artifacts.digest(_identity_payload(data))
     data["id"] += "." + data["identity_sha256"][:16]
     _fail(store.get(data["id"]) is None, "immutable record already exists; use get or a new version")
-    return workflow.persist(args.records, data, getattr(args, "db", None))
+    return workflow.persist(args.records, data, getattr(args, "db", None), create=True)
 
 
 def register_workload(args):
@@ -316,7 +319,119 @@ def workload_representation(store, workload_id, application):
             "sources": definition["sources"], "realized": definition["realized"], "representation": copy.deepcopy(rep)}
 
 
-def _validate_settings(settings, store):
+def _simulation_identity(settings, store, *, required=False, check_files=False):
+    """Pin the completed model build while leaving future rewrite binaries open."""
+    if settings.get("mode") == "native":
+        return None
+    identity = settings.get("simulation_identity")
+    if identity is None:
+        _fail(not required, "simulated protocol lacks simulation_identity; freeze a superseding protocol")
+        return None
+    _fail(isinstance(identity, dict) and identity.get("version") == "1.0", "unsupported simulation_identity")
+    reference = identity.get("model_build", {})
+    _fail(isinstance(reference, dict), "simulation_identity.model_build must be a record reference")
+    model = _get(store, reference.get("evaluation"), "evaluation")
+    _fail(reference.get("sha256") == artifacts.digest(model), "frozen model build record changed")
+    _fail(model.get("outcome", {}).get("state") == "complete" and model["outcome"].get("stage") == "build"
+          and model.get("evidence_kind") in {"execution", "contract_fixture"}, "frozen model build is incomplete or unclassified")
+    details = model.get("build", {}).get("details", {})
+    binaries = details.get("binaries", [])
+    _fail(isinstance(binaries, list) and all(isinstance(row, dict) for row in binaries), "model build binary inventory is invalid")
+    simulator = identity.get("simulator", {})
+    _fail(isinstance(simulator, dict) and set(simulator) == {"path", "sha256"}
+          and isinstance(simulator["path"], str) and isinstance(simulator["sha256"], str)
+          and re.fullmatch(r"[0-9a-f]{64}", simulator["sha256"])
+          and any(all(row.get(key) == simulator[key] for key in simulator) for row in binaries),
+          "frozen simulator is absent from the model build receipt")
+    _fail(all(target["configuration"]["model_revision"] == details.get("revision")
+              for target in settings["targets"].values()), "frozen target revision differs from model build")
+    if model["evidence_kind"] == "execution":
+        _fail(details.get("state") == "completed" and model.get("request", {}).get("fixture") is not True,
+              "frozen model build does not contain completed execution evidence")
+        _fail(all(target["id"] == model.get("context", {}).get("target") for target in settings["targets"].values()),
+              "frozen simulator targets differ from model build target")
+        _fail(any(Path(row.get("path", "")).name == "libramulator.so" for row in binaries),
+              "frozen model build lacks the Ramulator runtime library identity")
+    if check_files:
+        references = [simulator] + [row for row in binaries if ".so" in Path(row.get("path", "")).name]
+        build = model.get("build", {})
+        if model["evidence_kind"] == "execution":
+            references.append({"path": build["receipt"], "sha256": build["receipt_sha256"]})
+            if build.get("runtime_dependencies"):
+                references.append(build["runtime_dependencies"])
+        for item in references:
+            path = Path(item["path"])
+            _fail(path.is_file() and not path.is_symlink() and artifacts.file_hash(path) == item["sha256"],
+                  "frozen simulator/runtime/build receipt file is missing or changed")
+        if model["evidence_kind"] == "execution":
+            _fail(artifacts.digest(json.loads(Path(build["receipt"]).read_text())) == artifacts.digest(details),
+                  "frozen model build details differ from its receipt")
+    references = settings.get("reference_artifacts")
+    reference_mode = settings.get("mode") == "artifact_reference" or all(
+        build.get("adapter") == "dx100.author_artifact.v1" for build in settings.get("builds", {}).values())
+    _fail(not reference_mode or isinstance(references, dict), "fixed reference protocol requires reference_artifacts for both roles")
+    if references is not None:
+        _fail(isinstance(references, dict) and set(references) == {"baseline", "candidate"},
+              "reference_artifacts requires both roles")
+        for role, item in references.items():
+            _fail(isinstance(item, dict), "reference_artifacts role must be a source/binary mapping")
+            candidate = _get(store, item.get("candidate"), "candidate")
+            source = _get(store, candidate.get("source_snapshot"), "source_snapshot")
+            _fail(item.get("candidate_sha256") == artifacts.digest(candidate)
+                  and item.get("source_snapshot") == source["id"]
+                  and item.get("source_snapshot_sha256") == artifacts.digest(source)
+                  and item.get("source_artifact_sha256") == candidate.get("artifact", {}).get("sha256"),
+                  "frozen reference source identity changed")
+            _fail(candidate.get("artifact_role") == "source_baseline" and not candidate.get("proposal"),
+                  "fixed reference must retain unchanged catalog source")
+            validate_baseline_source(store, candidate)
+            binary = item.get("binary", {})
+            _fail(isinstance(binary, dict) and set(binary) == {"path", "sha256"}
+                  and any(all(row.get(key) == binary[key] for key in binary) for row in binaries),
+                  "frozen reference binary is absent from the model build receipt")
+    return model
+
+
+def _simulation_build(settings, store, role, candidate, build, classification, *, check_files=False):
+    model = _simulation_identity(settings, store, required=True, check_files=check_files)
+    identity = settings["simulation_identity"]
+    _fail(model["evidence_kind"] == classification, "simulation and frozen model have different evidence classifications")
+    _fail(build.get("model_build") == identity["model_build"]
+          and {"path": build.get("simulator"), "sha256": build.get("simulator_sha256")} == identity["simulator"],
+          "actual simulator/model build differs from frozen simulation_identity")
+    if settings.get("reference_artifacts"):
+        reference = settings["reference_artifacts"][role]
+        _fail(candidate["id"] == reference["candidate"]
+              and {"path": build.get("binary"), "sha256": build.get("binary_sha256")} == reference["binary"],
+              "actual reference source/binary differs from frozen reference_artifacts")
+
+
+ACCELERATOR_CASES = {"executed", "full_tiles", "tail_tiles", "competing_parent_updates"}
+
+
+def accelerator_cases(check):
+    """Typed observations only; a source label or context string is not execution."""
+    coverage = check.get("coverage", {})
+    if not isinstance(coverage, dict):
+        return set()
+    counters, units = coverage.get("instruction_counters", {}), coverage.get("completed_trace_units", {})
+    if not isinstance(counters, dict) or not isinstance(units, dict):
+        return set()
+    positive = lambda value: type(value) in (int, float) and math.isfinite(value) and value > 0
+    executed = (coverage.get("accelerator_executed") is True
+                and any(isinstance(key, str) and key.endswith(".numInst") and positive(value) for key, value in counters.items())
+                and all(positive(units.get(unit)) for unit in ("S", "I", "R", "A")))
+    if not executed:
+        return set()
+    observed = {"executed"}
+    for name in ACCELERATOR_CASES - {"executed"}:
+        item = coverage.get(name)
+        if isinstance(item, dict) and item.get("state") == "observed" and type(item.get("count")) is int and item["count"] > 0:
+            observed.add(name)
+    return observed
+
+
+def _validate_settings(settings, store, *, require_simulation_identity=False):
     _fail(isinstance(settings, dict), "settings must be a mapping")
     mode = settings.get("mode")
     _fail(mode in {"native", "artifact_reference", "controlled_simulator"}, "unsupported comparison mode")
@@ -371,6 +486,17 @@ def _validate_settings(settings, store):
     _fail(isinstance(correctness, dict) and correctness.get("coverage") == "every_timed_trial", "correctness must cover every timed trial")
     _text(correctness.get("verifier"), "correctness.verifier")
     _fail(isinstance(correctness.get("required_cases"), list), "correctness.required_cases is required")
+    accelerator = correctness.get("required_accelerator_cases")
+    if accelerator is not None:
+        _fail(mode != "native" and isinstance(accelerator, dict) and set(accelerator) == {"baseline", "candidate"}
+              and all(isinstance(values, list) and all(isinstance(value, str) for value in values)
+                      and len(values) == len(set(values)) and set(values) <= ACCELERATOR_CASES for values in accelerator.values()),
+              "required_accelerator_cases needs unique supported per-role typed observations")
+    fixed_reference = mode == "artifact_reference" or (mode != "native" and all(
+        value.get("adapter") == "dx100.author_artifact.v1" for value in settings["builds"].values()))
+    if require_simulation_identity and fixed_reference:
+        _fail(accelerator is not None and accelerator["baseline"] == [] and "executed" in accelerator["candidate"],
+              "author reference must require candidate accelerator execution with no scalar acceleration requirement")
     sampling = settings.get("sampling")
     _fail(isinstance(sampling, dict), "sampling policy is required")
     _integer(sampling.get("repetitions"), "repetitions", 5 if mode == "native" else 2)
@@ -391,6 +517,17 @@ def _validate_settings(settings, store):
             _text(pair.get(field), f"region_pairs.{field}")
         _fail(pair.get("scope") in {"per_invocation", "accumulated"}
               and pair.get("attribution") in {"inclusive", "exclusive"}, "region correspondence needs duration and attribution scopes")
+        if pair.get("evidence") is not None:
+            _fail(mode != "native" and pair["evidence"] == "simulated_diagnostic_profile",
+                  "unsupported region evidence kind")
+            collector = pair.get("collector", {})
+            _fail(isinstance(collector, dict) and collector.get("backend") == "libclang-cindex" and collector.get("collector") == "dx100.m5_rpns.source_scopes.v1"
+                  and all(isinstance(collector.get(key), str) and re.fullmatch(r"[0-9a-f]{64}", collector[key])
+                          for key in ("library_sha256", "pass_sha256", "runtime_sha256")),
+                  "simulated region pairs require the exact diagnostic collector identity")
+        _fail(not require_simulation_identity or mode == "native" or pair.get("evidence") == "simulated_diagnostic_profile",
+              "new simulated region comparisons require package-backed diagnostic evidence")
+    _simulation_identity(settings, store, required=require_simulation_identity)
 
 
 def freeze_protocol(args):
@@ -402,7 +539,7 @@ def freeze_protocol(args):
             if isinstance(target, dict):
                 target["machine_sha256"] = artifacts.digest(_get(store, target.get("id"), "machine"))
     try:
-        _validate_settings(settings, store)
+        _validate_settings(settings, store, require_simulation_identity=True)
     except (KeyError, TypeError, ValueError) as exc:
         raise Failure(f"invalid protocol settings: {exc}") from None
     identities = {wid: verify_immutable(_get(store, wid, "workload")) for wid in settings["workloads"]}
@@ -538,6 +675,8 @@ def validate_protocol_for_simulation(store, request, candidate, *, actual_target
     expected_build = settings["builds"][role]
     _fail(all(artifacts.digest(actual_build.get(key)) == artifacts.digest(expected_build[key])
               for key in ("compiler", "compiler_version", "flags", "adapter")), "actual simulator guest build differs from frozen settings")
+    _simulation_build(settings, store, role, candidate, actual_build,
+                      "contract_fixture" if request.get("fixture") else "execution", check_files=True)
     _fail(artifacts.digest(actual_instrumentation) == artifacts.digest(settings["instrumentation"][role]),
           "actual simulator instrumentation differs from frozen treatment")
     _fail(_get(store, candidate["implementation"], "implementation")["kernel"] == settings["kernel"], "simulation candidate kernel differs")
@@ -647,7 +786,7 @@ def aggregate_evaluations(args):
         data["correctness"]["state"] = "passed"
         data["outcome"] = {"state": "complete", "stage": "aggregation", "reason": "Exact completed simulator executions; no synthetic repetitions."}
         _evaluation_samples(store, data, frozen, role)
-    except (Failure, KeyError, TypeError, ValueError, OverflowError) as exc:
+    except (Failure, KeyError, TypeError, ValueError, OverflowError, OSError) as exc:
         data["outcome"] = {"state": "incompatible", "stage": "aggregation", "reason": str(exc)}
         data["correctness"]["state"] = "unverified"
     return workflow.persist(args.records, data, getattr(args, "db", None), create=True)
@@ -739,6 +878,13 @@ def _evaluation_samples(store, evaluation, protocol, role):
     expected = settings["builds"][role]
     _fail(all(build.get(key) == expected[key] for key in ("compiler", "flags", "compiler_version"))
           and context.get("adapter") == expected["adapter"], "evaluation build differs from frozen build definition")
+    if settings["mode"] != "native":
+        _simulation_build(settings, store, role, candidate, build, evaluation.get("evidence_kind"))
+        if evaluation.get("evidence_kind") == "execution":
+            bindings = list(context.get("component_bindings", {}).values()) if components else [context.get("execution_binding", {})]
+            _fail(bindings and all(row.get("simulator") == settings["simulation_identity"]["simulator"]
+                                  and row.get("binary") == {"path": build.get("binary"), "sha256": build.get("binary_sha256")}
+                                  for row in bindings), "simulation execution binding contradicts frozen build")
     _fail(context.get("instrumentation") == settings["instrumentation"][role], "instrumentation differs from frozen treatment")
     _fail(context.get("verifier") == settings["correctness"]["verifier"], "correctness verifier differs from frozen coverage")
     _fail(set(settings["correctness"]["required_cases"]).issubset(set(context.get("correctness_cases", []))),
@@ -773,6 +919,9 @@ def _evaluation_samples(store, evaluation, protocol, role):
               and matching[0].get("graph_sha256") == definition["canonical_sha256"]
               and matching[0].get("output_sha256") == observation.get("output_sha256"),
               "correctness is not linked to this timed graph/source/binary/output")
+        required_accelerator = settings["correctness"].get("required_accelerator_cases", {}).get(role, [])
+        _fail(set(required_accelerator) <= accelerator_cases(matching[0]),
+              "timed replay lacks required typed accelerator coverage")
         observations[cell] = _positive(observation.get("duration_s"), "ROI duration")
     _fail(set(observations) == expected_cells, "missing timed source/repetition coverage")
     return {position: [observations[position, repetition] for repetition in range(settings["sampling"]["repetitions"])]
@@ -807,9 +956,15 @@ def _statistics(baseline, candidate, policy):
             "relative_spread": spreads}
 
 
-def _region_comparisons(a, b, settings):
+def _region_comparisons(a, b, settings, store=None, packages=None):
     results = []
+    if any(pair.get("evidence") == "simulated_diagnostic_profile" for pair in settings.get("region_pairs", [])):
+        from swdb.bfs_region_comparison import compare
+        _fail(store is not None, "diagnostic region comparison requires record context")
+        results.extend(compare(store, a, b, settings, packages))
     for pair in settings.get("region_pairs", []):
+        if pair.get("evidence") == "simulated_diagnostic_profile":
+            continue
         durations = []
         for role, evaluation in (("baseline", a), ("candidate", b)):
             regions = evaluation.get("profiling", {}).get("regions", [])
@@ -857,7 +1012,7 @@ def compare_evaluations(args):
         _fail(evidence_kind == other_kind, "execution evidence cannot be paired with a contract fixture")
         data["evidence_kind"] = evidence_kind
         data["evaluation_identities"] = {baseline["id"]: artifacts.digest(baseline), candidate["id"]: artifacts.digest(candidate)}
-        data["region_comparisons"] = _region_comparisons(baseline, candidate, protocol["settings"])
+        data["region_comparisons"] = _region_comparisons(baseline, candidate, protocol["settings"], store, request.get("region_packages"))
         data["metrics"] = _statistics(a, b, protocol["settings"]["profitability"])
         data["metrics"]["workload"] = wid
         data["metrics"]["attribution"] = ("artifact_configuration_pair" if protocol["settings"]["mode"] == "artifact_reference" else
@@ -875,10 +1030,10 @@ def compare_evaluations(args):
             state = "inconclusive" if noisy else "gain" if gain else "regression" if interval["upper"] < 1 else "no_gain"
             data["decision"] = {"state": state, "reasons": ["Timing spread exceeds the frozen threshold."] if noisy else []}
             data["gain_claim"] = state == "gain"
-    except (Failure, KeyError, TypeError, ValueError, OverflowError) as exc:
+    except (Failure, KeyError, TypeError, ValueError, OverflowError, OSError) as exc:
         data["decision"] = {"state": "rejected", "reasons": [str(exc)]}
         data["gain_claim"] = False
         data["metrics"] = {}
         data["region_comparisons"] = []
     data["finished_at"] = _now()
-    return workflow.persist(args.records, data, getattr(args, "db", None))
+    return workflow.persist(args.records, data, getattr(args, "db", None), create=True)

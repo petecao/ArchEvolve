@@ -264,6 +264,19 @@ def test_new_protocol_version_preserves_comparison_and_marks_rerun(protocol_setu
     assert "binding" in refused["decision"]["reasons"][0]
 
 
+def test_public_protocol_rejects_different_contents_under_same_logical_version(protocol_setup, tmp_path):
+    records, _, original, request, _, _ = protocol_setup
+    request.update(version=2, supersedes=original['id'])
+    first = _command(records, 'freeze-protocol', _payload(tmp_path, 'first-version', request))
+    before = set(records.path.glob('protocols/*.yaml'))
+    request['settings']['profitability']['minimum_speedup'] = 1.5
+    rejected = records.swdb('freeze-protocol', _payload(tmp_path, 'duplicate-version', request), '--format', 'json')
+    assert rejected.returncode == 1 and 'logical name/version' in rejected.stderr
+    assert set(records.path.glob('protocols/*.yaml')) == before
+    saved = records.swdb('get', first['id'], '--format', 'json')
+    assert saved.returncode == 0 and json.loads(saved.stdout) == first
+
+
 def test_raw_add_cannot_recompute_content_under_old_frozen_id(protocol_setup, tmp_path):
     records, _, protocol, *_ = protocol_setup
     forged = copy.deepcopy(protocol)
@@ -294,9 +307,25 @@ def _fixture_rebind(evaluation, protocol, role, name):
     for stage in data["stages"]:
         stage.update(started=now, finished=now)
     if settings["mode"] != "native":
+        identity = settings.get("simulation_identity")
+        if identity:
+            data["build"].update(model_build=identity["model_build"], simulator=identity["simulator"]["path"],
+                                 simulator_sha256=identity["simulator"]["sha256"])
+        reference = settings.get("reference_artifacts", {}).get(role)
+        if reference:
+            data.update(candidate=reference["candidate"], source_snapshot=reference["source_snapshot"])
+            data["context"]["candidate_sha256"] = reference["source_artifact_sha256"]
+            data["build"].update(binary=reference["binary"]["path"], binary_sha256=reference["binary"]["sha256"])
+            for row in data["timing"] + data["correctness"]["checks"]:
+                row["binary_sha256"] = reference["binary"]["sha256"]
         data["context"]["basis"] = "simulated"
         for timing in data["timing"]:
             timing.update(basis="simulated", quantity="simulated_roi_seconds")
+        for check in data['correctness']['checks']:
+            if settings['correctness'].get('required_accelerator_cases', {}).get(role):
+                check['coverage'] = {'accelerator_executed': True, 'instruction_counters': {'system.maa.numInst': 20},
+                    'completed_trace_units': {unit: 2 for unit in ('S', 'I', 'R', 'A')},
+                    **{key: {'state': 'observed', 'count': 1} for key in ('full_tiles', 'tail_tiles', 'competing_parent_updates')}}
     data["provenance"].append({"id": "comparison-fixture", "kind": "agent_run",
                                "description": "Explicit simulator/region metadata fixture; this protocol was not executed."})
     return data
@@ -384,9 +413,163 @@ def _sim_settings(settings):
     return data
 
 
+def _model_identity_fixture(records, tmp, settings, evaluations, *, fixed=False):
+    """Retained synthetic model identity; never an executed hardware model."""
+    from swdb import artifacts, workflow
+    simulator = tmp / "explicit-simulator-fixture"
+    simulator.write_text("explicit model identity fixture\n")
+    reference = {"path": str(simulator), "sha256": _hash(simulator)}
+    binaries = [reference] + [{"path": row["build"]["binary"], "sha256": row["build"]["binary_sha256"]}
+                              for row in evaluations.values()]
+    model = workflow.record("evaluation", "explicit-model-fixture", request={"fixture": True},
+        context={}, build={"details": {"revision": settings["targets"]["baseline"]["configuration"]["model_revision"],
+                                      "state": "completed", "binaries": binaries}},
+        outcome={"state": "complete", "stage": "build", "reason": "Explicit contract fixture"}, stages=[], timing=[],
+        correctness={"state": "unverified", "checks": []}, profiling={}, raw_artifacts=[], gain_claim=False, evidence_kind="contract_fixture")
+    records.write("evaluations/explicit-model-fixture.yaml", model)
+    settings["simulation_identity"] = {"version": "1.0", "model_build": {"evaluation": model["id"], "sha256": artifacts.digest(model)},
+                                       "simulator": reference}
+    if fixed:
+        settings['correctness']['required_accelerator_cases'] = {'baseline': [], 'candidate': ['executed']}
+        baseline = evaluations["baseline"]
+        candidate = records.read(f"candidates/{baseline['candidate']}.yaml")
+        source = records.read(f"source_snapshots/{candidate['source_snapshot']}.yaml")
+        item = {"candidate": candidate["id"], "candidate_sha256": artifacts.digest(candidate),
+                "source_snapshot": source["id"], "source_snapshot_sha256": artifacts.digest(source),
+                "source_artifact_sha256": candidate["artifact"]["sha256"],
+                "binary": {"path": baseline["build"]["binary"], "sha256": baseline["build"]["binary_sha256"]}}
+        settings["reference_artifacts"] = {role: copy.deepcopy(item) for role in ("baseline", "candidate")}
+    return settings["simulation_identity"]
+
+
+@pytest.mark.parametrize("fault", ["missing", "changed-model", "wrong-simulator", "missing-reference", "rewritten-reference"])
+def test_simulated_freeze_requires_model_and_fixed_reference_identities(protocol_setup, tmp_path, fault):
+    records, _, _, request, evaluations, _ = protocol_setup
+    settings = _sim_settings(request["settings"])
+    _model_identity_fixture(records, tmp_path, settings, evaluations, fixed=True)
+    if fault == "missing": settings.pop("simulation_identity")
+    elif fault == "changed-model": settings["simulation_identity"]["model_build"]["sha256"] = "0" * 64
+    elif fault == "wrong-simulator": settings["simulation_identity"]["simulator"]["sha256"] = "0" * 64
+    else:
+        settings["mode"] = "artifact_reference"
+        if fault == "missing-reference": settings.pop("reference_artifacts")
+        else:
+            from swdb import artifacts
+            changed = records.read(f"candidates/{evaluations['candidate']['candidate']}.yaml")
+            item = settings["reference_artifacts"]["candidate"]
+            item.update(candidate=changed["id"], candidate_sha256=artifacts.digest(changed),
+                        source_artifact_sha256=changed["artifact"]["sha256"])
+    request.update(id="bad-identity-" + fault, settings=settings)
+    result = records.swdb("freeze-protocol", _payload(tmp_path, request["id"], request), "--format", "json")
+    assert result.returncode == 1, result.stdout
+    assert any(word in result.stderr for word in ("simulation_identity", "model build", "simulator", "reference")), result.stderr
+
+
+@pytest.mark.parametrize("fault", ["simulator", "model-build", "fixed-binary"])
+def test_simulated_comparison_rejects_unfrozen_build_identity(protocol_setup, tmp_path, fault):
+    records, _, _, request, evaluations, comparison = protocol_setup
+    settings = _sim_settings(request["settings"])
+    _model_identity_fixture(records, tmp_path, settings, evaluations, fixed=fault == "fixed-binary")
+    request.update(id="identity-policy-" + fault, settings=settings)
+    protocol = _command(records, "freeze-protocol", _payload(tmp_path, request["id"], request))
+    for role in ("baseline", "candidate"):
+        item = _fixture_rebind(evaluations[role], protocol, role, "identity-evaluation-" + role)
+        if role == "candidate":
+            if fault == "simulator": item["build"]["simulator_sha256"] = "0" * 64
+            elif fault == "model-build": item["build"]["model_build"]["sha256"] = "0" * 64
+            else: item["build"]["binary_sha256"] = "0" * 64
+        _add_record(records, tmp_path, item)
+        comparison[role + "_evaluation"] = item["id"]
+    comparison.update(id="identity-comparison-" + fault, protocol=protocol["id"])
+    result = _command(records, "compare-evaluations", _payload(tmp_path, comparison["id"], comparison), succeeds=False)
+    assert not result["gain_claim"] and any("frozen" in reason for reason in result["decision"]["reasons"])
+
+
+@pytest.mark.parametrize("fault", [None, "simulator", "runtime"])
+def test_simulator_binding_rechecks_frozen_model_files(protocol_setup, tmp_path, fault):
+    from swdb import artifacts, bfs_protocol
+    from swdb.store import Store
+    from swdb.cli import Failure
+    records, workload, _, request, evaluations, _ = protocol_setup
+    settings = _sim_settings(request['settings'])
+    identity = _model_identity_fixture(records, tmp_path, settings, evaluations)
+    runtime = tmp_path / 'libramulator.so'; runtime.write_bytes(b'explicit fixture runtime')
+    model = records.read('evaluations/explicit-model-fixture.yaml')
+    model['build']['details']['binaries'].append({'path': str(runtime), 'sha256': _hash(runtime)})
+    records.write('evaluations/explicit-model-fixture.yaml', model)
+    identity['model_build']['sha256'] = artifacts.digest(model)
+    frozen = _command(records, 'freeze-protocol', _payload(tmp_path, 'file-freeze', dict(message_version='1.0', id='file-policy', settings=settings)))
+    store = Store(records.path); candidate = store.get(evaluations['baseline']['candidate'])
+    representation = bfs_protocol.workload_representation(store, workload['id'], 'gapbs')['representation']
+    actual = {**evaluations['baseline']['build'], 'adapter': settings['builds']['baseline']['adapter'],
+              'simulator': identity['simulator']['path'], 'simulator_sha256': identity['simulator']['sha256'], 'model_build': identity['model_build']}
+    payload = dict(fixture=True, protocol=frozen['id'], protocol_role='baseline', protocol_trial={'source_position': 0, 'repetition': 0},
+        workload={'id': workload['id'], 'source': 0, 'representation': {key: representation[key] for key in ('path', 'sha256')}})
+    if fault == 'simulator': actual['simulator_sha256'] = '0'*64
+    if fault == 'runtime': runtime.write_bytes(b'changed runtime while simulator remains identical')
+    def bind():
+        return bfs_protocol.validate_protocol_for_simulation(store, payload, candidate,
+            actual_target=settings['targets']['baseline']['id'], actual_configuration=settings['targets']['baseline']['configuration'],
+            actual_build=actual, actual_instrumentation=settings['instrumentation']['baseline'], actual_threads=settings['threads'],
+            actual_roi=settings['roi'], actual_verifier=settings['correctness']['verifier'])
+    if fault:
+        with pytest.raises(Failure, match='frozen'): bind()
+    else:
+        assert bind()['context']['protocol_binding']['frozen_sha256'] == frozen['identity_sha256']
+
+
+@pytest.mark.parametrize('fault', [None, 'missing', 'scalar-fallback', 'incomplete-trace', 'label-only', 'one-unobserved-cell'])
+def test_comparison_requires_typed_acceleration_for_every_requested_replay(protocol_setup, tmp_path, fault):
+    records, _, _, request, evaluations, comparison = protocol_setup
+    settings = _sim_settings(request['settings'])
+    _model_identity_fixture(records, tmp_path, settings, evaluations)
+    cases = ['executed', 'full_tiles', 'tail_tiles', 'competing_parent_updates']
+    settings['correctness']['required_accelerator_cases'] = {'baseline': [], 'candidate': cases}
+    request.update(id='typed-acceleration-policy', settings=settings)
+    frozen = _command(records, 'freeze-protocol', _payload(tmp_path, 'typed-freeze', request))
+    for role in ('baseline', 'candidate'):
+        item = _fixture_rebind(evaluations[role], frozen, role, 'typed-evaluation-' + role)
+        if role == 'candidate' and fault:
+            check = item['correctness']['checks'][-1]; coverage = check['coverage']
+            if fault == 'missing': check.pop('coverage')
+            elif fault == 'scalar-fallback': coverage['instruction_counters']['system.maa.numInst'] = 0
+            elif fault == 'incomplete-trace': coverage['completed_trace_units']['I'] = 0
+            elif fault == 'label-only':
+                check['coverage'] = {'label': 'td_maa', 'full_tiles': 'observed'}
+                item['context']['correctness_cases'] = cases
+            else: coverage['tail_tiles'] = {'state': 'unobserved', 'count': 0}
+        _add_record(records, tmp_path, item)
+        comparison[role + '_evaluation'] = item['id']
+    comparison.update(id='typed-acceleration-comparison', protocol=frozen['id'])
+    result = _command(records, 'compare-evaluations', _payload(tmp_path, 'typed-compare', comparison), succeeds=fault is None)
+    assert not result['gain_claim']
+    if fault: assert 'typed accelerator coverage' in str(result['decision']['reasons'])
+    else: assert result['decision']['state'] == 'fixture_comparison'
+
+
+def test_legacy_unbound_simulator_protocol_is_readable_but_cannot_compare(protocol_setup, tmp_path):
+    from swdb import artifacts, bfs_protocol
+    records, _, original, _, evaluations, comparison = protocol_setup
+    legacy = copy.deepcopy(original)
+    legacy.update(requested_id='legacy-simulator-fixture', settings=_sim_settings(original['settings']))
+    legacy['identity_sha256'] = artifacts.digest(bfs_protocol._identity_payload(legacy))
+    legacy['id'] = legacy['requested_id'] + '.' + legacy['identity_sha256'][:16]
+    # Import an explicitly synthetic historical record; public add still cannot create protocols.
+    records.write(f"protocols/{legacy['id']}.yaml", legacy)
+    retrieved = records.swdb('get', legacy['id'], '--format', 'json')
+    assert retrieved.returncode == 0 and json.loads(retrieved.stdout) == legacy
+    for role in ('baseline', 'candidate'):
+        item = _fixture_rebind(evaluations[role], legacy, role, 'legacy-evaluation-' + role)
+        _add_record(records, tmp_path, item); comparison[role + '_evaluation'] = item['id']
+    comparison.update(id='legacy-rejected-comparison', protocol=legacy['id'])
+    rejected = _command(records, 'compare-evaluations', _payload(tmp_path, 'legacy-comparison', comparison), succeeds=False)
+    assert 'superseding protocol' in str(rejected['decision']['reasons']) and not rejected['gain_claim']
+
+
 def test_controlled_and_artifact_simulator_protocols_keep_distinct_attribution(protocol_setup, tmp_path):
     records, _, _, request, evaluations, comparison = protocol_setup
     controlled = _sim_settings(request["settings"])
+    _model_identity_fixture(records, tmp_path, controlled, evaluations, fixed=True)
     mismatch = copy.deepcopy(controlled)
     mismatch["targets"]["candidate"]["configuration"]["cache"]["llc_kib"] = 16384
     request.update(id="incompatible-control", settings=mismatch)
@@ -406,6 +589,12 @@ def test_controlled_and_artifact_simulator_protocols_keep_distinct_attribution(p
         result = _command(records, "compare-evaluations", _payload(tmp_path, "compare-" + mode, comparison))
         assert result["decision"]["state"] == "fixture_comparison" and not result["gain_claim"]
         assert result["metrics"]["attribution"] == ("joint_hardware_software" if mode == "controlled_simulator" else "artifact_configuration_pair")
+        chain = records.swdb('get', result['id'], '--chain', '--format', 'json')
+        assert chain.returncode == 0, chain.stderr
+        ids = json.loads(chain.stdout)['records']
+        assert 'explicit-model-fixture' in ids
+        for item in settings['reference_artifacts'].values():
+            assert item['candidate'] in ids and item['source_snapshot'] in ids
 
 
 def test_corresponding_region_ratio_is_separate_from_bfs_roi(protocol_setup, tmp_path):

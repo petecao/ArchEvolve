@@ -108,20 +108,13 @@ def _acceleration(evaluation):
         return {"executed": False, "cases": {}, "reason": "requires the real simulated DX100 target"}
     observed_checks = []
     for check in evaluation.get("correctness", {}).get("checks", []):
-        coverage = check.get("coverage", {})
-        counters = coverage.get("instruction_counters", {})
-        completed = coverage.get("completed_trace_units", {})
-        observed = (coverage.get("accelerator_executed") is True
-                    and any(k.endswith(".numInst") and type(v) in (int, float) and v > 0 for k, v in counters.items())
-                    and all(type(completed.get(k)) in (int, float) and completed[k] > 0 for k in ("S", "I", "R", "A")))
+        observed = "executed" in protocol.accelerator_cases(check)
         if observed:
             observed_checks.append(check)
     if observed_checks and not _correctness(evaluation):
         cases = {}
         for name in ("full_tiles", "tail_tiles", "competing_parent_updates"):
-            observations = [check["coverage"].get(name) for check in observed_checks]
-            cases[name] = any(isinstance(item, dict) and item.get("state") == "observed"
-                              and type(item.get("count")) is int and item["count"] > 0 for item in observations)
+            cases[name] = any(name in protocol.accelerator_cases(check) for check in observed_checks)
         return {"executed": True, "cases": cases, "executions": [check["execution"] for check in observed_checks], "reason": None}
     return {"executed": False, "cases": {}, "reason": "no matching positive instruction and completed-unit trace evidence"}
 
@@ -167,7 +160,7 @@ def _fixture_comparison(store, comparison):
                 or comparison['metrics'].get('workload') != workload
                 or comparison['metrics'].get('attribution') != attribution
                 or not profile_package._same(comparison['metrics'].get('disclosed_differences'), settings['differences'])
-                or not profile_package._same(comparison.get('region_comparisons'), protocol._region_comparisons(baseline, candidate, settings))
+                or not profile_package._same(comparison.get('region_comparisons'), protocol._region_comparisons(baseline, candidate, settings, store, comparison.get('request', {}).get('region_packages')))
                 or any(not profile_package._same(comparison['metrics'].get(key), measured[key])
                        for key in ('confidence_interval', 'relative_spread', 'per_source_position_speedup'))):
             return None
@@ -294,7 +287,7 @@ def _comparison(store, comparison, allowed, mode=None):
         if comparison.get("metrics", {}).get("attribution") != attribution or not profile_package._same(
                 comparison.get("metrics", {}).get("disclosed_differences"), p["settings"]["differences"]):
             reasons.append("comparison causal attribution does not match its software/hardware/configuration differences")
-        regions = protocol._region_comparisons(a, b, p["settings"])
+        regions = protocol._region_comparisons(a, b, p["settings"], store, comparison.get("request", {}).get("region_packages"))
         if not profile_package._same(comparison.get("region_comparisons"), regions):
             reasons.append("recorded region ratios differ from their selected scope and attribution")
         limit = p["settings"]["profitability"]["maximum_relative_spread"]
@@ -314,7 +307,7 @@ def _comparison(store, comparison, allowed, mode=None):
                 "comparison_baseline": a.get("implementation"), "candidate_implementation": b.get("implementation"),
                 "workload": wid, "gain": gain and not reasons, "metrics": metrics,
                 "differences": p["settings"]["differences"], "decision": comparison["decision"]}
-    except (Failure, KeyError, TypeError, ValueError, OverflowError, AttributeError) as exc:
+    except (Failure, KeyError, TypeError, ValueError, OverflowError, AttributeError, OSError) as exc:
         reasons.append(str(exc))
         return {"id": comparison["id"], "qualified": False, "reasons": reasons,
                 "protocol": comparison.get("protocol"), "decision": comparison.get("decision"), "gain": False}

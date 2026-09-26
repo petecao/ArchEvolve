@@ -152,6 +152,13 @@ def _reject_frozen_configuration_mismatch(case, records, compiled):
         'profitability': {'minimum_speedup': 1.01, 'maximum_relative_spread': 0.2, 'confidence': 0.95,
                          'bootstrap_resamples': 2000, 'bootstrap_seed': 17},
         'differences': {'software': ['Fixture candidate'], 'accelerator': [], 'configuration': []}, 'region_pairs': []}
+    model = records.read('evaluations/model-build.yaml')
+    model['build']['details'] = {'revision': config['model_revision'], 'state': 'completed',
+                                 'binaries': [request['simulator']]}
+    records.write('evaluations/model-build.yaml', model)
+    settings['simulation_identity'] = {'version': '1.0',
+        'model_build': {'evaluation': model['id'], 'sha256': artifacts.digest(model)},
+        'simulator': request['simulator']}
     path = folder / 'freeze.yaml'
     path.write_text(yaml.safe_dump({'message_version': '1.0', 'id': 'wrong-clock-policy', 'settings': settings}))
     frozen = records.swdb('freeze-protocol', path, '--format', 'json')

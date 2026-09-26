@@ -233,6 +233,7 @@ def memory_observation_issues(profile, *, verify_raw=False, require_available=Fa
             reasons.append('dynamic memory post-collection audit failed: ' + str(audit.get('reason', 'invalid observations')))
     if verify_raw:
         from swdb.bfs_profiling import parse_callgrind
+        from swdb.bfs_native import observation_bytes, StageFailure
         for entries in _callgrind_groups(rows):
             if any(index in rejected for index, _ in entries):
                 continue
@@ -243,15 +244,16 @@ def memory_observation_issues(profile, *, verify_raw=False, require_available=Fa
                     continue  # Fresh remote retrieval exposes availability separately.
                 if not path.is_file() or path.stat().st_size > 64 * 1024 * 1024:
                     raise Failure('raw summary is unavailable or exceeds the 64 MiB parser bound')
-                if artifacts.file_hash(path) != reference['raw_sha256']:
+                raw, digest = observation_bytes(path, 64 * 1024 * 1024, 'Callgrind raw summary')
+                if digest != reference['raw_sha256']:
                     raise Failure('raw summary content identity changed')
-                events = parse_callgrind(path, require_totals=True)
+                events = parse_callgrind(path, require_totals=True, raw=raw)
                 if events.get('Ir', 0) <= 0:
                     raise Failure('raw summary does not identify a nonempty ROI instruction collection')
                 for _, row in entries:
                     if row.get('available') is True and (row['metric'] not in events or row['value'] != events[row['metric']]):
                         raise Failure(f"retained {row['metric']} differs from its raw event summary")
-            except (Failure, OSError, ValueError, KeyError, TypeError) as exc:
+            except (Failure, StageFailure, OSError, ValueError, KeyError, TypeError) as exc:
                 rejected.update(index for index, _ in entries)
                 reasons.append(f"Callgrind execution {entries[0][1].get('execution')} raw validation failed: {exc}")
     return rejected, reasons

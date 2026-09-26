@@ -108,6 +108,24 @@ These four cases cover all eight source/route/graph cells, all four payload form
 
 ## Context pointers
 
+- 2026-09-25 23:11 ET: eleven tickets remain resolved; 160 catalog records
+  validate. Host and native-pilot workers are responsive; the identity worker
+  completed normally with reviewed protocol and collector fixes ready to commit.
+  Upstream native calibration remains complete. The DX100 native pilot holds
+  lane 1 generation 394 at `2eda712`: uniform has 15/15 checked primary samples
+  and a complete package; Kronecker has 11/15 checked samples at 23:11:53 ET.
+  The upstream primary/diagnostic compile pair and both author traversal
+  diagnostic builds passed at `81c0bc0`; lane 0 generation 273 released at
+  23:11:29 ET. These are compilation results, not guest correctness or ROI
+  acceptance. Uniform22 is registered with independently matching SG32/SG64
+  adjacency hashes and author-selected source 2796003; see
+  `observations/uniform22-preparation-a1.json`. At 23:09:31 ET the conservative
+  available estimates were 51.356 GiB on node 0 and 51.525 GiB on node 1,
+  both below the unchanged 52 GiB a6 admission gate; the actual 48 GiB attempt
+  remains unused. The legacy lease is released; free disks are 17 GiB on
+  `/data1` and 196 GiB on `/data`. A fixed-commit isolated full suite is being
+  prepared. No empirical comparison protocol is frozen and no policy-qualified
+  gain exists.
 - 2026-09-25 22:41 ET: all three workers are responsive; 155 catalog records
   validate. Upstream native pilot a2 completed at 22:36 ET with 30/30 primary
   correctness checks, two complete packages, 12 checked diagnostic executions,

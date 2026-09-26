@@ -11,7 +11,7 @@ import shutil
 import pytest
 
 from conftest import records as records_fixture
-from test_bfs_protocol import protocol_seed, _payload, _command
+from test_bfs_protocol import protocol_seed, _payload, _command, _model_identity_fixture
 
 
 def _digest(value):
@@ -32,6 +32,7 @@ def simulation_seed(protocol_seed, tmp_path_factory):
     configuration = {"cpu": "fixture_cpu", "cache": "fixture_cache", "memory": "fixture_memory",
                      "clock_hz": 1000000000, "model_revision": "fixture_revision"}
     settings["targets"] = {role: {"id": "fixture_dx100", "configuration": configuration} for role in ("baseline", "candidate")}
+    identity = _model_identity_fixture(records, tmp, settings, evaluations)
     frozen = _command(records, "freeze-protocol", _payload(tmp, "freeze-simulated", request))
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()
     components = {}
@@ -44,6 +45,8 @@ def simulation_seed(protocol_seed, tmp_path_factory):
                 item["id"] = f"sim-{role}-{position}-{repetition}"
                 item["request"].update(fixture=True, protocol=frozen["id"], protocol_role=role,
                                        protocol_trial={"source_position": position, "repetition": repetition})
+                item["build"].update(model_build=identity["model_build"], simulator=identity["simulator"]["path"],
+                                     simulator_sha256=identity["simulator"]["sha256"])
                 context = item["context"]
                 context.update(protocol=frozen["id"], protocol_trial=item["request"]["protocol_trial"],
                                sources=[source], repetitions=1, target="fixture_dx100",

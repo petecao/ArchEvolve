@@ -1,6 +1,7 @@
 """Exact-preprocessor simulated source-region diagnostics. Updated: 2026-09-25."""
 
 import json
+import hashlib
 from pathlib import Path
 import sys
 
@@ -57,11 +58,14 @@ def prepare(session, request, candidate, root, source, compiler, flags, includes
             'difference': 'scope guards, m5_rpns reads, thread-local stacks and atomic counters; diagnostic times cannot replace primary timing'}
 
 
-def counters(log, count):
+def counters(log, count, *, return_sha256=False):
     """Read exactly one post-seal diagnostic report with bounded integer data."""
     found, sealed = [], 0
-    with Path(log).open(errors='replace') as stream:
-        for line in stream:
+    digest = hashlib.sha256()
+    with Path(log).open('rb') as stream:
+        for raw in stream:
+            digest.update(raw)
+            line = raw.decode(errors='replace')
             if line.strip() == 'SWDB_DX100_ROI_SEALED':
                 sealed += 1
             if line.startswith('SWDB_DX100_REGIONS '):
@@ -83,4 +87,4 @@ def counters(log, count):
                        for key in ('inclusive_ns', 'exclusive_ns', 'invocations'))
                 or row['exclusive_ns'] > row['inclusive_ns']):
             raise Failure('invalid simulated region counter')
-    return rows
+    return (rows, digest.hexdigest()) if return_sha256 else rows

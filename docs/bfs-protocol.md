@@ -55,6 +55,10 @@ a workload, protocol, or comparison result. A changed version links its predeces
 and names existing comparisons that need new evidence. These checks protect the
 workflow's history; they are not a signature against a maintainer rewriting all
 authoritative records and evidence.
+The locked writer also rejects two workload or protocol records with the same
+kind, requested name and version, even if their content-addressed IDs differ.
+Concurrent creators cannot replace an existing immutable result or fork one
+logical version silently.
 Baseline-role dispatch and comparison also resolve the explicitly selected
 implementation's application source and full manifest. The candidate and source
 snapshot must match those bytes and their application, function, and revision.
@@ -88,6 +92,32 @@ thread count, ROI, and verifier to `validate_protocol_for_simulation`; any misma
 rejects the binding. The source and registered SG file must match the frozen
 loaded-adjacency identity. Diagnostic requests without a protocol remain diagnostic.
 
+New simulated freezes also require `simulation_identity.version: "1.0"`, an exact
+`model_build` evaluation ID and record `sha256`, and the `simulator` path and SHA256
+listed in that completed build receipt. The complete build record binds the source,
+compiler receipt and recorded dependencies. Frozen dispatch rehashes the simulator,
+receipt and runtime shared libraries, including `libramulator.so`; comparison checks
+the selected model and simulator against the evaluation and component bindings.
+The build's recorded system package versions are evidence, not invented file hashes.
+An `artifact_reference` protocol, or a protocol whose two guest adapters are
+`dx100.author_artifact.v1`, additionally requires `reference_artifacts` for both
+roles: `candidate`, `candidate_sha256` (record digest), `source_snapshot`,
+`source_snapshot_sha256`, `source_artifact_sha256`, and `binary: {path, sha256}`.
+Those candidates must match their unchanged catalog sources, and their binaries
+must belong to the frozen model receipt. Future rewrite protocols pin the model
+without requiring an unknown future candidate binary. Native freezes are unchanged.
+Legacy simulated protocol records remain readable, but missing bindings cannot
+authorize a new simulator dispatch or comparison gain. Publish a superseding
+protocol and collect fresh evidence; never retrofit a prior freeze.
+`correctness.required_accelerator_cases` is an optional per-role mapping of lists
+using only `executed`, `full_tiles`, `tail_tiles`, and `competing_parent_updates`.
+New author/reference protocols require `baseline: []` and candidate `executed`.
+Every required timed replay must contain matching typed observations: positive
+instruction counts and completed S/I/R/A traces for execution, plus positive
+observed case counts when a particular case is requested. Scalar fallback, labels,
+missing cells and context strings cannot satisfy those requirements. Fixture
+counter shapes exercise this contract without becoming execution evidence.
+
 `aggregate-evaluations` takes an `id`, `protocol`, `protocol_role`, and an
 `evaluations` list of distinct execution IDs. Each component must retain exactly
 one timed traversal and its matching structural check. The completed grid must
@@ -98,6 +128,24 @@ arguments do not stand in for completed executions. The result retains
 context, raw artifacts, and stages. Comparisons revalidate those component hashes
 and observations. Missing cells, failed components, duplicate cells, and identity
 mismatches produce a retained incompatible aggregation with no gain claim.
+
+For simulator region pairs, freeze `evidence: simulated_diagnostic_profile` and
+`collector` with `backend: libclang-cindex`,
+`collector: dx100.m5_rpns.source_scopes.v1`, `library_sha256`, `pass_sha256`, and
+`runtime_sha256`. The comparison request's `region_packages` maps every primary
+component evaluation ID in both grids to its exact sealed package. The comparator
+checks current package/profile/compile identities, independently passed diagnostic
+correctness, source/repetition coverage, the separate diagnostic binary, and the
+collector's actual source extent and timing scope. Local diagnostic raw reports
+are parsed and hashed from the same byte stream; stale values are rejected even
+after a package is reassembled. Remote raw bytes remain unverified during local
+metadata retrieval. Region results retain each package, collector, compilation,
+binary, raw-report reference, invocation count and source cell. They compute a
+geometric mean of per-source median diagnostic duration ratios; `per_invocation`
+divides each diagnostic duration by its own invocation count first. These are
+simulated elapsed intervals summed across executing threads, including waiting and
+overlap. They always retain `primary_bfs_roi: false` and `gain_claim: false` and
+cannot substitute for primary BFS ROI timing.
 
 The workload `definition` contains the kernel, family, generator, normalization,
 ordered sources, representation references, computed canonical hash, and realized

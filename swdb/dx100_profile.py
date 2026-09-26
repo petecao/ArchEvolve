@@ -47,7 +47,9 @@ def diagnostic_regions(store, request, evaluation, candidate, root):
     if not stage or not stage.get('log_sha256'):
         raise Failure('diagnostic simulation log identity is unavailable')
     log = _file({'path': stage['log'], 'sha256': stage['log_sha256']}, 'diagnostic log')
-    observed = counters(log, len(definition['regions']))
+    observed, observed_sha256 = counters(log, len(definition['regions']), return_sha256=True)
+    if observed_sha256 != stage['log_sha256']:
+        raise Failure('diagnostic log changed while reading its region counters')
     regions = []
     for original, values in zip(definition['regions'], observed):
         row = _region(original, root)
@@ -67,8 +69,8 @@ def diagnostic_regions(store, request, evaluation, candidate, root):
     source = diagnostic['context']['source']
     trial = evaluation['context'].get('protocol_trial', {'source_position': 0, 'repetition': 0})
     run = {'kind': 'regions', 'evaluation': diagnostic['id'], 'source': source, **trial,
-        'binary_sha256': diagnostic['build']['binary_sha256'], 'output': str(log), 'output_sha256': stage['log_sha256'],
-        'region_output': str(log), 'region_output_sha256': stage['log_sha256'],
+        'binary_sha256': diagnostic['build']['binary_sha256'], 'output': str(log), 'output_sha256': observed_sha256,
+        'region_output': str(log), 'region_output_sha256': observed_sha256,
         'evidence_kind': diagnostic['evidence_kind'], 'correctness': copy.deepcopy(diagnostic['correctness']),
         'differences_from_primary': [definition['difference']], 'host_cost_is_performance': False}
     return regions, definition['discovery'], run, {'path': str(binary), 'sha256': run['binary_sha256'], 'difference': definition['difference']}
@@ -196,7 +198,7 @@ def collect(args):
     data = workflow.record("region_profile", request["id"], request=request,
         outcome={"state": "submitted", "stage": "collection", "reason": None},
         stages=[], regions=[], dynamic_memory=[], executions=[], raw_artifacts=[], reasons=[], gain_claim=False)
-    workflow.persist(args.records, data, getattr(args, "db", None))
+    workflow.persist(args.records, data, getattr(args, "db", None), create=True)
     try:
         base_fields = {"message_version", "id", "evaluation", "budget"}
         if (set(request) not in (base_fields | {'discovery_profile'}, base_fields | {'diagnostic_evaluation'})):
