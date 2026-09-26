@@ -1,6 +1,7 @@
 """Public simulated collector fixtures, not hardware acceptance. Updated: 2026-09-25."""
 
 import hashlib
+import copy
 import json
 from pathlib import Path
 
@@ -11,7 +12,8 @@ from swdb import artifacts, workflow
 from test_dx100 import case, execution_request, reference
 
 
-@pytest.mark.parametrize("mode", ["normal", "missing-memory", "truncated", "changed-stats", "multiple-intervals", "wrong-clock", "stale-region"])
+@pytest.mark.parametrize("mode", ["normal", "missing-memory", "truncated", "changed-stats", "multiple-intervals", "wrong-clock", "stale-region",
+    "diagnostic", "diagnostic-source-mismatch", "diagnostic-invalid-counters"])
 def test_public_simulated_collector_retains_identity_and_incomplete_attribution(case, records, mode):
     records.copy_repo("applications")
     repository = Path(__file__).resolve().parents[1]
@@ -72,25 +74,60 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
         Path(evaluation["context"]["statistics"]["path"]).write_text("different")
     request = {"message_version": "1.0", "id": "profile", "evaluation": evaluation["id"],
         "discovery_profile": "discovery", "budget": {"total_seconds": 60}}
+    if mode.startswith('diagnostic'):
+        evaluation['context']['workload'] = {'canonical_sha256': 'a' * 64}
+        records.write('evaluations/' + evaluation['id'] + '.yaml', evaluation)
+        diagnostic = copy.deepcopy(evaluation)
+        diagnostic['id'] = 'diagnostic'
+        diagnostic['context']['candidate_build'] = 'diagnostic-build'
+        if mode == 'diagnostic-source-mismatch':
+            diagnostic['context']['candidate_sha256'] = 'b' * 64
+        binary = folder / 'diagnostic-binary'; binary.write_bytes(b'fixture diagnostic binary')
+        diagnostic['build'].update(binary=str(binary), binary_sha256=artifacts.file_hash(binary))
+        log = folder / 'diagnostic-log'
+        values = {'format': 'swdb.dx100.regions.v1', 'clock': 'm5_rpns', 'errors': 0,
+                  'regions': [{'index': i, 'inclusive_ns': 300 - i * 100, 'exclusive_ns': 100,
+                               'invocations': 2} for i in range(len(rows))]}
+        if mode == 'diagnostic-invalid-counters': values['regions'][0]['exclusive_ns'] = 900
+        log.write_text('SWDB_DX100_ROI_SEALED\nSWDB_DX100_REGIONS ' + json.dumps(values) + '\n')
+        diagnostic['stages'] = [{'stage': 'simulation', 'state': 'complete', 'started': evaluation['stages'][0]['started'],
+                                 'log': str(log), 'log_sha256': artifacts.file_hash(log)}]
+        build = copy.deepcopy(diagnostic); build['id'] = 'diagnostic-build'
+        build['outcome']['stage'] = 'candidate_build'
+        build['context']['diagnostic'] = {'regions': rows, 'discovery': {'backend': 'libclang-cindex', 'unresolved': []},
+            'instrumented_source': reference(path), 'runtime': reference(binary),
+            'quantity': 'per-thread simulated elapsed, summed; includes waits', 'difference': 'explicit source-scope fixture instrumentation'}
+        records.write('evaluations/diagnostic-build.yaml', build)
+        records.write('evaluations/diagnostic.yaml', diagnostic)
+        request.pop('discovery_profile')
+        request['diagnostic_evaluation'] = 'diagnostic'
     request_file = folder / "profile.yaml"
     request_file.write_text(yaml.safe_dump(request))
     run = records.swdb("dx100-profile", request_file, "--runs-dir", folder / "runs", "--format", "json")
     assert run.returncode in {0,1}, run.stderr
+    assert run.stdout, run.stderr
     profile = json.loads(run.stdout)
     assert json.loads(records.swdb("get", "profile", "--format", "json").stdout) == profile
     retrieved = json.loads(records.swdb("get", evaluation["id"], "--format", "json").stdout)
     assert retrieved["correctness"]["state"] == "unverified"
     assert retrieved["gain_claim"] is False
-    if mode in {"truncated", "changed-stats", "wrong-clock", "stale-region"}:
+    if mode in {"truncated", "changed-stats", "wrong-clock", "stale-region", 'diagnostic-source-mismatch', 'diagnostic-invalid-counters'}:
         assert profile["outcome"]["state"] == "failed"
         assert retrieved["timing"] == []
     else:
-        assert profile["outcome"]["state"] == "partial"
+        assert profile["outcome"]["state"] == ('complete' if mode == 'diagnostic' else "partial")
         assert retrieved["timing"][0]["duration_s"] == 0.001
         assert profile["context"]["roi_observation"]["clocks"]["system.cpu_clk_domain"]["period_ticks"] == [313]
         assert profile["context"]["roi_observation"]["interval_count"] == (2 if mode == "multiple-intervals" else 1)
-        assert profile["regions"][0]["metrics"] == {}
-        assert profile["regions"][1]["metrics"]["inclusive_simulated_seconds"] == 0.0004
-        assert "exclusive_simulated_seconds" not in profile["regions"][1]["metrics"]
+        if mode == 'diagnostic':
+            assert profile['regions'][0]['metrics']['inclusive_simulated_seconds'] == 300 / 1e9
+            assert profile['regions'][0]['metrics']['exclusive_simulated_seconds'] == 100 / 1e9
+            assert profile['executions'][1]['correctness']['state'] == 'unverified'
+            assert profile['artifacts']['region_binary']['sha256'] != profile['artifacts']['memory_binary']['sha256']
+            assert profile['dynamic_memory'][0]['raw_sha256'] == evaluation['context']['statistics']['sha256']
+        else:
+            assert profile["regions"][0]["metrics"] == {}
+            assert profile["regions"][1]["metrics"]["inclusive_simulated_seconds"] == 0.0004
+            assert "exclusive_simulated_seconds" not in profile["regions"][1]["metrics"]
         assert bool(profile["dynamic_memory"]) == (mode != "missing-memory")
         assert profile["executions"][0]["evidence_kind"] == "contract_fixture"

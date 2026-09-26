@@ -18,6 +18,57 @@ from swdb.dx100 import _file
 from swdb.bfs_native import StageFailure
 
 
+def diagnostic_regions(store, request, evaluation, candidate, root):
+    from swdb.dx100_diagnostic import counters
+    from swdb.profile_package import _context, _region
+    diagnostic = store.get(request.get('diagnostic_evaluation'), 'evaluation')
+    if (not diagnostic or diagnostic.get('candidate') != candidate['id']
+            or diagnostic.get('outcome', {}).get('state') != 'complete'
+            or diagnostic.get('evidence_kind') != evaluation['evidence_kind']
+            or artifacts.digest(_context(diagnostic)) != artifacts.digest(_context(evaluation))):
+        raise Failure('diagnostic execution differs from the exact primary source/workload/configuration/ROI')
+    build = store.get(diagnostic['context'].get('candidate_build'), 'evaluation')
+    if (not build or not build.get('context', {}).get('diagnostic')
+            or build.get('outcome', {}).get('state') != 'complete'
+            or build['outcome'].get('stage') != 'candidate_build'
+            or build.get('candidate') != candidate['id']
+            or build.get('evidence_kind') != diagnostic['evidence_kind']):
+        raise Failure('diagnostic execution has no instrumented compilation receipt')
+    definition = build['context']['diagnostic']
+    if definition.get('discovery', {}).get('backend') != 'libclang-cindex':
+        raise Failure('diagnostic compilation does not identify the shared compiler discovery')
+    if (build['context'].get('candidate_sha256') != candidate['artifact']['sha256']
+            or build['build']['binary_sha256'] != diagnostic['build']['binary_sha256']):
+        raise Failure('diagnostic compilation source/binary identity differs')
+    binary = _file({'path': build['build']['binary'], 'sha256': build['build']['binary_sha256']}, 'diagnostic binary')
+    for key in ('instrumented_source', 'runtime'):
+        _file(definition[key], 'diagnostic ' + key)
+    stage = next((item for item in diagnostic['stages'] if item['stage'] == 'simulation'), None)
+    if not stage or not stage.get('log_sha256'):
+        raise Failure('diagnostic simulation log identity is unavailable')
+    log = _file({'path': stage['log'], 'sha256': stage['log_sha256']}, 'diagnostic log')
+    observed = counters(log, len(definition['regions']))
+    regions = []
+    for original, values in zip(definition['regions'], observed):
+        row = _region(original, root)
+        row.update(metrics={'inclusive_simulated_seconds': values['inclusive_ns'] / 1e9,
+                            'exclusive_simulated_seconds': values['exclusive_ns'] / 1e9,
+                            'invocations': values['invocations']},
+            basis='simulated', scope='accumulated simulated elapsed per executing thread within diagnostic complete-call ROI',
+            artifact_sha256=diagnostic['build']['binary_sha256'], source_artifact_sha256=candidate['artifact']['sha256'],
+            attribution={'inclusive': True, 'exclusive': 'nested guarded intervals subtracted on the same thread',
+                         'whole_lexical_region': True, 'clock': 'm5_rpns',
+                         'quantity': definition['quantity'], 'limitations': definition['difference']})
+        regions.append(row)
+    source = diagnostic['context']['source']
+    run = {'kind': 'regions', 'evaluation': diagnostic['id'], 'source': source, 'source_position': 0, 'repetition': 0,
+        'binary_sha256': diagnostic['build']['binary_sha256'], 'output': str(log), 'output_sha256': stage['log_sha256'],
+        'region_output': str(log), 'region_output_sha256': stage['log_sha256'],
+        'evidence_kind': diagnostic['evidence_kind'], 'correctness': copy.deepcopy(diagnostic['correctness']),
+        'differences_from_primary': [definition['difference']], 'host_cost_is_performance': False}
+    return regions, definition['discovery'], run, {'path': str(binary), 'sha256': run['binary_sha256'], 'difference': definition['difference']}
+
+
 def statistics(path, deadline):
     """Read complete raw intervals; require an explicit caller-selected interval."""
     intervals, current = [], None
@@ -142,8 +193,9 @@ def collect(args):
         stages=[], regions=[], dynamic_memory=[], executions=[], raw_artifacts=[], reasons=[], gain_claim=False)
     workflow.persist(args.records, data, getattr(args, "db", None))
     try:
-        if set(request) != {"message_version", "id", "evaluation", "discovery_profile", "budget"}:
-            raise Failure("DX100 profile requires evaluation, discovery_profile and explicit budget")
+        base_fields = {"message_version", "id", "evaluation", "budget"}
+        if (set(request) not in (base_fields | {'discovery_profile'}, base_fields | {'diagnostic_evaluation'})):
+            raise Failure("DX100 profile requires evaluation, exactly one discovery_profile or diagnostic_evaluation, and explicit budget")
         budget = request["budget"]
         if not isinstance(budget, dict) or set(budget) != {"total_seconds"} or type(budget["total_seconds"]) is not int or not 1 <= budget["total_seconds"] <= 600:
             raise Failure("collector budget.total_seconds must be an integer from 1 to 600")
@@ -153,10 +205,10 @@ def collect(args):
             raise Failure("evaluation does not identify DX100 execution")
         context = evaluation["context"]
         candidate = store.get(evaluation.get("candidate"), "candidate")
-        discovery = store.get(request["discovery_profile"], "region_profile")
-        if not candidate or not discovery or discovery.get("candidate") != candidate["id"]:
+        discovery = store.get(request.get("discovery_profile"), "region_profile")
+        if not candidate or (not request.get('diagnostic_evaluation') and (not discovery or discovery.get("candidate") != candidate["id"])):
             raise Failure("collection requires compiler discovery for this exact candidate")
-        if discovery.get("discovery", {}).get("backend") != "libclang-cindex":
+        if discovery and discovery.get("discovery", {}).get("backend") != "libclang-cindex":
             raise Failure("source regions must come from the shared compiler discovery engine")
         root = artifacts.verify(candidate["artifact"])
         if context.get("candidate_sha256") != candidate["artifact"]["sha256"]:
@@ -164,7 +216,7 @@ def collect(args):
         from swdb.profile_package import _region
         data.update(evaluation=evaluation["id"], candidate=candidate["id"], source_snapshot=candidate["source_snapshot"],
                     implementation=candidate["implementation"], machine=evaluation["machine"], context=copy.deepcopy(context),
-                    discovery=copy.deepcopy(discovery["discovery"]))
+                    discovery=copy.deepcopy(discovery["discovery"]) if discovery else {})
         data["context"]["primary_binary_sha256"] = evaluation["build"]["binary_sha256"]
         stats_reference = context["statistics"]
         stats = _file(stats_reference, "recorded statistics")
@@ -186,8 +238,8 @@ def collect(args):
             raise Failure("simulation log identity is unavailable")
         log_reference = {"path": stage["log"], "sha256": stage["log_sha256"]}
         log = _file(log_reference, "simulation log")
-        observations = steps(log, deadline)
-        for original in discovery["regions"]:
+        observations = steps(log, deadline) if discovery else {}
+        for original in discovery["regions"] if discovery else []:
             row = _region(original, root)
             row["metrics"] = {}
             row.update(basis="simulated", artifact_sha256=log_reference["sha256"],
@@ -212,20 +264,42 @@ def collect(args):
             "evidence_kind": evaluation["evidence_kind"], "correctness": copy.deepcopy(evaluation["correctness"]),
             "roi": context["roi"], "statistics": stats_reference, "output": log_reference,
             "differences_from_primary": [], "host_cost_is_performance": False}]
+        if request.get('diagnostic_evaluation'):
+            regions, discovered, run, binary = diagnostic_regions(store, request, evaluation, candidate, root)
+            data.update(regions=regions, discovery=discovered, reasons=[])
+            data['executions'].append(run)
+            data['artifacts'] = {'primary_binary_sha256': evaluation['build']['binary_sha256'],
+                'region_binary': binary, 'memory_binary': {'path': evaluation['build']['binary'],
+                    'sha256': evaluation['build']['binary_sha256'], 'difference': 'actual primary modeled memory counters'}}
+            data['executions'][0].update(kind='memory', source=context['source'], source_position=0, repetition=0,
+                output=str(log), output_sha256=log_reference['sha256'], raw_artifact=str(stats), raw_sha256=stats_reference['sha256'])
+            for row in data['dynamic_memory']:
+                row.update(artifact_sha256=evaluation['build']['binary_sha256'], source_artifact_sha256=candidate['artifact']['sha256'],
+                    execution={'source': context['source'], 'source_position': 0, 'repetition': 0},
+                    raw_artifact=str(stats), raw_sha256=stats_reference['sha256'])
+            if not data['dynamic_memory']:
+                data['reasons'].append('No supported actual dynamic memory counter appears in the primary interval.')
+            if discovered.get('unresolved'):
+                data['reasons'].append('Compiler discovery retains unresolved source scopes.')
+            if not all(any(row['kind'] == kind and row['metrics']['invocations'] > 0 for row in regions) for kind in ('function', 'loop')):
+                data['reasons'].append('No invoked function and loop pair has complete diagnostic timing.')
         data["raw_artifacts"] = [{"kind": "statistics", **stats_reference}, {"kind": "log", **log_reference},
                                  {"kind": "configuration", **context["actual_configuration"]}]
-        timing = {"source": context["source"], "source_position": 0, "repetition": 0,
+        trial = context.get('protocol_trial', {'source_position': 0, 'repetition': 0})
+        timing = {"source": context["source"], **trial,
             "duration_s": roi["duration_s"], "roi": context["roi"], "basis": "simulated", "quantity": "simulated_roi_seconds",
-            "binary_sha256": evaluation["build"]["binary_sha256"], "output": str(stats), "output_sha256": stats_reference["sha256"],
+            "binary_sha256": evaluation["build"]["binary_sha256"], "output": str(log), "output_sha256": log_reference["sha256"],
+            "statistics_sha256": stats_reference["sha256"],
             "verified": evaluation["correctness"]["state"] == "passed", "evidence_kind": evaluation["evidence_kind"]}
         if time.monotonic() > deadline:
             raise StageFailure("budget_exhausted", "profile collection time budget exhausted")
         if evaluation["timing"] and evaluation["timing"] != [timing]:
             raise Failure("existing primary timing differs from this interval; preserve it and investigate")
         evaluation["timing"] = [timing]
-        evaluation["profiling"] = {"state": "incomplete", "region_profile": data["id"], "reasons": data["reasons"]}
+        evaluation["profiling"] = {"state": "incomplete" if data['reasons'] else 'complete', "region_profile": data["id"], "reasons": data["reasons"]}
         workflow.persist(args.records, evaluation, getattr(args, "db", None))
-        data["outcome"] = {"state": "partial", "stage": "collection", "reason": data["reasons"][0]}
+        data["outcome"] = {"state": "partial" if data['reasons'] else 'complete', "stage": "collection",
+            "reason": data['reasons'][0] if data['reasons'] else 'Exact source scopes and modeled memory collected; diagnostic durations are separate from primary timing.'}
     except (Failure, StageFailure, OSError, ValueError, KeyError, TypeError, configparser.Error) as exc:
         if isinstance(exc, Failure) and "persisted, but query indexing failed" in str(exc):
             raise

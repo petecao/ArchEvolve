@@ -8,6 +8,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 
@@ -24,10 +25,17 @@ def main():
     p.add_argument('--runs-dir', type=Path, required=True)
     p.add_argument('--lane', type=int, choices=(0, 1), required=True)
     a = p.parse_args()
+    if not re.fullmatch(r'[a-z0-9][a-z0-9._-]*', a.id):
+        raise SystemExit('smoke ID must use the record identifier syntax')
+    a.runs_dir = a.runs_dir.resolve()
+    if not any(a.runs_dir.is_relative_to(base) for base in (
+            '/data1/yanruj/EvolveSWDB_runs', '/data/yanruj/EvolveSWDB_runs')):
+        raise SystemExit('smoke raw output must use authorized EvolveSWDB_runs storage')
     store = Store(ROOT / 'records')
     profile._verified_lane(store.get('mbit10', 'machine'), f'mbit10-evaluation-node{a.lane}')
     build = store.get(a.build_evaluation, 'evaluation')
-    if build['outcome']['state'] != 'complete' or build['outcome']['stage'] != 'build':
+    if (build['outcome']['state'] != 'complete' or build['outcome']['stage'] != 'build'
+            or build['evidence_kind'] != 'execution'):
         raise SystemExit('a completed real model build is required')
     folder = a.runs_dir.resolve() / (a.id + '.driver')
     folder.mkdir(parents=True, exist_ok=False)

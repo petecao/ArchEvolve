@@ -213,6 +213,14 @@ def main():
         receipt["runtime_dependencies"] = {path: output(["ldd", str(source / path)])
             for path in ("build/X86/gem5.opt", "benchmarks/gapbs/bfs", "benchmarks/gapbs/bfs_maa")}
         receipt["libc_version"] = output(["ldd", "--version"])
+        # The upstream repository tracks this generated object. Restore only
+        # that known byproduct after linking; preserve its produced identity so
+        # the subsequent strict source-tree guard remains meaningful.
+        object_path = source / 'benchmarks/gapbs/m5op.o'
+        receipt['generated_tracked_object'] = {'path': str(object_path), 'produced_sha256': digest(object_path)}
+        subprocess.run(['git', 'restore', '--source=HEAD', '--', 'benchmarks/gapbs/m5op.o'],
+                       cwd=source, check=True, timeout=30)
+        receipt['generated_tracked_object']['restored_sha256'] = digest(object_path)
     except (OSError, subprocess.SubprocessError) as exc:
         receipt.update(state="failed", reason=f"build_artifact_identity_failure: {exc}",
                        ended_unix=time.time(), host_wall_seconds=time.monotonic() - start)

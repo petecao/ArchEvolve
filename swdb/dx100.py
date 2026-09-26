@@ -67,9 +67,9 @@ def _prepare(args, action, store, request, data):
     if action == "build":
         fields |= {"fixture_command"}
     elif action == "compile":
-        fields |= {"candidate", "build_evaluation", "function", "accelerated", "roi", "fixture_compiler"}
+        fields |= {"candidate", "build_evaluation", "function", "accelerated", "roi", "fixture_compiler", "diagnostic_regions", "discovery"}
     else:
-        fields |= {"simulator", "binary", "workload", "configuration", "checkpoint_manifest", "build_evaluation", "verification", "candidate", "candidate_build"}
+        fields |= {"simulator", "binary", "workload", "configuration", "checkpoint_manifest", "build_evaluation", "verification", "candidate", "candidate_build", "protocol", "protocol_role", "protocol_trial"}
     if request.keys() - fields:
         raise Failure(f"unknown DX100 request fields: {sorted(request.keys() - fields)}")
     if not isinstance(request.get("fixture", False), bool):
@@ -169,7 +169,12 @@ def _bounded_process(session, name, command, timeout, memory, storage, env=None)
                     if used > memory * 1024 * 1024:
                         raise StageFailure("budget_exhausted", "simulator process-group memory budget exhausted")
                 if time.monotonic() - last_storage >= 30:
-                    used = int(subprocess.check_output(["du", "-sk", str(session.folder)], text=True, timeout=30).split()[0])
+                    directories = [session.folder]
+                    build_dir = session.data.get('context', {}).get('build_directory')
+                    if build_dir and not Path(build_dir).is_relative_to(session.folder):
+                        directories.append(Path(build_dir))
+                    used = sum(int(subprocess.check_output(["du", "-sk", str(path)], text=True, timeout=30).split()[0])
+                               for path in directories)
                     if used > storage * 1024 * 1024:
                         raise StageFailure("budget_exhausted", "raw artifact storage budget exhausted")
                     last_storage = time.monotonic()
@@ -284,6 +289,10 @@ def _configuration(request, target, root):
         settings += ["--maa", "--maa_num_maas", "1", "--maa_num_tile_elements", str(tile),
                      "--maa_l2_uncacheable", "--maa_l3_uncacheable", "--maa_num_initial_row_table_slices", "32"]
     return settings, {**config, "guest_cores": 4, "guest_memory": "16GB", "cpu": "X86O3CPU",
+        "clock_hz": 3200000000, "model_revision": REVISION,
+        "cache": {"l1d_kib": 32, "l1i_kib": 32, "l1_assoc": 8, "l2_kib": 256, "l2_assoc": 4,
+                  "l3_mib": size, "l3_assoc": assoc, "cacheline_bytes": 64, "prefetcher": "StridePrefetcher"},
+        "memory": {"model": "Ramulator2", "channels": 2, "size": "16GB", "configuration_sha256": artifacts.file_hash(ramulator)},
         "cpu_clock": "3.2GHz", "ramulator_config_sha256": artifacts.file_hash(ramulator),
         "command_arguments": settings}
 
@@ -368,6 +377,10 @@ def _correctness(session, request, result_folder, log, completed):
         "parent_results": parent_results,
         "coverage": {**coverage, "accelerator_executed": acceleration, "instruction_counters": counters},
         "scope": "This execution only; finite graph/source checking is not a proof for all inputs."}]}
+    trial = data['context'].get('protocol_trial', {'source_position': 0, 'repetition': 0})
+    data['correctness']['checks'][0].update(passed=state == 'passed', source=data['context']['source'], **trial,
+        binary_sha256=data['build']['binary_sha256'],
+        graph_sha256=data['context'].get('workload', {}).get('canonical_sha256'), output_sha256=artifacts.file_hash(log))
     session.save()
     if explicit_failure:
         raise StageFailure("incorrect", "BFS structural verifier printed FAIL, independently of process exit status")
@@ -401,6 +414,9 @@ def execute(args):
                 raise Failure("candidate binary differs from its compilation receipt")
             for name in ("driver", "m5ops"):
                 _file(compiled["build"][name], f"candidate build {name}")
+            for reference in compiled.get('context', {}).get('diagnostic', {}).values():
+                if isinstance(reference, dict) and set(reference) == {'path', 'sha256'}:
+                    _file(reference, 'candidate diagnostic build input')
         if not request.get("fixture"):
             build_id = request.get("build_evaluation")
             if not isinstance(build_id, str):
@@ -474,6 +490,14 @@ def execute(args):
                               execution_binding_sha256=artifacts.digest(binding), source=source, sources=[source], threads=4)
         data["build"] = {"binary": str(binary), "binary_sha256": request["binary"]["sha256"],
                          "simulator": str(simulator), "simulator_sha256": request["simulator"]["sha256"]}
+        if compiled:
+            data['build'].update({key: compiled['build'][key] for key in ('compiler', 'compiler_version', 'flags', 'adapter')})
+        elif not request.get('fixture'):
+            guest_flags = ['-std=c++11', '-O3', '-Wall', '-g3', '-fopenmp', '-DGEM5']
+            if binary.name != 'bfs':
+                guest_flags += ['-DMAA', '-DNUM_CORES=4', '-DTILE_SIZE=' + ('1024' if binary.name == 'bfs_maa_1K' else '16384')]
+            data['build'].update(compiler='g++-13', compiler_version=receipt['environment']['compiler'].splitlines()[:2],
+                flags=guest_flags, adapter='dx100.author_artifact.v1')
         env = dict(os.environ, OMP_NUM_THREADS="4", OMP_PROC_BIND="false", OMP_DYNAMIC="FALSE")
         verify = request.get("verification")
         driver = paths.HOME / "scripts/dx100_verify.py"
@@ -498,6 +522,19 @@ def execute(args):
             env.update(SWDB_DX100_MODEL_ROOT=str(root),
                 SWDB_DX100_EXECUTION_BINDING_SHA256=data["context"]["execution_binding_sha256"],
                 SWDB_DX100_VERIFY_MAX_TICKS=str(verify["max_ticks"]))
+        instrumentation = {'treatment': 'source_scope_diagnostic' if compiled and compiled['context'].get('diagnostic') else 'primary',
+            'roi': data['context']['roi'], 'suppressed_internal_events': compiled['context']['suppressed_internal_events'] if compiled else [],
+            'verification': 'same_guest_post_roi' if verify else 'none',
+            'debug_flags': 'MAATrace,MAARangeFuser,MAAIndirect' if verify and verify.get('coverage') else 'MAATrace'}
+        data['context'].update(instrumentation=instrumentation, verifier='dx100.bfs.verifier.v1' if verify else None, repetitions=1)
+        if request.get('protocol'):
+            if not request.get('candidate') or not verify:
+                raise Failure('frozen simulation requires candidate identity and exact timed-binary verification')
+            bound = bfs_protocol.validate_protocol_for_simulation(store, request, candidate,
+                actual_target=target['id'], actual_configuration=configured, actual_build=data['build'],
+                actual_instrumentation=instrumentation, actual_threads=4, actual_roi=data['context']['roi'],
+                actual_verifier=data['context']['verifier'])
+            data['context'].update(bound['context'])
         if not request.get("fixture"):
             env.update(TMPDIR=str(root / ".tmp"), XDG_CACHE_HOME=str(root / ".cache"))
             Path(env["TMPDIR"]).mkdir(exist_ok=True)
@@ -570,6 +607,18 @@ def execute(args):
         data["context"].update(exit_tick=int(causes[-1][0]), exit_cause=causes[-1][1].strip(),
             actual_configuration={"path": str(actual_config), "sha256": artifacts.file_hash(actual_config)},
             statistics={"path": str(stats), "sha256": artifacts.file_hash(stats)})
+        if verify:
+            from swdb.dx100_profile import statistics, duration
+            intervals = statistics(stats, time.monotonic() + 60)
+            if len(intervals) != 1:
+                raise StageFailure('missing_observation', 'sealed primary timing requires exactly one interval')
+            elapsed = duration(intervals[0])
+            trial = data['context'].get('protocol_trial', {'source_position': 0, 'repetition': 0})
+            data['timing'] = [{'source': source, **trial, 'duration_s': elapsed['duration_s'], 'roi': data['context']['roi'],
+                'basis': 'simulated', 'quantity': 'simulated_roi_seconds', 'binary_sha256': data['build']['binary_sha256'],
+                'output': str(log), 'output_sha256': artifacts.file_hash(log), 'statistics_sha256': artifacts.file_hash(stats),
+                'verified': data['correctness']['state'] == 'passed', 'evidence_kind': data['evidence_kind']}]
+            data['context']['roi_ticks'] = elapsed
         data["raw_artifacts"].append({"kind": "simulation", "artifact": artifacts.identify(result_folder)})
         session.finish()
         data["outcome"] = {"state": "complete", "stage": "execution", "reason": (

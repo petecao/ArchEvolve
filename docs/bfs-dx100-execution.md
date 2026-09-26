@@ -168,3 +168,14 @@ before the protected structural verifier. Output includes its source, length,
 actual storage address, and a clearly labeled noncryptographic FNV-1a fingerprint;
 the enclosing output itself has a SHA-256 identity. A successful compilation
 does not establish accelerator execution, correctness, or performance.
+
+Generated guest build inputs and binaries use
+`/data1/yanruj/EvolveSWDB_builds/ID` on mbit10; the bounded process monitor
+accounts for that folder and the raw-log folder together. The compiler version
+and adapter are recorded with actual flags. A simulation request may supply
+`protocol`, `protocol_role`, and `protocol_trial: {source_position: N,
+repetition: N}`. Before checkpoint creation, the adapter validates actual build,
+modeled configuration, instrumentation, workload, source, and ROI against the
+frozen role. Each execution retains exactly one real source/repetition timing
+and corresponding detailed structural check. A later public aggregation joins
+separate completed executions; requested repetitions do not become evidence.

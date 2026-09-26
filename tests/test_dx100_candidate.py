@@ -11,11 +11,12 @@ import yaml
 
 from swdb import artifacts, workflow
 from swdb.dx100_candidate import driver
-from test_dx100 import case, reference
+from test_dx100 import case, reference, execution_request
 
 
 @pytest.mark.parametrize("override", [False, True])
-def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_driver_override(case, records, override):
+@pytest.mark.parametrize('diagnostic', [False, True])
+def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_driver_override(case, records, override, diagnostic):
     request, invoke, folder = case
     records.copy_repo("applications")
     repository = Path(__file__).resolve().parents[1]
@@ -45,12 +46,18 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
     assembly.parent.mkdir(parents=True)
     assembly.write_text("// fixture assembly\n")
     compiler = folder / "fixture-compiler"
-    compiler.write_text(f"#!{sys.executable}\n" + "import pathlib,sys\np=pathlib.Path(sys.argv[sys.argv.index('-o')+1]); p.write_text('#!/bin/sh\\nexit 0\\n'); p.chmod(0o755)\n")
+    compiler.write_text(f"#!{sys.executable}\n" + "import pathlib,sys\n"
+        "if '-dM' in sys.argv:\n print('#define _OPENMP 201511');sys.exit(0)\n"
+        "p=pathlib.Path(sys.argv[sys.argv.index('-o')+1]); p.write_text('#!/bin/sh\\nexit 0\\n'); p.chmod(0o755)\n")
     compiler.chmod(0o755)
     compile_request = request("candidate-build")
     compile_request.update(candidate="candidate", build_evaluation="model-build", function="DOBFS", accelerated=False,
         roi="bfs.complete_call.v1", fixture_compiler=reference(compiler),
         budget={"total_seconds": 60, "memory_gib": 1, "storage_gib": 1, "build_seconds": 10})
+    if diagnostic:
+        from test_bfs_profiling import compiler_inventory
+        library, arguments = compiler_inventory()
+        compile_request.update(diagnostic_regions=True, discovery={'library': library})
     result = invoke("dx100-compile", compile_request)
     assert result["outcome"]["state"] == ("failed" if override else "complete"), result["outcome"]
     if not override:
@@ -59,10 +66,62 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
         assert result["context"]["roi"] == "bfs.complete_call.v1"
         assert "m5_dump_stats" in result["context"]["suppressed_internal_events"]
         assert result["context"]["verifier_source"]["bounds_check"]
+        if diagnostic:
+            assert result['context']['diagnostic']['discovery']['actual_build_flags'] == result['build']['flags']
+            assert result['context']['diagnostic']['regions'][0]['name'] == 'BFSVerifier'
+            assert Path(result['context']['diagnostic']['instrumented_source']['path']).is_file()
+        else:
+            _reject_frozen_configuration_mismatch(case, records, result)
+
+
+def _reject_frozen_configuration_mismatch(case, records, compiled):
+    from test_bfs_protocol import _workload_request
+    from swdb.dx100 import _configuration
+    _, invoke, folder = case
+    graph = {'num_vertices': 3, 'directed': True, 'edges': [[0, 1], [1, 2]]}
+    registration = _workload_request(records, folder, graph)
+    path = folder / 'register.yaml'; path.write_text(yaml.safe_dump(registration))
+    run = records.swdb('register-workload', path, '--format', 'json')
+    assert run.returncode == 0, run.stderr
+    workload = json.loads(run.stdout)
+    request = execution_request(case)
+    representation = next(row for row in workload['definition']['representations'] if row['application'] == 'dx100-gapbs')
+    request.update(candidate=compiled['candidate'], candidate_build=compiled['id'], build_evaluation='model-build',
+        binary={'path': compiled['build']['binary'], 'sha256': compiled['build']['binary_sha256']},
+        workload={'id': workload['id'], 'source': 0, 'representation': {key: representation[key] for key in ('path', 'sha256')}},
+        verification={'checker': 'dx100.bfs.verifier.v1', 'max_ticks': 1000000},
+        protocol_role='baseline', protocol_trial={'source_position': 0, 'repetition': 0})
+    target = records.read('hardware_targets/dx100-e4fc4af-4c.yaml')
+    _, config = _configuration(request, target, Path(request['model_root']))
+    config['clock_hz'] = 1600000000  # The actual adapter always requests 3.2 GHz.
+    instrumentation = {'treatment': 'primary', 'roi': 'bfs.complete_call.v1',
+        'suppressed_internal_events': compiled['context']['suppressed_internal_events'],
+        'verification': 'same_guest_post_roi', 'debug_flags': 'MAATrace'}
+    settings = {'mode': 'controlled_simulator', 'kernel': 'gapbs-bfs', 'workloads': [workload['id']],
+        'targets': {role: {'id': target['id'], 'configuration': config} for role in ('baseline', 'candidate')},
+        'builds': {role: {key: compiled['build'][key] for key in ('compiler', 'compiler_version', 'flags', 'adapter')}
+                   for role in ('baseline', 'candidate')},
+        'instrumentation': {role: instrumentation for role in ('baseline', 'candidate')},
+        'threads': 4, 'roi': 'bfs.complete_call.v1',
+        'correctness': {'coverage': 'every_timed_trial', 'verifier': 'dx100.bfs.verifier.v1', 'required_cases': []},
+        'sampling': {'repetitions': 2, 'warmups': 0, 'aggregation': 'geomean_source_median_ratio'},
+        'profitability': {'minimum_speedup': 1.01, 'maximum_relative_spread': 0.2, 'confidence': 0.95,
+                         'bootstrap_resamples': 2000, 'bootstrap_seed': 17},
+        'differences': {'software': ['Fixture candidate'], 'accelerator': [], 'configuration': []}, 'region_pairs': []}
+    path = folder / 'freeze.yaml'
+    path.write_text(yaml.safe_dump({'message_version': '1.0', 'id': 'wrong-clock-policy', 'settings': settings}))
+    frozen = records.swdb('freeze-protocol', path, '--format', 'json')
+    assert frozen.returncode == 0, frozen.stderr
+    request['protocol'] = json.loads(frozen.stdout)['id']
+    rejected = invoke('dx100-execute', request)
+    assert rejected['outcome']['state'] == 'failed'
+    assert 'configuration differs from frozen settings' in rejected['outcome']['reason']
+    assert not any(row['stage'] in {'checkpoint', 'simulation'} for row in rejected['stages'])
 
 
 @pytest.mark.parametrize("parents,passes", [("0,0,1", True), ("0,9,1", False), ("0,0", False)])
-def test_generated_driver_checks_bounds_before_verifier_and_fingerprints_returned_parents(tmp_path, parents, passes):
+@pytest.mark.parametrize('diagnostic', [False, True])
+def test_generated_driver_checks_bounds_before_verifier_and_fingerprints_returned_parents(tmp_path, parents, passes, diagnostic):
     compiler = shutil.which("clang++") or shutil.which("g++")
     if compiler is None:
         pytest.skip("C++ compiler unavailable for trusted driver contract")
@@ -70,7 +129,8 @@ def test_generated_driver_checks_bounds_before_verifier_and_fingerprints_returne
     header = model / "include/gem5/m5ops.h"
     header.parent.mkdir(parents=True)
     header.write_text("#pragma once\n" + "\n".join(f"inline void {name}(int,int) {{}}" for name in (
-        "m5_checkpoint", "m5_work_begin", "m5_work_end", "m5_dump_stats", "m5_reset_stats")) + "\ninline void m5_exit(int) {}\n")
+        "m5_checkpoint", "m5_work_begin", "m5_work_end", "m5_dump_stats", "m5_reset_stats")) +
+        "\ninline void m5_exit(int) {}\ninline uint64_t m5_rpns(){static uint64_t tick=0;return ++tick;}\n")
     source = tmp_path / "fixture.cc"
     source.write_text('''#include <vector>
 using NodeID=int;
@@ -81,8 +141,12 @@ std::vector<int> DOBFS(const Graph&,int,bool) {return {PARENTS};}
 bool BFSVerifier(const Graph&,int,const std::vector<int>& p) { std::puts("CHECKER_CALLED"); return p.size()==3 && p[0]==0 && p[1]==0 && p[2]==1; }
 int main(int,char**) {return 0;}
 '''.replace("PARENTS", parents))
+    details = None
+    if diagnostic:
+        source.write_text(source.read_text().replace('return {', '::swdb_profile::Scope region(0);return {'))
+        details = {'regions': [{}], 'runtime': {'path': str(Path(__file__).resolve().parents[1] / 'tools/bfs_profile/gem5_runtime.hpp')}}
     generated = tmp_path / "driver.cc"
-    generated.write_text(driver(source, model, "DOBFS"))
+    generated.write_text(driver(source, model, "DOBFS", details))
     binary = tmp_path / "driver"
     result = subprocess.run([compiler, "-std=c++11", str(generated), "-o", str(binary)], capture_output=True, text=True, timeout=30)
     assert result.returncode == 0, result.stderr
@@ -92,3 +156,6 @@ int main(int,char**) {return 0;}
     assert "SWDB_BFS_RESULT source=0 vertices=3" in run.stdout
     assert "parent_fnv1a64=" in run.stdout
     assert ("Verification: PASS" in run.stdout) is passes
+    if diagnostic:
+        report = json.loads(next(line.split(' ', 1)[1] for line in run.stdout.splitlines() if line.startswith('SWDB_DX100_REGIONS ')))
+        assert report['errors'] == 0 and report['regions'][0]['invocations'] == 1
