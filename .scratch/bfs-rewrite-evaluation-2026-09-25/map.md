@@ -83,6 +83,54 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Heartbeat check — 2026-09-26 10:29 ET
+
+This heartbeat arrived before the previously anticipated 10:34 ET check; the
+fresh host audit ran **10:30:03–10:32 ET**. All 21 ticket fields still agree with
+the map: **12 resolved, 9 claimed**, **0/8 final cells**, no qualified gain, and
+no empirical freeze. Local HEAD before this status update was `3b0fbac`.
+Both review/implementation workers completed normally, and the host worker
+completed this audit normally. No dead or stranded agent was found.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 13 | Actual a1 failure retained; a2 expired unused | mbit10 / socket 0 released | Record, simulator, trace, parser, and audit hashes unchanged; a2 paths absent | Exact code export approval before further execution; preserve expired window |
+| 14 | Actual profiling collected; sync held | mbit10 / idle | Original failure retained; collection/package continuations complete and unchanged | Exact 14-file evidence export approval |
+| 15 | Paired implementation reviewed; study unrun | Local; mbit10 socket 1 free at observation | Plan revalidated at 10:30 ET; 213 focused checks remain the existing evidence | Approved code sync, then dispatch only before 11:58 ET; hard end 15:00 ET |
+| 18 | Existing candidate metadata fits initial-reuse shape | mbit10 / read-only | One completed patch attempt, candidate unverified, no provider/repair budget | Full artifact/package/replay validation and frozen-protocol evaluation |
+| 16–21 | Empirical reference/control and matrix gates incomplete | Not running | 0/8 cells and no qualified gain | Clear exact export holds and complete prerequisites |
+
+Socket 0, socket 1, and legacy leases remain released at generations **317,
+399, 77**; their recorded daemon PIDs are absent. No matching owned EvolveSWDB or
+gem5 job remains. Load is 0.00/0.00/0.00. Free disks remain **17 GiB on `/data1`
+and 184 GiB on `/data`**. Conservative node availability is 57.34/58.52 GiB,
+global availability 117.75 GiB, and pressure averages are zero. These observations
+do not reserve resources for this task.
+
+Historical DX `5802a5a`, native `41303ed7`, witness `51df061`, and helper `c40ad13`
+are unchanged. Helper script `00c269b4…` matches its worktree, HEAD, and existing
+origin copy; no fetch occurred. Native receipt `26ea5d69…` retains four complete
+cells. T14's original failed driver `a4e67382…` retains the missing-`--runs-dir`
+error; collection `45a0fb1d…` and package `a66864e…` remain complete. Recent native,
+collection, and package stderr logs are empty. A1 record `9a941cdf…`, simulator
+`607b6f69…`, trace `f6ad616e…`, parser `de6e008e…`, and audit `4d228a78…` are unchanged,
+including the line-27 witness parsing failure. All a2 record/output/dispatch paths
+remain absent. No remote mutation, export, provider call, or dispatch occurred.
+
+The Ticket 18 metadata check confirmed its original proposal/candidate IDs,
+source/package references, one completed initial rewrite, and retained artifact
+SHA `10d4976f…`. It did not replay the patch, reopen source bytes or diagnostic
+packages, admit reuse, or execute the candidate. Local full/focused test logs
+also retain their prior hashes; no test was rerun during this heartbeat.
+
+The exact four-commit code request through `6346189` and the separate evidence
+and provider requests remain unanswered; this automated heartbeat is not a new
+payload approval. Later local commits remain excluded from that code request.
+The heartbeat remains active. With this early scheduler delivery, the next
+30-minute check is expected around **10:59 ET**; perform it no later than
+30 minutes after this audit. Final acceptance and post-acceptance review remain
+open.
+
 ## Local verification and preparation — 2026-09-26 10:27 ET
 
 The pinned `721fa72` full suite completed with **1,164 passed, 3 failed, and

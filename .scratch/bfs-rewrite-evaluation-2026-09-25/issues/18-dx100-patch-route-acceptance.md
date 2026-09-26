@@ -74,3 +74,15 @@ tests passed, with 23 deselected, in 27.74 seconds. See the
 tool-result transcript and intermediate fixture-setup failure. No actual Ticket
 18 candidate execution occurred, no frozen-protocol result was added, and this
 ticket remains claimed behind Ticket 15 and current synchronization holds.
+
+2026-09-26 10:30–10:32 ET read-only readiness check: the actual retained proposal
+still has `candidate_created`, stage `rewriting`, exactly one completed attempt,
+and its original `.candidate-1`. Neither proposal nor attempt contains provider
+state, and no repair budget exists for this initial supplied patch. The candidate
+remains unverified with artifact SHA `10d4976f…`; source and supporting package
+IDs match the retained preparation. This checks metadata shape only, not source
+replay, fresh package admission, or candidate execution.
+The proposal and candidate YAML file hashes also match the current local master
+copies: `ab3bd889417ab02e3a882d8a6cda86823fa42768e376456bbdaecc38ccbd9d43`
+and `f426dd9eca7563b0cf66c161ca93f6d5fc4342160cc8bfca5a6a1da807ff9252`,
+respectively. Matching record bytes do not verify their external artifact bytes.
