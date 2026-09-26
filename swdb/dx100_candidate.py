@@ -19,6 +19,27 @@ ROI = "bfs.complete_call.v1"
 SUPPRESSED = ["m5_reset_stats", "m5_dump_stats", "m5_work_begin", "m5_work_end", "m5_exit"]
 
 
+def _protect_model_headers(candidate, model):
+    """The current operation contract compiles against this pinned interface.
+
+    Candidate application helpers remain editable, but a candidate copy of an
+    interface input must not differ from the model copy selected by -I. Check
+    all files, including .inc and extensionless headers, and basename shadows.
+    """
+    surfaces = (Path('include'), Path('util/m5/src'), Path('benchmarks/API'))
+    names = {'m5ops.h', 'MAA_gem5.hpp', 'MAA.hpp'}
+    for surface in surfaces:
+        names.update(path.name for path in (model / surface).rglob('*') if path.is_file()
+                     and not path.name.startswith('.')
+                     and (not path.suffix or path.suffix in {'.h', '.hh', '.hpp', '.hxx', '.inc'}))
+    for entry in candidate['artifact']['files']:
+        relative = Path(artifacts.relative_path(entry['path']))
+        if relative.name in names or any(relative.is_relative_to(surface) for surface in surfaces):
+            pinned = model / relative
+            if not pinned.is_file() or artifacts.file_hash(pinned) != entry['sha256']:
+                raise Failure('candidate changes or shadows the pinned model interface input: ' + entry['path'])
+
+
 def driver(source, model, function, diagnostic=None):
     prefix = "\n".join(f"#define {name}(...) ((void)0)" for name in SUPPRESSED)
     suffix = "\n".join(f"#undef {name}" for name in SUPPRESSED)
@@ -119,13 +140,7 @@ def compile_candidate(args):
                 if Path(entry['path']).suffix in {'.h', '.hpp', '.cc', '.cpp', '.c', '.S'}:
                     _file({'path': str(model / artifacts.relative_path(entry['path'])), 'sha256': entry['sha256']},
                           'unchanged author diagnostic source')
-        for entry in candidate["artifact"]["files"]:
-            if Path(entry["path"]).suffix not in {".h", ".hpp", ".cc", ".cpp", ".c"}:
-                continue
-            if Path(entry["path"]).name in {"m5ops.h", "MAA_gem5.hpp", "MAA.hpp"}:
-                pinned = model / entry["path"]
-                if not pinned.is_file() or artifacts.file_hash(pinned) != entry["sha256"]:
-                    raise Failure("candidate shadows the pinned model interface header")
+        _protect_model_headers(candidate, model)
         source_path = "src/bfs.cc" if original["application"] == "gapbs" else "benchmarks/gapbs/src/bfs.cc"
         source = source_root / source_path
         if not source.is_file():

@@ -14,6 +14,7 @@ from test_dx100 import case, execution_request, reference
 
 @pytest.mark.parametrize("mode", ["normal", "missing-memory", "truncated", "changed-stats", "multiple-intervals", "wrong-clock", "stale-region",
     "diagnostic", "diagnostic-source-mismatch", "diagnostic-invalid-counters", "diagnostic-outside-roi",
+    "diagnostic-report-list", "diagnostic-counter-list", "diagnostic-boolean-errors",
     "pinned-cache-totals", "pinned-region-only"])
 def test_public_simulated_collector_retains_identity_and_incomplete_attribution(case, records, mode):
     records.copy_repo("applications")
@@ -96,6 +97,9 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
                   'regions': [{'index': i, 'inclusive_ns': 300 - i * 100, 'exclusive_ns': 100,
                                'invocations': 2} for i in range(len(rows))]}
         if mode == 'diagnostic-invalid-counters': values['regions'][0]['exclusive_ns'] = 900
+        if mode == 'diagnostic-report-list': values = []
+        if mode == 'diagnostic-counter-list': values['regions'][0] = []
+        if mode == 'diagnostic-boolean-errors': values['errors'] = False
         if mode == 'diagnostic-outside-roi':
             values['regions'][0].update(inclusive_ns=0, exclusive_ns=0, invocations=0)
         log.write_text('SWDB_DX100_ROI_SEALED\nSWDB_DX100_REGIONS ' + json.dumps(values) + '\n')
@@ -125,7 +129,8 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
     retrieved = json.loads(records.swdb("get", evaluation["id"], "--format", "json").stdout)
     assert retrieved["correctness"]["state"] == "unverified"
     assert retrieved["gain_claim"] is False
-    if mode in {"truncated", "changed-stats", "wrong-clock", "stale-region", 'diagnostic-source-mismatch', 'diagnostic-invalid-counters'}:
+    if mode in {"truncated", "changed-stats", "wrong-clock", "stale-region", 'diagnostic-source-mismatch', 'diagnostic-invalid-counters',
+                'diagnostic-report-list', 'diagnostic-counter-list', 'diagnostic-boolean-errors'}:
         assert profile["outcome"]["state"] == "failed"
         assert retrieved["timing"] == []
     else:

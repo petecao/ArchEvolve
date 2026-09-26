@@ -10,12 +10,23 @@ import pytest
 import yaml
 
 from swdb import artifacts, workflow
-from swdb.dx100_candidate import driver
+from swdb.dx100_candidate import driver, _protect_model_headers
 from test_dx100 import case, reference, execution_request
 
 
+def test_pinned_header_shadow_guard_does_not_reserve_repository_metadata_names(tmp_path):
+    model = tmp_path / 'model'
+    metadata = model / 'include/.gitignore'
+    metadata.parent.mkdir(parents=True)
+    metadata.write_text('generated-header\n')
+    source = tmp_path / 'candidate'
+    source.mkdir()
+    (source / '.gitignore').write_text('candidate-build\n')
+    _protect_model_headers({'artifact': artifacts.identify(source)}, model)
+
+
 @pytest.mark.parametrize('override,diagnostic,author',
-    [(override, diagnostic, False) for override in (False, True, 'function') for diagnostic in (False, True)]
+    [(override, diagnostic, False) for override in (False, True, 'function', 'utility', 'api-extensionless', 'utility-shadow') for diagnostic in (False, True)]
     + [(False, True, True), ('source', True, True), ('nondiagnostic', False, True)])
 def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_driver_override(case, records, override, diagnostic, author):
     request, invoke, folder = case
@@ -34,6 +45,16 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
     source.parent.mkdir(parents=True)
     verifier = "bool BFSVerifier() { return true; }"
     source.write_text("// Contract fixture source\n" + verifier + "\n" + ("#define m5_dump_stats(...) ((void)0)\n" if override is True else ""))
+    model = Path(model_build["model_root"])
+    utility = model / 'benchmarks/API/MAA_utility.hpp'
+    utility.parent.mkdir(parents=True)
+    utility.write_text('// pinned interface utility\n')
+    candidate_utility = root / ('benchmarks/gapbs/src/MAA_utility.hpp' if override == 'utility-shadow'
+                               else 'benchmarks/API/utility' if override == 'api-extensionless'
+                               else 'benchmarks/API/MAA_utility.hpp')
+    candidate_utility.parent.mkdir(parents=True, exist_ok=True)
+    candidate_utility.write_text('// changed interface utility\n' if override in {'utility', 'api-extensionless', 'utility-shadow'}
+                                 else utility.read_text())
     artifact = artifacts.identify(root)
     protections = [{"path": "benchmarks/gapbs/src/bfs.cc", "kind": "verifier", "text": verifier}]
     snapshot = workflow.record("source_snapshot", "source", implementation="dx100-bfs-scalar", application="dx100-gapbs",
@@ -42,7 +63,6 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
         artifact=artifact, context={}, protections=protections, state="unverified", artifact_role="source_baseline")
     records.write("source_snapshots/source.yaml", snapshot)
     records.write("candidates/candidate.yaml", candidate)
-    model = Path(model_build["model_root"])
     if author:
         pinned_source = model / 'benchmarks/gapbs/src/bfs.cc'
         pinned_source.parent.mkdir(parents=True, exist_ok=True)
@@ -71,6 +91,9 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
     assert result["outcome"]["state"] == ("failed" if override else "complete"), result["outcome"]
     if override == 'function':
         assert 'function differs' in result['outcome']['reason']
+    if override in {'utility', 'api-extensionless', 'utility-shadow'}:
+        assert 'pinned model interface input' in result['outcome']['reason']
+        assert not any(row['stage'] == 'candidate_compile' for row in result['stages'])
     if not override:
         assert result["build"]["binary_sha256"]
         assert result["context"]["candidate_sha256"] == artifact["sha256"]

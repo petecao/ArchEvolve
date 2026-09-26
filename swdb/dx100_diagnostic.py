@@ -71,13 +71,14 @@ def counters(log, count):
     if sealed != 1 or len(found) != 1:
         raise Failure('diagnostic requires exactly one post-seal region report')
     value = found[0]
-    if value.get('format') != 'swdb.dx100.regions.v1' or value.get('clock') != 'm5_rpns' or value.get('errors') != 0:
+    if (not isinstance(value, dict) or value.get('format') != 'swdb.dx100.regions.v1'
+            or value.get('clock') != 'm5_rpns' or type(value.get('errors')) is not int or value['errors'] != 0):
         raise Failure('simulated region clock or nested accounting failed')
     rows = value.get('regions')
     if not isinstance(rows, list) or len(rows) != count:
         raise Failure('simulated region counter inventory differs from compiler discovery')
     for index, row in enumerate(rows):
-        if (type(row.get('index')) is not int or row['index'] != index
+        if (not isinstance(row, dict) or type(row.get('index')) is not int or row['index'] != index
                 or any(type(row.get(key)) is not int or not 0 <= row[key] < 2**64
                        for key in ('inclusive_ns', 'exclusive_ns', 'invocations'))
                 or row['exclusive_ns'] > row['inclusive_ns']):
