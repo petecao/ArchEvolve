@@ -24,6 +24,7 @@ from swdb import artifacts, bfs_protocol, profile
 from swdb.store import Store
 from scripts.dx100_build import disk_usage_kib
 from scripts.bfs_process import interruption_signals, run_stage
+from scripts import bfs_owned_execution as lifecycle
 
 
 def capacity_snapshot(node):
@@ -117,6 +118,7 @@ def validate_selection(candidate, source, implementation, workload, frozen, role
 
 @interruption_signals()
 def main():
+    entry_started = time.monotonic()
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('id', 'candidate', 'workload', 'build-evaluation'):
         parser.add_argument('--' + name, required=True)
@@ -142,7 +144,11 @@ def main():
     parser.add_argument('--verification-ticks', type=int, default=10**14)
     parser.add_argument('--verifier', choices=('dx100.bfs.verifier.v1', 'dx100.bfs.verifier.v2'),
                         help='explicit pilot checker; frozen series inherits its immutable checker')
+    parser.add_argument('--owned-cleanup-ledger', type=Path)
+    parser.add_argument('--owned-cleanup-binding')
     args = parser.parse_args()
+    if bool(args.owned_cleanup_ledger) != bool(args.owned_cleanup_binding):
+        parser.error('prospective supervision needs the exact shared cleanup ledger and binding')
     if socket.gethostname().split('.')[0] != 'mbit10':
         parser.error('this driver requires the mbit10 execution host')
     if not re.fullmatch(r'[a-z0-9][a-z0-9._-]*', args.id):
@@ -176,7 +182,17 @@ def main():
                'bounds': {name: getattr(args, name) for name in limits},
                'stages': [], 'samples': [], 'lane': lane,
                'repository_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()}
-    started = time.monotonic()
+    started = entry_started if args.owned_cleanup_ledger else time.monotonic()
+    owned = guard = None
+    if args.owned_cleanup_ledger:
+        cleanup = lifecycle.SharedCleanup(args.owned_cleanup_ledger, args.owned_cleanup_binding,
+                                          started+args.total_seconds)
+        owned = lifecycle.Owned(cleanup)
+        receipt['owned_started'] = lifecycle.stamp()
+        receipt['owned_supervision'] = {'format': 'swdb.bfs.simulator-supervision.v1',
+            'cleanup_ledger': str(cleanup.path), 'cleanup_binding': cleanup.binding,
+            'sampled_tree_rss_bytes': lifecycle.SAMPLED_RSS_BYTES, 'maximum_gap_seconds': 30,
+            'rss_source': lifecycle.RSS_SOURCE, 'hard_memory_quota': False}
 
     def save():
         receipt['host_wall_s'] = time.monotonic() - started
@@ -202,6 +218,15 @@ def main():
             raise RuntimeError('batch raw-storage budget exhausted')
         return remaining
 
+    def continuous_guard():
+        remaining = check_bounds()
+        sample = owned.sample()
+        if sample['rss_bytes'] > lifecycle.SAMPLED_RSS_BYTES:
+            raise ValueError('series sampled whole-tree RSS exceeded 52 GiB')
+        with (folder/'owned-resources.jsonl').open('a') as stream:
+            stream.write(json.dumps(sample)+'\n')
+        return remaining
+
     def call(command, *rest, timeout=180):
         profile._verified_lane(Store(args.records).get('mbit10', 'machine'), lane)
         check_bounds()
@@ -212,9 +237,14 @@ def main():
         out, err = folder / f'{index:03d}-{command}.json', folder / f'{index:03d}-{command}.stderr'
         argv = [sys.executable, '-m', 'swdb', command, *map(str, rest), '--records', str(args.records), '--format', 'json']
         try:
-            run_stage(receipt, folder, argv, timeout=timeout,
-                      deadline=started + args.total_seconds - 30, cwd=ROOT,
-                      output=out, stderr=err, monitor=check_bounds)
+            if owned:
+                lifecycle.run_stage(receipt, folder, argv, timeout=timeout,
+                    deadline=min(started+args.total_seconds-30, owned.budget.deadline-30), cwd=ROOT,
+                    output=out, stderr=err, owned=owned, monitor=guard.check)
+            else:
+                run_stage(receipt, folder, argv, timeout=timeout,
+                          deadline=started + args.total_seconds - 30, cwd=ROOT,
+                          output=out, stderr=err, monitor=check_bounds)
         finally:
             if len(receipt['stages']) > index:
                 receipt['stages'][index]['stdout'] = str(out)
@@ -231,6 +261,8 @@ def main():
 
     save()
     try:
+        if owned:
+            guard = lifecycle.Monitor(continuous_guard); guard.start()
         candidate = call('get', args.candidate)
         source = call('get', candidate['source_snapshot'])
         implementation = call('get', candidate['implementation'])
@@ -361,8 +393,57 @@ def main():
         receipt['state'] = 'complete'
     except BaseException as exc:
         receipt.update(state='failed', reason=f'{type(exc).__name__}: {exc}'); save(); raise
-    save()
-    print(json.dumps(receipt, indent=2))
+    finally:
+        original_failure = sys.exc_info()[1]
+        if owned:
+            error = None
+            try:
+                if guard:
+                    with owned.budget.reservation(): guard.stop(owned.budget.deadline)
+            except BaseException as exc:
+                error = exc
+            try:
+                receipt['owned_cleanup'] = lifecycle.verified_finish(owned)
+            except BaseException as exc:
+                error = error or exc
+            with owned.budget.reservation():
+                receipt['owned_identities'] = list(owned.history.values())
+                samples = folder/'owned-resources.jsonl'
+                if samples.is_file():
+                    receipt['owned_resource_artifact'] = {'path': str(samples), 'sha256': artifacts.file_hash(samples)}
+                    try:
+                        receipt['owned_resource_validation'] = lifecycle.validate_samples(samples,
+                            receipt['owned_started'], lifecycle.stamp())
+                    except BaseException as exc:
+                        error = exc
+                try:
+                    receipt['cleanup_accounting'] = owned.budget.snapshot()
+                except BaseException as exc:
+                    error = exc
+                    receipt.update(state='failed', cleanup_accounting_error=f'{type(exc).__name__}: {exc}'); save()
+                if guard:
+                    receipt['owned_supervision'].update(maximum_observed_gap_seconds=guard.maximum_gap_seconds,
+                        maximum_guard_seconds=guard.maximum_guard_seconds)
+                receipt['owned_finished'] = lifecycle.stamp()
+                save()
+                if error:
+                    receipt.update(state='failed', cleanup_error=f'{type(error).__name__}: {error}'); save()
+                    if original_failure is None: raise error
+    if owned:
+        with owned.budget.reservation():
+            save()
+            try:
+                check_bounds()
+                lifecycle.validate_samples(folder/'owned-resources.jsonl', receipt['owned_started'], lifecycle.stamp())
+                if time.monotonic() > owned.budget.deadline: raise TimeoutError('shared deadline exceeded during finalization')
+            except BaseException as exc:
+                receipt.update(state='failed', finalization_error=f'{type(exc).__name__}: {exc}'); save(); raise
+    else:
+        save()
+    if owned:
+        with owned.budget.reservation(): print(json.dumps(receipt, indent=2), flush=True)
+    else:
+        print(json.dumps(receipt, indent=2))
 
 
 if __name__ == '__main__':

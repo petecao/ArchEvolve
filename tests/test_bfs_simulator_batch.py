@@ -15,6 +15,7 @@ from conftest import REPO
 from test_profile_packages import package_seed, package_setup, _assemble
 from swdb.store import Store
 from scripts import bfs_simulator_batch as batch
+from scripts import bfs_dx100_coverage_a2 as coverage_a2
 from swdb import artifacts
 
 
@@ -143,6 +144,12 @@ def complete_child(policy, row, approval, storage):
              'diagnostic_build': {'evaluation': row['diagnostic_build'], 'sha256': policy['record_sha256'][row['diagnostic_build']]},
              'bounds': {key: policy['bounds'][key] for key in ('checkpoint_seconds','run_seconds','diagnostic_seconds','memory_gib','storage_gib')},
              'stages': [{'state': 'complete'}], 'samples': []}
+    value['owned_supervision'] = {'format':'swdb.bfs.simulator-supervision.v1',
+        'sampled_tree_rss_bytes':batch.lifecycle.SAMPLED_RSS_BYTES,'maximum_gap_seconds':30,
+        'rss_source':batch.lifecycle.RSS_SOURCE,'hard_memory_quota':False,
+        'maximum_observed_gap_seconds':5,'maximum_guard_seconds':.01}
+    value['owned_cleanup']={'state':'all_owned_descendants_absent'}
+    for stage in value['stages']:stage['cleanup']={'state':'all_owned_descendants_absent'}
     value['bounds'].update(total_seconds=21600, batch_storage_gib=storage, verification_ticks=policy['verification_ticks'])
     for position, source in enumerate(row['sources']):
         for repetition in range(2):
@@ -153,16 +160,17 @@ def complete_child(policy, row, approval, storage):
     return value
 
 
-@pytest.mark.parametrize('fault', ['state','candidate','protocol','bounds','grid','package','stage','diagnostic','source_context','target_context'])
+@pytest.mark.parametrize('fault', ['state','candidate','protocol','bounds','grid','package','stage','diagnostic','source_context','target_context','owned_contract','owned_cleanup'])
 def test_completed_receipt_cannot_hide_wrong_identity_or_partial_grid(fault, monkeypatch):
     def bound(store, package, requested, *args):
         batch.require(package == requested+'.v1.'+'a'*16, 'changed fixture package identity')
-        result = fixture_package(value, row, row['sources'][0])
+        position=int(requested[len(row['id'])+2:].split('.')[0])
+        result = fixture_package(value, row, row['sources'][position])
         if fault == 'source_context': result['context']['sources'] = [999]
         if fault == 'target_context': result['context']['target_configuration']['l3_size_mb'] = 99
         return result
     monkeypatch.setattr(batch, 'package_binding', bound)
-    value = plan('t16'); row = value['series'][0]; approval = admission(value)
+    value = plan('t15'); row = value['series'][0]; approval = admission(value)
     child = complete_child(value, row, approval, 59)
     if fault not in ('source_context','target_context'):
         batch.validate_series_result(value, row, approval, child, 21600, 59, None)
@@ -172,6 +180,8 @@ def test_completed_receipt_cannot_hide_wrong_identity_or_partial_grid(fault, mon
     elif fault == 'package': child['samples'][0]['package'] = 'another.package'
     elif fault == 'stage': child['stages'][0]['state'] = 'failed'
     elif fault == 'diagnostic': child['diagnostic_build']['sha256'] = '0'*64
+    elif fault == 'owned_contract': child.pop('owned_supervision')
+    elif fault == 'owned_cleanup': child['owned_cleanup']['state']='leader_only_exited'
     with pytest.raises(ValueError): batch.validate_series_result(value, row, approval, child, 21600, 59, None)
 
 
@@ -197,16 +207,26 @@ def test_sequential_collection_stops_on_failure_and_keeps_first_logs(tmp_path, m
         # A synthetic elapsed charge occurs inside the child; the next series sees it.
         clock.mono += 20; clock.wall += timedelta(seconds=20)
         out = kwargs['output']; out.write_text('retained failure log')
+        try: cleanup_row = finish()
+        except ValueError:
+            receipt['stages'].append({'cleanup': {'state':'failed'}}); raise
+        receipt['stages'].append({'cleanup': cleanup_row})
         assert json.loads((folder/'driver.json').read_text())['series'][-1]['state'] == 'running'
         if failure == 'child': raise RuntimeError('fixture child failed')
         storage = int(command[command.index('--batch-storage-gib')+1])
         child = complete_child(policy, row, approval, storage)
+        child['owned_supervision'].update(cleanup_ledger=str(tmp_path/'budget'),cleanup_binding='fixture')
+        sample=tmp_path/'resources';sample.write_text('explicit fixture resources')
+        child.update(owned_resource_artifact={'path':str(sample),'sha256':artifacts.file_hash(sample)},
+                     owned_started='fixture',owned_finished='fixture')
         if failure == 'incomplete': child['samples'].pop()
         destination = runs/row['id']/(row['id']+'.driver'); destination.mkdir(parents=True)
         ref(destination/'driver.json', child); out.write_text(json.dumps(child))
-    monkeypatch.setattr(batch, 'run_stage', run)
+    monkeypatch.setattr(batch.lifecycle, 'run_stage', run)
+    monkeypatch.setattr(batch.lifecycle, 'validate_samples', lambda *args: {})
     invoke = lambda: batch.collect_series(policy, approval, receipt, folder, runs, tmp_path/'records', 1,
-                                          ledger, SimpleNamespace(finish=finish), lambda: len(calls)*batch.GIB)
+                                          ledger, SimpleNamespace(finish=finish, budget=SimpleNamespace(path=tmp_path/'budget', binding='fixture')),
+                                          lambda: len(calls)*batch.GIB)
     if failure:
         with pytest.raises((ValueError, RuntimeError)): invoke()
         assert len(calls) == len(cleanup) == 1
@@ -236,7 +256,7 @@ def test_subreaper_admission_rejects_unsupported_platform(monkeypatch):
 
 @pytest.mark.skipif(sys.platform != 'linux', reason='actual Linux prctl/pidfd admission; run under the documented <=90s lane recipe')
 @pytest.mark.parametrize('failure', [False, True])
-def test_linux_subreaper_reaps_detached_grandchild_after_leader_exit(tmp_path, failure):
+def test_linux_historical_subreaper_compatibility(tmp_path, failure):
     # Isolate prctl from pytest. No model, compiler, graph, provider, or evaluator runs.
     supervisor = r'''
 import json, os, pathlib, resource, socket, subprocess, sys, time
@@ -303,7 +323,7 @@ def test_prerequisites_delegate_fixed_actual_case_and_terminal_proofs(monkeypatc
                     coverage_commit='actual_pinned_commit')
     observed = []
     monkeypatch.setattr(batch.coverage_case, 'validate_a3', lambda ref, store, current: observed.append(('a3', ref)))
-    monkeypatch.setattr(batch.coverage_case, 'validate_completed',
+    monkeypatch.setattr(coverage_a2, 'validate_completed',
                         lambda ref, store, current, commit: observed.append(('coverage',ref,commit)), raising=False)
     monkeypatch.setattr(batch.witness_case, 'validate_completion',
                         lambda ref, kind, current: observed.append((kind,ref)))
@@ -316,24 +336,40 @@ def test_prerequisites_delegate_fixed_actual_case_and_terminal_proofs(monkeypatc
     with pytest.raises(ValueError, match='identities differ'): batch.validate_prerequisites(value, approval, None)
 
 
-@pytest.mark.parametrize('fault', [None,'mac','duplicate','code','runtime','unverified','duration'])
+@pytest.mark.parametrize('fault', [None,'mac','duplicate','code','runtime','unverified','duration','skipped','missing_nested','junit_hash'])
 def test_actual_linux_cleanup_admission_is_required(tmp_path, fault):
     value = plan(); approval = admission(value)
-    approval.update(code_commit='fixture-code', runtime_sha256={name:'a'*64 for name in batch.CLEANUP_RUNTIME})
+    paths = (*batch.CLEANUP_RUNTIME, 'swdb/dx100.py', 'tests/test_dx100_interruption.py', 'tests/test_bfs_owned_execution.py')
+    approval.update(code_commit='fixture-code', runtime_sha256={name:'a'*64 for name in paths})
+    approval['python']['path'] = str(Path(sys.executable).resolve())
     results = []
-    for failed in (False, True):
-        result = {'format':'swdb.bfs.simulator-batch-cleanup-test.v1','host':'mbit10','platform':'linux',
-            'repository_commit':'fixture-code','runtime_sha256':copy.deepcopy(approval['runtime_sha256']),
-            'fixture_only':True,'state':'passed','failure_variant':failed,'host_wall_s':1.5,
-            'address_space_bytes':512*1024**2,'finished':'2026-09-26T13:00:00-04:00',
-            'cleanup':{'state':'all_owned_descendants_absent','subreaper':True}}
+    for kind in ('owned_cleanup', 'dx100_interruption'):
+        names = (['test_linux_owned_stage_reaps_detached_child[False]', 'test_linux_owned_stage_reaps_detached_child[True]',
+                  'test_linux_nested_interruption_uses_one_cleanup_budget',
+                  'test_linux_term_resistant_nested_cleanup_keeps_final_kill_reserve'] if kind=='owned_cleanup' else
+                 ['test_public_interruption_is_durable_before_postmortem[raises]',
+                  'test_public_interruption_is_durable_before_postmortem[stalls]'])
+        if fault == 'missing_nested' and kind=='owned_cleanup': names.pop()
+        junit=tmp_path/(kind+'.xml')
+        junit.write_text('<testsuites><testsuite>'+''.join('<testcase name="'+name+'">'+
+            ('<skipped/>' if fault=='skipped' else '')+'</testcase>' for name in names)+'</testsuite></testsuites>')
+        output=tmp_path/(kind+'.stdout');output.write_text('fixture passed')
+        module='tests/test_bfs_owned_execution.py' if kind=='owned_cleanup' else 'tests/test_dx100_interruption.py'
+        result = {'format':'swdb.bfs.linux-fixture.v1','kind':kind,'host':'mbit10','platform':'linux',
+            'code_commit':'fixture-code','runtime_sha256':copy.deepcopy(approval['runtime_sha256']),
+            'evidence_kind':'contract_fixture','state':'passed','returncode':0,
+            'started':'2026-09-26T12:59:58-04:00','finished':'2026-09-26T13:00:00-04:00',
+            'command':[approval['python']['path'],'-m','pytest',module,'--junitxml='+str(junit)],
+            'stdout':{'path':str(output),'sha256':artifacts.file_hash(output)},
+            'junit':{'path':str(junit),'sha256':artifacts.file_hash(junit)}}
         if fault == 'mac': result['platform']='darwin'
-        elif fault == 'duplicate': result['failure_variant']=False
-        elif fault == 'code': result['repository_commit']='another-code'
+        elif fault == 'duplicate': result['kind']='owned_cleanup'
+        elif fault == 'code': result['code_commit']='another-code'
         elif fault == 'runtime': result['runtime_sha256'][batch.CLEANUP_RUNTIME[0]]='b'*64
-        elif fault == 'unverified': result['cleanup']['state']='leader_only_exited'
-        elif fault == 'duration': result['host_wall_s']=21
-        results.append(ref(tmp_path/f'{failed}.json',result))
+        elif fault == 'unverified': result['state']='leader_only_exited'
+        elif fault == 'duration': result['started']='2026-09-26T12:55:00-04:00'
+        elif fault == 'junit_hash': result['junit']['sha256']='0'*64
+        results.append(ref(tmp_path/(kind+'.json'),result))
     approval['linux_cleanup_tests']=results
     if fault:
         with pytest.raises(ValueError): batch.validate_cleanup_tests(approval)
@@ -370,20 +406,23 @@ def test_public_content_addressed_package_reopens_exact_fixture_ancestry(package
                               evaluation['id'], profile['id'], candidate['id'])
 
 
-def test_batch_admission_uses_real_completed_coverage_reader_fixture(tmp_path, monkeypatch):
-    from test_bfs_dx100_coverage_execution import completed_coverage_fixture, write_ref
-    audit, _, store, proc, commit = completed_coverage_fixture(tmp_path, monkeypatch)
+def test_batch_admission_uses_real_completed_a2_reader_fixture(tmp_path, monkeypatch):
+    from test_bfs_dx100_coverage_a2 import completed_fixture
+    driver, audit, store, seal, current, proc = completed_fixture(tmp_path, monkeypatch)
     value = plan(); approval = admission(value)
-    approval.update(proofs={key: {'path': '/fixture/'+key, 'sha256': key} for key in ('a3','paired','provider')},
-                    coverage_commit=commit)
-    approval['proofs']['coverage'] = write_ref(tmp_path/'audit.json', audit)
-    real = batch.coverage_case.validate_completed
-    monkeypatch.setattr(batch.coverage_case,'validate_completed',lambda ref, store, current, expected:
+    approval.update(prepared_at=current.isoformat(),
+        proofs={key: {'path': '/fixture/'+key, 'sha256': key} for key in ('a3','paired','provider')},
+        coverage_commit=driver['repository_commit'])
+    approval['proofs']['coverage'] = seal()
+    real = coverage_a2.validate_completed
+    monkeypatch.setattr(coverage_a2,'validate_completed',lambda ref, store, current, expected:
                         real(ref, store, current, expected, proc))
+    monkeypatch.setattr(batch.coverage_case,'validate_a3',lambda *args: {})
+    monkeypatch.setattr(batch.witness_case,'validate_completion',lambda *args: {})
     observed = batch.validate_prerequisites(value, approval, store)
-    assert observed['coverage']['evaluation_sha256'] == audit['evaluation_sha256']
-    approval['coverage_commit'] = 'f'*40
-    with pytest.raises(ValueError, match='bounds, runtime, or interval'):
+    assert observed['coverage']
+    value['required_coverage']='bfs-dx100-coverage-20260926-a1.execute'
+    with pytest.raises(ValueError, match='identities differ'):
         batch.validate_prerequisites(value, approval, store)
 
 
@@ -415,3 +454,69 @@ def test_final_hash_and_last_persistence_remain_inside_shared_budget(tmp_path, m
         saved=json.loads((tmp_path/'driver.json').read_text())
         assert saved['state']=='complete' and saved['final_ledger']['charged_raw_bytes']==1024
         assert saved['ledger_artifact']['sha256']==original_hash(log)
+
+
+@pytest.mark.parametrize('original_failure', [False, True])
+@pytest.mark.parametrize('fault', ['guard', 'cleanup', 'snapshot', 'persistence'])
+def test_public_batch_finalization_preserves_original_failure_and_rejects_new_errors(
+        tmp_path, monkeypatch, clock, original_failure, fault):
+    """Run main's actual finally path; no host workload or measurement is launched."""
+    from contextlib import nullcontext
+    policy = plan(); approval = admission(policy); approval['code_commit'] = 'fixture'
+    runs = tmp_path / policy['id']
+    failure = RuntimeError('original stage failure')
+    final_error = ValueError('injected finalizer ' + fault)
+    class Budget:
+        create = staticmethod(lambda *args, **kwargs: 'fixture-binding')
+        def __init__(self, *args): pass
+        def reservation(self): return nullcontext(clock.mono + 5)
+        def snapshot(self):
+            if fault == 'snapshot': raise final_error
+            return {'fixture': True}
+    class Owner:
+        def __init__(self, budget): self.history = {}; self.budget = budget
+        def finish(self, child=None, direct=None):
+            if fault == 'cleanup': raise final_error
+            return {'state': 'all_owned_descendants_absent', 'errors': []}
+    class Guard:
+        def __init__(self, callback): self.maximum_gap_seconds = self.maximum_guard_seconds = 0
+        def start(self): pass
+        def stop(self, deadline):
+            if fault == 'guard': raise final_error
+    def collect(*args):
+        if original_failure: raise failure
+    monkeypatch.setattr(sys, 'argv', ['batch', 't15', '--admission', str(tmp_path/'admission'),
+        '--admission-sha256', 'fixture', '--runs-dir', str(runs), '--lane', '1',
+        '--outer-started', clock.wall.isoformat(),
+        '--outer-deadline', (clock.wall+timedelta(seconds=43200)).isoformat(),
+        '--pane-pid', '10', '--pane-start-ticks', '100'])
+    monkeypatch.setattr(batch, 'RAW_ROOTS', (tmp_path,))
+    monkeypatch.setattr(batch, 'read_reference', lambda *args, **kwargs: approval)
+    monkeypatch.setattr(batch.socket, 'gethostname', lambda: 'mbit10')
+    monkeypatch.setattr(batch, 'Store', lambda *args: SimpleNamespace(by_id={}))
+    monkeypatch.setattr(batch, 'validate_cleanup_tests', lambda *args: None)
+    monkeypatch.setattr(batch, 'validate_inputs', lambda *args: ({}, {}))
+    monkeypatch.setattr(batch, 'collect_series', collect)
+    monkeypatch.setattr(batch, 'allocated_bytes', lambda *args: 0)
+    monkeypatch.setattr(batch.lifecycle, 'SharedCleanup', Budget)
+    monkeypatch.setattr(batch.lifecycle, 'Owned', Owner)
+    monkeypatch.setattr(batch.lifecycle, 'Monitor', Guard)
+    monkeypatch.setattr(batch.lifecycle, 'identity', lambda pid: {'pid': pid, 'start_ticks': 1})
+    monkeypatch.setattr(batch.lifecycle, 'ancestry', lambda *args: [])
+    monkeypatch.setattr(batch.lifecycle, 'validate_samples', lambda *args, **kwargs: {})
+    real_save = batch.save_receipt
+    failed_write = False
+    def save(folder, value):
+        nonlocal failed_write
+        if fault == 'persistence' and value.get('finished') and not failed_write:
+            failed_write = True
+            raise final_error
+        real_save(folder, value)
+    monkeypatch.setattr(batch, 'save_receipt', save)
+    with pytest.raises(BaseException) as caught:
+        batch.main()
+    assert caught.value is (failure if original_failure else final_error)
+    saved = json.loads((runs/(policy['id']+'.driver')/'driver.json').read_text())
+    assert saved['state'] == 'failed'
+    if original_failure: assert saved['reason'] == 'RuntimeError: original stage failure'
+    assert 'injected finalizer ' + fault in json.dumps(saved)

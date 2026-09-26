@@ -343,3 +343,10 @@ by this result. The current study cannot qualify even if its remaining cells
 pass. The prepared T15 simulator collection is held because it cannot repair
 this native control failure; independent T13 correctness and T16 reference and
 controlled comparisons remain eligible after their own prerequisites.
+
+## Reviewed prospective supervision — 2026-09-26
+
+Simulator collection now has reviewed owned-process cleanup, original-clock resource
+accounting and failure preservation; see the [verification receipt](../observations/simulator-supervision-verification-20260926.json).
+The actual Linux fixtures, runtime admission and empirical execution remain
+pending. This preparation does not satisfy or change any open acceptance item.

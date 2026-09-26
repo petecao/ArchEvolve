@@ -39,7 +39,9 @@
     "batch_storage_gib": 40,
     "raw_reserve_gib": 30,
     "build_reserve_gib": 10,
-    "monitor_interval_seconds": 5
+    "monitor_interval_seconds": 5,
+    "sampled_tree_memory_gib": 52,
+    "maximum_telemetry_gap_seconds": 30
   },
   "budget_authority": "New prospective finite shared-gate plan; expired original pilot and native controls remain unchanged.",
   "series": [
@@ -102,5 +104,26 @@
     "excluded": "Immutable common model/toolchain/author binaries and registered scale18 inputs are historical shared infrastructure. Native pilot, failed/expired witness history, a3 correctness and coverage are separately bounded prerequisites; do not charge them again here.",
     "preparation": []
   },
-  "required_coverage": "bfs-dx100-coverage-20260926-a1.execute"
+  "required_coverage": "bfs-dx100-coverage-20260926-a2.execute",
+  "historical_coverage_failure": {
+    "id": "bfs-dx100-coverage-20260926-a1.execute",
+    "state": "interrupted_public_marker_retained",
+    "sha256": "f64b604d10bf579c832145b07d6b6cee39d81833d23711375a6625f59fbc57f9",
+    "file_sha256": "dfa28a3bbe8170fe2e3dff6b140a41b4bfc7873c3e903fc39d73cc258acac26e"
+  },
+  "supervision": {
+    "format": "swdb.bfs.simulator-supervision.v1",
+    "cleanup": "shared_atomic_reservations_total_30_seconds",
+    "rss_source": "linux.proc_pid_stat.field24.v1",
+    "hard_memory_quota": false,
+    "outer_helper_preflight_included": true,
+    "required_linux_cases": [
+      "detached_success",
+      "detached_failure",
+      "nested_interruption",
+      "nested_term_resistant",
+      "public_dx100_interruption"
+    ],
+    "final_kill_and_persistence_reserve_seconds": 10
+  }
 }

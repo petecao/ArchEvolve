@@ -41,7 +41,7 @@ def running(pid):
     return True
 
 
-def test_timeout_kills_term_resistant_descendant_after_leader_exits(driver, tmp_path):
+def test_generic_timeout_reaps_leader_without_claiming_post_reap_group_ownership(driver, tmp_path):
     worker, main = driver
     descendant = tmp_path / 'descendant.pid'
     leader = tmp_path / 'leader.pid'
@@ -58,10 +58,9 @@ def test_timeout_kills_term_resistant_descendant_after_leader_exits(driver, tmp_
         with pytest.raises(subprocess.TimeoutExpired):
             worker.call('fixture', timeout=2)
         pid, group = int(descendant.read_text()), int(leader.read_text())
-        until = time.monotonic() + 3
-        while running(pid) and time.monotonic() < until:
-            time.sleep(.02)
-        assert not running(pid), 'same-group TERM-resistant descendant survived cleanup'
+        # Updated safety boundary: after leader reap the numeric group may be
+        # reused. Only prospective Linux Owned supervision can clean this tree.
+        assert running(pid), 'fixture must demonstrate why whole-tree supervision is required'
         assert not running(group), 'leader survived cleanup'
         saved = json.loads((worker.folder / 'driver.json').read_text())['stages'][0]
         assert saved['state'] == 'interrupted_or_timeout' and saved['returncode'] == -signal.SIGTERM

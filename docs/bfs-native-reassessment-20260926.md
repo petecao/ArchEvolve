@@ -126,3 +126,63 @@ The new one-thread calibration publisher remains separate. This interface does
 not bypass calibration, the shared accelerator gates, or any empirical acceptance
 prerequisite. Synthetic unit records and explicit public fixture tests establish
 contract behavior only; they cannot support a freeze or gain claim.
+
+## Prospective execution supervision — 2026-09-26
+
+Actual newly dispatched existing-candidate campaigns require
+`--supervision-admission FILE --supervision-sha256 SHA --expected-commit COMMIT`,
+`--outer-started ISO --outer-deadline ISO`, and the original tmux
+`--pane-pid PID --pane-start-ticks TICKS`. The wrapper captures its start before
+entering the socket helper and uses TERM at 14,370 seconds and KILL 30 seconds
+later. The exact 14,400-second allowance includes wrapper, helper, admission,
+public calls, source replay, resource observations, and final persistence.
+The driver cannot start with a reset clock. All stages and finalization share
+one 30-second cleanup ledger; neither stages nor failures replenish it.
+
+The admission is `swdb.bfs.native-campaign-admission.v1`, with `id`,
+`prepared_at`, `code_commit`, `runtime`, `inputs`, `bounds`, and `linux_proof`.
+`runtime` comes from `campaign_runtime(COMMIT)`: complete tracked runtime and
+test inventories plus Python executable/version and project configuration.
+`inputs` comes from `campaign_inputs(args)` and pins the original proposal file,
+existing candidate, reassessment manifest when present, ordered packages,
+protocol, lane, records, and new raw/source/build directories. `bounds` must
+exactly equal `NATIVE_BOUNDS`. The hashed Linux proof uses
+`swdb.bfs.linux-fixture.v1`, `kind: native_campaign_owned_cleanup`,
+`evidence_kind: contract_fixture`, the same runtime/code, aware start/finish,
+actual pytest command, zero integer return code, and hashed stdout/JUnit.
+The actual fixture start-to-finish interval must not exceed 90 seconds.
+It must include both cases of
+`tests/test_bfs_native_execution.py::test_linux_campaign_reaps_detached_child`
+with no failures or skips. These fixtures do not establish native performance.
+
+The native guard uses 16 GiB sampled RSS over the driver and all observed
+owned descendants, including separate sessions; 16 GiB of newly retained raw,
+source, build, and record artifacts, with a 4 GiB build subset; 20/24 GiB node
+and global capacity at expensive-stage admission; and the existing 30/10 GiB
+raw/source-build free-space reserves. Nominal sampling is five seconds with a
+maximum 30-second gap or guard duration across admission and finalization.
+These are sampled observations, not hard memory quotas or true-peak claims.
+Native limits do not inherit the simulator helper's memory constant.
+
+Linux subreaper/pidfd ownership captures direct PID/start identities immediately
+and cleans adopted descendants before any next public stage. Shutdown failures
+still attempt bounded direct-child wait and retain the original failure.
+Final resource accounting, output hashes, both receipt writes, and their checks
+must fit the original shared clock and cleanup ledger. The receipt retains the
+complete ancestry, direct-stage, sampled, and cleanup identity union for an
+independent terminal audit, which must also bind the actual outer exit and
+released lane generation. The driver cannot attest its own reaping.
+The monitor remains active through owned cleanup. Monitor shutdown and final
+hash/write accounting use one bounded five-second reservation from the same
+ledger. Failure persistence also requires an available reservation: exhaustion
+does not permit an emergency write outside the budget. Admission must reject a
+nonzero outer result even if the last durable receipt predates that failure.
+
+The generic shared stage helper signals only a still-owned, unreaped session
+leader. Once reaped, its numeric process group is no longer safe authority for
+a signal. Its independent bounded direct wait preserves original failures, but
+it claims neither same-group nor detached-descendant cleanup after leader reap.
+This explicitly supersedes the old tests that expected stale numeric signaling;
+new Linux Owned tests retain the required whole-tree guarantee. Newly dispatched
+existing-candidate acceptance cannot use the generic path. Historical checkouts
+and evidence remain unchanged.

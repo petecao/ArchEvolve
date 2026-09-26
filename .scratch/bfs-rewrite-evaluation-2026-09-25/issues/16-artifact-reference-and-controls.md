@@ -78,3 +78,10 @@ reused only after host rehashing; the two distinct policy IDs cannot relabel one
 MAA replay as both comparisons. The existing 24-hour / 60-GiB budget is shared
 across the whole batch. A concrete common supervisor and absolute window are
 being prepared; neither policy nor any reference comparison is yet complete.
+
+## Reviewed prospective supervision — 2026-09-26
+
+Reference and control collection now has reviewed owned-process cleanup, original-clock resource
+accounting and failure preservation; see the [verification receipt](../observations/simulator-supervision-verification-20260926.json).
+The actual Linux fixtures, runtime admission and empirical execution remain
+pending. This preparation does not satisfy or change any open acceptance item.

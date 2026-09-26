@@ -9,7 +9,7 @@ sets the scientific requirements. `scripts/bfs_simulator_batch.py` coordinates
 existing public `scripts/bfs_simulator_series.py` calls; it does not introduce an
 evaluator, publish a protocol, retry a run, select a graph, or decide a gain.
 The expired pilot and unused a2 remain historical. The separately bounded a3
-and fixed coverage case must finish successfully before either batch is admitted.
+and new A2 fixed coverage case must finish successfully before either batch is admitted.
 
 ## Fixed scope and finite ceilings
 
@@ -74,7 +74,7 @@ partial or failed grid; it does not reduce repetitions or grant another window.
 
 ## Accounting and admission
 
-The shared clock begins at coordinator entry, before record/artifact validation,
+The shared clock begins at the captured outer-wrapper entry, before helper startup or record/artifact validation,
 and ends after owned-process cleanup and final storage accounting. Its remaining
 time is the minimum of the monotonic allowance and a separately sealed absolute
 ET deadline. Before dispatch the admission must state concrete aware timestamps
@@ -115,7 +115,7 @@ An admission is a separately hashed JSON document with these required fields:
   `{path, sha256}` terminal-audit reference. Actual a3/coverage must pass their
   shared readers; paired/provider may have failed but must be terminal with
   verified cleanup. The coverage evaluation is fixed to
-  `bfs-dx100-coverage-20260926-a1.execute`, its exact graph/request and bounded
+  `bfs-dx100-coverage-20260926-a2.execute`, its exact graph/request and bounded
   completed driver. `coverage_commit` pins that actual reviewed code.
 - `protocols`: empty for T15; for T16, `artifact` and `control`, each the actual
   immutable `{id, sha256}` of the matching independently frozen protocol.
@@ -123,7 +123,7 @@ An admission is a separately hashed JSON document with these required fields:
 
 Every prerequisite must exist before `prepared_at`. All fixed records and
 source/build/graph/raw references are reopened and checked. Retained a1 failure
-bytes must still match; an a2 execution record rejects admission. Existing batch
+bytes must still match; the expired witness-a2 execution record rejects admission. The interrupted coverage-a1 public marker and its exact YAML bytes remain pinned separately and are not promoted. Existing batch
 roots, child record prefixes or child build paths prevent retry/overwrite.
 Unknown runtime, protocol or completion identities fail closed.
 
@@ -146,46 +146,64 @@ standalone series behavior is unchanged when the flag is absent. Capacity
 estimates do not guarantee protection from other users' subsequent allocations.
 
 Nominal five-second coordinator observations retain common elapsed/storage,
-leases and PID/start-time descendant identities in `ledger.jsonl`. Each guard
-also preserves the 30-GiB raw and 10-GiB build free-space reserves. Observations
-are sampled; they are not a filesystem quota or an instantaneous memory bound.
-The public adapter retains its own execution memory monitor. A common budget
-failure terminates the current owned series, records failure and stops.
+leases and PID/start-time descendant identities in `ledger.jsonl`, including
+admission, record readback and finalization. The prospective coordinator and
+explicitly opted-in series use `bfs_owned_rss`: PID, start time, state and RSS
+come from one `/proc/PID/stat` record. The sampled coordinator subtree limit is
+52 GiB, including its series/public evaluators and observed detached descendants;
+the adapter's execution limit remains 48 GiB. This is a sampled guard, not a
+kernel memory quota or a guarantee about unobserved short-lived processes.
+Maximum inter-observation gap and guard duration are 30 seconds. Retained
+samples are reopened to check arithmetic, ordering, memory bound and coverage
+through finalization. Every guard also retains the existing 30-GiB raw and
+10-GiB build free-space reserves.
 
-Linux child-subreaper admission precedes series dispatch. It adopts orphaned
-nested sessions, including a detached grandchild whose first parent exited
-between samples. The existing `bfs_process.run_stage` performs graceful group
-cleanup; the coordinator then uses pidfds plus exact PID/start-time checks to
-kill/reap any remaining owned descendants within five seconds. All descendants
-must be absent before the next series. It never signals another user's process
-or the shared tmux server. The 30-second reserve covers the existing 20-second
-handler grace and the final five-second descendant check. A caller must impose
-an outer TERM deadline at the common remaining allowance minus 30 seconds and
-KILL after 30 seconds; neither outer timeout nor the absolute end is extended.
+Prospective execution uses `bfs_owned_execution`, independently of historical
+`OwnedDescendants` APIs retained for older pinned clients. Linux child-subreaper
+admission precedes dispatch. PIDfds and exact PID/start identity protect signals;
+there is no signal to a reused numeric process group or the shared tmux server.
+An exited public leader still requires adoption, termination and reaping of its
+owned detached descendants before the next public stage.
 
-## Required bounded Linux check before dispatch
+One file-backed 30-second cleanup ledger is shared by the coordinator, each
+series, and every public stage. Short atomic reservations and settlements hold
+the file lock only for metadata; signaling, waiting and reaping occur outside
+that lock. A dead supervisor's unsettled reservation remains charged. Graceful waiting cannot consume the final ten seconds reserved inside that same allowance for KILL, direct-child reap and final persistence. Concurrent
+parent/child cleanup may conservatively double-charge overlapping time, but it
+cannot reset the reserve. A bounded 50-ms settlement tail is charged and checked
+after persistence. An overrun fails the batch. Monitor shutdown, post-stage log hashing, receipt persistence and final
+resource readback are charged to the same reserve. All teardown, metadata and final
+persistence also remain inside the original absolute and monotonic batch clocks.
+The outer helper uses TERM at the remaining allowance minus 30 seconds and KILL
+after the same 30 seconds. There is no per-series cleanup-clock extension.
 
-The Mac tests are contract fixtures. They do not establish Linux subreaper or
-pidfd behavior. Before a real batch, on the exact admitted code under a free
-leased lane, run this selected test only:
+## Required bounded Linux checks before dispatch
+
+Mac fixtures do not establish Linux behavior. On the exact prospective runtime
+pin, a free leased lane must run these two separately bounded fixture selections,
+retaining actual commands, stdout hashes, JUnit hashes and terminal cleanup:
 
 ```sh
 timeout --signal=TERM --kill-after=5s 85s \
-  python3 -m pytest -q tests/test_bfs_simulator_batch.py \
-  -k linux_subreaper_reaps_detached_grandchild_after_leader_exit \
-  --basetemp "$CLEANUP_TEST_RAW"
+  python3 -m pytest -q tests/test_bfs_owned_execution.py \
+  -k linux --junitxml="$CLEANUP_JUNIT" --basetemp "$CLEANUP_TEST_RAW"
+timeout --signal=TERM --kill-after=5s 85s \
+  python3 -m pytest -q \
+  tests/test_dx100_interruption.py::test_public_interruption_is_durable_before_postmortem \
+  --junitxml="$INTERRUPTION_JUNIT" --basetemp "$INTERRUPTION_TEST_RAW"
 ```
 
-`CLEANUP_TEST_RAW` must name a fresh authorized host raw-output directory. Root
-coordinates this invocation; it has not been dispatched. There are two isolated
-success/failure supervisor cases, each bounded to 20 seconds and 512-MiB address
-space. Each creates a leader and one small detached Python grandchild with a
-15-second lifetime; no simulator, compiler, graph or provider runs. Each retains
-`linux-cleanup-result.json` with actual host/platform, code/runtime hashes,
-address-space limit, elapsed time, PID/start ownership, subreaper status and
-post-cleanup observations. Both receipts are mandatory admission inputs. A
-skipped, failed, wrong-platform or different-code result cannot authorize a
-batch.
+The first selection includes detached-child success, detached-child failure,
+nested-parent/child interruption, and a TERM-resistant nested case sharing the
+same reservation file. Actual direct-process regression also verifies reap even
+when signaling fails, preservation of the first stage error, and the unchanged
+work deadline after process startup. The second
+reopens the public failed evaluation while optional postmortem work raises or
+stalls. These are contract fixtures; no graph performance or coverage is inferred.
+Both `swdb.bfs.linux-fixture.v1` receipts must identify mbit10/Linux, the exact
+Git/runtime/test hashes and interpreter, successful unskipped required JUnit
+cases, and at most 90 seconds. Historical Linux receipts do not satisfy these
+new tests. No such prospective fixture or batch has been dispatched.
 
 ## Prospective public invocation
 
@@ -196,7 +214,8 @@ command is:
 python3 scripts/bfs_simulator_batch.py t15 \
   --admission "$ADMISSION_JSON" --admission-sha256 "$ADMISSION_SHA256" \
   --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1 \
-  --lane 0
+  --lane 0 --outer-started "$OUTER_STARTED" --outer-deadline "$OUTER_END" \
+  --pane-pid "$PANE_PID" --pane-start-ticks "$PANE_START_TICKS"
 ```
 
 Use `t16` and its exact root name for T16. Lane 0 is an example; choose a currently
@@ -206,3 +225,26 @@ timeout is computed from the sealed remaining allowance, not copied as a fresh
 and complete/failure state before continuing. A completed receipt means the
 fixed collection finished and its readback matched. It does not resolve tickets,
 qualify a protocol, promote T14's unverified samples or assert a gain.
+
+The A2 completed-reader import is intentionally lazy: the separately reviewed
+A2 export still pins the historical batch/series dependency bytes. Its actual
+successful code commit must be supplied in sealed admission and its full reader
+must pass; mere existence of an A2 evaluation is insufficient. New batch code
+must not leak into that separate measured runtime before independent review.
+
+## Terminal accounting readback
+
+After independent lease and PID/start-time closure, reopen the terminal driver
+and final shared-ledger bytes with
+`scripts.bfs_simulator_batch_terminal.validate_cleanup_ledger`. Supply the exact
+hashed references and original run ID, outer start, absolute deadline and audit
+time. The reader requires empty reservations, matching creator and immutable
+header, settled charges totaling no more than 30 seconds, no exceeded grants,
+and original-clock event ordering. Embedded cleanup snapshots are nonfinal;
+they cannot replace the final ledger. This readback proves accounting
+consistency, not process absence or empirical qualification.
+
+Final shutdown and accounting errors remain visible separately from the first
+stage failure. A new finalizer failure makes an otherwise successful coordinator
+exit unsuccessfully; it cannot silently return success with a failed receipt.
+The original stage exception remains authoritative if both fail.

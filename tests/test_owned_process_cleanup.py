@@ -118,7 +118,7 @@ def test_public_provider_reaps_descendant_and_retains_outcome(proposal_setup, tm
 
 
 @pytest.mark.parametrize('mode', ['success', 'failure', 'timeout'])
-def test_driver_stage_cleans_every_exit_before_retaining_log_hash(tmp_path, mode):
+def test_generic_driver_retains_outcome_without_claiming_post_reap_tree_cleanup(tmp_path, mode):
     receipt = {'stages': []}
     command = [sys.executable, '-c', program(tmp_path, mode != 'timeout') +
                ('raise SystemExit(7)\n' if mode == 'failure' else '')]
@@ -133,16 +133,15 @@ def test_driver_stage_cleans_every_exit_before_retaining_log_hash(tmp_path, mode
         assert row['state'] == {'success':'complete', 'failure':'failed', 'timeout':'interrupted_or_timeout'}[mode]
         assert row['stdout_sha256'] == file_hash(row['output'])
         pid = int((tmp_path / 'descendant.pid').read_text())
-        until = time.monotonic() + 3
-        while running(pid) and time.monotonic() < until:
-            time.sleep(.02)
-        assert not running(pid), 'stage returned with an owned descendant alive'
+        # A reaped leader does not authorize stale numeric group signaling.
+        # The actual Linux Owned tests establish prospective whole-tree cleanup.
+        assert running(pid)
     finally:
         cleanup(tmp_path)
 
 
 @pytest.mark.parametrize('returncode', [0, 3])
-def test_campaign_completion_reaps_descendants_and_preserves_json(driver, tmp_path, returncode):
+def test_generic_campaign_preserves_json_without_stale_post_reap_signal(driver, tmp_path, returncode):
     worker, main = driver
     code = program(tmp_path, True).replace('print("ready",flush=True)', 'print(\'{"recorded":true}\',flush=True)')
     main.write_text(code + f'raise SystemExit({returncode})\n')
@@ -153,9 +152,6 @@ def test_campaign_completion_reaps_descendants_and_preserves_json(driver, tmp_pa
         assert row['state'] == ('complete' if returncode == 0 else 'failed')
         assert row['stdout_sha256'] == file_hash(row['stdout'])
         pid = int((tmp_path / 'descendant.pid').read_text())
-        until = time.monotonic() + 3
-        while running(pid) and time.monotonic() < until:
-            time.sleep(.02)
-        assert not running(pid), 'campaign returned with an owned descendant alive'
+        assert running(pid), 'generic path makes no post-reap descendant claim'
     finally:
         cleanup(tmp_path)

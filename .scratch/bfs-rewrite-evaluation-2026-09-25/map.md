@@ -83,6 +83,22 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Prospective supervision reviewed — 2026-09-26
+
+The [simulator supervisor verification](observations/simulator-supervision-verification-20260926.json)
+retains 182 passing local tests with six Linux-only skips and unchanged source
+and runtime hashes throughout the final group. It covers shared process cleanup,
+continuous resource accounting, original deadlines, aggregate/protocol admission,
+terminal ledger readback, and preservation of original failures. The
+[native supervision verification](observations/native-supervision-verification-20260926.json)
+retains 124 integration passes, the final 41 repair-probe passes and independent
+review. Actual existing-candidate campaigns now require exact runtime admission,
+Linux owned-process proof and one four-hour clock with its shared cleanup reserve.
+Historical pinned executions remain unchanged. These are implementation checks;
+no new host fixture or candidate assessment has run. Broader isolated regression
+and independent Standards/Spec readiness audits follow; final all-ticket review
+still follows empirical acceptance.
+
 ## Progress check — 2026-09-26 16:03 ET
 
 The [full health audit](observations/health-20260926-1603.json) confirms the sole

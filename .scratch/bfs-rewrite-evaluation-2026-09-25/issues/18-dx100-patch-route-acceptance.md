@@ -100,3 +100,10 @@ These are contract tests, not candidate assessment. The materialization checkbox
 now reflects the already-retained actual primary/diagnostic compilation and
 independent source audit; all frozen execution and profiling obligations remain
 open. No new strategy or candidate was selected.
+
+## Reviewed prospective supervision — 2026-09-26
+
+Native candidate execution now has reviewed owned-process cleanup, original-clock resource
+accounting and failure preservation; see the [verification receipt](../observations/native-supervision-verification-20260926.json).
+The actual Linux fixtures, runtime admission and empirical execution remain
+pending. This preparation does not satisfy or change any open acceptance item.
