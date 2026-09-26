@@ -186,6 +186,17 @@ also covers continuation, and its guest tick cap is explicit in `max_ticks`.
 Sealed ROI evidence survives a later verifier timeout or failure. Live terminal
 statistics can change during verification without altering the sealed interval.
 
+As of 2026-09-26, a failed or interrupted simulator stage persists its terminal
+`outcome` before optional postmortem log/statistics inspection. The additive
+`context.postmortem` records `pending`, `complete`, or `failed` collection; a
+postmortem error cannot replace the original operational failure or certify the
+interrupted run. Signal handlers remain active during optional postmortem
+inspection. This does not bound postmortem scan time or guarantee survival of an earlier abrupt
+SIGKILL. Historical records, including the coverage run whose top-level state
+remained running, are unchanged. Public SIGTERM fixtures reopen the canonical
+record and query while postmortem is blocked, then verify the retained failure
+after its separate error.
+
 Path evidence counts completed MAA trace units and positive instruction counters
 from the sealed `finalTick - simTicks` through `finalTick` interval. Both are
 required for `accelerator_executed: true`; source presence, a `td_maa` label,
