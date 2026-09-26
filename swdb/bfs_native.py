@@ -5,6 +5,7 @@ Updated: 2026-09-25. Real timing, fixture timing, and profiling remain distinct.
 
 import copy
 import datetime
+import hashlib
 import json
 import math
 import os
@@ -83,10 +84,16 @@ def canonical_graph(workload):
             raise Failure("graph_file must be an absolute regular file, not a symlink")
         if path.stat().st_size > MAX_GRAPH_BYTES:
             raise Failure("graph_file exceeds the native evaluator's 512 MiB input limit")
-        actual = artifacts.file_hash(path)
+        # Hash exactly the bytes supplied to the parser. Separate hash/read opens
+        # can associate changed adjacency with an earlier representation hash.
+        with path.open("rb") as handle:
+            raw = handle.read(MAX_GRAPH_BYTES + 1)
+        if len(raw) > MAX_GRAPH_BYTES:
+            raise Failure("graph_file exceeds the native evaluator's 512 MiB input limit")
+        actual = hashlib.sha256(raw).hexdigest()
         if workload.get("graph_sha256") != actual:
             raise Failure("graph_file content does not match graph_sha256")
-        graph = json.loads(path.read_text())
+        graph = json.loads(raw)
         representation = {"kind": "json_graph", "path": str(path), "sha256": actual}
     if not isinstance(graph, dict):
         raise Failure("workload requires graph or a hashed graph_file")
