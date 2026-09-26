@@ -83,6 +83,24 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Progress check — 2026-09-26 14:33 ET
+
+The [full health receipt](observations/health-20260926-1433.json) records all three
+workers active, both socket leases and the legacy lease released, all kernel
+locks empty, and no live owned evaluation job. The exact failed-coverage pane
+remains a zero-RSS zombie. Available node/global capacity is 57.25/58.56/117.71
+GiB; free `/data1` and `/data` space is 16.42/182.29 GiB. Historical pins and 11
+receipt hashes remain unchanged. Next full check: 15:03 ET.
+
+Counts remain 13 resolved and eight claimed; final acceptance is 0/8. The new
+RSS/T17 minimal export `a53e619d` passes 59 local tests with three Linux skips.
+The fixed T17 build awaits actual Linux cleanup tests. The one-thread pilot has
+not launched; independent reviews are closing ownership, compiler readback and
+monitor/cleanup synchronization findings. A separately reproduced simulator
+fixture setup error is corrected with 25 regional/aggregation tests passing;
+production runtime checks are unchanged. The full `d9b1340` suite continues with
+its original setup failures retained.
+
 ## Failed coverage and reviewed monitor correction — 2026-09-26 14:25 ET
 
 The actual fixed coverage a1 ended unsuccessfully at 14:01 ET after the resource
