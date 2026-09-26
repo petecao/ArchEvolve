@@ -154,6 +154,32 @@ The invalid a3 Callgrind counts and their audit remain retained; these packages
 use the corrected a4 observations. This slice establishes real data handoff and
 profiling, without a profitability comparison.
 
+## Actual DX100 profile collection
+
+The approved 2026-09-26 metadata import includes
+[`bfs-dx100-profile-20260926-a1.package.v1.60c6fe30745432bc`](../records/profile_packages/bfs-dx100-profile-20260926-a1.package.v1.60c6fe30745432bc.yaml).
+This is actual simulated collection on a registered 64-vertex graph with 468
+adjacency entries and source 0. It retains 31 discovered regions: eight executed
+regions (three functions and five loops), plus 23 unobserved regions. The package
+contains 39 available dynamic memory metrics scoped to the whole diagnostic ROI;
+these counters do not establish per-region memory attribution.
+
+Public `bfs-hotspots` queries rank exclusive simulated elapsed time accumulated
+per executing thread, including waits and thread overlap. Inclusive nested scope
+durations overlap and must not be summed. Neither quantity is native thread CPU
+time. The separate primary ROI records 49,313,463 simulator ticks, or
+49.313463 microseconds at the recorded tick frequency. The primary and diagnostic
+correctness remain **unverified**, with retained `missing_observation` outcomes.
+Package completeness describes collection under its stated contract; it supplies
+neither a qualified timing comparison nor completed accelerator acceptance.
+
+The [import and retrieval audit](../.scratch/bfs-rewrite-evaluation-2026-09-25/observations/t14-approved-import-20260926.json)
+verified all 14 approved files and a fresh 17-record public chain. The raw
+observation audit and discovery limitations remain linked from
+[Ticket 14](../.scratch/bfs-rewrite-evaluation-2026-09-25/issues/14-dx100-region-and-memory-profiling.md).
+Remote artifacts stay on mbit10. Fresh witness and coverage executions under
+Ticket 13 remain separate requirements.
+
 ## Durable contract fixtures and remaining acceptance
 
 The separate [contract demonstration receipt](evidence/bfs-contract-demonstrations-20260925-a3.yaml)

@@ -140,3 +140,16 @@ at `83125b4` has passed 55% without a reported failure at this check, and is sti
 running; later a3/graph preparation has separate focused verification. Final
 Standards/Spec review against `1bdb7d4` remains required after all acceptance and
 repair work. The map's current table and observations preserve the evidence.
+
+
+2026-09-26 11:48 ET: a fresh local public `bfs-coverage` query rebuilt its own
+SQLite index from 197 valid master records. Its
+[request](../requests/acceptance-checkpoint-20260926.json) deliberately selects no
+protocols or comparisons because none is empirically frozen; all eight cells,
+reference comparisons and AC17 remain incomplete, with `gain_claim: false`.
+The [query receipt](../observations/acceptance-checkpoint-20260926-a1.json)
+retains all criterion states and output identity. Remote-only new provider and
+running paired records are outside this local snapshot. Artifact availability
+remains explicitly unverified where the local host cannot access remote bytes.
+The handoff now links the actual imported T14 simulator package, observed region
+and memory scopes, and its unchanged unverified-correctness limitation.
