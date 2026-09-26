@@ -1,6 +1,6 @@
 """Durable native BFS evaluation with evaluator-owned result checking.
 
-Updated: 2026-09-25. Real timing, fixture timing, and profiling remain distinct.
+Updated: 2026-09-26. Real timing, fixture timing, and profiling remain distinct.
 """
 
 import copy
@@ -23,9 +23,7 @@ from collections import deque
 from bisect import bisect_left
 from pathlib import Path
 
-import yaml
-
-from swdb import artifacts, paths, profile, workflow, yamlio
+from swdb import artifacts, paths, profile, workflow
 from swdb.cli import Failure, _require_valid
 from swdb.store import Store
 from swdb.vocab import load_all
@@ -463,13 +461,10 @@ def build_directory(request, host, rid, raw_folder, records):
 def run(args):
     """Public `swdb evaluate REQUEST --runs-dir DIR` boundary."""
     store = _require_valid(args.records)
-    try:
-        raw = Path(args.file).read_text()
-        if len(raw.encode()) > MAX_REQUEST_BYTES:
-            raise Failure("evaluation request exceeds 10 MiB")
-        request = yaml.load(raw, Loader=yamlio._Loader)
-    except yaml.YAMLError as error:
-        request = {"parse_error": str(error)}
+    raw = Path(args.file).read_text()
+    if len(raw.encode()) > MAX_REQUEST_BYTES:
+        raise Failure("evaluation request exceeds 10 MiB")
+    request = workflow.message_from_text(raw)
     rid = request.get("id") if isinstance(request, dict) else None
     if not isinstance(rid, str) or not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", rid):
         rid = f"evaluation-invalid-{uuid.uuid4().hex}"

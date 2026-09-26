@@ -173,7 +173,9 @@ def test_public_v2_retains_trusted_runtime_after_checkout_helpers_change(case, r
     assert availability and all(row['state'] == 'verified' for row in availability), availability
 
 
-@pytest.mark.parametrize('behavior', ['candidate', 'candidate-missing-parent', 'candidate-wrong-source', 'candidate-after-pass'])
+@pytest.mark.parametrize('behavior', ['candidate', 'candidate-missing-parent', 'candidate-wrong-source', 'candidate-after-pass',
+                                      'candidate-legacy-adapter', 'candidate-legacy-v1', 'candidate-missing-oracle', 'candidate-wrong-oracle',
+                                      'candidate-wrong-verifier'])
 def test_public_v2_candidate_requires_exact_protected_parent_result_before_pass(case, records, behavior):
     from swdb import artifacts, workflow
     data = v2_request(case, behavior)
@@ -214,9 +216,28 @@ def test_public_v2_candidate_requires_exact_protected_parent_result_before_pass(
         budget={'total_seconds': 60, 'memory_gib': 1, 'storage_gib': 1, 'build_seconds': 10})
     compiled = invoke('dx100-compile', build_request)
     assert compiled['outcome']['state'] == 'complete', compiled['outcome']
+    unsafe = behavior in {'candidate-legacy-adapter', 'candidate-legacy-v1', 'candidate-missing-oracle',
+                          'candidate-wrong-oracle', 'candidate-wrong-verifier'}
+    if unsafe:
+        if behavior in {'candidate-legacy-adapter', 'candidate-legacy-v1'}:
+            compiled['build']['adapter'] = 'dx100.complete_call.v1'
+            if behavior == 'candidate-legacy-v1':
+                data['verification']['checker'] = 'dx100.bfs.verifier.v1'
+        elif behavior == 'candidate-missing-oracle':
+            compiled['context'].pop('graph_verification')
+        elif behavior == 'candidate-wrong-oracle':
+            compiled['context']['graph_verification']['input_format'] = 'gapbs.sg64'
+        else:
+            compiled['context']['verifier_source'] = compiled['context']['protected_bfs_verifier']
+        records.write('evaluations/candidate-build.yaml', compiled)
     data.update(candidate='candidate', candidate_build=compiled['id'], build_evaluation='model-build',
         binary={'path': compiled['build']['binary'], 'sha256': compiled['build']['binary_sha256']})
     result = invoke('dx100-execute', data)
+    if unsafe:
+        assert result['outcome']['state'] == 'failed', result['outcome']
+        assert 'original-adjacency checker contract' in result['outcome']['reason']
+        assert not any(stage['stage'] in {'checkpoint', 'simulation'} for stage in result['stages'])
+        return
     valid = behavior == 'candidate'
     assert result['outcome']['state'] == ('complete' if valid else 'missing_observation'), result['outcome']
     assert result['correctness']['state'] == ('passed' if valid else 'unverified')
@@ -225,3 +246,15 @@ def test_public_v2_candidate_requires_exact_protected_parent_result_before_pass(
     assert check['completion_sequence']['observed'] is valid
     if valid:
         assert_downstream_verifier_contract(result)
+        import copy
+        from swdb.cli import Failure
+        from swdb.dx100_witness import validate_completed_witness
+        for field in ('graph_verification', 'application'):
+            changed = copy.deepcopy(result)
+            changed['context'].pop(field)
+            with pytest.raises(Failure):
+                validate_completed_witness(changed, verify_artifacts=False)
+        changed = copy.deepcopy(result)
+        changed['context']['instrumentation'].pop('graph_verification')
+        with pytest.raises(Failure, match='original-adjacency'):
+            validate_completed_witness(changed, verify_artifacts=False)

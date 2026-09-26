@@ -1,4 +1,4 @@
-"""Diagnostic wrapper preserving the pinned author's internal ROI. Updated: 2026-09-25."""
+"""Diagnostic wrapper preserving the pinned author's internal ROI. Updated: 2026-09-26."""
 
 AUTHOR_ROI = 'bfs.dx100.traversal.v1'
 HOOKS = {'m5_reset_stats': 'activate source scopes, then forward the actual reset',
@@ -8,7 +8,7 @@ HOOKS = {'m5_reset_stats': 'activate source scopes, then forward the actual rese
 def driver(source, model, function, diagnostic):
     """Reuse trusted result checking, preserving the original internal exit."""
     from swdb.dx100_candidate import SUPPRESSED, driver as complete_driver
-    text = complete_driver(source, model, function, diagnostic)
+    text = complete_driver(source, model, function, diagnostic, trusted_graph=False)
     noop = '\n'.join(f'#define {name}(...) ((void)0)' for name in SUPPRESSED)
     hooks = '''inline void swdb_author_reset_stats(uint64_t delay, uint64_t period) {
   ::swdb_profile::start();

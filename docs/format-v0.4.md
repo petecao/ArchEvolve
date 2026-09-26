@@ -1,13 +1,22 @@
 # Workflow record format 0.4
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 
 Format 0.4 adds source ownership and workflow records. Existing 0.2 and 0.3 records
 retain their meaning; see [source identity](bfs-source-identity.md). The envelope's
 `schema_version` versions database records. Independent `message_version: "1.0"`
 versions the provisional ensemble handoff. YAML remains authoritative; the SQLite
 `records` table carries every new kind for retrieval after an index rebuild.
+
+Public messages may use YAML syntax, but their values must round-trip through
+JSON without changing object keys or value types. Binary tags, sets, nonfinite
+numbers, recursive aliases, and non-string object keys are rejected. Durable
+proposal/evaluation/profile entry points retain invalid message text and its
+parse error in a failed record that still supports fresh retrieval and index
+rebuild. Protocol and package requests reject incompatible values before
+publication. Workflow persistence also checks JSON serializability before
+committing metadata, so an invalid value cannot poison the generated index.
 
 ## Shared workflow fields
 

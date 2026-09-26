@@ -25,6 +25,21 @@ VERSION = "1.0"
 OPERATOR = {"name": "swdb", "role": "operator", "test_client": False}
 
 
+def message_from_text(raw):
+    """Retain invalid YAML messages without committing JSON-incompatible values."""
+    try:
+        request = yaml.load(raw, Loader=yamlio._Loader)
+    except (yaml.YAMLError, TypeError, ValueError, RecursionError) as exc:
+        return {"raw_text": raw, "parse_error": str(exc)}
+    try:
+        encoded = json.dumps(request, allow_nan=False)
+        if json.loads(encoded) != request:
+            raise ValueError("message changes during JSON serialization")
+    except (TypeError, ValueError, RecursionError):
+        return {"raw_text": raw, "parse_error": "request is not a JSON-compatible message"}
+    return request
+
+
 def _source_destination(runs_dir, rid):
     """Keep buildable source on mbit10's source/build volume (2026-09-25)."""
     base = (Path('/data1/yanruj/EvolveSWDB_sources')
@@ -43,6 +58,12 @@ def record(kind, rid, **fields):
 def persist(records, data, db_path=None, *, create=False):
     """Commit metadata first; an index error reports that the durable record survives."""
     data["updated"] = writer.today()
+    try:
+        encoded = json.dumps(data, allow_nan=False)
+        if json.loads(encoded) != data:
+            raise ValueError("record changes during JSON serialization")
+    except (TypeError, ValueError, RecursionError) as exc:
+        raise Failure(f"record {data['id']} is not JSON-compatible; nothing was persisted: {exc}") from None
     writer.commit(records, new=[data] if create else [], upsert=[] if create else [data])
     try:
         db.build(records, db_path or db.default_path(records))
@@ -252,17 +273,10 @@ def apply_patch(source, destination, patch, allowed, protections):
 
 def submit(args):
     store = _require_valid(args.records)
-    try:
-        raw = args.file.read_text()
-        if len(raw.encode()) > 10 * 1024 * 1024:
-            raise Failure("proposal exceeds the 10 MiB request limit")
-        request = yamlio.load(args.file)
-        try:
-            json.dumps(request, allow_nan=False)
-        except (TypeError, ValueError):
-            request = {"raw_text": raw, "parse_error": "request is not a JSON-compatible message"}
-    except yaml.YAMLError as exc:
-        request = {"raw_text": raw, "parse_error": str(exc)}
+    raw = args.file.read_text()
+    if len(raw.encode()) > 10 * 1024 * 1024:
+        raise Failure("proposal exceeds the 10 MiB request limit")
+    request = message_from_text(raw)
     rid = request.get("id") if isinstance(request, dict) else None
     if not isinstance(rid, str) or not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", rid):
         rid = f"proposal-invalid-{uuid.uuid4().hex}"
@@ -378,7 +392,7 @@ def _repairable_build_failure(evaluation, candidate):
             and context.get("candidate_sha256") == candidate["artifact"]["sha256"]
             and evaluation.get("request", {}).get("candidate") == candidate["id"]
             and evaluation.get("source_snapshot") == candidate["source_snapshot"]
-            and evaluation.get("build", {}).get("adapter") == "dx100.complete_call.v1"
+            and evaluation.get("build", {}).get("adapter") in {"dx100.complete_call.v1", "dx100.complete_call.v2"}
             and any(stage.get("stage") == "candidate_compile" and stage.get("state") == "failed"
                     and type(stage.get("returncode")) is int and stage["returncode"] != 0
                     and stage.get("log_sha256") for stage in evaluation.get("stages", [])))

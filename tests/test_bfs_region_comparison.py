@@ -1,4 +1,4 @@
-"""Public diagnostic comparison contracts; synthetic evidence only. Date 2026-09-25."""
+"""Public diagnostic comparison contracts; synthetic evidence only. Date 2026-09-26."""
 import copy
 import datetime
 import hashlib
@@ -11,6 +11,7 @@ from conftest import records as records_fixture
 from test_bfs_aggregation import simulation_seed, protocol_seed, _aggregate
 from test_bfs_protocol import _payload, _command
 from swdb import artifacts, profile_package, workflow
+from swdb.dx100_witness import graph_verification_contract
 
 
 def ref(path):
@@ -39,14 +40,20 @@ def package_fixture(records, tmp, primary, collector, runtime, now, ns):
             source_artifact_sha256=candidate['artifact']['sha256'], function='explicit_fixture'))
     instrumented = tmp / (rid + '.cc'); instrumented.write_bytes(raw)
     binary = tmp / (rid + '.binary'); binary.write_text('explicit diagnostic fixture ' + rid)
+    wrapper = tmp / (rid + '.driver.cc'); wrapper.write_text('// Explicit nonexecuted diagnostic oracle wrapper fixture\n')
+    contract = graph_verification_contract('gapbs')
+    oracle = {**ref(wrapper), 'symbol': 'swdb_original::Graph::verify'}
     discovery = {key: value for key, value in collector.items() if key != 'runtime_sha256'}
     discovery.update(scope='explicit fixture source extents', limitations=['contract fixture, no compiler execution'])
     quantity = 'per-thread simulated elapsed intervals summed across threads; includes waiting and overlap'
     definition = dict(runtime=ref(runtime), instrumented_source=ref(instrumented), regions=copy.deepcopy(regions),
                       discovery=discovery, quantity=quantity, difference='explicit fixture instrumentation')
     compiled = workflow.record('evaluation', rid + '.compile', request={'fixture': True}, candidate=candidate['id'],
-        context={'candidate_sha256': candidate['artifact']['sha256'], 'diagnostic': definition},
-        build={'binary': str(binary), 'binary_sha256': ref(binary)['sha256']},
+        context={'candidate_sha256': candidate['artifact']['sha256'], 'diagnostic': definition,
+                 'application': 'gapbs', 'roi': primary['context']['roi'], 'graph_verification': contract,
+                 'driver': ref(wrapper), 'verifier_source': oracle},
+        build={'binary': str(binary), 'binary_sha256': ref(binary)['sha256'],
+               'adapter': 'dx100.complete_call.v2', 'driver': ref(wrapper)},
         outcome={'state': 'complete', 'stage': 'candidate_build', 'reason': 'fixture'}, stages=[], timing=[],
         correctness={'state': 'unverified', 'checks': []}, profiling={}, raw_artifacts=[], gain_claim=False, evidence_kind='contract_fixture')
     records.write(f"evaluations/{compiled['id']}.yaml", compiled)
@@ -54,20 +61,22 @@ def package_fixture(records, tmp, primary, collector, runtime, now, ns):
     log.write_text('SWDB_DX100_ROI_SEALED\nSWDB_DX100_REGIONS ' + json.dumps(dict(format='swdb.dx100.regions.v1',
         clock='m5_rpns', errors=0, regions=[dict(index=i, inclusive_ns=ns*2, exclusive_ns=ns, invocations=2) for i in range(2)])) + '\n')
     diagnostic = copy.deepcopy(primary); diagnostic['id'] = rid + '.diagnostic'
-    # Actual series diagnostics have their own binary and run without the
-    # primary protocol; their local output cell is 0/0 even at global cell 1/1.
-    for key in ('protocol', 'protocol_role', 'protocol_trial'):
+    # Diagnostics have their own binary and no primary frozen-role binding,
+    # but retain explicit actual coordinates in the full workload source list.
+    for key in ('protocol', 'protocol_role'):
         diagnostic['request'].pop(key, None)
-    for key in ('protocol', 'protocol_binding', 'protocol_trial', 'adapter'):
+    for key in ('protocol', 'protocol_binding', 'adapter'):
         diagnostic['context'].pop(key, None)
     diagnostic['context']['workload']['sources'] = [0, 4]
-    diagnostic['context'].update(candidate_build=compiled['id'], instrumentation={'treatment': 'source_scope_diagnostic'})
-    diagnostic['build'].update(binary=str(binary), binary_sha256=ref(binary)['sha256'])
+    diagnostic['context'].update(candidate_build=compiled['id'], candidate_driver=ref(wrapper), verifier_source=oracle,
+        instrumentation={'treatment': 'source_scope_diagnostic', 'graph_verification': contract,
+                         'candidate_driver': ref(wrapper)})
+    diagnostic['build'].update(binary=str(binary), binary_sha256=ref(binary)['sha256'], driver=ref(wrapper))
     diagnostic['stages'] = [dict(stage='simulation', state='complete', started=now, log=str(log), log_sha256=ref(log)['sha256'])]
     for check in diagnostic['correctness']['checks']:
-        check.update(binary_sha256=ref(binary)['sha256'], output_sha256=ref(log)['sha256'], source_position=0, repetition=0)
+        check.update(binary_sha256=ref(binary)['sha256'], output_sha256=ref(log)['sha256'])
     for timing in diagnostic['timing']:
-        timing.update(binary_sha256=ref(binary)['sha256'], output_sha256=ref(log)['sha256'], source_position=0, repetition=0)
+        timing.update(binary_sha256=ref(binary)['sha256'], output_sha256=ref(log)['sha256'])
     records.write(f"evaluations/{diagnostic['id']}.yaml", diagnostic)
     cell = {key: primary['timing'][0][key] for key in ('source', 'source_position', 'repetition')}
     run = dict(kind='regions', **cell, evaluation=diagnostic['id'], binary_sha256=ref(binary)['sha256'], output=str(log),
@@ -104,7 +113,14 @@ def region_seed(simulation_seed, tmp_path_factory):
     tmp = tmp_path_factory.mktemp('regional-contract'); records = records_fixture.__wrapped__(tmp)
     shutil.copytree(source.path, records.path, dirs_exist_ok=True)
     runtime = tmp / 'runtime.hpp'; runtime.write_text('// Explicit diagnostic runtime fixture\n')
+    wrapper = tmp / 'primary-driver.cc'; wrapper.write_text('// Explicit nonexecuted primary oracle wrapper fixture\n')
+    contract = graph_verification_contract('gapbs')
     settings = copy.deepcopy(old['settings'])
+    settings['correctness']['verifier'] = 'dx100.bfs.verifier.v1'
+    for role in ('baseline', 'candidate'):
+        settings['builds'][role]['adapter'] = 'dx100.complete_call.v2'
+        settings['instrumentation'][role] = {'treatment': 'explicit_fixture_primary_wrapper',
+                                           'graph_verification': contract, 'candidate_driver': ref(wrapper)}
     collector = dict(backend='libclang-cindex', collector='dx100.m5_rpns.source_scopes.v1', library_sha256='a'*64,
                      pass_sha256='b'*64, runtime_sha256=ref(runtime)['sha256'])
     settings['region_pairs'] = [dict(semantic_region='fixture traversal', baseline='fixture-loop', candidate='fixture-loop',
@@ -115,6 +131,13 @@ def region_seed(simulation_seed, tmp_path_factory):
         components[role] = []
         for initial in originals:
             primary = copy.deepcopy(initial); primary['id'] = 'regional-' + initial['id']
+            primary['build'].update(adapter='dx100.complete_call.v2', driver=ref(wrapper))
+            primary['context'].update(application='gapbs', adapter='dx100.complete_call.v2',
+                verifier=settings['correctness']['verifier'], graph_verification=contract,
+                candidate_driver=ref(wrapper), verifier_source={**ref(wrapper), 'symbol': 'swdb_original::Graph::verify'},
+                instrumentation=copy.deepcopy(settings['instrumentation'][role]))
+            for check in primary['correctness']['checks']:
+                check.update(checker=settings['correctness']['verifier'], verifier=settings['correctness']['verifier'])
             primary['request']['protocol'] = frozen['id']; primary['context']['protocol'] = frozen['id']
             primary['context']['protocol_binding'].update(protocol=frozen['id'], frozen_sha256=frozen['identity_sha256'],
                 settings_sha256=artifacts.digest(settings), frozen_at=frozen['frozen_at'], bound_at=now)
@@ -150,9 +173,10 @@ def test_public_regional_comparison_retains_diagnostic_cells_and_separate_quanti
     assert 'explicit-model-fixture' in chain
 
 
-@pytest.mark.parametrize('fault', ['missing-package', 'wrong-package', 'failed-check', 'stale-profile', 'collector', 'cell', 'raw-values'])
+@pytest.mark.parametrize('fault', ['missing-package', 'wrong-package', 'failed-check', 'stale-profile', 'collector', 'cell', 'raw-values',
+                                 'actual-timing', 'actual-context', 'actual-check'])
 def test_public_regional_comparison_rejects_incompatible_evidence(regional_setup, tmp_path, fault):
-    records, request, components = regional_setup; primary = components['candidate'][0]
+    records, request, components = regional_setup; primary = components['candidate'][-1]
     if fault == 'missing-package': request['region_packages'].pop(primary['id'])
     elif fault == 'wrong-package': request['region_packages'][primary['id']] = next(iter(request['region_packages'].values()))
     else:
@@ -161,7 +185,14 @@ def test_public_regional_comparison_rejects_incompatible_evidence(regional_setup
         if fault == 'failed-check':
             diagnostic['correctness']['state'] = 'failed'; records.write(f"evaluations/{diagnostic['id']}.yaml", diagnostic)
         else:
-            if fault == 'collector': profile['discovery']['pass_sha256'] = 'f'*64
+            if fault.startswith('actual-'):
+                if fault == 'actual-timing': diagnostic['timing'][0].update(source_position=0, repetition=0)
+                elif fault == 'actual-context': diagnostic['context']['protocol_trial'].update(source_position=0, repetition=0)
+                else:
+                    diagnostic['correctness']['checks'][0].update(source_position=0, repetition=0)
+                    profile['executions'][0]['correctness'] = copy.deepcopy(diagnostic['correctness'])
+                records.write(f"evaluations/{diagnostic['id']}.yaml", diagnostic)
+            elif fault == 'collector': profile['discovery']['pass_sha256'] = 'f'*64
             elif fault == 'cell': profile['executions'][0]['repetition'] = 99
             else: profile['regions'][1]['metrics']['exclusive_simulated_seconds'] *= 2
             records.write(f"region_profiles/{profile['id']}.yaml", profile)
@@ -169,8 +200,18 @@ def test_public_regional_comparison_rejects_incompatible_evidence(regional_setup
                 package = _command(records, 'profile-package', _payload(tmp_path, 'reassemble', dict(message_version='1.0',
                     id=primary['id'] + '.package', version=2, evaluation=primary['id'], region_profile=profile['id'],
                     implementation=primary['implementation'], context=profile_package._context(primary))))
+                if fault == 'cell':
+                    assert package['completeness'] == 'incomplete'
+                    assert 'requested source sequence or frozen repetition' in str(package['reasons'])
                 request['region_packages'][primary['id']] = package['id']
     result = _command(records, 'compare-evaluations', _payload(tmp_path, 'bad-compare', request), succeeds=False)
     assert not result['gain_claim'] and result['decision']['state'] == 'rejected'
-    if fault == 'raw-values': assert 'raw report' in str(result['decision']['reasons'])
-    if fault == 'collector': assert 'collector differs' in str(result['decision']['reasons'])
+    expected_reason = {
+        'missing-package': 'cover exactly', 'wrong-package': 'another primary',
+        'failed-check': 'independent correctness', 'stale-profile': 'evidence changed',
+        'collector': 'collector differs', 'cell': 'package is incomplete', 'raw-values': 'raw report',
+        'actual-timing': 'trial identity differs from its recorded timing',
+        'actual-context': 'trial identity differs from its recorded timing',
+        'actual-check': 'correctness is not bound',
+    }[fault]
+    assert expected_reason in str(result['decision']['reasons'])

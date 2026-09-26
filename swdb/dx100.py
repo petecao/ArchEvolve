@@ -15,9 +15,7 @@ import sys
 import time
 import uuid
 
-import yaml
-
-from swdb import artifacts, bfs_protocol, paths, profile, workflow, yamlio
+from swdb import artifacts, bfs_protocol, paths, profile, workflow
 from swdb.bfs_native import Session, StageFailure, Stopped, _integer, _now
 from swdb.cli import Failure, _require_valid
 
@@ -81,13 +79,10 @@ def _verification_runtime(session):
 
 def _request(args, action):
     store = _require_valid(args.records)
-    try:
-        text = Path(args.file).read_text()
-        if len(text.encode()) > 10 * 1024 * 1024:
-            raise Failure("DX100 request exceeds 10 MiB")
-        request = yaml.load(text, Loader=yamlio._Loader)
-    except yaml.YAMLError as exc:
-        request = {"parse_error": str(exc)}
+    text = Path(args.file).read_text()
+    if len(text.encode()) > 10 * 1024 * 1024:
+        raise Failure("DX100 request exceeds 10 MiB")
+    request = workflow.message_from_text(text)
     rid = request.get("id") if isinstance(request, dict) else None
     if not isinstance(rid, str) or not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", rid):
         rid = f"dx100-invalid-{uuid.uuid4().hex}"
@@ -560,6 +555,7 @@ def execute(args):
         source = _integer(workload["source"], "BFS source", minimum=0)
         graph = _file(workload["representation"], "graph representation")
         application = compiled["context"]["application"] if compiled else "dx100-gapbs"
+        data['context']['application'] = application
         registered = None
         if store.get(workload["id"], "workload"):
             registered = bfs_protocol.workload_representation(store, workload["id"], application)
@@ -568,6 +564,20 @@ def execute(args):
                     or source not in registered["sources"]):
                 raise Failure("execution graph/source differs from its registered workload")
             data["context"]["workload"] = registered
+        if compiled and compiled['context'].get('roi') == 'bfs.complete_call.v1':
+            from swdb.dx100_witness import graph_verification_contract
+            contract = graph_verification_contract(application)
+            verifier_source = compiled['context'].get('verifier_source', {})
+            driver_reference = compiled['context'].get('driver', {})
+            if (compiled['build'].get('adapter') != 'dx100.complete_call.v2'
+                    or compiled['context'].get('graph_verification') != contract
+                    or not driver_reference.get('sha256')
+                    or any(verifier_source.get(key) != driver_reference.get(key) for key in ('path', 'sha256'))):
+                raise Failure('complete-call candidate requires the original-adjacency checker contract; rebuild legacy wrappers')
+            if not request.get('fixture') and registered is None:
+                raise Failure('original-adjacency candidate checking requires a registered workload')
+            data['context']['graph_verification'] = dict(contract)
+            data['context']['protected_bfs_verifier'] = compiled['context']['protected_bfs_verifier']
         if 'protocol_trial' in request:
             trial = request['protocol_trial']
             if not isinstance(trial, dict) or set(trial) != {'source_position', 'repetition'}:
@@ -704,6 +714,8 @@ def execute(args):
             'roi': data['context']['roi'], 'suppressed_internal_events': compiled['context']['suppressed_internal_events'] if compiled else [],
             'verification': 'same_guest_post_roi' if verify else 'none',
             'debug_flags': 'MAATrace,MAARangeFuser,MAAIndirect' if verify and verify.get('coverage') else 'MAATrace'}
+        if 'graph_verification' in data['context']:
+            instrumentation['graph_verification'] = dict(data['context']['graph_verification'])
         if verify and verify['checker'] == 'dx100.bfs.verifier.v2':
             instrumentation['verifier_runtime'] = {
                 'driver_sha256': data['context']['verification_driver']['sha256'],

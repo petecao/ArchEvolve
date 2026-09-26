@@ -1,4 +1,4 @@
-"""Public bounded rewrite and repair contracts. Updated: 2026-09-25."""
+"""Public bounded rewrite and repair contracts. Updated: 2026-09-26."""
 
 import difflib
 import json
@@ -200,6 +200,7 @@ def test_public_dx100_compiler_failure_keeps_proposal_and_allows_one_repair(eval
         budget={'total_seconds':60,'build_seconds':10,'memory_gib':1,'storage_gib':1})
     failed = invoke('dx100-compile', build)
     assert failed['outcome']['stage']=='candidate_compile' and failed['outcome']['state']=='failed'
+    assert failed['build']['adapter'] == 'dx100.complete_call.v2'
     assert failed['proposal']==candidate['proposal']
     assert failed['stages'][-1]['returncode']==7 and failed['stages'][-1]['log_sha256']
     original = (Path(candidate['artifact']['path'])/'src/bfs.cc').read_text()
@@ -217,14 +218,15 @@ def test_public_dx100_compiler_failure_keeps_proposal_and_allows_one_repair(eval
     assert failed['id'] in chain['records'] and candidate['id'] in chain['records']
 
 
-def test_dx100_repair_eligibility_excludes_noncompiler_failures():
+@pytest.mark.parametrize('adapter', ['dx100.complete_call.v1', 'dx100.complete_call.v2'])
+def test_dx100_repair_eligibility_excludes_noncompiler_failures(adapter):
     import copy
     from swdb.workflow import _repairable_build_failure
     candidate={'id':'c','artifact':{'sha256':'a'*64},'source_snapshot':'s'}
     evaluation={'outcome':{'state':'failed','stage':'candidate_compile'},
         'request':{'candidate':'c'},'source_snapshot':'s',
         'context':{'backend':'dx100-gem5-se','candidate_sha256':'a'*64},
-        'build':{'adapter':'dx100.complete_call.v1'},
+        'build':{'adapter':adapter},
         'stages':[{'stage':'candidate_compile','state':'failed','returncode':7,'log_sha256':'b'*64}]}
     assert _repairable_build_failure(evaluation,candidate)
     for field,value in [('stage','validation'),('stage','candidate_compiler_identity'),

@@ -3,12 +3,12 @@
 
 Created: 2026-09-25 (Eastern Time). This bounded driver does not select intent,
 workloads, profitability thresholds, or a new protocol. Unfavorable results stay.
+Updated: 2026-09-26 (Eastern Time).
 """
 import argparse
 import json
 import os
 import re
-import signal
 import socket
 import subprocess
 import sys
@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from swdb import artifacts, bfs_protocol, profile, profile_package, rewrite
 from swdb.store import Store
+from scripts.bfs_process import interruption_signals, stop_group
 
 
 def validate_inputs(packages, frozen, proposal, get, lane, expected_artifact):
@@ -131,26 +132,23 @@ class Driver:
         self.receipt['stages'].append(entry)
         self.save()
         before = time.monotonic()
-        with output.open('w') as stdout, error.open('w') as stderr:
-            child = subprocess.Popen(argv, cwd=ROOT, stdout=stdout, stderr=stderr, start_new_session=True)
-            try:
+        child = None
+        try:
+            with output.open('w') as stdout, error.open('w') as stderr:
+                child = subprocess.Popen(argv, cwd=ROOT, stdout=stdout, stderr=stderr, start_new_session=True)
                 child.wait(timeout=min(timeout, remaining))
-            except BaseException:
-                try: os.killpg(child.pid, signal.SIGTERM)
-                except ProcessLookupError: pass
-                try: child.wait(timeout=20)
-                except subprocess.TimeoutExpired:
-                    try: os.killpg(child.pid, signal.SIGKILL)
-                    except ProcessLookupError: pass
-                    child.wait()
-                entry.update(state='interrupted_or_timeout', returncode=child.returncode,
-                             stdout_sha256=artifacts.file_hash(output), stderr_sha256=artifacts.file_hash(error))
-                self.save()
-                raise
-        entry.update(state='complete' if child.returncode == 0 else 'failed', returncode=child.returncode,
-                     host_wall_s=time.monotonic() - before, stdout_sha256=artifacts.file_hash(output),
-                     stderr_sha256=artifacts.file_hash(error))
-        self.save()
+            entry.update(state='complete' if child.returncode == 0 else 'failed')
+        except BaseException:
+            entry.update(state='interrupted_or_timeout' if child is not None else 'failed')
+            if child is not None:
+                stop_group(child)
+            raise
+        finally:
+            entry.update(returncode=child.returncode if child is not None else None,
+                         host_wall_s=time.monotonic() - before,
+                         stdout_sha256=artifacts.file_hash(output) if output.is_file() else None,
+                         stderr_sha256=artifacts.file_hash(error) if error.is_file() else None)
+            self.save()
         try: result = json.loads(output.read_text())
         except (ValueError, OSError): result = None
         if required and (child.returncode != 0 or not isinstance(result, dict)):
@@ -177,10 +175,10 @@ class Driver:
         return self.request('evaluate', request, '--runs-dir', self.args.runs_dir, '--lane', self.args.lane,
                             timeout=1260, required=False)
 
-    def collect(self, prefix, evaluation, baseline_profile):
+    def collect(self, prefix, evaluation, baseline_profile, repetitions=1):
         if not evaluation or evaluation.get('outcome', {}).get('state') != 'complete': return None
         observed = self.request('bfs-profile', {'message_version': '1.0', 'id': prefix + '.profile',
-            'evaluation': evaluation['id'], 'memory': True, 'correspondence': baseline_profile,
+            'evaluation': evaluation['id'], 'memory': True, 'correspondence': baseline_profile, 'repetitions': repetitions,
             'budget': {'discovery_seconds': 120, 'build_seconds': 180, 'run_seconds': 600, 'total_seconds': 1200}},
             '--runs-dir', self.args.runs_dir, '--lane', self.args.lane, timeout=1260, required=False)
         if not observed or not observed.get('id'): return None
@@ -218,12 +216,18 @@ class Driver:
             self.receipt.update(state='proposal_non_success', proposal_outcome=(submitted or {}).get('outcome'))
             return
         candidate = submitted['candidate']
-        baselines = {}
+        regional = [pair for pair in frozen['settings'].get('region_pairs', [])
+                    if pair.get('evidence') == 'native_diagnostic_profile.v1']
+        diagnostic_repetitions = regional[0]['diagnostic_repetitions'] if regional else 1
+        baselines, baseline_packages = {}, {}
         for family, row in rows.items():
             prefix = args.id + '.' + family.replace('_', '-')
             baseline = self.evaluate(prefix + '.baseline', row['candidate']['id'], row['workload'], frozen, 'baseline')
             baselines[family] = baseline
+            baseline_packages[family] = (self.collect(prefix + '.baseline', baseline,
+                row['package']['region_profile'], diagnostic_repetitions) if regional else None)
             self.receipt['families'][family] = {'workload': row['workload']['id'], 'baseline': baseline and baseline['id'],
+                                               'baseline_package': (baseline_packages[family] or {}).get('id'),
                                                'baseline_outcome': (baseline or {}).get('outcome')}
             self.save()
         for round_number in (1, 2):
@@ -234,13 +238,15 @@ class Driver:
             for family, row in rows.items():
                 prefix = args.id + '.' + family.replace('_', '-') + f'.candidate-{round_number}'
                 evaluation = self.evaluate(prefix + '.evaluation', candidate, row['workload'], frozen, 'candidate')
-                package = self.collect(prefix, evaluation, row['package']['region_profile'])
+                package = self.collect(prefix, evaluation, row['package']['region_profile'], diagnostic_repetitions)
                 baseline = baselines[family]
                 comparison = None
                 if evaluation and baseline:
+                    regional_evidence = ({'region_packages': {baseline['id']: (baseline_packages[family] or {}).get('id'),
+                        evaluation['id']: (package or {}).get('id')}} if regional else {})
                     comparison = self.request('compare-evaluations', {'message_version': '1.0', 'id': prefix + '.comparison',
                         'protocol': frozen['id'], 'baseline_evaluation': baseline['id'], 'candidate_evaluation': evaluation['id'],
-                        'comparison_baseline': proposal['implementation']}, required=False)
+                        'comparison_baseline': proposal['implementation'], **regional_evidence}, required=False)
                 current['families'][family] = {'evaluation': evaluation and evaluation['id'],
                     'outcome': (evaluation or {}).get('outcome'), 'profile_package': package and package['id'],
                     'package_completeness': (package or {}).get('completeness'),
@@ -297,17 +303,16 @@ def main():
         parser.error('raw and source/provider artifact trees must be disjoint')
     profile._verified_lane(Store(args.records).get('mbit10', 'machine'), args.lane)
     driver = Driver(args)
-    def stop(signum, _frame): raise InterruptedError(f'campaign interrupted by signal {signum}')
-    for sig in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP): signal.signal(sig, stop)
-    try:
-        driver.run()
-    except BaseException as exc:
-        driver.receipt.update(state='failed', reason=f'{type(exc).__name__}: {exc}')
-        raise
-    finally:
-        driver.receipt['host_wall_s'] = time.monotonic() - driver.started
-        driver.save()
-        print(json.dumps(driver.receipt, indent=2))
+    with interruption_signals():
+        try:
+            driver.run()
+        except BaseException as exc:
+            driver.receipt.update(state='failed', reason=f'{type(exc).__name__}: {exc}')
+            raise
+        finally:
+            driver.receipt['host_wall_s'] = time.monotonic() - driver.started
+            driver.save()
+            print(json.dumps(driver.receipt, indent=2))
     return 0 if driver.receipt['state'] == 'evaluated' else 1
 
 

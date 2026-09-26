@@ -1,6 +1,6 @@
 # BFS workloads and frozen comparisons
 
-Date: 2026-09-25
+Updated: 2026-09-26 ET
 
 This contract implements Ticket 11 using Ticket 03's durable evaluations.
 The public operations are `register-workload`, `freeze-protocol`,
@@ -146,6 +146,13 @@ divides each diagnostic duration by its own invocation count first. These are
 simulated elapsed intervals summed across executing threads, including waiting and
 overlap. They always retain `primary_bfs_roi: false` and `gain_claim: false` and
 cannot substitute for primary BFS ROI timing.
+
+Native region pairs can select the versioned
+[`native_diagnostic_profile.v1` treatment](bfs-native-region-comparison.md).
+It reads the separate native profile package and verified per-trial raw CPU
+counters, with explicit frozen collector identity and diagnostic repetition
+count. It retains diagnostic CPU ratios separately from the primary BFS wall-time
+decision; primary `profiling.regions` is not populated or fabricated for it.
 
 The workload `definition` contains the kernel, family, generator, normalization,
 ordered sources, representation references, computed canonical hash, and realized

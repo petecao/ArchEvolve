@@ -1,6 +1,6 @@
 """Execution-bound automatic BFS source attribution and modeled memory events.
 
-Updated: 2026-09-25. Diagnostic artifacts never replace primary native ROI timing.
+Updated: 2026-09-26. Diagnostic artifacts never replace primary native ROI timing.
 """
 import copy
 import itertools
@@ -14,9 +14,7 @@ import sys
 import uuid
 from pathlib import Path
 
-import yaml
-
-from swdb import artifacts, bfs_discovery, bfs_native as native, paths, profile, workflow, yamlio
+from swdb import artifacts, bfs_discovery, bfs_native as native, paths, profile, workflow
 from swdb.cli import Failure, _require_valid
 
 RUNTIME = paths.HOME / "tools/bfs_profile/runtime.hpp"
@@ -180,8 +178,9 @@ def run(args):
     store = _require_valid(args.records)
     try:
         raw = Path(args.file).read_text()
-        request = {"parse_error": "profile request exceeds 10 MiB"} if len(raw.encode()) > native.MAX_REQUEST_BYTES else yaml.load(raw, Loader=yamlio._Loader)
-    except (yaml.YAMLError, OSError) as error:
+        request = ({"parse_error": "profile request exceeds 10 MiB"} if len(raw.encode()) > native.MAX_REQUEST_BYTES
+                   else workflow.message_from_text(raw))
+    except OSError as error:
         request = {"parse_error": str(error)}
     rid = request.get("id") if isinstance(request, dict) else None
     if not isinstance(rid, str) or not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", rid):

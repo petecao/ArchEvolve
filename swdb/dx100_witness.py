@@ -37,6 +37,19 @@ def _need(condition, message):
         raise WitnessError(message)
 
 
+def graph_verification_contract(application):
+    """Stable treatment identity shared by compilation, dispatch and evidence."""
+    _need(application in {'gapbs', 'dx100-gapbs'}, 'unsupported original graph application')
+    return {'contract': 'swdb.bfs.original-adjacency.v1',
+            'input_format': 'gapbs.sg64' if application == 'gapbs' else 'gapbs.sg32',
+            'byte_order': 'little',
+            'adjacency': 'outgoing CSR from exact registered serialized input',
+            'maximum_extra_bytes': 2147483648,
+            'preload': 'before checkpoint and ROI',
+            'verification': 'after ROI on exact returned parent buffer',
+            'allocation': 'all oracle adjacency and checker work arrays allocated before ROI'}
+
+
 def _integer(value, name, minimum=0):
     _need(type(value) is int and minimum <= value < 2**64, f'invalid {name}')
     return value
@@ -347,6 +360,15 @@ def validate_completed_witness(evaluation, *, verify_artifacts=True, require_com
         verdicts = check['observed_verdicts']
         _need(len(verdicts) == 1 and verdicts[0].get('verdict') == 'PASS' and verdicts[0].get('after_seal') is True,
               'protected structural verdict is missing or failed')
+        if context.get('candidate_build') and context['roi'] == 'bfs.complete_call.v1':
+            contract = graph_verification_contract(context.get('application'))
+            _need(build.get('adapter') == 'dx100.complete_call.v2'
+                  and _same(context.get('graph_verification'), contract)
+                  and _same(context['instrumentation'].get('graph_verification'), contract),
+                  'complete-call candidate lacks the original-adjacency checker treatment')
+            _need(_same(_reference(context['verifier_source'], 'original graph oracle'),
+                        _reference(context['candidate_driver'], 'candidate wrapper')),
+                  'original graph oracle is not the protected compiled wrapper')
         _completion(check, context)
         continuation = check['continuation']
         _need(_same(continuation, seal['verification']), 'continuation differs from ROI seal')

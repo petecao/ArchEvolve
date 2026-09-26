@@ -1,7 +1,7 @@
 # DX100 build and smoke execution
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 
 On the pinned model, `src/python/m5/simulate.py:332–336` creates an empty literal
 `cpt.%d` directory before the C++ serializer expands the tick. The adapter
@@ -220,7 +220,12 @@ one complete call. It suppresses source-internal reset/dump/work/exit m5 events
 using protected evaluator macros and rejects candidate overrides. The unchanged
 author executable retains its separately named traversal ROI. After the outer
 ROI is sealed, the same returned parent array receives length/range validation
-before the protected structural verifier. Output includes its source, length,
+and an independent check against the original serialized adjacency retained
+before checkpoint/ROI. The candidate's mutable graph is not the correctness
+reference. The new `dx100.complete_call.v2` wrapper records this additional
+memory/cache treatment; legacy wrappers require rebuilding before execution.
+See [the original-graph contract](bfs-original-graph-oracle-20260926.md).
+Output includes its source, length,
 actual storage address, and a clearly labeled noncryptographic FNV-1a fingerprint;
 the enclosing output itself has a SHA-256 identity. A successful compilation
 does not establish accelerator execution, correctness, or performance.

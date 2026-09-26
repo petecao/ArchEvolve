@@ -12,9 +12,7 @@ import struct
 from bisect import bisect_left
 from pathlib import Path
 
-import yaml
-
-from swdb import artifacts, workflow, yamlio
+from swdb import artifacts, workflow
 from swdb.cli import Failure, _require_valid
 from swdb.problems import Problem
 
@@ -53,10 +51,11 @@ def _text(value, name):
 def _request(args):
     try:
         _fail(args.file.stat().st_size <= 10 * 1024 * 1024, "request exceeds 10 MiB")
-        request = yamlio.load(args.file)
-    except (OSError, yaml.YAMLError) as exc:
+        request = workflow.message_from_text(args.file.read_text())
+    except OSError as exc:
         raise Failure(f"cannot read request: {exc}") from None
     _fail(isinstance(request, dict), "request must be a mapping")
+    _fail(not request.get("parse_error"), str(request.get("parse_error")))
     _fail(request.get("message_version") == "1.0", "request needs message_version 1.0")
     _fail(isinstance(request.get("id"), str) and re.fullmatch(r"[a-z0-9][a-z0-9._-]*", request["id"]),
           "request needs a valid record id")
@@ -518,15 +517,29 @@ def _validate_settings(settings, store, *, require_simulation_identity=False):
         _fail(pair.get("scope") in {"per_invocation", "accumulated"}
               and pair.get("attribution") in {"inclusive", "exclusive"}, "region correspondence needs duration and attribution scopes")
         if pair.get("evidence") is not None:
-            _fail(mode != "native" and pair["evidence"] == "simulated_diagnostic_profile",
+            native_diagnostic = mode == "native" and pair["evidence"] == "native_diagnostic_profile.v1"
+            _fail(native_diagnostic or (mode != "native" and pair["evidence"] == "simulated_diagnostic_profile"),
                   "unsupported region evidence kind")
             collector = pair.get("collector", {})
-            _fail(isinstance(collector, dict) and collector.get("backend") == "libclang-cindex" and collector.get("collector") == "dx100.m5_rpns.source_scopes.v1"
-                  and all(isinstance(collector.get(key), str) and re.fullmatch(r"[0-9a-f]{64}", collector[key])
-                          for key in ("library_sha256", "pass_sha256", "runtime_sha256")),
-                  "simulated region pairs require the exact diagnostic collector identity")
+            if native_diagnostic:
+                _fail(isinstance(collector, dict) and collector.get("backend") == "libclang-cindex"
+                      and collector.get("clock") == "CLOCK_THREAD_CPUTIME_ID"
+                      and all(isinstance(collector.get(key), str) and re.fullmatch(r"[0-9a-f]{64}", collector[key])
+                              for key in ("library_sha256", "pass_sha256", "collector_sha256", "runtime_sha256")),
+                      "native region pairs require the exact thread CPU diagnostic collector identity")
+                repetitions = _integer(pair.get("diagnostic_repetitions"), "diagnostic_repetitions")
+                _fail(repetitions <= min(10, sampling["repetitions"]),
+                      "diagnostic repetitions exceed the primary cell grid or collector bound")
+            else:
+                _fail(isinstance(collector, dict) and collector.get("backend") == "libclang-cindex" and collector.get("collector") == "dx100.m5_rpns.source_scopes.v1"
+                      and all(isinstance(collector.get(key), str) and re.fullmatch(r"[0-9a-f]{64}", collector[key])
+                              for key in ("library_sha256", "pass_sha256", "runtime_sha256")),
+                      "simulated region pairs require the exact diagnostic collector identity")
         _fail(not require_simulation_identity or mode == "native" or pair.get("evidence") == "simulated_diagnostic_profile",
               "new simulated region comparisons require package-backed diagnostic evidence")
+    _fail(len({pair['diagnostic_repetitions'] for pair in pairs
+               if pair.get('evidence') == 'native_diagnostic_profile.v1'}) <= 1,
+          'one native profile package requires one diagnostic repetition policy')
     _simulation_identity(settings, store, required=require_simulation_identity)
 
 
@@ -794,32 +807,54 @@ def aggregate_evaluations(args):
 
 def _check_verifier_identity(evaluation, store=None):
     """Bind individual verdicts to the declared checker, including v2 witnesses."""
-    verifier = evaluation.get("context", {}).get("verifier")
+    context = evaluation.get('context', {})
+    verifier = context.get("verifier")
     checks = evaluation.get("correctness", {}).get("checks", [])
     _fail(isinstance(verifier, str) and verifier and checks,
           "correctness verifier or individual checks are missing")
     _fail(all(check.get("checker", check.get("verifier")) == verifier
               and all(check[key] == verifier for key in ("checker", "verifier") if key in check)
               for check in checks), "individual correctness checker differs from evaluation verifier")
-    if verifier != "dx100.bfs.verifier.v2":
-        return
-    from swdb.dx100_witness import validate_record_witness
+    # Retain historical records, but do not qualify the old mutable-Graph
+    # checker through v1 or an aggregate that merely copies a newer context.
+    build = evaluation.get('build', {})
+    if context.get('roi') == 'bfs.complete_call.v1' and (
+            verifier.startswith('dx100.') or context.get('candidate_build')
+            or str(build.get('adapter', '')).startswith('dx100.complete_call.')):
+        from swdb.dx100_witness import graph_verification_contract, WitnessError
+        try:
+            contract = graph_verification_contract(context.get('application'))
+        except WitnessError as exc:
+            raise Failure('complete-call original-adjacency qualification failed: ' + str(exc)) from None
+        _fail(build.get('adapter') == 'dx100.complete_call.v2'
+              and artifacts.digest(context.get('graph_verification')) == artifacts.digest(contract)
+              and artifacts.digest(context.get('instrumentation', {}).get('graph_verification')) == artifacts.digest(contract),
+              'complete-call candidate lacks the original-adjacency checker treatment; legacy record is retained but cannot qualify')
+        driver, oracle = context.get('candidate_driver', {}), context.get('verifier_source', {})
+        _fail(isinstance(driver, dict) and isinstance(oracle, dict)
+              and isinstance(driver.get('path'), str) and Path(driver['path']).is_absolute()
+              and '..' not in Path(driver['path']).parts and isinstance(driver.get('sha256'), str)
+              and re.fullmatch(r'[a-f0-9]{64}', driver['sha256'])
+              and all(oracle.get(key) == driver[key] for key in ('path', 'sha256')),
+              'complete-call original-adjacency checker differs from compiled wrapper')
     components = evaluation.get("component_evaluations", [])
     if not components:
-        validate_record_witness(evaluation)
+        if verifier == "dx100.bfs.verifier.v2":
+            from swdb.dx100_witness import validate_record_witness
+            validate_record_witness(evaluation)
         return
-    _fail(store is not None, "v2 aggregate requires its actual component records")
+    _fail(store is not None, "aggregate correctness requires its actual component records")
     retained = []
     seen = set()
     for identity in components:
         component = _get(store, identity["evaluation"], "evaluation")
         _fail(component["id"] not in seen and not component.get("component_evaluations")
               and component.get("context", {}).get("verifier") == verifier
-              and artifacts.digest(component) == identity["sha256"], "v2 aggregate component identity differs")
+              and artifacts.digest(component) == identity["sha256"], "aggregate component evidence changed or identity differs")
         seen.add(component["id"])
-        validate_record_witness(component)
+        _check_verifier_identity(component, store)
         retained.extend(component["correctness"]["checks"])
-    _fail(retained == checks, "v2 aggregate checks differ from actual component witnesses")
+    _fail(retained == checks, "aggregate checks differ from actual component correctness")
 
 
 def _evaluation_samples(store, evaluation, protocol, role):
@@ -981,20 +1016,23 @@ def _statistics(baseline, candidate, policy):
         draws.append(_geomean(resampled))
     draws.sort()
     lower, upper = draws[49], draws[1949]
-    return {"roi_speedup": _geomean(ratios.values()), "per_source_position_speedup": ratios,
+    return {"roi_speedup": _geomean(ratios.values()),
+            "per_source_position_speedup": {str(position): ratio for position, ratio in ratios.items()},
             "confidence_interval": {"confidence": 0.95, "lower": lower, "upper": upper,
                                     "method": "independent per-source bootstrap of median ratios", "resamples": 2000},
-            "relative_spread": spreads}
+            "relative_spread": {role: {str(position): value for position, value in rows.items()}
+                                for role, rows in spreads.items()}}
 
 
 def _region_comparisons(a, b, settings, store=None, packages=None):
     results = []
-    if any(pair.get("evidence") == "simulated_diagnostic_profile" for pair in settings.get("region_pairs", [])):
+    diagnostic_kinds = {"simulated_diagnostic_profile", "native_diagnostic_profile.v1"}
+    if any(pair.get("evidence") in diagnostic_kinds for pair in settings.get("region_pairs", [])):
         from swdb.bfs_region_comparison import compare
         _fail(store is not None, "diagnostic region comparison requires record context")
         results.extend(compare(store, a, b, settings, packages))
     for pair in settings.get("region_pairs", []):
-        if pair.get("evidence") == "simulated_diagnostic_profile":
+        if pair.get("evidence") in diagnostic_kinds:
             continue
         durations = []
         for role, evaluation in (("baseline", a), ("candidate", b)):

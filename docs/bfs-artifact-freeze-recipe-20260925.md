@@ -113,6 +113,11 @@ required before publishing. If any helper changes before freezing, explicitly
 review and regenerate these prospective identities; after freezing, changed
 instrumentation requires a superseding protocol.
 
+On 2026-09-26 the unfrozen parser identity was refreshed after the generated
+complete-call original-graph verification repair. The unchanged author traversal
+remains its separate treatment; these requests still have no frozen or executed
+status.
+
 Reuse `bfs-author-scalar-compile-20260925-a1.diagnostic.build` for the baseline
 and `bfs-author-maa-compile-20260925-a1.diagnostic.build` for the MAA role through
 `--diagnostic-build`. Their binary hashes are respectively

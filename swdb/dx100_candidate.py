@@ -1,6 +1,6 @@
 """Compile identified BFS candidates against a pinned executable model.
 
-Updated: 2026-09-25. Primary candidates use the complete-call ROI.
+Updated: 2026-09-26. Primary candidates use the complete-call ROI.
 """
 
 import json
@@ -14,6 +14,7 @@ from swdb.bfs_native import StageFailure, Stopped, _protect_driver_macros
 from swdb.cli import Failure
 from swdb.dx100 import REVISION, _bounded_process, _file, _finish, _prepare, _request
 from swdb.dx100_author import AUTHOR_ROI, HOOKS
+from swdb.dx100_witness import graph_verification_contract
 
 ROI = "bfs.complete_call.v1"
 SUPPRESSED = ["m5_reset_stats", "m5_dump_stats", "m5_work_begin", "m5_work_end", "m5_exit"]
@@ -40,16 +41,152 @@ def _protect_model_headers(candidate, model):
                 raise Failure('candidate changes or shadows the pinned model interface input: ' + entry['path'])
 
 
-def driver(source, model, function, diagnostic=None):
+ORIGINAL_GRAPH_ORACLE = r'''
+// This evaluator-owned parser precedes all candidate headers. Its private
+// arrays never alias Graph storage and it uses no candidate graph accessors.
+namespace swdb_original {
+class Graph {
+  uint64_t nodes_, arcs_;
+  int32_t source_;
+  std::vector<uint64_t> offsets_;
+  std::vector<int32_t> neighbors_, depth_, queue_;
+  std::vector<uint8_t> parent_edge_;
+  static uint64_t integer(FILE *stream, unsigned width) {
+    uint8_t bytes[8];
+    if (std::fread(bytes, 1, width, stream) != width)
+      throw std::runtime_error("truncated original serialized graph");
+    uint64_t value = 0;
+    for (unsigned i = 0; i < width; ++i) value |= uint64_t(bytes[i]) << (8*i);
+    if (bytes[width-1] & 128) throw std::runtime_error("negative serialized count or offset");
+    return value;
+  }
+public:
+  Graph(int argc, char **argv, unsigned width) : nodes_(0), arcs_(0), source_(-1) {
+    const char *path = nullptr, *selected_source = nullptr;
+    for (int i = 1; i < argc; ++i) {
+      if (std::strcmp(argv[i], "-f") == 0 || std::strcmp(argv[i], "-r") == 0) {
+        const bool file = std::strcmp(argv[i], "-f") == 0;
+        if (i+1 == argc || (file ? path != nullptr : selected_source != nullptr))
+          throw std::runtime_error("original graph requires one -f and one -r argument");
+        if (file) path = argv[++i]; else selected_source = argv[++i];
+      }
+    }
+    if (!path || !selected_source || (width != 4 && width != 8))
+      throw std::runtime_error("original graph requires explicit serialized input and source");
+    char *end = nullptr;
+    errno = 0;
+    const long long selected = std::strtoll(selected_source, &end, 10);
+    if (errno || end == selected_source || *end || selected < 0 || selected > INT32_MAX)
+      throw std::runtime_error("invalid original graph source");
+    source_ = static_cast<int32_t>(selected);
+    struct Input {
+      FILE *stream;
+      explicit Input(const char *name) : stream(std::fopen(name, "rb")) {
+        if (!stream) throw std::runtime_error("original serialized graph cannot be opened");
+      }
+      ~Input() { std::fclose(stream); }
+    } input(path);
+    FILE *stream = input.stream;
+    if (std::fseek(stream, 0, SEEK_END) != 0) throw std::runtime_error("original graph is not seekable");
+    const long length = std::ftell(stream);
+    if (length < 0 || std::fseek(stream, 0, SEEK_SET) != 0)
+      throw std::runtime_error("original graph length is unavailable");
+    const int directed = std::fgetc(stream);
+    if (directed != 0 && directed != 1) throw std::runtime_error("invalid original graph direction");
+    arcs_ = integer(stream, width);
+    nodes_ = integer(stream, width);
+    const uint64_t limit = UINT64_C(2147483648);
+    // CSR + fixed-size depth/queue/edge work arrays + conservative small-object
+    // reserve. Check before any graph-sized allocation; no capacity growth.
+    if (!nodes_ || nodes_ > INT32_MAX || arcs_ > limit/4 || nodes_ > limit/17 ||
+        (nodes_+1)*8 + arcs_*4 + nodes_*9 + 65536 > limit)
+      throw std::runtime_error("original graph oracle exceeds 2 GiB extra-allocation budget");
+    if (uint64_t(source_) >= nodes_) throw std::runtime_error("original source is outside graph");
+    const uint64_t expected = 1 + 2*width + (1+directed)*((nodes_+1)*width + arcs_*4);
+    if (uint64_t(length) != expected) throw std::runtime_error("serialized graph size differs from declared CSR");
+    offsets_.resize(nodes_+1);
+    neighbors_.resize(arcs_);
+    depth_.assign(nodes_, -1);
+    queue_.resize(nodes_);
+    parent_edge_.assign(nodes_, 0);
+    for (uint64_t u = 0; u <= nodes_; ++u) {
+      offsets_[u] = integer(stream, width);
+      if (offsets_[u] > arcs_ || (u && offsets_[u] < offsets_[u-1]))
+        throw std::runtime_error("invalid original CSR offsets");
+    }
+    if (offsets_[0] || offsets_[nodes_] != arcs_)
+      throw std::runtime_error("original CSR does not span its declared neighbors");
+    if (arcs_ && std::fread(neighbors_.data(), 4, arcs_, stream) != arcs_)
+      throw std::runtime_error("truncated original CSR neighbors");
+    // Decode in place, including on a big-endian host, without a second buffer.
+    for (uint64_t u = 0; u < nodes_; ++u) {
+      int32_t previous = -1;
+      for (uint64_t e = offsets_[u]; e < offsets_[u+1]; ++e) {
+        const unsigned char *bytes = reinterpret_cast<const unsigned char *>(&neighbors_[e]);
+        const uint32_t value = uint32_t(bytes[0]) | uint32_t(bytes[1])<<8 |
+            uint32_t(bytes[2])<<16 | uint32_t(bytes[3])<<24;
+        if (value >= nodes_ || value == u || int64_t(value) <= previous)
+          throw std::runtime_error("original CSR is not normalized adjacency");
+        neighbors_[e] = static_cast<int32_t>(value);
+        previous = neighbors_[e];
+      }
+    }
+    // Registration checks the inverse CSR/symmetry. The independent oracle
+    // needs only outgoing adjacency; the exact full file length is checked.
+  }
+  uint64_t nodes() const { return nodes_; }
+  int32_t source() const { return source_; }
+  bool verify(const int32_t *parent, uint64_t count) {
+    if (!parent || count != nodes_) return false;
+    for (uint64_t u = 0; u < nodes_; ++u)
+      if (parent[u] < -1 || int64_t(parent[u]) >= int64_t(nodes_)) return false;
+    if (parent[source_] != source_) return false;
+    uint64_t begin = 0, end = 0;
+    depth_[source_] = 0;
+    queue_[end++] = source_;
+    while (begin < end) {
+      const int32_t u = queue_[begin++];
+      for (uint64_t e = offsets_[u]; e < offsets_[u+1]; ++e) {
+        const int32_t v = neighbors_[e];
+        if (depth_[v] == -1) {
+          depth_[v] = depth_[u]+1;
+          queue_[end++] = v;
+        }
+      }
+    }
+    for (uint64_t u = 0; u < nodes_; ++u)
+      for (uint64_t e = offsets_[u]; e < offsets_[u+1]; ++e)
+        if (parent[neighbors_[e]] == int64_t(u)) parent_edge_[neighbors_[e]] = 1;
+    for (uint64_t v = 0; v < nodes_; ++v) {
+      if (depth_[v] == -1) { if (parent[v] != -1) return false; }
+      else if (v != uint64_t(source_) && (parent[v] < 0 || !parent_edge_[v] ||
+               depth_[parent[v]] != depth_[v]-1)) return false;
+    }
+    return true;
+  }
+};
+} // namespace swdb_original
+'''
+
+
+def driver(source, model, function, diagnostic=None, *, sg_offset_bytes=8, trusted_graph=True):
+    if type(sg_offset_bytes) is not int or sg_offset_bytes not in {4, 8}:
+        raise ValueError('serialized graph offsets must be 4 or 8 bytes')
     prefix = "\n".join(f"#define {name}(...) ((void)0)" for name in SUPPRESSED)
     suffix = "\n".join(f"#undef {name}" for name in SUPPRESSED)
     instrumentation = (f"#define SWDB_REGION_COUNT {len(diagnostic['regions'])}\n#include "
         + json.dumps(diagnostic['runtime']['path'])) if diagnostic else ""
-    return f'''// Trusted generated evaluator, 2026-09-25. Complete BFS call only.
+    return f'''// Trusted generated evaluator, 2026-09-26. Complete BFS call only.
 #include <cstdint>
 #include <cstdio>
+#include <cstdlib>
+#include <cerrno>
+#include <cstring>
+#include <stdexcept>
+#include <vector>
 #include <iostream>
 #include {json.dumps(str(model / 'include/gem5/m5ops.h'))}
+{ORIGINAL_GRAPH_ORACLE if trusted_graph else ''}
 {instrumentation}
 {prefix}
 #define main swdb_gem5_original_main
@@ -57,12 +194,16 @@ def driver(source, model, function, diagnostic=None):
 #undef main
 {suffix}
 int main(int argc, char **argv) {{
+  try {{
+  {f'swdb_original::Graph oracle(argc, argv, {sg_offset_bytes});' if trusted_graph else ''}
   CLApp cli(argc, argv, "SWDB complete-call BFS");
   if (!cli.ParseArgs()) return 2;
   Builder builder(cli);
   Graph graph = builder.MakeGraph();
   const int64_t source = cli.start_vertex();
   if (source < 0 || source >= graph.num_nodes()) return 3;
+  {'if (uint64_t(graph.num_nodes()) != oracle.nodes() || source != oracle.source()) return 3;' if trusted_graph else ''}
+  const uint64_t original_nodes = {'oracle.nodes()' if trusted_graph else 'graph.num_nodes()'};
   m5_checkpoint(0, 0);
   std::cout << "ROI started: 4 configured threads" << std::endl;
   m5_work_begin(0, 0);
@@ -79,24 +220,30 @@ int main(int argc, char **argv) {{
   m5_exit(0);
   {'::swdb_profile::write();' if diagnostic else ''}
   // Continuation sees precisely the parent object returned by the timed call.
-  bool valid = parent.size() == static_cast<size_t>(graph.num_nodes());
+  const auto *parent_values = parent.data();
+  const uint64_t parent_count = parent.size();
+  bool valid = parent_count == original_nodes;
   uint64_t digest = UINT64_C(14695981039346656037);
-  for (size_t i = 0; i < parent.size(); ++i) {{
-    const int64_t value = parent[i];
-    if (value < -1 || value >= graph.num_nodes()) valid = false;
+  for (uint64_t i = 0; i < parent_count && i < original_nodes; ++i) {{
+    const int64_t value = parent_values[i];
+    if (value < -1 || value >= int64_t(original_nodes)) valid = false;
     uint32_t bits = static_cast<uint32_t>(value);
     for (unsigned b = 0; b < 4; ++b) {{
       digest ^= (bits >> (8 * b)) & 255u;
       digest *= UINT64_C(1099511628211);
     }}
   }}
-  if (valid) valid = BFSVerifier(graph, static_cast<NodeID>(source), parent);
+  if (valid) valid = {'oracle.verify(parent_values, parent_count)' if trusted_graph else 'BFSVerifier(graph, static_cast<NodeID>(source), parent)'};
   std::printf("SWDB_BFS_RESULT source=%lld vertices=%lld parent_count=%llu parent_fnv1a64=%016llx\\n",
-      static_cast<long long>(source), static_cast<long long>(graph.num_nodes()),
-      static_cast<unsigned long long>(parent.size()), static_cast<unsigned long long>(digest));
+      static_cast<long long>(source), static_cast<long long>(original_nodes),
+      static_cast<unsigned long long>(parent_count), static_cast<unsigned long long>(digest));
   std::printf("Verification: %s\\n", valid ? "PASS" : "FAIL");
   std::fflush(stdout);
   return valid ? 0 : 4;
+  }} catch (const std::exception &error) {{
+    std::fprintf(stderr, "Trusted BFS evaluator: %s\\n", error.what());
+    return 5;
+  }}
 }}
 '''
 
@@ -149,7 +296,9 @@ def compile_candidate(args):
         source = source_root / source_path
         if not source.is_file():
             raise Failure("candidate BFS translation unit is missing")
-        driver_text = driver(source, model, function)
+        sg_offset_bytes = 8 if original['application'] == 'gapbs' else 4
+        driver_text = driver(source, model, function, sg_offset_bytes=sg_offset_bytes,
+                             trusted_graph=not author_diagnostic)
         _protect_driver_macros(candidate, source_root, extra_text=driver_text)
         model_build = store.get(request.get("build_evaluation"), "evaluation")
         if (not model_build or model_build.get("outcome", {}).get("state") != "complete"
@@ -195,7 +344,8 @@ def compile_candidate(args):
                 from swdb.dx100_author import driver as selected_driver
                 diagnostic['difference'] += '; author reset/dump hooks activate/deactivate guards while forwarding original ROI events'
             diagnostic['roi'] = roi
-            driver_text = selected_driver(Path(diagnostic['instrumented_source']['path']), model, function, diagnostic)
+            driver_text = selected_driver(Path(diagnostic['instrumented_source']['path']), model, function, diagnostic,
+                **({} if author_diagnostic else {'sg_offset_bytes': sg_offset_bytes}))
             _protect_driver_macros(candidate, source_root, extra_text=driver_text)
             data['context']['diagnostic'] = diagnostic
         driver_path.write_text(driver_text)
@@ -212,6 +362,12 @@ def compile_candidate(args):
             verifier_source={"path": str(source), "sha256": artifacts.file_hash(source),
                 "symbol": "BFSVerifier", "protected_text_sha256": artifacts.digest(verifier["text"]),
                 "bounds_check": "trusted driver validates parent length and values before BFSVerifier"})
+        if not author_diagnostic:
+            data['context']['graph_verification'] = graph_verification_contract(original['application'])
+            data['context']['protected_bfs_verifier'] = data['context']['verifier_source']
+            data['context']['verifier_source'] = {
+                **data['context']['driver'], 'symbol': 'swdb_original::Graph::verify',
+                'bounds_check': 'trusted original-CSR oracle checks exact parent length and range before traversal validation'}
         data["build"] = {"compiler": str(compiler), "compiler_sha256": artifacts.file_hash(compiler), "flags": flags,
             "driver": data["context"]["driver"], "m5ops": {"path": str(m5_source), "sha256": artifacts.file_hash(m5_source)},
             "binary": str(binary), "source_artifact": candidate["artifact"]}
@@ -221,7 +377,7 @@ def compile_candidate(args):
             data['build']['compiler_version'] = version.read_text(errors='replace').splitlines()[:2]
         else:
             data['build']['compiler_version'] = ['explicit fixture compiler']
-        data['build']['adapter'] = 'dx100.author_roi_diagnostic.v1' if author_diagnostic else 'dx100.complete_call.v1'
+        data['build']['adapter'] = 'dx100.author_roi_diagnostic.v1' if author_diagnostic else 'dx100.complete_call.v2'
         if author_diagnostic:
             data['context']['internal_event_hooks'] = HOOKS
         session.save()

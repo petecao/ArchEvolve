@@ -1,4 +1,4 @@
-"""Candidate compilation and trusted driver contracts. Updated: 2026-09-25."""
+"""Candidate compilation and trusted driver contracts. Updated: 2026-09-26."""
 
 import json
 from pathlib import Path
@@ -109,6 +109,11 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
             assert result['build']['adapter'] == 'dx100.author_roi_diagnostic.v1'
         else:
             assert "m5_dump_stats" in result["context"]["suppressed_internal_events"]
+            from swdb.dx100_witness import graph_verification_contract
+            assert result['build']['adapter'] == 'dx100.complete_call.v2'
+            assert result['context']['graph_verification'] == graph_verification_contract('dx100-gapbs')
+            assert result['context']['verifier_source']['sha256'] == result['context']['driver']['sha256']
+            assert result['context']['protected_bfs_verifier']['symbol'] == 'BFSVerifier'
         assert result["context"]["verifier_source"]["bounds_check"]
         if diagnostic:
             assert result['context']['diagnostic']['discovery']['actual_build_flags'] == result['build']['flags']
@@ -201,9 +206,12 @@ int main(int,char**) {return 0;}
     binary = tmp_path / "driver"
     result = subprocess.run([compiler, "-std=c++11", str(generated), "-o", str(binary)], capture_output=True, text=True, timeout=30)
     assert result.returncode == 0, result.stderr
-    run = subprocess.run([str(binary)], capture_output=True, text=True, timeout=5)
+    from test_bfs_protocol import _sg
+    graph = tmp_path / 'graph.sg'
+    graph.write_bytes(_sg({'num_vertices': 3, 'directed': False, 'edges': [[0, 1], [1, 2]]}, 8))
+    run = subprocess.run([str(binary), '-f', str(graph), '-r', '0'], capture_output=True, text=True, timeout=5)
     assert run.returncode == (0 if passes else 4)
-    assert ("CHECKER_CALLED" in run.stdout) is passes
+    assert 'CHECKER_CALLED' not in run.stdout  # Candidate graph is never the correctness oracle.
     assert "SWDB_BFS_RESULT source=0 vertices=3" in run.stdout
     assert "parent_fnv1a64=" in run.stdout
     assert ("Verification: PASS" in run.stdout) is passes
