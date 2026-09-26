@@ -520,3 +520,126 @@ def test_public_batch_finalization_preserves_original_failure_and_rejects_new_er
     assert saved['state'] == 'failed'
     if original_failure: assert saved['reason'] == 'RuntimeError: original stage failure'
     assert 'injected finalizer ' + fault in json.dumps(saved)
+
+
+@pytest.mark.parametrize('original_failure', [False, True])
+def test_batch_samples_through_cleanup_and_clips_monitor_stop(tmp_path, monkeypatch, clock, original_failure):
+    """Exercise the public finalizer with a live monitor, but no host workload."""
+    from contextlib import nullcontext
+    import threading
+    policy = plan(); approval = admission(policy); approval['code_commit'] = 'fixture'
+    runs = tmp_path / policy['id']; failure = RuntimeError('original stage failure')
+    entered_cleanup = threading.Event(); sampled_cleanup = threading.Event(); observations = []
+    real_monitor = batch.lifecycle.Monitor
+    class Budget:
+        create = staticmethod(lambda *args, **kwargs: 'fixture-binding')
+        def __init__(self, *args): pass
+        def reservation(self): return nullcontext(clock.mono + .1)
+        def snapshot(self): return {'fixture': True}
+    class Guard(real_monitor):
+        def __init__(self, callback):
+            def observe():
+                if entered_cleanup.is_set(): sampled_cleanup.set()
+            super().__init__(observe)
+        def stop(self, deadline):
+            observations.append(('stop_deadline', deadline))
+            return super().stop(deadline)
+    class Owner:
+        def __init__(self, budget): self.history = {}; self.budget = budget
+        def finish(self, child=None, direct=None):
+            entered_cleanup.set()
+            observations.append(('interrupt_during_cleanup', guards[0].interrupt))
+            observations.append(('sampled_cleanup', sampled_cleanup.wait(.2)))
+            return {'state': 'all_owned_descendants_absent', 'errors': []}
+    def collect(*args):
+        if original_failure: raise failure
+    monkeypatch.setattr(sys, 'argv', ['batch', 't15', '--admission', str(tmp_path/'admission'),
+        '--admission-sha256', 'fixture', '--runs-dir', str(runs), '--lane', '1',
+        '--outer-started', clock.wall.isoformat(),
+        '--outer-deadline', (clock.wall+timedelta(seconds=43200)).isoformat(),
+        '--pane-pid', '10', '--pane-start-ticks', '100'])
+    monkeypatch.setattr(batch, 'RAW_ROOTS', (tmp_path,))
+    monkeypatch.setattr(batch, 'read_reference', lambda *args, **kwargs: approval)
+    monkeypatch.setattr(batch.socket, 'gethostname', lambda: 'mbit10')
+    monkeypatch.setattr(batch, 'Store', lambda *args: SimpleNamespace(by_id={}))
+    monkeypatch.setattr(batch, 'validate_cleanup_tests', lambda *args: None)
+    monkeypatch.setattr(batch, 'validate_inputs', lambda *args: ({}, {}))
+    monkeypatch.setattr(batch, 'collect_series', collect)
+    monkeypatch.setattr(batch, 'allocated_bytes', lambda *args: 0)
+    monkeypatch.setattr(batch.lifecycle, 'SAMPLE_INTERVAL_SECONDS', .002)
+    monkeypatch.setattr(batch.lifecycle, 'SharedCleanup', Budget)
+    monkeypatch.setattr(batch.lifecycle, 'Owned', Owner)
+    guards = []
+    def make_guard(callback):
+        value = Guard(callback); guards.append(value); return value
+    monkeypatch.setattr(batch.lifecycle, 'Monitor', make_guard)
+    monkeypatch.setattr(batch.lifecycle, 'identity', lambda pid: {'pid': pid, 'start_ticks': 1})
+    monkeypatch.setattr(batch.lifecycle, 'ancestry', lambda *args: [])
+    monkeypatch.setattr(batch.lifecycle, 'validate_samples', lambda *args, **kwargs: {})
+    if original_failure:
+        with pytest.raises(RuntimeError) as caught: batch.main()
+        assert caught.value is failure
+    else:
+        batch.main()
+    assert observations == [('interrupt_during_cleanup', False), ('sampled_cleanup', True), ('stop_deadline', clock.mono + .1)]
+    assert guards[0].interrupt is False
+    assert not guards[0].thread.is_alive()
+
+
+@pytest.mark.parametrize('cleanup_seconds', [20, 41])
+def test_resource_sampling_uses_cleanup_clock_without_extending_outer_deadline(tmp_path, monkeypatch, clock, cleanup_seconds):
+    from contextlib import contextmanager
+    policy=plan(); approval=admission(policy);approval['code_commit']='fixture'
+    runs=tmp_path/policy['id'];events=[];guards=[]
+    original=RuntimeError('original fixture stage failure')
+    class Budget:
+        create=staticmethod(lambda *args,**kwargs:'fixture-binding')
+        def __init__(self,*args):pass
+        @contextmanager
+        def reservation(self):yield clock.mono+.25
+        def snapshot(self):return {'fixture_only':True}
+    class Owner:
+        def __init__(self,budget):self.budget=budget;self.history={}
+        def sample(self):return {'rss_bytes':1}
+        def finish(self,*args):
+            events.append(('cleanup',guards[0].running,guards[0].interrupt))
+            clock.mono += cleanup_seconds
+            clock.wall += timedelta(seconds=cleanup_seconds)
+            guards[0].callback()
+            return {'state':'all_owned_descendants_absent','errors':[]}
+    class Guard:
+        def __init__(self,callback):
+            self.callback=callback;self.running=False;self.interrupt=True;self.maximum_gap_seconds=self.maximum_guard_seconds=0;guards.append(self)
+        def start(self):self.running=True
+        def stop(self,deadline):events.append(('stop',deadline));self.running=False
+    def collect(*args):
+        clock.mono += 43160
+        clock.wall += timedelta(seconds=43160)
+    monkeypatch.setattr(sys,'argv',['batch','t15','--admission',str(tmp_path/'admission'),
+        '--admission-sha256','fixture','--runs-dir',str(runs),'--lane','1',
+        '--outer-started',clock.wall.isoformat(),'--outer-deadline',(clock.wall+timedelta(seconds=43200)).isoformat(),
+        '--pane-pid','10','--pane-start-ticks','100'])
+    monkeypatch.setattr(batch,'RAW_ROOTS',(tmp_path,))
+    monkeypatch.setattr(batch,'read_reference',lambda *args,**kwargs:approval)
+    monkeypatch.setattr(batch.socket,'gethostname',lambda:'mbit10')
+    monkeypatch.setattr(batch,'Store',lambda *args:SimpleNamespace(by_id={},get=lambda *args:{}))
+    monkeypatch.setattr(batch,'validate_cleanup_tests',lambda *args:None)
+    monkeypatch.setattr(batch,'validate_inputs',lambda *args:({},{}))
+    monkeypatch.setattr(batch,'collect_series',collect)
+    monkeypatch.setattr(batch,'allocated_bytes',lambda *args:0)
+    monkeypatch.setattr(batch.os,'statvfs',lambda *args:SimpleNamespace(f_bavail=100*1024**3,f_frsize=1))
+    monkeypatch.setattr(batch,'lease_observation',lambda *args:{'fixture_only':True})
+    monkeypatch.setattr(batch.lifecycle,'SharedCleanup',Budget)
+    monkeypatch.setattr(batch.lifecycle,'Owned',Owner)
+    monkeypatch.setattr(batch.lifecycle,'Monitor',Guard)
+    monkeypatch.setattr(batch.lifecycle,'identity',lambda pid:{'pid':pid,'start_ticks':1})
+    monkeypatch.setattr(batch.lifecycle,'ancestry',lambda *args:[])
+    monkeypatch.setattr(batch.lifecycle,'validate_samples',lambda *args,**kwargs:{})
+    if cleanup_seconds > 30:
+        with pytest.raises(ValueError, match='common batch deadline'): batch.main()
+    else:
+        batch.main()
+    assert events[0]==('cleanup',True,False), events
+    assert events[1]==('stop',clock.mono+.25),events
+    saved=json.loads((runs/(policy['id']+'.driver')/'driver.json').read_text())
+    assert saved['state']==('failed' if cleanup_seconds > 30 else 'complete')

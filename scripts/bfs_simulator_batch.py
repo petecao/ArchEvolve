@@ -628,8 +628,13 @@ def main():
         'ancestry': lifecycle.ancestry(driver_identity, pane)}
     receipt['cleanup_budget'] = {'path': str(budget_path), 'binding': binding, 'budget_seconds': 30}
     ledger_file = folder / 'ledger.jsonl'
+    finalizing = False
     def monitor():
-        ledger.remaining()
+        if finalizing:
+            require(time.monotonic() < ledger.monotonic_end and now() < ledger.end,
+                    'common batch deadline exhausted during cleanup')
+        else:
+            ledger.remaining()
         raw = allocated_bytes([runs])
         require(raw + ledger.charged_bytes < plan['bounds']['batch_storage_gib'] * GIB, 'shared batch raw-storage ceiling exceeded')
         for path, minimum in ((runs, plan['bounds']['raw_reserve_gib']), (BUILD_ROOT.parent, plan['bounds']['build_reserve_gib'])):
@@ -667,21 +672,26 @@ def main():
         raise
     finally:
         original_failure = sys.exc_info()[1]
+        finalizing = True
         final_error = None
         def failed(exc, field):
             nonlocal final_error
             final_error = final_error or exc
             receipt.update(state='failed', **{field: f'{type(exc).__name__}: {exc}'})
-        try:
-            if guard:
-                with cleanup_budget.reservation(): guard.stop(ledger.monotonic_end)
-        except BaseException as exc:
-            failed(exc, 'monitor_shutdown_error')
+        # Keep sampling through owned teardown without a monitor signal
+        # interrupting the already bounded finalization path.
+        if guard:
+            guard.interrupt = False
         try:
             receipt['cleanup'] = lifecycle.verified_finish(owned) if owned else {'state': 'subreaper_not_admitted'}
             require(receipt['cleanup']['state'] != 'failed', 'owned cleanup exhausted its bounded attempt')
         except BaseException as exc:
             failed(exc, 'owned_cleanup_error')
+        try:
+            if guard:
+                with cleanup_budget.reservation() as until: guard.stop(until)
+        except BaseException as exc:
+            failed(exc, 'monitor_shutdown_error')
         if owned:
             receipt['process_observations']['owned_processes'] = list(owned.history.values())
         try:

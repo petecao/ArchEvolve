@@ -1,0 +1,135 @@
+{
+  "created": "2026-09-26",
+  "status": "local_independent_reviews_complete_linux_pending",
+  "scope": "Prospective simulator batch and series finalization; active319 pilot and historical673 A2 remain unchanged",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_batch.py",
+      "bytes": 43797,
+      "sha256": "17a61980fb944046ed06f2f500d90e94d5bddc80f56501e655eb11e39633630c"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_series.py",
+      "bytes": 29895,
+      "sha256": "db5cdac5425c4c50ef8054274b8a56697e494d61eecbe2026a47f71de897279a"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_batch.py",
+      "bytes": 39464,
+      "sha256": "fe4831e6e5d2aeced110c643a8445c694f69872eb96be2232f86a4161583a575"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_series.py",
+      "bytes": 32667,
+      "sha256": "385bf0981a585a81cc24139bddcceb4c3fbe10cdac65131ec00bfca8255b0f89"
+    }
+  ],
+  "author_receipt": {
+    "path": "/private/tmp/bfs-simulator-monitor-stop-preparation-v3-20260926.json",
+    "bytes": 5499,
+    "sha256": "26f382fb5ad0e833a83b3f7eb4dc308a25a7ea3e112e4322d7dc5523c009e2ca"
+  },
+  "retained_reds": [
+    {
+      "result": "4 failed, 93 deselected in 1.01s",
+      "log": {
+        "path": "/private/tmp/bfs-simulator-monitor-stop-red-20260926.log",
+        "bytes": 25963,
+        "sha256": "618dc7721e2ca79ea871ab38d77ddd972a3e0fa8167c0db88c75409ec46a912a"
+      }
+    },
+    {
+      "result": "1 failed / 1 passed; reserved cleanup falsely rejected",
+      "log": {
+        "path": "/private/tmp/bfs-simulator-cleanup-clock-red-20260926.log",
+        "bytes": 5444,
+        "sha256": "e8a40afc2c75e678e306ff746eda3ad3a3de0371ea8b8c2e44364520ae871f67"
+      }
+    },
+    {
+      "result": "2 failed; final reservation masked original exception",
+      "log": {
+        "path": "/private/tmp/bfs-simulator-series-reservation-red-20260926.log",
+        "bytes": 11461,
+        "sha256": "1acbfa4b1bbf68f67bce209888cccf511ce8dd17977f43e4f767ff5dd9b7e840"
+      }
+    },
+    {
+      "result": "2 failed: first failed-receipt save / public call finally save mask original exception",
+      "log": {
+        "path": "/private/tmp/bfs-series-early-save-red-20260926.log",
+        "bytes": 9667,
+        "sha256": "cea0a2fb848e7cf7f2b133ca1b2e0b4dfddc099e662e5a991c14aeac0b4e13ca"
+      }
+    }
+  ],
+  "verification": {
+    "focused": {
+      "command": [
+        "python3",
+        "-m",
+        "pytest",
+        "tests/test_bfs_simulator_batch.py",
+        "tests/test_bfs_simulator_series.py",
+        "tests/test_bfs_linux_fixture.py",
+        "-q"
+      ],
+      "result": "123 passed, 2 Linux-only skipped in16.67s before final exception-note-only delta",
+      "log": {
+        "path": "/private/tmp/bfs-simulator-finalizer-final-v3-focused-20260926.log",
+        "bytes": 192,
+        "sha256": "817445388daf4d7f3aafb217a65dba1fb0e606064a8a0558b03a31778c0752d7"
+      }
+    },
+    "final_delta": {
+      "command": [
+        "python3",
+        "-m",
+        "pytest",
+        "tests/test_bfs_simulator_series.py",
+        "-q",
+        "-k",
+        "early_save_fails or original_error_survives_final_accounting_failure"
+      ],
+      "result": "......                                                                   [100%]\n6 passed, 33 deselected in 0.09s",
+      "log": {
+        "path": "/private/tmp/bfs-series-final-error-notes-20260926.log",
+        "bytes": 113,
+        "sha256": "a798dbbcadbb19cfa77f6a661226db975e5087a2fc814ab9582eb968231c3659"
+      }
+    }
+  },
+  "independent_reviews": {
+    "Standards": {
+      "result": "clean_after_original_error_persistence_repairs",
+      "receipt": {
+        "path": "/private/tmp/bfs-simulator-finalizer-standards-final-20260926.json",
+        "bytes": 3227,
+        "sha256": "6a4d864956d1a09eca93dcd0f3e8a6ffb67a63b75458ba5b2daafa7483b9a86b"
+      },
+      "validation": "3 original failure probes and 12 focused cases passed"
+    },
+    "Spec": {
+      "result": "clean_after_cleanup_clock_and_original_error_repairs",
+      "receipt": {
+        "path": "/private/tmp/bfs-simulator-finalizer-independent-spec-v3-20260926.json",
+        "bytes": 3289,
+        "sha256": "00d09d35e3db05861e1dd9a17a27ef096f6e25b5fd9fa48ff6c34b2d5a1d4ce5"
+      },
+      "validation": "5 original external probes plus2 early-save cases passed"
+    }
+  },
+  "corrections": [
+    "active telemetry through owned teardown, with interrupt=False",
+    "stop deadline clipped to shared reservation until",
+    "cleanup telemetry uses original outer clocks; work admission still reserves30s",
+    "entire series final accounting catches secondary errors, preserves first error and only persists with genuine remaining grant",
+    "first failure save and public call finally save keep original exception with secondary persistence details/notes; no extra unbudgeted save"
+  ],
+  "limits": [
+    "All reported tests are local contract checks; skipped Linux cases do not satisfy admission.",
+    "The original clock and shared cleanup reserve are unchanged; there is no new retry or evaluation allowance.",
+    "Actual Linux proofs must use the final exported runtime after required metadata imports.",
+    "Broader isolated c2f987b full suite predates this correction; final all-ticket review remains required."
+  ]
+}

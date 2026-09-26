@@ -113,6 +113,19 @@ no new host fixture or candidate assessment has run. Broader isolated regression
 and independent Standards/Spec readiness audits follow; final all-ticket review
 still follows empirical acceptance.
 
+## Finalizer review correction — 2026-09-26
+
+The [prospective simulator finalizer correction](observations/simulator-finalizer-clipping-20260926.json)
+keeps resource sampling active through owned cleanup, clips monitor shutdown to
+the remaining reservation, and admits cleanup under the original outer clock
+while preserving the work-phase reserve. A secondary persistence/accounting
+failure retains the original public error and its own details. Independent
+Standards and Spec reproductions are repaired and retained; both scoped
+rechecks are clean. The combined local group passed 123 with two Linux skips
+before the final exception-note delta; all six affected final-delta cases pass.
+Actual Linux admission and final acceptance remain outstanding. The separate
+A2 fixture route must bind its old tested runtime and new supervisor explicitly.
+
 ## Progress check — 2026-09-26 16:33 ET
 
 The [full health audit](observations/health-20260926-1633.json) confirms the sole

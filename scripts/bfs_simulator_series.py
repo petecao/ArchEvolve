@@ -246,9 +246,17 @@ def main():
                           deadline=started + args.total_seconds - 30, cwd=ROOT,
                           output=out, stderr=err, monitor=check_bounds)
         finally:
+            stage_failure = sys.exc_info()[1]
             if len(receipt['stages']) > index:
                 receipt['stages'][index]['stdout'] = str(out)
-            save()
+            try:
+                save()
+            except BaseException as exc:
+                detail = f'public call persistence: {type(exc).__name__}: {exc}'
+                receipt.setdefault('persistence_errors', []).append(detail)
+                if stage_failure is None:
+                    raise
+                stage_failure.add_note(detail)
         return json.loads(out.read_text())
 
     def request(command, value, *, timeout=180, execute=False):
@@ -392,43 +400,68 @@ def main():
             call('get', aggregate['id'], '--chain')
         receipt['state'] = 'complete'
     except BaseException as exc:
-        receipt.update(state='failed', reason=f'{type(exc).__name__}: {exc}'); save(); raise
+        receipt.update(state='failed', reason=f'{type(exc).__name__}: {exc}')
+        try:
+            save()
+        except BaseException as persistence_exc:
+            detail = f'failure persistence: {type(persistence_exc).__name__}: {persistence_exc}'
+            receipt.setdefault('persistence_errors', []).append(detail)
+            exc.add_note(detail)
+        raise
     finally:
         original_failure = sys.exc_info()[1]
         if owned:
             error = None
-            try:
-                if guard:
-                    with owned.budget.reservation(): guard.stop(owned.budget.deadline)
-            except BaseException as exc:
-                error = exc
+            # Sampling covers teardown; any late monitor failure is reported
+            # by stop rather than signaling over an original stage failure.
+            if guard:
+                guard.interrupt = False
             try:
                 receipt['owned_cleanup'] = lifecycle.verified_finish(owned)
             except BaseException as exc:
                 error = error or exc
-            with owned.budget.reservation():
-                receipt['owned_identities'] = list(owned.history.values())
-                samples = folder/'owned-resources.jsonl'
-                if samples.is_file():
-                    receipt['owned_resource_artifact'] = {'path': str(samples), 'sha256': artifacts.file_hash(samples)}
-                    try:
-                        receipt['owned_resource_validation'] = lifecycle.validate_samples(samples,
-                            receipt['owned_started'], lifecycle.stamp())
-                    except BaseException as exc:
-                        error = exc
-                try:
-                    receipt['cleanup_accounting'] = owned.budget.snapshot()
-                except BaseException as exc:
-                    error = exc
-                    receipt.update(state='failed', cleanup_accounting_error=f'{type(exc).__name__}: {exc}'); save()
+            try:
                 if guard:
-                    receipt['owned_supervision'].update(maximum_observed_gap_seconds=guard.maximum_gap_seconds,
-                        maximum_guard_seconds=guard.maximum_guard_seconds)
-                receipt['owned_finished'] = lifecycle.stamp()
-                save()
-                if error:
-                    receipt.update(state='failed', cleanup_error=f'{type(error).__name__}: {error}'); save()
-                    if original_failure is None: raise error
+                    with owned.budget.reservation() as until: guard.stop(until)
+            except BaseException as exc:
+                error = error or exc
+            try:
+                with owned.budget.reservation():
+                    receipt['owned_identities'] = list(owned.history.values())
+                    samples = folder/'owned-resources.jsonl'
+                    if samples.is_file():
+                        receipt['owned_resource_artifact'] = {'path': str(samples), 'sha256': artifacts.file_hash(samples)}
+                        try:
+                            receipt['owned_resource_validation'] = lifecycle.validate_samples(samples,
+                                receipt['owned_started'], lifecycle.stamp())
+                        except BaseException as exc:
+                            error = error or exc
+                    try:
+                        receipt['cleanup_accounting'] = owned.budget.snapshot()
+                    except BaseException as exc:
+                        error = error or exc
+                        receipt.update(state='failed', cleanup_accounting_error=f'{type(exc).__name__}: {exc}'); save()
+                    if guard:
+                        receipt['owned_supervision'].update(maximum_observed_gap_seconds=guard.maximum_gap_seconds,
+                            maximum_guard_seconds=guard.maximum_guard_seconds)
+                    receipt['owned_finished'] = lifecycle.stamp()
+                    save()
+                    if error:
+                        receipt.update(state='failed', cleanup_error=f'{type(error).__name__}: {error}'); save()
+                        if original_failure is None: raise error
+            except BaseException as exc:
+                error = error or exc
+                receipt.update(state='failed', cleanup_error=f'{type(error).__name__}: {error}')
+                if original_failure is not None:
+                    original_failure.add_note(f'cleanup accounting: {type(error).__name__}: {error}')
+                # A secondary accounting failure must not replace the public
+                # stage error. Persist it only with a genuine remaining grant.
+                try:
+                    with owned.budget.reservation(): save()
+                except BaseException:
+                    pass
+                if original_failure is None:
+                    raise error
     if owned:
         with owned.budget.reservation():
             save()

@@ -356,3 +356,183 @@ def test_capacity_admission_preserves_fresh_success_and_failure_snapshots(select
     with pytest.raises(ValueError, match='capacity admission'):
         client.admit_capacity(receipt, 1, 'dx100-execute')
     assert [row['observed_at'] for row in receipt['capacity_admissions']] == ['1','2']
+
+
+@pytest.mark.parametrize('cleanup_failure', [False, True])
+def test_series_samples_through_cleanup_and_clips_monitor_stop(selection, tmp_path, monkeypatch, cleanup_failure):
+    """Keep the real resource thread active during final owned teardown."""
+    from contextlib import nullcontext
+    import threading
+    client = selection[0]; root = tmp_path/'raw'; root.mkdir()
+    stage_error = RuntimeError('original public stage failure')
+    cleanup_error = ValueError('secondary cleanup failure')
+    entered_cleanup = threading.Event(); sampled_cleanup = threading.Event(); observations = []
+    real_monitor = client.lifecycle.Monitor
+    grants = []
+    class Budget:
+        def __init__(self, path, binding, deadline): self.path = path; self.binding = binding; self.deadline = deadline
+        def reservation(self):
+            until = client.time.monotonic() + .1; grants.append(until); return nullcontext(until)
+        def snapshot(self): return {'fixture': True}
+    class Guard(real_monitor):
+        def __init__(self, callback):
+            def observe():
+                if entered_cleanup.is_set(): sampled_cleanup.set()
+            super().__init__(observe)
+        def stop(self, deadline):
+            observations.append(('stop_deadline', deadline)); return super().stop(deadline)
+    class Owner:
+        def __init__(self, budget): self.history = {}; self.budget = budget
+        def finish(self, child=None, direct=None):
+            entered_cleanup.set(); observations.append(('interrupt_during_cleanup', guards[0].interrupt))
+            observations.append(('sampled_cleanup', sampled_cleanup.wait(.2)))
+            if cleanup_failure: raise cleanup_error
+            return {'state': 'all_owned_descendants_absent', 'errors': []}
+    def stage(*args, **kwargs): raise stage_error
+    monkeypatch.setattr(client.socket, 'gethostname', lambda: 'mbit10')
+    monkeypatch.setattr(client, 'Store', lambda _: SimpleNamespace(get=lambda *args: {}))
+    monkeypatch.setattr(client.profile, '_verified_lane', lambda *args: None)
+    monkeypatch.setattr(client.artifacts, 'external_directory', lambda _: root)
+    monkeypatch.setattr(client.subprocess, 'check_output', lambda *args, **kwargs: 'fixture-commit\n')
+    monkeypatch.setattr(client.os, 'statvfs', lambda _: SimpleNamespace(f_bavail=100*1024**3, f_frsize=1))
+    monkeypatch.setattr(client, 'disk_usage_kib', lambda _: (0, []))
+    monkeypatch.setattr(client.lifecycle, 'SAMPLE_INTERVAL_SECONDS', .002)
+    monkeypatch.setattr(client.lifecycle, 'SharedCleanup', Budget)
+    monkeypatch.setattr(client.lifecycle, 'Owned', Owner)
+    guards = []
+    def make_guard(callback):
+        value = Guard(callback); guards.append(value); return value
+    monkeypatch.setattr(client.lifecycle, 'Monitor', make_guard)
+    monkeypatch.setattr(client.lifecycle, 'run_stage', stage)
+    monkeypatch.setattr(sys, 'argv', ['series', '--id', 'finalize-case', '--candidate', 'baseline',
+        '--workload', 'graph', '--build-evaluation', 'model', '--configuration', str(tmp_path/'config'),
+        '--runs-dir', '/data/yanruj/EvolveSWDB_runs/finalize-case', '--lane', '1',
+        '--owned-cleanup-ledger', str(tmp_path/'cleanup.json'), '--owned-cleanup-binding', 'fixture'])
+    with pytest.raises(RuntimeError) as caught: client.main()
+    assert caught.value is stage_error
+    assert observations == [('interrupt_during_cleanup', False), ('sampled_cleanup', True), ('stop_deadline', grants[0])]
+    assert guards[0].interrupt is False and not guards[0].thread.is_alive()
+    saved = json.loads((root/'finalize-case.driver/driver.json').read_text())
+    assert saved['state'] == 'failed' and saved['reason'] == 'RuntimeError: original public stage failure'
+    if cleanup_failure: assert saved['cleanup_error'] == 'ValueError: secondary cleanup failure'
+
+
+@pytest.mark.parametrize('can_persist_secondary', [False, True])
+@pytest.mark.parametrize('fault', ['reservation', 'hash'])
+def test_series_original_error_survives_final_accounting_failure(selection, tmp_path, monkeypatch, can_persist_secondary, fault):
+    from contextlib import contextmanager
+    import time
+    client=selection[0]; runs=tmp_path/'raw';runs.mkdir();guards=[];events=[]
+    failure=RuntimeError('original independent fixture stage failure');grant=time.monotonic()+.25
+    class Budget:
+        def __init__(self,path,binding,deadline):self.path=path;self.binding=binding;self.deadline=deadline;self.calls=0
+        @contextmanager
+        def reservation(self):
+            self.calls += 1
+            if (self.calls == 2 and fault == 'reservation') or (self.calls > 2 and not can_persist_secondary):
+                raise ValueError('fixture final reservation exhausted')
+            yield grant
+        def snapshot(self):return {'fixture_only':True}
+    class Owner:
+        def __init__(self,budget):self.budget=budget;self.history={}
+        def finish(self,*args):
+            events.append(('cleanup',guards[0].running,guards[0].interrupt))
+            return {'state':'all_owned_descendants_absent','errors':[]}
+    class Guard:
+        def __init__(self,callback):
+            self.running=False;self.interrupt=True;self.maximum_gap_seconds=self.maximum_guard_seconds=0;guards.append(self)
+        def start(self):
+            self.running=True
+            (runs/'fixture-finalizer.driver'/'owned-resources.jsonl').write_text('{}\n')
+        def check(self):pass
+        def stop(self,deadline):events.append(('stop',deadline));self.running=False
+    def fail(*args,**kwargs):raise failure
+    monkeypatch.setattr(client.socket,'gethostname',lambda:'mbit10')
+    monkeypatch.setattr(client,'Store',lambda *args:SimpleNamespace(get=lambda *args:{}))
+    monkeypatch.setattr(client.profile,'_verified_lane',lambda *args:'fixture')
+    monkeypatch.setattr(client.artifacts,'external_directory',lambda *args:runs)
+    monkeypatch.setattr(client.subprocess,'check_output',lambda *args,**kwargs:'fixture-commit\n')
+    monkeypatch.setattr(client.os,'statvfs',lambda *args:SimpleNamespace(f_bavail=100*1024**3,f_frsize=1))
+    monkeypatch.setattr(client,'disk_usage_kib',lambda *args:(1,[]))
+    monkeypatch.setattr(client.lifecycle,'SharedCleanup',Budget)
+    monkeypatch.setattr(client.lifecycle,'Owned',Owner)
+    monkeypatch.setattr(client.lifecycle,'Monitor',Guard)
+    monkeypatch.setattr(client.lifecycle,'run_stage',fail)
+    monkeypatch.setattr(client.lifecycle,'validate_samples',lambda *args, **kwargs:{})
+    if fault == 'hash':
+        def fail_hash(path): raise ValueError('fixture final hash failed')
+        monkeypatch.setattr(client.artifacts,'file_hash',fail_hash)
+    monkeypatch.setattr(sys,'argv',['series','--id','fixture-finalizer','--candidate','fixture','--workload','fixture',
+        '--build-evaluation','fixture','--configuration',str(tmp_path/'configuration.json'),
+        '--runs-dir','/data/yanruj/EvolveSWDB_runs/fixture-finalizer','--records',str(tmp_path/'records'),
+        '--lane','1','--owned-cleanup-ledger',str(tmp_path/'ledger'),'--owned-cleanup-binding','fixture'])
+    with pytest.raises(RuntimeError) as caught:client.main()
+    assert caught.value is failure
+    assert events==[('cleanup',True,False),('stop',grant)],events
+    saved=json.loads((runs/'fixture-finalizer.driver'/'driver.json').read_text())
+    assert saved['state']=='failed' and 'original independent fixture stage failure' in saved['reason']
+    assert any('cleanup accounting:' in note for note in failure.__notes__)
+    if can_persist_secondary:
+        assert saved['cleanup_error'] == ('ValueError: fixture final reservation exhausted'
+            if fault == 'reservation' else 'ValueError: fixture final hash failed')
+
+
+@pytest.mark.parametrize('fault', ['failure-save', 'call-save'])
+def test_series_preserves_original_failure_if_early_save_fails(selection, tmp_path, monkeypatch, fault):
+    from contextlib import nullcontext
+    import time
+    client=selection[0];root=tmp_path/'raw';root.mkdir()
+    stage_error=RuntimeError('independent original stage failure')
+    later_error=ValueError('independent final '+fault+' failure')
+    events=[]
+    class Budget:
+        def __init__(self,path,binding,deadline):self.path=path;self.binding=binding;self.deadline=deadline;self.calls=0
+        def reservation(self):
+            self.calls+=1
+            if fault=='reservation' and self.calls==2:raise later_error
+            return nullcontext(time.monotonic()+.1)
+        def snapshot(self):return {}
+    class Guard:
+        def __init__(self,callback):self.maximum_gap_seconds=self.maximum_guard_seconds=0;self.interrupt=True
+        def start(self):
+            (root/'probe.driver'/'owned-resources.jsonl').write_text('{}\n')
+        def check(self):pass
+        def stop(self,until):events.append(('stop',until))
+    class Owner:
+        def __init__(self,budget):self.budget=budget;self.history={}
+        def finish(self,*args):events.append(('cleanup',True));return {'state':'all_owned_descendants_absent','errors':[]}
+    def stage(*args,**kwargs):raise stage_error
+    monkeypatch.setattr(client.socket,'gethostname',lambda:'mbit10')
+    monkeypatch.setattr(client,'Store',lambda _:SimpleNamespace(get=lambda *args:{}))
+    monkeypatch.setattr(client.profile,'_verified_lane',lambda *args:None)
+    monkeypatch.setattr(client.artifacts,'external_directory',lambda _:root)
+    monkeypatch.setattr(client.subprocess,'check_output',lambda *args,**kwargs:'fixture-commit\n')
+    monkeypatch.setattr(client.os,'statvfs',lambda _:SimpleNamespace(f_bavail=100*1024**3,f_frsize=1))
+    monkeypatch.setattr(client,'disk_usage_kib',lambda _:(0,[]))
+    monkeypatch.setattr(client.lifecycle,'SharedCleanup',Budget)
+    monkeypatch.setattr(client.lifecycle,'Owned',Owner)
+    monkeypatch.setattr(client.lifecycle,'Monitor',Guard)
+    monkeypatch.setattr(client.lifecycle,'run_stage',stage)
+    original_write=Path.write_text
+    failed_once=[]; driver_writes=[]
+    def write(self,data,*args,**kwargs):
+        if self.name=='driver.json':
+            driver_writes.append(json.loads(data))
+            selected = (fault=='failure-save' and json.loads(data).get('state')=='failed'
+                        or fault=='call-save' and len(driver_writes)==2)
+            if selected and not failed_once:
+                failed_once.append(True);raise later_error
+        return original_write(self,data,*args,**kwargs)
+    monkeypatch.setattr(Path,'write_text',write)
+    monkeypatch.setattr(sys,'argv',['series','--id','probe','--candidate','baseline','--workload','graph',
+        '--build-evaluation','model','--configuration',str(tmp_path/'config'),
+        '--runs-dir','/data/yanruj/EvolveSWDB_runs/probe','--lane','1',
+        '--owned-cleanup-ledger',str(tmp_path/'cleanup.json'),'--owned-cleanup-binding','fixture'])
+    with pytest.raises(BaseException) as caught:client.main()
+    saved=json.loads((root/'probe.driver'/'driver.json').read_text())
+    assert saved['reason']=='RuntimeError: independent original stage failure'
+    assert events[0][0]=='cleanup' and events[1][0]=='stop'
+    assert caught.value is stage_error, (type(caught.value).__name__,str(caught.value))
+    assert failed_once == [True]
+    assert any(fault in note for note in stage_error.__notes__)
+    assert fault in json.dumps(saved['persistence_errors'])
