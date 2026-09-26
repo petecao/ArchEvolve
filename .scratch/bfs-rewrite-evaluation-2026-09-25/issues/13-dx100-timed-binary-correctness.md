@@ -286,3 +286,12 @@ Linux fixture proofs at that exact export and whole native-client terminal
 cleanup remain mandatory. A native statistical failure can release this cleanup
 barrier but cannot qualify a native protocol. No a2 dispatch, accepted coverage
 sample or gain is claimed; all earlier failures remain unchanged.
+
+
+## Admission checkpoint — 2026-09-26 18:53 ET
+
+Both corrected Linux admission selections now pass at tested `5a0b15f`, with
+separate independent terminal audits. See the [actual fixture receipt](../observations/a2-corrected-fixtures-actual-20260926.json).
+The original interruption failure remains intact. The fixed A2 simulator
+attempt remains unused; this ticket stays claimed pending actual timed-binary
+coverage and its independent result audit.

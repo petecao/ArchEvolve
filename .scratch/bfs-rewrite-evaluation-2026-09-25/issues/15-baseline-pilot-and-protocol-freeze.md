@@ -401,3 +401,12 @@ gain vetoes under the unchanged fixed policy. See the
 The driver began its declared fresh diagnostics at 17:36:22 ET. All four
 packages, terminal cleanup and shared simulator gates still remain; this
 ticket remains claimed and no empirical protocol is published.
+
+
+## Admission checkpoint — 2026-09-26 18:53 ET
+
+The corrected native reader passed its [actual Linux fast-exit proof](../observations/native-reader-fast-exit-actual-20260926.json).
+The single bounded a2 metadata readback is independently reviewed and scheduled
+after 19:00 ET. Collection remains complete; qualification and all shared
+simulator gates remain outstanding. The original failed readback is preserved.
+No native or simulator protocol is published.

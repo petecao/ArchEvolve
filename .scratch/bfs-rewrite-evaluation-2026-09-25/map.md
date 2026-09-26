@@ -149,6 +149,24 @@ unchanged. No Linux fixture, auditor, compilation or measurement ran during
 this preparation. The original malformed preparation receipt is retained;
 an additive valid JSON receipt preserves its reference and unchanged facts.
 
+## Fresh Linux admission proofs — 2026-09-26 18:53 ET
+
+Both [corrected A2 fixture selections](observations/a2-corrected-fixtures-actual-20260926.json)
+passed against tested `5a0b15f` under supervisor `4c10943`. Owned cleanup took
+6.058 seconds with two passed cases; public interruption took 9.331 seconds
+with two passed cases. Both stayed within their original 90-second clocks,
+had zero external and audit exits, and released node 1 generations 405/406.
+Their complete retained identity unions were checked twice; only the exact
+zero-RSS pane zombies remained. The old failed fixture stays preserved.
+These are contract admission proofs; no A2 simulator execution has occurred.
+
+The [actual native reader proof](observations/native-reader-fast-exit-actual-20260926.json)
+also passed at `5e8b750`, retaining the real fast child's identity before reap.
+The corrected [readback recipe](../../docs/bfs-native-readback-preflight-a2-20260926.md)
+has independent review and a Git-only auxiliary export `5e4e895`. One bounded
+invocation is scheduled after 19:00 ET, followed by A2 after fresh lane checks.
+No empirical freeze, candidate acceptance, or gain is claimed.
+
 ## Progress check — 2026-09-26 18:33 ET
 
 The [full host audit](observations/health-20260926-1833.json) found both socket
