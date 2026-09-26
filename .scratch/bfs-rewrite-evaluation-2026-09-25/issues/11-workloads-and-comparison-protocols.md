@@ -1,11 +1,31 @@
 # 11 — Workloads and comparison protocols
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
-**Status:** resolved
+**Status:** claimed
 **Blocked by:** 03
 **Spec:** `../spec.md`
+
+## Reopened runtime-policy gap — 2026-09-26 13:15 ET
+
+A local public paired fixture reproduced a native protocol-enforcement gap.
+The immutable protocol retained calibration values `OMP_THREAD_LIMIT=4`,
+`OMP_WAIT_POLICY=PASSIVE`, and `GOMP_SPINCOUNT=0`, while all 20 later fixture
+subprocesses received `1`, `ACTIVE`, and `300000`. The pair completed and
+`compare-evaluations` accepted a fixture comparison instead of rejecting the
+runtime mismatch. This is contract evidence only, with no empirical gain.
+The exact reproduction, fixture records and output hashes remain under
+`/private/tmp/bfs-runtime-setting-audit-20260926/`; the executable reproduction
+is `/private/tmp/bfs-runtime-setting-audit-20260926.py`.
+
+The ticket is claimed again while an explicit native runtime-policy binding is
+implemented and independently checked. Future empirical evaluation must enforce
+the calibrated child environment and comparison must revalidate that evidence.
+Old records remain retrievable with missing settings explicit. This correction
+does not alter the active paired pilot, any historical observation, or the
+prepared simulator runtime pins. Earlier acceptance below is historical and
+does not close this new gap.
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
