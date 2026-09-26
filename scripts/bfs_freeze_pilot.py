@@ -144,10 +144,24 @@ def native_lane(context, machine):
     return lane
 
 
+def freeze_header(spec, store):
+    require(re.fullmatch(r'[a-z0-9][a-z0-9._-]*', spec.get('id', '')), 'invalid protocol identifier')
+    request = {'message_version': '1.0', 'id': spec['id'], 'version': spec.get('version', 1)}
+    if 'supersedes' in spec:
+        require(isinstance(spec['supersedes'], str) and spec['supersedes'].strip(),
+                'supersedes must identify the exact previous frozen protocol')
+        request['supersedes'] = spec['supersedes']
+    version, previous, _invalidated = bfs_protocol._version(request, store, 'protocol')
+    prior_names = [row.id for row in store.of_kind('protocol') if row.data.get('requested_id') == request['id']]
+    require(not prior_names or previous in prior_names,
+            'changing an existing protocol name requires supersedes and a newer version')
+    require(version == 1 or previous is not None, 'version greater than one requires supersedes')
+    return request
+
+
 def prepare(spec, store):
     require(spec.get('mode') == 'native', 'this narrow driver prepares native protocols only')
-    require(re.fullmatch(r'[a-z0-9][a-z0-9._-]*', spec.get('id', '')), 'invalid protocol identifier')
-    require(type(spec.get('version', 1)) is int and spec.get('version', 1) > 0, 'version must be a positive integer')
+    request = freeze_header(spec, store)
     ceiling = spec.get('maximum_relative_spread')
     require(type(ceiling) in (int, float) and math.isfinite(ceiling) and ceiling > 0,
             'an explicit fixed maximum_relative_spread is required')
@@ -244,7 +258,7 @@ def prepare(spec, store):
         'profitability': policy, 'differences': {'software': ['Explicit source rewrite evaluated after this freeze'],
             'accelerator': [], 'configuration': []}, 'region_pairs': [], 'calibration': calibration}
     bfs_protocol._validate_settings(settings, store)
-    request = {'message_version': '1.0', 'id': spec['id'], 'version': spec.get('version', 1), 'settings': settings}
+    request['settings'] = settings
     result = {'format': 'swdb.bfs.native-pilot-freeze-review.v1', 'input': spec, 'publishable': not gates,
               'unmet_gates': gates, 'freeze_request': request, 'gain_claim': False, 'ticket15_complete': False}
     result['identity_sha256'] = artifacts.digest(result)

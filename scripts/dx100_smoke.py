@@ -25,6 +25,8 @@ def main():
     p.add_argument('--runs-dir', type=Path, required=True)
     p.add_argument('--lane', type=int, choices=(0, 1), required=True)
     p.add_argument('--checkpoint-evaluation', help='reuse only an exact matching retained real checkpoint')
+    p.add_argument('--feasibility-memory-gib', type=int, choices=(32, 48), default=32,
+                   help='48 is reserved for the single documented bring-up feasibility attempt')
     a = p.parse_args()
     if not re.fullmatch(r'[a-z0-9][a-z0-9._-]*', a.id):
         raise SystemExit('smoke ID must use the record identifier syntax')
@@ -67,7 +69,7 @@ def main():
         'workload': workload,
         'configuration': {'mode': 'MAA', 'l3_size_mb': 8, 'l3_assoc': 16, 'tile_elements': 16384},
         'verification': {'checker': 'dx100.bfs.verifier.v1', 'max_ticks': 1000000000000},
-        'budget': {'total_seconds': 1100, 'memory_gib': 32, 'storage_gib': 2,
+        'budget': {'total_seconds': 1100, 'memory_gib': a.feasibility_memory_gib, 'storage_gib': 2,
             'checkpoint_seconds': 300, 'run_seconds': 750}}
     if prior:
         request['checkpoint_manifest'] = prior['context']['checkpoint_manifest']

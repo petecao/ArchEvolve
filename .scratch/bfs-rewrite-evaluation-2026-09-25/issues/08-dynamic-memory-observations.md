@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 06
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -29,14 +29,14 @@ This slice contributes AC04, AC09, and AC13 through D03–D05, D11, and D14. It 
 
 ## Acceptance criteria
 
-- [ ] A real BFS execution or supported diagnostic simulation produces at least one actual memory-behavior observation retrievable through the public profiling/query interface.
-- [ ] Each observation states its definition, units, collector/model identity, source/binary and workload identity, collection scope, attribution granularity, and evidence basis.
-- [ ] ROI-wide observations are not presented as measurements of individual loops or functions. Static formulas or source-derived access patterns are not relabeled as dynamic observations.
-- [ ] Unsupported, missing, or failed metrics and uncertain bottleneck explanations are explicit; a result with every dynamic memory metric unavailable cannot claim complete memory profiling.
-- [ ] Model-derived cache observations are labeled simulated and are not described as native hardware measurements. Actual counts are distinguished from inferred values.
-- [ ] If profiling uses a different instrumented artifact or execution, the result records that difference and its relationship to the timed artifact; diagnostic runtime cannot replace primary ROI timing.
-- [ ] Profiling a changed candidate collects fresh observations linked to that candidate. A fixed source-order graph traversal is not substituted for the actual BFS frontier order when claiming dynamic index behavior.
-- [ ] Successful and partial observations survive fresh-process retrieval, with raw-artifact references and failure reasons; missing evidence is not converted into a neutral performance result.
+- [x] A real BFS execution or supported diagnostic simulation produces at least one actual memory-behavior observation retrievable through the public profiling/query interface.
+- [x] Each observation states its definition, units, collector/model identity, source/binary and workload identity, collection scope, attribution granularity, and evidence basis.
+- [x] ROI-wide observations are not presented as measurements of individual loops or functions. Static formulas or source-derived access patterns are not relabeled as dynamic observations.
+- [x] Unsupported, missing, or failed metrics and uncertain bottleneck explanations are explicit; a result with every dynamic memory metric unavailable cannot claim complete memory profiling.
+- [x] Model-derived cache observations are labeled simulated and are not described as native hardware measurements. Actual counts are distinguished from inferred values.
+- [x] If profiling uses a different instrumented artifact or execution, the result records that difference and its relationship to the timed artifact; diagnostic runtime cannot replace primary ROI timing.
+- [x] Profiling a changed candidate collects fresh observations linked to that candidate. A fixed source-order graph traversal is not substituted for the actual BFS frontier order when claiming dynamic index behavior.
+- [x] Successful and partial observations survive fresh-process retrieval, with raw-artifact references and failure reasons; missing evidence is not converted into a neutral performance result.
 
 ## Verification
 
@@ -45,3 +45,23 @@ Drive public native execution/diagnostic profiling and retrieval after authoriza
 ## Dependencies and boundaries
 
 Ticket 06 provides execution-bound function/source context. Loop discovery is not a prerequisite because correctly scoped ROI/function observations can be useful independently. Ticket 09 assembles complete profile packages; this slice must not claim that an incomplete package meets that later gate. Choose the supported collection method during implementation design without broadening the task into full tracing or causal proof.
+
+## Answer
+
+Resolved 2026-09-25 (Eastern Time) from corrected real BFS diagnostics, with the earlier invalid observations preserved.
+
+The public `bfs-profile` / `bfs-hotspots` path now returns actual Callgrind 3.22.0 data-reference events and modeled cache misses for the complete BFS call. Every observation binds the current source artifact, separate memory binary, primary evaluation/binary, canonical graph, ordered source position, repetition, thread count, and ROI. The explicit model is I1 32768/8/64, D1 49152/12/64, and LL 25165824/12/64 (bytes/associativity/line bytes), initially cold. `Dr`/`Dw` count instrumented data references; `D1mr`/`D1mw` and `DLmr`/`DLmw` are simulated misses, all scoped to the whole ROI. No hardware-counter, address-trace, per-loop-memory, source-order-traversal, or causal-bottleneck claim is made.
+
+Actual corrected records are `bfs-profile-smoke-20260925-a4.baseline-profile` and `bfs-profile-smoke-20260925-a4.changed-profile`, collected at checkpoint `c4788fb0295bf624b36308d1fd6338f3a4899700` in lane 1 generation 385 (21:04–21:20 ET). Each profile has six independently checked diagnostic executions—three region and three memory executions—and 18 available, validated memory rows. Sources are `[0, 3, 8]`, one repetition and one thread. This is a real compiled BFS traversal on a ten-vertex diagnostic graph, not pilot performance evidence.
+
+| Source | Baseline Dr | Baseline Dw | Changed Dr | Changed Dw |
+|---|---:|---:|---:|---:|
+| 0 | 8468 | 5753 | 54474 | 25757 |
+| 3 | 6671 | 4594 | 52677 | 24598 |
+| 8 | 4891 | 3438 | 50897 | 23442 |
+
+The changed candidate genuinely executes `SWDBDiscoveredHelper`; fresh queries ranked it first and found both executed nested loops. The changed source artifact is `e6e789e6942776ad88cbc3ba8377d09be8f8b8eee63e511230d7a9957a2490fd`. Its primary binary is `e7db1f8531ddbd675ec5874acade25a35e675bd782e1967e8243b2322e46027a`, whereas its separately instrumented memory binary is `f2ddd8aa05c335b66907e27f5b6d88b7d2aadb611a4d4efdbe7cc90a32afd847`. The baseline memory binary is `20ebc23ffca71766cdf31c2a65e0efa9ebc8cd5622d467f721eab18ba3482e6c`. Diagnostic runtime never replaces primary complete-call wall timing.
+
+Both profile families passed independent raw-artifact hash checks, strict parsing, summary/self-cost consistency, and cache-miss hierarchy checks after collection. The public driver completed with exit 0, retrieved eight chain records, and retained `gain_claim: false`. Metadata commit `5ea41132ac0f17b1ecb119cdaba4de3791c2dd0d` on `codex/bfs-profile-evidence-20260925-a4` contains only the two profile records; all 108 records validated before sync. Raw files remain under `/data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925` on mbit10, with diagnostic sources and binaries under `/data1/yanruj/EvolveSWDB_builds`.
+
+Source attribution still reports explicit partial coverage; it does not prevent this independently complete supported memory family. Earlier a1/a2 collection failures and a3's invalid unsigned-wrap values remain retained. The [real one/four-thread control](../../../docs/evidence/bfs-callgrind-roi-20260925-a1.yaml) reproduces the old failure and validates the corrected dump-before-stop order. Historical query/package guards exclude inconsistent observations without deleting their original values. Local compiler/public workflow and parser regressions cover failure retention and invalid-count handling; actual acceptance comes from the corrected a4 executions above. Package assembly remains Ticket 09.

@@ -21,6 +21,17 @@ stage records `sampled_peak_process_group_rss_kib` where Linux accounting is
 available. This is sampled host experiment cost, never simulated BFS memory
 traffic or performance.
 
+The subsequent a5 restore reached traversal and the first statistics dump, then
+exceeded 32 GiB at a sampled 32.12 GiB. The source-backed fixed-statistics estimate
+and one explicitly bounded 48 GiB feasibility attempt are recorded in
+[the memory plan](../.scratch/bfs-rewrite-evaluation-2026-09-25/dx100-memory-feasibility-plan.md).
+That exception does not change the pilot's cap. New runs retain nominal
+five-second own-process-group RSS logs and bounded host phase observations,
+including on failure. `context.host_memory_observer` identifies its source and
+sampling scope. The observer reads one representative requestor vector and
+existing allocator numeric properties without enumerating all statistics or
+changing model events. Both NUMA nodes' memory details are part of host receipts.
+
 New `swdb.dx100.checkpoint.v2` manifests bind the complete modeled cache,
 mode, clock, memory, core, and target configuration in addition to the exact
 binary/workload/source identities. A changed configuration rejects before

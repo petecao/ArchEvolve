@@ -4,6 +4,7 @@ import json
 import runpy
 import subprocess
 import sys
+from types import SimpleNamespace
 
 import pytest
 
@@ -97,14 +98,42 @@ def test_public_native_metadata_query_preserves_the_verifiable_lane_shape(record
         module['native_lane'](context, machine)
 
 
-def test_public_prepare_without_completed_pilots_does_not_create_a_freeze(records, tmp_path):
+@pytest.mark.parametrize('fault', [None, 'missing-predecessor', 'same-version', 'unknown-predecessor', 'old-name-without-predecessor'])
+def test_freeze_review_preserves_exact_version_predecessor(fault):
+    from swdb import artifacts, bfs_protocol
+    from swdb.cli import Failure
+    module = runpy.run_path(str(REPO / 'scripts/bfs_freeze_pilot.py'))
+    # Minimal sealed metadata exercises naming/version semantics only; no pilot
+    # collection, valid settings, or publishable empirical freeze is implied.
+    old = {'kind': 'protocol', 'requested_id': 'version-fixture', 'version': 1, 'supersedes': None,
+           'invalidated_comparisons': [], 'settings': {}, 'workload_identities': {},
+           'frozen_at': '2026-09-25T00:00:00Z', 'state': 'frozen'}
+    old['identity_sha256'] = artifacts.digest(bfs_protocol._identity_payload(old))
+    old['id'] = old['requested_id'] + '.' + old['identity_sha256'][:16]
+    store = SimpleNamespace(get=lambda rid, kind=None: old if rid == old['id'] else None,
+        of_kind=lambda kind: [SimpleNamespace(id=old['id'], data=old)] if kind == 'protocol' else [])
+    spec = {'id': 'version-fixture', 'version': 2, 'supersedes': old['id']}
+    if fault == 'missing-predecessor': spec = {'id': 'fresh-name', 'version': 2}
+    elif fault == 'same-version': spec['version'] = 1
+    elif fault == 'unknown-predecessor': spec['supersedes'] = 'unknown'
+    elif fault == 'old-name-without-predecessor': spec = {'id': old['requested_id']}
+    if fault:
+        with pytest.raises((ValueError, Failure)):
+            module['freeze_header'](spec, store)
+    else:
+        assert module['freeze_header'](spec, store) == {'message_version': '1.0', **spec}
+
+
+@pytest.mark.parametrize('version,reason', [(1, 'one distinct native package per graph family'),
+                                          (2, 'version greater than one requires supersedes')])
+def test_public_prepare_without_completed_pilots_does_not_create_a_freeze(records, tmp_path, version, reason):
     request = tmp_path / 'selection.json'
-    request.write_text(json.dumps({'id': 'unobserved', 'mode': 'native', 'packages': [],
+    request.write_text(json.dumps({'id': 'unobserved', 'version': version, 'mode': 'native', 'packages': [],
         'maximum_relative_spread': 0.1, 'spread_justification': 'fixture only; not empirical',
         'size_selection': {'scale': 18, 'justification': 'fixture'}}))
     output = tmp_path / 'not-published'
     result = subprocess.run([sys.executable, str(REPO / 'scripts/bfs_freeze_pilot.py'), 'prepare', str(request),
                             '--records', str(records.path), '--output', str(output)], cwd=REPO,
                             capture_output=True, text=True, timeout=30)
-    assert result.returncode != 0 and 'one distinct native package per graph family' in result.stderr
+    assert result.returncode != 0 and reason in result.stderr
     assert not output.exists() and not (records.path / 'protocols').exists()

@@ -70,3 +70,19 @@ checkpoint tests passed in 16.56 seconds. Retry a4 was dispatched through lane 1
 at 20:37 ET from `6ddaff831b85d8039729114f10a7341611b01657`, with a
 300-second checkpoint bound inside the unchanged 1100-second total budget.
 Checkpoint-to-ROI acceptance is still pending; this ticket remains claimed.
+
+## Fixed host-memory diagnosis — 2026-09-25
+
+a4 completed its checkpoint but exceeded its 16 GiB host cap during restore.
+a5 reused that exact checkpoint/configuration and traversed the tiny graph, then
+exceeded its 32 GiB cap during the first statistics dump (sampled 32.12 GiB).
+Neither produced a sealed ROI or verifier result. Both failures are retained;
+they do not establish backend acceptance. The unchanged model's approximately
+4.94 million cache statistic objects have a source-derived allocation subtotal
+of 26.86 GiB before allocator rounding and other state. The actual binary already
+links tcmalloc. The [finite feasibility plan](../dx100-memory-feasibility-plan.md)
+documents the arithmetic, uncertainties, and exactly one 48 GiB retry with host
+RSS/phase observations, conditional on socket capacity and normal lane ownership.
+Eight public continuation/resource tests and five observation/receipt tests pass.
+At 21:22 ET, lane 1 was free but its conservative free-plus-clean-cache headroom
+was only 32.60 GiB, below the plan's 52 GiB prerequisite; no retry was dispatched.

@@ -22,7 +22,7 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 05 | [Annotated-source rewriting](issues/05-annotated-source-rewriting.md) | 04 | resolved |
 | 06 | [Automatic function hotspot discovery](issues/06-function-hotspot-discovery.md) | 03 | resolved |
 | 07 | [Loop discovery and changed-region profiling](issues/07-loop-discovery-and-reprofiling.md) | 06 | resolved |
-| 08 | [Dynamic memory observations](issues/08-dynamic-memory-observations.md) | 06 | claimed |
+| 08 | [Dynamic memory observations](issues/08-dynamic-memory-observations.md) | 06 | resolved |
 | 09 | [Complete profile packages and strategy lookup](issues/09-profile-packages-and-strategy-lookup.md) | 07, 08 | claimed |
 | 10 | [Queryable DX100 operation contracts](issues/10-dx100-operation-contracts.md) | 02 | resolved |
 | 11 | [Reproducible workloads and comparison protocols](issues/11-workloads-and-comparison-protocols.md) | 03 | resolved |
@@ -37,7 +37,7 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 20 | [Upstream BFS: annotated-source route acceptance](issues/20-upstream-annotated-route-acceptance.md) | 05, 10, 15 | claimed |
 | 21 | [Coverage, ROI gain, and collaborator handoff](issues/21-coverage-roi-gain-and-handoff.md) | 16, 17, 18, 19, 20 | claimed |
 
-Tickets 01–07, 10, and 11 are resolved (9/21); the current empirical frontier is corrected dynamic-memory collection and simulator verification. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
+Tickets 01–08, 10, and 11 are resolved (10/21); the current empirical frontier is the complete package handoff, unchanged-baseline pilots, and simulator verification. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
 
 ### Assigned acceptance cases
 
@@ -107,6 +107,11 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | Master records, collaborator fixtures, public workflow tests, authorization | 26–27, 53–60 | D02–D03, D14–D15 | AC07, AC09, AC18, AC20; publication gate |
 
 ## Context pointers
+
+- 2026-09-25: Ticket 08 resolved from corrected a4 baseline/changed BFS profiles
+  (12 checked diagnostic executions, 36 validated memory rows; metadata
+  `5ea41132ac0f17b1ecb119cdaba4de3791c2dd0d`). The a3 memory audit remains
+  invalid and preserved. Ticket 09 can now assemble packages from the new evidence.
 
 - 2026-09-25: Tickets 06 and 07 resolved from independently checked a3 function/loop
   rediscovery: new helper ranked first and two nested loops executed; see their

@@ -22,6 +22,10 @@ The selection object supplies `mode: native`, a new protocol `id`, optional
 `rejected_evaluations`, and `accelerator_packages`. No default spread threshold is
 chosen. Every actual within-source spread is reported; exceeding the supplied
 threshold leaves the review unpublishable. The driver never raises the threshold.
+Replacing a frozen protocol also supplies its exact `supersedes` ID and a greater
+`version`. Preparation checks the existing name and predecessor through the core
+version contract and forwards that identity unchanged. Revised settings require
+fresh compatible comparisons; the preceding evidence and comparisons remain stored.
 
 The fixed profitability policy is a 1.05 floor, a 95% bootstrap lower bound above
 that floor, 2,000 resamples, and seed 20260925. Native sampling freezes five trials

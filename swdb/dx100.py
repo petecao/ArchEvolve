@@ -158,7 +158,9 @@ def _bounded_process(session, name, command, timeout, memory, storage, env=None)
     reason = None
     code = None
     last_storage = 0
+    last_observation = -5.0
     peak_rss_kib = None
+    memory_log = log.with_suffix('.memory.jsonl')
     try:
         with log.open("w") as stream:
             session.child = subprocess.Popen(command, cwd=session.folder, env=env, stdout=stream,
@@ -170,9 +172,15 @@ def _bounded_process(session, name, command, timeout, memory, storage, env=None)
                 if sys.platform == "linux":
                     # Include all processes in this child's group. The build helper
                     # separately accounts for its nested compiler process group.
-                    rss = subprocess.check_output(["ps", "-eo", "pgid=,rss="], text=True, timeout=10)
-                    used = sum(int(row[1]) for line in rss.splitlines() if len(row := line.split()) == 2 and row[0] == str(session.child.pid))
+                    from swdb.dx100_resources import process_group, observe
+                    processes = process_group(session.child.pid)
+                    used = sum(row['rss_kib'] for row in processes)
                     peak_rss_kib = max(peak_rss_kib or 0, used)
+                    elapsed = time.monotonic() - start
+                    if elapsed - last_observation >= 5 or used > memory * 1024 * 1024:
+                        observe(memory_log, session.child.pid, processes, start, log,
+                                session.folder, session.data['evidence_kind'])
+                        last_observation = elapsed
                     if used > memory * 1024 * 1024:
                         raise StageFailure("budget_exhausted", f"simulator process-group memory budget exhausted: {used} KiB > {memory} GiB")
                 if time.monotonic() - last_storage >= 30:
@@ -185,13 +193,19 @@ def _bounded_process(session, name, command, timeout, memory, storage, env=None)
                     if used > storage * 1024 * 1024:
                         raise StageFailure("budget_exhausted", "raw artifact storage budget exhausted")
                     last_storage = time.monotonic()
-                time.sleep(0.2 if session.data["evidence_kind"] == "contract_fixture" else 2)
+                time.sleep(0.2 if session.data["evidence_kind"] == "contract_fixture" else
+                           min(2, max(0.05, 5 - (time.monotonic() - start - last_observation))))
             code = session.child.returncode
     except (StageFailure, Stopped, OSError, subprocess.SubprocessError) as exc:
         reason = exc
     finally:
         _terminate(session.child)
         session.child = None
+        for path, kind in ((memory_log, 'process_group_memory'),
+                (session.folder / 'simulation/host-memory-phases.jsonl', 'simulator_host_memory_phases')):
+            if path.is_file():
+                session.data['raw_artifacts'].append({'host': session.data['context']['host'],
+                    'kind': kind, 'path': str(path), 'sha256': artifacts.file_hash(path)})
     state = "complete" if code == 0 and reason is None else reason.state if isinstance(reason, StageFailure) else "interrupted" if isinstance(reason, Stopped) else "failed"
     session.finish(state, host_wall_s=time.monotonic() - start, returncode=code,
                    log_sha256=artifacts.file_hash(log), reason=str(reason) if reason else None,
@@ -543,6 +557,10 @@ def execute(args):
                         "symbol": "BFSVerifier", "lines": [463, 508],
                         "harness": {"path": str(harness), "sha256": artifacts.file_hash(harness)}})
             data["context"]["verification_driver"] = {"path": str(driver), "sha256": artifacts.file_hash(driver)}
+            observer = paths.HOME / 'scripts/dx100_host_memory.py'
+            data['context']['host_memory_observer'] = {'path': str(observer),
+                'sha256': artifacts.file_hash(observer), 'sample_interval_seconds': 5,
+                'scope': 'host process group and bounded phase observations; no modeled changes'}
             env.update(SWDB_DX100_MODEL_ROOT=str(root),
                 SWDB_DX100_EXECUTION_BINDING_SHA256=data["context"]["execution_binding_sha256"],
                 SWDB_DX100_VERIFY_MAX_TICKS=str(verify["max_ticks"]))

@@ -15,6 +15,8 @@ COMMANDS = (
     ('cat', '/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor'),
     ('cat', '/sys/devices/system/cpu/intel_pstate/no_turbo'),
     ('lscpu',), ('numactl', '--hardware'), ('uname', '-a'),
+    ('cat', '/sys/devices/system/node/node0/meminfo'),
+    ('cat', '/sys/devices/system/node/node1/meminfo'),
     ('git', 'rev-parse', '--abbrev-ref', 'HEAD'), ('git', 'rev-parse', 'HEAD'),
 )
 
