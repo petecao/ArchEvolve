@@ -15,7 +15,9 @@ from test_dx100 import case, execution_request, reference
 @pytest.mark.parametrize("mode", ["normal", "missing-memory", "truncated", "changed-stats", "multiple-intervals", "wrong-clock", "stale-region",
     "diagnostic", "diagnostic-source-mismatch", "diagnostic-invalid-counters", "diagnostic-outside-roi",
     "diagnostic-report-list", "diagnostic-counter-list", "diagnostic-boolean-errors",
-    "pinned-cache-totals", "pinned-region-only"])
+    "pinned-cache-totals", "pinned-region-only", "diagnostic-unverified", "diagnostic-incorrect",
+    "diagnostic-no-seal", "diagnostic-seal-tamper", "diagnostic-seal-binding", "diagnostic-seal-list",
+    "diagnostic-preseal", "diagnostic-unentered-time"])
 def test_public_simulated_collector_retains_identity_and_incomplete_attribution(case, records, mode):
     records.copy_repo("applications")
     repository = Path(__file__).resolve().parents[1]
@@ -105,9 +107,12 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
         if mode == 'diagnostic-report-list': values = []
         if mode == 'diagnostic-counter-list': values['regions'][0] = []
         if mode == 'diagnostic-boolean-errors': values['errors'] = False
+        if mode == 'diagnostic-unentered-time': values['regions'][0]['invocations'] = 0
         if mode == 'diagnostic-outside-roi':
             values['regions'][0].update(inclusive_ns=0, exclusive_ns=0, invocations=0)
         log.write_text('SWDB_DX100_ROI_SEALED\nSWDB_DX100_REGIONS ' + json.dumps(values) + '\n')
+        if mode == 'diagnostic-preseal':
+            log.write_text('SWDB_DX100_REGIONS ' + json.dumps(values) + '\nSWDB_DX100_ROI_SEALED\n')
         diagnostic['stages'] = [{'stage': 'simulation', 'state': 'complete', 'started': evaluation['stages'][0]['started'],
                                  'log': str(log), 'log_sha256': artifacts.file_hash(log)}]
         build = copy.deepcopy(diagnostic); build['id'] = 'diagnostic-build'
@@ -115,6 +120,30 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
         build['context']['diagnostic'] = {'regions': rows, 'discovery': {'backend': 'libclang-cindex', 'unresolved': []},
             'instrumented_source': reference(path), 'runtime': reference(binary),
             'quantity': 'per-thread simulated elapsed, summed; includes waits', 'difference': 'explicit source-scope fixture instrumentation'}
+        diagnostic['context']['execution_binding']['binary'] = reference(binary)
+        diagnostic['context']['execution_binding_sha256'] = artifacts.digest(diagnostic['context']['execution_binding'])
+        diagnostic['context']['verification_driver'] = reference(binary)
+        diagnostic['context']['host_memory_observer'] = reference(binary)
+        seal = {'format': 'swdb.dx100.roi-seal.v1', 'roi_exit_cause': 'm5_exit instruction encountered',
+            'execution_binding_sha256': diagnostic['context']['execution_binding_sha256'],
+            'driver_sha256': artifacts.file_hash(binary), 'host_memory_observer_sha256': artifacts.file_hash(binary),
+            'statistics': diagnostic['context']['statistics'], 'verification': {'state': 'finished'}}
+        seal_path = folder / 'diagnostic-seal.json'
+        seal_path.write_text(json.dumps(seal))
+        diagnostic['context']['sealed_roi'] = {**reference(seal_path), **seal}
+        if mode == 'diagnostic-no-seal': diagnostic['context'].pop('sealed_roi')
+        if mode == 'diagnostic-seal-tamper': seal_path.write_text('{}')
+        if mode == 'diagnostic-seal-binding':
+            seal['execution_binding_sha256'] = '0' * 64
+            seal_path.write_text(json.dumps(seal))
+            diagnostic['context']['sealed_roi'] = {**reference(seal_path), **seal}
+        if mode == 'diagnostic-seal-list':
+            seal_path.write_text('[]')
+            diagnostic['context']['sealed_roi'].update(reference(seal_path))
+        if mode in {'diagnostic-unverified', 'diagnostic-incorrect'}:
+            diagnostic['outcome'] = {'state': 'missing_observation' if mode == 'diagnostic-unverified' else 'incorrect',
+                                     'stage': 'simulation', 'reason': 'Retained verifier outcome after completed counters.'}
+            diagnostic['correctness']['state'] = 'unverified' if mode == 'diagnostic-unverified' else 'failed'
         records.write('evaluations/diagnostic-build.yaml', build)
         records.write('evaluations/diagnostic.yaml', diagnostic)
         request.pop('discovery_profile')
@@ -135,18 +164,21 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
     assert retrieved["correctness"]["state"] == "unverified"
     assert retrieved["gain_claim"] is False
     if mode in {"truncated", "changed-stats", "wrong-clock", "stale-region", 'diagnostic-source-mismatch', 'diagnostic-invalid-counters',
-                'diagnostic-report-list', 'diagnostic-counter-list', 'diagnostic-boolean-errors'}:
+                'diagnostic-report-list', 'diagnostic-counter-list', 'diagnostic-boolean-errors',
+                'diagnostic-no-seal', 'diagnostic-seal-tamper', 'diagnostic-seal-binding', 'diagnostic-seal-list',
+                'diagnostic-preseal', 'diagnostic-unentered-time'}:
         assert profile["outcome"]["state"] == "failed"
         assert retrieved["timing"] == []
     else:
-        assert profile["outcome"]["state"] == ('complete' if mode == 'diagnostic' else "partial")
+        assert profile["outcome"]["state"] == ('complete' if mode in {'diagnostic', 'diagnostic-unverified', 'diagnostic-incorrect'} else "partial")
         assert retrieved["timing"][0]["duration_s"] == 0.001
         assert profile["context"]["roi_observation"]["clocks"]["system.cpu_clk_domain"]["period_ticks"] == [313]
         assert profile["context"]["roi_observation"]["interval_count"] == (2 if mode == "multiple-intervals" else 1)
-        if mode == 'diagnostic':
+        if mode in {'diagnostic', 'diagnostic-unverified', 'diagnostic-incorrect'}:
             assert profile['regions'][0]['metrics']['inclusive_simulated_seconds'] == 300 / 1e9
             assert profile['regions'][0]['metrics']['exclusive_simulated_seconds'] == 100 / 1e9
-            assert profile['executions'][1]['correctness']['state'] == 'unverified'
+            assert profile['executions'][1]['correctness']['state'] == ('failed' if mode == 'diagnostic-incorrect' else 'unverified')
+            assert profile['executions'][1]['execution_outcome'] == diagnostic['outcome']
             assert profile['artifacts']['region_binary']['sha256'] != profile['artifacts']['memory_binary']['sha256']
             assert profile['dynamic_memory'][0]['raw_sha256'] == evaluation['context']['statistics']['sha256']
             assert all(run['source_position'] == 2 and run['repetition'] == 1 for run in profile['executions'])

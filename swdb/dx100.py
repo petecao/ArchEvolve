@@ -342,6 +342,12 @@ def _correctness(session, request, result_folder, log, completed):
         raise StageFailure("incompatible", "sealed statistics must belong to this execution directory")
     data["context"]["sealed_roi"] = {"path": str(seal_path), "sha256": artifacts.file_hash(seal_path), **seal}
     data["context"]["statistics"] = seal["statistics"]
+    actual_config = result_folder / "config.ini"
+    if actual_config.is_file():
+        # Collection can use a sealed interval even when verification later
+        # fails. Bind the instantiated configuration before that verdict.
+        data["context"]["actual_configuration"] = {
+            "path": str(actual_config), "sha256": artifacts.file_hash(actual_config)}
     _file(request["binary"], "timed BFS binary")
     _file(request["simulator"], "simulator")
     _file(request["workload"]["representation"], "graph representation")
@@ -509,6 +515,8 @@ def execute(args):
                     _file({"path": str(root / artifacts.relative_path(entry["path"])), "sha256": entry["sha256"]},
                           "candidate source in the pinned model build")
             data.update(candidate=candidate["id"], source_snapshot=candidate["source_snapshot"], implementation=candidate["implementation"])
+            if candidate.get("proposal"):
+                data["proposal"] = candidate["proposal"]
             data["context"]["candidate_sha256"] = candidate["artifact"]["sha256"]
         from swdb.dx100_inputs import resolve as resolve_loader_input
         loader_graph, loader_input = resolve_loader_input(session, args.runs_dir, workload['representation'], application, registered)

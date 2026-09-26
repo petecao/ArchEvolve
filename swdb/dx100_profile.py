@@ -6,6 +6,7 @@ Updated: 2026-09-25. Source discovery is reused; no static access stream is inve
 import configparser
 import copy
 from decimal import Decimal, InvalidOperation
+import json
 import math
 from pathlib import Path
 import re
@@ -18,12 +19,44 @@ from swdb.dx100 import _file
 from swdb.bfs_native import StageFailure
 
 
-def diagnostic_regions(store, request, evaluation, candidate, root):
+def _diagnostic_seal(evaluation, deadline):
+    """Accept completed observations independently of the later verifier verdict."""
+    context = evaluation['context']
+    seal = context.get('sealed_roi', {})
+    path = _file({key: seal[key] for key in ('path', 'sha256')}, 'diagnostic ROI seal')
+    if path.stat().st_size > 65536:
+        raise Failure('diagnostic ROI seal exceeds its size bound')
+    actual = json.loads(path.read_text())
+    binding = context['execution_binding']
+    binary = {'path': evaluation['build']['binary'], 'sha256': evaluation['build']['binary_sha256']}
+    if (not isinstance(actual, dict) or not isinstance(binding, dict)
+            or actual != {key: value for key, value in seal.items() if key not in ('path', 'sha256')}
+            or actual.get('format') != 'swdb.dx100.roi-seal.v1'
+            or actual.get('roi_exit_cause') != 'm5_exit instruction encountered'
+            or actual.get('execution_binding_sha256') != artifacts.digest(binding)
+            or context.get('execution_binding_sha256') != actual['execution_binding_sha256']
+            or binding.get('binary') != binary
+            or actual.get('driver_sha256') != context['verification_driver']['sha256']
+            or actual.get('host_memory_observer_sha256') != context['host_memory_observer']['sha256']
+            or actual.get('statistics') != context.get('statistics')):
+        raise Failure('diagnostic ROI seal differs from its exact execution identity')
+    _file(context['verification_driver'], 'diagnostic verification driver')
+    _file({key: context['host_memory_observer'][key] for key in ('path', 'sha256')}, 'diagnostic host observer')
+    _file(context['actual_configuration'], 'diagnostic actual configuration')
+    stats = _file(actual['statistics'], 'diagnostic sealed statistics')
+    intervals = statistics(stats, deadline)
+    if len(intervals) != 1:
+        raise Failure('diagnostic ROI seal requires one complete statistics interval')
+    duration(intervals[0])
+
+
+def diagnostic_regions(store, request, evaluation, candidate, root, deadline):
     from swdb.dx100_diagnostic import counters
     from swdb.profile_package import _context, _region
     diagnostic = store.get(request.get('diagnostic_evaluation'), 'evaluation')
     if (not diagnostic or diagnostic.get('candidate') != candidate['id']
-            or diagnostic.get('outcome', {}).get('state') != 'complete'
+            or diagnostic.get('outcome', {}).get('state') not in {
+                'complete', 'incorrect', 'missing_observation', 'timed_out', 'budget_exhausted', 'interrupted', 'failed'}
             or diagnostic.get('evidence_kind') != evaluation['evidence_kind']
             or artifacts.digest(_context(diagnostic)) != artifacts.digest(_context(evaluation))):
         raise Failure('diagnostic execution differs from the exact primary source/workload/configuration/ROI')
@@ -43,8 +76,9 @@ def diagnostic_regions(store, request, evaluation, candidate, root):
     binary = _file({'path': build['build']['binary'], 'sha256': build['build']['binary_sha256']}, 'diagnostic binary')
     for key in ('instrumented_source', 'runtime'):
         _file(definition[key], 'diagnostic ' + key)
+    _diagnostic_seal(diagnostic, deadline)
     stage = next((item for item in diagnostic['stages'] if item['stage'] == 'simulation'), None)
-    if not stage or not stage.get('log_sha256'):
+    if not stage or stage.get('state') in {'submitted', 'running'} or not stage.get('log_sha256'):
         raise Failure('diagnostic simulation log identity is unavailable')
     log = _file({'path': stage['log'], 'sha256': stage['log_sha256']}, 'diagnostic log')
     observed, observed_sha256 = counters(log, len(definition['regions']), return_sha256=True)
@@ -72,6 +106,7 @@ def diagnostic_regions(store, request, evaluation, candidate, root):
         'binary_sha256': diagnostic['build']['binary_sha256'], 'output': str(log), 'output_sha256': observed_sha256,
         'region_output': str(log), 'region_output_sha256': observed_sha256,
         'evidence_kind': diagnostic['evidence_kind'], 'correctness': copy.deepcopy(diagnostic['correctness']),
+        'execution_outcome': copy.deepcopy(diagnostic['outcome']),
         'differences_from_primary': [definition['difference']], 'host_cost_is_performance': False}
     return regions, definition['discovery'], run, {'path': str(binary), 'sha256': run['binary_sha256'], 'difference': definition['difference']}
 
@@ -272,7 +307,7 @@ def collect(args):
             "roi": context["roi"], "statistics": stats_reference, "output": log_reference,
             "differences_from_primary": [], "host_cost_is_performance": False}]
         if request.get('diagnostic_evaluation'):
-            regions, discovered, run, binary = diagnostic_regions(store, request, evaluation, candidate, root)
+            regions, discovered, run, binary = diagnostic_regions(store, request, evaluation, candidate, root, deadline)
             data.update(regions=regions, discovery=discovered, reasons=[])
             data['executions'].append(run)
             data['artifacts'] = {'primary_binary_sha256': evaluation['build']['binary_sha256'],

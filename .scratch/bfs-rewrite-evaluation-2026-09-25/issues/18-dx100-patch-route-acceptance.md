@@ -21,8 +21,8 @@ Covers AC06–AC10, AC12–AC14, AC16, AC18, AC20 and contributes evidence towar
 
 ## Acceptance criteria
 
-- [ ] Retrieve the baseline profile package for the exact DX100 scalar source and declared native workload. Use the package's source, region, build, correctness, and ROI context in the proposal.
-- [ ] Submit an actual patch in the versioned proposal envelope, naming its optimization intent, exact source identity, required capabilities, and preservation constraints. Record test-client provenance.
+- [x] Retrieve the baseline profile package for the exact DX100 scalar source and declared native workload. Use the package's source, region, build, correctness, and ROI context in the proposal.
+- [x] Submit an actual patch in the versioned proposal envelope, naming its optimization intent, exact source identity, required capabilities, and preservation constraints. Record test-client provenance.
 - [ ] Materialize changed CPU-runnable BFS code with recorded supporting edits, candidate/binary identities, diff, and any bounded repairs. Preserve evaluator-owned correctness and timing boundaries.
 - [ ] Execute the candidate and its explicitly selected unaccelerated native baseline on both graph families using ticket 15's frozen graph/source, thread, target, ROI, and repetition rules.
 - [ ] Retain structural BFS correctness evidence for the timed code and every workload supporting a timing claim. Verification remains outside the declared ROI, while required work inside that ROI remains charged.
@@ -43,3 +43,16 @@ A performance gain is optional for this case. Ticket 17 owns the DX100-source ac
 ## Implementation progress
 
 2026-09-25: Root owns dependent preparation of the representative proposal and public campaign driver. No candidate performance assessment begins before Ticket 15 freezes compatible protocols. Actual acceptance remains pending; preparation does not satisfy the listed blockers.
+
+## Actual proposal and compile preparation — 2026-09-25
+
+The fixed literal patch was submitted as
+`bfs-campaign-preparation-20260925-a1.dx100-patch` using both real native baseline
+family packages. Its candidate `candidate-1` has artifact SHA
+`10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028`.
+Primary and diagnostic DX100 compilation succeeded and discovered 31 source
+regions; exact patch output, protected inputs, all region bytes, and binary hashes
+were independently audited. See [the retained receipt](../../../docs/evidence/bfs-campaign-preparation-20260925-a1.yaml).
+These are materialization and compilation observations only. Native candidate
+execution, correctness, timing, refreshed profiling, and the frozen comparison
+remain pending; this ticket is not resolved.

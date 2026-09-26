@@ -85,6 +85,7 @@ def counters(log, count, *, return_sha256=False):
         if (not isinstance(row, dict) or type(row.get('index')) is not int or row['index'] != index
                 or any(type(row.get(key)) is not int or not 0 <= row[key] < 2**64
                        for key in ('inclusive_ns', 'exclusive_ns', 'invocations'))
-                or row['exclusive_ns'] > row['inclusive_ns']):
+                or row['exclusive_ns'] > row['inclusive_ns']
+                or (row['invocations'] == 0 and (row['inclusive_ns'] != 0 or row['exclusive_ns'] != 0))):
             raise Failure('invalid simulated region counter')
     return (rows, digest.hexdigest()) if return_sha256 else rows

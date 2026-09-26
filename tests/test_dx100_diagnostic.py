@@ -31,13 +31,14 @@ def test_simulated_nested_guards_report_inclusive_and_exclusive_elapsed(tmp_path
                     {'index': 1, 'inclusive_ns': 10, 'exclusive_ns': 10, 'invocations': 1}]
 
 
-@pytest.mark.parametrize('defect', ['unsealed', 'double', 'bad_clock', 'bad_count', 'exclusive'])
+@pytest.mark.parametrize('defect', ['unsealed', 'double', 'bad_clock', 'bad_count', 'exclusive', 'unentered'])
 def test_simulated_counter_report_rejects_incompatible_observations(tmp_path, defect):
     row = {'index': 0, 'inclusive_ns': 20, 'exclusive_ns': 10, 'invocations': 1}
     data = {'format': 'swdb.dx100.regions.v1', 'clock': 'm5_rpns', 'errors': 0, 'regions': [row]}
     if defect == 'bad_clock': data['clock'] = 'wall'
     if defect == 'bad_count': data['regions'] = []
     if defect == 'exclusive': row['exclusive_ns'] = 30
+    if defect == 'unentered': row['invocations'] = 0
     text = 'SWDB_DX100_REGIONS ' + json.dumps(data) + '\n'
     if defect != 'unsealed': text = 'SWDB_DX100_ROI_SEALED\n' + text
     if defect == 'double': text *= 2

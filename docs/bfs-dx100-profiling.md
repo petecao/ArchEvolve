@@ -72,3 +72,22 @@ scope. Every mode retains the existing 240-second/16-GiB per-build limits and
 700-second driver bound; it performs no graph or guest execution.
 
 Correctness remains independent. Collection can retain an unverified real evaluation, and a fixture remains `contract_fixture` throughout. Nothing in collection promotes a candidate, infers a neutral speedup, or enables a gain claim. Exact candidate, source snapshot, binary, workload, source vertex, target/configuration, and actual clock remain part of the retrievable evidence.
+
+## Sealed collection and verifier outcomes — 2026-09-25
+
+A completed source-scope report can be collected even when its later structural
+verifier fails, is absent, or does not terminate within its bound. Collection
+requires a finalized simulation log, exactly one post-seal report, a hash-verified
+ROI receipt and statistics interval, the matching execution/binary/source/build
+identities, and the retained instantiated configuration. A running execution,
+missing seal, changed seal, pre-seal report, invalid accounting, or changed raw
+artifact cannot supply complete observations. Zero invocations require zero
+inclusive and exclusive durations.
+
+The diagnostic execution's `execution_outcome` and `correctness` remain in its
+profile execution entry. Observation completeness does not turn either into a
+successful correctness verdict or a gain claim; comparison still applies its
+independent primary and diagnostic acceptance rules. The execute adapter records
+`actual_configuration` before reporting a post-ROI verifier failure, allowing
+subsequent collection to identify the configuration actually observed. Earlier
+records missing that identity are not silently rewritten or inferred complete.

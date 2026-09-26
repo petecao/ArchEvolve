@@ -83,6 +83,27 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Latest integration — 2026-09-25 23:57 ET
+
+- Literal DX100 patch proposal and candidate now have actual primary and diagnostic
+  compilation receipts, 31 discovered regions, and audited source/protection/binary
+  hashes. [Preparation receipt](../../docs/evidence/bfs-campaign-preparation-20260925-a1.yaml)
+  records that no candidate execution or performance timing occurred. Ticket 18
+  remains claimed pending the frozen native evaluation.
+- [Post-ROI diagnosis](../../docs/bfs-post-roi-termination-diagnosis.md) identifies a
+  plausible lost clone-process association in serialized gem5 checkpoints. Runtime
+  pointer aliasing is not yet observed. One bounded post-seal syscall trace is being
+  prepared; no simulator modification or acceptance change has been applied.
+- The independent diagnostic collector now retains exact sealed observations even
+  when subsequent verification fails, preserving the original verdict and outcome.
+  Configuration identity is captured before reporting that verdict. Twenty-eight
+  focused continuation/collector/counter checks passed. The existing a6 record is
+  unchanged and cannot acquire missing identities retrospectively.
+- [Read-only a6 parser receipt](observations/dx100-a6-collector-preflight.json)
+  records 7,253 counters and 39 actual ROI-wide memory rows, with a 29.122772 us
+  sealed duration. This source-unbound bring-up observation is not a profile package
+  or correctness acceptance. The local catalog validates all 185 records.
+
 ## Review navigation
 
 | Review question | Spec destination |

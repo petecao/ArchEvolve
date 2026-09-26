@@ -366,6 +366,8 @@ def test_same_simulation_continuation_seals_roi_and_retains_explicit_verdict(cas
     sealed = Path(result["context"]["statistics"]["path"])
     assert "simTicks 31300" in sealed.read_text()
     assert "VERIFICATION MODIFIED" not in sealed.read_text()
+    config = result['context']['actual_configuration']
+    assert config == reference(Path(config['path']))
     check = result["correctness"]["checks"][0]
     assert check["binding"]["binary"] == data["binary"]
     assert check["requested_checks"] == 1
