@@ -51,6 +51,28 @@
     "sha256": "e3ddfe24fc06bdf8a5d36fdcfbd2a940c49e8b3500b45fa027e53576c4199601"
   },
   "checkpoint_process_diagnosis": {
+    "architectural_thread_statuses": [
+      {
+        "key": "_status",
+        "section": "[system.cpu3.xc.0]",
+        "value": "0"
+      },
+      {
+        "key": "_status",
+        "section": "[system.cpu2.xc.0]",
+        "value": "0"
+      },
+      {
+        "key": "_status",
+        "section": "[system.cpu1.xc.0]",
+        "value": "0"
+      },
+      {
+        "key": "_status",
+        "section": "[system.cpu0.xc.0]",
+        "value": "0"
+      }
+    ],
     "checkpoint": {
       "bytes": 361986,
       "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a4/checkpoint/cpt.2117142500/m5.cpt",
@@ -110,6 +132,7 @@
         }
       ]
     },
+    "cpu_pid_field_note": "BaseCPU::_pid is CPU task/statistics identity, not Process::_pid or a per-thread Process pointer. The checkpoint lacks the latter identity fields.",
     "identity_key_matches": [
       {
         "key": "_pid",
