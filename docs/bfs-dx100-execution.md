@@ -21,6 +21,16 @@ stage records `sampled_peak_process_group_rss_kib` where Linux accounting is
 available. This is sampled host experiment cost, never simulated BFS memory
 traffic or performance.
 
+New `swdb.dx100.checkpoint.v2` manifests bind the complete modeled cache,
+mode, clock, memory, core, and target configuration in addition to the exact
+binary/workload/source identities. A changed configuration rejects before
+restore. Legacy v1 reuse additionally requires `checkpoint_evaluation` naming
+the original retained evaluation, its identical hashed manifest, completed
+checkpoint stage, matching execution binding, and identical recorded modeled
+configuration. The resulting `checkpoint_compatibility_proof` records and hashes
+that explicit source evidence; missing or changed proof rejects reuse. No
+legacy checkpoint is silently promoted to a fully bound v2 manifest.
+
 The public `dx100-build` and `dx100-execute` commands persist ordinary evaluation
 records before starting external work. `swdb get ID` retrieves them in another
 process. A completed build means identified binaries exist; completed smoke

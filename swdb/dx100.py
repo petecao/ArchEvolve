@@ -69,7 +69,7 @@ def _prepare(args, action, store, request, data):
     elif action == "compile":
         fields |= {"candidate", "build_evaluation", "function", "accelerated", "roi", "fixture_compiler", "diagnostic_regions", "discovery"}
     else:
-        fields |= {"simulator", "binary", "workload", "configuration", "checkpoint_manifest", "build_evaluation", "verification", "candidate", "candidate_build", "protocol", "protocol_role", "protocol_trial"}
+        fields |= {"simulator", "binary", "workload", "configuration", "checkpoint_manifest", "checkpoint_evaluation", "build_evaluation", "verification", "candidate", "candidate_build", "protocol", "protocol_role", "protocol_trial"}
     if request.keys() - fields:
         raise Failure(f"unknown DX100 request fields: {sorted(request.keys() - fields)}")
     if not isinstance(request.get("fixture", False), bool):
@@ -503,7 +503,8 @@ def execute(args):
         binding = {"model_revision": REVISION, "simulator": request["simulator"], "binary": request["binary"],
             "workload": workload, "guest_cores": 4, "guest_memory": "16GB", "options": options,
             "entry_script_sha256": artifacts.file_hash(script), "roi": data["context"]["roi"],
-            "candidate_build": compiled["id"] if compiled else None}
+            "candidate_build": compiled["id"] if compiled else None,
+            "modeled_configuration": configured, "hardware_target": target['id']}
         data["context"].update(configuration=configured, backend_configuration=configured, execution_binding=binding,
                               execution_binding_sha256=artifacts.digest(binding), source=source, sources=[source], threads=4)
         data["build"] = {"binary": str(binary), "binary_sha256": request["binary"]["sha256"],
@@ -559,13 +560,16 @@ def execute(args):
             Path(env["XDG_CACHE_HOME"]).mkdir(exist_ok=True)
         session.finish()
         reference = request.get("checkpoint_manifest")
+        from swdb.dx100_checkpoint import FORMAT, compatibility
+        if 'checkpoint_evaluation' in request and reference is None:
+            raise Failure('checkpoint_evaluation requires the exact checkpoint_manifest reference')
         if reference is not None:
             session.begin("checkpoint_resolution")
             manifest_path = _file(reference, "checkpoint manifest")
             manifest = json.loads(manifest_path.read_text())
-            if (not isinstance(manifest, dict) or manifest.get("format") != "swdb.dx100.checkpoint.v1"
-                    or manifest.get("binding") != binding):
-                raise StageFailure("incompatible", "checkpoint binding differs from exact binary/workload/source/model/options")
+            proof = compatibility(manifest, reference, binding, request, store)
+            if proof:
+                data['context']['checkpoint_compatibility_proof'] = proof
             checkpoint = artifacts.verify(manifest["artifact"])
             session.finish()
         else:
@@ -585,7 +589,7 @@ def execute(args):
                 directories.append(path)
             if len(directories) != 1:
                 raise StageFailure("missing_observation", "checkpoint execution did not produce exactly one checkpoint directory")
-            manifest = {"format": "swdb.dx100.checkpoint.v1", "binding": binding,
+            manifest = {"format": FORMAT, "binding": binding,
                         "artifact": artifacts.identify(checkpoint), "evidence_kind": data["evidence_kind"]}
             manifest_path = session.folder / "checkpoint-manifest.json"
             manifest_path.write_text(json.dumps(manifest, sort_keys=True, indent=2) + "\n")

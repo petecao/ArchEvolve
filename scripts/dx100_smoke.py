@@ -71,6 +71,7 @@ def main():
             'checkpoint_seconds': 300, 'run_seconds': 750}}
     if prior:
         request['checkpoint_manifest'] = prior['context']['checkpoint_manifest']
+        request['checkpoint_evaluation'] = prior['id']
     path = folder / 'request.json'
     path.write_text(json.dumps(request, indent=2) + '\n')
     with (folder / 'evaluation.stdout.json').open('w') as out, (folder / 'evaluation.stderr').open('w') as err:

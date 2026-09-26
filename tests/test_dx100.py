@@ -145,6 +145,40 @@ def test_exact_checkpoint_reuse_still_runs_a_fresh_distinct_simulation(case):
     assert Path(second_run['log']).is_file() and Path(first_log).is_file()
 
 
+@pytest.mark.parametrize('legacy,changed_cache', [(False, True), (True, False), (True, True), ('missing', False)])
+def test_checkpoint_configuration_is_bound_in_manifest_or_explicit_legacy_proof(case, records, legacy, changed_cache):
+    from swdb import artifacts
+    data = execution_request(case)
+    _, invoke, folder = case
+    first = invoke('dx100-execute', data)
+    assert first['outcome']['state'] == 'complete'
+    reference = first['context']['checkpoint_manifest']
+    if legacy:
+        manifest = json.loads(Path(reference['path']).read_text())
+        manifest['format'] = 'swdb.dx100.checkpoint.v1'
+        for key in ('modeled_configuration', 'hardware_target'):
+            manifest['binding'].pop(key)
+        path = folder / 'legacy-checkpoint.json'
+        path.write_text(json.dumps(manifest))
+        reference = {'path': str(path), 'sha256': artifacts.file_hash(path)}
+        first['context'].update(checkpoint_manifest=reference, execution_binding=manifest['binding'],
+            execution_binding_sha256=artifacts.digest(manifest['binding']))
+        records.write('evaluations/' + first['id'] + '.yaml', first)
+        if legacy != 'missing':
+            data['checkpoint_evaluation'] = first['id']
+    data.update(id='reuse-config', checkpoint_manifest=reference)
+    if changed_cache:
+        data['configuration']['l3_size_mb'] = 16
+    second = invoke('dx100-execute', data)
+    assert second['outcome']['state'] == ('incompatible' if changed_cache or legacy == 'missing' else 'complete')
+    if changed_cache or legacy == 'missing':
+        assert 'configuration' in second['outcome']['reason']
+        assert not any(stage['stage'] == 'simulation' for stage in second['stages'])
+    else:
+        assert second['context']['checkpoint_compatibility_proof']['source_evaluation'] == first['id']
+        assert second['context']['checkpoint_compatibility_proof']['proof_sha256']
+
+
 def test_changed_binary_is_rejected_before_checkpoint(case):
     data = execution_request(case)
     _, invoke, _ = case
