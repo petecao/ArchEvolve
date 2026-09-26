@@ -176,3 +176,25 @@ separate audited collection contract and exact metric/timing validation. It
 would not remove the fixed statistic allocation or unrelated kernel slab.
 No output filtering, statistic deletion, allocator setting or model patch is
 part of a6.
+
+
+## One-attempt outcome — 2026-09-25, 23:31 ET
+
+Attempt a6 consumed the one authorized 48 GiB execution on lane 1, generation
+395. The fresh preclaim and in-lane discounted node estimates were 55,016,988
+and 55,080,236 KiB, both above the unchanged 54,525,952 KiB threshold; global
+capacity also passed. Original modeled hardware, checkpoint and statistics
+remained unchanged. The bounded observer confirmed the estimated requestor
+count of 50. Actual sampled peak RSS was 33,719,536 KiB (32.158 GiB), consistent
+with the prior 32 GiB failure and below this attempt's cap. The first dump
+finished at 113.46 seconds of model runtime; the post-ROI verification loop
+reached its fixed tick limit at 341.04 seconds. Total lane occupation was
+416 seconds, within all wall-time and storage limits.
+
+The model sealed the ROI and printed same-guest PASS, then failed the separate
+normal-termination requirement. This is a retained compatibility/correctness
+observation, not a reason to repeat the memory experiment or increase its cap.
+The prior gate refusals consumed no execution; this actual attempt consumed one.
+[The a6 receipt](observations/dx100-smoke-a6.json) binds capacity receipts,
+phase/RSS samples, allocator values, sealed statistics and final event. The
+pilot's separate 32 GiB bound is not revised by this observation.

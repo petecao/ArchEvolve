@@ -26,7 +26,7 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 09 | [Complete profile packages and strategy lookup](issues/09-profile-packages-and-strategy-lookup.md) | 07, 08 | resolved |
 | 10 | [Queryable DX100 operation contracts](issues/10-dx100-operation-contracts.md) | 02 | resolved |
 | 11 | [Reproducible workloads and comparison protocols](issues/11-workloads-and-comparison-protocols.md) | 03 | resolved |
-| 12 | [DX100 build and execution path](issues/12-dx100-build-and-execution.md) | 03 | claimed |
+| 12 | [DX100 build and execution path](issues/12-dx100-build-and-execution.md) | 03 | resolved |
 | 13 | [Correctness of the timed DX100 binary](issues/13-dx100-timed-binary-correctness.md) | 12 | claimed |
 | 14 | [DX100 region timing and memory profiling](issues/14-dx100-region-and-memory-profiling.md) | 09, 12 | claimed |
 | 15 | [Baseline pilot and protocol freeze](issues/15-baseline-pilot-and-protocol-freeze.md) | 11, 13, 14 | claimed |
@@ -37,7 +37,7 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 20 | [Upstream BFS: annotated-source route acceptance](issues/20-upstream-annotated-route-acceptance.md) | 05, 10, 15 | claimed |
 | 21 | [Coverage, ROI gain, and collaborator handoff](issues/21-coverage-roi-gain-and-handoff.md) | 16, 17, 18, 19, 20 | claimed |
 
-Tickets 01–11 are resolved (11/21); the current empirical frontier is unchanged-baseline pilots and simulator verification. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
+Tickets 01–12 are resolved (12/21); the current empirical frontier is simulator verification and the shared calibration gate. Later independent branches may proceed once their own blockers are resolved; list order alone is not an additional dependency. Runtime scheduling must also follow the lab's host and resource rules.
 
 ### Assigned acceptance cases
 
@@ -108,6 +108,25 @@ These four cases cover all eight source/route/graph cells, all four payload form
 
 ## Context pointers
 
+- 2026-09-25 23:40 ET: twelve tickets are resolved. Ticket12 now meets its
+  explicitly unverified checkpoint-to-ROI smoke scope: a6's simulator stage
+  completed within wall/RSS bounds and sealed the actual ROI. Its overall
+  `missing_observation` outcome and unverified correctness remain unchanged;
+  Ticket13 still needs valid termination and actual accelerator coverage.
+  Both native implementations have finished both scale18 families:60 primary
+  checks,24 diagnostic executions and4 complete packages, imported through
+  `f3b50df`. The fixed-checkpoint local suite at `d9c4c10` is still running;
+  later focused checks pass, without a full-suite success claim. All workers
+  are healthy; identity completed diagnosis normally. At23:39:29 both socket
+  leases and legacy were released (generations274/395), with no owned active
+  simulator/provider job. Free disks remain17GiB `/data1`,196GiB `/data`,42GiB
+  locally. Node estimates are51.209/52.587GiB and global105.572GiB. The single
+  a6 attempt is consumed; no retry is queued. Four fixed proposal envelopes
+  are prepared. Automatic approval review rejected external Claude payload
+  export before any submission; explicit approval for the three concrete
+  instruction/annotation payloads is pending, while literal-patch work continues.
+  Both concrete author/reference requests are prepared in `9c57862`, not frozen.
+  No candidate matrix or policy-qualified gain exists yet.
 - 2026-09-25 23:11 ET: eleven tickets remain resolved; 160 catalog records
   validate. Host and native-pilot workers are responsive; the identity worker
   completed normally with reviewed protocol and collector fixes ready to commit.

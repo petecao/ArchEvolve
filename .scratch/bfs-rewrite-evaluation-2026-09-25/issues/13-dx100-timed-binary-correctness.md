@@ -62,3 +62,16 @@ trace addresses are never directly compared with a guest virtual pointer.
 The combined adapter/driver/profile suite passed 42 tests in 166.32 seconds.
 These source and contract tests do not satisfy the still-pending real
 accelerated full/tail/competing-update acceptance.
+
+
+## Actual continuation evidence — 2026-09-25
+
+The real a6 model run sealed its ROI at tick 2,187,360,749, then the unchanged
+same guest printed exactly one `Verification: PASS`, verification time, and
+average time. It did not produce the required last-active-thread exit event;
+continuation reached the declared 10^12-tick ceiling. The public record remains
+unverified despite its PASS line and process exit zero, as required by the
+contract. See [the audited finite receipt](../observations/dx100-smoke-a6.json).
+The tiny graph's observed frontiers (1, 9, 37, 17) select the author's scalar
+fallback and cannot establish accelerator execution/full-tile/tail/conflict
+coverage. No acceptance criterion is resolved by this bring-up observation.

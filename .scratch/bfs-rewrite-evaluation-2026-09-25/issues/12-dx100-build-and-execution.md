@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 03
 **Spec:** `../spec.md`
 
@@ -23,14 +23,14 @@ Implements the backend and retention portions of D02, D03, D09, D14 and supports
 
 ## Acceptance criteria
 
-- [ ] Before future build or execution, record attempt, wall-time, memory, storage, and parallelism limits; check live host capability/capacity and apply the repository's host, lane, no-sudo, storage, and synchronization procedures. Local Apple Silicon artifacts are not reused as x86 build products.
-- [ ] Build provenance identifies the DX100/model revision, required dependencies, toolchain, build settings, source identities, scalar BFS and author-accelerated BFS binaries, and executing host. The host identity remains separate from the simulated hardware target.
-- [ ] Public execution requests select an exact binary, workload/source arguments, simulated configuration, and checkpoint provenance. A checkpoint is not silently reused for an incompatible binary, workload, or execution context.
-- [ ] A bounded real checkpoint-to-ROI smoke execution completes for the pinned BFS path and retains its actual command/configuration identities, raw simulator output, exit reason, and available ROI artifacts. Backend configuration can represent the scalar and accelerated targets without conflating them.
-- [ ] The supplied checkpoint-helper argument mismatch is checked and any necessary adapter/automation correction is recorded. The backend does not infer successful execution from a preexisting statistics file or assume that a requested trial count survived the first simulation exit.
-- [ ] Build failure, missing dependency/capability, invalid checkpoint, simulator failure, timeout, and budget exhaustion remain queryable with stage-specific reasons and completed evidence. A later process can retrieve the execution after the originating caller exits.
-- [ ] Smoke evidence lacking explicit timed-binary correctness is labeled unverified; raw statistics and a successful process exit do not promote it to an implementation or establish a gain. Missing region or memory profiling is reported as incomplete rather than fabricated.
-- [ ] Large raw artifacts and checkpoints retain external identity/location references and follow host storage rules. Host wall time is recorded as experiment cost, not simulated BFS execution time.
+- [x] Before future build or execution, record attempt, wall-time, memory, storage, and parallelism limits; check live host capability/capacity and apply the repository's host, lane, no-sudo, storage, and synchronization procedures. Local Apple Silicon artifacts are not reused as x86 build products.
+- [x] Build provenance identifies the DX100/model revision, required dependencies, toolchain, build settings, source identities, scalar BFS and author-accelerated BFS binaries, and executing host. The host identity remains separate from the simulated hardware target.
+- [x] Public execution requests select an exact binary, workload/source arguments, simulated configuration, and checkpoint provenance. A checkpoint is not silently reused for an incompatible binary, workload, or execution context.
+- [x] A bounded real checkpoint-to-ROI smoke execution completes for the pinned BFS path and retains its actual command/configuration identities, raw simulator output, exit reason, and available ROI artifacts. Backend configuration can represent the scalar and accelerated targets without conflating them.
+- [x] The supplied checkpoint-helper argument mismatch is checked and any necessary adapter/automation correction is recorded. The backend does not infer successful execution from a preexisting statistics file or assume that a requested trial count survived the first simulation exit.
+- [x] Build failure, missing dependency/capability, invalid checkpoint, simulator failure, timeout, and budget exhaustion remain queryable with stage-specific reasons and completed evidence. A later process can retrieve the execution after the originating caller exits.
+- [x] Smoke evidence lacking explicit timed-binary correctness is labeled unverified; raw statistics and a successful process exit do not promote it to an implementation or establish a gain. Missing region or memory profiling is reported as incomplete rather than fabricated.
+- [x] Large raw artifacts and checkpoints retain external identity/location references and follow host storage rules. Host wall time is recorded as experiment cost, not simulated BFS execution time.
 
 ## Verification
 
@@ -116,3 +116,43 @@ Upstream discovery retained 24 source scopes; each author diagnostic retained
 31. Original author scalar and MAA binaries remain unchanged. This completes
 compilation preparation for both source families and ROI treatments, without
 claiming simulator execution, timed correctness, or dynamic profile acceptance.
+
+
+## Finite simulator feasibility result — 2026-09-25
+
+The single 48 GiB a6 attempt ran on lane 1, generation 395, from 23:24:14 to
+23:31:10 ET at SWDB `08a373d14a64ed2b935601fd7f9ec47b137115a3`. Both unchanged
+capacity gates passed before execution. The existing a4 checkpoint, original
+MAA guest, 16GB modeled memory and cache/statistics configuration were retained.
+The model completed instantiation and its first statistics dump, sealed the ROI,
+and resumed the same guest. Sampled peak RSS was 33,719,536 KiB (32.158 GiB);
+the bounded runtime observer confirmed 50 requestors. No memory-cap increase or
+further attempt was made.
+
+The guest printed `Verification: PASS` and `Average Time` after the seal, but
+continuation ended at its original 10^12-tick limit rather than normal process
+termination. Public evaluation `bfs-dx100-smoke-20260925-a6` therefore retains
+`missing_observation` and `correctness: unverified`. Its full chain and catalog
+validation passed; raw hashes and finite observations are retained in
+[the a6 receipt](../observations/dx100-smoke-a6.json). This establishes bounded
+model memory feasibility and actual ROI sealing, not accepted timed execution
+or accelerated correctness. The ticket remains claimed while the post-verifier
+termination path is diagnosed.
+
+## Answer
+
+2026-09-25 23:40 ET: resolved within this ticket's explicit unverified-smoke
+boundary. The pinned real model and both author guests were built in a2; a4
+created the exact checkpoint, and a6 completed its real restore-to-ROI path.
+The simulator subprocess returned zero after 369.533 host seconds, below the
+750-second bound, with sampled peak RSS 32.158 GiB below the48 GiB cap. It
+retained the actual configuration, exact execution/checkpoint binding, sealed
+ROI at tick2,187,360,749 and hashed raw statistics. All earlier build/checkpoint/
+resource failures remain queryable. Fresh public get--chain and remote
+validation passed; see `../observations/dx100-smoke-a6.json` and model-build a2.
+
+The overall a6 evaluation remains `missing_observation`, correctness remains
+`unverified`, and timing remains empty because the post-ROI continuation reached
+its tick limit instead of the required final guest exit. Resolving backend
+bring-up does not resolve Ticket13, establish acceleration, accept profiling,
+or claim a performance result. The ticket explicitly permits this distinction.
