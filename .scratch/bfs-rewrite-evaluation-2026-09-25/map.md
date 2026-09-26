@@ -108,6 +108,20 @@ These four cases cover all eight source/route/graph cells, all four payload form
 
 ## Context pointers
 
+- 2026-09-25 22:41 ET: all three workers are responsive; 155 catalog records
+  validate. Upstream native pilot a2 completed at 22:36 ET with 30/30 primary
+  correctness checks, two complete packages, 12 checked diagnostic executions,
+  and 36 memory observations; independently rehashed metadata is synchronized in
+  `c91994c` and `docs/evidence/bfs-native-pilot-20260925-upstream18-a2.yaml`.
+  Its noisy timing remains calibration evidence. Lane 1 generation 392 and the
+  legacy lease are released; lane 0's external owner and child remain alive.
+  The primary/diagnostic compile-only smoke is preparing at `2667f17`.
+  Exact node-1 available estimate is 51.630 GiB, below a6's 52 GiB gate;
+  a6 remains unused. Free space remains 17 GiB on `/data1`, 198 GiB on `/data`,
+  and 42 GiB locally. The full local test run retained 653 passes, 3 skips, and
+  12 failures, all addressed in separately passing focused checks; no clean
+  full-suite result is claimed. Eleven tickets remain resolved; no empirical
+  comparison protocol is frozen and no policy-qualified gain exists.
 - 2026-09-25 22:11 ET: all three workers are responsive. Native upstream pilot
   a2 holds lane 1, generation 392, at exact commit `9fff245`; actual uniform-18
   materialization passed without changing the graph or reducing its scale. Lane 0
