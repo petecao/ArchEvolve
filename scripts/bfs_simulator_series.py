@@ -6,6 +6,7 @@ A frozen series evaluates an already selected candidate; it never picks a
 strategy, freezes settings, retries a failure, or makes a gain claim.
 """
 import argparse
+from datetime import datetime
 import json
 import os
 from pathlib import Path
@@ -15,6 +16,7 @@ import statistics
 import subprocess
 import sys
 import time
+from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -22,6 +24,24 @@ from swdb import artifacts, bfs_protocol, profile
 from swdb.store import Store
 from scripts.dx100_build import disk_usage_kib
 from scripts.bfs_process import interruption_signals, run_stage
+
+
+def capacity_snapshot(node):
+    """Read fresh admission capacity between owned executions, never during one."""
+    from scripts.dx100_capacity import capacity
+    inputs = {name: Path(path).read_text() for name, path in {
+        'node': f'/sys/devices/system/node/node{node}/meminfo',
+        'zones': '/proc/zoneinfo', 'global': '/proc/meminfo'}.items()}
+    return {'observed_at': datetime.now(ZoneInfo('America/New_York')).isoformat(),
+            'inputs': inputs, 'result': capacity(inputs['node'], inputs['zones'], inputs['global'],
+                                               node, os.sysconf('SC_PAGE_SIZE'))}
+
+
+def admit_capacity(receipt, node, command):
+    snapshot = capacity_snapshot(node)
+    receipt.setdefault('capacity_admissions', []).append({'command': command, **snapshot})
+    if snapshot['result']['eligible'] is not True:
+        raise ValueError('fresh node/global capacity admission failed before ' + command)
 
 
 def select_verifier(requested, frozen):
@@ -105,6 +125,8 @@ def main():
     parser.add_argument('--protocol')
     parser.add_argument('--protocol-role', choices=('baseline', 'candidate'))
     parser.add_argument('--diagnostic-build', help='reuse an exact completed diagnostic compile record selected before freeze')
+    parser.add_argument('--require-capacity', action='store_true',
+                        help='require fresh 52-GiB node/64-GiB global admission before each compile or execution')
     parser.add_argument('--author-binary', action='store_true', help='retain the original author traversal ROI')
     parser.add_argument('--accelerated', action='store_true', help='compile MAA support; does not prove execution')
     parser.add_argument('--runs-dir', type=Path, required=True, help='unique batch raw-output directory on mbit10')
@@ -183,6 +205,9 @@ def main():
     def call(command, *rest, timeout=180):
         profile._verified_lane(Store(args.records).get('mbit10', 'machine'), lane)
         check_bounds()
+        if args.require_capacity and command in {'dx100-compile', 'dx100-execute'}:
+            admit_capacity(receipt, args.lane, command)
+            save()
         index = len(receipt['stages'])
         out, err = folder / f'{index:03d}-{command}.json', folder / f'{index:03d}-{command}.stderr'
         argv = [sys.executable, '-m', 'swdb', command, *map(str, rest), '--records', str(args.records), '--format', 'json']

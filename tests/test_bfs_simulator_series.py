@@ -288,3 +288,71 @@ def test_client_emits_actual_trial_for_every_primary_and_diagnostic_request(sele
             for row in execution_requests] == expected_cells
     assert all(set(row['protocol_trial']) == {'source_position', 'repetition'} for row in execution_requests)
     assert all(('protocol' in row) == (frozen_series and '.primary.' in row['id']) for row in execution_requests)
+
+
+@pytest.mark.parametrize('author,required', [(False, False), (False, True), (True, False), (True, True)])
+def test_capacity_flag_gates_only_expensive_public_dispatch(selection, tmp_path, monkeypatch, author, required):
+    client, candidate, source, implementation, workload, expected = selection
+    source['application'] = 'fixture-application'
+    root = tmp_path/'raw'; root.mkdir()
+    config = tmp_path/'config.json'
+    config.write_text(json.dumps({'mode': 'BASE', 'l3_size_mb': 8, 'l3_assoc': 16, 'tile_elements': 16384}))
+    model = {'id': 'model', 'evidence_kind': 'execution', 'outcome': {'state': 'complete', 'stage': 'build'},
+             'context': {'model_root': '/fixture/model', 'target': 'target'},
+             'build': {'details': {'binaries': [{'path': '/fixture/'+name, 'sha256': 'a'*64}
+                                               for name in ('bfs','bfs_maa','gem5.opt')]}}}
+    records = {'baseline': candidate, 'snapshot': source, implementation['id']: implementation,
+               'graph': workload, 'model': model, 'diag': {'id': 'diag'}}
+    monkeypatch.setattr(client.socket, 'gethostname', lambda: 'mbit10')
+    monkeypatch.setattr(client, 'Store', lambda _: SimpleNamespace(get=lambda *args: {'id': 'mbit10'}))
+    monkeypatch.setattr(client.profile, '_verified_lane', lambda *args: 'verified fixture lane')
+    monkeypatch.setattr(client.artifacts, 'external_directory', lambda _: root)
+    monkeypatch.setattr(client.artifacts, 'source_root', lambda *args: tmp_path)
+    monkeypatch.setattr(client.artifacts, 'identify', lambda *args: expected)
+    monkeypatch.setattr(client.bfs_protocol, 'workload_representation', lambda *args: {
+        'representation': {'path': '/fixture/graph.sg', 'sha256': 'f'*64}})
+    monkeypatch.setattr(client, 'validate_diagnostic_build', lambda *args: None)
+    monkeypatch.setattr(client.os, 'statvfs', lambda _: SimpleNamespace(f_bavail=100*1024**3, f_frsize=1))
+    monkeypatch.setattr(client, 'disk_usage_kib', lambda _: (0, []))
+    snapshots = []; dispatches = []
+    def snapshot(node):
+        snapshots.append(node)
+        return {'observed_at': '2026-09-26T12:00:00-04:00', 'inputs': {'fixture': True},
+                'result': {'eligible': False, 'estimated_available_kib': 0}}
+    monkeypatch.setattr(client, 'capacity_snapshot', snapshot)
+    def stage(receipt, folder, argv, **kwargs):
+        command = argv[3]; dispatches.append(command)
+        if command in {'dx100-compile','dx100-execute'}: raise RuntimeError('stop before fixture execution')
+        assert command == 'get'
+        kwargs['output'].write_text(json.dumps(records[argv[4]]))
+    monkeypatch.setattr(client, 'run_stage', stage)
+    argv = ['series', '--id','capacity-case','--candidate','baseline','--workload','graph',
+            '--build-evaluation','model','--configuration',str(config), '--lane','0',
+            '--runs-dir','/data/yanruj/EvolveSWDB_runs/capacity-case']
+    if author: argv += ['--author-binary','--diagnostic-build','diag']
+    if required: argv += ['--require-capacity']
+    monkeypatch.setattr(sys, 'argv', argv)
+    with pytest.raises((ValueError, RuntimeError), match='capacity admission|fixture execution'):
+        client.main()
+    saved = json.loads((root/'capacity-case.driver/driver.json').read_text())
+    expensive = 'dx100-execute' if author else 'dx100-compile'
+    assert saved['state'] == 'failed'
+    if required:
+        assert snapshots == [0] and expensive not in dispatches
+        assert saved['capacity_admissions'][0]['command'] == expensive
+        assert saved['capacity_admissions'][0]['result']['eligible'] is False
+    else:
+        assert not snapshots and dispatches[-1] == expensive and 'capacity_admissions' not in saved
+
+
+def test_capacity_admission_preserves_fresh_success_and_failure_snapshots(selection, monkeypatch):
+    client = selection[0]; receipt = {}; calls = []
+    def snapshot(node):
+        calls.append(node)
+        return {'observed_at': str(len(calls)), 'inputs': {'fixture': True},
+                'result': {'eligible': len(calls) == 1}}
+    monkeypatch.setattr(client, 'capacity_snapshot', snapshot)
+    client.admit_capacity(receipt, 1, 'dx100-execute')
+    with pytest.raises(ValueError, match='capacity admission'):
+        client.admit_capacity(receipt, 1, 'dx100-execute')
+    assert [row['observed_at'] for row in receipt['capacity_admissions']] == ['1','2']
