@@ -1,0 +1,294 @@
+kind: collector_control_evidence
+created: '2026-09-25'
+updated: '2026-09-25'
+timezone: America/Detroit
+id: bfs-callgrind-roi-20260925-a1
+host: mbit10
+repository_commit: 6f7730d27cf0cede9b35dce5c55267618bbd9e21
+state: passed
+purpose: collector ROI-order control
+gain_claim: false
+bfs_acceptance: false
+lane: 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation
+  383)'
+lane_receipt:
+  path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.launch/lane.json
+  sha256: 2ab32b4d84bf920c3d31161b30040dab68ef8dcb107a5e975d004bdc49ef0ec8
+  bytes: 740
+raw_receipt:
+  path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/receipt.json
+  sha256: 936c758a7d5a5d6ad940a7ee74ab01ac0a28ea55187468d6ea2e759f71433d2a
+  bytes: 8666
+source_sha256: 4b51600abdbbbb63bb151e72e24f0992bbe24d9708200b42483fc32b02ae7f6d
+binary_sha256: 9dc9d899c3a1d114511717b7ef4234ac845ec518ce683c33c47dc7f3e673063e
+compiler_version: 'g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+
+  Copyright (C) 2023 Free Software Foundation, Inc.
+
+  This is free software; see the source for copying conditions.  There is NO
+
+  warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.'
+collector_version: valgrind-3.22.0
+bounds:
+  compile_seconds: 60
+  each_control_seconds: 45
+  outer_seconds: 360
+  thread_counts:
+  - 1
+  - 4
+commands:
+- name: compiler-version
+  argv:
+  - /usr/bin/g++
+  - --version
+  timeout_seconds: 15
+  state: complete
+  returncode: 0
+  host_wall_seconds: 0.004131173714995384
+  stdout_sha256: 59d1cbef41d4ae78d5063d525b7aa13d18dc0493ea00537efc19b2ee398cb5a8
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- name: collector-version
+  argv:
+  - /usr/bin/valgrind
+  - --version
+  timeout_seconds: 15
+  state: complete
+  returncode: 0
+  host_wall_seconds: 0.008162332698702812
+  stdout_sha256: 06bd4b41e0b515a43bbb6fa5d24e6596c4604fbc070ea04aa1dd8d2ad3035a53
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- name: build
+  argv:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O2
+  - -g
+  - -fopenmp
+  - /data1/yanruj/EvolveSWDB_builds/bfs-callgrind-roi-20260925-a1/probe.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/bfs-callgrind-roi-20260925-a1/probe
+  timeout_seconds: 60
+  state: complete
+  returncode: 0
+  host_wall_seconds: 0.16445309575647116
+  stdout_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- name: old-1
+  argv:
+  - /usr/bin/valgrind
+  - --tool=callgrind
+  - --cache-sim=yes
+  - --collect-atstart=yes
+  - --instr-atstart=no
+  - --separate-threads=no
+  - --I1=32768,8,64
+  - --D1=49152,12,64
+  - --LL=25165824,12,64
+  - --callgrind-out-file=/data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/old-1.callgrind
+  - /data1/yanruj/EvolveSWDB_builds/bfs-callgrind-roi-20260925-a1/probe
+  - old
+  timeout_seconds: 45
+  state: complete
+  returncode: 0
+  host_wall_seconds: 0.26601959858089685
+  stdout_sha256: da93e161f58c2bb804015ff8105a780357e15694191419a327e6a06d9f9277a9
+  stderr_sha256: 575e30f75d0b198052c315c9b966f064ecd8133b7803ce434467242e9f2a3b68
+- name: fixed-1
+  argv:
+  - /usr/bin/valgrind
+  - --tool=callgrind
+  - --cache-sim=yes
+  - --collect-atstart=yes
+  - --instr-atstart=no
+  - --separate-threads=no
+  - --I1=32768,8,64
+  - --D1=49152,12,64
+  - --LL=25165824,12,64
+  - --callgrind-out-file=/data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/fixed-1.callgrind
+  - /data1/yanruj/EvolveSWDB_builds/bfs-callgrind-roi-20260925-a1/probe
+  - fixed
+  timeout_seconds: 45
+  state: complete
+  returncode: 0
+  host_wall_seconds: 0.26527915708720684
+  stdout_sha256: da93e161f58c2bb804015ff8105a780357e15694191419a327e6a06d9f9277a9
+  stderr_sha256: 78df26c25d134f5b9eba1855841ca72be8865a0c4e19a69144a3b518c80bd9e1
+- name: old-4
+  argv:
+  - /usr/bin/valgrind
+  - --tool=callgrind
+  - --cache-sim=yes
+  - --collect-atstart=yes
+  - --instr-atstart=no
+  - --separate-threads=no
+  - --I1=32768,8,64
+  - --D1=49152,12,64
+  - --LL=25165824,12,64
+  - --callgrind-out-file=/data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/old-4.callgrind
+  - /data1/yanruj/EvolveSWDB_builds/bfs-callgrind-roi-20260925-a1/probe
+  - old
+  timeout_seconds: 45
+  state: complete
+  returncode: 0
+  host_wall_seconds: 0.766509004868567
+  stdout_sha256: da93e161f58c2bb804015ff8105a780357e15694191419a327e6a06d9f9277a9
+  stderr_sha256: daebe0561176552fa5a7541455d56469325cacf6a99c15bb4abcc02de70fda17
+- name: fixed-4
+  argv:
+  - /usr/bin/valgrind
+  - --tool=callgrind
+  - --cache-sim=yes
+  - --collect-atstart=yes
+  - --instr-atstart=no
+  - --separate-threads=no
+  - --I1=32768,8,64
+  - --D1=49152,12,64
+  - --LL=25165824,12,64
+  - --callgrind-out-file=/data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/fixed-4.callgrind
+  - /data1/yanruj/EvolveSWDB_builds/bfs-callgrind-roi-20260925-a1/probe
+  - fixed
+  timeout_seconds: 45
+  state: complete
+  returncode: 0
+  host_wall_seconds: 0.6159944757819176
+  stdout_sha256: da93e161f58c2bb804015ff8105a780357e15694191419a327e6a06d9f9277a9
+  stderr_sha256: af13be156f4ed0ab2a276697f5d1c3db5a2ebb14967b23119e9a517245893797
+runs:
+- order: old
+  threads: 1
+  checksum: 2588160
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/old-1.callgrind.1
+  raw_sha256: 768474823d9c494912cfc906ca05c073cb1a0c664291157ac1a729d82362a547
+  state: invalid
+  reason: Callgrind output lacks a valid event summary
+- order: fixed
+  threads: 1
+  checksum: 2588160
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/fixed-1.callgrind.1
+  raw_sha256: 10e0a64285ebd5730bce6b9801f9e02ad036bee794d884f0346737c0a5173e15
+  events:
+    Ir: 402284
+    Dr: 66425
+    Dw: 66066
+    I1mr: 174
+    D1mr: 226
+    D1mw: 54
+    ILmr: 174
+    DLmr: 226
+    DLmw: 54
+  state: valid
+- order: old
+  threads: 4
+  checksum: 2588160
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/old-4.callgrind.1
+  raw_sha256: 4c2f1d0f072bfb27a6e5a7fe9a5054efe6fd9a606987f16eecd64c51c699ff6e
+  state: invalid
+  reason: Callgrind output lacks a valid event summary
+- order: fixed
+  threads: 4
+  checksum: 2588160
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/fixed-4.callgrind.1
+  raw_sha256: 5bf561f881fa31ee3148f8672d379055af7735f5816d511d2247d30030a3bad3
+  events:
+    Ir: 8348105
+    Dr: 1202462
+    Dw: 67654
+    I1mr: 384
+    D1mr: 295
+    D1mw: 190
+    ILmr: 384
+    DLmr: 295
+    DLmw: 190
+  state: valid
+raw_artifacts:
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/build.stderr
+  sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  bytes: 0
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/build.stdout
+  sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  bytes: 0
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/collector-version.stderr
+  sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  bytes: 0
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/collector-version.stdout
+  sha256: 06bd4b41e0b515a43bbb6fa5d24e6596c4604fbc070ea04aa1dd8d2ad3035a53
+  bytes: 16
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/compiler-version.stderr
+  sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  bytes: 0
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/compiler-version.stdout
+  sha256: 59d1cbef41d4ae78d5063d525b7aa13d18dc0493ea00537efc19b2ee398cb5a8
+  bytes: 246
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/fixed-1.callgrind
+  sha256: 7299614b4ff94192b0852a7ae45436f602b6af0eb3c2dbee5f2bb9be7a0c0a27
+  bytes: 868
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/fixed-1.callgrind.1
+  sha256: 10e0a64285ebd5730bce6b9801f9e02ad036bee794d884f0346737c0a5173e15
+  bytes: 10563
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/fixed-1.stderr
+  sha256: 78df26c25d134f5b9eba1855841ca72be8865a0c4e19a69144a3b518c80bd9e1
+  bytes: 1281
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/fixed-1.stdout
+  sha256: da93e161f58c2bb804015ff8105a780357e15694191419a327e6a06d9f9277a9
+  bytes: 8
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/fixed-4.callgrind
+  sha256: 4e5dc3280748bfccca5d687b9b852c1a9c5748c24a75ba45bb013197db8c4cae
+  bytes: 872
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/fixed-4.callgrind.1
+  sha256: 5bf561f881fa31ee3148f8672d379055af7735f5816d511d2247d30030a3bad3
+  bytes: 26282
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/fixed-4.stderr
+  sha256: af13be156f4ed0ab2a276697f5d1c3db5a2ebb14967b23119e9a517245893797
+  bytes: 1336
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/fixed-4.stdout
+  sha256: da93e161f58c2bb804015ff8105a780357e15694191419a327e6a06d9f9277a9
+  bytes: 8
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/old-1.callgrind
+  sha256: 7be3f057cc56149d1f0c0f980938cda6ce6bf0f8f9958139d84309bcc4e73fdd
+  bytes: 474
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/old-1.callgrind.1
+  sha256: 768474823d9c494912cfc906ca05c073cb1a0c664291157ac1a729d82362a547
+  bytes: 10659
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/old-1.stderr
+  sha256: 575e30f75d0b198052c315c9b966f064ecd8133b7803ce434467242e9f2a3b68
+  bytes: 1279
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/old-1.stdout
+  sha256: da93e161f58c2bb804015ff8105a780357e15694191419a327e6a06d9f9277a9
+  bytes: 8
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/old-4.callgrind
+  sha256: 6d5a441ac7a7aa4b743c538cb9289cfebb11ae291abed2186cc61172cd46f9c2
+  bytes: 478
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/old-4.callgrind.1
+  sha256: 4c2f1d0f072bfb27a6e5a7fe9a5054efe6fd9a606987f16eecd64c51c699ff6e
+  bytes: 26324
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/old-4.stderr
+  sha256: daebe0561176552fa5a7541455d56469325cacf6a99c15bb4abcc02de70fda17
+  bytes: 1348
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/old-4.stdout
+  sha256: da93e161f58c2bb804015ff8105a780357e15694191419a327e6a06d9f9277a9
+  bytes: 8
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.probe/receipt.json
+  sha256: 936c758a7d5a5d6ad940a7ee74ab01ac0a28ea55187468d6ea2e759f71433d2a
+  bytes: 8666
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.launch/dispatch.log
+  sha256: aaeeda68cc1f4fc186bb322d071496e921881e22e3b476a264e1d974aa3599a1
+  bytes: 1799
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.launch/exit-code
+  sha256: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+  bytes: 2
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.launch/lane.json
+  sha256: 2ab32b4d84bf920c3d31161b30040dab68ef8dcb107a5e975d004bdc49ef0ec8
+  bytes: 740
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.launch/launch.sh
+  sha256: 7d802b8b5bf6609a1cb9103d59ac7fb4f7c088ae293a58adc55f01a0714ceb53
+  bytes: 669
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.launch/probe.log
+  sha256: c6e04356c9e8b47cefd19ee353faade578d9544cfbb2e83056b465f09670ae2b
+  bytes: 13675
+- path: /data/yanruj/EvolveSWDB_runs/bfs-callgrind-roi-20260925/bfs-callgrind-roi-20260925-a1.launch/run.sh
+  sha256: fcdbd72bc2ba99081759c707f2dd79cc9438c8c9b3aad80d87049100e735b699
+  bytes: 935
+interpretation: Both historical orders reproduce invalid unsigned summaries. Corrected
+  dump-before-stop produces valid counters with one and four threads; all checksum
+  checks pass. This validates the collector control only; fresh BFS profiles are still
+  required.
