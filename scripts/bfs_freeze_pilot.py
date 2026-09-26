@@ -691,8 +691,16 @@ def main():
     parser.add_argument('file', type=Path, help='operator selection JSON for prepare; exact review JSON for publish')
     parser.add_argument('--output', type=Path, required=True, help='new output directory')
     parser.add_argument('--records', type=Path, default=ROOT / 'records')
+    parser.add_argument('--db', type=Path, required=True,
+                        help='absolute SQLite cache path in separately accounted raw storage, outside code/records/output')
     args = parser.parse_args()
     args.records = args.records.resolve()
+    require(args.db.is_absolute() and args.db == args.db.resolve()
+            and args.db != args.file.resolve()
+            and all(root != args.db and root not in args.db.parents
+                    for root in (ROOT.resolve(), args.records, args.output.resolve()))
+            and (not args.db.exists() or args.db.is_file()),
+            'database must be an absolute, nonsymlinked file outside repository, records, input, and new output directory')
     source = json.loads(args.file.read_text())
     spec = source['input'] if args.action == 'publish' else source
     if args.action == 'publish':
@@ -701,7 +709,8 @@ def main():
     # The public query verifies the master records; preparation then uses exactly
     # that authoritative folder for bounded cross-record and raw-artifact checks.
     for rid in spec.get('packages', []) + spec.get('size_selection', {}).get('accelerator_packages', []):
-        result = subprocess.run([sys.executable, '-m', 'swdb', 'get', rid, '--records', str(args.records), '--format', 'json'],
+        result = subprocess.run([sys.executable, '-m', 'swdb', 'get', rid, '--records', str(args.records),
+                                 '--db', str(args.db), '--format', 'json'],
                                 cwd=ROOT, capture_output=True, text=True, timeout=180)
         require(result.returncode == 0, 'public pilot retrieval failed: ' + result.stderr)
     review = prepare(spec, Store(args.records))
@@ -714,12 +723,14 @@ def main():
     request_file.write_text(json.dumps(review['freeze_request'], indent=2) + '\n')
     if args.action == 'publish':
         result = subprocess.run([sys.executable, '-m', 'swdb', 'freeze-protocol', str(request_file),
-            '--records', str(args.records), '--format', 'json'], cwd=ROOT, capture_output=True, text=True, timeout=180)
+            '--records', str(args.records), '--db', str(args.db), '--format', 'json'],
+            cwd=ROOT, capture_output=True, text=True, timeout=180)
         (args.output / 'freeze.stdout.json').write_text(result.stdout)
         (args.output / 'freeze.stderr').write_text(result.stderr)
         require(result.returncode == 0, 'public freeze failed; retained exact request and diagnostics')
         frozen = json.loads(result.stdout)
-        result = subprocess.run([sys.executable, '-m', 'swdb', 'get', frozen['id'], '--records', str(args.records), '--format', 'json'],
+        result = subprocess.run([sys.executable, '-m', 'swdb', 'get', frozen['id'], '--records', str(args.records),
+                                 '--db', str(args.db), '--format', 'json'],
                                 cwd=ROOT, capture_output=True, text=True, timeout=180)
         require(result.returncode == 0 and json.loads(result.stdout) == frozen, 'fresh public frozen-protocol retrieval differs')
         print(json.dumps({'protocol': frozen['id'], 'gain_claim': False, 'ticket15_complete': False}))

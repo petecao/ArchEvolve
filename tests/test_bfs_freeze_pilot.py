@@ -156,7 +156,8 @@ def test_public_prepare_without_completed_pilots_does_not_create_a_freeze(record
         'size_selection': {'scale': 18, 'justification': 'fixture'}}))
     output = tmp_path / 'not-published'
     result = subprocess.run([sys.executable, str(REPO / 'scripts/bfs_freeze_pilot.py'), 'prepare', str(request),
-                            '--records', str(records.path), '--output', str(output)], cwd=REPO,
+                            '--records', str(records.path), '--output', str(output),
+                            '--db', str(tmp_path / 'raw/swdb.sqlite')], cwd=REPO,
                             capture_output=True, text=True, timeout=30)
     assert result.returncode != 0 and reason in result.stderr
     assert not output.exists() and not (records.path / 'protocols').exists()

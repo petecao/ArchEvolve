@@ -83,6 +83,23 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Accounted public databases — 2026-09-26 19:35 ET
+
+The same real-CLI cache-placement defect was reproduced in simulator series
+and protocol publication: their public queries created an unaccounted
+checkout-root database. The series now owns SQLite inside its raw driver folder;
+the publisher requires an explicit external `--db` and rejects paths overlapping
+code, records, input or the not-yet-created output directory. Every public call
+uses that path. Qualification logic, clocks and failed-prepare output ordering
+remain unchanged. Callers account the selected database and its sidecars.
+
+The [repair receipt](observations/public-client-database-fix-20260926.json)
+retains original failures and 197 passing focused tests with two Linux-only
+skips. The [independent review](observations/client-database-spec-review-20260926.json)
+passes all 11 scoped cases, including actual public get/freeze/get. These are
+contract fixtures, not empirical publication or measurements. The already
+specified T16 public commands use an external database and are unaffected.
+
 ## Actual coverage and native runtime repair — 2026-09-26 19:20 ET
 
 DX100 A2 completed all six public stages with correctness passed at 19:16 ET.
