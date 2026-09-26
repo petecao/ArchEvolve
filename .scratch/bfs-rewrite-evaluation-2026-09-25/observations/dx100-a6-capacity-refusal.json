@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "eligible": true,
+      "estimated_node_available_kib": 54740260,
+      "global_available_kib": 112322496,
+      "observed": "2026-09-26T01:37:33.700412+00:00",
+      "receipt": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6-capacity-preclaim.json",
+        "sha256": "f8f5a5ec251829bd53168a470681ac23209fc19699445bb0e5dcac8f466a3ddc"
+      }
+    },
+    {
+      "eligible": false,
+      "estimated_node_available_kib": 54096492,
+      "global_available_kib": 110394320,
+      "observed": "2026-09-26T01:38:18.049880+00:00",
+      "receipt": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6-capacity-in-lane.json",
+        "sha256": "6766a3adb2ba2a5b6b2d64878d137ed38fefd5c57e5698ab18caa5cfc39a9a4b"
+      }
+    }
+  ],
+  "created": "2026-09-25",
+  "driver_log": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6-driver.log",
+    "sha256": "10b46cc340072c8a78e528c18fc908a31ebd626536a2016f873456cd6ab4f981"
+  },
+  "execution_started": false,
+  "exit_status": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6.exit",
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "gain_claim": false,
+  "kind": "preflight_refusal",
+  "lane": {
+    "ended_utc": "2026-09-26T01:38:18Z",
+    "exit_code": 1,
+    "generation": 388,
+    "receipt": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/lane-smoke-a6.json",
+      "sha256": "757e19219f8ecbb008568c3d84d2be3ab93597bf112900d33eacc55dd5ff27dc"
+    },
+    "started_utc": "2026-09-26T01:38:17Z"
+  },
+  "node": 1,
+  "planned_execution": "bfs-dx100-smoke-20260925-a6",
+  "reason": "Fresh in-lane discounted node capacity fell below the unchanged 52 GiB threshold.",
+  "simulator_attempts_consumed": 0,
+  "state": "held_capacity",
+  "swdb_revision": "c779b7542badff7fa5a7705f25be31190982a390",
+  "timezone": "America/Detroit"
+}
