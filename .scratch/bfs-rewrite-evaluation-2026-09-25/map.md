@@ -83,6 +83,38 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Progress check and actual T16 freezes — 2026-09-26 19:33 ET
+
+The [host audit](observations/health-20260926-1933.json) found both socket leases
+and the legacy lease released (331/406/77), no kernel locks or live owned work,
+and unchanged historical receipt/code identities. All three workers are responsive.
+Available disk is 17,453,592,576 bytes on `/data1` and 194,147,344,384 bytes on
+`/data`; both nodes meet current memory gates. Capacity must be rechecked at launch.
+Ticket counts are 14 resolved, seven claimed, and 0/8 final acceptance. Next full
+host/worker/ticket check: 20:03 ET.
+
+The [actual T16 metadata operation](observations/t16-freeze-actual-20260926.json)
+completed all four public freeze/get-chain commands with exit zero. It published
+`bfs-author-reference-20260925.b4cbd3924b40e7df` and
+`bfs-author-matched-control-20260925.d02e719e2d375764`, matching the exact prepared
+settings and fresh retrieval. Both records were pushed in source-free `5db2bec`,
+imported as `9cd2f82`, and independently checked locally for file/canonical/settings
+hashes and immutable identity. These are the independent T16 policies; native
+and candidate-specific simulator protocols remain pending.
+
+The first launcher failed before any public command because pane-PID quoting
+produced a literal dollar. Its failure remains retained with an incomplete
+historical PID union; a current full-operation scan found no live survivors.
+The corrected launcher spent the same original 19:30:05–19:40:05 ET operation
+window, ending at 19:33:21 ET (196.471 seconds including the failed launch).
+No public request was retried. The second launcher has an independently audited
+eight-identity union, seven absent and only its exact zero-RSS pane zombie;
+generation 331 is released. This metadata operation ran no guest measurement.
+
+The prospective final campaign source is a separate child of the five-record
+metadata chain. Its fresh standard Linux checks and absolute T15/T16 admissions
+remain required before batch execution; no reference/control result is claimed.
+
 ## Accounted public databases — 2026-09-26 19:35 ET
 
 The same real-CLI cache-placement defect was reproduced in simulator series

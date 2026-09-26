@@ -9,6 +9,30 @@ Updated: 2026-09-26 (Eastern Time)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
+## Current checkpoint — 2026-09-26 19:33 ET
+
+Both exact prospective policies are now published and freshly retrieved:
+`bfs-author-reference-20260925.b4cbd3924b40e7df` and
+`bfs-author-matched-control-20260925.d02e719e2d375764`. The
+[actual freeze receipt](../observations/t16-freeze-actual-20260926.json) retains
+four successful public commands, exact settings/file/canonical identities and
+independent terminal closure. Both source-free records were synchronized through
+Git and revalidated locally. The artifact scalar retains 10 MiB/20-way LLC versus
+MAA 8 MiB/16-way; the matched control uses 8 MiB/16-way for both roles. No graph,
+source, verifier, ROI, repetitions or profitability threshold changed.
+
+The initial launcher failed before public commands; its error is retained. A
+quoting correction continued within the same original 600-second operation,
+finishing in 196.471 seconds, without retrying a public request. The second
+launch's eight retained identities were checked twice; only its exact zero-RSS
+pane zombie remains, and socket 0 generation 331 is released. Initial-wrapper
+historical PID capture remains incomplete; current scans found no live survivor.
+
+Actual scalar/MAA reference/control executions and comparisons remain pending.
+Final runtime sealing, standard Linux ownership/interruption proofs, absolute
+batch admission and fresh capacity checks precede them. This ticket stays claimed;
+policy publication alone does not satisfy any measurement or gain requirement.
+
 ## What to build
 
 Execute and retain the BFS-only authors' scalar/accelerated artifact comparison and additional controlled reference comparisons with matched CPU/cache/memory settings. Freeze this slice's protocols independently before its measured comparisons. Provide real reference evidence and explicit limits on attribution without waiting for candidate-workload calibration or requiring new rewrite proposals.
