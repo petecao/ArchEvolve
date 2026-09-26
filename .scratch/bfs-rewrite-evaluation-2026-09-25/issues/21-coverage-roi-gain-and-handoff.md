@@ -161,3 +161,23 @@ and memory scopes, and its unchanged unverified-correctness limitation.
 The later a3/graph/coverage/batch work is excluded from that pin and receives
 separate verification. This green suite does not close any empirical cell or
 the final post-acceptance Standards/Spec review.
+
+
+## Fresh checkpoint — 2026-09-26 15:40 ET
+
+A second fresh public `bfs-coverage` query regenerated a dedicated temporary
+SQLite cache from **213 valid canonical records**, now including the published
+four-thread paired history, tiny a3 witness and failed coverage a1. All eight
+final cells and reference comparisons remain incomplete, with `gain_claim:
+false`; the actual native pilot is still running and its partial results are
+not imported. Held provider/candidate results remain remote. The
+[checkpoint receipt](../observations/acceptance-checkpoint-20260926-a2.json)
+binds the complete local report, query and metadata-derived criterion states.
+External raw-artifact verification remains incomplete on this local host.
+
+The tracker remains **13 resolved / 8 claimed**, with no empirical freeze or
+qualified gain. The reviewed a2 retry export has 116 passing local tests and
+three Linux-only skips. Additional process-lifetime findings in future batch and
+native campaign execution are being repaired before dispatch; fixtures do not
+close any acceptance cell. Final independent Standards/Spec review against
+`1bdb7d4` remains required after all acceptance and repair work.
