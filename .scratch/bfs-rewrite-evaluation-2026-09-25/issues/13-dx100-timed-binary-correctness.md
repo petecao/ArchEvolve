@@ -7,7 +7,19 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 12
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 13:56 ET
+## Current checkpoint — 2026-09-26 18:28 ET
+
+The [new A2 Linux admission checks](../observations/a2-linux-fixtures-20260926-a1.json)
+ran against exact `67313d9` with separate supervisor `3f38a2b`. The two owned
+cleanup cases pass, with independent proof and released generation 403. Both
+interruption cases fail at validation because their synthetic machine record
+disables the real host's required socket policy. They never enter simulation.
+Their failure and verified generation-404 process/lease closure are retained;
+no interruption proof or simulator admission is claimed. The fixture is being
+corrected without weakening the production guard. Actual A2 remains unused,
+with the same 21:00 ET cutoff and 3,600-second allowance. T13 remains claimed.
+
+## Historical checkpoint — 2026-09-26 13:56 ET
 
 The [fixed full/tail/competing-parent case](../observations/dx100-coverage-start-20260926.json)
 started at 13:56:02 ET on socket 0 generation 321 from `53f2e768`. Both actual

@@ -149,6 +149,43 @@ unchanged. No Linux fixture, auditor, compilation or measurement ran during
 this preparation. The original malformed preparation receipt is retained;
 an additive valid JSON receipt preserves its reference and unchanged facts.
 
+## Progress check — 2026-09-26 18:33 ET
+
+The [full host audit](observations/health-20260926-1833.json) found both socket
+leases and legacy released (326/404/77), empty kernel locks, and no live owned
+jobs. Native collection remains complete (240 checks, four packages); its failed
+readback remains unqualified. The old A2 cleanup fixture passed while its
+interruption fixture failed host-policy validation. All three workers responded;
+the corrected regression suite remains running at exact `e4c4015`. Counts remain
+13 resolved, eight claimed, and 0/8 final acceptance. Next full check: 19:03 ET.
+
+The [reviewed fixture correction](observations/a2-prelaunch-revision-20260926.json)
+preserves real host lane enforcement and the original A2 measurement window and
+budget. Both selections require fresh actual Linux proofs at the new tested
+revision. The [reader test delta](observations/native-reader-durable-fixture-delta-20260926.json)
+retains fsynced real process events; its additive export `5e8b750` is synced, with
+actual Linux proof still pending.
+
+At 18:41 ET automatic approval review rejected the new 24-record native evidence
+packet `c6f16004` (3,948,624 bytes, including 12 source-bearing records totaling
+2,863,879 bytes) as outside the previously approved 14-file packet. Exact approval
+was requested. The packet remains on mbit10; no push or substitute transfer
+occurred. This does not block independent host-local qualification or A2 work.
+
+## Actual A2 Linux admission outcomes — 2026-09-26 18:28 ET
+
+The [actual Linux fixture packet](observations/a2-linux-fixtures-20260926-a1.json)
+retains both fixed selections against `67313d9` under supervisor `3f38a2b`.
+Owned cleanup passes two cases and its independent auditor; socket 1 generation
+403 is released. Both public interruption cases fail before simulation because
+the fixture disables mbit10's required lane policy. Production refusal is correct;
+this is a fixture setup defect, not missing dependencies or simulator behavior.
+The failed generation 404 is released, all six retained identities checked twice,
+and only the exact zero-RSS pane remains. No pending/passed interruption proof
+exists. A narrow fixture correction and fresh prelaunch code/proof bindings are
+required. The actual A2 simulator remains undispatched with its original
+21:00 ET launch cutoff, workload and 3,600-second limit unchanged.
+
 ## Native reader repaired — 2026-09-26 18:23 ET
 
 The [launcher repair](observations/native-reader-repair-20260926.json) converts
