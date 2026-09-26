@@ -14,6 +14,8 @@ import pytest
 from conftest import REPO
 from scripts import bfs_t17_build_only as build
 from swdb import artifacts
+from swdb.cli import Failure
+from test_bfs_native_campaign import seal_package
 
 
 class FakeOwned:
@@ -216,13 +218,15 @@ def execution_fixture(tmp_path, monkeypatch):
     artifact=artifacts.identify(source)
     compiler=tmp_path/'compiler';compiler.write_text('fixture compiler identity; never executed\n')
     model_receipt=tmp_path/'model.json';model_receipt.write_text('{}')
-    values={'proposal':{'id':'proposal','profile_package':'package','repair_budget':{'total_seconds':1800,'used_seconds':233.21830715797842,'repairs':0,'max_repairs':2}},
+    package=seal_package({'id':'package','kind':'profile_package','completeness':'fixture',
+                          'evidence':{'classification':'contract_fixture'}})
+    values={'proposal':{'id':'proposal','profile_package':package['id'],'repair_budget':{'total_seconds':1800,'used_seconds':233.21830715797842,'repairs':0,'max_repairs':2}},
             'candidate':{'id':'candidate','proposal':'proposal','source_snapshot':'source','artifact':artifact,'protections':[]},
             'source_snapshot':{'id':'source','artifact':artifact},
-            'package':{'id':'package'},'model':{'id':'model'},'target':{'id':'target'}}
+            'package':package,'model':{'id':'model'},'target':{'id':'target'}}
     pins={key:{'id':values[key]['id'],'canonical_sha256':artifacts.digest(values[key])}
           for key in ('proposal','candidate','source_snapshot')}
-    pins['proposal'].update(profile_package='package',retained_provider_budget=copy.deepcopy(values['proposal']['repair_budget']))
+    pins['proposal'].update(profile_package=package['id'],retained_provider_budget=copy.deepcopy(values['proposal']['repair_budget']))
     pins['model']={'build_evaluation':'model','target':'target','build_canonical_sha256':artifacts.digest(values['model']),
                    'target_canonical_sha256':artifacts.digest(values['target']),'receipt':build.ref(model_receipt)}
     pins['compiler']=build.ref(compiler)
@@ -266,7 +270,17 @@ def test_origin_mismatch_refuses_before_compile(execution_fixture, fault):
     elif fault=='changed-candidate':values['candidate']['other']='mutated'
     elif fault=='changed-budget':values['proposal']['repair_budget']['used_seconds']=0
     else:Path(pins['compiler']['path']).write_text('different bytes')
-    with pytest.raises(ValueError):build.execute(attempt,pins,{})
+    reason={'changed-source':'source_snapshot record changed','changed-candidate':'candidate record changed',
+            'changed-budget':'proposal record changed','changed-compiler':'compiler changed'}[fault]
+    with pytest.raises(ValueError,match=reason):build.execute(attempt,pins,{})
+    assert not any(row[0]=='compile' for row in attempt.calls)
+
+
+def test_changed_sealed_origin_package_refuses_before_compile(execution_fixture):
+    attempt,pins,values,*_=execution_fixture
+    values['package']['evidence']['classification']='execution'
+    with pytest.raises(Failure,match='content differs from its retained identity'):
+        build.execute(attempt,pins,{})
     assert not any(row[0]=='compile' for row in attempt.calls)
 
 
@@ -284,7 +298,10 @@ def test_public_build_result_and_fresh_chain_cannot_overstate_success(execution_
             if name=='compile':records['proposal']=copy.deepcopy(values['proposal']);records['proposal']['repair_budget']['used_seconds']=0
             return row
         attempt.stage=stage
-    with pytest.raises(ValueError):build.execute(attempt,pins,{})
+    reason={'failure':'only the requested actual build','claim':'overstates build-only evidence',
+            'request':'fixed request','chain':'fresh public chain',
+            'budget-after':'retained origin record or provider budget changed'}[fault]
+    with pytest.raises(ValueError,match=reason):build.execute(attempt,pins,{})
     assert sum(row[0]=='compile' for row in attempt.calls)==1
 
 

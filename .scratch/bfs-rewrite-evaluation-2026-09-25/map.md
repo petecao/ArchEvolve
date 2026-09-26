@@ -173,6 +173,18 @@ two failed** with exact files unchanged. The superseding `3f38a2b` export includ
 these two fixture corrections; its affected-module/catalog checks and private
 branch synchronization are recorded above.
 
+## T17 contract-fixture correction — 2026-09-26 17:57 ET
+
+The running full regression exposed seven additional T17 build-only failures.
+All seven reproduce because the synthetic origin package lacks its current
+assembly seal. The [test-only repair](observations/t17-package-fixture-repair-20260926.json)
+uses the real seal verifier and updates proposal/pin references. Targeted
+negative assertions now require their intended failure reasons, and a changed
+sealed package rejects before compilation. The full file passes 48 tests with
+two Linux-only skips; independent Spec checks pass 11. Production validation
+and the published supervisor are unchanged. The original failed run continues
+at its exact pinned commit; no full-suite pass or actual T17 acceptance is claimed.
+
 ## Progress check — 2026-09-26 17:33 ET
 
 The [full health audit](observations/health-20260926-1733.json) confirms native
