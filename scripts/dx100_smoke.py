@@ -59,7 +59,7 @@ def main():
         'configuration': {'mode': 'MAA', 'l3_size_mb': 8, 'l3_assoc': 16, 'tile_elements': 16384},
         'verification': {'checker': 'dx100.bfs.verifier.v1', 'max_ticks': 1000000000000},
         'budget': {'total_seconds': 1100, 'memory_gib': 16, 'storage_gib': 2,
-            'checkpoint_seconds': 120, 'run_seconds': 900}}
+            'checkpoint_seconds': 300, 'run_seconds': 750}}
     path = folder / 'request.json'
     path.write_text(json.dumps(request, indent=2) + '\n')
     with (folder / 'evaluation.stdout.json').open('w') as out, (folder / 'evaluation.stderr').open('w') as err:

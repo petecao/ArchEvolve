@@ -571,7 +571,15 @@ def execute(args):
             command = [str(simulator), f"--outdir={checkpoint}", str(script), "--cpu-type", "AtomicSimpleCPU",
                        "-n", "4", "--mem-size", "16GB", "--max-checkpoints", "1", "--cmd", str(binary), "--options", options]
             _bounded_process(session, "checkpoint", command, checkpoint_seconds, budget["memory_gib"], budget["storage_gib"], env)
-            directories = [path for path in checkpoint.glob("cpt.*") if path.is_dir()]
+            directories = []
+            for path in checkpoint.glob('cpt.*'):
+                # Pinned m5.checkpoint creates the literal formatting directory
+                # before the C++ serializer expands %d to the actual tick.
+                if path.name == 'cpt.%d' and path.is_dir() and not path.is_symlink() and not any(path.iterdir()):
+                    continue
+                if path.is_symlink() or not path.is_dir() or not re.fullmatch(r'cpt\.[0-9]+', path.name):
+                    raise StageFailure('missing_observation', 'checkpoint execution produced an unexpected checkpoint entry')
+                directories.append(path)
             if len(directories) != 1:
                 raise StageFailure("missing_observation", "checkpoint execution did not produce exactly one checkpoint directory")
             manifest = {"format": "swdb.dx100.checkpoint.v1", "binding": binding,

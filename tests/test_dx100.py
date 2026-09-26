@@ -149,6 +149,23 @@ def test_author_binary_tile_mismatch_rejected_before_checkpoint(case):
     assert not any(stage['stage'] in {'checkpoint', 'simulation'} for stage in result['stages'])
 
 
+@pytest.mark.parametrize('unexpected', [False, True])
+def test_pinned_empty_checkpoint_template_directory_is_distinguished_from_payload(case, unexpected):
+    data = execution_request(case)
+    _, invoke, _ = case
+    simulator = Path(data['simulator']['path'])
+    extra = "    (out/'cpt.%d').mkdir()\n"
+    if unexpected:
+        extra += "    (out/'cpt.%d'/'unexpected').write_bytes(b'not an empty placeholder')\n"
+    simulator.write_text(simulator.read_text().replace('    child.mkdir()\n', '    child.mkdir()\n' + extra))
+    data['simulator'] = reference(simulator)
+    result = invoke('dx100-execute', data)
+    assert result['outcome']['state'] == ('missing_observation' if unexpected else 'complete')
+    if unexpected:
+        assert 'unexpected checkpoint entry' in result['outcome']['reason']
+        assert not any(stage['stage'] == 'simulation' for stage in result['stages'])
+
+
 def test_reference_execution_accepts_explicit_four_hour_stage_but_keeps_build_cap(case):
     request, invoke, _ = case
     data = execution_request(case)

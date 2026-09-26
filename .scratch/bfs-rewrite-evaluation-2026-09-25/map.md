@@ -112,6 +112,15 @@ These entries retain historical milestones. The ticket table and each ticket's l
 evidence describe current acceptance; earlier publication-only or unexecuted notes
 do not override the subsequent authorization and execution evidence.
 
+- 2026-09-25 20:30 ET: all three workers responsive; mbit10 lane 0 remains held by
+  another task, lane 1 is running the bounded simulator smoke, and the legacy lease
+  is released. Live free capacity is 17 GiB on `/data1` and 198 GiB on `/data`.
+  Profiling a3 completed its changed-helper demonstration (rank 1 and two new loops),
+  but its final Callgrind value audit found unsigned-underflow counters. Those
+  observations are retained as invalid; Tickets 08–09 remain unaccepted pending
+  corrected collection. Local checkpoint `bccdd88` adds bounded simulator grids and
+  separately instrumented author-traversal diagnostics; it is not execution evidence.
+
 - 2026-09-25 20:20 ET: checkpoint `95909bc` separates the fixed author `DOBFSMAA`
   implementation from scalar `DOBFS`, binds evaluator entry points, preserves
   simulator source/repetition cells in complete profile packages, and exposes

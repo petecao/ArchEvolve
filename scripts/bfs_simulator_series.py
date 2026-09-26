@@ -246,7 +246,9 @@ def main():
                               if compiled else {key: binaries['bfs_maa' if args.accelerated else 'bfs'][key]
                                                 for key in ('path', 'sha256')})
                     diagnostic = treatment == 'diagnostic'
-                    checkpoint_seconds = min(120, args.diagnostic_seconds // 3) if diagnostic else args.checkpoint_seconds
+                    # Actual tiny guest serialization took109s; reserve half of
+                    # the fixed diagnostic budget for its16GB checkpoint.
+                    checkpoint_seconds = args.diagnostic_seconds // 2 if diagnostic else args.checkpoint_seconds
                     run_seconds = args.diagnostic_seconds - checkpoint_seconds - 30 if diagnostic else args.run_seconds
                     total_seconds = args.diagnostic_seconds if diagnostic else min(18000, checkpoint_seconds + run_seconds + 60)
                     payload = {'message_version': '1.0', 'id': prefix + '.' + treatment + '.evaluation',

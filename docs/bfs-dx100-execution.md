@@ -3,6 +3,14 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 
+On the pinned model, `src/python/m5/simulate.py:332–336` creates an empty literal
+`cpt.%d` directory before the C++ serializer expands the tick. The adapter
+accepts that empty, nonsymlink placeholder alongside exactly one numeric
+`cpt.<tick>` payload; any other checkpoint entry rejects restore. The first real
+tiny checkpoint completed in 91.656 seconds and produced about 17 MiB of
+compressed guest memory. Future smoke stages reserve 300 seconds for checkpoint
+creation within their unchanged overall budgets.
+
 The public `dx100-build` and `dx100-execute` commands persist ordinary evaluation
 records before starting external work. `swdb get ID` retrieves them in another
 process. A completed build means identified binaries exist; completed smoke

@@ -93,7 +93,7 @@ def main():
                 'workload': {'id': workload['id'], 'source': 0, 'representation': ref(sg32)},
                 'configuration': {'mode': 'MAA', 'l3_size_mb': 8, 'l3_assoc': 16, 'tile_elements': 16384},
                 'verification': {'checker': 'dx100.bfs.verifier.v1', 'max_ticks': 1000000000000},
-                'budget': {'total_seconds': 800, 'checkpoint_seconds': 120, 'run_seconds': 600, 'memory_gib': 16, 'storage_gib': 2}}
+                'budget': {'total_seconds': 800, 'checkpoint_seconds': 300, 'run_seconds': 450, 'memory_gib': 16, 'storage_gib': 2}}
             evaluations[mode] = call('dx100-execute', request(mode + '-execute', execution), '--runs-dir', runs, '--lane', args.lane, timeout=850)
         primary = evaluations['primary']
         collected = call('dx100-profile', request('profile', {'message_version': '1.0', 'id': args.id + '.profile',
