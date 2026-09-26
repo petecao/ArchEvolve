@@ -123,7 +123,7 @@ controlled Python and pytest pins before recording the exact expanded argv.
 timeout --signal=TERM --kill-after=30s 60s \
   bash "$LANE_HELPER" "$NODE" "$FIXTURE_ID" --record "$DISPATCH/lane.json" -- \
   env -u PYTHONPATH -u PYTHONHOME -u PYTHONSTARTUP -u PYTHONUSERBASE \
-      -u PYTEST_ADDOPTS -u LD_PRELOAD -u LD_LIBRARY_PATH \
+      -u PYTHONOPTIMIZE -u PYTEST_ADDOPTS -u PYTEST_PLUGINS -u LD_PRELOAD -u LD_LIBRARY_PATH \
       PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
   /data1/yanruj/venvs/evolveswdb-test/bin/python3 "$CODE/scripts/bfs_linux_fixture.py" "$KIND" \
       --expected-commit "$COMMIT" --python-sha256 "$PYTHON_SHA256" \
@@ -135,7 +135,8 @@ timeout --signal=TERM --kill-after=30s 60s \
 The fields above are unresolved preflight substitutions, not permission to guess
 identities or move historical checkouts. The actual supervisor and outer exit
 values must both be retained; shell pipeline success must not replace either.
-The runner records pytest version/module hash and the controlled Python map,
+The runner rejects optimized Python startup so nested contract assertions remain
+enabled and clears explicit pytest plugin injection. It records pytest version/module hash and the controlled Python map,
 keeps telemetry active through owned teardown, and leaves the independent
 terminal audit to a different post-exit observation. A late failure leaves any
 pending result unaccepted; no runner path writes the admitted `proof.json`.

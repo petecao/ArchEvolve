@@ -51,6 +51,19 @@ def test_child_environment_removes_python_and_pytest_injection(tmp_path,monkeypa
     assert os.environ['PYTHONPATH']=='injected'  # Parent environment is not modified.
 
 
+@pytest.mark.parametrize('key',['PYTEST_PLUGINS','PYTHONOPTIMIZE'])
+def test_child_environment_removes_explicit_plugins_and_optimization(tmp_path,monkeypatch,key):
+    monkeypatch.setenv(key,'injected')
+    assert key not in runner.child_environment(tmp_path)
+
+
+def test_optimized_fixture_supervisor_is_rejected_before_imports(tmp_path):
+    result=subprocess.run([sys.executable,'-O',str(Path(runner.__file__).resolve()),'--help'],
+        env=runner.child_environment(tmp_path),capture_output=True,text=True,timeout=10)
+    assert result.returncode != 0
+    assert 'assertions enabled' in result.stderr
+
+
 @pytest.fixture
 def execution(tmp_path,monkeypatch):
     """Real subprocess and shared ledger; explicit synthetic procfs/host seams."""

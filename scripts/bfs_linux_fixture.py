@@ -16,11 +16,12 @@ import time
 import xml.etree.ElementTree as XML
 
 PYTHON_INPUTS = {**dict.fromkeys(('PYTHONPATH','PYTHONHOME','PYTHONSTARTUP','PYTHONUSERBASE',
-    'PYTEST_ADDOPTS','LD_PRELOAD','LD_LIBRARY_PATH')), 'PYTHONNOUSERSITE':'1',
+    'PYTHONOPTIMIZE','PYTEST_ADDOPTS','PYTEST_PLUGINS','LD_PRELOAD','LD_LIBRARY_PATH')), 'PYTHONNOUSERSITE':'1',
     'PYTHONDONTWRITEBYTECODE':'1','PYTEST_DISABLE_PLUGIN_AUTOLOAD':'1'}
 if __name__ == '__main__':
-    if any(os.environ.get(key) != value for key,value in PYTHON_INPUTS.items()) or not sys.flags.no_user_site:
-        raise SystemExit('fixture runner requires the declared isolated Python environment')
+    if (any(os.environ.get(key) != value for key,value in PYTHON_INPUTS.items())
+            or not sys.flags.no_user_site or sys.flags.optimize != 0):
+        raise SystemExit('fixture runner requires the declared isolated Python environment with assertions enabled')
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
