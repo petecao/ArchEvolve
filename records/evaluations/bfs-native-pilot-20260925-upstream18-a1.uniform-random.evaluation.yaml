@@ -1,0 +1,115 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs-native-pilot-20260925-upstream18-a1.uniform-random.evaluation
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-native-pilot-20260925-upstream18-a1.uniform-random.evaluation
+  candidate: bfs-native-pilot-20260925-upstream18-a1.baseline
+  machine: mbit10
+  threads: 4
+  repetitions: 5
+  sources: [0, 1234, 7777]
+  roi: bfs.complete_call.v1
+  target_configuration:
+    lane: mbit10-evaluation-node1
+  workload:
+    id: bfs-20260925-uniform18.cd2169a5c421baf7
+  comparison_baseline: gapbs-bfs-do
+  budget:
+    build_seconds: 180
+    run_seconds: 60
+    total_seconds: 1200
+outcome:
+  state: failed
+  stage: workload_resolution
+  reason: registered graph exceeds native materialization limits; use its external SG representation
+stages:
+- stage: source_resolution
+  state: complete
+  started: '2026-09-26T01:52:59.945127+00:00'
+  finished: '2026-09-26T01:53:04.097037+00:00'
+- stage: workload_resolution
+  state: failed
+  started: '2026-09-26T01:53:08.340572+00:00'
+  finished: '2026-09-26T01:53:12.572530+00:00'
+  reason: registered graph exceeds native materialization limits; use its external SG representation
+timing: []
+correctness:
+  state: unverified
+  checks: []
+profiling:
+  state: unavailable
+  reasons:
+  - automatic function attribution not collected
+  - automatic loop attribution not collected
+  - dynamic memory observations not collected
+raw_artifacts:
+- host: mbit10
+  path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.uniform-random.evaluation
+  kind: evaluation_run
+- host: mbit10
+  path: /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-upstream18-a1.uniform-random.evaluation
+  kind: evaluation_build
+- host: mbit10
+  kind: host_observation
+  path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.uniform-random.evaluation/host-observation.json
+  sha256: 9ab3814594536bc2ed5eb71c9cbceca7aba59721b443296fbe623583879f518d
+  host_wall_s: 0.07707150653004646
+  evidence_kind: execution
+  unavailable_commands: 2
+gain_claim: false
+evidence_kind: execution
+candidate: bfs-native-pilot-20260925-upstream18-a1.baseline
+source_snapshot: bfs-native-pilot-20260925-upstream18-a1.source
+implementation: gapbs-bfs-do
+machine: mbit10
+comparison_baseline: gapbs-bfs-do
+context:
+  candidate_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+  function: DOBFS
+  source_revision: 2972aeb2703165bafd921222f4ed7196f542d3a8
+  application: gapbs
+  adapter: gapbs_native
+  target: mbit10
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  threads: 4
+  sources: [0, 1234, 7777]
+  repetitions: 5
+  roi: bfs.complete_call.v1
+  protocol: null
+  basis: measured
+  process_policy: one fresh process per source and repetition; graph construction before ROI
+  verifier: swdb.bfs.structural.v1
+  verifier_sha256: 16d1515eb73d862cfdeef37e5783270854db5362c48f65fad89c853973336538
+  backend_configuration:
+    lane: mbit10-evaluation-node1
+  instrumentation:
+    template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+    treatment: included
+  host: mbit10
+  architecture: x86_64
+  lane: 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 391)'
+  load_average: [13.70166015625, 14.09130859375, 14.65283203125]
+  budget:
+    build_seconds: 180.0
+    run_seconds: 60.0
+    total_seconds: 1200.0
+  host_observation:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.uniform-random.evaluation/host-observation.json
+    sha256: 9ab3814594536bc2ed5eb71c9cbceca7aba59721b443296fbe623583879f518d
+    host_wall_s: 0.07707150653004646
+    evidence_kind: execution
+    unavailable_commands: 2
