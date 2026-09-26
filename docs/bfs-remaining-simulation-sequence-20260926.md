@@ -10,7 +10,7 @@ finite simulator-calibration plan and the independent author-reference batch.
 Neither small case substitutes for performance-workload evidence. This document
 does not start a budget clock or select an execution window.
 
-## Execution update — 2026-09-26 16:33 ET
+## Execution update — 2026-09-26 17:03 ET
 
 The planning boundaries below predate the completed tiny a3 witness and the
 failed coverage a1 attempt. Their outcomes are retained in the
@@ -21,9 +21,9 @@ reviewed prospective continuation, with actual Linux admission checks still
 pending. It waits for terminal cleanup of the active native pilot.
 
 The four-thread paired study failed its fixed spread gates. The separate
-one-thread pilot has checked 136/240 trials at this update: both uniform
-cells passed the fixed controls, DX100 Kronecker has 16/60 checked trials, and
-upstream Kronecker has not started. There is no empirical freeze. The
+one-thread pilot has checked 183/240 trials at this update: both uniform
+cells and DX100 Kronecker passed the fixed controls; upstream Kronecker has
+3/60 checked trials. All four controls and fresh diagnostics remain required. There is no empirical freeze. The
 [bounded simulator plans](bfs-simulator-batches-20260926.md) now provide the
 T15/T16 coordinator, common resource accounting and prospective admission
 requirements described below. Their actual Linux checks, absolute windows and

@@ -127,6 +127,17 @@ before the final exception-note delta; all six affected final-delta cases pass.
 Actual Linux admission and final acceptance remain outstanding. The separate
 A2 fixture route must bind its old tested runtime and new supervisor explicitly.
 
+## Independent fixture closure preparation — 2026-09-26
+
+The [post-exit proof auditor](observations/linux-fixture-audit-preparation-20260926.json)
+passes independent Standards and Spec rechecks after repairing final-hash
+publication failure. Its combined local group passes 97 with one Linux-only
+skip. It reopens the exact original fixture clocks, runtime, JUnit, output,
+process identity union, released lane and settled cleanup ledger before sealing
+a separate proof. Pending evidence remains unchanged. Actual Linux fixtures,
+terminal audits and empirical acceptance are still outstanding. The corrected
+full local suite runs separately at `7fe4c34`; no broad pass is inferred here.
+
 ## Local regression repair — 2026-09-26
 
 The [three full-suite failures and clock follow-up](observations/c2-regression-repair-20260926.json)
