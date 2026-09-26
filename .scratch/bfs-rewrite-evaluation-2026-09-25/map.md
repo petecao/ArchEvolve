@@ -83,6 +83,49 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Progress check — 2026-09-26 12:03 ET
+
+The [fresh host receipt](observations/progress-20260926-1203.json) was observed
+at 12:03:49 ET. All three original exact transfers remain complete; the two
+additional exact approval questions remain pending. Status is **13 resolved /
+8 claimed**, **0/8 final acceptance cells**, no empirical freeze and no qualified
+gain. All three workers are responsive; no dead or stranded worker was found.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 15 paired calibration | Running | mbit10 / socket 1, generation 400 | 93/240 observations; DX100 uniform complete; upstream uniform 33/60 | Finish both uniform and both Kronecker cells under fixed bounds |
+| 13 correctness | A3 prepared; coverage/observer implementation reviewed in progress | mbit10 / socket 0 free | Idle a3 checkout `1018432`; no new simulator execution | Native terminal barrier, then one bounded actual proof |
+| 17/19 initial rewrites | Candidates created, unverified | mbit10 / provider batch terminal | Two actual retained candidates | Compatible frozen-protocol assessment |
+| 20 annotation | Original unresolved; supplement prepared | No provider running | Exact API/header/context and remaining budget retained | Pending exact new-payload approval |
+| Regression | Complete, passed | Local isolated `83125b4` | 1,300 passed, three skipped; exit 0; 2,682.52 seconds | Focused checks and review for later code |
+| Result sync | Six-file packet held | mbit10 | Exact `5f1b802` inventory | Pending exact packet/branch approval |
+
+DX100 uniform's first 60 independent correctness checks passed. Its fixed-policy
+unchanged-code ratio is 0.997256 with 95% interval [0.984188, 1.009630]; the
+reverse ratio is 1.002752 with interval [0.990353, 1.016063]. Maximum relative
+spread is 0.081338, below the prospective 0.10 ceiling. Neither direction has a
+numerical gain leg. The exact host analysis is retained at
+`bfs-native-paired-pilot-20260926-a1.dispatch/first-cell-fixed-policy-analysis.json`,
+SHA-256 `86afd75a4cc7c44a89201053a5945190f13f4b45ab5d608ec81168ed3eb73171`.
+This first cell does not qualify the four-cell study or publish a protocol.
+
+Socket 0 and legacy leases remain released at 318/77; socket 1 has the live
+owned driver/evaluator/trial at generation 400. Current sampled RSS is 1.01 GiB,
+peak 1.04 GiB, with 600 samples and a 1.529-second maximum guard cost. Raw output
+is 571 MiB. Load is 1.09/1.11/1.07, estimated node availability is 57.30/57.39 GiB,
+global availability 116.59 GiB, and memory-pressure averages zero. Free source/raw
+space is 16.46/183.16 GiB. Active, historical, helper and idle a3 checkout
+identities remain unchanged, as do the checked native/T14/a1/provider receipts;
+a2 is absent and a3 unused. Next full check is due by **12:33 ET**.
+
+The [integrated regression receipt](observations/full-regression-83125b4-20260926.json)
+records the exact green suite and excludes newer preparation code. The fresh
+[public coverage checkpoint](observations/acceptance-checkpoint-20260926-a1.json)
+reconstructs all eight incomplete cells from 197 valid local master records.
+Local code preparation adds a fixed coverage case, a bounded read-only owned-
+process observer, and shared simulator-batch budgets. These are not execution
+or acceptance evidence, and the final post-acceptance reviews remain open.
+
 ## Progress check — 2026-09-26 11:33 ET
 
 All three original exact transfers are complete. The new provider-results packet

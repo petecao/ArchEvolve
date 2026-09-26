@@ -7,7 +7,19 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 11:42 ET
+## Current checkpoint — 2026-09-26 12:03 ET
+
+The native paired study has 93/240 observations: DX100 uniform completed all
+60 checks and its two directional unchanged-code controls passed; upstream
+uniform has 33/60. Maximum first-cell spread is 0.081338 under the fixed 0.10
+ceiling. The remaining study stays unqualified until all four cells pass and
+the independent simulator gates are satisfied. No threshold, sample, bound or
+historical failure has changed. The map and
+[12:03 observation receipt](../observations/progress-20260926-1203.json) retain
+exact analysis and current host/lane evidence. A new bounded simulator-batch
+coordinator is in local implementation/review, with no simulator dispatch yet.
+
+## Historical checkpoint — 2026-09-26 11:42 ET
 
 The actual paired study started at **11:13:30 ET** from `98b5f50` on
 mbit10 socket 1, lease generation 400. The 11:39:52 ET light check observed
