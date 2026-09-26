@@ -149,6 +149,16 @@ unchanged. No Linux fixture, auditor, compilation or measurement ran during
 this preparation. The original malformed preparation receipt is retained;
 an additive valid JSON receipt preserves its reference and unchanged facts.
 
+## Actual DX100 A2 started — 2026-09-26 19:09 ET
+
+The [fixed empirical A2 attempt](observations/dx100-coverage-a2-start-20260926.json)
+started at 19:09:05.775756 ET on node 0 generation 329, exact tested `5a0b15f`.
+Its original 3,600-second clock ends at 20:09:05.775756 ET, including shared
+30-second cleanup. Capacity, graph generation and registration completed;
+compilation was running at the 19:09:49 observation. Node 1 and legacy were
+idle. No simulator result, correctness coverage, protocol freeze or gain is
+claimed from this start. The runtime checkout and sealed admission remain fixed.
+
 ## A2 admission prepared — 2026-09-26 19:07 ET
 
 The [full prelaunch validation](observations/a2-admission-prepared-20260926.json)

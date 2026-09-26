@@ -295,3 +295,12 @@ separate independent terminal audits. See the [actual fixture receipt](../observ
 The original interruption failure remains intact. The fixed A2 simulator
 attempt remains unused; this ticket stays claimed pending actual timed-binary
 coverage and its independent result audit.
+
+
+## Actual corrected coverage running — 2026-09-26 19:09 ET
+
+A2 launched at 19:09:05.775756 ET on mbit10 node 0 generation 329, exact code
+`5a0b15f`, with hard end 20:09:05.775756 ET. The [start receipt](../observations/dx100-coverage-a2-start-20260926.json)
+retains actual argv, process identities and completed generation/registration.
+Compilation is running. This ticket remains claimed pending actual full/tail/
+competing-update results and independent terminal audit; no retry is implied.
