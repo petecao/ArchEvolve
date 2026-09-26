@@ -83,6 +83,33 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Progress check — 2026-09-26 15:33 ET
+
+The [full health audit](observations/health-20260926-1533.json) confirms the
+one-thread native pilot is the only active measurement, on socket 1 generation
+402. Its first DX100 uniform-random pair has 43/60 timed structural checks
+(22 baseline, 21 candidate); the other three pairs have not started. No failure
+or retry is recorded, stderr is empty, and recent sampled tree RSS is below
+1.05 GiB. Socket 0 generation 325 and legacy generation 77 are released with
+empty kernel locks. All historical owned process identities are absent and all
+15 retained audit hashes match. Free `/data1` and `/data` space is 16.38/182.01
+GiB. All three workers are healthy; next full check is 16:03 ET.
+
+The [prospective coverage a2 client](observations/dx100-coverage-a2-preparation-20260926.json)
+is committed at `5e7eb62` after independent review repaired an unconditional
+child-reap failure. Its isolated 11-file export is `67313d9` on native `319645e`;
+exact-export tests passed 116 with three Linux-only skips, and the private branch
+ref is verified. Actual Linux checks and native terminal cleanup are still
+required before dispatch. The initial local export test invocation
+used a Python without pytest and stopped before collection; the existing Python
+3.12 test environment is now explicit. No coverage execution occurred. The [one-thread publisher](observations/one-thread-publisher-verification-20260926.json)
+passed independent review after the same signal-failure/reap edge was repaired;
+it still requires all fresh primary/diagnostic and shared accelerator gates.
+
+Counts remain **13/21 resolved and 0/8 final acceptance cells**. No empirical
+freeze or qualified gain is established. The publisher cleanup correction and
+T15/T16 shared resource supervisor are still under review.
+
 ## One-thread pilot running — 2026-09-26 15:07 ET
 
 The [sole native attempt](observations/native-one-thread-start-20260926.json)

@@ -147,10 +147,93 @@
   "initial_focused_scope": "101 passed/2 Linux skips applies to pre-reap stable six-file checkpoint; subsequent 12 affected checks and original independent reproduction validate the repair.",
   "review_state": "no_remaining_actionable_finding_in_scoped_review",
   "remote_execution": false,
-  "export_state": "not_exported; minimal Git tree on native319 must preserve required runtime hashes",
+  "export_state": "pushed_to_private_repository_and_exact_ref_verified",
   "source_preparation": {
     "path": "/private/tmp/bfs-coverage-a2-stable-20260926/preparation-reap-fix.json",
     "bytes": 4730,
     "sha256": "1678b7d30be9fe889f745c1bce9f857bcae2fe61f425812e89308adef8db2767"
+  },
+  "export": {
+    "date": "2026-09-26 ET",
+    "parent": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+    "commit": "67313d9b2a45d9f0fb23d935b56e755a3a19fa7f",
+    "branch": "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+    "root_commit": "5e7eb6267c04d0e48752c75b028364a2310fc3d2",
+    "files": [
+      {
+        "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/dx100-coverage-a2-preparation-20260926.json",
+        "bytes": 7559,
+        "sha256": "c4d804223479f307f3ad7e30decfb6a069ea7687518ade7894fa51a53983d8b1"
+      },
+      {
+        "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/dx100-durable-interruption-verification-20260926.json",
+        "bytes": 1962,
+        "sha256": "196b015bd10b5ea860f924b2f9c3897417df96afdcde4f53292c0186f6730245"
+      },
+      {
+        "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-coverage-a2-20260926.json",
+        "bytes": 5778,
+        "sha256": "6a44a19d953ad77a9d2c00a811290128296364971f222c25bcdfeed03a39d6cc"
+      },
+      {
+        "path": "docs/bfs-dx100-coverage-a2-plan-20260926.md",
+        "bytes": 15888,
+        "sha256": "ec68f9e81c66f238e1842d22b0a057ad82f860e68d89d43e81638ceace4f8f9f"
+      },
+      {
+        "path": "docs/bfs-dx100-execution.md",
+        "bytes": 16108,
+        "sha256": "2beb4c5a8e06059f4e691dfaa93da2116bad17f42d83e1d8fc79b3c368b087ce"
+      },
+      {
+        "path": "scripts/bfs_dx100_coverage_a2.py",
+        "bytes": 46202,
+        "sha256": "ebe4843361b4d751e57ffcd85e52945caace1a6c1e294945a3ad5917e88fa703"
+      },
+      {
+        "path": "scripts/bfs_dx100_coverage_execution.py",
+        "bytes": 44565,
+        "sha256": "b2a4c7daee6f96c16ffcd1e757ce278c93e49665708123b42450d7f6a412e524"
+      },
+      {
+        "path": "swdb/dx100.py",
+        "bytes": 57054,
+        "sha256": "f4e82d3163d3c2d3d4764aace07da952b0ca67c0aaf480c3738ccd9f0641deec"
+      },
+      {
+        "path": "tests/test_bfs_dx100_coverage_a2.py",
+        "bytes": 31368,
+        "sha256": "4fc708e0311a35e126a80a8ae6ce1b32804c53df71017ebdd46bd46ed2ce12f9"
+      },
+      {
+        "path": "tests/test_bfs_dx100_coverage_execution.py",
+        "bytes": 32046,
+        "sha256": "dd793de52b9c88eafe8b9b45dde53263bee631c2e594e9b2f402c08b44f26339"
+      },
+      {
+        "path": "tests/test_dx100_interruption.py",
+        "bytes": 4695,
+        "sha256": "4aa6c6090ec0e755303b5d62c87071b4908b1c2da0e71f2ed86b06fa07d90e73"
+      }
+    ],
+    "total_bytes": 263225,
+    "held_provider_source_included": false,
+    "pushed": true,
+    "ls_remote_verified": true
+  },
+  "exact_export_verification": {
+    "result": "116 passed,3 Linux-only skipped in27.76s",
+    "python": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "log": {
+      "path": "/private/tmp/bfs-coverage-a2-exact-export-python312-20260926.log",
+      "bytes": 192,
+      "sha256": "9f44fb51d3b6c02625851d7d930001216cf7509dee4c89d34183d016e15ca5e8"
+    },
+    "initial_environment_failure": {
+      "path": "/private/tmp/bfs-coverage-a2-exact-export-20260926.log",
+      "bytes": 69,
+      "sha256": "c99d342a1664b93a03868ad56a22451965948da811503ce3b0d29ae5123b9dbb"
+    },
+    "initial_failure_scope": "Default worktree Python3.14 lacked pytest; no tests collected. Existing3.12 environment then used."
   }
 }

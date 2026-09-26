@@ -329,6 +329,10 @@ def calibrated_runtime(control, paired_mode):
 
 def prepare(spec, store):
     require(spec.get('mode') == 'native', 'this narrow driver prepares native protocols only')
+    one_thread_mode = 'one_thread_calibration' in spec
+    paired_mode = 'paired_calibration' in spec
+    require(not (one_thread_mode and paired_mode), 'select exactly one native calibration route')
+    threads, repetitions = (1, 10) if one_thread_mode else (4, 5)
     request = freeze_header(spec, store)
     ceiling = spec.get('maximum_relative_spread')
     require(type(ceiling) in (int, float) and math.isfinite(ceiling) and ceiling > 0,
@@ -355,13 +359,13 @@ def prepare(spec, store):
         require(machine is not None, 'native pilot machine metadata is missing')
         native_lane(context, machine)
         require(context['basis'] == 'measured' and context['roi'] == 'bfs.complete_call.v1'
-                and context['threads'] == 4 and context['target'] == 'mbit10'
+                and context['threads'] == threads and context['target'] == 'mbit10'
                 and context.get('verifier') == 'swdb.bfs.structural.v1' and context.get('function') == 'DOBFS'
                 and not any(flag.startswith('-DMAA') for flag in evaluation['build']['flags']),
                 'native pilot ROI, threads, actual lane, or CPU artifact differs from plan')
         require(context.get('machine_sha256') == artifacts.digest(machine), 'native pilot machine metadata changed')
         identities.update(item['record_identities']); identities[machine['id']] = artifacts.digest(machine)
-        samples = sample_grid(evaluation, SOURCES, 5)
+        samples = sample_grid(evaluation, SOURCES, repetitions)
         overhead = []
         for execution in item['diagnostic']['executions']:
             require(execution.get('kind') in ('regions', 'memory') and execution.get('correctness', {}).get('passed') is True,
@@ -387,7 +391,6 @@ def prepare(spec, store):
     for values in (configurations, builds, instruments):
         require(artifacts.digest(values[0]) == artifacts.digest(values[1]), 'native graph pilots used different target/build/instrumentation')
     gates = []
-    paired_mode = 'paired_calibration' in spec
     historical_gates = []
     if any(row['relative_spread'] > ceiling for item in observations for row in item['samples']):
         (historical_gates if paired_mode else gates).append(
@@ -398,10 +401,18 @@ def prepare(spec, store):
         historical_packets = read_historical_packets(spec, packets, store)
         for item in historical_packets:
             identities.update(item['record_identities'])
-    control = repeatability_control(spec, historical_packets, store, identities,
-                                    historical_gates if paired_mode else gates)
+    historical_spec = spec
+    if one_thread_mode:
+        from scripts.bfs_one_thread_calibration import historical_selection
+        historical_spec, historical_packets = historical_selection(spec, store)
+        for item in historical_packets:
+            identities.update(item['record_identities'])
+            if any(row['relative_spread'] > ceiling for row in sample_grid(item['evaluation'], SOURCES, 5)):
+                historical_gates.append(item['evaluation']['id'] + ': historical first-block spread exceeds the fixed ceiling')
+    control = repeatability_control(historical_spec, historical_packets, store, identities,
+                                    historical_gates if paired_mode or one_thread_mode else gates)
     historical_control, paired_primary = None, []
-    if paired_mode:
+    if paired_mode or one_thread_mode:
         from scripts.bfs_paired_calibration import qualify
         require(control.get('state') in {'no_numerical_gain_detected', 'numerical_gain_detected'},
                 'paired publication must retain a revalidated historical serial control, including its failures')
@@ -412,7 +423,12 @@ def prepare(spec, store):
             'review_spread_ceiling': ceiling, 'original_spread_policy_frozen': False,
             'scope': 'historical serial collection; retained without promoting or excluding its observations; '
                 'spread diagnostics use the supplied prospective ceiling, not a retroactive historical freeze'}
-        control, paired_primary = qualify(spec, packets, store, identities, gates)
+        if one_thread_mode:
+            from scripts.bfs_one_thread_calibration import historical_paired_control, qualify as qualify_one_thread
+            historical_paired = historical_paired_control(spec, store, identities)
+            control, paired_primary = qualify_one_thread(spec, packets, store, identities, gates)
+        else:
+            control, paired_primary = qualify(spec, packets, store, identities, gates)
         for item, primary in zip(packets, paired_primary):
             historical = item['evaluation']
             require(all(primary['context'].get(key) == historical['context'].get(key)
@@ -450,13 +466,21 @@ def prepare(spec, store):
         'plans': [{'path': str(path), 'sha256': artifacts.file_hash(path)} for path in PLANS],
         'scope': 'native protocol only; no candidate acceptance, artifact reproduction, or Ticket15 completion',
         'region_comparisons': 'baseline attribution retained; no candidate region mapping or regional speedup invented'}
-    if paired_mode:
+    if paired_mode or one_thread_mode:
         calibration.update(historical_serial_control=historical_control,
             diagnostic_scope='native_pilots retain their historical five-trial primary and collector overhead; '
                 'new paired grids alone supply the prospective sampling readiness evidence')
+    if one_thread_mode:
+        calibration.update(historical_four_thread_paired_control=historical_paired,
+            diagnostic_scope='all four fresh one-thread profiles are bound to their new ten-repetition primaries; '
+                             'historical diagnostics and failures remain separately scoped')
     runtime_policy = None
     try:
-        runtime_policy, runtime_evidence = calibrated_runtime(control, paired_mode)
+        if one_thread_mode:
+            from scripts.bfs_one_thread_calibration import calibrated_runtime as one_thread_runtime
+            runtime_policy, runtime_evidence = one_thread_runtime(control)
+        else:
+            runtime_policy, runtime_evidence = calibrated_runtime(control, paired_mode)
         calibration['native_runtime_evidence'] = runtime_evidence
     except (Failure, ValueError, KeyError, TypeError) as exc:
         gates.append('native runtime calibration is unsupported: ' + str(exc))
@@ -464,13 +488,13 @@ def prepare(spec, store):
         'targets': {role: copy.deepcopy(configurations[0]) for role in ('baseline', 'candidate')},
         'builds': {role: copy.deepcopy(builds[0]) for role in ('baseline', 'candidate')},
         'instrumentation': {role: copy.deepcopy(instruments[0]) for role in ('baseline', 'candidate')},
-        'threads': 4, 'roi': 'bfs.complete_call.v1',
+        'threads': threads, 'roi': 'bfs.complete_call.v1',
         'correctness': {'coverage': 'every_timed_trial', 'verifier': 'swdb.bfs.structural.v1', 'required_cases': [],
                         'supporting_pilot_evidence': [item['evaluation'] for item in observations]},
         'sampling': {'repetitions': 5, 'warmups': 0, 'aggregation': 'geomean_source_median_ratio'},
         'profitability': policy, 'differences': {'software': ['Explicit source rewrite evaluated after this freeze'],
             'accelerator': [], 'configuration': []}, 'region_pairs': [], 'calibration': calibration}
-    if paired_mode:
+    if paired_mode or one_thread_mode:
         settings['sampling'] = copy.deepcopy(control['sampling'])
         settings['correctness']['supporting_pilot_evidence'] = control['selected_primary_evaluations']
     if runtime_policy is not None:
