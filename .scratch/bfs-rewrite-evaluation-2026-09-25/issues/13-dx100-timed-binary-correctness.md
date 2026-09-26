@@ -186,3 +186,31 @@ The [new prospective a3 plan](../../../docs/bfs-dx100-witness-continuation-20260
 waits for paired native calibration and provider generation to terminate,
 retains one actual attempt and the same 1,200-second/resource caps, and has a
 15:20 ET latest launch / 15:40 ET absolute end. No a3 simulation has run.
+
+## Reviewed launch and coverage preparation — 2026-09-26 12:38 ET
+
+The observer, fixed coverage case, completed-evidence readers, and bounded
+simulator coordinator are prepared on the separate code branch
+`codex/bfs-simulator-admission-20260926`. The final launcher tip is
+`c5f70d77396af0e7562310375333f34791aac3a1`, independently verified on the remote
+Git branch. The actual a3 client remains unchanged at `1018432`; the new launcher
+runs that client and its read-only observer as separately identified children
+inside the same original 1,170-second work plus 30-second cleanup allowance.
+Separate child exits, exact pane ancestry and the independent terminal union
+audit are mandatory. No existing deadline or failed result is replaced.
+
+The [preparation test receipt](../observations/simulator-admission-tests-20260926.json)
+retains 183 passing focused tests and two Linux-only skips in both root and
+isolated checkouts. The [launcher review receipt](../observations/witness-launcher-tests-20260926.json)
+retains 24 independently passing launcher tests and 43 passing launcher/observer
+tests on the exact export. Review fixed deadline overrun, stale process-group
+signaling and a real child-disappearance/reaping race. Earlier failed test
+results remain available. These are local fixtures, not actual DX100 acceptance.
+
+One a3 dispatch is authorized when the native/provider terminal barriers, free
+socket lane, resource checks, exact runtime and original full launch window
+all pass. The separate fixed 8,212-vertex coverage case can follow only a passed
+actual a3 and its terminal audit; its 15:45 ET latest launch and 16:45 ET end
+remain fixed. No coverage run, Linux cleanup test or simulator batch has been
+dispatched at this checkpoint. Native pilot spread failure blocks T15's freeze
+but does not itself block this independent correctness work or T16.
