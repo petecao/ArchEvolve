@@ -83,6 +83,39 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Progress check — 2026-09-26 12:33 ET
+
+The [host and kernel-lock observations](observations/progress-20260926-1233.json)
+cover 12:33:28–12:33:54 ET. All three workers are responsive; no dead or stranded
+worker was found. Status remains **13 resolved / 8 claimed**, **0/8 final
+acceptance cells**, no empirical freeze and no qualified gain.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 15 paired calibration | Running; qualification failed | mbit10 / socket 1, generation 400 | 146/240 checked observations; both uniform cells complete, DX100 Kronecker 26/60; upstream uniform spread 0.1591826 > 0.10 | Finish original remaining cells; retain all failures; no freeze |
+| 13 correctness | Prepared | mbit10 / socket 0 free | Idle a3 client `1018432`; observer/coverage code `01e5fc1`; separate launcher race fix under review | Native terminal barrier, final launcher pin, actual bounded proof |
+| 16 artifact/control | Prepared independently of 15 | mbit10 / no dispatch | Both exact freeze requests pass local settings/diagnostic admission | Actual a3/coverage, host Linux cleanup test, then sealed reference admission |
+| Preparation tests | Passed locally | Root and isolated export checkout | 183 passed, two Linux-only skipped in each checkout | Real Linux cleanup checks remain required |
+| New provider transfers | Held | mbit10 | Exact six-file result inventory and new context payload | Await pending exact approvals |
+
+Socket 0/socket 1/legacy metadata and kernel locks agree: released 318 / held
+400 / released 77. The active native driver/evaluator remain healthy on
+`98b5f50`, with no outer exit or stderr failure. Latest sampled RSS is 0.949 GiB,
+peak 1.049 GiB; 952 samples retain maximum guard cost 2.522 seconds below 30.
+Load is 1.15/1.14/1.10, estimated node availability 57.30/57.51 GiB, global
+availability 116.71 GiB, and source/raw free space 16.44/182.90 GiB. Historical
+and helper pins and retained native/T14/a1/provider/cell-analysis hashes are
+unchanged. A2 is unused/expired and a3 is unused. Next full check: **13:03 ET**.
+
+The [focused test/export receipt](observations/simulator-admission-tests-20260926.json)
+binds the 13-file preparation branch `codex/bfs-simulator-admission-20260926`
+at `01e5fc13cf25b56549cdd285c6a2e197e2190bbf`. This contains code, tests,
+prospective plans and documentation; it excludes the held provider packet and
+raw artifacts. A separate witness launcher is still being fixed and reviewed.
+An existing host Python 3.12.3/pytest 9.1.1 environment is available; no
+installation or new host test has run. Original exact transfer branches stay
+unchanged. These preparations establish no new empirical acceptance.
+
 ## New control result — 2026-09-26 12:18 ET
 
 The first two paired cells completed 120/240 observations and all 120 correctness
