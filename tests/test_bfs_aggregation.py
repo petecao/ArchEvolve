@@ -44,6 +44,10 @@ def simulation_seed(protocol_seed, tmp_path_factory):
             for repetition in range(2):
                 item = copy.deepcopy(base)
                 item["id"] = f"sim-{role}-{position}-{repetition}"
+                # Simulator fixtures carry modeled execution, not the native
+                # seed's host OpenMP policy. Actual DX100 builds lack these.
+                for native_key in ("native_runtime", "execution_environment"):
+                    item["build"].pop(native_key, None)
                 item["request"].update(fixture=True, protocol=frozen["id"], protocol_role=role,
                                        protocol_trial={"source_position": position, "repetition": repetition})
                 item["build"].update(model_build=identity["model_build"], simulator=identity["simulator"]["path"],
