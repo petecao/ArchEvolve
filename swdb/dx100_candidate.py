@@ -1,6 +1,6 @@
 """Compile identified BFS candidates against a pinned executable model.
 
-Updated: 2026-09-25. Trusted outer instrumentation uses the complete-call ROI.
+Updated: 2026-09-25. Primary candidates use the complete-call ROI.
 """
 
 import json
@@ -13,6 +13,7 @@ from swdb import artifacts, workflow
 from swdb.bfs_native import StageFailure, Stopped, _protect_driver_macros
 from swdb.cli import Failure
 from swdb.dx100 import REVISION, _bounded_process, _file, _finish, _prepare, _request
+from swdb.dx100_author import AUTHOR_ROI, HOOKS
 
 ROI = "bfs.complete_call.v1"
 SUPPRESSED = ["m5_reset_stats", "m5_dump_stats", "m5_work_begin", "m5_work_end", "m5_exit"]
@@ -85,8 +86,10 @@ def compile_candidate(args):
     error = None
     try:
         session, target, model = _prepare(args, "compile", store, request, data)
-        if request.get("roi") != ROI:
-            raise Failure("candidate compilation supports only the trusted complete-call ROI")
+        roi = request.get('roi')
+        author_diagnostic = roi == AUTHOR_ROI
+        if roi not in {ROI, AUTHOR_ROI} or (author_diagnostic and request.get('diagnostic_regions') is not True):
+            raise Failure("author traversal ROI requires source diagnostics; primary candidates require complete-call ROI")
         function = request.get("function")
         if not isinstance(function, str) or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", function):
             raise Failure("selected BFS function must be one C++ identifier")
@@ -108,6 +111,14 @@ def compile_candidate(args):
             raise Failure("candidate application has no supported trusted BFS driver")
         source_root = artifacts.verify(candidate["artifact"])
         artifacts.check_protections(source_root, candidate["protections"])
+        if author_diagnostic:
+            if (candidate.get('artifact_role') != 'source_baseline' or original['application'] != 'dx100-gapbs'
+                    or function not in {'DOBFS', 'DOBFSMAA'} or request['accelerated'] != (function == 'DOBFSMAA')):
+                raise Failure('author diagnostic requires the unchanged identified DX100 source baseline and selected author function')
+            for entry in candidate['artifact']['files']:
+                if Path(entry['path']).suffix in {'.h', '.hpp', '.cc', '.cpp', '.c', '.S'}:
+                    _file({'path': str(model / artifacts.relative_path(entry['path'])), 'sha256': entry['sha256']},
+                          'unchanged author diagnostic source')
         for entry in candidate["artifact"]["files"]:
             if Path(entry["path"]).suffix not in {".h", ".hpp", ".cc", ".cpp", ".c"}:
                 continue
@@ -141,20 +152,29 @@ def compile_candidate(args):
                            if data['context']['host'] == 'mbit10' else session.folder / 'build')
         build_directory.mkdir(exist_ok=False)
         data['context']['build_directory'] = str(build_directory)
-        driver_path = build_directory / "complete_call.cc"
+        driver_path = build_directory / ('author_roi.cc' if author_diagnostic else 'complete_call.cc')
         binary = build_directory / "bfs"
         m5_source = model / "util/m5/build/x86/abi/x86/m5op.S"
         if not m5_source.is_file():
             raise Failure("pinned model m5ops assembly is unavailable")
         flags = ["-std=c++11", "-O3", "-Wall", "-g", "-fopenmp", "-DGEM5", "-DNUM_CORES=4",
                  f"-DTILE_SIZE={target['configuration']['tile_elements']}"]
+        if author_diagnostic:
+            flags = ['-std=c++11', '-O3', '-Wall', '-g3', '-fopenmp', '-DGEM5']
+            if request['accelerated']:
+                flags += ['-DNUM_CORES=4', f"-DTILE_SIZE={target['configuration']['tile_elements']}"]
         if request["accelerated"]:
             flags += ["-DMAA"]
         includes = [model / "include", model / "util/m5/src", model / "benchmarks/API", source.parent]
         if request.get('diagnostic_regions'):
             from swdb.dx100_diagnostic import prepare
             diagnostic = prepare(session, request, candidate, source_root, source, compiler, flags, includes, build_directory)
-            driver_text = driver(Path(diagnostic['instrumented_source']['path']), model, function, diagnostic)
+            selected_driver = driver
+            if author_diagnostic:
+                from swdb.dx100_author import driver as selected_driver
+                diagnostic['difference'] += '; author reset/dump hooks activate/deactivate guards while forwarding original ROI events'
+            diagnostic['roi'] = roi
+            driver_text = selected_driver(Path(diagnostic['instrumented_source']['path']), model, function, diagnostic)
             _protect_driver_macros(candidate, source_root, extra_text=driver_text)
             data['context']['diagnostic'] = diagnostic
         driver_path.write_text(driver_text)
@@ -164,9 +184,9 @@ def compile_candidate(args):
         verifier = next((guard for guard in candidate["protections"] if guard["kind"] == "verifier"), None)
         if not verifier or verifier["path"] != source_path:
             raise Failure("candidate has no protected BFS verifier in its translation unit")
-        data["context"].update(candidate_sha256=candidate["artifact"]["sha256"], roi=ROI, application=original["application"],
+        data["context"].update(candidate_sha256=candidate["artifact"]["sha256"], roi=roi, application=original["application"],
             source_path=source_path, function=function, accelerated_requested=request["accelerated"],
-            model_build=model_build["id"], suppressed_internal_events=SUPPRESSED,
+            model_build=model_build["id"], suppressed_internal_events=[] if author_diagnostic else SUPPRESSED,
             driver={"path": str(driver_path), "sha256": artifacts.file_hash(driver_path)},
             timed_source={"path": str(source), "sha256": artifacts.file_hash(source)},
             verifier_source={"path": str(source), "sha256": artifacts.file_hash(source),
@@ -181,7 +201,9 @@ def compile_candidate(args):
             data['build']['compiler_version'] = version.read_text(errors='replace').splitlines()[:2]
         else:
             data['build']['compiler_version'] = ['explicit fixture compiler']
-        data['build']['adapter'] = 'dx100.complete_call.v1'
+        data['build']['adapter'] = 'dx100.author_roi_diagnostic.v1' if author_diagnostic else 'dx100.complete_call.v1'
+        if author_diagnostic:
+            data['context']['internal_event_hooks'] = HOOKS
         session.save()
         _bounded_process(session, "candidate_compile", command, request["budget"]["build_seconds"],
                          request["budget"]["memory_gib"], request["budget"]["storage_gib"])

@@ -1,0 +1,157 @@
+"""Simulator orchestration selection guards; no simulator evidence. Updated: 2026-09-25."""
+import copy
+import importlib.util
+import sys
+
+import pytest
+
+from conftest import REPO
+from swdb import artifacts, bfs_protocol
+from swdb.cli import Failure
+
+
+@pytest.fixture
+def selection(tmp_path, monkeypatch):
+    # This client imports the sibling bounded-build helper when run as a script.
+    monkeypatch.syspath_prepend(str(REPO / 'scripts'))
+    spec = importlib.util.spec_from_file_location('simulator_series', REPO / 'scripts/bfs_simulator_series.py')
+    client = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(client)
+    pinned = tmp_path / 'pinned'; pinned.mkdir()
+    (pinned / 'bfs.cc').write_text('int fixture_bfs(){return 0;}\n')
+    expected = artifacts.identify(pinned)
+    implementation = {'id': 'dx100-bfs-scalar', 'function': 'DOBFS'}
+    source = {'id': 'snapshot', 'implementation': implementation['id'],
+              'context': {'function': 'DOBFS'}, 'artifact': copy.deepcopy(expected)}
+    candidate = {'id': 'baseline', 'implementation': implementation['id'],
+                 'source_snapshot': source['id'], 'context': {'function': 'DOBFS'},
+                 'artifact_role': 'source_baseline', 'artifact': copy.deepcopy(expected)}
+    workload = {'kind': 'workload', 'requested_id': 'graph.v1', 'version': 1, 'supersedes': None,
+                'invalidated_comparisons': [], 'definition': {'sources': [0, 4], 'family': 'contract_fixture'}}
+    seal(workload)
+    return client, candidate, source, implementation, workload, expected
+
+
+def seal(record):
+    fingerprint = artifacts.digest(bfs_protocol._identity_payload(record))
+    record.update(identity_sha256=fingerprint, id=record['requested_id'] + '.' + fingerprint[:16])
+    return record
+
+
+def protocol(workload, mode='controlled_simulator'):
+    return seal({'kind': 'protocol', 'requested_id': 'policy.v1', 'version': 1, 'supersedes': None,
+                 'invalidated_comparisons': [], 'frozen_at': '2026-09-25T20:00:00-04:00', 'state': 'frozen',
+                 'settings': {'mode': mode}, 'workload_identities': {workload['id']: workload['identity_sha256']}})
+
+
+def check(selection, frozen=None, role=None, author=False):
+    client, candidate, source, implementation, workload, expected = selection
+    client.validate_selection(candidate, source, implementation, workload, frozen, role, author, expected)
+
+
+@pytest.mark.parametrize('implementation_id,function,author', [
+    ('dx100-bfs-scalar', 'DOBFS', False), ('gapbs-bfs-do', 'DOBFS', False),
+    ('dx100-bfs-maa-reference', 'DOBFSMAA', True)])
+def test_unchanged_identified_source_can_calibrate(selection, implementation_id, function, author):
+    _, candidate, source, implementation, _, _ = selection
+    implementation.update(id=implementation_id, function=function)
+    for value in (candidate, source):
+        value['implementation'] = implementation_id
+        value['context']['function'] = function
+    check(selection, author=author)
+
+
+def test_repackaged_rewrite_is_not_an_unchanged_pilot(selection, tmp_path):
+    _, candidate, source, _, _, _ = selection
+    changed = tmp_path / 'changed'; changed.mkdir()
+    (changed / 'bfs.cc').write_text('int fixture_bfs(){return 1;}\n')
+    # Public baseline-candidate also accepts a newly profiled source snapshot.
+    # Equality to that snapshot alone cannot establish pinned-source identity.
+    candidate['artifact'] = source['artifact'] = artifacts.identify(changed)
+    with pytest.raises(ValueError, match='pinned application source'):
+        check(selection)
+
+
+@pytest.mark.parametrize('fault', ['candidate-implementation', 'source-implementation',
+                                  'source-reference', 'candidate-function', 'source-function', 'proposal'])
+def test_mixed_identity_or_rewrite_history_cannot_calibrate(selection, fault):
+    _, candidate, source, _, _, _ = selection
+    if fault == 'candidate-implementation': candidate['implementation'] = 'gapbs-bfs-do'
+    elif fault == 'source-implementation': source['implementation'] = 'gapbs-bfs-do'
+    elif fault == 'source-reference': candidate['source_snapshot'] = 'different-snapshot'
+    elif fault == 'candidate-function': candidate['context']['function'] = 'DOBFSMAA'
+    elif fault == 'source-function': source['context']['function'] = 'DOBFSMAA'
+    else: candidate['proposal'] = 'actual-rewrite-proposal'
+    with pytest.raises(ValueError, match='identity|pilot'):
+        check(selection)
+
+
+def test_frozen_candidate_may_change_source_but_baseline_may_not(selection):
+    _, candidate, _, _, workload, _ = selection
+    frozen = protocol(workload)
+    candidate.update(artifact_role='rewrite', proposal='selected-proposal')
+    candidate['artifact']['sha256'] = 'f' * 64
+    check(selection, frozen, 'candidate')
+    with pytest.raises(ValueError, match='pinned application source'):
+        check(selection, frozen, 'baseline')
+    with pytest.raises(ValueError, match='pinned application source'):
+        check(selection, frozen, 'candidate', author=True)
+
+
+@pytest.mark.parametrize('fault', ['native-policy', 'changed-policy', 'changed-workload',
+                                  'missing-workload', 'wrong-workload-fingerprint', 'role'])
+def test_frozen_selection_requires_exact_simulator_policy(selection, fault):
+    workload = selection[4]
+    frozen = protocol(workload)
+    role = 'candidate'
+    if fault == 'native-policy': frozen = protocol(workload, 'native')
+    elif fault == 'changed-policy': frozen['settings']['mode'] = 'artifact_reference'
+    elif fault == 'changed-workload': workload['definition']['sources'].reverse()
+    elif fault == 'missing-workload': frozen['workload_identities'] = {}; seal(frozen)
+    elif fault == 'wrong-workload-fingerprint':
+        frozen['workload_identities'][workload['id']] = 'a' * 64; seal(frozen)
+    else: role = 'exploratory'
+    with pytest.raises((Failure, ValueError)):
+        check(selection, frozen, role)
+
+
+def test_author_binary_cannot_be_labeled_as_upstream_source(selection):
+    _, candidate, source, implementation, _, _ = selection
+    implementation['id'] = candidate['implementation'] = source['implementation'] = 'gapbs-bfs-do'
+    with pytest.raises(ValueError, match='author binaries'):
+        check(selection, author=True)
+
+
+def test_accelerated_author_reference_is_not_the_scalar_comparator(selection):
+    _, candidate, source, implementation, workload, _ = selection
+    implementation.update(id='dx100-bfs-maa-reference', function='DOBFSMAA')
+    for value in (candidate, source):
+        value.update(implementation=implementation['id'])
+        value['context']['function'] = implementation['function']
+    frozen = protocol(workload, 'artifact_reference')
+    check(selection, frozen, 'candidate', author=True)
+    with pytest.raises(ValueError, match='unaccelerated starting source'):
+        check(selection, frozen, 'baseline', author=True)
+
+
+@pytest.mark.parametrize('root', ['/data/yanruj/EvolveSWDB_runs', '/data1/yanruj/EvolveSWDB_runs',
+                                 '/data/yanruj/EvolveSWDB_runs/existing-batch'])
+def test_batch_budget_never_counts_a_shared_or_nonempty_output_root(selection, tmp_path, monkeypatch, capsys, root):
+    client = selection[0]
+    monkeypatch.setattr(client.socket, 'gethostname', lambda: 'mbit10')
+    monkeypatch.setattr(sys, 'argv', ['bfs_simulator_series.py', '--id', 'guard-case', '--candidate', 'baseline',
+        '--workload', 'graph', '--build-evaluation', 'build', '--configuration', str(tmp_path / 'unused.json'),
+        '--runs-dir', root, '--lane', '0'])
+    (tmp_path / 'unrelated-job.log').write_text('already owned output')
+    calls = []
+    def external_directory(path):
+        calls.append(str(path))
+        return tmp_path
+    monkeypatch.setattr(client.artifacts, 'external_directory', external_directory)
+    with pytest.raises(SystemExit) as stopped:
+        client.main()
+    assert stopped.value.code == 2
+    if root.endswith('existing-batch'):
+        assert calls == [root] and 'directory must be empty' in capsys.readouterr().err
+    else:
+        assert not calls and 'dedicated child' in capsys.readouterr().err

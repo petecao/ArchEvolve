@@ -43,10 +43,10 @@ Tickets 01–05, 10, and 11 are resolved; the current empirical frontier is nati
 
 | Ticket | Starting implementation | Payload / producer | Execution requirement | Graph coverage |
 |---|---|---|---|---|
-| 17 | DX100 scalar top-down BFS | Natural-language instructions / SW test client | Correct candidate with proven DX100 accelerator execution | claimed |
-| 18 | DX100 scalar top-down BFS | Supplied patch / test client | Real native CPU evaluation and reprofiling | claimed |
-| 19 | Upstream direction-optimizing BFS | Structured instructions / test client | Real native CPU evaluation and reprofiling | claimed |
-| 20 | Upstream direction-optimizing BFS | Annotated source / HW test client | Correct candidate with proven DX100 accelerator execution | claimed |
+| 17 | DX100 scalar top-down BFS | Natural-language instructions / SW test client | Correct candidate with proven DX100 accelerator execution | Kronecker and uniform-random |
+| 18 | DX100 scalar top-down BFS | Supplied patch / test client | Real native CPU evaluation and reprofiling | Kronecker and uniform-random |
+| 19 | Upstream direction-optimizing BFS | Structured instructions / test client | Real native CPU evaluation and reprofiling | Kronecker and uniform-random |
+| 20 | Upstream direction-optimizing BFS | Annotated source / HW test client | Correct candidate with proven DX100 accelerator execution | Kronecker and uniform-random |
 
 These four cases cover all eight source/route/graph cells, all four payload forms, and both source-specific accelerator minima. Ticket 16 separately supplies the actual artifact reference and controlled comparison evidence. A candidate or result may cover multiple obligations only when its source, workload, protocol, target, and required evidence match.
 
@@ -107,6 +107,17 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | Master records, collaborator fixtures, public workflow tests, authorization | 26–27, 53–60 | D02–D03, D14–D15 | AC07, AC09, AC18, AC20; publication gate |
 
 ## Context pointers
+
+These entries retain historical milestones. The ticket table and each ticket's latest
+evidence describe current acceptance; earlier publication-only or unexecuted notes
+do not override the subsequent authorization and execution evidence.
+
+- 2026-09-25 20:20 ET: checkpoint `95909bc` separates the fixed author `DOBFSMAA`
+  implementation from scalar `DOBFS`, binds evaluator entry points, preserves
+  simulator source/repetition cells in complete profile packages, and exposes
+  refreshed evidence through result chains. Targeted identity (29), aggregation
+  (12), and package (28) checks passed. Native profiling attempt a3 is still running;
+  no profiling or simulator ticket is resolved from this checkpoint alone.
 
 - 2026-09-25: [Ticket 10](issues/10-dx100-operation-contracts.md) resolved: seven pinned source-backed operation contracts and 14 passing public capability/proposal tests. [Capability contract](../../docs/bfs-capabilities.md) separates model/interface support from executable readiness; no DX100 execution is yet claimed.
 

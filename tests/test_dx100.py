@@ -135,6 +135,20 @@ def test_changed_binary_is_rejected_before_checkpoint(case):
     assert not any(stage["stage"] == "checkpoint" for stage in result["stages"])
 
 
+def test_author_binary_tile_mismatch_rejected_before_checkpoint(case):
+    data = execution_request(case)
+    _, invoke, folder = case
+    original = Path(data['binary']['path'])
+    binary = folder / 'bfs_maa_1K'
+    binary.write_bytes(original.read_bytes())
+    binary.chmod(0o755)
+    data['binary'] = reference(binary)
+    result = invoke('dx100-execute', data)
+    assert result['outcome']['state'] == 'failed'
+    assert 'tile size differs' in result['outcome']['reason']
+    assert not any(stage['stage'] in {'checkpoint', 'simulation'} for stage in result['stages'])
+
+
 def test_reference_execution_accepts_explicit_four_hour_stage_but_keeps_build_cap(case):
     request, invoke, _ = case
     data = execution_request(case)

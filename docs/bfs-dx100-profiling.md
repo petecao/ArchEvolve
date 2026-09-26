@@ -17,4 +17,17 @@ Run that separate diagnostic binary through `dx100-execute`, then supply its ID 
 
 The profile identifies separate region and memory executions: source scopes use the diagnostic binary, while ROI-wide memory counters use the primary binary. Every observation retains source artifact, binary, output, and raw-statistics hashes. Instrumentation overhead and unresolved scopes remain explicit. Collection completeness and structural correctness are separate fields; unverified collection cannot establish a gain.
 
+The unchanged author baseline also supports a separate diagnostic compile with
+`roi: bfs.dx100.traversal.v1`. This requires `diagnostic_regions: true`, a
+`source_baseline` candidate whose code matches the pinned model, and the exact
+identified `DOBFS` or `DOBFSMAA` function. The generated wrapper forwards the
+author's internal m5 events; its `internal_event_hooks` activate source guards
+at reset and deactivate them at dump. The receipt uses adapter
+`dx100.author_roi_diagnostic.v1`, while the primary author executable stays
+unchanged. A scope entered before activation, including the enclosing BFS
+function, has `observation_state: unobserved`, an `unavailable_reason`, and no
+inferred duration. The original returned parent array and counters are checked
+after the same guest's ROI exit is sealed and continued. These diagnostics
+cannot be substituted for the author's primary timing.
+
 Correctness remains independent. Collection can retain an unverified real evaluation, and a fixture remains `contract_fixture` throughout. Nothing in collection promotes a candidate, infers a neutral speedup, or enables a gain claim. Exact candidate, source snapshot, binary, workload, source vertex, target/configuration, and actual clock remain part of the retrievable evidence.

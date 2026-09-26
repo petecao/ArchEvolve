@@ -54,11 +54,15 @@ def diagnostic_regions(store, request, evaluation, candidate, root):
         row.update(metrics={'inclusive_simulated_seconds': values['inclusive_ns'] / 1e9,
                             'exclusive_simulated_seconds': values['exclusive_ns'] / 1e9,
                             'invocations': values['invocations']},
-            basis='simulated', scope='accumulated simulated elapsed per executing thread within diagnostic complete-call ROI',
+            basis='simulated', scope='accumulated simulated elapsed per executing thread within ' + diagnostic['context']['roi'],
             artifact_sha256=diagnostic['build']['binary_sha256'], source_artifact_sha256=candidate['artifact']['sha256'],
             attribution={'inclusive': True, 'exclusive': 'nested guarded intervals subtracted on the same thread',
                          'whole_lexical_region': True, 'clock': 'm5_rpns',
                          'quantity': definition['quantity'], 'limitations': definition['difference']})
+        if values['invocations'] == 0:
+            row['metrics'] = {'invocations': 0}
+            row['observation_state'] = 'unobserved'
+            row['unavailable_reason'] = 'This scope was not entered while ROI guards were active; no duration is inferred.'
         regions.append(row)
     source = diagnostic['context']['source']
     trial = evaluation['context'].get('protocol_trial', {'source_position': 0, 'repetition': 0})

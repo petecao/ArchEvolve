@@ -15,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from swdb import artifacts, bfs_protocol, profile_package
+from swdb.store import Store
 
 
 def native_patch(original):
@@ -121,6 +122,8 @@ def main():
     if packages[0]['id'] == packages[1]['id']:
         raise ValueError('proposal support requires two distinct graph-family packages')
     implementation = 'dx100-bfs-scalar' if args.case.startswith('dx100-') else 'gapbs-bfs-do'
+    identified_implementation = query('get', implementation)
+    expected_artifact = artifacts.identify(artifacts.source_root(Store(args.records), identified_implementation))
     if any(p.get('kind') != 'profile_package' or p.get('implementation') != implementation
            or p.get('completeness') != 'complete' or p.get('evidence', {}).get('classification') != 'execution'
            or p.get('evidence', {}).get('primary_correctness', {}).get('state') != 'passed' for p in packages):
@@ -150,11 +153,16 @@ def main():
             raise ValueError('baseline package evaluation or canonical workload identity changed')
         baseline = query('get', evaluation['candidate'])
         ancestor = query('get', baseline['source_snapshot'])
-        if (baseline.get('artifact_role') != 'source_baseline' or baseline['implementation'] != implementation
+        if (baseline.get('artifact_role') != 'source_baseline' or baseline.get('proposal')
+                or any(item['implementation'] != implementation for item in (baseline, ancestor, evaluation))
                 or baseline['artifact']['sha256'] != source['artifact']['sha256']
                 or baseline['artifact']['sha256'] != ancestor['artifact']['sha256']
+                or baseline['artifact']['sha256'] != expected_artifact['sha256']
+                or identified_implementation['function'] != 'DOBFS'
+                or any(item['context'].get('function') != identified_implementation['function']
+                       for item in (baseline, ancestor, source))
                 or package['candidate'] != baseline['id']):
-            raise ValueError('representative proposals require unchanged starting-source packages')
+            raise ValueError('representative proposals require unchanged pinned application source and entry point')
     package, source = packages[0], sources[0]
     path = 'benchmarks/gapbs/src/bfs.cc' if implementation == 'dx100-bfs-scalar' else 'src/bfs.cc'
     original = (Path(source['artifact']['path']) / path).read_text()

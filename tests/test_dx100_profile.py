@@ -13,7 +13,7 @@ from test_dx100 import case, execution_request, reference
 
 
 @pytest.mark.parametrize("mode", ["normal", "missing-memory", "truncated", "changed-stats", "multiple-intervals", "wrong-clock", "stale-region",
-    "diagnostic", "diagnostic-source-mismatch", "diagnostic-invalid-counters"])
+    "diagnostic", "diagnostic-source-mismatch", "diagnostic-invalid-counters", "diagnostic-outside-roi"])
 def test_public_simulated_collector_retains_identity_and_incomplete_attribution(case, records, mode):
     records.copy_repo("applications")
     repository = Path(__file__).resolve().parents[1]
@@ -90,6 +90,8 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
                   'regions': [{'index': i, 'inclusive_ns': 300 - i * 100, 'exclusive_ns': 100,
                                'invocations': 2} for i in range(len(rows))]}
         if mode == 'diagnostic-invalid-counters': values['regions'][0]['exclusive_ns'] = 900
+        if mode == 'diagnostic-outside-roi':
+            values['regions'][0].update(inclusive_ns=0, exclusive_ns=0, invocations=0)
         log.write_text('SWDB_DX100_ROI_SEALED\nSWDB_DX100_REGIONS ' + json.dumps(values) + '\n')
         diagnostic['stages'] = [{'stage': 'simulation', 'state': 'complete', 'started': evaluation['stages'][0]['started'],
                                  'log': str(log), 'log_sha256': artifacts.file_hash(log)}]
@@ -128,6 +130,11 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
             assert profile['dynamic_memory'][0]['raw_sha256'] == evaluation['context']['statistics']['sha256']
             assert all(run['source_position'] == 2 and run['repetition'] == 1 for run in profile['executions'])
             assert retrieved['timing'][0]['source_position'] == 2 and retrieved['timing'][0]['repetition'] == 1
+        elif mode == 'diagnostic-outside-roi':
+            assert profile['regions'][0]['metrics'] == {'invocations': 0}
+            assert profile['regions'][0]['observation_state'] == 'unobserved'
+            assert 'not entered' in profile['regions'][0]['unavailable_reason']
+            assert profile['regions'][1]['metrics']['inclusive_simulated_seconds'] == 200 / 1e9
         else:
             assert profile["regions"][0]["metrics"] == {}
             assert profile["regions"][1]["metrics"]["inclusive_simulated_seconds"] == 0.0004

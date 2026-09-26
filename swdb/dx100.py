@@ -482,6 +482,17 @@ def execute(args):
         if any(character.isspace() for character in str(graph)):
             raise Failure("this pinned gem5 option parser cannot safely pass whitespace in graph paths")
         settings, configured = _configuration(request, target, root)
+        if compiled:
+            flags = compiled['build']['flags']
+            # Scalar author diagnostics do not use the API or its tile macros.
+            if compiled['context'].get('accelerated_requested') and (
+                    f"-DTILE_SIZE={request['configuration']['tile_elements']}" not in flags
+                    or '-DNUM_CORES=4' not in flags):
+                raise Failure('compiled accelerator tile/core flags differ from the requested model configuration')
+        else:
+            built_tile = {'bfs_maa': 16384, 'bfs_maa_1K': 1024}.get(binary.name)
+            if built_tile and built_tile != request['configuration']['tile_elements']:
+                raise Failure('author executable tile size differs from the requested model configuration')
         script = root / "configs/deprecated/example/se.py"
         if not script.is_file():
             raise Failure("pinned simulator entry script is missing")

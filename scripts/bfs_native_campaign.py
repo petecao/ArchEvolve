@@ -21,7 +21,7 @@ from swdb import artifacts, bfs_protocol, profile, profile_package, rewrite
 from swdb.store import Store
 
 
-def validate_inputs(packages, frozen, proposal, get, lane):
+def validate_inputs(packages, frozen, proposal, get, lane, expected_artifact):
     """Check the exact inputs before any proposal is sent or benchmark is run."""
     if len(packages) != 2 or len({p['id'] for p in packages}) != 2:
         raise ValueError('exactly two distinct baseline packages are required')
@@ -54,8 +54,14 @@ def validate_inputs(packages, frozen, proposal, get, lane):
                 or artifacts.digest(package['context'].get('build')) != artifacts.digest(evaluation.get('build'))
                 or evaluation.get('candidate') != candidate['id']):
             raise ValueError('baseline package primary source/context evidence changed')
-        if candidate.get('artifact_role') != 'source_baseline' or candidate['artifact']['sha256'] != source['artifact']['sha256']:
-            raise ValueError('baseline package must measure an unchanged starting-source candidate')
+        implementation = get(package['implementation'])
+        if (candidate.get('artifact_role') != 'source_baseline' or candidate.get('proposal')
+                or candidate['artifact']['sha256'] != source['artifact']['sha256']
+                or candidate['artifact']['sha256'] != expected_artifact['sha256']
+                or any(item['implementation'] != implementation['id'] for item in (candidate, source, evaluation))
+                or implementation['function'] != 'DOBFS'
+                or any(item['context'].get('function') != implementation['function'] for item in (candidate, source))):
+            raise ValueError('baseline package must measure the unchanged pinned application source and entry point')
         artifacts.verify(candidate['artifact'])
         if (workload['id'] not in frozen['workload_identities']
                 or workload['identity_sha256'] != frozen['workload_identities'][workload['id']]
@@ -192,7 +198,9 @@ class Driver:
         packages = [self.call('get', rid) for rid in args.packages]
         proposal = json.loads(args.proposal.read_text())
         bfs_protocol._validate_settings(frozen['settings'], Store(args.records))
-        rows = validate_inputs(packages, frozen, proposal, lambda rid: self.call('get', rid), args.lane)
+        implementation = self.call('get', packages[0]['implementation'])
+        expected_artifact = artifacts.identify(artifacts.source_root(Store(args.records), implementation))
+        rows = validate_inputs(packages, frozen, proposal, lambda rid: self.call('get', rid), args.lane, expected_artifact)
         if proposal['payload']['kind'] == 'structured_instructions' and not args.provider_config:
             raise ValueError('interpreted proposal requires operator-supplied --provider-config')
         for file in (args.provider_config, args.repair_config):

@@ -14,9 +14,10 @@ from swdb.dx100_candidate import driver
 from test_dx100 import case, reference, execution_request
 
 
-@pytest.mark.parametrize("override", [False, True, 'function'])
-@pytest.mark.parametrize('diagnostic', [False, True])
-def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_driver_override(case, records, override, diagnostic):
+@pytest.mark.parametrize('override,diagnostic,author',
+    [(override, diagnostic, False) for override in (False, True, 'function') for diagnostic in (False, True)]
+    + [(False, True, True), ('source', True, True), ('nondiagnostic', False, True)])
+def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_driver_override(case, records, override, diagnostic, author):
     request, invoke, folder = case
     records.copy_repo("applications")
     repository = Path(__file__).resolve().parents[1]
@@ -42,6 +43,10 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
     records.write("source_snapshots/source.yaml", snapshot)
     records.write("candidates/candidate.yaml", candidate)
     model = Path(model_build["model_root"])
+    if author:
+        pinned_source = model / 'benchmarks/gapbs/src/bfs.cc'
+        pinned_source.parent.mkdir(parents=True, exist_ok=True)
+        pinned_source.write_bytes(source.read_bytes() + (b'// changed\n' if override == 'source' else b''))
     assembly = model / "util/m5/build/x86/abi/x86/m5op.S"
     assembly.parent.mkdir(parents=True)
     assembly.write_text("// fixture assembly\n")
@@ -56,6 +61,8 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
         budget={"total_seconds": 60, "memory_gib": 1, "storage_gib": 1, "build_seconds": 10})
     if override == 'function':
         compile_request['function'] = 'DOBFSMAA'
+    if author:
+        compile_request['roi'] = 'bfs.dx100.traversal.v1'
     if diagnostic:
         from test_bfs_profiling import compiler_inventory
         library, arguments = compiler_inventory()
@@ -67,8 +74,13 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
     if not override:
         assert result["build"]["binary_sha256"]
         assert result["context"]["candidate_sha256"] == artifact["sha256"]
-        assert result["context"]["roi"] == "bfs.complete_call.v1"
-        assert "m5_dump_stats" in result["context"]["suppressed_internal_events"]
+        assert result["context"]["roi"] == compile_request['roi']
+        if author:
+            assert result['context']['suppressed_internal_events'] == []
+            assert set(result['context']['internal_event_hooks']) == {'m5_reset_stats', 'm5_dump_stats'}
+            assert result['build']['adapter'] == 'dx100.author_roi_diagnostic.v1'
+        else:
+            assert "m5_dump_stats" in result["context"]["suppressed_internal_events"]
         assert result["context"]["verifier_source"]["bounds_check"]
         if diagnostic:
             assert result['context']['diagnostic']['discovery']['actual_build_flags'] == result['build']['flags']
