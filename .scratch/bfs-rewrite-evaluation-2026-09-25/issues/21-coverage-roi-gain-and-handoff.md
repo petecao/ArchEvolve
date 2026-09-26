@@ -153,3 +153,11 @@ running paired records are outside this local snapshot. Artifact availability
 remains explicitly unverified where the local host cannot access remote bytes.
 The handoff now links the actual imported T14 simulator package, observed region
 and memory scopes, and its unchanged unverified-correctness limitation.
+
+
+2026-09-26 11:54 ET: the isolated full suite at `83125b4` completed with
+**1,300 passed, three skipped**, exit code 0, in 2,682.52 seconds. See the
+[retained completion receipt](../observations/full-regression-83125b4-20260926.json).
+The later a3/graph/coverage/batch work is excluded from that pin and receives
+separate verification. This green suite does not close any empirical cell or
+the final post-acceptance Standards/Spec review.

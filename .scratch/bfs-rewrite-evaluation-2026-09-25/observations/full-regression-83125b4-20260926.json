@@ -1,0 +1,30 @@
+{
+  "created": "2026-09-26",
+  "observed_at_et": "2026-09-26T11:54:33.281012-04:00",
+  "run": "full_local_regression",
+  "commit": "83125b42cd470a7c0348583cec8c9324251fccdf",
+  "worktree": "/Users/yanrujhou/.codex/worktrees/bfs-validation/EvolveSWDB",
+  "exit_code": 0,
+  "passed": 1300,
+  "skipped": 3,
+  "failed": 0,
+  "pytest_elapsed_seconds": 2682.52,
+  "log_last_modified_et": "2026-09-26T11:53:29.771791-04:00",
+  "log": {
+    "path": "/private/tmp/bfs-full-suite-20260926-1110b-83125b4.log",
+    "sha256": "bb25ab56ff53bef572bd2d0cb64a66582d276acf87253b2fe419539182cf9e66"
+  },
+  "bounds": {
+    "timeout_seconds": 3600,
+    "cleanup_seconds": 30
+  },
+  "python": "3.12.6",
+  "limitations": [
+    "Pinned run excludes later a3/coverage/coordinator preparation. Local fixtures and subprocess checks do not establish actual native/DX100 acceptance."
+  ],
+  "initial_launcher_failure": {
+    "path": "/private/tmp/bfs-full-suite-20260926-1110-83125b4.log",
+    "sha256": "c99d342a1664b93a03868ad56a22451965948da811503ce3b0d29ae5123b9dbb",
+    "reason": "Python3.14 selected without pytest; no tests collected."
+  }
+}

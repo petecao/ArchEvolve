@@ -298,3 +298,17 @@ The corrected launcher explicitly selects repository Python 3.12.6, with a
 The filename is an identifier, not a claim that it started at 11:10. No full
 result is claimed until the process finishes. New work after `83125b4` is not
 covered by this pinned run.
+
+
+## Integrated regression completed — 2026-09-26 11:54 ET
+
+The isolated suite at exact commit `83125b42cd470a7c0348583cec8c9324251fccdf`
+completed with **1,300 passed, three skipped, zero failed**, exit code 0, in
+2,682.52 seconds. The worktree remains clean at that commit. The original log is
+`/private/tmp/bfs-full-suite-20260926-1110b-83125b4.log`, SHA-256
+`bb25ab56ff53bef572bd2d0cb64a66582d276acf87253b2fe419539182cf9e66`.
+The [completion receipt](../.scratch/bfs-rewrite-evaluation-2026-09-25/observations/full-regression-83125b4-20260926.json)
+records the observed completion, log modification time, execution bounds and
+preserved initial launcher failure. Later a3/graph/coverage/batch work is outside
+this pinned suite and has separate focused tests and review. Actual native and
+DX100 acceptance, followed by the final two-axis review, remains incomplete.
