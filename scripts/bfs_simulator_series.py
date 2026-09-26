@@ -20,8 +20,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from swdb import artifacts, bfs_protocol, profile
 from swdb.store import Store
-from dx100_build import disk_usage_kib
-from bfs_process import interruption_signals, run_stage
+from scripts.dx100_build import disk_usage_kib
+from scripts.bfs_process import interruption_signals, run_stage
 
 
 def validate_diagnostic_build(build, candidate, implementation, model, roi, accelerated, frozen=None, role=None):

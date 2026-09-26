@@ -83,7 +83,7 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
-## Latest integration — 2026-09-25 23:57 ET
+## Latest integration — 2026-09-25 23:54 ET
 
 - Literal DX100 patch proposal and candidate now have actual primary and diagnostic
   compilation receipts, 31 discovered regions, and audited source/protection/binary

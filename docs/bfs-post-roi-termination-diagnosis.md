@@ -1,7 +1,7 @@
 # BFS post-ROI termination diagnosis
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 
 Status: source diagnosis and prospective diagnostic plan. No simulator patch,
 new execution, protocol freeze, or acceptance change is authorized by this document.
@@ -243,3 +243,84 @@ not establish general pre-ROI equivalence. Any future validation must include
 same-pointer peers, distinct-process same-group peers, unrelated groups, and
 non-group exits, then a bounded execution with strict terminal checking. This
 patch is not applied, and a6 remains immutable and unverified.
+
+## Upstream and specification review — 2026-09-26
+
+The upstream gem5 history contains a relevant
+[2019 exit-group fix](https://github.com/gem5/gem5/commit/bae0edb0d26dc6c4738855cf38e9a6a109ae8003).
+It added halting of same-TGID peers, excluded `Halting` contexts from the active
+count, and checked the count after halting the caller. Those changes are already
+present in pinned DX100. The patch retained `walk != p`; it does not repair the
+restored same-Process alias case. The proposed group-only extension above must
+not be described as an upstream backport.
+
+The inspected upstream `develop` revision is
+`5abaae90c5f5785142460f518256fe6a487d070b`, committed 2026-09-25. Its
+[exit handler](https://github.com/gem5/gem5/blob/5abaae90c5f5785142460f518256fe6a487d070b/src/sim/syscall_emul.cc#L126)
+still uses `walk != p`. Its
+[Process serialization](https://github.com/gem5/gem5/blob/5abaae90c5f5785142460f518256fe6a487d070b/src/sim/process.cc#L412),
+[ThreadState serialization](https://github.com/gem5/gem5/blob/5abaae90c5f5785142460f518256fe6a487d070b/src/cpu/thread_state.cc#L54),
+and [takeover precondition](https://github.com/gem5/gem5/blob/5abaae90c5f5785142460f518256fe6a487d070b/src/cpu/thread_context.cc#L253)
+retain the relevant limitations. Targeted upstream issue searches and the most
+recent 100 commits for each of `process.cc` and `syscall_emul.cc` found no specific
+clone-checkpoint/Process-alias restoration fix. This is a bounded search result,
+not a claim that no related work exists anywhere in gem5 history. Other inspected
+serialization fixes cover address-space bookkeeping and memory pools, and the
+recent [wait4/dup2 fix](https://github.com/gem5/gem5/pull/3343) covers exit status
+encoding; none supplies this missing association.
+
+A terminal alias fix could make this specific process group halt if the runtime
+hypothesis is confirmed. It cannot establish faithful restoration of clone
+identity, `childClearTID`, shared Process ownership, or futex wait-map state.
+These omissions can matter before termination. General restoration fidelity
+requires restoring the relevant state or avoiding reconstruction, together with
+appropriate execution checks. Conversely, an exact structural check of the
+observed BFS parent array remains evidence about that finite result; it is not a
+proof of general thread synchronization or timing fidelity.
+
+| Choice | Defensible use | Remaining boundary |
+|---|---|---|
+| One post-seal SyscallBase probe | Distinguish guest exit request from an earlier library/destructor stall | Does not repair termination or show Process pointers |
+| New alias-aware exit handler | Diagnose and potentially repair normal group termination | New simulator identity; missing clone state remains |
+| O3 from program start | Preserve live clone objects without restore or CPU takeover | Separate startup/cache/TLB/predictor treatment; cannot silently replace author restore trials |
+| Prospectively declared structural-verdict witness | Check the exact timed result independently of abnormal process termination | Cannot claim normal guest exit or automatically qualify performance evidence |
+
+The recommended next action remains the single finite syscall observation above.
+There is no demonstrated route that currently supplies both strict normal
+termination and an unchanged author restore pipeline. An O3-from-start control
+could preserve the pinned simulator and guest binaries, but its different
+prehistory must be explicit and independently budgeted. A patched simulator
+requires a new build identity and disclosed deviation. Neither may be mixed with
+old trials in a frozen comparison or labeled an unchanged Ticket 16 reproduction.
+
+## Structural verdict versus terminal event — 2026-09-26
+
+[Spec D10](../.scratch/bfs-rewrite-evaluation-2026-09-25/spec.md#d10-correctness-evidence)
+and [Ticket 13](../.scratch/bfs-rewrite-evaluation-2026-09-25/issues/13-dx100-timed-binary-correctness.md)
+require explicit structural correctness for the exact timed binary/result and
+allow a mechanism other than same-simulation continuation. They do not themselves
+mandate gem5's normal last-active-thread terminal event. That event is an
+additional condition in the current `dx100.bfs.verifier.v1` implementation.
+Keep v1 unchanged and keep a6 unverified.
+
+After the diagnostic, a separately named and prospectively validated mechanism
+could combine exact protected-verifier/source/binary/graph/ROI identity, one
+unambiguous post-seal PASS, completed benchmark output, and a trusted witness
+that the same guest entered and completed emulation of `exit_group(0)`. Pinned
+[SyscallDesc::doSyscall](https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/sim/syscall_desc.cc#L42)
+emits `Calling` before invoking the syscall executor, while `handleReturn` emits
+`Returned` afterward. A simulator-only trace artifact must distinguish those
+events from guest stdout, bind their CPU/thread/tick ordering, and be hashed with
+the exact protected execution. A lone `Calling` line does not prove the executor
+finished, and a guest-printed imitation is not a trusted syscall witness.
+
+Such a mechanism would retain the actual abnormal termination and execution
+failure independently; it would never assert that all guest threads halted.
+It requires negative tests for absent, duplicate, wrong-source, reordered,
+truncated, failed-verifier, and nonzero-exit witnesses, plus a newly declared
+bounded real validation. It cannot retroactively reinterpret a6 under a different
+checker. It also cannot replace actual accelerated/full-tile/tail/conflict
+coverage, justify general checkpoint fidelity, or automatically grant comparison
+eligibility. Any later use for performance needs an explicit reviewed protocol
+that accounts for the remaining execution-model limitation. No alternate checker,
+model patch, O3-start adapter, or additional run is implemented by this document.
