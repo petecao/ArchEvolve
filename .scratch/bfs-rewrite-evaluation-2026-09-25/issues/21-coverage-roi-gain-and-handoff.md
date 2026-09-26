@@ -117,3 +117,13 @@ modes and included in the 213-case group. The retained original run is not calle
 green. Final Standards/Spec reviews against `1bdb7d4` remain required after actual
 acceptance and all further repairs. All ticket states remain 12 resolved and
 9 claimed. See the map's 10:04 ET table for current host and export holds.
+
+2026-09-26 10:27 ET follow-up: the pinned `721fa72` suite finished with
+1,164 passed, three failed, and three skipped. The three failures were an
+incomplete campaign fixture and missing paired-field documentation; their local
+corrections passed focused checks and the original failed run is preserved.
+The separate existing-candidate client route passed 40 focused tests and scoped
+independent review at `35b0cff`; it adds no empirical cell or gain. The handoff
+now describes paired collection and exact candidate reuse. Final acceptance and
+the final post-acceptance Standards/Spec reviews remain incomplete; the active
+30-minute heartbeat continues.

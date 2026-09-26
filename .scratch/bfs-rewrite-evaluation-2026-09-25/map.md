@@ -83,6 +83,44 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Local verification and preparation — 2026-09-26 10:27 ET
+
+The pinned `721fa72` full suite completed with **1,164 passed, 3 failed, and
+3 skipped in 2,474.56 seconds**. Its original log and exact hash are retained in
+[the review receipt](../../docs/bfs-interim-review-20260926.md). The failures were
+the incomplete campaign fixture and two paired-field documentation checks.
+The serial/paired fixture correction is in `6346189` and passed within the
+213-case group; the documentation correction is in `d53c226` and all four format
+checks pass. This is targeted repair evidence, not a full-suite pass at a newer
+checkpoint.
+
+A bounded audit of the remaining tickets identified one local preparation gap:
+Ticket 18's proposal already created a candidate, while the native client always
+resubmitted. Commit `35b0cff` adds explicit exact candidate reuse with public
+retrieval, original provider/repair-budget preservation, and bounded patch replay
+that binds source bytes to candidate bytes. Independent review reproduced and
+closed a consistently rehashed candidate/diff mismatch; it found no remaining
+actionable issue after repair. The focused group passed **40 tests with
+23 deselected in 27.74 seconds**, including fresh submit, actual local patch
+replay, public fixture evaluation, cleanup, and serial/paired flow. Paired receipt
+bounds now report their existing 2,400-second allowance accurately. The
+[campaign plan](campaign-plan.md) and [handoff](../../docs/bfs-handoff.md) describe
+the interface and evidence limits.
+
+All workers finished normally. The full-suite process has exited. All 21 ticket
+states remain **12 resolved, 9 claimed**, with **0/8 final cells**, no qualified
+gain, and no empirical freeze. No remote job, provider call, export, or new lease
+was started. The most recent host observations remain the 10:04–10:05 ET audit
+below; they are not relabeled as a new observation.
+
+The pending four-commit code approval covers only the exact tip **`6346189`**
+identified in [its inventory](observations/code-export-20260926-1005.json).
+Later local tracker, documentation, and reuse commits are excluded; do not push
+`HEAD` under that narrower approval. Separate evidence/provider questions remain
+pending. The heartbeat is confirmed **ACTIVE, every 30 minutes**; next full
+progress/host check is **10:34 ET**. Final post-acceptance Standards/Spec reviews
+remain outstanding.
+
 ## Progress check — 2026-09-26 10:04 ET
 
 Ticket states remain **12 resolved, 9 claimed**, with **0/8 final matrix cells**,

@@ -1,7 +1,7 @@
 # 18 — DX100 BFS: patch-route acceptance
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 15
@@ -56,3 +56,21 @@ were independently audited. See [the retained receipt](../../../docs/evidence/bf
 These are materialization and compilation observations only. Native candidate
 execution, correctness, timing, refreshed profiling, and the frozen comparison
 remain pending; this ticket is not resolved.
+
+## Exact candidate reuse preparation — 2026-09-26 10:27 ET
+
+Commit `35b0cff` adds `--existing-candidate` to the native campaign client so the
+already-created initial candidate can be evaluated without duplicate submission.
+The client requires the exact original proposal JSON, reopens its public record
+chain, verifies source/package/artifact/protection bindings, and replays the
+authorized patch in a bounded temporary source snapshot. The replay rejects a
+consistently rehashed candidate containing edits absent from the retained patch.
+Reuse does not invoke a provider or reset repair history. Both default fresh
+submission and existing-candidate fixture evaluation remain covered.
+
+Independent scoped review reports no remaining actionable finding; 40 focused
+tests passed, with 23 deselected, in 27.74 seconds. See the
+[review receipt](../../../docs/bfs-interim-review-20260926.md) for the retained
+tool-result transcript and intermediate fixture-setup failure. No actual Ticket
+18 candidate execution occurred, no frozen-protocol result was added, and this
+ticket remains claimed behind Ticket 15 and current synchronization holds.
