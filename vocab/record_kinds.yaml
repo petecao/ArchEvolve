@@ -1,5 +1,6 @@
 name: record_kinds
 description: The kinds of record the database holds; each has its own schema.
+# Updated: 2026-09-26 (Eastern Time).
 values:
   - value: application
     meaning: A program that contains kernels, from one source at one version.
@@ -27,6 +28,8 @@ values:
     meaning: Unverified code materialized from an identified rewrite proposal.
   - value: evaluation
     meaning: Durable stage outcomes and evidence for an exact candidate execution.
+  - value: evaluation_pair
+    meaning: Prospective native trial order and exact paired execution receipt for two evaluations.
   - value: operation
     meaning: Source-backed accelerator operation semantics and resource requirements.
   - value: hardware_target

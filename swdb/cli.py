@@ -169,6 +169,11 @@ def main(argv=None):
     sub.add_argument("--runs-dir", type=Path, required=True)
     sub.add_argument("--lane")
 
+    sub = command("evaluate-pair", "collect a prospective interleaved native A/A or A/B pair", db=True, fmt=True)
+    sub.add_argument("file", type=Path)
+    sub.add_argument("--runs-dir", type=Path, required=True)
+    sub.add_argument("--lane")
+
     sub = command("bfs-profile", "collect automatic native BFS region and memory observations", db=True, fmt=True)
     sub.add_argument("file", type=Path)
     sub.add_argument("--runs-dir", type=Path, required=True)
@@ -250,6 +255,13 @@ def _dispatch(args):
         from swdb import bfs_native
 
         result = bfs_native.run(args)
+        _emit(result, args.format)
+        return 0 if result.get("outcome", {}).get("state") == "complete" else 1
+
+    if args.command == "evaluate-pair":
+        from swdb import bfs_native_pair
+
+        result = bfs_native_pair.run(args)
         _emit(result, args.format)
         return 0 if result.get("outcome", {}).get("state") == "complete" else 1
 

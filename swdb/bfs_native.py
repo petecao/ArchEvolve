@@ -460,11 +460,26 @@ def build_directory(request, host, rid, raw_folder, records):
 
 def run(args):
     """Public `swdb evaluate REQUEST --runs-dir DIR` boundary."""
+    steps = evaluation_steps(args)
+    while True:
+        try:
+            next(steps)
+        except StopIteration as finished:
+            return finished.value
+
+
+def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=None):
+    """Shared collector: yield after preparation and each independently checked trial.
+
+    A paired coordinator supplies the next scheduled slot with send(). Serial
+    evaluation consumes the same steps without supplying pairing metadata.
+    """
     store = _require_valid(args.records)
-    raw = Path(args.file).read_text()
-    if len(raw.encode()) > MAX_REQUEST_BYTES:
-        raise Failure("evaluation request exceeds 10 MiB")
-    request = workflow.message_from_text(raw)
+    if request is None:
+        raw = Path(args.file).read_text()
+        if len(raw.encode()) > MAX_REQUEST_BYTES:
+            raise Failure("evaluation request exceeds 10 MiB")
+        request = workflow.message_from_text(raw)
     rid = request.get("id") if isinstance(request, dict) else None
     if not isinstance(rid, str) or not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", rid):
         rid = f"evaluation-invalid-{uuid.uuid4().hex}"
@@ -522,7 +537,10 @@ def run(args):
         build_folder = build_directory(request, host, rid, folder, args.records)
         data["raw_artifacts"].append({"host": host, "path": str(build_folder), "kind": "evaluation_build"})
         session = Session(args, data, folder, budget["total_seconds"])
-        session.install_handlers()
+        if deadline is not None:
+            session.deadline = min(session.deadline, deadline)
+        if pairing is None:
+            session.install_handlers()
         session.begin("source_resolution")
         root = artifacts.verify(candidate["artifact"])
         artifacts.check_protections(root, candidate["protections"])
@@ -551,6 +569,8 @@ def run(args):
                            "instrumentation": {"template_sha256": artifacts.file_hash(DRIVER), "treatment": "included"},
                            "host": host, "architecture": platform.machine(), "lane": lane,
                            "load_average": list(os.getloadavg()), "budget": budget}
+        if pairing is not None:
+            data["context"]["pairing"] = copy.deepcopy(pairing)
         if host == 'mbit10' and not request.get('fixture'):
             from swdb.host_observation import attach
             attach(data, folder, paths.HOME, total_seconds=min(15, session.remaining()))
@@ -585,7 +605,8 @@ def run(args):
                 raise Failure("frozen protocol validation is unavailable") from None
             data["context"]["protocol_binding"] = validate_protocol_for_evaluation(
                 store, request, candidate, actual_build={"compiler": compiler, "flags": flags, "adapter": adapter},
-                actual_lane=lane, actual_instrumentation=data["context"]["instrumentation"])
+                actual_lane=lane, actual_instrumentation=data["context"]["instrumentation"],
+                actual_collection=pairing["collection"] if pairing else None)
         session.finish()
         wrapper = build_folder / "native_driver.cc"
         template = DRIVER.read_text()
@@ -594,9 +615,21 @@ def run(args):
         command = [compiler, *flags, *(f"-I{p}" for p in includes), str(wrapper), "-o", str(binary)]
         data["build"] = {"directory": str(build_folder), "compiler": compiler, "flags": flags, "command": command,
                          "wrapper_sha256": artifacts.file_hash(wrapper), "template_sha256": artifacts.file_hash(DRIVER)}
-        version_log = session.execute("compiler_identity", [compiler, "--version"], min(30, budget["build_seconds"]))
-        data["build"]["compiler_version"] = version_log.read_text(errors="replace").splitlines()[:2]
-        session.execute("build", command, budget["build_seconds"])
+        if reuse is None:
+            version_log = session.execute("compiler_identity", [compiler, "--version"], min(30, budget["build_seconds"]))
+            data["build"]["compiler_version"] = version_log.read_text(errors="replace").splitlines()[:2]
+            session.execute("build", command, budget["build_seconds"])
+        else:
+            if (reuse["candidate"] != candidate["id"] or reuse["build"]["compiler"] != compiler
+                    or reuse["build"]["flags"] != flags):
+                raise Failure("A/A executable reuse requires identical candidate and build settings")
+            session.begin("build_reuse", evaluation=reuse["id"])
+            data["build"] = copy.deepcopy(reuse["build"])
+            data["build"]["reused_from_evaluation"] = reuse["id"]
+            binary = Path(data["build"]["binary"])
+            if artifacts.file_hash(binary) != data["build"]["binary_sha256"]:
+                raise Failure("reused A/A binary changed after preparation")
+            session.finish()
         if not binary.is_file() or not os.access(binary, os.X_OK):
             raise Failure("build did not produce an executable")
         data["build"].update(binary=str(binary), binary_sha256=artifacts.file_hash(binary))
@@ -606,8 +639,13 @@ def run(args):
         data["build"]["execution_environment"] = {name: env[name] for name in
                                                    ("OMP_NUM_THREADS", "OMP_DYNAMIC", "OMP_PROC_BIND", "OMP_PLACES")}
         session.save()
+        slot = yield data
         for repetition in range(repetitions):
             for position, source in enumerate(sources):
+                if pairing is not None and (not isinstance(slot, dict)
+                        or slot.get("repetition") != repetition or slot.get("source_position") != position
+                        or slot.get("source") != source or slot.get("role") != pairing["role"]):
+                    raise Failure("paired collector received an unexpected scheduled trial")
                 trial = len(data["timing"])
                 output = folder / f"trial-{repetition}-{position}.json"
                 if artifacts.file_hash(binary) != data["build"]["binary_sha256"]:
@@ -616,6 +654,7 @@ def run(args):
                     raise Failure("protected canonical graph changed before execution")
                 session.execute("execution", [str(binary), str(graph_path), str(source), str(output)],
                                 budget["run_seconds"], env, repetition=repetition, source_position=position, source=source)
+                executed = copy.deepcopy(session.current)
                 session.begin("correctness", repetition=repetition, source_position=position, source=source)
                 observed, output_hash = json_observation(output, canonical["num_vertices"] * 24 + 4096,
                                                         "parent/timing output")
@@ -633,18 +672,25 @@ def run(args):
                                "binary_sha256": data["build"]["binary_sha256"], "output": str(output),
                                "output_sha256": output_hash, "verified": False,
                                "evidence_kind": data["evidence_kind"]}
+                if pairing is not None:
+                    observation["pairing"] = {**copy.deepcopy(slot), "pair_id": pairing["pair_id"],
+                        "started": executed["started"], "finished": executed["finished"],
+                        "execution_log": executed["log"], "execution_log_sha256": executed["log_sha256"]}
                 data["timing"].append(observation)
                 check = verify_parents(canonical["adjacency"], source, observed.get("parents"))
                 session.remaining()
                 check.update(source=source, source_position=position, repetition=repetition, trial=trial,
                              output_sha256=observation["output_sha256"], binary_sha256=observation["binary_sha256"],
                              graph_sha256=workload["canonical_sha256"], verifier="swdb.bfs.structural.v1")
+                if pairing is not None:
+                    check["pairing"] = copy.deepcopy(observation["pairing"])
                 data["correctness"]["checks"].append(check)
                 observation["verified"] = check["passed"]
                 session.finish("complete" if check["passed"] else "failed", reason=check["reason"])
                 if not check["passed"]:
                     data["correctness"]["state"] = "failed"
                     raise StageFailure("incorrect", check["reason"])
+                slot = yield data
         session.begin("aggregation")
         artifacts.verify(candidate["artifact"])
         if artifacts.file_hash(binary) != data["build"]["binary_sha256"]:

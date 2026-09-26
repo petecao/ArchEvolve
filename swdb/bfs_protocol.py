@@ -508,6 +508,14 @@ def _validate_settings(settings, store, *, require_simulation_identity=False):
     _fail(policy.get("confidence") == 0.95 and policy.get("bootstrap_resamples") == 2000,
           "supported confidence policy is the 95 percent interval with 2000 bootstrap resamples")
     _integer(policy.get("bootstrap_seed"), "bootstrap_seed", 0)
+    collection = sampling.get("collection")
+    analysis = sampling.get("analysis")
+    if collection is not None or analysis is not None:
+        from swdb.bfs_native_pair import ANALYSIS, collection_policy
+        _fail(mode == "native" and analysis == ANALYSIS, "paired sampling requires its versioned native block analysis")
+        collection_policy(collection)
+        _fail(policy["minimum_speedup"] == 1.05 and policy["bootstrap_seed"] == 20260925,
+              "paired profitability retains the 1.05 floor and seed 20260925")
     pairs = settings.get("region_pairs", [])
     _fail(isinstance(pairs, list), "region_pairs must be a list")
     for pair in pairs:
@@ -592,13 +600,16 @@ def validate_baseline_source(store, candidate):
           "baseline artifact differs from the selected implementation source")
 
 
-def validate_protocol_for_evaluation(store, request, candidate, actual_build=None, actual_lane=None, actual_instrumentation=None):
+def validate_protocol_for_evaluation(store, request, candidate, actual_build=None, actual_lane=None, actual_instrumentation=None,
+                                    actual_collection=None):
     if request.get("protocol") is None:
         return None
     protocol = _get(store, request["protocol"], "protocol")
     digest = verify_immutable(protocol)
     settings = protocol["settings"]
     _validate_settings(settings, store)
+    _fail(settings["sampling"].get("collection") == actual_collection,
+          "actual collection method differs from the frozen sampling policy")
     role = request.get("protocol_role")
     _fail(role in {"baseline", "candidate"}, "protocol_role must select baseline or candidate")
     workload_request = request.get("workload")
@@ -998,7 +1009,7 @@ def _geomean(values):
     return math.exp(statistics.mean(math.log(value) for value in values))
 
 
-def _statistics(baseline, candidate, policy):
+def _statistics(baseline, candidate, policy, sampling=None):
     ratios = {position: statistics.median(baseline[position]) / statistics.median(candidate[position]) for position in baseline}
     for ratio in ratios.values():
         _positive(ratio, "representable source duration ratio")
@@ -1008,18 +1019,27 @@ def _statistics(baseline, candidate, policy):
           "timing spread exceeds representable numeric range")
     rng = random.Random(policy["bootstrap_seed"])
     draws = []
+    paired = sampling is not None and sampling.get("analysis") == "paired_repetition_block_bootstrap.v1"
+    count = len(next(iter(baseline.values())))
+    if paired:
+        _fail(all(len(values) == count for role in (baseline, candidate) for values in role.values()),
+              "paired bootstrap requires complete equal repetition blocks")
     for _ in range(policy["bootstrap_resamples"]):
         resampled = []
+        blocks = rng.choices(range(count), k=count) if paired else None
         for position in baseline:
             a, b = baseline[position], candidate[position]
-            resampled.append(statistics.median(rng.choices(a, k=len(a))) / statistics.median(rng.choices(b, k=len(b))))
+            aa, bb = ([a[index] for index in blocks], [b[index] for index in blocks]) if paired else (
+                rng.choices(a, k=len(a)), rng.choices(b, k=len(b)))
+            resampled.append(statistics.median(aa) / statistics.median(bb))
         draws.append(_geomean(resampled))
     draws.sort()
     lower, upper = draws[49], draws[1949]
     return {"roi_speedup": _geomean(ratios.values()),
             "per_source_position_speedup": {str(position): ratio for position, ratio in ratios.items()},
             "confidence_interval": {"confidence": 0.95, "lower": lower, "upper": upper,
-                                    "method": "independent per-source bootstrap of median ratios", "resamples": 2000},
+                                    "method": "paired_repetition_block_bootstrap.v1" if paired else
+                                        "independent per-source bootstrap of median ratios", "resamples": 2000},
             "relative_spread": {role: {str(position): value for position, value in rows.items()}
                                 for role, rows in spreads.items()}}
 
@@ -1079,10 +1099,20 @@ def compare_evaluations(args):
         b, other_wid, other_kind = _evaluation_samples(store, candidate, protocol, "candidate")
         _fail(wid == other_wid, "baseline and candidate evaluate different workloads")
         _fail(evidence_kind == other_kind, "execution evidence cannot be paired with a contract fixture")
+        sampling = protocol["settings"]["sampling"]
+        pair_identity = None
+        if sampling.get("collection") is not None:
+            from swdb.bfs_native_pair import validate_receipt
+            pair_identity = validate_receipt(store, baseline, candidate, protocol["settings"])
+        else:
+            _fail(not any(row.get("context", {}).get("pairing") for row in (baseline, candidate)),
+                  "paired evidence cannot use an independent serial analysis")
         data["evidence_kind"] = evidence_kind
         data["evaluation_identities"] = {baseline["id"]: artifacts.digest(baseline), candidate["id"]: artifacts.digest(candidate)}
         data["region_comparisons"] = _region_comparisons(baseline, candidate, protocol["settings"], store, request.get("region_packages"))
-        data["metrics"] = _statistics(a, b, protocol["settings"]["profitability"])
+        data["metrics"] = _statistics(a, b, protocol["settings"]["profitability"], sampling)
+        if pair_identity is not None:
+            data["metrics"]["paired_collection"] = pair_identity
         data["metrics"]["workload"] = wid
         data["metrics"]["attribution"] = ("artifact_configuration_pair" if protocol["settings"]["mode"] == "artifact_reference" else
             "software_on_fixed_target" if protocol["settings"]["targets"]["baseline"] == protocol["settings"]["targets"]["candidate"] else

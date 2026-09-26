@@ -172,6 +172,7 @@ def get_record(args):
                 "machine", "hardware_target")]
             request, build, settings = (mapping(d.get(key)) for key in ("request", "build", "settings"))
             context = mapping(d.get("context"))
+            linked.append(mapping(context.get("pairing")).get("pair_id"))
             linked.extend(owner.get("protocol") for owner in (request, context))
             linked.append(context.get("target"))
             for owner in (d, request, context):

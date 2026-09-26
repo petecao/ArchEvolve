@@ -164,7 +164,7 @@ class Driver:
         path.write_text(json.dumps(value, indent=2, allow_nan=False))
         return self.call(command, path, *rest, **kwargs)
 
-    def evaluate(self, name, candidate, workload, frozen, role):
+    def evaluation_request(self, name, candidate, workload, frozen, role):
         settings = frozen['settings']
         request = {'message_version': '1.0', 'id': name, 'candidate': candidate, 'machine': 'mbit10',
             'protocol': frozen['id'], 'protocol_role': role, 'threads': settings['threads'],
@@ -173,8 +173,25 @@ class Driver:
             'workload': {'id': workload['id']}, 'comparison_baseline': self.receipt['implementation'],
             'build': {key: settings['builds'][role][key] for key in ('compiler', 'flags')},
             'budget': {'build_seconds': 180, 'run_seconds': 60, 'total_seconds': 1200}}
-        return self.request('evaluate', request, '--runs-dir', self.args.runs_dir, '--lane', self.args.lane,
+        return request
+
+    def evaluate(self, name, candidate, workload, frozen, role):
+        return self.request('evaluate', self.evaluation_request(name, candidate, workload, frozen, role),
+                            '--runs-dir', self.args.runs_dir, '--lane', self.args.lane,
                             timeout=1260, required=False)
+
+    def evaluate_pair(self, prefix, baseline, candidate, workload, frozen):
+        request = {'message_version': '1.0', 'id': prefix + '.pair',
+            'collection': frozen['settings']['sampling']['collection'], 'budget': {'total_seconds': 2400}}
+        for role, artifact in (('baseline', baseline), ('candidate', candidate)):
+            name = prefix + ('.baseline.evaluation' if role == 'baseline' else '.evaluation')
+            request[role] = self.evaluation_request(name, artifact, workload, frozen, role)
+            request[role]['budget']['total_seconds'] = 2400
+        pair = self.request('evaluate-pair', request, '--runs-dir', self.args.runs_dir, '--lane', self.args.lane,
+                            timeout=2460, required=False)
+        values = {role: (self.call('get', pair[role + '_evaluation'], required=False)
+                        if pair and pair.get(role + '_evaluation') else None) for role in ('baseline', 'candidate')}
+        return pair, values['baseline'], values['candidate']
 
     def collect(self, prefix, evaluation, baseline_profile, repetitions=1):
         if not evaluation or evaluation.get('outcome', {}).get('state') != 'complete': return None
@@ -220,8 +237,9 @@ class Driver:
         regional = [pair for pair in frozen['settings'].get('region_pairs', [])
                     if pair.get('evidence') == 'native_diagnostic_profile.v1']
         diagnostic_repetitions = regional[0]['diagnostic_repetitions'] if regional else 1
+        paired = frozen['settings']['sampling'].get('collection') is not None
         baselines, baseline_packages = {}, {}
-        for family, row in rows.items():
+        for family, row in ([] if paired else rows.items()):
             prefix = args.id + '.' + family.replace('_', '-')
             baseline = self.evaluate(prefix + '.baseline', row['candidate']['id'], row['workload'], frozen, 'baseline')
             baselines[family] = baseline
@@ -238,7 +256,18 @@ class Driver:
             repairable = []
             for family, row in rows.items():
                 prefix = args.id + '.' + family.replace('_', '-') + f'.candidate-{round_number}'
-                evaluation = self.evaluate(prefix + '.evaluation', candidate, row['workload'], frozen, 'candidate')
+                pair = None
+                if paired:
+                    pair, baseline, evaluation = self.evaluate_pair(prefix, row['candidate']['id'], candidate, row['workload'], frozen)
+                    baselines[family] = baseline
+                    baseline_packages[family] = (self.collect(prefix + '.baseline', baseline,
+                        row['package']['region_profile'], diagnostic_repetitions) if regional else None)
+                    self.receipt['families'][family] = {'workload': row['workload']['id'],
+                        'baseline': baseline and baseline['id'], 'pair': pair and pair['id'],
+                        'baseline_package': (baseline_packages[family] or {}).get('id'),
+                        'baseline_outcome': (baseline or {}).get('outcome')}
+                else:
+                    evaluation = self.evaluate(prefix + '.evaluation', candidate, row['workload'], frozen, 'candidate')
                 package = self.collect(prefix, evaluation, row['package']['region_profile'], diagnostic_repetitions)
                 baseline = baselines[family]
                 comparison = None
@@ -249,6 +278,7 @@ class Driver:
                         'protocol': frozen['id'], 'baseline_evaluation': baseline['id'], 'candidate_evaluation': evaluation['id'],
                         'comparison_baseline': proposal['implementation'], **regional_evidence}, required=False)
                 current['families'][family] = {'evaluation': evaluation and evaluation['id'],
+                    'baseline_evaluation': baseline and baseline['id'], 'pair': pair and pair['id'],
                     'outcome': (evaluation or {}).get('outcome'), 'profile_package': package and package['id'],
                     'package_completeness': (package or {}).get('completeness'),
                     'comparison': comparison and comparison['id'], 'decision': (comparison or {}).get('decision')}
