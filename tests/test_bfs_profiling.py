@@ -69,6 +69,8 @@ def test_captured_region_and_callgrind_outputs_keep_exact_byte_identity(tmp_path
 @pytest.mark.parametrize('errors,inclusive,exclusive,invocations,valid', [
     (False, 0, 0, 0, False), (0, 1, 0, 0, False),
     (0, 1, 1, 0, False), (0, 0, 0, 1, True), (0, 0, 0, 0, True),
+    (0, 10**309, 10**309, 1, False), (0, 0, 0, 2**64, False),
+    (0, 2**64-1, 0, 1, True),
 ])
 def test_region_counter_runtime_invariants(tmp_path, errors, inclusive, exclusive, invocations, valid):
     from swdb.bfs_native import StageFailure
@@ -129,6 +131,36 @@ unsigned Caller(unsigned n) { return NewlyIntroducedHelper(n); }
     helper=rows[next(i for i,r in enumerate(regions) if r['name']=='NewlyIntroducedHelper')]
     assert caller['inclusive_ns']>=helper['inclusive_ns']
     assert caller['exclusive_ns']<caller['inclusive_ns']
+
+
+def test_free_function_template_and_loops_execute_for_multiple_instantiations(tmp_path):
+    library, args = compiler_inventory()
+    source = tmp_path/'template.cc'
+    source.write_text('''template<class T> T NewTemplateHelper(T n) {
+ T sum=0; for(T i=0;i<n;++i) sum+=i; return sum;
+}
+int Caller(){return NewTemplateHelper(4)+NewTemplateHelper(5L);}
+struct ExcludedMember { template<class T> T method(T n){for(T i=0;i<n;++i){}return n;} };
+''')
+    result = discover(source, args, library)
+    regions = result['regions']
+    helper = next(i for i,r in enumerate(regions) if r['kind']=='function' and r['name']=='NewTemplateHelper')
+    loops = [i for i,r in enumerate(regions) if r['kind']=='loop' and r['function']=='NewTemplateHelper']
+    assert len(loops)==1 and regions[helper]['usr']
+    assert not any(r['name']=='method' or r['function']=='method' for r in regions)
+    assert any('combines instantiations' in reason for reason in result['limitations'])
+    rewritten = tmp_path/'instrumented.cc'; rewritten.write_bytes(instrument(source, regions))
+    driver = tmp_path/'driver.cc'; output=tmp_path/'counts.json'
+    driver.write_text(f'#define SWDB_REGION_COUNT {len(regions)}\n#include "{REPO}/tools/bfs_profile/runtime.hpp"\n'
+        f'#include "{rewritten}"\nint main(){{swdb_profile::start();int value=Caller();swdb_profile::stop();swdb_profile::write("{output}");return value==16?0:1;}}\n')
+    compiler=shutil.which('clang++') or shutil.which('g++')
+    if not compiler: pytest.skip('C++ compiler unavailable')
+    compiled=subprocess.run([compiler,'-std=c++11','-O2',str(driver),'-o',str(tmp_path/'program')],capture_output=True,text=True)
+    assert compiled.returncode==0,compiled.stderr
+    subprocess.run([str(tmp_path/'program')],check=True)
+    counts=json.loads(output.read_text())
+    assert counts['errors']==0 and counts['regions'][helper]['invocations']==2
+    assert counts['regions'][loops[0]]['invocations']==2
 
 
 def test_discovery_fails_closed_on_missing_headers_and_skips_unsafe_openmp(tmp_path):

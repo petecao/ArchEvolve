@@ -55,6 +55,7 @@ def discover(source, arguments, library):
         "clang_getCursorSpelling": ([Cursor], String),
         "clang_getCursorUSR": ([Cursor], String),
         "clang_getCursorReferenced": ([Cursor], Cursor),
+        "clang_getCursorSemanticParent": ([Cursor], Cursor),
         "clang_getCursorExtent": ([Cursor], Range),
         "clang_getRangeStart": ([Range], Location),
         "clang_getRangeEnd": ([Range], Location),
@@ -145,7 +146,10 @@ def discover(source, arguments, library):
                 return
             name = string(lib.clang_getCursorSpelling(cursor))
             sub = children(cursor)
-            if local and cursor.kind == 8:
+            # FunctionTemplate exposes its body directly, without a nested
+            # FunctionDecl. Its source scope aggregates all instantiations.
+            free_template = cursor.kind == 30 and lib.clang_getCursorSemanticParent(cursor).kind not in (2, 3, 4, 31, 32)
+            if local and (cursor.kind == 8 or free_template):
                 body = next((c for c in sub if c.kind == 202), None)
                 if body:
                     body_start, body_end = extent(body)
@@ -224,6 +228,7 @@ def discover(source, arguments, library):
                 "regions": regions, "unresolved": unresolved,
                 "scope": "free functions and ordinary loops defined in the BFS translation-unit source file",
                 "limitations": ["header-defined, library, virtual/member and compiler-outlined code is not independently attributed",
+                    "free function template timing combines instantiations sharing one source extent",
                     "inlined source scopes remain source scopes, not machine-code symbols",
                     "OpenMP-disabled metadata inventory preserves _OPENMP; actual diagnostic execution retains original OpenMP flags",
                     "metadata parser substitutes Clang builtin/OpenMP declarations in the compiler-private header slot while preserving actual system-library search order; execution uses original compiler headers",

@@ -25,7 +25,9 @@ library hash, arguments, diagnostics, and coverage limits survive in the record.
 
 Discovery uses the compiler's source extents for free functions and ordinary loops
 in the current BFS translation-unit source file. Names are not an eligibility
-catalog. The metadata parser disables OpenMP while retaining the actual compiler's
+catalog. Free function templates and their loops are included; their shared source
+extent aggregates executed instantiations. Member templates retain the existing
+member-code exclusion. The metadata parser disables OpenMP while retaining the actual compiler's
 `_OPENMP` feature macro, because CIndex otherwise hides captured loop bodies.
 The actual compiler's verbose system-header search paths are supplied explicitly
 to standalone libclang, whose installation may otherwise omit GCC's C++ headers.
@@ -78,6 +80,10 @@ Other loops count loop entries, and functions count calls. Function rankings use
 `exclusive_function_thread_cpu_seconds`: the sum of nonoverlapping exclusive source
 scopes belonging to that function, including its loops and worker iterations. This
 includes its own loop work while excluding separately guarded helper functions.
+Raw runtime counters must fit unsigned 64-bit integers; zero invocations require
+zero duration. These checks reject malformed observations before arithmetic or
+aggregation, while positive invocation counts may legitimately have zero measured
+duration.
 The source-scope inclusive and exclusive counters remain separately available.
 Concurrent thread CPU
 seconds are not complete-call wall seconds. Instrumentation overhead is included,

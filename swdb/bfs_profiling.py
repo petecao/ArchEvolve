@@ -144,7 +144,7 @@ def _region_observations(path, regions):
     if not isinstance(rows, list) or len(rows) != len(regions):
         raise native.StageFailure("missing_observation", "region counter inventory differs")
     for index, row in enumerate(rows):
-        if (not isinstance(row, dict) or type(row.get("index")) is not int or row["index"] != index or any(type(row.get(key)) is not int or row[key] < 0
+        if (not isinstance(row, dict) or type(row.get("index")) is not int or row["index"] != index or any(type(row.get(key)) is not int or not 0 <= row[key] < 2**64
                 for key in ("inclusive_ns", "exclusive_ns", "invocations"))
                 or row["exclusive_ns"] > row["inclusive_ns"]
                 or (row["invocations"] == 0 and (row["inclusive_ns"] or row["exclusive_ns"]))):
