@@ -1,6 +1,6 @@
 """Bounded DX100 build, checkpoint, and unverified execution workflows.
 
-Updated: 2026-09-25. Build/smoke evidence never certifies a timed binary.
+Updated: 2026-09-26. Build/smoke evidence never certifies a timed binary.
 """
 
 import json
@@ -564,14 +564,19 @@ def execute(args):
             data['build'].update(compiler='g++-13', compiler_version=receipt['environment']['compiler'].splitlines()[:2],
                 flags=guest_flags, adapter='dx100.author_artifact.v1')
         env = dict(os.environ, OMP_NUM_THREADS="4", OMP_PROC_BIND="false", OMP_DYNAMIC="FALSE")
+        # A caller's environment cannot silently opt into diagnostic tracing.
+        env.pop('SWDB_DX100_POST_ROI_TRACE', None)
         verify = request.get("verification")
         driver = paths.HOME / "scripts/dx100_verify.py"
         if verify is not None:
-            if (not isinstance(verify, dict) or set(verify) - {"checker", "max_ticks", "coverage"}
+            if (not isinstance(verify, dict) or set(verify) - {"checker", "max_ticks", "coverage", "post_roi_trace"}
                     or verify.get("checker") != "dx100.bfs.verifier.v1" or "max_ticks" not in verify):
                 raise Failure("verification requires checker dx100.bfs.verifier.v1 and max_ticks")
             if type(verify.get("coverage", False)) is not bool:
                 raise Failure("verification.coverage must be boolean")
+            if 'post_roi_trace' in verify and (type(verify['post_roi_trace']) is not str
+                    or verify['post_roi_trace'] != 'SyscallBase'):
+                raise Failure('verification.post_roi_trace must be SyscallBase when present')
             _integer(verify["max_ticks"], "verification.max_ticks", maximum=10**15)
             if not compiled:
                 source_file = root / "benchmarks/gapbs/src/bfs.cc"
@@ -591,10 +596,15 @@ def execute(args):
             env.update(SWDB_DX100_MODEL_ROOT=str(root),
                 SWDB_DX100_EXECUTION_BINDING_SHA256=data["context"]["execution_binding_sha256"],
                 SWDB_DX100_VERIFY_MAX_TICKS=str(verify["max_ticks"]))
+            if 'post_roi_trace' in verify:
+                env['SWDB_DX100_POST_ROI_TRACE'] = verify['post_roi_trace']
         instrumentation = {'treatment': 'source_scope_diagnostic' if compiled and compiled['context'].get('diagnostic') else 'primary',
             'roi': data['context']['roi'], 'suppressed_internal_events': compiled['context']['suppressed_internal_events'] if compiled else [],
             'verification': 'same_guest_post_roi' if verify else 'none',
             'debug_flags': 'MAATrace,MAARangeFuser,MAAIndirect' if verify and verify.get('coverage') else 'MAATrace'}
+        if verify and 'post_roi_trace' in verify:
+            instrumentation['post_roi_trace'] = {
+                'flag': verify['post_roi_trace'], 'scope': 'post-seal verifier continuation only'}
         data['context'].update(instrumentation=instrumentation, verifier='dx100.bfs.verifier.v1' if verify else None, repetitions=1)
         if request.get('protocol'):
             if not request.get('candidate') or not verify:

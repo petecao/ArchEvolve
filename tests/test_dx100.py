@@ -1,4 +1,4 @@
-"""Public DX100 adapter fixtures; never simulator acceptance. Updated: 2026-09-25."""
+"""Public DX100 adapter fixtures; never simulator acceptance. Updated: 2026-09-26."""
 
 import hashlib
 import json
@@ -313,10 +313,12 @@ def test_simulation_timeout_preserves_checkpoint_and_failed_stage(case):
     assert result["stages"][-1]["state"] == "timed_out"
 
 
-@pytest.mark.parametrize("behavior,expected", [("PASS", "complete"), ("FAIL", "incorrect"),
-    ("absent", "missing_observation"), ("ambiguous", "missing_observation"),
-    ("wrong-exit", "missing_observation"), ("timeout", "timed_out")])
-def test_same_simulation_continuation_seals_roi_and_retains_explicit_verdict(case, behavior, expected):
+@pytest.mark.parametrize("behavior,expected,trace", [("PASS", "complete", False), ("FAIL", "incorrect", False),
+    ("absent", "missing_observation", False), ("ambiguous", "missing_observation", False),
+    ("wrong-exit", "missing_observation", False), ("timeout", "timed_out", False),
+    ("PASS", "complete", True), ("wrong-exit", "missing_observation", True)])
+def test_same_simulation_continuation_seals_roi_and_retains_explicit_verdict(case, monkeypatch, behavior, expected, trace):
+    monkeypatch.setenv('SWDB_DX100_POST_ROI_TRACE', 'SyscallBase')
     data = execution_request(case)
     _, invoke, folder = case
     model = Path(data["model_root"])
@@ -329,16 +331,36 @@ def test_same_simulation_continuation_seals_roi_and_retains_explicit_verdict(cas
         "event=m5.simulate()\nprint('Exiting @ tick 31400 because '+event.getCause())\n")
     simulator = Path(data["simulator"]["path"])
     text = simulator.read_text()
-    text = text.replace("    print('Exiting @ tick 31400 because m5_exit instruction encountered')", '''    import runpy,types
+    text = text.replace("    print('Exiting @ tick 31400 because m5_exit instruction encountered')", '''    import runpy,types,json,os
     (out/'stats.txt').write_text('---------- Begin Simulation Statistics ----------\\nsimTicks 31300\\nfinalTick 31400\\nsimFreq 1000000000000\\nsystem.maa.numInst 4\\n---------- End Simulation Statistics ----------\\n')
     for unit in 'SIAR':
         print(f'30000: system.maa: {unit}[0] End [fixture instruction]')
     counter=[0]
+    enabled=[]
+    synced=[]
+    original_fsync=os.fsync
+    def fsync(fd):
+        inode=os.fstat(fd)
+        original_fsync(fd)
+        synced.append((inode.st_dev,inode.st_ino))
+    os.fsync=fsync
+    def enable_trace():
+        assert counter==[1] and not enabled, 'enable once after ROI exit'
+        seal=json.loads((out/'roi-seal.json').read_text())
+        assert seal['verification']['state']=='running'
+        assert seal['roi_exit_tick']==31400
+        assert 'simTicks 31300' in (out/'roi-stats.txt').read_text()
+        for path in (out/'roi-seal.json',out/'roi-stats.txt',out):
+            inode=path.stat()
+            assert (inode.st_dev,inode.st_ino) in synced, 'seal, stats and directory must be durable'
+        enabled.append(31400)
     def simulate(*args):
         counter[0]+=1
         if counter[0]==1:
+            assert not enabled, 'no syscall tracing during the measured ROI'
             return types.SimpleNamespace(getCause=lambda:'m5_exit instruction encountered',getCode=lambda:0)
         assert counter[0]==2, 'must resume the same simulated machine once'
+        assert bool(enabled)==('SWDB_DX100_POST_ROI_TRACE' in os.environ)
         (out/'stats.txt').write_text('VERIFICATION MODIFIED LIVE STATS\\n')
         mode=BEHAVIOR
         if mode=='timeout':
@@ -352,12 +374,15 @@ def test_same_simulation_continuation_seals_roi_and_retains_explicit_verdict(cas
     m5.simulate=simulate
     m5.curTick=lambda:31400 if counter[0]==1 else 40000
     m5.options=types.SimpleNamespace(outdir=str(out))
+    m5.debug=types.SimpleNamespace(flags={'SyscallBase': types.SimpleNamespace(enable=enable_trace)})
     sys.modules['m5']=m5
     driver=next(arg for arg in args if arg.endswith('dx100_verify.py'))
     runpy.run_path(driver,run_name='__m5_main__')'''.replace("BEHAVIOR", repr(behavior)))
     simulator.write_text(text)
     data["simulator"] = reference(simulator)
     data["verification"] = {"checker": "dx100.bfs.verifier.v1", "max_ticks": 1000000}
+    if trace:
+        data['verification']['post_roi_trace'] = 'SyscallBase'
     if behavior == "timeout":
         data["budget"]["run_seconds"] = 1
     result = invoke("dx100-execute", data)
@@ -374,3 +399,24 @@ def test_same_simulation_continuation_seals_roi_and_retains_explicit_verdict(cas
     assert check["coverage"]["accelerator_executed"] is True
     assert check["coverage"]["full_tiles"]["state"] == "unobserved"
     assert check["sealed_roi"]["sha256"]
+    treatment = result['context']['instrumentation'].get('post_roi_trace')
+    enabled_trace = check['continuation'].get('post_roi_trace')
+    if trace:
+        assert treatment == {'flag': 'SyscallBase', 'scope': 'post-seal verifier continuation only'}
+        assert enabled_trace == {**treatment, 'enabled_tick': 31400, 'output': 'simulation_log'}
+        output = Path(check['output']['path']).read_text()
+        assert output.index('SWDB_DX100_ROI_SEALED') < output.index('SWDB_DX100_POST_ROI_TRACE') < output.index('Verification: PASS')
+    else:
+        assert treatment is None and enabled_trace is None
+
+
+@pytest.mark.parametrize('trace', [None, True, False, '', 'Exec', 'SyscallBase,Exec', ['SyscallBase']])
+def test_public_verification_rejects_unsupported_trace_before_checkpoint(case, trace):
+    data = execution_request(case)
+    _, invoke, _ = case
+    data['verification'] = {'checker': 'dx100.bfs.verifier.v1', 'max_ticks': 1000,
+                            'post_roi_trace': trace}
+    result = invoke('dx100-execute', data)
+    assert result['outcome']['state'] == 'failed'
+    assert 'verification.post_roi_trace' in result['outcome']['reason']
+    assert not any(stage['stage'] in {'checkpoint', 'simulation'} for stage in result['stages'])

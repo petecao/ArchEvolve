@@ -1,6 +1,6 @@
 """gem5 entry wrapper: seal the BFS ROI, then resume its verifier.
 
-Updated: 2026-09-25. Executed by the pinned gem5 embedded Python interpreter.
+Updated: 2026-09-26. Executed by the pinned gem5 embedded Python interpreter.
 """
 
 import hashlib
@@ -24,11 +24,22 @@ def digest(path):
 
 def save(path, data):
     pending = path.with_suffix(".pending")
-    pending.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n")
+    with pending.open('w') as stream:
+        stream.write(json.dumps(data, indent=2, sort_keys=True) + "\n")
+        stream.flush()
+        os.fsync(stream.fileno())
     pending.replace(path)
+    directory = os.open(str(path.parent), os.O_RDONLY)
+    try:
+        os.fsync(directory)
+    finally:
+        os.close(directory)
 
 
 def main():
+    trace = os.environ.get('SWDB_DX100_POST_ROI_TRACE')
+    if trace is not None and trace != 'SyscallBase':
+        raise RuntimeError('unsupported post-ROI trace flag')
     root = Path(os.environ["SWDB_DX100_MODEL_ROOT"])
     entry = root / "configs/deprecated/example/se.py"
     folder = Path(m5.options.outdir)
@@ -85,6 +96,8 @@ def main():
     # The pinned Text::end flushes each guest dump. Never request another dump:
     # that would extend the intended interval beyond m5_dump_stats in BFS.
     shutil.copyfile(stats, sealed)
+    with sealed.open('rb') as stream:
+        os.fsync(stream.fileno())
     receipt = {
         "format": "swdb.dx100.roi-seal.v1",
         "execution_binding_sha256": os.environ["SWDB_DX100_EXECUTION_BINDING_SHA256"],
@@ -97,6 +110,18 @@ def main():
     }
     save(folder / "roi-seal.json", receipt)
     print("SWDB_DX100_ROI_SEALED", flush=True)
+    if trace:
+        # The immutable interval and its receipt are durable before the flag is
+        # enabled. SyscallBase writes to gem5's existing bounded output stream.
+        from m5 import debug
+        enable_tick = int(m5.curTick())
+        debug.flags[trace].enable()
+        receipt['verification']['post_roi_trace'] = {
+            'flag': trace, 'enabled_tick': enable_tick,
+            'scope': 'post-seal verifier continuation only', 'output': 'simulation_log'}
+        save(folder / 'roi-seal.json', receipt)
+        print('SWDB_DX100_POST_ROI_TRACE ' + json.dumps(
+            receipt['verification']['post_roi_trace'], sort_keys=True), flush=True)
     # This is the same instantiated machine and guest address space. It resumes
     # immediately after the m5_exit and returns the exact timed parent array.
     observer.write('verification_begin')
