@@ -1,12 +1,13 @@
 # T17 existing-candidate build-only plan
 
 Created: 2026-09-26 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 
 This prepares one compilation of the retained initial instruction-route candidate.
 It has not been dispatched. Run it only after the native study, a3 continuation,
 and fixed-coverage work have ended and their owned-process cleanup has been
-verified. Preserve their windows and other-node-idle admission gates. The pending
-native unpublishable-review readback takes priority. This plan neither freezes a
+verified. Preserve their windows and other-node-idle admission gates. The single
+native review readback has ended by timeout, with no retry. This plan neither freezes a
 protocol nor completes [Ticket 17](issues/17-dx100-instruction-route-acceptance.md).
 
 ## Request and bindings
@@ -87,3 +88,76 @@ or ended tmux pane alone does not establish cleanup. Successful compilation leav
 correctness unverified, profiling incomplete, and gain false; timed execution,
 actual full/tail/competing coverage, both graph families, and frozen-protocol
 acceptance remain outstanding.
+
+## Reviewed orchestration addendum — 2026-09-26
+
+The local [T17 supervisor](../../scripts/bfs_t17_build_only.py) implements this
+one attempt; its [focused tests](../../tests/test_bfs_t17_build_only.py) passed
+47 cases locally, with two real Linux subreaper/pidfd cases skipped on macOS.
+An independent reviewer reproduced that result and found no remaining issue after
+the stage-boundary cleanup repair. This is local preparation, not a build result.
+Dispatch remains contingent on the prerequisites and live host admission above,
+a separately pinned idle orchestration checkout, and the Linux cleanup checks.
+The existing provider and fixed-coverage checkouts remain unchanged.
+
+Use the named tmux pane → `timeout --signal=TERM --kill-after=30s 270s` →
+current socket-0 helper → supervisor topology. Capture the actual pane PID/start
+identity and the original aware start/deadline immediately before the timeout;
+the deadline is exactly 300 seconds after that start. Put the helper's lane,
+outer exit, and preflight evidence in the new sibling
+`/data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926.dispatch/` so the
+supervisor can require its separate raw root to be unused. The command interface is:
+
+```sh
+python3 ORCHESTRATION_ROOT/scripts/bfs_t17_build_only.py \
+  --expected-commit ORCHESTRATION_COMMIT \
+  --outer-started ORIGINAL_START --outer-deadline ORIGINAL_START_PLUS_300_SECONDS \
+  --pane-pid ACTUAL_PANE_PID --pane-start-ticks ACTUAL_PANE_START \
+  --coverage-completion /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/terminal-validation.json \
+  --coverage-sha256 65969e8cae4ce113c289ba79c9b3aafd852f36724dcd8c060d8f37837c5c971a \
+  --coverage-commit ACTUAL_PROSPECTIVELY_SELECTED_COVERAGE_COMMIT
+```
+
+Those uppercase values are required prospective inputs, not defaults or permission
+to extend the original clock. The supervisor fixes the public checkout to
+`5f1b8028619976b36df5fa24b8aacb91bf488168` and checks its code parent, all
+tracked runtime sources and configuration, request bytes, Python executable, and
+compiler/model identities. Its public sequence is six fresh preflight `get`
+processes, one `dx100-compile`, then fresh evaluation and chain retrieval. Each
+`get` has a maximum 15-second allowance, clipped to the common work deadline.
+The child environment disables Python user-site and bytecode writes, uses the
+existing `/data1/yanruj/tmp`, selects `/usr/bin:/bin`, and removes Python-path and
+compiler search-path overrides; the exact controlled map is retained.
+
+The supervisor uses the reviewed Linux subreaper/pidfd cleanup owner with the new
+[RSS observer](../../scripts/bfs_owned_rss.py). Its basis is
+`linux.proc_pid_stat.field24.v1`: PID, start time, state, and RSS pages come from
+the same `/proc/PID/stat` read. RSS remains approximate. The helper was exported
+separately at `a8b89115c9650173d516a50e3ed659036e614428`; the eventual client
+checkout must bind its own complete runtime tree. The additional supervisor guard
+covers itself and observed owned descendants across sessions, with the same
+16 GiB ceiling, nominal five-second observations, and a maximum 30-second gap.
+It does not claim a true peak or a kernel-enforced cap. Each public stage cleans
+adopted detached descendants before the next stage starts. All direct shutdown,
+reap, and adopted cleanup time spends one total 30-second allowance inside the
+original 300 seconds; no stage receives a new cleanup budget.
+
+The fixed coverage attempt ended **failed**, with outer/lane exit 1 and socket-0
+generation 321 released. Its exact terminal audit above retains 14 observed
+PID/start identities: 13 absent and only the captured tmux pane
+`3053339/494729548` as a zero-RSS zombie. Its resource observer is still labeled
+failed and sampling incomplete. The shared `coverage_cleanup` reader reopens
+that failed driver, time/budget bindings, lane/exit/release artifacts, and the
+full ancestry/known/sample identity union, then checks current process states.
+It also preserves the passed a3 and completed native/provider cleanup barriers.
+This admission establishes sequencing and terminal ownership only; it does not
+establish full/tail/competing execution or promote failed correctness evidence.
+
+The final independent terminal audit must include the supervisor's ancestry,
+driver and pane identities, every resource-sample and known identity, every
+public-stage identity, and all per-stage/final adopted-cleanup observations.
+`driver.json` retains direct-child exit/reap results, source/Python/runtime hashes,
+raw and binary bindings, elapsed time, resource observations, and final accounting.
+Its `cleanup_verified` remains false because its own reaping and the later lease
+release require the independent audit. No candidate performance or provider call
+is added by this orchestration.
