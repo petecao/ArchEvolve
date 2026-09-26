@@ -1,0 +1,285 @@
+{
+  "format": "swdb.dx100.compile_extension_observation.v1",
+  "created": "2026-09-25",
+  "observed": "2026-09-26T03:13:39.788941+00:00",
+  "state": "complete",
+  "guest_execution": false,
+  "gain_claim": false,
+  "cells": [
+    {
+      "id": "bfs-upstream-compile-20260925-a1",
+      "repository_commit": "81c0bc0619f8a0cb0985dd9a91b64a13425919cb",
+      "roi": "bfs.complete_call.v1",
+      "implementation": "gapbs-bfs-do",
+      "builds": {
+        "primary": {
+          "evaluation": "bfs-upstream-compile-20260925-a1.primary.build",
+          "binary_sha256": "a86c2b79c0e6e0c3d2aa4f751f596d4b271ed624851288429a73e45e9fff28ca",
+          "flags": [
+            "-std=c++11",
+            "-O3",
+            "-Wall",
+            "-g",
+            "-fopenmp",
+            "-DGEM5",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384"
+          ],
+          "compiler_version": [
+            "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+            "Copyright (C) 2023 Free Software Foundation, Inc."
+          ],
+          "source_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+          "model": {
+            "id": "dx100-gem5",
+            "revision": "e4fc4afdf894f295442cef3604667a469fab8e62"
+          }
+        },
+        "diagnostic": {
+          "evaluation": "bfs-upstream-compile-20260925-a1.diagnostic.build",
+          "binary_sha256": "eff85e34ff260e62f08ce3ceeda8fa1513de701c42a921a9a36c6f43c8a09c45",
+          "flags": [
+            "-std=c++11",
+            "-O3",
+            "-Wall",
+            "-g",
+            "-fopenmp",
+            "-DGEM5",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384"
+          ],
+          "compiler_version": [
+            "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+            "Copyright (C) 2023 Free Software Foundation, Inc."
+          ],
+          "source_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+          "model": {
+            "id": "dx100-gem5",
+            "revision": "e4fc4afdf894f295442cef3604667a469fab8e62"
+          }
+        }
+      },
+      "records": [
+        {
+          "path": "records/candidates/bfs-upstream-compile-20260925-a1.candidate.yaml",
+          "sha256": "3b3f572aac8ee18ed38155bc3b787182ab7345e9d9fafca84f575bb16cbc9124",
+          "id": "bfs-upstream-compile-20260925-a1.candidate"
+        },
+        {
+          "path": "records/evaluations/bfs-upstream-compile-20260925-a1.diagnostic.build.yaml",
+          "sha256": "e22d7a4a5cdf8c963a09db0b06b2e479ce01ffdf203b7a17830e80bf5d48dc65",
+          "id": "bfs-upstream-compile-20260925-a1.diagnostic.build"
+        },
+        {
+          "path": "records/evaluations/bfs-upstream-compile-20260925-a1.primary.build.yaml",
+          "sha256": "474d6f93d91b4a59914ec7b9999de8243a6ad4670a36df2212ea66cac85cf58b",
+          "id": "bfs-upstream-compile-20260925-a1.primary.build"
+        },
+        {
+          "path": "records/source_snapshots/bfs-upstream-compile-20260925-a1.source.yaml",
+          "sha256": "632b1a00ec91608125e5e12915ecaee45f01150602765fbd8b16404ca60283bc",
+          "id": "bfs-upstream-compile-20260925-a1.source"
+        }
+      ],
+      "raw_receipts": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-upstream-compile-20260925-a1.driver/driver.json",
+          "sha256": "8ae81d687101f05cb5cd9c85d7ec0d35957a1c748e73bae624130568df4d6054",
+          "bytes": 7455
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/lane-upstream-compile-a1.json",
+          "sha256": "edc232b4780cc0020bf65919b7f1c4a6429e91b2f52bbe1ba29c63797cb6474b",
+          "bytes": 988
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/upstream-compile-a1-driver.log",
+          "sha256": "2e74de97a2bbbb55f7e78002da784cb06f63fa84d13008eac58c91bd7de9aeea",
+          "bytes": 9755
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/upstream-compile-a1.exit",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "bytes": 2
+        }
+      ],
+      "region_inventories": {
+        "bfs-upstream-compile-20260925-a1.diagnostic.build": 24
+      }
+    },
+    {
+      "id": "bfs-author-maa-compile-20260925-a1",
+      "repository_commit": "81c0bc0619f8a0cb0985dd9a91b64a13425919cb",
+      "roi": "bfs.dx100.traversal.v1",
+      "implementation": "dx100-bfs-maa-reference",
+      "builds": {
+        "diagnostic": {
+          "evaluation": "bfs-author-maa-compile-20260925-a1.diagnostic.build",
+          "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+          "flags": [
+            "-std=c++11",
+            "-O3",
+            "-Wall",
+            "-g3",
+            "-fopenmp",
+            "-DGEM5",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-DMAA"
+          ],
+          "compiler_version": [
+            "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+            "Copyright (C) 2023 Free Software Foundation, Inc."
+          ],
+          "source_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+          "model": {
+            "id": "dx100-gem5",
+            "revision": "e4fc4afdf894f295442cef3604667a469fab8e62"
+          }
+        }
+      },
+      "records": [
+        {
+          "path": "records/candidates/bfs-author-maa-compile-20260925-a1.candidate.yaml",
+          "sha256": "4b23eaeef1cd472d598af974baa845d62f67218f477c42ab9ea780a700a4789e",
+          "id": "bfs-author-maa-compile-20260925-a1.candidate"
+        },
+        {
+          "path": "records/evaluations/bfs-author-maa-compile-20260925-a1.diagnostic.build.yaml",
+          "sha256": "55bcec2362c2d2368ea84bb18f7ae2355ffde73b73e7e595f248960e8b06086c",
+          "id": "bfs-author-maa-compile-20260925-a1.diagnostic.build"
+        },
+        {
+          "path": "records/source_snapshots/bfs-author-maa-compile-20260925-a1.source.yaml",
+          "sha256": "143c3fad1b93bc8d32a7c50d87e190d99f8593759f4b54e949ae91918b416675",
+          "id": "bfs-author-maa-compile-20260925-a1.source"
+        }
+      ],
+      "raw_receipts": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-author-maa-compile-20260925-a1.driver/driver.json",
+          "sha256": "a505abe6df0750416b8ea48939fd1d7809bbe158790ed8953601cda4e08b3e39",
+          "bytes": 5061
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/lane-author-maa-compile-a1.json",
+          "sha256": "2ef05ee7b3d98fb49079afc35bb5ce967a855f9a6348ae0e83d077dae4079a7d",
+          "bytes": 1032
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/author-maa-compile-a1-driver.log",
+          "sha256": "e56344dacde6358f7ad4e3ead0c7017b7b6947c9f4a8a1b5ddf6d2a78070c1ab",
+          "bytes": 7453
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/author-maa-compile-a1.exit",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "bytes": 2
+        }
+      ],
+      "region_inventories": {
+        "bfs-author-maa-compile-20260925-a1.diagnostic.build": 31
+      }
+    },
+    {
+      "id": "bfs-author-scalar-compile-20260925-a1",
+      "repository_commit": "81c0bc0619f8a0cb0985dd9a91b64a13425919cb",
+      "roi": "bfs.dx100.traversal.v1",
+      "implementation": "dx100-bfs-scalar",
+      "builds": {
+        "diagnostic": {
+          "evaluation": "bfs-author-scalar-compile-20260925-a1.diagnostic.build",
+          "binary_sha256": "0b28af6ac6a32c31f38d7b28062f57b7f4db4917aae2a196db117d846d29b47a",
+          "flags": [
+            "-std=c++11",
+            "-O3",
+            "-Wall",
+            "-g3",
+            "-fopenmp",
+            "-DGEM5"
+          ],
+          "compiler_version": [
+            "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+            "Copyright (C) 2023 Free Software Foundation, Inc."
+          ],
+          "source_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+          "model": {
+            "id": "dx100-gem5",
+            "revision": "e4fc4afdf894f295442cef3604667a469fab8e62"
+          }
+        }
+      },
+      "records": [
+        {
+          "path": "records/candidates/bfs-author-scalar-compile-20260925-a1.candidate.yaml",
+          "sha256": "47cd14bd40aacf10b310ebd31d0478f024158da021d3dda3ec34db831baf47a0",
+          "id": "bfs-author-scalar-compile-20260925-a1.candidate"
+        },
+        {
+          "path": "records/evaluations/bfs-author-scalar-compile-20260925-a1.diagnostic.build.yaml",
+          "sha256": "33848b3b442602f5c5a04e8a9581bc86e9f3d0b57f3e8409a3fb50abbc6e431c",
+          "id": "bfs-author-scalar-compile-20260925-a1.diagnostic.build"
+        },
+        {
+          "path": "records/source_snapshots/bfs-author-scalar-compile-20260925-a1.source.yaml",
+          "sha256": "fdda88105e4ce422ab019c3f116648651c76722621b79c19325e44417ffe4fd6",
+          "id": "bfs-author-scalar-compile-20260925-a1.source"
+        }
+      ],
+      "raw_receipts": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-author-scalar-compile-20260925-a1.driver/driver.json",
+          "sha256": "d929b958119bde25d24adc9177afe98c016ba37456da5a8f6f6b54fc96eed2ea",
+          "bytes": 5028
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/lane-author-scalar-compile-a1.json",
+          "sha256": "ee43d16e2d93b4da5528cdd30bdb4f65aa08d0f6586c22249a736fddd964a9a8",
+          "bytes": 1031
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/author-scalar-compile-a1-driver.log",
+          "sha256": "b1a63dd6150e03ddf482c1e45522255d3adef32084fa0322d95a7901ea40076e",
+          "bytes": 7421
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/author-scalar-compile-a1.exit",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "bytes": 2
+        }
+      ],
+      "region_inventories": {
+        "bfs-author-scalar-compile-20260925-a1.diagnostic.build": 31
+      }
+    }
+  ],
+  "preserved_author_binaries": [
+    {
+      "bytes": 1146480,
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs",
+      "sha256": "70301ad2e587c2dd55a730da5e0135337cb6b46ddd72999a843f86fd4b070dd1"
+    },
+    {
+      "bytes": 1146496,
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs_maa",
+      "sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d"
+    }
+  ],
+  "capacity_receipts": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6-dispatch3-capacity-preclaim.json",
+      "sha256": "246bf004c89598b81dd0e6ae26b9f3e826dd67da9bbc5d08ab799224eb31f954",
+      "bytes": 47508
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6-capacity-check7-node0.json",
+      "sha256": "b972c50a205373c0d1e8462cd3f596b7891c8c16c1cb98396bde8f55d0450b40",
+      "bytes": 47504
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6-capacity-check7-node1.json",
+      "sha256": "af199ccf5f7634f5a2c5a019e77d57e5c4a69c2df5494e670b9c0e874c53a66d",
+      "bytes": 47454
+    }
+  ]
+}
