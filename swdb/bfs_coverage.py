@@ -167,8 +167,9 @@ def _fixture_comparison(store, comparison):
             if workload is not None and wid != workload:
                 return None
             workload = wid; values.append(samples); ids[evaluation['id']] = artifacts.digest(evaluation)
-        measured = protocol._statistics(*values, frozen['settings']['profitability'])
         settings = frozen['settings']
+        _collection_identity(store, comparison, baseline, candidate, settings)
+        measured = protocol._statistics(*values, settings['profitability'], settings['sampling'])
         attribution = ('artifact_configuration_pair' if settings['mode'] == 'artifact_reference' else
                        'software_on_fixed_target' if settings['targets']['baseline'] == settings['targets']['candidate'] else
                        'joint_hardware_software')
@@ -184,6 +185,19 @@ def _fixture_comparison(store, comparison):
         return measured
     except (Failure, KeyError, TypeError, ValueError, OverflowError, OSError):
         return None
+
+
+def _collection_identity(store, comparison, baseline, candidate, settings):
+    """Reopen paired evidence under the same admission used by public comparison."""
+    if settings['sampling'].get('collection') is not None:
+        from swdb.bfs_native_pair import validate_receipt
+        actual = validate_receipt(store, baseline, candidate, settings)
+        protocol._fail(profile_package._same(comparison.get('metrics', {}).get('paired_collection'), actual),
+                       'comparison paired collection identity differs from its reopened receipt')
+    else:
+        protocol._fail(not any(row.get('context', {}).get('pairing') for row in (baseline, candidate))
+                       and comparison.get('metrics', {}).get('paired_collection') is None,
+                       'paired evidence cannot use an independent serial coverage analysis')
 
 
 def _unfavorable_fixture(store, comparison):
@@ -294,7 +308,8 @@ def _comparison(store, comparison, allowed, mode=None):
             reasons.append("comparison does not name its actual explicit baseline")
         if comparison.get("decision", {}).get("state") not in {"gain", "regression", "no_gain", "inconclusive"}:
             reasons.append("comparison has no valid empirical policy decision")
-        metrics = protocol._statistics(left, right, p["settings"]["profitability"])
+        _collection_identity(store, comparison, a, b, p['settings'])
+        metrics = protocol._statistics(left, right, p["settings"]["profitability"], p['settings']['sampling'])
         recorded = comparison.get("metrics", {}).get("roi_speedup")
         if type(recorded) not in (int, float) or not math.isfinite(recorded) or not math.isclose(recorded, metrics["roi_speedup"], rel_tol=1e-12):
             reasons.append("recorded ROI ratio differs from its immutable evaluation samples")

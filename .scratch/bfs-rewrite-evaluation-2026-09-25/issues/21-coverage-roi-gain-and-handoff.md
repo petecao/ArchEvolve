@@ -181,3 +181,15 @@ three Linux-only skips. Additional process-lifetime findings in future batch and
 native campaign execution are being repaired before dispatch; fixtures do not
 close any acceptance cell. Final independent Standards/Spec review against
 `1bdb7d4` remains required after all acceptance and repair work.
+
+## Frozen paired coverage repair — 2026-09-26
+
+Independent Spec review found that coverage recomputed paired confidence
+intervals as independent samples and omitted pair-receipt admission. Both
+fixture and empirical readers now use the frozen sampling policy and reopen
+the exact pair, component identities and raw evidence through the comparison's
+shared validator. Seven new/original-reproduction cases, 24 existing coverage
+cases and three independent edge checks pass. See the
+[repair receipt](../observations/paired-coverage-repair-20260926.json).
+All probes are contract fixtures; no final cell or gain is established. The
+original failed probes remain retained and this ticket stays claimed.

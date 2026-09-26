@@ -91,7 +91,10 @@ now rejects that downgrade and removal of all seal fields under an assembly ID.
 The public package suite passes 49 tests and all 213 catalog records validate;
 all six explicit legacy fixtures remain retrievable. Independent recheck is
 clean. T09 remains resolved. Independent Spec review separately found a paired
-coverage statistics/provenance error; its repair is undergoing regression.
+coverage statistics/provenance error. Its [repair](observations/paired-coverage-repair-20260926.json)
+passes seven new/reproduction cases, 24 existing cases and three independent
+edge checks, including refusal when raw paired evidence is missing. Both review
+findings are closed; empirical acceptance remains incomplete.
 The full local suite is running at isolated `c2f987b`, before these two fixes.
 
 ## Prospective supervision reviewed — 2026-09-26
