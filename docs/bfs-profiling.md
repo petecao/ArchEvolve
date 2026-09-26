@@ -39,6 +39,13 @@ qualifier, whose prefix spelling in the pinned DX100 source GCC accepts and Clan
 rejects. This adaptation is recorded in `parser_adaptations`; inventory does not
 infer alias semantics. Source bytes and all actual executable builds retain the
 original qualifier.
+Clang's predefined compiler identity and feature macros are not rewritten to
+pretend it is GCC. The full source file is tokenized, including inactive branches;
+uses of compiler-identity or feature-query tokens such as `__GNUC__`, `__clang__`,
+and `__has_builtin` fail discovery as unresolved. This also catches aliases
+defined in the source, while comments and string literals remain valid. Conditions
+or aliases supplied indirectly by headers remain outside branch-equivalence
+guarantees. The current pinned BFS source files do not use these tokens.
 `build_directory` optionally selects a unique absolute directory outside the
 repository and records. On mbit10 it must be under `/data1/yanruj` and defaults to
 `/data1/yanruj/EvolveSWDB_builds/<profile-id>`. Instrumented sources, wrappers, and

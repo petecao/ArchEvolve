@@ -26,6 +26,18 @@ class Range(C.Structure):
     _fields_ = [("data", C.c_void_p * 2), ("begin", C.c_uint), ("end", C.c_uint)]
 
 
+class Token(C.Structure):
+    _fields_ = [("data", C.c_uint * 4), ("pointer", C.c_void_p)]
+
+
+def _compiler_sensitive(name):
+    """Compiler identity/features are not reproduced by the metadata parser."""
+    return (name.startswith(("__GNUC", "__GNUG", "__clang", "__INTEL_COMPILER", "_MSC_"))
+            or name in {"__VERSION__", "__GXX_ABI_VERSION", "__has_builtin", "__has_feature",
+                        "__has_extension", "__has_attribute", "__has_cpp_attribute",
+                        "__has_c_attribute", "__has_declspec_attribute", "__is_identifier"})
+
+
 def discover(source, arguments, library):
     """Return only compiler-resolved editable extents, fail on any parse error."""
     source = Path(source).resolve()
@@ -46,6 +58,13 @@ def discover(source, arguments, library):
         "clang_getCursorExtent": ([Cursor], Range),
         "clang_getRangeStart": ([Range], Location),
         "clang_getRangeEnd": ([Range], Location),
+        "clang_getFile": ([C.c_void_p, C.c_char_p], C.c_void_p),
+        "clang_getLocationForOffset": ([C.c_void_p, C.c_void_p, C.c_uint], Location),
+        "clang_getRange": ([Location, Location], Range),
+        "clang_tokenize": ([C.c_void_p, Range, C.POINTER(C.POINTER(Token)), C.POINTER(C.c_uint)], None),
+        "clang_getTokenKind": ([Token], C.c_uint),
+        "clang_getTokenSpelling": ([C.c_void_p, Token], String),
+        "clang_disposeTokens": ([C.c_void_p, C.POINTER(Token), C.c_uint], None),
         "clang_getSpellingLocation": ([Location, C.POINTER(C.c_void_p), C.POINTER(C.c_uint),
                                        C.POINTER(C.c_uint), C.POINTER(C.c_uint)], None),
         "clang_getFileName": ([C.c_void_p], String),
@@ -99,6 +118,22 @@ def discover(source, arguments, library):
             lib.clang_disposeDiagnostic(diagnostic)
         if any(d["severity"] >= 3 for d in diagnostics):
             raise ValueError("compiler discovery diagnostics: " + "; ".join(d["message"] for d in diagnostics))
+        # Tokenize the entire original file, including inactive branches. Looking
+        # only at the AST misses the exact branch mismatch this guard prevents.
+        file = lib.clang_getFile(tu, str(source).encode())
+        span = lib.clang_getRange(lib.clang_getLocationForOffset(tu, file, 0),
+                                  lib.clang_getLocationForOffset(tu, file, len(raw)))
+        tokens, count = C.POINTER(Token)(), C.c_uint()
+        lib.clang_tokenize(tu, span, C.byref(tokens), C.byref(count))
+        try:
+            sensitive = sorted({name for i in range(count.value)
+                                if lib.clang_getTokenKind(tokens[i]) == 2
+                                for name in [string(lib.clang_getTokenSpelling(tu, tokens[i]))]
+                                if _compiler_sensitive(name)})
+        finally:
+            lib.clang_disposeTokens(tu, tokens, count)
+        if sensitive:
+            raise ValueError("compiler-sensitive source inventory is unresolved: " + ", ".join(sensitive))
         regions, unresolved, seen = [], [], set()
         loops = {207: "while", 208: "do", 209: "for", 225: "range_for"}
 
@@ -192,6 +227,7 @@ def discover(source, arguments, library):
                     "inlined source scopes remain source scopes, not machine-code symbols",
                     "OpenMP-disabled metadata inventory preserves _OPENMP; actual diagnostic execution retains original OpenMP flags",
                     "metadata parser substitutes Clang builtin/OpenMP declarations in the compiler-private header slot while preserving actual system-library search order; execution uses original compiler headers",
+                    "metadata uses Clang predefined compiler macros; compiler-identity/feature tokens in the source file are rejected, while header-defined macro conditions and indirect expansions remain outside branch-equivalence guarantees",
                     "transformation-specific OpenMP pragmas and macro-generated loop extents may remain unresolved"] + adaptations}
     finally:
         if tu.value: lib.clang_disposeTranslationUnit(tu)

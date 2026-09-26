@@ -67,3 +67,30 @@ validated CSR directly within the existing native two-million-vertex,
 5,005,448 adjacency entries and agrees with the independent streaming parser.
 This interface failure does not justify selecting scale 16, freezing a protocol,
 or claiming timing evidence; the bounded retry retains the same scale-18 graphs.
+
+2026-09-25 actual upstream native calibration: the unchanged `gapbs-bfs-do`
+retry `bfs-native-pilot-20260925-upstream18-a2` completed on verified socket lane 1
+(generation 392, 22:09:24–22:36:23 Eastern). Both fixed scale-18 version-2 graphs
+completed fifteen independently checked primary executions: five fresh processes
+for each ordered source `[0, 1234, 7777]`, with four threads. Each family also has
+six independently checked diagnostic executions, eighteen valid modeled-memory
+observations, and a complete sealed source/profile package. Independent
+post-collection validation rehashed source, primary/diagnostic binaries, graph,
+outputs, and Callgrind summaries. See repository-root
+`docs/evidence/bfs-native-pilot-20260925-upstream18-a2.yaml`, imported in `c91994c`.
+
+| Family | Primary checks | Source medians, milliseconds (0 / 1234 / 7777) | Five-sample range / median | Package |
+|---|---:|---|---|---|
+| Uniform random | 15/15 | 4.893488 / 5.124849 / 6.909457 | 39.06% / 42.73% / 37.63% | Complete |
+| Kronecker | 15/15 | 6.369765 / 6.685496 / 4.602018 | 38.08% / 49.13% / 46.24% | Complete |
+
+The full driver cost was 1,618.235 seconds. Primary stage intervals were
+479.168 seconds (uniform) and 503.484 seconds (Kronecker), while their recorded
+subprocess sums were 46.527 and 29.535 seconds. Diagnostic stage intervals were
+225.240 and 239.975 seconds, with subprocess sums 65.019 and 55.389 seconds.
+The receipt preserves exact timestamps and each subprocess cost; the remaining
+host cost is not attributed. These costs establish bounded upstream feasibility
+at scale 18, but the substantial sample spread does not relax the fixed timing
+policy. The unchanged DX100 scalar pilot, accelerator coverage, repeated simulator
+replays, and protocol freeze remain outstanding. No candidate gain or complete
+Ticket 15 acceptance is claimed.

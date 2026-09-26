@@ -79,6 +79,33 @@ for(int i=0;i<4;++i) for(int j=0;j<4;++j) a[i*4+j]=i+j;
     assert result['unresolved'] and not any(r['kind']=='loop' for r in result['regions'])
 
 
+@pytest.mark.parametrize('directives', [
+    '#if __GNUC__ >= 13\nint CompilerChosen(){return 13;}\n#else\nint MetadataChosen(){return 4;}\n#endif',
+    '#define COMPILER_VERSION __GNUC_MINOR__\n#if COMPILER_VERSION > 0\nint f(){return 1;}\n#endif',
+    '#if 0\n#if defined(__clang__)\nint hidden(){return 1;}\n#endif\n#endif',
+    '#if __has_builtin(__builtin_expect)\nint f(){return 1;}\n#endif',
+])
+def test_compiler_identity_and_feature_branches_fail_closed(tmp_path, directives):
+    library, args = compiler_inventory()
+    source = tmp_path/'compiler-branches.cc'
+    source.write_text(directives+'\nint always(){return 0;}\n')
+    with pytest.raises(ValueError, match='compiler-sensitive source inventory is unresolved'):
+        discover(source, args, library)
+
+
+def test_compiler_names_in_comments_and_strings_are_not_branch_tokens(tmp_path):
+    library, args = compiler_inventory()
+    source = tmp_path/'compiler-text.cc'
+    source.write_text('''// __GNUC__ does not control this function.
+/* #if __has_feature(cxx_exceptions) */
+const char *f(){return "__clang__";}
+const char *g(){return R"(__GNUC_MINOR__)";}
+''')
+    result = discover(source, args, library)
+    assert {r['name'] for r in result['regions']} == {'f', 'g'}
+    assert any('predefined compiler macros' in reason for reason in result['limitations'])
+
+
 def test_openmp_loop_iteration_is_guarded_on_executing_worker(tmp_path):
     library,args=compiler_inventory()
     source=tmp_path/'toy.cc';source.write_text('''void f(int *a) {
