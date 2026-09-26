@@ -75,6 +75,30 @@ explicit model is I1 32768/8/64, D1 49152/12/64, and LL 25165824/12/64
 `collector`. Cache state starts cold at instrumentation start. Collection is enabled for all
 threads, instrumentation is globally bounded to the ROI, and the dump combines
 thread events; no per-thread collection toggle can omit new OpenMP workers.
+The explicit client dump occurs **before** stopping instrumentation. Only that
+dump contributes observations; all raw parts, including the final process-exit
+dump, remain retained. `counter_validation` requires bounded nonnegative integer
+counts, summary counts at least as large as the self-cost totals, data-cache misses
+no greater than their references, and last-level misses no greater than first-level
+misses. Public hotspot queries also invalidate inconsistent historical execution
+groups while preserving their numeric values and `recorded_available` flag.
+
+The September 25 a3 observations exposed the reason for this ordering requirement:
+Valgrind 3.22 resets current thread costs when instrumentation stops, while a prior
+zero-stats operation leaves a nonzero last-dump baseline. Dumping afterward can
+subtract that baseline from zero using unsigned arithmetic. The a3 `summary`
+contained values near 2^64 even though `totals` contained ordinary positive values.
+Both original observations and raw hashes are preserved with an invalid-memory
+audit; they cannot establish Ticket 08 or package completeness. This diagnosis
+follows `callgrind/main.c` (`set_instrument_state`, `zero_thread_cost`) and
+`callgrind/dump.c` (`new_dumpfile`) at upstream tag `VALGRIND_3_22_0`, commit
+`bd4db67b1d386c352040b1d8fab82f5f3340fc59`, in the
+[official Valgrind source](https://sourceware.org/git/?p=valgrind.git;a=tree;h=bd4db67b1d386c352040b1d8fab82f5f3340fc59).
+The [Callgrind format](https://valgrind.org/docs/manual/cl-format.html) specifies
+the summary/self-cost relationship. `scripts/bfs_callgrind_roi_probe.py` compares
+the old and corrected orders with one and four threads under a 360-second outer
+budget. `scripts/bfs_profile_recollect.py` then reuses retained valid primary
+evaluations for fresh baseline and changed-source diagnostics.
 Valgrind schedules threads differently from native execution; the cache model
 uses virtual addresses and excludes kernel/other-process cache effects. These are model
 parameters, not claimed current hardware counters. No source-order proxy is

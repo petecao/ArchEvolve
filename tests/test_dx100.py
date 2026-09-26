@@ -125,6 +125,26 @@ def test_missing_statistics_does_not_infer_success_from_exit_zero(case):
     assert result["raw_artifacts"]
 
 
+def test_exact_checkpoint_reuse_still_runs_a_fresh_distinct_simulation(case):
+    data = execution_request(case)
+    _, invoke, _ = case
+    first = invoke('dx100-execute', data)
+    assert first['outcome']['state'] == 'complete'
+    data['id'] = 'same-binding-new-execution'
+    data['checkpoint_manifest'] = first['context']['checkpoint_manifest']
+    second = invoke('dx100-execute', data)
+    assert second['outcome']['state'] == 'complete'
+    assert second['context']['execution_binding'] == first['context']['execution_binding']
+    assert second['context']['checkpoint_manifest'] == first['context']['checkpoint_manifest']
+    assert 'checkpoint' not in [stage['stage'] for stage in second['stages']]
+    assert 'checkpoint_resolution' in [stage['stage'] for stage in second['stages']]
+    first_log = next(stage['log'] for stage in first['stages'] if stage['stage'] == 'simulation')
+    second_run = next(stage for stage in second['stages'] if stage['stage'] == 'simulation')
+    assert second_run['state'] == 'complete' and second_run['returncode'] == 0
+    assert second_run['log'] != first_log
+    assert Path(second_run['log']).is_file() and Path(first_log).is_file()
+
+
 def test_changed_binary_is_rejected_before_checkpoint(case):
     data = execution_request(case)
     _, invoke, _ = case

@@ -38,7 +38,7 @@ def main():
     profiling={'message_version':'1.0','id':args.id+'.baseline-profile','evaluation':baseline['id'],
         'memory':True,'budget':{'discovery_seconds':120,'build_seconds':180,'run_seconds':180,'total_seconds':1200}}
     before=request('bfs-profile',profiling)
-    if not before['regions'] or not any(x.get('available') for x in before['dynamic_memory']):
+    if not before['regions'] or not any(x.get('available') and x.get('counter_validation',{}).get('state')=='valid' for x in before['dynamic_memory']):
         raise RuntimeError('baseline automatic regions or dynamic memory missing: '+json.dumps(before['outcome'])+' '+str(before['reasons']))
     source=call('get',baseline['source_snapshot'])
     base_candidate=call('get',baseline['candidate'])
@@ -81,6 +81,8 @@ def main():
     new_loops=[r for r in loops['regions'] if r['function']=='SWDBDiscoveredHelper']
     assert new_function and new_loops and all(r['metrics']['invocations']>0 for r in new_function+new_loops)
     assert not any(r['function']=='SWDBDiscoveredHelper' for r in before['regions'])
+    assert functions['memory_validation']['state']=='consistent'
+    assert all(x.get('counter_validation',{}).get('state')=='valid' for x in after['dynamic_memory'])
     assert any(x.get('available') and x.get('value',0)>0 for x in after['dynamic_memory'])
     assert all(x['correctness']['passed'] for x in after['executions'])
     chain=call('get',after['id'],'--chain')

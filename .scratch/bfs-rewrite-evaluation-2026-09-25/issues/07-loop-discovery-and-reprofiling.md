@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 06
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -25,14 +25,14 @@ This slice completes the discovery behavior in AC02–AC03 and contributes AC13 
 
 ## Acceptance criteria
 
-- [ ] A public native BFS profiling query discovers and ranks attributable loops within BFS functions and helpers without mandatory manual loop annotations.
-- [ ] Loop output identifies the current source/binary, containing function and source context, contribution metric, units, and whether timing is per invocation or accumulated across the BFS execution.
-- [ ] Inclusive/exclusive attribution and unresolved work remain explicit across nested functions and loops, without double-counting their reported contributions.
-- [ ] A real BFS candidate introduces expensive work in a helper or loop absent from the baseline catalog; after the normal candidate/evaluation path, reprofiling discovers, locates, and ranks that work without a person first adding it to the catalog.
-- [ ] Reprofiled observations reference the candidate artifact rather than the baseline. Removed or changed regions do not retain unsupported baseline timing, access-pattern, or semantic assertions.
-- [ ] Changed, split, or fused regions have explicit correspondence when one can be established; an unresolved correspondence cannot be used to manufacture a region speedup.
-- [ ] Fresh-process queries recover both baseline and candidate rankings and the available correspondence, including differences between BFS-level and region-level observations.
-- [ ] Collection failure or incomplete source attribution remains a retained partial outcome. Diagnostic runs performed before protocol freeze do not become candidate gain claims.
+- [x] A public native BFS profiling query discovers and ranks attributable loops within BFS functions and helpers without mandatory manual loop annotations.
+- [x] Loop output identifies the current source/binary, containing function and source context, contribution metric, units, and whether timing is per invocation or accumulated across the BFS execution.
+- [x] Inclusive/exclusive attribution and unresolved work remain explicit across nested functions and loops, without double-counting their reported contributions.
+- [x] A real BFS candidate introduces expensive work in a helper or loop absent from the baseline catalog; after the normal candidate/evaluation path, reprofiling discovers, locates, and ranks that work without a person first adding it to the catalog.
+- [x] Reprofiled observations reference the candidate artifact rather than the baseline. Removed or changed regions do not retain unsupported baseline timing, access-pattern, or semantic assertions.
+- [x] Changed, split, or fused regions have explicit correspondence when one can be established; an unresolved correspondence cannot be used to manufacture a region speedup.
+- [x] Fresh-process queries recover both baseline and candidate rankings and the available correspondence, including differences between BFS-level and region-level observations.
+- [x] Collection failure or incomplete source attribution remains a retained partial outcome. Diagnostic runs performed before protocol freeze do not become candidate gain claims.
 
 ## Verification
 
@@ -41,3 +41,15 @@ Use the public patch-to-candidate, native evaluation, profiling, and retrieval p
 ## Dependencies and boundaries
 
 Ticket 06 supplies function attribution and source context; its prerequisite chain already supplies patch candidates and native evaluation. Natural-language or annotated-source workers are not required for this discovery demonstration. Memory observations and complete package acceptance arrive separately. General program extraction, full traces, and proof of every bottleneck cause remain outside this slice.
+
+## Answer
+
+Resolved 2026-09-25 (Eastern Time) from real changed-source rediscovery, independent of the invalid memory observations in the same attempt.
+
+Automatic source scopes now cover ordinary loops and eligible OpenMP iteration bodies within discovered BFS functions/helpers. Public rankings state accumulated thread CPU seconds, inclusive/exclusive accounting, invocation units, current source extents and hashes, containing functions, and exact diagnostic artifact identity. Fresh candidate instrumentation supplies all observations; only identical unambiguous fragments within a containing function receive correspondence, and changed/split/fused/removed fragments inherit neither measurements nor semantics.
+
+The real public changed-helper demonstration in `bfs-profile-smoke-20260925-a3.changed-profile` followed proposal `bfs-profile-smoke-20260925-a3.proposal` and the independently checked primary evaluation `bfs-profile-smoke-20260925-a3.evaluation` (three sources `[0, 3, 8]`, three passes). The baseline had 31 discovered scopes; the candidate had 34. `SWDBDiscoveredHelper` at lines 313–319 and two nested loops were discovered without annotations or a name catalog. The outer loop at lines 315–317 ran three times with 0.003185478 exclusive CPU seconds; the inner loop at lines 316–317 ran 6000 times with 0.003264096 exclusive CPU seconds. Fresh-process queries ranked and retrieved both loops, the new rank-1 helper, and source/build context. Thirty unchanged fragments received correspondence; four current fragments and one previous fragment remained explicitly unresolved.
+
+The changed source artifact is `e6e789e6942776ad88cbc3ba8377d09be8f8b8eee63e511230d7a9957a2490fd`, and the region binary is `82a31660bdda9a1a9c197753b05358df789fe05dc2f31263864147a5ed78a69c`. Metadata from commits `cd3ed062f68916dd56663e4a76623bbba72b6fae` and `3a8f8c372cba18c7cc5b8d46f4ec4fe9bd7afc02` is imported by parent checkpoint `dc12a01`; raw evidence remains on mbit10 under `/data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925`.
+
+Local compiler/public integration cases cover nested scopes, single-statement loops, changed source hashes, retained discovery failures, and stale evaluation rejection. Coverage remains partial, including the unresolved continued OpenMP pragma at line 189 and excluded header/library/outlined scopes. All loop quantities are diagnostic, separate from primary complete-call wall time. The a3 memory family is explicitly invalid after its unsigned-underflow audit; Tickets 08 and 09 remain unaccepted and no region speedup or candidate gain is claimed.

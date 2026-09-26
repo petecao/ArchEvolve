@@ -161,7 +161,7 @@ def _packages(store, evaluation):
             _, memory_reasons = profile_package._memory_validation(package.get('dynamic_memory', []))
             reasons.extend(memory_reasons)
             if diagnostic:
-                _, diagnostic_reasons = profile_package.memory_observation_issues(diagnostic)
+                _, diagnostic_reasons = profile_package.memory_observation_issues(diagnostic, verify_raw=True)
                 reasons.extend(diagnostic_reasons)
                 if not profile_package._same(package.get('dynamic_memory'), diagnostic.get('dynamic_memory')):
                     reasons.append('package dynamic memory differs from its identified diagnostic profile')
@@ -260,7 +260,7 @@ def _evaluation(store, evaluation, comparisons, current):
     else:
         original_diagnostic = store.get(original_package.get('region_profile'), 'region_profile') or {}
         if (profile_package._memory_validation(original_package.get('dynamic_memory', []))[1]
-                or profile_package.memory_observation_issues(original_diagnostic)[1]):
+                or profile_package.memory_observation_issues(original_diagnostic, verify_raw=True)[1]):
             reasons.append('proposal input package contains inconsistent or audited-invalid memory observations')
     context = evaluation.get("context", {})
     if context.get("basis") == "measured" and any(flag.startswith("-DMAA") for flag in evaluation.get("build", {}).get("flags", [])):

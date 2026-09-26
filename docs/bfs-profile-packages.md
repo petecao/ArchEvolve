@@ -36,6 +36,11 @@ duplicate event, failed post-collection audit, or inconsistent counter invalidat
 that execution's memory evidence, including any otherwise plausible zero rows.
 Original values remain visible with reasons; the coverage report rechecks these
 conditions even for packages sealed by an earlier assembler.
+When raw Callgrind output is available, assembly and coverage independently parse
+its identified event summary and consistency totals and compare every available
+retained count exactly. Plausible but miscopied values fail this check. Files on
+an unavailable remote host remain explicitly unverified; local missing or changed
+artifacts cannot establish acceptance.
 Diagnostic timing and simulated cache behavior do not replace primary native ROI
 timing. A complete package needs discovered function and loop timing, primary ROI
 timing, and at least one actual available dynamic-memory

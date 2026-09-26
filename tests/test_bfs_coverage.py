@@ -81,11 +81,13 @@ def test_missing_remote_artifacts_are_exposed_as_unverified(package_setup, tmp_p
     assert report["external_verification_complete"] is False
 
 
-def test_historical_sealed_package_with_underflow_is_rejected_without_erasing_it(package_setup, tmp_path):
+@pytest.mark.parametrize('fault', ['a3-underflow', 'miscopied'])
+def test_historical_sealed_package_with_invalid_counts_is_rejected_without_erasing_it(package_setup, tmp_path, fault):
     from test_profile_packages import _assemble, _callgrind_profile
     records, request, evaluation, profile, _ = package_setup
     package = _assemble(records, tmp_path, request)
-    _callgrind_profile(profile, tmp_path, 'a3-underflow')
+    _callgrind_profile(profile, tmp_path, 'a3-underflow' if fault == 'a3-underflow' else None)
+    if fault == 'miscopied': profile['dynamic_memory'][0]['value'] = 201
     records.write('region_profiles/package-diagnostics.yaml', profile)
     # Represent a historical package whose old assembler accepted these counts.
     # Its seal is correct; only the newly enforced observation semantics reject it.
@@ -102,7 +104,8 @@ def test_historical_sealed_package_with_underflow_is_rejected_without_erasing_it
     report = _report(records, tmp_path)
     observed = next(row for row in report['unassigned_evaluations'] if row['evaluation'] == evaluation['id'])
     rejected = next(row for row in observed['rejected_packages'] if row['id'] == package['id'])
-    assert any('Callgrind execution' in reason and 'inconsistent' in reason for reason in rejected['reasons'])
+    assert any('Callgrind execution' in reason and ('inconsistent' in reason or 'raw validation failed' in reason)
+               for reason in rejected['reasons'])
     assert not report['profiling_demonstrations'] and report['criteria']['AC04']['state'] == 'incomplete'
     retained = records.swdb('get', package['id'], '--format', 'json')
     assert retained.returncode == 0 and json.loads(retained.stdout) == package

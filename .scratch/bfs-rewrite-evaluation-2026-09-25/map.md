@@ -20,8 +20,8 @@ The user approved this 21-ticket decomposition on 2026-09-25. Each link is one i
 | 03 | [Native BFS evaluation](issues/03-native-bfs-evaluation.md) | 02 | resolved |
 | 04 | [Instruction-based rewriting and bounded repair](issues/04-instruction-rewriting-and-repair.md) | 03 | resolved |
 | 05 | [Annotated-source rewriting](issues/05-annotated-source-rewriting.md) | 04 | resolved |
-| 06 | [Automatic function hotspot discovery](issues/06-function-hotspot-discovery.md) | 03 | claimed |
-| 07 | [Loop discovery and changed-region profiling](issues/07-loop-discovery-and-reprofiling.md) | 06 | claimed |
+| 06 | [Automatic function hotspot discovery](issues/06-function-hotspot-discovery.md) | 03 | resolved |
+| 07 | [Loop discovery and changed-region profiling](issues/07-loop-discovery-and-reprofiling.md) | 06 | resolved |
 | 08 | [Dynamic memory observations](issues/08-dynamic-memory-observations.md) | 06 | claimed |
 | 09 | [Complete profile packages and strategy lookup](issues/09-profile-packages-and-strategy-lookup.md) | 07, 08 | claimed |
 | 10 | [Queryable DX100 operation contracts](issues/10-dx100-operation-contracts.md) | 02 | resolved |
@@ -107,6 +107,11 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | Master records, collaborator fixtures, public workflow tests, authorization | 26–27, 53–60 | D02–D03, D14–D15 | AC07, AC09, AC18, AC20; publication gate |
 
 ## Context pointers
+
+- 2026-09-25: Tickets 06 and 07 resolved from independently checked a3 function/loop
+  rediscovery: new helper ranked first and two nested loops executed; see their
+  Answers for exact artifact hashes and metrics. The a3 memory family remains
+  invalid under its retained audit; Tickets 08–09 remain unaccepted.
 
 These entries retain historical milestones. The ticket table and each ticket's latest
 evidence describe current acceptance; earlier publication-only or unexecuted notes

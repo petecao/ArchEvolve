@@ -24,6 +24,7 @@ def main():
     p.add_argument('--build-evaluation', required=True)
     p.add_argument('--runs-dir', type=Path, required=True)
     p.add_argument('--lane', type=int, choices=(0, 1), required=True)
+    p.add_argument('--checkpoint-evaluation', help='reuse only an exact matching retained real checkpoint')
     a = p.parse_args()
     if not re.fullmatch(r'[a-z0-9][a-z0-9._-]*', a.id):
         raise SystemExit('smoke ID must use the record identifier syntax')
@@ -42,24 +43,34 @@ def main():
     binaries = {Path(row['path']).name: row for row in build['build']['details']['binaries']}
     def ref(path):
         return {'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
-    converter = Path(binaries['converter']['path'])
-    if ref(converter)['sha256'] != binaries['converter']['sha256']:
-        raise SystemExit('converter changed since the selected build')
-    graph = folder / 'uniform64.sg'
-    with (folder / 'generate.log').open('w') as log:
-        subprocess.run([str(converter), '-u', '6', '-k', '4', '-b', str(graph)],
-            stdout=log, stderr=subprocess.STDOUT, check=True, timeout=60,
-            env={**os.environ, 'OMP_NUM_THREADS': '1'})
+    prior = store.get(a.checkpoint_evaluation, 'evaluation') if a.checkpoint_evaluation else None
+    if a.checkpoint_evaluation:
+        if (not prior or prior.get('evidence_kind') != 'execution'
+                or not prior.get('context', {}).get('checkpoint_manifest')):
+            raise SystemExit('reuse requires an existing identified real checkpoint')
+        workload = prior['request']['workload']
+    else:
+        converter = Path(binaries['converter']['path'])
+        if ref(converter)['sha256'] != binaries['converter']['sha256']:
+            raise SystemExit('converter changed since the selected build')
+        graph = folder / 'uniform64.sg'
+        with (folder / 'generate.log').open('w') as log:
+            subprocess.run([str(converter), '-u', '6', '-k', '4', '-b', str(graph)],
+                stdout=log, stderr=subprocess.STDOUT, check=True, timeout=60,
+                env={**os.environ, 'OMP_NUM_THREADS': '1'})
+        workload = {'id': a.id + '.uniform64-diagnostic', 'source': 0, 'representation': ref(graph)}
     request = {'message_version': '1.0', 'id': a.id, 'machine': 'mbit10',
         'hardware_target': 'dx100-e4fc4af-4c', 'model_root': build['context']['model_root'],
         'build_evaluation': build['id'],
         'simulator': {key: binaries['gem5.opt'][key] for key in ('path', 'sha256')},
         'binary': {key: binaries['bfs_maa'][key] for key in ('path', 'sha256')},
-        'workload': {'id': a.id + '.uniform64-diagnostic', 'source': 0, 'representation': ref(graph)},
+        'workload': workload,
         'configuration': {'mode': 'MAA', 'l3_size_mb': 8, 'l3_assoc': 16, 'tile_elements': 16384},
         'verification': {'checker': 'dx100.bfs.verifier.v1', 'max_ticks': 1000000000000},
-        'budget': {'total_seconds': 1100, 'memory_gib': 16, 'storage_gib': 2,
+        'budget': {'total_seconds': 1100, 'memory_gib': 32, 'storage_gib': 2,
             'checkpoint_seconds': 300, 'run_seconds': 750}}
+    if prior:
+        request['checkpoint_manifest'] = prior['context']['checkpoint_manifest']
     path = folder / 'request.json'
     path.write_text(json.dumps(request, indent=2) + '\n')
     with (folder / 'evaluation.stdout.json').open('w') as out, (folder / 'evaluation.stderr').open('w') as err:

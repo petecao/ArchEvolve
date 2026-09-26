@@ -111,17 +111,26 @@ def _callgrind_profile(profile, tmp_path, fault=None):
         elif fault == 'write-only': events.update(Dr=0, D1mr=0, DLmr=0)
         elif fault == 'one-bad-execution' and original['execution']['source_position'] == 0:
             events['Dw'] = 2**64-7
+        raw = tmp_path / f"callgrind-{original['execution']['source_position']}.out"
+        totals = ' '.join(map(str, [1000, *events.values()]))
+        raw.write_text('events: Ir ' + ' '.join(events) + '\nsummary: ' + totals + '\ntotals: ' + totals + '\n')
+        digest = hashlib.sha256(raw.read_bytes()).hexdigest()
+        for execution in profile['executions']:
+            if execution['kind'] == 'memory' and execution['source_position'] == original['execution']['source_position']:
+                execution.update(raw_artifact=str(raw), raw_sha256=digest)
         for metric, value in events.items():
             rows.append({**copy.deepcopy(original), 'metric': metric, 'value': value,
+                         'raw_artifact': str(raw), 'raw_sha256': digest,
                          'unit': 'references' if metric in ('Dr', 'Dw') else 'misses',
                          'collector': {'name': 'Callgrind', 'version': 'explicit contract fixture'}})
         if fault == 'duplicate': rows.append(copy.deepcopy(rows[-1]))
+        if fault == 'split-raw-identity': rows[-1]['raw_sha256'] = 'a' * 64
     profile['dynamic_memory'] = rows
     return profile
 
 
 @pytest.mark.parametrize('fault', ['a3-underflow', 'misses-exceed-references', 'll-exceeds-l1',
-                                  'noninteger', 'one-bad-execution', 'duplicate'])
+                                  'noninteger', 'one-bad-execution', 'duplicate', 'split-raw-identity'])
 def test_inconsistent_callgrind_group_never_completes_package(package_setup, tmp_path, fault):
     records, request, _, profile, _ = package_setup
     _callgrind_profile(profile, tmp_path, fault)
@@ -157,6 +166,19 @@ def test_post_collection_audit_invalidates_previously_plausible_memory(package_s
     assert package['completeness'] == 'incomplete'
     assert any('post-collection audit failed' in reason for reason in package['reasons'])
     assert package['dynamic_memory'] == profile['dynamic_memory']
+
+
+def test_plausible_but_miscopied_callgrind_value_is_not_an_observation(package_setup, tmp_path):
+    records, request, _, profile, _ = package_setup
+    _callgrind_profile(profile, tmp_path)
+    # Both values satisfy every counter inequality; only raw re-parsing catches
+    # this possible transcription/collector defect despite its correct file hash.
+    profile['dynamic_memory'][0]['value'] = 201
+    records.write('region_profiles/package-diagnostics.yaml', profile)
+    package = _assemble(records, tmp_path, request)
+    assert package['completeness'] == 'incomplete'
+    assert any('retained Dr differs from its raw event summary' in reason for reason in package['reasons'])
+    assert package['dynamic_memory'][0]['value'] == 201
 
 
 def test_exact_fixture_package_has_source_and_bidirectional_strategies(package_setup, tmp_path):

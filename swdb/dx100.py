@@ -153,6 +153,7 @@ def _bounded_process(session, name, command, timeout, memory, storage, env=None)
     reason = None
     code = None
     last_storage = 0
+    peak_rss_kib = None
     try:
         with log.open("w") as stream:
             session.child = subprocess.Popen(command, cwd=session.folder, env=env, stdout=stream,
@@ -166,8 +167,9 @@ def _bounded_process(session, name, command, timeout, memory, storage, env=None)
                     # separately accounts for its nested compiler process group.
                     rss = subprocess.check_output(["ps", "-eo", "pgid=,rss="], text=True, timeout=10)
                     used = sum(int(row[1]) for line in rss.splitlines() if len(row := line.split()) == 2 and row[0] == str(session.child.pid))
+                    peak_rss_kib = max(peak_rss_kib or 0, used)
                     if used > memory * 1024 * 1024:
-                        raise StageFailure("budget_exhausted", "simulator process-group memory budget exhausted")
+                        raise StageFailure("budget_exhausted", f"simulator process-group memory budget exhausted: {used} KiB > {memory} GiB")
                 if time.monotonic() - last_storage >= 30:
                     directories = [session.folder]
                     build_dir = session.data.get('context', {}).get('build_directory')
@@ -187,7 +189,8 @@ def _bounded_process(session, name, command, timeout, memory, storage, env=None)
         session.child = None
     state = "complete" if code == 0 and reason is None else reason.state if isinstance(reason, StageFailure) else "interrupted" if isinstance(reason, Stopped) else "failed"
     session.finish(state, host_wall_s=time.monotonic() - start, returncode=code,
-                   log_sha256=artifacts.file_hash(log), reason=str(reason) if reason else None)
+                   log_sha256=artifacts.file_hash(log), reason=str(reason) if reason else None,
+                   sampled_peak_process_group_rss_kib=peak_rss_kib)
     if reason:
         raise reason
     if code != 0:

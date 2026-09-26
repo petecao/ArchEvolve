@@ -10,8 +10,8 @@ Updated: 2026-09-25 (Eastern Time)
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
 Dependent preparation claimed 2026-09-25 by the identity/profile-package worker.
-Tickets 07 and 08 remain acceptance gates; the public assembly and lookup contract
-is prepared alongside their collector implementation.
+Tickets 07 and 08 are prerequisites; the public assembly and lookup contract
+was prepared alongside their collector implementation.
 
 ## What to build
 
@@ -62,7 +62,8 @@ Actual collection `bfs-profile-smoke-20260925-a3` discovered and timed current
 function/loop regions, including a newly introduced helper. Its final numerical
 audit found invalid unsigned-underflow memory counts. No complete real package
 or real-package patch handoff is accepted from that collection. Ticket 08 owns
-counter-ordering repair and recollection; Tickets 07/08 remain acceptance gates.
+counter-ordering repair and recollection. Ticket 07 is now resolved on the actual
+function/loop evidence; Ticket 08 remains the acceptance gate.
 
 The assembler now invalidates an entire inconsistent Callgrind execution group,
 including plausible zero rows accompanying unsigned-underflow counts, and honors

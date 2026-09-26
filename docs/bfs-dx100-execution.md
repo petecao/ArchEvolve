@@ -11,6 +11,16 @@ tiny checkpoint completed in 91.656 seconds and produced about 17 MiB of
 compressed guest memory. Future smoke stages reserve 300 seconds for checkpoint
 creation within their unchanged overall budgets.
 
+The a4 checkpoint-to-restore attempt retained `budget_exhausted` after detailed
+restore exceeded its 16 GiB host process-group cap. Future tiny smoke requests
+reserve 32 GiB host RSS, within the pilot cap, while retaining the identical
+16 GiB guest configuration. `--checkpoint-evaluation` reuses a retained real
+checkpoint with its exact existing workload ID, source, representation path,
+and binary binding; the public adapter revalidates all identities. Each process
+stage records `sampled_peak_process_group_rss_kib` where Linux accounting is
+available. This is sampled host experiment cost, never simulated BFS memory
+traffic or performance.
+
 The public `dx100-build` and `dx100-execute` commands persist ordinary evaluation
 records before starting external work. `swdb get ID` retrieves them in another
 process. A completed build means identified binaries exist; completed smoke

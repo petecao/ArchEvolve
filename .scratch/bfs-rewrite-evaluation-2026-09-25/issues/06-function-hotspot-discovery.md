@@ -3,7 +3,7 @@
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 03
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -25,14 +25,14 @@ This slice delivers the function portion of AC02 and contributes AC03 and AC13 t
 
 ## Acceptance criteria
 
-- [ ] A public profiling request binds exact implementation/source/binary, graph and traversal sources, native target, thread count, and ROI; the returned ranking identifies that same execution context.
-- [ ] Real native BFS profiling discovers functions and relevant helpers without a person first supplying their names as a required symbol catalog or adding source annotations.
-- [ ] The query ranks attributable function contributions using a stated metric, units, and scope, distinguishing inclusive and exclusive contributions rather than summing nested work twice.
-- [ ] Each resolved entry links to the correct source snapshot, location, function context, relevant callers/helpers, and access to the buildable application context.
-- [ ] Inlined, outlined, unresolved, or otherwise unattributed work is handled explicitly according to observed collector limits; partial coverage is not described as an exhaustive application bottleneck.
-- [ ] Separately instrumented or diagnostic executions identify their artifact differences and overhead treatment; their runtime does not silently replace primary native ROI timing.
-- [ ] A later public query retrieves the evidence and source associations, while a mismatched or stale request produces an explicit response instead of reusing another workload's ranking.
-- [ ] Failed or incomplete collection retains available evidence and reasons without producing a fabricated successful ranking or pre-freeze gain claim.
+- [x] A public profiling request binds exact implementation/source/binary, graph and traversal sources, native target, thread count, and ROI; the returned ranking identifies that same execution context.
+- [x] Real native BFS profiling discovers functions and relevant helpers without a person first supplying their names as a required symbol catalog or adding source annotations.
+- [x] The query ranks attributable function contributions using a stated metric, units, and scope, distinguishing inclusive and exclusive contributions rather than summing nested work twice.
+- [x] Each resolved entry links to the correct source snapshot, location, function context, relevant callers/helpers, and access to the buildable application context.
+- [x] Inlined, outlined, unresolved, or otherwise unattributed work is handled explicitly according to observed collector limits; partial coverage is not described as an exhaustive application bottleneck.
+- [x] Separately instrumented or diagnostic executions identify their artifact differences and overhead treatment; their runtime does not silently replace primary native ROI timing.
+- [x] A later public query retrieves the evidence and source associations, while a mismatched or stale request produces an explicit response instead of reusing another workload's ranking.
+- [x] Failed or incomplete collection retains available evidence and reasons without producing a fabricated successful ranking or pre-freeze gain claim.
 
 ## Verification
 
@@ -41,3 +41,15 @@ Exercise public profile/query and fresh-process retrieval using a real native BF
 ## Dependencies and boundaries
 
 Ticket 03 provides native execution identity, correctness/diagnostic context, and durable results. Loop attribution is ticket 07, actual memory observations ticket 08, and accepted package assembly ticket 09. DX100-specific collection is a later backend slice. The deliverable as a whole covers both sources, but this ticket does not acquire a hidden dependency on DX100 bring-up or expand into a general application/language profiler.
+
+## Answer
+
+Resolved 2026-09-25 (Eastern Time) from real mbit10 diagnostic execution, independent of the invalid memory observations in the same attempt.
+
+The public `bfs-profile` and `bfs-hotspots` path now discovers current source functions with libclang, instruments nested source scopes, and ranks accumulated exclusive function thread CPU seconds. Exact candidate/source, primary and diagnostic binaries, graph, ordered sources, thread count, lane, compiler, and complete-call ROI bindings are retained. Inclusive counters remain separate; diagnostic CPU time is not primary wall time, and instrumentation overhead is included.
+
+Actual evidence is `bfs-profile-smoke-20260925-a3.baseline-profile` (11 functions and 20 loops) and `bfs-profile-smoke-20260925-a3.changed-profile` (12 functions and 22 loops), collected in lane 1 generation 380 at checkpoint `5790e8d5338a958a9a5db861b9bae52ed97e2f41`. The normal public patch/candidate/evaluation path introduced `SWDBDiscoveredHelper`, absent from the baseline catalog. The candidate's primary evaluation passed all three independent checks for sources `[0, 3, 8]`; the separate region executions also passed all three. The helper ranked first with three calls and 0.006454273 accumulated exclusive function thread CPU seconds. Its source and callers/helpers were returned without requiring its name as a discovery input.
+
+The changed region binary is `82a31660bdda9a1a9c197753b05358df789fe05dc2f31263864147a5ed78a69c`; candidate artifact is `e6e789e6942776ad88cbc3ba8377d09be8f8b8eee63e511230d7a9957a2490fd`; primary binary is `e7db1f8531ddbd675ec5874acade25a35e675bd782e1967e8243b2322e46027a`. Fresh-process queries recovered the ranking and chain. Metadata was retained in remote commits `cd3ed062f68916dd56663e4a76623bbba72b6fae` and `3a8f8c372cba18c7cc5b8d46f4ec4fe9bd7afc02`, imported by parent checkpoint `dc12a01`. Raw diagnostics remain under `/data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925` on mbit10.
+
+Coverage is explicitly partial: header/library/member/outlined scopes are excluded, and the unsafe continued OpenMP pragma at source line 189 remains unresolved. Earlier a1/a2 parser failures remain retained. The separately collected a3 memory counters failed a later unsigned-underflow audit; that entire observation family is invalid and does not satisfy Ticket 08 or 09. This answer accepts only independently valid function attribution. There is no gain claim.

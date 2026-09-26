@@ -438,7 +438,7 @@ def query(args):
     metric = "exclusive_function_thread_cpu_seconds" if requested == "function" else "exclusive_thread_cpu_seconds"
     regions.sort(key=lambda r: r["metrics"].get(metric, r["metrics"]["exclusive_thread_cpu_seconds"]), reverse=True)
     from swdb.profile_package import memory_observation_issues
-    rejected, memory_reasons = memory_observation_issues(data)
+    rejected, memory_reasons = memory_observation_issues(data, verify_raw=True)
     memory_rows = copy.deepcopy(data["dynamic_memory"])
     for index in rejected:
         memory_rows[index].update(recorded_available=memory_rows[index].get("available"), available=False,

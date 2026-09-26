@@ -162,6 +162,18 @@ def _forward(store, impl, regions, unchanged):
     return found
 
 
+def _callgrind_groups(rows):
+    groups = {}
+    for index, row in enumerate(rows):
+        collector = row.get('collector', {})
+        name = collector.get('name', '') if isinstance(collector, dict) else collector
+        if not isinstance(name, str) or name.casefold() != 'callgrind':
+            continue
+        key = artifacts.digest({field: row.get(field) for field in ('execution', 'artifact_sha256')})
+        groups.setdefault(key, []).append((index, row))
+    return groups.values()
+
+
 def _memory_validation(rows):
     """Invalidate an inconsistent Callgrind execution, including its zero rows.
 
@@ -169,18 +181,12 @@ def _memory_validation(rows):
     unsigned near-2**64 summaries can be subtraction underflow, not huge counts.
     Raw values remain unchanged in retained records and package diagnostics.
     """
-    groups = {}
-    for index, row in enumerate(rows):
-        collector = row.get('collector', {})
-        name = collector.get('name', '') if isinstance(collector, dict) else collector
-        if not isinstance(name, str) or name.casefold() != 'callgrind':
-            continue
-        key = artifacts.digest({field: row.get(field) for field in
-                                ('execution', 'artifact_sha256', 'raw_artifact', 'raw_sha256')})
-        groups.setdefault(key, []).append((index, row))
     rejected, reasons = set(), []
-    for entries in groups.values():
+    for entries in _callgrind_groups(rows):
         events, invalid = {}, []
+        if len({artifacts.digest({key: row.get(key) for key in ('raw_artifact', 'raw_sha256', 'collector')})
+                for _, row in entries}) != 1:
+            invalid.append('raw artifact or collector identity differs within one execution')
         for _, row in entries:
             metric, value = row.get('metric'), row.get('value')
             if value is None and row.get('available') is not True:
@@ -214,7 +220,7 @@ def _memory(rows):
     return available
 
 
-def memory_observation_issues(profile):
+def memory_observation_issues(profile, *, verify_raw=False, require_available=False):
     """Recheck retained counters and subsequent audits without changing records."""
     rows = profile.get('dynamic_memory', [])
     rejected, reasons = _memory_validation(rows)
@@ -225,6 +231,29 @@ def memory_observation_issues(profile):
         if isinstance(audit, dict) and audit.get('scope') == 'dynamic_memory' and audit.get('state') == 'invalid':
             rejected.update(range(len(rows)))
             reasons.append('dynamic memory post-collection audit failed: ' + str(audit.get('reason', 'invalid observations')))
+    if verify_raw:
+        from swdb.bfs_profiling import parse_callgrind
+        for entries in _callgrind_groups(rows):
+            if any(index in rejected for index, _ in entries):
+                continue
+            try:
+                reference = entries[0][1]
+                path = Path(reference['raw_artifact'])
+                if not path.is_file() and not require_available:
+                    continue  # Fresh remote retrieval exposes availability separately.
+                if not path.is_file() or path.stat().st_size > 64 * 1024 * 1024:
+                    raise Failure('raw summary is unavailable or exceeds the 64 MiB parser bound')
+                if artifacts.file_hash(path) != reference['raw_sha256']:
+                    raise Failure('raw summary content identity changed')
+                events = parse_callgrind(path, require_totals=True)
+                if events.get('Ir', 0) <= 0:
+                    raise Failure('raw summary does not identify a nonempty ROI instruction collection')
+                for _, row in entries:
+                    if row.get('available') is True and (row['metric'] not in events or row['value'] != events[row['metric']]):
+                        raise Failure(f"retained {row['metric']} differs from its raw event summary")
+            except (Failure, OSError, ValueError, KeyError, TypeError) as exc:
+                rejected.update(index for index, _ in entries)
+                reasons.append(f"Callgrind execution {entries[0][1].get('execution')} raw validation failed: {exc}")
     return rejected, reasons
 
 
@@ -242,7 +271,7 @@ def _source_positions(evaluation):
 
 def _check_observations(profile, evaluation, candidate):
     """Bind diagnostics to actual executions rather than accepting standalone numbers."""
-    _, reasons = memory_observation_issues(profile)
+    _, reasons = memory_observation_issues(profile, verify_raw=True, require_available=True)
     executions = profile.get("executions", [])
     fixture = profile.get("request", {}).get("fixture") is True
     expected, repetition = _source_positions(evaluation)

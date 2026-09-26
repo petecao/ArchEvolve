@@ -277,3 +277,15 @@ int main(){return 99;}
     assert all(not x['available'] for x in result['dynamic_memory'])
     fresh=call('get',result['id'])
     assert fresh['regions']==result['regions'] and fresh['context']['primary_binary_sha256']==evaluation['build']['binary_sha256']
+    # A later audit must affect public eligibility, without erasing the original
+    # observation or concealing its recorded availability from historical users.
+    fresh['dynamic_memory']=[{'metric':'Dw','available':True,'value':2**64-7,
+                             'collector':{'name':'Callgrind'},'execution':{'source':0}}]
+    fresh.setdefault('extensions',{})['post_collection_audit']={'scope':'dynamic_memory','state':'invalid'}
+    records.write('region_profiles/toy-profile.yaml',fresh)
+    audited=call('bfs-hotspots',result['id'],'--kind','function')
+    assert audited['memory_validation']['state']=='invalid'
+    assert audited['dynamic_memory'][0]['recorded_available'] is True
+    assert audited['dynamic_memory'][0]['available'] is False
+    assert audited['dynamic_memory'][0]['value']==2**64-7
+    assert call('get',result['id'])['dynamic_memory'][0]['available'] is True
