@@ -149,6 +149,20 @@ unchanged. No Linux fixture, auditor, compilation or measurement ran during
 this preparation. The original malformed preparation receipt is retained;
 an additive valid JSON receipt preserves its reference and unchanged facts.
 
+## Native reader repaired — 2026-09-26 18:23 ET
+
+The [launcher repair](observations/native-reader-repair-20260926.json) converts
+the JSON records path to `Path` in the generated child. Its regression executes
+the real historical Store API. An optional observer persists the actual Linux
+PID/start identity before any poll/wait and reports direct reap under the same
+cleanup deadline. Observer errors reject admission while preserving an earlier
+reader failure; deterministic qualification output is unchanged. The full local
+file passes 57 with one Linux-only skip; independent checks pass 10 with that
+same Linux skip, including three boundary probes. Actual Linux fast-exit proof
+remains required. The [separate corrected attempt](../../docs/bfs-native-readback-correction-20260926.md)
+has one 990-second allowance and a fixed window; final code/recipe admission is
+not sealed. The failed first attempt and completed measurements stay unchanged.
+
 ## Native readback failed before validation — 2026-09-26 18:13 ET
 
 The [single readback attempt](observations/native-readback-failure-20260926.json)

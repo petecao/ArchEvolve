@@ -16,6 +16,7 @@ import time
 from scripts import bfs_native_one_thread_pilot as driver
 from scripts import bfs_paired_calibration as paired
 from scripts import dx100_witness_continuation as terminal
+from scripts.bfs_owned_execution import identity as reader_identity
 from scripts.bfs_freeze_pilot import packet, require, sample_grid
 from swdb import artifacts, bfs_native
 
@@ -186,20 +187,27 @@ def stop_reader(child, deadline):
             pass
 
 
-def pinned_readback(selected, receipt, store):
-    """Use the unmodified measured reader in its own pristine original checkout."""
+def pinned_readback(selected, receipt, store, *, reader_observer=None):
+    """Use the unmodified measured reader in its own pristine original checkout.
+
+    Optional synchronous spawn/finished observations require Linux identities.
+    Persist spawn before any reap, and finish inside the same cleanup deadline.
+    Observation failures reject admission; they never change the stable result
+    or replace an earlier reader error. Callback persistence time is charged.
+    """
     start = time.monotonic(); work_end = start+READBACK_SECONDS
     hard_end = work_end+READBACK_CLEANUP_SECONDS
+    require(reader_observer is None or callable(reader_observer), 'reader observer must be callable')
     checkout = Path(selected['collector_checkout'])
     require(checkout == checkout.resolve() and checkout.is_dir(), 'collector checkout is missing or symlinked')
     runtime = driver.runtime_identity(COLLECTOR_COMMIT, root=checkout)
     require(artifacts.digest(runtime) == artifacts.digest(receipt['runtime']), 'collector runtime inventory differs from measurement')
     plan = json.loads((checkout/PLAN_RELATIVE).read_text()); driver.validate_plan(plan)
     # Exact reviewed code only; this invokes admission, not the collector main.
-    program = ('import json,sys; from scripts import bfs_native_one_thread_pilot as d; '
+    program = ('import json,sys; from pathlib import Path; from scripts import bfs_native_one_thread_pilot as d; '
                'from swdb.store import Store; from swdb import yamlio; '
                'v=json.loads(sys.argv[1]); '
-               'r=d.validate_driver_receipt(v["driver"],yamlio.load(d.PLAN),Store(v["records"]),v["commit"]); '
+               'r=d.validate_driver_receipt(v["driver"],yamlio.load(d.PLAN),Store(Path(v["records"])),v["commit"]); '
                'print(json.dumps(r,sort_keys=True,allow_nan=False))')
     payload = {'driver': selected['driver_receipt'], 'records': str(Path(store.dir).resolve()), 'commit': COLLECTOR_COMMIT}
     command = [runtime['python']['path'], '-c', program, json.dumps(payload, sort_keys=True)]
@@ -211,15 +219,29 @@ def pinned_readback(selected, receipt, store):
     require(remaining > 0, 'one-thread readback preflight exhausted its total allowance')
     child = subprocess.Popen(command, cwd=checkout, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                              start_new_session=True)
-    error, cleanup_error = None, None
+    error, cleanup_error, identity = None, None, None
     try:
+        if reader_observer is not None:
+            # A fast exited child is still identifiable while it is unreaped.
+            # Capture and persist before communicate/poll can discard that PID.
+            identity = reader_identity(child.pid)
+            require(identity is not None and identity['pid'] == child.pid
+                    and identity['parent_pid'] == os.getpid()
+                    and type(identity.get('start_ticks')) is int and identity['start_ticks'] >= 0,
+                    'reader spawn identity is unavailable')
+            reader_observer({'event': 'spawn', 'identity': copy.deepcopy(identity),
+                'observed_at': datetime.now(timezone.utc).isoformat(),
+                'work_deadline_monotonic': work_end, 'hard_deadline_monotonic': hard_end})
         remaining = work_end-time.monotonic()
         require(remaining > 0, 'reader startup exhausted its work allowance')
         stdout, stderr = child.communicate(timeout=remaining)
+        require(child.returncode == 0 and len(stdout) <= 8*1024**2 and len(stderr) <= 1024**2,
+                'pinned one-thread reader failed: ' + stderr[:2048].decode(errors='replace'))
     except BaseException as exc:
         error = exc
     finally:
-        cleanup_end = min(hard_end, time.monotonic()+READBACK_CLEANUP_SECONDS)
+        cleanup_start = time.monotonic()
+        cleanup_end = min(hard_end, cleanup_start+READBACK_CLEANUP_SECONDS)
         try:
             stop_reader(child, cleanup_end)
         except BaseException as exc:
@@ -235,12 +257,26 @@ def pinned_readback(selected, receipt, store):
                     if stream is not None: stream.close()
                 except BaseException as exc:
                     cleanup_error = cleanup_error or exc
+        if reader_observer is not None:
+            try:
+                require(time.monotonic() <= cleanup_end, 'reader observation exhausted its cleanup deadline')
+                reader_observer({'event': 'finished', 'identity': copy.deepcopy(identity),
+                    'pid': child.pid, 'returncode': child.returncode,
+                    'direct_reaped': child.returncode is not None,
+                    'observed_at': datetime.now(timezone.utc).isoformat(),
+                    'cleanup_started_monotonic': cleanup_start,
+                    'cleanup_deadline_monotonic': cleanup_end,
+                    'cleanup_elapsed_before_event_seconds': time.monotonic()-cleanup_start,
+                    'hard_deadline_monotonic': hard_end,
+                    'original_error': None if error is None else f'{type(error).__name__}: {error}',
+                    'cleanup_error': None if cleanup_error is None else f'{type(cleanup_error).__name__}: {cleanup_error}'})
+                require(time.monotonic() <= cleanup_end, 'reader observation exceeded its cleanup deadline')
+            except BaseException as exc:
+                cleanup_error = cleanup_error or exc
     if error is not None:
         raise error from cleanup_error
     if cleanup_error is not None:
         raise cleanup_error
-    require(child.returncode == 0 and len(stdout) <= 8*1024**2 and len(stderr) <= 1024**2,
-            'pinned one-thread reader failed: ' + stderr[:2048].decode(errors='replace'))
     result = json.loads(stdout)
     require(result.get('state') == 'complete' and result.get('qualified') is True
             and result.get('gain_claim') is False and result.get('driver') == selected['driver_receipt'],
@@ -253,14 +289,17 @@ def pinned_readback(selected, receipt, store):
     return plan, evidence
 
 
-def qualify(spec, packets, store, identities, gates):
+def qualify(spec, packets, store, identities, gates, *, reader_observer=None):
     selected = selection(spec); receipt = read(selected['driver_receipt'])
     require(receipt.get('id') == RUN_ID and receipt.get('repository_commit') == COLLECTOR_COMMIT
             and receipt.get('state') == 'complete' and receipt.get('primary_qualified') is True
             and receipt.get('gain_claim') is receipt.get('protocol_freeze') is receipt.get('provider_calls') is False,
             'one-thread study is incomplete, unqualified, or from another code pin')
     closure = terminal_closure(selected['terminal_receipt'], selected['driver_receipt'], receipt)
-    plan, readback = pinned_readback(selected, receipt, store)
+    if reader_observer is None:
+        plan, readback = pinned_readback(selected, receipt, store)
+    else:
+        plan, readback = pinned_readback(selected, receipt, store, reader_observer=reader_observer)
     require([row.get('id') for row in receipt.get('cells', [])] == [cell['id'] for cell in plan['cells']],
             'one-thread primary grid differs from its four fixed cells')
     require(selected['packages'] == [row['id'] for row in receipt['diagnostics']], 'fresh diagnostic package order differs')

@@ -6,6 +6,7 @@ these tests exercise history/gate routing, terminal closure, and reader launch.
 import copy
 from datetime import datetime
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -213,24 +214,28 @@ def test_only_exact_terminal_pane_zero_rss_zombie_is_allowed(terminal_case):
 
 @pytest.fixture
 def readback_case(tmp_path, monkeypatch):
-    """Real child process; explicit synthetic runtime-validation seam."""
+    """Real child and Store API; only collector admission/runtime are synthetic."""
     checkout = tmp_path/'collector'; checkout.mkdir()
     (checkout/one.PLAN_RELATIVE).parent.mkdir(parents=True)
     (checkout/one.PLAN_RELATIVE).write_text(json.dumps(PLAN))
     for folder in ('scripts','swdb'):
         (checkout/folder).mkdir(); (checkout/folder/'__init__.py').write_text('')
-    (checkout/'swdb/store.py').write_text('class Store:\n def __init__(self,path): self.path=path\n')
-    (checkout/'swdb/yamlio.py').write_text('import json\ndef load(path): return json.load(open(path))\n')
+    for name in ('store.py', 'yamlio.py', 'problems.py'):
+        (checkout/'swdb'/name).write_bytes((one.driver.ROOT/'swdb'/name).read_bytes())
+    records = tmp_path/'records'; records.mkdir()
+    write(records/'fixture.yaml', {'kind':'machine', 'id':'reader-contract-fixture', 'test_client':True})
     source = checkout/'scripts/bfs_native_one_thread_pilot.py'
     source.write_text('import os,json\nPLAN='+repr(one.PLAN_RELATIVE)+'\n'
         'def validate_driver_receipt(ref,plan,store,commit):\n'
         ' assert commit=='+repr(one.COLLECTOR_COMMIT)+'\n'
-        ' assert os.path.isabs(store.path)\n'
-        ' return dict(state="complete",qualified=True,gain_claim=False,driver=ref)\n')
+        ' assert os.path.isabs(store.dir) and not store.problems\n'
+        ' fixture=store.get("reader-contract-fixture","machine")\n'
+        ' assert fixture["test_client"] is True\n'
+        ' return dict(state="complete",qualified=True,gain_claim=False,driver=ref,fixture_record=fixture)\n')
     runtime = {'python':{'path':sys.executable},'synthetic_fixture':True}
     monkeypatch.setattr(one.driver,'runtime_identity',lambda expected,root: copy.deepcopy(runtime))
     value = selected(checkout,['a','b','c','d']); value['driver_receipt']={'path':'fixture','sha256':'0'*64}
-    return SimpleNamespace(selected=value,receipt={'runtime':runtime},store=SimpleNamespace(dir=tmp_path/'records'),source=source)
+    return SimpleNamespace(selected=value,receipt={'runtime':runtime},store=SimpleNamespace(dir=records),source=source)
 
 
 def test_pinned_reader_uses_its_checkout_and_returns_stable_result(readback_case):
@@ -238,6 +243,120 @@ def test_pinned_reader_uses_its_checkout_and_returns_stable_result(readback_case
     first = one.pinned_readback(c.selected,c.receipt,c.store)
     second = one.pinned_readback(c.selected,c.receipt,c.store)
     assert first == second and first[1]['result']['qualified'] is True
+
+
+def test_generated_reader_loads_actual_store_and_preserves_full_reference(readback_case):
+    c = readback_case
+    c.selected['driver_receipt']['bytes'] = 486592
+    _, evidence = one.pinned_readback(c.selected, c.receipt, c.store)
+    assert evidence['result']['fixture_record'] == {
+        'kind':'machine', 'id':'reader-contract-fixture', 'test_client':True}
+    assert evidence['result']['driver'] == c.selected['driver_receipt']
+
+
+@pytest.fixture
+def observed_reader(readback_case, monkeypatch):
+    """Real children; synthetic procfs identity on non-Linux test hosts only."""
+    children = []; original = subprocess.Popen
+    def spawn(*args, **kwargs):
+        child = original(*args, **kwargs); children.append(child)
+        return child
+    monkeypatch.setattr(one.subprocess, 'Popen', spawn)
+    if sys.platform != 'linux':
+        def identity(pid):
+            assert children[-1].pid == pid and children[-1].returncode is None
+            return {'pid':pid, 'parent_pid':os.getpid(), 'start_ticks':1,
+                    'state':'fixture', 'rss_bytes':0}
+        monkeypatch.setattr(one, 'reader_identity', identity)
+    return readback_case, children
+
+
+def test_reader_persists_fast_child_identity_before_reaping(observed_reader, monkeypatch, tmp_path):
+    c, children = observed_reader
+    original = one.subprocess.Popen
+    def already_exited(*args, **kwargs):
+        child = original(*args, **kwargs)
+        time.sleep(.15)  # Real tiny reader may finish before Popen returns to caller.
+        return child
+    monkeypatch.setattr(one.subprocess, 'Popen', already_exited)
+    events = []; durable = tmp_path/'reader-events.jsonl'
+    def observe(event):
+        if event['event'] == 'spawn':
+            assert children[0].returncode is None  # Nothing has polled/reaped it.
+        events.append(event)
+        with durable.open('a') as out: out.write(json.dumps(event)+'\n')
+    _, evidence = one.pinned_readback(c.selected,c.receipt,c.store,reader_observer=observe)
+    assert [event['event'] for event in events] == ['spawn','finished']
+    assert events[0]['identity']['pid'] == children[0].pid
+    assert events[1]['identity'] == events[0]['identity']
+    assert events[1]['direct_reaped'] and events[1]['returncode'] == 0
+    assert events[1]['cleanup_deadline_monotonic'] <= events[0]['hard_deadline_monotonic']
+    assert 0 <= events[1]['cleanup_elapsed_before_event_seconds'] <= one.READBACK_CLEANUP_SECONDS
+    assert len(durable.read_text().splitlines()) == 2
+    assert 'reader_observer' not in evidence and evidence['result']['qualified']
+
+
+@pytest.mark.parametrize('failed_event',['spawn','finished'])
+def test_reader_observer_failure_fails_closed_and_reaps(observed_reader, failed_event):
+    c, children = observed_reader; error = OSError('fixture observer persistence denied'); events=[]
+    def observe(event):
+        events.append(event)
+        if event['event'] == failed_event: raise error
+    with pytest.raises(OSError) as caught:
+        one.pinned_readback(c.selected,c.receipt,c.store,reader_observer=observe)
+    assert caught.value is error and len(children) == 1 and children[0].returncode is not None
+    assert events[-1]['event'] == 'finished' and events[-1]['direct_reaped']
+
+
+def test_observer_metadata_does_not_change_deterministic_readback(observed_reader):
+    c, _ = observed_reader; events=[]
+    without = one.pinned_readback(c.selected,c.receipt,c.store)
+    with_observer = one.pinned_readback(c.selected,c.receipt,c.store,reader_observer=events.append)
+    assert without == with_observer and len(events)==2
+
+
+def test_original_reader_failure_precedes_finished_observer_error(observed_reader):
+    c, children = observed_reader; failure=OSError('fixture final observation denied')
+    c.source.write_text(c.source.read_text()+'\nraise ValueError("original fixture reader failure")\n')
+    def observe(event):
+        if event['event'] == 'finished':
+            assert event['returncode']==1 and event['direct_reaped']
+            assert 'original fixture reader failure' in event['original_error']
+            raise failure
+    with pytest.raises(ValueError,match='original fixture reader failure') as caught:
+        one.pinned_readback(c.selected,c.receipt,c.store,reader_observer=observe)
+    assert caught.value.__cause__ is failure and children[0].returncode==1
+
+
+def test_reader_final_observer_cannot_reset_existing_cleanup_allowance(observed_reader, monkeypatch):
+    c, children = observed_reader; original_clock=time.monotonic; elapsed=[0]
+    monkeypatch.setattr(one.time,'monotonic',lambda:original_clock()+elapsed[0])
+    def observe(event):
+        if event['event'] == 'finished': elapsed[0] += one.READBACK_CLEANUP_SECONDS+1
+    with pytest.raises(ValueError,match='observation exceeded its cleanup deadline'):
+        one.pinned_readback(c.selected,c.receipt,c.store,reader_observer=observe)
+    assert len(children)==1 and children[0].returncode==0
+
+
+@pytest.mark.skipif(sys.platform != 'linux', reason='actual Linux PID/start and zombie identity proof')
+def test_linux_fast_reader_retains_actual_unreaped_identity(readback_case, monkeypatch):
+    c=readback_case; original=subprocess.Popen; observed=[]
+    def spawn(*args,**kwargs):
+        child=original(*args,**kwargs)
+        # waitid(WNOWAIT) observes exit without removing the child's procfs identity.
+        until=time.monotonic()+5
+        while os.waitid(os.P_PID,child.pid,os.WEXITED|os.WNOWAIT|os.WNOHANG) is None:
+            if time.monotonic() >= until:
+                child.kill(); child.wait(timeout=1)
+                raise TimeoutError('fixture reader did not exit in five seconds')
+            time.sleep(.01)
+        return child
+    monkeypatch.setattr(one.subprocess,'Popen',spawn)
+    one.pinned_readback(c.selected,c.receipt,c.store,reader_observer=observed.append)
+    identity=observed[0]['identity']
+    assert identity['state']=='Z' and identity['rss_bytes']==0 and identity['start_ticks']>0
+    assert observed[1]['direct_reaped'] and observed[1]['returncode']==0
+    assert not Path('/proc',str(identity['pid'])).exists()
 
 
 def test_pinned_reader_timeout_reaps_its_actual_child(readback_case, monkeypatch):
@@ -365,6 +484,17 @@ def test_qualifier_requires_four_fresh_diagnostics_and_all_eight_runtime_maps(qu
     assert len(control['pairs'])==len(control['fresh_diagnostics'])==4 and len(evidence['evaluations'])==8
     assert policy==PLAN['native_runtime'] and [row['id'] for row in primary]==control['selected_primary_evaluations']
     assert all(cell['id'] in identities for cell in PLAN['cells'])
+
+
+def test_qualifier_forwards_optional_reader_observer_without_changing_result(qualification_case,monkeypatch):
+    c=qualification_case; original=one.pinned_readback; calls=[]
+    observer=lambda event: None
+    def readback(*args,reader_observer):
+        calls.append(reader_observer)
+        return original(*args)
+    monkeypatch.setattr(one,'pinned_readback',readback)
+    result,_=one.qualify(c.spec,[],c.store,{},[],reader_observer=observer)
+    assert calls==[observer] and result['state']=='qualified'
 
 
 @pytest.mark.parametrize('fault',['missing-package','reordered-packages','missing-cell','changed-member',
