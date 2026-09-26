@@ -56,3 +56,10 @@ source does not inherit baseline semantic facts merely because line numbers or
 function names match. Reported benefits remain literature statements, separate
 from measured profile outcomes. Neither direction selects a strategy or promises
 performance.
+
+Both query directions return `evidence_validation` for the current retained
+evaluation/profile identities and dynamic memory. A later audit, changed raw
+file, or missing remote artifact is exposed as invalid or unverified evidence;
+the original sealed package and its recorded completeness remain unchanged.
+Reverse matches cannot label those observations compatible profile evidence.
+Static applicability may still be returned, with no performance guarantee.

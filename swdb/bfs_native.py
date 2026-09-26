@@ -463,6 +463,9 @@ def run(args):
                            "instrumentation": {"template_sha256": artifacts.file_hash(DRIVER), "treatment": "included"},
                            "host": host, "architecture": platform.machine(), "lane": lane,
                            "load_average": list(os.getloadavg()), "budget": budget}
+        if host == 'mbit10' and not request.get('fixture'):
+            from swdb.host_observation import attach
+            attach(data, folder, paths.HOME, total_seconds=min(15, session.remaining()))
         session.finish()
         session.begin("workload_resolution")
         supplied_workload = request.get("workload")

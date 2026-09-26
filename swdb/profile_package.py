@@ -458,6 +458,46 @@ def assemble(args):
     return workflow.persist(args.records, package, args.db, create=True)
 
 
+def _query_evidence(store, package):
+    """Expose stale or unavailable observations without rewriting sealed packages."""
+    _, invalid = _memory_validation(package.get('dynamic_memory', []))
+    unavailable = []
+    evidence = package.get('evidence', {})
+    for field, kind in (('evaluation', 'evaluation'), ('region_profile', 'region_profile')):
+        current = store.get(package.get(field), kind) if package.get(field) else None
+        if current is None:
+            unavailable.append(f'identified {field} is unavailable')
+            continue
+        if evidence.get(field + '_sha256') != artifacts.digest(current):
+            invalid.append(f'{field} changed since profile-package assembly')
+        if field == 'region_profile':
+            _, reasons = memory_observation_issues(current, verify_raw=True)
+            invalid.extend(reasons)
+            if not _same(package.get('dynamic_memory'), current.get('dynamic_memory')):
+                invalid.append('retained package memory differs from its identified diagnostic profile')
+    references = {}
+    for row in package.get('dynamic_memory', []):
+        if row.get('available') is True:
+            reference = [row.get('raw_artifact'), row.get('raw_sha256')]
+            references[artifacts.digest(reference)] = reference
+    for name, expected in references.values():
+        try:
+            if not isinstance(name, str) or not isinstance(expected, str):
+                invalid.append('available dynamic memory lacks a raw path/hash identity')
+            elif not Path(name).is_file():
+                unavailable.append(f'dynamic memory raw artifact is unavailable: {name}')
+            elif artifacts.file_hash(name) != expected:
+                invalid.append(f'dynamic memory raw artifact changed: {name}')
+        except OSError as exc:
+            unavailable.append(f'dynamic memory raw artifact cannot be read: {exc}')
+    state = 'invalid' if invalid else 'unverified' if unavailable else 'valid'
+    support = ('invalid_profile_evidence' if invalid else 'unverified_profile_evidence' if unavailable
+               else 'compatible_profile_evidence' if package.get('completeness') == 'complete'
+               and evidence.get('classification') == 'execution' else 'incomplete_or_fixture')
+    return {'state': state, 'scope': 'current record identities and retained dynamic memory',
+            'reasons': sorted(set(invalid + unavailable)), 'profile_support': support}
+
+
 def strategies(args):
     store = _require_valid(args.records)
     package = _get(store, args.package, "profile_package")
@@ -467,7 +507,8 @@ def strategies(args):
         _fail(args.region in {r["id"] for r in package["regions"]}, "region is absent from package")
         matches = [r for r in matches if r["region"] == args.region]
     return {"profile_package": package["id"], "context": package["context"], "matches": matches,
-            "performance_guarantee": False, "classification": package["evidence"].get("classification")}
+            "performance_guarantee": False, "classification": package["evidence"].get("classification"),
+            "evidence_validation": _query_evidence(store, package)}
 
 
 def regions(args):
@@ -479,11 +520,13 @@ def regions(args):
     profiled = []
     for package in packages:
         verify(package)
+        validation = _query_evidence(store, package)
         for row in package.get("strategies", []):
             if row["strategy"] == chosen["id"] and row["outcome"] != "illegal":
                 profiled.append({**copy.deepcopy(row), "profile_package": package["id"],
                                  "context": package["context"], "evidence_classification": package["evidence"]["classification"],
                                  "package_completeness": package["completeness"],
-                                 "profile_support": "compatible_profile_evidence" if package["completeness"] == "complete" else "incomplete_or_fixture"})
+                                 "profile_support": validation['profile_support'],
+                                 "evidence_validation": validation})
     return {"strategy": chosen["id"], "strategy_sha256": artifacts.digest(chosen), "effect": chosen["effect"],
             "static_matches": static, "profiled_matches": profiled, "performance_guarantee": False}

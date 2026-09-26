@@ -31,6 +31,17 @@ configuration. The resulting `checkpoint_compatibility_proof` records and hashes
 that explicit source evidence; missing or changed proof rejects reuse. No
 legacy checkpoint is silently promoted to a fully bound v2 manifest.
 
+Real DX100 build, compile, and execute requests automatically capture a
+`swdb.host-observation.v1` receipt after lane verification and before execution.
+`context.host_observation` and the raw-artifact list retain its path, hash,
+host collection cost, and `unavailable_commands` count. It records exact
+read-only commands, outputs, exit statuses, and timeouts for current users,
+load, disks, available memory, governor/turbo controls, CPU/NUMA layout, kernel,
+and the running SWDB revision. Collection has a 15-second total limit and a
+3-second limit per command; missing controls remain explicit and never change
+host policy. Its elapsed cost is deducted from the experiment budget. Contract
+fixtures do not claim a real host receipt.
+
 The public `dx100-build` and `dx100-execute` commands persist ordinary evaluation
 records before starting external work. `swdb get ID` retrieves them in another
 process. A completed build means identified binaries exist; completed smoke

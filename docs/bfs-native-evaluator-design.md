@@ -4,6 +4,12 @@ Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 Status: Ticket 03 implemented; real native correctness diagnostic passed on mbit10.
 
+Real mbit10 primary runs automatically retain a separate
+`swdb.host-observation.v1` receipt after lane verification. Its identified raw file
+records load, users, disk/memory, CPU/NUMA, available governor/turbo controls,
+kernel, and running SWDB revision through bounded read-only commands. Missing
+controls remain explicit, and collection time counts against the run budget.
+
 This design binds the native evaluator to the candidate artifact produced by
 Ticket 02. It supports DX100 scalar top-down BFS first and upstream GAPBS
 direction-optimizing BFS second. The evaluator owns source protection, invocation,

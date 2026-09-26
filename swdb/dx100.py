@@ -126,7 +126,12 @@ def _prepare(args, action, store, request, data):
         "model_root": str(model_root), "host": host, "lane": lane, "budget": budget,
         "load_average": list(os.getloadavg()), "roi": ROI, "basis": "simulated"})
     data["raw_artifacts"].append({"host": host, "path": str(folder), "kind": f"dx100_{action}"})
-    session = Session(args, data, folder, total + (30 if action == "build" and not request.get("fixture") else 0))
+    observation_seconds = 0
+    if not request.get('fixture'):
+        from swdb.host_observation import attach
+        observed = attach(data, folder, paths.HOME, total_seconds=min(15, total))
+        observation_seconds = observed['host_wall_s']
+    session = Session(args, data, folder, max(0, total - observation_seconds) + (30 if action == "build" and not request.get("fixture") else 0))
     session.install_handlers()
     return session, target, model_root
 

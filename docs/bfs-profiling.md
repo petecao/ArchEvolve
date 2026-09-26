@@ -2,6 +2,13 @@
 
 Updated: 2026-09-25 (Eastern Time).
 
+Future real mbit10 collections retain a bounded `swdb.host-observation.v1`
+receipt with read-only load, users, disk/memory, CPU/NUMA, governor/turbo, kernel,
+and SWDB revision observations. The verified lane remains in the profile context.
+Unavailable host controls are recorded explicitly; collection time counts against
+the diagnostic budget. Native primary evaluations retain their own separate
+receipt, so a later diagnostic does not replace the timed run's host observations.
+
 `swdb bfs-profile REQUEST --runs-dir EXTERNAL --lane LANE` consumes one complete,
 structurally checked native `evaluation`. `swdb bfs-hotspots PROFILE --kind
 function|loop [--evaluation EXPECTED]` retrieves ranked attributable source scopes;

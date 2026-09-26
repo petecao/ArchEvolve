@@ -241,6 +241,10 @@ def run(args):
             primary_load_average=evaluation["context"].get("load_average"), load_average=list(os.getloadavg()),
             timing_basis="diagnostic accumulated thread CPU seconds; primary ROI wall timing remains in evaluation",
             overhead_treatment="scope instrumentation overhead is included; no synthetic subtraction or gain claim")
+        if host == 'mbit10' and not request.get('fixture'):
+            from swdb.host_observation import attach
+            attach(data, folder, paths.HOME, total_seconds=min(15, session.remaining()))
+            session.save()
         if candidate["artifact"]["sha256"] != evaluation["context"]["candidate_sha256"]:
             raise Failure("evaluation source identity differs from candidate artifact")
         graph_path = Path(evaluation["context"]["workload"]["canonical_path"])
