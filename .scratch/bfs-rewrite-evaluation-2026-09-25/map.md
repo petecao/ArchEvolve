@@ -83,6 +83,22 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## New control result — 2026-09-26 12:18 ET
+
+The first two paired cells completed 120/240 observations and all 120 correctness
+checks passed. DX100 uniform passed its fixed control gates. Upstream uniform's
+candidate-role source-0 relative spread is **0.1591826**, exceeding **0.10**;
+both unchanged-code confidence intervals include 1. Its exact 6,902-byte host
+analysis has SHA-256
+`920189ff3c8abebafac60c00639497a90c4e07a3d70844b83cbe6302ab336a79`.
+See [ticket 15](issues/15-baseline-pilot-and-protocol-freeze.md) for the full
+reference and numerical results. Both Kronecker cells continue without altered
+data, thresholds or attempts. This failure prevents current protocol
+qualification. T15's prepared simulator collection stays undispatched;
+independent T13 correctness and T16 comparisons continue toward their own
+prerequisites. Ticket counts remain 13 resolved / 8 claimed, with 0/8 final
+acceptance cells and no qualified gain.
+
 ## Progress check — 2026-09-26 12:03 ET
 
 The [fresh host receipt](observations/progress-20260926-1203.json) was observed

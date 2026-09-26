@@ -263,3 +263,30 @@ paths were unused. The plan remains `f0be176d…`, with the same latest launch
 11:58 ET, hard end 15:00 ET, 240 observations, four threads, ten repetitions,
 resource caps, and no retry. This correction changes no measurement condition.
 The next step is fresh preflight and actual dispatch at the corrected code tip.
+
+## Paired study control failure — 2026-09-26 12:18 ET
+
+The corrected study launched at 11:13:30 ET on mbit10 socket 1, lease generation
+400, using `98b5f50`. Its first two cells have completed 120 independent
+correctness checks. DX100 uniform passed the fixed control gates: maximum
+relative spread 0.081338 and baseline/candidate ratio 0.997256, with 95% interval
+[0.984188, 1.009630]. Upstream uniform completed at 12:18:31 ET with the same
+binary in both roles and ratio 1.0062486, interval [0.9954416, 1.0165401]. Its
+reverse ratio is 0.9937902, interval [0.9836343, 1.0043927]. Neither direction
+has a numerical gain leg, but candidate-role source 0 has relative spread
+**0.1591826**, above the prospectively fixed **0.10** ceiling.
+
+The host-retained second-cell analysis is
+`/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/second-cell-fixed-policy-analysis.json`,
+6,902 bytes, SHA-256
+`920189ff3c8abebafac60c00639497a90c4e07a3d70844b83cbe6302ab336a79`.
+It binds all 60 checks, both actual evaluation identities, the unchanged binary,
+the fixed policy, both label directions and the analysis modules. These values
+were reported by the host worker; raw artifacts remain on mbit10.
+
+Both Kronecker cells continue under the original study bounds. No observation
+is removed and no retry, threshold change or protocol publication is allowed
+by this result. The current study cannot qualify even if its remaining cells
+pass. The prepared T15 simulator collection is held because it cannot repair
+this native control failure; independent T13 correctness and T16 reference and
+controlled comparisons remain eligible after their own prerequisites.
