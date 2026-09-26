@@ -1,0 +1,45 @@
+{
+  "created": "2026-09-26T17:59:51.880298-04:00",
+  "commit": "e4c401585a2cec8319ecc06ff2f7662bcd352730",
+  "cwd": "/Users/yanrujhou/.codex/worktrees/bfs-dx100-acceptance/EvolveSWDB",
+  "command": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/private/tmp/bfs-full-suite-e4c4015-20260926"
+  ],
+  "state": "finished",
+  "timeout_seconds": 7200,
+  "classification": "local_contract_regression_not_empirical_evidence",
+  "python": {
+    "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "bytes": 33816,
+    "sha256": "08fa4dbadc420090dfee2acf433b827ae05541f728d1478d96879122f53b4328"
+  },
+  "pid": 43736,
+  "returncode": 0,
+  "finished": "2026-09-26T18:55:16.618622-04:00",
+  "elapsed_seconds": 3324.7231847499497,
+  "log": {
+    "path": "/private/tmp/bfs-full-suite-e4c4015-20260926.log",
+    "bytes": 2446,
+    "sha256": "ae766e53869b888a4b02cda2b8d854661adae07a99a890a18fe161fc110bd1c1"
+  },
+  "final_commit": "e4c401585a2cec8319ecc06ff2f7662bcd352730",
+  "tracked_diff": "",
+  "result": {
+    "passed": 2075,
+    "skipped": 19,
+    "failed": 0,
+    "pytest_elapsed_seconds": 3324.53
+  },
+  "limits": [
+    "Exact e4c4015 checkout only; subsequent3ccbb5d native reader and later fixtures have separate focused/actual-Linux checks.",
+    "A local contract regression pass does not establish native qualification, simulator acceptance, protocol freeze or ROI gain.",
+    "All prior failed full-suite receipts remain preserved."
+  ]
+}

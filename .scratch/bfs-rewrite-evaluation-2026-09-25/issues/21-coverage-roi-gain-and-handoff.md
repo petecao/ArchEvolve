@@ -233,3 +233,13 @@ publisher readback, simulator prerequisites, protocol freeze, candidate coverage
 and the required gain remain outstanding. The original 25 fixture failures are
 retained and repaired; corrected full regression at `e4c4015` is running.
 All workers are responsive. Counts remain 13/21 resolved and 0/8 final cells.
+
+
+## Broad regression passed — 2026-09-26 18:55 ET
+
+The [exact e4c4015 full regression](../observations/full-regression-e4c4015-20260926.json)
+finished with 2,075 passed, 19 skipped and zero failures in 3,324.53 seconds.
+Later reader/fixture changes retain separate focused and actual Linux evidence.
+Original failures remain preserved. Counts remain 13 resolved/eight claimed,
+0/8 final acceptance and no qualified gain; final all-ticket reviews follow
+completion of the remaining actual evaluations and synchronization.

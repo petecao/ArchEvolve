@@ -149,6 +149,15 @@ unchanged. No Linux fixture, auditor, compilation or measurement ran during
 this preparation. The original malformed preparation receipt is retained;
 an additive valid JSON receipt preserves its reference and unchanged facts.
 
+## Full regression passed — 2026-09-26 18:55 ET
+
+The isolated [exact `e4c4015` run](observations/full-regression-e4c4015-20260926.json)
+completed in 3,324.53 seconds: **2,075 passed, 19 skipped, zero failures**.
+The checkout was unchanged. Original failed broad-run receipts remain retained.
+Subsequent native-reader and admission-fixture edits have their separately
+recorded focused checks and real Linux proofs; this broad result covers its
+exact earlier commit. No empirical acceptance or gain is inferred.
+
 ## Fresh Linux admission proofs — 2026-09-26 18:53 ET
 
 Both [corrected A2 fixture selections](observations/a2-corrected-fixtures-actual-20260926.json)
