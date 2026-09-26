@@ -83,6 +83,43 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Progress check — 2026-09-26 13:03 ET
+
+The [host and kernel-lock observations](observations/progress-20260926-1303.json)
+cover 13:03:36–13:04:30 ET. The host worker is active, Spec is responsive and
+preparing the next build-only request, and Standards completed its read-only
+native design audit. No dead or stranded worker was found. Status remains
+**13 resolved / 8 claimed**, **0/8 final acceptance cells**, no empirical freeze
+and no qualified gain.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 15 paired calibration | Running; qualification failed | mbit10 / socket 1, generation 400 | 201/240 observations; first three cells complete, upstream Kronecker 21/60; upstream uniform and DX100 Kronecker exceed fixed spread gate | Finish original final cell; retain all failures; no freeze |
+| 13 correctness | Reviewed and prepared | mbit10 / socket 0 free | Exact a3 client `1018432`, acceptance launcher `c5f70d7`; 43 isolated focused tests passed | Native terminal barrier and one bounded readback, then one original-window a3 attempt |
+| 16 artifact/control | Prepared independently of 15 | mbit10 / no dispatch | Both exact freeze requests and bounded batch plan retained | Actual a3/coverage, Linux cleanup test and sealed admission |
+| 17/19 initial rewrites | Candidates created, unverified | mbit10 | Actual producer fields checked; T17 build-only request preparation | Build/correctness steps within fixed bounds; performance remains gated |
+| New provider transfers | Held | mbit10 | Exact six-file result inventory and new context payload | Await pending exact approvals |
+
+Socket 0/socket 1/legacy metadata and kernel locks agree: released 318 / held
+400 / released 77. The active native driver/evaluator remain healthy on
+`98b5f50`, with no outer exit and four recent empty stderr logs. Latest sampled
+RSS is 1.051 GiB, peak 1.134 GiB; 1,308 samples retain maximum guard cost
+3.651 seconds below 30. Load is 1.01/1.03/1.04, estimated node availability
+57.28/57.40 GiB, global availability 116.58 GiB, and source/raw free space
+16.44/182.64 GiB. Active, historical, idle acceptance and helper identities
+and checked evidence hashes remain unchanged. A2 is unused/expired and a3 is
+unused. Next full check: **13:33 ET**.
+
+DX100 Kronecker completed all 60 checks at 12:50:51 ET. Its baseline/candidate
+ratio is 1.01937589, 95% interval [0.99698372, 1.03831107]; the reverse ratio is
+0.98099240, interval [0.96304593, 1.00302330]. Four of six role/source spreads
+exceed 0.10, with maximum **0.5340568** for candidate-role source 1234.
+All samples remain retained. The exact 6,824-byte third-cell analysis has
+SHA-256 `1494b241394f87e06dffa29737f4f7d4133ee140ebfd54105779fe4b8804e272`.
+Neither direction has a numerical gain leg; this does not override the spread
+failure. Any later measurement design requires a separately reviewed prospective
+version and fresh evidence. No new native plan or retry is authorized here.
+
 ## Progress check — 2026-09-26 12:33 ET
 
 The [host and kernel-lock observations](observations/progress-20260926-1233.json)

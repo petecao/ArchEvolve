@@ -1,0 +1,198 @@
+{
+  "created": "2026-09-26",
+  "observed_at_et": "2026-09-26 13:03:36 ET",
+  "actual_timestamp_note": "Full host check and supplemental kernel lease audit completed 13:03:36\u201313:04:30 ET.",
+  "source_receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/health-20260926-1303.json",
+    "bytes": 20316,
+    "sha256": "94e0196eb7872b0921057f14bad2c29687da6f1c0066de294ec078c59f544254"
+  },
+  "tickets": {
+    "resolved": 13,
+    "claimed": 8,
+    "final_cells_accepted": 0,
+    "final_cells_required": 8,
+    "qualified_gain": false,
+    "empirical_freeze": false
+  },
+  "leases": {
+    "socket0": {
+      "state": "released",
+      "generation": 318
+    },
+    "socket1": {
+      "state": "held",
+      "generation": 400
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    }
+  },
+  "paired": {
+    "state": "running",
+    "cell": "upstream.kronecker",
+    "observations": 201,
+    "cell_required": 60,
+    "all_required": 240,
+    "remaining_cells": [],
+    "driver_pid": 3034830,
+    "driver_start_ticks": 493754313,
+    "evaluator_pid": 3044668,
+    "evaluator_start_ticks": 494338418,
+    "helper_pid": 3034761,
+    "started_at_et": "2026-09-26 11:13:30 ET",
+    "active_code": "98b5f50e93f531ce0395fe7e161f812a406d6d9d",
+    "sampled_rss_gib_latest": 1.051,
+    "sampled_rss_gib_peak": 1.134,
+    "resource_samples": 1308,
+    "max_guard_seconds": 3.651,
+    "stderr_or_failure_observed": false,
+    "cell_observations": 21,
+    "completed_cells": [
+      "dx100.uniform-random",
+      "upstream.uniform-random",
+      "dx100.kronecker"
+    ],
+    "helper_start_ticks": 493754292,
+    "qualification": "Failed fixed upstream uniform and DX100 Kronecker spread gates; final cell continues unchanged.",
+    "cell_role_observations": {
+      "baseline": 11,
+      "candidate": 10
+    }
+  },
+  "host": {
+    "load": [
+      1.01,
+      1.03,
+      1.04
+    ],
+    "estimated_node_available_gib": [
+      57.28,
+      57.4
+    ],
+    "global_available_gib": 116.58,
+    "data1_free_gib": 16.44,
+    "data_free_gib": 182.64
+  },
+  "helper": {
+    "commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+    "script_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+    "active_checkout_unchanged": true
+  },
+  "history": "Native/T14/a1/provider and all three cell-analysis hashes unchanged. Active and historical checkouts unchanged; a3 client1018432 unchanged, idle acceptancec5f70d7 unchanged. Helper42ce8dc/script00c269 unchanged. Expired a2 absent and a3 unused.",
+  "workers": "Host worker running; Spec responsive and preparing T17 build-only request plus assigned terminal native readback; Standards completed read-only native design audit. No dead or stranded worker.",
+  "next_full_health_due_et": "2026-09-26 13:33 ET",
+  "first_cell_control": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/first-cell-fixed-policy-analysis.json",
+    "sha256": "86afd75a4cc7c44a89201053a5945190f13f4b45ab5d608ec81168ed3eb73171",
+    "observations": 60,
+    "passed_checks": 60,
+    "baseline_over_candidate": {
+      "ratio": 0.997256,
+      "confidence_interval_95": [
+        0.984188,
+        1.00963
+      ]
+    },
+    "candidate_over_baseline": {
+      "ratio": 1.002752,
+      "confidence_interval_95": [
+        0.990353,
+        1.016063
+      ]
+    },
+    "maximum_relative_spread": 0.081338,
+    "ceiling": 0.1,
+    "whole_study_state": "unqualified_incomplete",
+    "gain_claim": false
+  },
+  "regression": {
+    "commit": "83125b42cd470a7c0348583cec8c9324251fccdf",
+    "passed": 1300,
+    "skipped": 3,
+    "exit_code": 0,
+    "receipt": "full-regression-83125b4-20260926.json"
+  },
+  "kernel_lease_receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/health-20260926-1303-kernel-leases.json",
+    "bytes": 524,
+    "sha256": "82b2da463e285b627265512e406bb59c723218cc1e028529c78a278a154888b0",
+    "all_three_match_metadata": true
+  },
+  "second_cell_control": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/second-cell-fixed-policy-analysis.json",
+    "sha256": "920189ff3c8abebafac60c00639497a90c4e07a3d70844b83cbe6302ab336a79",
+    "bytes": 6902,
+    "observations": 60,
+    "passed_checks": 60,
+    "baseline_over_candidate": {
+      "ratio": 1.0062486,
+      "confidence_interval_95": [
+        0.9954416,
+        1.0165401
+      ]
+    },
+    "candidate_over_baseline": {
+      "ratio": 0.9937902,
+      "confidence_interval_95": [
+        0.9836343,
+        1.0043927
+      ]
+    },
+    "failed_source": 0,
+    "failed_role": "candidate",
+    "relative_spread": 0.1591826,
+    "ceiling": 0.1,
+    "spread_gate_passed": false,
+    "gain_claim": false
+  },
+  "focused_preparation": {
+    "receipt": "simulator-admission-tests-20260926.json",
+    "passed": 183,
+    "skipped": 2,
+    "isolated_commit": "01e5fc13cf25b56549cdd285c6a2e197e2190bbf",
+    "limitation": "Linux tests unexecuted; later launcher not covered."
+  },
+  "third_cell_control": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/third-cell-fixed-policy-analysis.json",
+    "bytes": 6824,
+    "sha256": "1494b241394f87e06dffa29737f4f7d4133ee140ebfd54105779fe4b8804e272",
+    "completed_at_et": "2026-09-26 12:50:51 ET",
+    "observations": 60,
+    "passed_checks": 60,
+    "baseline_over_candidate": {
+      "ratio": 1.01937589,
+      "confidence_interval_95": [
+        0.99698372,
+        1.03831107
+      ]
+    },
+    "candidate_over_baseline": {
+      "ratio": 0.9809924,
+      "confidence_interval_95": [
+        0.96304593,
+        1.0030233
+      ]
+    },
+    "failed_source_groups": 4,
+    "total_source_groups": 6,
+    "maximum_relative_spread": 0.5340568,
+    "maximum_spread_source": 1234,
+    "maximum_spread_role": "candidate",
+    "other_failed_relative_spreads": [
+      0.1214757,
+      0.108353,
+      0.1174884
+    ],
+    "ceiling": 0.1,
+    "spread_gate_passed": false,
+    "gain_claim": false
+  },
+  "launcher": {
+    "receipt": "witness-launcher-tests-20260926.json",
+    "export_commit": "c5f70d77396af0e7562310375333f34791aac3a1",
+    "isolated_tests_passed": 43,
+    "conditional_dispatch": "One a3 only after actual native/provider termination and unchanged host/window admission gates."
+  }
+}

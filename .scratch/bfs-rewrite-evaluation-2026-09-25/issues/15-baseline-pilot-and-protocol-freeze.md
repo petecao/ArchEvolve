@@ -7,7 +7,20 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 12:03 ET
+## Current checkpoint — 2026-09-26 13:03 ET
+
+The unchanged paired study has 201/240 observations. Three cells completed all
+60 checks; upstream Kronecker has 21/60. The study is already unqualified:
+upstream uniform exceeded the fixed 0.10 spread ceiling, and DX100 Kronecker
+now fails in four of six role/source groups, with maximum 0.5340568. Both
+Kronecker label-direction confidence intervals include one. No samples,
+thresholds, attempts or ROI definitions changed. The final cell continues
+under the original bounds, followed by terminal cleanup and one bounded
+unpublishable readback. See the [13:03 receipt](../observations/progress-20260926-1303.json)
+for exact analysis hashes and host health. T15 simulator collection remains
+held; independent T13/T16 work continues under its own prerequisites.
+
+## Historical checkpoint — 2026-09-26 12:03 ET
 
 The native paired study has 93/240 observations: DX100 uniform completed all
 60 checks and its two directional unchanged-code controls passed; upstream
