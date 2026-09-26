@@ -7,6 +7,25 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
+## Current checkpoint — 2026-09-26 11:42 ET
+
+The actual paired study started at **11:13:30 ET** from `98b5f50` on
+mbit10 socket 1, lease generation 400. The 11:39:52 ET light check observed
+51 of 240 primary process observations, all in the first DX100 uniform cell,
+with no reported failure and fresh resource samples. This is running collection,
+not admission or a protocol freeze. All four cells, every sample, and the
+original time, resource and negative-control gates remain fixed.
+
+The [11:33 host checkpoint](../observations/progress-20260926-1133.json)
+records the full lease, process, load, capacity and history audit. The
+[remaining simulator sequence](../../../docs/bfs-remaining-simulation-sequence-20260926.md)
+distinguishes the minimum shared simulator gate from all of this ticket's
+requirements: two exact scale-18 families, three sources and two actual replays
+require 12 primary executions and 12 separately checked diagnostic packages.
+The small prospective correctness graph cannot substitute for that grid.
+The old pilot remains expired; new batch preparation does not launch or freeze
+anything. The entries below retain their historical, time-specific states.
+
 ## Paired calibration implementation — 2026-09-26 10:04 ET
 
 Local commit `6346189` implements the bounded four-cell driver, immutable request,

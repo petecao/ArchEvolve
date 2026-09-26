@@ -4,7 +4,7 @@ Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-26 (Eastern Time)
 **Type:** ticket map
 **Status:** claimed
-**Blocked by:** Remaining empirical verification, calibration, artifact/control comparisons, and final acceptance. The three exact transfer holds were explicitly cleared; both Git transfers are verified and provider submissions are proceeding.
+**Blocked by:** Remaining empirical verification, calibration, artifact/control comparisons, and final acceptance. All three originally approved transfers are complete. The new six-file result sync and context-supplemented provider payload await exact approval.
 **Spec:** [Refined specification](spec.md)
 
 The user authorized autonomous implementation of all 21 tickets and all necessary builds, installations, benchmark/simulator runs, external access, Git, and Claude Code on 2026-09-25. This supersedes the publication-only hold. The two-lane mbit10 rules and evidence requirements remain in force.
@@ -82,6 +82,55 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC18 — Full coverage including failed/regressing cases | 17–21 |
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
+
+## Progress check — 2026-09-26 11:33 ET
+
+All three original exact transfers are complete. The new provider-results packet
+is a separate held transfer, and the annotated context follow-up is a separate
+prepared payload. Both concrete approval questions are pending. Native evaluation
+and authorized code/test work continue. Status remains **13 resolved / 8 claimed**,
+**0/8 final acceptance cells**, no qualified gain, and no empirical freeze.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 15 paired calibration | Running | mbit10 / socket 1, generation 400 | 37/240 observations; first cell 37/60; no stderr/failure | Complete the original four-cell finite plan |
+| 17/19 initial rewrites | Candidates created, unverified | mbit10 / socket 0 released | Two retained actual provider candidates | Frozen-protocol evaluation after calibration |
+| 20 annotation | Original unresolved; supplemental context prepared | No provider running | Exact API/header/capability bindings and retained prior spending | Exact new-payload approval before transfer |
+| 13 correctness | A3 client prepared and independently reviewed | Waiting for native termination | Fixed history/request/runtime and cleanup barriers; diagnostic-only a1 reparse | Verify terminal receipts, then one actual bounded proof |
+| Regression | Full suite running at pinned `83125b4` | Local isolated worktree | Past 44%; no failure reported at this check | Retain the final full result |
+| Result synchronization | New six-file packet held | mbit10 | Commit `5f1b802`; 169,515 bytes including source/patch fields | Exact packet/branch approval |
+
+The [fresh host health receipt](observations/progress-20260926-1133.json)
+was observed at **11:33:07 ET**; its filename retains the scheduled 11:32 label.
+Socket 0 and legacy leases are released at 318/77. Socket 1 is held by the
+live paired job at 400. No dead or stranded worker was found. Paired sampled
+RSS is 0.90 GiB, peak 0.99 GiB; 235 resource samples retain healthy five-second
+sampling and a 0.0107-second maximum guard cost. Raw output is 272 MiB.
+Load is 1.10/1.07/0.86, node availability is approximately 57.33/57.45 GiB,
+and global availability is 116.68 GiB, with zero memory-pressure averages.
+Free source/raw space is 16.47/183.45 GiB (the `df -h` display is 17/184 GiB).
+Active code is `98b5f50`; helper `42ce8dc` and historical checkouts remain
+unchanged. Native/T14/a1/provider receipt hashes are unchanged and a2 remains
+absent. Next full health check is due by **12:03 ET**.
+
+The provider batch ran 11:06:44–11:13:35 ET on socket 0. Two requests created
+candidates; the annotation request returned unresolved context. Reported cost
+is USD **2.7976184**. Its outer exit 0 means all three submissions reached
+retained outcomes, not that every interpretation succeeded. No repair, retry
+or candidate evaluation ran. The terminal audit records no live owned work;
+one exact zero-RSS zombie launcher under shared tmux remains recorded and
+untouched. See [the initial summary](observations/provider-initial-summary-20260926.json)
+and [held export inventory](observations/provider-export-inventory-20260926.json).
+
+Reviewed code-only acceptance preparation was synchronized separately as
+`1018432fdb3800522d723afb874f3bffa41dd0e5` on
+`codex/bfs-dx100-acceptance-prep-20260926`. Exactly seven new code/request/test/plan
+files were based on `98b5f50`, excluding held provider records and unrelated
+history. The isolated checkpoint passed **45 combined continuation/graph tests**
+in 1.64 seconds; log `/private/tmp/bfs-dx100-acceptance-prep-20260926-1018432.log`,
+SHA-256 `7755cb871a3efc7767f32af242a67d72b3afe5aec4a958dad0acc8f3a7a25fb1`.
+No active checkout was changed. The graph remains preparation-only; a3 still
+waits for the paired batch's terminal cleanup evidence before simulation.
 
 ## Progress and approved synchronization — 2026-09-26 11:03 ET
 

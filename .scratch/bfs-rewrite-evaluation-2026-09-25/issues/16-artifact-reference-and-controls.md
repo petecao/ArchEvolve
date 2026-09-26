@@ -1,7 +1,7 @@
 # 16 — Artifact reference and controls
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 11, 13, 14
@@ -66,3 +66,15 @@ coverage. These changes and fixture tests do not complete any empirical checkbox
 the independently frozen pairs, replay results and final acceptance remain
 pending. Audited scalar/MAA source candidates and diagnostic compilation records
 are now available in `../observations/dx100-compile-extension-a1.json`.
+
+
+## Remaining execution audit — 2026-09-26 11:42 ET
+
+The [simulation sequence audit](../../../docs/bfs-remaining-simulation-sequence-20260926.md)
+identifies four independent role/policy series: eight fresh primary and eight
+fresh diagnostic executions, eight packages, four aggregates and two comparisons.
+The original author binaries and compatible author-ROI diagnostic builds can be
+reused only after host rehashing; the two distinct policy IDs cannot relabel one
+MAA replay as both comparisons. The existing 24-hour / 60-GiB budget is shared
+across the whole batch. A concrete common supervisor and absolute window are
+being prepared; neither policy nor any reference comparison is yet complete.

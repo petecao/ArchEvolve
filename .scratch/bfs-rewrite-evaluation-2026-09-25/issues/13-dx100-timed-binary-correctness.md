@@ -7,12 +7,20 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 12
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 11:06 ET
+## Current checkpoint — 2026-09-26 11:42 ET
 
 Exact code transfer is complete. The read-only corrected-parser diagnosis passed;
 its evidence and limits are appended below. A1 remains failed, a2 expired unused,
 and a3 is prospectively scheduled after paired calibration with latest launch
 15:20 ET / hard end 15:40 ET. No new simulator correctness result is claimed.
+
+The independently reviewed one-attempt continuation is synchronized as
+`1018432` in the idle `/data1/yanruj/EvolveSWDB_dx100_continuation_20260926_a3`
+checkout. Its 11:34:33 ET read-only preflight passed the exact request, runtime,
+failed-a1 history, unused-a2/a3 paths, diagnostic receipt and actual provider
+termination checks. The native paired job remains live, so its terminal barrier
+is still required before dispatch. The isolated exported code passed 45 combined
+continuation and graph-preparation tests; none is new accelerator execution.
 
 ## Historical checkpoint — 2026-09-26 10:04 ET
 

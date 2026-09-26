@@ -127,3 +127,16 @@ independent review at `35b0cff`; it adds no empirical cell or gain. The handoff
 now describes paired collection and exact candidate reuse. Final acceptance and
 the final post-acceptance Standards/Spec reviews remain incomplete; the active
 30-minute heartbeat continues.
+
+
+2026-09-26 11:42 ET checkpoint: T14's approved evidence import and independent
+audit brought the tracker to **13 resolved / 8 claimed**. All three specifically
+approved transfers are complete. The paired native run is active and the first
+three actual provider submissions produced two unverified candidates and one
+unresolved annotation. A new six-file result export and context-supplemented
+payload are separately pending exact approval. Final acceptance remains zero of
+eight cells with no qualified gain or empirical freeze. The isolated full suite
+at `83125b4` has passed 55% without a reported failure at this check, and is still
+running; later a3/graph preparation has separate focused verification. Final
+Standards/Spec review against `1bdb7d4` remains required after all acceptance and
+repair work. The map's current table and observations preserve the evidence.

@@ -1,0 +1,57 @@
+{
+  "created": "2026-09-26",
+  "state": "three_initial_submissions_finished",
+  "interpretation_successes": 2,
+  "unresolved": 1,
+  "candidate_evaluation_performed": false,
+  "repairs": 0,
+  "retries": 0,
+  "started_at_et": "2026-09-26 11:06:44 ET",
+  "finished_at_et": "2026-09-26 11:13:35 ET",
+  "lane_generation": 318,
+  "outer_exit": 0,
+  "outer_exit_meaning": "All three planned submissions reached retained outcomes, not universal interpretation success.",
+  "total_reported_cost_usd": 2.7976184,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_tokens": 602476,
+    "cache_read_tokens": 10012,
+    "output_tokens": 38570
+  },
+  "cases": [
+    {
+      "case": "dx100-instructions",
+      "outcome": "candidate_created",
+      "candidate": "bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1",
+      "reported_cost_usd": 1.243954,
+      "prompt_sha256": "5628f294b68b1c6f57dcf33c338743951e0d901cb56481cd016d929d75e94db4"
+    },
+    {
+      "case": "upstream-instructions",
+      "outcome": "candidate_created",
+      "candidate": "bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1",
+      "reported_cost_usd": 0.7468272,
+      "prompt_sha256": "22f9ab6ed269ae6e72fae12eb94fc8f18c30b628a8af382cd56c8487fdbc3a04"
+    },
+    {
+      "case": "upstream-annotated",
+      "outcome": "unresolved",
+      "candidate": null,
+      "reported_cost_usd": 0.8068372,
+      "prompt_sha256": "fd6cc804f2cda5477fad977c379621becaee9d6af3722a82e266b625a92611d9",
+      "reason": "Missing target capability context, exact API/slot declarations, and protected queue interface context."
+    }
+  ],
+  "results_audit": {
+    "sha256": "1f29bab9e3253f54f9f859f6bf67b44b07163815d02181bca19cc9bca81324bd",
+    "host_directory": "/data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1"
+  },
+  "terminal_audit": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/terminal-validation.json",
+    "sha256": "1f455257e4542f67555389195be532de3a131d677083f4e5372c6afcdf02ad1c",
+    "state": "terminal_no_live_owned_processes",
+    "retained_process_identities": 10,
+    "remaining_process": "One zero-RSS zombie tmux launcher, PID3033637/start493713694; shared tmux server untouched."
+  },
+  "canonical_records_sync": "Held exact six-file packet; see provider-export-inventory-20260926.json. This local summary does not substitute for imported authoritative proposal/candidate records."
+}

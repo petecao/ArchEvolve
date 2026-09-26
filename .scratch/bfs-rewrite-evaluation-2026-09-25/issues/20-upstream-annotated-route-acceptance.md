@@ -1,7 +1,7 @@
 # 20 — Upstream BFS: annotated-source route acceptance
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 05, 10, 15
@@ -43,3 +43,34 @@ Only selected BFS phases need use DX100. No new hardware operation, automatic st
 ## Implementation progress
 
 2026-09-25: Root owns dependent preparation of the representative proposal and public campaign driver. No candidate performance assessment begins before Ticket 15 freezes compatible protocols. Actual acceptance remains pending; preparation does not satisfy the listed blockers.
+
+
+## Initial provider result — 2026-09-26 11:13 ET
+
+The explicitly approved `upstream-annotated` source/profile payload was sent through
+Claude Code in the bounded three-request socket-0 batch. This request returned an explicit unresolved interpretation and created no candidate.
+The [initial batch summary](../observations/provider-initial-summary-20260926.json)
+retains the actual outcome; no repair, retry, compile, performance evaluation or
+final acceptance followed from this submission. The original annotations and
+proposal context remain retained.
+
+The six-file result packet was committed on mbit10 as `5f1b802`, but automatic
+approval review rejected its new GitHub packet/branch. Exact approval is pending;
+canonical proposal/candidate records have not been imported into this checkout.
+See [the concrete inventory](../observations/provider-export-inventory-20260926.json).
+
+The unresolved result names missing exact API/slot declarations, protected queue
+interfaces, and target capability context. A separate context-supplement request
+is prepared with unchanged annotations, strategy, source/profile and edit scope.
+Eight manifest-verified headers and queried target/operation records are added
+as read-only context. Its exact initial prompt is 518,016 bytes, SHA-256
+`6042ab21a40f270ac9f21007de8e0a2d7c55850ab1448253697c446801d07f63`.
+The prior 62.419636563397944 provider seconds are charged before flooring the
+remaining allowance to 1,737 seconds, with 600 seconds and USD 10 per call and
+at most two later build/correctness repairs. This is a new context submission,
+not a public repair of the unresolved request. Independent review found no
+remaining budget/provenance blocker after a lineage companion was added.
+The companion requires separate fresh retrieval of the original and supplement;
+generic chain traversal does not follow the arbitrary predecessor parameter.
+Explicit approval for this new payload and bounded repairs is pending. It has
+not been sent. No strategy replacement or performance tuning is introduced.

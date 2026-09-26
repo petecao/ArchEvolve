@@ -1,7 +1,7 @@
 # 17 — DX100 BFS: instruction-route acceptance
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 04, 10, 15
@@ -43,3 +43,18 @@ Do not require every BFS phase to accelerate. Do not require a gain in this case
 ## Implementation progress
 
 2026-09-25: Root owns dependent preparation of the representative proposal and public campaign driver. No candidate performance assessment begins before Ticket 15 freezes compatible protocols. Actual acceptance remains pending; preparation does not satisfy the listed blockers.
+
+
+## Initial provider result — 2026-09-26 11:13 ET
+
+The explicitly approved `dx100-instructions` source/profile payload was sent through
+Claude Code in the bounded three-request socket-0 batch. This request created an unverified candidate.
+The [initial batch summary](../observations/provider-initial-summary-20260926.json)
+retains the actual outcome; no repair, retry, compile, performance evaluation or
+final acceptance followed from this submission. The original annotations and
+proposal context remain retained.
+
+The six-file result packet was committed on mbit10 as `5f1b802`, but automatic
+approval review rejected its new GitHub packet/branch. Exact approval is pending;
+canonical proposal/candidate records have not been imported into this checkout.
+See [the concrete inventory](../observations/provider-export-inventory-20260926.json).
