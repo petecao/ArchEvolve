@@ -339,8 +339,15 @@ def test_reader_final_observer_cannot_reset_existing_cleanup_allowance(observed_
 
 
 @pytest.mark.skipif(sys.platform != 'linux', reason='actual Linux PID/start and zombie identity proof')
-def test_linux_fast_reader_retains_actual_unreaped_identity(readback_case, monkeypatch):
+def test_linux_fast_reader_retains_actual_unreaped_identity(readback_case, monkeypatch, tmp_path):
     c=readback_case; original=subprocess.Popen; observed=[]
+    durable=tmp_path/'linux-reader-events.jsonl'
+    durable.touch(exist_ok=False)
+    def observe(event):
+        with durable.open('a') as stream:
+            stream.write(json.dumps(event,sort_keys=True)+'\n')
+            stream.flush(); os.fsync(stream.fileno())
+        observed.append(event)
     def spawn(*args,**kwargs):
         child=original(*args,**kwargs)
         # waitid(WNOWAIT) observes exit without removing the child's procfs identity.
@@ -352,10 +359,12 @@ def test_linux_fast_reader_retains_actual_unreaped_identity(readback_case, monke
             time.sleep(.01)
         return child
     monkeypatch.setattr(one.subprocess,'Popen',spawn)
-    one.pinned_readback(c.selected,c.receipt,c.store,reader_observer=observed.append)
+    one.pinned_readback(c.selected,c.receipt,c.store,reader_observer=observe)
     identity=observed[0]['identity']
     assert identity['state']=='Z' and identity['rss_bytes']==0 and identity['start_ticks']>0
     assert observed[1]['direct_reaped'] and observed[1]['returncode']==0
+    assert [json.loads(line) for line in durable.read_text().splitlines()] == observed
+    assert [event['event'] for event in observed] == ['spawn','finished']
     assert not Path('/proc',str(identity['pid'])).exists()
 
 
