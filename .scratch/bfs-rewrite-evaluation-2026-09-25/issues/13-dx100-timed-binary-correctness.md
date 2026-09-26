@@ -253,3 +253,24 @@ preserves the interrupted stage, stale public outcome, failed driver and verifie
 cleanup. A prospective observer correction is locally tested and independently
 reviewed; Linux verification and a distinct corrective attempt remain outstanding.
 This ticket stays claimed. No existing failure or acceptance requirement is waived.
+
+
+## Reviewed corrective coverage client — 2026-09-26 15:44 ET
+
+A distinct fixed a2 client is committed at `5e7eb62` and exported at
+`67313d9b2a45d9f0fb23d935b56e755a3a19fa7f` on the private
+`codex/bfs-dx100-coverage-20260926-a2` branch. Its 11-file tree preserves the
+reviewed historical batch/series dependencies and adds the durable public
+interruption correction. All six runtime dependency hashes match; 116 local
+checks passed and three Linux-only checks remain pending. Independent review
+reproduced and repaired a shutdown-error path that skipped direct-child reaping.
+The [preparation/export receipt](../observations/dx100-coverage-a2-preparation-20260926.json)
+retains tests, failures, exact inventory and verified remote ref.
+
+This one new attempt retains the fixed 8,212-vertex graph, original author MAA
+code, 3,600-second total/30-second shared cleanup, 48 GiB sampled RSS and 4 GiB
+artifact limits. Its window is 16:00–22:00 ET with latest start 21:00 ET. Actual
+Linux fixture proofs at that exact export and whole native-client terminal
+cleanup remain mandatory. A native statistical failure can release this cleanup
+barrier but cannot qualify a native protocol. No a2 dispatch, accepted coverage
+sample or gain is claimed; all earlier failures remain unchanged.

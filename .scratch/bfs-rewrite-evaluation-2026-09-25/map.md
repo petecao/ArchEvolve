@@ -83,6 +83,16 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## First one-thread pair complete — 2026-09-26 15:46 ET
+
+The [DX100 uniform-random pair](observations/native-one-thread-first-cell-20260926.json)
+completed 60/60 structural checks and passed all six fixed spread groups;
+maximum spread is 5.08%. Its A/A ratio is 1.0015 with paired 95% interval
+[0.9974, 1.0051], and neither label direction has a numerical gain leg.
+Upstream uniform-random is now running under the same unchanged socket-1
+lease and hard stop. This is one-cell repeatability evidence only; the full
+study, fresh diagnostics and shared simulator gates remain unfinished.
+
 ## Progress check — 2026-09-26 15:33 ET
 
 The [full health audit](observations/health-20260926-1533.json) confirms the

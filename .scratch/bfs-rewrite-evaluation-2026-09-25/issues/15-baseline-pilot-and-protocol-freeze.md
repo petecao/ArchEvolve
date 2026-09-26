@@ -7,7 +7,27 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
-## Current outcome — 2026-09-26 13:23 ET
+## Current checkpoint — 2026-09-26 15:46 ET
+
+The distinct one-thread pilot started at 15:07:35 ET on mbit10 socket 1,
+generation 402, at exact code `319645e`; its unchanged shared hard stop is
+20:11:35 ET. The [first completed pair](../observations/native-one-thread-first-cell-20260926.json)
+passed 60/60 structural checks and all six fixed role/source spread gates.
+Maximum relative spread is 0.05084535 under the 0.10 ceiling. The unchanged-code
+baseline/candidate ratio is 1.0014557894 with paired 95% interval
+[0.9973626956, 1.0051191835]; neither direction has a numerical gain leg.
+Upstream uniform-random started at 15:44:03 ET. No partial result is a candidate
+gain, whole-pilot qualification or protocol freeze.
+
+The explicit one-thread publisher in `ea0c1f4` has passed independent scoped
+review and a reproduced cleanup correction. Its
+[verification receipt](../observations/one-thread-publisher-verification-20260926.json)
+keeps all original serial/four-thread failures, requires all four fresh primary
+controls and diagnostic packages, and retains the shared simulator gates. It
+has not been run against a final actual study. Prospective T15/T16 supervision
+and native candidate execution remain under review. This ticket stays claimed.
+
+## Historical outcome — 2026-09-26 13:23 ET
 
 The fixed paired study finished at 13:23:55 ET with all 240 correctness checks
 passed, outer exit zero, released socket-1 lease generation 400, and no live
