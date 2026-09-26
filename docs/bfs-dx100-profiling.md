@@ -29,6 +29,14 @@ changed candidate copy would silently compile different code from the proposed
 interface change. Application helpers outside this interface remain editable.
 Changing the model API requires a separately supported operation contract.
 
+Candidate compilation links the regular pinned
+`util/m5/src/abi/x86/m5op.S` source directly. SCons' build-tree counterpart is a
+symlink, which cannot satisfy execution's regular-file input requirement. A
+read-only mbit10 check at 2026-09-25 22:29 ET confirmed both resolve to bytes with
+SHA-256 `fe20d70d689c341ee614121d7aac1431b81d2178943a113ea1aa1d7c5ef50c69`.
+The execution guard remains unchanged; the receipt identifies the actual
+regular source compiled into the candidate.
+
 Run that separate diagnostic binary through `dx100-execute`, then supply its ID as `diagnostic_evaluation` instead of `discovery_profile` in the collector request. It must match the primary candidate, graph, source, threads, modeled configuration, and semantic ROI exactly. Inclusive/exclusive simulated seconds are elapsed intervals accumulated per executing thread, including waits and overlap. Exclusive attribution subtracts only nested guarded intervals on that thread; neither quantity is CPU service time or a replacement for primary BFS duration. Invocations retain the shared discovery engine's function-call, loop-entry, or OpenMP-worker-iteration units. The report is emitted only after the ROI seal. Invalid nested accounting, changed source/binary/runtime, missing reports, and incompatible contexts fail explicitly.
 
 The profile identifies separate region and memory executions: source scopes use the diagnostic binary, while ROI-wide memory counters use the primary binary. Every observation retains source artifact, binary, output, and raw-statistics hashes. Instrumentation overhead and unresolved scopes remain explicit. Collection completeness and structural correctness are separate fields; unverified collection cannot establish a gain.

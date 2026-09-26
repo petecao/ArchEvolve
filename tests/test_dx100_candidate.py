@@ -67,9 +67,12 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
         pinned_source = model / 'benchmarks/gapbs/src/bfs.cc'
         pinned_source.parent.mkdir(parents=True, exist_ok=True)
         pinned_source.write_bytes(source.read_bytes() + (b'// changed\n' if override == 'source' else b''))
-    assembly = model / "util/m5/build/x86/abi/x86/m5op.S"
+    assembly = model / "util/m5/src/abi/x86/m5op.S"
     assembly.parent.mkdir(parents=True)
     assembly.write_text("// fixture assembly\n")
+    generated_assembly = model / 'util/m5/build/x86/abi/x86/m5op.S'
+    generated_assembly.parent.mkdir(parents=True)
+    generated_assembly.symlink_to(assembly)
     compiler = folder / "fixture-compiler"
     compiler.write_text(f"#!{sys.executable}\n" + "import pathlib,sys\n"
         "if '-dM' in sys.argv:\n print('#define _OPENMP 201511');sys.exit(0)\n"
@@ -96,6 +99,8 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
         assert not any(row['stage'] == 'candidate_compile' for row in result['stages'])
     if not override:
         assert result["build"]["binary_sha256"]
+        assert result['build']['m5ops'] == reference(assembly)
+        assert not Path(result['build']['m5ops']['path']).is_symlink()
         assert result["context"]["candidate_sha256"] == artifact["sha256"]
         assert result["context"]["roi"] == compile_request['roi']
         if author:

@@ -169,8 +169,10 @@ def compile_candidate(args):
         data['context']['build_directory'] = str(build_directory)
         driver_path = build_directory / ('author_roi.cc' if author_diagnostic else 'complete_call.cc')
         binary = build_directory / "bfs"
-        m5_source = model / "util/m5/build/x86/abi/x86/m5op.S"
-        if not m5_source.is_file():
+        # SCons' build-tree copy is a symlink by default. Bind the regular
+        # pinned source so execute can apply its unchanged input-file guard.
+        m5_source = model / "util/m5/src/abi/x86/m5op.S"
+        if m5_source.is_symlink() or not m5_source.is_file():
             raise Failure("pinned model m5ops assembly is unavailable")
         flags = ["-std=c++11", "-O3", "-Wall", "-g", "-fopenmp", "-DGEM5", "-DNUM_CORES=4",
                  f"-DTILE_SIZE={target['configuration']['tile_elements']}"]
