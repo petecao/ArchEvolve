@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One fixed unchanged native paired calibration. Created: 2026-09-26 ET.
+"""One fixed unchanged native paired calibration. Created/updated: 2026-09-26 ET.
 
 This separately bounded study does not restart the expired pilot, retry a cell,
 choose workloads, collect diagnostics, decide a gain, or publish a protocol.
@@ -91,6 +91,18 @@ def pair_request(first, cell, machine):
         request[role] = member
     bfs_native_pair.validate_request(request)
     return request
+
+
+def observe_compiler(first, output, stage):
+    """Preserve invocation spelling while identifying its resolved executable."""
+    declared = first['build']['compiler']
+    resolved = Path(declared).resolve(strict=True)
+    digest = artifacts.file_hash(resolved)
+    stage([declared, '--version'], 30, output)
+    require(output.read_text().splitlines()[:2] == first['build']['compiler_version'], 'compiler version changed')
+    require(Path(declared).resolve(strict=True) == resolved and artifacts.file_hash(resolved) == digest,
+            'compiler executable changed during preflight')
+    return {'compiler_resolved': str(resolved), 'compiler_sha256': digest}
 
 
 def validate_pair_result(store, first, pair, machine, request):
@@ -318,7 +330,7 @@ def validate_driver_receipt(receipt, plan):
             require(isinstance(compiler, str) and Path(compiler).is_absolute()
                     and compiler == str(Path(first['build']['compiler']).resolve(strict=True))
                     and entry.get('compiler_sha256') == artifacts.file_hash(compiler), 'compiler executable changed or is unavailable')
-            expected_command, output = [compiler, '--version'], folder / (cell['id'] + '.compiler-version.txt')
+            expected_command, output = [first['build']['compiler'], '--version'], folder / (cell['id'] + '.compiler-version.txt')
         require(stage.get('command') == expected_command and stage.get('output') == str(output), 'driver preflight command/path differs')
         output_ref = {'path': str(output), 'sha256': stage.get('stdout_sha256')}
         raw = _reference(output_ref, 'driver preflight stdout').decode()
@@ -576,15 +588,12 @@ def main():
                 bfs_protocol.verify_immutable(workload)
                 workload_plan(workload, 18)
                 require(artifacts.file_hash(bfs_native.DRIVER) == cell['driver_template_sha256'], 'trusted timed driver changed')
-                compiler = Path(first['build']['compiler']).resolve(strict=True)
                 version = folder / (cell['id'] + '.compiler-version.txt')
-                stage([str(compiler), '--version'], 30, version)
-                require(version.read_text().splitlines()[:2] == first['build']['compiler_version'], 'compiler version changed')
+                compiler_identity = observe_compiler(first, version, stage)
                 request_path = folder / (cell['id'] + '.request.json')
                 request_path.write_text(json.dumps(request, indent=2) + '\n')
                 entry = {'id': cell['id'], 'first_evaluation': first['id'], 'state': 'prepared',
-                    'first_record_sha256': artifacts.digest(first), 'compiler_resolved': str(compiler),
-                    'compiler_sha256': artifacts.file_hash(compiler),
+                    'first_record_sha256': artifacts.digest(first), **compiler_identity,
                     'request': {'path': str(request_path), 'sha256': artifacts.file_hash(request_path)},
                     'availability': previous.verify_available([first, candidate, source, implementation, workload])}
                 receipt['cells'].append(entry)

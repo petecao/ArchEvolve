@@ -50,8 +50,8 @@ a replacement ID after inspecting results.
 The new machine-readable request plan must retain every original cell identity
 field from [the fixed second-block request](../.scratch/bfs-rewrite-evaluation-2026-09-25/requests/native-repeatability-20260926-a1.json):
 first evaluation and its SHA-256, implementation, candidate, registered workload,
-canonical graph SHA-256, source snapshot SHA-256, primary binary SHA-256, resolved
-compiler request, flags, and trusted driver-template SHA-256. Its proposed path is
+canonical graph SHA-256, source snapshot SHA-256, primary binary SHA-256, declared
+compiler path, flags, and trusted driver-template SHA-256. Its proposed path is
 `.scratch/bfs-rewrite-evaluation-2026-09-25/requests/native-paired-pilot-20260926-a1.json`.
 It adds the pair/member IDs, collection/analysis, bounds, deadline, and explicit
 `maximum_relative_spread: 0.10`; it does not modify the old request. The coordinator
@@ -75,8 +75,11 @@ than silently becoming another experimental condition.
 
 Before any trial, revalidate all four first records, candidate/source manifests,
 registered graph representations and loaded adjacency, retained build artifacts,
-and actual compiler version. Record the current resolved compiler executable and
-its hash, evaluator/driver/verifier code hashes, generated wrapper and binary hashes,
+and actual compiler version. Invoke the exact recorded compiler path for both
+`--version` and compilation; resolving a symlink can change an argv0-sensitive
+version banner even when the executable bytes are identical. Separately record
+the resolved compiler executable and its hash, evaluator/driver/verifier code
+hashes, generated wrapper and binary hashes,
 requested OpenMP settings, inherited runtime knobs, machine identity, lane receipt,
 and host load. Recheck compiler/template identities before and after each cell.
 The earlier first block did not retain compiler-executable hashes or all inherited
