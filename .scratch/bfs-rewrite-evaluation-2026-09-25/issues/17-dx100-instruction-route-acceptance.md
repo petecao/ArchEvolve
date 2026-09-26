@@ -66,3 +66,18 @@ public request for the existing initial candidate and metadata-only host binding
 checks. It remains undispatched, follows native/a3/fixed-coverage cleanup, and
 permits one compilation without a provider call, retry, or repair. Compilation
 does not establish correctness, actual acceleration, or this ticket's acceptance.
+
+## Actual fixed candidate compilation — 2026-09-26 14:47 ET
+
+The existing initial instruction candidate compiled once through the public
+DX100 path. All nine public calls, including fresh result and chain retrieval,
+returned zero within 55.878 seconds (compilation 32.908 seconds). Independent
+terminal inspection confirms all 15 owned PID/start identities absent and
+socket-0 generation 324 released. The original proposal, source, candidate,
+provider budget and measured public checkout remain unchanged; no provider call
+or repair occurred. See the [terminal receipt](../observations/t17-build-only-terminal-20260926.json).
+
+The actual binary hash is `852e62314b7114079975fe25d70da4e77596490bcfa89fb4f7c64af585485527`.
+Correctness remains unverified, profiling incomplete, and timings empty. This
+proves compilation only. Both graph families, actual accelerated correctness,
+reprofiling and frozen-protocol comparison still remain; the ticket stays claimed.

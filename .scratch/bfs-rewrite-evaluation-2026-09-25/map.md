@@ -83,6 +83,22 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## T17 build and native pilot export — 2026-09-26 14:47 ET
+
+The [actual T17 build](observations/t17-build-only-terminal-20260926.json) completed
+in 55.878 seconds, including nine successful public stages and fresh result/chain
+readback. All 15 owned process identities are absent and node-0 generation 324
+is released. No provider call or repair occurred. Correctness is unverified,
+profiling incomplete and timings empty; T17 remains claimed.
+
+The [reviewed one-thread pilot](observations/native-one-thread-preparation-20260926.json)
+is committed at `cbfce757` and exported at `d484afb2` with only required runtime,
+tests/plans and already-synced native history. Exact-export tests pass 127 with
+five Linux-only skips. The new client still requires its two actual Linux
+cleanup fixtures and fresh admission before launch. The sampler and T17 Linux
+proofs already passed at their exact pins. Local catalog validation reports
+213 valid records after the preserved coverage failure import.
+
 ## Progress check — 2026-09-26 14:33 ET
 
 The [full health receipt](observations/health-20260926-1433.json) records all three
@@ -918,6 +934,26 @@ new evidence export packet.
 | Master records, collaborator fixtures, public workflow tests, authorization | 26–27, 53–60 | D02–D03, D14–D15 | AC07, AC09, AC18, AC20; publication gate |
 
 ## Context pointers
+
+### Reviewed runtime fixes and verification — 2026-09-26 15:07 ET
+
+- Native one-thread client phase accounting is serialized before any attempt. The
+  superseding code export is `319645eab0a25c815fa03fe1c372d32b4ba45d10`; the prior
+  `d484afb` export was not dispatched. Its phase regression passed 69 local cases
+  with two Linux-only cases still required on the final host pin. See
+  [phase fix](observations/native-one-thread-phase-fix-20260926.json) and
+  [preparation/export](observations/native-one-thread-preparation-20260926.json).
+- The simulator now persists its operational failure before optional postmortem
+  scanning. The reviewed fix is `76fd5b4`; 42 focused checks and two independent
+  public SIGTERM cases passed. [Receipt](observations/dx100-durable-interruption-verification-20260926.json).
+  Historical failed coverage remains unchanged and unqualified.
+- The exact `d9b1340` full suite completed with **1530 passed, 5 skipped, 11 setup
+  errors**. All errors share the copied native-runtime metadata in an explicit
+  simulator fixture. The separate fixture correction passed 25 targeted tests;
+  this is not a green full-suite result. [Full result](observations/full-regression-d9b1340-20260926.json).
+- Candidate reassessment and coverage a2 are local implementation work. Neither
+  constitutes an empirical freeze, candidate acceptance, or qualified gain.
+
 
 - 2026-09-25 23:46 ET: isolated fixed-commit validation at `d9c4c10` passed
   **765 tests with 3 skips and no failures**, in 1660.57 seconds. The checkout
