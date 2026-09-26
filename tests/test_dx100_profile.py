@@ -87,6 +87,11 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
         records.write('evaluations/' + evaluation['id'] + '.yaml', evaluation)
         diagnostic = copy.deepcopy(evaluation)
         diagnostic['id'] = 'diagnostic'
+        # The series freezes the primary trial only. Independent source-scope
+        # diagnostics keep their own local cell while the profile maps them to
+        # the primary's global source-position/repetition identity.
+        diagnostic['context'].pop('protocol_trial')
+        diagnostic['context']['workload']['sources'] = [1, 2, evaluation['context']['source']]
         diagnostic['context']['candidate_build'] = 'diagnostic-build'
         if mode == 'diagnostic-source-mismatch':
             diagnostic['context']['candidate_sha256'] = 'b' * 64

@@ -10,6 +10,25 @@ from test_profile_packages import package_seed, package_setup
 from swdb import artifacts, profile_package
 
 
+def test_artifact_topology_gate_accepts_registered_author_graph_and_rejects_directed_relabeling():
+    from conftest import REPO, read_yaml
+    from swdb.bfs_coverage import _artifact_workload
+    workload = read_yaml(REPO / "records/workloads/bfs-20260925-uniform22.f23b09bb0c0601b5.yaml")["definition"]
+    # This is the observed topology from the pinned author's converter, not
+    # synthetic execution evidence and not a claim of completed reproduction.
+    assert workload["realized"]["directed"] is False
+    assert _artifact_workload(workload)
+    changed = copy.deepcopy(workload)
+    changed["realized"]["directed"] = True
+    assert not _artifact_workload(changed)
+    changed = copy.deepcopy(workload)
+    changed["generator"]["parameters"]["symmetrize"] = False
+    assert not _artifact_workload(changed)
+    changed = copy.deepcopy(workload)
+    changed["generator"]["parameters"]["scale"] = 18
+    assert not _artifact_workload(changed)
+
+
 def _report(records, tmp_path, **updates):
     request = {"message_version": "1.0", "id": "coverage", "candidate_protocols": [],
                "artifact_reference_comparisons": [], "controlled_reference_comparisons": [], **updates}

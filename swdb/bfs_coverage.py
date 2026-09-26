@@ -20,6 +20,17 @@ CASES = {
 REVISION = "e4fc4afdf894f295442cef3604667a469fab8e62"
 
 
+def _artifact_workload(workload):
+    """Check the pinned generator's effective topology, not the absence of -s."""
+    generator = workload.get("generator", {})
+    parameters = generator.get("parameters", {})
+    realized = workload.get("realized", {})
+    return (workload.get("family") == "uniform_random" and generator.get("revision") == REVISION
+            and parameters.get("scale") == 22 and parameters.get("edge_factor") == 16
+            and parameters.get("symmetrize") is True
+            and realized.get("num_vertices") == 2**22 and realized.get("directed") is False)
+
+
 def _mapping(value):
     return value if isinstance(value, dict) else {}
 
@@ -434,12 +445,8 @@ def report(args):
                 if not _acceleration(accelerated)["executed"]:
                     row["reasons"].append("reference accelerated side lacks actual DX100 execution")
                 workload = store.get(row["workload"], "workload")["definition"]
-                if mode == "artifact_reference" and not (workload["family"] == "uniform_random"
-                        and workload["generator"]["revision"] == REVISION
-                        and workload["generator"]["parameters"].get("scale") == 22
-                        and workload["generator"]["parameters"].get("edge_factor") == 16
-                        and workload["realized"]["num_vertices"] == 2**22 and workload["realized"]["directed"] is True):
-                    row["reasons"].append("artifact case is not the pinned uniform scale22 degree16 directed workload")
+                if mode == "artifact_reference" and not _artifact_workload(workload):
+                    row["reasons"].append("artifact case is not the pinned uniform scale22 degree16 symmetrized undirected workload")
                 if mode == "artifact_reference":
                     for role, eid, size, ways, enable in (("baseline", row["baseline_evaluation"], 10, 20, "BASE"),
                                                          ("candidate", row["candidate_evaluation"], 8, 16, "MAA")):

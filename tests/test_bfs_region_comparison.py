@@ -54,11 +54,20 @@ def package_fixture(records, tmp, primary, collector, runtime, now, ns):
     log.write_text('SWDB_DX100_ROI_SEALED\nSWDB_DX100_REGIONS ' + json.dumps(dict(format='swdb.dx100.regions.v1',
         clock='m5_rpns', errors=0, regions=[dict(index=i, inclusive_ns=ns*2, exclusive_ns=ns, invocations=2) for i in range(2)])) + '\n')
     diagnostic = copy.deepcopy(primary); diagnostic['id'] = rid + '.diagnostic'
+    # Actual series diagnostics have their own binary and run without the
+    # primary protocol; their local output cell is 0/0 even at global cell 1/1.
+    for key in ('protocol', 'protocol_role', 'protocol_trial'):
+        diagnostic['request'].pop(key, None)
+    for key in ('protocol', 'protocol_binding', 'protocol_trial', 'adapter'):
+        diagnostic['context'].pop(key, None)
+    diagnostic['context']['workload']['sources'] = [0, 4]
     diagnostic['context'].update(candidate_build=compiled['id'], instrumentation={'treatment': 'source_scope_diagnostic'})
     diagnostic['build'].update(binary=str(binary), binary_sha256=ref(binary)['sha256'])
     diagnostic['stages'] = [dict(stage='simulation', state='complete', started=now, log=str(log), log_sha256=ref(log)['sha256'])]
     for check in diagnostic['correctness']['checks']:
-        check.update(binary_sha256=ref(binary)['sha256'], output_sha256=ref(log)['sha256'])
+        check.update(binary_sha256=ref(binary)['sha256'], output_sha256=ref(log)['sha256'], source_position=0, repetition=0)
+    for timing in diagnostic['timing']:
+        timing.update(binary_sha256=ref(binary)['sha256'], output_sha256=ref(log)['sha256'], source_position=0, repetition=0)
     records.write(f"evaluations/{diagnostic['id']}.yaml", diagnostic)
     cell = {key: primary['timing'][0][key] for key in ('source', 'source_position', 'repetition')}
     run = dict(kind='regions', **cell, evaluation=diagnostic['id'], binary_sha256=ref(binary)['sha256'], output=str(log),

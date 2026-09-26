@@ -94,3 +94,30 @@ at scale 18, but the substantial sample spread does not relax the fixed timing
 policy. The unchanged DX100 scalar pilot, accelerator coverage, repeated simulator
 replays, and protocol freeze remain outstanding. No candidate gain or complete
 Ticket 15 acceptance is claimed.
+
+2026-09-25 actual DX100 scalar calibration: unchanged `dx100-bfs-scalar` run
+`bfs-native-pilot-20260925-dx10018-a1` completed on socket lane 1, generation 394,
+22:44:59–23:21:08 Eastern, using exact checkpoint `2eda712`. It retained the same
+version-2 graphs, ordered sources, four threads, five fresh processes per source,
+and original budgets. Each family passed fifteen primary checks and six separate
+diagnostic checks, with eighteen valid modeled-memory rows and a complete sealed
+package. Post-collection source/binary/graph/output/raw-counter hashes and package
+identities passed independent validation. Evidence is
+`docs/evidence/bfs-native-pilot-20260925-dx10018-a1.yaml` (repository-root path),
+returned by metadata-only Git commit `8182a0a`.
+
+| Family | Primary checks | Source medians, milliseconds (0 / 1234 / 7777) | Five-sample range / median | Package |
+|---|---:|---|---|---|
+| Uniform random | 15/15 | 26.276661 / 22.068036 / 22.069061 | 40.75% / 50.37% / 55.25% | Complete |
+| Kronecker | 15/15 | 20.383814 / 19.607609 / 18.452187 | 30.67% / 47.54% / 52.12% | Complete |
+
+The DX100 driver cost was 2,167.632 seconds. Primary stage intervals were
+644.027 / 698.237 seconds (uniform / Kronecker), with subprocess sums
+48.343 / 32.393 seconds. Diagnostic intervals were 295.319 / 311.762 seconds,
+with subprocess sums 67.419 / 58.367 seconds; residual host cost remains
+unattributed. Across both starting implementations, all four native baseline
+cells now have complete packages: sixty primary checks and twenty-four diagnostic
+checks. These establish bounded native scale-18 feasibility. Accelerator coverage,
+identical simulator replays, shared workload gates, and the final protocol freeze
+remain outstanding. The observed spreads do not automatically relax acceptance
+thresholds, and no candidate profitability claim is made.
