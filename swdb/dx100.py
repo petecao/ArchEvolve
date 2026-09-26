@@ -248,15 +248,19 @@ def _bounded_process(session, name, command, timeout, memory, storage, env=None)
     return log
 
 
+def _failure_outcome(data, session, error):
+    if isinstance(error, Failure) and "persisted, but query indexing failed" in str(error):
+        raise error
+    state = error.state if isinstance(error, StageFailure) else "interrupted" if isinstance(error, Stopped) else "failed"
+    stage = session.current["stage"] if session and session.current else "validation"
+    data["outcome"] = {"state": state, "stage": stage, "reason": str(error)}
+    if session and session.current and session.current["state"] == "running":
+        session.current.update(state=state, finished=_now(), reason=str(error))
+
+
 def _finish(args, data, session, error=None):
     if error is not None:
-        if isinstance(error, Failure) and "persisted, but query indexing failed" in str(error):
-            raise error
-        state = error.state if isinstance(error, StageFailure) else "interrupted" if isinstance(error, Stopped) else "failed"
-        stage = session.current["stage"] if session and session.current else "validation"
-        data["outcome"] = {"state": state, "stage": stage, "reason": str(error)}
-        if session and session.current and session.current["state"] == "running":
-            session.current.update(state=state, finished=_now(), reason=str(error))
+        _failure_outcome(data, session, error)
     if session:
         session.restore_handlers()
     return workflow.persist(args.records, data, getattr(args, "db", None))
@@ -784,14 +788,30 @@ def execute(args):
         data["context"]["debug_flags"] = debug_flags
         command = [str(simulator), f"--debug-flags={debug_flags}", f"--outdir={result_folder}", str(driver if verify else script), *settings,
                    "--cmd", str(binary), "--options", options, "--checkpoint-dir", str(checkpoint), "-r", "1"]
-        completed = False
         log = session.folder / f"{len(data['stages']):03d}-simulation.log"
         try:
             _bounded_process(session, "simulation", command, run_seconds, budget["memory_gib"], budget["storage_gib"], env)
-            completed = True
-        finally:
+        except (Failure, StageFailure, Stopped, OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as simulation_error:
+            # A supervisor may end its cleanup grace while postmortem scans a
+            # large log. Save the operational failure before that optional work,
+            # retaining signal handlers and the original error for finalization.
+            _failure_outcome(data, session, simulation_error)
             if verify is not None:
-                _correctness(session, request, result_folder, log, completed)
+                data['context']['postmortem'] = {'state': 'pending', 'reason': None}
+            session.save()
+            if verify is not None:
+                try:
+                    _correctness(session, request, result_folder, log, False)
+                except Exception as postmortem_error:
+                    if isinstance(postmortem_error, Failure) and "persisted, but query indexing failed" in str(postmortem_error):
+                        raise
+                    data['context']['postmortem'] = {'state': 'failed', 'reason': str(postmortem_error)}
+                else:
+                    data['context']['postmortem'] = {'state': 'complete', 'reason': None}
+            raise
+        else:
+            if verify is not None:
+                _correctness(session, request, result_folder, log, True)
         _file(workload['representation'], 'graph representation')
         if loader_input:
             _file(loader_input['alias'], 'serialized loader alias')

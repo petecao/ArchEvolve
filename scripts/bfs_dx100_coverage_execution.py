@@ -182,39 +182,39 @@ def validate_source(store):
     return candidate
 
 
-def compile_request():
+def compile_request(*, run_id=RUN_ID):
     template = yamlio.load(a3.REQUEST)
-    return {'message_version': '1.0', 'id': RUN_ID + '.compile', 'machine': 'mbit10',
+    return {'message_version': '1.0', 'id': run_id + '.compile', 'machine': 'mbit10',
         'hardware_target': template['hardware_target'], 'model_root': template['model_root'],
         'build_evaluation': template['build_evaluation'], 'candidate': CANDIDATE,
         'function': 'DOBFSMAA', 'accelerated': True, 'roi': 'bfs.complete_call.v1',
         'budget': {'total_seconds': 240, 'build_seconds': 240, 'memory_gib': 48, 'storage_gib': 4}}
 
 
-def registration_request(graph):
-    return {'message_version': '1.0', 'id': RUN_ID + '.workload', 'version': 1,
+def registration_request(graph, *, run_id=RUN_ID):
+    return {'message_version': '1.0', 'id': run_id + '.workload', 'version': 1,
         'kernel': 'gapbs-bfs', 'family': 'fixed_dx100_correctness_coverage',
         'generator': {'name': 'bfs_dx100_coverage_graph.v1', 'revision': artifacts.file_hash(Path(graph_case.__file__)),
                       'parameters': {'vertices': 8212, 'directed_arcs': 147492, 'frontier': 4097, 'shared': 16}},
         'sources': [0], 'normalization': bfs_protocol.NORMALIZATION,
-        'representations': [{'id': RUN_ID + '.sg32', 'application': 'dx100-gapbs',
+        'representations': [{'id': run_id + '.sg32', 'application': 'dx100-gapbs',
             'format': 'gapbs_sg32le', **{k: graph['representation'][k] for k in ('path', 'sha256')}}]}
 
 
-def execution_request(compiled, workload, graph):
-    require(compiled.get('id') == RUN_ID + '.compile' and compiled.get('evidence_kind') == 'execution'
+def execution_request(compiled, workload, graph, *, run_id=RUN_ID):
+    require(compiled.get('id') == run_id + '.compile' and compiled.get('evidence_kind') == 'execution'
             and compiled.get('outcome', {}).get('state') == 'complete'
             and compiled['outcome']['stage'] == 'candidate_build'
             and compiled['build']['adapter'] == 'dx100.complete_call.v2'
             and compiled.get('candidate') == CANDIDATE
             and compiled['context']['candidate_sha256'] == SOURCE_SHA
-            and artifacts.digest(compiled['request']) == artifacts.digest(compile_request()),
+            and artifacts.digest(compiled['request']) == artifacts.digest(compile_request(run_id=run_id)),
             'fresh exact author complete-call compilation is required')
-    require(workload.get('requested_id') == RUN_ID + '.workload'
+    require(workload.get('requested_id') == run_id + '.workload'
             and workload['definition']['canonical_sha256'] == graph['canonical_sha256']
             and workload['definition']['sources'] == [0], 'registered coverage graph identity differs')
     template = yamlio.load(a3.REQUEST)
-    return {'message_version': '1.0', 'id': RUN_ID + '.execute', 'machine': 'mbit10',
+    return {'message_version': '1.0', 'id': run_id + '.execute', 'machine': 'mbit10',
         'hardware_target': template['hardware_target'], 'model_root': template['model_root'],
         'build_evaluation': template['build_evaluation'], 'simulator': template['simulator'],
         'candidate': CANDIDATE, 'candidate_build': compiled['id'],
@@ -228,8 +228,8 @@ def execution_request(compiled, workload, graph):
                    'checkpoint_seconds': 300, 'run_seconds': 2700}}
 
 
-def validate_coverage(evaluation, request, graph):
-    require(evaluation.get('evidence_kind') == 'execution' and evaluation.get('id') == RUN_ID + '.execute'
+def validate_coverage(evaluation, request, graph, *, run_id=RUN_ID):
+    require(evaluation.get('evidence_kind') == 'execution' and evaluation.get('id') == run_id + '.execute'
             and artifacts.digest(evaluation.get('request')) == artifacts.digest(request)
             and evaluation.get('gain_claim') is False, 'coverage evaluation identity differs')
     dx100_witness.validate_completed_witness(evaluation, verify_artifacts=True)

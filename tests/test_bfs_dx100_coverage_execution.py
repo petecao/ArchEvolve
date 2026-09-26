@@ -30,6 +30,14 @@ def test_window_does_not_extend_a3_or_run_with_partial_outer_allowance():
 
 def test_real_public_registration_of_fixed_fixture_graph_and_fresh_get(records, tmp_path):
     records.copy_repo()
+    # Fixture isolation only: the real a1 evidence is now in the copied catalog.
+    # Remove its three temporary copies; canonical/host evidence stays untouched.
+    for relative in (
+        'evaluations/bfs-dx100-coverage-20260926-a1.compile.yaml',
+        'evaluations/bfs-dx100-coverage-20260926-a1.execute.yaml',
+        'workloads/bfs-dx100-coverage-20260926-a1.workload.241d37f1ee522c01.yaml',
+    ):
+        (records.path / relative).unlink(missing_ok=True)
     graph = case.graph_case.generate(tmp_path / 'synthetic-graph')
     request = case.registration_request(graph)
     path = tmp_path / 'request.json'

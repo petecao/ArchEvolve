@@ -1,0 +1,156 @@
+{
+  "date": "2026-09-26",
+  "prepared_at": "2026-09-26T19:30:15.705278+00:00",
+  "scope": "local_only_corrective_coverage_a2",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_dx100_coverage_execution.py",
+      "bytes": 44565,
+      "sha256": "b2a4c7daee6f96c16ffcd1e757ce278c93e49665708123b42450d7f6a412e524"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_dx100_coverage_a2.py",
+      "bytes": 46202,
+      "sha256": "ebe4843361b4d751e57ffcd85e52945caace1a6c1e294945a3ad5917e88fa703"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_dx100_coverage_execution.py",
+      "bytes": 32046,
+      "sha256": "dd793de52b9c88eafe8b9b45dde53263bee631c2e594e9b2f402c08b44f26339"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_dx100_coverage_a2.py",
+      "bytes": 31368,
+      "sha256": "4fc708e0311a35e126a80a8ae6ce1b32804c53df71017ebdd46bd46ed2ce12f9"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-coverage-a2-20260926.json",
+      "bytes": 5778,
+      "sha256": "6a44a19d953ad77a9d2c00a811290128296364971f222c25bcdfeed03a39d6cc"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-dx100-coverage-a2-plan-20260926.md",
+      "bytes": 15888,
+      "sha256": "ec68f9e81c66f238e1842d22b0a057ad82f860e68d89d43e81638ceace4f8f9f"
+    }
+  ],
+  "verification": {
+    "path": "/private/tmp/bfs-coverage-a2-stable-20260926/verification.json",
+    "bytes": 1896,
+    "sha256": "36749781785e34aaf9e23e1ab6fcfe05971d4d7a49d1c0b32ec6026fb6d86105"
+  },
+  "focused_result": "101 passed, 2 skipped in 25.97s",
+  "log": {
+    "path": "/private/tmp/bfs-coverage-a2-stable-20260926/pytest.log",
+    "bytes": 192,
+    "sha256": "38b840539342b78a25f9ade99dea9114dc153a53d99ea65f4cfc0ce5c7205aab"
+  },
+  "prior_failure_log": {
+    "path": "/private/tmp/bfs-coverage-a2-initial-focused-20260926.log",
+    "bytes": 1739,
+    "sha256": "da872730c22347b99bbb0cfd22f7fcba2c94f17419ef5fa6504534fc85b0e623"
+  },
+  "py_compile": "passed",
+  "whitespace_check": "passed",
+  "canonical_plan_sha256": "f24375eca2fcfb304c92bd752c718f71f14e111ed40a2f1211c12172d3c558e7",
+  "native_commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+  "required_runtime_sha256": {
+    "swdb/dx100.py": "f4e82d3163d3c2d3d4764aace07da952b0ca67c0aaf480c3738ccd9f0641deec",
+    "scripts/bfs_owned_rss.py": "e9e48a661ed1cb68eee64711090d83e0bd1be7524f012c19d48b21da99475cb3",
+    "tests/test_dx100_interruption.py": "4aa6c6090ec0e755303b5d62c87071b4908b1c2da0e71f2ed86b06fa07d90e73",
+    "scripts/bfs_simulator_batch.py": "413bd1420bb9cbbdd7fe23cd2037c5257ad530cebd5039ba4c440977976dafda",
+    "scripts/bfs_simulator_series.py": "a26f28184d8b9b7c458d1436d5fdf43b21df633dab74e45949f95f6f05bbb54e",
+    "scripts/bfs_native_one_thread_pilot.py": "5b0dd95f73a5166bad3b602b07274af4915e8c08070769e9e989ddf00e27ab0a"
+  },
+  "scope_limits": [
+    "No host dispatch, measurement, provider call, export or commit",
+    "Linux owned cleanup and public interruption proofs remain mandatory at the future exact code pin",
+    "No empirical coverage or gain claim",
+    "Minimal export must retain reviewed historical batch and series bytes, excluding concurrent host changes"
+  ],
+  "fixed_findings": [
+    "Distinct original outer versus actual driver entry clock",
+    "Monitor stop and all finalization consume shared cumulative30s cleanup",
+    "Final cleanup identities included in independently audited terminal union",
+    "Runtime rehash followed by work-deadline check",
+    "Only three copied actual a1 records removed in temporary public registration fixture",
+    "Shutdown failure no longer skips direct-child bounded wait/reap"
+  ],
+  "supersedes": {
+    "path": "/private/tmp/bfs-coverage-a2-stable-20260926/preparation.json",
+    "bytes": 3756,
+    "sha256": "db10c4937b0425beafec00be7af4702f317808d1383ad2819987e35f2b51a369"
+  },
+  "repair_verification": {
+    "command": "python3 -m pytest tests/test_bfs_dx100_coverage_a2.py -q -k 'denied_shutdown or real_tiny_process or failed_stage or failed_public or shared_cleanup or monitor or final_hashes or final_runtime'",
+    "result": "12 passed, 51 deselected in 0.76s",
+    "log": {
+      "path": "/private/tmp/bfs-a2-direct-reap-fixed-20260926.log",
+      "bytes": 114,
+      "sha256": "52572ca279e21e2076e6e826bee7b0a5721dc508e565391ce0b36f7f40cb9498"
+    },
+    "independent_original_failure": {
+      "path": "/private/tmp/bfs-a2-direct-reap-review-20260926.log",
+      "bytes": 1720,
+      "sha256": "9f6df05337aac35eb17c74be8153b4593d2bdd2f8a87290bfa7c32001088bcd0"
+    }
+  },
+  "created": "2026-09-26 ET",
+  "role": "reviewed_local_corrective_coverage_client_not_empirical_evidence",
+  "independent_review": {
+    "standards": {
+      "date": "2026-09-26 ET",
+      "state": "reviewed_fix_passed",
+      "command": "python3 -m pytest /private/tmp/test_a2_direct_reap_review.py -q",
+      "probe": {
+        "path": "/private/tmp/test_a2_direct_reap_review.py",
+        "bytes": 1063,
+        "sha256": "888c1b579a5a1269931e3cc712f29ed2346eb56f95e980bd3c4ad40ecf978384"
+      },
+      "prior_failure": {
+        "path": "/private/tmp/bfs-a2-direct-reap-review-20260926.json",
+        "bytes": 855,
+        "sha256": "e77fe85a8169497eb0e52fac3df2b2f81d5030f810dab3c61449d689cd45d959"
+      },
+      "passed_log": {
+        "path": "/private/tmp/bfs-a2-direct-reap-independent-fixed-20260926.log",
+        "bytes": 98,
+        "sha256": "036bb9390fb408c39eb19a61d865bc4044aa29eeea8139e62a988a5a83930a4d"
+      },
+      "source": {
+        "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_dx100_coverage_a2.py",
+        "bytes": 46202,
+        "sha256": "ebe4843361b4d751e57ffcd85e52945caace1a6c1e294945a3ad5917e88fa703"
+      },
+      "tests": {
+        "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_dx100_coverage_a2.py",
+        "bytes": 31368,
+        "sha256": "4fc708e0311a35e126a80a8ae6ce1b32804c53df71017ebdd46bd46ed2ce12f9"
+      },
+      "readback": "shutdown errors preserve failed state; bounded wait is unconditional and spends the same hard cleanup deadline; elapsed charged once",
+      "limitations": [
+        "No repeated full suite",
+        "No remote or empirical execution",
+        "Linux fixture proofs and coverage remain independent prerequisites"
+      ]
+    },
+    "root": {
+      "result_before_direct_reap_fix": "102 passed, 2 Linux-only skipped in 26.89s",
+      "log": {
+        "path": "/private/tmp/bfs-coverage-a2-independent-20260926.log",
+        "bytes": 192,
+        "sha256": "3c7770dece2a2ee05637dd69047a09e4545f572ef254f4a7afed5b41ffa76f7b"
+      },
+      "scope": "Code/plan/readback review and independent terminal-union regression; final direct-reap delta inspected after separate independent probe passed."
+    }
+  },
+  "initial_focused_scope": "101 passed/2 Linux skips applies to pre-reap stable six-file checkpoint; subsequent 12 affected checks and original independent reproduction validate the repair.",
+  "review_state": "no_remaining_actionable_finding_in_scoped_review",
+  "remote_execution": false,
+  "export_state": "not_exported; minimal Git tree on native319 must preserve required runtime hashes",
+  "source_preparation": {
+    "path": "/private/tmp/bfs-coverage-a2-stable-20260926/preparation-reap-fix.json",
+    "bytes": 4730,
+    "sha256": "1678b7d30be9fe889f745c1bce9f857bcae2fe61f425812e89308adef8db2767"
+  }
+}
