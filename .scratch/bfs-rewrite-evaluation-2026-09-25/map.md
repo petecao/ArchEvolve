@@ -83,6 +83,30 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Actual coverage and native runtime repair — 2026-09-26 19:20 ET
+
+DX100 A2 completed all six public stages with correctness passed at 19:16 ET.
+Its exact `5a0b15f` completed reader reopened the actual artifacts at 19:17 ET:
+8 full tiles, 8 tail tiles, and 14,546 competing-parent updates inside the
+selected ROI. The independent terminal audit checked all 14 retained PID/start
+identities twice: 13 absent, with only the exact completed pane a zero-RSS zombie;
+node 0 generation 329 is released. Peak sampled RSS was 34,732,048,384 bytes.
+See [actual readback](observations/dx100-coverage-a2-completed-readback-20260926.json).
+This establishes finite coverage, not a candidate gain or final acceptance.
+
+The future native campaign now routes every public CLI database into its
+accounted raw driver directory, preventing a generated checkout-root `build/`
+from invalidating the runtime guard. The real CLI regression reproduced the
+failure before repair; 149 focused tests pass with two Linux-only skips, and
+independent review is clean. [Fix receipt](observations/native-campaign-database-fix-20260926.json)
+and [Spec review](observations/native-campaign-database-spec-review-20260926.json)
+retain red and green evidence. This change does not alter measured checkouts.
+
+[T16 preflight](../../docs/bfs-t16-freeze-preflight-20260926.md) and the
+[post-A2 sequence](../../docs/bfs-post-a2-batch-sequence-20260926.md) now explicitly
+place public SQLite caches outside the runtime checkout. Actual T15/T16 batches,
+protocol publication and candidate acceptance remain pending.
+
 ## Evidence-integrity review correction — 2026-09-26
 
 Independent Standards review reproduced a profile-package seal downgrade: a
