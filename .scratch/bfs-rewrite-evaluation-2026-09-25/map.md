@@ -127,6 +127,17 @@ before the final exception-note delta; all six affected final-delta cases pass.
 Actual Linux admission and final acceptance remain outstanding. The separate
 A2 fixture route must bind its old tested runtime and new supervisor explicitly.
 
+## Current package seals in contract fixtures — 2026-09-26
+
+The [campaign and reassessment fixture correction](observations/profile-seal-fixture-repair-20260926.json)
+uses current assembly seals and refreshes content-addressed fixture references
+after deliberate mutations. Production validation is unchanged. All 16 campaign
+and 45 reassessment cases pass; independent cross-reviews confirm the intended
+semantic checks, unknown-origin fields and failed-build/no-repair behavior.
+The original unpublished `c0df79e` check remains **558 passed, nine skipped,
+two failed** with exact files unchanged. A superseding export will include these
+two fixture corrections and receive its own affected-module/catalog check.
+
 ## Progress check — 2026-09-26 17:33 ET
 
 The [full health audit](observations/health-20260926-1733.json) confirms native

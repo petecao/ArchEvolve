@@ -13,7 +13,7 @@ import pytest
 from scripts import bfs_native_campaign as campaign
 from swdb import artifacts, bfs_native, bfs_protocol, profile_package
 from swdb.cli import Failure
-from test_bfs_native_campaign import inputs as admission_inputs, seal
+from test_bfs_native_campaign import inputs as admission_inputs, seal, seal_package
 from test_bfs_campaign_reuse import reuse_case, reuse_seed
 
 
@@ -45,7 +45,8 @@ def case(admission_inputs):
                                 'workload':copy.deepcopy(primary['context']['workload']),
                                 'primary_binary_sha256':primary['build']['binary_sha256']})
         package['evidence']['evaluation_sha256']=artifacts.digest(primary)
-        old=copy.deepcopy(package);old['id']='origin-'+package['id'];historic.append(old);records[old['id']]=old
+        old=copy.deepcopy(package);old['requested_id']='origin-'+package['requested_id']
+        seal_package(old);historic.append(old);records[old['id']]=old
         fresh=copy.deepcopy(primary);fresh['id']='fresh-'+primary['id'];fresh['context']['threads']=1
         fresh['build']['native_runtime']={'version':1,'environment':{**bfs_native.controlled_environment(1),
                                                                   **dict.fromkeys(bfs_native.RUNTIME_INHERITED)}}
@@ -56,7 +57,8 @@ def case(admission_inputs):
             context={**profile_package._context(fresh),'build':copy.deepcopy(fresh['build']),
                      'workload':copy.deepcopy(fresh['context']['workload']),
                      'primary_binary_sha256':fresh['build']['binary_sha256']})
-        package['evidence']['evaluation_sha256']=artifacts.digest(fresh);records[package['id']]=package
+        package['evidence']['evaluation_sha256']=artifacts.digest(fresh)
+        seal_package(package);records[package['id']]=package
     settings=copy.deepcopy(frozen['settings']);settings.update(threads=1,sampling={},native_runtime=copy.deepcopy(records[packages[0]['evaluation']]['build']['native_runtime']))
     frozen=seal('protocol','fresh-policy',settings=settings,workload_identities=frozen['workload_identities'],
                 frozen_at='2026-09-26T20:00:00-04:00',state='frozen');records[frozen['id']]=frozen
@@ -85,15 +87,21 @@ def validate(case):
 def reseal(case):
     """Adversarially reseal metadata copies; semantic mismatches must still reject."""
     for package in case.packages+case.historic:
+        previous_id=package['id']
         primary=case.records[package['evaluation']]
         package['context'].update(profile_package._context(primary))
         package['context'].update(build=copy.deepcopy(primary['build']),workload=copy.deepcopy(primary['context']['workload']),
                                   primary_binary_sha256=primary['build']['binary_sha256'])
         package['evidence']['evaluation_sha256']=artifacts.digest(primary)
+        seal_package(package)
+        case.records.pop(previous_id,None);case.records[package['id']]=package
+    case.proposal['profile_package']=case.historic[0]['id']
+    case.submitted['request']=copy.deepcopy(case.proposal)
     origin=case.manifest['origin']
     for kind,record in [('proposal',case.submitted),('candidate',case.candidate),
                         ('profile_package',case.historic[0]),('source_snapshot',case.source)]:origin[kind]=pin(record)
     origin['baseline_packages']=[pin(row) for row in case.historic]
+    origin['request_sha256']=artifacts.digest(case.proposal)
     case.manifest['assessment']['packages']=[pin(row) for row in case.packages]
 
 

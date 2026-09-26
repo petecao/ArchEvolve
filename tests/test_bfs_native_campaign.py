@@ -1,4 +1,8 @@
-"""Native campaign admission guards; metadata fixtures only. Updated: 2026-09-26."""
+"""Native campaign admission guards; metadata fixtures only. Updated: 2026-09-26.
+
+Synthetic execution-class metadata exercises admission; it is not empirical
+evidence. No fixture records are persisted to the canonical catalog.
+"""
 import copy
 import runpy
 
@@ -16,6 +20,17 @@ def seal(kind, name, **payload):
     digest = artifacts.digest(bfs_protocol._identity_payload(value))
     value.update(id=name + '.' + digest[:16], identity_sha256=digest)
     return value
+
+
+def seal_package(package):
+    """Use the assembly identity, including after intentional context mutations."""
+    name = package.get('requested_id', package['id'])
+    package.update(id=name, requested_id=name, package_version=1)
+    package.pop('identity_sha256', None)
+    package['identity_sha256'] = artifacts.digest(package)
+    package['id'] = f"{name}.v1.{package['identity_sha256'][:16]}"
+    profile_package.verify(package)
+    return package
 
 
 @pytest.fixture
@@ -48,9 +63,9 @@ def inputs(tmp_path):
         context = profile_package._context(evaluation)
         context.update(primary_binary_sha256=evaluation['build']['binary_sha256'], build=evaluation['build'],
                        workload=evaluation['context']['workload'])
-        packages.append({'id': 'pkg-' + family, 'evaluation': evaluation['id'], 'candidate': 'baseline',
+        packages.append(seal_package({'id': 'pkg-' + family, 'evaluation': evaluation['id'], 'candidate': 'baseline',
             'source_snapshot': 'source', 'implementation': implementation['id'], 'completeness': 'complete',
-            'context': context, 'evidence': {'classification': 'execution', 'evaluation_sha256': artifacts.digest(evaluation)}})
+            'context': context, 'evidence': {'classification': 'execution', 'evaluation_sha256': artifacts.digest(evaluation)}}))
     frozen = seal('protocol', 'fixture-policy', settings={'mode': 'native', 'targets': {'baseline': target, 'candidate': target},
         'native_runtime': {'version': 1, 'environment': {**controlled_environment(4), **dict.fromkeys(RUNTIME_INHERITED)}},
         'roi': 'bfs.complete_call.v1', 'threads': 4, 'workloads': [w['id'] for w in workloads]},
@@ -75,7 +90,7 @@ def test_enriched_package_context_remains_usable(inputs):
 @pytest.mark.parametrize('package_index', [0, 1])
 @pytest.mark.parametrize('fault', ['missing', 'different', 'boolean-version', 'float-version'])
 def test_resealed_primary_runtime_must_match_frozen_policy_before_dispatch(inputs, package_index, fault):
-    _, packages, _, _, records, _, _ = inputs
+    _, packages, _, proposal, records, _, _ = inputs
     package = packages[package_index]
     evaluation = records[package['evaluation']]
     if fault == 'missing':
@@ -87,6 +102,8 @@ def test_resealed_primary_runtime_must_match_frozen_policy_before_dispatch(input
     # Reseal both copies: equality with the package's own primary is insufficient.
     package['context']['build'] = copy.deepcopy(evaluation['build'])
     package['evidence']['evaluation_sha256'] = artifacts.digest(evaluation)
+    seal_package(package)
+    proposal['profile_package'] = packages[0]['id']
     with pytest.raises((Failure, ValueError), match='runtime'):
         validate(inputs)
 
@@ -94,7 +111,7 @@ def test_resealed_primary_runtime_must_match_frozen_policy_before_dispatch(input
 @pytest.mark.parametrize('fault', ['pinned-source', 'source-function', 'candidate-function',
                                   'source-implementation', 'proposal', 'binary', 'build'])
 def test_no_repackaged_source_or_relabelled_context_before_dispatch(inputs, fault):
-    _, packages, _, _, records, _, expected = inputs
+    _, packages, _, proposal, records, _, expected = inputs
     if fault == 'pinned-source': expected['sha256'] = 'e' * 64
     elif fault == 'source-function': records['source']['context']['function'] = 'DOBFSMAA'
     elif fault == 'candidate-function': records['baseline']['context']['function'] = 'DOBFSMAA'
@@ -102,5 +119,7 @@ def test_no_repackaged_source_or_relabelled_context_before_dispatch(inputs, faul
     elif fault == 'proposal': records['baseline']['proposal'] = 'actual-prior-rewrite'
     elif fault == 'binary': packages[0]['context']['primary_binary_sha256'] = 'c' * 64
     else: packages[0]['context']['build'] = {'flags': ['-O0']}
+    seal_package(packages[0])
+    proposal['profile_package'] = packages[0]['id']
     with pytest.raises(ValueError, match='pinned application|context evidence changed'):
         validate(inputs)
