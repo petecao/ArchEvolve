@@ -605,7 +605,9 @@ class Driver:
         self.supervision = None
         self.folder = args.runs_dir / (args.id + '.driver')
         self.folder.mkdir(exist_ok=False)
+        self.database = self.folder / 'swdb.sqlite'
         self.receipt = {'id': args.id, 'state': 'running', 'protocol': args.protocol,
+                        'database': str(self.database),
                         'stages': [], 'families': {}, 'candidate_rounds': [], 'repair_attempts': [],
                         'gain_claim': False, 'acceptance': 'reported separately by bfs-coverage',
                         'lane': args.lane, 'bounds': {'driver_seconds': args.total_seconds,
@@ -618,7 +620,8 @@ class Driver:
         pending.replace(self.folder / 'driver.json')
 
     def call(self, command, *rest, timeout=180, required=True):
-        argv = [sys.executable, '-m', 'swdb', command, *map(str, rest), '--records', str(self.args.records), '--format', 'json']
+        argv = [sys.executable, '-m', 'swdb', command, *map(str, rest), '--records', str(self.args.records),
+                '--db', str(self.database), '--format', 'json']
         return self.execute(command, argv, timeout=timeout, required=required)
 
     def execute(self, command, argv, *, timeout=180, required=True):

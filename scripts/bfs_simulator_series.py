@@ -177,7 +177,9 @@ def main():
     profile._verified_lane(store.get('mbit10', 'machine'), lane)
     folder = runs / (args.id + '.driver')
     folder.mkdir(exist_ok=False)
+    database = folder / 'swdb.sqlite'
     receipt = {'id': args.id, 'created': '2026-09-25', 'state': 'running', 'gain_claim': False,
+               'database': str(database),
                'purpose': 'frozen_sample_grid' if args.protocol else 'unchanged_baseline_calibration',
                'bounds': {name: getattr(args, name) for name in limits},
                'stages': [], 'samples': [], 'lane': lane,
@@ -235,7 +237,8 @@ def main():
             save()
         index = len(receipt['stages'])
         out, err = folder / f'{index:03d}-{command}.json', folder / f'{index:03d}-{command}.stderr'
-        argv = [sys.executable, '-m', 'swdb', command, *map(str, rest), '--records', str(args.records), '--format', 'json']
+        argv = [sys.executable, '-m', 'swdb', command, *map(str, rest), '--records', str(args.records),
+                '--db', str(database), '--format', 'json']
         try:
             if owned:
                 lifecycle.run_stage(receipt, folder, argv, timeout=timeout,

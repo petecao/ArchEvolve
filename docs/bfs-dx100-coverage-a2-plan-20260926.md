@@ -2,8 +2,19 @@
 
 Created: 2026-09-26 (Eastern Time).
 Updated: 2026-09-26 (Eastern Time).
-Status: local implementation and contract tests in review. No a2 build or host
-dispatch has occurred.
+Status: corrected Linux admission fixtures passed at the reviewed prelaunch
+revision. No a2 simulator build or execution has occurred as of 18:58 ET.
+
+The active tested commit is `5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f`;
+its canonical plan digest is
+`d78c09751d9b56abddcce0a7217983fc1652ef6dc83c09fc55ecf8a9a4d4be5a`.
+The [prelaunch correction](bfs-a2-interruption-prelaunch-revision-20260926.md)
+preserves mandatory mbit10 lane checks and changes only the interruption
+fixture and its plan bindings. Both fresh Linux selections passed; the
+[actual receipts](../.scratch/bfs-rewrite-evaluation-2026-09-25/observations/a2-corrected-fixtures-actual-20260926.json)
+remain contract evidence. The same unused measurement ID, 21:00 ET launch
+cutoff and 3,600-second budget remain in force. Older preparation identities
+below are retained as history, not the active admission pin.
 
 This is one prospective corrective attempt for the failed
 `bfs-dx100-coverage-20260926-a1` collection. It changes collection reliability,
@@ -157,12 +168,13 @@ The selected native code is
 `d484afb` preparation is presumed. The future native terminal hash and new
 a2 code pin must be sealed before launch.
 
-The [exact a2 plan request](../.scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-coverage-a2-20260926.json)
-has canonical SHA-256
+The initial a2 plan at `67313d9` had canonical SHA-256
 `f24375eca2fcfb304c92bd752c718f71f14e111ed40a2f1211c12172d3c558e7`.
-It pins the reviewed interruption correction from commit `76fd5b4`, the
+It pinned the interruption correction from commit `76fd5b4`, the
 stat-field-24 observer, and the historical shared batch/series/native helper
-bytes from that reviewed base. The separately developing batch/series changes
+bytes from that reviewed base. The active [plan request](../.scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-coverage-a2-20260926.json)
+changes only the required interruption-test hash, as recorded above.
+The separately developing batch/series changes
 are excluded from this a2 export. Runtime admission fails if they replace the
 pinned shared files. The pure a1 helper changes are the only permitted edits
 to the historical coverage module.

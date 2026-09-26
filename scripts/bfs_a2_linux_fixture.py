@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Two bounded A2 Linux contract selections against fixed historical code. Created 2026-09-26 ET.
+"""Two bounded A2 Linux contract selections against fixed prelaunch code. Updated 2026-09-26 ET.
 
 This supervisor never runs an empirical workload or asserts independent terminal
 cleanup. Every selection has one original 90-second clock and no retry.
@@ -33,13 +33,13 @@ from swdb import artifacts
 from swdb.store import Store
 
 LIMIT_BYTES = 512 * 1024**2
-TESTED_COMMIT = '67313d9b2a45d9f0fb23d935b56e755a3a19fa7f'
+TESTED_COMMIT = '5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f'
 SELECTIONS = {
-    'owned_cleanup': ('bfs-a2-owned-linux-20260926-a1',
+    'owned_cleanup': ('bfs-a2-owned-linux-20260926-a2',
         ['tests/test_bfs_dx100_coverage_a2.py::test_linux_a2_reaps_detached_child'], {
             'test_linux_a2_reaps_detached_child[False]',
             'test_linux_a2_reaps_detached_child[True]'}),
-    'dx100_interruption': ('bfs-a2-interruption-linux-20260926-a1',
+    'dx100_interruption': ('bfs-a2-interruption-linux-20260926-a2',
         ['tests/test_dx100_interruption.py::test_public_interruption_is_durable_before_postmortem'], {
             'test_public_interruption_is_durable_before_postmortem[raises]',
             'test_public_interruption_is_durable_before_postmortem[stalls]'})}

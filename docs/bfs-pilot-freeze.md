@@ -41,7 +41,7 @@ current shell, so the old serial records remain unsupported for new empirical
 publication even if their other gates were satisfied. Existing statistical,
 history, diagnostic-scope, and accelerator gates remain unchanged.
 
-`scripts/bfs_freeze_pilot.py prepare SELECTION.json --records RECORDS --output NEW_DIR`
+`scripts/bfs_freeze_pilot.py prepare SELECTION.json --records RECORDS --db /absolute/accounted/raw/cache/swdb.sqlite --output NEW_DIR`
 prepares a review and exact public `freeze-protocol` request from two complete real
 native packages. It does not publish a protocol. The packages must describe one
 unchanged scalar implementation, one workload from each graph family, four native
@@ -145,7 +145,7 @@ native median, explicitly across different instrumented executions; it is not a
 candidate speedup or a claim of isolated instrumentation cost.
 
 After the operator has reviewed actual size feasibility and the proposed settings,
-`scripts/bfs_freeze_pilot.py publish REVIEW.json --records RECORDS --output NEW_DIR`
+`scripts/bfs_freeze_pilot.py publish REVIEW.json --records RECORDS --db /absolute/accounted/raw/cache/swdb.sqlite --output NEW_DIR`
 reconstructs the review from current records and raw artifacts. Any changed input,
 plan, repeatability receipt/result, record identity, setting, or unmet gate rejects publication. A successful
 request invokes public `freeze-protocol`, then retrieves the frozen record through

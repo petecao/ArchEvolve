@@ -1,6 +1,6 @@
 # Explicit publication from the requested-one-thread calibration
 
-Created: 2026-09-26 ET.
+Created: 2026-09-26 ET. Updated: 2026-09-26 ET.
 
 This opt-in route prepares a native protocol from the fixed
 `bfs-native-one-thread-pilot-20260926-a1` study. It does not run a measurement,
@@ -52,8 +52,8 @@ After the actual artifacts exist, preparation and publication use separate new
 output directories:
 
 ```sh
-python3 scripts/bfs_freeze_pilot.py prepare SELECTION.json --records RECORDS --output NEW_REVIEW_DIRECTORY
-python3 scripts/bfs_freeze_pilot.py publish NEW_REVIEW_DIRECTORY/review.json --records RECORDS --output NEW_PUBLICATION_DIRECTORY
+python3 scripts/bfs_freeze_pilot.py prepare SELECTION.json --records RECORDS --db /absolute/accounted/raw/review-cache/swdb.sqlite --output NEW_REVIEW_DIRECTORY
+python3 scripts/bfs_freeze_pilot.py publish NEW_REVIEW_DIRECTORY/review.json --records RECORDS --db /absolute/accounted/raw/publication-cache/swdb.sqlite --output NEW_PUBLICATION_DIRECTORY
 ```
 
 Preparation produces a review, not a frozen record. Publication repeats admission

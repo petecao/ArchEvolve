@@ -1,12 +1,12 @@
 # A2 Linux fixture route
 
-Created 2026-09-26 ET. Preparation only. No fixture or guest dispatch is authorized
-by this document. The sole active native pilot remains unchanged until its whole
-terminal outcome and independent cleanup audit.
+Created 2026-09-26 ET. Updated 2026-09-26 ET for the corrected prelaunch fixture
+routes. Preparation only; this document does not authorize fixture or guest dispatch.
+The completed native pilot and its separate terminal audit remain unchanged.
 
 The new `scripts/bfs_a2_linux_fixture.py` supervisor runs from a separately
 reviewed code checkout. It tests exactly
-`67313d9b2a45d9f0fb23d935b56e755a3a19fa7f` in a distinct clean checkout under
+`5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f` in a distinct clean checkout under
 `/data1/yanruj`. It does not import that historical runtime into its own process,
 change its files or plans, or substitute the newer simulator runtime. Before
 any historical child import, immediate checkout entries must be Git-tracked
@@ -16,13 +16,22 @@ only two allowed selections:
 
 | Kind | Fixed pytest selector | Exact cases | New raw directory under `/data/yanruj/EvolveSWDB_runs/` |
 |---|---|---|---|
-| `owned_cleanup` | `tests/test_bfs_dx100_coverage_a2.py::test_linux_a2_reaps_detached_child` | `[False]`, `[True]` | `bfs-a2-owned-linux-20260926-a1` |
-| `dx100_interruption` | `tests/test_dx100_interruption.py::test_public_interruption_is_durable_before_postmortem` | `[raises]`, `[stalls]` | `bfs-a2-interruption-linux-20260926-a1` |
+| `owned_cleanup` | `tests/test_bfs_dx100_coverage_a2.py::test_linux_a2_reaps_detached_child` | `[False]`, `[True]` | `bfs-a2-owned-linux-20260926-a2` |
+| `dx100_interruption` | `tests/test_dx100_interruption.py::test_public_interruption_is_durable_before_postmortem` | `[raises]`, `[stalls]` | `bfs-a2-interruption-linux-20260926-a2` |
+
+The original `67313d9` tested checkout and `3f38a2b` supervisor remain unchanged.
+Their `a1` owned-cleanup fixture passed; their interruption fixture failed before
+simulation because its fixture disabled mbit10's mandatory lane policy. Preserve
+both outcomes and their exact proofs or failure receipts. The new tested commit
+changes only that fixture, its required plan hash and the plan's canonical digest.
+It keeps production host checks enabled and derives the requested node from the
+verified helper. Both corrected selections need fresh proofs because their full
+tested runtime identity changed; the old success cannot be relabeled.
 
 Each selection has its own original 90-second outer clock, captured in the owned
 tmux pane before the normal socket helper. TERM at 60 seconds and KILL 30 seconds
 later preserve that same deadline. Setup and three owned subprocess stages share
-60 seconds: a fixed read-only `runtime_identity(673...)` command in the tested
+60 seconds: a fixed read-only `runtime_identity(5a0b15fe...)` command in the tested
 checkout, the exact pytest selection, and the same runtime command afterward.
 Each metadata command is capped at ten seconds and the remaining work budget.
 Pytest receives only the remaining work budget. There is no retry, provider call,
@@ -79,4 +88,7 @@ helper and outer-exit receipts in a new sibling `.dispatch` directory so the raw
 selection root is absent on admission. The actual expanded argv, two runtime pins,
 current helper identity, both socket/legacy locks, capacity and native terminal
 reference must be recorded before launch. Future code hashes are deliberately not
-guessed here. Neither this route nor its fixtures extend A2's existing window.
+guessed here. The auditor derives these two IDs and the tested commit from this
+supervisor module; its validation implementation is unchanged. Neither route
+extends the unused A2 measurement's 21:00 ET launch cutoff, 22:00 ET absolute end
+or 3,600-second outer allowance. Missing proofs leave A2 unadmitted.
