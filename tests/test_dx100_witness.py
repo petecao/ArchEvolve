@@ -39,6 +39,55 @@ def test_exact_exit_pair_retains_later_workers_without_claiming_termination(tmp_
     assert 'normal_exit_observed' not in found
 
 
+def progress(tick=140, cpu=3, total=4468078, committed=4468078, ipc='01.39851'):
+    # Pinned CPUProgressEvent::process uses unconditional DPRINTFN, even when
+    # only SyscallBase is enabled. This is a synthetic trace, not run evidence.
+    return (f'{tick}: Event_335: {CPUS[cpu]} progress event, total committed:{total}, '
+            f'progress insts committed: {committed}, IPC: {ipc}\n')
+
+
+def test_pinned_progress_records_are_retained_without_witness_authority(tmp_path):
+    _, found = trace(tmp_path, line(120, 'Calling exit_group(0)...')
+        + line(120, 'Returned 0.') + progress())
+    assert found['completed'] is True
+    assert found['exit_request']['return_line'] == 2
+    assert found['events_after_exit'] == 1
+    assert found['progress_records'] == [{'line': 3, 'tick': 140, 'event': 335,
+        'cpu': CPUS[3], 'total_committed': 4468078, 'interval_committed': 4468078,
+        'ipc': '01.39851'}]
+    _, incomplete = trace(tmp_path, progress(), allow_incomplete=True)
+    assert incomplete['completed'] is False and incomplete['exit_request'] is None
+    assert incomplete['initial_partial_calls'] == [] and incomplete['pending_calls'] == []
+    with pytest.raises(WitnessError, match='missing exit'):
+        trace(tmp_path, progress())
+
+
+@pytest.mark.parametrize('row,reason', [
+    (progress().replace(CPUS[3], 'other.cpu'), 'CPU'),
+    (progress(tick=99), 'interval'),
+    (progress(tick=151), 'interval'),
+    (progress(total=-1), 'format'),
+    (progress(committed=-1), 'format'),
+    (progress(total=5, committed=6), 'progress'),
+    (progress(total=2**64, committed=0), 'progress'),
+    (progress(ipc='nan'), 'format'),
+    (progress(ipc='inf'), 'format'),
+    (progress(ipc='1e999'), 'progress'),
+    (progress().replace('Event_335', 'Other_335'), 'format'),
+    (progress().replace('progress event', 'exit_group(0)'), 'format'),
+])
+def test_progress_records_reject_unknown_or_inconsistent_format(tmp_path, row, reason):
+    with pytest.raises(WitnessError, match=reason):
+        trace(tmp_path, row, allow_incomplete=True)
+
+
+def test_progress_records_obey_global_tick_order_and_do_not_complete_partial_exit(tmp_path):
+    with pytest.raises(WitnessError, match='order'):
+        trace(tmp_path, progress() + line(120, 'Calling exit_group(0)...'), allow_incomplete=True)
+    with pytest.raises(WitnessError, match='incomplete exit'):
+        trace(tmp_path, line(120, 'Calling exit_group(0)...') + progress(), allow_incomplete=True)
+
+
 @pytest.mark.parametrize('text,match', [
     ('Verification: PASS\n', 'format'),
     (line(120, 'Returned 0.'), 'orphan'),
@@ -124,8 +173,8 @@ def test_initial_worker_retry_retains_partial_preseal_history(tmp_path):
         trace(tmp_path, text + line(140, 'Retrying futex(1, 2, 3, 4, 5, 6)...', 1))
 
 
-def evaluation(tmp_path):
-    path, found = trace(tmp_path)
+def evaluation(tmp_path, trace_text=None):
+    path, found = trace(tmp_path, trace_text)
     ref = found['trace']
     parser = Path(__file__).resolve().parents[1] / 'swdb/dx100_witness.py'
     binary = {'path': str(tmp_path / 'bfs'), 'sha256': 'b' * 64}
@@ -194,6 +243,44 @@ def test_completed_witness_does_not_require_normal_guest_exit(tmp_path):
     assert data == original
     data['outcome']['state'] = 'running'
     assert validate_completed_witness(data, require_complete_evaluation=False)['completed'] is True
+
+
+def test_completed_witness_revalidates_progress_without_rewriting_legacy_receipts(tmp_path):
+    data = evaluation(tmp_path, line(120, 'Calling exit_group(0)...')
+        + line(120, 'Returned 0.') + progress())
+    found = validate_completed_witness(data)
+    assert found['completed'] is True and len(found['progress_records']) == 1
+    assert validate_completed_witness(data, verify_artifacts=False) == found
+
+
+@pytest.mark.parametrize('field,value', [
+    ('cpu', 'other.cpu'), ('line', 1), ('line', 4), ('tick', 99), ('tick', 151),
+    ('tick', 110), ('total_committed', -1), ('interval_committed', 4468079),
+    ('event', True), ('ipc', 'nan'), ('ipc', '1e999'),
+])
+def test_remote_progress_metadata_remains_typed_and_bound_to_exit_order(tmp_path, field, value):
+    from swdb.cli import Failure
+    data = evaluation(tmp_path, line(120, 'Calling exit_group(0)...')
+        + line(120, 'Returned 0.') + progress())
+    # Update both in-memory receipt copies; metadata-only validation must still
+    # reject it without depending on reopening the raw trace or seal.
+    data['correctness']['checks'][0]['continuation']['exit_witness']['progress_records'][0][field] = value
+    with pytest.raises(Failure, match='progress'):
+        validate_completed_witness(data, verify_artifacts=False)
+
+
+def test_progress_between_same_tick_exit_lines_must_have_the_same_tick(tmp_path):
+    from swdb.cli import Failure
+    data = evaluation(tmp_path, line(120, 'Calling exit_group(0)...')
+        + line(120, 'Returned 0.') + progress())
+    witness = data['correctness']['checks'][0]['continuation']['exit_witness']
+    witness['exit_request']['return_line'] = 3
+    witness.update(line_count=4, events_after_exit=1)
+    witness['progress_records'][0]['line'] = 2
+    with pytest.raises(Failure, match='progress observation tick'):
+        validate_completed_witness(data, verify_artifacts=False)
+    witness['progress_records'][0]['tick'] = 120
+    assert validate_completed_witness(data, verify_artifacts=False)['completed'] is True
 
 
 @pytest.mark.parametrize('field', ['driver_sha256', 'parser_sha256', 'observer_sha256'])

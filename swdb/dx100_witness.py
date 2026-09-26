@@ -23,6 +23,11 @@ MAX_OUTPUT_BYTES = 2 * 1024**3
 CPUS = tuple(f'system.switch_cpus{i}' for i in range(4))
 _HASH = re.compile(r'[0-9a-f]{64}')
 _LINE = re.compile(r' *(\d{1,24}): SyscallBase: ([A-Za-z_][A-Za-z0-9_.]*): T(\d{1,4}) : syscall (.+)')
+_DECIMAL = r'[0-9]{1,24}(?:\.[0-9]{1,24})?(?:[eE][+-]?[0-9]{1,3})?'
+# Pinned CPUProgressEvent::process uses DPRINTFN, which bypasses debug flags.
+# Event::name supplies Event_<instance>; this is not a SyscallBase observation.
+_PROGRESS = re.compile(r' *(\d{1,24}): Event_(\d{1,24}): ([A-Za-z_][A-Za-z0-9_.]*) '
+    r'progress event, total committed:(\d{1,24}), progress insts committed: (\d{1,24}), IPC: (' + _DECIMAL + r')')
 _CALL = re.compile(r'(Calling|Retrying) ([A-Za-z_][A-Za-z0-9_]*)\(([^\r\n]*)\)\.\.\.')
 _RETURN = re.compile(r'Returned (-?\d{1,24})\.')
 _RETRY = re.compile(r'([A-Za-z_][A-Za-z0-9_]*) (needs retry|still needs retry)\.')
@@ -58,6 +63,22 @@ def _integer(value, name, minimum=0):
 def _same(left, right):
     # JSON's Boolean and integer types are distinct even though Python's == is not.
     return json.dumps(left, sort_keys=True, allow_nan=False) == json.dumps(right, sort_keys=True, allow_nan=False)
+
+
+def _validate_progress(row, allowed, start, end):
+    _need(isinstance(row, dict) and set(row) == {
+        'line', 'tick', 'event', 'cpu', 'total_committed', 'interval_committed', 'ipc'},
+        'invalid progress observation fields')
+    _need(row['cpu'] in allowed, 'progress trace names an unexpected CPU')
+    _need(start <= _integer(row['tick'], 'progress tick') <= end,
+          'progress event lies outside enabled interval')
+    _integer(row['line'], 'progress line', 1)
+    _integer(row['event'], 'progress event')
+    total = _integer(row['total_committed'], 'progress total committed')
+    _need(_integer(row['interval_committed'], 'progress interval committed') <= total,
+          'progress interval exceeds total committed instructions')
+    _need(isinstance(row['ipc'], str) and re.fullmatch(_DECIMAL, row['ipc']) is not None
+          and math.isfinite(float(row['ipc'])), 'invalid progress IPC')
 
 
 def _reference(value, name):
@@ -117,21 +138,29 @@ def parse_trace(path, *, enabled_tick, end_tick, expected_cpu, expected_thread=0
     _need(all(character == '\n' or ' ' <= character <= '~' for character in text),
           'invalid control character in trace format')
     pending, exit_request, exit_count = {}, None, 0
-    seen_streams, initial_partial = set(), []
+    seen_streams, initial_partial, progress_rows = set(), [], []
     previous_tick, line_count, after_exit = enabled_tick, 0, 0
     for number, line in enumerate(text.splitlines(), 1):
         line_count = number
         _need(len(line) <= MAX_LINE_BYTES and '\r' not in line, 'trace line exceeds bound or format')
         match = _LINE.fullmatch(line)
-        _need(match is not None, f'invalid simulator trace format at line {number}')
-        tick, cpu, thread, body = int(match[1]), match[2], int(match[3]), match[4]
+        progress = _PROGRESS.fullmatch(line)
+        _need(match is not None or progress is not None, f'invalid simulator trace format at line {number}')
+        tick, cpu = (int(progress[1]), progress[3]) if progress else (int(match[1]), match[2])
         _need(cpu in allowed, 'trace names an unexpected CPU')
-        _need(thread == expected_thread, 'trace caller hardware thread differs')
         _need(enabled_tick <= tick <= end_tick, 'trace event lies outside enabled interval')
         _need(tick >= previous_tick, 'trace ticks are out of order')
         previous_tick = tick
         if exit_request is not None:
             after_exit += 1
+        if progress:
+            row = {'line': number, 'tick': tick, 'event': int(progress[2]), 'cpu': cpu,
+                'total_committed': int(progress[4]), 'interval_committed': int(progress[5]), 'ipc': progress[6]}
+            _validate_progress(row, allowed, enabled_tick, end_tick)
+            progress_rows.append(row)
+            continue
+        thread, body = int(match[3]), match[4]
+        _need(thread == expected_thread, 'trace caller hardware thread differs')
         key = (cpu, thread)
         first_event = key not in seen_streams
         seen_streams.add(key)
@@ -181,7 +210,7 @@ def parse_trace(path, *, enabled_tick, end_tick, expected_cpu, expected_thread=0
             raise WitnessError(f'unrecognized syscall trace format at line {number}')
     _need(not any(row['name'] == 'exit_group' for row in pending.values()), 'incomplete exit_group call/return')
     _need(exit_request is not None or allow_incomplete, 'missing exit_group witness')
-    return {'format': FORMAT, 'completed': exit_request is not None,
+    result = {'format': FORMAT, 'completed': exit_request is not None,
         'trace': {'path': str(Path(path)), 'sha256': digest, 'bytes': len(raw)},
         'enabled_tick': enabled_tick, 'end_tick': end_tick,
         'caller': {'cpu': expected_cpu, 'thread': expected_thread}, 'allowed_cpus': allowed,
@@ -189,6 +218,10 @@ def parse_trace(path, *, enabled_tick, end_tick, expected_cpu, expected_thread=0
         'initial_partial_calls': initial_partial,
         'pending_calls': [{'cpu': cpu, 'thread': thread, 'name': row['name'], 'state': row['state']}
                           for (cpu, thread), row in sorted(pending.items())]}
+    if progress_rows:
+        # Preserve the exact receipt shape of earlier traces without progress.
+        result['progress_records'] = progress_rows
+    return result
 
 
 def _completion(check, context):
@@ -420,6 +453,19 @@ def validate_completed_witness(evaluation, *, verify_artifacts=True, require_com
               <= _integer(witness['line_count'], 'trace line count') <= trace_ref['bytes'], 'exit request evidence is inconsistent')
         _need(_integer(witness['events_after_exit'], 'events after exit') == witness['line_count'] - exit_request['return_line'],
               'post-exit event accounting differs')
+        progress_rows = witness.get('progress_records', [])
+        _need(isinstance(progress_rows, list) and len(progress_rows) <= witness['line_count'],
+              'invalid progress observation list')
+        previous_line, previous_tick = 0, start
+        for row in progress_rows:
+            _validate_progress(row, CPUS, start, end)
+            _need(previous_line < row['line'] <= witness['line_count']
+                  and row['line'] not in {exit_request['call_line'], exit_request['return_line']}
+                  and previous_tick <= row['tick'], 'invalid progress observation order or line')
+            _need((row['line'] > exit_request['return_line'] or row['tick'] <= exit_request['tick'])
+                  and (row['line'] < exit_request['call_line'] or row['tick'] >= exit_request['tick']),
+                  'progress observation tick differs from exit ordering')
+            previous_line, previous_tick = row['line'], row['tick']
         pending = witness['pending_calls']
         _need(isinstance(pending, list) and len(pending) <= len(CPUS), 'invalid pending syscall list')
         seen = set()

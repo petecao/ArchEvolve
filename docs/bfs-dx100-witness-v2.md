@@ -40,6 +40,21 @@ These trace identities are CPU object/hardware-thread identities, not proof of
 guest PID, TGID, or Process-pointer relationships. Worker activity after the
 exit pair remains visible and does not invalidate the observed request.
 
+The pinned simulator also emits unconditional CPU progress records through
+`DPRINTFN` in `src/cpu/base.cc:107–110`. `src/base/trace.hh:238–242` does not gate
+these records on the selected debug flags, and `src/sim/eventq.cc:83–86` names
+their events `Event_<instance>`. The first actual v2 proof failed because four
+such records shared the redirected stream; its failed record is preserved in
+[the execution receipt](evidence/bfs-dx100-witness-20260926-a1.yaml).
+
+The parser recognizes only that exact additional grammar, validates the CPU,
+tick interval/order, bounded nonnegative counters and finite IPC, and retains
+the rows separately in `progress_records`. Progress cannot create, return, or
+complete a syscall; a stream containing progress alone has no exit witness.
+All other unknown formats still fail. Earlier receipts without progress keep
+their original shape. This correction does not retroactively qualify the failed
+proof; a new execution requires its own bounded plan and result identity.
+
 A worker retry event may have been scheduled before trace enable. The first
 observed non-exit `Retrying` on a stream is therefore retained explicitly in
 `initial_partial_calls`; its later retry/return transitions remain checked.

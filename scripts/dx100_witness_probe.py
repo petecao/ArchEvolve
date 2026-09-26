@@ -13,11 +13,11 @@ PROBE_ID = 'bfs-dx100-witness-20260926-a1'
 REQUEST = ROOT / '.scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-witness-a1.yaml'
 
 
-def validate_request(request, prior):
+def validate_request(request, prior, *, probe_id=PROBE_ID):
     if prior.get('id') != PRIOR_ID or prior.get('evidence_kind') != 'execution':
         raise ValueError('witness probe requires the exact retained real a6 evaluation')
     expected = deepcopy(prior['request'])
-    expected['id'] = PROBE_ID
+    expected['id'] = probe_id
     expected['verification'].update(checker='dx100.bfs.verifier.v2',
                                     max_ticks=10**10, post_roi_trace='SyscallBase')
     if request != expected:
