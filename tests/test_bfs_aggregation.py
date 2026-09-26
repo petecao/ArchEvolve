@@ -1,4 +1,4 @@
-"""Actual execution-grid aggregation contract through fresh CLI calls. Date 2026-09-25.
+"""Actual execution-grid aggregation contract through fresh CLI calls. Updated 2026-09-26.
 
 All timings and simulator-shaped records here are explicitly contract fixtures.
 """
@@ -103,7 +103,7 @@ def test_complete_actual_grid_retains_components_and_compares_as_fixture(simulat
     assert all(row["id"] in json.loads(later.stdout)["records"] for row in components["candidate"])
 
 
-@pytest.mark.parametrize("fault", ["missing", "duplicate-id", "duplicate-cell", "binary", "configuration", "failed", "prefreeze", "multi-trial", "promoted-fixture"])
+@pytest.mark.parametrize("fault", ["missing", "duplicate-id", "duplicate-cell", "binary", "configuration", "failed", "prefreeze", "multi-trial", "promoted-fixture", "wrong-checker"])
 def test_incomplete_or_mismatched_components_are_retained(simulation_setup, tmp_path, fault):
     records, frozen, components = simulation_setup
     rows = components["candidate"]
@@ -118,6 +118,7 @@ def test_incomplete_or_mismatched_components_are_retained(simulation_setup, tmp_
         elif fault == "prefreeze": row["context"]["protocol_binding"]["bound_at"] = "2000-01-01T00:00:00Z"
         elif fault == "multi-trial": row["timing"].append(copy.deepcopy(row["timing"][0]))
         elif fault == "promoted-fixture": row["evidence_kind"] = "execution"
+        elif fault == "wrong-checker": row["correctness"]["checks"][0]["verifier"] = "another.verifier"
         records.write(f"evaluations/{row['id']}.yaml", row)
     result = _aggregate(records, tmp_path, frozen, "candidate", rows, succeeds=False)
     assert result["outcome"]["state"] == "incompatible" and result["outcome"]["reason"]

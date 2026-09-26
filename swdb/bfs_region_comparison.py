@@ -1,4 +1,4 @@
-"""Package-backed simulated diagnostic comparisons. Updated 2026-09-25.
+"""Package-backed simulated diagnostic comparisons. Updated 2026-09-26.
 
 The quantities are summed per-thread elapsed intervals, not primary BFS wall time.
 """
@@ -9,7 +9,7 @@ import statistics
 from pathlib import Path
 
 from swdb import artifacts
-from swdb.bfs_protocol import _fail, _get, _positive, _integer, _geomean, _timestamp
+from swdb.bfs_protocol import _fail, _get, _positive, _integer, _geomean, _timestamp, _check_verifier_identity
 
 
 def _raw(reference, host, *, verify_hash=True):
@@ -103,6 +103,9 @@ def _sample(store, primary, package_id, pair, role):
     _fail(_timestamp(stages[0].get("started")) >= _timestamp(primary["context"]["protocol_binding"]["frozen_at"]),
           "diagnostic region observation predates protocol freeze")
     checks = diagnostic["correctness"].get("checks", [])
+    _check_verifier_identity(diagnostic, store)
+    _fail(diagnostic.get("context", {}).get("verifier") == primary["context"].get("verifier"),
+          "diagnostic correctness verifier differs from primary")
     _fail(len(checks) == 1 and checks[0].get("passed") is True and checks[0].get("source") == cell["source"]
           and checks[0].get("binary_sha256") == binary["binary_sha256"]
           and checks[0].get("graph_sha256") == primary["context"]["workload"]["canonical_sha256"]

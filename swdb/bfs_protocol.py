@@ -1,4 +1,4 @@
-"""Canonical BFS workloads and immutable comparison policy. Updated 2026-09-25."""
+"""Canonical BFS workloads and immutable comparison policy. Updated 2026-09-26."""
 
 import copy
 import datetime
@@ -792,10 +792,41 @@ def aggregate_evaluations(args):
     return workflow.persist(args.records, data, getattr(args, "db", None), create=True)
 
 
+def _check_verifier_identity(evaluation, store=None):
+    """Bind individual verdicts to the declared checker, including v2 witnesses."""
+    verifier = evaluation.get("context", {}).get("verifier")
+    checks = evaluation.get("correctness", {}).get("checks", [])
+    _fail(isinstance(verifier, str) and verifier and checks,
+          "correctness verifier or individual checks are missing")
+    _fail(all(check.get("checker", check.get("verifier")) == verifier
+              and all(check[key] == verifier for key in ("checker", "verifier") if key in check)
+              for check in checks), "individual correctness checker differs from evaluation verifier")
+    if verifier != "dx100.bfs.verifier.v2":
+        return
+    from swdb.dx100_witness import validate_record_witness
+    components = evaluation.get("component_evaluations", [])
+    if not components:
+        validate_record_witness(evaluation)
+        return
+    _fail(store is not None, "v2 aggregate requires its actual component records")
+    retained = []
+    seen = set()
+    for identity in components:
+        component = _get(store, identity["evaluation"], "evaluation")
+        _fail(component["id"] not in seen and not component.get("component_evaluations")
+              and component.get("context", {}).get("verifier") == verifier
+              and artifacts.digest(component) == identity["sha256"], "v2 aggregate component identity differs")
+        seen.add(component["id"])
+        validate_record_witness(component)
+        retained.extend(component["correctness"]["checks"])
+    _fail(retained == checks, "v2 aggregate checks differ from actual component witnesses")
+
+
 def _evaluation_samples(store, evaluation, protocol, role):
     settings = protocol["settings"]
     _fail(evaluation.get("outcome", {}).get("state") == "complete", "evaluation is incomplete or failed")
     _fail(evaluation.get("correctness", {}).get("state") == "passed", "evaluation lacks passed correctness")
+    _check_verifier_identity(evaluation, store)
     context = evaluation.get("context", {})
     components = evaluation.get("component_evaluations", [])
     if components:

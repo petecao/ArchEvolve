@@ -1,4 +1,4 @@
-"""Evidence-based BFS acceptance reporting; never dispatches work. Updated 2026-09-25."""
+"""Evidence-based BFS acceptance reporting; never dispatches work. Updated 2026-09-26."""
 
 import copy
 import math
@@ -77,20 +77,26 @@ def _availability(records, host):
     return result
 
 
-def _correctness(evaluation):
+def _correctness(evaluation, store=None):
     reasons = []
     if evaluation.get("correctness", {}).get("state") != "passed":
         return ["timed evaluation lacks passed independent correctness"]
+    try:
+        protocol._check_verifier_identity(evaluation, store)
+    except (Failure, KeyError, TypeError, ValueError, OSError) as exc:
+        return [str(exc)]
     binary = evaluation.get("build", {}).get("binary_sha256")
     context = evaluation.get("context", {})
     checks = evaluation["correctness"].get("checks", [])
     if context.get("basis") == "simulated":
+        if context.get("verifier") not in {"dx100.bfs.verifier.v1", "dx100.bfs.verifier.v2"}:
+            return ["simulator correctness requires an identified DX100 checker"]
         bindings = (context.get("component_bindings", {}) if evaluation.get("component_evaluations") else
                     {evaluation["id"]: context.get("execution_binding")})
         timings = evaluation.get("timing", [])
         for timing in timings:
             matched = [c for c in checks if c.get("state") == "passed" and c.get("passed") is True
-                       and c.get("checker") == "dx100.bfs.verifier.v1" and bindings.get(c.get("execution"))
+                       and c.get("checker") == context["verifier"] and bindings.get(c.get("execution"))
                        and profile_package._same(c.get("binding"), bindings[c["execution"]])
                        and c.get("binding", {}).get("binary", {}).get("sha256") == binary
                        and c.get("graph_sha256") == context.get("workload", {}).get("canonical_sha256")
@@ -114,7 +120,7 @@ def _correctness(evaluation):
     return reasons
 
 
-def _acceleration(evaluation):
+def _acceleration(evaluation, store=None):
     if evaluation.get("context", {}).get("basis") != "simulated" or not _real(evaluation):
         return {"executed": False, "cases": {}, "reason": "requires the real simulated DX100 target"}
     observed_checks = []
@@ -122,7 +128,7 @@ def _acceleration(evaluation):
         observed = "executed" in protocol.accelerator_cases(check)
         if observed:
             observed_checks.append(check)
-    if observed_checks and not _correctness(evaluation):
+    if observed_checks and not _correctness(evaluation, store):
         cases = {}
         for name in ("full_tiles", "tail_tiles", "competing_parent_updates"):
             cases[name] = any(name in protocol.accelerator_cases(check) for check in observed_checks)
@@ -328,7 +334,7 @@ def _evaluation(store, evaluation, comparisons, current):
     reasons = []
     if not _real(evaluation): reasons.append("contract fixtures do not satisfy real execution acceptance")
     if evaluation.get("outcome", {}).get("state") != "complete": reasons.append("evaluation is incomplete or failed")
-    reasons.extend(_correctness(evaluation))
+    reasons.extend(_correctness(evaluation, store))
     packages, rejected = _packages(store, evaluation)
     if not packages: reasons.append("no complete real profile package matches this exact evaluation")
     associated = [result for result in comparisons if result.get("candidate_evaluation") == evaluation["id"]]
@@ -359,7 +365,7 @@ def _evaluation(store, evaluation, comparisons, current):
             "qualified": not reasons, "reasons": reasons, "outcome": evaluation.get("outcome"),
             "correctness": evaluation.get("correctness"), "basis": context.get("basis"),
             "profile_packages": [p["id"] for p in packages], "rejected_packages": rejected,
-            "comparisons": associated, "acceleration": _acceleration(evaluation), "artifacts": availability,
+            "comparisons": associated, "acceleration": _acceleration(evaluation, store), "artifacts": availability,
             "external_verification": "verified" if availability and all(ref["state"] == "verified" for ref in availability) else "unverified"}
 
 
@@ -435,14 +441,14 @@ def report(args):
                     row["reasons"].append("reference pair must identify scalar DOBFS and the fixed author DOBFSMAA implementation separately")
                 for eid in (row["baseline_evaluation"], row["candidate_evaluation"]):
                     evaluation = store.get(eid, "evaluation")
-                    if _correctness(evaluation) or not _packages(store, evaluation)[0]:
+                    if _correctness(evaluation, store) or not _packages(store, evaluation)[0]:
                         row["reasons"].append("reference pair lacks exact correctness or complete execution profiling")
                     candidate = store.get(evaluation.get("candidate"), "candidate")
                     source = store.get((candidate or {}).get("source_snapshot"), "source_snapshot")
                     if not candidate or not source or candidate["artifact"]["sha256"] != source["artifact"]["sha256"]:
                         row["reasons"].append("reference comparison does not retain unchanged fixed source identities")
                 accelerated = store.get(row["candidate_evaluation"], "evaluation")
-                if not _acceleration(accelerated)["executed"]:
+                if not _acceleration(accelerated, store)["executed"]:
                     row["reasons"].append("reference accelerated side lacks actual DX100 execution")
                 workload = store.get(row["workload"], "workload")["definition"]
                 if mode == "artifact_reference" and not _artifact_workload(workload):
@@ -491,7 +497,7 @@ def report(args):
         evaluation = record.data
         try:
             if (not _real(evaluation) or evaluation.get("implementation") not in SOURCES
-                    or evaluation.get("outcome", {}).get("state") != "complete" or _correctness(evaluation)):
+                    or evaluation.get("outcome", {}).get("state") != "complete" or _correctness(evaluation, store)):
                 continue
             if (evaluation.get("context", {}).get("basis") == "measured"
                     and any(flag.startswith("-DMAA") for flag in evaluation.get("build", {}).get("flags", []))):

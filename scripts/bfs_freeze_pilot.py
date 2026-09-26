@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Prepare and publish a native protocol from actual unchanged BFS pilots.
 
-Created: 2026-09-25 (Eastern Time). Preparation does not freeze settings. Publish
+Updated: 2026-09-26 (Eastern Time). Preparation does not freeze settings. Publish
 revalidates the reviewed evidence and requires the shared accelerator size gate.
 This narrow native freeze does not resolve Ticket 15 or the artifact reference.
 """
@@ -82,7 +82,7 @@ def packet(store, package_id):
     require(package is not None, 'missing pilot profile package: ' + package_id)
     evaluation = store.get(package.get('evaluation'), 'evaluation')
     require(evaluation and bfs_coverage._real(evaluation) and evaluation['outcome']['state'] == 'complete'
-            and not bfs_coverage._correctness(evaluation), 'pilot needs complete real independently checked primary evidence')
+            and not bfs_coverage._correctness(evaluation, store), 'pilot needs complete real independently checked primary evidence')
     accepted, rejected = bfs_coverage._packages(store, evaluation)
     require(any(row['id'] == package_id for row in accepted), 'pilot package is incomplete, invalid, stale, or a fixture: ' + str(rejected))
     candidate = store.get(evaluation['candidate'], 'candidate')
@@ -290,7 +290,7 @@ def accelerator_gate(store, ids, native, identities, gates, ceiling):
                 and type(observation.get('duration_s')) in (int, float)
                 and math.isfinite(observation['duration_s']) and observation['duration_s'] > 0,
                 'reference pilot lacks actual simulated ROI timing')
-        coverage = bfs_coverage._acceleration(evaluation)
+        coverage = bfs_coverage._acceleration(evaluation, store)
         require(coverage['executed'], 'reference pilot used only fallback or lacks observed accelerator execution')
         signature = artifacts.digest({'context': {key: context.get(key) for key in
             ('candidate_sha256', 'target', 'backend_configuration', 'instrumentation', 'adapter', 'roi')},

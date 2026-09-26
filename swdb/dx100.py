@@ -4,6 +4,7 @@ Updated: 2026-09-26. Build/smoke evidence never certifies a timed binary.
 """
 
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -325,6 +326,8 @@ def _configuration(request, target, root):
 def _correctness(session, request, result_folder, log, completed):
     """Retain sealed ROI and explicit post-ROI verdict, even after interruption."""
     data = session.data
+    checker = request['verification']['checker']
+    witnessed = checker == 'dx100.bfs.verifier.v2'
     seal_path = result_folder / "roi-seal.json"
     if not seal_path.is_file():
         data["correctness"]["checks"].append({"state": "unverified", "reason": "No sealed ROI receipt was produced."})
@@ -342,6 +345,18 @@ def _correctness(session, request, result_folder, log, completed):
         raise StageFailure("incompatible", "sealed statistics must belong to this execution directory")
     data["context"]["sealed_roi"] = {"path": str(seal_path), "sha256": artifacts.file_hash(seal_path), **seal}
     data["context"]["statistics"] = seal["statistics"]
+    if witnessed:
+        parser = data['context']['verification_parser']
+        if seal.get('verification_parser') != parser:
+            raise StageFailure('incompatible', 'sealed ROI does not identify the selected v2 parser')
+        _file(parser, 'verification parser')
+        trace = seal.get('verification', {}).get('post_roi_trace', {})
+        if trace and trace.get('path') != str(result_folder / 'post-roi-syscalls.log'):
+            raise StageFailure('incompatible', 'v2 trace must belong to this exact execution')
+        if trace.get('sha256'):
+            _file({key: trace[key] for key in ('path', 'sha256')}, 'post-ROI simulator trace')
+        if trace:
+            data['context']['post_roi_trace'] = trace
     actual_config = result_folder / "config.ini"
     if actual_config.is_file():
         # Collection can use a sealed interval even when verification later
@@ -372,7 +387,7 @@ def _correctness(session, request, result_folder, log, completed):
                 interval_values[match[1]] = match[2]
     if intervals != 1 or ends != 1:
         raise StageFailure("missing_observation", "sealed ROI must contain exactly one guest statistics interval")
-    verdicts, trace_ends, sealed_markers, parent_results = [], {}, 0, []
+    verdicts, trace_ends, sealed_markers, parent_results, completion_times = [], {}, 0, [], []
     with log.open(errors="replace") as stream:
         for number, line in enumerate(stream, 1):
             if line.strip() == "SWDB_DX100_ROI_SEALED":
@@ -385,15 +400,29 @@ def _correctness(session, request, result_folder, log, completed):
                 parent_results.append({"source": int(found[1]), "vertices": int(found[2]), "parent_count": int(found[3]),
                     "parent_fnv1a64": found[4], "line": number, "after_seal": sealed_markers == 1,
                     "fingerprint_kind": "noncryptographic FNV-1a over little-endian signed32 parent values"})
+            found = re.fullmatch(r'\s*(Verification Time|Average Time):\s*([0-9]+(?:\.[0-9]+)?(?:[eE][+-]?\d+)?)\s*', line)
+            if found:
+                value = float(found[2])
+                completion_times.append({'kind': found[1], 'seconds': value, 'line': number,
+                    'after_seal': sealed_markers == 1, 'finite': math.isfinite(value)})
     terminal = seal.get("verification", {})
     explicit_failure = any(item["verdict"] == "FAIL" for item in verdicts)
+    ended = terminal.get('exit_cause') == 'exiting with last active thread context'
+    if witnessed:
+        ended = (terminal.get('checker') == checker and terminal.get('stop_reason') in {'exit_witness', 'normal_exit'})
     valid = (completed and len(verdicts) == 1 and verdicts[0]["after_seal"] and sealed_markers == 1
-             and terminal.get("state") == "finished" and terminal.get("exit_code") == 0
-             and terminal.get("exit_cause") == "exiting with last active thread context")
+             and terminal.get("state") == "finished" and terminal.get("exit_code") == 0 and ended)
     if data["context"].get("candidate_build"):
         valid = (valid and len(parent_results) == 1 and parent_results[0]["after_seal"]
             and parent_results[0]["source"] == data["context"]["source"]
             and parent_results[0]["vertices"] == parent_results[0]["parent_count"])
+        if witnessed:
+            valid = valid and parent_results[0]['line'] < verdicts[0]['line']
+    elif witnessed:
+        valid = (valid and len(completion_times) == 2
+            and [row['kind'] for row in completion_times] == ['Verification Time', 'Average Time']
+            and all(row['after_seal'] and row['finite'] for row in completion_times)
+            and verdicts[0]['line'] < completion_times[0]['line'] < completion_times[1]['line'])
     state = "failed" if explicit_failure else "passed" if valid else "unverified"
     from swdb.dx100_coverage import observe
     coverage = observe(log, interval_values, request["configuration"]["tile_elements"])
@@ -402,7 +431,7 @@ def _correctness(session, request, result_folder, log, completed):
         and any(value > 0 for key, value in counters.items() if key.endswith(".numInst"))
         and all(trace_ends.get(unit, 0) > 0 for unit in ("S", "I", "R", "A")))
     data["correctness"] = {"state": state, "checks": [{"state": state,
-        "checker": "dx100.bfs.verifier.v1", "execution": data["id"],
+        "checker": checker, "execution": data["id"],
         "binding": data["context"]["execution_binding"],
         "target": data["context"]["target"], "configuration": data["context"]["configuration"],
         "timed_source": data["context"]["timed_source"],
@@ -413,10 +442,22 @@ def _correctness(session, request, result_folder, log, completed):
         "parent_results": parent_results,
         "coverage": {**coverage, "accelerator_executed": acceleration, "instruction_counters": counters},
         "scope": "This execution only; finite graph/source checking is not a proof for all inputs."}]}
+    if witnessed:
+        check = data['correctness']['checks'][0]
+        check['completion_sequence'] = {'kind': 'protected_candidate' if data['context'].get('candidate_build') else 'pinned_author',
+            'times': completion_times, 'observed': bool(valid)}
     trial = data['context'].get('protocol_trial', {'source_position': 0, 'repetition': 0})
     data['correctness']['checks'][0].update(passed=state == 'passed', source=data['context']['source'], **trial,
         binary_sha256=data['build']['binary_sha256'],
         graph_sha256=data['context'].get('workload', {}).get('canonical_sha256'), output_sha256=artifacts.file_hash(log))
+    if witnessed and valid and not explicit_failure:
+        from swdb.dx100_witness import validate_completed_witness
+        try:
+            validate_completed_witness(data, require_complete_evaluation=False)
+        except (Failure, ValueError, TypeError, KeyError, OSError) as exc:
+            valid = False
+            data['correctness']['state'] = 'unverified'
+            data['correctness']['checks'][0].update(state='unverified', passed=False, reason=str(exc))
     session.save()
     if explicit_failure:
         raise StageFailure("incorrect", "BFS structural verifier printed FAIL, independently of process exit status")
@@ -570,13 +611,15 @@ def execute(args):
         driver = paths.HOME / "scripts/dx100_verify.py"
         if verify is not None:
             if (not isinstance(verify, dict) or set(verify) - {"checker", "max_ticks", "coverage", "post_roi_trace"}
-                    or verify.get("checker") != "dx100.bfs.verifier.v1" or "max_ticks" not in verify):
-                raise Failure("verification requires checker dx100.bfs.verifier.v1 and max_ticks")
+                    or verify.get("checker") not in {"dx100.bfs.verifier.v1", "dx100.bfs.verifier.v2"} or "max_ticks" not in verify):
+                raise Failure("verification requires checker dx100.bfs.verifier.v1 or v2 and max_ticks")
             if type(verify.get("coverage", False)) is not bool:
                 raise Failure("verification.coverage must be boolean")
             if 'post_roi_trace' in verify and (type(verify['post_roi_trace']) is not str
                     or verify['post_roi_trace'] != 'SyscallBase'):
                 raise Failure('verification.post_roi_trace must be SyscallBase when present')
+            if verify['checker'] == 'dx100.bfs.verifier.v2' and verify.get('post_roi_trace') != 'SyscallBase':
+                raise Failure('v2 verification requires explicit post_roi_trace: SyscallBase')
             _integer(verify["max_ticks"], "verification.max_ticks", maximum=10**15)
             if not compiled:
                 source_file = root / "benchmarks/gapbs/src/bfs.cc"
@@ -589,12 +632,16 @@ def execute(args):
                         "symbol": "BFSVerifier", "lines": [463, 508],
                         "harness": {"path": str(harness), "sha256": artifacts.file_hash(harness)}})
             data["context"]["verification_driver"] = {"path": str(driver), "sha256": artifacts.file_hash(driver)}
+            if verify['checker'] == 'dx100.bfs.verifier.v2':
+                parser = paths.HOME / 'swdb/dx100_witness.py'
+                data['context']['verification_parser'] = {'path': str(parser), 'sha256': artifacts.file_hash(parser)}
             observer = paths.HOME / 'scripts/dx100_host_memory.py'
             data['context']['host_memory_observer'] = {'path': str(observer),
                 'sha256': artifacts.file_hash(observer), 'sample_interval_seconds': 5,
                 'scope': 'host process group and bounded phase observations; no modeled changes'}
             env.update(SWDB_DX100_MODEL_ROOT=str(root),
                 SWDB_DX100_EXECUTION_BINDING_SHA256=data["context"]["execution_binding_sha256"],
+                SWDB_DX100_CHECKER=verify['checker'],
                 SWDB_DX100_VERIFY_MAX_TICKS=str(verify["max_ticks"]))
             if 'post_roi_trace' in verify:
                 env['SWDB_DX100_POST_ROI_TRACE'] = verify['post_roi_trace']
@@ -605,7 +652,11 @@ def execute(args):
         if verify and 'post_roi_trace' in verify:
             instrumentation['post_roi_trace'] = {
                 'flag': verify['post_roi_trace'], 'scope': 'post-seal verifier continuation only'}
-        data['context'].update(instrumentation=instrumentation, verifier='dx100.bfs.verifier.v1' if verify else None, repetitions=1)
+            if verify['checker'] == 'dx100.bfs.verifier.v2':
+                instrumentation['post_roi_trace'].update(output='separate_simulator_trace', format_flags=['FmtFlag'],
+                    disabled_format_flags=['FmtTicksOff', 'FmtStackTrace'],
+                    disabled_roi_flags=['MAATrace', 'MAARangeFuser', 'MAAIndirect'], chunk_ticks=10**9)
+        data['context'].update(instrumentation=instrumentation, verifier=verify['checker'] if verify else None, repetitions=1)
         if request.get('protocol'):
             if not request.get('candidate') or not verify:
                 raise Failure('frozen simulation requires candidate identity and exact timed-binary verification')

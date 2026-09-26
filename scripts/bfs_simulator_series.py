@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run one bounded BFS simulator sample grid using public workflow commands.
 
-Created: 2026-09-25 (Eastern Time). A pilot accepts unchanged baselines only.
+Updated: 2026-09-26 (Eastern Time). A pilot accepts unchanged baselines only.
 A frozen series evaluates an already selected candidate; it never picks a
 strategy, freezes settings, retries a failure, or makes a gain claim.
 """
@@ -22,6 +22,16 @@ from swdb import artifacts, bfs_protocol, profile
 from swdb.store import Store
 from scripts.dx100_build import disk_usage_kib
 from scripts.bfs_process import interruption_signals, run_stage
+
+
+def select_verifier(requested, frozen):
+    """Use the frozen checker; selecting v2 for a pilot must be explicit."""
+    selected = frozen['settings']['correctness']['verifier'] if frozen else requested or 'dx100.bfs.verifier.v1'
+    if selected not in {'dx100.bfs.verifier.v1', 'dx100.bfs.verifier.v2'}:
+        raise ValueError('series requires a supported DX100 verifier')
+    if requested is not None and requested != selected:
+        raise ValueError('requested verifier differs from frozen protocol')
+    return selected
 
 
 def validate_diagnostic_build(build, candidate, implementation, model, roi, accelerated, frozen=None, role=None):
@@ -108,6 +118,8 @@ def main():
     parser.add_argument('--storage-gib', type=int, default=10)
     parser.add_argument('--batch-storage-gib', type=int, default=40)
     parser.add_argument('--verification-ticks', type=int, default=10**14)
+    parser.add_argument('--verifier', choices=('dx100.bfs.verifier.v1', 'dx100.bfs.verifier.v2'),
+                        help='explicit pilot checker; frozen series inherits its immutable checker')
     args = parser.parse_args()
     if socket.gethostname().split('.')[0] != 'mbit10':
         parser.error('this driver requires the mbit10 execution host')
@@ -117,7 +129,7 @@ def main():
         parser.error('protocol and protocol-role must be supplied together')
     limits = {'total_seconds': (1, 86400 if args.author_binary else 43200),
               'checkpoint_seconds': (1, 3600), 'run_seconds': (1, 14400 if args.author_binary else 3600),
-              'diagnostic_seconds': (180, 600), 'memory_gib': (1, 48 if args.author_binary else 32),
+              'diagnostic_seconds': (180, 600), 'memory_gib': (1, 48),
               'storage_gib': (1, 15 if args.author_binary else 10),
               'batch_storage_gib': (1, 60 if args.author_binary else 40),
               'verification_ticks': (1, 10**15)}
@@ -188,6 +200,8 @@ def main():
         path = folder / (value['id'] + '.request.json')
         path.write_text(json.dumps(value, indent=2) + '\n')
         rest = ['--runs-dir', runs, '--lane', args.lane] if execute else []
+        if command == 'dx100-profile':
+            rest = ['--runs-dir', runs]
         return call(command, path, *rest, timeout=timeout)
 
     save()
@@ -197,6 +211,7 @@ def main():
         implementation = call('get', candidate['implementation'])
         workload = call('get', args.workload)
         frozen = call('get', args.protocol) if args.protocol else None
+        verifier = select_verifier(args.verifier, frozen)
         expected_artifact = artifacts.identify(artifacts.source_root(Store(args.records), implementation))
         validate_selection(candidate, source, implementation, workload, frozen, args.protocol_role, args.author_binary, expected_artifact)
         model = call('get', args.build_evaluation)
@@ -268,10 +283,12 @@ def main():
                         'simulator': {key: binaries['gem5.opt'][key] for key in ('path', 'sha256')},
                         'workload': {'id': workload['id'], 'source': vertex, 'representation': graph},
                         'configuration': configuration,
-                        'verification': {'checker': 'dx100.bfs.verifier.v1', 'max_ticks': args.verification_ticks,
+                        'verification': {'checker': verifier, 'max_ticks': args.verification_ticks,
                                          'coverage': args.accelerated},
                         'budget': {'total_seconds': total_seconds, 'checkpoint_seconds': checkpoint_seconds,
                                    'run_seconds': run_seconds, 'memory_gib': args.memory_gib, 'storage_gib': args.storage_gib}}
+                    if verifier == 'dx100.bfs.verifier.v2':
+                        payload['verification']['post_roi_trace'] = 'SyscallBase'
                     if compiled: payload['candidate_build'] = compiled['id']
                     if (position, treatment) in checkpoints:
                         payload['checkpoint_manifest'] = checkpoints[position, treatment]

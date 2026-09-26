@@ -106,7 +106,10 @@ def main():
     def request(command, payload, *, timeout=120, execute=False):
         path = folder / (payload['id'] + '.request.json')
         path.write_text(json.dumps(payload, indent=2) + '\n')
-        return call(command, path, *(['--runs-dir', runs, '--lane', args.lane] if execute else []),
+        options = ['--runs-dir', runs, '--lane', args.lane] if execute else []
+        if command == 'dx100-profile':
+            options = ['--runs-dir', runs]
+        return call(command, path, *options,
                     timeout=timeout, retained_execution=payload['id'] if execute else None)
 
     save()

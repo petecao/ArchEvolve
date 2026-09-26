@@ -1,11 +1,29 @@
 # BFS baseline and reference pilot plan
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 
 This plan fixes the permitted calibration scope before candidate performance
 assessment. It is dependent preparation for Ticket 15; no empirical protocol is
 frozen by this document, and no calibration gate is accepted without its evidence.
+
+Resource-plan revision 2, before any candidate performance assessment: new
+simulator calibration requests may explicitly select 48 GiB sampled host RSS.
+The retained 32 GiB bring-up failure and the separately bounded a6 feasibility
+run justify this host-only limit: [a6's existing receipt](observations/dx100-smoke-a6.json)
+records 33,719,536 KiB peak RSS (about 32.16 GiB) even on the tiny input. The
+model's cache-statistics allocation dominates this cost. This does not change
+the modeled 16 GiB guest memory, binaries, ROI, graph selection, repetition
+count, output limit, or old outcomes. A 48 GiB request requires the existing
+conservative 52 GiB per-node and 64 GiB global available-memory gates before
+dispatch; a released lease alone is insufficient. No further automatic memory
+increase is authorized by this revision.
+
+The original 12-hour wall deadline remains **2026-09-26 05:56:38 ET**, measured
+conservatively from the first plan commit at 2026-09-25 17:56:38 ET, including
+idle and engineering time. A new driver or resource-plan revision does not
+restart that clock. Preserve incomplete calibration if this deadline prevents
+the required baseline/reference observations.
 
 ## Permitted artifacts and questions
 
@@ -74,7 +92,7 @@ processes. Source/builds remain under `/data1/yanruj`; raw outputs use the recor
   checkpoints. This pre-execution choice avoids redundant guest serialization
   after the tiny checkpoint cost was observed; it does not reuse ROI measurements.
   Each checkpoint or restored traversal
-  gets at most 3,600 host seconds, 32 GiB sampled host RSS, and 10 GiB retained output;
+  gets at most 3,600 host seconds, 48 GiB sampled host RSS, and 10 GiB retained output;
   predeclare a bounded post-ROI verification tick allowance separately. At most
   one diagnosed rerun per failed configuration. Total calibration wall budget is
   12 hours across the two lanes, excluding the bounded model build.

@@ -1,4 +1,4 @@
-"""Public graph, freeze, and comparison workflows. Created 2026-09-25.
+"""Public graph, freeze, and comparison workflows. Updated 2026-09-26.
 
 External compiler and simulator-shaped records are explicit contract fixtures.
 Their durations never establish experimental performance.
@@ -221,7 +221,8 @@ def test_frozen_baseline_dispatch_rejects_a_rewritten_source_before_build(protoc
 
 @pytest.mark.parametrize("fault", ["different-source", "different-roi", "different-target", "different-threads",
                                    "unverified", "missing-timing", "wrong-binary", "different-graph", "pre-freeze",
-                                   "host-time", "simulated-time", "missing-binding", "promoted-fixture"])
+                                   "host-time", "simulated-time", "missing-binding", "promoted-fixture",
+                                   "wrong-checker", "missing-checker", "contradictory-checker"])
 def test_incompatible_evaluations_retain_explicit_rejection(protocol_setup, tmp_path, fault):
     records, _, _, _, evaluations, comparison = protocol_setup
     candidate = copy.deepcopy(evaluations["candidate"])
@@ -238,6 +239,9 @@ def test_incompatible_evaluations_retain_explicit_rejection(protocol_setup, tmp_
     elif fault == "host-time": candidate["timing"][0]["roi"] = "simulator-host-cost"
     elif fault == "simulated-time": candidate["timing"][0].update(basis="simulated", quantity="simulated_roi_seconds")
     elif fault == "missing-binding": candidate["context"].pop("protocol_binding")
+    elif fault == "wrong-checker": candidate["correctness"]["checks"][0]["verifier"] = "another.verifier"
+    elif fault == "missing-checker": candidate["correctness"]["checks"][0].pop("verifier")
+    elif fault == "contradictory-checker": candidate["correctness"]["checks"][0]["checker"] = "another.verifier"
     else:
         candidate["evidence_kind"] = "execution"
         for timing in candidate["timing"]: timing["evidence_kind"] = "execution"

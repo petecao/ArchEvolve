@@ -1,4 +1,4 @@
-"""Simulator orchestration selection guards; no simulator evidence. Updated: 2026-09-25."""
+"""Simulator orchestration selection guards; no simulator evidence. Updated: 2026-09-26."""
 import copy
 import importlib.util
 import sys
@@ -195,3 +195,18 @@ def test_reused_diagnostic_must_match_source_and_frozen_collector(selection):
     changed['context']['diagnostic']['regions'][0]['id'] = 'new-selected'
     with pytest.raises(ValueError, match='frozen region correspondence/collector'):
         check(changed)
+
+
+def test_checker_selection_never_silently_promotes_legacy_evidence(selection):
+    client = selection[0]
+    v1, v2 = 'dx100.bfs.verifier.v1', 'dx100.bfs.verifier.v2'
+    assert client.select_verifier(None, None) == v1
+    assert client.select_verifier(v2, None) == v2
+    for checker in (v1, v2):
+        frozen = {'settings': {'correctness': {'verifier': checker}}}
+        assert client.select_verifier(None, frozen) == checker
+        assert client.select_verifier(checker, frozen) == checker
+        with pytest.raises(ValueError, match='differs from frozen'):
+            client.select_verifier(v1 if checker == v2 else v2, frozen)
+    with pytest.raises(ValueError, match='supported DX100'):
+        client.select_verifier(None, {'settings': {'correctness': {'verifier': 'unknown'}}})
