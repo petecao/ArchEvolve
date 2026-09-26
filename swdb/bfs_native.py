@@ -66,6 +66,26 @@ def _seconds(value, name):
     return float(value)
 
 
+def observation_bytes(path, limit, label):
+    """Bind an observation hash to exactly the bounded bytes being checked."""
+    path = Path(path)
+    if not path.is_file() or path.is_symlink() or path.stat().st_size > limit:
+        raise StageFailure("missing_observation", f"{label} missing, unsafe, or oversized")
+    with path.open("rb") as handle:
+        raw = handle.read(limit + 1)
+    if len(raw) > limit:
+        raise StageFailure("missing_observation", f"{label} exceeds its byte bound")
+    return raw, hashlib.sha256(raw).hexdigest()
+
+
+def json_observation(path, limit, label):
+    raw, digest = observation_bytes(path, limit, label)
+    value = json.loads(raw)
+    if not isinstance(value, dict):
+        raise StageFailure("missing_observation", f"{label} must be a JSON object")
+    return value, digest
+
+
 def canonical_graph(workload):
     """Validate and normalize a bounded graph without relying on a candidate loader.
 
@@ -488,6 +508,8 @@ def run(args):
             raise Failure(f"current host {host!r} differs from machine {machine['hostname']!r}")
         if host == "mbit10" and not profile.lane_required(machine):
             raise Failure("mbit10 evaluations cannot disable socket-lane policy")
+        if host == "mbit10" and threads > 16:
+            raise Failure("mbit10 evaluations permit at most 16 threads per socket job")
         lane = profile._verified_lane(machine, getattr(args, "lane", None))
         available_cpus = len(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else os.cpu_count()
         if available_cpus is not None and threads > available_cpus:
@@ -600,10 +622,9 @@ def run(args):
                 session.execute("execution", [str(binary), str(graph_path), str(source), str(output)],
                                 budget["run_seconds"], env, repetition=repetition, source_position=position, source=source)
                 session.begin("correctness", repetition=repetition, source_position=position, source=source)
-                if not output.is_file() or output.is_symlink() or output.stat().st_size > canonical["num_vertices"] * 24 + 4096:
-                    raise StageFailure("missing_observation", "missing, unsafe, or oversized parent/timing output")
-                observed = json.loads(output.read_text())
-                if not isinstance(observed, dict) or observed.get("format") != "swdb.bfs.native.trial.v1":
+                observed, output_hash = json_observation(output, canonical["num_vertices"] * 24 + 4096,
+                                                        "parent/timing output")
+                if observed.get("format") != "swdb.bfs.native.trial.v1":
                     raise StageFailure("missing_observation", "native trial output has the wrong format")
                 if (type(observed.get("source")) is not int or observed["source"] != source
                         or observed.get("roi") != ROI or type(observed.get("configured_threads")) is not int
@@ -615,7 +636,7 @@ def run(args):
                 observation = {"source": source, "source_position": position, "repetition": repetition,
                                "duration_s": duration, "roi": ROI, "basis": "measured", "quantity": "native_roi_wall_seconds",
                                "binary_sha256": data["build"]["binary_sha256"], "output": str(output),
-                               "output_sha256": artifacts.file_hash(output), "verified": False,
+                               "output_sha256": output_hash, "verified": False,
                                "evidence_kind": data["evidence_kind"]}
                 data["timing"].append(observation)
                 check = verify_parents(canonical["adjacency"], source, observed.get("parents"))

@@ -128,6 +128,21 @@ def evaluate(setup, mode="pass", **changes):
     return result, json.loads(result.stdout)
 
 
+def test_mbit10_rejects_more_than_sixteen_threads_before_lane_execution(evaluation_setup, monkeypatch):
+    from argparse import Namespace
+    from swdb import bfs_native
+    records, runs, request, _ = evaluation_setup
+    monkeypatch.setattr(bfs_native.socket, 'gethostname', lambda: 'mbit10')
+    def forbidden_lane(*args):
+        pytest.fail('an oversized thread request reached lane execution validation')
+    monkeypatch.setattr(bfs_native.profile, '_verified_lane', forbidden_lane)
+    result = bfs_native.run(Namespace(records=records.path, runs_dir=runs, db=None,
+        file=request(machine='mbit10', threads=17), lane='mbit10-evaluation-node1'))
+    assert result['outcome']['state'] == 'failed'
+    assert 'at most 16 threads' in result['outcome']['reason']
+    assert result['timing'] == [] and result['correctness']['state'] == 'unverified'
+
+
 def assert_process_gone(pid):
     until = time.monotonic() + 2
     while time.monotonic() < until:

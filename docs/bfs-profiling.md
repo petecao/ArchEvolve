@@ -53,6 +53,10 @@ binaries live there; collector logs and observation files remain in `--runs-dir`
 The diagnostic `load_average` is sampled for this profile; `primary_load_average`
 retains the timed evaluation's original host-load observation. Both region and
 memory collectors honor the requested repetitions and ordered traversal sources.
+Parent vectors, region counters, and Callgrind summaries are parsed and hashed
+from one bounded byte buffer per observation. Each execution and its metric rows
+reuse that captured identity; a later file replacement cannot redefine the bytes
+that were checked. Callgrind files have a 64 MiB collection/parser bound.
 An additive `post_collection_audit` can invalidate a metric family while retaining
 the exact original observations and raw hashes. An audit with `scope: dynamic_memory`
 and `state: invalid` prevents those observations from satisfying package completeness;

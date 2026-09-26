@@ -79,8 +79,10 @@ and records. On mbit10 it must be under `/data1/yanruj` and defaults to
 there; graph inputs, logs, and result files remain in `--runs-dir`.
 The host, lane, source, binary, and executable capabilities are verified rather
 than accepted from request labels. Timeout values must be positive and finite;
-repetitions and thread count must be positive integers, excluding booleans. Instead
-of inline `graph`, `workload` may name an absolute JSON `graph_file` plus its
+repetitions and thread count must be positive integers, excluding booleans.
+On mbit10, a socket job is limited to sixteen threads even though its affinity
+includes both hardware threads of each core.
+Instead of inline `graph`, `workload` may name an absolute JSON `graph_file` plus its
 `graph_sha256`; that file contains the same vertex/edge mapping. A graph can instead
 provide `adjacency`, with exactly one sorted, distinct, in-range neighbor list per
 vertex, no self loops, and exact symmetry when undirected. It cannot also provide
@@ -113,6 +115,10 @@ ordered-source identity even when the same source appears repeatedly. The
 `quantity` is `native_roi_wall_seconds` for this backend. The `checks` array under `correctness`
 contains the verdict and graph/binary/result identity for every checked trial;
 its overall `state` remains unverified when later trials are interrupted.
+Graph JSON and native parent observations are hashed from the same bounded byte
+buffer supplied to the parser. The retained output identity therefore refers to
+the checked bytes even if the external file changes later; subsequent retrieval
+can detect that change by rehashing the file.
 
 Keep implementation narrow: `swdb/bfs_native.py` orchestrates stages;
 `tools/bfs_native/driver.cc.in` holds the protected wrapper; and a verifier helper

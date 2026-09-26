@@ -30,10 +30,15 @@ METRICS = {
 }
 
 
-def parse_callgrind(path, *, require_totals=False):
+def parse_callgrind(path, *, require_totals=False, raw=None):
     """Read collector-produced event totals, not source-derived estimates."""
+    if raw is None:
+        try:
+            raw, _ = native.observation_bytes(path, 64*1024*1024, "Callgrind output")
+        except native.StageFailure as error:
+            raise Failure(str(error)) from None
     events, summary, totals = None, None, None
-    for line in Path(path).read_text(errors="replace").splitlines():
+    for line in raw.decode(errors="replace").splitlines():
         if line.startswith("events:"):
             events = line.split()[1:]
         elif line.startswith(("summary:", "totals:")):
@@ -117,9 +122,7 @@ def _discovery_settings(request, compiler, flags, includes, macro_log):
 
 
 def _trial_output(output, graph, source, threads):
-    if not output.is_file() or output.is_symlink() or output.stat().st_size > graph["num_vertices"]*24+4096:
-        raise native.StageFailure("missing_observation", "diagnostic parent output missing or unsafe")
-    value = json.loads(output.read_text())
+    value, digest = native.json_observation(output, graph["num_vertices"]*24+4096, "diagnostic parent output")
     if (value.get("format") != "swdb.bfs.native.trial.v1" or type(value.get("source")) is not int
             or value["source"] != source or value.get("roi") != native.ROI
             or type(value.get("configured_threads")) is not int or value["configured_threads"] != threads):
@@ -129,24 +132,24 @@ def _trial_output(output, graph, source, threads):
     duration = value.get("duration_s")
     if isinstance(duration, bool) or not isinstance(duration, (float, int)) or not math.isfinite(duration) or duration <= 0:
         raise native.StageFailure("missing_observation", "diagnostic duration missing or invalid")
-    return {"correctness": check, "output_sha256": artifacts.file_hash(output), "diagnostic_wall_seconds": duration}
+    return {"correctness": check, "output_sha256": digest, "diagnostic_wall_seconds": duration}
 
 
 def _region_observations(path, regions):
-    if not path.is_file() or path.is_symlink() or path.stat().st_size > len(regions)*256+4096:
-        raise native.StageFailure("missing_observation", "region counter output missing or unsafe")
-    value = json.loads(path.read_text())
-    if value.get("format") != "swdb.bfs.regions.v1" or value.get("clock") != "CLOCK_THREAD_CPUTIME_ID" or value.get("errors") != 0:
+    value, digest = native.json_observation(path, len(regions)*256+4096, "region counter output")
+    if (value.get("format") != "swdb.bfs.regions.v1" or value.get("clock") != "CLOCK_THREAD_CPUTIME_ID"
+            or type(value.get("errors")) is not int or value["errors"] != 0):
         raise native.StageFailure("missing_observation", "region clock or nested accounting failed")
     rows = value.get("regions")
     if not isinstance(rows, list) or len(rows) != len(regions):
         raise native.StageFailure("missing_observation", "region counter inventory differs")
     for index, row in enumerate(rows):
-        if (type(row.get("index")) is not int or row["index"] != index or any(type(row.get(key)) is not int or row[key] < 0
+        if (not isinstance(row, dict) or type(row.get("index")) is not int or row["index"] != index or any(type(row.get(key)) is not int or row[key] < 0
                 for key in ("inclusive_ns", "exclusive_ns", "invocations"))
-                or row["exclusive_ns"] > row["inclusive_ns"]):
+                or row["exclusive_ns"] > row["inclusive_ns"]
+                or (row["invocations"] == 0 and (row["inclusive_ns"] or row["exclusive_ns"]))):
             raise native.StageFailure("missing_observation", "invalid region counters")
-    return rows
+    return rows, digest
 
 
 def _wrapper(source, prefix, start, end, after):
@@ -313,7 +316,7 @@ def run(args):
                     raise Failure("diagnostic binary or graph changed")
                 session.execute("region_execution", [str(binary), str(graph_path), str(source_id), str(output)], budget["run_seconds"], env)
                 check = _trial_output(output, graph, source_id, threads)
-                counters = _region_observations(Path(str(output)+".regions.json"), rows)
+                counters, counter_hash = _region_observations(Path(str(output)+".regions.json"), rows)
                 for row, observed in zip(rows, counters):
                     row["metrics"]["inclusive_thread_cpu_seconds"] += observed["inclusive_ns"] / 1e9
                     row["metrics"]["exclusive_thread_cpu_seconds"] += observed["exclusive_ns"] / 1e9
@@ -325,7 +328,7 @@ def run(args):
                             if r.get("function_region") == function["id"])
                 data["executions"].append({"kind": "regions", "source": source_id, "source_position": position,
                     "repetition": repetition, "binary_sha256": binary_hash, "output": str(output),
-                    "region_output": str(output)+".regions.json", "region_output_sha256": artifacts.file_hash(str(output)+".regions.json"), **check})
+                    "region_output": str(output)+".regions.json", "region_output_sha256": counter_hash, **check})
                 session.save()
         if request.get("correspondence"):
             prior = store.get(request["correspondence"], "region_profile")
@@ -399,16 +402,17 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
         for file in sorted(folder.glob(raw.name+"*")):
             # Only the explicit client dump defines the ROI. Stopping
             # instrumentation can reset global accounting before final exit.
-            if "desc: Trigger: Client Request" not in file.read_text(errors="replace"):
+            content, raw_hash = native.observation_bytes(file, 64*1024*1024, "Callgrind output")
+            if b"desc: Trigger: Client Request" not in content:
                 continue
-            events = parse_callgrind(file, require_totals=True)
-            if events.get("Ir", 0): nonzero.append((file, events))
+            events = parse_callgrind(file, require_totals=True, raw=content)
+            if events.get("Ir", 0): nonzero.append((file, events, raw_hash))
         if len(nonzero) != 1:
             raise native.StageFailure("missing_observation", "expected exactly one nonempty explicit Callgrind ROI dump")
-        file, events = nonzero[0]
+        file, events, raw_hash = nonzero[0]
         execution = {"kind": "memory", "source": source_id, "source_position": position, "repetition": repetition,
             "binary_sha256": binary_hash, "output": str(output), "raw_artifact": str(file),
-            "raw_sha256": artifacts.file_hash(file), "collector": collector, **check}
+            "raw_sha256": raw_hash, "collector": collector, **check}
         execution["counter_validation"] = {"state": "valid", "method": "swdb.callgrind.roi.v1",
             "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump"}
         data["executions"].append(execution)
@@ -420,7 +424,7 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
                 "collector": collector, "artifact_sha256": binary_hash, "source_artifact_sha256": data["context"]["candidate_sha256"],
                 "counter_validation": execution["counter_validation"],
                 "execution": {"source": source_id, "source_position": position, "repetition": repetition},
-                "raw_artifact": str(file), "raw_sha256": artifacts.file_hash(file),
+                "raw_artifact": str(file), "raw_sha256": raw_hash,
                 "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof"})
         session.save()
 

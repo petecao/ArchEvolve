@@ -3,6 +3,7 @@
 Local toy compilation is integration evidence, not native BFS acceptance.
 """
 import json
+import hashlib
 import shutil
 import subprocess
 from pathlib import Path
@@ -16,6 +17,70 @@ from test_proposals import proposal_setup
 from swdb.bfs_discovery import discover, instrument
 from swdb.bfs_profiling import parse_callgrind, _discovery_settings
 from swdb.cli import Failure
+
+
+def test_diagnostic_parent_hash_identifies_the_checked_bytes(tmp_path, monkeypatch):
+    from swdb.bfs_profiling import _trial_output
+    path = tmp_path/'parents.json'
+    payload = json.dumps({'format':'swdb.bfs.native.trial.v1', 'source':0,
+        'roi':'bfs.complete_call.v1', 'configured_threads':1, 'duration_s':0.1,
+        'parents':[0,0]}).encode()
+    path.write_bytes(payload)
+    original_open = Path.open
+    reads = 0
+    def replace_between_reads(self, mode='r', *args, **kwargs):
+        nonlocal reads
+        if self == path and 'r' in mode:
+            reads += 1
+            if reads == 2:
+                with original_open(path, 'wb') as out: out.write(b'changed after validation')
+        return original_open(self, mode, *args, **kwargs)
+    monkeypatch.setattr(Path, 'open', replace_between_reads)
+    observed = _trial_output(path, {'num_vertices':2,'adjacency':[[1],[]]}, 0, 1)
+    assert observed['correctness']['passed']
+    assert observed['output_sha256'] == hashlib.sha256(payload).hexdigest()
+
+
+def test_captured_region_and_callgrind_outputs_keep_exact_byte_identity(tmp_path):
+    from swdb.bfs_native import observation_bytes, json_observation, StageFailure
+    from swdb.bfs_profiling import _region_observations
+    path = tmp_path/'regions.json'
+    row = {'index':0,'inclusive_ns':8,'exclusive_ns':5,'invocations':2}
+    payload = json.dumps({'format':'swdb.bfs.regions.v1','clock':'CLOCK_THREAD_CPUTIME_ID',
+                          'errors':0,'regions':[row]}).encode()
+    path.write_bytes(payload)
+    rows, digest = _region_observations(path, [{}])
+    assert rows == [row] and digest == hashlib.sha256(payload).hexdigest()
+    path.write_text('[]')
+    with pytest.raises(StageFailure, match='JSON object'):
+        json_observation(path, 64, 'test output')
+    path.write_bytes(b'x'*65)
+    with pytest.raises(StageFailure, match='oversized'):
+        observation_bytes(path, 64, 'test output')
+    raw = tmp_path/'callgrind.out'
+    payload = b'events: Ir Dr Dw\nsummary: 100 20 10\ntotals: 100 20 10\n'
+    raw.write_bytes(payload)
+    captured, digest = observation_bytes(raw, 1024, 'Callgrind')
+    raw.write_text('changed after capture')
+    assert parse_callgrind(raw, require_totals=True, raw=captured) == {'Ir':100,'Dr':20,'Dw':10}
+    assert digest == hashlib.sha256(payload).hexdigest()
+
+
+@pytest.mark.parametrize('errors,inclusive,exclusive,invocations,valid', [
+    (False, 0, 0, 0, False), (0, 1, 0, 0, False),
+    (0, 1, 1, 0, False), (0, 0, 0, 1, True), (0, 0, 0, 0, True),
+])
+def test_region_counter_runtime_invariants(tmp_path, errors, inclusive, exclusive, invocations, valid):
+    from swdb.bfs_native import StageFailure
+    from swdb.bfs_profiling import _region_observations
+    path = tmp_path/'regions.json'
+    row = {'index':0, 'inclusive_ns':inclusive, 'exclusive_ns':exclusive, 'invocations':invocations}
+    path.write_text(json.dumps({'format':'swdb.bfs.regions.v1','clock':'CLOCK_THREAD_CPUTIME_ID',
+                               'errors':errors, 'regions':[row]}))
+    if valid:
+        assert _region_observations(path, [{}])[0] == [row]
+    else:
+        with pytest.raises(StageFailure): _region_observations(path, [{}])
 
 
 def compiler_inventory():
