@@ -51,6 +51,13 @@ a workload, protocol, or comparison result. A changed version links its predeces
 and names existing comparisons that need new evidence. These checks protect the
 workflow's history; they are not a signature against a maintainer rewriting all
 authoritative records and evidence.
+Baseline-role dispatch and comparison also resolve the explicitly selected
+implementation's application source and full manifest. The candidate and source
+snapshot must match those bytes and their application, function, and revision.
+An ancestry ID or rematerializing rewritten code with `baseline-candidate` does
+not establish that identity. A separately registered implementation can still be
+selected when its own source context matches. Ordinary historical `get` retrieval
+does not require remote source files or rewrite recorded comparison outcomes.
 The public `add` operation rejects these two sealed kinds: workload registration
 must parse the real representations, and protocol creation must run the freeze
 checks. The normal writer still persists both operations as authoritative YAML.

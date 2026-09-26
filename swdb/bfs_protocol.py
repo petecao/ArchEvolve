@@ -416,6 +416,22 @@ def verified_native_lane(value, machine):
     return lane
 
 
+def validate_baseline_source(store, candidate):
+    """Bind the baseline bytes to its selected catalog implementation, not ancestry."""
+    selected = _get(store, candidate.get("implementation"), "implementation")
+    source = _get(store, candidate.get("source_snapshot"), "source_snapshot")
+    context = store.source_context(selected)
+    _fail(source.get("implementation") == selected["id"]
+          and all(row.get("context", {}).get("application") == context["application"]
+                  and row.get("context", {}).get("function") == context["function"]
+                  and row.get("context", {}).get("source", {}).get("commit") == context["source"]["commit"]
+                  for row in (candidate, source)), "baseline differs from the selected implementation source context")
+    expected = artifacts.identify(artifacts.source_root(store, selected))
+    _fail(all(row.get("artifact", {}).get("sha256") == expected["sha256"]
+              and row.get("artifact", {}).get("files") == expected["files"] for row in (candidate, source)),
+          "baseline artifact differs from the selected implementation source")
+
+
 def validate_protocol_for_evaluation(store, request, candidate, actual_build=None, actual_lane=None, actual_instrumentation=None):
     if request.get("protocol") is None:
         return None
@@ -446,6 +462,8 @@ def validate_protocol_for_evaluation(store, request, candidate, actual_build=Non
         _fail(verified_native_lane(actual_lane, machine) == target["configuration"]["lane"],
               "verified socket lane differs from frozen target")
     _fail(_get(store, candidate["implementation"], "implementation")["kernel"] == settings["kernel"], "candidate kernel differs from protocol")
+    if role == "baseline":
+        validate_baseline_source(store, candidate)
     if actual_build is not None:
         expected = settings["builds"][role]
         _fail(all(actual_build.get(key) == expected[key] for key in ("compiler", "flags", "adapter")), "actual build differs from frozen settings")
@@ -513,6 +531,8 @@ def validate_protocol_for_simulation(store, request, candidate, *, actual_target
     _fail(artifacts.digest(actual_instrumentation) == artifacts.digest(settings["instrumentation"][role]),
           "actual simulator instrumentation differs from frozen treatment")
     _fail(_get(store, candidate["implementation"], "implementation")["kernel"] == settings["kernel"], "simulation candidate kernel differs")
+    if role == "baseline":
+        validate_baseline_source(store, candidate)
     binding = {"protocol": frozen["id"], "frozen_sha256": fingerprint, "workload_id": wid,
                "workload_sha256": workload["identity_sha256"], "role": role, "frozen_at": frozen["frozen_at"],
                "bound_at": _now(), "settings_sha256": artifacts.digest(settings)}
@@ -681,6 +701,8 @@ def _evaluation_samples(store, evaluation, protocol, role):
           and candidate["artifact"]["sha256"] == context.get("candidate_sha256"), "timed candidate identity differs from source artifact")
     implementation = _get(store, candidate["implementation"], "implementation")
     _fail(implementation["kernel"] == settings["kernel"], "evaluation realizes a different kernel")
+    if role == "baseline":
+        validate_baseline_source(store, candidate)
     workload = context.get("workload", {})
     wid = workload.get("id")
     _fail(wid in protocol["workload_identities"] and binding.get("workload_id") == wid, "evaluation workload is outside protocol")

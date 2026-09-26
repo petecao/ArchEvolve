@@ -129,15 +129,18 @@ arithmetic uses integer pages and is converted to KiB only afterward:
   discounted result to be **at least 52 GiB**, and global `MemAvailable` to be
   **at least 64 GiB**, using exact integer thresholds without rounding up.
 
-At 21:30:22 ET, node 1 had 30.6055 GiB free, 2.1838 GiB file LRU and
-20.7224 GiB reclaimable slab. Its low-water sum was 0.1062 GiB and calculated
-reserved memory 0.1692 GiB. The algorithm produced 55,710,924 KiB (53.1301 GiB),
-or **54,662,348 KiB (52.1301 GiB)** after the extra discount. The selected-socket
+The retained 21:37:33 ET preclaim receipt gives node 1's 30.3888 GiB free,
+2.4751 GiB clean file LRU and 20.7223 GiB reclaimable slab. Its low-water sum
+was 111,484 KiB (including an empty Movable zone's 32-page watermark) and
+reserved memory 177,400 KiB. The algorithm produced 55,788,836 KiB (53.2044 GiB),
+or **54,740,260 KiB (52.2044 GiB)** after the extra discount. This replaces the
+earlier illustrative normal-zone-only arithmetic; the executable helper has
+always included every zone. The selected-socket
 threshold leaves 4 GiB above the 48 GiB process-group limit in addition to that
 1 GiB discount and kernel reserves. These values illustrate the algorithm;
 they are not authorization to reuse an old capacity observation.
 
-The following 30-second read-only observation showed zero increases in swap,
+The 21:30:22–21:30:52 ET read-only observation showed zero increases in swap,
 allocation stalls, direct/kswapd page scans or steals, slab scans and OOM counts.
 Memory PSI averages were zero; the full-stall cumulative counter increased by
 62 microseconds. This quiet interval does not prove reclaim will succeed during

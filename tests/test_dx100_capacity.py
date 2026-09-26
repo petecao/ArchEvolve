@@ -19,12 +19,15 @@ def zone(low=0, high=0, protection=0):
 
 
 def test_recorded_node_values_produce_exact_discounted_estimate():
-    result = capacity(node(32092188, 2289840, 21729008), zone(27839, 44350),
-                      'MemAvailable: 84193092 kB', 1, 4096)
+    # The real preclaim receipt includes an empty Movable zone with a nonzero
+    # low watermark; Linux includes it in the low-water sum, but not reserves.
+    zones = zone(27839, 44350) + 'Node 1, zone Movable\n low 32\n high 32\n managed 0\n protection: (0, 0, 0)\n'
+    result = capacity(node(31864936, 2597556, 21728952, dirty=2240), zones,
+                      'MemAvailable: 112322496 kB', 1, 4096)
     assert result['reserved_kib'] == 177400
-    assert result['low_watermarks_kib'] == 111356
-    assert result['before_uncertainty_discount_kib'] == 55710924
-    assert result['estimated_available_kib'] == 54662348
+    assert result['low_watermarks_kib'] == 111484
+    assert result['before_uncertainty_discount_kib'] == 55788836
+    assert result['estimated_available_kib'] == 54740260
     assert result['eligible']
 
 

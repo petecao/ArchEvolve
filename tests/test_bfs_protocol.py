@@ -109,10 +109,15 @@ def _seed_protocol(evaluation_setup, tmp_path):
     settings = _settings(base, workload)
     protocol_request = {"message_version": "1.0", "id": "fixture-policy", "version": 1, "settings": settings}
     protocol = _command(records, "freeze-protocol", _payload(tmp_path, "freeze", protocol_request))
+    baseline = records.swdb('baseline-candidate', 'test-source', '--id', 'protocol-source-baseline',
+                            '--runs-dir', runs, '--format', 'json')
+    assert baseline.returncode == 0, baseline.stderr
+    baseline_id = json.loads(baseline.stdout)['id']
     evaluations = {}
     for role, duration in (("baseline", "0.05"), ("candidate", "0.025")):
         file = evaluate_request(id=f"eval-{role}", protocol=protocol["id"], protocol_role=role,
-                                sources=request["sources"], repetitions=5, workload={"id": workload["id"]})
+                                sources=request["sources"], repetitions=5, workload={"id": workload["id"]},
+                                candidate=baseline_id if role == 'baseline' else base['candidate'])
         result = records.swdb("evaluate", file, "--runs-dir", runs, "--format", "json", env={"SWDB_PROTOCOL_DURATION": duration})
         assert result.returncode == 0, result.stderr + result.stdout
         evaluations[role] = json.loads(result.stdout)
@@ -169,6 +174,49 @@ def test_frozen_native_comparison_is_fixture_not_gain(protocol_setup, tmp_path):
     later = records.swdb("get", result["id"], "--chain", "--format", "json")
     assert later.returncode == 0, later.stderr
     assert json.loads(later.stdout)["records"][result["id"]] == result
+
+
+@pytest.mark.parametrize('rematerialize', [False, True])
+def test_rewritten_candidate_cannot_impersonate_selected_starting_baseline(protocol_setup, tmp_path, rematerialize):
+    records, _, protocol, _, evaluations, comparison = protocol_setup
+    changed = records.read('candidates/test-proposal.candidate-1.yaml')
+    original = records.read('source_snapshots/test-source.yaml')
+    assert changed['artifact']['sha256'] != original['artifact']['sha256']
+    if rematerialize:
+        source = {**copy.deepcopy(original), 'id': 'rewritten-source', 'artifact': copy.deepcopy(changed['artifact']),
+                  'context': copy.deepcopy(changed['context'])}
+        _add_record(records, tmp_path, source)
+        result = records.swdb('baseline-candidate', source['id'], '--id', 'rematerialized-rewrite',
+                              '--runs-dir', tmp_path / 'rematerialized', '--format', 'json')
+        assert result.returncode == 0, result.stderr
+        changed = json.loads(result.stdout)
+        assert changed['artifact_role'] == 'source_baseline'
+    baseline = _fixture_rebind(evaluations['baseline'], protocol, 'baseline', 'rewritten-as-baseline')
+    baseline.update(candidate=changed['id'], source_snapshot=changed['source_snapshot'])
+    if changed.get('proposal'):
+        baseline['proposal'] = changed['proposal']
+    baseline['context']['candidate_sha256'] = changed['artifact']['sha256']
+    _add_record(records, tmp_path, baseline)
+    comparison.update(id='reject-rewritten-baseline', baseline_evaluation=baseline['id'])
+    result = _command(records, 'compare-evaluations', _payload(tmp_path, 'rewritten-baseline', comparison), succeeds=False)
+    assert result['decision']['state'] == 'rejected'
+    assert 'selected implementation source' in str(result['decision']['reasons'])
+    assert result['metrics'] == {} and not result['gain_claim']
+    later = records.swdb('get', result['id'], '--format', 'json')
+    assert json.loads(later.stdout)['decision'] == result['decision']
+
+
+def test_frozen_baseline_dispatch_rejects_a_rewritten_source_before_build(protocol_setup, tmp_path):
+    records, _, _, _, evaluations, _ = protocol_setup
+    request = copy.deepcopy(evaluations['candidate']['request'])
+    request.update(id='dispatch-rewritten-baseline', protocol_role='baseline')
+    result = records.swdb('evaluate', _payload(tmp_path, 'bad-baseline-dispatch', request),
+                          '--runs-dir', tmp_path / 'dispatch', '--format', 'json')
+    assert result.returncode == 1, result.stderr
+    retained = json.loads(result.stdout)
+    assert 'selected implementation source' in retained['outcome']['reason']
+    assert retained['timing'] == [] and all(row['stage'] != 'build' for row in retained['stages'])
+    assert records.swdb('get', retained['id'], '--format', 'json').returncode == 0
 
 
 @pytest.mark.parametrize("fault", ["different-source", "different-roi", "different-target", "different-threads",
@@ -309,7 +357,7 @@ def test_comparator_differs_from_candidate_source_ancestor(protocol_setup, tmp_p
     snapshot = records.read("source_snapshots/test-source.yaml")
     snapshot.update(id="fixture-reference-source", implementation=implementation["id"])
     _add_record(records, tmp_path, snapshot)
-    baseline_candidate = records.read("candidates/test-proposal.candidate-1.yaml")
+    baseline_candidate = records.read("candidates/protocol-source-baseline.yaml")
     baseline_candidate.update(id="fixture-reference-candidate", implementation=implementation["id"], source_snapshot=snapshot["id"])
     _add_record(records, tmp_path, baseline_candidate)
     baseline = copy.deepcopy(evaluations["baseline"])

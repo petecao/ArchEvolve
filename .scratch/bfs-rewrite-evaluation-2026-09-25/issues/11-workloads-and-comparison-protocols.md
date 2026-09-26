@@ -86,3 +86,15 @@ another lane are rejected, while the complete receipt remains in each evaluation
 Four focused public freeze/comparison cases passed (101.47 seconds), including
 the dispatch binding check. Their metadata and times remain explicit fixtures;
 this correction establishes no empirical protocol or gain.
+
+Baseline identity correction 2026-09-25: a public regression reproduced a
+rewritten candidate being accepted as the unchanged selected implementation's
+baseline (an explicit fixture ratio of 2). Baseline-role native/simulator dispatch
+and comparison now require the selected catalog implementation's full application
+manifest, function, application, and revision identity. Merely retaining ancestry
+or rematerializing rewritten code as a source-baseline artifact is insufficient.
+Separately registered source baselines and ordinary offline record retrieval
+remain supported. The test seed now materializes a genuinely unchanged baseline
+through the public API. Protocol/aggregation checks passed 46 cases in 141.56
+seconds; dependent coverage/native-campaign/simulator-series checks passed 43 cases
+in 19.53 seconds. Fixtures verify rejection and comparison contracts only.
