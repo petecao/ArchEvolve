@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bounded, lane-confined DX100 BFS build helper. Updated: 2026-09-25.
+"""Bounded, lane-confined DX100 BFS build helper. Updated: 2026-09-26.
 
 Receipts are build evidence only. This helper never runs a BFS measurement.
 """
@@ -13,8 +13,11 @@ import platform
 import re
 import signal
 import subprocess
+import sys
 import time
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from swdb.processes import stop_group
 
 REVISION = "e4fc4afdf894f295442cef3604667a469fab8e62"
 
@@ -68,15 +71,7 @@ def group_rss_kib(pgid):
 
 
 def stop(process):
-    if process is not None and process.poll() is None:
-        try:
-            os.killpg(process.pid, signal.SIGTERM)
-            process.wait(timeout=10)
-        except subprocess.TimeoutExpired:
-            os.killpg(process.pid, signal.SIGKILL)
-            process.wait()
-        except ProcessLookupError:
-            process.wait()
+    stop_group(process, grace_seconds=10)
 
 
 def interrupted(signum, frame):

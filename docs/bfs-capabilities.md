@@ -1,7 +1,7 @@
 # BFS accelerator capability contract
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 
 `swdb capabilities dx100-e4fc4af-4c --format json` returns the selected hardware
 target and its supported operation records. These records describe the pinned
@@ -44,9 +44,12 @@ symbol. Empty declarations, unknown required operations, unsupported semantic
 claims, and identity conflicts remain unresolved. Expansion is bounded to
 128 entries and eight nested levels. No other wrapper fields are interpreted.
 
-`require_executable_backend: true` additionally requires a target marked built
-or verified with identified build evidence. The later evaluator must reopen
-and verify the exact artifacts before executing. `false` permits source-level
+`require_executable_backend: true` requires an identified `hardware_target`
+marked built or verified with identified build evidence, even when
+`required_operations` is empty or omitted. A missing or unknown target and a
+source-only target produce a retained unresolved capability outcome before
+candidate creation. The later evaluator must reopen and verify the exact
+artifacts before executing. `false` or an omitted flag permits source-level
 proposal work and does not bypass execution checks. For example, requiring
 `cpu_atomic: true` on the scatter operation is unresolved: neither the API
 name nor its optional returned old values establishes CPU CAS semantics.

@@ -1,6 +1,6 @@
 """Bounded instruction interpretation through an operator-selected provider.
 
-Updated: 2026-09-25. Providers return proposed edits; SWDB applies protections.
+Updated: 2026-09-26. Providers return proposed edits; SWDB applies protections.
 """
 
 import fnmatch
@@ -15,6 +15,7 @@ from pathlib import Path
 
 from swdb import artifacts, yamlio
 from swdb.cli import Failure
+from swdb.processes import stop_group
 
 OUTPUT_SCHEMA = {
     "type": "object", "additionalProperties": False,
@@ -149,26 +150,16 @@ def interpret(config, prompt, folder, remaining_s=None):
                 time.sleep(0.1)
             meta.update(state="completed" if child.returncode == 0 else "failed", returncode=child.returncode)
     except BaseException:
-        if child is not None:
-            try:
-                os.killpg(child.pid, signal.SIGTERM)
-            except ProcessLookupError:
-                pass
-            try:
-                child.wait(timeout=2)
-            except subprocess.TimeoutExpired:
-                try:
-                    os.killpg(child.pid, signal.SIGKILL)
-                except ProcessLookupError:
-                    pass
-                child.wait()
         meta.update(state="interrupted_or_timeout")
         raise
     finally:
-        for sig, handler in previous.items():
-            signal.signal(sig, handler)
-        meta["host_wall_s"] = time.monotonic() - started
-        (folder / "provider.json").write_text(json.dumps(meta, indent=2))
+        try:
+            stop_group(child, grace_seconds=2)
+        finally:
+            for sig, handler in previous.items():
+                signal.signal(sig, handler)
+            meta["host_wall_s"] = time.monotonic() - started
+            (folder / "provider.json").write_text(json.dumps(meta, indent=2))
     if child.returncode:
         raise Failure(f"rewrite provider exited {child.returncode}; retained {folder}")
     if (folder / "stdout.txt").stat().st_size > 10 * 1024 * 1024:

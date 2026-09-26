@@ -204,6 +204,24 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
             assert "exclusive_simulated_seconds" not in profile["regions"][1]["metrics"]
         assert bool(profile["dynamic_memory"]) == (mode not in {'missing-memory', 'pinned-region-only'})
         assert profile["executions"][0]["evidence_kind"] == "contract_fixture"
+        if mode in {'normal', 'diagnostic', 'diagnostic-outside-roi'}:
+            for kind in ('function', 'loop'):
+                queried = records.swdb('bfs-hotspots', profile['id'], '--kind', kind, '--format', 'json')
+                assert queried.returncode == 0, queried.stderr
+                ranked = json.loads(queried.stdout)
+                metric = 'inclusive_simulated_seconds' if mode == 'normal' else 'exclusive_simulated_seconds'
+                assert ranked['ranking']['metric'] == metric
+                assert ranked['ranking']['basis'] == 'simulated'
+                assert ranked['ranking']['quantity'] == 'simulated elapsed time'
+                assert ranked['evidence_kind'] == 'contract_fixture' and ranked['gain_claim'] is False
+                expected = [r for r in profile['regions'] if r['kind'] == kind and r['metrics'].get('invocations', 0) > 0]
+                assert ranked['regions'] == sorted(expected, key=lambda r: r['metrics'][metric], reverse=True)
+                assert all('thread_cpu' not in name for row in ranked['regions'] for name in row['metrics'])
+                if mode == 'normal':
+                    assert 'exclusivity is unavailable' in ranked['ranking']['attribution']
+                else:
+                    assert 'waits and thread overlap' in ranked['ranking']['scope']
+            assert json.loads(records.swdb('get', profile['id'], '--format', 'json').stdout) == profile
 
 
 @pytest.mark.parametrize('field,value', [

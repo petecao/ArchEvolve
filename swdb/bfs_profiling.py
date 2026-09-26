@@ -437,18 +437,45 @@ def query(args):
     requested = getattr(args, "kind", None)
     regions = [r for r in data["regions"] if (requested is None or r["kind"] == requested)
                and r.get("metrics", {}).get("invocations", 0) > 0]
-    metric = "exclusive_function_thread_cpu_seconds" if requested == "function" else "exclusive_thread_cpu_seconds"
-    regions.sort(key=lambda r: r["metrics"].get(metric, r["metrics"]["exclusive_thread_cpu_seconds"]), reverse=True)
+    simulated = (data.get("context", {}).get("basis") == "simulated"
+                 or any("inclusive_simulated_seconds" in r.get("metrics", {}) for r in data["regions"]))
+    if simulated:
+        request = data.get("request")
+        diagnostic = (isinstance(request, dict) and bool(request.get("diagnostic_evaluation"))) or any(
+            "exclusive_simulated_seconds" in r.get("metrics", {}) for r in data["regions"])
+        metric = "exclusive_simulated_seconds" if diagnostic else "inclusive_simulated_seconds"
+        ranking = {"basis": "simulated", "quantity": "simulated elapsed time",
+            "scope": ("accumulated per executing thread within the diagnostic ROI; includes waits and thread overlap"
+                      if diagnostic else "accumulated logged Start-to-Stop intervals inside observed traversal loops"),
+            "attribution": ("exclusive lexical scope; nested guarded intervals subtracted on the same thread"
+                            if diagnostic else "inclusive timer intervals; called work is included and exclusivity is unavailable")}
+    else:
+        metric = "exclusive_function_thread_cpu_seconds" if requested == "function" else "exclusive_thread_cpu_seconds"
+        # Older native profiles lack the function aggregate. Rank every row by
+        # the same available quantity rather than mixing it with lexical scope time.
+        if regions and any(metric not in r["metrics"] for r in regions):
+            metric = "exclusive_thread_cpu_seconds"
+        ranking = {"basis": "measured", "quantity": "thread CPU time",
+            "scope": "accumulated across diagnostic executions",
+            "attribution": ("exclusive function work including its loop scopes; separately guarded helpers excluded"
+                            if metric == "exclusive_function_thread_cpu_seconds" else "exclusive lexical source scope")}
+    unavailable = [r["id"] for r in regions if metric not in r["metrics"]]
+    regions = [r for r in regions if metric in r["metrics"]]
+    regions.sort(key=lambda r: r["metrics"][metric], reverse=True)
+    ranking.update(metric=metric, unit="seconds", unavailable=unavailable,
+        inclusive="nested source scopes overlap; do not sum inclusive values",
+        unexecuted="discovered but unexecuted scopes remain in the durable record")
     from swdb.profile_package import memory_observation_issues
     rejected, memory_reasons = memory_observation_issues(data, verify_raw=True)
     memory_rows = copy.deepcopy(data["dynamic_memory"])
     for index in rejected:
         memory_rows[index].update(recorded_available=memory_rows[index].get("available"), available=False,
                                  counter_validation={"state": "invalid", "reasons": memory_reasons})
+    evaluation = store.get(data.get("evaluation"), "evaluation") or {}
     return {"profile": data["id"], "evaluation": data.get("evaluation"), "candidate": data.get("candidate"),
+        "evidence_kind": evaluation.get("evidence_kind"),
         "context": data.get("context"), "outcome": data["outcome"], "regions": regions,
-        "ranking": {"metric": metric, "unit": "seconds", "scope": "accumulated across diagnostic executions",
-                    "inclusive": "nested source scopes overlap; do not sum inclusive values", "unexecuted": "discovered but unexecuted scopes remain in the durable record"},
+        "ranking": ranking,
         "correspondence": data.get("correspondence"), "dynamic_memory": memory_rows,
         "memory_validation": {"state": "invalid" if rejected else "consistent", "reasons": memory_reasons},
         "coverage": data.get("discovery"), "reasons": data["reasons"], "gain_claim": False}

@@ -3,6 +3,7 @@
 
 Created: 2026-09-25 (Eastern Time). This driver never freezes a protocol,
 submits a rewrite, compares candidates, or claims a gain.
+Updated: 2026-09-26 (Eastern Time).
 """
 import argparse
 import json
@@ -20,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from swdb import artifacts, profile
 from swdb.store import Store
+from swdb.processes import stop_group
 
 
 def main():
@@ -80,21 +82,12 @@ def main():
         with out.open('w') as stdout, err.open('w') as stderr:
             child = subprocess.Popen(argv, cwd=ROOT, stdout=stdout, stderr=stderr, start_new_session=True)
             try:
-                child.wait(timeout=min(timeout, remaining))
+                try:
+                    child.wait(timeout=min(timeout, remaining))
+                finally:
+                    # Give the evaluator time to persist and stop nested jobs.
+                    stop_group(child)
             except BaseException:
-                # Give the evaluator a chance to persist interrupted stages before killing.
-                try:
-                    os.killpg(child.pid, signal.SIGTERM)
-                except ProcessLookupError:
-                    pass
-                try:
-                    child.wait(timeout=20)
-                except subprocess.TimeoutExpired:
-                    try:
-                        os.killpg(child.pid, signal.SIGKILL)
-                    except ProcessLookupError:
-                        pass
-                    child.wait()
                 entry.update(state='interrupted_or_timeout', returncode=child.returncode)
                 save()
                 raise

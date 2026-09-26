@@ -1,13 +1,13 @@
 """Owned subprocess cleanup and durable driver stages. Updated: 2026-09-26 ET."""
 from contextlib import contextmanager
 import json
-import os
 from pathlib import Path
 import signal
 import subprocess
 import time
 
 from swdb.artifacts import file_hash
+from swdb.processes import stop_group
 
 
 @contextmanager
@@ -32,24 +32,6 @@ def interruption_signals():
 
 def save_receipt(folder, receipt):
     (Path(folder) / 'driver.json').write_text(json.dumps(receipt, indent=2) + '\n')
-
-
-def stop_group(child):
-    """Stop an owned session, including descendants after its leader exits."""
-    try:
-        os.killpg(child.pid, signal.SIGTERM)
-    except ProcessLookupError:
-        pass
-    try:
-        child.wait(timeout=20)
-    except subprocess.TimeoutExpired:
-        pass
-    # A terminated/reaped leader does not imply that its process group is empty.
-    try:
-        os.killpg(child.pid, signal.SIGKILL)
-    except ProcessLookupError:
-        pass
-    child.wait(timeout=5)
 
 
 def run_stage(receipt, folder, command, *, timeout, deadline, cwd, env=None,
@@ -86,11 +68,10 @@ def run_stage(receipt, folder, command, *, timeout, deadline, cwd, env=None,
                     except subprocess.TimeoutExpired:
                         if monitor is None:
                             raise
-            except BaseException:
+            finally:
                 # Public evaluators own additional compiler/simulator sessions.
                 # TERM gives them time to stop those children and retain failure.
                 stop_group(child)
-                raise
         row['state'] = 'complete' if child.returncode == 0 else 'failed'
         if child.returncode:
             raise RuntimeError(f'command failed; retained {out} and {err}')

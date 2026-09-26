@@ -136,12 +136,13 @@ class Driver:
         try:
             with output.open('w') as stdout, error.open('w') as stderr:
                 child = subprocess.Popen(argv, cwd=ROOT, stdout=stdout, stderr=stderr, start_new_session=True)
-                child.wait(timeout=min(timeout, remaining))
+                try:
+                    child.wait(timeout=min(timeout, remaining))
+                finally:
+                    stop_group(child)
             entry.update(state='complete' if child.returncode == 0 else 'failed')
         except BaseException:
             entry.update(state='interrupted_or_timeout' if child is not None else 'failed')
-            if child is not None:
-                stop_group(child)
             raise
         finally:
             entry.update(returncode=child.returncode if child is not None else None,

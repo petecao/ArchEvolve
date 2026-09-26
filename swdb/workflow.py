@@ -222,7 +222,7 @@ def _request_error(request):
 
 def check_capabilities(request, store):
     """Unknown accelerator capabilities stay unresolved until a backend contract checks them."""
-    if request.get("required_operations"):
+    if request.get("required_operations") or request.get("require_executable_backend"):
         try:
             from swdb.capabilities import check_requirements
         except ImportError:

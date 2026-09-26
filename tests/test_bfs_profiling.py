@@ -1,4 +1,4 @@
-"""Compiler discovery and public diagnostic contracts. Updated 2026-09-25.
+"""Compiler discovery and public diagnostic contracts. Updated 2026-09-26.
 
 Local toy compilation is integration evidence, not native BFS acceptance.
 """
@@ -320,6 +320,31 @@ def test_public_profile_rejects_fixture_execution_and_retains_reason(evaluation_
     assert mismatch.returncode==1 and 'differs' in mismatch.stderr
 
 
+def test_public_legacy_native_hotspots_use_one_quantity_and_keep_unobserved_records(records):
+    from swdb.workflow import record
+    rows = [
+        {'id': 'function:a', 'kind': 'function', 'metrics': {'invocations': 1,
+            'exclusive_function_thread_cpu_seconds': 100, 'exclusive_thread_cpu_seconds': 1}},
+        {'id': 'function:b', 'kind': 'function', 'metrics': {'invocations': 1, 'exclusive_thread_cpu_seconds': 2}},
+        {'id': 'loop:a', 'kind': 'loop', 'metrics': {'invocations': 1, 'exclusive_thread_cpu_seconds': 3}},
+        {'id': 'loop:b', 'kind': 'loop', 'metrics': {'invocations': 1, 'exclusive_thread_cpu_seconds': 4}},
+        {'id': 'function:unobserved', 'kind': 'function', 'metrics': {'invocations': 0}},
+    ]
+    data = record('region_profile', 'legacy-native', request={'fixture': True},
+        context={'basis': 'measured'}, outcome={'state': 'partial', 'stage': 'fixture', 'reason': None},
+        stages=[], regions=rows, dynamic_memory=[], executions=[], raw_artifacts=[], reasons=[], gain_claim=False)
+    records.write('region_profiles/legacy-native.yaml', data)
+    for kind in ('function', 'loop'):
+        result = records.swdb('bfs-hotspots', data['id'], '--kind', kind, '--format', 'json')
+        assert result.returncode == 0, result.stderr
+        ranked = json.loads(result.stdout)
+        assert ranked['ranking']['metric'] == 'exclusive_thread_cpu_seconds'
+        assert ranked['ranking']['quantity'] == 'thread CPU time'
+        assert [r['id'] for r in ranked['regions']] == [kind + ':b', kind + ':a']
+        assert ranked['gain_claim'] is False
+    assert json.loads(records.swdb('get', data['id'], '--format', 'json').stdout)['regions'] == rows
+
+
 def test_public_compiled_toy_profile_and_fresh_rankings(records,tmp_path):
     import socket
     library,parse_args=compiler_inventory()
@@ -394,8 +419,12 @@ int main(){return 99;}
     ranking=call('bfs-hotspots',result['id'],'--kind','function','--evaluation',evaluation['id'])
     assert any(r['name']=='UncataloguedHelper' and r['metrics']['invocations']==2 for r in ranking['regions'])
     assert ranking['ranking']['metric']=='exclusive_function_thread_cpu_seconds'
+    assert ranking['ranking']['basis']=='measured' and ranking['ranking']['quantity']=='thread CPU time'
+    assert ranking['evidence_kind']=='execution' and ranking['gain_claim'] is False
     assert all(r['metrics']['exclusive_function_thread_cpu_seconds']>=r['metrics']['exclusive_thread_cpu_seconds'] for r in ranking['regions'])
     loops=call('bfs-hotspots',result['id'],'--kind','loop')
+    assert loops['ranking']['metric']=='exclusive_thread_cpu_seconds'
+    assert loops['ranking']['basis']=='measured' and loops['ranking']['quantity']=='thread CPU time'
     assert any(r['function']=='UncataloguedHelper' for r in loops['regions'])
     assert len(result['executions'])==2 and all(x['correctness']['passed'] for x in result['executions'])
     assert all(not x['available'] for x in result['dynamic_memory'])

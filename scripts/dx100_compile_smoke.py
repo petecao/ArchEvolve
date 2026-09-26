@@ -3,6 +3,7 @@
 
 Created: 2026-09-25 (Eastern Time). No guest execution or performance claim.
 Run in a verified socket lane under an outer 700-second timeout.
+Updated: 2026-09-26 (Eastern Time).
 """
 import argparse
 import json
@@ -18,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from swdb import artifacts, profile
 from swdb.store import Store
+from swdb.processes import stop_group
 
 OUTER_SECONDS = 700
 CLEANUP_RESERVE_SECONDS = 30
@@ -85,24 +87,13 @@ def main():
                     raise TimeoutError('compile smoke total time budget exhausted')
                 row['timeout_s'] = allowed
                 child = subprocess.Popen(argv, cwd=ROOT, stdout=stdout, stderr=stderr, start_new_session=True)
-                child.wait(timeout=allowed)
+                try:
+                    child.wait(timeout=allowed)
+                finally:
+                    # Let the evaluator persist and stop its own compiler first.
+                    stop_group(child)
             row['state'] = 'complete' if child.returncode == 0 else 'failed'
         except BaseException as exc:
-            if child is not None and child.poll() is None:
-                # The public evaluator catches TERM, terminates its separately
-                # grouped compiler, and persists interrupted stages.
-                try:
-                    os.killpg(child.pid, signal.SIGTERM)
-                except ProcessLookupError:
-                    pass
-                try:
-                    child.wait(timeout=20)
-                except subprocess.TimeoutExpired:
-                    try:
-                        os.killpg(child.pid, signal.SIGKILL)
-                    except ProcessLookupError:
-                        pass
-                    child.wait(timeout=5)
             row.update(state='interrupted_or_timeout' if isinstance(exc, (InterruptedError, TimeoutError, subprocess.TimeoutExpired)) else 'failed',
                        reason=f'{type(exc).__name__}: {exc}')
             raise

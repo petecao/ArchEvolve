@@ -113,3 +113,39 @@ legacy-oracle qualification cases, 31 aggregation/v2 cases, and seven positive
 package/build/profile persistence cases. Catalog validation reports 185 valid
 records. Both prospective author-policy request files validate after their
 parser identity refresh; neither was published or executed.
+
+## Second independent review and repairs — 2026-09-26
+
+Separate Standards and Spec reviewers inspected the fixed checkpoint `0467c72`
+against the same starting commit, spec, tickets, and repository rules. This was
+a risk-focused review of the current implementation, not a line-by-line audit of
+every generated record or a replacement for the final post-acceptance review.
+
+| Axis | Finding | Repair and evidence |
+|---|---|---|
+| Standards, P2 | DX100 and build cleanup skipped surviving descendants after the session leader exited | Shared `swdb.processes.stop_group` always finishes the owned group, including after the leader is reaped. All migrated provider and driver callers clean up on success, failure, timeout, and interruption. |
+| Spec, P2 | `bfs-hotspots` indexed native CPU fields for valid simulated profiles and raised `KeyError` | Select the profile's actual native or simulated metric, label inclusive logging-only intervals, and leave unentered scopes unranked. Five focused public tests passed; independent replay of the original simulated fixture succeeds with fixture evidence and no gain claim. |
+| Spec, P2 | An explicit executable-backend requirement was bypassed when required operations were omitted or empty | Apply readiness checks independently of operation-list length. Seventeen public tests passed in 319.16 s; independent review confirmed schema rejection of non-Boolean flags and preservation of default source-only behavior. |
+
+Cleanup peer review reproduced an additional normal-completion leak in provider
+and stage callers after the initial helper repair. Cleanup now runs in `finally`
+for every outcome. The final focused group passed **34 tests in 68.19 s**,
+including real local TERM-resistant children, public build/provider paths, and
+durable stage receipts. The positive natural-language provider-fixture workflow
+passed separately in **20.72 s**. These are local subprocess and contract tests;
+no external provider or simulator was invoked. The final cleanup log is
+`/private/tmp/bfs-shared-cleanup-final-20260926.log`, SHA-256
+`90d967d735c0cfeeeb8fa000f9d97acea830b58f31a19bf9627aef0b8392a83c`.
+The positive fixture log is `/private/tmp/bfs-provider-positive-final-20260926.log`,
+SHA-256 `906d1a0ad3ddb112a7b869c052d6f55b37e3bd5116e84c6bcf3a590e09afb1b4`.
+Independent cleanup cross-review found no remaining actionable issue and reran
+all 16 descendant-process regressions successfully in 53.26 s. Those cases
+overlap the 34-test group and are not additional unique tests. The standalone
+build helper also imports successfully when invoked from outside the repository.
+
+The clean isolated full suite at **`0467c72` passed 1,097 tests with 3 skips in
+2071.53 s**. Its log is `/private/tmp/bfs-full-suite-20260926-0156-0467c72.log`,
+SHA-256 `466b0e6f8091c79d3b2b75cb66c51e295b5fc61afdcf9f79b625aa1c29657d64`.
+That run predates the three repairs in this section; their focused checks must
+not be presented as a full-suite run of a later checkpoint. Actual acceptance
+and the required final independent review remain incomplete.

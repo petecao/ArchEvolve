@@ -1,6 +1,6 @@
 # Automatic BFS diagnostics
 
-Updated: 2026-09-25 (Eastern Time).
+Updated: 2026-09-26 (Eastern Time).
 
 Future real mbit10 collections retain a bounded `swdb.host-observation.v1`
 receipt with read-only load, users, disk/memory, CPU/NUMA, governor/turbo, kernel,
@@ -14,6 +14,16 @@ structurally checked native `evaluation`. `swdb bfs-hotspots PROFILE --kind
 function|loop [--evaluation EXPECTED]` retrieves ranked attributable source scopes;
 an expected evaluation mismatch is rejected. `swdb get PROFILE --chain` retains
 its source, candidate, and primary execution relationship.
+
+Hotspot responses name the ranking metric, basis, quantity, and attribution,
+retain the primary evaluation's `evidence_kind`, and always report
+`gain_claim: false`. Native functions use the function aggregate described below;
+loops use exclusive lexical thread CPU time. Older native profiles without the
+function aggregate use exclusive lexical thread CPU time for the entire ranking.
+Unexecuted scopes remain in the durable profile, outside the ranked rows; an
+executed scope missing the selected metric is listed under `ranking.unavailable`.
+Simulated profiles use the distinct elapsed-time quantities documented in
+[DX100 profiling](bfs-dx100-profiling.md).
 
 A request supplies `message_version: "1.0"`, a new `id`, `evaluation`, and explicit
 `budget` values `discovery_seconds`, `build_seconds`, `run_seconds`, and

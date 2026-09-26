@@ -1,6 +1,6 @@
 """Source-backed accelerator contracts and fail-closed proposal checks.
 
-Updated: 2026-09-25. A supported declaration is not an executable build receipt.
+Updated: 2026-09-26. A supported declaration is not an executable build receipt.
 """
 
 import json
@@ -29,17 +29,17 @@ def check_requirements(request, store):
     requirements = request.get("required_operations", [])
     if not isinstance(requirements, list):
         return "required_operations must be a list"
-    if not requirements:
-        return None
-    target_id = request.get("hardware_target")
-    if not isinstance(target_id, str):
-        return "required accelerator operations require an exact hardware_target"
-    target = store.get(target_id, "hardware_target")
-    if target is None:
-        return f"unknown hardware target {target_id!r}"
     executable = request.get("require_executable_backend", False)
     if not isinstance(executable, bool):
         return "require_executable_backend must be boolean"
+    if not requirements and not executable:
+        return None
+    target_id = request.get("hardware_target")
+    if not isinstance(target_id, str):
+        return "required accelerator capabilities require an exact hardware_target"
+    target = store.get(target_id, "hardware_target")
+    if target is None:
+        return f"unknown hardware target {target_id!r}"
     if executable and (target["backend"]["readiness"] not in {"built", "verified"}
                        or not target["backend"]["build_evidence"]):
         return f"target {target_id!r} has no identified executable backend build"

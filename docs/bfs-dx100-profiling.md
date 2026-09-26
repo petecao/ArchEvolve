@@ -1,7 +1,7 @@
 # DX100 execution-derived profile collection
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 
 `dx100-profile REQUEST --runs-dir DIR --format json` retains a `region_profile` and attaches exact simulated ROI timing to the selected evaluation. The request contains `message_version: '1.0'`, a new `id`, `evaluation`, `discovery_profile`, and `budget: {total_seconds: 60}`. The maximum collector budget is 600 seconds. The referenced compiler discovery must identify the same candidate; every returned source extent is checked against the current candidate bytes. Native timing observations are discarded rather than copied to the simulated profile.
 
@@ -18,6 +18,16 @@ identity does not establish whole-ROI or source-loop attribution. BASE execution
 can therefore provide actual cache observations without any MAA packet counter.
 
 Primary `td`/`td_maa` logging can associate accumulated inclusive Start-to-Stop observations with a compiler-discovered enclosing traversal loop. These timer intervals include called work, queue advancement and any logging between their endpoints; their printed resolution is 0.00001 seconds. They do not establish exclusive time or the duration of every function/loop. `td_maa` is not evidence of acceleration because the author prints it even on scalar fallback. This logging-only route returns `partial`.
+
+`bfs-hotspots PROFILE --kind function|loop --format json` uses
+`exclusive_simulated_seconds` for guarded diagnostic profiles, labeled as
+per-thread simulated elapsed time that includes waits and thread overlap.
+Logging-only profiles instead rank observed loops by
+`inclusive_simulated_seconds`; their unobserved functions produce an empty
+ranking. These quantities retain their original scope and attribution and never
+become thread CPU time or inferred exclusive function work. Unentered scopes
+stay in the durable profile outside the ranked rows. The response retains the
+primary evaluation's `evidence_kind` and `gain_claim: false`.
 
 For complete source-scope attribution, `dx100-compile` accepts `diagnostic_regions: true` and optional `discovery: {library: PATH, resource_dir: PATH}`. The shared compiler discovery receives the actual GEM5/DMAA build flags and compiler-reported system header order. User-supplied preprocessor overrides are excluded. Its ordinary functions and loops receive nested scope guards using `m5_rpns`; generated source, runtime, and binary live under `/data1/yanruj/EvolveSWDB_builds/ID` on mbit10. Logs and discovery receipts remain in the chosen raw folder.
 

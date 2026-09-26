@@ -69,3 +69,14 @@ source-supported DX100 contracts and retain explicit unsupported/unknown outcome
 Fourteen public tests passed, including fresh-process retrieval and actual source
 patch creation. No model execution or performance evidence is claimed. Context:
 `docs/bfs-capabilities.md` and `docs/bfs-dx100-design.md`.
+
+## Review follow-up — 2026-09-26
+
+An independent Spec review reproduced a readiness bypass when a proposal required
+an executable backend but omitted or emptied its operation list. The shared
+workflow gate and capability checker now apply that requirement independently
+of list length. Missing, unknown, or source-only targets remain unresolved;
+built/verified fixtures require identified build receipts. The 17 public tests
+passed in 319.16 seconds, and an independent cross-review found no remaining
+defect. Fixture receipts establish contract behavior only, not actual backend
+execution. See `docs/bfs-interim-review-20260926.md` for the review boundary.

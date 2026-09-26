@@ -1,4 +1,4 @@
-"""Public capability/proposal checks; no fixture establishes acceleration. Updated 2026-09-25."""
+"""Public capability/proposal checks; no fixture establishes acceleration. Updated 2026-09-26."""
 
 import copy
 import difflib
@@ -78,12 +78,12 @@ def proposal_case(records, tmp_path):
         current = copy.deepcopy(request)
         if change:
             change(current)
-        path = tmp_path / "proposal.yaml"
+        path = tmp_path / f"{current['id']}.yaml"
         path.write_text(yaml.safe_dump(current))
         command = records.swdb("submit", path, "--runs-dir", runs, "--format", "json")
         assert command.returncode in {0, 1}, command.stderr
         result = json.loads(command.stdout)
-        retrieved = output(records.swdb("get", "proposal", "--format", "json"))
+        retrieved = output(records.swdb("get", current["id"], "--format", "json"))
         assert retrieved == result
         return result
     return submit
@@ -96,6 +96,73 @@ def test_supported_sequence_creates_candidate_without_executable_claim(proposal_
     result = proposal_case(change)
     assert result["outcome"]["state"] == "candidate_created"
     assert result["candidate"]
+
+
+def test_executable_requirement_rejects_unready_missing_and_unknown_targets(proposal_case):
+    for operations_name, operations in (("omitted", None), ("empty", []), ("nonempty", [leaf()])):
+        for target_name, target, reason in (
+            ("source-only", TARGET, "no identified executable backend build"),
+            ("missing", None, "exact hardware_target"),
+            ("unknown", "unknown-target", "unknown hardware target"),
+        ):
+            def change(request):
+                request.update(id=f"executable-{operations_name}-{target_name}", require_executable_backend=True)
+                if operations is None:
+                    request.pop("required_operations")
+                else:
+                    request["required_operations"] = operations
+                if target is None:
+                    request.pop("hardware_target")
+                else:
+                    request["hardware_target"] = target
+            result = proposal_case(change)
+            assert result["outcome"]["state"] == "unresolved", result
+            assert result["outcome"]["stage"] == "capabilities"
+            assert reason in result["outcome"]["reason"]
+            assert "candidate" not in result
+
+
+def test_executable_requirement_accepts_identified_fixture_build_without_operations(proposal_case, records, tmp_path):
+    receipt = tmp_path / "fixture-backend-build.json"
+    receipt.write_text(json.dumps({"classification": "contract_fixture", "backend": "dx100-gem5-se"}))
+    target = records.read(f"hardware_targets/{TARGET}.yaml")
+    target["backend"]["build_evidence"] = [{"uri": receipt.as_uri(), "sha256": hashlib.sha256(receipt.read_bytes()).hexdigest()}]
+    for readiness in ("built", "verified"):
+        target["backend"]["readiness"] = readiness
+        records.write(f"hardware_targets/{TARGET}.yaml", target)
+        for operations_name, operations in (("omitted", None), ("empty", [])):
+            def change(request):
+                request.update(id=f"executable-{readiness}-{operations_name}", require_executable_backend=True)
+                if operations is None:
+                    request.pop("required_operations")
+                else:
+                    request["required_operations"] = operations
+            result = proposal_case(change)
+            assert result["outcome"]["state"] == "candidate_created", result
+            assert result["candidate"]
+    result = proposal_case(lambda request: request.update(
+        id="executable-unknown-operation", require_executable_backend=True,
+        required_operations=[leaf("unsupported-operation")]))
+    assert result["outcome"]["state"] == "unresolved", result
+    assert "unsupported" in result["outcome"]["reason"]
+    assert "candidate" not in result
+
+
+def test_no_executable_requirement_preserves_source_only_proposals(proposal_case):
+    for flag_name, flag in (("omitted", None), ("false", False)):
+        for operations_name, operations in (("omitted", None), ("empty", [])):
+            def change(request):
+                request["id"] = f"source-only-{flag_name}-{operations_name}"
+                request.pop("hardware_target")
+                if flag is not None:
+                    request["require_executable_backend"] = flag
+                if operations is None:
+                    request.pop("required_operations")
+                else:
+                    request["required_operations"] = operations
+            result = proposal_case(change)
+            assert result["outcome"]["state"] == "candidate_created", result
+            assert result["candidate"]
 
 
 @pytest.mark.parametrize("kind,reason", [

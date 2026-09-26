@@ -8,7 +8,6 @@ import math
 import os
 from pathlib import Path
 import re
-import signal
 import socket
 import subprocess
 import sys
@@ -18,6 +17,7 @@ import uuid
 from swdb import artifacts, bfs_protocol, paths, profile, workflow
 from swdb.bfs_native import Session, StageFailure, Stopped, _integer, _now
 from swdb.cli import Failure, _require_valid
+from swdb.processes import stop_group
 
 REVISION = "e4fc4afdf894f295442cef3604667a469fab8e62"
 ROI = "bfs.dx100.traversal.v1"
@@ -174,16 +174,7 @@ def _prepare(args, action, store, request, data):
 
 
 def _terminate(child):
-    if child is None or child.poll() is not None:
-        return
-    try:
-        os.killpg(child.pid, signal.SIGTERM)
-        child.wait(timeout=15)
-    except subprocess.TimeoutExpired:
-        os.killpg(child.pid, signal.SIGKILL)
-        child.wait()
-    except ProcessLookupError:
-        child.wait()
+    stop_group(child, grace_seconds=15)
 
 
 def _bounded_process(session, name, command, timeout, memory, storage, env=None):

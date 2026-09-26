@@ -4,6 +4,7 @@
 Created: 2026-09-25 (Eastern Time). Synthetic compiler/timing fixtures never
 establish native performance, simulated acceleration, or an empirical regression.
 Raw files use a new /private/tmp directory; master records are never overwritten.
+Updated: 2026-09-26 (Eastern Time).
 """
 import argparse
 import copy
@@ -14,7 +15,6 @@ import os
 from pathlib import Path
 import platform
 import re
-import signal
 import socket
 import subprocess
 import sys
@@ -24,6 +24,7 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from swdb import artifacts, bfs_protocol, workflow
+from swdb.processes import stop_group
 
 PROGRAM = '''#!/usr/bin/env python3
 import collections,json,os,sys,time
@@ -104,11 +105,8 @@ def main():
         with out.open('w') as stdout, err.open('w') as stderr:
             child = subprocess.Popen(argv, cwd=ROOT, stdout=stdout, stderr=stderr, env={**os.environ, **(env or {})}, start_new_session=True)
             try: child.wait(timeout=min(900, remaining))
-            except BaseException:
-                os.killpg(child.pid, signal.SIGTERM)
-                try: child.wait(timeout=10)
-                except subprocess.TimeoutExpired: os.killpg(child.pid, signal.SIGKILL); child.wait()
-                raise
+            finally:
+                stop_group(child, grace_seconds=10)
         entry.update(returncode=child.returncode, state='complete' if child.returncode == expected else 'unexpected_outcome',
                      stdout_sha256=artifacts.file_hash(out), stderr_sha256=artifacts.file_hash(err)); save()
         if child.returncode != expected: raise RuntimeError(f'{command} failed its expected result; see {err}')
