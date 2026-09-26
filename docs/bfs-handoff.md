@@ -108,9 +108,18 @@ All clients here are explicitly labeled representative test clients. No live
 Peter/Josh integration has occurred, and no message has been sent to either
 collaborator as part of this implementation. A future client can use the same
 versioned public request contracts without sharing the worker process. These
-retained proposal examples all declare `role: sw` and `test_client: true`.
-A real campaign submission labeled as an HW test client remains an acceptance
-obligation; the SW examples do not stand in for that role.
+retained smoke examples all declare `role: sw` and `test_client: true`.
+The initial campaign submission
+`bfs-campaign-preparation-20260925-a1.upstream-annotated` declares `role: hw`
+and `test_client: true` in the actual proposal record on mbit10, checked
+2026-09-26 12:52 ET. Its provider outcome is unresolved, so it establishes a
+labeled HW test-client submission but no candidate or evaluated HW chain.
+The two initial instruction proposals declare `role: sw` and `test_client: true`;
+their created candidates also await evaluation. See the
+[initial outcomes](../.scratch/bfs-rewrite-evaluation-2026-09-25/observations/provider-initial-summary-20260926.json)
+and [held record inventory](../.scratch/bfs-rewrite-evaluation-2026-09-25/observations/provider-export-inventory-20260926.json).
+The authoritative campaign records remain on mbit10 pending their separate
+six-file transfer approval; this summary does not substitute for that chain.
 
 ## Real profile-package and strategy-query handoff
 
