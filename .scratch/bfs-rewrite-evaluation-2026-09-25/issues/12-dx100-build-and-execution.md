@@ -105,3 +105,14 @@ sync. Public records `bfs-dx100-compile-20260925-a1.primary.build` and
 `observations/dx100-compile-smoke-a1.json`, retain the exact receipts. This was
 compile-only evidence; checkpoint-to-ROI execution still awaits the finite
 memory-gated bring-up attempt. The ticket remains claimed.
+
+## Additional compilation evidence — 2026-09-25
+
+At 23:11 ET all requested compile-only cells had passed: the unchanged upstream
+complete-call primary/diagnostic pair and the unchanged author scalar/MAA
+traversal diagnostics. Audited public records and raw-output hashes are linked
+by `../observations/dx100-compile-extension-a1.json`, imported in `d9c4c10`.
+Upstream discovery retained 24 source scopes; each author diagnostic retained
+31. Original author scalar and MAA binaries remain unchanged. This completes
+compilation preparation for both source families and ROI treatments, without
+claiming simulator execution, timed correctness, or dynamic profile acceptance.

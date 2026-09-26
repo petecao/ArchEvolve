@@ -10,7 +10,6 @@ import json
 import os
 from pathlib import Path
 import re
-import signal
 import socket
 import statistics
 import subprocess
@@ -22,6 +21,34 @@ sys.path.insert(0, str(ROOT))
 from swdb import artifacts, bfs_protocol, profile
 from swdb.store import Store
 from dx100_build import disk_usage_kib
+from bfs_process import interruption_signals, run_stage
+
+
+def validate_diagnostic_build(build, candidate, implementation, model, roi, accelerated, frozen=None, role=None):
+    """Reuse the exact pre-freeze diagnostic artifact, never a fresh substitute."""
+    context, request = build.get('context', {}), build.get('request', {})
+    if (build.get('outcome', {}).get('state') != 'complete'
+            or build['outcome'].get('stage') != 'candidate_build'
+            or build.get('evidence_kind') != 'execution' or request.get('fixture') is True
+            or build.get('candidate') != candidate['id']
+            or context.get('candidate_sha256') != candidate['artifact']['sha256']
+            or context.get('function') != implementation['function']
+            or context.get('model_build') != model['id']
+            or context.get('model_root') != model['context']['model_root']
+            or context.get('target') != model['context']['target']
+            or context.get('roi') != roi or context.get('accelerated_requested') is not accelerated
+            or request.get('diagnostic_regions') is not True or not context.get('diagnostic')):
+        raise ValueError('diagnostic build does not identify this exact source/model/ROI/treatment')
+    definition = context['diagnostic']
+    for pair in frozen['settings'].get('region_pairs', []) if frozen else []:
+        if pair.get('evidence') != 'simulated_diagnostic_profile':
+            continue
+        collector = pair['collector']
+        if (not any(row['id'] == pair[role] for row in definition['regions'])
+                or any(definition['discovery'].get(key) != collector[key]
+                       for key in ('backend', 'collector', 'library_sha256', 'pass_sha256'))
+                or definition['runtime']['sha256'] != collector['runtime_sha256']):
+            raise ValueError('diagnostic build differs from the frozen region correspondence/collector')
 
 
 def validate_selection(candidate, source, implementation, workload, frozen, role, author, expected_artifact):
@@ -58,6 +85,7 @@ def validate_selection(candidate, source, implementation, workload, frozen, role
         raise ValueError('author binaries require unchanged, explicitly identified DX100 source')
 
 
+@interruption_signals()
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('id', 'candidate', 'workload', 'build-evaluation'):
@@ -66,6 +94,7 @@ def main():
                         help='exact mode, l3_size_mb, l3_assoc, tile_elements JSON request')
     parser.add_argument('--protocol')
     parser.add_argument('--protocol-role', choices=('baseline', 'candidate'))
+    parser.add_argument('--diagnostic-build', help='reuse an exact completed diagnostic compile record selected before freeze')
     parser.add_argument('--author-binary', action='store_true', help='retain the original author traversal ROI')
     parser.add_argument('--accelerated', action='store_true', help='compile MAA support; does not prove execution')
     parser.add_argument('--runs-dir', type=Path, required=True, help='unique batch raw-output directory on mbit10')
@@ -119,12 +148,6 @@ def main():
         receipt['host_wall_s'] = time.monotonic() - started
         (folder / 'driver.json').write_text(json.dumps(receipt, indent=2) + '\n')
 
-    def interrupted(signum, _frame):
-        raise InterruptedError(f'simulator series interrupted by signal {signum}')
-
-    for sig in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP):
-        signal.signal(sig, interrupted)
-
     def storage_bytes():
         # A dedicated batch root bounds all of its retained checkpoints and logs.
         used, warnings = disk_usage_kib(runs)
@@ -147,40 +170,18 @@ def main():
 
     def call(command, *rest, timeout=180):
         profile._verified_lane(Store(args.records).get('mbit10', 'machine'), lane)
-        remaining = check_bounds()
+        check_bounds()
         index = len(receipt['stages'])
         out, err = folder / f'{index:03d}-{command}.json', folder / f'{index:03d}-{command}.stderr'
         argv = [sys.executable, '-m', 'swdb', command, *map(str, rest), '--records', str(args.records), '--format', 'json']
-        entry = {'command': argv, 'state': 'running', 'stdout': str(out), 'stderr': str(err)}
-        receipt['stages'].append(entry); save()
-        before = time.monotonic()
-        with out.open('w') as stdout, err.open('w') as stderr:
-            child = subprocess.Popen(argv, cwd=ROOT, stdout=stdout, stderr=stderr, start_new_session=True)
-            try:
-                deadline = before + min(timeout, remaining)
-                while child.poll() is None:
-                    left = deadline - time.monotonic()
-                    if left <= 0:
-                        raise TimeoutError(f'{command} elapsed budget exhausted')
-                    try:
-                        child.wait(timeout=min(5, left))
-                    except subprocess.TimeoutExpired:
-                        check_bounds()
-            except BaseException:
-                try: os.killpg(child.pid, signal.SIGTERM)
-                except ProcessLookupError: pass
-                try: child.wait(timeout=20)
-                except subprocess.TimeoutExpired:
-                    try: os.killpg(child.pid, signal.SIGKILL)
-                    except ProcessLookupError: pass
-                    child.wait()
-                entry.update(state='interrupted_or_timeout', returncode=child.returncode); save()
-                raise
-        entry.update(state='complete' if child.returncode == 0 else 'failed', returncode=child.returncode,
-                     host_wall_s=time.monotonic() - before,
-                     stdout_sha256=artifacts.file_hash(out), stderr_sha256=artifacts.file_hash(err)); save()
-        if child.returncode:
-            raise RuntimeError(f'{command} failed; retained {out} and {err}')
+        try:
+            run_stage(receipt, folder, argv, timeout=timeout,
+                      deadline=started + args.total_seconds - 30, cwd=ROOT,
+                      output=out, stderr=err, monitor=check_bounds)
+        finally:
+            if len(receipt['stages']) > index:
+                receipt['stages'][index]['stdout'] = str(out)
+            save()
         return json.loads(out.read_text())
 
     def request(command, value, *, timeout=180, execute=False):
@@ -222,6 +223,9 @@ def main():
             if args.author_binary and treatment == 'primary':
                 builds[treatment] = None
                 continue
+            if treatment == 'diagnostic' and args.diagnostic_build:
+                builds[treatment] = call('get', args.diagnostic_build)
+                continue
             builds[treatment] = request('dx100-compile', {
                 'message_version': '1.0', 'id': args.id + '.' + treatment + '.build',
                 'machine': 'mbit10', 'hardware_target': 'dx100-e4fc4af-4c',
@@ -232,8 +236,12 @@ def main():
                 timeout=660, execute=True)
             if builds[treatment]['outcome']['state'] != 'complete':
                 raise RuntimeError('candidate compilation did not complete')
+        validate_diagnostic_build(builds['diagnostic'], candidate, implementation, model,
+                                  roi, args.accelerated, frozen, args.protocol_role)
         receipt.update(candidate=candidate['id'], workload=workload['id'], model_build=model['id'],
                        configuration=configuration, roi=roi, protocol=args.protocol, repetitions=repetitions,
+                       diagnostic_build={'evaluation': builds['diagnostic']['id'],
+                                         'sha256': artifacts.digest(builds['diagnostic'])},
                        checkpoint_policy='two fresh restores of the same exact checkpoint per source and binary')
         save()
         primary_ids = []

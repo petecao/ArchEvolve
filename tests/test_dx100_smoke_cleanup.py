@@ -93,3 +93,39 @@ else:
     nested = int((tmp_path / 'nested.pid').read_text())
     with pytest.raises(ProcessLookupError):
         os.kill(nested, 0)
+
+
+def test_monitored_stage_preserves_resource_failure_and_kills_owned_descendant(tmp_path, monkeypatch):
+    """The series storage monitor may fail while its nested evaluator is running."""
+    import time
+    scripts = Path(__file__).resolve().parents[1] / 'scripts'
+    monkeypatch.syspath_prepend(str(scripts))
+    from bfs_process import interruption_signals, run_stage
+    program = tmp_path/'nested.py'
+    program.write_text('''import os,pathlib,signal,subprocess,sys,time
+child=subprocess.Popen([sys.executable,'-c','import time;time.sleep(60)'],start_new_session=True)
+def stop(signum,frame):
+ os.killpg(child.pid,signal.SIGTERM)
+ child.wait(timeout=5)
+ print('RESOURCE_FAILURE_REAPED',flush=True)
+ sys.exit(143)
+signal.signal(signal.SIGTERM,stop)
+pathlib.Path('nested.pid').write_text(str(child.pid))
+print('STARTED',flush=True)
+time.sleep(60)
+''')
+    def monitor():
+        if (tmp_path/'nested.pid').exists():
+            raise RuntimeError('fixture storage reserve exhausted')
+    receipt = {'stages': []}
+    with pytest.raises(RuntimeError, match='storage reserve exhausted'), interruption_signals():
+        run_stage(receipt, tmp_path, [sys.executable, str(program)], timeout=10,
+                  deadline=time.monotonic()+10, cwd=tmp_path, monitor=monitor)
+    stage = json.loads((tmp_path/'driver.json').read_text())['stages'][0]
+    assert stage['state']=='failed' and stage['returncode']==143
+    assert 'storage reserve exhausted' in stage['reason']
+    assert stage['stdout_sha256']==artifacts.file_hash(stage['output'])
+    assert stage['stderr_sha256']==artifacts.file_hash(stage['stderr'])
+    assert 'RESOURCE_FAILURE_REAPED' in Path(stage['output']).read_text()
+    with pytest.raises(ProcessLookupError):
+        os.kill(int((tmp_path/'nested.pid').read_text()), 0)

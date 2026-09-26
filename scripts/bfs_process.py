@@ -35,7 +35,7 @@ def save_receipt(folder, receipt):
 
 
 def run_stage(receipt, folder, command, *, timeout, deadline, cwd, env=None,
-              output=None, stderr=None):
+              output=None, stderr=None, monitor=None):
     """Stream logs; on interruption allow the evaluator to reap nested groups."""
     folder = Path(folder)
     step = f"{len(receipt['stages']):02d}"
@@ -56,7 +56,18 @@ def run_stage(receipt, folder, command, *, timeout, deadline, cwd, env=None,
             child = subprocess.Popen(row['command'], cwd=cwd, env=env, stdout=stdout,
                                      stderr=errors, start_new_session=True)
             try:
-                child.wait(timeout=allowed)
+                until = time.monotonic() + allowed
+                while child.poll() is None:
+                    if monitor is not None:
+                        monitor()
+                    remaining = until - time.monotonic()
+                    if remaining <= 0:
+                        raise subprocess.TimeoutExpired(row['command'], allowed)
+                    try:
+                        child.wait(timeout=min(5, remaining) if monitor is not None else remaining)
+                    except subprocess.TimeoutExpired:
+                        if monitor is None:
+                            raise
             except BaseException:
                 # Public evaluators own additional compiler/simulator sessions.
                 # TERM gives them time to stop those children and retain failure.

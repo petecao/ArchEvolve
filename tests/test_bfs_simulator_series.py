@@ -155,3 +155,43 @@ def test_batch_budget_never_counts_a_shared_or_nonempty_output_root(selection, t
         assert calls == [root] and 'directory must be empty' in capsys.readouterr().err
     else:
         assert not calls and 'dedicated child' in capsys.readouterr().err
+
+
+def test_reused_diagnostic_must_match_source_and_frozen_collector(selection):
+    client, candidate, _, implementation, workload, _ = selection
+    model = {'id': 'model', 'context': {'model_root': '/fixture/model', 'target': 'target'}}
+    collector = {'backend': 'libclang-cindex', 'collector': 'dx100.m5_rpns.source_scopes.v1',
+                 'library_sha256': 'a'*64, 'pass_sha256': 'b'*64, 'runtime_sha256': 'c'*64}
+    diagnostic = {'id': 'diagnostic', 'candidate': candidate['id'], 'evidence_kind': 'execution',
+        'outcome': {'state': 'complete', 'stage': 'candidate_build'},
+        'request': {'diagnostic_regions': True}, 'context': {
+            'candidate_sha256': candidate['artifact']['sha256'], 'function': implementation['function'],
+            'model_build': model['id'], 'model_root': '/fixture/model', 'target': 'target',
+            'roi': 'bfs.complete_call.v1', 'accelerated_requested': False,
+            'diagnostic': {'regions': [{'id': 'selected'}],
+                'discovery': {key: value for key, value in collector.items() if key != 'runtime_sha256'},
+                'runtime': {'sha256': collector['runtime_sha256']}}}}
+    frozen = protocol(workload)
+    frozen['settings']['region_pairs'] = [{'evidence': 'simulated_diagnostic_profile',
+        'baseline': 'selected', 'candidate': 'selected', 'collector': collector}]
+    def check(build):
+        client.validate_diagnostic_build(build, candidate, implementation, model,
+                                         'bfs.complete_call.v1', False, frozen, 'baseline')
+    check(diagnostic)
+    for location, key, value in [
+        ('context', 'candidate_sha256', 'd'*64), ('context', 'function', 'AnotherEntry'),
+        ('context', 'model_build', 'other-model'), ('context', 'target', 'other-target'),
+        ('context', 'roi', 'bfs.dx100.traversal.v1'), ('context', 'accelerated_requested', True),
+        ('request', 'diagnostic_regions', False), ('request', 'fixture', True),
+        ('outcome', 'state', 'failed')]:
+        changed = copy.deepcopy(diagnostic); changed[location][key] = value
+        with pytest.raises(ValueError, match='exact source/model/ROI/treatment'):
+            check(changed)
+    changed = copy.deepcopy(diagnostic)
+    changed['context']['diagnostic']['discovery']['pass_sha256'] = 'd'*64
+    with pytest.raises(ValueError, match='frozen region correspondence/collector'):
+        check(changed)
+    changed = copy.deepcopy(diagnostic)
+    changed['context']['diagnostic']['regions'][0]['id'] = 'new-selected'
+    with pytest.raises(ValueError, match='frozen region correspondence/collector'):
+        check(changed)

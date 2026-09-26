@@ -19,7 +19,7 @@ actual returned identifier or observed value before execution.
 | Runtime shared library | `ext/ramulator2/ramulator2/libramulator.so`, SHA256 `46b5dbd87a77845ebadd1854e990d8e5c04c41253ad76315a766d61b77ca43dd` |
 | Runtime package receipt | Recorded JSON SHA256 `ae7389a0b6848fa21eae7c527211948a88e3010f9a5135754a2241dc6f5542c4`; system package versions do not establish unrecorded file hashes |
 | Workload and source | `bfs-20260925-uniform22.f23b09bb0c0601b5`; actual pinned SourcePicker source2796003, degree40; uniform scale22/degree16/seed27491095 with effective symmetrization |
-| Fixed reference candidates | **Unresolved:** unchanged `dx100-bfs-scalar` and `dx100-bfs-maa-reference` snapshots/candidates from public creation |
+| Fixed reference candidates | `bfs-author-scalar-compile-20260925-a1.candidate` and `bfs-author-maa-compile-20260925-a1.candidate`; unchanged public source candidates audited in `observations/dx100-compile-extension-a1.json` |
 | Region correspondence | **Unresolved:** compiler-discovered scalar/MAA region IDs, actual diagnostic library/pass/runtime hashes and explicit semantic mapping |
 | Protocol IDs and results | **Unresolved:** two independently frozen protocols and their actual replay/aggregate/package IDs |
 
@@ -169,7 +169,14 @@ Invoke `scripts/bfs_simulator_series.py` four times: baseline and candidate for
 each frozen policy. Supply actual `--id`, `--candidate`, `--workload`,
 `--build-evaluation`, four-field `--configuration` JSON, `--protocol`,
 `--protocol-role`, dedicated empty `--runs-dir`, `--records`, and owned `--lane`.
-All four use `--author-binary`; only MAA uses `--accelerated`. The driver preserves
+All four use `--author-binary`; only MAA uses `--accelerated`. Pass the actual
+`--diagnostic-build bfs-author-scalar-compile-20260925-a1.diagnostic.build` or
+`--diagnostic-build bfs-author-maa-compile-20260925-a1.diagnostic.build` selected
+for that frozen collector identity. This reuses the exact audited diagnostic
+artifact; later collector changes cannot silently replace it. Both reused and
+newly compiled diagnostics must match the frozen selected regions and collector
+before any primary execution. Execution still rehashes the source and binary.
+The driver preserves
 two separate source/repetition replays, independent diagnostics, public profiles,
 sealed packages and a public aggregate. It cannot reuse one MAA evaluation under
 two different frozen protocol IDs; use fresh MAA replays for the second policy.
@@ -182,7 +189,9 @@ silently raise this or substitute primary wall time. The outer operator must sha
 one 24-hour/60GiB batch budget across the four series, subtracting already spent
 time/storage before each invocation and supervising the remaining batch deadline.
 Each series' own `--total-seconds`/`--batch-storage-gib` applies only to its dedicated
-child folder. Preserve 30GiB raw and 10GiB build reserves. No automatic regression
+child folder, with 30 seconds reserved inside the elapsed budget for process
+cleanup. Storage/reserve checks continue while public subprocesses run; an
+interruption preserves stage output hashes and reaps owned child groups. Preserve 30GiB raw and 10GiB build reserves. No automatic regression
 retry or unbounded search is authorized by this recipe.
 
 For each policy, create a public `compare-evaluations` request with the returned

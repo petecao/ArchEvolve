@@ -56,11 +56,13 @@ simulated executions, exact timed-binary verification, diagnostic profiles,
 and comparisons remain pending; no reproduction or gain is claimed.
 
 2026-09-25: The identity agent prepared [the concrete freeze recipe](../../../docs/bfs-artifact-freeze-recipe-20260925.md)
-with exact retained model/guest/runtime identities, unresolved scale22/source-picker
-and region inputs, two separate policies, and the public command sequence. Isolated
+with exact retained model/guest/runtime identities, the now-registered scale22
+graph and actual SourcePicker result, remaining region-policy inputs, two separate
+policies, and the public command sequence. Isolated
 contract reproductions exposed ignored simulator identity and missing aggregate
 region lookup. The additive fixes pin simulation/model and fixed author sources,
 bind package-backed diagnostic regions, and enforce typed per-role accelerator
 coverage. These changes and fixture tests do not complete any empirical checkbox;
-the actual graph, independently frozen pairs, replay results and final acceptance
-remain pending.
+the independently frozen pairs, replay results and final acceptance remain
+pending. Audited scalar/MAA source candidates and diagnostic compilation records
+are now available in `../observations/dx100-compile-extension-a1.json`.

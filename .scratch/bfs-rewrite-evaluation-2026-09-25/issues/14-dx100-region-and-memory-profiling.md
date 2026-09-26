@@ -90,3 +90,14 @@ receipts. The diagnostic public call cost 64.11 host seconds within its
 240-second/16-GiB bound. Discovery and compilation establish no dynamic region
 durations, memory observations, or simulated correctness. Real collection
 acceptance remains pending and this ticket stays claimed.
+
+## Additional compilation evidence — 2026-09-25
+
+At 23:11 ET all requested compile-only cells had passed: the unchanged upstream
+complete-call primary/diagnostic pair and the unchanged author scalar/MAA
+traversal diagnostics. Audited public records and raw-output hashes are linked
+by `../observations/dx100-compile-extension-a1.json`, imported in `d9c4c10`.
+Upstream discovery retained 24 source scopes; each author diagnostic retained
+31. Original author scalar and MAA binaries remain unchanged. This completes
+compilation preparation for both source families and ROI treatments, without
+claiming simulator execution, timed correctness, or dynamic profile acceptance.
