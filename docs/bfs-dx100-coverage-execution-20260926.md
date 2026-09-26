@@ -1,7 +1,7 @@
 # One finite DX100 coverage execution
 
 Created: 2026-09-26 (Eastern Time).
-Status: local implementation and contract fixtures only; no dispatch or export.
+Status: prepared tooling with local contract tests; actual execution requires the retained prerequisites below.
 
 This implements the separate correctness case in
 [the coverage plan](bfs-dx100-coverage-plan-20260926.md). The public entry is
