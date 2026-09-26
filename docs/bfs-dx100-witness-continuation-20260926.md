@@ -160,3 +160,83 @@ paired pilot runs. They cannot start a simulator, alter historical records or
 checkouts, consume a new measurement ID, or claim acceptance. A passing reparse
 only explains the retained a1 failure; real acceptance requires the new actual
 execution and its independent witness audit.
+
+## Dedicated a3 admission driver — 2026-09-26
+
+`scripts/dx100_witness_continuation.py` implements only the selected fresh window.
+Its fixed [a3 request](../.scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-witness-a3.yaml)
+has the canonical digest above. It refuses changed a1 bytes, any a2 evaluation
+or execution path, and any existing a3 evaluation, output, or driver path,
+including dangling symlinks. A driver directory created by a failed attempt is
+retained and prevents an automatic retry. The public operation has a
+1,150-second stage ceiling within the unchanged 1,170-second driver allowance
+and 30-second outer cleanup reserve; the adapter and simulator retain their
+1,100- and 750-second caps. Every preflight clock check requires the full
+1,200 seconds before 15:40 ET. Neither old wrapper is modified or invoked.
+
+The pinned read-only a1 diagnostic prerequisite is
+`bfs-dx100-witness-20260926-a1-diagnostic-reparse-20260926.json`, SHA-256
+`2d7d011e238f06954757fa426dc527bdec54504ffd6fd1890c542b4955f4a7b5`, under the
+unchanged bring-up raw root. Its parse completed under the corrected parser;
+its original evaluation remains failed. The driver only reads this receipt.
+
+Each prior batch supplies a coordinator-reviewed completion JSON and its exact
+SHA-256, passed separately on the command line. The JSON carries the exact batch
+`id`, an aware `observed_at`, hashed `driver`, `lane`, and `outer_exit` references,
+`lease_released: true`, and nonempty `owned_processes` with integer `pid` and
+`start_ticks`. `process_observations` references a hashed JSON containing the
+initial owned `ancestry` and optional additional `owned_processes` arrays. The
+completion identity set must cover those arrays and every process from the
+driver's hashed resource samples (`rss.samples` for paired collection,
+`resource_artifact` for provider generation). Paired samples must contain the
+recorded `driver_pid`. Missing observations fail admission. Receipt JSON reads
+are capped at 2 MiB and resource sample reads at 16 MiB; these finite reader
+limits fail closed if exceeded and do not change any collection resource cap.
+
+For an all-absent batch, the completion state is `terminal_and_reaped` and
+`owned_processes_absent: true`. A retained launcher zombie is the narrowly
+permitted alternative for either batch: `terminal_no_live_owned_processes`,
+`owned_processes_absent: false`, and `owned_processes_nonrunning: true`. In that
+case exactly one retained process may have `state: Z`, `role: tmux_launcher`,
+and `rss_bytes: 0`; every other entry has `state: absent`. That identity must
+occur in the hashed initial ancestry and match the actual observed launcher:
+provider PID/start-ticks `3033637/493713694`, or paired `3034758/493754291`.
+The reader checks
+current `/proc` PID/start identities, permits that recorded launcher only if it
+is still a zero-RSS zombie or has disappeared, and rejects every other surviving
+owned identity. It does not signal the shared tmux server or claim that the
+launcher has been reaped. A reused PID with a different start time is not the
+old process. These checks cover retained owned identities, not unknown jobs on
+the shared host; the coordinator still checks all three leases and live load.
+
+The reader reopens the actual `{socket_lane: {...}}` helper receipt and requires
+mbit10 node 1/generation 400 for paired collection and node 0/generation 318 for
+provider generation. Driver and outer exit records must be terminal, the lane
+exit code must match, and their chronology must precede admission. The helper's
+whole-second end timestamp denotes `[stamp, stamp + 1 second)`; the driver's
+fractional finish must also precede the audit observation. Failed batches with
+unattempted cells are allowed once their owned processes have terminated.
+This barrier does not qualify their scientific or provider outcomes.
+
+After the coordinator's fresh helper, lease, identity, disk, and capacity checks,
+the command inside a newly claimed node-0 helper is:
+
+```sh
+timeout --signal=TERM --kill-after=30s 1170s \
+  python3 scripts/dx100_witness_continuation.py \
+  --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925 \
+  --lane 0 \
+  --paired-completion PAIRED_TERMINAL_JSON --paired-sha256 PAIRED_TERMINAL_SHA256 \
+  --provider-completion PROVIDER_TERMINAL_JSON --provider-sha256 PROVIDER_TERMINAL_SHA256
+```
+
+The placeholders must be replaced with newly checked, exact receipt paths and
+hashes; they are not permissions to create substitute evidence. The driver
+rechecks current node-0 lane ancestry and capacity, and rechecks the retained
+process identities just before public execution. It retains the request,
+historical failure and diagnostic bindings, runtime hashes, repository commit,
+both completion barriers, stage logs and hashes, elapsed time, and final result.
+Only a fresh passed `validate_completed_witness(..., verify_artifacts=True)` can
+mark a3 complete. `gain_claim` remains false, and no a4 or coverage job follows
+automatically. Local driver tests use synthetic terminal/process fixtures and
+are not simulator, cleanup, or correctness evidence for mbit10.
