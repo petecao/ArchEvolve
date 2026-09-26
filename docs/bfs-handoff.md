@@ -77,6 +77,16 @@ The baseline pilot and author reference/control batch have separate pre-executio
 plans under `.scratch/bfs-rewrite-evaluation-2026-09-25/`. Neither plan freezes
 unknown quantities or proves that its runs have completed.
 
+The native campaign client accepts `--existing-candidate ID` with the exact
+original `--proposal` JSON when that proposal already created its initial
+candidate. It reopens the public record chain and verifies source, package,
+artifact, protections, and patch replay before evaluation. Reuse invokes no
+provider; `--provider-config` and previously repaired candidates are rejected.
+An optional later build/correctness repair retains the original provider time
+and repair limits. This path changes candidate acquisition only: real packages,
+a compatible frozen protocol, fresh observations, and independent correctness
+remain required. Omitting the option preserves fresh submission.
+
 ## Real linked examples available now
 
 The following records came from actual mbit10 execution. Tiny diagnostic graphs

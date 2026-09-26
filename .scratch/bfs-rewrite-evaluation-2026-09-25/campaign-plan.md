@@ -1,7 +1,7 @@
 # Representative BFS campaign plan
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 
 This is dependent preparation for Tickets 17–20. No proposal is submitted without
 complete real baseline packages, and no candidate performance is assessed before
@@ -41,9 +41,21 @@ the earlier outcomes. No source-dependent graph substitution is allowed.
   diagnostics, packages, comparisons, and fresh-process retrieval. Pre-freeze
   baseline packages provide proposal context; their times cannot substitute for
   new frozen-protocol baseline measurements.
+- The explicit `--existing-candidate ID` route retains the exact original
+  `--proposal` JSON and reopens its initial completed candidate through public
+  queries. It checks proposal/source/package/artifact identities and replays the
+  retained patch in a bounded temporary source snapshot. Matching file hashes
+  alone do not establish that the selected patch produced the candidate. Reuse
+  invokes no provider and rejects `--provider-config`, prior repair history,
+  changed bindings, or missing original interpreted-provider budget metadata.
+  Optional `--repair-config` permits the existing single build/correctness repair
+  only within the retained allowance; reuse never resets consumed provider time.
 - Native interpretation uses at most 300 seconds per call, one repair, a 600-second
   provider total, and a USD 5 provider-call cap. Each evaluation permits 180 seconds
-  to build, 60 seconds per trial, and 1,200 seconds total. Each diagnostic collector
+  to build and 60 seconds per trial. Serial evaluations permit 1,200 seconds total;
+  a newly frozen paired protocol permits 2,400 seconds per complete pair and per
+  member including waiting, as fixed in the [paired contract](../../docs/bfs-native-paired.md).
+  These new-mode bounds do not alter any earlier pilot's allowance. Each diagnostic collector
   permits 120 seconds for discovery, 180 seconds to build, 600 seconds per case,
   and 1,200 seconds total. The enclosing native campaign is capped at four hours
   per source/route, including any rerun of both families after one repair.

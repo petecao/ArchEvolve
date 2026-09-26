@@ -4,20 +4,33 @@
 Created: 2026-09-25 (Eastern Time). This bounded driver does not select intent,
 workloads, profitability thresholds, or a new protocol. Unfavorable results stay.
 Updated: 2026-09-26 (Eastern Time).
+
+The optional --existing-candidate ID route retains --proposal as the exact
+original JSON request. It reopens that proposal's first completed candidate
+through public get, validates its source/package/diff bindings, and never submits
+or invokes a rewrite provider again. Prior repair history is not resumable by this
+narrow route; a new build/correctness failure can still use --repair-config under
+the proposal's existing repair budget. --provider-config is incompatible with
+reuse. Omitting --existing-candidate preserves the fresh-submit behavior.
+Reuse reconstructs the retained patch in an owned temporary source directory:
+at most 4096 source files / 64 MiB, a 10 MiB patch, and 60 seconds capped by the
+remaining campaign deadline. The reconstructed tree is removed on every exit.
 """
 import argparse
 import json
+import math
 import os
 import re
 import socket
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from swdb import artifacts, bfs_protocol, profile, profile_package, rewrite
+from swdb import artifacts, bfs_protocol, profile, profile_package, rewrite, workflow
 from swdb.store import Store
 from scripts.bfs_process import interruption_signals, stop_group
 
@@ -97,6 +110,88 @@ def validate_inputs(packages, frozen, proposal, get, lane, expected_artifact):
     return by_family
 
 
+def validate_existing_candidate(request, submitted, candidate, source, package, replay):
+    """Revalidate retained creation bindings; this makes no measurement claim."""
+    def require(condition, reason):
+        if not condition:
+            raise ValueError('existing candidate: ' + reason)
+
+    require(workflow._request_error(request) is None, 'original proposal request is invalid')
+    require(submitted.get('kind') == 'proposal' and submitted.get('id') == request['id']
+            and artifacts.digest(submitted.get('request')) == artifacts.digest(request)
+            and submitted.get('payload_sha256') == artifacts.digest(request['payload'])
+            and submitted.get('producer') == request['producer'], 'proposal/request identity differs')
+    require(submitted.get('outcome') == {'state': 'candidate_created', 'stage': 'rewriting', 'reason': None},
+            'proposal is not at its completed initial rewrite')
+    attempts = submitted.get('attempts', [])
+    require(len(attempts) == 1 and attempts[0].get('number') == 1
+            and attempts[0].get('stage') == 'rewriting' and attempts[0].get('state') == 'completed'
+            and attempts[0].get('candidate') == candidate.get('id')
+            and not any(key in attempts[0] for key in ('parent_candidate', 'trigger_evaluation')),
+            'prior or incomplete repair/rewrite history cannot be resumed')
+    budget = submitted.get('repair_budget')
+    require(budget is None or (isinstance(budget, dict) and type(budget.get('repairs')) is int and budget['repairs'] == 0),
+            'a consumed repair budget cannot be reset by reuse')
+    require(candidate.get('kind') == 'candidate' and candidate.get('id') == request['id'] + '.candidate-1'
+            and submitted.get('candidate') == candidate['id'] and candidate.get('proposal') == submitted['id']
+            and candidate.get('parent_candidate') is None and candidate.get('state') == 'unverified'
+            and candidate.get('producer') == request['producer'], 'candidate is not the exact original rewrite result')
+    profile_package.verify(package)
+    require(package.get('kind') == 'profile_package' and package.get('id') == request['profile_package']
+            and submitted.get('profile_package') == package['id']
+            and source.get('kind') == 'source_snapshot' and source.get('id') == request['source_snapshot']
+            and all(row.get('source_snapshot') == source['id'] for row in (submitted, candidate, package))
+            and all(row.get('implementation') == request['implementation'] for row in (candidate, source, package))
+            and source.get('artifact', {}).get('sha256') == request['source_sha256']
+            and package.get('context', {}).get('source_sha256') == request['source_sha256']
+            and set(request['regions']) <= {row.get('id') for row in package.get('regions', [])},
+            'source/profile/implementation/region bindings differ')
+    require(candidate.get('context') == source.get('context')
+            and candidate.get('protections') == source.get('protections'), 'candidate source context or protections differ')
+    source_path = artifacts.verify(source['artifact'])
+    candidate_path = artifacts.verify(candidate['artifact'])
+    require(candidate['artifact']['sha256'] != source['artifact']['sha256'], 'candidate contains no source change')
+    artifacts.check_protections(source_path, source['protections'])
+    artifacts.check_protections(candidate_path, source['protections'])
+    diff = Path(candidate.get('diff', ''))
+    require(diff.is_absolute() and diff.is_file() and not diff.is_symlink()
+            and diff.stat().st_size <= 10 * 1024**2
+            and artifacts.file_hash(diff) == candidate.get('diff_sha256'), 'candidate diff is unavailable or changed')
+    patch = request['payload']['content']
+    if request['payload']['kind'] == 'patch':
+        require(budget is None and 'provider' not in submitted and 'provider' not in attempts[0],
+                'initial supplied patch unexpectedly contains provider or repair state')
+    else:
+        provider = submitted.get('provider', {})
+        observed = attempts[0].get('provider', {})
+        require(submitted.get('provider', {}).get('kind') == 'claude'
+                and observed.get('classification') == 'rewrite_provider'
+                and observed.get('state') == 'completed' and type(observed.get('returncode')) is int
+                and observed['returncode'] == 0 and observed.get('provider') == provider,
+                'interpreted reuse lacks a completed real rewrite provider receipt')
+        require(isinstance(budget, dict) and set(budget) == {'max_repairs', 'total_seconds', 'used_seconds', 'repairs'}
+                and type(budget.get('max_repairs')) is int and 0 <= budget['max_repairs'] <= 5
+                and type(budget.get('total_seconds')) is int and 1 <= budget['total_seconds'] <= 3600
+                and type(budget.get('used_seconds')) in (int, float) and math.isfinite(budget['used_seconds'])
+                and 0 <= budget['used_seconds'] <= budget['total_seconds']
+                and all(budget[key] == provider.get(key) for key in ('max_repairs', 'total_seconds'))
+                and budget['used_seconds'] == observed.get('host_wall_s'),
+                'retained provider time/repair allowance is missing or inconsistent')
+        interpretation = submitted.get('interpretation', {})
+        require(not interpretation.get('unresolved') and bool(interpretation.get('interpretation')), 'interpretation is unresolved')
+        patch = interpretation.get('patch')
+    require(isinstance(patch, str) and patch.strip() and diff.read_text() == patch,
+            'candidate diff differs from the exact retained patch/interpretation')
+    binding = replay(request, source, candidate, patch)
+    return {'mode': 'existing_candidate', 'proposal': submitted['id'], 'proposal_sha256': artifacts.digest(submitted),
+            'candidate': candidate['id'], 'candidate_sha256': artifacts.digest(candidate),
+            'candidate_artifact_sha256': candidate['artifact']['sha256'],
+            'source_snapshot': source['id'], 'source_snapshot_sha256': artifacts.digest(source),
+            'profile_package': package['id'], 'profile_package_sha256': artifacts.digest(package),
+            'diff': {'path': str(diff), 'sha256': candidate['diff_sha256']},
+            'repair_budget': budget, 'patch_binding': binding, 'gain_claim': False}
+
+
 class Driver:
     def __init__(self, args):
         self.args = args
@@ -116,6 +211,10 @@ class Driver:
         pending.replace(self.folder / 'driver.json')
 
     def call(self, command, *rest, timeout=180, required=True):
+        argv = [sys.executable, '-m', 'swdb', command, *map(str, rest), '--records', str(self.args.records), '--format', 'json']
+        return self.execute(command, argv, timeout=timeout, required=required)
+
+    def execute(self, command, argv, *, timeout=180, required=True):
         args = self.args
         profile._verified_lane(Store(args.records).get('mbit10', 'machine'), args.lane)
         remaining = args.total_seconds - (time.monotonic() - self.started)
@@ -127,7 +226,6 @@ class Driver:
                 raise RuntimeError(f'{path} free-space reserve is below {reserve} GiB')
         index = len(self.receipt['stages'])
         output, error = self.folder / f'{index:03}-{command}.json', self.folder / f'{index:03}-{command}.stderr'
-        argv = [sys.executable, '-m', 'swdb', command, *map(str, rest), '--records', str(args.records), '--format', 'json']
         entry = {'command': argv, 'state': 'running', 'stdout': str(output), 'stderr': str(error)}
         self.receipt['stages'].append(entry)
         self.save()
@@ -157,12 +255,67 @@ class Driver:
         return result
 
     def request(self, command, value, *rest, **kwargs):
+        path = self.retain_request(value)
+        return self.call(command, path, *rest, **kwargs)
+
+    def retain_request(self, value):
         if not isinstance(value.get('id'), str) or not re.fullmatch(r'[a-z0-9][a-z0-9._-]*', value['id']):
             raise ValueError('request ID must use record identifier syntax')
         path = self.folder / (value['id'] + '.request.json')
         if path.exists(): raise ValueError('driver request ID would overwrite retained evidence')
         path.write_text(json.dumps(value, indent=2, allow_nan=False))
-        return self.call(command, path, *rest, **kwargs)
+        return path
+
+    def replay_candidate(self, request, source, candidate, patch):
+        """Bind source+authorized edits to the artifact under the caller's deadline."""
+        files = source['artifact']['files']
+        if len(files) > 4096 or sum(row['bytes'] for row in files) > 64 * 1024**2:
+            raise ValueError('existing candidate replay exceeds the 4096-file/64-MiB source bound')
+        proof = {'id': request['id'] + '.candidate-binding', 'source': source['artifact'], 'patch': patch,
+                 'editable_files': request['constraints']['editable_files'], 'protections': source['protections']}
+        path = self.retain_request(proof)
+        script = ('import json,sys; from pathlib import Path; from swdb import artifacts,workflow; '
+                  'data=json.loads(Path(sys.argv[1]).read_text()); '
+                  'result=workflow.apply_patch(artifacts.verify(data["source"]),Path(sys.argv[2]),'
+                  'data["patch"],data["editable_files"],data["protections"]); print(json.dumps(result))')
+        with tempfile.TemporaryDirectory(prefix=self.args.id + '.candidate-binding-', dir=self.args.source_runs_dir) as scratch:
+            result = self.execute('candidate-binding', [sys.executable, '-c', script, str(path), str(Path(scratch) / 'source')], timeout=60)
+            if (result.get('sha256') != candidate['artifact']['sha256']
+                    or result.get('files') != candidate['artifact']['files']):
+                raise ValueError('existing candidate bytes differ from replaying the exact authorized patch on its source')
+            artifacts.verify(candidate['artifact'])
+        return {'source_sha256': source['artifact']['sha256'], 'candidate_sha256': result['sha256'],
+                'request': {'path': str(path), 'sha256': artifacts.file_hash(path)},
+                'result': {'path': self.receipt['stages'][-1]['stdout'], 'sha256': self.receipt['stages'][-1]['stdout_sha256']},
+                'temporary_source_retained': False}
+
+    def acquire_candidate(self, proposal):
+        existing = getattr(self.args, 'existing_candidate', None)
+        if not existing:
+            extra = ['--provider-config', self.args.provider_config] if self.args.provider_config else []
+            return self.request('submit', proposal, '--runs-dir', self.args.source_runs_dir, *extra,
+                                timeout=1000, required=False)
+        if self.args.provider_config:
+            raise ValueError('--provider-config cannot accompany --existing-candidate; reuse never invokes a provider')
+        path = self.retain_request(proposal)
+        submitted = self.call('get', proposal['id'])
+        candidate = self.call('get', existing)
+        if candidate.get('id') != existing:
+            raise ValueError('public get returned another existing candidate identity')
+        source = self.call('get', proposal['source_snapshot'])
+        package = self.call('get', proposal['profile_package'])
+        reuse = validate_existing_candidate(proposal, submitted, candidate, source, package, self.replay_candidate)
+        reason = workflow.check_capabilities(proposal, Store(self.args.records))
+        if reason:
+            raise ValueError('existing candidate capability requirements are unresolved: ' + reason)
+        chain = self.call('get', proposal['id'], '--chain')
+        if (chain.get('root') != proposal['id'] or any(artifacts.digest(chain.get('records', {}).get(row['id'])) != artifacts.digest(row)
+                for row in (submitted, candidate, source, package))):
+            raise ValueError('existing candidate changed during public chain retrieval')
+        reuse['request'] = {'path': str(path), 'sha256': artifacts.file_hash(path)}
+        self.receipt['candidate_acquisition'] = reuse
+        self.save()
+        return submitted
 
     def evaluation_request(self, name, candidate, workload, frozen, role):
         settings = frozen['settings']
@@ -214,10 +367,17 @@ class Driver:
         packages = [self.call('get', rid) for rid in args.packages]
         proposal = json.loads(args.proposal.read_text())
         bfs_protocol._validate_settings(frozen['settings'], Store(args.records))
+        paired = frozen['settings']['sampling'].get('collection') is not None
+        self.receipt.setdefault('bounds', {})['evaluation_seconds'] = 2400 if paired else 1200
+        if paired:
+            self.receipt['bounds']['pair_seconds'] = 2400
         implementation = self.call('get', packages[0]['implementation'])
         expected_artifact = artifacts.identify(artifacts.source_root(Store(args.records), implementation))
         rows = validate_inputs(packages, frozen, proposal, lambda rid: self.call('get', rid), args.lane, expected_artifact)
-        if proposal['payload']['kind'] == 'structured_instructions' and not args.provider_config:
+        if getattr(args, 'existing_candidate', None) and args.provider_config:
+            raise ValueError('--provider-config cannot accompany --existing-candidate; reuse never invokes a provider')
+        if (proposal['payload']['kind'] == 'structured_instructions' and not args.provider_config
+                and not getattr(args, 'existing_candidate', None)):
             raise ValueError('interpreted proposal requires operator-supplied --provider-config')
         for file in (args.provider_config, args.repair_config):
             if file:
@@ -228,8 +388,7 @@ class Driver:
             inputs=[{'id': package['id'], 'sha256': artifacts.digest(package)} for package in packages],
             repository_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip())
         self.save()
-        extra = ['--provider-config', args.provider_config] if args.provider_config else []
-        submitted = self.request('submit', proposal, '--runs-dir', args.source_runs_dir, *extra, timeout=1000, required=False)
+        submitted = self.acquire_candidate(proposal)
         if not submitted or submitted.get('outcome', {}).get('state') != 'candidate_created':
             self.receipt.update(state='proposal_non_success', proposal_outcome=(submitted or {}).get('outcome'))
             return
@@ -237,7 +396,6 @@ class Driver:
         regional = [pair for pair in frozen['settings'].get('region_pairs', [])
                     if pair.get('evidence') == 'native_diagnostic_profile.v1']
         diagnostic_repetitions = regional[0]['diagnostic_repetitions'] if regional else 1
-        paired = frozen['settings']['sampling'].get('collection') is not None
         baselines, baseline_packages = {}, {}
         for family, row in ([] if paired else rows.items()):
             prefix = args.id + '.' + family.replace('_', '-')
@@ -311,6 +469,7 @@ def main():
     parser.add_argument('--packages', nargs=2, required=True, help='kronecker/uniform baseline packages; proposal targets the first')
     parser.add_argument('--protocol', required=True)
     parser.add_argument('--proposal', type=Path, required=True, help='operator-authored JSON request; intent is never synthesized by this driver')
+    parser.add_argument('--existing-candidate', help='reuse this exact initial candidate of the retained --proposal request; no submit or provider rerun')
     parser.add_argument('--provider-config', type=Path)
     parser.add_argument('--repair-config', type=Path, help='optional provider configuration authorizing at most one build/correctness repair')
     parser.add_argument('--runs-dir', type=Path, required=True)
@@ -320,6 +479,10 @@ def main():
     parser.add_argument('--total-seconds', type=int, default=14400)
     args = parser.parse_args()
     if not re.fullmatch(r'[a-z0-9][a-z0-9._-]*', args.id): parser.error('id must use record identifier syntax')
+    if args.existing_candidate and not re.fullmatch(r'[a-z0-9][a-z0-9._-]*', args.existing_candidate):
+        parser.error('existing-candidate must use record identifier syntax')
+    if args.existing_candidate and args.provider_config:
+        parser.error('--provider-config cannot accompany --existing-candidate')
     if not 1 <= args.total_seconds <= 21600: parser.error('total-seconds must be in [1,21600]')
     for key in ('records', 'proposal', 'provider_config', 'repair_config'):
         if getattr(args, key) is not None: setattr(args, key, getattr(args, key).resolve())

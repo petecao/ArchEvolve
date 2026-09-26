@@ -238,3 +238,37 @@ The fixture correction and document checks are targeted post-failure evidence,
 not a relabeled full-suite pass at a newer commit. The new explicit campaign
 candidate-reuse path is under separate implementation/review and is not covered
 by the pinned full run. No new remote evaluation occurred.
+
+## Existing-candidate campaign route — 2026-09-26 10:26 ET
+
+A remaining-ticket audit found that the native client always called `submit`,
+although Ticket 18's proposal had already created its candidate and duplicate
+proposal IDs are rejected. The explicit `--existing-candidate` route now retrieves
+and checks that exact initial candidate with the original proposal JSON. It
+preserves the default fresh-submit path and the original provider-time/repair
+allowance; it invokes no provider during acquisition.
+
+Independent review reproduced a candidate/diff mismatch that ordinary rehashed
+artifact checks missed. Replaying the exact authorized patch with the existing
+workflow helper now binds source bytes to candidate bytes. Replay is capped at
+60 seconds and the remaining campaign budget, with a 4,096-file/64-MiB source
+bound, owned-process cleanup, temporary source cleanup, and retained proof hashes.
+The independent reproduction accepts the original artifact and rejects an altered,
+consistently rehashed artifact. Review also closed missing original provider-budget
+metadata and numeric/Boolean request-equality gaps. Paired campaign receipts now
+report the already implemented 2,400-second pair/member limit; serial stays at
+1,200 seconds and the overall campaign bound is unchanged.
+
+The worker's focused group passed **40 tests, with 23 deselected, in 27.74 seconds**,
+covering reuse/replay, fresh submission, campaign cleanup, and both region-flow
+modes. The observed tool-result transcript is retained at
+`/private/tmp/bfs-campaign-reuse-focused-20260926.log`, SHA-256
+`23a6fffb819530b21a329526b9b5adae09d6b4a1877a9ecefbcd0a976246fd51`.
+It is explicitly a transcript captured after the command, not redirected raw
+pytest output or a rerun. An initial fixture setup run had 10 passing cases and
+22 setup errors because `copytree` targeted an existing directory; that setup
+was corrected. Its summary is retained at
+`/private/tmp/bfs-campaign-reuse-intermediate-failure-20260926.log`; the original
+tool output was truncated, so no complete raw log is claimed. Independent scoped
+review reports no remaining actionable finding. These local checks do not
+execute the actual Ticket 18 candidate or complete any empirical acceptance cell.

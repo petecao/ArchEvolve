@@ -258,6 +258,8 @@ def test_campaign_collects_current_baseline_packages_before_passing_region_map(t
         return {'id': prefix + '.pair'}, baseline, candidate
     driver.evaluate_pair = evaluate_pair
     driver.run()
+    assert driver.receipt['bounds']['evaluation_seconds'] == (2400 if paired else 1200)
+    assert driver.receipt['bounds'].get('pair_seconds') == (2400 if paired else None)
     assert len(collected) == 4 and len(comparisons) == 2
     assert len(pairs) == (2 if paired else 0)
     for request in comparisons:
