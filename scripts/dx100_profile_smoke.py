@@ -151,6 +151,7 @@ def main():
                 'simulator': prior['request']['simulator'],
                 'binary': {'path': built['build']['binary'], 'sha256': built['build']['binary_sha256']},
                 'workload': {'id': workload['id'], 'source': 0, 'representation': graph},
+                'protocol_trial': {'source_position': 0, 'repetition': 0},
                 'configuration': {'mode': 'BASE', 'l3_size_mb': 8, 'l3_assoc': 16, 'tile_elements': 16384},
                 'verification': {'checker': 'dx100.bfs.verifier.v1', 'max_ticks': 10**10},
                 'budget': {'total_seconds': total, 'checkpoint_seconds': 300, 'run_seconds': run,

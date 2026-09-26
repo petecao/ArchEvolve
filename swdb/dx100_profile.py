@@ -1,6 +1,6 @@
 """Execution-bound DX100 statistics and selected-region collection.
 
-Updated: 2026-09-25. Source discovery is reused; no static access stream is invented.
+Updated: 2026-09-26. Source discovery is reused; no static access stream is invented.
 """
 
 import configparser
@@ -17,6 +17,26 @@ from swdb.bfs_protocol import _request
 from swdb.cli import Failure, _require_valid
 from swdb.dx100 import _file
 from swdb.bfs_native import StageFailure
+
+
+def _trial(evaluation, *, require_explicit=False):
+    """Retain execution coordinates; never map a diagnostic to another trial."""
+    context = evaluation['context']
+    trial = context.get('protocol_trial')
+    if 'protocol_trial' not in context and not require_explicit:
+        trial = {'source_position': 0, 'repetition': 0}
+    if (not isinstance(trial, dict) or set(trial) != {'source_position', 'repetition'}
+            or any(type(value) is not int or value < 0 for value in trial.values())
+            or type(context.get('source')) is not int or context['source'] < 0):
+        raise Failure('execution requires explicit integer source/position/repetition trial identity')
+    result = {'source': context['source'], **trial}
+    timing = evaluation.get('timing', [])
+    if not isinstance(timing, list) or (timing and (
+            len(timing) != 1 or not isinstance(timing[0], dict) or any(
+                type(timing[0].get(key)) is not int or timing[0][key] != value
+                for key, value in result.items()))):
+        raise Failure('execution trial identity differs from its recorded timing')
+    return result
 
 
 def _diagnostic_seal(evaluation, deadline):
@@ -60,6 +80,9 @@ def diagnostic_regions(store, request, evaluation, candidate, root, deadline):
             or diagnostic.get('evidence_kind') != evaluation['evidence_kind']
             or artifacts.digest(_context(diagnostic)) != artifacts.digest(_context(evaluation))):
         raise Failure('diagnostic execution differs from the exact primary source/workload/configuration/ROI')
+    trial = _trial(diagnostic, require_explicit=True)
+    if trial != _trial(evaluation, require_explicit=True):
+        raise Failure('diagnostic execution trial differs from the actual primary source/position/repetition')
     build = store.get(diagnostic['context'].get('candidate_build'), 'evaluation')
     if (not build or not build.get('context', {}).get('diagnostic')
             or build.get('outcome', {}).get('state') != 'complete'
@@ -100,9 +123,7 @@ def diagnostic_regions(store, request, evaluation, candidate, root, deadline):
             row['observation_state'] = 'unobserved'
             row['unavailable_reason'] = 'This scope was not entered while ROI guards were active; no duration is inferred.'
         regions.append(row)
-    source = diagnostic['context']['source']
-    trial = evaluation['context'].get('protocol_trial', {'source_position': 0, 'repetition': 0})
-    run = {'kind': 'regions', 'evaluation': diagnostic['id'], 'source': source, **trial,
+    run = {'kind': 'regions', 'evaluation': diagnostic['id'], **trial,
         'binary_sha256': diagnostic['build']['binary_sha256'], 'output': str(log), 'output_sha256': observed_sha256,
         'region_output': str(log), 'region_output_sha256': observed_sha256,
         'evidence_kind': diagnostic['evidence_kind'], 'correctness': copy.deepcopy(diagnostic['correctness']),
@@ -246,6 +267,7 @@ def collect(args):
         if not evaluation or evaluation.get("context", {}).get("backend") != "dx100-gem5-se":
             raise Failure("evaluation does not identify DX100 execution")
         context = evaluation["context"]
+        trial = _trial(evaluation, require_explicit=bool(request.get('diagnostic_evaluation')))
         candidate = store.get(evaluation.get("candidate"), "candidate")
         discovery = store.get(request.get("discovery_profile"), "region_profile")
         if not candidate or (not request.get('diagnostic_evaluation') and (not discovery or discovery.get("candidate") != candidate["id"])):
@@ -313,12 +335,11 @@ def collect(args):
             data['artifacts'] = {'primary_binary_sha256': evaluation['build']['binary_sha256'],
                 'region_binary': binary, 'memory_binary': {'path': evaluation['build']['binary'],
                     'sha256': evaluation['build']['binary_sha256'], 'difference': 'actual primary modeled memory counters'}}
-            trial = context.get('protocol_trial', {'source_position': 0, 'repetition': 0})
-            data['executions'][0].update(kind='memory', source=context['source'], **trial,
+            data['executions'][0].update(kind='memory', **trial,
                 output=str(log), output_sha256=log_reference['sha256'], raw_artifact=str(stats), raw_sha256=stats_reference['sha256'])
             for row in data['dynamic_memory']:
                 row.update(artifact_sha256=evaluation['build']['binary_sha256'], source_artifact_sha256=candidate['artifact']['sha256'],
-                    execution={'source': context['source'], **trial},
+                    execution=dict(trial),
                     raw_artifact=str(stats), raw_sha256=stats_reference['sha256'])
             if not data['dynamic_memory']:
                 data['reasons'].append('No supported actual dynamic memory counter appears in the primary interval.')
@@ -328,8 +349,7 @@ def collect(args):
                 data['reasons'].append('No invoked function and loop pair has complete diagnostic timing.')
         data["raw_artifacts"] = [{"kind": "statistics", **stats_reference}, {"kind": "log", **log_reference},
                                  {"kind": "configuration", **context["actual_configuration"]}]
-        trial = context.get('protocol_trial', {'source_position': 0, 'repetition': 0})
-        timing = {"source": context["source"], **trial,
+        timing = {**trial,
             "duration_s": roi["duration_s"], "roi": context["roi"], "basis": "simulated", "quantity": "simulated_roi_seconds",
             "binary_sha256": evaluation["build"]["binary_sha256"], "output": str(log), "output_sha256": log_reference["sha256"],
             "statistics_sha256": stats_reference["sha256"],

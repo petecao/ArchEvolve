@@ -282,6 +282,7 @@ def main():
                         'candidate': candidate['id'], 'binary': binary,
                         'simulator': {key: binaries['gem5.opt'][key] for key in ('path', 'sha256')},
                         'workload': {'id': workload['id'], 'source': vertex, 'representation': graph},
+                        'protocol_trial': {'source_position': position, 'repetition': repetition},
                         'configuration': configuration,
                         'verification': {'checker': verifier, 'max_ticks': args.verification_ticks,
                                          'coverage': args.accelerated},
@@ -293,8 +294,7 @@ def main():
                     if (position, treatment) in checkpoints:
                         payload['checkpoint_manifest'] = checkpoints[position, treatment]
                     if frozen and not diagnostic:
-                        payload.update(protocol=frozen['id'], protocol_role=args.protocol_role,
-                                       protocol_trial={'source_position': position, 'repetition': repetition})
+                        payload.update(protocol=frozen['id'], protocol_role=args.protocol_role)
                     pair[treatment] = request('dx100-execute', payload, timeout=total_seconds + 60, execute=True)
                     if (pair[treatment]['outcome']['state'] != 'complete'
                             or pair[treatment]['correctness']['state'] != 'passed'):

@@ -1,4 +1,4 @@
-"""Public simulated collector fixtures, not hardware acceptance. Updated: 2026-09-25."""
+"""Public simulated collector fixtures, not hardware acceptance. Updated: 2026-09-26."""
 
 import hashlib
 import copy
@@ -17,7 +17,8 @@ from test_dx100 import case, execution_request, reference
     "diagnostic-report-list", "diagnostic-counter-list", "diagnostic-boolean-errors",
     "pinned-cache-totals", "pinned-region-only", "diagnostic-unverified", "diagnostic-incorrect",
     "diagnostic-no-seal", "diagnostic-seal-tamper", "diagnostic-seal-binding", "diagnostic-seal-list",
-    "diagnostic-preseal", "diagnostic-unentered-time"])
+    "diagnostic-preseal", "diagnostic-unentered-time", "diagnostic-missing-trial",
+    "diagnostic-wrong-position", "diagnostic-wrong-repetition", "diagnostic-timing-mismatch", "diagnostic-wrong-source"])
 def test_public_simulated_collector_retains_identity_and_incomplete_attribution(case, records, mode):
     records.copy_repo("applications")
     repository = Path(__file__).resolve().parents[1]
@@ -89,12 +90,20 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
         records.write('evaluations/' + evaluation['id'] + '.yaml', evaluation)
         diagnostic = copy.deepcopy(evaluation)
         diagnostic['id'] = 'diagnostic'
-        # The series freezes the primary trial only. Independent source-scope
-        # diagnostics keep their own local cell while the profile maps them to
-        # the primary's global source-position/repetition identity.
-        diagnostic['context'].pop('protocol_trial')
+        # Diagnostics retain their own global trial, even without a frozen
+        # protocol and when context.sources contains only the executed source.
         diagnostic['context']['workload']['sources'] = [1, 2, evaluation['context']['source']]
         diagnostic['context']['candidate_build'] = 'diagnostic-build'
+        if mode == 'diagnostic-missing-trial': diagnostic['context'].pop('protocol_trial')
+        if mode == 'diagnostic-wrong-position': diagnostic['context']['protocol_trial']['source_position'] = 0
+        if mode == 'diagnostic-wrong-repetition': diagnostic['context']['protocol_trial']['repetition'] = 0
+        if mode == 'diagnostic-wrong-source': diagnostic['context']['source'] += 1
+        if mode == 'diagnostic-timing-mismatch':
+            diagnostic['timing'] = [{'source': diagnostic['context']['source'], 'source_position': 0,
+                'repetition': 0, 'duration_s': 0.001, 'verified': False, 'evidence_kind': 'contract_fixture',
+                'roi': evaluation['context']['roi'], 'basis': 'simulated', 'quantity': 'simulated_roi_seconds',
+                'binary_sha256': evaluation['build']['binary_sha256'], 'output': '/fixture/log',
+                'output_sha256': 'a' * 64}]
         if mode == 'diagnostic-source-mismatch':
             diagnostic['context']['candidate_sha256'] = 'b' * 64
         binary = folder / 'diagnostic-binary'; binary.write_bytes(b'fixture diagnostic binary')
@@ -166,7 +175,8 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
     if mode in {"truncated", "changed-stats", "wrong-clock", "stale-region", 'diagnostic-source-mismatch', 'diagnostic-invalid-counters',
                 'diagnostic-report-list', 'diagnostic-counter-list', 'diagnostic-boolean-errors',
                 'diagnostic-no-seal', 'diagnostic-seal-tamper', 'diagnostic-seal-binding', 'diagnostic-seal-list',
-                'diagnostic-preseal', 'diagnostic-unentered-time'}:
+                'diagnostic-preseal', 'diagnostic-unentered-time', 'diagnostic-missing-trial',
+                'diagnostic-wrong-position', 'diagnostic-wrong-repetition', 'diagnostic-timing-mismatch', 'diagnostic-wrong-source'}:
         assert profile["outcome"]["state"] == "failed"
         assert retrieved["timing"] == []
     else:
@@ -194,3 +204,30 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
             assert "exclusive_simulated_seconds" not in profile["regions"][1]["metrics"]
         assert bool(profile["dynamic_memory"]) == (mode not in {'missing-memory', 'pinned-region-only'})
         assert profile["executions"][0]["evidence_kind"] == "contract_fixture"
+
+
+@pytest.mark.parametrize('field,value', [
+    ('source', True), ('source_position', False), ('repetition', True),
+    ('source', -1), ('source_position', -1), ('repetition', -1),
+    ('source_position', 1.0), ('repetition', '1')])
+def test_trial_identity_rejects_boolean_negative_or_coerced_coordinates(field, value):
+    from swdb.cli import Failure
+    from swdb.dx100_profile import _trial
+    evaluation = {'context': {'source': 7, 'protocol_trial': {'source_position': 2, 'repetition': 1}}}
+    target = evaluation['context'] if field == 'source' else evaluation['context']['protocol_trial']
+    target[field] = value
+    with pytest.raises(Failure, match='trial identity'):
+        _trial(evaluation, require_explicit=True)
+
+
+def test_legacy_discovery_trial_is_not_promoted_to_an_explicit_diagnostic_trial():
+    from swdb.cli import Failure
+    from swdb.dx100_profile import _trial
+    evaluation = {'context': {'source': 7}}
+    assert _trial(evaluation) == {'source': 7, 'source_position': 0, 'repetition': 0}
+    with pytest.raises(Failure, match='explicit'):
+        _trial(evaluation, require_explicit=True)
+    assert 'protocol_trial' not in evaluation['context']
+    evaluation['context']['protocol_trial'] = None
+    with pytest.raises(Failure, match='explicit'):
+        _trial(evaluation)

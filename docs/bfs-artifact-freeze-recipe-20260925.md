@@ -1,6 +1,6 @@
 # Author BFS reference and matched-control freeze recipe
 
-Date: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 
 This is a reviewable operator recipe for Ticket 16. It does not freeze a protocol,
 dispatch a simulator, or claim reference acceptance. The prescribed run plan is
@@ -102,6 +102,17 @@ These choices precede all reference timing. The requested names are inputs, not
 claims of returned protocol IDs. The canonical model-build record digest is
 `13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea`.
 
+The unfrozen requests now prospectively select `dx100.bfs.verifier.v2` and its
+separate post-seal `SyscallBase` trace. Both roles bind the exact driver, parser,
+and host-memory observer hashes in `instrumentation.verifier_runtime`; each
+actual execution retains immutable copies. Their trace instrumentation also
+matches the declared formatting flags and one-billion-tick chunk limit. These
+edits do not change an existing protocol or promote a v1 result. A successful
+bounded v2 author proof and a fresh check of these exact helper hashes are still
+required before publishing. If any helper changes before freezing, explicitly
+review and regenerate these prospective identities; after freezing, changed
+instrumentation requires a superseding protocol.
+
 Reuse `bfs-author-scalar-compile-20260925-a1.diagnostic.build` for the baseline
 and `bfs-author-maa-compile-20260925-a1.diagnostic.build` for the MAA role through
 `--diagnostic-build`. Their binary hashes are respectively
@@ -163,7 +174,8 @@ Invoke `scripts/bfs_simulator_series.py` four times: baseline and candidate for
 each frozen policy. Supply actual `--id`, `--candidate`, `--workload`,
 `--build-evaluation`, four-field `--configuration` JSON, `--protocol`,
 `--protocol-role`, dedicated empty `--runs-dir`, `--records`, and owned `--lane`.
-All four use `--author-binary`; only MAA uses `--accelerated`. Pass the actual
+All four use `--author-binary --verifier dx100.bfs.verifier.v2`; only MAA uses
+`--accelerated`. Pass the actual
 `--diagnostic-build bfs-author-scalar-compile-20260925-a1.diagnostic.build` or
 `--diagnostic-build bfs-author-maa-compile-20260925-a1.diagnostic.build` selected
 for that frozen collector identity. This reuses the exact audited diagnostic

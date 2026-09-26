@@ -1,4 +1,4 @@
-# Prepared 2026-09-25 (Eastern Time); not yet frozen or executed.
+# Updated 2026-09-26 (Eastern Time); prospective v2 policy, not frozen or executed.
 message_version: '1.0'
 id: bfs-author-reference-20260925
 version: 1
@@ -229,17 +229,53 @@ settings:
       suppressed_internal_events: []
       verification: same_guest_post_roi
       debug_flags: MAATrace
+      verifier_runtime:
+        driver_sha256: 371657977d56816a37f4885f19923f37175331d2d15b5d7f6e6049d3fa8c1395
+        parser_sha256: 536fe9770612430ec5bd4c719fd8d78d94b46d0a803f293fd8fea31d886dbf74
+        observer_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+      post_roi_trace:
+        flag: SyscallBase
+        scope: post-seal verifier continuation only
+        output: separate_simulator_trace
+        format_flags:
+        - FmtFlag
+        disabled_format_flags:
+        - FmtTicksOff
+        - FmtStackTrace
+        disabled_roi_flags:
+        - MAATrace
+        - MAARangeFuser
+        - MAAIndirect
+        chunk_ticks: 1000000000
     candidate:
       treatment: primary
       roi: bfs.dx100.traversal.v1
       suppressed_internal_events: []
       verification: same_guest_post_roi
       debug_flags: MAATrace,MAARangeFuser,MAAIndirect
+      verifier_runtime:
+        driver_sha256: 371657977d56816a37f4885f19923f37175331d2d15b5d7f6e6049d3fa8c1395
+        parser_sha256: 536fe9770612430ec5bd4c719fd8d78d94b46d0a803f293fd8fea31d886dbf74
+        observer_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+      post_roi_trace:
+        flag: SyscallBase
+        scope: post-seal verifier continuation only
+        output: separate_simulator_trace
+        format_flags:
+        - FmtFlag
+        disabled_format_flags:
+        - FmtTicksOff
+        - FmtStackTrace
+        disabled_roi_flags:
+        - MAATrace
+        - MAARangeFuser
+        - MAAIndirect
+        chunk_ticks: 1000000000
   threads: 4
   roi: bfs.dx100.traversal.v1
   correctness:
     coverage: every_timed_trial
-    verifier: dx100.bfs.verifier.v1
+    verifier: dx100.bfs.verifier.v2
     required_cases: []
     required_accelerator_cases:
       baseline: []

@@ -1,7 +1,10 @@
 """Simulator orchestration selection guards; no simulator evidence. Updated: 2026-09-26."""
 import copy
 import importlib.util
+import json
+from pathlib import Path
 import sys
+from types import SimpleNamespace
 
 import pytest
 
@@ -210,3 +213,78 @@ def test_checker_selection_never_silently_promotes_legacy_evidence(selection):
             client.select_verifier(v1 if checker == v2 else v2, frozen)
     with pytest.raises(ValueError, match='supported DX100'):
         client.select_verifier(None, {'settings': {'correctness': {'verifier': 'unknown'}}})
+
+
+@pytest.mark.parametrize('frozen_series', [False, True])
+def test_client_emits_actual_trial_for_every_primary_and_diagnostic_request(selection, tmp_path, monkeypatch, frozen_series):
+    """Exercise the client/public-command boundary without running a simulator."""
+    client, candidate, source, implementation, workload, expected = selection
+    source['application'] = 'dx100-gapbs'
+    frozen = protocol(workload)
+    frozen['settings'].update(sampling={'repetitions': 2}, correctness={'verifier': 'dx100.bfs.verifier.v1'})
+    seal(frozen)
+    model = {'id': 'model', 'outcome': {'state': 'complete', 'stage': 'build'}, 'evidence_kind': 'execution',
+        'context': {'model_root': '/fixture/model', 'target': 'dx100-e4fc4af-4c'},
+        'build': {'details': {'binaries': [{'path': '/fixture/gem5.opt', 'sha256': 'a' * 64}]}}}
+    catalog = {row['id']: row for row in (candidate, source, implementation, workload, model, frozen)}
+    execution_requests = []
+
+    def stage(receipt, folder, argv, *, output, **kwargs):
+        command, argument = argv[3:5]
+        if command == 'get':
+            result = catalog[argument]
+        else:
+            payload = json.loads(Path(argument).read_text())
+            result = {'id': payload['id']}
+            if command == 'dx100-compile':
+                result.update(candidate=candidate['id'], evidence_kind='execution', request=payload,
+                    outcome={'state': 'complete', 'stage': 'candidate_build'},
+                    build={'binary': '/fixture/' + result['id'], 'binary_sha256': 'b' * 64},
+                    context={'candidate_sha256': expected['sha256'], 'function': implementation['function'],
+                        'model_build': model['id'], 'model_root': '/fixture/model', 'target': model['context']['target'],
+                        'roi': 'bfs.complete_call.v1', 'accelerated_requested': False,
+                        'diagnostic': {'regions': [], 'discovery': {}, 'runtime': {}}})
+            elif command == 'dx100-execute':
+                execution_requests.append(payload)
+                result.update(outcome={'state': 'complete'}, correctness={'state': 'passed', 'checks': [{}]},
+                    context={'checkpoint_manifest': '/fixture/checkpoint', 'workload': {'canonical_sha256': 'c' * 64},
+                        'sources': [payload['workload']['source']], 'target': model['context']['target'],
+                        'backend_configuration': payload['configuration'], 'threads': 4, 'roi': 'bfs.complete_call.v1'},
+                    timing=[{'duration_s': 0.01}])
+            elif command == 'profile-package':
+                result['completeness'] = 'complete'
+            elif command == 'aggregate-evaluations':
+                result['outcome'] = {'state': 'complete'}
+            elif command != 'dx100-profile':
+                raise AssertionError(command)
+            catalog[result['id']] = result
+        output.write_text(json.dumps(result))
+        receipt['stages'].append({'command': command})
+
+    runs = tmp_path / 'runs'; runs.mkdir()
+    config = tmp_path / 'configuration.json'
+    config.write_text(json.dumps({'mode': 'BASE', 'l3_size_mb': 8, 'l3_assoc': 16, 'tile_elements': 16384}))
+    monkeypatch.setattr(client.socket, 'gethostname', lambda: 'mbit10')
+    monkeypatch.setattr(client, 'Store', lambda _: SimpleNamespace(get=lambda ident, kind=None: catalog.get(ident, {})))
+    monkeypatch.setattr(client.profile, '_verified_lane', lambda *args: None)
+    monkeypatch.setattr(client.artifacts, 'external_directory', lambda _: runs)
+    monkeypatch.setattr(client.artifacts, 'source_root', lambda *args: tmp_path / 'pinned')
+    monkeypatch.setattr(client.bfs_protocol, 'workload_representation',
+                        lambda *args: {'representation': {'path': '/fixture/graph.sg', 'sha256': 'c' * 64}})
+    monkeypatch.setattr(client.subprocess, 'check_output', lambda *args, **kwargs: 'fixture-commit\n')
+    monkeypatch.setattr(client.os, 'statvfs', lambda _: SimpleNamespace(f_bavail=100 * 1024**3, f_frsize=1))
+    monkeypatch.setattr(client, 'disk_usage_kib', lambda _: (1, []))
+    monkeypatch.setattr(client, 'run_stage', stage)
+    argv = ['bfs_simulator_series.py', '--id', 'series-fixture', '--candidate', candidate['id'],
+        '--workload', workload['id'], '--build-evaluation', model['id'], '--configuration', str(config),
+        '--runs-dir', '/data/yanruj/EvolveSWDB_runs/series-fixture', '--records', str(tmp_path / 'records'), '--lane', '1']
+    if frozen_series:
+        argv += ['--protocol', frozen['id'], '--protocol-role', 'baseline']
+    monkeypatch.setattr(sys, 'argv', argv)
+    client.main()
+    expected_cells = [(position, vertex, repetition) for position, vertex in enumerate(workload['definition']['sources'])
+                      for repetition in range(2) for _ in ('primary', 'diagnostic')]
+    assert [(row['protocol_trial']['source_position'], row['workload']['source'], row['protocol_trial']['repetition'])
+            for row in execution_requests] == expected_cells
+    assert all(set(row['protocol_trial']) == {'source_position', 'repetition'} for row in execution_requests)
+    assert all(('protocol' in row) == (frozen_series and '.primary.' in row['id']) for row in execution_requests)

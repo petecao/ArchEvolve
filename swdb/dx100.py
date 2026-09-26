@@ -568,6 +568,17 @@ def execute(args):
                     or source not in registered["sources"]):
                 raise Failure("execution graph/source differs from its registered workload")
             data["context"]["workload"] = registered
+        if 'protocol_trial' in request:
+            trial = request['protocol_trial']
+            if not isinstance(trial, dict) or set(trial) != {'source_position', 'repetition'}:
+                raise Failure('protocol_trial requires source_position and repetition only')
+            position = _integer(trial['source_position'], 'protocol_trial.source_position', minimum=0)
+            repetition = _integer(trial['repetition'], 'protocol_trial.repetition', minimum=0)
+            if registered is None:
+                raise Failure('protocol_trial requires a registered ordered workload source list')
+            if position >= len(registered['sources']) or registered['sources'][position] != source:
+                raise Failure('protocol_trial source_position differs from the registered workload source')
+            data['context']['protocol_trial'] = {'source_position': position, 'repetition': repetition}
         source_file = root / "benchmarks/gapbs/src/bfs.cc"
         if source_file.is_file():
             data["context"]["timed_source"] = {"path": str(source_file),
