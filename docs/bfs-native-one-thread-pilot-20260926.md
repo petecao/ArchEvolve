@@ -332,3 +332,19 @@ An external final audit still establishes driver/launcher terminal state, lane
 release, and the complete owned-process union. This client does not attest its
 own disappearance, and it adds no intermediate primary-phase admission for
 another workflow.
+
+## Phase-accounting correction before dispatch — 2026-09-26 14:54 ET
+
+Final readback reproduced a monitor/phase-transition race: a storage count read
+before the switch could be compared with the newer diagnostic baseline and
+falsely fail the nonnegative phase-byte guard. The regression failed with
+`phase storage allowance exhausted` before the correction. A shared reentrant
+lock now keeps each accounting snapshot and the phase/baseline transition
+consistent. Its wait and work remain inside the existing 30-second guard and
+remaining phase allowance. Final primary reads are charged before diagnostics
+begins; no phase, storage, statistical, or launch limit changes.
+
+The complete client suite now passes 69 tests with two Linux-only skips; an
+independent reviewer repeated the race and phase-budget cases. The earlier
+`d484afb2` export was never dispatched as a pilot. Its superseding exact code
+pin and actual Linux cleanup proof remain required before the single attempt.
