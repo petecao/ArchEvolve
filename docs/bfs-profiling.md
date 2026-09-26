@@ -39,6 +39,12 @@ binaries live there; collector logs and observation files remain in `--runs-dir`
 The diagnostic `load_average` is sampled for this profile; `primary_load_average`
 retains the timed evaluation's original host-load observation. Both region and
 memory collectors honor the requested repetitions and ordered traversal sources.
+An additive `post_collection_audit` can invalidate a metric family while retaining
+the exact original observations and raw hashes. An audit with `scope: dynamic_memory`
+and `state: invalid` prevents those observations from satisfying package completeness;
+it does not erase independent region or correctness evidence.
+Older collectors persist the same audit under `extensions.post_collection_audit`
+so their original schema remains valid.
 Execution retains the primary compiler, version, and OpenMP build flags. Any parser
 error fails discovery. Transformation-specific/continued OpenMP pragmas and
 macro-generated loops without safe source extents remain unresolved. Header,

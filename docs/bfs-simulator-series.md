@@ -18,7 +18,12 @@ The driver does not choose a rewrite, freeze policy, retry failures, or compare
 results. A completed series is not itself a gain claim.
 
 Each workload source gets two separate primary executions and two separate
-diagnostic executions. Primary results carry the actual frozen source/repetition
+diagnostic executions. For each source and binary, the second replay restores the
+first execution's exact checkpoint through its hashed manifest. Every replay is a
+new simulator process with a new ROI and correctness result; reuse avoids repeating
+guest serialization without creating synthetic measurements. Checkpoints are not
+shared across source vertices, primary/diagnostic binaries, or series.
+Primary results carry the actual frozen source/repetition
 cell when applicable. Diagnostic source scopes and binary differences are retained
 separately; their durations cannot replace primary ROI timing. The driver assembles
 one complete package per primary cell, then aggregates frozen primary executions

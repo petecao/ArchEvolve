@@ -43,3 +43,22 @@ Claimed for exact-binary continuation implementation while ticket 12 builds the 
 ## Implementation evidence — 2026-09-25
 
 The continuation driver in `scripts/dx100_verify.py` seals the actual guest-dumped interval and resumes the same machine once. `swdb/dx100.py` binds explicit verifier results and observed MAA path evidence to exact execution identities while retaining incomplete/failing outcomes. `python3 -m pytest tests/test_dx100.py -q` passed 13 tests in 37.04 seconds, including direct driver execution with fake gem5 events for PASS, FAIL with exit zero, absent/ambiguous verdict, unexpected terminal cause, and post-seal timeout. These are contract fixtures; actual model continuation and applicable accelerated coverage remain unaccepted.
+
+## Candidate and coverage preparation — 2026-09-25
+
+The public candidate compiler now binds changed source artifacts to bounded
+compilation receipts without rebuilding the model. Its trusted complete-call
+wrapper preserves the actual returned parent array across the sealed exit and
+validates its length and value range before the protected structural verifier.
+An independent diagnostic-only wrapper preserves the unchanged author's
+traversal ROI and forwards its internal reset/dump/exit events. The original
+author primary binary is unchanged. Author function identity and accelerator
+tile/core mismatches reject before simulation.
+
+Actual MAA completion and tile sizes are parsed only inside the sealed ROI.
+Competing-update evidence first binds the instruction's virtual parent base,
+then detects distinct values for the same observed physical word; physical
+trace addresses are never directly compared with a guest virtual pointer.
+The combined adapter/driver/profile suite passed 42 tests in 166.32 seconds.
+These source and contract tests do not satisfy the still-pending real
+accelerated full/tail/competing-update acceptance.

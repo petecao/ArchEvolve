@@ -233,9 +233,11 @@ def main():
             if builds[treatment]['outcome']['state'] != 'complete':
                 raise RuntimeError('candidate compilation did not complete')
         receipt.update(candidate=candidate['id'], workload=workload['id'], model_build=model['id'],
-                       configuration=configuration, roi=roi, protocol=args.protocol, repetitions=repetitions)
+                       configuration=configuration, roi=roi, protocol=args.protocol, repetitions=repetitions,
+                       checkpoint_policy='two fresh restores of the same exact checkpoint per source and binary')
         save()
         primary_ids = []
+        checkpoints = {}
         for position, vertex in enumerate(workload['definition']['sources']):
             for repetition in range(repetitions):
                 prefix = f'{args.id}.s{position}.r{repetition}'
@@ -246,8 +248,8 @@ def main():
                               if compiled else {key: binaries['bfs_maa' if args.accelerated else 'bfs'][key]
                                                 for key in ('path', 'sha256')})
                     diagnostic = treatment == 'diagnostic'
-                    # Actual tiny guest serialization took109s; reserve half of
-                    # the fixed diagnostic budget for its16GB checkpoint.
+                    # Tiny guest serialization took 91.7s plus stage overhead;
+                    # reserve half the fixed budget for its 16GB checkpoint.
                     checkpoint_seconds = args.diagnostic_seconds // 2 if diagnostic else args.checkpoint_seconds
                     run_seconds = args.diagnostic_seconds - checkpoint_seconds - 30 if diagnostic else args.run_seconds
                     total_seconds = args.diagnostic_seconds if diagnostic else min(18000, checkpoint_seconds + run_seconds + 60)
@@ -263,6 +265,8 @@ def main():
                         'budget': {'total_seconds': total_seconds, 'checkpoint_seconds': checkpoint_seconds,
                                    'run_seconds': run_seconds, 'memory_gib': args.memory_gib, 'storage_gib': args.storage_gib}}
                     if compiled: payload['candidate_build'] = compiled['id']
+                    if (position, treatment) in checkpoints:
+                        payload['checkpoint_manifest'] = checkpoints[position, treatment]
                     if frozen and not diagnostic:
                         payload.update(protocol=frozen['id'], protocol_role=args.protocol_role,
                                        protocol_trial={'source_position': position, 'repetition': repetition})
@@ -270,6 +274,7 @@ def main():
                     if (pair[treatment]['outcome']['state'] != 'complete'
                             or pair[treatment]['correctness']['state'] != 'passed'):
                         raise RuntimeError(f'{treatment} execution did not complete with exact timed-binary correctness')
+                    checkpoints[position, treatment] = pair[treatment]['context']['checkpoint_manifest']
                 primary = pair['primary']
                 collected = request('dx100-profile', {'message_version': '1.0', 'id': prefix + '.profile',
                     'evaluation': primary['id'], 'diagnostic_evaluation': pair['diagnostic']['id'],

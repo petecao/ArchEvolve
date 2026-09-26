@@ -30,20 +30,38 @@ METRICS = {
 }
 
 
-def parse_callgrind(path):
+def parse_callgrind(path, *, require_totals=False):
     """Read collector-produced event totals, not source-derived estimates."""
-    events, summary = None, None
+    events, summary, totals = None, None, None
     for line in Path(path).read_text(errors="replace").splitlines():
         if line.startswith("events:"):
             events = line.split()[1:]
-        elif line.startswith("summary:"):
+        elif line.startswith(("summary:", "totals:")):
             try:
-                summary = [int(value) for value in line.split()[1:]]
+                values = [int(value) for value in line.split()[1:]]
             except ValueError:
                 raise Failure("malformed Callgrind summary") from None
-    if not events or summary is None or len(summary) > len(events) or any(v < 0 for v in summary):
+            if line.startswith("summary:"):
+                if summary is not None: raise Failure("multiple Callgrind summary parts are unsupported")
+                summary = values
+            else:
+                if totals is not None: raise Failure("multiple Callgrind totals parts are unsupported")
+                totals = values
+    if not events or len(set(events)) != len(events) or summary is None or len(summary) > len(events) or any(v < 0 or v >= 2**63 for v in summary):
         raise Failure("Callgrind output lacks a valid event summary")
-    return dict(zip(events, summary + [0] * (len(events)-len(summary))))
+    summary += [0] * (len(events)-len(summary))
+    if require_totals and totals is None: raise Failure("Callgrind ROI dump lacks consistency totals")
+    if totals is not None:
+        if len(totals)>len(events) or any(v < 0 or v >= 2**63 for v in totals):
+            raise Failure("invalid Callgrind consistency totals")
+        totals += [0] * (len(events)-len(totals))
+        if any(total > value for total,value in zip(totals,summary)):
+            raise Failure("Callgrind summary is smaller than self-cost totals")
+    result = dict(zip(events, summary))
+    for miss, reference in [('D1mr','Dr'),('D1mw','Dw'),('DLmr','D1mr'),('DLmw','D1mw')]:
+        if miss in result and reference in result and result[miss] > result[reference]:
+            raise Failure(f"Callgrind {miss} exceeds {reference}")
+    return result
 
 
 def _discovery_settings(request, compiler, flags, includes, macro_log):
@@ -358,8 +376,8 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
     build_folder = Path(data["build"]["directory"])
     driver = build_folder / "memory_driver.cc"
     driver.write_text(_wrapper(source, '#include <valgrind/callgrind.h>',
-        "CALLGRIND_START_INSTRUMENTATION; CALLGRIND_ZERO_STATS;",
-        "CALLGRIND_STOP_INSTRUMENTATION; CALLGRIND_DUMP_STATS;", ""))
+        "CALLGRIND_START_INSTRUMENTATION;",
+        "CALLGRIND_DUMP_STATS; CALLGRIND_STOP_INSTRUMENTATION;", ""))
     binary = build_folder / "bfs-memory"
     memory_flags = list(flags)
     if "-g" not in memory_flags: memory_flags.append("-g")
@@ -380,7 +398,11 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
         check = _trial_output(output, graph, source_id, data["context"]["threads"])
         nonzero = []
         for file in sorted(folder.glob(raw.name+"*")):
-            events = parse_callgrind(file)
+            # Only the explicit client dump defines the ROI. Stopping
+            # instrumentation can reset global accounting before final exit.
+            if "desc: Trigger: Client Request" not in file.read_text(errors="replace"):
+                continue
+            events = parse_callgrind(file, require_totals=True)
             if events.get("Ir", 0): nonzero.append((file, events))
         if len(nonzero) != 1:
             raise native.StageFailure("missing_observation", "expected exactly one nonempty explicit Callgrind ROI dump")
@@ -388,6 +410,8 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
         execution = {"kind": "memory", "source": source_id, "source_position": position, "repetition": repetition,
             "binary_sha256": binary_hash, "output": str(output), "raw_artifact": str(file),
             "raw_sha256": artifacts.file_hash(file), "collector": collector, **check}
+        execution["counter_validation"] = {"state": "valid", "method": "swdb.callgrind.roi.v1",
+            "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump"}
         data["executions"].append(execution)
         for metric, definition in METRICS.items():
             available = metric in events
@@ -395,6 +419,7 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
                 "value": events.get(metric), "unit": "references" if metric in ("Dr", "Dw") else "misses",
                 "definition": definition, "basis": "simulated", "scope": "ROI", "attribution_granularity": "whole BFS call",
                 "collector": collector, "artifact_sha256": binary_hash, "source_artifact_sha256": data["context"]["candidate_sha256"],
+                "counter_validation": execution["counter_validation"],
                 "execution": {"source": source_id, "source_position": position, "repetition": repetition},
                 "raw_artifact": str(file), "raw_sha256": artifacts.file_hash(file),
                 "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof"})
@@ -412,9 +437,16 @@ def query(args):
                and r.get("metrics", {}).get("invocations", 0) > 0]
     metric = "exclusive_function_thread_cpu_seconds" if requested == "function" else "exclusive_thread_cpu_seconds"
     regions.sort(key=lambda r: r["metrics"].get(metric, r["metrics"]["exclusive_thread_cpu_seconds"]), reverse=True)
+    from swdb.profile_package import memory_observation_issues
+    rejected, memory_reasons = memory_observation_issues(data)
+    memory_rows = copy.deepcopy(data["dynamic_memory"])
+    for index in rejected:
+        memory_rows[index].update(recorded_available=memory_rows[index].get("available"), available=False,
+                                 counter_validation={"state": "invalid", "reasons": memory_reasons})
     return {"profile": data["id"], "evaluation": data.get("evaluation"), "candidate": data.get("candidate"),
         "context": data.get("context"), "outcome": data["outcome"], "regions": regions,
         "ranking": {"metric": metric, "unit": "seconds", "scope": "accumulated across diagnostic executions",
                     "inclusive": "nested source scopes overlap; do not sum inclusive values", "unexecuted": "discovered but unexecuted scopes remain in the durable record"},
-        "correspondence": data.get("correspondence"), "dynamic_memory": data["dynamic_memory"],
+        "correspondence": data.get("correspondence"), "dynamic_memory": memory_rows,
+        "memory_validation": {"state": "invalid" if rejected else "consistent", "reasons": memory_reasons},
         "coverage": data.get("discovery"), "reasons": data["reasons"], "gain_claim": False}

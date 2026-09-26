@@ -98,6 +98,67 @@ def _assemble(records, tmp, request):
     return json.loads(result.stdout)
 
 
+def _callgrind_profile(profile, tmp_path, fault=None):
+    """Actual a3 counter patterns in synthetic, explicitly fixture executions."""
+    rows = []
+    for original in profile['dynamic_memory']:
+        events = {'Dr': 200, 'Dw': 100, 'D1mr': 20, 'D1mw': 10, 'DLmr': 5, 'DLmw': 3}
+        if fault == 'a3-underflow':
+            events.update(Dr=0, Dw=2**64-7, D1mw=2**64-3, DLmw=2**64-3)
+        elif fault == 'misses-exceed-references': events['D1mr'] = 201
+        elif fault == 'll-exceeds-l1': events['DLmr'] = 21
+        elif fault == 'noninteger': events['Dw'] = 0.5
+        elif fault == 'write-only': events.update(Dr=0, D1mr=0, DLmr=0)
+        elif fault == 'one-bad-execution' and original['execution']['source_position'] == 0:
+            events['Dw'] = 2**64-7
+        for metric, value in events.items():
+            rows.append({**copy.deepcopy(original), 'metric': metric, 'value': value,
+                         'unit': 'references' if metric in ('Dr', 'Dw') else 'misses',
+                         'collector': {'name': 'Callgrind', 'version': 'explicit contract fixture'}})
+        if fault == 'duplicate': rows.append(copy.deepcopy(rows[-1]))
+    profile['dynamic_memory'] = rows
+    return profile
+
+
+@pytest.mark.parametrize('fault', ['a3-underflow', 'misses-exceed-references', 'll-exceeds-l1',
+                                  'noninteger', 'one-bad-execution', 'duplicate'])
+def test_inconsistent_callgrind_group_never_completes_package(package_setup, tmp_path, fault):
+    records, request, _, profile, _ = package_setup
+    _callgrind_profile(profile, tmp_path, fault)
+    records.write('region_profiles/package-diagnostics.yaml', profile)
+    package = _assemble(records, tmp_path, request)
+    assert package['completeness'] == 'incomplete'
+    assert any('Callgrind execution' in reason and 'inconsistent' in reason for reason in package['reasons'])
+    assert package['dynamic_memory'] == profile['dynamic_memory']  # Never repair or erase observed values.
+    if fault == 'a3-underflow':
+        assert any('no available dynamic memory observation' in reason for reason in package['reasons'])
+        assert any(row['metric'] == 'Dr' and row['value'] == 0 for row in package['dynamic_memory'])
+
+
+@pytest.mark.parametrize('fault', [None, 'write-only'])
+def test_consistent_callgrind_references_and_misses_remain_available(package_setup, tmp_path, fault):
+    records, request, _, profile, _ = package_setup
+    _callgrind_profile(profile, tmp_path, fault)
+    records.write('region_profiles/package-diagnostics.yaml', profile)
+    package = _assemble(records, tmp_path, request)
+    assert package['completeness'] == 'fixture' and package['reasons'] == []
+
+
+@pytest.mark.parametrize('location', ['top-level', 'extensions'])
+def test_post_collection_audit_invalidates_previously_plausible_memory(package_setup, tmp_path, location):
+    records, request, _, profile, _ = package_setup
+    _callgrind_profile(profile, tmp_path)
+    container = profile if location == 'top-level' else profile.setdefault('extensions', {})
+    container['post_collection_audit'] = {'scope': 'dynamic_memory', 'state': 'invalid',
+        'reason': 'explicit contract-fixture invalid ROI attribution', 'original_observations_retained': True,
+        'region_observations_affected': False}
+    records.write('region_profiles/package-diagnostics.yaml', profile)
+    package = _assemble(records, tmp_path, request)
+    assert package['completeness'] == 'incomplete'
+    assert any('post-collection audit failed' in reason for reason in package['reasons'])
+    assert package['dynamic_memory'] == profile['dynamic_memory']
+
+
 def test_exact_fixture_package_has_source_and_bidirectional_strategies(package_setup, tmp_path):
     records, request, _, profile, candidate = package_setup
     package = _assemble(records, tmp_path, request)

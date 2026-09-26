@@ -162,16 +162,70 @@ def _forward(store, impl, regions, unchanged):
     return found
 
 
+def _memory_validation(rows):
+    """Invalidate an inconsistent Callgrind execution, including its zero rows.
+
+    The signed-64 ceiling is a conservative bound for these time-limited runs;
+    unsigned near-2**64 summaries can be subtraction underflow, not huge counts.
+    Raw values remain unchanged in retained records and package diagnostics.
+    """
+    groups = {}
+    for index, row in enumerate(rows):
+        collector = row.get('collector', {})
+        name = collector.get('name', '') if isinstance(collector, dict) else collector
+        if not isinstance(name, str) or name.casefold() != 'callgrind':
+            continue
+        key = artifacts.digest({field: row.get(field) for field in
+                                ('execution', 'artifact_sha256', 'raw_artifact', 'raw_sha256')})
+        groups.setdefault(key, []).append((index, row))
+    rejected, reasons = set(), []
+    for entries in groups.values():
+        events, invalid = {}, []
+        for _, row in entries:
+            metric, value = row.get('metric'), row.get('value')
+            if value is None and row.get('available') is not True:
+                continue
+            if not isinstance(metric, str) or metric in events:
+                invalid.append('missing or duplicate event name')
+            elif type(value) is not int or not 0 <= value < 2**63:
+                invalid.append(f'{metric} is outside bounded nonnegative integer counts')
+            else:
+                events[metric] = value
+        for miss, reference in (('D1mr', 'Dr'), ('D1mw', 'Dw'), ('DLmr', 'Dr'), ('DLmw', 'Dw'),
+                                ('DLmr', 'D1mr'), ('DLmw', 'D1mw')):
+            if miss in events and (reference not in events or events[miss] > events[reference]):
+                invalid.append(f'{miss} exceeds or lacks its associated {reference} count')
+        if invalid:
+            rejected.update(index for index, _ in entries)
+            reasons.append(f"Callgrind execution {entries[0][1].get('execution')} is inconsistent: " + '; '.join(invalid))
+    return rejected, reasons
+
+
 def _memory(rows):
+    rejected, _ = _memory_validation(rows)
     available = []
-    for row in rows:
-        if row.get("available") is not True:
+    for index, row in enumerate(rows):
+        if index in rejected or row.get("available") is not True:
             continue
         if not (_number(row.get("value")) and row.get("basis") in {"measured", "simulated"}
                 and all(row.get(key) for key in ("metric", "unit", "definition", "scope", "collector", "execution", "artifact_sha256"))):
             continue
         available.append(row)
     return available
+
+
+def memory_observation_issues(profile):
+    """Recheck retained counters and subsequent audits without changing records."""
+    rows = profile.get('dynamic_memory', [])
+    rejected, reasons = _memory_validation(rows)
+    extensions = profile.get('extensions', {})
+    audits = [profile.get('post_collection_audit'),
+              extensions.get('post_collection_audit') if isinstance(extensions, dict) else None]
+    for audit in audits:
+        if isinstance(audit, dict) and audit.get('scope') == 'dynamic_memory' and audit.get('state') == 'invalid':
+            rejected.update(range(len(rows)))
+            reasons.append('dynamic memory post-collection audit failed: ' + str(audit.get('reason', 'invalid observations')))
+    return rejected, reasons
 
 
 def _source_positions(evaluation):
@@ -188,7 +242,7 @@ def _source_positions(evaluation):
 
 def _check_observations(profile, evaluation, candidate):
     """Bind diagnostics to actual executions rather than accepting standalone numbers."""
-    reasons = []
+    _, reasons = memory_observation_issues(profile)
     executions = profile.get("executions", [])
     fixture = profile.get("request", {}).get("fixture") is True
     expected, repetition = _source_positions(evaluation)

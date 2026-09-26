@@ -49,3 +49,24 @@ The public build/checkpoint/execution adapter and bounded build helper are imple
 The public first build ran on mbit10 lane 0 (lease generation 265) at 17:40:46–17:41:39 ET from SWDB `4a9383316eb8b2a5dfb53a02bb6c9a4c30a31b8d`. It stopped during Ramulator CMake configuration because `du` traversed a CMake temporary file concurrently removed by CMake. This was an explicitly recorded monitor failure, not a compiler/model failure. Raw receipt and stage logs remain under `/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a1/`; public evaluation `bfs-dx100-build-20260925-a1` is retained. Lane 0 released cleanly.
 
 The monitor now accepts only a complete `du` directory total accompanied exclusively by explicit vanished-file warnings, retaining those warnings; permission or other errors still fail closed. `tests/test_dx100_build.py` passes three cases, including the observed race and a permission-denied failure. Request `requests/dx100-build-a2.yaml` retains the same declared budget for the diagnosed second attempt. No simulator execution is implied.
+
+## Successful build and bounded bring-up — 2026-09-25
+
+Real build `bfs-dx100-build-20260925-a2` completed on lane 0 with all model,
+Ramulator, m5ops, scalar BFS, accelerated BFS, 1K BFS, and converter artifacts
+identified. Host cost was 1804.54 seconds with peak RSS 5.60 GiB and 4.96 GiB
+source/build storage, within the declared limits. Runtime dependency versions
+and the known generated tracked `m5op.o` cleanup are retained separately;
+linked executable hashes did not change when the tracked source object was
+restored.
+
+Real smoke a3 reached the original guest checkpoint and exited that stage
+successfully in 91.656 seconds. Its adapter rejected the model's additional
+empty `cpt.%d` formatting placeholder. Evaluation
+`bfs-dx100-smoke-20260925-a3` retains this failed outcome and raw evidence.
+The source-confirmed correction accepts exactly one numeric checkpoint plus
+that explicitly empty placeholder, and rejects unexpected payloads. Six public
+checkpoint tests passed in 16.56 seconds. Retry a4 was dispatched through lane 1
+at 20:37 ET from `6ddaff831b85d8039729114f10a7341611b01657`, with a
+300-second checkpoint bound inside the unchanged 1100-second total budget.
+Checkpoint-to-ROI acceptance is still pending; this ticket remains claimed.

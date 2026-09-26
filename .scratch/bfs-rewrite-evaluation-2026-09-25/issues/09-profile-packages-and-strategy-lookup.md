@@ -52,8 +52,23 @@ across rewrite generations. Sealed package identities survive index rebuilding a
 are checked before proposal submission. Raw `add` cannot fabricate assembled
 completeness. See `docs/bfs-profile-packages.md`.
 
-Verification: 23 public package tests passed (79.08 seconds), covering both query
+Verification: 28 public package tests passed (91.27 seconds), covering both query
 directions, patch handoff, stale/missing evidence, fixture separation, simulated
-attribution, immutable versions, and multiple rewrite generations. A preceding
-34-test package/add/format run passed. Real discovery and memory-profile acceptance
-from Tickets 07/08 is still required before resolving this ticket.
+attribution, global frozen simulator source/repetition cells, immutable versions,
+multiple rewrite generations, and reverse candidate/result retrieval. A preceding
+34-test package/add/format run passed.
+
+Actual collection `bfs-profile-smoke-20260925-a3` discovered and timed current
+function/loop regions, including a newly introduced helper. Its final numerical
+audit found invalid unsigned-underflow memory counts. No complete real package
+or real-package patch handoff is accepted from that collection. Ticket 08 owns
+counter-ordering repair and recollection; Tickets 07/08 remain acceptance gates.
+
+The assembler now invalidates an entire inconsistent Callgrind execution group,
+including plausible zero rows accompanying unsigned-underflow counts, and honors
+both retained post-collection audit locations. The coverage query rechecks sealed
+historical packages. Fifty focused package/coverage checks passed: 48 in 143.17
+seconds plus both audit-location checks in 29.07 seconds. Original observations
+remain retrievable. `scripts/bfs_package_handoff.py` prepares the public real-data
+assembly/query/rebuild/patch-handoff sequence, with an actual Git patch-application
+check for exact output source identity; it has not yet established real acceptance.

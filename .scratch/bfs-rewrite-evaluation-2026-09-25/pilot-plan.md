@@ -57,7 +57,12 @@ processes. Source/builds remain under `/data1/yanruj`; raw outputs use the recor
   traversal budget 60 seconds, and total per evaluation 1,200 seconds. Repeated
   trials of one graph/source are distinguished from different source vertices.
 - Simulator calibration: four guest cores, baseline/reference only, two identical
-  replays per graph/source/configuration. Each checkpoint or restored traversal
+  replays per graph/source/configuration. Each replay is a new simulator process;
+  the second restores the same manifest-verified checkpoint for that exact
+  source/binary/configuration. Primary and diagnostic binaries keep separate
+  checkpoints. This pre-execution choice avoids redundant guest serialization
+  after the tiny checkpoint cost was observed; it does not reuse ROI measurements.
+  Each checkpoint or restored traversal
   gets at most 3,600 host seconds, 32 GiB sampled host RSS, and 10 GiB retained output;
   predeclare a bounded post-ROI verification tick allowance separately. At most
   one diagnosed rerun per failed configuration. Total calibration wall budget is

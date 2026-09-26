@@ -7,6 +7,7 @@ import pytest
 
 from test_bfs_protocol import _payload
 from test_profile_packages import package_seed, package_setup
+from swdb import artifacts, profile_package
 
 
 def _report(records, tmp_path, **updates):
@@ -78,6 +79,33 @@ def test_missing_remote_artifacts_are_exposed_as_unverified(package_setup, tmp_p
                     if a["path"] == evaluation["build"]["binary"])
     assert artifact["state"] == "remote_unverified"
     assert report["external_verification_complete"] is False
+
+
+def test_historical_sealed_package_with_underflow_is_rejected_without_erasing_it(package_setup, tmp_path):
+    from test_profile_packages import _assemble, _callgrind_profile
+    records, request, evaluation, profile, _ = package_setup
+    package = _assemble(records, tmp_path, request)
+    _callgrind_profile(profile, tmp_path, 'a3-underflow')
+    records.write('region_profiles/package-diagnostics.yaml', profile)
+    # Represent a historical package whose old assembler accepted these counts.
+    # Its seal is correct; only the newly enforced observation semantics reject it.
+    package['completeness'] = 'complete'
+    package['evidence']['classification'] = 'execution'
+    package['dynamic_memory'] = copy.deepcopy(profile['dynamic_memory'])
+    package['evidence']['region_profile_sha256'] = artifacts.digest(profile)
+    package.pop('identity_sha256')
+    package['id'] = package['requested_id']
+    package['identity_sha256'] = artifacts.digest(package)
+    package['id'] = f"{package['requested_id']}.v{package['package_version']}.{package['identity_sha256'][:16]}"
+    profile_package.verify(package)
+    records.write(f"profile_packages/{package['id']}.yaml", package)
+    report = _report(records, tmp_path)
+    observed = next(row for row in report['unassigned_evaluations'] if row['evaluation'] == evaluation['id'])
+    rejected = next(row for row in observed['rejected_packages'] if row['id'] == package['id'])
+    assert any('Callgrind execution' in reason and 'inconsistent' in reason for reason in rejected['reasons'])
+    assert not report['profiling_demonstrations'] and report['criteria']['AC04']['state'] == 'incomplete'
+    retained = records.swdb('get', package['id'], '--format', 'json')
+    assert retained.returncode == 0 and json.loads(retained.stdout) == package
 
 
 @pytest.mark.parametrize("field", ["request", "workload", "check"])

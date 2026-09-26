@@ -43,3 +43,21 @@ Claimed while tickets 09 and 12 prepare shared packages and the executable model
 ## Initial collector implementation — 2026-09-25
 
 `swdb/dx100_profile.py` implements strict interval/clock conversion, actual ROI-wide memory counters, source-verified automatic region reuse and partial selected-loop timing; `docs/bfs-dx100-profiling.md` describes its limits. The combined DX100 fixture suite passed 23 tests in 87.32 seconds, including seven public collector cases for altered tick frequency, multiple intervals, missing memory, truncated/changed statistics, invalid clocks and stale region mappings. Complete function/exclusive-loop attribution and real simulator acceptance remain outstanding; the collector explicitly returns partial.
+
+## Source-scope diagnostics implemented — 2026-09-25
+
+The collector now supports shared libclang discovery with the actual simulator
+preprocessor settings and compiler header search order. Separately identified
+diagnostic binaries use `m5_rpns` guards for nested inclusive/exclusive simulated
+elapsed intervals accumulated per executing thread. These include waits and
+overlap; they are not CPU service time or primary BFS elapsed time. Model memory
+counters remain attached to the primary binary and whole sealed ROI.
+
+The unchanged author traversal diagnostic forwards its original ROI events.
+Scopes entered before activation, including the enclosing BFS function, retain
+explicit unavailable durations. Exact source, graph, binary, global protocol
+trial, target configuration, and ROI bindings are required for packaging. The
+combined relevant suite passed 42 tests in 166.32 seconds, including public
+positive and negative diagnostic collection paths. A real complete simulated
+profile package remains pending behind bounded model bring-up; this ticket
+remains claimed.

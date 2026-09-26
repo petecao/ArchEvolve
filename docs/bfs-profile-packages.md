@@ -29,6 +29,13 @@ interfaces and explicit unknown support. Collector `discovery`, `artifacts`,
 `executions`, and changed-source `correspondence` remain attached to their exact
 evidence. Timing ranks retain inclusive/exclusive scope and discovery coverage. Memory
 observations retain their collector, basis, scope, and diagnostic execution.
+Callgrind counts are checked as one execution group. Counts must be nonnegative
+integers below 2^63, cache misses cannot exceed their associated references, and
+last-level misses cannot exceed first-level misses. A missing associated count,
+duplicate event, failed post-collection audit, or inconsistent counter invalidates
+that execution's memory evidence, including any otherwise plausible zero rows.
+Original values remain visible with reasons; the coverage report rechecks these
+conditions even for packages sealed by an earlier assembler.
 Diagnostic timing and simulated cache behavior do not replace primary native ROI
 timing. A complete package needs discovered function and loop timing, primary ROI
 timing, and at least one actual available dynamic-memory

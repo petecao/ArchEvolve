@@ -16,12 +16,21 @@ their real execution evidence. Missing obligations remain visible and unresolved
 Preparation progress 2026-09-25: `bfs-coverage` now reconstructs all eight cells,
 source-specific acceleration minima, author/control obligations, frozen comparison
 decisions, AC01–AC20, complete retained history, and external artifact availability.
-Eleven public subprocess tests passed (32.81 seconds) for empty/missing evidence,
+Eleven public subprocess tests passed (34.30 seconds) for empty/missing evidence,
 fixture promotion, functional API timing, incorrect ROI, missing correctness,
 unsupported gain labels, remote artifact availability, cache regeneration, and
 malformed retained failures. Simulator aggregates require exact complete component
 profiles and independently bound correctness. These tests establish rejection and
 retrieval behavior only; real acceptance and the final handoff remain pending.
+Independent real profiling demonstrations can establish discovery and memory
+capabilities without a profitability protocol, but cannot satisfy the frozen
+campaign matrix, comparisons, or gain requirement. Author-reference comparisons
+require explicit scalar `dx100-bfs-scalar` and accelerated
+`dx100-bfs-maa-reference` identities; native and simulated timing remain separate.
+Following the actual a3 counter audit, the report also rejects sealed historical
+packages containing inconsistent Callgrind counter groups or failed memory audits.
+The negative test preserves the original sealed package and raw values while
+reporting rejection; a valid seal alone does not establish observation validity.
 
 ## What to build
 

@@ -25,8 +25,18 @@ def leaf(operation="dx100.mmio.v1.indirect-store-vector.i32", **extra):
             "interface_version": "1.0-e4fc4af", "model_revision": REVISION, **extra}
 
 
-def test_public_capabilities_distinguish_source_from_executable(records):
+def source_only_target(records):
+    """Keep source-only contract cases independent of actual lab build progress."""
     records.copy_repo()
+    target = records.read(f"hardware_targets/{TARGET}.yaml")
+    target['backend'].update(readiness='source_supported', build_evidence=[])
+    target['execution_host'] = None
+    records.write(f"hardware_targets/{TARGET}.yaml", target)
+    return target
+
+
+def test_public_capabilities_distinguish_source_from_executable(records):
+    source_only_target(records)
     data = output(records.swdb("capabilities", TARGET, "--format", "json"))
     assert data["target"]["backend"]["readiness"] == "source_supported"
     assert data["target"]["backend"]["build_evidence"] == []
@@ -46,7 +56,7 @@ def test_public_capabilities_distinguish_source_from_executable(records):
 
 @pytest.fixture
 def proposal_case(records, tmp_path):
-    records.copy_repo()
+    source_only_target(records)
     runs = tmp_path / "runs"
     source = output(records.swdb("source-snapshot", "gapbs-bfs-do", "--id", "source",
                                  "--runs-dir", runs, "--format", "json"))
@@ -131,8 +141,7 @@ def test_requirements_fail_durably_before_candidate_creation(proposal_case, reco
 
 
 def test_built_target_requires_build_receipt_and_real_operation_references(records, tmp_path):
-    records.copy_repo()
-    target = records.read(f"hardware_targets/{TARGET}.yaml")
+    target = source_only_target(records)
     target["backend"]["readiness"] = "built"
     path = tmp_path / "target.yaml"
     path.write_text(yaml.safe_dump(target))

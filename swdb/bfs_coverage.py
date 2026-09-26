@@ -158,6 +158,13 @@ def _packages(store, evaluation):
                 reasons.append("package diagnostic profile identity is stale or missing")
             if not profile_package._memory(package.get("dynamic_memory", [])):
                 reasons.append("dynamic memory observations are unavailable")
+            _, memory_reasons = profile_package._memory_validation(package.get('dynamic_memory', []))
+            reasons.extend(memory_reasons)
+            if diagnostic:
+                _, diagnostic_reasons = profile_package.memory_observation_issues(diagnostic)
+                reasons.extend(diagnostic_reasons)
+                if not profile_package._same(package.get('dynamic_memory'), diagnostic.get('dynamic_memory')):
+                    reasons.append('package dynamic memory differs from its identified diagnostic profile')
             if not all(any(r.get("kind") == kind and profile_package._timing_quantity(r) for r in package.get("regions", []))
                        for kind in ("function", "loop")):
                 reasons.append("executed function/loop timing is missing")
@@ -250,6 +257,11 @@ def _evaluation(store, evaluation, comparisons, current):
     original_package = store.get((proposal or {}).get("request", {}).get("profile_package"), "profile_package")
     if not original_package or original_package.get("completeness") != "complete" or original_package.get("evidence", {}).get("classification") != "execution":
         reasons.append("proposal did not consume a complete real source profile package")
+    else:
+        original_diagnostic = store.get(original_package.get('region_profile'), 'region_profile') or {}
+        if (profile_package._memory_validation(original_package.get('dynamic_memory', []))[1]
+                or profile_package.memory_observation_issues(original_diagnostic)[1]):
+            reasons.append('proposal input package contains inconsistent or audited-invalid memory observations')
     context = evaluation.get("context", {})
     if context.get("basis") == "measured" and any(flag.startswith("-DMAA") for flag in evaluation.get("build", {}).get("flags", [])):
         reasons.append("functional accelerator host runtime cannot satisfy native or simulated accelerator acceptance")

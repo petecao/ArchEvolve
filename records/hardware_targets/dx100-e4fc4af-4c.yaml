@@ -55,6 +55,7 @@ source_evidence:
   sha256: 82c8d78e4339f1be9249c0e92db8a8d5f9654310f1fe4dc91680da6a9e0f7681
   lines: [90, 115]
 notes:
-- Source-supported capability catalog only; no model build, measured behavior, correctness, or gain is
-  claimed.
+- The pinned model and BFS artifacts were built in evaluation bfs-dx100-build-20260925-a2.
+  The retained receipt establishes build readiness only; it does not establish timed-binary
+  correctness, actual accelerator execution, or a gain.
 - Physical execution host is intentionally null until an execution result identifies it.

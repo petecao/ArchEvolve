@@ -140,6 +140,14 @@ def test_callgrind_dynamic_counts_and_missing_events(tmp_path):
     with pytest.raises(Failure,match='summary'): parse_callgrind(raw)
     raw.write_text('events: Ir Dr\n')
     with pytest.raises(Failure,match='summary'): parse_callgrind(raw)
+    raw.write_text('events: Ir Dr Dw\nsummary: 18446744073709551605 0 18446744073709551609\ntotals: 252385 54474 25758\n')
+    with pytest.raises(Failure,match='summary'): parse_callgrind(raw,require_totals=True)
+    raw.write_text('events: Ir Dr Dw\nsummary: 10 2 1\ntotals: 11 2 1\n')
+    with pytest.raises(Failure,match='smaller'): parse_callgrind(raw,require_totals=True)
+    raw.write_text('events: Ir Dr D1mr\nsummary: 100 2 3\ntotals: 100 2 3\n')
+    with pytest.raises(Failure,match='exceeds'): parse_callgrind(raw,require_totals=True)
+    raw.write_text('events: Ir Dr Dw\nsummary: 100 20 10\ntotals: 98 19 10\n')
+    assert parse_callgrind(raw,require_totals=True)=={'Ir':100,'Dr':20,'Dw':10}
 
 
 def test_memory_collector_repeats_each_ordered_source_without_reusing_outputs(tmp_path):
@@ -164,7 +172,7 @@ def test_memory_collector_repeats_each_ordered_source_without_reusing_outputs(tm
                     'parents':[details['source'],details['source']]}))
                 raw = Path(next(c.split('=',1)[1] for c in command if c.startswith('--callgrind-out-file=')))
                 assert not raw.exists()
-                raw.write_text(f'events: Ir Dr Dw D1mr D1mw DLmr DLmw\nsummary: 100 {self.count} 2 0 0 0 0\n')
+                raw.write_text(f'desc: Trigger: Client Request\nevents: Ir Dr Dw D1mr D1mw DLmr DLmw\nsummary: 100 {self.count} 2 0 0 0 0\ntotals: 100 {self.count} 2 0 0 0 0\n')
         def save(self): pass
     session = FixtureSession()
     _memory(session,data,{'memory_model':{'collector':shutil.which('python3')}},source,[], 'fixture-cxx',[],

@@ -27,6 +27,7 @@
     "dynamic_memory": {"type": "array", "items": {"type": "object"}},
     "executions": {"type": "array", "items": {"type": "object"}},
     "correspondence": {"type": "object"},
+    "post_collection_audit": {"type": "object"},
     "raw_artifacts": {"type": "array", "items": {"type": "object"}},
     "reasons": {"type": "array", "items": {"type": "string"}},
     "gain_claim": {"const": false}
