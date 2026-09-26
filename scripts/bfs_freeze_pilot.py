@@ -118,8 +118,12 @@ def workload_plan(workload, scale):
     parameters = generator['parameters']
     require(definition['family'] in {'kronecker', 'uniform_random'} and definition['sources'] == SOURCES
             and parameters.get('scale') == scale and parameters.get('edge_factor') == 16
-            and parameters.get('seed') == 27491095 and parameters.get('symmetrize') is False
-            and generator['revision'] == REVISION and definition['realized']['num_vertices'] == 2**scale,
+            and parameters.get('seed') == 27491095 and parameters.get('symmetrize') is True
+            and generator['revision'] == REVISION
+            # The pinned builder retains IDs through the highest sampled endpoint;
+            # a Kronecker graph need not contain the last possible vertex ID.
+            and type(definition['realized']['num_vertices']) is int
+            and max(SOURCES) < definition['realized']['num_vertices'] <= 2**scale,
             'workload differs from the planned generator, scale, degree, or source sequence')
     representations = definition['representations']
     require(all(any(row.get('application') == app and row.get('canonical_sha256') == definition['canonical_sha256']

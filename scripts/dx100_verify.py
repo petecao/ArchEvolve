@@ -33,8 +33,9 @@ def main():
     entry = root / "configs/deprecated/example/se.py"
     folder = Path(m5.options.outdir)
     observer_path = Path(__file__).with_name('dx100_host_memory.py')
+    observer_sha256 = digest(observer_path)
     observer = runpy.run_path(str(observer_path))['Observer'](folder)
-    observer.write('wrapper_start', observer_sha256=digest(observer_path))
+    observer.write('wrapper_start', observer_sha256=observer_sha256)
     last = None
     original = m5.simulate
     original_instantiate = getattr(m5, 'instantiate', None)
@@ -88,6 +89,7 @@ def main():
         "format": "swdb.dx100.roi-seal.v1",
         "execution_binding_sha256": os.environ["SWDB_DX100_EXECUTION_BINDING_SHA256"],
         "driver_sha256": digest(Path(__file__)),
+        "host_memory_observer_sha256": observer_sha256,
         "roi_exit_tick": int(m5.curTick()),
         "roi_exit_cause": last.getCause(),
         "statistics": {"path": str(sealed), "sha256": digest(sealed)},

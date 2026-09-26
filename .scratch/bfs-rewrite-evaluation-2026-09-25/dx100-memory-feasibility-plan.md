@@ -64,11 +64,11 @@ Run exactly one new attempt, `bfs-dx100-smoke-20260925-a6`, after this plan and 
 observer code are committed, reviewed and pushed, and the native profiling job
 has released its lane. Require a fresh lane/legacy-lease/load/disk/memory check,
 with at least 64 GiB host MemAvailable before claiming the free lane. Strict
-NUMA binding also requires at least 52 GiB on that socket as MemFree plus
-max(0, FilePages − Shmem − Dirty − Writeback). Retain both nodes’ meminfo, including
-anonymous and slab fields; do not count anonymous, shared-memory, dirty pages or
-slab reclamation as available headroom. Do not drop caches or change NUMA policy.
-Use the
+NUMA binding also requires at least 52 GiB under the explicitly reviewed
+kernel-based capacity estimate below. The original free-plus-clean-cache gate
+rejected dispatch at 21:22 ET; this revision is based on kernel accounting before
+any new simulation or candidate assessment. Retain both nodes’ meminfo and zone
+watermarks. Do not drop caches or change NUMA policy. Use the
 normal verified socket-lane helper. Keep a4's exact graph ID, path, source, binary,
 checkpoint manifest and modeled configuration; select the explicit
 `--checkpoint-evaluation bfs-dx100-smoke-20260925-a4` compatibility proof path.
@@ -99,3 +99,77 @@ observer never walks the full statistics tree, evaluates a statistic value,
 materializes all names, or calls `get_simstat`. Driver and observer file hashes,
 phase logs and RSS logs are retained in the execution evidence, including on
 failure. Sampled RSS may miss peaks between samples; it is not an exact maximum.
+
+
+## Reviewed capacity estimate revision — 2026-09-25
+
+The original gate excluded all reclaimable slab. Linux's documented
+`MemAvailable` estimate explicitly includes reclaimable slab while reserving
+watermarks and accounting for potentially unreclaimable cache. See the
+[kernel memory accounting documentation](https://docs.kernel.org/filesystems/proc.html#meminfo).
+The v6.8 primary implementation is
+[`si_mem_available` in mm/show_mem.c](https://github.com/torvalds/linux/blob/v6.8/mm/show_mem.c)
+and [`calculate_totalreserve_pages` in mm/page_alloc.c](https://github.com/torvalds/linux/blob/v6.8/mm/page_alloc.c).
+The fetched source SHA-256 values are respectively
+`29c0c6f784bf30c666e0f8416e0e4c36ca65bdcbbd4ecccc0218b40bf24aee18` and
+`5ec6e187b4b7134cf7e4d4eafb6525b29d88d3c2e9b0c9e79436103a077afcd0`.
+These are upstream v6.8 source references for the host's 6.8 kernel family, not
+an assertion that its Ubuntu kernel has an identical complete source tree.
+
+The approved helper `scripts/dx100_capacity.py` applies that algorithm to the
+selected socket's counters, with additional conservative exclusions. All
+arithmetic uses integer pages and is converted to KiB only afterward:
+
+- `F` is node `MemFree`; `L` sums its zones' low watermarks.
+- `R` sums `min(managed, high + max(protection))` over that node's zones.
+- `C` is `max(0, Active(file) + Inactive(file) − Dirty − Writeback)`.
+- `S` is `SReclaimable`; miscellaneous reclaimable kernel memory is excluded.
+- `A = max(0, F − R + C − min(C/2,L) + S − min(S/2,L))`, with integer division.
+- Discount `A` by another **1 GiB** for estimation uncertainty. Require the
+  discounted result to be **at least 52 GiB**, and global `MemAvailable` to be
+  **at least 64 GiB**, using exact integer thresholds without rounding up.
+
+At 21:30:22 ET, node 1 had 30.6055 GiB free, 2.1838 GiB file LRU and
+20.7224 GiB reclaimable slab. Its low-water sum was 0.1062 GiB and calculated
+reserved memory 0.1692 GiB. The algorithm produced 55,710,924 KiB (53.1301 GiB),
+or **54,662,348 KiB (52.1301 GiB)** after the extra discount. The selected-socket
+threshold leaves 4 GiB above the 48 GiB process-group limit in addition to that
+1 GiB discount and kernel reserves. These values illustrate the algorithm;
+they are not authorization to reuse an old capacity observation.
+
+The following 30-second read-only observation showed zero increases in swap,
+allocation stalls, direct/kswapd page scans or steals, slab scans and OOM counts.
+Memory PSI averages were zero; the full-stall cumulative counter increased by
+62 microseconds. This quiet interval does not prove reclaim will succeed during
+a later workload. `/proc/slabinfo` and named `/sys/kernel/slab` counters denied
+unprivileged access, so no claim is made about slab classes, ownership or exact
+reclaimability. The slab exists without an owned simulator and is separate from
+its process RSS. Reclaiming it is left entirely to normal kernel policy.
+
+Immediately before lane claim, run the helper against fresh files and retain
+its timestamped raw inputs, calculation, source hash and result; repeat inside
+the verified lane before simulation if acquisition/setup delayed dispatch.
+Failure holds the attempt. The helper does not allocate workload memory, change
+policy, trigger reclamation, count anonymous memory as reclaimable, or guarantee
+freedom from NUMA OOM. Normal lane/load/storage checks still apply. This revision
+changes only a host-capacity estimate; the single-attempt count, 48 GiB RSS cap,
+guest/model/statistics/ROI identities, and pilot's 32 GiB cap remain unchanged.
+
+## Output collection alternatives — 2026-09-25
+
+Pinned `VectorInfo::enable` allocates requestor-sized name and description
+storage before collection. Format options such as `desc=False` and `spaces=False`
+do not remove that storage. `Text::visit(VectorInfo)` evaluates `info.result()`
+and copies names before printing; formulas use the same visitor. About 2.82 GiB
+of the estimate consists of lazily populated result vectors, but the larger
+fixed names/counters/information allocation persists independently of output.
+
+The existing `--stats-root` mechanism filters whole SimObject subtrees. Selecting
+only MAA omits root `simTicks`/`simFreq` and cache observations; selecting the root
+restores the entire traversal. It is therefore not a compatible one-flag
+replacement for current evidence. A bespoke selected-statistic visitor might
+retain a defined subset without changing simulated work, but would require a
+separate audited collection contract and exact metric/timing validation. It
+would not remove the fixed statistic allocation or unrelated kernel slab.
+No output filtering, statistic deletion, allocator setting or model patch is
+part of a6.

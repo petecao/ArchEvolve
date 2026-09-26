@@ -6,6 +6,8 @@ import sys
 import time
 from types import ModuleType, SimpleNamespace
 
+import pytest
+
 from swdb import dx100_resources
 
 
@@ -88,3 +90,17 @@ def test_wrapper_forwards_model_calls_once_and_observes_dump_phases(tmp_path, mo
     assert phases.count('statistics_dump_begin') == phases.count('statistics_dump_end') == 2
     assert phases.count('requestor_vector') == 1
     assert json.loads((output / 'roi-seal.json').read_text())['verification']['state'] == 'finished'
+
+
+def test_sealed_roi_rejects_different_host_observer_before_accepting_verdict(tmp_path):
+    from swdb.dx100 import _correctness
+    from swdb.bfs_native import StageFailure
+    (tmp_path / 'roi-seal.json').write_text(json.dumps({
+        'format': 'swdb.dx100.roi-seal.v1', 'execution_binding_sha256': 'execution',
+        'driver_sha256': 'driver', 'host_memory_observer_sha256': 'different-observer',
+        'roi_exit_cause': 'm5_exit instruction encountered'}))
+    session = SimpleNamespace(data={'context': {
+        'execution_binding_sha256': 'execution', 'verification_driver': {'sha256': 'driver'},
+        'host_memory_observer': {'sha256': 'expected-observer'}}})
+    with pytest.raises(StageFailure, match='sealed ROI does not identify'):
+        _correctness(session, {}, tmp_path, tmp_path / 'unused.log', True)

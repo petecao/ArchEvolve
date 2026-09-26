@@ -60,6 +60,28 @@ def test_missing_accelerator_size_evidence_does_not_make_native_freeze_publishab
     assert reasons and result == {'executions': [], 'repeatability': []}
 
 
+@pytest.mark.parametrize('vertices,symmetrize,accepted', [
+    (262144, True, True), (262143, True, True), (262145, True, False),
+    (7777, True, False), (262144, False, False),
+])
+def test_pilot_respects_effective_generator_and_realized_vertex_range(vertices, symmetrize, accepted):
+    module = runpy.run_path(str(REPO / 'scripts/bfs_freeze_pilot.py'))
+    # Real scale18 Kronecker generation retained262143 vertices: the pinned
+    # builder infers the range from its highest sampled endpoint. This fixture
+    # tests admission only; it does not assert adjacency or empirical coverage.
+    definition = {'family': 'kronecker', 'sources': [0, 1234, 7777],
+        'generator': {'revision': 'e4fc4afdf894f295442cef3604667a469fab8e62',
+            'parameters': {'scale': 18, 'edge_factor': 16, 'seed': 27491095, 'symmetrize': symmetrize}},
+        'realized': {'num_vertices': vertices}, 'canonical_sha256': 'a' * 64,
+        'representations': [{'application': app, 'canonical_sha256': 'a' * 64,
+                             'adjacency_verified': True} for app in ('gapbs', 'dx100-gapbs')]}
+    if accepted:
+        module['workload_plan']({'definition': definition}, 18)
+    else:
+        with pytest.raises(ValueError, match='workload differs'):
+            module['workload_plan']({'definition': definition}, 18)
+
+
 @pytest.mark.parametrize('fault', [None, 'bare-lane', 'wrong-bind', 'wrong-config', 'wrong-host', 'missing-node'])
 def test_recorded_native_lane_receipt_preserves_verified_identity(fault):
     module = runpy.run_path(str(REPO / 'scripts/bfs_freeze_pilot.py'))

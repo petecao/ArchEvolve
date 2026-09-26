@@ -331,6 +331,7 @@ def _correctness(session, request, result_folder, log, completed):
     if (seal.get("format") != "swdb.dx100.roi-seal.v1"
             or seal.get("execution_binding_sha256") != data["context"]["execution_binding_sha256"]
             or seal.get("driver_sha256") != data["context"]["verification_driver"]["sha256"]
+            or seal.get('host_memory_observer_sha256') != data['context']['host_memory_observer']['sha256']
             or seal.get("roi_exit_cause") != "m5_exit instruction encountered"):
         raise StageFailure("incompatible", "sealed ROI does not identify this execution and verification driver")
     stats = _file(seal.get("statistics"), "sealed ROI statistics")
@@ -342,6 +343,8 @@ def _correctness(session, request, result_folder, log, completed):
     _file(request["simulator"], "simulator")
     _file(request["workload"]["representation"], "graph representation")
     _file(data["context"]["verification_driver"], "verification driver")
+    _file({key: data['context']['host_memory_observer'][key] for key in ('path', 'sha256')},
+          'host memory observer')
     counters, interval_values = {}, {}
     intervals = ends = 0
     with stats.open(errors="replace") as stream:
