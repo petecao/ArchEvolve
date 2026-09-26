@@ -37,6 +37,15 @@ SHA-256 `fe20d70d689c341ee614121d7aac1431b81d2178943a113ea1aa1d7c5ef50c69`.
 The execution guard remains unchanged; the receipt identifies the actual
 regular source compiled into the candidate.
 
+The real-model and complete-call smoke drivers retain a cumulative deadline
+inside their original 1200- and 2400-second outer limits, reserving 30 seconds
+for cleanup. On timeout or interruption, they send TERM to the owned public
+evaluator and allow 20 seconds for its nested compiler/simulator cleanup before
+forcing remaining owned processes to exit. Driver stages retain exit codes,
+wall time, failure reasons, and output hashes. Local process-lifecycle tests
+exercise both deadline and signal interruption with a separately grouped nested
+child; these tests do not execute gem5 or establish simulator acceptance.
+
 Run that separate diagnostic binary through `dx100-execute`, then supply its ID as `diagnostic_evaluation` instead of `discovery_profile` in the collector request. It must match the primary candidate, graph, source, threads, modeled configuration, and semantic ROI exactly. Inclusive/exclusive simulated seconds are elapsed intervals accumulated per executing thread, including waits and overlap. Exclusive attribution subtracts only nested guarded intervals on that thread; neither quantity is CPU service time or a replacement for primary BFS duration. Invocations retain the shared discovery engine's function-call, loop-entry, or OpenMP-worker-iteration units. The report is emitted only after the ROI seal. Invalid nested accounting, changed source/binary/runtime, missing reports, and incompatible contexts fail explicitly.
 
 The profile identifies separate region and memory executions: source scopes use the diagnostic binary, while ROI-wide memory counters use the primary binary. Every observation retains source artifact, binary, output, and raw-statistics hashes. Instrumentation overhead and unresolved scopes remain explicit. Collection completeness and structural correctness are separate fields; unverified collection cannot establish a gain.

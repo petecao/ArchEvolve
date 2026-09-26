@@ -11,15 +11,26 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import time
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from swdb import artifacts, bfs_protocol, profile
 from swdb.store import Store
-from bfs_generate_workload import widen_sg
+from scripts.bfs_generate_workload import widen_sg
+from scripts.bfs_process import interruption_signals, run_stage
+
+OUTER_SECONDS = 2400
+CLEANUP_RESERVE_SECONDS = 30
 
 
 def main():
+    with interruption_signals():
+        return run()
+
+
+def run():
+    deadline = time.monotonic() + OUTER_SECONDS - CLEANUP_RESERVE_SECONDS
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--id', required=True)
     parser.add_argument('--build-evaluation', required=True)
@@ -39,18 +50,15 @@ def main():
     folder = runs / (args.id + '.driver'); folder.mkdir(parents=True, exist_ok=False)
     stages = []
     receipt = {'id': args.id, 'created': '2026-09-25', 'state': 'running', 'stages': stages, 'gain_claim': False,
+        'outer_seconds': OUTER_SECONDS, 'cleanup_reserve_seconds': CLEANUP_RESERVE_SECONDS,
         'repository_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()}
     def save(): (folder / 'driver.json').write_text(json.dumps(receipt, indent=2) + '\n')
     def call(command, *parameters, timeout=600):
         step = f'{len(stages):02d}-{command}'
         argv = [sys.executable, '-m', 'swdb', command, *map(str, parameters), '--format', 'json']
         out, err = folder / (step + '.json'), folder / (step + '.stderr')
-        stages.append({'command': argv, 'output': str(out), 'stderr': str(err), 'state': 'running'}); save()
-        with out.open('w') as stdout, err.open('w') as stderr:
-            completed = subprocess.run(argv, cwd=ROOT, stdout=stdout, stderr=stderr, timeout=timeout)
-        stages[-1].update(returncode=completed.returncode, state='complete' if completed.returncode == 0 else 'failed'); save()
-        if completed.returncode:
-            raise RuntimeError(f'{command} failed; retained {out} and {err}')
+        run_stage(receipt, folder, argv, timeout=timeout, deadline=deadline,
+                  cwd=ROOT, output=out, stderr=err)
         return json.loads(out.read_text())
     def request(name, value):
         path = folder / (name + '.request.json'); path.write_text(json.dumps(value, indent=2) + '\n'); return path
@@ -62,9 +70,9 @@ def main():
         if artifacts.file_hash(converter) != binaries['converter']['sha256']:
             raise RuntimeError('selected converter changed')
         sg32, sg64 = folder / 'uniform64-sg32.sg', folder / 'uniform64-sg64.sg'
-        with (folder / 'generate.log').open('w') as log:
-            subprocess.run([str(converter), '-u', '6', '-k', '4', '-b', str(sg32)], stdout=log,
-                stderr=subprocess.STDOUT, check=True, timeout=60, env={**os.environ, 'OMP_NUM_THREADS': '1'})
+        run_stage(receipt, folder, [str(converter), '-u', '6', '-k', '4', '-b', str(sg32)],
+                  output=folder / 'generate.log', timeout=60, deadline=deadline,
+                  cwd=ROOT, env={**os.environ, 'OMP_NUM_THREADS': '1'})
         widen_sg(sg32, sg64)
         registration = {'message_version': '1.0', 'id': args.id + '.workload', 'kernel': 'gapbs-bfs',
             'family': 'uniform_random', 'sources': [0], 'normalization': bfs_protocol.NORMALIZATION,
