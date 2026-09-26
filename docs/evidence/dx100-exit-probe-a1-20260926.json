@@ -1,0 +1,165 @@
+{
+  "artifacts": [
+    {
+      "bytes": 30039,
+      "path": "/data1/yanruj/EvolveSWDB_dx100_20260925_a1/records/evaluations/bfs-dx100-exit-probe-20260926-a1.yaml",
+      "sha256": "48b9f90959ddb6250e487b9011f265f4df3d7b4ae349ad9c7a31c057dc8a711c"
+    },
+    {
+      "bytes": 23940,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-exit-probe-20260926-a1/002-simulation.log",
+      "sha256": "cf885dd20c990705802f26137a67d6eaf4d8a18252ab05af9b3cc753a272a1e4"
+    },
+    {
+      "bytes": 1003,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-exit-probe-20260926-a1/simulation/roi-seal.json",
+      "sha256": "5f28b09bce79b1b291f23ef38e862d954b6e502e7615fba02edfbc033661acb9"
+    },
+    {
+      "bytes": 1011244,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-exit-probe-20260926-a1/simulation/roi-stats.txt",
+      "sha256": "038c2123e475b116500122645b79ba1d4b1ac2e63cd121417bc17ae95c067f6d"
+    },
+    {
+      "bytes": 145080,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-exit-probe-20260926-a1/simulation/config.ini",
+      "sha256": "73e4b31c7ec7002ce1339b305b7516d25706f288ac0fc90049d69fc3c5fb15ef"
+    },
+    {
+      "bytes": 10082,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-exit-probe-20260926-a1/002-simulation.memory.jsonl",
+      "sha256": "46adfd711a791e698ae737e1ae5c1ca2f8f85a5f801e8abeb3562a19f29a276c"
+    },
+    {
+      "bytes": 10255,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-exit-probe-20260926-a1/simulation/host-memory-phases.jsonl",
+      "sha256": "a0e8a74a5a0f92731e7e1d6d4da3584de9afb611b2d1a259cd7dc6ebaf880eda"
+    },
+    {
+      "bytes": 2306,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-exit-probe-20260926-a1.driver/driver.json",
+      "sha256": "4e3768c0e4e3ef3921e14aee28b298b779bd62ab6b430507c24b217bad894089"
+    },
+    {
+      "bytes": 979,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/exit-probe-a1-dispatch1-lane.json",
+      "sha256": "8b618ca37a3e4a110c61fd38317038e044ff17863e41c73038084e9686e2564a"
+    },
+    {
+      "bytes": 2,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/exit-probe-a1-dispatch1.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "bytes": 47445,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/exit-probe-a1-dispatch1-capacity-preclaim-final.json",
+      "sha256": "d3ce5f7d5d04c8a08b728739c44144f1af3e62a48914536cf1943bb8f26ca255"
+    },
+    {
+      "bytes": 47435,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/exit-probe-a1-dispatch1-capacity-inlane.json",
+      "sha256": "3efcbdebae74b172d931b01b50c5a695d4bf9c92a425d1139294896cc476ee0b"
+    }
+  ],
+  "automatic_retry_allowed": false,
+  "code_commit": "5802a5a76599de952f58a57d00c193ea9f1341d7",
+  "correctness": "unverified",
+  "evaluation": "bfs-dx100-exit-probe-20260926-a1",
+  "evaluation_sha256": "ca7ea074ea0cf54c3e3f090fea32c9f294f0953e7cf699fba737256d2a47999c",
+  "exit_syscalls": [
+    {
+      "argument": 0,
+      "call_line": 234,
+      "call_tick": 2222725680,
+      "cpu": "system.switch_cpus0",
+      "return_line": 235,
+      "return_tick": 2222725680,
+      "return_value": 0,
+      "thread": 0
+    }
+  ],
+  "gain_claim": false,
+  "interpretation": "exit_group(0) returned0 on CPU0, followed by worker futex waits and a tick-limit event; Process-pointer aliasing is not directly observed",
+  "memory_samples": 33,
+  "normal_exit_observed": false,
+  "observed": "2026-09-26T00:16:11-0400",
+  "outcome": {
+    "reason": "missing, ambiguous, interrupted, or incomplete post-ROI verifier outcome",
+    "stage": "simulation",
+    "state": "missing_observation"
+  },
+  "peak_rss_kib": 33719548,
+  "phases": [
+    {
+      "elapsed_s": 5.746912211179733e-05,
+      "phase": "wrapper_start"
+    },
+    {
+      "elapsed_s": 0.18734505120664835,
+      "phase": "instantiate_begin"
+    },
+    {
+      "elapsed_s": 78.33743769209832,
+      "phase": "instantiate_end"
+    },
+    {
+      "elapsed_s": 78.33875836804509,
+      "phase": "requestor_vector"
+    },
+    {
+      "elapsed_s": 78.34006879013032,
+      "phase": "simulate_begin"
+    },
+    {
+      "elapsed_s": 79.00349703524262,
+      "phase": "simulate_end"
+    },
+    {
+      "elapsed_s": 79.0046613086015,
+      "phase": "simulate_begin"
+    },
+    {
+      "elapsed_s": 85.18318405747414,
+      "phase": "statistics_dump_begin"
+    },
+    {
+      "elapsed_s": 113.39212711341679,
+      "phase": "statistics_dump_end"
+    },
+    {
+      "elapsed_s": 113.4333687601611,
+      "phase": "simulate_end"
+    },
+    {
+      "elapsed_s": 113.43853828404099,
+      "phase": "verification_begin"
+    },
+    {
+      "elapsed_s": 133.8933988949284,
+      "phase": "verification_end"
+    },
+    {
+      "elapsed_s": 133.8989078514278,
+      "phase": "statistics_dump_begin"
+    },
+    {
+      "elapsed_s": 161.00599942356348,
+      "phase": "statistics_dump_end"
+    }
+  ],
+  "roi_exit_tick": 2187360749,
+  "terminal": {
+    "exit_cause": "simulate() limit reached",
+    "exit_code": 0,
+    "exit_tick": 12187360749,
+    "max_ticks": 10000000000,
+    "post_roi_trace": {
+      "enabled_tick": 2187360749,
+      "flag": "SyscallBase",
+      "output": "simulation_log",
+      "scope": "post-seal verifier continuation only"
+    },
+    "state": "finished"
+  },
+  "updated": "2026-09-26"
+}
