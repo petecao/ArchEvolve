@@ -1,0 +1,135 @@
+{
+  "state": "commit_prepared_export_rejected_specific_approval_pending",
+  "destination": {
+    "repository": "git@github.com:ruchou/EvolveSWDB.git",
+    "visibility": "private",
+    "proposed_branch": "codex/bfs-evidence-sync-20260926-a1",
+    "base_commit": "a6b2f61f082afb64bc5b8ad108e07df7247ec2f1",
+    "delta_scope": "exactly the 14 listed files; construct without publishing unrelated local branch history"
+  },
+  "provenance": {
+    "native_source_commit": "41303ed7fb02f9a5c515e2e951d27e20869c73e9",
+    "historical_dx_checkout": "5802a5a76599de952f58a57d00c193ea9f1341d7",
+    "read_only_inventory_et": "2026-09-26 01:59\u201302:02 ET",
+    "receipt_health_et": "2026-09-26 08:05\u201308:06 ET"
+  },
+  "content": "Measurements, correctness/failure outcomes, stage/resource/host summaries, paths and hashes. Profiling/source records also contain 116 repeated selected-source excerpt fields, totaling 125119 bytes, matched to unchanged pinned author BFS. This is not an exhaustive secret scan.",
+  "excluded": [
+    "raw logs/statistics/traces",
+    "binaries",
+    "serialized graph bytes",
+    "credentials",
+    "unrelated code/history"
+  ],
+  "file_count": 14,
+  "total_file_bytes": 1118269,
+  "files": [
+    {
+      "group": "native",
+      "source": "/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/docs/evidence/bfs-native-repeatability-20260926-a1.yaml",
+      "destination": "docs/evidence/bfs-native-repeatability-20260926-a1.yaml",
+      "bytes": 25087,
+      "sha256": "b7ceb3266d9c2bcff01e8e73dca21dcd8438f2573cf773c8f1c2ff6480778062"
+    },
+    {
+      "group": "native",
+      "source": "/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records/evaluations/bfs-native-repeatability-20260926-a1.dx100.kronecker.evaluation.yaml",
+      "destination": "records/evaluations/bfs-native-repeatability-20260926-a1.dx100.kronecker.evaluation.yaml",
+      "bytes": 39741,
+      "sha256": "f5d79fe652842bc7fa204106d52e515fe3c0f44618a0f46a37abe9d938f071bf"
+    },
+    {
+      "group": "native",
+      "source": "/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records/evaluations/bfs-native-repeatability-20260926-a1.dx100.uniform-random.evaluation.yaml",
+      "destination": "records/evaluations/bfs-native-repeatability-20260926-a1.dx100.uniform-random.evaluation.yaml",
+      "bytes": 40179,
+      "sha256": "ed9b33588118cf04f287b129f4d94a54b1e462332c66fc2ede6dae400122ce38"
+    },
+    {
+      "group": "native",
+      "source": "/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records/evaluations/bfs-native-repeatability-20260926-a1.upstream.kronecker.evaluation.yaml",
+      "destination": "records/evaluations/bfs-native-repeatability-20260926-a1.upstream.kronecker.evaluation.yaml",
+      "bytes": 39670,
+      "sha256": "f0dae564373743ec9ac3c708c65f193bed7197036bf8e96cf01c067cc8e235ce"
+    },
+    {
+      "group": "native",
+      "source": "/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records/evaluations/bfs-native-repeatability-20260926-a1.upstream.uniform-random.evaluation.yaml",
+      "destination": "records/evaluations/bfs-native-repeatability-20260926-a1.upstream.uniform-random.evaluation.yaml",
+      "bytes": 40114,
+      "sha256": "01224898fba05682c4545230d3139dd222a0acd06c2506247b693464c388f967"
+    },
+    {
+      "group": "profiling",
+      "source": "/data1/yanruj/EvolveSWDB_dx100_20260925_a1/records/evaluations/bfs-dx100-profile-20260926-a1.diagnostic.yaml",
+      "destination": "records/evaluations/bfs-dx100-profile-20260926-a1.diagnostic.yaml",
+      "bytes": 28184,
+      "sha256": "3e95bade512bae6b62ee7ac18ea8b5162f1cb6c83d174ba0d5517e4c5775caf4"
+    },
+    {
+      "group": "profiling",
+      "source": "/data1/yanruj/EvolveSWDB_dx100_20260925_a1/records/evaluations/bfs-dx100-profile-20260926-a1.primary.yaml",
+      "destination": "records/evaluations/bfs-dx100-profile-20260926-a1.primary.yaml",
+      "bytes": 28695,
+      "sha256": "0cb64c9d9552b020b2e97a0ae1ccd1f44c12a15cc970d08574a8cc3c24650389"
+    },
+    {
+      "group": "profiling",
+      "source": "/data1/yanruj/EvolveSWDB_dx100_20260925_a1/records/region_profiles/bfs-dx100-profile-20260926-a1.profile.yaml",
+      "destination": "records/region_profiles/bfs-dx100-profile-20260926-a1.profile.yaml",
+      "bytes": 156018,
+      "sha256": "66a545211b35390d8c000dfdf7ceb470c1043661b7d7c41aa2d544266503505c"
+    },
+    {
+      "group": "profiling",
+      "source": "/data1/yanruj/EvolveSWDB_dx100_20260925_a1/records/profile_packages/bfs-dx100-profile-20260926-a1.package.v1.60c6fe30745432bc.yaml",
+      "destination": "records/profile_packages/bfs-dx100-profile-20260926-a1.package.v1.60c6fe30745432bc.yaml",
+      "bytes": 528195,
+      "sha256": "0b2747e0d2fcbaa570f53821f5f4ed7cf738990e064e7eba8137a40d9d23f99c"
+    },
+    {
+      "group": "profiling",
+      "source": "/data1/yanruj/EvolveSWDB_dx100_20260925_a1/records/source_snapshots/bfs-dx100-profile-20260926-a1.package.v1.source.yaml",
+      "destination": "records/source_snapshots/bfs-dx100-profile-20260926-a1.package.v1.source.yaml",
+      "bytes": 149576,
+      "sha256": "1b0ecfc1aa6ca6252f81820a6834083f97d42e9f2ae7d6c7c53e57e38e9a519c"
+    },
+    {
+      "group": "profiling",
+      "source": "/data1/yanruj/EvolveSWDB_dx100_20260925_a1/records/workloads/bfs-dx100-profile-20260926-a1.uniform64.3904583b5b7c5067.yaml",
+      "destination": "records/workloads/bfs-dx100-profile-20260926-a1.uniform64.3904583b5b7c5067.yaml",
+      "bytes": 1874,
+      "sha256": "0cb5fd1dc5aef54b68a51c4507273ee0f74e8d8e2e94fba33770431d4c3c6e70"
+    },
+    {
+      "group": "bringup",
+      "source": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/dx100-probe-preflight-20260926.export-review.json",
+      "destination": "docs/evidence/dx100-probe-preflight-20260926.json",
+      "bytes": 5339,
+      "sha256": "37590392b93f4a3f0a379d03f5556e3e2f237a23d1f5334dd4956895a97fb44c"
+    },
+    {
+      "group": "bringup",
+      "source": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/dx100-exit-probe-a1-20260926.export-review.json",
+      "destination": "docs/evidence/dx100-exit-probe-a1-20260926.json",
+      "bytes": 5558,
+      "sha256": "dbd6b01d9a49ce6b3de8f16516067ee18a429d3a8f3b09eb3dce5e2eda383cc9"
+    },
+    {
+      "group": "bringup",
+      "source": "/data1/yanruj/EvolveSWDB_dx100_20260925_a1/records/evaluations/bfs-dx100-exit-probe-20260926-a1.yaml",
+      "destination": "records/evaluations/bfs-dx100-exit-probe-20260926-a1.yaml",
+      "bytes": 30039,
+      "sha256": "48b9f90959ddb6250e487b9011f265f4df3d7b4ae349ad9c7a31c057dc8a711c"
+    }
+  ],
+  "created_date_et": "2026-09-26",
+  "prepared_commit": "ee7af80a16eb92a42f4eef757cf1bdfa988d74d2",
+  "approval_review": {
+    "date_et": "2026-09-26",
+    "user_response": "i approve everything btw",
+    "result": "rejected after exact commit and destination verification",
+    "reason": "Automatic review requires explicit sensitive packet and destination approval; broad approval was not accepted.",
+    "follow_up": "Explicit packet/destination question pending; no export or bypass performed."
+  }
+}

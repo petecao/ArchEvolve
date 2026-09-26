@@ -1,7 +1,7 @@
 # 14 — DX100 region and memory profiling
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 09, 12
@@ -101,3 +101,58 @@ Upstream discovery retained 24 source scopes; each author diagnostic retained
 31. Original author scalar and MAA binaries remain unchanged. This completes
 compilation preparation for both source families and ROI treatments, without
 claiming simulator execution, timed correctness, or dynamic profile acceptance.
+
+## Independent actual-observation audit — 2026-09-26
+
+The bounded real primary and diagnostic runs at implementation checkpoint
+`5802a5a` produced source-bound sealed observations. Both executions remain
+`missing_observation` with **unverified correctness** under their original v1
+checker. The initial orchestration omitted a required collection CLI argument;
+it failed before any collector execution. An additive continuation performed
+only the already planned collection, package, and fresh retrieval. Neither
+simulation was repeated and the failed driver receipt remains available.
+
+The independently audited package is
+`bfs-dx100-profile-20260926-a1.package.v1.60c6fe30745432bc`, retained under
+`/data/yanruj/EvolveSWDB_runs/bfs-dx100-profile-20260926-a1` on mbit10.
+It contains 31 discovered regions and 39 actual ROI-wide memory observations.
+Eight regions executed (three functions and five loops); 23 were unobserved.
+The unsupported unused TDStepMAA SIMD scope remains explicit. Its public package
+is complete under the stated package contract while the collector retains its
+partial discovery limitation.
+
+An independent worker checked 17 bounded raw/source artifacts, every region's
+source byte range and diagnostic counter mapping, all 39 memory values and
+intervals, and 13 access/hit/miss identities. The primary duration is
+49,313,463 ticks / 10^12 ticks per second = 49.313463 microseconds. The actual
+313-tick CPU period (about 3.194888 GHz) is recorded separately from the requested
+3.2 GHz clock. Region durations are diagnostic accumulated per-thread elapsed
+intervals; memory counters cover the primary whole ROI. They cannot be added
+or substituted for primary BFS time. The audit reused the existing model-build
+identity receipt rather than rehashing the large simulator and Ramulator files.
+
+This tiny 64-vertex, 468-arc, source-0 case establishes collection behavior. It
+does not establish accelerator coverage, pilot-sized feasibility, matrix
+acceptance, verified correctness, or gain. Every gain flag remains false.
+Fresh public retrieval matched the stored execution/profile/package records;
+the separate registered workload is being added to generic chain traversal.
+
+The independent audit found no blocking observation defect. This ticket remains
+claimed until the exact metadata export is authorized and the master records
+and evidence can be synchronized. This update is retained locally and excluded
+from Git export while that approval is pending.
+
+2026-09-26 local review follow-up: the public hotspot query now selects actual
+simulated elapsed metrics for these profiles instead of indexing native CPU
+fields. Guarded diagnostics use exclusive elapsed intervals; logging-only
+profiles expose inclusive observed-loop intervals. Unobserved scopes remain
+unranked and fixture evidence stays labeled. Five focused public tests and an
+independent replay of the original query failure passed. This repair does not
+verify the timed binary or change the actual package's evidence limits. Review
+details are in `docs/bfs-interim-review-20260926.md` (repository-root path).
+
+2026-09-26 10:04 ET health update: the original failed driver and the completed
+collection/package continuations retain their prior hashes. The final package
+receipt remains `a66864e…`; recent package and fresh-chain stderr logs are empty.
+No profiling job remains. No new measurement, correctness result, record import,
+or evidence export occurred; the exact 14-file packet approval remains pending.

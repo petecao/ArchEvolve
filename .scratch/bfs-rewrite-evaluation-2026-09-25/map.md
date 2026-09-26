@@ -1,10 +1,10 @@
 # Map: BFS profiling, rewrite proposals, and hardware-aware evaluation
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 **Type:** ticket map
 **Status:** claimed
-**Blocked by:** None — user authorized implementation and execution on 2026-09-25.
+**Blocked by:** Exact code/evidence/provider export approvals after automatic approval-review rejections; remaining empirical dependencies and expired pilot windows. Remote code remains at the previously synchronized checkpoint; local work continues.
 **Spec:** [Refined specification](spec.md)
 
 The user authorized autonomous implementation of all 21 tickets and all necessary builds, installations, benchmark/simulator runs, external access, Git, and Claude Code on 2026-09-25. This supersedes the publication-only hold. The two-lane mbit10 rules and evidence requirements remain in force.
@@ -82,6 +82,351 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC18 — Full coverage including failed/regressing cases | 17–21 |
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
+
+## Progress check — 2026-09-26 10:04 ET
+
+Ticket states remain **12 resolved, 9 claimed**, with **0/8 final matrix cells**,
+no qualified gain, and no empirical protocol freeze. Local HEAD is `6346189`.
+Both implementation/review workers completed normally; the host worker completed
+the scheduled health audit. No dead or stranded worker was found. Current catalog
+validation reports **186 valid records**.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 13 | Actual a1 failed; a2 window expired unused | mbit10 / socket 0 released | Failure and raw trace hashes unchanged; reviewed parser correction passed 121 tests | Clear exact code-export hold before further execution; do not extend a2 |
+| 14 | Actual profiling retained; synchronization held | mbit10 / idle | Final package receipt unchanged; timed-binary correctness remains unverified | Exact 14-file evidence export approval |
+| 15 | Prospective paired driver and admission reader committed | Local / `6346189` | Independent reviews clean after repairs; 213 focused tests passed in 158.00 s; no paired execution | Exact code synchronization, then dispatch only before 11:58 ET under the fixed 15:00 ET end |
+| 16–21 | Final reference/control and matrix acceptance incomplete | Not running | 0/8 final cells; no qualified gain | Clear export holds and empirical prerequisites |
+
+Fresh read-only observations at **10:04:19–10:05:58 ET** found socket 0,
+socket 1, and legacy leases released at generations **317, 399, 77**; recorded
+lease daemons were absent. No matching owned EvolveSWDB/gem5 job remained. Load
+was 0.00/0.03/0.10; free disks were 17 GiB on `/data1` and 184 GiB on `/data`.
+Conservative available memory was 57.31/58.51 GiB per node and 117.72 GiB globally;
+pressure averages were zero. These observations do not reserve a lane.
+
+Historical DX `5802a5a`, native `41303ed7`, witness `51df061`, and helper
+`c40ad13` remain unchanged. The helper script hash remains `00c269b4…` and matches
+its HEAD and existing origin copy; no fetch occurred. Native driver `26ea5d69…`
+still retains four complete cells. T14's original failed driver `a4e67382…` remains
+failed, while its completed collection/package continuations, including final
+package driver `a66864e…`, remain unchanged. Recent native/package stderr logs
+were empty. A1 record `9a941cdf…`, simulator `607b6f69…`, trace `f6ad616e…`, parser
+`de6e008e…`, and audit `4d228a78…` hashes were unchanged. Its line-27 trace-format
+failure remains preserved. A2 evaluation, driver, audit, and dispatch paths were
+absent; its 10:00 ET end passed unused. No host mutation or export occurred.
+
+The code-export inventory now covers the concrete four-commit checkpoint
+`1cc9557`, `b3a2cbe`, `721fa72`, `6346189`: **35 changed tip files, 592,945 bytes**,
+targeting the same private GitHub repository/branch. The exact request supersedes
+the earlier two-commit question; see
+[the inventory](observations/code-export-20260926-1005.json). The 14-file evidence
+packet and three Anthropic/Claude payload questions remain separately pending.
+No rejected action was retried or routed elsewhere.
+
+The full suite at pinned `721fa72` is still running. Its one observed failure is
+an incomplete campaign fixture, reproduced and corrected in `6346189` for serial
+and paired modes; both fixed cases are in the 213-test passing group. The original
+full run and failure remain intact and are not reported as green. See
+[interim review](../../docs/bfs-interim-review-20260926.md). Final post-acceptance
+Standards/Spec reviews remain required. The heartbeat stays active; the next full
+progress check is due **2026-09-26 10:34 ET**.
+
+## Progress check — 2026-09-26 09:34 ET
+
+All 21 map rows retain **12 resolved, 9 claimed**, with **0/8 final matrix
+cells**, no qualified gain, and no empirical protocol freeze. Three active
+workers responded; none was dead or stranded. Local HEAD is `b3a2cbe`.
+The fresh local catalog check reports **186 valid records**.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 13 | Actual a1 failed; parser correction reviewed | mbit10 / socket 0 released | Failed v2 record imported at `1cc9557`; correction passed 121 tests in 57.30 s | Exact code-export approval; a2 only before 09:40 ET |
+| 14 | Actual profiling retained; synchronization held | mbit10 / idle | 31 scopes and 39 memory rows; still unverified correctness | Exact 14-file evidence export approval |
+| 15 | Original pilot expired; new paired plan in development | Local | Both old blocks preserved; paired parent-admission defect fixed and independently reproduced as rejected | Complete fixed 240-observation driver and publication review |
+| 16–21 | Final reference/control and matrix acceptance incomplete | Not running | 0/8 final cells; no qualified gain | Clear export holds and empirical prerequisites |
+
+Fresh read-only observations at **09:34:05–09:34:57 ET** found socket 0,
+socket 1, and legacy leases released at generations **317, 399, 77**.
+Intervening generations changed after the 09:04 observation; no ownership or
+workload is inferred from those counters. No owned job remained. Load was
+0.31/0.26/0.25; free disks were 17 GiB on `/data1` and 184 GiB on `/data`.
+Conservative available memory was 57.21/58.51 GiB per node and 117.62 GiB globally.
+
+Historical DX `5802a5a`, native `41303ed7`, witness `51df061`, and helper
+`c40ad13` remain unchanged. The helper hash remains
+`00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8`.
+The a1 evaluation (`9a941cd…`), trace (`f6ad616e…`), old parser (`de6e008e…`),
+and audit (`4d228a78…`) hashes were rechecked unchanged. Its verdict remains
+failed/unverified, with zero admitted timings and no gain. Native and T14
+terminal receipts also remain unchanged. All a2 result, driver, launch, and
+record paths were absent. This check made no remote mutation or transfer.
+
+The user reaffirmed broad approval at 08:54 ET. Reviewed code was synchronized
+through `0236631`, and the newly generated two-file failed-a1 metadata packet was
+separately synchronized successfully. Automatic approval review rejected the
+14-file source-excerpt packet and the later two-commit correction push
+(`1cc9557`, `b3a2cbe`), requiring exact payload/destination approval. Specific
+questions for those packets and the three Anthropic/Claude source/profile
+payloads remain pending. No rejected action is retried or routed elsewhere.
+The a2 corrective plan keeps its **10:00 ET** end and **09:40 ET** latest dispatch;
+a missing approval does not extend it. The separately proposed paired native
+study ends at **15:00 ET** with no retries or adaptive changes.
+
+Local calibration fixture checks passed 88 tests. The new driver and publication
+reader remain under development and independent review; those fixture results
+are not actual paired calibration. The heartbeat stays active, with the next
+full progress check due **2026-09-26 10:04 ET**.
+
+## Progress check — 2026-09-26 08:34 ET
+
+All 21 map rows match the ticket status fields: **12 resolved, 9 claimed**.
+Acceptance remains **0/8 final matrix cells**, with no qualified gain or frozen
+empirical protocol. Code remains at local checkpoint `5f4ffdf`. The two review
+workers completed normally; the host worker completed this check normally. No
+dead or stranded agent was found. The previous catalog validation reports 185
+valid records; it was not rerun as a new test during this unchanged heartbeat.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 13 | Actual v2 proof pending | mbit10 / released | Reviewed implementation retained; no new execution | Specific code export approval, then bounded proof |
+| 14 | Profiling collected; synchronization held | mbit10 / released | Existing complete package and unchanged terminal receipt | Approval for the exact 14-file evidence packet |
+| 15 | Pilot expired; no freeze | mbit10 / released | Both native blocks retained; A/A instability unresolved | Preserve incomplete pilot; separately plan subsequent calibration |
+| 16–21 | Final reference/control and matrix acceptance incomplete | Not running | 0/8 cells, no qualified gain | Clear export holds and empirical dependencies |
+
+Fresh read-only observations at **08:34:40–08:35:30 ET** found socket 0, socket 1,
+and legacy leases released at generations 314, 397, and 77. No owned jobs or prior
+owned PIDs remained. Load was 0.00/0.00/0.00. Free disks were 17 GiB on `/data1`
+and 184 GiB on `/data`; conservative node availability was 57.32/58.52 GiB and
+global availability 117.75 GiB. Native and T14 driver receipts remain complete
+with their previously recorded hashes unchanged; recent stderr files were empty.
+DX `5802a5a`, native `41303ed7`, and helper `c40ad13` remain unchanged. The helper
+hash remains `00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8`.
+No new fetch, host write, export, lease change, or dispatch occurred.
+
+The specific code/evidence/provider approvals are still unanswered. This
+automated heartbeat does not grant those approvals or renew the expired pilot.
+The automation remains active; the next scheduled check is **09:04 ET**.
+
+## Recovery check — 2026-09-26 08:10 ET
+
+Tickets remain **12/21 resolved**, final matrix acceptance **0/8**, with no
+qualified gain or empirical protocol freeze. The usage limit prevented agent
+work and observations from approximately 02:04 through 08:04 ET. Heartbeat
+messages during that gap are not evidence of completed checks. Workers resumed
+after usage recovered; all three responded and no dead worker was left running.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 13 | Original-graph checker implemented; actual v2 proof pending | Local / mbit10 released | Full suite at `0467c72`: 1,097 passed, 3 skipped; actual proof not run | Approved code sync, then separately bounded proof |
+| 14 | Actual profiling retained; synchronization held | mbit10 / released | Complete 31-scope, 39-memory-row package remains unverified for correctness | Exact metadata export approval and master-record synchronization |
+| 15 | Original pilot window expired; no freeze | mbit10 / released | Two native blocks retained; unchanged A/A crosses the gain threshold | Preserve incomplete outcome; separately plan any subsequent pilot |
+| 16 | Reference/control prepared, unfrozen | Local preparation | Uniform22 and prospective author requests retained | v2 mechanism and independent protocol prerequisites |
+| 17/19/20 | Exact provider payloads held | Not running | No new provider invocation | Specific payload approval and remaining freeze gates |
+| 18 | Literal candidate retained; final evaluation pending | mbit10 / released | Existing compilation only | Frozen native evaluation and reprofiling |
+
+Actual read-only host observations span **08:05:26–08:06:23 ET**. Both socket
+leases are released (node 0 generation 314; node 1 generation 397), as is legacy
+generation 77. No matching live EvolveSWDB/gem5 job or previously owned PID was
+found. Load was 0.00/0.00/0.00. Free disks were 17 GiB on `/data1` and 184 GiB on
+`/data`. Conservative available memory was 57.29/58.52 GiB per node and 117.72 GiB
+globally; pressure averages were zero. Capacity does not supply export approval
+or renew a run budget. Intervening lane use during the unobserved gap is unknown.
+
+The historical DX checkout remains `5802a5a`; the native metadata checkout remains
+`41303ed7`. The helper checkout is `c40ad13e`, matching its existing fetched origin,
+with SHA-256 `00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8`.
+No new fetch is claimed. The native driver receipt still hashes to
+`26ea5d69db8a7b06f48e35876fa2308aa849a654c0cab351c6f70ae4777f4583`;
+the profile continuation receipt still hashes to
+`a66864e992b59eda7e3598bf083fb426ed94d845fe802338e053d4e452e53d53`.
+No host job was dispatched, and no rejected export was retried or routed elsewhere.
+The next periodic check is due **2026-09-26 08:34 ET**.
+
+Local follow-up review found and repaired surviving-process cleanup, simulated
+hotspot metric selection, and empty-operation executable-readiness enforcement.
+Focused checks and the separately pinned 1,097-test suite are recorded in the
+[interim review receipt](../../docs/bfs-interim-review-20260926.md). The final
+post-acceptance review remains outstanding. The local
+[export inventory](observations/export-inventory-20260926.json) identifies 14
+remote evidence files and their proposed destination; preparation is not export
+authorization. It excludes raw logs, binaries, and graph bytes. No ticket is
+resolved from preparing that inventory.
+
+2026-09-26 local checkpoint update: `5f4ffdf` commits the three latest reviewed
+repairs after their focused tests and independent cross-reviews passed. Catalog
+validation still reports 185 valid records. The pending code approval now names
+all five local commits after `a6b2f61` (64 files, 3,598 additions, 323 deletions)
+and the existing private repository/branch. A separate pending question names
+the exact 14-file, 1,118,269-byte evidence packet and its proposed new branch.
+Neither transfer has occurred; earlier provider-payload questions remain pending.
+These local tracker updates and held host observations are excluded from the
+code checkpoint. No new candidate or acceptance result follows from the commit.
+
+The additional read-only handoff check at **08:23:39–08:24:53 ET** found both
+socket leases still released at generations 314/397, legacy 77 released, and no
+matching owned EvolveSWDB/gem5 process. Load was 0.03/0.02/0.00; free disks stayed
+17/184 GiB. Conservative node availability was 57.30/58.53 GiB and global
+availability 117.73 GiB. Checkout identities, helper bytes, and both terminal
+receipt hashes were unchanged; recent driver stderr tails were empty and the
+packages retained `gain_claim: false`. No host write, fetch, export, or job was
+performed. This extra check does not fill the earlier monitoring gap or renew
+the expired pilot. The scheduled 08:34 ET check remains due.
+
+## Progress check — 2026-09-26 01:40 ET
+
+Tickets remain 12/21 resolved; final acceptance remains 0/8, with no qualified
+gain or empirical protocol freeze. All three workers are responsive. Interim
+Standards/Spec review found four concrete defects: unsafe mutable-graph checking,
+missing native package-backed region comparisons, incomplete descendant cleanup,
+and YAML-only messages breaking durable JSON retrieval. Repairs and independent
+cross-review are recorded in the [interim review receipt](../../docs/bfs-interim-review-20260926.md).
+The final required review still follows acceptance.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 13 | Independent original-graph checker implemented; v2 proof pending | Mac / mbit10 queued | Compiled false-PASS regression now rejected; 114 candidate/author/witness cases passed | Finish downstream qualification guards and approved code sync |
+| 14 | Actual profiling package complete; export held | mbit10 / released | 31 scopes and 39 memory rows; actual correctness still unverified | Authorized metadata sync before resolution |
+| 15 | Native A/A veto implemented; simulator calibration pending | mbit10 / released | 121 calibration/repeatability contract cases passed; unchanged A/A crosses gain threshold | Preserve all samples; complete actual simulator gates |
+| 16 | Prospective author/control policies refreshed, unfrozen | Local preparation | Updated v2 runtime parser identity; unchanged author traversal remains distinct | Bounded v2 proof and freeze prerequisites |
+| 17/19/20 | Exact provider payload approvals pending | No provider invocation | No new generated candidate claimed | Resume only after approval and freeze |
+| 18 | Literal candidate compiled; frozen native evaluation pending | mbit10 / queued | Existing compile evidence retained | Frozen evaluation and reprofiling |
+
+Read-only host observations span 01:40:24–01:43:35 ET. Node 0 generation 277
+is held by the live external workflow; node 1 generation 397 and legacy 77 are
+released. No owned BFS/gem5/Callgrind job remains. Eight external Python workers
+use both sockets without lane confinement; their processes and the external
+Spatter process remain active. Load changed from 9.44/10.03/8.96 to
+11.82/10.70/9.41. Disk availability remains 17 GiB on `/data1` and 196 GiB on
+`/data`. Conservative node availability is 35.28/52.89 GiB and global availability
+89.95 GiB; these estimates do not authorize or guarantee a dispatch.
+
+Historical DX checkout `5802a5a` and native metadata checkout `41303ed7` remain
+unchanged. The actual helper checkout remains clean at `c40ad13e`, matching its
+existing fetched origin, and helper SHA-256 remains
+`00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8`.
+No fetch, new host receipt, code export, or measurement was performed during
+this check. The tool transcript retains the observations. Native driver receipt
+SHA-256 remains `26ea5d69db8a7b06f48e35876fa2308aa849a654c0cab351c6f70ae4777f4583`;
+profile continuation receipt remains
+`a66864e992b59eda7e3598bf083fb426ed94d845fe802338e053d4e452e53d53`.
+The next full check is due **2026-09-26 02:10 ET**. The pilot deadline remains
+05:56:38 ET; idle/approval time does not extend it.
+
+## Progress check — 2026-09-26 01:10 ET
+
+Tickets 01–12 remain resolved (12/21); final matrix acceptance remains 0/8.
+No empirical protocol or qualified gain is claimed. Local checkpoint `8175ca1`
+retains verifier runtime bytes per execution and binds their hashes into frozen
+instrumentation. Its 89 focused tests passed; the actual v2 attempt has not
+started. Automatic approval review rejected this code push as well as the
+previous evidence exports and Claude payloads. Exact payload/destination approval
+questions remain pending. No alternate export or execution path was used.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 13 | Fixed v2 proof prepared; code synchronization held | Mac / mbit10 pending | 89 runtime, public execution, and fixed-request tests passed | Approved code sync, then one bounded author proof |
+| 14 | Independent observation audit passed; synchronization held | mbit10 / released | Complete package, 31 source scopes and 39 memory rows; actual v1 remains unverified | Authorized metadata synchronization before ticket resolution |
+| 15 | Second native block complete; profitability readiness unresolved | mbit10 / lane 1 released | All 60 trials checked; unchanged DX100 uniform nominal A/A ratio 1.176047, 95% interval [1.066142, 1.448303] | Retain instability and all samples; finish simulator gates |
+| 16 | Reference/control prepared, not frozen | mbit10 / queued | Existing uniform22 graph and identified author builds | Validate v2 mechanism and prospective protocol |
+| 17/19/20 | Exact provider payloads held | No provider invocation | Source/profile export approval pending | Resume only after explicit approval |
+| 18 | Literal candidate and builds complete | mbit10 / queued | Existing primary/diagnostic compilation | Frozen native evaluation and profiling |
+
+The native second block used `8c178a7` and completed in 1,662.222400 seconds.
+Its four binary/wrapper/settings comparisons and all raw references passed the
+remote audit. Remote-only evidence commit
+`41303ed7fb02f9a5c515e2e951d27e20869c73e9` contains four evaluations and the audit;
+189 remote records validate. It has not been exported or imported into the local
+185-record catalog. The unchanged A/A interval is descriptive, not a qualified
+gain. Every sample remains retained. The external Spatter workflow overlaps four
+DX100 Kronecker execution-stage envelopes and all fifteen upstream Kronecker
+trials; no causal explanation or sample exclusion is asserted.
+
+The scheduled host snapshot was captured at 01:08:37 ET. Lane 0 generation 277
+belongs to the live external workflow; lane 1 generation 397 and legacy lease 77
+are released. No owned evaluator or gem5 process remains; the old outer wrapper
+is an inert zombie. Load1 is 1.33, free disks are 17/196 GiB, conservative node
+availability is 56.837/53.333 GiB, and global availability is 112.042 GiB. Helper
+`c40ad13e` matches the last fetched origin and its retained hash; no fresh fetch
+is claimed. The historical DX checkout stays pinned at `5802a5a`. The host receipt
+`periodic-health-20260926-0110.json` has SHA-256
+`3d76f1f7701ac597b45b0655cda525ced2d68592efe9ed1d4ec37999b305a0e4`
+and remains remote. All three workers are active; no dead worker was found.
+The next full check is due **2026-09-26 01:40 ET**.
+
+Independent local work continues on explicit simulator source/replay identity
+and separately labeled diagnostic case evidence. A diagnostic must retain its
+own cell and cannot certify primary timing or primary accelerator execution.
+Neither the 57 calibration fixture tests nor the prepared finite sequence
+constitutes execution acceptance. The pilot deadline remains 05:56:38 ET.
+
+## Progress check — 2026-09-26 00:40 ET
+
+Tickets 01–12 remain resolved (12/21); final acceptance remains 0/8 and no
+qualified gain is claimed. Core v2 implementation checkpoint `a6b2f61` is pushed;
+its independent contract review and focused tests are documented in
+[the local validation receipt](../../docs/evidence/bfs-v2-contract-review-20260926.md).
+A real v2 attempt remains pending; no old execution has been promoted.
+
+| Ticket/case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| 13 | Explicit v2 implemented and reviewed | Mac; model pending | 69 witness and 12 public adapter tests; exact checker binding | Review fixed request; run after native block |
+| 14 | Complete package; independent audit pending | mbit10 / lane 0 released | 31 regions, 39 memory rows, fresh retrieval matches; v1 correctness remains unverified | Audit source/ROI attribution and preserve export hold |
+| 15 | Second native block running | mbit10 / lane 1 generation 397 | DX100 uniform 15/15 checked with unchanged binary/wrapper; upstream uniform started | Finish three remaining fixed cells; analyze all trials |
+| 16 | Reference/control prepared, not frozen | mbit10 / queued | Registered uniform22 graph and unchanged identified builds | Establish v2 correctness before freezing |
+| 17/19/20 | Prepared provider payloads held | No provider invocation | Exact source/profile approval pending | Resume only after explicit payload authorization |
+| 18 | Literal candidate/builds complete | mbit10 / queued | Identified primary and diagnostic compilation | Frozen native evaluation and profiling |
+
+At 00:39:39 ET all three subagents were live. Lane 0 and the legacy lease were
+released; lane 1 owner and driver were alive with the actual upstream evaluator.
+No owned gem5 process remained. Load1 was 6.03; `/data1` and `/data` had 17 and
+196 GiB free. Conservative per-node available memory was 53.438/53.061 GiB and
+global availability 108.272 GiB. The lane helper still matched its current
+`c40ad13e` source identity. No other user's job or active checkout was changed.
+The next full check is due **2026-09-26 01:10 ET**.
+
+The independent profile's original CLI failure occurred before collection:
+`--runs-dir` was omitted. Both orchestration clients are fixed. The original
+simulations and failure receipt remain unchanged; only the planned collection,
+package, and fresh retrieval steps were completed in an additive continuation.
+Unresolved compiler scopes remain explicit despite package completeness.
+
+Automatic approval review still holds the three Claude payload submissions and
+the exact Git evidence packet. New host evidence and this status update remain
+local/remote as applicable and were excluded from code pushes. No alternate
+agent, destination, or export path was used. Existing required approval questions
+remain pending. Independent implementation and authorized execution continue.
+
+## Progress check — 2026-09-26 00:10 ET
+
+Tickets 01–12 remain resolved (12/21); final matrix acceptance remains 0/8 and no
+qualified ROI gain is claimed. Commit `5802a5a` contains the reviewed post-seal
+trace probe; `6234c6d` contains the independent source-bound profiling diagnostic.
+The clean full-suite result remains 765 passed / 3 skipped at `d9c4c10`; it does
+not cover later changes. A combined DX100/profile regression run is active.
+
+| Case | Status | Host/lane | Evidence | Next action |
+|---|---|---|---|---|
+| Ticket 13 | Trace preflight passed; not yet dispatched at this check | mbit10 / lane 1 planned | Exact 14 input files and 10 checkpoint files rehashed; original a6 remains unverified | One bounded post-seal syscall probe |
+| Ticket 14 | Observation driver reviewed | mbit10 / pending eligible lane | Existing scalar primary/diagnostic binaries; unsupported unused SIMD scope remains explicit | One bounded actual profile package |
+| Ticket 15 | First native block complete; second block preparation | mbit10 / lane 1 planned | 60 primary observations; high unexplained timing spread | Remaining finite unchanged-baseline block |
+| Ticket 16 | Graph/build identities prepared; not frozen | mbit10 | Actual uniform22 registration and concrete protocol requests | Validate correctness mechanism before comparisons |
+| Tickets 17/19/20 | Envelopes prepared, provider calls held | No active provider | Three exact source/profile payloads await required approval | Resume only after payload authorization |
+| Ticket 18 | Literal candidate and two build modes complete | mbit10 / released | Audited primary/diagnostic builds and 31 discovered regions | Frozen native correctness/timing/profiling |
+
+At 00:09–00:10 ET both socket leases and the legacy lease were released, with no
+owned probe PID. Lane 1 conservative capacity was 52.385 GiB, global available
+memory 105.164 GiB, load1 11.36, and disks 17/196 GiB free on `/data1`/`/data`.
+The lane helper was freshly verified against `c40ad13e`; no other user's job was
+changed. Two workers were active and the independent review worker completed
+normally; no dead worker was found. The next full progress check is due 00:40 ET.
+
+Automatic approval review rejected the three Claude payloads and a separate
+proposed Git metadata export. The latter remains held after fresh verification
+that the existing remote is the user's private repository; it must not be routed
+through another agent. Read-only host checks and authorized code/execution work
+continue. This progress section is retained locally pending approval of the exact
+new evidence export packet.
 
 ## Latest integration — 2026-09-25 23:54 ET
 
@@ -337,3 +682,12 @@ evidence; automatic function/loop/memory collection remains tickets 06–09.
 Tickets [04](issues/04-instruction-rewriting-and-repair.md) and [05](issues/05-annotated-source-rewriting.md) are resolved: real Claude source changes for natural-language, structured, and annotated inputs each have a three-source independently verified native diagnostic. The ten-test bounded rewrite suite passes, and earlier failed attempts remain linked. See [handoff](../../docs/bfs-handoff.md) for exact record IDs. Tickets 17–20 remain separate frozen-workload acceptance obligations.
 
 - 2026-09-25: [Campaign plan](campaign-plan.md) records operator-selected strategies, provider/evaluation limits, and failure rules before candidate assessment. Native and proposal client drivers are preparatory; no frozen coverage or gain is claimed.
+
+## Corrective proof launch cutoff — 2026-09-26 09:40 ET
+
+The a2 launch cutoff passed without the exact two-commit export approval.
+The corrective attempt remains unused; no launch, reparse, or result is claimed.
+Fewer than 1,200 seconds remain in its fixed 10:00 ET window, so dispatch is
+prohibited under that plan. The rejected export is not retried and the deadline
+is not extended. Local paired calibration implementation and fixed-commit
+regression verification continue independently.

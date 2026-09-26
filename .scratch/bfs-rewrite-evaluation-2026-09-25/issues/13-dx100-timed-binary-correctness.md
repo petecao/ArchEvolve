@@ -1,11 +1,45 @@
 # 13 — DX100 timed-binary correctness
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 12
 **Spec:** `../spec.md`
+
+## Current checkpoint — 2026-09-26 10:04 ET
+
+The a2 10:00 ET window ended unused after its 09:40 ET launch cutoff. No reparse,
+dispatch, or new correctness result occurred. The read-only 10:04–10:05 ET audit
+confirmed a2 output/record paths absent and the retained a1 record, trace, parser,
+simulator, and audit hashes unchanged. The actual a1 failure stays failed with
+zero admitted timings. Local correction and paired-calibration work now reaches
+`6346189`; the updated exact four-commit code export is awaiting approval after
+the earlier automatic rejection. This does not authorize retrying the expired
+a2 plan. Accelerator correctness coverage remains incomplete.
+
+## Prior checkpoint — 2026-09-26 09:34 ET
+
+The one-attempt actual v2 proof ran at `0236631` on mbit10 lane 0, generation
+315, and failed at 09:03 ET. The same guest emitted the protected PASS sequence
+and successful exit syscall, but the parser rejected four unconditional CPU
+progress messages. The retained result remains unverified with no admitted timing
+or gain. Its evaluation SHA-256 is
+`9a941cdff315e283b13563bf81ef2f45ba0712bbcf6d31b92f6232488efa3b42`;
+local commit `1cc9557` imports that failure and its audit receipt.
+
+Commit `b3a2cbe` accepts only the pinned CPU progress grammar, retaining those
+observations separately from the syscall completion witness. Independent review
+closed a progress/exit tick-ordering defect. The final parser/adapter/probe test
+set passed **121 tests in 57.30 seconds**. Local catalog validation reports 186
+valid records. These checks do not establish real execution of the correction.
+
+The [one corrective a2 plan](../../../docs/bfs-dx100-witness-correction-20260926.md)
+retains the 10:00 ET absolute end and requires at least 1,200 seconds at dispatch.
+Automatic approval review rejected the new two-commit GitHub synchronization;
+an exact payload/destination question remains pending. There is no a2 dispatch
+or retrospective promotion of a1. Required accelerated full/tail/competing-parent
+coverage is still outstanding, so this ticket remains claimed.
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
@@ -75,3 +109,45 @@ contract. See [the audited finite receipt](../observations/dx100-smoke-a6.json).
 The tiny graph's observed frontiers (1, 9, 37, 17) select the author's scalar
 fallback and cannot establish accelerator execution/full-tile/tail/conflict
 coverage. No acceptance criterion is resolved by this bring-up observation.
+
+## Prospective v2 contract — 2026-09-26
+
+Local checkpoint `8175ca1` retains exact verifier driver, parser, and host-memory
+observer bytes per execution and binds their hashes into instrumentation. The
+explicit v2 contract checks protected completion output and a separate
+simulator-origin successful `exit_group(0)` call/return after the durable ROI
+seal. It records actual normal termination separately; no previous v1 result is
+promoted. The combined 89 runtime, public-adapter, and fixed-request tests passed.
+These fixtures do not establish actual model acceptance.
+
+The one-attempt unchanged-author proof is prepared in
+`../requests/dx100-witness-a1.yaml` and repository-root
+`docs/bfs-dx100-witness-probe-plan-20260926.md`. Automatic approval review rejected
+the code push pending specific payload/destination approval, so the actual v2
+attempt has not started. Accelerated full/tail/competing-update cases still
+require their own actual observations. Ticket 13 remains claimed.
+
+## Interim correctness repair — 2026-09-26
+
+Independent Spec review reproduced a false PASS when a generated candidate
+mutated the graph subsequently used by the protected verifier. The new
+`dx100.complete_call.v2` wrapper checks the exact returned parent buffer against
+independently loaded original adjacency. Its 2 GiB bounded allocation occurs
+before checkpoint/ROI and is declared as a new treatment. Legacy wrappers stay
+retrievable but cannot execute or qualify through comparisons/aggregates.
+
+Compiled local regression cases reject the false PASS and accept valid alternative
+parent trees; they are not actual DX100 acceptance. Unchanged author traversal
+remains a distinct treatment. See [oracle contract](../../../docs/bfs-original-graph-oracle-20260926.md)
+and [interim review](../../../docs/bfs-interim-review-20260926.md). The actual v2
+proof, accelerated coverage, code synchronization, and evidence synchronization
+remain pending. This ticket remains claimed.
+
+## Corrective proof launch cutoff — 2026-09-26 09:40 ET
+
+The a2 launch cutoff passed without the exact two-commit export approval.
+The corrective attempt remains unused; no launch, reparse, or result is claimed.
+Fewer than 1,200 seconds remain in its fixed 10:00 ET window, so dispatch is
+prohibited under that plan. The rejected export is not retried and the deadline
+is not extended. Local paired calibration implementation and fixed-commit
+regression verification continue independently.

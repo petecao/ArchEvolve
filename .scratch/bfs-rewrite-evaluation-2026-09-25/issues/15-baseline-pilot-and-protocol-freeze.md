@@ -1,11 +1,56 @@
 # 15 — Baseline pilot and protocol freeze
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
+
+## Paired calibration implementation — 2026-09-26 10:04 ET
+
+Local commit `6346189` implements the bounded four-cell driver, immutable request,
+and independent admission reader. Independent review repairs cover descendant
+ownership, resource freshness and guard duration, failed-run cleanup, full startup
+timing, exact lane/runtime metadata, and reopened request/result/code evidence.
+All four old controls remain retrievable, including the failed DX100 uniform A/A
+control; all four new pairs must qualify even when freezing an upstream protocol.
+The shared accelerator gate remains required. Reviewers report no remaining
+actionable finding in these paths.
+
+The final combined group passed **213 tests in 158.00 seconds**; see
+[the interim review and retained log](../../../docs/bfs-interim-review-20260926.md).
+These are local contract and subprocess checks, not empirical calibration.
+The actual paired study remains unrun behind the exact code-export hold. Its
+11:58 ET latest dispatch and 15:00 ET absolute end are unchanged; no retries or
+automatic extension are permitted. The 10:04 ET host audit found both sockets
+and the legacy lease released, with no owned job; this is availability evidence,
+not a reservation. This ticket remains claimed and no protocol was published.
+
+## Paired calibration preparation — 2026-09-26 09:34 ET
+
+The original expired pilot and both serial native blocks remain unchanged.
+The prospective [paired pilot](../../../docs/bfs-native-paired-pilot-20260926.md)
+uses all four fixed implementation/graph cells, ten repetitions per ordered
+source and role, one exact compiled executable per A/A cell, and seeded balanced
+adjacent order. It changes collection and whole-repetition resampling only for
+new evidence and a new protocol. No paired measurement or freeze has occurred.
+
+The fixed study has 240 primary process observations, a prospective 0.10 spread
+ceiling, and the unchanged 1.05/95%/2,000-resample profitability rule. Either
+direction of a numerical A/A gain in any cell vetoes admission. Four passing
+controls would not establish confidence-interval coverage or statistical power.
+The finite 15:00 ET end, 10,800-second driver, and 10,920-second outer bound permit
+no automatic retry, discarded samples, or relaxed thresholds.
+
+Local paired collection and campaign wiring were independently reviewed. Review
+reproduced acceptance of a consistently rehashed invalid parent vector; admission
+now revalidates canonical graph bytes and checks each reopened parent vector.
+The public negative reproduction now rejects, and seven targeted regressions
+passed. The new bounded driver and publication reader are still under development
+and review. Existing diagnostics stay tied to their actual original evaluations;
+new paired sampling cannot promote the old failed negative control. Shared
+simulator size/correctness/coverage/replay gates remain required.
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
@@ -121,3 +166,44 @@ checks. These establish bounded native scale-18 feasibility. Accelerator coverag
 identical simulator replays, shared workload gates, and the final protocol freeze
 remain outstanding. The observed spreads do not automatically relax acceptance
 thresholds, and no candidate profitability claim is made.
+
+## Second unchanged block — 2026-09-26
+
+The second and final permitted native block completed on lane 1 using `8c178a7`:
+all 60 primary trials passed structural checks and retained matching primary
+binaries, wrappers, sources, and explicit settings. All raw references were
+audited. Its 1,662.222400-second driver and four evaluation records are retained
+in remote-only commit `41303ed7fb02f9a5c515e2e951d27e20869c73e9`; export remains
+held. They are not part of the local 185-record catalog.
+
+The existing fixed 2,000-resample, seed-20260925 descriptive A/A calculation
+gives unchanged DX100 uniform a first/second ratio of 1.176047 and a 95% interval
+[1.066142, 1.448303]. Its lower bound exceeds the initial 1.05 numerical gain
+threshold. No spread ceiling or empirical protocol is frozen, so this is not
+a qualified gain; it shows that the current separate-block comparison can
+attribute a session difference to unchanged code. Both directions, every sample,
+and observed environment differences remain retained. No cause is assigned.
+
+External Spatter overlap affects four DX100 Kronecker stage envelopes and all
+fifteen upstream Kronecker trials. The uniform cells finished before that job.
+No sample is removed and no third native block is scheduled. Native profitability
+readiness remains unresolved; choosing a higher spread ceiling or the more
+favorable block does not repair it. Simulator correctness, shared-size coverage,
+identical replays, and the original 05:56:38 ET deadline remain separate gates.
+
+## Pilot window expired — 2026-09-26 08:20 ET
+
+The original absolute deadline, **2026-09-26 05:56:38 ET**, elapsed without the
+required simulator calibration or a defensible native profitability freeze.
+The original pilot is incomplete; its native trials, failures, environment
+observations, and unverified simulator evidence remain retained. No third native
+block or late simulator dispatch is scheduled under this window. A subsequent
+pilot would require a separately recorded finite plan before execution; the
+expired window is not silently renewed. This ticket remains claimed with its
+empirical acceptance boxes open.
+
+The agent usage limit prevented observation from approximately 02:04 through
+08:04 ET. Scheduled heartbeat messages during that interval do not establish
+that worker or host checks occurred. Recovery checks found no owned live
+measurement process. See the map's 08:10 recovery entry for the actual read-only
+host snapshot and the outstanding synchronization approvals.

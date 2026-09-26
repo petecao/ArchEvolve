@@ -1,7 +1,7 @@
 # 21 — Coverage, ROI gain, and collaborator handoff
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 16, 17, 18, 19, 20
@@ -79,3 +79,41 @@ Exercise the public coverage/result query in a fresh process against the actual 
 Ticket 16 supplies actual artifact/control comparisons. Tickets 17–20 supply the four source/route batches, each on both graph families, with all four payload forms. Their dependency chains supply the shared workflow and profiling capabilities.
 
 This ticket reports and checks existing evidence. If another bounded proposal or rerun is needed, identify that need for the owner; it is not automatic authority for the reporter to choose a different strategy. Neither all-cell gains nor a win over the authors' accelerated implementation is required.
+
+## Interim review status — 2026-09-26
+
+Independent Standards and Spec reviewers inspected the implementation from
+`1bdb7d4037916dea782c40239a6415b61a47f3c1` through `8175ca1`. Four concrete
+findings have local repairs with focused regression evidence: durable invalid
+message retrieval, descendant cleanup, independent original-graph correctness,
+and native diagnostic-region comparisons. Two integration follow-ups preserve
+v2 bounded repair and prevent legacy aggregate qualification. See
+[the interim review receipt](../../../docs/bfs-interim-review-20260926.md).
+
+A clean suite at `6a1bd7d` passed 951 tests with three skipped, before these
+review repairs. The final fresh Standards/Spec review remains required after all
+assigned implementation, actual acceptance, and review fixes finish. Current
+acceptance is still 12/21 resolved tickets, zero of eight final matrix cells,
+and no qualified ROI gain. Provider/code/evidence export approval holds and the
+failed native repeatability gate remain explicit; no fixture closes this ticket.
+
+2026-09-26 follow-up: the isolated full suite at `0467c72` finished with
+1,097 passed and three skipped. A second independent interim review found one
+Standards P2 (remaining process-group cleanup) and two Spec P2 findings
+(simulated hotspot metrics and empty-operation executable-readiness checks).
+All have local repairs, passing focused tests, and clean independent cross-review;
+the pinned full suite predates these latest repairs. The review receipt preserves
+the separate axes and test boundaries. The original pilot expired at 05:56:38 ET
+without a freeze. Final acceptance and the final post-acceptance review remain
+open; the 30-minute heartbeat remains active.
+
+2026-09-26 10:04 ET checkpoint: prospective paired calibration implementation
+and independent admission review are complete at `6346189`, with all identified
+review gaps repaired and 213 focused checks passing. No actual paired study,
+empirical freeze, final matrix cell, or qualified gain follows from these tests.
+The full suite at pinned `721fa72` is still running with one observed incomplete
+test-fixture failure; the correction is verified separately in both collection
+modes and included in the 213-case group. The retained original run is not called
+green. Final Standards/Spec reviews against `1bdb7d4` remain required after actual
+acceptance and all further repairs. All ticket states remain 12 resolved and
+9 claimed. See the map's 10:04 ET table for current host and export holds.
