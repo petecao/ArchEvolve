@@ -11,6 +11,63 @@ import pytest
 from swdb import artifacts
 
 
+@pytest.mark.parametrize('implementation,roi,modes,function,accelerated', [
+    ('gapbs-bfs-do', 'bfs.complete_call.v1', ['primary', 'diagnostic'], 'DOBFS', False),
+    ('dx100-bfs-scalar', 'bfs.dx100.traversal.v1', ['diagnostic'], 'DOBFS', False),
+    ('dx100-bfs-maa-reference', 'bfs.dx100.traversal.v1', ['diagnostic'], 'DOBFSMAA', True),
+])
+def test_compile_scope_selects_only_permitted_public_builds(
+        tmp_path, monkeypatch, implementation, roi, modes, function, accelerated):
+    script = Path(__file__).resolve().parents[1] / 'scripts/dx100_compile_smoke.py'
+    spec = importlib.util.spec_from_file_location('compile_scope_fixture', script)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    package = tmp_path / 'swdb'
+    package.mkdir()
+    (package / '__main__.py').write_text('''import json,pathlib,sys
+command=sys.argv[1]
+if command in ('source-snapshot','baseline-candidate'):
+ print(json.dumps({'id':command,'artifact':{'sha256':'a'*64}}))
+elif command=='dx100-compile':
+ request=json.loads(pathlib.Path(sys.argv[2]).read_text())
+ print(json.dumps({'id':request['id'],'build':{'binary_sha256':'b'*64,
+  'flags':['fixture'],'compiler_version':['fixture']},'context':{
+  'candidate_sha256':'a'*64,'model':{'revision':'fixture'}}}))
+elif command=='get': print('{}')
+else: raise SystemExit('unexpected public command')
+''')
+    class FixtureStore:
+        def get(self, name, kind):
+            if kind == 'machine': return {}
+            if kind == 'implementation': return {'function': function}
+            return {'id': 'model', 'outcome': {'state': 'complete', 'stage': 'build'},
+                    'evidence_kind': 'execution', 'context': {'model_root': '/fixture/model'}}
+    monkeypatch.setattr(module, 'ROOT', tmp_path)
+    monkeypatch.setattr(module, 'Store', lambda path: FixtureStore())
+    monkeypatch.setattr(module.profile, '_verified_lane', lambda *args: None)
+    monkeypatch.setattr(module.subprocess, 'check_output', lambda *args, **kwargs: 'fixture-commit\n')
+    runs = tmp_path / 'runs'
+    relative = Path.is_relative_to
+    monkeypatch.setattr(Path, 'is_relative_to', lambda self, other: True if self == runs else relative(self, other))
+    monkeypatch.setattr(sys, 'argv', [str(script), '--id', 'fixture', '--implementation', implementation,
+                                    '--roi', roi, '--build-evaluation', 'model', '--runs-dir', str(runs), '--lane', '1'])
+    module.main()
+    folder = runs / 'fixture.driver'
+    receipt = json.loads((folder / 'driver.json').read_text())
+    assert receipt['state'] == 'complete' and receipt['guest_execution'] is False
+    assert receipt['roi'] == roi and receipt['implementation'] == implementation
+    assert list(receipt['builds']) == modes
+    assert sorted(path.name for path in folder.glob('*.request.json')) == sorted(mode + '.request.json' for mode in modes)
+    for mode in modes:
+        request = json.loads((folder / (mode + '.request.json')).read_text())
+        assert request['roi'] == roi and request['function'] == function
+        assert request['accelerated'] is accelerated
+        assert request['diagnostic_regions'] is (mode == 'diagnostic')
+        assert request['budget'] == {'total_seconds': 240, 'build_seconds': 120, 'memory_gib': 16, 'storage_gib': 1}
+    assert all(row['command'][3] in {'source-snapshot', 'baseline-candidate', 'dx100-compile', 'get'}
+               for row in receipt['stages'])
+
+
 def test_driver_deadline_gracefully_reaps_nested_evaluator_child_and_retains_failure(tmp_path, monkeypatch):
     script = Path(__file__).resolve().parents[1] / 'scripts/dx100_compile_smoke.py'
     spec = importlib.util.spec_from_file_location('compile_smoke_fixture', script)

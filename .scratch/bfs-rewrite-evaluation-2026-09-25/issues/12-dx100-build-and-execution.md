@@ -86,3 +86,22 @@ RSS/phase observations, conditional on socket capacity and normal lane ownership
 Eight public continuation/resource tests and five observation/receipt tests pass.
 At 21:22 ET, lane 1 was free but its conservative free-plus-clean-cache headroom
 was only 32.60 GiB, below the plan's 52 GiB prerequisite; no retry was dispatched.
+
+## Public candidate compilation smoke — 2026-09-25
+
+The unchanged DX100 scalar source compiled through the public candidate adapter
+on mbit10 lane 1, generation 393, at 22:41:26–22:43:26 ET from SWDB
+`2667f179817c127c814f86bfcfa16ff12d02e5e7`. Primary and diagnostic public calls
+completed in 39.23 and 64.11 seconds, within their separate 240-second/16-GiB
+bounds and the 700-second driver limit. Fresh public retrieval passed for both.
+Source artifact `d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d`
+was unchanged; the primary binary hash is
+`bde41a46e02eed2f7f30b3d8abdd8157bbae0c425afa7476e07915a0c1b9b68d`.
+
+The source manifests, binaries, generated drivers, regular pinned m5ops assembly,
+and stage output hashes were independently rechecked on the host before metadata
+sync. Public records `bfs-dx100-compile-20260925-a1.primary.build` and
+`bfs-dx100-compile-20260925-a1.diagnostic.build`, plus
+`observations/dx100-compile-smoke-a1.json`, retain the exact receipts. This was
+compile-only evidence; checkpoint-to-ROI execution still awaits the finite
+memory-gated bring-up attempt. The ticket remains claimed.

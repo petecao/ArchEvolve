@@ -77,3 +77,16 @@ seconds. The subsequent metadata-name correction and candidate regressions
 passed 22 tests in 45.18 seconds. These establish contract handling, not real
 simulated profiling acceptance. The memory-gated model feasibility attempt and
 real primary/diagnostic collection remain pending.
+
+## Real source-diagnostic compilation — 2026-09-25
+
+The public unchanged DX100 scalar diagnostic build completed on mbit10 lane 1
+at 22:43 ET, using the actual GCC 13 GEM5/OpenMP flags and shared libclang
+discovery. It discovered 31 source scopes and compiled the instrumented binary
+with SHA-256 `40a215eac6816704b92c0847e24c1aba7abf9c5699c23b2407e55b41b212f483`.
+The separate primary binary and unchanged source were also built and rehashed;
+`observations/dx100-compile-smoke-a1.json` links their public records and raw
+receipts. The diagnostic public call cost 64.11 host seconds within its
+240-second/16-GiB bound. Discovery and compilation establish no dynamic region
+durations, memory observations, or simulated correctness. Real collection
+acceptance remains pending and this ticket stays claimed.

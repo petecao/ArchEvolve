@@ -63,4 +63,12 @@ inferred duration. The original returned parent array and counters are checked
 after the same guest's ROI exit is sealed and continued. These diagnostics
 cannot be substituted for the author's primary timing.
 
+The bounded compile-only driver `scripts/dx100_compile_smoke.py` accepts
+`--implementation` and `--roi`. Its default complete-call scope compiles both
+primary and diagnostic candidates. Selecting `bfs.dx100.traversal.v1` compiles
+only the unchanged DX100 scalar or author-accelerated diagnostic, preserving the
+original primary executable. Upstream GAPBS cannot select the author traversal
+scope. Every mode retains the existing 240-second/16-GiB per-build limits and
+700-second driver bound; it performs no graph or guest execution.
+
 Correctness remains independent. Collection can retain an unverified real evaluation, and a fixture remains `contract_fixture` throughout. Nothing in collection promotes a candidate, infers a neutral speedup, or enables a gain claim. Exact candidate, source snapshot, binary, workload, source vertex, target/configuration, and actual clock remain part of the retrievable evidence.

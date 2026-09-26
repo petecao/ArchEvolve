@@ -31,12 +31,17 @@ def main():
     parser.add_argument('--id', required=True)
     parser.add_argument('--implementation', choices=('gapbs-bfs-do', 'dx100-bfs-scalar', 'dx100-bfs-maa-reference'),
                         default='dx100-bfs-scalar')
+    parser.add_argument('--roi', choices=('bfs.complete_call.v1', 'bfs.dx100.traversal.v1'),
+                        default='bfs.complete_call.v1',
+                        help='author traversal compiles its diagnostic only; the original primary binary stays fixed')
     parser.add_argument('--build-evaluation', required=True)
     parser.add_argument('--runs-dir', type=Path, required=True)
     parser.add_argument('--lane', type=int, choices=(0, 1), required=True)
     args = parser.parse_args()
     if not re.fullmatch(r'[a-z0-9][a-z0-9._-]*', args.id):
         raise SystemExit('invalid smoke identifier')
+    if args.roi == 'bfs.dx100.traversal.v1' and args.implementation == 'gapbs-bfs-do':
+        raise SystemExit('author traversal diagnostic requires an unchanged DX100 implementation')
     runs = args.runs_dir.resolve()
     if not any(runs.is_relative_to(base) for base in ('/data/yanruj/EvolveSWDB_runs', '/data1/yanruj/EvolveSWDB_runs')):
         raise SystemExit('raw output must use authorized EvolveSWDB_runs storage')
@@ -51,6 +56,7 @@ def main():
     folder.mkdir(parents=True, exist_ok=False)
     receipt = {'id': args.id, 'created': '2026-09-25', 'state': 'running', 'stages': [], 'builds': {},
                'gain_claim': False, 'guest_execution': False, 'model_build': model['id'],
+               'roi': args.roi, 'implementation': args.implementation,
                'outer_seconds': OUTER_SECONDS, 'cleanup_reserve_seconds': CLEANUP_RESERVE_SECONDS,
                'repository_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()}
     interrupted = False
@@ -115,12 +121,13 @@ def main():
         if candidate['artifact']['sha256'] != source['artifact']['sha256']:
             raise RuntimeError('unchanged baseline source identity changed')
         receipt.update(candidate=candidate['id'], source_snapshot=source['id'], source_sha256=candidate['artifact']['sha256'])
-        for mode in ('primary', 'diagnostic'):
+        modes = ('diagnostic',) if args.roi == 'bfs.dx100.traversal.v1' else ('primary', 'diagnostic')
+        for mode in modes:
             rid = args.id + '.' + mode
             request = {'message_version': '1.0', 'id': rid + '.build', 'machine': 'mbit10',
                 'hardware_target': 'dx100-e4fc4af-4c', 'model_root': model['context']['model_root'],
                 'build_evaluation': model['id'], 'candidate': candidate['id'], 'function': implementation['function'],
-                'accelerated': args.implementation == 'dx100-bfs-maa-reference', 'roi': 'bfs.complete_call.v1',
+                'accelerated': args.implementation == 'dx100-bfs-maa-reference', 'roi': args.roi,
                 'diagnostic_regions': mode == 'diagnostic',
                 'budget': {'total_seconds': 240, 'build_seconds': 120, 'memory_gib': 16, 'storage_gib': 1}}
             path = folder / (mode + '.request.json')
