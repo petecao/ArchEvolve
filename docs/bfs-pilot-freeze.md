@@ -30,6 +30,17 @@ treatment is required before retaining them as supporting evidence. Every
 shared accelerator gate below still applies. A passing native negative control
 alone cannot publish a protocol or complete Ticket 15.
 
+Publication also binds [the native runtime inputs](bfs-native-runtime-20260926.md)
+as `settings.native_runtime`. For the retained paired driver, its revalidated
+four inherited inputs combine with the four controlled inputs of all eight
+members. Explicit `null` means observed unset. The supporting receipt and all
+member identities remain in `calibration.native_runtime_evidence`; historical
+evaluation records are not rewritten. A serial calibration requires an explicit
+runtime map in every block. Unknown first-block inputs cannot be filled from the
+current shell, so the old serial records remain unsupported for new empirical
+publication even if their other gates were satisfied. Existing statistical,
+history, diagnostic-scope, and accelerator gates remain unchanged.
+
 `scripts/bfs_freeze_pilot.py prepare SELECTION.json --records RECORDS --output NEW_DIR`
 prepares a review and exact public `freeze-protocol` request from two complete real
 native packages. It does not publish a protocol. The packages must describe one

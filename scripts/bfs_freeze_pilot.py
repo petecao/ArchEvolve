@@ -19,6 +19,7 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from swdb import artifacts, bfs_coverage, bfs_protocol, profile_package
+from swdb.cli import Failure
 from swdb.store import Store
 
 REVISION = 'e4fc4afdf894f295442cef3604667a469fab8e62'
@@ -286,6 +287,46 @@ def repeatability_control(spec, packets, store, identities, gates):
     return result
 
 
+def calibrated_runtime(control, paired_mode):
+    """Bind observed native inputs without filling gaps in historical records."""
+    from swdb.bfs_native import RUNTIME_INHERITED, controlled_environment, validate_runtime_policy
+    policies = []
+    if paired_mode:
+        retained = control.get('retained_driver', {}).get('inherited_runtime_settings')
+        require(isinstance(retained, dict) and set(retained) == set(RUNTIME_INHERITED),
+                'paired calibration lacks its observed inherited runtime inputs')
+        evaluations = [evaluation for pair in control.get('pairs', [])
+                       for evaluation in pair.get('evaluations', {}).values()]
+        require(len(evaluations) == 8, 'paired calibration lacks runtime inputs for all eight members')
+        for evaluation in evaluations:
+            controlled = evaluation['build'].get('execution_environment')
+            require(controlled == controlled_environment(evaluation['context']['threads']),
+                    'paired calibration controlled runtime inputs differ from its declared execution')
+            policy = {'version': 1, 'environment': {**controlled, **retained}}
+            validate_runtime_policy(policy, evaluation['context']['threads'])
+            if 'native_runtime' in evaluation['build']:
+                explicit = validate_runtime_policy(evaluation['build']['native_runtime'],
+                                                   evaluation['context']['threads'])
+                require(artifacts.digest(explicit) == artifacts.digest(policy),
+                        'paired primary runtime inputs differ from its retained driver snapshot')
+            policies.append(policy)
+        evidence = {'basis': 'revalidated paired driver inherited inputs and primary controlled inputs',
+                    'driver_receipt': copy.deepcopy(control['driver_receipt']),
+                    'evaluations': [row['id'] for row in evaluations]}
+    else:
+        blocks = [block for pair in control.get('pairs', []) for block in pair.get('blocks', [])]
+        require(blocks, 'serial calibration lacks observed runtime inputs for every block')
+        for block in blocks:
+            require(block['build'].get('execution_environment') == controlled_environment(block['context']['threads']),
+                    'serial calibration controlled runtime inputs contradict its declared execution')
+            policies.append(validate_runtime_policy(block['build'].get('native_runtime'), block['context']['threads']))
+        evidence = {'basis': 'explicit runtime inputs retained in every serial calibration block',
+                    'evaluations': [block['evaluation'] for block in blocks]}
+    require(policies and all(value == policies[0] for value in policies),
+            'native calibration runtime inputs differ between its observations')
+    return copy.deepcopy(policies[0]), evidence
+
+
 def prepare(spec, store):
     require(spec.get('mode') == 'native', 'this narrow driver prepares native protocols only')
     request = freeze_header(spec, store)
@@ -413,6 +454,12 @@ def prepare(spec, store):
         calibration.update(historical_serial_control=historical_control,
             diagnostic_scope='native_pilots retain their historical five-trial primary and collector overhead; '
                 'new paired grids alone supply the prospective sampling readiness evidence')
+    runtime_policy = None
+    try:
+        runtime_policy, runtime_evidence = calibrated_runtime(control, paired_mode)
+        calibration['native_runtime_evidence'] = runtime_evidence
+    except (Failure, ValueError, KeyError, TypeError) as exc:
+        gates.append('native runtime calibration is unsupported: ' + str(exc))
     settings = {'mode': 'native', 'kernel': 'gapbs-bfs', 'workloads': [item['workload']['id'] for item in packets],
         'targets': {role: copy.deepcopy(configurations[0]) for role in ('baseline', 'candidate')},
         'builds': {role: copy.deepcopy(builds[0]) for role in ('baseline', 'candidate')},
@@ -426,6 +473,8 @@ def prepare(spec, store):
     if paired_mode:
         settings['sampling'] = copy.deepcopy(control['sampling'])
         settings['correctness']['supporting_pilot_evidence'] = control['selected_primary_evaluations']
+    if runtime_policy is not None:
+        settings['native_runtime'] = runtime_policy
     bfs_protocol._validate_settings(settings, store)
     request['settings'] = settings
     result = {'format': 'swdb.bfs.native-pilot-freeze-review.v1', 'input': spec, 'publishable': not gates,

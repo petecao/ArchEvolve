@@ -1,7 +1,7 @@
 """Publisher boundary regressions; synthetic fixtures only. Date: 2026-09-26 ET.
 
-No fixture is an empirical pilot. Package admission and the unfinished paired
-driver are explicit seams; historical receipt/raw validation, publisher gate
+No fixture is an empirical pilot. Package and paired-driver admission use
+explicit seams; historical receipt/raw validation, publisher gate
 routing, historical selection, and negative-control statistics run normally.
 """
 
@@ -16,6 +16,7 @@ from scripts import bfs_freeze_pilot as publisher
 from scripts import bfs_native_repeatability as serial
 from scripts import bfs_paired_calibration as paired
 from swdb import artifacts, bfs_protocol
+from swdb.bfs_native import RUNTIME_INHERITED
 from swdb.cli import Failure
 from test_bfs_freeze_pilot import aa_control
 from test_bfs_paired_admission import admission_case
@@ -145,9 +146,13 @@ def paired_review(aa_control, monkeypatch):
         for index, samples in enumerate(new_samples):
             control = paired.negative_control(samples, POLICY, SAMPLING)
             gates.extend(f"new-cell-{index}: {reason}" for reason in control["unmet_gates"])
-            controls.append({"pair": f"new-cell-{index}", **control})
+            member = new_primary[packets[index]['evaluation']['id']]
+            controls.append({"pair": f"new-cell-{index}", **control,
+                             "evaluations": {role: copy.deepcopy(member) for role in ('baseline', 'candidate')}})
         primary = [new_primary[item["evaluation"]["id"]] for item in selected]
         return {"pairs": controls, "sampling": copy.deepcopy(SAMPLING), "gain_claim": False,
+                "retained_driver": {"inherited_runtime_settings": dict.fromkeys(RUNTIME_INHERITED)},
+                "driver_receipt": copy.deepcopy(spec['repeatability']['driver_receipt']),
                 "selected_primary_evaluations": [row["id"] for row in primary]}, primary
 
     monkeypatch.setattr(paired, "qualify", admitted_paired)
@@ -206,6 +211,74 @@ def test_old_dx100_false_gain_is_retained_without_becoming_a_new_paired_input(pa
     for item in case.packets:
         for rid, digest in item["record_identities"].items():
             assert calibration["record_identities"][rid] == digest
+
+
+def test_paired_publication_binds_observed_unsets_without_rewriting_old_blocks(paired_review):
+    case = paired_review
+    before = copy.deepcopy(case.packets)
+    result = publisher.prepare(case.spec, case.store)
+    settings = result['freeze_request']['settings']
+    runtime = settings['native_runtime']
+    assert result['publishable'] and runtime['version'] == 1
+    assert runtime['environment'] == {
+        'OMP_NUM_THREADS': '4', 'OMP_DYNAMIC': 'FALSE', 'OMP_PROC_BIND': 'close', 'OMP_PLACES': 'cores',
+        **dict.fromkeys(RUNTIME_INHERITED)}
+    evidence = settings['calibration']['native_runtime_evidence']
+    assert len(evidence['evaluations']) == 8 and evidence['driver_receipt']
+    assert case.packets == before
+    assert all('native_runtime' not in block['build'] for pair in
+               settings['calibration']['historical_serial_control']['control']['pairs'] for block in pair['blocks'])
+
+
+@pytest.mark.parametrize('fault', ['missing-snapshot', 'missing-key', 'thread-limit', 'waiting',
+                                  'unselected-member', 'unselected-controlled', 'missing-member',
+                                  'unselected-boolean-version', 'unselected-float-version'])
+def test_unsupported_calibration_runtime_keeps_review_unpublishable(paired_review, monkeypatch, fault):
+    original = paired.qualify
+    def changed(*args):
+        control, primary = original(*args)
+        environment = control['retained_driver']['inherited_runtime_settings']
+        if fault == 'missing-snapshot': control.pop('retained_driver')
+        elif fault == 'missing-key': environment.pop('GOMP_SPINCOUNT')
+        elif fault == 'thread-limit': environment['OMP_THREAD_LIMIT'] = '1'
+        elif fault == 'waiting': environment['OMP_WAIT_POLICY'] = 'invalid'
+        elif fault == 'missing-member': control['pairs'][0]['evaluations'].pop('candidate')
+        else:
+            member = control['pairs'][0]['evaluations']['candidate']
+            if fault == 'unselected-controlled': member['build']['execution_environment']['OMP_DYNAMIC'] = 'TRUE'
+            else:
+                member['build']['native_runtime'] = {'version': 1, 'environment': {
+                    **member['build']['execution_environment'], **dict.fromkeys(RUNTIME_INHERITED)}}
+                if fault == 'unselected-boolean-version':
+                    member['build']['native_runtime']['version'] = True
+                elif fault == 'unselected-float-version':
+                    member['build']['native_runtime']['version'] = 1.0
+                else:
+                    member['build']['native_runtime']['environment']['GOMP_SPINCOUNT'] = '0'
+        return control, primary
+    monkeypatch.setattr(paired, 'qualify', changed)
+    result = publisher.prepare(paired_review.spec, paired_review.store)
+    assert result['publishable'] is False
+    assert any('native runtime calibration is unsupported' in reason for reason in result['unmet_gates'])
+    assert 'native_runtime' not in result['freeze_request']['settings']
+
+
+@pytest.mark.parametrize('fault', ['missing-map', 'contradictory-controlled'])
+def test_serial_runtime_requires_each_block_observation_not_current_shell(monkeypatch, fault):
+    from swdb.bfs_native import controlled_environment
+    runtime = {'version': 1, 'environment': {**controlled_environment(4), **dict.fromkeys(RUNTIME_INHERITED)}}
+    blocks = [{'evaluation': name, 'context': {'threads': 4}, 'build': {
+        'execution_environment': controlled_environment(4), 'native_runtime': copy.deepcopy(runtime)}}
+              for name in ('first', 'second')]
+    control = {'pairs': [{'blocks': blocks}]}
+    actual, evidence = publisher.calibrated_runtime(control, False)
+    assert actual == runtime and evidence['evaluations'] == ['first', 'second']
+    if fault == 'missing-map': blocks[0]['build'].pop('native_runtime')
+    else: blocks[0]['build']['execution_environment']['OMP_NUM_THREADS'] = '1'
+    for key in RUNTIME_INHERITED:
+        monkeypatch.setenv(key, 'recorded second block cannot supply the first block')
+    with pytest.raises((Failure, ValueError), match='runtime'):
+        publisher.calibrated_runtime(control, False)
 
 
 @pytest.mark.parametrize("cell", range(4))

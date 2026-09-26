@@ -201,6 +201,8 @@ def run(args):
             raise Failure("profiling requires a complete independently checked native evaluation")
         if evaluation["evidence_kind"] != "execution":
             raise Failure("contract-fixture timing cannot authorize an execution profile")
+        env, actual_runtime = native.runtime_environment(evaluation["context"]["threads"],
+            evaluation.get("build", {}).get("native_runtime"), required=True)
         for key in ("candidate", "source_snapshot", "implementation", "machine"):
             data[key] = evaluation[key]
         data["evaluation"] = evaluation["id"]
@@ -287,7 +289,7 @@ def run(args):
         command = [compiler, *flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary)]
         data["build"] = {"directory": str(build_folder), "compiler": compiler, "compiler_version": evaluation["build"]["compiler_version"], "flags": flags,
             "command": command, "wrapper_sha256": artifacts.file_hash(driver), "runtime_sha256": artifacts.file_hash(runtime),
-            "instrumented_source_sha256": artifacts.file_hash(diagnostic_source)}
+            "instrumented_source_sha256": artifacts.file_hash(diagnostic_source), "native_runtime": actual_runtime}
         session.execute("region_build", command, budget["build_seconds"])
         binary_hash = artifacts.file_hash(binary)
         data["artifacts"] = {"primary_binary_sha256": evaluation["build"]["binary_sha256"],
@@ -306,7 +308,6 @@ def run(args):
                 row["function_region"] = function["id"]
                 row["referenced_types"] = list(function.get("referenced_types", []))
         data["regions"] = rows
-        env = dict(os.environ, **evaluation["build"]["execution_environment"])
         threads = evaluation["context"]["threads"]
         for repetition in range(repetitions):
             for position, source_id in enumerate(evaluation["context"]["sources"]):

@@ -49,6 +49,8 @@ def diagnostic_fixture(records, tmp, primary, template, runtime, ns):
     binary_hash = artifacts.file_hash(binary)
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()
     build = {key: copy.deepcopy(primary['build'][key]) for key in ('compiler', 'compiler_version', 'flags')}
+    if 'native_runtime' in primary['build']:
+        build['native_runtime'] = copy.deepcopy(primary['build']['native_runtime'])
     build.update(directory=str(folder), command=[*primary['build']['command'][:-3], str(folder / 'regions_driver.cc'), '-o', str(binary)],
         wrapper_sha256=artifacts.file_hash(folder / 'regions_driver.cc'), runtime_sha256=artifacts.file_hash(runtime),
         instrumented_source_sha256=artifacts.file_hash(folder / 'instrumented_bfs.cc'))
@@ -153,7 +155,8 @@ def test_public_native_cpu_comparison_uses_actual_profile_shape_and_separate_pri
 
 @pytest.mark.parametrize('fault', ['absent-package', 'stale-profile', 'wrong-binary', 'wrong-collector',
     'wrong-scope', 'wrong-source', 'wrong-repetition', 'failed-check', 'pre-freeze', 'raw-values',
-    'raw-unavailable', 'raw-parent', 'instrumentation', 'wrong-build', 'hidden-build-flag'])
+    'raw-unavailable', 'raw-parent', 'instrumentation', 'wrong-build', 'hidden-build-flag',
+    'runtime-missing', 'runtime-changed'])
 def test_public_native_region_comparison_rejects_incompatible_diagnostics(native_setup, tmp_path, fault):
     records, request, primaries, profiles, _ = native_setup
     primary, profile = primaries['candidate'], profiles['candidate']
@@ -178,6 +181,8 @@ def test_public_native_region_comparison_rejects_incompatible_diagnostics(native
             profile['stages'][1]['command'][-1] = str(output)
         elif fault == 'instrumentation': selected['insertion_range'][0] += 1
         elif fault == 'wrong-build': profile['build']['flags'] = ['-O0']
+        elif fault == 'runtime-missing': profile['build'].pop('native_runtime')
+        elif fault == 'runtime-changed': profile['build']['native_runtime']['environment']['OMP_WAIT_POLICY'] = 'ACTIVE'
         elif fault == 'hidden-build-flag':
             profile['build']['command'].insert(-3, '-Ofast')
             profile['stages'][0]['command'] = copy.deepcopy(profile['build']['command'])
@@ -185,11 +190,15 @@ def test_public_native_region_comparison_rejects_incompatible_diagnostics(native
         records.write('region_profiles/' + profile['id'] + '.yaml', profile)
         if fault != 'stale-profile':
             package = assemble(records, tmp_path, primary, profile, version=2)
+            if fault.startswith('runtime-'):
+                assert 'runtime' in str(package['reasons'])
+                assert package['completeness'] == 'incomplete'
             request['region_packages'][primary['id']] = package['id']
     result = _command(records, 'compare-evaluations', _payload(tmp_path, 'bad-compare', request), succeeds=False)
     assert result['decision']['state'] == 'rejected' and not result['gain_claim']
     assert result['region_comparisons'] == []
     if fault == 'raw-values': assert 'raw trial reports' in str(result['decision']['reasons'])
+    if fault.startswith('runtime-'): assert 'diagnostic package is incomplete' in str(result['decision']['reasons'])
 
 
 @pytest.mark.parametrize('fault', ['mode', 'clock', 'collector', 'repetitions-bool', 'repetitions-excess'])
@@ -258,6 +267,8 @@ def test_campaign_collects_current_baseline_packages_before_passing_region_map(t
         return {'id': prefix + '.pair'}, baseline, candidate
     driver.evaluate_pair = evaluate_pair
     driver.run()
+    assert driver.receipt['bounds']['evaluation_seconds'] == (2400 if paired else 1200)
+    assert driver.receipt['bounds'].get('pair_seconds') == (2400 if paired else None)
     assert len(collected) == 4 and len(comparisons) == 2
     assert len(pairs) == (2 if paired else 0)
     for request in comparisons:

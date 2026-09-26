@@ -160,6 +160,9 @@ def _native_samples(store, primary, package_id, pair, role):
 
     candidate, package, profile, row = _associated_profile(store, primary, package_id, pair, role)
     context, build = profile['context'], profile.get('build', {})
+    if 'native_runtime' in primary.get('build', {}):
+        _fail(build.get('native_runtime') == primary['build']['native_runtime'],
+              'native diagnostic runtime inputs differ from primary')
     _fail(primary['context'].get('basis') == 'measured' and not primary.get('component_evaluations')
           and primary['context'].get('roi') == bfs_native.ROI, 'native diagnostic requires a native complete-call primary')
     _fail(profile.get('outcome', {}).get('state') in {'partial', 'complete'}

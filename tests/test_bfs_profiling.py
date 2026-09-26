@@ -345,7 +345,7 @@ def test_public_legacy_native_hotspots_use_one_quantity_and_keep_unobserved_reco
     assert json.loads(records.swdb('get', data['id'], '--format', 'json').stdout)['regions'] == rows
 
 
-def test_public_compiled_toy_profile_and_fresh_rankings(records,tmp_path):
+def test_public_compiled_toy_profile_and_fresh_rankings(records,tmp_path,monkeypatch):
     import socket
     library,parse_args=compiler_inventory()
     compiler=shutil.which('clang++') or shutil.which('g++')
@@ -356,6 +356,9 @@ def test_public_compiled_toy_profile_and_fresh_rankings(records,tmp_path):
         if p.relative_to(records.path).as_posix() not in keep: p.unlink()
     source=tmp_path/'toy-app';(source/'src').mkdir(parents=True)
     toy='''#include <iostream>
+#include <cstdlib>
+#include <cstring>
+#include <stdexcept>
 #include <vector>
 #include <queue>
 #include <cstdint>
@@ -369,6 +372,9 @@ struct Graph {
 };
 void UncataloguedHelper(){volatile int sink=0;for(int i=0;i<100;++i)sink+=i;}
 pvector<NodeID> DOBFS(const Graph&g,NodeID source,bool){
+ if(!getenv("OMP_THREAD_LIMIT") || strcmp(getenv("OMP_THREAD_LIMIT"),"2") ||
+    !getenv("OMP_WAIT_POLICY") || strcmp(getenv("OMP_WAIT_POLICY"),"PASSIVE") ||
+    getenv("GOMP_SPINCOUNT") || getenv("GOMP_CPU_AFFINITY")) throw std::runtime_error("wrong runtime inputs");
  UncataloguedHelper();pvector<NodeID>p(g.num_nodes(),-1);p[source]=source;
  std::queue<NodeID>q;q.push(source);
  while(!q.empty()){auto u=q.front();q.pop();for(auto v:g.adj[u])if(p[v]<0){p[v]=u;q.push(v);}}
@@ -405,14 +411,25 @@ int main(){return 99;}
         'sources':[0,4],'repetitions':1,'roi':'bfs.complete_call.v1','budget':{'build_seconds':20,'run_seconds':5,'total_seconds':120},
         'workload':{'family':'contract_fixture','graph':{'num_vertices':5,'directed':True,'edges':[[0,1],[0,2],[1,3],[2,3]]}}}
     file=tmp_path/'evaluation.yaml';file.write_text(yaml.safe_dump(request))
+    monkeypatch.setenv('OMP_THREAD_LIMIT', '2')
+    monkeypatch.setenv('OMP_WAIT_POLICY', 'PASSIVE')
+    monkeypatch.delenv('GOMP_SPINCOUNT', raising=False)
+    monkeypatch.delenv('GOMP_CPU_AFFINITY', raising=False)
     evaluation=call('evaluate',file,'--runs-dir',runs)
     assert evaluation['correctness']['state']=='passed'
+    # Actual diagnostic subprocesses must receive the retained inputs, including
+    # explicit unsets, despite a different invoking shell. No OpenMP team claim.
+    monkeypatch.setenv('OMP_THREAD_LIMIT', '1')
+    monkeypatch.setenv('OMP_WAIT_POLICY', 'ACTIVE')
+    monkeypatch.setenv('GOMP_SPINCOUNT', '300000')
+    monkeypatch.setenv('GOMP_CPU_AFFINITY', '999')
     request={'message_version':'1.0','id':'toy-profile','evaluation':evaluation['id'],'memory':False,
         'discovery':{'library':library,'arguments':parse_args},
         'budget':{'discovery_seconds':20,'build_seconds':20,'run_seconds':5,'total_seconds':120}}
     file=tmp_path/'profile.yaml';file.write_text(yaml.safe_dump(request))
     result=call('bfs-profile',file,'--runs-dir',runs)
     assert result['outcome']['state']=='partial',result['outcome']
+    assert result['build']['native_runtime'] == evaluation['build']['native_runtime']
     assert '-isystem' in result['discovery']['arguments']
     assert result['context']['primary_load_average']==evaluation['context']['load_average']
     assert len(result['context']['load_average'])==3
@@ -442,3 +459,15 @@ int main(){return 99;}
     assert audited['dynamic_memory'][0]['available'] is False
     assert audited['dynamic_memory'][0]['value']==2**64-7
     assert call('get',result['id'])['dynamic_memory'][0]['available'] is True
+    # Historical input omissions remain visible and cannot authorize another
+    # execution profile from the current invoking environment.
+    evaluation['build'].pop('native_runtime')
+    records.write('evaluations/' + evaluation['id'] + '.yaml', evaluation)
+    assert call('get', evaluation['id']) == evaluation
+    request['id'] = 'toy-profile-unknown-runtime'
+    file.write_text(yaml.safe_dump(request))
+    rejected = records.swdb('bfs-profile', file, '--runs-dir', runs, '--format', 'json')
+    assert rejected.returncode == 1
+    retained = json.loads(rejected.stdout)
+    assert 'runtime inputs are unknown' in retained['outcome']['reason']
+    assert not retained['executions']

@@ -1,4 +1,4 @@
-"""Public profile assembly, lookup, and patch handoff. Created 2026-09-25.
+"""Public profile assembly, lookup, and patch handoff. Updated 2026-09-26.
 
 Compiler/discovery contract fixtures cannot claim experimental gains.
 """
@@ -68,6 +68,7 @@ def package_seed(tmp_path_factory):
             executions.append(execution)
     profile = {key: copy.deepcopy(evaluation[key]) for key in ("schema_version", "status", "created", "updated", "provenance", "message_version", "producer")}
     profile.update(kind="region_profile", id="package-diagnostics", request={"fixture": True},
+                   build={"native_runtime": copy.deepcopy(evaluation['build']['native_runtime'])},
                    evaluation=evaluation["id"], candidate=candidate["id"], source_snapshot=candidate["source_snapshot"],
                    implementation=candidate["implementation"], machine=evaluation["machine"],
                    context={**copy.deepcopy(evaluation["context"]), "primary_binary_sha256": evaluation["build"]["binary_sha256"]},

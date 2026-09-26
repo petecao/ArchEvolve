@@ -48,6 +48,16 @@ including matching NUMA binding and lease generation; an unverified bare label,
 arbitrary suffix, or another socket is incompatible. Each run retains its full
 receipt even though the frozen lane identity excludes the changing generation.
 
+New native freezes also require `settings.native_runtime`, a version 1 map of
+the exact eight requested OpenMP/libgomp environment inputs described in
+[the native runtime contract](bfs-native-runtime-20260926.md). Evaluation dispatch
+constructs that environment, including removing explicitly unset variables;
+comparison reopens the recorded `build.native_runtime` and requires equality.
+Historical records without the map remain readable. Their missing inputs cannot
+authorize empirical native dispatch or comparison; explicit fixture-only flows
+remain available and cannot claim gain. This map is not worker-placement or
+actual-team telemetry.
+
 Frozen records are content-addressed: their identifier contains the freeze hash,
 and readers recompute the hash. Evaluations retain the exact frozen hash at dispatch;
 later record edits invalidate that binding. The public operations never overwrite

@@ -80,6 +80,7 @@ def _workload_request(records, tmp_path, graph, name="small-graph"):
 
 
 def _settings(base, workload):
+    from swdb.bfs_native import controlled_environment, RUNTIME_INHERITED
     build = {**base["build"], "adapter": "gapbs_native", "compiler_version": ["SWDB external compiler contract fixture v1"]}
     instrumentation = {"template_sha256": _hash(REPO / "tools/bfs_native/driver.cc.in"), "treatment": "included"}
     return {"mode": "native", "kernel": "gapbs-bfs", "workloads": [workload["id"]],
@@ -87,6 +88,8 @@ def _settings(base, workload):
             "builds": {role: build for role in ("baseline", "candidate")},
             "instrumentation": {role: instrumentation for role in ("baseline", "candidate")},
             "threads": 1, "roi": "bfs.complete_call.v1",
+            "native_runtime": {"version": 1, "environment": {
+                **controlled_environment(1), **dict.fromkeys(RUNTIME_INHERITED)}},
             "correctness": {"coverage": "every_timed_trial", "verifier": "swdb.bfs.structural.v1", "required_cases": []},
             "sampling": {"repetitions": 5, "warmups": 0, "aggregation": "geomean_source_median_ratio"},
             "profitability": {"minimum_speedup": 1.01, "maximum_relative_spread": 0.2, "confidence": 0.95,
@@ -423,6 +426,7 @@ def test_comparator_differs_from_candidate_source_ancestor(protocol_setup, tmp_p
 
 def _sim_settings(settings):
     data = copy.deepcopy(settings)
+    data.pop("native_runtime", None)
     data["mode"] = "controlled_simulator"
     common = {"cpu": {"model": "fixture-timing-cpu", "cores": 4}, "cache": {"llc_kib": 4096},
               "memory": {"kind": "fixture-ddr", "size_gib": 4}, "clock_hz": 1e9, "model_revision": "fixture-v1"}
