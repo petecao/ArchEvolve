@@ -4,15 +4,68 @@ import hashlib
 import json
 import os
 import shutil
+import signal
 import subprocess
 import tempfile
 import threading
+from contextlib import contextmanager
 from pathlib import Path
 
 from swdb import artifacts
 from swdb.cli import Failure
 
 SOURCE = Path(__file__).resolve().parents[1] / "tools/bfs_native/sg_identity.cc"
+
+
+@contextmanager
+def _interruptions():
+    """Unwind parser/compiler cleanup when the public registration is stopped."""
+    handlers = {}
+    interrupted = False
+
+    def stop(signum, _frame):
+        nonlocal interrupted
+        if not interrupted:
+            interrupted = True
+            raise Failure(f"streaming SG validation interrupted by {signal.Signals(signum).name}")
+
+    if threading.current_thread() is threading.main_thread():
+        handlers = {sig: signal.signal(sig, stop)
+                    for sig in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP)}
+    try:
+        yield
+    finally:
+        for sig, handler in handlers.items():
+            signal.signal(sig, handler)
+
+
+def _compile(command, seconds):
+    child = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                             text=True, start_new_session=True)
+    try:
+        _, errors = child.communicate(timeout=seconds)
+        if child.returncode:
+            raise Failure(f"streaming SG parser compilation failed: {errors[-2000:]}")
+    except subprocess.TimeoutExpired:
+        raise Failure("streaming SG parser compilation exceeded its wall budget") from None
+    finally:
+        if child.poll() is None:
+            try:
+                os.killpg(child.pid, signal.SIGTERM)
+            except ProcessLookupError:
+                pass
+            try:
+                child.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                pass
+        # The compiler may have exited before its same-group workers did.
+        try:
+            os.killpg(child.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        child.wait(timeout=5)
+        child.stdout.close()
+        child.stderr.close()
 
 
 def inspect(path, width, options):
@@ -40,15 +93,9 @@ def inspect(path, width, options):
         raise Failure("streaming SG verification requires a C++ compiler")
     source_hash = artifacts.file_hash(SOURCE)
     before = Path(path).stat()
-    with tempfile.TemporaryDirectory(prefix="swdb-sg-", dir=work) as directory:
+    with _interruptions(), tempfile.TemporaryDirectory(prefix="swdb-sg-", dir=work) as directory:
         binary = Path(directory) / "sg-identity"
-        try:
-            built = subprocess.run([compiler, "-std=c++11", "-O3", str(SOURCE), "-o", str(binary)],
-                                   capture_output=True, text=True, timeout=budgets["compile_timeout_s"])
-        except subprocess.TimeoutExpired:
-            raise Failure("streaming SG parser compilation exceeded its wall budget") from None
-        if built.returncode:
-            raise Failure(f"streaming SG parser compilation failed: {built.stderr[-2000:]}")
+        _compile([compiler, "-std=c++11", "-O3", str(SOURCE), "-o", str(binary)], budgets["compile_timeout_s"])
         h = hashlib.sha256()
         expired = threading.Event()
         with tempfile.TemporaryFile(dir=directory) as diagnostics:

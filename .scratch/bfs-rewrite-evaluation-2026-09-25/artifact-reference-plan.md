@@ -58,6 +58,12 @@ matched controls; never divide it by native or complete-call timing.
 Generate the uniform scale 22 graph once using the pinned converter under a lane,
 with compile 180s, generation 900s, source selection 300s, and registration 2400s
 budgets, four host threads, and 48GiB address-space bound. Keep SG32 for DX100.
+A 3600-second outer driver ceiling, matching prior workload preparation,
+reserves 30 seconds for cleanup. Individual phase budgets are ceilings within
+that total. Interrupted public registration receives TERM so it can reap its
+separately grouped streaming parser; the driver waits at most 20 seconds before
+forcing remaining owned processes to exit. Preserve partial logs and their
+hashes even when generation, compilation, or registration is interrupted.
 A deterministic SG32-to-SG64 width conversion preserves adjacency bytes and
 widened counts/offsets for upstream consumers; register both through exact bounded
 streaming CSR validation. The canonical hash must agree across representations.

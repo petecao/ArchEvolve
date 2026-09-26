@@ -21,6 +21,9 @@ sys.path.insert(0,str(ROOT))
 from swdb import artifacts, bfs_protocol, profile
 from swdb.store import Store
 
+OUTER_SECONDS = 3600
+CLEANUP_RESERVE_SECONDS = 30
+
 
 def serialized_paths(directory):
     """Both pinned GAPBS Builders select their binary reader by the .sg suffix."""
@@ -55,6 +58,7 @@ def widen_sg(source,destination):
 
 
 def main():
+    deadline=time.monotonic()+OUTER_SECONDS-CLEANUP_RESERVE_SECONDS
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--id',required=True)
     p.add_argument('--family',choices=['kronecker','uniform_random'],required=True)
@@ -83,13 +87,19 @@ def main():
     if not any(base in runs.parents for base in [Path('/data1/yanruj'),Path('/data/yanruj')]):
         raise SystemExit('raw output must use the authorized host volumes')
     runs.mkdir(exist_ok=False);build.mkdir(exist_ok=False)
+    stopping=False
     def interrupted(signum,_frame):
-        raise InterruptedError(f'workload preparation interrupted by signal {signum}')
+        nonlocal stopping
+        if not stopping:
+            stopping=True
+            raise InterruptedError(f'workload preparation interrupted by signal {signum}')
+    handlers={}
     for sig in (signal.SIGTERM,signal.SIGINT,signal.SIGHUP):
-        signal.signal(sig,interrupted)
+        handlers[sig]=signal.signal(sig,interrupted)
     receipt={'id':a.id,'state':'running','family':a.family,'scale':a.scale,'edge_factor':16,
              'sources':a.sources,'lane':a.lane,'stages':[],
-             'bounds':{'compile_s':180,'generate_s':900,'register_s':2400,'address_space_gib':48,'threads':4}}
+             'bounds':{'compile_s':180,'generate_s':900,'register_s':2400,'address_space_gib':48,'threads':4,
+                       'outer_s':OUTER_SECONDS,'cleanup_reserve_s':CLEANUP_RESERVE_SECONDS}}
     def save(): (runs/'driver.json').write_text(json.dumps(receipt,indent=2))
     def bounded(stage,argv,seconds):
         profile._verified_lane(store.get('mbit10','machine'),a.lane)
@@ -97,16 +107,37 @@ def main():
         def limit(): resource.setrlimit(resource.RLIMIT_AS,(48*1024**3,48*1024**3))
         entry={'stage':stage,'argv':list(map(str,argv)),'timeout_s':seconds,'state':'running'}
         receipt['stages'].append(entry);save()
-        with out.open('w') as stdout,err.open('w') as stderr:
-            child=subprocess.Popen(list(map(str,argv)),cwd=ROOT,stdout=stdout,stderr=stderr,
-                env={**os.environ,'OMP_NUM_THREADS':'4'},start_new_session=True,preexec_fn=limit)
-            try: child.wait(timeout=seconds)
-            except BaseException:
-                try: os.killpg(child.pid,signal.SIGKILL)
-                except ProcessLookupError: pass
-                child.wait();entry.update(state='interrupted_or_timeout',host_wall_s=time.monotonic()-before);save();raise
-        entry.update(state='complete' if child.returncode==0 else 'failed',returncode=child.returncode,
-                     host_wall_s=time.monotonic()-before,stdout_sha256=artifacts.file_hash(out),stderr_sha256=artifacts.file_hash(err));save()
+        child=None
+        try:
+            with out.open('w') as stdout,err.open('w') as stderr:
+                allowed=min(seconds,deadline-time.monotonic())
+                if allowed<=0: raise TimeoutError('workload preparation total time budget exhausted')
+                entry['timeout_s']=allowed
+                child=subprocess.Popen(list(map(str,argv)),cwd=ROOT,stdout=stdout,stderr=stderr,
+                    env={**os.environ,'OMP_NUM_THREADS':'4'},start_new_session=True,preexec_fn=limit)
+                try: child.wait(timeout=allowed)
+                except BaseException:
+                    # Registration owns a separately grouped streaming parser;
+                    # allow its signal handler to reap that process first.
+                    try: os.killpg(child.pid,signal.SIGTERM)
+                    except ProcessLookupError: pass
+                    try: child.wait(timeout=20)
+                    except subprocess.TimeoutExpired: pass
+                    try: os.killpg(child.pid,signal.SIGKILL)
+                    except ProcessLookupError: pass
+                    child.wait(timeout=5)
+                    raise
+            entry['state']='complete' if child.returncode==0 else 'failed'
+        except BaseException as exc:
+            entry.update(state='interrupted_or_timeout' if isinstance(exc,(InterruptedError,TimeoutError,subprocess.TimeoutExpired)) else 'failed',
+                         reason=f'{type(exc).__name__}: {exc}')
+            raise
+        finally:
+            entry.update(returncode=child.returncode if child is not None else None,
+                         host_wall_s=time.monotonic()-before,
+                         stdout_sha256=artifacts.file_hash(out) if out.is_file() else None,
+                         stderr_sha256=artifacts.file_hash(err) if err.is_file() else None)
+            save()
         if child.returncode: raise RuntimeError(f'{stage} exited {child.returncode}; retained {err}')
         return out
     save()
@@ -153,6 +184,8 @@ def main():
             canonical_sha256=registered['definition']['canonical_sha256'],realized=registered['definition']['realized'])
     except BaseException as exc:
         receipt.update(state='failed',reason=f'{type(exc).__name__}: {exc}');save();raise
+    finally:
+        for sig,handler in handlers.items(): signal.signal(sig,handler)
     save();print(json.dumps(receipt,indent=2))
 
 if __name__=='__main__':main()

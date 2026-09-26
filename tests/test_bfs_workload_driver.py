@@ -1,8 +1,10 @@
 """Public registration verifies the campaign's SG widening. Updated 2026-09-25."""
 import importlib.util
 import json
+import os
 from pathlib import Path
 import shutil
+import signal
 import subprocess
 import sys
 
@@ -10,6 +12,70 @@ import pytest
 
 from conftest import REPO
 from test_bfs_protocol import _hash, _payload, _workload_request, _sg
+
+
+@pytest.mark.parametrize('interruption', ['deadline', 'signal'])
+def test_generator_interrupt_reaps_nested_registration_and_retains_logs(tmp_path, monkeypatch, interruption):
+    spec=importlib.util.spec_from_file_location('workload_cleanup',REPO/'scripts/bfs_generate_workload.py')
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    source=tmp_path/'apps/dx100/benchmarks/gapbs/src'
+    source.mkdir(parents=True);(source/'converter.cc').write_text('// explicit compiler fixture\n')
+    graph=_sg({'num_vertices':6,'directed':False,'edges':[[0,1],[1,2]]},4)
+    converter_code=f'#!{sys.executable}\nimport pathlib,sys\npathlib.Path(sys.argv[-1]).write_bytes({graph!r})\n'
+    binaries=tmp_path/'bin';binaries.mkdir()
+    compiler=binaries/'g++'
+    compiler.write_text(f'#!{sys.executable}\nimport pathlib,sys\np=pathlib.Path(sys.argv[-1]);p.write_text({converter_code!r});p.chmod(0o755)\n')
+    compiler.chmod(0o755)
+    package=tmp_path/'swdb';package.mkdir()
+    (package/'__main__.py').write_text('''import os,pathlib,signal,subprocess,sys,time
+child=subprocess.Popen([sys.executable,'-c','import time;time.sleep(60)'],start_new_session=True)
+def stop(signum,frame):
+ os.killpg(child.pid,signal.SIGTERM)
+ child.wait(timeout=5)
+ print('FIXTURE_REGISTER_REAPED',flush=True)
+ sys.exit(143)
+signal.signal(signal.SIGTERM,stop)
+pathlib.Path('nested.pid').write_text(str(child.pid))
+if os.environ['GENERATOR_FIXTURE_INTERRUPT']=='signal': os.kill(os.getppid(),signal.SIGTERM)
+time.sleep(60)
+''')
+    class FixtureStore:
+        def get(self,*args): return {}
+    monkeypatch.setattr(module,'ROOT',tmp_path)
+    monkeypatch.setattr(module,'Store',lambda path:FixtureStore())
+    monkeypatch.setattr(module.socket,'gethostname',lambda:'mbit10')
+    monkeypatch.setattr(module.profile,'_verified_lane',lambda *args:None)
+    # This Mac fixture tests process ownership, not Linux RLIMIT_AS enforcement.
+    monkeypatch.setattr(module.resource,'setrlimit',lambda *args:None)
+    monkeypatch.setattr(module.subprocess,'check_output',lambda *args,**kwargs:'fixture-commit\n')
+    monkeypatch.setattr(module,'OUTER_SECONDS',3)
+    monkeypatch.setattr(module,'CLEANUP_RESERVE_SECONDS',1)
+    monkeypatch.setenv('PATH',str(binaries)+os.pathsep+os.environ['PATH'])
+    monkeypatch.setenv('GENERATOR_FIXTURE_INTERRUPT',interruption)
+    build,runs=tmp_path/'builds',tmp_path/'runs'
+    parents=Path.parents
+    def fixture_parents(path):
+        actual=parents.__get__(path)
+        if path in (build/'fixture',runs/'fixture'):
+            return (*actual,Path('/data1/yanruj'))
+        return actual
+    monkeypatch.setattr(Path,'parents',property(fixture_parents))
+    monkeypatch.setattr(sys,'argv',[str(REPO/'scripts/bfs_generate_workload.py'),'--id','fixture',
+        '--family','uniform_random','--scale','14','--sources','0','--records',str(tmp_path/'records'),
+        '--build-dir',str(build),'--runs-dir',str(runs),'--lane','mbit10-evaluation-node1'])
+    original={sig:signal.getsignal(sig) for sig in (signal.SIGTERM,signal.SIGINT,signal.SIGHUP)}
+    expected=subprocess.TimeoutExpired if interruption=='deadline' else InterruptedError
+    with pytest.raises(expected): module.main()
+    assert all(signal.getsignal(sig)==handler for sig,handler in original.items())
+    receipt=json.loads((runs/'fixture/driver.json').read_text())
+    assert receipt['state']=='failed'
+    stage=receipt['stages'][-1]
+    assert stage['stage']=='register' and stage['state']=='interrupted_or_timeout'
+    assert stage['returncode']==143 and stage['host_wall_s']<3
+    assert stage['stdout_sha256']==_hash(runs/'fixture/register.stdout')
+    assert stage['stderr_sha256']==_hash(runs/'fixture/register.stderr')
+    assert 'FIXTURE_REGISTER_REAPED' in (runs/'fixture/register.stdout').read_text()
+    with pytest.raises(ProcessLookupError): os.kill(int((tmp_path/'nested.pid').read_text()),0)
 
 
 @pytest.mark.parametrize('width', [32, 64])
