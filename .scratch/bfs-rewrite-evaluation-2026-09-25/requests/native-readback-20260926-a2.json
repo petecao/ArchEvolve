@@ -1,0 +1,54 @@
+{
+  "outer_started": "CAPTURE_IN_OWNED_PANE_IMMEDIATELY_BEFORE_TIMEOUT",
+  "outer_deadline": "SAME_CAPTURE_PLUS_990_SECONDS",
+  "spec": {
+    "maximum_relative_spread": 0.1,
+    "one_thread_calibration": {
+      "run_id": "bfs-native-one-thread-pilot-20260926-a1",
+      "code_commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+      "collector_checkout": "/data1/yanruj/EvolveSWDB_native_one_thread_20260926_a1",
+      "driver_receipt": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-pilot-20260926-a1/bfs-native-one-thread-pilot-20260926-a1.driver/driver.json",
+        "sha256": "81596a440b9114c5f4a6b2edb1d8a799b748ae01c144bc82a218902755115092",
+        "bytes": 486592
+      },
+      "terminal_receipt": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-pilot-20260926-a1.dispatch/terminal-validation.json",
+        "sha256": "9fe880825baefb4179e14f30310916054aacf2af86b050ec2ad9c05fb37ed0d4"
+      },
+      "packages": [
+        "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.b8f33855cc6c657e",
+        "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.ffd9925db46a63a9",
+        "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.122d39652ae0c326",
+        "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.f613a3b01a24e380"
+      ],
+      "historical_paired_calibration": {
+        "pairs": [
+          "bfs-native-paired-pilot-20260926-a1.dx100.uniform-random.pair",
+          "bfs-native-paired-pilot-20260926-a1.upstream.uniform-random.pair",
+          "bfs-native-paired-pilot-20260926-a1.dx100.kronecker.pair",
+          "bfs-native-paired-pilot-20260926-a1.upstream.kronecker.pair"
+        ],
+        "driver_receipt": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1/bfs-native-paired-pilot-20260926-a1.driver/driver.json",
+          "sha256": "a59d271e6f1407408dd7f8e16b6df0435772d5b12b61f46bf4e388e8edaec632"
+        },
+        "historical_packages": [
+          "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718",
+          "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6",
+          "bfs-native-pilot-20260925-dx10018-a1.kronecker.package.v1.1d44ec6b44f05000",
+          "bfs-native-pilot-20260925-upstream18-a2.kronecker.package.v1.6a34b061dcca355b"
+        ]
+      }
+    }
+  },
+  "pane_identity": {
+    "pid": "CAPTURE_ACTUAL_OWNED_PANE_PID",
+    "start_ticks": "CAPTURE_SAME_PID_START_TICKS"
+  },
+  "linux_proof": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-reader-fast-exit-linux-20260926-a1/proof.json",
+    "sha256": "79f349b0e348e4ee47e63a4a74ff04565497e7c7df45848c6cd9e1aad940b4b1",
+    "bytes": 2914
+  }
+}
