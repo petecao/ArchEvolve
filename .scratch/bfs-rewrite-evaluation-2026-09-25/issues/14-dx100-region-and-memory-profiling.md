@@ -61,3 +61,19 @@ combined relevant suite passed 42 tests in 166.32 seconds, including public
 positive and negative diagnostic collection paths. A real complete simulated
 profile package remains pending behind bounded model bring-up; this ticket
 remains claimed.
+
+## Preliminary handoff audit — 2026-09-25
+
+The source-scope handoff audit reproduced and fixed two gaps before the next
+real compile smoke. Candidate interface utilities could differ from the pinned
+headers selected by the compiler; the public compile path now rejects changed
+or shadowed inputs throughout the pinned model interface. Both actual unchanged
+source manifests pass this guard, including upstream repository metadata.
+Malformed diagnostic JSON objects and counter rows now retain explicit failed
+collection records instead of escaping with an uncaught attribute error.
+
+The combined public compile/collector regression passed 37 tests in 124.32
+seconds. The subsequent metadata-name correction and candidate regressions
+passed 22 tests in 45.18 seconds. These establish contract handling, not real
+simulated profiling acceptance. The memory-gated model feasibility attempt and
+real primary/diagnostic collection remain pending.
