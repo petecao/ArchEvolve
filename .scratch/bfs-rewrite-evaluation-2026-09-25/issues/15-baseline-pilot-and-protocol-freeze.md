@@ -349,3 +349,11 @@ Simulator collection now has reviewed owned-process cleanup, original-clock reso
 accounting and failure preservation; see the [verification receipt](../observations/simulator-supervision-verification-20260926.json).
 The actual Linux fixtures, runtime admission and empirical execution remain
 pending. This preparation does not satisfy or change any open acceptance item.
+
+## One-thread control checkpoint — 2026-09-26 17:03 ET
+
+Three of four controls pass; all 180 completed trials pass structural checks.
+The fourth cell has 3/60 checked. See the [health audit](../observations/health-20260926-1703.json)
+and [third-cell analysis](../observations/native-one-thread-third-cell-20260926.json).
+The original hard stop is unchanged. All four controls and fresh diagnostics
+remain required before empirical freeze; this ticket remains claimed.

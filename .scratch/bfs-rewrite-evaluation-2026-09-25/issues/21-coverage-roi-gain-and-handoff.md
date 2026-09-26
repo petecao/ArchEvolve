@@ -204,3 +204,12 @@ import the running native study or held provider results and does not verify
 remote artifacts. The tracker remains 13 resolved / 8 claimed. The isolated
 full suite is still running at `c2f987b`; later fixes have focused independent
 checks, not a claimed full-suite pass. Final all-ticket review remains pending.
+
+## Regression and evaluation checkpoint — 2026-09-26 17:03 ET
+
+The [exact c2f987b full suite](../observations/full-regression-c2f987b-20260926.json)
+finished with 1,950 passed, 18 skipped and three failures. The focused repairs
+and an independently discovered receipt-write timing issue are under review;
+no full-suite pass is claimed. Native progress is 183/240 with three controls
+passed. Acceptance remains 0/8 with no qualified gain. Final all-ticket review
+and synchronization remain outstanding.

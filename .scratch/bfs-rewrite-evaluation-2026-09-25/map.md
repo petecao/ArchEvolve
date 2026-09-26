@@ -95,7 +95,8 @@ coverage statistics/provenance error. Its [repair](observations/paired-coverage-
 passes seven new/reproduction cases, 24 existing cases and three independent
 edge checks, including refusal when raw paired evidence is missing. Both review
 findings are closed; empirical acceptance remains incomplete.
-The full local suite is running at isolated `c2f987b`, before these two fixes.
+The full local suite at isolated `c2f987b`, before these two fixes, finished
+with 1,950 passes, 18 skips and three failures; see the 17:03 checkpoint below.
 
 ## Prospective supervision reviewed — 2026-09-26
 
@@ -125,6 +126,30 @@ rechecks are clean. The combined local group passed 123 with two Linux skips
 before the final exception-note delta; all six affected final-delta cases pass.
 Actual Linux admission and final acceptance remain outstanding. The separate
 A2 fixture route must bind its old tested runtime and new supervisor explicitly.
+
+## Progress check — 2026-09-26 17:03 ET
+
+The [full health audit](observations/health-20260926-1703.json) confirms native
+progress at 183/240 checked trials. All three completed cells pass their fixed
+controls; [DX100 Kronecker](observations/native-one-thread-third-cell-20260926.json)
+completed 60/60 with maximum spread 4.38% and no numerical gain in either label
+direction. Upstream Kronecker has 3/60 checked. Socket 1 generation 402 remains
+healthy with empty stderr, recent peak RSS 1.13 GiB and unchanged 20:11:35 ET
+hard stop. Socket 0 generation 325 and legacy generation 77 are released;
+all historical identities, receipt hashes and runtime pins pass their checks.
+Free build/raw space is 16.38/181.23 GiB. Three workers are responsive; the next
+full audit is 17:33 ET.
+
+The [isolated full regression](observations/full-regression-c2f987b-20260926.json)
+finished with **1,950 passed, 18 skipped, three failed** at exact `c2f987b`.
+Two failures concern legacy smoke cleanup reservation; one prelaunch fixture
+conflicts with the newer durable a3 record. All failures are retained. Focused
+repairs passed 47 tests, while independent review found a further initial
+receipt-write clock gap that is being repaired before export. A2's separate
+fixture wrapper and shared root import guard pass their scoped reviews; actual
+Linux proof remains outstanding. Counts remain **13/21 resolved and 0/8 final
+cells**, without empirical freeze or a qualified gain. Whole native cleanup
+must precede A2 or any other measurement.
 
 ## Progress check — 2026-09-26 16:33 ET
 
