@@ -61,6 +61,10 @@ Missing other failure categories remain incomplete.
 The exit-zero verifier-failure category requires the verdict-producing native
 execution cell or the exact simulator log/binding to have exited zero. Successful
 compiler or checkpoint stages cannot stand in for a failed simulator process.
+AC14 revalidates the actual baseline implementation and candidate ancestry, the
+candidate's explicit comparator selection, both content identities, frozen
+protocol, matching workload, and recomputed comparison quantities. Relabeling a
+retained comparison cannot create an independent-baseline demonstration.
 
 `profiling_demonstrations` accounts for actual discovery, dynamic-memory, and
 native-execution evidence independently of the comparison matrix. A checked real

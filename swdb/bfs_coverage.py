@@ -126,8 +126,21 @@ def _acceleration(evaluation):
     return {"executed": False, "cases": {}, "reason": "no matching positive instruction and completed-unit trace evidence"}
 
 
-def _unfavorable_fixture(store, comparison):
-    """A synthetic unfavorable ratio demonstrates a contract, never regression."""
+def _comparison_relationship(store, comparison):
+    baseline = protocol._get(store, comparison.get('baseline_evaluation'), 'evaluation')
+    candidate = protocol._get(store, comparison.get('candidate_evaluation'), 'evaluation')
+    ancestry = protocol._get(store, candidate.get('candidate'), 'candidate')
+    selected = comparison.get('comparison_baseline')
+    protocol._fail(selected == baseline.get('implementation'), 'comparison names another baseline implementation')
+    protocol._fail(candidate.get('comparison_baseline') in {None, selected},
+                   "comparison conflicts with the evaluation's selected baseline")
+    protocol._fail(comparison.get('source_ancestor') == ancestry.get('implementation'),
+                   'comparison source ancestry differs from its actual candidate')
+    return baseline, candidate
+
+
+def _fixture_comparison(store, comparison):
+    """Revalidate the complete synthetic pair without promoting its evidence kind."""
     if (comparison.get('decision', {}).get('state') != 'fixture_comparison'
             or comparison.get('evidence_kind') != 'contract_fixture' or comparison.get('gain_claim') is not False):
         return None
@@ -135,29 +148,42 @@ def _unfavorable_fixture(store, comparison):
         frozen = protocol._get(store, comparison.get('protocol'), 'protocol')
         protocol.verify_immutable(frozen)
         protocol._validate_settings(frozen['settings'], store)
+        baseline, candidate = _comparison_relationship(store, comparison)
         values, ids, workload = [], {}, None
-        for role in ('baseline', 'candidate'):
-            evaluation = protocol._get(store, comparison.get(role + '_evaluation'), 'evaluation')
+        for role, evaluation in (('baseline', baseline), ('candidate', candidate)):
             samples, wid, kind = protocol._evaluation_samples(store, evaluation, frozen, role)
             if kind != 'contract_fixture' or evaluation.get('request', {}).get('fixture') is not True:
                 return None
             if workload is not None and wid != workload:
                 return None
-            if role == 'baseline' and comparison.get('comparison_baseline') != evaluation.get('implementation'):
-                return None
             workload = wid; values.append(samples); ids[evaluation['id']] = artifacts.digest(evaluation)
         measured = protocol._statistics(*values, frozen['settings']['profitability'])
+        settings = frozen['settings']
+        attribution = ('artifact_configuration_pair' if settings['mode'] == 'artifact_reference' else
+                       'software_on_fixed_target' if settings['targets']['baseline'] == settings['targets']['candidate'] else
+                       'joint_hardware_software')
         if (comparison.get('protocol_sha256') != frozen['identity_sha256'] or comparison.get('evaluation_identities') != ids
                 or comparison.get('metrics', {}).get('fixture_ratio') != measured['roi_speedup']
-                or measured['confidence_interval']['upper'] >= 1
+                or comparison['metrics'].get('workload') != workload
+                or comparison['metrics'].get('attribution') != attribution
+                or not profile_package._same(comparison['metrics'].get('disclosed_differences'), settings['differences'])
+                or not profile_package._same(comparison.get('region_comparisons'), protocol._region_comparisons(baseline, candidate, settings))
                 or any(not profile_package._same(comparison['metrics'].get(key), measured[key])
                        for key in ('confidence_interval', 'relative_spread', 'per_source_position_speedup'))):
             return None
-        return {'comparison': comparison['id'], 'classification': 'contract_fixture',
-                'outcome': 'unfavorable_fixture_ratio', 'fixture_ratio': measured['roi_speedup'],
-                'empirical_regression': False, 'gain_claim': False}
-    except (Failure, KeyError, TypeError, ValueError, OSError):
+        return measured
+    except (Failure, KeyError, TypeError, ValueError, OverflowError, OSError):
         return None
+
+
+def _unfavorable_fixture(store, comparison):
+    """A synthetic unfavorable ratio demonstrates a contract, never regression."""
+    measured = _fixture_comparison(store, comparison)
+    if measured is None or measured['confidence_interval']['upper'] >= 1:
+        return None
+    return {'comparison': comparison['id'], 'classification': 'contract_fixture',
+            'outcome': 'unfavorable_fixture_ratio', 'fixture_ratio': measured['roi_speedup'],
+            'empirical_regression': False, 'gain_claim': False}
 
 
 def _exit_zero_verifier_failure(evaluation):
@@ -247,8 +273,7 @@ def _comparison(store, comparison, allowed, mode=None):
             reasons.append("comparison mode does not match its declared obligation")
         if comparison.get("protocol_sha256") != p["identity_sha256"]:
             reasons.append("comparison freeze identity is stale")
-        a = protocol._get(store, comparison.get("baseline_evaluation"), "evaluation")
-        b = protocol._get(store, comparison.get("candidate_evaluation"), "evaluation")
+        a, b = _comparison_relationship(store, comparison)
         if comparison.get("evaluation_identities") != {a["id"]: artifacts.digest(a), b["id"]: artifacts.digest(b)}:
             reasons.append("comparison input evaluations changed or lack content identities")
         left, wid, kind = protocol._evaluation_samples(store, a, p, "baseline")
@@ -580,11 +605,13 @@ def report(args):
         if comparison.get("source_ancestor") == comparison.get("comparison_baseline"): continue
         if comparison.get("decision", {}).get("state") not in {"fixture_comparison", "gain", "no_gain", "regression", "inconclusive"}: continue
         try:
-            p = protocol._get(store, comparison.get("protocol"), "protocol")
-            for role, key in (("baseline", "baseline_evaluation"), ("candidate", "candidate_evaluation")):
-                protocol._evaluation_samples(store, protocol._get(store, comparison.get(key), "evaluation"), p, role)
-            independent_baselines.append(record.id)
-        except (Failure, KeyError, TypeError, ValueError): pass
+            _comparison_relationship(store, comparison)
+            valid = (_fixture_comparison(store, comparison) is not None
+                     if comparison['decision']['state'] == 'fixture_comparison' else
+                     _comparison(store, comparison, [comparison.get('protocol')]).get('qualified'))
+            if valid:
+                independent_baselines.append(record.id)
+        except (Failure, KeyError, TypeError, ValueError, OSError): pass
     mark(14, bool(independent_baselines), "a retained compatible comparison must resolve a baseline different from source ancestry; fixtures prove this contract only")
     criterion["AC14"]["evidence"] = independent_baselines
     supported = [r.id for r in store.of_kind("hardware_target") if r.data["backend"]["readiness"] in {"built", "verified"}

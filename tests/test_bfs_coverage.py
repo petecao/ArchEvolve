@@ -44,6 +44,51 @@ def test_fixture_execution_and_missing_protocol_are_retained_but_never_counted(p
     assert _report(records, tmp_path, candidate_protocols=["missing-frozen-policy"])["identity_sha256"] == before
 
 
+def test_invented_independent_baseline_cannot_satisfy_comparator_contract(protocol_setup, tmp_path):
+    records, _, frozen, _, _, request = protocol_setup
+    result = _command(records, 'compare-evaluations', _payload(tmp_path, 'baseline-identity', request))
+    # The actual comparison used gapbs-bfs-do for both ancestry and baseline.
+    # A different declared ID must not invent a successful independent comparison.
+    reference = records.read('implementations/gapbs-bfs-do.yaml')
+    reference['id'] = 'unused-comparison-reference'
+    added = records.swdb('add', _payload(tmp_path, 'unused-reference', reference))
+    assert added.returncode == 0, added.stderr
+    result['comparison_baseline'] = reference['id']
+    records.write('comparison_results/' + result['id'] + '.yaml', result)
+    report = _report(records, tmp_path, candidate_protocols=[frozen['id']])
+    assert report['criteria']['AC14']['state'] == 'incomplete'
+    assert report['criteria']['AC14']['evidence'] == []
+    assert not report['gain_claim']
+
+
+@pytest.mark.parametrize('fault', [None, 'protocol-hash', 'evaluation-hash', 'workload'])
+def test_independent_fixture_comparison_rechecks_pair_identity(protocol_setup, tmp_path, fault):
+    records, _, frozen, _, evaluations, request = protocol_setup
+    def add(value):
+        result = records.swdb('add', _payload(tmp_path, value['id'], value))
+        assert result.returncode == 0, result.stderr
+    reference = records.read('implementations/gapbs-bfs-do.yaml')
+    reference['id'] = 'coverage-reference'; add(reference)
+    source = records.read('source_snapshots/test-source.yaml')
+    source.update(id='coverage-reference-source', implementation=reference['id']); add(source)
+    baseline = records.read('candidates/protocol-source-baseline.yaml')
+    baseline.update(id='coverage-reference-candidate', implementation=reference['id'], source_snapshot=source['id']); add(baseline)
+    evaluation = copy.deepcopy(evaluations['baseline'])
+    evaluation.update(id='coverage-reference-evaluation', implementation=reference['id'], candidate=baseline['id'], source_snapshot=source['id']); add(evaluation)
+    candidate = copy.deepcopy(evaluations['candidate'])
+    candidate.update(id='coverage-selected-evaluation', comparison_baseline=reference['id']); add(candidate)
+    request.update(baseline_evaluation=evaluation['id'], candidate_evaluation=candidate['id'], comparison_baseline=reference['id'])
+    result = _command(records, 'compare-evaluations', _payload(tmp_path, 'independent-compare', request))
+    assert result['decision']['state'] == 'fixture_comparison'
+    if fault == 'protocol-hash': result['protocol_sha256'] = '0' * 64
+    elif fault == 'evaluation-hash': result['evaluation_identities'][evaluation['id']] = '0' * 64
+    elif fault == 'workload': result['metrics']['workload'] = 'different-workload'
+    if fault: records.write('comparison_results/' + result['id'] + '.yaml', result)
+    report = _report(records, tmp_path, candidate_protocols=[frozen['id']])
+    assert report['criteria']['AC14']['evidence'] == ([] if fault else [result['id']])
+    assert not report['gain_claim'] and report['criteria']['AC17']['state'] == 'incomplete'
+
+
 @pytest.mark.parametrize('fault', [None, 'changed-ratio', 'promoted-to-regression'])
 def test_unfavorable_fixture_contract_never_counts_as_empirical_regression_or_gain(protocol_setup, tmp_path, fault):
     records, _, frozen, _, evaluations, comparison = protocol_setup
