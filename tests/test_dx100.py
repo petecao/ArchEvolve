@@ -100,6 +100,72 @@ else:
     return data
 
 
+@pytest.mark.parametrize('suffix', ['.sg32', '.sg64', '.wsg'])
+def test_public_execution_rejects_unloadable_serialized_suffix_before_checkpoint(case, suffix):
+    data = execution_request(case)
+    _, invoke, folder = case
+    graph = folder / ('graph' + suffix)
+    graph.write_bytes(Path(data['workload']['representation']['path']).read_bytes())
+    data['workload']['representation'] = reference(graph)
+    result = invoke('dx100-execute', data)
+    assert result['outcome']['state'] == 'failed'
+    assert 'registered serialized SG representation' in result['outcome']['reason']
+    assert not any(stage['stage'] in {'checkpoint', 'simulation'} for stage in result['stages'])
+
+
+@pytest.mark.parametrize('tamper', [False, True])
+def test_public_serialized_alias_preserves_registered_identity_and_checkpoint_reuse(case, records, tamper):
+    from test_bfs_protocol import _workload_request
+    data = execution_request(case)
+    _, invoke, folder = case
+    repository = Path(__file__).resolve().parents[1]
+    kernel = yaml.safe_load((repository / 'records/kernels/gapbs-bfs.yaml').read_text())
+    kernel['baseline_implementation'] = 'dx100-bfs-scalar'
+    records.write('kernels/gapbs-bfs.yaml', kernel)
+    records.write('implementations/dx100-bfs-scalar.yaml', yaml.safe_load(
+        (repository / 'records/implementations/dx100-bfs-scalar.yaml').read_text()))
+    request = _workload_request(records, folder, {'num_vertices': 3, 'directed': True, 'edges': [[0,1], [1,2]]})
+    registration = folder / 'registered.yaml'
+    registration.write_text(yaml.safe_dump(request))
+    result = records.swdb('register-workload', registration, '--format', 'json')
+    assert result.returncode == 0, result.stderr
+    workload = json.loads(result.stdout)
+    representation = next(row for row in workload['definition']['representations'] if row['application'] == 'dx100-gapbs')
+    original = {key: representation[key] for key in ('path', 'sha256')}
+    data['workload'] = {'id': workload['id'], 'source': 0, 'representation': original}
+    simulator = Path(data['simulator']['path'])
+    program = simulator.read_text().replace('args=sys.argv[1:]', '''args=sys.argv[1:]
+selected=pathlib.Path(args[args.index('--options')+1].split()[1])
+assert selected.suffix=='.sg' and selected.is_file()
+''')
+    simulator.write_text(program)
+    data['simulator'] = reference(simulator)
+    first = invoke('dx100-execute', data)
+    assert first['outcome']['state'] == 'complete', first['outcome']
+    loader = first['context']['loader_input']
+    assert loader['original'] == original
+    assert loader['alias']['sha256'] == original['sha256']
+    assert first['context']['execution_binding']['workload']['representation'] == original
+    assert first['context']['execution_binding']['loader_representation'] == loader['alias']
+    data.update(id='alias-replay', checkpoint_manifest=first['context']['checkpoint_manifest'])
+    if tamper:
+        alias = Path(loader['alias']['path'])
+        alias.unlink()
+        alias.write_bytes(b'changed alias without changing original')
+    second = invoke('dx100-execute', data)
+    if tamper:
+        assert second['outcome']['state'] == 'failed'
+        assert 'alias' in second['outcome']['reason']
+        assert not any(row['stage'] in {'checkpoint_resolution', 'checkpoint', 'simulation'} for row in second['stages'])
+    else:
+        assert second['outcome']['state'] == 'complete', second['outcome']
+        assert second['context']['loader_input']['alias'] == loader['alias']
+        assert second['context']['loader_input']['provenance']['method'] == 'existing_verified_alias'
+        assert second['context']['checkpoint_manifest'] == first['context']['checkpoint_manifest']
+        assert any(row['stage'] == 'checkpoint_resolution' for row in second['stages'])
+        assert not any(row['stage'] == 'checkpoint' for row in second['stages'])
+
+
 def test_checkpoint_smoke_is_durable_but_unverified_and_stale_checkpoint_rejected(case):
     data = execution_request(case)
     _, invoke, _ = case

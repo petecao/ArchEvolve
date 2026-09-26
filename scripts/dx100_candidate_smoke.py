@@ -61,7 +61,7 @@ def main():
         converter = Path(binaries['converter']['path'])
         if artifacts.file_hash(converter) != binaries['converter']['sha256']:
             raise RuntimeError('selected converter changed')
-        sg32, sg64 = folder / 'uniform64.sg32', folder / 'uniform64.sg64'
+        sg32, sg64 = folder / 'uniform64-sg32.sg', folder / 'uniform64-sg64.sg'
         with (folder / 'generate.log').open('w') as log:
             subprocess.run([str(converter), '-u', '6', '-k', '4', '-b', str(sg32)], stdout=log,
                 stderr=subprocess.STDOUT, check=True, timeout=60, env={**os.environ, 'OMP_NUM_THREADS': '1'})

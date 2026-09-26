@@ -188,6 +188,9 @@ def _bounded_process(session, name, command, timeout, memory, storage, env=None)
                     build_dir = session.data.get('context', {}).get('build_directory')
                     if build_dir and not Path(build_dir).is_relative_to(session.folder):
                         directories.append(Path(build_dir))
+                    loader = session.data.get('context', {}).get('loader_input')
+                    if loader and loader['provenance']['storage_charge_bytes']:
+                        directories.append(Path(loader['alias']['path']))
                     used = sum(int(subprocess.check_output(["du", "-sk", str(path)], text=True, timeout=30).split()[0])
                                for path in directories)
                     if used > storage * 1024 * 1024:
@@ -342,6 +345,8 @@ def _correctness(session, request, result_folder, log, completed):
     _file(request["binary"], "timed BFS binary")
     _file(request["simulator"], "simulator")
     _file(request["workload"]["representation"], "graph representation")
+    if data['context'].get('loader_input'):
+        _file(data['context']['loader_input']['alias'], 'serialized loader alias')
     _file(data["context"]["verification_driver"], "verification driver")
     _file({key: data['context']['host_memory_observer'][key] for key in ('path', 'sha256')},
           'host memory observer')
@@ -467,6 +472,7 @@ def execute(args):
         source = _integer(workload["source"], "BFS source", minimum=0)
         graph = _file(workload["representation"], "graph representation")
         application = compiled["context"]["application"] if compiled else "dx100-gapbs"
+        registered = None
         if store.get(workload["id"], "workload"):
             registered = bfs_protocol.workload_representation(store, workload["id"], application)
             representation = registered["representation"]
@@ -504,7 +510,11 @@ def execute(args):
                           "candidate source in the pinned model build")
             data.update(candidate=candidate["id"], source_snapshot=candidate["source_snapshot"], implementation=candidate["implementation"])
             data["context"]["candidate_sha256"] = candidate["artifact"]["sha256"]
-        if any(character.isspace() for character in str(graph)):
+        from swdb.dx100_inputs import resolve as resolve_loader_input
+        loader_graph, loader_input = resolve_loader_input(session, args.runs_dir, workload['representation'], application, registered)
+        if loader_input:
+            data['context']['loader_input'] = loader_input
+        if any(character.isspace() for character in str(loader_graph)):
             raise Failure("this pinned gem5 option parser cannot safely pass whitespace in graph paths")
         settings, configured = _configuration(request, target, root)
         if compiled:
@@ -521,12 +531,14 @@ def execute(args):
         script = root / "configs/deprecated/example/se.py"
         if not script.is_file():
             raise Failure("pinned simulator entry script is missing")
-        options = f"-f {graph} -l -n 1 -v -r {source}"
+        options = f"-f {loader_graph} -l -n 1 -v -r {source}"
         binding = {"model_revision": REVISION, "simulator": request["simulator"], "binary": request["binary"],
             "workload": workload, "guest_cores": 4, "guest_memory": "16GB", "options": options,
             "entry_script_sha256": artifacts.file_hash(script), "roi": data["context"]["roi"],
             "candidate_build": compiled["id"] if compiled else None,
             "modeled_configuration": configured, "hardware_target": target['id']}
+        if loader_input:
+            binding['loader_representation'] = loader_input['alias']
         data["context"].update(configuration=configured, backend_configuration=configured, execution_binding=binding,
                               execution_binding_sha256=artifacts.digest(binding), source=source, sources=[source], threads=4)
         data["build"] = {"binary": str(binary), "binary_sha256": request["binary"]["sha256"],
@@ -628,6 +640,8 @@ def execute(args):
         _file(request["simulator"], "simulator")
         _file(request["binary"], "BFS binary")
         _file(workload["representation"], "graph representation")
+        if loader_input:
+            _file(loader_input['alias'], 'serialized loader alias')
         result_folder = session.folder / "simulation"
         result_folder.mkdir()
         debug_flags = "MAATrace,MAARangeFuser,MAAIndirect" if verify and verify.get("coverage") else "MAATrace"
@@ -642,6 +656,9 @@ def execute(args):
         finally:
             if verify is not None:
                 _correctness(session, request, result_folder, log, completed)
+        _file(workload['representation'], 'graph representation')
+        if loader_input:
+            _file(loader_input['alias'], 'serialized loader alias')
         session.begin("execution_observations")
         stats = result_folder / ("roi-stats.txt" if verify else "stats.txt")
         causes = []
