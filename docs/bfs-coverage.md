@@ -49,6 +49,19 @@ fixture tests cannot satisfy real native/simulator execution. The report supplie
 evidence to the proposal owner and does not launch strategy search. Prepared SW/HW
 test clients do not establish live Peter/Josh integration.
 
+AC09 distinguishes retained empirical regression history from an
+`unfavorable_fixture_ratio` contract demonstration. The latter requires a durable
+public fixture comparison whose frozen bindings, selected baseline source,
+evaluation identities, sample cells, and unfavorable ratio are recomputed. It is
+reported separately in `unfavorable_fixture_demonstrations` with
+`empirical_regression: false`; `classified_failures` labels each retained failure's
+evidence kind. Such a demonstration can establish unfavorable-result handling,
+but cannot fill an actual workload matrix cell, satisfy AC17, or claim a gain.
+Missing other failure categories remain incomplete.
+The exit-zero verifier-failure category requires the verdict-producing native
+execution cell or the exact simulator log/binding to have exited zero. Successful
+compiler or checkpoint stages cannot stand in for a failed simulator process.
+
 `profiling_demonstrations` accounts for actual discovery, dynamic-memory, and
 native-execution evidence independently of the comparison matrix. A checked real
 profile of a new expensive helper can establish those capabilities without being

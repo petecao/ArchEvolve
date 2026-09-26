@@ -5,7 +5,7 @@ import json
 
 import pytest
 
-from test_bfs_protocol import _payload
+from test_bfs_protocol import _payload, _command, protocol_seed, protocol_setup
 from test_profile_packages import package_seed, package_setup
 from swdb import artifacts, profile_package
 
@@ -44,6 +44,35 @@ def test_fixture_execution_and_missing_protocol_are_retained_but_never_counted(p
     assert _report(records, tmp_path, candidate_protocols=["missing-frozen-policy"])["identity_sha256"] == before
 
 
+@pytest.mark.parametrize('fault', [None, 'changed-ratio', 'promoted-to-regression'])
+def test_unfavorable_fixture_contract_never_counts_as_empirical_regression_or_gain(protocol_setup, tmp_path, fault):
+    records, _, frozen, _, evaluations, comparison = protocol_setup
+    request = copy.deepcopy(evaluations['candidate']['request'])
+    request['id'] = 'unfavorable-fixture-evaluation'
+    executed = records.swdb('evaluate', _payload(tmp_path, 'unfavorable-run', request),
+        '--runs-dir', tmp_path / 'unfavorable', '--format', 'json', env={'SWDB_PROTOCOL_DURATION': '0.10'})
+    assert executed.returncode == 0, executed.stderr
+    candidate = json.loads(executed.stdout)
+    comparison.update(id='unfavorable-fixture-comparison', candidate_evaluation=candidate['id'])
+    result = _command(records, 'compare-evaluations', _payload(tmp_path, 'unfavorable-compare', comparison))
+    assert result['decision']['state'] == 'fixture_comparison' and result['metrics']['fixture_ratio'] == 0.5
+    if fault == 'changed-ratio': result['metrics']['fixture_ratio'] = 0.1
+    elif fault == 'promoted-to-regression': result.update(decision={'state':'regression','reasons':[]}, evidence_kind='execution')
+    if fault:
+        records.write('comparison_results/' + result['id'] + '.yaml', result)
+    report = _report(records, tmp_path, candidate_protocols=[frozen['id']])
+    demonstrations = report['criteria']['AC09']['unfavorable_fixture_demonstrations']
+    assert len(demonstrations) == (0 if fault else 1)
+    if demonstrations:
+        assert demonstrations[0] == {'comparison': result['id'], 'classification': 'contract_fixture',
+            'outcome': 'unfavorable_fixture_ratio', 'fixture_ratio': 0.5, 'empirical_regression': False, 'gain_claim': False}
+    assert report['criteria']['AC09']['evidence']['regression'] == []
+    assert report['criteria']['AC09']['state'] == 'incomplete'  # Other failure cases are still absent.
+    assert report['criteria']['AC17']['state'] == 'incomplete'
+    assert all(cell['state'] == 'incomplete' for cell in report['matrix'])
+    assert report['acceptance'] == 'incomplete' and not report['gain_claim'] and not report['qualifying_candidate_gains']
+
+
 @pytest.mark.parametrize("case", ["promoted-fixture", "functional-api", "wrong-roi", "missing-correctness", "false-gain"])
 def test_claim_labels_cannot_satisfy_real_acceptance(package_setup, tmp_path, case):
     records, _, evaluation, _, _ = package_setup
@@ -79,6 +108,24 @@ def test_missing_remote_artifacts_are_exposed_as_unverified(package_setup, tmp_p
                     if a["path"] == evaluation["build"]["binary"])
     assert artifact["state"] == "remote_unverified"
     assert report["external_verification_complete"] is False
+
+
+@pytest.mark.parametrize('run_returncode', [0, 1])
+def test_exit_zero_failure_requires_the_actual_verdict_producing_execution(package_setup, tmp_path, run_returncode):
+    records, _, evaluation, _, _ = package_setup
+    evaluation['outcome'] = {'state':'incorrect','stage':'correctness','reason':'Explicit failed simulator contract fixture.'}
+    binding = {'binary': {'sha256': evaluation['build']['binary_sha256']}}
+    evaluation['context'].update(basis='simulated', execution_binding=binding)
+    evaluation['correctness'] = {'state':'failed','checks':[{'passed':False,'state':'failed','execution':evaluation['id'],
+        'binding':binding,'output':{'path':'/fixture/simulation.log','sha256':'a'*64}}]}
+    evaluation['stages'] = [{'stage':'compiler_identity','started':evaluation['created'],'state':'complete','returncode':0},
+        {'stage':'simulation','state':'failed' if run_returncode else 'complete','returncode':run_returncode,
+         'started':evaluation['created'],'log':'/fixture/simulation.log','log_sha256':'a'*64}]
+    records.write('evaluations/package-evaluation.yaml', evaluation)
+    report = _report(records, tmp_path)
+    values = report['criteria']['AC09']['evidence']['verifier_failure_exit_zero']
+    assert (evaluation['id'] in values) is (run_returncode == 0)
+    assert not report['gain_claim'] and report['criteria']['AC17']['state'] == 'incomplete'
 
 
 @pytest.mark.parametrize('fault', ['a3-underflow', 'miscopied'])

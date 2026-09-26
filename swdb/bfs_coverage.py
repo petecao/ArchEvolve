@@ -126,6 +126,62 @@ def _acceleration(evaluation):
     return {"executed": False, "cases": {}, "reason": "no matching positive instruction and completed-unit trace evidence"}
 
 
+def _unfavorable_fixture(store, comparison):
+    """A synthetic unfavorable ratio demonstrates a contract, never regression."""
+    if (comparison.get('decision', {}).get('state') != 'fixture_comparison'
+            or comparison.get('evidence_kind') != 'contract_fixture' or comparison.get('gain_claim') is not False):
+        return None
+    try:
+        frozen = protocol._get(store, comparison.get('protocol'), 'protocol')
+        protocol.verify_immutable(frozen)
+        protocol._validate_settings(frozen['settings'], store)
+        values, ids, workload = [], {}, None
+        for role in ('baseline', 'candidate'):
+            evaluation = protocol._get(store, comparison.get(role + '_evaluation'), 'evaluation')
+            samples, wid, kind = protocol._evaluation_samples(store, evaluation, frozen, role)
+            if kind != 'contract_fixture' or evaluation.get('request', {}).get('fixture') is not True:
+                return None
+            if workload is not None and wid != workload:
+                return None
+            if role == 'baseline' and comparison.get('comparison_baseline') != evaluation.get('implementation'):
+                return None
+            workload = wid; values.append(samples); ids[evaluation['id']] = artifacts.digest(evaluation)
+        measured = protocol._statistics(*values, frozen['settings']['profitability'])
+        if (comparison.get('protocol_sha256') != frozen['identity_sha256'] or comparison.get('evaluation_identities') != ids
+                or comparison.get('metrics', {}).get('fixture_ratio') != measured['roi_speedup']
+                or measured['confidence_interval']['upper'] >= 1
+                or any(not profile_package._same(comparison['metrics'].get(key), measured[key])
+                       for key in ('confidence_interval', 'relative_spread', 'per_source_position_speedup'))):
+            return None
+        return {'comparison': comparison['id'], 'classification': 'contract_fixture',
+                'outcome': 'unfavorable_fixture_ratio', 'fixture_ratio': measured['roi_speedup'],
+                'empirical_regression': False, 'gain_claim': False}
+    except (Failure, KeyError, TypeError, ValueError, OSError):
+        return None
+
+
+def _exit_zero_verifier_failure(evaluation):
+    checks = [row for row in evaluation.get('correctness', {}).get('checks', [])
+              if isinstance(row, dict) and row.get('passed') is False]
+    if evaluation.get('context', {}).get('basis') == 'simulated':
+        stages = [stage for stage in evaluation.get('stages', []) if stage.get('stage') == 'simulation']
+        return (len(stages) == 1 and stages[0].get('returncode') == 0
+                and any(check.get('execution') == evaluation['id'] and check.get('state') == 'failed'
+                        and check.get('binding') == evaluation.get('context', {}).get('execution_binding')
+                        and _mapping(check.get('output')).get('path') == stages[0].get('log')
+                        and _mapping(check.get('output')).get('sha256') == stages[0].get('log_sha256')
+                        and bool(stages[0].get('log_sha256')) for check in checks))
+    fields = ('source', 'source_position', 'repetition')
+    for check in checks:
+        if not all(type(check.get(key)) is int for key in fields):
+            continue
+        stages = [stage for stage in evaluation.get('stages', []) if stage.get('stage') == 'execution'
+                  and all(stage.get(key) == check[key] for key in fields)]
+        if len(stages) == 1 and stages[0].get('returncode') == 0:
+            return True
+    return False
+
+
 def _packages(store, evaluation):
     if evaluation.get("component_evaluations"):
         accepted, rejected = [], []
@@ -502,13 +558,22 @@ def report(args):
         data = record.data
         state = data.get("outcome", {}).get("state")
         if state == "failed" and "build" in data.get("outcome", {}).get("stage", ""): failures["build_failure"].append(record.id)
-        if state == "incorrect" and any(stage.get("returncode") == 0 for stage in data.get("stages", [])):
+        if state == "incorrect" and _exit_zero_verifier_failure(data):
             failures["verifier_failure_exit_zero"].append(record.id)
         for label, outcome in (("timeout", "timed_out"), ("budget_exhausted", "budget_exhausted"), ("missing_observation", "missing_observation")):
             if state == outcome: failures[label].append(record.id)
-    failures["regression"] = [r.id for r in store.of_kind("comparison_result") if r.data.get("decision", {}).get("state") == "regression"]
-    mark(9, all(failures.values()), "all required failure and unfavorable-result categories must remain retrievable")
+    failures["regression"] = [r.id for r in store.of_kind("comparison_result")
+        if r.data.get("decision", {}).get("state") == "regression" and r.data.get('evidence_kind') == 'execution'
+        and _comparison(store, r.data, [r.data.get('protocol')]).get('qualified')]
+    unfavorable_fixtures = [value for record in store.of_kind('comparison_result')
+                           if (value := _unfavorable_fixture(store, record.data)) is not None]
+    demonstrated = all(values or (key == 'regression' and unfavorable_fixtures) for key, values in failures.items())
+    mark(9, demonstrated, "failure contracts must remain retrievable; unfavorable fixture ratios demonstrate handling only, never empirical regression")
     criterion["AC09"]["evidence"] = failures
+    criterion['AC09']['unfavorable_fixture_demonstrations'] = unfavorable_fixtures
+    criterion['AC09']['classified_failures'] = {
+        key: [{'id': rid, 'classification': (store.get(rid) or {}).get('evidence_kind', 'unknown')}
+              for rid in values] for key, values in failures.items()}
     independent_baselines = []
     for record in store.of_kind("comparison_result"):
         comparison = record.data
