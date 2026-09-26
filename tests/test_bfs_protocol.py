@@ -451,6 +451,7 @@ def test_new_workload_version_marks_comparison_for_fresh_evidence(protocol_setup
 @pytest.mark.parametrize("fault", ["wrong-offset-width", "wrong-adjacency", "wrong-inverse", "truncated", "wrong-hash"])
 def test_registration_rejects_non_equivalent_or_invalid_files(records, tmp_path, fault):
     records.copy_repo()
+    before = {path.name: path.read_bytes() for path in (records.path / "workloads").glob("*.yaml")}
     base = {"workload": {"graph": {"num_vertices": 5, "directed": True, "edges": [[0,1], [0,2], [1,3], [2,3]]}}}
     request = _workload_request(records, tmp_path, base["workload"]["graph"])
     representation = request["representations"][1]
@@ -472,7 +473,7 @@ def test_registration_rejects_non_equivalent_or_invalid_files(records, tmp_path,
     else: representation["sha256"] = "f" * 64
     result = records.swdb("register-workload", _payload(tmp_path, "bad-register", request), "--format", "json")
     assert result.returncode == 1 and not result.stdout
-    assert not list((records.path / "workloads").glob("*.yaml"))
+    assert {path.name: path.read_bytes() for path in (records.path / "workloads").glob("*.yaml")} == before
 
 
 def test_frozen_dispatch_rejects_wrong_sources_before_build(protocol_setup, tmp_path):
