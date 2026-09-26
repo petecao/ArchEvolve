@@ -83,6 +83,27 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Progress check — 2026-09-26 16:03 ET
+
+The [full health audit](observations/health-20260926-1603.json) confirms the sole
+native pilot is healthy on socket 1 generation 402: DX100 uniform is complete
+60/60 with passed fixed controls, upstream uniform is running at 30/60 checked,
+and both Kronecker cells have not started. The pilot has 90/240 checked trials,
+empty stderr and recent tree RSS below 1.05 GiB. Its exact `319645e` runtime and
+20:11 ET hard stop are unchanged. Socket 0 generation 325 and legacy generation
+77 are released with empty kernel locks and absent owners. All historical
+PID/start unions are absent; all 15 retained audit hashes and pinned checkouts
+match. Free `/data1` and `/data` space is 16.38/181.73 GiB. All three workers are
+active; next full audit is 16:33 ET.
+
+Local independent result-admission/lifecycle checks passed 75 with four
+Linux-only skips. The batch finalizer now preserves original failures and
+rejects accounting failure through a nonzero exit. Native supervision review
+also identified and is correcting a generic stage startup deadline edge.
+These checks are preparation only; actual Linux admission remains required.
+Counts remain **13/21 resolved and 0/8 final acceptance cells**, with no empirical
+freeze or qualified gain. Coverage A2 waits for whole-pilot terminal cleanup.
+
 ## First one-thread pair complete — 2026-09-26 15:46 ET
 
 The [DX100 uniform-random pair](observations/native-one-thread-first-cell-20260926.json)

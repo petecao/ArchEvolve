@@ -10,6 +10,26 @@ finite simulator-calibration plan and the independent author-reference batch.
 Neither small case substitutes for performance-workload evidence. This document
 does not start a budget clock or select an execution window.
 
+## Execution update — 2026-09-26 16:03 ET
+
+The planning boundaries below predate the completed tiny a3 witness and the
+failed coverage a1 attempt. Their outcomes are retained in the
+[ticket map](../.scratch/bfs-rewrite-evaluation-2026-09-25/map.md); a3 proves only
+its tiny timed-binary case, and coverage a1 has zero admitted timings. The
+[fixed coverage A2 plan](bfs-dx100-coverage-a2-plan-20260926.md) supplies the
+reviewed prospective continuation, with actual Linux admission checks still
+pending. It waits for terminal cleanup of the active native pilot.
+
+The four-thread paired study failed its fixed spread gates. The separate
+one-thread pilot has checked 90/240 trials at this update: its DX100 uniform
+cell passed the fixed controls, upstream uniform is running, and the two
+Kronecker cells have not started. There is no empirical freeze. The
+[bounded simulator plans](bfs-simulator-batches-20260926.md) now provide the
+T15/T16 coordinator, common resource accounting and prospective admission
+requirements described below. Their actual Linux checks, absolute windows and
+empirical prerequisites remain outstanding. The older deadlines below remain
+historical constraints, not authority to dispatch under an expired clock.
+
 ## Boundaries that remain in force
 
 - The original pilot expired at **2026-09-26 05:56:38 ET**. Its two serial native
