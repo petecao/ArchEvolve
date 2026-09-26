@@ -1,0 +1,28 @@
+{
+  "date": "2026-09-26 ET",
+  "scope": "Add fsynced JSONL retention to existing Linux fast-exit fixture only",
+  "parent_export": "7797285d9f1233093ac61a4e9f31e1ade56935da",
+  "before_test_sha256": "279973e1f1a6c66fb334524d50fb62288b4196b22d7bcb957e38fd0df7bc9f64",
+  "after_test": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_one_thread_freeze.py",
+    "bytes": 32353,
+    "sha256": "75c5910d9c237c6dccf0a2178f871089e4a7bc95d9d3d48ad53097f38aee3d08"
+  },
+  "production_unchanged": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_one_thread_calibration.py",
+    "bytes": 23642,
+    "sha256": "77fc98b00e745122668b35e7b1f3bbe383a80009315a5a24865f992b08da201a"
+  },
+  "artifact": "<pytest basetemp>/test_linux_fast_reader_retains_*/linux-reader-events.jsonl",
+  "contract": "Each spawn/finished callback appends sorted JSON, flushes and fsyncs before return; test reopens exactly both events and preserves actual PID/start, direct reap and absence assertions.",
+  "validation": {
+    "command": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_one_thread_freeze.py -k 'linux_fast_reader or reader_persists_fast_child' -q --basetemp /private/tmp/bfs-reader-durable-fixture-20260926",
+    "log": {
+      "path": "/private/tmp/bfs-reader-durable-fixture-20260926.log",
+      "bytes": 124,
+      "sha256": "9df46f9d0f4a371df50e71ca17b9b039174f21a5bdfdb52a1861b1f5aae5cdc8"
+    },
+    "result": "1 passed,1Linuxskip,56deselected in0.27s; actual Linux proof remains unrun"
+  },
+  "limits": "No production change, host action or retry; original779 and prior57+skip evidence retained."
+}
