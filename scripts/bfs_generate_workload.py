@@ -22,6 +22,12 @@ from swdb import artifacts, bfs_protocol, profile
 from swdb.store import Store
 
 
+def serialized_paths(directory):
+    """Both pinned GAPBS Builders select their binary reader by the .sg suffix."""
+    directory = Path(directory)
+    return directory/'graph-dx100.sg', directory/'graph-upstream.sg'
+
+
 def widen_sg(source,destination):
     """Widen actual SG counts/CSR offsets; keep vertex IDs and adjacency bytes."""
     source,destination=Path(source),Path(destination)
@@ -110,7 +116,7 @@ def main():
         receipt['repository_commit']=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
         compiler='g++';binary=build/'converter'
         bounded('compile',[compiler,'-std=c++11','-O3','-fopenmp',source/'converter.cc','-o',binary],180)
-        sg32=runs/'graph.sg32';sg64=runs/'graph.sg64'
+        sg32,sg64=serialized_paths(runs)
         generator_command=[str(binary),'-u' if a.family=='uniform_random' else '-g',str(a.scale),'-k','16','-b',str(sg32)]
         bounded('generate',generator_command,900)
         widen_sg(sg32,sg64)

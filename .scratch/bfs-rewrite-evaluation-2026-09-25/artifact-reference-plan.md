@@ -62,6 +62,12 @@ A deterministic SG32-to-SG64 width conversion preserves adjacency bytes and
 widened counts/offsets for upstream consumers; register both through exact bounded
 streaming CSR validation. The canonical hash must agree across representations.
 Keep the converter binary/source hashes and all generator stdout/stderr.
+New generator outputs are named `graph-dx100.sg` and `graph-upstream.sg`: both
+pinned Builders dispatch serialized loading by the `.sg` suffix, while the record's
+`format` carries the 32-bit versus 64-bit offset width. The original SourcePicker
+must load the SG32 file through that actual Builder path. Existing scale-14/18
+records and bytes retain their identities; an evaluator-owned, hash-verified loader
+alias supplies a compatible suffix when an older representation name needs one.
 
 Determine the original first traversal source using the pinned `SourcePicker`
 implementation on that exact graph before freezing the protocol. Retain its
