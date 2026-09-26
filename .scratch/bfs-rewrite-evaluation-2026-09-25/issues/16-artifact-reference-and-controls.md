@@ -20,7 +20,7 @@ Implements D10–D14 and AC10, AC13–AC16, AC18. The artifact pair preserves th
 ## Acceptance criteria
 
 - [ ] Before execution, record a bounded BFS-only run plan, attempt/time/resource/storage limits, and host/lane checks. Instantiate and freeze this slice's graph/source identities, build settings, ROI, exact configurations, correctness scope, instrumentation treatment, repetitions/aggregation, and profitability/claim rules independently of ticket 15. These rules assess any reported gain; a positive gain is not required to complete the reference comparison.
-- [ ] Resolve the artifact's prescribed graph family/scale and actual input identity from the pinned source, retaining generated/serialized identities and realized graph properties. A convenient smaller graph or matching filename is not silently accepted as the artifact case.
+- [x] Resolve the artifact's prescribed graph family/scale and actual input identity from the pinned source, retaining generated/serialized identities and realized graph properties. A convenient smaller graph or matching filename is not silently accepted as the artifact case.
 - [ ] Complete real scalar and author-accelerated BFS executions under the authors' BASE/accelerated configuration pair. Retain their actual configuration difference, including the LLC difference, instead of normalizing it away and calling the result a reproduction.
 - [ ] Complete the additional controlled reference comparisons with matched CPU, cache, memory, workload, traversal sources, threads, and semantic ROI as declared. Enumerate remaining software and accelerator changes; do not claim an isolated software-rewrite gain from a joint hardware/software comparison.
 - [ ] Each reported comparison has explicit baseline/result identities, exact timed-binary structural correctness, accelerator-use evidence for the accelerated case, BFS ROI duration, selected-region timing, and actual dynamic memory observations with truthful scope and basis.
@@ -39,3 +39,28 @@ Ticket 11 supplies explicit protocol/comparison enforcement; tickets 13 and 14 s
 ## Implementation progress
 
 2026-09-25: Root is preparing the independent reference/control batch. `../artifact-reference-plan.md` records source-backed configuration, graph/source selection, bounded execution, and distinct ROI scope before measurement. Actual execution awaits Tickets 13 and 14.
+
+2026-09-25 23:01 ET: the prescribed uniform scale-22 graph is generated and
+registered as `bfs-20260925-uniform22.f23b09bb0c0601b5`, imported in `acb361a`.
+Actual pinned SourcePicker execution chose vertex 2,796,003, whose degree is 40.
+The graph has 4,194,304 vertices, 134,217,158 directed adjacency entries,
+undirected semantics, and zero isolated vertices. Independent streaming CSR
+validation produces canonical SHA-256
+`b4fb93dcda22c988de996781c6d0adf070e821796e84f469a38cb3a206f109b4`
+for both SG32 and SG64. Both serialized files and all preparation stage outputs
+were rehashed on mbit10; raw files remain there. See
+`../observations/uniform22-preparation-a1.json` for the exact source, binary,
+command, bounded execution, lane-0 generation-270, and host receipts.
+This resolves only the prescribed-input criterion. Reference/control freezes,
+simulated executions, exact timed-binary verification, diagnostic profiles,
+and comparisons remain pending; no reproduction or gain is claimed.
+
+2026-09-25: The identity agent prepared [the concrete freeze recipe](../../../docs/bfs-artifact-freeze-recipe-20260925.md)
+with exact retained model/guest/runtime identities, unresolved scale22/source-picker
+and region inputs, two separate policies, and the public command sequence. Isolated
+contract reproductions exposed ignored simulator identity and missing aggregate
+region lookup. The additive fixes pin simulation/model and fixed author sources,
+bind package-backed diagnostic regions, and enforce typed per-role accelerator
+coverage. These changes and fixture tests do not complete any empirical checkbox;
+the actual graph, independently frozen pairs, replay results and final acceptance
+remain pending.
