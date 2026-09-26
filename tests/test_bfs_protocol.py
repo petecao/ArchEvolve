@@ -254,6 +254,50 @@ def _fixture_rebind(evaluation, protocol, role, name):
     return data
 
 
+@pytest.mark.parametrize('fault', [None, 'bare-lane', 'wrong-bind', 'different-lane'])
+def test_frozen_native_lane_uses_exact_recorded_verifier_receipt(protocol_setup, tmp_path, fault):
+    from swdb import artifacts, bfs_protocol
+    from swdb.cli import Failure
+    from swdb.store import Store
+    records, workload, _, request, evaluations, comparison = protocol_setup
+    target_id = request['settings']['targets']['baseline']['id']
+    machine = records.read(f'machines/{target_id}.yaml')
+    machine.update(id='lane-fixture-machine', hostname='mbit10', lane_required=True)
+    _add_record(records, tmp_path, machine)
+    request['id'] = 'lane-policy'
+    for target in request['settings']['targets'].values():
+        target['id'] = machine['id']
+        target['configuration'] = {'lane': 'mbit10-evaluation-node1'}
+    protocol = _command(records, 'freeze-protocol', _payload(tmp_path, 'lane-freeze', request))
+    receipt = 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 375)'
+    if fault == 'bare-lane': receipt = 'mbit10-evaluation-node1'
+    elif fault == 'wrong-bind': receipt = receipt.replace('bind:1', 'bind:0')
+    elif fault == 'different-lane': receipt = receipt.replace('node1', 'node0').replace('bind:1', 'bind:0')
+    for role in ('baseline', 'candidate'):
+        data = _fixture_rebind(evaluations[role], protocol, role, f'lane-{role}')
+        data['machine'] = machine['id']
+        data['context'].update(lane=receipt, machine_sha256=artifacts.digest(machine))
+        data['request'].update(machine=machine['id'], target_configuration={'lane': 'mbit10-evaluation-node1'})
+        _add_record(records, tmp_path, data)
+        comparison[role + '_evaluation'] = data['id']
+    # The execution preflight and later public comparator must interpret the
+    # identical historical receipt. This test never acquires a real host lane.
+    candidate = Store(records.path).get(data['candidate'], 'candidate')
+    bound_request = {**data['request'], 'workload': {'id': workload['id']}}
+    if fault:
+        with pytest.raises(Failure, match='socket lane'):
+            bfs_protocol.validate_protocol_for_evaluation(Store(records.path), bound_request, candidate, actual_lane=receipt)
+    else:
+        binding = bfs_protocol.validate_protocol_for_evaluation(Store(records.path), bound_request, candidate, actual_lane=receipt)
+        assert binding['frozen_sha256'] == protocol['identity_sha256']
+    comparison.update(id='compare-lane', protocol=protocol['id'])
+    result = _command(records, 'compare-evaluations', _payload(tmp_path, 'lane-compare', comparison), succeeds=fault is None)
+    assert result['decision']['state'] == ('rejected' if fault else 'fixture_comparison')
+    if fault:
+        assert 'socket lane' in str(result['decision']['reasons'])
+    assert not result['gain_claim']
+
+
 def test_comparator_differs_from_candidate_source_ancestor(protocol_setup, tmp_path):
     records, _, _, _, evaluations, comparison = protocol_setup
     # A second catalog identity of the same source is sufficient to check the

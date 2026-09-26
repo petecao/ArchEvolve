@@ -39,3 +39,13 @@ Ticket 11 supplies workload/protocol identity and enforcement. Ticket 13 supplie
 ## Implementation progress
 
 2026-09-25: Root owns dependent pilot preparation. The pre-execution limits and baseline-only selection rules are in `../pilot-plan.md`. Actual calibration awaits Tickets 11, 13, and 14; this ticket is not accepted or frozen by the plan.
+
+2026-09-25 dependent implementation: `scripts/bfs_freeze_pilot.py` prepares a
+reviewable native request from actual unchanged-source packages and publishes only
+after revalidation of the exact reviewed evidence and the shared accelerator size
+gate. Actual spread, collector overhead, selected-source attribution, raw identity,
+rejected cases, and justifications remain inside frozen settings. The fixed
+5-trial/1.05/95%/2,000-resample policy is not weakened automatically. Thirteen
+targeted calibration-cell and missing-evidence checks passed (0.17 seconds), with
+fixtures establishing guard behavior only. See `docs/bfs-pilot-freeze.md`. No
+empirical protocol or Ticket15 completion is claimed by this preparation.

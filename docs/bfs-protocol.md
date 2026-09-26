@@ -38,6 +38,11 @@ simulator comparisons are separate modes. Controlled comparisons require matched
 CPU/cache/memory configurations; artifact-reference comparisons retain disclosed
 differences. Software and accelerator changes are enumerated without claiming an
 isolated software cause when target configurations differ.
+For a lane-managed native machine the target freezes the socket lane ID. Dispatch
+and comparison accept the exact recorded host lane verifier receipt for that ID,
+including matching NUMA binding and lease generation; an unverified bare label,
+arbitrary suffix, or another socket is incompatible. Each run retains its full
+receipt even though the frozen lane identity excludes the changing generation.
 
 Frozen records are content-addressed: their identifier contains the freeze hash,
 and readers recompute the hash. Evaluations retain the exact frozen hash at dispatch;

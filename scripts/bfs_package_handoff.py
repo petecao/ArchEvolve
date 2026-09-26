@@ -114,11 +114,18 @@ def main():
             if package['completeness'] != 'complete' or package['evidence']['classification'] != 'execution':
                 raise ValueError('public assembler retained an incomplete or fixture package')
             forward = call('profile-strategies', package['id'])
+            if (forward.get('performance_guarantee') is not False
+                    or forward.get('evidence_validation', {}).get('state') != 'valid'):
+                raise ValueError('forward strategy query lacks current valid profile evidence')
             reversible = next((row for row in forward['matches'] if row['outcome'] != 'illegal'), None)
             if reversible is None:
                 raise ValueError('forward strategy query returned no legal or unresolved applicability information')
             reverse = call('strategy-regions', reversible['strategy'], '--package', package['id'])
-            if not any(row['profile_package'] == package['id'] for row in reverse['profiled_matches']):
+            if reverse.get('performance_guarantee') is not False or not any(
+                    row['profile_package'] == package['id']
+                    and row.get('profile_support') == 'compatible_profile_evidence'
+                    and row.get('evidence_validation', {}).get('state') == 'valid'
+                    for row in reverse['profiled_matches']):
                 raise ValueError('reverse strategy query lost the exact measured package')
             packages.append(package)
         package = packages[0]

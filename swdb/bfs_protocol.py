@@ -400,6 +400,22 @@ def freeze_protocol(args):
                            frozen_at=_now(), state="frozen")
 
 
+def verified_native_lane(value, machine):
+    """Normalize only the exact persisted receipt emitted by the host lane verifier."""
+    from swdb.profile import lane_required
+    if not lane_required(machine):
+        return value
+    hostname = re.escape(machine["hostname"])
+    matched = re.fullmatch(
+        rf"({hostname}-evaluation-node([01])) \(verified: affinity, bind:\2, lease held, generation ([0-9]+)\)",
+        value if isinstance(value, str) else "")
+    _fail(matched is not None, "verified socket lane receipt is missing or malformed")
+    lane, node, _generation = matched.groups()
+    _fail(any(row.get("node") == int(node) for row in machine.get("numa_nodes", [])),
+          "verified socket lane is absent from the target machine")
+    return lane
+
+
 def validate_protocol_for_evaluation(store, request, candidate, actual_build=None, actual_lane=None, actual_instrumentation=None):
     if request.get("protocol") is None:
         return None
@@ -426,7 +442,9 @@ def validate_protocol_for_evaluation(store, request, candidate, actual_build=Non
     _fail(request.get("machine") == target["id"] and request.get("target_configuration", {}) == target["configuration"],
           "target or configuration differs from frozen settings")
     if "lane" in target["configuration"]:
-        _fail(actual_lane == target["configuration"]["lane"], "verified socket lane differs from frozen target")
+        machine = _get(store, target["id"], "machine")
+        _fail(verified_native_lane(actual_lane, machine) == target["configuration"]["lane"],
+              "verified socket lane differs from frozen target")
     _fail(_get(store, candidate["implementation"], "implementation")["kernel"] == settings["kernel"], "candidate kernel differs from protocol")
     if actual_build is not None:
         expected = settings["builds"][role]
@@ -682,7 +700,9 @@ def _evaluation_samples(store, evaluation, protocol, role):
     if settings["mode"] == "native":
         _fail(context.get("machine_sha256") == target["machine_sha256"], "native target machine identity changed")
         if "lane" in target["configuration"]:
-            _fail(context.get("lane") == target["configuration"]["lane"], "verified socket lane differs from frozen target")
+            machine = _get(store, target["id"], "machine")
+            _fail(verified_native_lane(context.get("lane"), machine) == target["configuration"]["lane"],
+                  "verified socket lane differs from frozen target")
     build = evaluation.get("build", {})
     expected = settings["builds"][role]
     _fail(all(build.get(key) == expected[key] for key in ("compiler", "flags", "compiler_version"))

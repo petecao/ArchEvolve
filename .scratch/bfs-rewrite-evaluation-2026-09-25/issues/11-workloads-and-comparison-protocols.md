@@ -77,3 +77,12 @@ simulator and campaign tickets.
 Context: `swdb/bfs_protocol.py`, `swdb/sg_stream.py`,
 `tools/bfs_native/sg_identity.cc`, `docs/bfs-protocol.md`,
 `tests/test_bfs_protocol.py`, and `tests/test_bfs_sg_stream.py`.
+
+Regression correction 2026-09-25: native dispatch and comparison now normalize
+the exact host lane verifier receipt to its frozen socket identity. Previously
+the annotated real receipt could not equal the bare frozen lane ID. Matching
+socket/binding/host syntax is mandatory; bare labels, mismatched bindings, and
+another lane are rejected, while the complete receipt remains in each evaluation.
+Four focused public freeze/comparison cases passed (101.47 seconds), including
+the dispatch binding check. Their metadata and times remain explicit fixtures;
+this correction establishes no empirical protocol or gain.
