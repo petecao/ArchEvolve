@@ -108,6 +108,20 @@ These four cases cover all eight source/route/graph cells, all four payload form
 
 ## Context pointers
 
+- 2026-09-25 21:47 ET: all three workers are responsive. The live external
+  lane-0 owner and Spatter child remain active; lane 1 and the legacy lease are
+  released. Host free space is 17 GiB on `/data1` and 198 GiB on `/data`; raw
+  output remains on `/data`. The a6 in-lane capacity refusal consumed no simulator
+  attempt and its hashed receipts are preserved in
+  `observations/dx100-a6-capacity-refusal.json`. The approved capacity estimator
+  still holds dispatch below its exact threshold.
+- 2026-09-25: Both actual scale-18 graphs and their corrected version-2 generator
+  metadata are synchronized; see `docs/evidence/bfs-workloads18-20260925.yaml`
+  and commit `05b936b`. Earlier incorrect generator declarations remain in the
+  immutable version-1 records. Bytes, canonical adjacency, realized vertices,
+  isolates, and ordered sources did not change. All 119 records validate;
+  workload preparation does not establish calibration or a gain.
+
 - 2026-09-25: Ticket 09 resolved from two complete real packages, fresh validated
   forward/reverse strategy queries, an exact-source patch handoff, and a fresh
   14-record chain. See `docs/evidence/bfs-package-handoff-20260925-a1.yaml` and
