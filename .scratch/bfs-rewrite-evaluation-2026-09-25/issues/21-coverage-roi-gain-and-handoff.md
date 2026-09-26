@@ -222,3 +222,14 @@ two related reassessment fixture failures under repair. Both original results
 remain retained; no broad green result or code push is claimed. Native controls
 have 237/240 checked trials. See the [full audit](../observations/health-20260926-1733.json).
 Acceptance remains 0/8, with 13 resolved and eight claimed tickets.
+
+## Evaluation checkpoint — 2026-09-26 18:03 ET
+
+The [host audit](../observations/health-20260926-1803.json) confirms completed
+native collection: 240 primary checks, four controls, four diagnostic packages,
+and independent closure of all 131 owned PID/start identities. Both sockets and
+the legacy lease are released. This is baseline collection evidence; bounded
+publisher readback, simulator prerequisites, protocol freeze, candidate coverage
+and the required gain remain outstanding. The original 25 fixture failures are
+retained and repaired; corrected full regression at `e4c4015` is running.
+All workers are responsive. Counts remain 13/21 resolved and 0/8 final cells.

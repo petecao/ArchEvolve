@@ -7,7 +7,23 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 16:33 ET
+## Current checkpoint — 2026-09-26 17:58 ET
+
+The [one-thread collector and independent terminal audit](../observations/native-one-thread-terminal-20260926.json)
+completed successfully. All 240 primary structural checks, four unchanged-code
+controls and 24 spread groups passed. All four fresh diagnostic packages
+completed with 24 correctness checks and 72 valid memory rows. The driver
+finished at 17:56:28 ET, before its original 20:11:35 ET hard end, with exit zero.
+All 131 retained PID/start identities are absent; socket 1 generation 402 is
+released and its kernel lock is empty. The collector remains pinned to `319645e`.
+
+The prospective publisher still requires one bounded original-code readback;
+actual simulator calibration and both source-specific protocol freezes remain
+outstanding. The separate `3f38a2b` supervisor checkout is prepared. Its Linux
+admission tests wait for the coordinated next step. No candidate gain or final
+acceptance follows from the baseline study. This ticket stays claimed.
+
+## Historical checkpoint — 2026-09-26 16:33 ET
 
 The distinct one-thread pilot remains on mbit10 socket 1 generation 402 at
 exact code `319645e`, with unchanged hard stop 20:11:35 ET. Both uniform cells

@@ -149,6 +149,38 @@ unchanged. No Linux fixture, auditor, compilation or measurement ran during
 this preparation. The original malformed preparation receipt is retained;
 an additive valid JSON receipt preserves its reference and unchanged facts.
 
+## Progress check — 2026-09-26 18:03 ET
+
+The [full host audit](observations/health-20260926-1803.json) confirms the completed
+native study and all 131 owned identities absent. Both socket leases and the
+legacy lease are released (generations 325/402/77); all kernel locks and owners
+are absent. Historical receipts and code pins are unchanged, and the separate
+`3f38a2b` supervisor checkout is pristine. Free build/raw space is
+16.35/181.10 GiB. All three workers are responsive; next full check is 18:33 ET.
+The single bounded native readback is awaiting its final recipe review; no
+Linux admission fixture or subsequent measurement has started at this audit.
+
+All 25 identified failures in the retained `7fe4c34` full regression now have
+independently checked test-fixture repairs. That original run continues unchanged.
+A corrected full regression started at 17:59:51 ET on exact `e4c4015` in the
+separate idle managed worktree, with a two-hour ceiling and its own retained log.
+Neither full run is claimed green. Counts remain **13/21 resolved, 0/8 final
+acceptance cells**, with no empirical protocol freeze or qualified candidate gain.
+
+## One-thread native collection completed — 2026-09-26 17:58 ET
+
+The [actual terminal audit](observations/native-one-thread-terminal-20260926.json)
+records successful completion at 17:56:28 ET in 10,133 seconds. All 240 primary
+structural checks, four fixed controls and 24 spread groups passed. All four
+fresh diagnostic packages completed with 24 structural checks and 72 valid
+memory rows. The separate terminal audit found all 131 retained PID/start
+identities absent on both passes, socket 1 generation 402 released and its
+kernel lock empty. Sampled peak tree RSS was 1.18 GiB; the original hard end
+was unchanged. One bounded readback through the original collector remains
+before publisher qualification. Shared simulator gates, protocol freeze and
+all eight final acceptance cells remain open; passing unchanged-code controls
+is not a candidate gain.
+
 ## All one-thread primary controls passed — 2026-09-26 17:38 ET
 
 The [fourth retained control](observations/native-one-thread-fourth-cell-20260926.json)
