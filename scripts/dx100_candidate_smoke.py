@@ -2,6 +2,7 @@
 """Bounded public complete-call simulator and diagnostic integration smoke.
 
 Created: 2026-09-25 (Eastern Time). This tiny graph cannot establish a gain.
+Updated: 2026-09-26 (Eastern Time).
 Run inside a verified socket lane with an external 2400-second timeout.
 """
 import argparse
@@ -30,7 +31,8 @@ def main():
 
 
 def run():
-    deadline = time.monotonic() + OUTER_SECONDS - CLEANUP_RESERVE_SECONDS
+    deadline = time.monotonic() + OUTER_SECONDS
+    work_deadline = deadline - CLEANUP_RESERVE_SECONDS
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--id', required=True)
     parser.add_argument('--build-evaluation', required=True)
@@ -57,7 +59,7 @@ def run():
         step = f'{len(stages):02d}-{command}'
         argv = [sys.executable, '-m', 'swdb', command, *map(str, parameters), '--format', 'json']
         out, err = folder / (step + '.json'), folder / (step + '.stderr')
-        run_stage(receipt, folder, argv, timeout=timeout, deadline=deadline,
+        run_stage(receipt, folder, argv, timeout=min(timeout, work_deadline-time.monotonic()), deadline=deadline,
                   cwd=ROOT, output=out, stderr=err)
         return json.loads(out.read_text())
     def request(name, value):
@@ -71,7 +73,7 @@ def run():
             raise RuntimeError('selected converter changed')
         sg32, sg64 = folder / 'uniform64-sg32.sg', folder / 'uniform64-sg64.sg'
         run_stage(receipt, folder, [str(converter), '-u', '6', '-k', '4', '-b', str(sg32)],
-                  output=folder / 'generate.log', timeout=60, deadline=deadline,
+                  output=folder / 'generate.log', timeout=min(60, work_deadline-time.monotonic()), deadline=deadline,
                   cwd=ROOT, env={**os.environ, 'OMP_NUM_THREADS': '1'})
         widen_sg(sg32, sg64)
         registration = {'message_version': '1.0', 'id': args.id + '.workload', 'kernel': 'gapbs-bfs',

@@ -3,6 +3,7 @@
 import copy
 import hashlib
 import math
+import re
 from pathlib import Path
 
 from swdb import artifacts, db, strategy, workflow
@@ -47,6 +48,11 @@ def _timing_quantity(region):
 def verify(package):
     """Check sealed assemblies while leaving the original explicit fixtures compatible."""
     if "package_version" not in package:
+        _fail(package.get("completeness") == "fixture"
+              and package.get("evidence", {}).get("classification") == "contract_fixture"
+              and not any(key in package for key in ("requested_id", "identity_sha256"))
+              and not re.search(r"\.v[0-9]+\.[0-9a-f]{16}$", package.get("id", "")),
+              "profile package lacks its retained identity; only explicit unsealed contract fixtures are compatible")
         return
     original = copy.deepcopy(package)
     expected = original.pop("identity_sha256", None)

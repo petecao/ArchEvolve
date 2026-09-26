@@ -1,6 +1,7 @@
 # BFS profile packages and strategy lookup
 
 Date: 2026-09-25
+Updated: 2026-09-26 (Eastern Time)
 
 Ticket 09 assembles evidence through `profile-package REQUEST`. The request names
 an exact `evaluation`, optional `region_profile`, `implementation`, and `context`:
@@ -13,6 +14,11 @@ Packages use independent message version 1.0 and record format 0.4. Their
 `package_version`, `requested_id`, and `identity_sha256` identify a retained
 assembly. A new request creates a new version rather than overwriting an earlier
 package. Evidence references and content identities survive index regeneration.
+Removing a seal field cannot turn an assembly into a legacy fixture. An unsealed
+package must explicitly declare fixture completeness and contract-fixture
+evidence, carry no assembly identity fields, and use an ID outside the reserved
+`.v<version>.<16-hex-digest>` assembly suffix. Public retrieval and index rebuild
+enforce the same identity check, including for incomplete assemblies.
 Public `add` accepts only explicit legacy fixture packages; assembled completeness
 must pass the public assembly checks. Source semantics are transferred only when
 the candidate matches the implementation's application snapshot, including after

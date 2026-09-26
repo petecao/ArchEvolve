@@ -302,8 +302,23 @@ def test_public_driver_rejects_late_start_before_host_checks_or_writes(tmp_path,
     assert list(tmp_path.iterdir()) == []
 
 
-def test_public_driver_preserves_failure_and_blocks_retry_after_stage_failure(tmp_path, monkeypatch):
+def test_public_driver_preserves_failure_and_blocks_retry_after_stage_failure(tmp_path, monkeypatch, records):
     """Only orchestration is exercised: lane/capacity/public execution are synthetic."""
+    # Model the pre-launch catalog in an owned fixture. Published a3 evidence
+    # and historical runtime pins must remain untouched in the real repository.
+    original_root = continuation.ROOT
+    records.copy_repo()
+    for rid in (continuation.EXPIRED_ID, continuation.PROBE_ID):
+        (records.path/'evaluations'/(rid+'.yaml')).unlink(missing_ok=True)
+    fixture_root = records.path.parent
+    fixture_runtime = {}
+    for relative in continuation.RUNTIME:
+        target = fixture_root/relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((original_root/relative).read_bytes())
+        fixture_runtime[relative] = artifacts.file_hash(target)
+    monkeypatch.setattr(continuation, 'ROOT', fixture_root)
+    monkeypatch.setattr(continuation, 'RUNTIME', fixture_runtime)
     runs = tmp_path / 'runs'
     runs.mkdir()
     args = ['a3', '--runs-dir', str(runs), '--lane', '0']

@@ -1,0 +1,71 @@
+{
+  "created": "2026-09-26",
+  "status": "local_scoped_reviews_complete_actual_linux_pending",
+  "scope": "Independent post-exit sealer for three prospective supervisor fixtures and two historical A2 fixtures",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_linux_fixture_audit.py",
+      "bytes": 22656,
+      "sha256": "c2fb516cf83152f23875da8782cb4701972cc47b87555d317179bd6d403afca6"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_linux_fixture_audit.py",
+      "bytes": 17671,
+      "sha256": "df7eaea464a22eddc1463c920cf21532187ba233220c98aba06dc868062847de"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-linux-fixture-audit-20260926.md",
+      "bytes": 3445,
+      "sha256": "50d96f8c149eaa92992eca6c49ff9ee6b5a438504679ca7fccba636f617339c7"
+    }
+  ],
+  "preparation": {
+    "path": "/private/tmp/bfs-linux-fixture-audit-preparation-v2-20260926.json",
+    "bytes": 1616,
+    "sha256": "8d7f1887013659b85a8bc039f3239e38bc39b6c539644edaa4743db633e496a4"
+  },
+  "checks": {
+    "combined_runner_and_auditor": "97 passed,1 Linux-only skipped in2.17s",
+    "independent_spec": "Original red and auditor group46 passed,1 Linux-only skipped in0.24s; clean",
+    "independent_standards": "Original2 final-hash failure probes pass in0.09s; clean"
+  },
+  "reviews": {
+    "Spec": {
+      "path": "/private/tmp/bfs-linux-fixture-audit-independent-spec-20260926.json",
+      "bytes": 3417,
+      "sha256": "81f632034cc87e35daf9c78b521288e0905365cf227c11a98e77e90f481d2d93"
+    },
+    "Standards": {
+      "path": "/private/tmp/bfs-linux-fixture-audit-standards-review-final-20260926.json",
+      "bytes": 3160,
+      "sha256": "3a3fa6d81ea71d6e48d8ec4ed24480aa57a987af3f1913b7144479423c8194ea"
+    }
+  },
+  "retained_failures": {
+    "Spec": {
+      "path": "/private/tmp/bfs-linux-fixture-audit-spec-red-20260926.log",
+      "bytes": 1411,
+      "sha256": "acc3a76c8fa27a0de5b9cbd21f2302d5368ec3df24e9a5e0b24faad62fef0545"
+    },
+    "Standards": {
+      "path": "/private/tmp/bfs-fixture-audit-final-hash-standards-red-20260926.log",
+      "bytes": 3298,
+      "sha256": "70225d52047ab465abfce5b79fe03cb8d095a9cc3a4fb5acab88d5ddb430376d"
+    }
+  },
+  "correction": "Final proof hashing and postcheck remain inside the guarded publication block; a failure withdraws only this invocation's admitted proof link while retaining pending, audit and staged bytes.",
+  "proof_boundary": [
+    "Independent exact PID/start union readback twice after wrapper/helper exit; only captured zero-RSS pane zombie is permitted.",
+    "Exact released lane generation and empty kernel lock; observed other socket and legacy state.",
+    "All original child/helper/outer exits, JUnit cases, runtime and artifact hashes, sampled bounds and settled30-second ledger must agree.",
+    "New passed proof binds immutable pending and terminal audit. Original90-second interval remains unchanged; audit has a separate60-second bound.",
+    "Retain external audit exit/stdout/stderr before admission; sampled evidence cannot reconstruct unobserved short-lived processes."
+  ],
+  "actual_host_fixture": "not_started",
+  "actual_terminal_audit": "not_started",
+  "limits": [
+    "Local synthetic and subprocess contracts do not establish actual Linux admission or empirical acceptance.",
+    "The active native pilot, historical A2 runtime and prior failures remain unchanged.",
+    "This scoped review does not replace final all-ticket Standards and Spec review."
+  ]
+}
