@@ -14,6 +14,7 @@ import re
 import statistics
 import subprocess
 import sys
+import time
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -163,6 +164,127 @@ def freeze_header(spec, store):
     return request
 
 
+def repeatability_control(spec, packets, store, identities, gates):
+    """Recheck the final unchanged block; a numerical A/A gain vetoes freeze."""
+    from scripts import bfs_native_repeatability as repeat
+    from swdb.bfs_native import json_observation, StageFailure
+    from swdb.cli import Failure
+    result = {'state': 'unqualified', 'pairs': [], 'gain_claim': False,
+              'scope': 'unchanged-code negative control; no candidate assessment or empirical gain'}
+    try:
+        selected = spec.get('repeatability')
+        require(isinstance(selected, dict) and set(selected) == {'evaluations', 'driver_receipt'},
+                'repeatability evaluations and exact driver_receipt are required')
+        mapping = selected['evaluations']
+        require(isinstance(mapping, dict) and set(mapping) == {item['evaluation']['id'] for item in packets}
+                and len(mapping) == len(set(mapping.values())) == 2,
+                'repeatability mapping must name exactly both selected first-block evaluations')
+        plan = json.loads(repeat.PLAN.read_text()); repeat.validate_plan(plan)
+        cells = {cell['first_evaluation']: cell for cell in plan['cells']}
+        require(all(first in cells and cells[first]['id'] == second for first, second in mapping.items()),
+                'repeatability mapping differs from the fixed final unchanged-block plan')
+        ref = selected['driver_receipt']
+        require(isinstance(ref, dict) and set(ref) == {'path', 'sha256'} and Path(ref['path']).is_absolute(),
+                'repeatability driver receipt needs an absolute path and exact hash')
+        receipt, digest = json_observation(Path(ref['path']), 32 * 1024**2, 'repeatability driver receipt')
+        require(digest == ref['sha256'], 'repeatability driver receipt bytes differ')
+        require(isinstance(receipt.get('plan'), dict)
+                and isinstance(receipt.get('cells'), list)
+                and all(isinstance(row, dict) for row in receipt['cells'])
+                and isinstance(receipt.get('stages'), list)
+                and all(isinstance(row, dict) for row in receipt['stages']),
+                'repeatability receipt plan/cells/stages have malformed nested types')
+        require(receipt.get('id') == repeat.RUN_ID and receipt.get('state') == 'complete'
+                and receipt.get('role') == 'second_unchanged_native_calibration_block'
+                and receipt.get('bounds') == repeat.BOUNDS and receipt.get('profiling') is False
+                and receipt.get('gain_claim') is False and receipt.get('protocol_freeze') is False
+                and receipt.get('plan', {}).get('sha256') == artifacts.file_hash(repeat.PLAN)
+                and [row.get('id') for row in receipt.get('cells', [])] == [row['id'] for row in plan['cells']]
+                and all(row.get('state') == 'complete' for row in receipt['cells']),
+                'repeatability receipt lacks the complete fixed four-cell block')
+        result.update(driver_receipt=copy.deepcopy(ref), retained_driver=receipt,
+            plan={'path': str(repeat.PLAN), 'sha256': artifacts.file_hash(repeat.PLAN)})
+        policy = {'minimum_speedup': 1.05, 'confidence': .95, 'bootstrap_resamples': 2000, 'bootstrap_seed': 20260925}
+        result['numerical_policy'] = policy
+        for item in packets:
+            first = item['evaluation']; cell = cells[first['id']]
+            second = store.get(mapping[first['id']], 'evaluation')
+            require(second is not None, 'required second-block evaluation is unavailable: ' + cell['id'])
+            machine = store.get(first['machine'], 'machine')
+            expected_request = repeat.first_request(first, cell, machine)
+            second_samples = repeat.repeat_result(first, second, machine, expected_request)
+            require([(row.get('repetition'), row.get('source_position')) for row in first['timing']]
+                    == [(rep, position) for rep in range(5) for position in range(3)]
+                    and all(len(row['correctness']['checks']) == 15 for row in (first, second)),
+                    'repeatability blocks must preserve the full original trial/check order and count')
+            require(second.get('source_snapshot') == first.get('source_snapshot'), 'second-block source snapshot changed')
+            candidate = store.get(second['candidate'], 'candidate')
+            implementation, source = unchanged(store, candidate)
+            entry = next(row for row in receipt['cells'] if row['id'] == second['id'])
+            require(entry.get('evaluation') == second['id'] and entry.get('first_evaluation') == first['id']
+                    and entry.get('first_record_sha256') == artifacts.digest(first)
+                    and entry.get('first_binary_sha256') == entry.get('second_binary_sha256') == first['build']['binary_sha256']
+                    and entry.get('first_verifier_module_sha256') == first['context'].get('verifier_sha256')
+                    and receipt.get('verifier_module_sha256') == second['context'].get('verifier_sha256')
+                    and re.fullmatch(r'[a-f0-9]{64}', entry.get('compiler_sha256', ''))
+                    and isinstance(receipt.get('inherited_runtime_settings'), dict)
+                    and set(receipt['inherited_runtime_settings']) == {
+                        'OMP_THREAD_LIMIT', 'OMP_WAIT_POLICY', 'GOMP_SPINCOUNT', 'GOMP_CPU_AFFINITY'}
+                    and all(value is None or isinstance(value, str)
+                            for value in receipt['inherited_runtime_settings'].values()),
+                    'repeatability driver cell differs from retained evaluation identities')
+            outputs = [row for row in receipt.get('stages', [])
+                       if Path(row.get('output', '')).name == second['id'] + '.result.json']
+            require(len(outputs) == 1 and outputs[0].get('state') == 'complete'
+                    and type(outputs[0].get('returncode')) is int and outputs[0]['returncode'] == 0,
+                    'second-block public evaluation result is missing or unsuccessful')
+            returned, returned_sha = json_observation(Path(outputs[0]['output']), 32 * 1024**2,
+                                                      'second-block public evaluation result')
+            require(returned_sha == outputs[0].get('stdout_sha256')
+                    and artifacts.digest(returned) == artifacts.digest(second),
+                    'second-block record differs from the retained public evaluation result')
+            availability = repeat.verify_available([first, second, candidate, source, implementation,
+                {'path': ref['path'], 'sha256': ref['sha256']},
+                {'path': outputs[0]['output'], 'sha256': returned_sha}])
+            first_samples = sample_grid(first, SOURCES, 5)
+            a, b = ({position: row['samples_seconds'] for position, row in enumerate(samples)}
+                    for samples in (first_samples, second_samples))
+            directions = []
+            for label, left, right in (('first_over_second', a, b), ('second_over_first', b, a)):
+                measured = bfs_protocol._statistics(left, right, policy)
+                exceeds = measured['confidence_interval']['lower'] > policy['minimum_speedup']
+                directions.append({'direction': label, 'statistics': measured, 'numerical_gain_leg': exceeds})
+                if exceeds:
+                    gates.append(first['id'] + ': unchanged-code A/A ' + label
+                        + ' lower confidence bound exceeds 1.05; native profitability is uncalibrated regardless of spread ceiling')
+            if any(row['relative_spread'] > spec['maximum_relative_spread'] for row in second_samples):
+                gates.append(second['id'] + ': second-block spread exceeds the fixed supplied ceiling')
+            pair = {'first_evaluation': first['id'], 'second_evaluation': second['id'], 'directions': directions,
+                'blocks': [{'evaluation': row['id'], 'sha256': artifacts.digest(row),
+                    'samples': samples, 'timing': copy.deepcopy(row['timing']),
+                    'correctness': copy.deepcopy(row['correctness']), 'stages': copy.deepcopy(row.get('stages', [])),
+                    'context': copy.deepcopy(row['context']), 'build': copy.deepcopy(row['build'])}
+                    for row, samples in ((first, first_samples), (second, second_samples))],
+                'diagnostics': {'first_profile_package': item['package']['id'],
+                    'first_region_profile': item['diagnostic']['id'], 'second': None,
+                    'scope': 'first-block diagnostics retain their original evaluation; second block collected no new profile'},
+                'condition_limits': {'first_compiler_executable_sha256': None, 'first_inherited_runtime_settings': None,
+                    'second_compiler_executable_sha256': entry.get('compiler_sha256'),
+                    'second_inherited_runtime_settings': receipt.get('inherited_runtime_settings'),
+                    'verifier_module_equal': first['context'].get('verifier_sha256') == second['context'].get('verifier_sha256'),
+                    'interpretation': 'missing historical settings remain unknown; evaluator code may differ despite identical timed bytes'},
+                'raw_verification': availability}
+            result['pairs'].append(pair)
+            identities.update({row['id']: artifacts.digest(row) for row in (second, candidate, source, implementation)})
+        result['state'] = 'numerical_gain_detected' if any(direction['numerical_gain_leg']
+            for pair in result['pairs'] for direction in pair['directions']) else 'no_numerical_gain_detected'
+        result['limitation'] = 'A control without a numerical gain does not establish nominal interval coverage or statistical power.'
+    except (Failure, StageFailure, ValueError, KeyError, TypeError, OSError) as exc:
+        result['reason'] = str(exc)
+        gates.append('native repeatability evidence is not qualified (missing, unavailable, or incompatible): ' + str(exc))
+    return result
+
+
 def prepare(spec, store):
     require(spec.get('mode') == 'native', 'this narrow driver prepares native protocols only')
     request = freeze_header(spec, store)
@@ -225,6 +347,7 @@ def prepare(spec, store):
     gates = []
     if any(row['relative_spread'] > ceiling for item in observations for row in item['samples']):
         gates.append('observed native baseline spread exceeds the fixed supplied ceiling; no automatic relaxation')
+    control = repeatability_control(spec, packets, store, identities, gates)
     rejected = []
     for rid in selection.get('rejected_evaluations', []):
         row = store.get(rid, 'evaluation')
@@ -246,7 +369,8 @@ def prepare(spec, store):
     accelerated = accelerator_gate(store, selection.get('accelerator_packages', []), packets, identities, gates, ceiling)
     policy = {'minimum_speedup': 1.05, 'maximum_relative_spread': ceiling, 'confidence': 0.95,
               'bootstrap_resamples': 2000, 'bootstrap_seed': 20260925}
-    calibration = {'native_pilots': observations, 'record_identities': identities, 'shared_size_selection': selection,
+    calibration = {'native_pilots': observations, 'repeatability_control': control,
+        'record_identities': identities, 'shared_size_selection': selection,
         'accelerator_size_evidence': accelerated, 'rejected_pilots': rejected, 'spread_justification': spec['spread_justification'],
         'plans': [{'path': str(path), 'sha256': artifacts.file_hash(path)} for path in PLANS],
         'scope': 'native protocol only; no candidate acceptance, artifact reproduction, or Ticket15 completion',
@@ -269,6 +393,114 @@ def prepare(spec, store):
     return result
 
 
+def supporting_case_evidence(store, item):
+    """Keep independently checked diagnostic cases separate from primary evidence.
+
+    Only the unchanged author reference's calibration may use this receipt.
+    Candidate qualification and primary timing/coverage are never modified.
+    """
+    primary, profile = item['evaluation'], item['diagnostic']
+    require(item['implementation']['id'] == 'dx100-bfs-maa-reference'
+            and primary['context']['roi'] == 'bfs.dx100.traversal.v1',
+            'separate case support is only for the unchanged author traversal calibration')
+    runs = [run for run in profile.get('executions', []) if run.get('kind') == 'regions']
+    require(len(runs) == 1, 'calibration requires one identified region diagnostic execution')
+    run = runs[0]
+    diagnostic = store.get(run.get('evaluation'), 'evaluation')
+    require(diagnostic and diagnostic['id'] != primary['id'] and bfs_coverage._real(diagnostic)
+            and diagnostic.get('outcome', {}).get('state') == 'complete'
+            and diagnostic.get('context', {}).get('verifier') == 'dx100.bfs.verifier.v2'
+            and not bfs_coverage._correctness(diagnostic, store),
+            'supporting diagnostic requires its own complete real passed v2 correctness')
+    context = diagnostic['context']
+    require(all(diagnostic.get(key) == primary.get(key) for key in
+                ('candidate', 'source_snapshot', 'implementation', 'machine'))
+            and profile_package._same(profile_package._context(diagnostic), profile_package._context(primary))
+            and context['workload']['id'] == primary['context']['workload']['id']
+            and all(profile_package._same(context.get(key), primary['context'].get(key))
+                    for key in ('model', 'interface', 'basis', 'verifier'))
+            and all(profile_package._same(diagnostic['build'].get(key), primary['build'].get(key))
+                    for key in ('model_build', 'simulator', 'simulator_sha256'))
+            and all(profile_package._same(context.get('instrumentation', {}).get(key),
+                                          primary['context'].get('instrumentation', {}).get(key))
+                    for key in ('verifier_runtime', 'post_roi_trace')),
+            'supporting diagnostic source/workload/ROI/target/model differs from primary')
+    require(len(diagnostic.get('timing', [])) == len(primary.get('timing', [])) == 1,
+            'supporting diagnostic must identify one actual replay')
+    cell = {key: primary['timing'][0][key] for key in ('source', 'source_position', 'repetition')}
+    require(all(type(value) is int and type(run.get(key)) is int
+                and type(diagnostic['timing'][0].get(key)) is int
+                and run.get(key) == value == diagnostic['timing'][0].get(key) for key, value in cell.items())
+            and profile_package._same(run.get('correctness'), diagnostic['correctness'])
+            and profile_package._same(run.get('execution_outcome'), diagnostic['outcome'])
+            and run.get('evidence_kind') == 'execution', 'supporting diagnostic replay or retained verdict differs')
+    build = store.get(context.get('candidate_build'), 'evaluation')
+    model_ref = primary['build'].get('model_build', {})
+    model = store.get(model_ref.get('evaluation'), 'evaluation')
+    require(build and bfs_coverage._real(build) and build.get('outcome', {}).get('state') == 'complete'
+            and build['outcome'].get('stage') == 'candidate_build'
+            and build.get('candidate') == primary.get('candidate')
+            and build.get('request', {}).get('diagnostic_regions') is True
+            and build.get('context', {}).get('function') == 'DOBFSMAA'
+            and build['context'].get('roi') == primary['context']['roi']
+            and build['context'].get('accelerated_requested') is True
+            and build['context'].get('candidate_sha256') == primary['context']['candidate_sha256']
+            and build['context'].get('model_build') == model_ref.get('evaluation')
+            and model and bfs_coverage._real(model) and model.get('outcome', {}).get('state') == 'complete'
+            and model['outcome'].get('stage') == 'build' and artifacts.digest(model) == model_ref.get('sha256'),
+            'supporting diagnostic lacks an exact real source/model compilation receipt')
+    binary = {'path': diagnostic['build']['binary'], 'sha256': diagnostic['build']['binary_sha256']}
+    region_binary = profile.get('artifacts', {}).get('region_binary', {})
+    definition = build['context']['diagnostic']
+    stages = [stage for stage in diagnostic.get('stages', []) if stage.get('stage') == 'simulation']
+    require(build['build']['binary'] == binary['path'] and build['build']['binary_sha256'] == binary['sha256']
+            and all(region_binary.get(key) == value for key, value in binary.items())
+            and run.get('binary_sha256') == binary['sha256'] and len(stages) == 1
+            and run.get('output') == run.get('region_output') == stages[0].get('log')
+            and run.get('output_sha256') == run.get('region_output_sha256') == stages[0].get('log_sha256')
+            and profile_package._same(item['package']['evidence']['diagnostic_executions'], profile['executions'])
+            and profile_package._same(definition['discovery'], profile['discovery'])
+            and profile['discovery'].get('backend') == 'libclang-cindex'
+            and isinstance(definition.get('difference'), str) and definition['difference']
+            and run.get('differences_from_primary') == [definition['difference']]
+            and region_binary.get('difference') == definition['difference'],
+            'supporting diagnostic differs from the packaged collector/binary/log')
+    records = [diagnostic, build, model]
+    availability = bfs_coverage._availability(records, context.get('host'))
+    require(availability and all(row['state'] == 'verified' for row in availability),
+            'supporting diagnostic raw/build/model artifacts are unavailable or changed')
+    from swdb.dx100_profile import statistics
+    from swdb.dx100_coverage import observe
+    seal = context['sealed_roi']
+    require(profile_package._same(seal['statistics'], context['statistics']), 'supporting diagnostic statistics differ from seal')
+    intervals = statistics(Path(context['statistics']['path']), time.monotonic() + 30)
+    require(len(intervals) == 1, 'supporting diagnostic needs one sealed statistics interval')
+    values = intervals[0]['values']
+    counters = {name: int(value) for name, value in values.items()
+                if re.fullmatch(r'\S*maa\S*\.numInst(?:_[A-Z]+)?', name) and re.fullmatch(r'\d+', value)}
+    log = Path(stages[0]['log'])
+    actual = observe(log, values, context['configuration']['tile_elements'])
+    actual.update(instruction_counters=counters,
+        accelerator_executed=(context['configuration'].get('mode') == 'MAA'
+            and any(value > 0 for name, value in counters.items() if name.endswith('.numInst'))
+            and all(actual['completed_trace_units'].get(unit, 0) > 0 for unit in ('S', 'I', 'R', 'A'))))
+    require(artifacts.file_hash(log) == stages[0]['log_sha256']
+            and artifacts.file_hash(Path(context['statistics']['path'])) == context['statistics']['sha256']
+            and len(diagnostic['correctness']['checks']) == 1
+            and profile_package._same(actual, diagnostic['correctness']['checks'][0].get('coverage')),
+            'supporting diagnostic case observations differ from retained raw statistics/trace')
+    coverage = bfs_coverage._acceleration(diagnostic, store)
+    require(coverage['executed'], 'supporting diagnostic lacks positive executed accelerator evidence')
+    return {'evaluation': diagnostic['id'], 'evaluation_sha256': artifacts.digest(diagnostic),
+        'primary_evaluation': primary['id'], 'profile_package': item['package']['id'], 'region_profile': profile['id'],
+        'build_evaluation': build['id'], 'build_sha256': artifacts.digest(build), 'model_build': model_ref,
+        'binary': binary, 'cell': cell, 'coverage': coverage, 'checks': copy.deepcopy(diagnostic['correctness']['checks']),
+        'instrumentation': copy.deepcopy(context['instrumentation']),
+        'differences_from_primary': copy.deepcopy(run['differences_from_primary']),
+        'raw_verification': availability,
+        'scope': 'separate independently checked author diagnostic cases for calibration only; not primary coverage or timing'}
+
+
 def accelerator_gate(store, ids, native, identities, gates, ceiling):
     require(isinstance(ids, list) and len(ids) == len(set(ids)), 'accelerator packages must be distinct record IDs')
     if not ids:
@@ -285,6 +517,11 @@ def accelerator_gate(store, ids, native, identities, gates, ceiling):
         require(context['roi'] in ('bfs.complete_call.v1', 'bfs.dx100.traversal.v1')
                 and context['backend_configuration'].get('mode') == 'MAA', 'reference ROI/configuration differs from calibration')
         observation = evaluation['timing'][0]
+        position, repetition = observation.get('source_position'), observation.get('repetition')
+        require(type(position) is int and 0 <= position < len(SOURCES)
+                and type(repetition) is int and 0 <= repetition < 2
+                and type(observation.get('source')) is int and observation['source'] == SOURCES[position],
+                'reference pilot source/replay cell differs from the planned grid')
         require(observation.get('quantity') == 'simulated_roi_seconds' and observation.get('basis') == 'simulated'
                 and observation.get('verified') is True and observation.get('source') in SOURCES
                 and type(observation.get('duration_s')) in (int, float)
@@ -296,20 +533,30 @@ def accelerator_gate(store, ids, native, identities, gates, ceiling):
             ('candidate_sha256', 'target', 'backend_configuration', 'instrumentation', 'adapter', 'roi')},
             'build': {key: evaluation['build'].get(key) for key in
                       (*BUILD_FIELDS, 'adapter', 'binary_sha256', 'simulator_sha256')}})
-        grouped.setdefault(item['workload']['id'], []).append((evaluation, coverage, signature))
+        support = None
+        if context['roi'] == 'bfs.dx100.traversal.v1' and not all(coverage['cases'].get(case)
+                for case in ('full_tiles', 'tail_tiles', 'competing_parent_updates')):
+            support = supporting_case_evidence(store, item)
+            identities[support['evaluation']] = support['evaluation_sha256']
+            identities[support['build_evaluation']] = support['build_sha256']
+            identities[support['model_build']['evaluation']] = support['model_build']['sha256']
+        grouped.setdefault(item['workload']['id'], []).append((evaluation, coverage, signature, support))
         evaluated.add(evaluation['id']); identities.update(item['record_identities'])
         evidence.append({'evaluation': evaluation['id'], 'profile_package': rid, 'workload': item['workload']['id'],
             'timing': evaluation['timing'], 'coverage': coverage, 'build': evaluation['build'],
             'configuration': context['backend_configuration'], 'instrumentation': context['instrumentation'],
-            'raw_verification': item['availability'], 'stages': evaluation['stages']})
+            'raw_verification': item['availability'], 'stages': evaluation['stages'],
+            'supporting_case_evidence': [support] if support else []})
     for wid in allowed:
         rows = grouped.get(wid, [])
-        if len(rows) != 6 or len({signature for _, _, signature in rows}) != 1:
+        if len(rows) != 6 or len({signature for _, _, signature, _ in rows}) != 1:
             gates.append(wid + ': requires two identical configured replays per each of three sources')
             continue
         for source in SOURCES:
-            runs = [e for e, _, _ in rows if e['timing'][0]['source'] == source]
-            if len(runs) != 2 or len({e['timing'][0]['output'] for e in runs}) != 2 or len({e['build']['binary_sha256'] for e in runs}) != 1:
+            runs = [e for e, _, _, _ in rows if e['timing'][0]['source'] == source]
+            if (len(runs) != 2 or {e['timing'][0]['repetition'] for e in runs} != {0, 1}
+                    or len({e['timing'][0]['output'] for e in runs}) != 2
+                    or len({e['build']['binary_sha256'] for e in runs}) != 1):
                 gates.append(wid + ': repeated simulator runs are missing, duplicated, or use different binaries')
             else:
                 measured = summary(source, [e['timing'][0]['duration_s'] for e in runs])
@@ -318,7 +565,8 @@ def accelerator_gate(store, ids, native, identities, gates, ceiling):
                 if measured['relative_spread'] > ceiling:
                     gates.append(wid + ': observed simulator repeatability exceeds the supplied fixed spread ceiling')
         for case in ('full_tiles', 'tail_tiles', 'competing_parent_updates'):
-            if not any(coverage['cases'].get(case) for _, coverage, _ in rows):
+            if not any(coverage['cases'].get(case) or (support and support['coverage']['cases'].get(case))
+                       for _, coverage, _, support in rows):
                 gates.append(wid + ': missing observed accelerator ' + case)
     return {'executions': evidence, 'repeatability': repeatability}
 
