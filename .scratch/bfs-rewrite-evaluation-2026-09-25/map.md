@@ -127,6 +127,33 @@ before the final exception-note delta; all six affected final-delta cases pass.
 Actual Linux admission and final acceptance remain outstanding. The separate
 A2 fixture route must bind its old tested runtime and new supervisor explicitly.
 
+## Prospective supervision code synchronized — 2026-09-26
+
+The [verified private code sync](observations/supervision-export-sync-20260926.json)
+published `3f38a2b` on `codex/bfs-supervision-20260926-a1`: 56 explicit files,
+857,716 bytes, with parent `67313d9`. The updated export changes only two
+reviewed test fixtures and their receipt relative to the retained first export;
+all production bytes are unchanged. The exact follow-up passes 61 tests and
+validates 206 records. The initial 558-pass/nine-skip/two-failure result remains
+retained, along with its local Git checkpoint. Independent inventory review
+confirms required T15/T16 bindings and provider/raw-artifact exclusions.
+A2 tests remain pinned to old `67313d9`; their supervisor and auditor use the
+new separate checkout. Actual Linux fixtures and independent host closure
+remain pending until whole native completion. This sync establishes no final
+acceptance cell, empirical freeze or gain.
+
+## All one-thread primary controls passed — 2026-09-26 17:38 ET
+
+The [fourth retained control](observations/native-one-thread-fourth-cell-20260926.json)
+passes. All 240/240 structural checks and 24/24 spread groups meet the fixed
+policy; neither direction of any unchanged-code comparison triggers the gain
+threshold. Upstream Kronecker's maximum spread is 3.25%; forward/reverse ratios
+are 0.99854/1.00146 under the unchanged 1.05 numerical floor. The same driver
+started DX100 uniform profiling at 17:36:22 ET. All four fresh diagnostic
+packages and independent whole-client cleanup remain required; the original
+20:11:35 ET hard stop and code pin remain unchanged. No empirical freeze or
+candidate gain is claimed.
+
 ## Current package seals in contract fixtures — 2026-09-26
 
 The [campaign and reassessment fixture correction](observations/profile-seal-fixture-repair-20260926.json)

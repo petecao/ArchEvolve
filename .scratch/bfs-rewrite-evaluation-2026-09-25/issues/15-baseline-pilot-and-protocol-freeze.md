@@ -364,3 +364,12 @@ The [full health audit](../observations/health-20260926-1733.json) has 237/240
 checked trials and three passed controls. The fourth control and all fresh
 diagnostics remain outstanding. The original hard stop and single occupied
 socket are unchanged. No empirical freeze or candidate gain is established.
+
+## Primary controls complete — 2026-09-26 17:38 ET
+
+All four controls pass: 240 structural checks, 24 spread groups, and both-label
+gain vetoes under the unchanged fixed policy. See the
+[fourth retained result](../observations/native-one-thread-fourth-cell-20260926.json).
+The driver began its declared fresh diagnostics at 17:36:22 ET. All four
+packages, terminal cleanup and shared simulator gates still remain; this
+ticket remains claimed and no empirical protocol is published.
