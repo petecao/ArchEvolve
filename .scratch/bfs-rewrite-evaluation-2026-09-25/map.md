@@ -113,6 +113,34 @@ no new host fixture or candidate assessment has run. Broader isolated regression
 and independent Standards/Spec readiness audits follow; final all-ticket review
 still follows empirical acceptance.
 
+## Progress check — 2026-09-26 16:33 ET
+
+The [full health audit](observations/health-20260926-1633.json) confirms the sole
+native pilot is healthy at `319645e` on socket 1 generation 402. Both uniform
+cells have 60/60 checked trials and passed fixed controls. The
+[upstream cell](observations/native-one-thread-second-cell-20260926.json) has
+maximum spread 2.44% and neither direction shows a numerical gain leg. DX100
+Kronecker has 16/60 checked; upstream Kronecker has not started. Total progress
+is 136/240, with empty stderr and recent tree RSS below 1.05 GiB. The hard stop
+remains 20:11:35 ET. Socket 0 generation 325 and legacy generation 77 are
+released with empty kernel locks and absent owners. All historical PID/start
+unions, retained receipt hashes and runtime/helper pins pass their checks.
+Free `/data1` and `/data` space is 16.38/181.48 GiB. All three workers are
+active; next full audit is 17:03 ET.
+
+The [Linux fixture runner](observations/linux-fixture-preparation-20260926.json)
+is committed after independent Standards and Spec reviews: 20 focused cases
+and two independent probes per axis pass. It emits only an unaccepted pending
+proof; actual Linux execution and independent terminal closure remain required.
+The prospective simulator finalizer is receiving a narrow cleanup-budget and
+monitor-order correction before export. The isolated full suite at `c2f987b`
+is still running; it predates the two evidence-integrity fixes and fixture runner.
+A [fresh public coverage query](observations/acceptance-post-review-20260926.json)
+after both evidence-integrity repairs retains the same incomplete report.
+Counts remain **13/21 resolved and 0/8 final cells**, with no empirical freeze
+or qualified candidate gain. Coverage A2 remains pinned separately to `67313d9`
+and waits for whole-pilot terminal cleanup.
+
 ## Progress check — 2026-09-26 16:03 ET
 
 The [full health audit](observations/health-20260926-1603.json) confirms the sole

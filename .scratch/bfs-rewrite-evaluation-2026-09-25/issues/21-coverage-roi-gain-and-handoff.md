@@ -193,3 +193,14 @@ cases and three independent edge checks pass. See the
 [repair receipt](../observations/paired-coverage-repair-20260926.json).
 All probes are contract fixtures; no final cell or gain is established. The
 original failed probes remain retained and this ticket stays claimed.
+
+
+## Post-repair checkpoint — 2026-09-26 16:33 ET
+
+The [fresh public query after both evidence-integrity repairs](../observations/acceptance-post-review-20260926.json)
+returns the same report identity and bytes as the prior checkpoint: 0/8 final
+cells, incomplete acceptance and no qualified gain. This local query does not
+import the running native study or held provider results and does not verify
+remote artifacts. The tracker remains 13 resolved / 8 claimed. The isolated
+full suite is still running at `c2f987b`; later fixes have focused independent
+checks, not a claimed full-suite pass. Final all-ticket review remains pending.

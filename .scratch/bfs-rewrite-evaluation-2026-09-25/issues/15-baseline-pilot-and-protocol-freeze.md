@@ -7,25 +7,24 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 15:46 ET
+## Current checkpoint — 2026-09-26 16:33 ET
 
-The distinct one-thread pilot started at 15:07:35 ET on mbit10 socket 1,
-generation 402, at exact code `319645e`; its unchanged shared hard stop is
-20:11:35 ET. The [first completed pair](../observations/native-one-thread-first-cell-20260926.json)
-passed 60/60 structural checks and all six fixed role/source spread gates.
-Maximum relative spread is 0.05084535 under the 0.10 ceiling. The unchanged-code
-baseline/candidate ratio is 1.0014557894 with paired 95% interval
-[0.9973626956, 1.0051191835]; neither direction has a numerical gain leg.
-Upstream uniform-random started at 15:44:03 ET. No partial result is a candidate
-gain, whole-pilot qualification or protocol freeze.
+The distinct one-thread pilot remains on mbit10 socket 1 generation 402 at
+exact code `319645e`, with unchanged hard stop 20:11:35 ET. Both uniform cells
+have 60/60 structurally checked trials and passed all six fixed spread groups:
+[DX100](../observations/native-one-thread-first-cell-20260926.json) max 5.08%,
+[upstream](../observations/native-one-thread-second-cell-20260926.json) max 2.44%.
+Neither unchanged-code comparison has a numerical gain in either direction.
+DX100 Kronecker is running at 16/60; upstream Kronecker remains unstarted.
+Total progress is 136/240. No partial result is a candidate gain, whole-pilot
+qualification or protocol freeze.
 
-The explicit one-thread publisher in `ea0c1f4` has passed independent scoped
-review and a reproduced cleanup correction. Its
-[verification receipt](../observations/one-thread-publisher-verification-20260926.json)
-keeps all original serial/four-thread failures, requires all four fresh primary
-controls and diagnostic packages, and retains the shared simulator gates. It
-has not been run against a final actual study. Prospective T15/T16 supervision
-and native candidate execution remain under review. This ticket stays claimed.
+The explicit one-thread publisher remains independently reviewed but unrun on
+a final actual study. The [prospective Linux fixture runner](../observations/linux-fixture-preparation-20260926.json)
+has passed independent Standards and Spec checks. Actual Linux admission and
+whole-pilot terminal audit remain required. Simulator supervision is receiving
+a narrow finalization correction before its separate code export; the active
+pilot and historical executions are unchanged. This ticket stays claimed.
 
 ## Historical outcome — 2026-09-26 13:23 ET
 
