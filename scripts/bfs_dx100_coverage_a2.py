@@ -36,7 +36,7 @@ from swdb.store import Store
 
 RUN_ID = 'bfs-dx100-coverage-20260926-a2'
 PLAN = ROOT / '.scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-coverage-a2-20260926.json'
-PLAN_SHA = 'f24375eca2fcfb304c92bd752c718f71f14e111ed40a2f1211c12172d3c558e7'
+PLAN_SHA = 'd78c09751d9b56abddcce0a7217983fc1652ef6dc83c09fc55ecf8a9a4d4be5a'
 LANE = 'mbit10-evaluation-node0'
 require, stamp, now, ref, exact = native.require, native.witness.stamp, native.now, native.ref, native.exact
 read = native.read
