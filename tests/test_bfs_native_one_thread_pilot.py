@@ -83,6 +83,47 @@ def test_runtime_environment_removes_observed_unsets_and_preserves_parent():
     assert original == before
 
 
+def test_phase_switch_cannot_mix_a_sample_with_a_new_storage_baseline(tmp_path, monkeypatch, clock):
+    driver = client.Driver.__new__(client.Driver)
+    driver.clock = timer(clock); driver.plan = plan(); driver.runs = tmp_path
+    driver.phase_start_bytes = 0; driver.receipt = {'phases': []}
+    driver.accounting_lock = threading.RLock()
+    monkeypatch.setattr(client, 'BUILDS', tmp_path/'absent-builds')
+    monkeypatch.setattr(client.os, 'statvfs', lambda _: SimpleNamespace(f_bavail=100*1024**3, f_frsize=1))
+    reading, release, transitioning = threading.Event(), threading.Event(), threading.Event()
+    samples, errors = [], []
+
+    def storage():
+        if threading.current_thread() is reader:
+            reading.set()
+            assert release.wait(2), 'test must release the in-flight observation'
+            return 100  # Captured before the main thread observes 150 bytes.
+        return 150
+
+    driver.storage = storage
+    def sample():
+        try: samples.append(driver.accounting(cleanup=True))
+        except BaseException as exc: errors.append(str(exc))
+    def transition():
+        transitioning.set()
+        try: driver.start_diagnostics()
+        except BaseException as exc: errors.append(str(exc))
+    reader = threading.Thread(target=sample)
+    switch = threading.Thread(target=transition)
+    reader.start()
+    try:
+        assert reading.wait(1)
+        switch.start(); assert transitioning.wait(1)
+        switch.join(.1)
+    finally:
+        release.set(); reader.join(2)
+        if switch.ident is not None: switch.join(2)
+    assert not reader.is_alive() and not switch.is_alive()
+    assert errors == []
+    assert samples[0]['phase'] == 'primary' and samples[0]['phase_raw_bytes'] == 100
+    assert driver.phase_start_bytes == 150 and driver.clock.phase == 'diagnostic'
+
+
 def test_shared_window_and_phase_caps_do_not_reset_or_borrow(clock):
     ledger = timer(clock)
     assert ledger.remaining() == 10800

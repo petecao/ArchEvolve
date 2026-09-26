@@ -5,6 +5,7 @@ Public collectors only; no retry, rewrite, protocol publication, or gain claim.
 Run inside the verified node1 helper with TERM18120s/KILL120s outer containment.
 """
 import argparse
+from contextlib import contextmanager
 import copy
 from datetime import datetime, timedelta
 import hashlib
@@ -613,6 +614,7 @@ class Driver:
         self.owned, self.monitor = None, None
         self.last_sample = started_at
         self.phase_start_bytes = 0
+        self.accounting_lock = threading.RLock()
         self.env, policy = bfs_native.runtime_environment(1, plan['native_runtime'])
         for name, value in PYTHON_INPUTS.items():
             if value is None: self.env.pop(name, None)
@@ -622,7 +624,24 @@ class Driver:
         self.receipt['python_environment'] = copy.deepcopy(PYTHON_INPUTS)
         save_receipt(self.folder, self.receipt)
 
+    @contextmanager
+    def accounting_guard(self, *, cleanup=False):
+        started = time.monotonic()
+        allowance = max(0, min(30, self.clock.remaining(cleanup=cleanup)))
+        require(allowance > 0 and self.accounting_lock.acquire(timeout=allowance),
+                'phase accounting lock exhausted its guard allowance')
+        try:
+            yield
+        finally:
+            self.accounting_lock.release()
+        require(time.monotonic()-started <= 30, 'phase accounting exceeded its guard allowance')
+        self.clock.check(cleanup=cleanup)
+
     def accounting(self, *, cleanup=False):
+        with self.accounting_guard(cleanup=cleanup):
+            return self.accounting_snapshot(cleanup=cleanup)
+
+    def accounting_snapshot(self, *, cleanup=False):
         self.clock.check(cleanup=cleanup)
         b = self.plan['bounds']; size = self.storage()
         require(size <= b['total_raw_bytes'], 'shared storage allowance exhausted')
@@ -735,11 +754,7 @@ class Driver:
             self.receipt['diagnostics'] = [{'id': c['profile'], 'state': 'not_dispatched_primary_unqualified'} for c in self.plan['cells']]
             self.receipt['state'] = 'primary_unqualified'
             return
-        self.receipt['phases'].append({'phase': 'primary', 'finished': now().isoformat(), 'accounting': self.accounting()})
-        self.clock.diagnostics(); self.phase_start_bytes = self.storage()
-        self.receipt['phase'] = 'diagnostic'
-        self.receipt['diagnostic_started'] = self.clock.phase_start.isoformat()
-        self.receipt['diagnostic_start_bytes'] = self.phase_start_bytes
+        self.start_diagnostics()
         for cell in self.plan['cells']:
             self.clock.reserve(1620)
             diagnostic = self.public('bfs-profile', profile_request(cell), 1260, expensive=True)
@@ -753,6 +768,19 @@ class Driver:
             self.receipt['diagnostics'].append({**checked, 'profile': cell['profile'], 'state': 'complete', 'public_get': ref(output)})
             save_receipt(self.folder, self.receipt); self.check()
         self.receipt['state'] = 'complete'
+
+    def start_diagnostics(self):
+        # A monitor sample must pair its storage count with the same phase's
+        # baseline. Charge the final primary reads before switching clocks.
+        with self.accounting_guard():
+            primary = self.accounting()
+            next_baseline = self.storage()
+            self.clock.check()
+            self.receipt['phases'].append({'phase': 'primary', 'finished': now().isoformat(), 'accounting': primary})
+            self.clock.diagnostics(); self.phase_start_bytes = next_baseline
+            self.receipt['phase'] = 'diagnostic'
+            self.receipt['diagnostic_started'] = self.clock.phase_start.isoformat()
+            self.receipt['diagnostic_start_bytes'] = self.phase_start_bytes
 
     def finalize(self):
         """Every final hash/write is charged; overruns retain a failed receipt."""
