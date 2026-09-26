@@ -50,6 +50,15 @@ the earlier outcomes. No source-dependent graph substitution is allowed.
   changed bindings, or missing original interpreted-provider budget metadata.
   Optional `--repair-config` permits the existing single build/correctness repair
   only within the retained allowance; reuse never resets consumed provider time.
+- When the explicitly new one-thread calibration qualifies, the optional
+  `--reassessment` manifest binds each retained original native candidate to the
+  two fresh packages and separately frozen new protocol. Both original package
+  identities, the unchanged proposal/payload, source/region protections, exact
+  patch replay, and original consumed provider budget remain retained. Unknown
+  historical runtime inputs are not inferred. This mode forbids provider and
+  repair configurations and performs no submission or repair, even after a build
+  failure. [Contract and evidence](../../docs/bfs-native-reassessment-20260926.md).
+  Its implementation does not qualify calibration or publish a protocol.
 - Native interpretation uses at most 300 seconds per call, one repair, a 600-second
   provider total, and a USD 5 provider-call cap. Each evaluation permits 180 seconds
   to build and 60 seconds per trial. Serial evaluations permit 1,200 seconds total;
