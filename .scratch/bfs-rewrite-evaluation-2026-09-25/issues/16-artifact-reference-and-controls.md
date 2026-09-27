@@ -9,6 +9,15 @@ Updated: 2026-09-26 (Eastern Time)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
+## Failed execution — 2026-09-26 23:27 ET
+
+The batch failed on a `/proc` ESRCH process-exit race, with zero completed samples.
+The independent process closure found no live owned work; cleanup budget readback
+failed because one five-second reservation remained. Both failures are preserved
+in [terminal evidence](../observations/t16-failed-terminal-20260926.json).
+The public evaluation's remaining running state is stale interrupted metadata.
+No comparison or acceptance is claimed, and the original absolute budget is not reset.
+
 ## Current checkpoint — 2026-09-26 20:23 ET
 
 The fixed T16 simulator batch actually started on mbit10 node 0 at

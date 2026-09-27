@@ -83,6 +83,33 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Execution failure and transfer checkpoint — 2026-09-26 23:27 ET
+
+T16 stopped with `ProcessLookupError: [Errno 3] No such process` in the owned
+RSS sampler at 23:20:51 ET. It completed zero samples and has no sealed ROI or
+verified result. The independent retained union contains 944 PID/start identities:
+943 absent and the exact zero-RSS tmux launcher zombie. Its cleanup ledger retains
+20.94487111307685 settled seconds plus one unreturned five-second reservation;
+that budget audit failed and remains failed. Final raw allocation is 658,644,992
+bytes (1,789,632,512 including prior preparation), with 11,120.079151 seconds
+from original outer start through final read-only recount. The public evaluation
+still says running because its process was killed; this is stale interrupted
+state, not live execution. See [failed terminal evidence](observations/t16-failed-terminal-20260926.json).
+
+The T15 setup proof group failed its interruption audit when another user acquired
+a successor socket lease. Five owned-cleanup and two interruption fixture tests
+executed successfully, but only the owned proof sealed. The group remains failed,
+with the entire 600-second/2-GiB reservation retained despite actual elapsed
+297.915705 seconds and 1,548,288 allocated bytes. No rerun or retrospective proof
+promotion is authorized by this checkpoint. See [failed group](observations/setup-recovery-proofgroup-failed-20260926.json).
+
+Both prepared provider/native evidence packets were pushed and imported as exact
+Git blobs in `c2c2dc6d87e73fdfd9db8e3b9eb1c2f856e0e5c9`. Fresh validation finds
+247 valid records; representative public get/chain queries pass. Native
+qualification remains pending. See [durability verification](observations/approved-evidence-durability-20260926.json).
+Tickets remain 14 resolved / 7 claimed, final coverage 0/8, qualified gain false.
+RSS and historical lease-closure repairs are under review; T20 has not started.
+
 ## Standing transfer authorization and resumed work — 2026-09-26 23:09 ET
 
 The user's [standing authorization](observations/standing-transfer-authorization-20260926.json)
