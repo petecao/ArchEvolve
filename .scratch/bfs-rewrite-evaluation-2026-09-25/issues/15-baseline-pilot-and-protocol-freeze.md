@@ -528,3 +528,18 @@ prepare/publish operations after actual simulator packages exist. These steps
 must run from a pristine future checkout; import guards and policy stay intact.
 A2 and T15/T16 collection do not depend on standalone qualification. Native
 qualification and the native/controlled-simulator freezes remain outstanding.
+
+
+## Setup recovery preparation — 2026-09-26
+
+The separately fixed [setup recovery](../../../docs/bfs-t15-setup-recovery-20260926.md)
+retains both failed attempts and the consumed Linux proof reservation. Its five
+flat charges total 2,997 seconds and 15,322,025,984 bytes; the new work remains
+inside the original aggregate and actual September 27 09:14:09.851819 ET hard end.
+No old ID resumes, and each series still requires its full allowance.
+[Preparation](../observations/t15-setup-recovery-preparation-20260926.json) passed
+266 affected checks with eight Linux-only skips. [Independent review](../observations/setup-recovery-standards-review-v2-20260926.json)
+passed 54 focused checks and verified the fifth Linux SQLite case is selected,
+runtime-pinned and required only by the new admission. Fresh actual a4 proofs,
+exact runtime transfer/admission and guest execution remain pending. These local
+checks do not qualify the pilot or resolve this ticket.

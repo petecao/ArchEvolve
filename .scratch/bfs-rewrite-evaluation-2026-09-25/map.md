@@ -83,6 +83,17 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Setup recovery reviewed — 2026-09-26
+
+The [new fixed recovery plan](../../docs/bfs-t15-setup-recovery-20260926.md) has
+266 passing affected tests, eight Linux-only skips, and 54 passing independent
+review checks. The prior failed attempts remain failed. Flat charges, the actual
+09:14:09.851819 ET hard end, and full-series admission remain enforced. A new
+five-case owned Linux proof plus the two interruption cases is mandatory before
+this attempt. Exact combined runtime preparation and transfer approval remain
+pending; no new host job has started. See [preparation](observations/t15-setup-recovery-preparation-20260926.json)
+and [independent review](observations/setup-recovery-standards-review-v2-20260926.json).
+
 ## Host and worker checkpoint — 2026-09-26 22:03 ET
 
 The [full host audit](observations/health-20260926-2203.json) confirms node 0

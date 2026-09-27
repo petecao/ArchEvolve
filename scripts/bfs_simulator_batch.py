@@ -33,7 +33,10 @@ from swdb.store import Store
 
 ET = ZoneInfo('America/New_York')
 GIB = 1024**3
-PLAN_HASHES = {'t15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
+PLAN_HASHES = {'t15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
+SETUP_RECOVERY_ID = 'bfs-t15-setup-recovery-simulator-batch-20260926-a1'
+SETUP_FAILURE_ID = 'bfs-t15-correction-simulator-batch-20260926-a1'
+SETUP_HARD_END = '2026-09-27T09:14:09.851819-04:00'
 PLAN_DIR = ROOT / '.scratch/bfs-rewrite-evaluation-2026-09-25/requests'
 RAW_ROOTS = (Path('/data/yanruj/EvolveSWDB_runs'), Path('/data1/yanruj/EvolveSWDB_runs'))
 BUILD_ROOT = Path('/data1/yanruj/EvolveSWDB_builds')
@@ -143,6 +146,115 @@ def failed_batch_charge(entry):
     return {'id': entry['id'], 'elapsed_seconds': seconds, 'raw_bytes': storage['raw_bytes']}
 
 
+def setup_failure_charges(plan):
+    """The one fixed pre-guest failure is a flat cost, never a retry tree."""
+    from scripts import bfs_simulator_batch_terminal as terminal
+    entry = plan['accounting']['retained_setup_failure']
+    require(plan['id'] == SETUP_RECOVERY_ID and entry['id'] == SETUP_FAILURE_ID,
+            'only the fixed setup recovery lineage is supported')
+    driver = read_reference(entry['driver'], maximum=16*1024**2)
+    old_plan = driver['plan']; validate_plan(old_plan, 't15-correction')
+    require(driver.get('id') == SETUP_FAILURE_ID and driver.get('state') == 'failed'
+            and driver.get('code_commit') == entry['code_commit']
+            and driver.get('outer_deadline') == entry['absolute_end'] == SETUP_HARD_END
+            and plan.get('clock_policy') == {'method':'original_absolute_end_clamp.v1',
+                                           'absolute_end':SETUP_HARD_END}
+            and 'retained_setup_failure' not in old_plan['accounting'],
+            'setup recovery differs from the exact consumed attempt and original end')
+    approval = read_reference(entry['admission'])
+    require(driver.get('admission') == entry['admission']
+            and approval.get('plan_sha256') == artifacts.digest(old_plan)
+            and approval.get('code_commit') == entry['code_commit'],
+            'setup recovery prior admission binding differs')
+    # Reopen every old proof and audit before retaining its full, nonrefundable
+    # reservation. The old plan has only the original failed batch, not this one.
+    validate_cleanup_tests(approval)
+    validate_preparation_reservation(old_plan, approval)
+    prior = preparation_charges(old_plan)
+    require(prior == entry['prior_charges']
+            and approval.get('preparation_charges') == prior
+            and driver.get('preparation_charges') == prior,
+            'setup recovery prior flat charges changed')
+    reserved = old_plan['accounting']['preparation_reservation']
+    old_proof = {key:reserved[key] for key in ('id','elapsed_seconds','raw_bytes')}
+    require(old_proof == entry['prior_proof_charge'] and old_proof in prior,
+            'setup recovery omits or refunds the consumed proof reservation')
+    observed = now().isoformat()
+    terminal.validate_cleanup_ledger(entry['driver'], entry['cleanup_ledger'],
+        expected_run_id=SETUP_FAILURE_ID, expected_outer_start=driver['outer_started'],
+        expected_deadline=SETUP_HARD_END, current=observed)
+    storage = terminal.validate_storage_accounting(entry['driver'],entry['terminal'],current=observed)
+    audit = read_reference(entry['terminal'], maximum=16*1024**2)
+    require(all(audit.get('driver',{}).get(k) == entry['driver'][k] for k in ('path','sha256'))
+            and audit.get('state') == 'failed' and audit.get('lease_released') is True,
+            'setup recovery lacks exact independent failed closure')
+    lane_ref = audit['lane']; lane = read_reference(lane_ref)['socket_lane']
+    dispatch = Path(storage['storage_paths'][1])
+    require(Path(lane_ref['path']) == dispatch/'lane.json'
+            and lane.get('job') == SETUP_FAILURE_ID and lane.get('host') == 'mbit10'
+            and lane.get('lease_generation') == audit.get('lease_generation')
+            and type(lane.get('exit_code')) is int and lane['exit_code'] != 0
+            and storage['storage_paths'] == entry['storage_paths']
+            and storage['raw_bytes'] == entry['retained_bytes'],
+            'setup failure lane or final retained bytes changed')
+    outer, finished, closed = map(stamp,(driver['outer_started'],driver['finished'],entry['closed_at']))
+    lane_start,lane_end = stamp(lane['started_utc']),stamp(lane['ended_utc'])
+    require(outer < lane_start+timedelta(seconds=1) and lane_start <= stamp(driver['started'])
+            and outer <= finished < lane_end+timedelta(seconds=1)
+            and lane_end <= closed <= stamp(observed)
+            and finished <= stamp(audit['observed_at']) <= closed,
+            'setup failure clock or final closure endpoint changed')
+    seconds = math.ceil(max((lane_end+timedelta(seconds=1)-outer).total_seconds(),
+                            (closed-outer).total_seconds()))
+    require(seconds == entry['elapsed_seconds'], 'setup failure whole-envelope charge changed')
+    # Exact public record, first grid position, and on-disk leaf establish a
+    # setup failure. A later failed checkpoint/simulation is not this exception.
+    record_path = Path(entry['evaluation']['path'])
+    require(record_path.is_absolute() and record_path == record_path.resolve()
+            and not record_path.is_symlink() and artifacts.file_hash(record_path) == entry['evaluation']['sha256'],
+            'setup failure public record changed')
+    value = yamlio.load(record_path)
+    row = old_plan['series'][0]; evaluation_id = row['id']+'.s0.r0.primary.evaluation'
+    request = value.get('request',{})
+    require(value.get('id') == evaluation_id and request.get('id') == evaluation_id
+            and value.get('evidence_kind') == 'execution' and request.get('fixture') is not True
+            and value.get('outcome') == {'state':'interrupted','stage':'execution_identity','reason':'interrupted by SIGTERM'}
+            and value.get('timing') == [] and value.get('correctness') == {'state':'unverified','checks':[]}
+            and len(value.get('stages',[])) == 1
+            and value['stages'][0].get('stage') == 'execution_identity'
+            and value['stages'][0].get('state') == 'interrupted'
+            and request.get('candidate') == row['candidate']
+            and request.get('build_evaluation') == old_plan['model_build']
+            and request.get('configuration') == row['configuration']
+            and request.get('workload',{}).get('id') == row['workload']
+            and request.get('workload',{}).get('source') == row['sources'][0]
+            and request.get('protocol_trial') == {'source_position':0,'repetition':0}
+            and request.get('verification') == {'checker':old_plan['verifier'],
+                'max_ticks':old_plan['verification_ticks'],'coverage':True,
+                'post_roi_trace':'SyscallBase','trace_transport':old_plan['trace_transport']}
+            and not any(k in request for k in ('checkpoint_manifest','checkpoint_evaluation','protocol','candidate_build')),
+            'retained failure is not the exact pre-guest first public call')
+    runs = Path(storage['storage_paths'][0]); leaf = runs/row['id']/evaluation_id
+    require(leaf.is_dir() and not leaf.is_symlink() and leaf == leaf.resolve()
+            and {p.name for p in leaf.iterdir()} == {'host-observation.json'},
+            'setup failure has checkpoint, simulation or other guest artifacts')
+    host_ref = value.get('context',{}).get('host_observation',{})
+    require(host_ref.get('path') == str(leaf/'host-observation.json'), 'setup failure host observation path differs')
+    read_reference(host_ref)
+    raw = value.get('raw_artifacts',[])
+    require(len(raw) == 2 and {r.get('kind') for r in raw} == {'dx100_execute','host_observation'}
+            and next(r for r in raw if r['kind']=='dx100_execute').get('path') == str(leaf)
+            and next(r for r in raw if r['kind']=='host_observation').get('sha256') == host_ref['sha256'],
+            'setup failure raw evidence differs')
+    related = sorted(record_path.parent.glob(SETUP_FAILURE_ID+'*.yaml'))
+    require(related == [record_path] and len(driver.get('series',[])) == 1
+            and driver['series'][0].get('id') == row['id'] and driver['series'][0].get('state') == 'failed',
+            'setup recovery contains another public execution or series')
+    require(not any(p.is_dir() and p.name in {'checkpoint','simulation'} for p in runs.rglob('*')),
+            'setup recovery contains a checkpoint or simulation directory')
+    return [old_proof, {'id':entry['id'],'elapsed_seconds':seconds,'raw_bytes':storage['raw_bytes']}]
+
+
 def preparation_charges(plan):
     """Reopen the fixed retained preparation; caller-supplied credits are forbidden."""
     rows = []
@@ -181,6 +293,8 @@ def preparation_charges(plan):
     retained = plan['accounting'].get('retained_failed_batches', [])
     require(len(retained) <= 1, 'only one separately planned corrective attempt is authorized')
     rows.extend(failed_batch_charge(entry) for entry in retained)
+    if 'retained_setup_failure' in plan['accounting']:
+        rows.extend(setup_failure_charges(plan))
     reservation = plan['accounting'].get('preparation_reservation')
     if reservation is not None:
         require(all(type(reservation.get(key)) is int and reservation[key] > 0
@@ -224,6 +338,19 @@ def validate_preparation_reservation(plan, admission):
         require(kind in reserved['selections'] and kind not in seen,
                 'reserved preparation proof selection differs')
         seen.add(kind)
+        if plan.get('id') == SETUP_RECOVERY_ID and kind == 'owned_cleanup':
+            import xml.etree.ElementTree as XML
+            junit = proof['junit']; path = Path(junit['path'])
+            require(path.is_absolute() and path.is_file() and not path.is_symlink()
+                    and path.stat().st_size <= 4*1024**2
+                    and artifacts.file_hash(path) == junit['sha256'],
+                    'setup recovery SQLite Linux proof artifact changed')
+            cases = XML.fromstring(path.read_bytes()).findall('.//testcase')
+            selected = [case for case in cases if case.get('name') ==
+                        'test_linux_storage_observation_handles_sqlite_journal_unlink']
+            require(len(selected) == 1 and not any(selected[0].find(tag) is not None
+                    for tag in ('failure','error','skipped')),
+                    'setup recovery requires the actual passed Linux SQLite journal case')
         run_id = reserved['selections'][kind]
         raw = group.parent/run_id; dispatch = Path(str(raw)+'.dispatch')
         expected_paths.extend([raw,dispatch])
@@ -340,10 +467,23 @@ class Ledger:
         self.charged_seconds = sum(row['elapsed_seconds'] for row in charged)
         self.charged_bytes = sum(row['raw_bytes'] for row in charged)
         available = self.bounds['batch_seconds'] - self.charged_seconds
-        require(available > 0 and latest == self.end - timedelta(seconds=available)
-                and stamp(admission['prepared_at']) <= first <= self.outer_started <= started_at <= latest,
-                'prospective schedule is absent, late, or cannot fit the remaining batch allowance')
-        self.monotonic_end = started + available - startup
+        if 'clock_policy' in plan:
+            require(plan['id'] == SETUP_RECOVERY_ID
+                    and plan['clock_policy'] == {'method':'original_absolute_end_clamp.v1',
+                                                 'absolute_end':SETUP_HARD_END}
+                    and self.end == stamp(SETUP_HARD_END)
+                    and latest <= self.end-timedelta(seconds=self.bounds['series_seconds']+self.bounds['cleanup_seconds']),
+                    'setup recovery must retain its fixed original hard end and full-series latest start')
+            usable = min(available, (self.end-self.outer_started).total_seconds())
+            require(available > 0 and usable >= self.bounds['series_seconds']+self.bounds['cleanup_seconds']
+                    and stamp(admission['prepared_at']) <= first <= self.outer_started <= started_at <= latest,
+                    'setup recovery is late or cannot admit a full series and cleanup')
+            self.monotonic_end = started + usable - startup
+        else:
+            require(available > 0 and latest == self.end - timedelta(seconds=available)
+                    and stamp(admission['prepared_at']) <= first <= self.outer_started <= started_at <= latest,
+                    'prospective schedule is absent, late, or cannot fit the remaining batch allowance')
+            self.monotonic_end = started + available - startup
         self.startup_seconds = startup
 
     def remaining(self):
