@@ -1,0 +1,52 @@
+{
+  "created": "2026-09-27",
+  "state": "author_verified_independent_review_pending",
+  "host_execution": false,
+  "successful_proof_runtime": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+  "original_map_entries": 157,
+  "original_map_digest": "d8529ea6c79f9da1b5998b83eef1f42022b3647c25f598844c74ffe1be8bfa5e",
+  "test_logs": [
+    "/private/tmp/bfs-proof-provenance-green-20260927.log",
+    "/private/tmp/bfs-proof-provenance-broad-20260927.log"
+  ],
+  "reproduction": "/private/tmp/bfs-supplement-python-alias-repro-final-20260927.log",
+  "checks": [
+    "Original8cb plan JSON equals current plan after removing only linux_proof_provenance",
+    "Original157entry runtime map digest independently derived from Git blobs",
+    "Exact retained argv preserved; same executable through venv symlink accepted; different executable rejected",
+    "Explicit immutable originalmap and unchangedcurrenttestedbytes required; only two declared consumer readers differ",
+    "No proof rerun, cost refund, deadline restoration or raw mutation"
+  ],
+  "files": [
+    {
+      "path": "scripts/bfs_simulator_batch.py",
+      "bytes": 68284,
+      "sha256": "0ffcc7ef83b0be924d8f3c793110e112c9c5e8e6515547f2e233909b5e425183"
+    },
+    {
+      "path": "scripts/bfs_simulator_recovery.py",
+      "bytes": 29581,
+      "sha256": "bea576ee47e69b56cd33d9d048a041a03613d48f34b59dc78e2603e0347ec64c"
+    },
+    {
+      "path": "tests/test_bfs_simulator_recovery.py",
+      "bytes": 30200,
+      "sha256": "9f19ee93d39776b929e4865a0cf0c768a7acc90d9254052526eb3f5b9c0c71b3"
+    },
+    {
+      "path": "docs/bfs-supervision-recovery-20260926.md",
+      "bytes": 7241,
+      "sha256": "cb569f488ac14405dbc4b05706698d0eec65be981d25ad168bc23494f54b2c09"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-supervision-recovery-simulator-batch-20260926-a1.json",
+      "bytes": 11020,
+      "sha256": "f53081981bb3116f57b65a6b48471d9f7ed5a39a81cc64c1e926f58eab4e34cb"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-supervision-recovery-simulator-batch-20260926-a1.json",
+      "bytes": 14550,
+      "sha256": "c3503db2f65421321d3c53c72069f82e205fea51bdf156811745882e5513b148"
+    }
+  ]
+}

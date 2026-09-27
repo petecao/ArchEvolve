@@ -273,5 +273,14 @@
     "method": "original_absolute_end_clamp.v1",
     "absolute_end": "2026-09-27T20:16:17.225985-04:00"
   },
-  "trace_transport": "gem5-gzip.v1"
+  "trace_transport": "gem5-gzip.v1",
+  "linux_proof_provenance": {
+    "code_commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+    "runtime_sha256_digest": "d8529ea6c79f9da1b5998b83eef1f42022b3647c25f598844c74ffe1be8bfa5e",
+    "consumer_only_exceptions": {
+      "scripts/bfs_simulator_batch.py": "b08335b912e5e83e58f366ed5294c32c2de06073600c8faf4fe2cb370918b4e6",
+      "scripts/bfs_simulator_recovery.py": "e242c904684bd0e433d0c9501c3c1cd2d8e2f342db8188cfe1894b829d657744"
+    },
+    "evidence_kind": "contract_fixture"
+  }
 }
