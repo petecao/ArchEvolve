@@ -735,3 +735,32 @@ session `t15pilot-b2`. Fresh Linux tests passed at that runtime.
 Watch item for AC10: neither s0 primary has observed a competing parent update so
 far; only the diagnostics have. Diagnostic coverage cannot stand in for the timed
 binary.
+
+## b2 package timeout, bound audit and b3 relaunch — 2026-09-27 16:12 ET
+
+In b2 the 1,800-s profile passed: Kronecker s0r0 took 733 s and uniform 900 s.
+Both families then failed in `profile-package`, at the series' fixed 180-s call
+timeout. That call re-validates both full traces. [Closure](../observations/t15-pilot-b2-closure-20260927.json):
+
+- All identities are absent (pane zombie only); generation 379 is released.
+- Storage is 4,837,421,056 bytes.
+- Both cleanup ledgers settled.
+- The b2 charge is 10,584 s.
+
+The s0r0 simulated ROI times are identical in b1 and b2, even though each attempt
+created its own checkpoint: Kronecker 5.851991667 ms, uniform 5.731610302 ms.
+
+Before b3, every bounded call was audited against measured trace-processing cost
+([b3 request](../requests/bfs-t15-pilot-simulator-batch-20260927-b3.json),
+`bound_audit_20260927`):
+
+- Execute limits are at least 3.5 times the measured cost.
+- Profile and package are 2,400 s, at least 2.6 times the measured cost.
+- A fresh-process get takes 6.5 s against its 180-s limit.
+- Post-grid aggregate and freeze re-validate every primary trace (about 83 min in
+  total); they run with a 4-h operator timeout.
+
+`bfs-t15-pilot-simulator-batch-20260927-b3` started at 16:10:52 ET on node0,
+generation 382, from runtime `b68bd6df7ea458e9413dedf44ac5c296b84df8af`. It stays
+inside the same allocation: b1, b2 and a 16.7-MB off-lane measurement directory
+are charged, and the absolute end remains 2026-09-29 10:29:47 ET.
