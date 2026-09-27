@@ -1,0 +1,62 @@
+{
+  "created": "2026-09-27",
+  "observation": "2026-09-27T03:15:59.669928-04:00",
+  "original_end": "2026-09-27T09:14:09.851819-04:00",
+  "remaining_wall_seconds": 21490.181891,
+  "required_new_series_seconds": 21630,
+  "next_series_cannot_start_under_current_gate": true,
+  "current_series": "uniform18",
+  "complete_samples": 0,
+  "grid": {
+    "series": 2,
+    "sources_per_series": 3,
+    "repetitions": 2,
+    "primary_diagnostic_pairs": 12,
+    "individual_executions": 24
+  },
+  "checkpoint_host_wall_s": 77.52165415789932,
+  "simulation_host_wall_s": 2031.0243363408372,
+  "simulation_finished": "2026-09-27T07:16:43.614740+00:00",
+  "public_evaluation_still_running_at": "2026-09-27T03:16:47.588692-04:00",
+  "trace_metadata": {
+    "observed_at": "2026-09-27T03:17:15.228786-04:00",
+    "trace_files_metadata_only": {
+      "roi-debug.trace.gz": {
+        "bytes": 1296681706,
+        "mtime": "2026-09-27T03:16:41.664777-04:00"
+      },
+      "post-roi-syscalls.log": {
+        "bytes": 39877,
+        "mtime": "2026-09-27T03:16:16.623516-04:00"
+      },
+      "roi-seal.json": {
+        "bytes": 72432,
+        "mtime": "2026-09-27T03:16:16.642517-04:00"
+      },
+      "roi-stats.txt": {
+        "bytes": 1255784,
+        "mtime": "2026-09-27T02:58:32.546459-04:00"
+      }
+    },
+    "public_process": {
+      "pid": 3340261,
+      "start_ticks": 499319438,
+      "state": "R",
+      "rss_pages": 25418
+    }
+  },
+  "static_risks": [
+    "full gzip trace hashing before+after and one decoded full line scan in correctness",
+    "profile collection replays coverage for primary and diagnostic inside existing120second budget",
+    "sample count appended only after primary+diagnostic+profile+package+freshget"
+  ],
+  "not_claimed": [
+    "completion ETA",
+    "finished correctness",
+    "completed primary public evaluation",
+    "gain",
+    "remaining first-series feasibility"
+  ],
+  "mutations": false,
+  "profiler_or_counters": false
+}

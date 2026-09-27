@@ -2469,3 +2469,19 @@ externally held, and legacy generation 77 is released. T16 remains admitted but
 unlaunched. The context3 operator packet `4f57306c` is Git-delivered for readiness
 inspection; no fourth provider call has run. Tickets remain 14 resolved / seven
 claimed, with no final acceptance cell qualified.
+
+## Evaluation limit checkpoint — 2026-09-27 03:44 ET
+
+[Live health](observations/host-health-20260927-0343.json) confirms gem5 completed
+but the first public evaluation remains in CPU-active result processing, with fresh
+telemetry and zero accepted samples. Its original stage bound ends nominally at
+04:43:01 ET; the batch hard end remains 09:14:09.851819 ET. Node 0 generation 349
+is externally held, node 1 generation 444 belongs to T15, and legacy is free.
+
+The [fixed scheduling gate](observations/t15-budget-and-trace-analysis-summary-20260927.json)
+requires 21,630 seconds remaining to start each series. The second series can no
+longer start after the elapsed 03:13:39.851819 ET cutoff. Therefore the current
+plan cannot complete the two-series grid; continuing the first series does not
+waive the missing family or qualify acceptance. No deadline or allowance was reset.
+Context3 host rendering and immutable runtime verification passed, but both lanes
+remain occupied and no provider call has started.
