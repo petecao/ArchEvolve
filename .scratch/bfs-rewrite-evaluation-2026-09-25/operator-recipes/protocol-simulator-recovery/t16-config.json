@@ -1,0 +1,46 @@
+{
+  "created": "2026-09-27",
+  "runtime": "/data1/yanruj/EvolveSWDB_t16_protocol_recovery_runtime_20260927_a1",
+  "commit": "2a64a188f08811baf09ab9c61e69633c3d45a7f2",
+  "python": "/usr/bin/python3.12",
+  "python_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+  "pytest_version": "9.1.1",
+  "pytest_sha256": "ee37885c9583f843390684dfb496907f87a0905128e7a3cf4ad227f49ff34c2d",
+  "manifest": "/data1/yanruj/EvolveSWDB_seal_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/seal-simulator-recovery/runtime-manifest.json",
+  "manifest_sha256": "277afa007f5c0810eae52e227635c715c35008940e60fa51c60c538507ab5b66",
+  "helper": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+  "helper_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+  "hostlock": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/hostlock.sh",
+  "hostlock_sha256": "50745f827bac2a3db4fc56fdedc95f6fb57fb4b39cf9b269796c77c0274dc996",
+  "helper_upstream_comparison": {
+    "created": "2026-09-27",
+    "observed_at": "2026-09-27T07:13:41.695759-04:00",
+    "reviewed": true,
+    "host_subtree_equal": true,
+    "tracked_untracked_clean": true,
+    "installed_commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+    "upstream_commit": "f38f4b336726cd9d6f55141006548e1af1248ef2",
+    "tracked_remote": "origin",
+    "tracked_ref": "refs/heads/yanrujhou_main",
+    "host_subtree": "AgenticRefiner/scripts/host",
+    "files": {
+      "socket_lane.sh": {
+        "path": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+        "bytes": 10510,
+        "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8"
+      },
+      "hostlock.sh": {
+        "path": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/hostlock.sh",
+        "bytes": 15662,
+        "sha256": "50745f827bac2a3db4fc56fdedc95f6fb57fb4b39cf9b269796c77c0274dc996"
+      }
+    },
+    "checkout_updated": false
+  },
+  "operator_sha256": "46e71770e9f1640477f28e86d32f4e0e434ca15f592667a8c6fee84d23690d94",
+  "node": 1,
+  "proofgroup": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-protocol-recovery-linux-20260927-a1.final.json",
+    "sha256": "a77da4476a159cb7a715c60dfe2f43e1ac7b91df51afc557a013f9add00dd47f"
+  }
+}
