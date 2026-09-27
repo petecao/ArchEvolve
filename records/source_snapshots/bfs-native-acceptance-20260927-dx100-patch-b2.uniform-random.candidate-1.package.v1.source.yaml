@@ -1,0 +1,3457 @@
+kind: source_snapshot
+schema_version: '0.4'
+id: bfs-native-acceptance-20260927-dx100-patch-b2.uniform-random.candidate-1.package.v1.source
+status: draft
+created: '2026-09-27'
+updated: '2026-09-27'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+implementation: dx100-bfs-scalar
+application: dx100-gapbs
+revision: e4fc4afdf894f295442cef3604667a469fab8e62
+artifact:
+  path: /data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.dx100-patch/source
+  sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  files:
+  - path: LICENSE
+    sha256: b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2
+    bytes: 1208
+    executable: false
+  - path: PROVENANCE.md
+    sha256: 9d4f2794ed7b492fae1cb946cce45b3247d9e27c7dfaae11df71d310701206a5
+    bytes: 661
+    executable: false
+  - path: SHA256SUMS
+    sha256: 8cc8eb45740c436260623bda72b765524ec4692ddfee5c1c7dfd5f48ca8caf9a
+    bytes: 4907
+    executable: false
+  - path: benchmarks/API/.gitignore
+    sha256: ca7fabf7f4bedcc521ae2346c034463db580111de0da3494ed3f58c2558b7a88
+    bytes: 14
+    executable: false
+  - path: benchmarks/API/MAA.hpp
+    sha256: 4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd
+    bytes: 1323
+    executable: false
+  - path: benchmarks/API/MAA_atomics.hpp
+    sha256: 896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a
+    bytes: 845
+    executable: false
+  - path: benchmarks/API/MAA_compiler_api.cpp
+    sha256: 15df982719e46110a9ba3d1a86ac34b65019f37c5b00199eaace7379159370d5
+    bytes: 4089
+    executable: false
+  - path: benchmarks/API/MAA_functional.hpp
+    sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+    bytes: 25345
+    executable: false
+  - path: benchmarks/API/MAA_gem5.hpp
+    sha256: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+    bytes: 27473
+    executable: false
+  - path: benchmarks/API/MAA_gem5_magic.hpp
+    sha256: e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32
+    bytes: 9802
+    executable: false
+  - path: benchmarks/API/MAA_utility.hpp
+    sha256: 3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e
+    bytes: 786
+    executable: false
+  - path: benchmarks/API/README.md
+    sha256: f67f7c2e7e8f08f1f92f701accf39fcd981df373552caa1ad24ead487505a328
+    bytes: 6773
+    executable: false
+  - path: benchmarks/API/gen_chkpt.sh
+    sha256: f4a89124276963302b13546a84745cf25d3ce2b7032956201e7263384e2726ac
+    bytes: 354
+    executable: false
+  - path: benchmarks/API/make.sh
+    sha256: a3ebeedbe09348c70a7ac8f87a8ba796bf1c58e50f910029b16900e62468ee3f
+    bytes: 4253
+    executable: false
+  - path: benchmarks/API/make_functional.sh
+    sha256: 09b2c73bccf0ada756ede4292d6c35f65972f77d892beef7c541eca4960adbe3
+    bytes: 550
+    executable: false
+  - path: benchmarks/API/prefetch_depricated.cpp
+    sha256: b0d93940467e0a72964f3e0a53e32f7da0a86fead090ef074aaf16be22611f8c
+    bytes: 11952
+    executable: false
+  - path: benchmarks/API/run_chkpt.sh
+    sha256: bf097be9e4ff373e9dafd11f20163446e8f1d105549d89970953c09162329010
+    bytes: 886
+    executable: false
+  - path: benchmarks/API/test.cpp
+    sha256: 5157dd85b88d9ca2ef0a7126e7d88dfea027031cd1053a6e3979cb1ce7cb75d1
+    bytes: 88043
+    executable: false
+  - path: benchmarks/API/test_compiler.cpp
+    sha256: 9384dbb08f1e8e7897ba517074e5d528d02d82349ceea292282ffbd4eb6d0a48
+    bytes: 2122
+    executable: false
+  - path: benchmarks/API/test_functional.cpp
+    sha256: 20a8702bd7051b2214a18529ffa025dd956c0aaa6591eec1f5cf792549d46dc4
+    bytes: 67088
+    executable: false
+  - path: benchmarks/API/test_strided.cpp
+    sha256: f2cf4aca9883ebb0e777b114624002f2ac83c3117161a9c712fadfbef5147cc0
+    bytes: 66926
+    executable: false
+  - path: benchmarks/API/test_tested_parallel.cpp
+    sha256: 9012d12c6664fe383798038f403c214c5da73ea3ed9a8e37471960a571f090f7
+    bytes: 47822
+    executable: false
+  - path: benchmarks/API/test_vectorized.cpp
+    sha256: 0281c06ae9918703f4d5e51b062cd35d5a7328f11274282cd7096b4e5a411335
+    bytes: 4342
+    executable: false
+  - path: benchmarks/gapbs/LICENSE
+    sha256: bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3
+    bytes: 1499
+    executable: false
+  - path: benchmarks/gapbs/Makefile
+    sha256: cc5a39f4950dc8bdfbbc32834043e379b13d9db79e4f96158d7960ac561f9daa
+    bytes: 3375
+    executable: false
+  - path: benchmarks/gapbs/src/bc.cc
+    sha256: 9732327b347c5da72526923f44b4250afcd7816c3b0ca1d0c8a43cd1d77f36ea
+    bytes: 33804
+    executable: false
+  - path: benchmarks/gapbs/src/bc_maa_full.cc
+    sha256: a5f0e1467edfa7931db7546b6bcb4a41669a448d55cbe43c3846cd19c15dbaae
+    bytes: 8682
+    executable: false
+  - path: benchmarks/gapbs/src/bc_new.cc
+    sha256: b34131eaea5d8afa460b9fffbe7de83fe6abb5bde1d2b2ad6e9575ff7e2db0f0
+    bytes: 41934
+    executable: false
+  - path: benchmarks/gapbs/src/benchmark.h
+    sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+    bytes: 3565
+    executable: false
+  - path: benchmarks/gapbs/src/bfs.cc
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+    bytes: 20533
+    executable: false
+  - path: benchmarks/gapbs/src/bfs_bu.cc
+    sha256: ecd5f574fd10458703ad4af3bdf85ec522cca3821591e15456309f9906c70986
+    bytes: 4616
+    executable: false
+  - path: benchmarks/gapbs/src/bitmap.h
+    sha256: 6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465
+    bytes: 1706
+    executable: false
+  - path: benchmarks/gapbs/src/builder.h
+    sha256: 2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01
+    bytes: 16778
+    executable: false
+  - path: benchmarks/gapbs/src/cc.cc
+    sha256: 0986d8a21cf79e85c88b4615ef1b8aacc1ec1090784b2437d92ee22ae1163fd6
+    bytes: 7422
+    executable: false
+  - path: benchmarks/gapbs/src/cc_sv.cc
+    sha256: f239bd71cee27cba37f3824ae7b2520c291b116ccc83a329d09484b631c599ee
+    bytes: 4994
+    executable: false
+  - path: benchmarks/gapbs/src/command_line.h
+    sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+    bytes: 8511
+    executable: false
+  - path: benchmarks/gapbs/src/converter.cc
+    sha256: 8c5ce5fc37304103c16390f67f27b565aa4f7d3d178dc02cf12b3f5e25b42648
+    bytes: 775
+    executable: false
+  - path: benchmarks/gapbs/src/generator.h
+    sha256: 24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe
+    bytes: 6418
+    executable: false
+  - path: benchmarks/gapbs/src/graph.h
+    sha256: 79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0
+    bytes: 8276
+    executable: false
+  - path: benchmarks/gapbs/src/platform_atomics.h
+    sha256: 9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd
+    bytes: 4198
+    executable: false
+  - path: benchmarks/gapbs/src/pr.cc
+    sha256: 9379044698f6c296b8d2a17e1dcc651e7d2f45a147882ccc4dd5334b332727c0
+    bytes: 12267
+    executable: false
+  - path: benchmarks/gapbs/src/pr_spmv.cc
+    sha256: ea1e58b6957b0bcc1e76f4fde54131aa52bdefd2014dae604a9b7d9d1a5dae70
+    bytes: 3540
+    executable: false
+  - path: benchmarks/gapbs/src/pvector.h
+    sha256: b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d
+    bytes: 4265
+    executable: false
+  - path: benchmarks/gapbs/src/reader.h
+    sha256: 951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1
+    bytes: 9268
+    executable: false
+  - path: benchmarks/gapbs/src/sliding_queue.h
+    sha256: 3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c
+    bytes: 2502
+    executable: false
+  - path: benchmarks/gapbs/src/sssp.cc
+    sha256: a3442b7f4c5f155dde5b3d76896d2dfc7d1a72deb7bea4581401f2d281b316b2
+    bytes: 21897
+    executable: false
+  - path: benchmarks/gapbs/src/sssp_maa.cc
+    sha256: 3ed0f58d042c107aa8abdaa476ed86ab38d47670b55b1c36931b6dc3798d4c67
+    bytes: 13800
+    executable: false
+  - path: benchmarks/gapbs/src/tc.cc
+    sha256: de3a1a453e1e632ab2338a36c5a8f846a078a096f5c9ab7e7320b9448bbb43cb
+    bytes: 4327
+    executable: false
+  - path: benchmarks/gapbs/src/timer.h
+    sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+    bytes: 1161
+    executable: false
+  - path: benchmarks/gapbs/src/util.h
+    sha256: a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6
+    bytes: 1953
+    executable: false
+  - path: benchmarks/gapbs/src/writer.h
+    sha256: 3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea
+    bytes: 2898
+    executable: false
+  - path: include/gem5/asm/generic/m5ops.h
+    sha256: 28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d
+    bytes: 5479
+    executable: false
+  - path: include/gem5/m5ops.h
+    sha256: bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8
+    bytes: 3937
+    executable: false
+context:
+  application: dx100-gapbs
+  source:
+    origin: upstream
+    uri: https://github.com/arkhadem/DX100
+    commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    local_path: apps/dx100
+  code:
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [66, 225]
+    excerpt: |-
+      void TDStepMAA(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue, int num_nodes, int num_edges) {
+      #ifdef GEM5
+          clear_mem_region();
+          add_mem_region(queue.beginp(), queue.endp());                   // 6
+          add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());   // 7
+          add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8
+          add_mem_region(parent.beginp(), parent.endp());                 // 9
+      #endif
+      #pragma omp parallel
+          {
+              int tile0, tile1, tile2, tile3, tile4, tile5, tile6, tile7;
+              int reg0, reg1, regOne, regZero, last_i_reg, last_j_reg;
+              int tid = omp_get_thread_num();
+              tile0 = tiles0[tid];
+              tile1 = tiles1[tid];
+              tile2 = tiles2[tid];
+              tile3 = tiles3[tid];
+              tile4 = tiles4[tid];
+              tile5 = tiles5[tid];
+              tile6 = tilesi[tid];
+              tile7 = tilesj[tid];
+              reg0 = regs0[tid];
+              reg1 = regs1[tid];
+              regOne = regs2[tid];
+              regZero = regs3[tid];
+              last_i_reg = last_i_regs[tid];
+              last_j_reg = last_j_regs[tid];
+              QueueBuffer<NodeID> lqueue(queue);
+              maa_const<int>(1, regOne);
+              maa_const<int>(0, regZero);
+              __restrict__ uint32_t *tile0Ptr = get_cacheable_tile_pointer<uint32_t>(tile0);
+              __restrict__ uint32_t *tile4Ptr = get_cacheable_tile_pointer<uint32_t>(tile4);
+              int *tile5Ptr = get_cacheable_tile_pointer<int>(tile5);
+              int idx = (int)queue.shared_out_start;
+              int len = (int)queue.shared_out_end;
+              while (idx < len) {
+                  int current_len_size = len - idx;
+      #if TILE_SIZE == 32768
+                  const int tile_size = current_len_size > NUM_CORES * 32768   ? 32768
+                                        : current_len_size > NUM_CORES * 16384 ? 16384
+                                        : current_len_size > NUM_CORES * 8192  ? 8192
+                                        : current_len_size > NUM_CORES * 4096  ? 4096
+                                        : current_len_size > NUM_CORES * 2048  ? 2048
+                                        : current_len_size > NUM_CORES * 1024  ? 1024
+                                                                               : -1;
+      #elif TILE_SIZE == 16384
+                  const int tile_size = current_len_size > NUM_CORES * 16384  ? 16384
+                                        : current_len_size > NUM_CORES * 8192 ? 8192
+                                        : current_len_size > NUM_CORES * 4096 ? 4096
+                                        : current_len_size > NUM_CORES * 2048 ? 2048
+                                        : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                              : -1;
+      #elif TILE_SIZE == 8192
+                  const int tile_size = current_len_size > NUM_CORES * 8192   ? 8192
+                                        : current_len_size > NUM_CORES * 4096 ? 4096
+                                        : current_len_size > NUM_CORES * 2048 ? 2048
+                                        : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                              : -1;
+      #elif TILE_SIZE == 4096
+                  const int tile_size = current_len_size > NUM_CORES * 4096   ? 4096
+                                        : current_len_size > NUM_CORES * 2048 ? 2048
+                                        : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                              : -1;
+      #elif TILE_SIZE == 2048
+                  const int tile_size = current_len_size > NUM_CORES * 2048   ? 2048
+                                        : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                              : -1;
+      #elif TILE_SIZE == 1024
+                  const int tile_size = current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+      #else
+                  assert(false);
+      #endif
+                  if (tile_size != -1) {
+                      // #pragma omp master
+                      //                 std::cout << "Starting TDSTEP: tile: " << tile_size << " idx: " << idx << " (maa)" << std::endl;
+                      int min = idx + tid * tile_size;
+                      int max = min + tile_size;
+                      maa_const<int>((int)min, reg0);
+                      maa_const<int>((int)max, reg1);
+                      // tile0 = u = queue.shared[i]
+                      maa_stream_load(queue.shared, reg0, reg1, regOne, tile0);
+                      // tile1 = VertexOffsets[u]
+                      maa_indirect_load<int>(VertexOffsets.start_, tile0, tile1);
+                      // tile2 = VertexOffsets[u+1]
+                      maa_indirect_load<int>(&VertexOffsets.start_[1], tile0, tile2);
+                      // do while using range loop api
+                      maa_const<int>(0, last_i_reg);
+                      maa_const<int>(-1, last_j_reg);
+                      int curr_tile7_size = 0;
+                      do {
+                          // tile6 = i
+                          // tile7 = j
+                          maa_range_loop<int>(last_i_reg, last_j_reg, tile1, tile2, regOne, tile6, tile7);
+                          // tile0 = v = g.out_neighbors_[j]
+                          maa_indirect_load<int>(g.out_neighbors_, tile7, tile0);
+                          // tile3 = inner u = queue.shared[i]
+                          maa_indirect_load<int>((NodeID *)(queue.shared + min), tile6, tile3);
+                          // Transfer tile7, tile0, tile3
+                          wait_ready(tile7);
+                          curr_tile7_size = get_tile_size(tile7);
+                          if (curr_tile7_size == 0) {
+                              break;
+                          }
+      #pragma omp critical
+                          {
+                              // tile7 = parent[v]
+                              maa_indirect_load<int>(parent.data(), tile0, tile7);
+                              // tile4 = parent[v] < 0
+                              maa_alu_scalar<int>(tile7, regZero, tile4, Operation_t::LT_OP);
+                              // if (tile4 -- parent[v] < 0)
+                              //     tile5 = parent[v]
+                              //     parent[v] = inner u
+                              maa_indirect_store_vector<int>(parent.data(), tile0, tile3, tile4, tile5);
+                              wait_ready(tile3);
+                              // #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                              //                     for (int i = 0; i < curr_tile7_size; i++) {
+                              //                         if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                              //                             std::cout << "v:" << tile0Ptr[i] << " op[v]<0: " << tile4Ptr[i] << " np[v] " << tile5Ptr[i] << std::endl;
+                              //                         }
+                              //                     }
+                          }
+      #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                          for (int i = 0; i < curr_tile7_size; i++) {
+                              if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                                  lqueue.push_back(tile0Ptr[i]);
+                              }
+                          }
+                      } while (curr_tile7_size > 0);
+                      idx += NUM_CORES * tile_size;
+                  } else {
+      #pragma omp barrier
+      // #pragma omp master
+      //                 std::cout << "Starting TDSTEP: tile: " << tile_size << " idx: " << idx << " (base)" << std::endl;
+      #pragma omp for schedule(dynamic, 64)
+                      for (int i = idx; i < len; i++) {
+                          NodeID u = queue.shared[i];
+                          for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                              NodeID v = g.out_neighbors_[j];
+                              NodeID curr_val = parent[v];
+                              if (curr_val < 0) {
+                                  // indirect write (parent, v_tile, u_tile)
+                                  // core fetch v tile
+                                  if (compare_and_swap(parent[v], curr_val, u)) {
+                                      parent[v] = u;
+                                      lqueue.push_back(v);
+                                  }
+                              }
+                          }
+                      }
+                      idx = len;
+                  }
+              }
+
+              lqueue.flush();
+          }
+      #ifdef GEM5
+          clear_mem_region();
+      #endif
+      }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [101, 218]
+    excerpt: |-
+      while (idx < len) {
+                  int current_len_size = len - idx;
+      #if TILE_SIZE == 32768
+                  const int tile_size = current_len_size > NUM_CORES * 32768   ? 32768
+                                        : current_len_size > NUM_CORES * 16384 ? 16384
+                                        : current_len_size > NUM_CORES * 8192  ? 8192
+                                        : current_len_size > NUM_CORES * 4096  ? 4096
+                                        : current_len_size > NUM_CORES * 2048  ? 2048
+                                        : current_len_size > NUM_CORES * 1024  ? 1024
+                                                                               : -1;
+      #elif TILE_SIZE == 16384
+                  const int tile_size = current_len_size > NUM_CORES * 16384  ? 16384
+                                        : current_len_size > NUM_CORES * 8192 ? 8192
+                                        : current_len_size > NUM_CORES * 4096 ? 4096
+                                        : current_len_size > NUM_CORES * 2048 ? 2048
+                                        : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                              : -1;
+      #elif TILE_SIZE == 8192
+                  const int tile_size = current_len_size > NUM_CORES * 8192   ? 8192
+                                        : current_len_size > NUM_CORES * 4096 ? 4096
+                                        : current_len_size > NUM_CORES * 2048 ? 2048
+                                        : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                              : -1;
+      #elif TILE_SIZE == 4096
+                  const int tile_size = current_len_size > NUM_CORES * 4096   ? 4096
+                                        : current_len_size > NUM_CORES * 2048 ? 2048
+                                        : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                              : -1;
+      #elif TILE_SIZE == 2048
+                  const int tile_size = current_len_size > NUM_CORES * 2048   ? 2048
+                                        : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                              : -1;
+      #elif TILE_SIZE == 1024
+                  const int tile_size = current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+      #else
+                  assert(false);
+      #endif
+                  if (tile_size != -1) {
+                      // #pragma omp master
+                      //                 std::cout << "Starting TDSTEP: tile: " << tile_size << " idx: " << idx << " (maa)" << std::endl;
+                      int min = idx + tid * tile_size;
+                      int max = min + tile_size;
+                      maa_const<int>((int)min, reg0);
+                      maa_const<int>((int)max, reg1);
+                      // tile0 = u = queue.shared[i]
+                      maa_stream_load(queue.shared, reg0, reg1, regOne, tile0);
+                      // tile1 = VertexOffsets[u]
+                      maa_indirect_load<int>(VertexOffsets.start_, tile0, tile1);
+                      // tile2 = VertexOffsets[u+1]
+                      maa_indirect_load<int>(&VertexOffsets.start_[1], tile0, tile2);
+                      // do while using range loop api
+                      maa_const<int>(0, last_i_reg);
+                      maa_const<int>(-1, last_j_reg);
+                      int curr_tile7_size = 0;
+                      do {
+                          // tile6 = i
+                          // tile7 = j
+                          maa_range_loop<int>(last_i_reg, last_j_reg, tile1, tile2, regOne, tile6, tile7);
+                          // tile0 = v = g.out_neighbors_[j]
+                          maa_indirect_load<int>(g.out_neighbors_, tile7, tile0);
+                          // tile3 = inner u = queue.shared[i]
+                          maa_indirect_load<int>((NodeID *)(queue.shared + min), tile6, tile3);
+                          // Transfer tile7, tile0, tile3
+                          wait_ready(tile7);
+                          curr_tile7_size = get_tile_size(tile7);
+                          if (curr_tile7_size == 0) {
+                              break;
+                          }
+      #pragma omp critical
+                          {
+                              // tile7 = parent[v]
+                              maa_indirect_load<int>(parent.data(), tile0, tile7);
+                              // tile4 = parent[v] < 0
+                              maa_alu_scalar<int>(tile7, regZero, tile4, Operation_t::LT_OP);
+                              // if (tile4 -- parent[v] < 0)
+                              //     tile5 = parent[v]
+                              //     parent[v] = inner u
+                              maa_indirect_store_vector<int>(parent.data(), tile0, tile3, tile4, tile5);
+                              wait_ready(tile3);
+                              // #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                              //                     for (int i = 0; i < curr_tile7_size; i++) {
+                              //                         if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                              //                             std::cout << "v:" << tile0Ptr[i] << " op[v]<0: " << tile4Ptr[i] << " np[v] " << tile5Ptr[i] << std::endl;
+                              //                         }
+                              //                     }
+                          }
+      #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                          for (int i = 0; i < curr_tile7_size; i++) {
+                              if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                                  lqueue.push_back(tile0Ptr[i]);
+                              }
+                          }
+                      } while (curr_tile7_size > 0);
+                      idx += NUM_CORES * tile_size;
+                  } else {
+      #pragma omp barrier
+      // #pragma omp master
+      //                 std::cout << "Starting TDSTEP: tile: " << tile_size << " idx: " << idx << " (base)" << std::endl;
+      #pragma omp for schedule(dynamic, 64)
+                      for (int i = idx; i < len; i++) {
+                          NodeID u = queue.shared[i];
+                          for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                              NodeID v = g.out_neighbors_[j];
+                              NodeID curr_val = parent[v];
+                              if (curr_val < 0) {
+                                  // indirect write (parent, v_tile, u_tile)
+                                  // core fetch v tile
+                                  if (compare_and_swap(parent[v], curr_val, u)) {
+                                      parent[v] = u;
+                                      lqueue.push_back(v);
+                                  }
+                              }
+                          }
+                      }
+                      idx = len;
+                  }
+              }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [156, 194]
+    excerpt: |-
+      do {
+                          // tile6 = i
+                          // tile7 = j
+                          maa_range_loop<int>(last_i_reg, last_j_reg, tile1, tile2, regOne, tile6, tile7);
+                          // tile0 = v = g.out_neighbors_[j]
+                          maa_indirect_load<int>(g.out_neighbors_, tile7, tile0);
+                          // tile3 = inner u = queue.shared[i]
+                          maa_indirect_load<int>((NodeID *)(queue.shared + min), tile6, tile3);
+                          // Transfer tile7, tile0, tile3
+                          wait_ready(tile7);
+                          curr_tile7_size = get_tile_size(tile7);
+                          if (curr_tile7_size == 0) {
+                              break;
+                          }
+      #pragma omp critical
+                          {
+                              // tile7 = parent[v]
+                              maa_indirect_load<int>(parent.data(), tile0, tile7);
+                              // tile4 = parent[v] < 0
+                              maa_alu_scalar<int>(tile7, regZero, tile4, Operation_t::LT_OP);
+                              // if (tile4 -- parent[v] < 0)
+                              //     tile5 = parent[v]
+                              //     parent[v] = inner u
+                              maa_indirect_store_vector<int>(parent.data(), tile0, tile3, tile4, tile5);
+                              wait_ready(tile3);
+                              // #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                              //                     for (int i = 0; i < curr_tile7_size; i++) {
+                              //                         if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                              //                             std::cout << "v:" << tile0Ptr[i] << " op[v]<0: " << tile4Ptr[i] << " np[v] " << tile5Ptr[i] << std::endl;
+                              //                         }
+                              //                     }
+                          }
+      #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                          for (int i = 0; i < curr_tile7_size; i++) {
+                              if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                                  lqueue.push_back(tile0Ptr[i]);
+                              }
+                          }
+                      } while (curr_tile7_size > 0);
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [201, 215]
+    excerpt: |-
+      for (int i = idx; i < len; i++) {
+                          NodeID u = queue.shared[i];
+                          for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                              NodeID v = g.out_neighbors_[j];
+                              NodeID curr_val = parent[v];
+                              if (curr_val < 0) {
+                                  // indirect write (parent, v_tile, u_tile)
+                                  // core fetch v tile
+                                  if (compare_and_swap(parent[v], curr_val, u)) {
+                                      parent[v] = u;
+                                      lqueue.push_back(v);
+                                  }
+                              }
+                          }
+                      }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [203, 214]
+    excerpt: |-
+      for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                              NodeID v = g.out_neighbors_[j];
+                              NodeID curr_val = parent[v];
+                              if (curr_val < 0) {
+                                  // indirect write (parent, v_tile, u_tile)
+                                  // core fetch v tile
+                                  if (compare_and_swap(parent[v], curr_val, u)) {
+                                      parent[v] = u;
+                                      lqueue.push_back(v);
+                                  }
+                              }
+                          }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [227, 258]
+    excerpt: |-
+      void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue, int num_nodes, int num_edges) {
+      #ifdef GEM5
+          clear_mem_region();
+          add_mem_region(queue.beginp(), queue.endp());                   // 6
+          add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());   // 7
+          add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8
+          add_mem_region(parent.beginp(), parent.endp());                 // 9
+      #endif
+      #pragma omp parallel
+          {
+              QueueBuffer<NodeID> lqueue(queue);
+      #pragma omp for schedule(dynamic, 64) nowait
+              for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                  NodeID u = queue.shared[i];
+                  for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                      NodeID v = g.out_neighbors_[j];
+                      NodeID curr_val = parent[v];
+                      if (curr_val < 0) {
+                          // indirect write (parent, v_tile, u_tile)
+                          // core fetch v tile
+                          if (compare_and_swap(parent[v], curr_val, u)) {
+                              lqueue.push_back(v);
+                          }
+                      }
+                  }
+              }
+              lqueue.flush();
+          }
+      #ifdef GEM5
+          clear_mem_region();
+      #endif
+      }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [239, 252]
+    excerpt: |-
+      for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                  NodeID u = queue.shared[i];
+                  for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                      NodeID v = g.out_neighbors_[j];
+                      NodeID curr_val = parent[v];
+                      if (curr_val < 0) {
+                          // indirect write (parent, v_tile, u_tile)
+                          // core fetch v tile
+                          if (compare_and_swap(parent[v], curr_val, u)) {
+                              lqueue.push_back(v);
+                          }
+                      }
+                  }
+              }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [241, 251]
+    excerpt: |-
+      for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                      NodeID v = g.out_neighbors_[j];
+                      NodeID curr_val = parent[v];
+                      if (curr_val < 0) {
+                          // indirect write (parent, v_tile, u_tile)
+                          // core fetch v tile
+                          if (compare_and_swap(parent[v], curr_val, u)) {
+                              lqueue.push_back(v);
+                          }
+                      }
+                  }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [260, 281]
+    excerpt: |-
+      int64_t TDStep2(const Graph &g, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue) {
+          int64_t scout_count = 0;
+      #pragma omp parallel
+          {
+              QueueBuffer<NodeID> lqueue(queue);
+      #pragma omp for reduction(+ : scout_count) nowait
+              for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                  NodeID u = *q_iter;
+                  for (NodeID v : g.out_neigh(u)) {
+                      NodeID curr_val = parent[v];
+                      if (curr_val < 0) {
+                          if (compare_and_swap(parent[v], curr_val, u)) {
+                              lqueue.push_back(v);
+                              scout_count += -curr_val;
+                          }
+                      }
+                  }
+              }
+              lqueue.flush();
+          }
+          return scout_count;
+      }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [266, 277]
+    excerpt: |-
+      for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                  NodeID u = *q_iter;
+                  for (NodeID v : g.out_neigh(u)) {
+                      NodeID curr_val = parent[v];
+                      if (curr_val < 0) {
+                          if (compare_and_swap(parent[v], curr_val, u)) {
+                              lqueue.push_back(v);
+                              scout_count += -curr_val;
+                          }
+                      }
+                  }
+              }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [268, 276]
+    excerpt: |-
+      for (NodeID v : g.out_neigh(u)) {
+                      NodeID curr_val = parent[v];
+                      if (curr_val < 0) {
+                          if (compare_and_swap(parent[v], curr_val, u)) {
+                              lqueue.push_back(v);
+                              scout_count += -curr_val;
+                          }
+                      }
+                  }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [283, 289]
+    excerpt: |-
+      void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+      #pragma omp parallel for
+          for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+              NodeID u = *q_iter;
+              bm.set_bit_atomic(u);
+          }
+      }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [285, 288]
+    excerpt: |-
+      for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+              NodeID u = *q_iter;
+              bm.set_bit_atomic(u);
+          }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [291, 303]
+    excerpt: |-
+      void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                         SlidingQueue<NodeID> &queue) {
+      #pragma omp parallel
+          {
+              QueueBuffer<NodeID> lqueue(queue);
+      #pragma omp for nowait
+              for (NodeID n = 0; n < g.num_nodes(); n++)
+                  if (bm.get_bit(n))
+                      lqueue.push_back(n);
+              lqueue.flush();
+          }
+          queue.slide_window();
+      }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [297, 299]
+    excerpt: |-
+      for (NodeID n = 0; n < g.num_nodes(); n++)
+                  if (bm.get_bit(n))
+                      lqueue.push_back(n);
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [305, 311]
+    excerpt: |-
+      pvector<NodeID> InitParent(const Graph &g) {
+          pvector<NodeID> parent(g.num_nodes());
+      #pragma omp parallel for
+          for (NodeID n = 0; n < g.num_nodes(); n++)
+              parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+          return parent;
+      }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [308, 309]
+    excerpt: |-
+      for (NodeID n = 0; n < g.num_nodes(); n++)
+              parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [313, 364]
+    excerpt: |-
+      pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                            int alpha = 1, int beta = 18) {
+          int num_nodes = g.num_nodes();
+          int num_edges = g.num_edges_directed();
+          if (logging_enabled)
+              PrintStep("Source", static_cast<int64_t>(source));
+          pvector<SGOffset> VertexOffsetsOut = g.VertexOffsets();
+          Timer t;
+          alloc_MAA();
+          init_MAA();
+          t.Start();
+          pvector<NodeID> parent = InitParent(g);
+          t.Stop();
+          if (logging_enabled)
+              PrintStep("i", t.Seconds());
+          parent[source] = source;
+          SlidingQueue<NodeID> queue(g.num_nodes());
+          queue.push_back(source);
+          queue.slide_window();
+          Bitmap curr(g.num_nodes());
+          curr.reset();
+          Bitmap front(g.num_nodes());
+          front.reset();
+
+      #ifdef GEM5
+          std::cout << "ROI started: " << omp_get_num_threads() << " threads" << std::endl;
+          m5_work_begin(0, 0);
+          m5_reset_stats(0, 0);
+      #endif
+          while (!queue.empty()) {
+              if (logging_enabled)
+                  std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+              t.Start();
+              TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+              queue.slide_window();
+              t.Stop();
+              if (logging_enabled) {
+                  PrintStep("td", t.Seconds());
+              }
+          }
+      #pragma omp parallel for
+          for (NodeID n = 0; n < g.num_nodes(); n++)
+              if (parent[n] < -1)
+                  parent[n] = -1;
+      #ifdef GEM5
+          m5_dump_stats(0, 0);
+          m5_work_end(0, 0);
+          std::cout << "ROI End!!!" << std::endl;
+          m5_exit(0);
+      #endif
+          return parent;
+      }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [342, 352]
+    excerpt: |-
+      while (!queue.empty()) {
+              if (logging_enabled)
+                  std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+              t.Start();
+              TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+              queue.slide_window();
+              t.Stop();
+              if (logging_enabled) {
+                  PrintStep("td", t.Seconds());
+              }
+          }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [354, 356]
+    excerpt: |-
+      for (NodeID n = 0; n < g.num_nodes(); n++)
+              if (parent[n] < -1)
+                  parent[n] = -1;
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [366, 443]
+    excerpt: |-
+      pvector<NodeID> DOBFSMAA(const Graph &g, NodeID source, bool logging_enabled = false,
+                               int alpha = 1, int beta = 18) {
+          int num_nodes = g.num_nodes();
+          int num_edges = g.num_edges_directed();
+          if (logging_enabled)
+              PrintStep("Source", static_cast<int64_t>(source));
+          pvector<SGOffset> VertexOffsetsOut = g.VertexOffsets();
+          Timer t;
+          alloc_MAA();
+          init_MAA();
+          t.Start();
+      #pragma omp parallel
+          {
+      #pragma omp critical
+              {
+                  int tid = omp_get_thread_num();
+                  tiles0[tid] = get_new_tile<int>();
+                  tiles1[tid] = get_new_tile<int>();
+                  tiles2[tid] = get_new_tile<int>();
+                  tiles3[tid] = get_new_tile<int>();
+                  tiles4[tid] = get_new_tile<int>();
+                  tiles5[tid] = get_new_tile<int>();
+                  tilesi[tid] = get_new_tile<int>();
+                  tilesj[tid] = get_new_tile<int>();
+                  regs0[tid] = get_new_reg<int>();
+                  regs1[tid] = get_new_reg<int>();
+                  regs2[tid] = get_new_reg<int>();
+                  regs3[tid] = get_new_reg<int>();
+                  regs4[tid] = get_new_reg<int>();
+                  regs5[tid] = get_new_reg<int>();
+                  last_i_regs[tid] = get_new_reg<int>();
+                  last_j_regs[tid] = get_new_reg<int>();
+              }
+          }
+          pvector<NodeID> parent = InitParent(g);
+          t.Stop();
+          if (logging_enabled)
+              PrintStep("i", t.Seconds());
+          parent[source] = source;
+          SlidingQueue<NodeID> queue(g.num_nodes());
+          queue.push_back(source);
+          queue.slide_window();
+          Bitmap curr(g.num_nodes());
+          curr.reset();
+          Bitmap front(g.num_nodes());
+          front.reset();
+
+      #ifdef GEM5
+          std::cout << "ROI started: " << omp_get_num_threads() << " threads" << std::endl;
+          m5_work_begin(0, 0);
+          m5_reset_stats(0, 0);
+      #endif
+          while (!queue.empty()) {
+              t.Start();
+              bool isMAA = true;
+              std::cout << "Starting TDStepMAA: " << queue.size() << " elements" << std::endl;
+              TDStepMAA(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+              queue.slide_window();
+              t.Stop();
+              if (logging_enabled) {
+                  if (isMAA)
+                      PrintStep("td_maa", t.Seconds());
+                  else
+                      PrintStep("td", t.Seconds());
+              }
+          }
+      #pragma omp parallel for
+          for (NodeID n = 0; n < g.num_nodes(); n++)
+              if (parent[n] < -1)
+                  parent[n] = -1;
+      #ifdef GEM5
+          m5_dump_stats(0, 0);
+          m5_work_end(0, 0);
+          std::cout << "ROI End!!!" << std::endl;
+          m5_exit(0);
+      #endif
+          return parent;
+      }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [418, 431]
+    excerpt: |-
+      while (!queue.empty()) {
+              t.Start();
+              bool isMAA = true;
+              std::cout << "Starting TDStepMAA: " << queue.size() << " elements" << std::endl;
+              TDStepMAA(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+              queue.slide_window();
+              t.Stop();
+              if (logging_enabled) {
+                  if (isMAA)
+                      PrintStep("td_maa", t.Seconds());
+                  else
+                      PrintStep("td", t.Seconds());
+              }
+          }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [433, 435]
+    excerpt: |-
+      for (NodeID n = 0; n < g.num_nodes(); n++)
+              if (parent[n] < -1)
+                  parent[n] = -1;
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [445, 456]
+    excerpt: |-
+      void PrintBFSStats(const Graph &g, const pvector<NodeID> &bfs_tree) {
+          int64_t tree_size = 0;
+          int64_t n_edges = 0;
+          for (NodeID n : g.vertices()) {
+              if (bfs_tree[n] >= 0) {
+                  n_edges += g.out_degree(n);
+                  tree_size++;
+              }
+          }
+          cout << "BFS Tree has " << tree_size << " nodes and ";
+          cout << n_edges << " edges" << endl;
+      }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [448, 453]
+    excerpt: |-
+      for (NodeID n : g.vertices()) {
+              if (bfs_tree[n] >= 0) {
+                  n_edges += g.out_degree(n);
+                  tree_size++;
+              }
+          }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [463, 509]
+    excerpt: |-
+      bool BFSVerifier(const Graph &g, NodeID source,
+                       const pvector<NodeID> &parent) {
+          pvector<int> depth(g.num_nodes(), -1);
+          depth[source] = 0;
+          vector<NodeID> to_visit;
+          to_visit.reserve(g.num_nodes());
+          to_visit.push_back(source);
+          for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+              NodeID u = *it;
+              for (NodeID v : g.out_neigh(u)) {
+                  if (depth[v] == -1) {
+                      depth[v] = depth[u] + 1;
+                      to_visit.push_back(v);
+                  }
+              }
+          }
+          for (NodeID u : g.vertices()) {
+              if ((depth[u] != -1) && (parent[u] != -1)) {
+                  if (u == source) {
+                      if (!((parent[u] == u) && (depth[u] == 0))) {
+                          cout << "Source wrong" << endl;
+                          return false;
+                      }
+                      continue;
+                  }
+                  bool parent_found = false;
+                  for (NodeID v : g.in_neigh(u)) {
+                      if (v == parent[u]) {
+                          if (depth[v] != depth[u] - 1) {
+                              cout << "Wrong depths for " << u << " & " << v << endl;
+                              return false;
+                          }
+                          parent_found = true;
+                          break;
+                      }
+                  }
+                  if (!parent_found) {
+                      cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                      return false;
+                  }
+              } else if (depth[u] != parent[u]) {
+                  cout << "Reachability mismatch" << endl;
+                  return false;
+              }
+          }
+          return true;
+      }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [470, 478]
+    excerpt: |-
+      for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+              NodeID u = *it;
+              for (NodeID v : g.out_neigh(u)) {
+                  if (depth[v] == -1) {
+                      depth[v] = depth[u] + 1;
+                      to_visit.push_back(v);
+                  }
+              }
+          }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [472, 477]
+    excerpt: |-
+      for (NodeID v : g.out_neigh(u)) {
+                  if (depth[v] == -1) {
+                      depth[v] = depth[u] + 1;
+                      to_visit.push_back(v);
+                  }
+              }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [479, 507]
+    excerpt: |-
+      for (NodeID u : g.vertices()) {
+              if ((depth[u] != -1) && (parent[u] != -1)) {
+                  if (u == source) {
+                      if (!((parent[u] == u) && (depth[u] == 0))) {
+                          cout << "Source wrong" << endl;
+                          return false;
+                      }
+                      continue;
+                  }
+                  bool parent_found = false;
+                  for (NodeID v : g.in_neigh(u)) {
+                      if (v == parent[u]) {
+                          if (depth[v] != depth[u] - 1) {
+                              cout << "Wrong depths for " << u << " & " << v << endl;
+                              return false;
+                          }
+                          parent_found = true;
+                          break;
+                      }
+                  }
+                  if (!parent_found) {
+                      cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                      return false;
+                  }
+              } else if (depth[u] != parent[u]) {
+                  cout << "Reachability mismatch" << endl;
+                  return false;
+              }
+          }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [489, 498]
+    excerpt: |-
+      for (NodeID v : g.in_neigh(u)) {
+                      if (v == parent[u]) {
+                          if (depth[v] != depth[u] - 1) {
+                              cout << "Wrong depths for " << u << " & " << v << endl;
+                              return false;
+                          }
+                          parent_found = true;
+                          break;
+                      }
+                  }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [511, 536]
+    excerpt: |-
+      int main(int argc, char *argv[]) {
+          CLApp cli(argc, argv, "breadth-first search");
+          if (!cli.ParseArgs())
+              return -1;
+          Builder b(cli);
+          Graph g = b.MakeGraph();
+          SourcePicker<Graph> sp(g, cli.start_vertex());
+      #ifdef GEM5
+          std::cout << "Fake Checkpoint started" << std::endl;
+          m5_checkpoint(0, 0);
+          std::cout << "Fake Checkpoint ended" << std::endl;
+      #endif
+          auto BFSBound = [&sp, &cli](const Graph &g) {
+      #ifdef MAA
+              return DOBFSMAA(g, sp.PickNext(), cli.logging_en());
+      #else
+              return DOBFS(g, sp.PickNext(), cli.logging_en());
+      #endif
+          };
+          SourcePicker<Graph> vsp(g, cli.start_vertex());
+          auto VerifierBound = [&vsp](const Graph &g, const pvector<NodeID> &parent) {
+              return BFSVerifier(g, vsp.PickNext(), parent);
+          };
+          BenchmarkKernel(cli, g, BFSBound, PrintBFSStats, VerifierBound);
+          return 0;
+      }
+    sha256: 352d4ba4e689ec18045ecd96f6849ab8189a7c5deaf82a90f5cdf1a0b870d5e0
+  function: DOBFS
+  build:
+    compiler: g++
+    flags: -std=c++11 -O3 -Wall -fopenmp -pthread -DFUNC
+    command: '{cxx} {flags} -I{app}/benchmarks/API -I{app}/benchmarks/gapbs/src {source} -o {binary}'
+  run:
+    command: '{binary} {input_args} -n {trials}'
+    timer: gapbs_trial_time
+    threads_env: OMP_NUM_THREADS
+    kernel_symbols: [DOBFS, TDStep, InitParent]
+    index_stream: null
+  evaluator:
+    backend: native
+    command: '{binary} {input_args} -n 1 -v'
+    pass_regex: Verification:\s+PASS
+    verifier:
+      description: DX100 BFSVerifier structurally checks parent edges, depths and reachability from the
+        same source. Native FUNC binding; GEM5 post-ROI correctness requires its own evaluator.
+      code:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+        lines: [458, 509]
+  source_ancestor: null
+  source_baseline: dx100-bfs-scalar
+  comparison_baseline: null
+  verification:
+    status: unchecked
+    evidence: []
+    scope: Imported source only; no native or simulated target/workload has been checked by this record.
+  context_resolution: explicit
+regions:
+- id: function:bfs.cc:2157:ba2f8e639d5daef5
+  kind: function
+  name: TDStepMAA
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [66, 225]
+  byte_range: [2157, 10394]
+  insertion_range: [2307, 10394]
+  source_sha256: ba2f8e639d5daef5d58debef79db66fcac1e5296a5f53c207e3a80b92280725f
+  text: |-
+    void TDStepMAA(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue, int num_nodes, int num_edges) {
+    #ifdef GEM5
+        clear_mem_region();
+        add_mem_region(queue.beginp(), queue.endp());                   // 6
+        add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());   // 7
+        add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8
+        add_mem_region(parent.beginp(), parent.endp());                 // 9
+    #endif
+    #pragma omp parallel
+        {
+            int tile0, tile1, tile2, tile3, tile4, tile5, tile6, tile7;
+            int reg0, reg1, regOne, regZero, last_i_reg, last_j_reg;
+            int tid = omp_get_thread_num();
+            tile0 = tiles0[tid];
+            tile1 = tiles1[tid];
+            tile2 = tiles2[tid];
+            tile3 = tiles3[tid];
+            tile4 = tiles4[tid];
+            tile5 = tiles5[tid];
+            tile6 = tilesi[tid];
+            tile7 = tilesj[tid];
+            reg0 = regs0[tid];
+            reg1 = regs1[tid];
+            regOne = regs2[tid];
+            regZero = regs3[tid];
+            last_i_reg = last_i_regs[tid];
+            last_j_reg = last_j_regs[tid];
+            QueueBuffer<NodeID> lqueue(queue);
+            maa_const<int>(1, regOne);
+            maa_const<int>(0, regZero);
+            __restrict__ uint32_t *tile0Ptr = get_cacheable_tile_pointer<uint32_t>(tile0);
+            __restrict__ uint32_t *tile4Ptr = get_cacheable_tile_pointer<uint32_t>(tile4);
+            int *tile5Ptr = get_cacheable_tile_pointer<int>(tile5);
+            int idx = (int)queue.shared_out_start;
+            int len = (int)queue.shared_out_end;
+            while (idx < len) {
+                int current_len_size = len - idx;
+    #if TILE_SIZE == 32768
+                const int tile_size = current_len_size > NUM_CORES * 32768   ? 32768
+                                      : current_len_size > NUM_CORES * 16384 ? 16384
+                                      : current_len_size > NUM_CORES * 8192  ? 8192
+                                      : current_len_size > NUM_CORES * 4096  ? 4096
+                                      : current_len_size > NUM_CORES * 2048  ? 2048
+                                      : current_len_size > NUM_CORES * 1024  ? 1024
+                                                                             : -1;
+    #elif TILE_SIZE == 16384
+                const int tile_size = current_len_size > NUM_CORES * 16384  ? 16384
+                                      : current_len_size > NUM_CORES * 8192 ? 8192
+                                      : current_len_size > NUM_CORES * 4096 ? 4096
+                                      : current_len_size > NUM_CORES * 2048 ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 8192
+                const int tile_size = current_len_size > NUM_CORES * 8192   ? 8192
+                                      : current_len_size > NUM_CORES * 4096 ? 4096
+                                      : current_len_size > NUM_CORES * 2048 ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 4096
+                const int tile_size = current_len_size > NUM_CORES * 4096   ? 4096
+                                      : current_len_size > NUM_CORES * 2048 ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 2048
+                const int tile_size = current_len_size > NUM_CORES * 2048   ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 1024
+                const int tile_size = current_len_size > NUM_CORES * 1024 ? 1024
+                                                                          : -1;
+    #else
+                assert(false);
+    #endif
+                if (tile_size != -1) {
+                    // #pragma omp master
+                    //                 std::cout << "Starting TDSTEP: tile: " << tile_size << " idx: " << idx << " (maa)" << std::endl;
+                    int min = idx + tid * tile_size;
+                    int max = min + tile_size;
+                    maa_const<int>((int)min, reg0);
+                    maa_const<int>((int)max, reg1);
+                    // tile0 = u = queue.shared[i]
+                    maa_stream_load(queue.shared, reg0, reg1, regOne, tile0);
+                    // tile1 = VertexOffsets[u]
+                    maa_indirect_load<int>(VertexOffsets.start_, tile0, tile1);
+                    // tile2 = VertexOffsets[u+1]
+                    maa_indirect_load<int>(&VertexOffsets.start_[1], tile0, tile2);
+                    // do while using range loop api
+                    maa_const<int>(0, last_i_reg);
+                    maa_const<int>(-1, last_j_reg);
+                    int curr_tile7_size = 0;
+                    do {
+                        // tile6 = i
+                        // tile7 = j
+                        maa_range_loop<int>(last_i_reg, last_j_reg, tile1, tile2, regOne, tile6, tile7);
+                        // tile0 = v = g.out_neighbors_[j]
+                        maa_indirect_load<int>(g.out_neighbors_, tile7, tile0);
+                        // tile3 = inner u = queue.shared[i]
+                        maa_indirect_load<int>((NodeID *)(queue.shared + min), tile6, tile3);
+                        // Transfer tile7, tile0, tile3
+                        wait_ready(tile7);
+                        curr_tile7_size = get_tile_size(tile7);
+                        if (curr_tile7_size == 0) {
+                            break;
+                        }
+    #pragma omp critical
+                        {
+                            // tile7 = parent[v]
+                            maa_indirect_load<int>(parent.data(), tile0, tile7);
+                            // tile4 = parent[v] < 0
+                            maa_alu_scalar<int>(tile7, regZero, tile4, Operation_t::LT_OP);
+                            // if (tile4 -- parent[v] < 0)
+                            //     tile5 = parent[v]
+                            //     parent[v] = inner u
+                            maa_indirect_store_vector<int>(parent.data(), tile0, tile3, tile4, tile5);
+                            wait_ready(tile3);
+                            // #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                            //                     for (int i = 0; i < curr_tile7_size; i++) {
+                            //                         if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                            //                             std::cout << "v:" << tile0Ptr[i] << " op[v]<0: " << tile4Ptr[i] << " np[v] " << tile5Ptr[i] << std::endl;
+                            //                         }
+                            //                     }
+                        }
+    #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                        for (int i = 0; i < curr_tile7_size; i++) {
+                            if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                                lqueue.push_back(tile0Ptr[i]);
+                            }
+                        }
+                    } while (curr_tile7_size > 0);
+                    idx += NUM_CORES * tile_size;
+                } else {
+    #pragma omp barrier
+    // #pragma omp master
+    //                 std::cout << "Starting TDSTEP: tile: " << tile_size << " idx: " << idx << " (base)" << std::endl;
+    #pragma omp for schedule(dynamic, 64)
+                    for (int i = idx; i < len; i++) {
+                        NodeID u = queue.shared[i];
+                        for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                            NodeID v = g.out_neighbors_[j];
+                            NodeID curr_val = parent[v];
+                            if (curr_val < 0) {
+                                // indirect write (parent, v_tile, u_tile)
+                                // core fetch v tile
+                                if (compare_and_swap(parent[v], curr_val, u)) {
+                                    parent[v] = u;
+                                    lqueue.push_back(v);
+                                }
+                            }
+                        }
+                    }
+                    idx = len;
+                }
+            }
+
+            lqueue.flush();
+        }
+    #ifdef GEM5
+        clear_mem_region();
+    #endif
+    }
+  function: TDStepMAA
+  usr: c:@F@TDStepMAA#&1$@S@CSRGraph>#I#I#Vb1#&$@S@pvector>#I#S2_#&$@S@SlidingQueue>#I#I#I#
+  helpers:
+  - omp_get_thread_num
+  - QueueBuffer
+  - maa_const
+  - get_cacheable_tile_pointer
+  - maa_stream_load
+  - maa_indirect_load
+  - maa_range_loop
+  - wait_ready
+  - get_tile_size
+  - data
+  - maa_alu_scalar
+  - maa_indirect_store_vector
+  - operator[]
+  - compare_and_swap
+  - push_back
+  - flush
+  callers: [DOBFSMAA]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - uint32_t
+  - Operation_t
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:2157:ba2f8e639d5daef5
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:3718:555ee7236ddd1e7f
+  kind: loop
+  name: while
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [101, 218]
+  byte_range: [3718, 10318]
+  insertion_range: [3718, 10318]
+  source_sha256: 555ee7236ddd1e7f01fd36c69f0682b7d3ec7ae468976dca19865fed64ef615f
+  text: |-
+    while (idx < len) {
+                int current_len_size = len - idx;
+    #if TILE_SIZE == 32768
+                const int tile_size = current_len_size > NUM_CORES * 32768   ? 32768
+                                      : current_len_size > NUM_CORES * 16384 ? 16384
+                                      : current_len_size > NUM_CORES * 8192  ? 8192
+                                      : current_len_size > NUM_CORES * 4096  ? 4096
+                                      : current_len_size > NUM_CORES * 2048  ? 2048
+                                      : current_len_size > NUM_CORES * 1024  ? 1024
+                                                                             : -1;
+    #elif TILE_SIZE == 16384
+                const int tile_size = current_len_size > NUM_CORES * 16384  ? 16384
+                                      : current_len_size > NUM_CORES * 8192 ? 8192
+                                      : current_len_size > NUM_CORES * 4096 ? 4096
+                                      : current_len_size > NUM_CORES * 2048 ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 8192
+                const int tile_size = current_len_size > NUM_CORES * 8192   ? 8192
+                                      : current_len_size > NUM_CORES * 4096 ? 4096
+                                      : current_len_size > NUM_CORES * 2048 ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 4096
+                const int tile_size = current_len_size > NUM_CORES * 4096   ? 4096
+                                      : current_len_size > NUM_CORES * 2048 ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 2048
+                const int tile_size = current_len_size > NUM_CORES * 2048   ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 1024
+                const int tile_size = current_len_size > NUM_CORES * 1024 ? 1024
+                                                                          : -1;
+    #else
+                assert(false);
+    #endif
+                if (tile_size != -1) {
+                    // #pragma omp master
+                    //                 std::cout << "Starting TDSTEP: tile: " << tile_size << " idx: " << idx << " (maa)" << std::endl;
+                    int min = idx + tid * tile_size;
+                    int max = min + tile_size;
+                    maa_const<int>((int)min, reg0);
+                    maa_const<int>((int)max, reg1);
+                    // tile0 = u = queue.shared[i]
+                    maa_stream_load(queue.shared, reg0, reg1, regOne, tile0);
+                    // tile1 = VertexOffsets[u]
+                    maa_indirect_load<int>(VertexOffsets.start_, tile0, tile1);
+                    // tile2 = VertexOffsets[u+1]
+                    maa_indirect_load<int>(&VertexOffsets.start_[1], tile0, tile2);
+                    // do while using range loop api
+                    maa_const<int>(0, last_i_reg);
+                    maa_const<int>(-1, last_j_reg);
+                    int curr_tile7_size = 0;
+                    do {
+                        // tile6 = i
+                        // tile7 = j
+                        maa_range_loop<int>(last_i_reg, last_j_reg, tile1, tile2, regOne, tile6, tile7);
+                        // tile0 = v = g.out_neighbors_[j]
+                        maa_indirect_load<int>(g.out_neighbors_, tile7, tile0);
+                        // tile3 = inner u = queue.shared[i]
+                        maa_indirect_load<int>((NodeID *)(queue.shared + min), tile6, tile3);
+                        // Transfer tile7, tile0, tile3
+                        wait_ready(tile7);
+                        curr_tile7_size = get_tile_size(tile7);
+                        if (curr_tile7_size == 0) {
+                            break;
+                        }
+    #pragma omp critical
+                        {
+                            // tile7 = parent[v]
+                            maa_indirect_load<int>(parent.data(), tile0, tile7);
+                            // tile4 = parent[v] < 0
+                            maa_alu_scalar<int>(tile7, regZero, tile4, Operation_t::LT_OP);
+                            // if (tile4 -- parent[v] < 0)
+                            //     tile5 = parent[v]
+                            //     parent[v] = inner u
+                            maa_indirect_store_vector<int>(parent.data(), tile0, tile3, tile4, tile5);
+                            wait_ready(tile3);
+                            // #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                            //                     for (int i = 0; i < curr_tile7_size; i++) {
+                            //                         if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                            //                             std::cout << "v:" << tile0Ptr[i] << " op[v]<0: " << tile4Ptr[i] << " np[v] " << tile5Ptr[i] << std::endl;
+                            //                         }
+                            //                     }
+                        }
+    #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                        for (int i = 0; i < curr_tile7_size; i++) {
+                            if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                                lqueue.push_back(tile0Ptr[i]);
+                            }
+                        }
+                    } while (curr_tile7_size > 0);
+                    idx += NUM_CORES * tile_size;
+                } else {
+    #pragma omp barrier
+    // #pragma omp master
+    //                 std::cout << "Starting TDSTEP: tile: " << tile_size << " idx: " << idx << " (base)" << std::endl;
+    #pragma omp for schedule(dynamic, 64)
+                    for (int i = idx; i < len; i++) {
+                        NodeID u = queue.shared[i];
+                        for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                            NodeID v = g.out_neighbors_[j];
+                            NodeID curr_val = parent[v];
+                            if (curr_val < 0) {
+                                // indirect write (parent, v_tile, u_tile)
+                                // core fetch v tile
+                                if (compare_and_swap(parent[v], curr_val, u)) {
+                                    parent[v] = u;
+                                    lqueue.push_back(v);
+                                }
+                            }
+                        }
+                    }
+                    idx = len;
+                }
+            }
+  function: TDStepMAA
+  usr: null
+  helpers: []
+  callers: [DOBFSMAA]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - uint32_t
+  - Operation_t
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:2157:ba2f8e639d5daef5
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:7062:a164130f692c4691
+  kind: loop
+  name: do
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [156, 194]
+  byte_range: [7062, 9276]
+  insertion_range: [7062, 9276]
+  source_sha256: a164130f692c4691a1df95bb18da5990228b1bbb0669c69eb51ea371703e624c
+  text: |-
+    do {
+                        // tile6 = i
+                        // tile7 = j
+                        maa_range_loop<int>(last_i_reg, last_j_reg, tile1, tile2, regOne, tile6, tile7);
+                        // tile0 = v = g.out_neighbors_[j]
+                        maa_indirect_load<int>(g.out_neighbors_, tile7, tile0);
+                        // tile3 = inner u = queue.shared[i]
+                        maa_indirect_load<int>((NodeID *)(queue.shared + min), tile6, tile3);
+                        // Transfer tile7, tile0, tile3
+                        wait_ready(tile7);
+                        curr_tile7_size = get_tile_size(tile7);
+                        if (curr_tile7_size == 0) {
+                            break;
+                        }
+    #pragma omp critical
+                        {
+                            // tile7 = parent[v]
+                            maa_indirect_load<int>(parent.data(), tile0, tile7);
+                            // tile4 = parent[v] < 0
+                            maa_alu_scalar<int>(tile7, regZero, tile4, Operation_t::LT_OP);
+                            // if (tile4 -- parent[v] < 0)
+                            //     tile5 = parent[v]
+                            //     parent[v] = inner u
+                            maa_indirect_store_vector<int>(parent.data(), tile0, tile3, tile4, tile5);
+                            wait_ready(tile3);
+                            // #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                            //                     for (int i = 0; i < curr_tile7_size; i++) {
+                            //                         if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                            //                             std::cout << "v:" << tile0Ptr[i] << " op[v]<0: " << tile4Ptr[i] << " np[v] " << tile5Ptr[i] << std::endl;
+                            //                         }
+                            //                     }
+                        }
+    #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                        for (int i = 0; i < curr_tile7_size; i++) {
+                            if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                                lqueue.push_back(tile0Ptr[i]);
+                            }
+                        }
+                    } while (curr_tile7_size > 0);
+  function: TDStepMAA
+  usr: null
+  helpers: []
+  callers: [DOBFSMAA]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - uint32_t
+  - Operation_t
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:2157:ba2f8e639d5daef5
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:9557:d3183c577229b91e
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [201, 215]
+  byte_range: [9557, 10267]
+  insertion_range: [9589, 10267]
+  source_sha256: d3183c577229b91edfe9cb2792cf213958309f872871f822f3d60495b409beb3
+  text: |-
+    for (int i = idx; i < len; i++) {
+                        NodeID u = queue.shared[i];
+                        for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                            NodeID v = g.out_neighbors_[j];
+                            NodeID curr_val = parent[v];
+                            if (curr_val < 0) {
+                                // indirect write (parent, v_tile, u_tile)
+                                // core fetch v tile
+                                if (compare_and_swap(parent[v], curr_val, u)) {
+                                    parent[v] = u;
+                                    lqueue.push_back(v);
+                                }
+                            }
+                        }
+                    }
+  function: TDStepMAA
+  usr: null
+  helpers: []
+  callers: [DOBFSMAA]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - uint32_t
+  - Operation_t
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:2157:ba2f8e639d5daef5
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:9659:781ab83e6d1b28c0
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [203, 214]
+  byte_range: [9659, 10249]
+  insertion_range: [9659, 10249]
+  source_sha256: 781ab83e6d1b28c0815701c42db67ffe0bb9806b3882940de203e97a60848bed
+  text: |-
+    for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                            NodeID v = g.out_neighbors_[j];
+                            NodeID curr_val = parent[v];
+                            if (curr_val < 0) {
+                                // indirect write (parent, v_tile, u_tile)
+                                // core fetch v tile
+                                if (compare_and_swap(parent[v], curr_val, u)) {
+                                    parent[v] = u;
+                                    lqueue.push_back(v);
+                                }
+                            }
+                        }
+  function: TDStepMAA
+  usr: null
+  helpers: []
+  callers: [DOBFSMAA]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - uint32_t
+  - Operation_t
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:2157:ba2f8e639d5daef5
+  source_association: verified_current_candidate
+- id: function:bfs.cc:10396:d26a44a368eb08b9
+  kind: function
+  name: TDStep
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [227, 258]
+  byte_range: [10396, 11675]
+  insertion_range: [10543, 11675]
+  source_sha256: d26a44a368eb08b98f2b96274b5fef16382c8ddba3ab716a7853d4de6fd51ce5
+  text: |-
+    void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue, int num_nodes, int num_edges) {
+    #ifdef GEM5
+        clear_mem_region();
+        add_mem_region(queue.beginp(), queue.endp());                   // 6
+        add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());   // 7
+        add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8
+        add_mem_region(parent.beginp(), parent.endp());                 // 9
+    #endif
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for schedule(dynamic, 64) nowait
+            for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                NodeID u = queue.shared[i];
+                for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                    NodeID v = g.out_neighbors_[j];
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        // indirect write (parent, v_tile, u_tile)
+                        // core fetch v tile
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                        }
+                    }
+                }
+            }
+            lqueue.flush();
+        }
+    #ifdef GEM5
+        clear_mem_region();
+    #endif
+    }
+  function: TDStep
+  usr: c:@F@TDStep#&1$@S@CSRGraph>#I#I#Vb1#&$@S@pvector>#I#S2_#&$@S@SlidingQueue>#I#I#I#
+  helpers: [QueueBuffer, 'operator[]', compare_and_swap, push_back, flush]
+  callers: [DOBFS]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - size_t
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.8055586530000001
+    exclusive_thread_cpu_seconds: 0.16736899
+    invocations: 18
+    exclusive_function_thread_cpu_seconds: 0.8055586530000001
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:10396:d26a44a368eb08b9
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:11002:2f219774fd6e0e7d
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [239, 252]
+  byte_range: [11002, 11600]
+  insertion_range: [11073, 11600]
+  source_sha256: 2f219774fd6e0e7d51f01370d0efe3da1f3af123219d4f61be756a865c8dfb27
+  text: |-
+    for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                NodeID u = queue.shared[i];
+                for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                    NodeID v = g.out_neighbors_[j];
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        // indirect write (parent, v_tile, u_tile)
+                        // core fetch v tile
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                        }
+                    }
+                }
+            }
+  function: TDStep
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - size_t
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.638189663
+    exclusive_thread_cpu_seconds: 0.331895205
+    invocations: 786432
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:10396:d26a44a368eb08b9
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:11127:896b649457fb9e83
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [241, 251]
+  byte_range: [11127, 11590]
+  insertion_range: [11127, 11590]
+  source_sha256: 896b649457fb9e8389c2e9f6a386c0a969b37798e34376af4a00bbf2ccb04ad2
+  text: |-
+    for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                    NodeID v = g.out_neighbors_[j];
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        // indirect write (parent, v_tile, u_tile)
+                        // core fetch v tile
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                        }
+                    }
+                }
+  function: TDStep
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - size_t
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.306294458
+    exclusive_thread_cpu_seconds: 0.306294458
+    invocations: 786432
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:10396:d26a44a368eb08b9
+  source_association: verified_current_candidate
+- id: function:bfs.cc:11677:cd1ef9d28c8c62ca
+  kind: function
+  name: TDStep2
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [260, 281]
+  byte_range: [11677, 12431]
+  insertion_range: [11764, 12431]
+  source_sha256: cd1ef9d28c8c62ca8a2c340177951a7dbaa740ce3e9302ea3b9ce763851a50a1
+  text: |-
+    int64_t TDStep2(const Graph &g, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue) {
+        int64_t scout_count = 0;
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for reduction(+ : scout_count) nowait
+            for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                NodeID u = *q_iter;
+                for (NodeID v : g.out_neigh(u)) {
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                            scout_count += -curr_val;
+                        }
+                    }
+                }
+            }
+            lqueue.flush();
+        }
+        return scout_count;
+    }
+  function: TDStep2
+  usr: c:@F@TDStep2#&1$@S@CSRGraph>#I#I#Vb1#&$@S@pvector>#I#&$@S@SlidingQueue>#I#
+  helpers:
+  - QueueBuffer
+  - begin
+  - end
+  - out_neigh
+  - operator[]
+  - compare_and_swap
+  - push_back
+  - flush
+  callers: []
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:11677:cd1ef9d28c8c62ca
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:11922:ee8a2407c2e768df
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [266, 277]
+  byte_range: [11922, 12375]
+  insertion_range: [11988, 12375]
+  source_sha256: ee8a2407c2e768dff49d6ca1d8d0f638495c6952159f63bc01e4c62e9e94565a
+  text: |-
+    for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                NodeID u = *q_iter;
+                for (NodeID v : g.out_neigh(u)) {
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                            scout_count += -curr_val;
+                        }
+                    }
+                }
+            }
+  function: TDStep2
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:11677:cd1ef9d28c8c62ca
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:12034:d3f90fae3543181f
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [268, 276]
+  byte_range: [12034, 12365]
+  insertion_range: [12034, 12365]
+  source_sha256: d3f90fae3543181f3ce5df866bea21d3b3bb2ecd044103944273db1e4c30ff71
+  text: |-
+    for (NodeID v : g.out_neigh(u)) {
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                            scout_count += -curr_val;
+                        }
+                    }
+                }
+  function: TDStep2
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:11677:cd1ef9d28c8c62ca
+  source_association: verified_current_candidate
+- id: function:bfs.cc:12433:3e560c996879193b
+  kind: function
+  name: QueueToBitmap
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [283, 289]
+  byte_range: [12433, 12663]
+  insertion_range: [12500, 12663]
+  source_sha256: 3e560c996879193bc6c4b1bda8a34996b8b542c9231ad8fc5af16b7977999f4b
+  text: |-
+    void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+    #pragma omp parallel for
+        for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+            NodeID u = *q_iter;
+            bm.set_bit_atomic(u);
+        }
+    }
+  function: QueueToBitmap
+  usr: c:@F@QueueToBitmap#&1$@S@SlidingQueue>#I#&$@S@Bitmap#
+  helpers: [begin, end, set_bit_atomic]
+  callers: []
+  referenced_types: [SlidingQueue, NodeID, Bitmap]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:12433:3e560c996879193b
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:12530:6fce0a8bf1585475
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [285, 288]
+  byte_range: [12530, 12661]
+  insertion_range: [12596, 12661]
+  source_sha256: 6fce0a8bf158547509cbb72c209724fe846ba3ee42c4c6f59f2c2bcb42bab441
+  text: |-
+    for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+            NodeID u = *q_iter;
+            bm.set_bit_atomic(u);
+        }
+  function: QueueToBitmap
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [SlidingQueue, NodeID, Bitmap]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:12433:3e560c996879193b
+  source_association: verified_current_candidate
+- id: function:bfs.cc:12665:9ca128eb96d3fcc8
+  kind: function
+  name: BitmapToQueue
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [291, 303]
+  byte_range: [12665, 13037]
+  insertion_range: [12767, 13037]
+  source_sha256: 9ca128eb96d3fcc8f69d73fee58e9fcd06cf8627e0d3b1dee4b8c9ee5226697a
+  text: |-
+    void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                       SlidingQueue<NodeID> &queue) {
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for nowait
+            for (NodeID n = 0; n < g.num_nodes(); n++)
+                if (bm.get_bit(n))
+                    lqueue.push_back(n);
+            lqueue.flush();
+        }
+        queue.slide_window();
+    }
+  function: BitmapToQueue
+  usr: c:@F@BitmapToQueue#&1$@S@CSRGraph>#I#I#Vb1#&1$@S@Bitmap#&$@S@SlidingQueue>#I#
+  helpers: [QueueBuffer, num_nodes, get_bit, push_back, flush, slide_window]
+  callers: []
+  referenced_types: [Graph, Bitmap, SlidingQueue, NodeID, QueueBuffer]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:12665:9ca128eb96d3fcc8
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:12869:ec35536f223b52f4
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [297, 299]
+  byte_range: [12869, 12979]
+  insertion_range: [12924, 12979]
+  source_sha256: ec35536f223b52f4377c50e849b0d1edb09134486bb9fc5a82f3ea97301015e9
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+                if (bm.get_bit(n))
+                    lqueue.push_back(n);
+  function: BitmapToQueue
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [Graph, Bitmap, SlidingQueue, NodeID, QueueBuffer]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:12665:9ca128eb96d3fcc8
+  source_association: verified_current_candidate
+- id: function:bfs.cc:13039:a64d92c2d52fcfe5
+  kind: function
+  name: InitParent
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [305, 311]
+  byte_range: [13039, 13285]
+  insertion_range: [13083, 13285]
+  source_sha256: a64d92c2d52fcfe583c71a23b2ca992cac0cdd0549e8a92b0fb5cf331a91ee1a
+  text: |-
+    pvector<NodeID> InitParent(const Graph &g) {
+        pvector<NodeID> parent(g.num_nodes());
+    #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+        return parent;
+    }
+  function: InitParent
+  usr: c:@F@InitParent#&1$@S@CSRGraph>#I#I#Vb1#
+  helpers: [pvector, num_nodes, 'operator[]', out_degree]
+  callers: [DOBFS, DOBFSMAA]
+  referenced_types: [pvector, NodeID, Graph]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.329910993
+    exclusive_thread_cpu_seconds: 0.16815441
+    invocations: 3
+    exclusive_function_thread_cpu_seconds: 0.329910993
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:13039:a64d92c2d52fcfe5
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:13156:7429be52f28ee4f6
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [308, 309]
+  byte_range: [13156, 13264]
+  insertion_range: [13207, 13264]
+  source_sha256: 7429be52f28ee4f605b59b8f8f8963bc23d10594fb262ed1fa032c095231adca
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+            parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+  function: InitParent
+  usr: null
+  helpers: []
+  callers: [DOBFS, DOBFSMAA]
+  referenced_types: [pvector, NodeID, Graph]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.16175658299999998
+    exclusive_thread_cpu_seconds: 0.16175658299999998
+    invocations: 786432
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:13039:a64d92c2d52fcfe5
+  source_association: verified_current_candidate
+- id: function:bfs.cc:13287:71949e7157b42ff3
+  kind: function
+  name: DOBFS
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [313, 364]
+  byte_range: [13287, 14871]
+  insertion_range: [13423, 14871]
+  source_sha256: 71949e7157b42ff39306d16765a69b4fd6059a0c9a17e820a538a6c8b7b9811e
+  text: |-
+    pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                          int alpha = 1, int beta = 18) {
+        int num_nodes = g.num_nodes();
+        int num_edges = g.num_edges_directed();
+        if (logging_enabled)
+            PrintStep("Source", static_cast<int64_t>(source));
+        pvector<SGOffset> VertexOffsetsOut = g.VertexOffsets();
+        Timer t;
+        alloc_MAA();
+        init_MAA();
+        t.Start();
+        pvector<NodeID> parent = InitParent(g);
+        t.Stop();
+        if (logging_enabled)
+            PrintStep("i", t.Seconds());
+        parent[source] = source;
+        SlidingQueue<NodeID> queue(g.num_nodes());
+        queue.push_back(source);
+        queue.slide_window();
+        Bitmap curr(g.num_nodes());
+        curr.reset();
+        Bitmap front(g.num_nodes());
+        front.reset();
+
+    #ifdef GEM5
+        std::cout << "ROI started: " << omp_get_num_threads() << " threads" << std::endl;
+        m5_work_begin(0, 0);
+        m5_reset_stats(0, 0);
+    #endif
+        while (!queue.empty()) {
+            if (logging_enabled)
+                std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+            t.Start();
+            TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled) {
+                PrintStep("td", t.Seconds());
+            }
+        }
+    #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            if (parent[n] < -1)
+                parent[n] = -1;
+    #ifdef GEM5
+        m5_dump_stats(0, 0);
+        m5_work_end(0, 0);
+        std::cout << "ROI End!!!" << std::endl;
+        m5_exit(0);
+    #endif
+        return parent;
+    }
+  function: DOBFS
+  usr: c:@F@DOBFS#&1$@S@CSRGraph>#I#I#Vb1#I#b#I#I#
+  helpers:
+  - num_nodes
+  - num_edges_directed
+  - PrintStep
+  - basic_string
+  - VertexOffsets
+  - Timer
+  - alloc_MAA
+  - init_MAA
+  - Start
+  - InitParent
+  - Stop
+  - Seconds
+  - operator[]
+  - SlidingQueue
+  - push_back
+  - slide_window
+  - Bitmap
+  - reset
+  - empty
+  - operator<<
+  - size
+  - TDStep
+  - pvector
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 1.465722437
+    exclusive_thread_cpu_seconds: 0.168719122
+    invocations: 3
+    exclusive_function_thread_cpu_seconds: 0.330252791
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:13287:71949e7157b42ff3
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:14222:9649562f1941ed2b
+  kind: loop
+  name: while
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [342, 352]
+  byte_range: [14222, 14595]
+  insertion_range: [14222, 14595]
+  source_sha256: 9649562f1941ed2b0f29675a9cbf0352771bef52ea42563a6eccb8ffcbdaf28f
+  text: |-
+    while (!queue.empty()) {
+            if (logging_enabled)
+                std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+            t.Start();
+            TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled) {
+                PrintStep("td", t.Seconds());
+            }
+        }
+  function: DOBFS
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.8055689739999999
+    exclusive_thread_cpu_seconds: 1.0321e-05
+    invocations: 3
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:13287:71949e7157b42ff3
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:14625:01da7bd21c1235d7
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [354, 356]
+  byte_range: [14625, 14723]
+  insertion_range: [14676, 14723]
+  source_sha256: 01da7bd21c1235d7332ac2bf4123b457ff5757c5477c545eca47d07fb8f67c63
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+            if (parent[n] < -1)
+                parent[n] = -1;
+  function: DOBFS
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.161523348
+    exclusive_thread_cpu_seconds: 0.161523348
+    invocations: 786432
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:13287:71949e7157b42ff3
+  source_association: verified_current_candidate
+- id: function:bfs.cc:14873:094895302872aee0
+  kind: function
+  name: DOBFSMAA
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [366, 443]
+  byte_range: [14873, 17423]
+  insertion_range: [15015, 17423]
+  source_sha256: 094895302872aee07c44cac8f82564e826603f552ce1448b8e5460f1ddb5c349
+  text: |-
+    pvector<NodeID> DOBFSMAA(const Graph &g, NodeID source, bool logging_enabled = false,
+                             int alpha = 1, int beta = 18) {
+        int num_nodes = g.num_nodes();
+        int num_edges = g.num_edges_directed();
+        if (logging_enabled)
+            PrintStep("Source", static_cast<int64_t>(source));
+        pvector<SGOffset> VertexOffsetsOut = g.VertexOffsets();
+        Timer t;
+        alloc_MAA();
+        init_MAA();
+        t.Start();
+    #pragma omp parallel
+        {
+    #pragma omp critical
+            {
+                int tid = omp_get_thread_num();
+                tiles0[tid] = get_new_tile<int>();
+                tiles1[tid] = get_new_tile<int>();
+                tiles2[tid] = get_new_tile<int>();
+                tiles3[tid] = get_new_tile<int>();
+                tiles4[tid] = get_new_tile<int>();
+                tiles5[tid] = get_new_tile<int>();
+                tilesi[tid] = get_new_tile<int>();
+                tilesj[tid] = get_new_tile<int>();
+                regs0[tid] = get_new_reg<int>();
+                regs1[tid] = get_new_reg<int>();
+                regs2[tid] = get_new_reg<int>();
+                regs3[tid] = get_new_reg<int>();
+                regs4[tid] = get_new_reg<int>();
+                regs5[tid] = get_new_reg<int>();
+                last_i_regs[tid] = get_new_reg<int>();
+                last_j_regs[tid] = get_new_reg<int>();
+            }
+        }
+        pvector<NodeID> parent = InitParent(g);
+        t.Stop();
+        if (logging_enabled)
+            PrintStep("i", t.Seconds());
+        parent[source] = source;
+        SlidingQueue<NodeID> queue(g.num_nodes());
+        queue.push_back(source);
+        queue.slide_window();
+        Bitmap curr(g.num_nodes());
+        curr.reset();
+        Bitmap front(g.num_nodes());
+        front.reset();
+
+    #ifdef GEM5
+        std::cout << "ROI started: " << omp_get_num_threads() << " threads" << std::endl;
+        m5_work_begin(0, 0);
+        m5_reset_stats(0, 0);
+    #endif
+        while (!queue.empty()) {
+            t.Start();
+            bool isMAA = true;
+            std::cout << "Starting TDStepMAA: " << queue.size() << " elements" << std::endl;
+            TDStepMAA(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled) {
+                if (isMAA)
+                    PrintStep("td_maa", t.Seconds());
+                else
+                    PrintStep("td", t.Seconds());
+            }
+        }
+    #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            if (parent[n] < -1)
+                parent[n] = -1;
+    #ifdef GEM5
+        m5_dump_stats(0, 0);
+        m5_work_end(0, 0);
+        std::cout << "ROI End!!!" << std::endl;
+        m5_exit(0);
+    #endif
+        return parent;
+    }
+  function: DOBFSMAA
+  usr: c:@F@DOBFSMAA#&1$@S@CSRGraph>#I#I#Vb1#I#b#I#I#
+  helpers:
+  - num_nodes
+  - num_edges_directed
+  - PrintStep
+  - basic_string
+  - VertexOffsets
+  - Timer
+  - alloc_MAA
+  - init_MAA
+  - Start
+  - omp_get_thread_num
+  - get_new_tile
+  - get_new_reg
+  - InitParent
+  - Stop
+  - Seconds
+  - operator[]
+  - SlidingQueue
+  - push_back
+  - slide_window
+  - Bitmap
+  - reset
+  - empty
+  - operator<<
+  - size
+  - TDStepMAA
+  - pvector
+  callers: []
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:14873:094895302872aee0
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:16680:d6668c43308db1a5
+  kind: loop
+  name: while
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [418, 431]
+  byte_range: [16680, 17147]
+  insertion_range: [16680, 17147]
+  source_sha256: d6668c43308db1a59dc93d07795b7f58efc2ad3fbe6a93b20840f76c34fafe53
+  text: |-
+    while (!queue.empty()) {
+            t.Start();
+            bool isMAA = true;
+            std::cout << "Starting TDStepMAA: " << queue.size() << " elements" << std::endl;
+            TDStepMAA(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled) {
+                if (isMAA)
+                    PrintStep("td_maa", t.Seconds());
+                else
+                    PrintStep("td", t.Seconds());
+            }
+        }
+  function: DOBFSMAA
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:14873:094895302872aee0
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:17177:01da7bd21c1235d7
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [433, 435]
+  byte_range: [17177, 17275]
+  insertion_range: [17228, 17275]
+  source_sha256: 01da7bd21c1235d7332ac2bf4123b457ff5757c5477c545eca47d07fb8f67c63
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+            if (parent[n] < -1)
+                parent[n] = -1;
+  function: DOBFSMAA
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:14873:094895302872aee0
+  source_association: verified_current_candidate
+- id: function:bfs.cc:17425:660ca89daefffcee
+  kind: function
+  name: PrintBFSStats
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [445, 456]
+  byte_range: [17425, 17797]
+  insertion_range: [17494, 17797]
+  source_sha256: 660ca89daefffcee213996f21b5338c0cd52f823457bf58e3a994bee95d05a04
+  text: |-
+    void PrintBFSStats(const Graph &g, const pvector<NodeID> &bfs_tree) {
+        int64_t tree_size = 0;
+        int64_t n_edges = 0;
+        for (NodeID n : g.vertices()) {
+            if (bfs_tree[n] >= 0) {
+                n_edges += g.out_degree(n);
+                tree_size++;
+            }
+        }
+        cout << "BFS Tree has " << tree_size << " nodes and ";
+        cout << n_edges << " edges" << endl;
+    }
+  function: PrintBFSStats
+  usr: c:@F@PrintBFSStats#&1$@S@CSRGraph>#I#I#Vb1#&1$@S@pvector>#I#
+  helpers: [operator*, vertices, 'operator[]', out_degree, operator<<]
+  callers: []
+  referenced_types: [Graph, pvector, NodeID, int64_t]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:17425:660ca89daefffcee
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:17551:a8105cce278141c3
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [448, 453]
+  byte_range: [17551, 17695]
+  insertion_range: [17551, 17695]
+  source_sha256: a8105cce278141c3759b9973c40c12789eb0f32462d9e43ba7ce4242d825b6ce
+  text: |-
+    for (NodeID n : g.vertices()) {
+            if (bfs_tree[n] >= 0) {
+                n_edges += g.out_degree(n);
+                tree_size++;
+            }
+        }
+  function: PrintBFSStats
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [Graph, pvector, NodeID, int64_t]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:17425:660ca89daefffcee
+  source_association: verified_current_candidate
+- id: function:bfs.cc:18063:546ec83dfdeaf3fe
+  kind: function
+  name: BFSVerifier
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [463, 509]
+  byte_range: [18063, 19664]
+  insertion_range: [18160, 19664]
+  source_sha256: 546ec83dfdeaf3fec444ebfcc1c70b72588f13dd21194e0d19146a5d6f5f5d96
+  text: |-
+    bool BFSVerifier(const Graph &g, NodeID source,
+                     const pvector<NodeID> &parent) {
+        pvector<int> depth(g.num_nodes(), -1);
+        depth[source] = 0;
+        vector<NodeID> to_visit;
+        to_visit.reserve(g.num_nodes());
+        to_visit.push_back(source);
+        for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+        for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+        return true;
+    }
+  function: BFSVerifier
+  usr: c:@F@BFSVerifier#&1$@S@CSRGraph>#I#I#Vb1#I#&1$@S@pvector>#I#
+  helpers:
+  - pvector
+  - num_nodes
+  - operator[]
+  - vector
+  - reserve
+  - push_back
+  - begin
+  - operator!=
+  - end
+  - operator++
+  - operator*
+  - out_neigh
+  - vertices
+  - operator<<
+  - in_neigh
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:18063:546ec83dfdeaf3fe
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:18329:859f5c781239d2af
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [470, 478]
+  byte_range: [18329, 18601]
+  insertion_range: [18329, 18601]
+  source_sha256: 859f5c781239d2afa384246228ba88c634694e7be3bfb36835a19fd12fa81a8a
+  text: |-
+    for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:18063:546ec83dfdeaf3fe
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:18424:696dcb82ce1ee80d
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [472, 477]
+  byte_range: [18424, 18595]
+  insertion_range: [18424, 18595]
+  source_sha256: 696dcb82ce1ee80df7e1500bbf764349585ad5968d8f45e5aac89c3ce28c0175
+  text: |-
+    for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:18063:546ec83dfdeaf3fe
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:18606:5688108067948590
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [479, 507]
+  byte_range: [18606, 19645]
+  insertion_range: [18606, 19645]
+  source_sha256: 568810806794859013d79d3866031532944edd5e06bf0ef002028cde36deb171
+  text: |-
+    for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:18063:546ec83dfdeaf3fe
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:18979:61928faa9fc30778
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [489, 498]
+  byte_range: [18979, 19341]
+  insertion_range: [18979, 19341]
+  source_sha256: 61928faa9fc30778009b87fb9807969ac3532e62625421b22b79cd25b03ac08c
+  text: |-
+    for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:18063:546ec83dfdeaf3fe
+  source_association: verified_current_candidate
+- id: function:bfs.cc:19666:7a7b5f224b2acf8f
+  kind: function
+  name: main
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [511, 536]
+  byte_range: [19666, 20532]
+  insertion_range: [19700, 20532]
+  source_sha256: 7a7b5f224b2acf8ff9416b29e133952d76182231067a6c5f9caf4522e5eebcc4
+  text: |-
+    int main(int argc, char *argv[]) {
+        CLApp cli(argc, argv, "breadth-first search");
+        if (!cli.ParseArgs())
+            return -1;
+        Builder b(cli);
+        Graph g = b.MakeGraph();
+        SourcePicker<Graph> sp(g, cli.start_vertex());
+    #ifdef GEM5
+        std::cout << "Fake Checkpoint started" << std::endl;
+        m5_checkpoint(0, 0);
+        std::cout << "Fake Checkpoint ended" << std::endl;
+    #endif
+        auto BFSBound = [&sp, &cli](const Graph &g) {
+    #ifdef MAA
+            return DOBFSMAA(g, sp.PickNext(), cli.logging_en());
+    #else
+            return DOBFS(g, sp.PickNext(), cli.logging_en());
+    #endif
+        };
+        SourcePicker<Graph> vsp(g, cli.start_vertex());
+        auto VerifierBound = [&vsp](const Graph &g, const pvector<NodeID> &parent) {
+            return BFSVerifier(g, vsp.PickNext(), parent);
+        };
+        BenchmarkKernel(cli, g, BFSBound, PrintBFSStats, VerifierBound);
+        return 0;
+    }
+  function: main
+  usr: c:@F@main#I#**C#
+  helpers:
+  - CLApp
+  - basic_string
+  - ParseArgs
+  - BuilderBase
+  - MakeGraph
+  - SourcePicker
+  - start_vertex
+  - DOBFS
+  - PickNext
+  - logging_en
+  - BFSVerifier
+  - BenchmarkKernel
+  - (lambda at /data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.dx100-patch/source/benchmarks/gapbs/src/bfs.cc:523:21)
+  - (lambda at /data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.dx100-patch/source/benchmarks/gapbs/src/bfs.cc:531:26)
+  callers: []
+  referenced_types: [CLApp, Builder, Graph, SourcePicker, pvector, NodeID]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: f1100f71027bbb0c03ab424d261c270a87e3d9d296195a16c290276c3d150836
+  source_artifact_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+  function_region: function:bfs.cc:19666:7a7b5f224b2acf8f
+  source_association: verified_current_candidate
+protections:
+- path: benchmarks/gapbs/src/bfs.cc
+  kind: verifier
+  text: |
+    // BFS verifier does a serial BFS from same source and asserts:
+    // - parent[source] = source
+    // - parent[v] = u  =>  depth[v] = depth[u] + 1 (except for source)
+    // - parent[v] = u  => there is edge from u to v
+    // - all vertices reachable from source have a parent
+    bool BFSVerifier(const Graph &g, NodeID source,
+                     const pvector<NodeID> &parent) {
+        pvector<int> depth(g.num_nodes(), -1);
+        depth[source] = 0;
+        vector<NodeID> to_visit;
+        to_visit.reserve(g.num_nodes());
+        to_visit.push_back(source);
+        for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+        for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+        return true;
+    }
+- path: benchmarks/API/prefetch_depricated.cpp
+  kind: roi_calls
+  calls: ['m5_work_begin(0, 0);', 'm5_reset_stats(0, 0);', 'm5_dump_stats(0, 0);', 'm5_work_end(0, 0);']
+- path: benchmarks/API/test.cpp
+  kind: roi_calls
+  calls:
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_exit(0);
+- path: benchmarks/API/test_functional.cpp
+  kind: roi_calls
+  calls:
+  - m5_exit(1);
+  - m5_exit(1);
+  - m5_exit(1);
+  - m5_exit(1);
+  - m5_exit(1);
+  - m5_exit(1);
+  - m5_exit(1);
+  - m5_exit(1);
+  - m5_exit(1);
+  - m5_exit(1);
+  - m5_exit(1);
+  - m5_exit(1);
+  - m5_exit(1);
+  - m5_exit(0);
+- path: benchmarks/API/test_strided.cpp
+  kind: roi_calls
+  calls:
+  - m5_exit(0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_exit(0);
+- path: benchmarks/API/test_tested_parallel.cpp
+  kind: roi_calls
+  calls:
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_exit(0);
+- path: benchmarks/API/test_vectorized.cpp
+  kind: roi_calls
+  calls:
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+- path: benchmarks/gapbs/src/bc.cc
+  kind: roi_calls
+  calls:
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_exit(0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_exit(0);
+- path: benchmarks/gapbs/src/benchmark.h
+  kind: file
+  sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+- path: benchmarks/gapbs/src/bfs.cc
+  kind: roi_calls
+  calls:
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_exit(0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_exit(0);
+- path: benchmarks/gapbs/src/command_line.h
+  kind: file
+  sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+- path: benchmarks/gapbs/src/pr.cc
+  kind: roi_calls
+  calls:
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_exit(0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_exit(0);
+- path: benchmarks/gapbs/src/sssp.cc
+  kind: roi_calls
+  calls:
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_exit(0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_exit(0);
+  - m5_work_begin(0, 0);
+  - m5_reset_stats(0, 0);
+  - m5_dump_stats(0, 0);
+  - m5_work_end(0, 0);
+  - m5_exit(0);
+- path: benchmarks/gapbs/src/timer.h
+  kind: file
+  sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+- path: include/gem5/m5ops.h
+  kind: roi_calls
+  calls:
+  - m5_exit(uint64_t ns_delay);
+  - m5_reset_stats(uint64_t ns_delay, uint64_t ns_period);
+  - m5_dump_stats(uint64_t ns_delay, uint64_t ns_period);
+  - m5_work_begin(uint64_t workid, uint64_t threadid);
+  - m5_work_end(uint64_t workid, uint64_t threadid);

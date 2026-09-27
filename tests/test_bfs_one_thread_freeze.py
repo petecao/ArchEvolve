@@ -119,6 +119,38 @@ def test_new_route_keeps_shared_accelerator_gate(fresh_review, monkeypatch):
     assert not result['publishable'] and 'actual shared accelerator calibration missing' in result['unmet_gates']
 
 
+def r7_scope():
+    return {'state': 'native_only_not_required', 'decision': 'R7', 'justification': 'synthetic',
+            'plan': {'path': str(publisher.RESUME_PLAN), 'sha256': artifacts.file_hash(publisher.RESUME_PLAN)}}
+
+
+def test_r7_native_only_scope_replaces_only_the_accelerator_gate(fresh_review, monkeypatch):
+    # Added 2026-09-27 ET: decision R7 makes the native protocol independent of
+    # simulator packages; the explicit selection is retained in the review.
+    def blocked(*_args):
+        raise AssertionError('native-only scope must not consult simulator packages')
+    monkeypatch.setattr(publisher, 'accelerator_gate', blocked)
+    fresh_review.spec['accelerator_size_gate'] = r7_scope()
+    result = publisher.prepare(fresh_review.spec, fresh_review.store)
+    evidence = result['freeze_request']['settings']['calibration']['accelerator_size_evidence']
+    assert result['publishable'] and evidence['state'] == 'native_only_not_required'
+    assert evidence['decision'] == r7_scope() and evidence['executions'] == []
+
+
+@pytest.mark.parametrize('fault', ['wrong-hash', 'wrong-decision', 'extra-key', 'packages', 'paired-route'])
+def test_r7_native_only_scope_is_exact_and_one_thread_only(fresh_review, fault):
+    scope = r7_scope(); spec = fresh_review.spec
+    if fault == 'wrong-hash': scope['plan']['sha256'] = '0'*64
+    if fault == 'wrong-decision': scope['decision'] = 'R6'
+    if fault == 'extra-key': scope['note'] = 'x'
+    if fault == 'packages': spec['size_selection']['accelerator_packages'] = ['synthetic']
+    if fault == 'paired-route':
+        spec['paired_calibration'] = spec.pop('one_thread_calibration')['historical_paired_calibration']
+    spec['accelerator_size_gate'] = scope
+    with pytest.raises(ValueError, match='native-only size scope'):
+        publisher.prepare(spec, fresh_review.store)
+
+
 @pytest.mark.parametrize('fault', ['old-package', 'missing-old', 'changed-old', 'ambiguous'])
 def test_new_route_cannot_omit_history_or_reuse_old_context(fresh_review, fault):
     case = fresh_review
