@@ -35,6 +35,34 @@ SUPPLEMENT_SELECTORS = [
 ]
 
 
+
+# The successful 2026-09-27 group tested this immutable runtime. Only its two
+# consumer readers may differ in the new batch; no tested primitive is waived.
+PROOF_COMMIT = '8cbfee600f23416a8e9578fa8d3ce3f0e19fced8'
+PROOF_MAP_DIGEST = 'd8529ea6c79f9da1b5998b83eef1f42022b3647c25f598844c74ffe1be8bfa5e'
+PROOF_CONSUMERS = {
+    'scripts/bfs_simulator_batch.py':'b08335b912e5e83e58f366ed5294c32c2de06073600c8faf4fe2cb370918b4e6',
+    'scripts/bfs_simulator_recovery.py':'e242c904684bd0e433d0c9501c3c1cd2d8e2f342db8188cfe1894b829d657744'}
+PROOF_PROVENANCE = {'code_commit':PROOF_COMMIT, 'runtime_sha256_digest':PROOF_MAP_DIGEST,
+    'consumer_only_exceptions':PROOF_CONSUMERS, 'evidence_kind':'contract_fixture'}
+
+
+def proof_admission(admission):
+    """Keep actual proof identity separate from the current execution runtime."""
+    b=batch_api()
+    declared=admission.get('linux_proof_runtime')
+    if declared is None:return admission  # Original exact-runtime admissions.
+    b.require(isinstance(declared,dict) and set(declared)=={'code_commit','runtime_sha256'}
+              and declared['code_commit']==PROOF_COMMIT
+              and artifacts.digest(declared['runtime_sha256'])==PROOF_MAP_DIGEST,
+              'Linux proof provenance differs from the immutable successful group')
+    old,current=declared['runtime_sha256'],admission['runtime_sha256']
+    b.require(set(old)==set(current) and all(old[name]==digest for name,digest in PROOF_CONSUMERS.items())
+              and all(current[name]==digest for name,digest in old.items() if name not in PROOF_CONSUMERS),
+              'current runtime changes a tested primitive or proof dependency')
+    return {**admission,'code_commit':PROOF_COMMIT,'runtime_sha256':old}
+
+
 def batch_api():
     from scripts import bfs_simulator_batch
     return bfs_simulator_batch
@@ -289,9 +317,11 @@ def _validate_supplement_value(plan, admission, ref, value):
     b.require(b.stamp(pre['observed_at']) <= start <= finish <= b.stamp(actual['finished'])
               and (finish-start).total_seconds() <= 90, 'supplement exceeds its original finite stage')
     command = value['command']; junit = value['junit']; stdout = value['stdout']
-    expected = [admission['python']['path'],'-m','pytest',*SUPPLEMENT_SELECTORS,'-q','-p','no:cacheprovider',
+    expected = [command[0],'-m','pytest',*SUPPLEMENT_SELECTORS,'-q','-p','no:cacheprovider',
                 '--junitxml='+junit['path'],'--basetemp='+str(group/'supplement/pytest')]
-    b.require(command == expected and value.get('selectors') == SUPPLEMENT_SELECTORS,
+    b.require(command == expected and Path(command[0]).is_absolute()
+              and Path(command[0]).resolve()==Path(admission['python']['path']).resolve()
+              and value.get('selectors') == SUPPLEMENT_SELECTORS,
               'supplement must run the full fixed RSS suite and exact lease-reader cases')
     for item in (junit, stdout, value['stderr']):
         p = Path(item['path'])
@@ -336,6 +366,11 @@ def _validate_supplement_value(plan, admission, ref, value):
     current_closed(terminal['owned_processes'], driver['process_observations']['pane_identity'])
     from scripts import bfs_linux_fixture_audit as audit_reader
     reader = audit_reader.Reader(time.monotonic()+30)
+    executable = driver['runtime']['python']
+    reader.raw(executable)
+    b.require(Path(executable['path'])==Path(command[0]).resolve()
+              and ('sha256' not in admission['python'] or executable['sha256']==admission['python']['sha256']),
+              'supplement executable differs from the pinned Python bytes')
     end = b.stamp(driver['outer_deadline']); ledger_ref = terminal['cleanup_ledger']['ledger']
     b.require(Path(ledger_ref['path']) == group/'supplement/cleanup-ledger.json',
               'supplement cleanup ledger is outside its fixed root')

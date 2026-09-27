@@ -382,3 +382,56 @@ def test_supplement_producer_seals_only_independently_closed_exact_evidence(supp
         assert produced['complete_retained_identity_union'] is True
         assert not (f.folder/'proof.pending.json').exists()
         with pytest.raises(ValueError,match='already attempted'):invoke()
+
+
+# 2026-09-27: preserve actual 8cb proof provenance through consumer-only repairs.
+@pytest.mark.parametrize('different_binary',[False,True])
+def test_supplement_canonical_python_alias_preserves_actual_argv(supplement,different_binary):
+    f=supplement
+    alias=f.group/'venv-python3'
+    if different_binary:alias.write_bytes(b'not the pinned executable')
+    else:alias.symlink_to(Path(f.approved['python']['path']))
+    f.d['command'][0]=str(alias);f.d['stages'][0]['command'][0]=str(alias);f.v['command'][0]=str(alias)
+    if different_binary:
+        with pytest.raises(ValueError,match='exact lease-reader cases'):mod.validate_supplement(*f.seal())
+    else:
+        mod.validate_supplement(*f.seal())
+        assert f.v['command'][0]==str(alias)  # No rewriting of retained evidence.
+
+
+def declared_proof_admission():
+    current=batch.runtime_identity()
+    original={**current,**mod.PROOF_CONSUMERS}
+    assert artifacts.digest(original)==mod.PROOF_MAP_DIGEST
+    return {'code_commit':'b'*40,'runtime_sha256':current,
+            'linux_proof_runtime':{'code_commit':mod.PROOF_COMMIT,'runtime_sha256':original}}
+
+
+def test_fixed_proof_runtime_is_explicit_and_does_not_relabel_current_execution():
+    admission=declared_proof_admission();before=copy.deepcopy(admission)
+    actual=mod.proof_admission(admission)
+    assert actual['code_commit']==mod.PROOF_COMMIT
+    assert artifacts.digest(actual['runtime_sha256'])==mod.PROOF_MAP_DIGEST
+    assert admission==before and admission['code_commit']=='b'*40
+    assert mod.proof_admission({'code_commit':'a'*40})=={'code_commit':'a'*40}
+
+
+@pytest.mark.parametrize('fault',['old-map','old-commit','missing-entry','new-entry',
+    'scripts/bfs_owned_execution.py','scripts/bfs_owned_rss.py','scripts/bfs_storage.py',
+    'scripts/bfs_linux_fixture.py','scripts/bfs_linux_fixture_audit.py','scripts/bfs_supervision_supplement.py',
+    'tests/test_bfs_owned_execution.py','tests/test_bfs_owned_rss.py','tests/test_bfs_linux_fixture_audit.py'])
+def test_proof_runtime_never_waives_tested_primitive_or_inventory_changes(fault):
+    admission=declared_proof_admission()
+    if fault=='old-map':admission['linux_proof_runtime']['runtime_sha256']['scripts/bfs_owned_execution.py']='0'*64
+    elif fault=='old-commit':admission['linux_proof_runtime']['code_commit']='c'*40
+    elif fault=='missing-entry':del admission['runtime_sha256']['scripts/bfs_owned_execution.py']
+    elif fault=='new-entry':admission['runtime_sha256']['scripts/unreviewed.py']='0'*64
+    else:admission['runtime_sha256'][fault]='0'*64
+    with pytest.raises(ValueError):mod.proof_admission(admission)
+
+
+def test_new_plans_cannot_omit_explicit_proof_provenance():
+    with pytest.raises(ValueError,match='explicit fixed Linux proof provenance'):
+        batch.validate_preparation_reservation(policy('t15'),{})
+    for key in ('t15','t16'):
+        assert policy(key)['linux_proof_provenance']==mod.PROOF_PROVENANCE

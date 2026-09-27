@@ -33,7 +33,7 @@ from swdb.store import Store
 
 ET = ZoneInfo('America/New_York')
 GIB = 1024**3
-PLAN_HASHES = {'t15-supervision-recovery': '5551bd6aa004dbe74aba4c628bb5a3c0f96231b4bc8fd11ce719118ee7de6b9c', 't16-supervision-recovery': '3c3dcaa3e6ecee16ea2d32b9a792d1b983c8d2858a3101e7943859879743b0f2', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
+PLAN_HASHES = {'t15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
 SETUP_RECOVERY_ID = 'bfs-t15-setup-recovery-simulator-batch-20260926-a1'
 SETUP_FAILURE_ID = 'bfs-t15-correction-simulator-batch-20260926-a1'
 SETUP_HARD_END = '2026-09-27T09:14:09.851819-04:00'
@@ -318,6 +318,11 @@ def validate_preparation_reservation(plan, admission):
     if reserved is None:
         require('preparation_reservation' not in admission, 'unplanned preparation reservation')
         return
+    if 'linux_proof_provenance' in plan:
+        from scripts.bfs_simulator_recovery import PROOF_PROVENANCE, proof_admission
+        require(plan['linux_proof_provenance'] == PROOF_PROVENANCE
+                and 'linux_proof_runtime' in admission, 'explicit fixed Linux proof provenance is required')
+        admission = proof_admission(admission)
     actual = admission['preparation_reservation']
     paths = [Path(path) for path in reserved['storage_paths']]
     require(len(paths) == len(set(paths)) == 5 and all(path.is_absolute() and path == path.resolve()
@@ -591,6 +596,8 @@ def validate_prerequisites(plan, admission, store):
 def validate_cleanup_tests(admission):
     """Actual Linux nested cleanup and public interruption proof at this exact pin."""
     import xml.etree.ElementTree as XML
+    from scripts.bfs_simulator_recovery import proof_admission
+    admission = proof_admission(admission)
     refs = admission['linux_cleanup_tests']
     require(isinstance(refs, list) and len(refs) == 2, 'two actual Linux fixture receipts are required')
     expected = {name: admission['runtime_sha256'][name] for name in CLEANUP_RUNTIME}
