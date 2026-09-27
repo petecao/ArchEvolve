@@ -9,6 +9,15 @@ Updated: 2026-09-27 (Eastern Time)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
+## Hold for verified seal-reader defect — 2026-09-27 04:18 ET
+
+The prepared lease-recovery runtime shares the T15 seal-reader defect:
+[72,432-byte metadata was rejected by a 65,536-byte reader cap](../observations/t15-lease-witness-size-diagnosis-20260927.json).
+Do not launch this known-defective admission. The existing scientific protocols,
+20:16:17.225985 ET hard end and historical charges remain unchanged. A repaired
+runtime requires fresh exact-runtime proof and new admission before execution.
+No T16 lease-recovery scientific attempt has run and no acceptance is claimed.
+
 ## Fresh lease-proof checkpoint — 2026-09-27 02:31 ET
 
 The [independent closure](../observations/lease-proofgroup-independent-closure-20260927.json)

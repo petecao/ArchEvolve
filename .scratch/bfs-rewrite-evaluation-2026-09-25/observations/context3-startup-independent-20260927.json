@@ -1,0 +1,107 @@
+{
+  "observed_at": "2026-09-27T04:16:24.750037-04:00",
+  "state": "running",
+  "outer_started": "2026-09-27T04:15:37.652278-04:00",
+  "outer_deadline": "2026-09-27T04:28:07.652278-04:00",
+  "bounds": {
+    "outer_seconds": 750,
+    "work_seconds": 720,
+    "cleanup_seconds": 30,
+    "provider_seconds": 600,
+    "remaining_provider_seconds": 1031,
+    "public_submit_seconds": 660,
+    "sampled_rss_bytes": 17179869184,
+    "retained_bytes": 1073741824,
+    "raw_reserve_bytes": 32212254720,
+    "source_reserve_bytes": 10737418240
+  },
+  "stages": [
+    {
+      "state": "complete",
+      "started": "2026-09-27T04:15:38.317617-04:00",
+      "finished": "2026-09-27T04:15:38.327891-04:00",
+      "returncode": 0,
+      "identity": {
+        "pid": 3572642,
+        "parent_pid": 3572632,
+        "start_ticks": 499887120,
+        "state": "R",
+        "rss_bytes": 0
+      },
+      "timeout_s": 20
+    },
+    {
+      "state": "complete",
+      "started": "2026-09-27T04:15:38.330124-04:00",
+      "finished": "2026-09-27T04:15:38.340242-04:00",
+      "returncode": 0,
+      "identity": {
+        "pid": 3572643,
+        "parent_pid": 3572632,
+        "start_ticks": 499887122,
+        "state": "R",
+        "rss_bytes": 0
+      },
+      "timeout_s": 20
+    },
+    {
+      "state": "complete",
+      "started": "2026-09-27T04:15:38.342424-04:00",
+      "finished": "2026-09-27T04:15:38.382668-04:00",
+      "returncode": 0,
+      "identity": {
+        "pid": 3572644,
+        "parent_pid": 3572632,
+        "start_ticks": 499887123,
+        "state": "R",
+        "rss_bytes": 0
+      },
+      "timeout_s": 15
+    },
+    {
+      "state": "complete",
+      "started": "2026-09-27T04:15:38.740991-04:00",
+      "finished": "2026-09-27T04:15:40.507076-04:00",
+      "returncode": 0,
+      "identity": {
+        "pid": 3572647,
+        "parent_pid": 3572632,
+        "start_ticks": 499887163,
+        "state": "R",
+        "rss_bytes": 0
+      },
+      "timeout_s": 30
+    },
+    {
+      "state": "complete",
+      "started": "2026-09-27T04:15:40.513596-04:00",
+      "finished": "2026-09-27T04:15:44.195741-04:00",
+      "returncode": 0,
+      "identity": {
+        "pid": 3572650,
+        "parent_pid": 3572632,
+        "start_ticks": 499887340,
+        "state": "R",
+        "rss_bytes": 0
+      },
+      "timeout_s": 20
+    },
+    {
+      "state": "running",
+      "started": "2026-09-27T04:15:44.201378-04:00",
+      "finished": null,
+      "returncode": null,
+      "identity": {
+        "pid": 3572672,
+        "parent_pid": 3572632,
+        "start_ticks": 499887709,
+        "state": "R",
+        "rss_bytes": 0
+      },
+      "timeout_s": 660
+    }
+  ],
+  "provider_state": "running",
+  "outer_exit": null,
+  "mutations": false
+}
