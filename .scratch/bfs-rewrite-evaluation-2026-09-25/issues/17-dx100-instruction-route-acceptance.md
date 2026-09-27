@@ -175,3 +175,22 @@ cleanup binding. All four synthetic commands parse with the actual client argume
 definitions; 39 local planning/command controls passed. No subprocess or remote execution
 was performed. The preview preserves null aggregate bounds, clock, and T15-dependent
 workloads/protocol; dispatch remains false and acceptance criteria remain open.
+
+## Stream C diagnostic a2 prepared, launch not performed — 2026-09-27 10:40 ET
+
+Branch `codex/bfs-dx100-candidates-20260927-b1` (commit `b1fcf76`, root-reviewed under R9)
+adds a bounded public-job launcher (`../operator-recipes/stream-c-20260927/`). Job
+`t17-diagnostic-a2` runs exactly one public `dx100-compile` of the unused prospective request
+`bfs-t17-diagnostic-build-only-20260927-a2` (repair 3c09f3c is in main) inside a node0 socket
+lane, with a 270 s call cap in a 420 s outer cap, then a fresh chain `get`. No provider, repair,
+guest or primary rebuild. Root assigned node0 at 10:35 ET. A clean host checkout exists at
+`/data1/yanruj/EvolveSWDB_streamc_20260927_b1` (b1fcf76; `swdb validate` 253 records OK).
+**This session's permission gate (shared-host mutation) blocked the launch, so it has not run;
+it needs the user's permission.** The diagnostic binary and the region correspondence remain
+pending. The a1 failure and its charges are unchanged.
+
+Unaccelerated baseline: the four scalar v2 v2-adapter build records are now imported byte-exact
+into Git ([import receipt](../observations/stream-c-scalar-v2-baseline-import-20260927.json)).
+The `dx100.primary`/`dx100.diagnostic` pair is the T17 `dx100-bfs-scalar` comparison baseline.
+Their enclosing preparation stays failed at finalization, and the import does not change that.
+No acceptance box changes.

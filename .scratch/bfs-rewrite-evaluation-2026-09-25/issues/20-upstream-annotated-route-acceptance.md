@@ -140,3 +140,26 @@ The companion requires separate fresh retrieval of the original and supplement;
 generic chain traversal does not follow the arbitrary predecessor parameter.
 Explicit approval for this new payload and bounded repairs is pending. It has
 not been sent. No strategy replacement or performance tuning is introduced.
+
+## R8 focused-context submission prepared, launch not performed — 2026-09-27 10:40 ET
+
+Under resume-plan R8, the new allocation is: 1,800 s pool, 900 s and USD 10 per call, and at
+most two repairs. Contexts 1–3 stay failed and charged under the old pool (1,367.61 s); nothing is
+refunded. Context4 (`bfs-campaign-preparation-20260925-a1.upstream-annotated-context4`) keeps the
+campaign-plan row 20 strategy, intent, annotated payload (with the author `TDStepMAA` reference),
+regions, required operations and source/package identities byte-identical to context3. Only the
+worker context changes. The new opt-in projection `selected_regions_focused_context.v1` in
+`swdb/rewrite.py` keeps the package identity, the two selected regions and the selected-strategy
+rows. Everything omitted is named by a canonical hash. Headers are reduced to MAA_gem5, MAA and
+MAA_utility plus upstream sliding_queue, pvector and graph. The prompt is 115,100 bytes, down from
+275,533. There are 12 projection tests and 3 packet tests, all passing locally. The packet is in
+`../operator-recipes/stream-c-20260927/prepared/` (proposal SHA `edd9132c…`, provider SHA
+`58000bf4…`) at commit `b1fcf76`, and root reviewed it.
+
+Root approved one unconfined `swdb submit` (provider only, no lane). **This session's permission
+gate blocked the host launch, so no provider call has been made**, and the allocation is unspent.
+Once a candidate exists, job `t20-context4-builds` compiles the primary and diagnostic accelerated
+builds (requests in `requests/`) in a root-assigned lane. The unaccelerated `gapbs-bfs-do` baseline
+is the imported scalar v2 `upstream.primary`/`upstream.diagnostic` pair
+([import receipt](../observations/stream-c-scalar-v2-baseline-import-20260927.json)); its
+enclosing preparation stays failed at finalization. No candidate exists and no acceptance box changes.
