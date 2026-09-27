@@ -32,13 +32,13 @@ cleanup ledger.
 ## Steps (all on mbit10, in the immutable runtime checkout)
 
 ```sh
-OP=.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t15-pilot-b1/operator.py
-/usr/bin/python3.12 -s -B $OP setup
+OP=.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t15-pilot-b1/pilot_operator.py
+/usr/bin/python3.12 -I -B $OP setup
 bash $HELPER 0 bfs-t15-pilot-linux-tests-20260927-b1 -- \
-  timeout 300 /usr/bin/python3.12 -s -B $OP tests --kind owned_cleanup
+  timeout 300 /data1/yanruj/venvs/evolveswdb-test/bin/python -I -B $OP tests --kind owned_cleanup
 bash $HELPER 0 bfs-t15-pilot-linux-tests-20260927-b1 -- \
-  timeout 300 /usr/bin/python3.12 -s -B $OP tests --kind dx100_interruption
-/usr/bin/python3.12 -s -B $OP prepare        # the 48-h clock starts here
+  timeout 300 /data1/yanruj/venvs/evolveswdb-test/bin/python -I -B $OP tests --kind dx100_interruption
+/usr/bin/python3.12 -I -B $OP prepare        # the 48-h clock starts here
 tmux new -d -s t15pilot "OPERATOR=... OPERATOR_SHA=... ADMISSION_SHA=... bash .../launch.sh"
 ```
 

@@ -17,7 +17,7 @@ print(int(Path('/proc',sys.argv[1],'stat').read_text().rsplit(')',1)[1].split()[
 PY
 )
 set +e
-/usr/bin/python3.12 -s -B "$OPERATOR" launch --admission-sha256 "$ADMISSION_SHA" --pane-pid "$PANE_PID" --pane-start-ticks "$TICKS" >"$D/outer.stdout" 2>"$D/outer.stderr"
+/usr/bin/python3.12 -I -B "$OPERATOR" launch --admission-sha256 "$ADMISSION_SHA" --pane-pid "$PANE_PID" --pane-start-ticks "$TICKS" >"$D/outer.stdout" 2>"$D/outer.stderr"
 result=$?
 printf '%s\n' "$result" >"$D/outer.exit"
 date --iso-8601=ns >"$D/outer.finished"
