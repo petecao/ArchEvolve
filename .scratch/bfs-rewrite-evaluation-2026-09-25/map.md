@@ -2485,3 +2485,20 @@ plan cannot complete the two-series grid; continuing the first series does not
 waive the missing family or qualify acceptance. No deadline or allowance was reset.
 Context3 host rendering and immutable runtime verification passed, but both lanes
 remain occupied and no provider call has started.
+
+## Verified T15 failure and next work — 2026-09-27 04:16 ET
+
+[Independent closure](observations/t15-lease-failed-terminal-independent-20260927.json)
+verified all 246 retained identities absent twice and settled cleanup. The
+[diagnosis](observations/t15-lease-witness-size-diagnosis-20260927.json) identifies
+the actual rejection: a 72,432-byte ROI seal exceeded the reader's 65,536-byte
+seal limit; the 39,877-byte syscall trace was within its own bound. T15 remains
+failed with zero accepted samples. Charge 5,685 seconds through independent
+closure, including 4,028 seconds of execution, and 1,432,768,512 retained bytes;
+no historical charge was refunded.
+
+The trace-parser optimization passed independent review and is committed as
+`6f1e700`; it has not altered retained execution evidence. A separate bounded
+seal-reader repair is now under development. T16 is held against this known
+reader defect. Context3's reviewed one-call submission has started on node 0;
+its existing provider allowance and original wrapper limits remain unchanged.

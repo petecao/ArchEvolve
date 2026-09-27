@@ -7,6 +7,18 @@ Updated: 2026-09-27 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
+## Failed seal reopening — 2026-09-27 04:17 ET
+
+The lease-recovery attempt is closed as failed, with zero accepted samples.
+Its 72,432-byte ROI seal exceeded the reader's 65,536-byte limit; the syscall
+trace was not oversized. [Closure](../observations/t15-lease-failed-terminal-independent-20260927.json)
+and [diagnosis](../observations/t15-lease-witness-size-diagnosis-20260927.json)
+retain the original failure, 246 absent process identities, settled cleanup,
+5,685 seconds through independent closure and 1,432,768,512 bytes. No cost refund
+or failed-result promotion is claimed. The two-family freeze remains incomplete;
+its original next-series admission cutoff has passed. A code repair is separate
+from any future empirical allocation.
+
 ## Live verification checkpoint — 2026-09-27 03:15 ET
 
 The first primary ROI seal has been produced, but verification remains running;
