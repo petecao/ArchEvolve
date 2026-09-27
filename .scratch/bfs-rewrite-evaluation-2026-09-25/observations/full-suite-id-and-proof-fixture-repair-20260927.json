@@ -1,0 +1,90 @@
+{
+  "created": "2026-09-27",
+  "scope": "Test-only repairs in main; production provenance enforcement and running c282 validation worktree unchanged.",
+  "full_suite": {
+    "commit": "c282c9f5c57f7756dc3b22e12952eb963683e6d3",
+    "state": "running_at_last_observation",
+    "failure_diagnostics": "Pending terminal output; ordered collection provisionally identifies two current a4-versus-a5 assertion failures.",
+    "ordered_collection": {
+      "path": "/private/tmp/bfs-c282-ordered-collection-20260927.log",
+      "bytes": 259215,
+      "sha256": "41b19fb1dba0548ccbd58961e260470a0f5d8d0d348b71bb864925468c387280"
+    },
+    "provisional_failed_tests": [
+      "tests/test_bfs_simulator_setup_recovery.py::test_fixed_recovery_preserves_science_and_only_flat_costs",
+      "tests/test_bfs_simulator_storage.py::test_only_consumed_simulator_fixture_ids_advance"
+    ]
+  },
+  "main_base": "494407fde7ebbe9e4c2ae78f52248ab73014c733",
+  "findings": [
+    {
+      "problem": "Current fixture IDs advanced to a5, but one storage assertion still expected a4.",
+      "repair": "Update only the current simulator selections to a5; unchanged native a1 and historical a4 plan assertions remain."
+    },
+    {
+      "problem": "Tests reconstructed immutable old proof runtime from all live main files; the committed T17 diagnostic repair changes an unrelated runtime hash.",
+      "repair": "Use exact frozen157-entry8cb map with its existing digest; synthesize compatible current fixture using only the two declared consumer overrides. Add rejection of the actual changed T17 dependency.",
+      "production_enforcement_changed": false,
+      "scientific_runtime_6a_changed": false
+    }
+  ],
+  "frozen_fixture": {
+    "reference": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/fixtures/bfs_proof_runtime_8cbfee6.json",
+      "bytes": 16409,
+      "sha256": "ec7fb2aa61be0748d575b3ccb68259f340dccb54ae772bdb870b90fadf6d1c60"
+    },
+    "source_commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+    "entries": 157,
+    "map_digest": "d8529ea6c79f9da1b5998b83eef1f42022b3647c25f598844c74ffe1be8bfa5e",
+    "every_git_blob_independently_rehashed": true
+  },
+  "red_checks": [
+    {
+      "path": "/private/tmp/bfs-full-suite-current-id-recheck-20260927.log",
+      "bytes": 973,
+      "sha256": "faa99394781e15bf98b087c67baba15319508852fc0a78ad36d04cd18c8ef0d4"
+    },
+    {
+      "path": "/private/tmp/bfs-full-suite-id-repair-green-20260927.log",
+      "bytes": 21083,
+      "sha256": "e1ac0b19ba4e02107b0ace369c48eff7dc13991e84ac6862b234cd62c70fc177"
+    }
+  ],
+  "green_checks": [
+    {
+      "result": "64 passed in0.31s",
+      "log": {
+        "path": "/private/tmp/bfs-full-suite-id-only-repair-green-20260927.log",
+        "bytes": 99,
+        "sha256": "61a47aa4250b30a3df782bd314312678bf1055ae0bfc722bb71df9c64b09e4af"
+      }
+    },
+    {
+      "result": "161 passed in0.82s",
+      "log": {
+        "path": "/private/tmp/bfs-full-suite-id-and-proof-fixture-green-20260927.log",
+        "bytes": 260,
+        "sha256": "5e43cac6fba8c4e93159f91acdac65b9b5225273533996a2936567cd13183d28"
+      }
+    }
+  ],
+  "changed_files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_storage.py",
+      "bytes": 9196,
+      "sha256": "28db4bd7fab6a74aa5ed3c0133914078d941e37576e357571b3390560e65e0a2"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_recovery.py",
+      "bytes": 31083,
+      "sha256": "a4b4486620a1030ae45700e5909a91345aff8c079adf0345f4441cabfde4d102"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/fixtures/bfs_proof_runtime_8cbfee6.json",
+      "bytes": 16409,
+      "sha256": "ec7fb2aa61be0748d575b3ccb68259f340dccb54ae772bdb870b90fadf6d1c60"
+    }
+  ],
+  "remote_jobs_started": false
+}
