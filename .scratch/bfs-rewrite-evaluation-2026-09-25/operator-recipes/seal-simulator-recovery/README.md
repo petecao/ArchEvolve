@@ -11,12 +11,17 @@ helper remains pinned to its previously reviewed SHA. It invokes the existing
 batch supervisor with canonical Python and explicit `-s -B`; no evaluator or
 cleanup implementation is duplicated.
 
-Runtime `PIN`, template commit, full runtime manifest hash and fresh proof reference
-are deliberately unset. `setup` rejects both T15 and an unpinned runtime before any
-host inspection or file access. Root must review the diff and tests, then pin the
-immutable export, build its complete manifest, retain a fresh helper comparison and
-seal the actual proof reference before Git export/admission. The helper files and
-resource limits are unchanged.
+Runtime `PIN` and template commit are
+`923cf33b955104fdf96705b648933e7d486a3810`; the complete manifest covers 809 files
+and has SHA-256 `b6ad68a4a8606f3b8c8eb511d891c4ce2765363b5131636f675fc2c86ac34166`.
+The sealed `t16-config.json` binds the independently closed fresh proof final
+SHA-256 `1e937000e163166a8b28f6d0bb2001175d5cf7d7117efa916f7c3bccc77c9a4c`.
+The template remains non-admitting with a null proof reference. `setup` rejects T15 and an unpinned runtime
+before host inspection or file access. Root must review the final pins and tests,
+retain a fresh helper comparison, and seal the actual proof reference before Git
+export/admission. The separate runtime checkout was created through Git and all
+809 files independently matched this manifest; no admission or scientific job was
+started. The helper files and resource limits are unchanged.
 
 The original T16 hard end remains 20:16:17.225985 ET. Admission must still allow a
 whole 21,600-second series plus 30-second cleanup by 14:15:47.225985 ET. The existing

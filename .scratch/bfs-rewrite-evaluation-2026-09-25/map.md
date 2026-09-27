@@ -2527,3 +2527,17 @@ reservation remains charged to T16. This is infrastructure proof, not scientific
 acceptance. The fresh T16 scientific checkout matches all 809 pinned files; its
 operator and admission are being sealed before dispatch. Node 0 was released,
 node 1 remained externally held, and the legacy lease was free at closure.
+
+## T16 seal recovery execution — 2026-09-27 05:15 ET
+
+The single authorized `bfs-t16-seal-recovery-simulator-batch-20260927-a1`
+launch began at **05:14:00.067637 ET** on mbit10 node 0, lease generation 356,
+using runtime `923cf33` and operator `3b480e4`. The original absolute end remains
+**20:16:17.225985 ET**. The batch supervisor is running its first
+`artifact.scalar` series; periodic ledger telemetry is present. This is execution
+progress, with no accepted sample or scientific acceptance claimed. The other
+socket was externally held at generation 447 and the legacy lease was free.
+
+Evidence: [startup](observations/t16-seal-startup-20260927.json),
+[prelaunch health](observations/t16-seal-prelaunch-health-20260927.json),
+and [sealed admission](observations/t16-seal-admission-readback-20260927.json).

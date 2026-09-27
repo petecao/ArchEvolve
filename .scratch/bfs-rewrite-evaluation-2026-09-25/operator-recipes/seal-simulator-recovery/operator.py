@@ -19,7 +19,7 @@ import time
 HERE=Path(__file__).resolve().parent
 GROUP_OP=HERE.parent/'supervision-recovery/operator.py'
 GROUP_OP_SHA='c40875e68a2c28e0c5b47517d63d0b2c40f26e51414c43f4d253154c8d77b992'
-PIN=None  # Filled only after the reviewed immutable runtime export.
+PIN='923cf33b955104fdf96705b648933e7d486a3810'
 BASE=Path('/data/yanruj/EvolveSWDB_runs')
 GROUP_FINAL=BASE/'bfs-seal-recovery-linux-20260927-a1.final.json'
 ROOTS={'t16':Path('/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1')}

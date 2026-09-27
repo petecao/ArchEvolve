@@ -50,7 +50,7 @@ def test_only_fresh_exact_runtime_proof_is_accepted():
     assert "c.get('proofgroup') == ref(GROUP_FINAL)" in source
     assert "'linux_proof_runtime':" not in source
     assert "kind+'-seal-recovery'" in source
-    assert m.PIN is None
+    assert m.PIN=='923cf33b955104fdf96705b648933e7d486a3810'
 
 
 def test_wrapper_dispatch_matches_new_plan_date():
@@ -59,15 +59,17 @@ def test_wrapper_dispatch_matches_new_plan_date():
     assert 'seal-recovery-simulator-batch-20260926' not in shell
 
 
-def test_unpinned_runtime_and_t15_cannot_enter_setup():
+def test_unpinned_runtime_and_t15_cannot_enter_setup(monkeypatch):
     with pytest.raises(ValueError,match='T16-only'):m.setup('t15',Path('/nonexistent'))
+    monkeypatch.setattr(m,'PIN',None)
     with pytest.raises(ValueError,match='not pinned'):m.setup('t16',Path('/nonexistent'))
 
 
 def test_template_cannot_admit_or_reuse_old_proof():
     import json
     c=json.loads(P.with_name('t16-config-template.json').read_text())
-    assert c['commit'] is c['manifest_sha256'] is c['proofgroup'] is None
+    assert c['commit']==m.PIN and c['manifest_sha256']==m.sha(P.with_name('runtime-manifest.json'))
+    assert c['proofgroup'] is None
     assert c['node']==0 and 't16_seal_recovery' in c['runtime']
     shell=P.with_name('launch.sh').read_text()
     assert '[[ "$KIND" == t16 ]] || exit 64' in shell
