@@ -5,6 +5,8 @@ references between them. Records refer to each other by ID, never by file path.
 """
 
 from dataclasses import dataclass
+import json
+import os
 
 import yaml
 
@@ -51,7 +53,7 @@ class Store:
 
     def _load(self, path, rel):
         try:
-            data = yamlio.load(path)
+            data = _parse(path)
         except yaml.YAMLError as exc:
             self.problems.append(Problem(rel, "-", f"not valid YAML: {' '.join(str(exc).split())}"))
             return
@@ -138,6 +140,45 @@ class Store:
 def canonical_path(kind, record_id):
     """Where `swdb add` writes a record: <kind plural>/<id>.yaml under the records folder."""
     return f"{PLURAL[kind]}/{record_id}.yaml"
+
+
+# Per-process parse cache (2026-09-27 ET). A long-lived writer such as the paired
+# native collector persists several times per trial, and every persist reloads
+# the whole folder. Unchanged files are served from their canonical JSON text,
+# keyed by the file's inode, size, and modification/change times observed both
+# before and after parsing. Callers always receive fresh objects. Records that
+# do not survive a JSON round trip unchanged are never cached.
+_PARSED = {}
+_PARSED_LIMIT = 256 * 1024**2
+_parsed_bytes = 0
+
+
+def _stamp(path):
+    st = os.stat(path)
+    return st.st_ino, st.st_size, st.st_mtime_ns, st.st_ctime_ns
+
+
+def _parse(path):
+    global _parsed_bytes
+    name = os.path.abspath(path)
+    before = _stamp(path)
+    cached = _PARSED.get(name)
+    if cached is not None and cached[0] == before:
+        return json.loads(cached[1])
+    data = yamlio.load(path)
+    try:
+        text = json.dumps(data, allow_nan=False)
+        cacheable = json.loads(text) == data and _stamp(path) == before
+    except (TypeError, ValueError, RecursionError):
+        cacheable = False
+    if cacheable:
+        if _parsed_bytes + len(text) > _PARSED_LIMIT:
+            _PARSED.clear(); _parsed_bytes = 0
+        previous = _PARSED.pop(name, None)
+        if previous is not None:
+            _parsed_bytes -= len(previous[1])
+        _PARSED[name] = (before, text); _parsed_bytes += len(text)
+    return data
 
 
 def record_files(records_dir):

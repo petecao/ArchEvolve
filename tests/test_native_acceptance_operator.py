@@ -50,6 +50,25 @@ def test_environment_clears_declared_python_inputs(monkeypatch):
     assert 'PYTHONPATH' not in env and env['PYTHONDONTWRITEBYTECODE'] == '1' and env['PYTHONNOUSERSITE'] == '1'
 
 
+def test_minimal_view_keeps_reference_closure_catalogs_and_sidecar_files(tmp_path):
+    from swdb.store import Store
+    src, dst = tmp_path/'src', tmp_path/'dst'
+    files = {'machines/m.yaml': 'kind: machine\nid: m\n',
+             'protocols/p.yaml': 'kind: protocol\nid: p\nsupport: [e1]\n',
+             'protocols/q.yaml': 'kind: protocol\nid: q\n',
+             'evaluations/e1.yaml': 'kind: evaluation\nid: e1\nnested: {ref: e2}\n',
+             'evaluations/e2.yaml': 'kind: evaluation\nid: e2\n',
+             'evaluations/e3.yaml': 'kind: evaluation\nid: e3\n',
+             'implementations/x/source.cc': 'int main(){}\n'}
+    for rel, text in files.items():
+        (src/rel).parent.mkdir(parents=True, exist_ok=True); (src/rel).write_text(text)
+    kept = op['minimal_view'](Store(src), src, dst, ['p'])
+    assert kept == ['e1', 'e2', 'm', 'p']
+    assert (dst/'implementations/x/source.cc').is_file() and not (dst/'protocols/q.yaml').exists()
+    with pytest.raises(RuntimeError, match='root'):
+        op['minimal_view'](Store(src), src, tmp_path/'other', ['missing'])
+
+
 def test_config_rejects_unresolved_fields(tmp_path):
     value = conf(); value['commit'] = None
     (tmp_path/'c.json').write_text(json.dumps(value))

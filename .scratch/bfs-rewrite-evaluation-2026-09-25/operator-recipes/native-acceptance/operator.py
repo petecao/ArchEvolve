@@ -170,6 +170,48 @@ def proof_stage(c, path, version, pytest_sha, pane):
 
 
 # ---------------------------------------------------------------- campaign
+FULL_KINDS = {'application', 'kernel', 'implementation', 'operation', 'intrinsic', 'hardware_target',
+              'machine', 'workload', 'input', 'strategy'}
+
+
+def _strings(value):
+    if isinstance(value, str): yield value
+    elif isinstance(value, dict):
+        for key, item in value.items(): yield key; yield from _strings(item)
+    elif isinstance(value, list):
+        for item in value: yield from _strings(item)
+
+
+def minimal_view(store, source, target, roots):
+    """Copy the reference closure of the campaign roots (2026-09-27 ET, b2).
+
+    Small catalog kinds are kept whole; every other record is kept only when a
+    kept record mentions its exact ID. Non-YAML files (record-root sources) are
+    copied unchanged. The b1 view carried unrelated records and the other
+    source's 3 MB protocol, which made every harness persist slower."""
+    keep = {rec.id for rec in store.records if rec.kind in FULL_KINDS}
+    queue = [*roots, *keep]
+    while queue:
+        rid = queue.pop(); rec = store.by_id.get(rid)
+        if rec is None: continue
+        keep.add(rid)
+        for text in _strings(rec.data):
+            if text in store.by_id and text not in keep:
+                keep.add(text); queue.append(text)
+    require(all(rid in keep and rid in store.by_id for rid in roots), 'campaign root record missing from view')
+    written = set()
+    for rec in store.records:
+        if rec.id in keep and store.by_id.get(rec.id) is rec:
+            path = Path(target)/rec.rel; path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(Path(source)/rec.rel, path); written.add(rec.rel)
+    for path in Path(source).rglob('*'):
+        rel = path.relative_to(source)
+        if (path.is_file() and path.suffix not in {'.yaml', '.yml'}
+                and not any(part.startswith('.') for part in rel.parts)):
+            (Path(target)/rel).parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(path, Path(target)/rel)
+    return sorted(keep)
+
+
 def route_paths(r):
     runs = BASE/r['id']
     return {'runs': runs, 'dispatch': Path(str(runs)+'.dispatch'),
@@ -199,11 +241,21 @@ def admit(c, path):
     from scripts import bfs_native_campaign as campaign
     from swdb import artifacts
     from swdb.store import Store
+    from swdb.validate import _validate_store
     d = p['dispatch']; d.mkdir()
-    shutil.copytree(r['record_view'], d/'records', symlinks=False)
+    manifest = read(Path(c['runtime'])/r['reassessment_template'])
+    proposal = read(Path(c['runtime'])/r['proposal'])
+    roots = [proposal['id'], r['candidate'], *r['packages'], r['protocol'], 'mbit10',
+             *(manifest['origin'][k]['id'] for k in ('proposal', 'candidate', 'profile_package', 'source_snapshot')),
+             *(row['id'] for row in manifest['origin']['baseline_packages'])]
+    kept = minimal_view(Store(Path(r['record_view'])), r['record_view'], d/'records', roots)
     shutil.copyfile(Path(c['runtime'])/r['proposal'], d/'proposal.json')
     store = Store(d/'records')
-    manifest = read(Path(c['runtime'])/r['reassessment_template'])
+    checked = _validate_store(store, extra=[], replace={})
+    require(not store.problems and not checked.problems, 'minimal record view is invalid: '
+            + str((store.problems + checked.problems)[:3]))
+    write(d/'record-view.json', {'created': '2026-09-27', 'source': r['record_view'], 'roots': roots,
+                                 'records': kept, 'count': len(kept)})
     frozen = store.get(r['protocol'], 'protocol'); require(frozen is not None, 'frozen protocol missing')
     manifest['assessment'] = {'protocol': {'id': frozen['id'], 'sha256': artifacts.digest(frozen)},
         'packages': [{'id': rid, 'sha256': artifacts.digest(store.get(rid, 'profile_package'))} for rid in r['packages']]}
