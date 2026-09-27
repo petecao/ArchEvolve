@@ -2585,3 +2585,15 @@ original 20:16:17.225985 ET hard end is unchanged. No new execution is launched.
 lanes and the legacy lease free, with adequate capacity and no owned T16 job.
 The public query/handoff checkpoint and diagnosis are synchronized in `043d385`;
 acceptance remains incomplete with zero of eight cells and no qualified gain.
+
+## Protocol recovery proof verified — 2026-09-27 07:13 ET
+
+The fresh `2a64a188` runtime passed 66 supplement, five owned-job, and two
+interruption Linux cases with zero skips. Independent review verified all 817
+manifest entries and both new immutable protocol records. Strict cleanup and
+process identity unions were checked twice. Actual proof time was 26.802634
+seconds with 5,246,976 retained bytes; the full 600-second/2-GiB reservation
+remains charged to T16. See [closure](observations/protocol-proofgroup-independent-closure-20260927.json).
+Node 1 was released and external node 0 was untouched. Scientific admission is
+being prepared; this proof is not simulation or acceptance evidence. The
+original hard end and all prior charges remain unchanged.

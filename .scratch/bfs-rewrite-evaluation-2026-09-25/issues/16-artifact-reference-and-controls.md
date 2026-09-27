@@ -251,3 +251,15 @@ lease were kernel-unlocked at the 05:43 check; no matching job remained executin
 Evidence: [closure](../observations/t16-seal-terminal-independent-20260927.json),
 [failure](../observations/t16-seal-execution-identity-failure-20260927.json), and
 [health](../observations/host-health-20260927-0543.json).
+
+## Protocol recovery proof verified — 2026-09-27 07:13 ET
+
+The fresh `2a64a188` runtime passed 66 supplement, five owned-job, and two
+interruption Linux cases with zero skips. Independent review verified all 817
+manifest entries and both new immutable protocol records. Strict cleanup and
+process identity unions were checked twice. Actual proof time was 26.802634
+seconds with 5,246,976 retained bytes; the full 600-second/2-GiB reservation
+remains charged to T16. See [closure](../observations/protocol-proofgroup-independent-closure-20260927.json).
+Node 1 was released and external node 0 was untouched. Scientific admission is
+being prepared; this proof is not simulation or acceptance evidence. The
+original hard end and all prior charges remain unchanged.
