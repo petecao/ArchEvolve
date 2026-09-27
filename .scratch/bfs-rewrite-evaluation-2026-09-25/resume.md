@@ -78,3 +78,10 @@ strict closure: this remains a blocker to the planned T15 serialization admissio
 until a prospectively reviewed recovery resolves it without changing old evidence.
 The conservative current-attempt charge is 8,712 seconds and 619,712,512 bytes;
 cumulative T16 retained charges are 24,325 seconds and 11,011,186,688 bytes.
+
+## Main branch consolidation — 2026-09-27
+
+The user requested consolidating all branch work into main. Resume from `main`;
+BFS implementation and snapshot histories are consolidated there. Historical
+branch refs and immutable runtime commits remain for provenance. Evaluation
+remains paused and the heartbeat remains deleted.

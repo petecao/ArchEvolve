@@ -284,3 +284,10 @@ Work is paused at the user’s request, and the recurring heartbeat is deleted.
 See the [resume checkpoint](../.scratch/bfs-rewrite-evaluation-2026-09-25/resume.md)
 for retained authorization, incomplete acceptance, resource limits, interruption
 evidence and the next required steps. No task is marked complete because of this pause.
+
+## Main branch consolidation — 2026-09-27
+
+The user requested consolidating all branch work into main. Resume from `main`;
+BFS implementation and snapshot histories are consolidated there. Historical
+branch refs and immutable runtime commits remain for provenance. Evaluation
+remains paused and the heartbeat remains deleted.
