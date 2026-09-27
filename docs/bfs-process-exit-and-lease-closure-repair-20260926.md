@@ -13,7 +13,10 @@ only independently confirmed directory absence or a newly read actual stat/child
 record. PID/start matching still prevents following a reused process. Unknown,
 permission, malformed and repeated live-process telemetry errors fail closed;
 there is no zero-RSS fallback. The [Linux kernel documentation](https://cdn.kernel.org/doc/html/latest/filesystems/proc.html) explicitly describes ESRCH from open proc descriptors after process exit. Task enumeration independently reopens the parent
-identity before treating an exit or PID reuse as terminal.
+identity before treating an exit or PID reuse as terminal. The lifecycle identity
+reader uses the same bounded primitive. Signal delivery suppresses ESRCH only
+from the actual pidfd operation; ambiguous identity reads propagate, and a reused
+PID cannot authorize a signal to a different start identity.
 
 The fixture auditor separates historical closure from fresh admission. Its original
 lease generation must be released, or a strictly later generation must have been

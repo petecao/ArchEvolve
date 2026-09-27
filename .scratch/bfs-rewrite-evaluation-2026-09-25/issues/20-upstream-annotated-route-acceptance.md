@@ -9,6 +9,18 @@ Updated: 2026-09-26 (Eastern Time)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
+## Context continuation preparation — 2026-09-26 23:40 ET
+
+The prior provider-result packet is transferred and imported; the original
+unresolved proposal remains unchanged. The prepared 518,016-byte context payload
+has not been sent. Its reviewed continuation permits one provider call capped at
+600 seconds inside a 750-second outer job, preserving the original 62.419636563397944
+seconds already consumed and the conservatively rounded 1,737 seconds remaining.
+The separate corrected runtime is `0dc0d4fecfe2903ff0cc1ba9e6b738a8f5c1a4f1`.
+Pre-import runtime inventory and executable wrapper-clock corrections are being
+reviewed before Git-only delivery and fresh host admission. This is preparation,
+not a candidate, evaluation, comparison, or acceptance result.
+
 ## What to build
 
 Demonstrate a representative HW Ensemble submission containing annotated upstream GAPBS direction-optimizing BFS source. Interpret the annotations into an accelerator-using rewrite, then independently check and evaluate the timed candidate on DX100 for both Kronecker and uniform-random graphs.

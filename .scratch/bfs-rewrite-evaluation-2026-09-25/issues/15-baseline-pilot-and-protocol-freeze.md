@@ -7,6 +7,18 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
+## Failed proof preparation — 2026-09-26 23:40 ET
+
+The setup-recovery Linux preparation group executed its five owned-cleanup and
+two interruption tests successfully, but the interruption audit failed after an
+unrelated user acquired the socket. Only the owned proof sealed. The group stays
+failed, with its full 600-second/2-GiB charge retained; see the
+[failed-group observation](../observations/setup-recovery-proofgroup-failed-20260926.json).
+No setup-recovery guest batch was launched. A new bounded recovery plan and exact
+Linux validation are being prepared after reviewed RSS and historical lease fixes.
+The original 2026-09-27 09:14:09.851819 ET hard end remains unchanged. Local tests
+and a pushed repair runtime do not satisfy this ticket's empirical freeze.
+
 ## Current checkpoint — 2026-09-26 21:56 ET
 
 The [fixed correction failed before guest execution](../observations/t15-correction-failed-terminal-20260926.json)
