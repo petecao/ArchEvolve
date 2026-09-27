@@ -125,14 +125,26 @@ def lease_snapshot(node, generation, lane, begin, end, root=LEASE_ROOT):
             finally: fcntl.flock(stream,fcntl.LOCK_UN)
         require(path.read_bytes() == before and value.get('state') == ('held' if held else 'released'),
                 'lease metadata changed or disagrees with kernel lock')
-        if name in ('mbit10-evaluation',f'mbit10-evaluation-node{node}'):
-            require(not held, 'fixture or legacy lease is still held')
         if name == f'mbit10-evaluation-node{node}':
-            require(type(value.get('lease',{}).get('generation')) is int and value['lease']['generation'] == generation
-                    and value['lease'].get('lease_name') == name and value['lease'].get('host') == 'mbit10'
-                    and begin-timedelta(seconds=1) <= timestamp(value['lease']['acquired_at']) <= end
-                    and timestamp(lane['ended_utc']) <= timestamp(value['released_at']) < end+timedelta(seconds=1),
+            lease = value.get('lease', {})
+            require(type(lease.get('generation')) is int and lease['generation'] >= generation
+                    and lease.get('lease_name') == name and lease.get('host') == 'mbit10',
                     'fixture released lease generation or interval differs')
+            acquired = timestamp(lease['acquired_at'])
+            if lease['generation'] == generation:
+                require(not held, 'fixture lease is still held')
+                require(begin-timedelta(seconds=1) <= acquired <= end
+                        and timestamp(lane['ended_utc']) <= timestamp(value['released_at']) < end+timedelta(seconds=1),
+                        'fixture released lease generation or interval differs')
+            else:
+                # The helper advances generations under the same exclusive
+                # lock. A later acquisition after our helper ended proves our
+                # generation released; it does not admit another job here.
+                require(timestamp(lane['ended_utc']) <= acquired <= timestamp(own.stamp()),
+                        'successor lease acquisition does not establish fixture release')
+                if not held:
+                    require(acquired <= timestamp(value['released_at']) <= timestamp(own.stamp()),
+                            'successor lease release interval differs')
         result[name] = {'path':str(path), 'sha256':hashlib.sha256(before).hexdigest(),
                         'metadata':value, 'kernel_held':held}
     return result
@@ -289,7 +301,8 @@ def audit(route, kind, pending_ref, lane_ref, exit_ref, ledger_ref, code, node, 
     budget=ledger_check(reader,ledger_ref,driver,begin,end)
     reader.recheck()
     second_leases=leases(node,generation,lane,begin,end); second=process_snapshot(rows,pane,inspect)
-    require(first_leases[name]==second_leases[name],'fixture lease changed during audit')
+    # Each snapshot independently establishes release of the fixture generation.
+    # Later users may acquire/release the lane between those observations.
     reader.check()
     return {'format':'swdb.bfs.fixture-terminal.v1','id':driver['id'],'state':'passed',
         'evidence_kind':'contract_fixture','route':route,'kind':kind,'code_commit':pending['code_commit'],

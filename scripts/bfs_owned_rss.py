@@ -30,12 +30,26 @@ class DescendantRSS:
         _require(type(self.page_size) is int and 0 < self.page_size <= 1024**2,
                  'owned RSS page size is unavailable')
 
+    @staticmethod
+    def _read_proc_text(path, folder, label):
+        # Linux may report ESRCH for an already-open procfs file when its
+        # process/task exits. Independently confirm directory absence, or
+        # reopen once and use that actual identity/measurement. Neither the
+        # first error nor an ambiguous confirmation authorizes a zero value.
+        for attempt in range(2):
+            try:
+                return path.read_text()
+            except (FileNotFoundError, ProcessLookupError):
+                try:
+                    folder.stat()
+                except FileNotFoundError:
+                    return None
+                _require(attempt == 0, f'live owned {label} is unavailable')
+
     def _stat(self, pid):
         folder = self.proc / str(pid)
-        try:
-            raw = (folder / 'stat').read_text()
-        except FileNotFoundError:
-            _require(not folder.exists(), f'live owned PID {pid} stat is unavailable')
+        raw = self._read_proc_text(folder / 'stat', folder, f'PID {pid} stat')
+        if raw is None:
             return None
         try:
             prefix, suffix = raw.rsplit(')', 1)
@@ -61,14 +75,14 @@ class DescendantRSS:
             for task in tasks:
                 if not task.name.isdigit():
                     continue
-                try:
-                    values = (task / 'children').read_text().split()
-                    _require(len(values) <= MAX_IDENTITIES, 'owned child observation bound exceeded')
-                    children.extend(int(value) for value in values)
-                    _require(len(children) <= MAX_IDENTITIES, 'owned child observation bound exceeded')
-                except FileNotFoundError:
-                    _require(not task.exists(), f'live owned task {task.name} children are unavailable')
-        except FileNotFoundError:
+                raw = self._read_proc_text(task / 'children', task, f'task {task.name} children')
+                if raw is None:
+                    continue
+                values = raw.split()
+                _require(len(values) <= MAX_IDENTITIES, 'owned child observation bound exceeded')
+                children.extend(int(value) for value in values)
+                _require(len(children) <= MAX_IDENTITIES, 'owned child observation bound exceeded')
+        except (FileNotFoundError, ProcessLookupError):
             # A process may be reaped between the stat read and task traversal.
             current = self._stat(row['pid'])
             _require(current is None or current['start_ticks'] != row['start_ticks'],
