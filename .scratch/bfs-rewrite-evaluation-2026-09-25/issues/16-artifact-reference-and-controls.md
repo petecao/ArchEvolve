@@ -263,3 +263,37 @@ remains charged to T16. See [closure](../observations/protocol-proofgroup-indepe
 Node 1 was released and external node 0 was untouched. Scientific admission is
 being prepared; this proof is not simulation or acceptance evidence. The
 original hard end and all prior charges remain unchanged.
+
+## T16 fresh protocol continuation started — 2026-09-27 07:20 ET
+
+The independently approved `bfs-t16-protocol-recovery-simulator-batch-20260927-a1`
+started once at **07:18:39.701921 ET** on mbit10 node 1 using exact runtime
+`2a64a188` and corrected operator `f775fd0`. The original absolute end remains
+**20:16:17.225985 ET**; all 15,613 seconds and 10,391,474,176 bytes of prior
+charges/reservations remain counted. Fresh immutable protocols bind the reviewed
+verifier runtime in both roles of both comparisons.
+
+At 07:20:06 ET the first `artifact.scalar` public `dx100-execute` remained
+running with owned gem5 PID 3719733/start 500992796. It passed the prior
+execution-identity refusal and reached actual simulator execution. The batch
+and series supervisors were running with fresh telemetry; no accepted sample
+or scientific acceptance is claimed. No previous failed attempt was resumed.
+
+Evidence: [independent admission](../observations/protocol-scientific-admission-independent-20260927.json),
+[startup](../observations/t16-protocol-startup-20260927.json), and
+[first simulator observation](../observations/t16-protocol-first-simulator-20260927.json).
+
+## T16 live checkpoint — 2026-09-27 07:43 ET
+
+The fresh protocol continuation is running its first `artifact.scalar` primary
+simulation. At 07:43:03 ET the active gem5 identity was PID 3720651/start
+501007027, state R, with 30,518,341,632 bytes RSS and 124,601 CPU ticks.
+The checkpoint process had finished and the public execution remained active;
+this is not an accepted sample. The series still contained zero accepted samples.
+Supervisor ledger telemetry was 0.15 seconds old. Node 1 remained owned at
+generation 451; node 0 was externally held at generation 366, and the legacy
+lease was free. All observed kernel locks agreed with stable metadata.
+Free space was 155,565,334,528 bytes on `/data` and 16,841,564,160 bytes on
+`/data1`. The original deadline, limits, and prior charges remain unchanged.
+
+Evidence: [live health](../observations/host-health-20260927-0743.json).
