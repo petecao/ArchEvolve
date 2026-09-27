@@ -2569,3 +2569,19 @@ The query-index repair was independently verified with 51 passing tests and
 synchronized as `3c3efd3`; see the
 [independent review](observations/bfs-query-index-independent-review-20260927.json).
 This resolves that interim Standards finding. The T16 runtime was not changed.
+
+## Protocol preparation checkpoint — 2026-09-27 06:14 ET
+
+The [diagnosis](../../docs/bfs-t16-instrumentation-preparation-20260927.md)
+confirms a preparation defect: repaired verifier hashes were paired with old
+frozen protocol records. The identity gate remains unchanged. New immutable
+author-reference and matched-control requests are being prepared, preserving
+all scientific settings apart from the exact repaired verifier identities.
+Because continuation registry/accounting changes require a new runtime, a fresh
+600-second/2-GiB Linux proof reservation is deducted from the existing T16 pool;
+cumulative reserved costs become 15,613 seconds and 10,391,474,176 bytes. The
+original 20:16:17.225985 ET hard end is unchanged. No new execution is launched.
+[Host health](observations/host-health-20260927-0613.json) confirms both socket
+lanes and the legacy lease free, with adequate capacity and no owned T16 job.
+The public query/handoff checkpoint and diagnosis are synchronized in `043d385`;
+acceptance remains incomplete with zero of eight cells and no qualified gain.
