@@ -343,3 +343,79 @@ def test_linux_storage_observation_handles_sqlite_journal_unlink(tmp_path, monke
     result = subprocess.run(['du','-sk',str(tmp_path)],check=True,capture_output=True,
                             text=True,timeout=5,env={**os.environ,'LC_ALL':'C'})
     assert measured == int(result.stdout.split()[0])*1024
+
+
+# 2026-09-26: procfs identity-read races, including pidfd signal admission.
+def _identity_proc(tmp_path,monkeypatch,pid=991991,start=1001,pages=7):
+    from tests.test_bfs_owned_rss import process
+    folder=process(tmp_path,pid,1,start,pages=pages)
+    original=Path
+    monkeypatch.setattr(owned,'Path',lambda value: tmp_path/str(value).removeprefix('/proc/')
+                        if str(value).startswith('/proc/') else original(value))
+    return pid,folder
+
+
+def test_identity_esrch_exit_requires_independently_absent_directory(tmp_path,monkeypatch):
+    import errno,shutil
+    pid,folder=_identity_proc(tmp_path,monkeypatch)
+    read=Path.read_text
+    def exiting(path,*args,**kwargs):
+        if path==folder/'stat':
+            shutil.rmtree(folder)
+            raise ProcessLookupError(errno.ESRCH,'proc descriptor lost on exit')
+        return read(path,*args,**kwargs)
+    monkeypatch.setattr(Path,'read_text',exiting)
+    assert owned.identity(pid) is None
+
+
+@pytest.mark.parametrize('reuse',[False,True])
+def test_identity_esrch_reopens_actual_identity_and_rss(tmp_path,monkeypatch,reuse):
+    import errno
+    from tests.test_bfs_owned_rss import process
+    pid,folder=_identity_proc(tmp_path,monkeypatch);read=Path.read_text;calls=0
+    def replaced(path,*args,**kwargs):
+        nonlocal calls
+        if path==folder/'stat':
+            calls+=1
+            if calls==1:
+                if reuse:process(tmp_path,pid,999,9001,pages=13)
+                raise ProcessLookupError(errno.ESRCH,'old proc descriptor')
+        return read(path,*args,**kwargs)
+    monkeypatch.setattr(Path,'read_text',replaced)
+    row=owned.identity(pid)
+    assert calls==2 and row['pid']==pid and row['start_ticks']==(9001 if reuse else 1001)
+    assert row['rss_bytes']==(13 if reuse else 7)*os.sysconf('SC_PAGE_SIZE')
+
+
+@pytest.mark.parametrize('fault',['live-esrch','permission','io','malformed','confirmation-esrch'])
+def test_identity_does_not_suppress_ambiguous_or_invalid_telemetry(tmp_path,monkeypatch,fault):
+    import errno
+    pid,folder=_identity_proc(tmp_path,monkeypatch);read=Path.read_text;stat=Path.stat
+    def invalid(path,*args,**kwargs):
+        if path==folder/'stat':
+            if fault=='permission':raise PermissionError(errno.EACCES,'denied')
+            if fault=='io':raise OSError(errno.EIO,'I/O error')
+            if fault=='malformed':return 'broken stat'
+            raise ProcessLookupError(errno.ESRCH,'still-live proc')
+        return read(path,*args,**kwargs)
+    def confirm(path,*args,**kwargs):
+        if path==folder and fault=='confirmation-esrch':raise ProcessLookupError(errno.ESRCH,'unknown confirmation')
+        return stat(path,*args,**kwargs)
+    monkeypatch.setattr(Path,'read_text',invalid);monkeypatch.setattr(Path,'stat',confirm)
+    with pytest.raises((ValueError,OSError,IndexError)):owned.identity(pid)
+
+
+@pytest.mark.parametrize('fault',['reused','confirmation-esrch'])
+def test_signal_never_admits_reused_or_unknown_identity(tmp_path,monkeypatch,fault):
+    import errno
+    pid,folder=_identity_proc(tmp_path,monkeypatch,start=9001);sent=[];closed=[]
+    monkeypatch.setattr(owned.os,'pidfd_open',lambda value:77,raising=False)
+    monkeypatch.setattr(owned.os,'close',closed.append)
+    monkeypatch.setattr(owned.signal,'pidfd_send_signal',lambda *args:sent.append(args),raising=False)
+    owner=object.__new__(owned.Owned)
+    if fault=='confirmation-esrch':
+        def unknown(value):raise ProcessLookupError(errno.ESRCH,'independent confirmation unavailable')
+        monkeypatch.setattr(owned,'identity',unknown)
+        with pytest.raises(ProcessLookupError,match='confirmation'):owner.signal({'pid':pid,'start_ticks':1001},owned.signal.SIGTERM)
+    else:owner.signal({'pid':pid,'start_ticks':1001},owned.signal.SIGTERM)
+    assert not sent and closed==[77]

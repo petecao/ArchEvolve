@@ -188,3 +188,46 @@ def test_public_native_admission_rejects_pending_fixture_proof(tmp_path):
     value['state']='tests_passed_cleanup_unverified'
     path=tmp_path/'proof.pending.json';path.write_text(json.dumps(value))
     with pytest.raises(ValueError,match='exact Linux'):campaign.validate_linux_proof(campaign.reference(path),admission)
+
+
+# 2026-09-27: private supplemental stage shares lifecycle, never a proof kind.
+def test_private_supplement_fixed_configuration_does_not_mutate_public_selection(tmp_path,monkeypatch):
+    import copy
+    from scripts.bfs_simulator_recovery import GROUP_ID, SUPPLEMENT_SELECTORS
+    before=copy.deepcopy(runner.SELECTIONS);monkeypatch.setattr(runner,'RAW_BASE',tmp_path)
+    folder=tmp_path/(GROUP_ID+'.dispatch')/'supplement'
+    rid,argv,names=runner.supplement_configuration(folder)
+    assert rid==GROUP_ID+'.supplement' and len(names)==42
+    assert argv[3:3+len(SUPPLEMENT_SELECTORS)]==SUPPLEMENT_SELECTORS
+    assert runner.SELECTIONS==before and len(runner.SELECTIONS)==3
+    with pytest.raises(ValueError,match='fixed group root'):runner.supplement_configuration(tmp_path/'arbitrary')
+
+
+@pytest.mark.parametrize('fault',[None,'child','cleanup','missing_junit'])
+def test_private_supplement_reuses_real_stage_cleanup_without_proof(execution,monkeypatch,fault):
+    from scripts.bfs_simulator_recovery import GROUP_ID
+    f=execution;f.fault['kind']=fault;folder=f.folder
+    args=runner.command('owned_cleanup',folder);names=runner.SELECTIONS['owned_cleanup'][2]
+    # The fixed command/cases are checked separately above; this seam drives a
+    # real tiny child through the shared production lifecycle on macOS.
+    monkeypatch.setattr(runner,'supplement_configuration',lambda folder:(GROUP_ID+'.supplement',args,names))
+    begin=datetime.now(runner.own.ET);runtime=runner.campaign_runtime('a'*40);pytest_runtime=runner.pytest_identity()
+    invoke=lambda:runner.execute_supplement(folder,begin,begin+timedelta(seconds=90),time.monotonic()+90,
+        'a'*40,runtime,{'pid':2,'start_ticks':1},0,pytest_runtime)
+    if fault:
+        with pytest.raises((ValueError,PermissionError)):invoke()
+    else:
+        value=invoke();assert value['state']=='complete' and value['standard_proof_kind'] is False
+        assert value['work_deadline']==(begin+timedelta(seconds=60)).isoformat()
+        assert value['runtime_sha256']['scripts/bfs_owned_rss.py']
+    assert len(f.children)==1 and f.children[0].returncode is not None
+    assert not (folder/'proof.pending.json').exists() and not (folder/'proof.json').exists()
+    ledger=json.loads((folder/'cleanup-ledger.json').read_text());assert not ledger['reservations'] and ledger['spent_seconds']<=30
+
+
+def test_private_supplement_rejects_extended_original_clock_before_child(tmp_path):
+    begin=datetime.now(runner.own.ET)
+    with pytest.raises(ValueError,match='original 90-second'):
+        runner.execute_supplement(tmp_path/'unused',begin,begin+timedelta(seconds=91),time.monotonic()+91,
+            'a'*40,{}, {'pid':2,'start_ticks':1},0,{})
+    assert not (tmp_path/'unused').exists()

@@ -42,10 +42,9 @@ def stamp():
 
 
 def identity(pid):
-    try:
-        raw = Path(f'/proc/{pid}/stat').read_text()
-    except FileNotFoundError:
-        require(not Path(f'/proc/{pid}').exists(), 'live identity stat unavailable')
+    folder = Path(f'/proc/{pid}')
+    raw = DescendantRSS._read_proc_text(folder/'stat', folder, f'PID {pid} identity')
+    if raw is None:
         return None
     fields = raw.rsplit(')', 1)[1].split()
     require(int(raw.split(' (', 1)[0]) == pid, 'process identity changed')
@@ -217,8 +216,8 @@ class Owned:
         try:
             current = identity(row['pid'])
             if current and current['start_ticks'] == row['start_ticks']:
-                signal.pidfd_send_signal(fd, signum)
-        except ProcessLookupError: pass
+                try: signal.pidfd_send_signal(fd, signum)
+                except ProcessLookupError: pass  # pidfd target exited after verification
         finally: os.close(fd)
 
     def finish(self, child=None, direct=None):

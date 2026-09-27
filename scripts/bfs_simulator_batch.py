@@ -33,7 +33,7 @@ from swdb.store import Store
 
 ET = ZoneInfo('America/New_York')
 GIB = 1024**3
-PLAN_HASHES = {'t15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
+PLAN_HASHES = {'t15-supervision-recovery': '5551bd6aa004dbe74aba4c628bb5a3c0f96231b4bc8fd11ce719118ee7de6b9c', 't16-supervision-recovery': '3c3dcaa3e6ecee16ea2d32b9a792d1b983c8d2858a3101e7943859879743b0f2', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
 SETUP_RECOVERY_ID = 'bfs-t15-setup-recovery-simulator-batch-20260926-a1'
 SETUP_FAILURE_ID = 'bfs-t15-correction-simulator-batch-20260926-a1'
 SETUP_HARD_END = '2026-09-27T09:14:09.851819-04:00'
@@ -80,7 +80,8 @@ def runtime_identity():
             for name in ('swdb', 'scripts', 'schemas', 'vocab')
             for path in sorted((ROOT / name).rglob('*')) if path.is_file() and path.suffix in suffixes}
     result.update({name: artifacts.file_hash(ROOT/name) for name in
-                   ('tests/test_bfs_owned_execution.py', 'tests/test_dx100_interruption.py')})
+                   ('tests/test_bfs_owned_execution.py', 'tests/test_dx100_interruption.py',
+                    'tests/test_bfs_owned_rss.py', 'tests/test_bfs_linux_fixture_audit.py')})
     return result
 
 
@@ -257,6 +258,9 @@ def setup_failure_charges(plan):
 
 def preparation_charges(plan):
     """Reopen the fixed retained preparation; caller-supplied credits are forbidden."""
+    if 'supervision_recovery' in plan['accounting']:
+        from scripts.bfs_simulator_recovery import preparation_charges as recovery_charges
+        return recovery_charges(plan)
     rows = []
     for entry in plan['accounting']['preparation']:
         driver, wrapped = read_reference(entry['driver']), read_reference(entry['lane'])
@@ -400,6 +404,9 @@ def validate_preparation_reservation(plan, admission):
     used = allocated_bytes(paths)
     require(type(actual['raw_bytes']) is int and used == actual['raw_bytes'] <= reserved['raw_bytes'],
             'preparation output changed or exceeded the full reserved storage allowance')
+    if 'supervision_recovery' in plan['accounting']:
+        from scripts.bfs_simulator_recovery import validate_supplement
+        validate_supplement(plan, admission)
 
 
 class OwnedDescendants:
@@ -468,10 +475,16 @@ class Ledger:
         self.charged_bytes = sum(row['raw_bytes'] for row in charged)
         available = self.bounds['batch_seconds'] - self.charged_seconds
         if 'clock_policy' in plan:
-            require(plan['id'] == SETUP_RECOVERY_ID
-                    and plan['clock_policy'] == {'method':'original_absolute_end_clamp.v1',
-                                                 'absolute_end':SETUP_HARD_END}
-                    and self.end == stamp(SETUP_HARD_END)
+            if 'supervision_recovery' in plan['accounting']:
+                from scripts.bfs_simulator_recovery import hard_end
+                expected_end = hard_end(plan)
+            else:
+                require(plan['id'] == SETUP_RECOVERY_ID
+                        and plan['clock_policy'] == {'method':'original_absolute_end_clamp.v1',
+                                                     'absolute_end':SETUP_HARD_END},
+                        'setup recovery must retain its fixed original hard end and full-series latest start')
+                expected_end = stamp(SETUP_HARD_END)
+            require(self.end == expected_end
                     and latest <= self.end-timedelta(seconds=self.bounds['series_seconds']+self.bounds['cleanup_seconds']),
                     'setup recovery must retain its fixed original hard end and full-series latest start')
             usable = min(available, (self.end-self.outer_started).total_seconds())
