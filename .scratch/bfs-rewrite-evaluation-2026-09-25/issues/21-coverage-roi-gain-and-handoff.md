@@ -1,7 +1,7 @@
 # 21 — Coverage, ROI gain, and collaborator handoff
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-27 (Eastern Time)
+Updated: 2026-09-27 18:35 ET
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 16, 17, 18, 19, 20
@@ -328,3 +328,56 @@ allocation and comparable bounded recoveries have direct user approval, but
 no new T15 implementation, clock or admission started. T16 is physically stopped
 with a retained strict-cleanup accounting failure; this must be addressed
 prospectively before satisfying the T15 serialization prerequisite.
+
+## Stream E: final-report preparation — 2026-09-27 18:35 ET
+
+This work is on branch `codex/bfs-t21-report-20260927-e1` (commit `85f01b1`,
+based on `f633f00`). It is local work only: no lane, no provider call, and no
+evaluation. The ticket stays claimed.
+
+**Defect fixed.** The four T18/T19 native comparisons were rejected on the Mac
+with the message "representation must be an absolute regular file". The cause
+was that paired-receipt admission reopened graph files, binaries, and raw outputs
+that exist only on mbit10. The new `validate_receipt(..., verify_raw=False)`
+checks every record binding: receipt and schedule identities, evaluation,
+observation, and correctness digests, stage links, and a passed check on the
+registered graph. It is used only when the evidence provably lives on another
+host, meaning a different recorded host and no declared raw path present
+locally. The comparison is then reported as `raw_verification: remote_unverified`,
+and `external_verification_complete` stays false. On mbit10 the full raw check
+still runs. With this fix the four native cells appear with their real IDs as
+`satisfied_by_retained_metadata`, each with a completed workflow case, a complete
+package, and an **inconclusive** outcome (T18 1.0004 and 1.0015; T19 1.0013 and
+1.0019). No gain is claimed.
+
+**Report sections added.** Each cell now has a `summary` covering workflow case,
+accelerator use, evidence package, comparison outcome, and raw verification.
+Missing evidence is reported as `missing` and never as a ratio. Each cell also
+lists every retained proposal (T20 contexts 1–6 in the annotated cells). The new
+`gain_gate` section covers AC17, `accounting` covers AC18 (retained failures,
+including the T18 b1 interruption and T20 contexts 2–5), and `selection_audit`
+lists unselected protocols and comparisons.
+
+**AC20/D06.** Added the [format 1.0 contract](../../../docs/bfs-handoff-contract-v1.md),
+the public command `swdb handoff-message`, and six examples rendered from actual
+records under `docs/bfs-handoff-examples/`, each labeled as coming from a test
+client. The contract reflects full_files, stream-json, and the R10/R11/R12
+fields. R10–R12 code is still only on the T16 branch. The regenerator is
+`scripts/bfs_handoff_examples.py`, and `--check` fails if an example is stale.
+
+**Test fix.** `test_unknown_counter_availability_stays_null` now uses a separate
+synthetic machine record. It no longer edits mbit10, whose digest the frozen
+protocols bind.
+
+**Regeneration.** Use the request
+[`acceptance-report-20260927-e1.json`](../requests/acceptance-report-20260927-e1.json);
+the command is in the [handoff](../../../docs/bfs-handoff.md#final-report-regeneration--2026-09-27).
+The current result has 11 of 20 criteria satisfied by retained metadata: AC01–05,
+07–09, and 12–14. AC06, AC10, AC11, and AC15–AC20 remain incomplete, and
+acceptance is incomplete. Next, add the T15 controlled-simulator protocol IDs and
+the T16 comparison IDs in a new request, then run the command on mbit10 for
+external verification.
+
+**Tests.** The new report tests, 8 in total, passed. The focused
+coverage/pair/index/handoff set passed 68 tests. The full suite at `85f01b1`
+reported **2,672 passed, 21 skipped, 0 failed**, in 4,913 s.
