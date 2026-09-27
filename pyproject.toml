@@ -22,3 +22,6 @@ packages = ["swdb"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# 2026-09-27 ET: never write .pytest_cache into a checkout. A stray cache in a
+# runtime checkout failed native readback a2's root-entry admission.
+addopts = "-p no:cacheprovider"

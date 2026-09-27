@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Prepare and publish a native protocol from actual unchanged BFS pilots.
 
-Updated: 2026-09-26 (Eastern Time). Preparation does not freeze settings. Publish
+Updated: 2026-09-27 (Eastern Time). Preparation does not freeze settings. Publish
 revalidates the reviewed evidence and requires the shared accelerator size gate.
 This narrow native freeze does not resolve Ticket 15 or the artifact reference.
 """
@@ -344,6 +344,8 @@ def prepare(spec, store):
     require(type(scale) is int and scale in (16, 18), 'performance scale must be planned18 or cost-qualified16')
     require(isinstance(selection.get('justification'), str) and selection['justification'].strip(),
             'shared workload-size selection requires a retained justification')
+    native_only = (native_only_size_scope(spec, one_thread_mode, selection)
+                   if 'accelerator_size_gate' in spec else None)
     ids = spec.get('packages', [])
     require(len(ids) == 2 and len(set(ids)) == 2, 'one distinct native package per graph family is required')
     packets = [packet(store, rid) for rid in ids]
@@ -457,7 +459,10 @@ def prepare(spec, store):
                     unchanged(store, store.get(row['candidate'], 'candidate')); cost_failure = True
         if not cost_failure:
             gates.append('scale16 requires a retained unchanged scale18 resource-cost failure')
-    accelerated = accelerator_gate(store, selection.get('accelerator_packages', []), packets, identities, gates, ceiling)
+    if native_only is not None:
+        accelerated = native_only
+    else:
+        accelerated = accelerator_gate(store, selection.get('accelerator_packages', []), packets, identities, gates, ceiling)
     policy = {'minimum_speedup': 1.05, 'maximum_relative_spread': ceiling, 'confidence': 0.95,
               'bootstrap_resamples': 2000, 'bootstrap_seed': 20260925}
     calibration = {'native_pilots': observations, 'repeatability_control': control,
@@ -614,6 +619,33 @@ def supporting_case_evidence(store, item):
         'differences_from_primary': copy.deepcopy(run['differences_from_primary']),
         'raw_verification': availability,
         'scope': 'separate independently checked author diagnostic cases for calibration only; not primary coverage or timing'}
+
+
+RESUME_PLAN = ROOT / '.scratch/bfs-rewrite-evaluation-2026-09-25/resume-plan-20260927.md'
+
+
+def native_only_size_scope(spec, one_thread_mode, selection):
+    """Explicit R7 route (2026-09-27 ET): a native-only protocol may omit the
+    shared simulator size evidence. Opt-in only for the one-thread calibration;
+    the selection must name the recorded decision by exact file hash and supply
+    no accelerator packages. Controlled-simulator protocols keep the gate."""
+    scope = spec['accelerator_size_gate']
+    require(one_thread_mode, 'native-only size scope is limited to the one-thread calibration route')
+    require(isinstance(scope, dict) and set(scope) == {'state', 'decision', 'plan', 'justification'}
+            and scope['state'] == 'native_only_not_required' and scope['decision'] == 'R7'
+            and isinstance(scope['justification'], str) and scope['justification'].strip(),
+            'native-only size scope has an unsupported shape')
+    plan = scope['plan']
+    require(isinstance(plan, dict) and set(plan) == {'path', 'sha256'}
+            and Path(plan['path']).resolve() == RESUME_PLAN.resolve()
+            and artifacts.file_hash(RESUME_PLAN) == plan['sha256']
+            and 'R7. **Native protocol independence.**' in RESUME_PLAN.read_text(),
+            'native-only size scope must bind the exact recorded R7 decision')
+    require(not selection.get('accelerator_packages'),
+            'native-only size scope cannot also admit accelerator packages')
+    return {'executions': [], 'repeatability': [], 'state': 'native_only_not_required',
+            'decision': copy.deepcopy(scope),
+            'scope': 'native protocol only; every controlled-simulator freeze keeps the shared accelerator size gate'}
 
 
 def accelerator_gate(store, ids, native, identities, gates, ceiling):
