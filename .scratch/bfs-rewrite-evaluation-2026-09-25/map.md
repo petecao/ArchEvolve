@@ -4,7 +4,7 @@ Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-26 (Eastern Time)
 **Type:** ticket map
 **Status:** claimed
-**Blocked by:** Remaining empirical verification, calibration, artifact/control comparisons, and final acceptance. All three originally approved transfers are complete. The new six-file provider-result packet, 24-file native evidence packet, context-supplemented provider payload, and superseding 26-file recovery runtime await payload-specific approval after automatic review rejected their earlier transfer requests. Local/host evaluation continues independently.
+**Blocked by:** Remaining empirical verification, calibration, artifact/control comparisons, final acceptance, and free host-lane availability. The user now grants standing authorization for current and future task-related transfers to private ruchou/EvolveSWDB codex/bfs-* branches, mbit10 through Git, and Anthropic through Claude Code. Earlier transfer holds are superseded; original budgets and evidence-preservation rules remain.
 **Spec:** [Refined specification](spec.md)
 
 The user authorized autonomous implementation of all 21 tickets and all necessary builds, installations, benchmark/simulator runs, external access, Git, and Claude Code on 2026-09-25. This supersedes the publication-only hold. The two-lane mbit10 rules and evidence requirements remain in force.
@@ -82,6 +82,29 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC18 — Full coverage including failed/regressing cases | 17–21 |
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
+
+## Standing transfer authorization and resumed work — 2026-09-26 23:09 ET
+
+The user's [standing authorization](observations/standing-transfer-authorization-20260926.json)
+explicitly covers private project source and research evidence in all pending
+and future task-related transfers to the named private repository/branches,
+mbit10 through Git, and Anthropic through Claude Code. Changes of commit, file
+inventory, size or task branch alone do not require another question. Credentials,
+unrelated data, public publication and destructive operations remain excluded.
+Original budgets, frozen settings and failed evidence are unchanged.
+
+The reviewed runtime `eb2f51d` was pushed successfully to
+`codex/bfs-recovery-runtime-20260926-a2`. The host worker may prepare the isolated
+recovery checkout and fresh bounded a4 proof envelope; the evidence worker is
+resuming the exact provider/native packet transfers, and the proposal worker
+is resuming the already bounded context-supplemented Claude continuation.
+
+The [23:03 full audit](observations/health-20260926-2303.json) retains T16 on
+node 0 generation 332, with zero completed samples and no sealed ROI/stats.
+Node 1 is again held, generation 423, and is unavailable for our new jobs.
+The latest helper upstream tip requires a fresh bounded Git-object comparison
+before dispatch; active checkout and T16 remain unchanged. Next full audit:
+23:33 ET. No ticket or coverage cell is resolved by transfer alone.
 
 ## Heartbeat and lane coordination — 2026-09-26 22:42 ET
 
