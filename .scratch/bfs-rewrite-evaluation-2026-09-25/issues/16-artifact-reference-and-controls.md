@@ -139,3 +139,11 @@ tree RSS. The original 14,400-second simulation bound is unchanged. A bounded
 [output metadata read](../observations/t16-roi-progress-2205-20260926.json) shows
 advancing tick output but no sealed ROI result; no progress percentage, completed
 comparison or gain is inferred. This ticket remains claimed.
+
+
+2026-09-26 22:33 ET: the [full audit](../observations/health-20260926-2233.json)
+retains the same first scalar stage, zero completed samples, explicit ROI-entry
+text but no sealed ROI/stats, and the original 14,400-second simulation limit.
+The nominal stage end is September 27 00:24:25.226146 ET; no remaining-time
+estimate or completed comparison is inferred. Node 0 remains owned at generation
+332, and node 1 remains free.

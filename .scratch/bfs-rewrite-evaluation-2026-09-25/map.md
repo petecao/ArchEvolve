@@ -4,7 +4,7 @@ Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-26 (Eastern Time)
 **Type:** ticket map
 **Status:** claimed
-**Blocked by:** Remaining empirical verification, calibration, artifact/control comparisons, and final acceptance. All three originally approved transfers are complete. The new six-file provider-result packet, 24-file native evidence packet, context-supplemented provider payload, and five-file T17 diagnostic export await payload-specific approval after automatic review rejected their transfer. Local/host evaluation continues independently.
+**Blocked by:** Remaining empirical verification, calibration, artifact/control comparisons, and final acceptance. All three originally approved transfers are complete. The new six-file provider-result packet, 24-file native evidence packet, context-supplemented provider payload, and superseding 26-file recovery runtime await payload-specific approval after automatic review rejected their earlier transfer requests. Local/host evaluation continues independently.
 **Spec:** [Refined specification](spec.md)
 
 The user authorized autonomous implementation of all 21 tickets and all necessary builds, installations, benchmark/simulator runs, external access, Git, and Claude Code on 2026-09-25. This supersedes the publication-only hold. The two-lane mbit10 rules and evidence requirements remain in force.
@@ -82,6 +82,41 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC18 — Full coverage including failed/regressing cases | 17–21 |
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
+
+## Host and worker checkpoint — 2026-09-26 22:33 ET
+
+The [full audit](observations/health-20260926-2233.json) confirms node 0 held at
+generation 332 with the expected kernel holder; node 1 generation 416 and legacy
+77 are released, with no corresponding kernel lock. The host worker is running
+and responsive; both review workers completed their assigned reviews normally.
+No dead worker or competing lane holder was found. Closed roots and historical
+hashes remain unchanged. Free space is 16.18 GiB on `/data1` and 169.98 GiB on
+`/data`; available memory is 58.47 GiB on node 1 and 88.92 GiB globally.
+
+| Ticket or case | Status | Host / lane | Evidence | Next action |
+|---|---|---|---|---|
+| 01–14 | resolved | — | 14/21 tickets | Preserve accepted evidence |
+| T15 recovery | reviewed, transfer pending | local; node 1 free | Fixed charges/hard end; Linux proof unrun | Exact transfer approval, then a4 proof/admission |
+| T16 | running, zero completed samples | mbit10 / node 0, 332 | Same gem5 PID/start; 30,948,171,776-byte tree RSS; 1,756,381,184 charged bytes | Original stage bound, no retry |
+| Full regression | passed | local / d5e2159 | 2,258 passed, 20 skipped | Retain exact revision evidence |
+| New runtime | reviewed and locally tested | local / eb2f51d | 553 passed, ten Linux-only skips | Exact 26-file transfer question pending |
+| Final acceptance | incomplete | — | 0/8 cells; no qualified gain | Seven tickets remain claimed |
+
+The first T16 simulation stage started at 20:24:25.226146 ET with a 14,400-second
+limit, corresponding to September 27 00:24:25.226146 ET; its existing monotonic
+guard remains authoritative. A bounded prefix contains the author's ROI-start
+marker, while the sealed ROI and ROI stats are absent. The latest bounded tail
+shows tick 225,936,615,500. This is activity and entry evidence, not completion
+or a remaining-time estimate. The marker prints `omp_get_num_threads()` from
+serial scope (`apps/dx100/benchmarks/gapbs/src/bfs.cc:339`); its value of one does
+not observe the later traversal team's size. Requested four-thread settings
+and actual team observations remain distinct.
+
+Remote Memacc upstream advanced to `8b572e8bbb20d60da32809746ca70fb9840cfc9e`.
+Installed helper commit `42ce8dce` and script hash `00c269b4` remain unchanged.
+A bounded Git-object comparison is in progress before any new lane dispatch;
+no running helper checkout, job or lease is changed. Next full audit: 23:03 ET.
+The 30-minute heartbeat is verified ACTIVE.
 
 ## Corrected exact runtime packet — 2026-09-26
 
