@@ -1,7 +1,21 @@
 # Existing-candidate native acceptance preparation
 
-Created: 2026-09-27 (Eastern Time).
-Status: data-only preparation; neither route is admitted or dispatched.
+Created: 2026-09-27 (Eastern Time). Updated: 2026-09-27 12:35 ET.
+Status (original): data-only preparation; neither route is admitted or dispatched.
+
+**Executed — 2026-09-27 12:35 ET (Stream B).** Both routes have now executed.
+Evidence: [observation](../../observations/native-routes-t18-t19-20260927.json)
+and Tickets 18/19.
+
+- `protocol/` holds the two R7 selections and `operation.sh`, used for
+  prepare/publish outside a lane.
+- `operator.py` holds the proof/admit/launch/close glue. Admission now builds a
+  reference-closure record view.
+- T18 b1 was interrupted and is retained.
+- T18 b2 and T19 b2 are evaluated. All four comparisons are inconclusive under
+  the spread veto.
+- T19 b1 was admitted but never launched; its admission is retained. The text
+  below is the original preparation record.
 
 Assumption: preserve the existing T18 DX100 supplied patch and T19 upstream
 structured-instruction candidate, and assess each against separately frozen

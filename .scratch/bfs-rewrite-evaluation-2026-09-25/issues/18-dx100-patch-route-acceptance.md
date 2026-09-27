@@ -1,9 +1,9 @@
 # 18 — DX100 BFS: patch-route acceptance
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-27 (Eastern Time)
+Updated: 2026-09-27 12:25 ET
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 15
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -24,11 +24,11 @@ Covers AC06–AC10, AC12–AC14, AC16, AC18, AC20 and contributes evidence towar
 - [x] Retrieve the baseline profile package for the exact DX100 scalar source and declared native workload. Use the package's source, region, build, correctness, and ROI context in the proposal.
 - [x] Submit an actual patch in the versioned proposal envelope, naming its optimization intent, exact source identity, required capabilities, and preservation constraints. Record test-client provenance.
 - [x] Materialize changed CPU-runnable BFS code with recorded supporting edits, candidate/binary identities, diff, and any bounded repairs. Preserve evaluator-owned correctness and timing boundaries.
-- [ ] Execute the candidate and its explicitly selected unaccelerated native baseline on both graph families using ticket 15's frozen graph/source, thread, target, ROI, and repetition rules.
-- [ ] Retain structural BFS correctness evidence for the timed code and every workload supporting a timing claim. Verification remains outside the declared ROI, while required work inside that ROI remains charged.
-- [ ] Retrieve actual native BFS ROI timing, selected-region timing, and refreshed dynamic memory evidence with the diagnostic collector's identity, attribution scope, and differences from the timed artifact.
-- [ ] Confirm that a fresh public query retrieves the full proposal/candidate/evaluation chain and preserves native measurement identity; fixture timings and functional accelerator host runtimes do not satisfy this case.
-- [ ] Preserve failures, incomplete evidence, and regressions with reasons and raw references. Run within explicit budgets and lab-host rules; a correct regression may complete the case, but missing correctness or required profiling cannot.
+- [x] Execute the candidate and its explicitly selected unaccelerated native baseline on both graph families using ticket 15's frozen graph/source, thread, target, ROI, and repetition rules.
+- [x] Retain structural BFS correctness evidence for the timed code and every workload supporting a timing claim. Verification remains outside the declared ROI, while required work inside that ROI remains charged.
+- [x] Retrieve actual native BFS ROI timing, selected-region timing, and refreshed dynamic memory evidence with the diagnostic collector's identity, attribution scope, and differences from the timed artifact.
+- [x] Confirm that a fresh public query retrieves the full proposal/candidate/evaluation chain and preserves native measurement identity; fixture timings and functional accelerator host runtimes do not satisfy this case.
+- [x] Preserve failures, incomplete evidence, and regressions with reasons and raw references. Run within explicit budgets and lab-host rules; a correct regression may complete the case, but missing correctness or required profiling cannot.
 
 ## Verification and demonstration
 
@@ -117,3 +117,90 @@ four threads; the prospective one-thread reassessment preserves that history.
 Protocol, fresh-package and host-admission fields remain unset pending T15 and
 source-specific qualification/publication. The existing public campaign CLI is
 sufficient; no provider, build, measurement, new allowance or acceptance is claimed.
+
+## Native acceptance under the frozen one-thread protocol — 2026-09-27 12:25 ET
+
+Stream B, branch `codex/bfs-native-routes-20260927-b1`. Evidence:
+[native routes observation](../observations/native-routes-t18-t19-20260927.json).
+Raw output stays on mbit10 under `/data/yanruj/EvolveSWDB_runs/`.
+
+**Protocol (R7).** The one-thread study `bfs-native-one-thread-pilot-20260926-a1`
+qualified through the public `bfs_freeze_pilot.py` prepare/publish route, with
+the pinned 319645e reader in its original checkout. No gates were unmet. The
+explicit R7 native-only size scope replaced the simulator size gate; it is
+bound to the resume-plan hash, and controlled-simulator freezes keep that gate.
+Frozen protocol: `bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3`
+(1 thread, 10 paired repetitions, `native_paired.v1`, 0.10 spread ceiling,
+1.05 minimum speedup, lane node1). The fresh baseline packages are the study's
+one-thread DX100 uniform `…b8f33855cc6c657e` and Kronecker `…122d39652ae0c326`.
+The readback a1/a2 failures stay retained. The a2 cause (a stray
+`.pytest_cache`) is fixed prospectively: project pytest runs no longer create
+that cache.
+
+**Run b1 (retained failure).** `bfs-native-acceptance-20260927-dx100-patch-b1`
+started on node1 at 10:32 ET (generation 453). Reassessment, exact candidate
+reacquisition and patch replay passed. Paired trials took about 70 s each,
+against the pilot's 33 s, so the uniform pair could not fit its fixed 2,400 s
+bound. The cost was harness persistence outside the ROI (every persist
+reparsed and reindexed a 21 MB record view); the ~0.047 s BFS ROI was
+unaffected. At root's direction one SIGTERM stopped the driver at 10:51 ET.
+Its state is failed/interrupted, with six trials retained. Independent
+closure: 44/44 identities absent and the lease released. The run ID is never
+reused. The prospective fix (commits af100f1, 820f32b) adds a per-process
+Store parse cache and a reference-closure record view. A trial-equivalent
+persist fell from 8.7 s to 1.0 s. The unused T19 b1 admission is retained.
+
+**Run b2 (evaluated).** `bfs-native-acceptance-20260927-dx100-patch-b2` ran on
+node1 from 11:10:14 to 11:37:55 ET (1,661 s of the 14,400 s cap; generation
+455; load1 at start 2.42). The run:
+
+- reused candidate `bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1`
+  (artifact `10d4976f…`) through `--existing-candidate --reassessment`, with no
+  provider and no repair;
+- compiled the candidate binary `e65d00dc…` and the unaccelerated
+  `dx100-bfs-scalar` baseline binary `42546a5a…`;
+- collected a 60-trial paired grid per family.
+
+| Family | Baseline median ROI s | Candidate median ROI s | Speedup | 95% CI | Max spread (base / cand) | Decision |
+|---|---|---|---|---|---|---|
+| Uniform-random | 0.046034 | 0.045964 | 1.0015 | [0.9977, 1.0108] | 0.143 / 0.172 | inconclusive (spread veto) |
+| Kronecker | 0.023259 | 0.023226 | 1.0004 | [0.9958, 1.0197] | 0.138 / 0.021 | inconclusive (spread veto) |
+
+Structural correctness passed for all 30 timed trials per role per family,
+verified outside the ROI; initialization stays charged inside
+`bfs.complete_call.v1`. Each family has a complete candidate diagnostic
+package (`…5df6a96f028565a1`, `…d612335972200df6`). Each package holds
+per-region thread-CPU timing for 31 discovered regions from a separate
+instrumented binary. It also holds Callgrind 3.22 ROI memory rows (18 each:
+reads/writes, D1/LL misses, with the model limits stated) and region
+correspondence to the fresh baseline profile. 26 regions resolve identically.
+The five changed regions (TDStep, its two loops, DOBFS and its while loop) are
+reported as unresolved, with the collector's stated limit: "no timings or
+semantics are inherited". The comparison is software on a fixed target, so
+there is no accelerator claim. The region-profile records report `partial` (bounded source attribution, with explicit coverage and metric limits), the same state as every retained baseline profile; the packages themselves are `complete`.
+
+A fresh process with a new SQLite database retrieved the complete chain
+through `swdb get … --chain` for the proposal and both comparisons: proposal,
+candidate, evaluations, pair, package, region profile, protocol, machine and
+workload. Independent closure: 94/94 identities absent, lease released,
+storage within budget. Records were imported through Git at `cc598bc`.
+
+This is no gain and no regression. The candidate differs from the baseline
+by at most 0.15%, and the frozen spread veto fires on single-source outliers
+(about 0.13–0.17 against 0.10). By the plan, no retry or tuning follows.
+
+## Answer
+
+2026-09-27 12:25 ET. T18 is complete. The supplied DX100 scalar patch
+(64-vertex dynamic chunks, redundant CAS store removed, conditional printing)
+went through the public workflow on both graph families. It was built,
+structurally checked on every timed trial, and timed natively under the
+frozen one-thread paired protocol against the unaccelerated `dx100-bfs-scalar`
+baseline. It was reprofiled (region timing plus Callgrind memory) and
+retrieved in a fresh process. Both families are **inconclusive**: speedups are
+1.0015 and 1.0004, the intervals include 1, and the spread veto triggered. No
+gain is claimed. The interrupted b1 run and its harness-overhead cause are
+retained. The protocol was frozen under decision R7, independently of T15's
+simulator packages. Map pointer: left to root (this stream does not edit
+`map.md`).
+
