@@ -35,8 +35,8 @@ observe() {  # host record per the mbit10 measurement protocol
   {
     echo "== $1 $(date --iso-8601=ns)"; uptime; who | awk '{print $1}' | sort -u | tr '\n' ' '; echo
     df -h /data1 /data
-    cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor /sys/devices/system/cpu/intel_pstate/no_turbo 2>&1
-    grep -H '"state"' /data1/yanruj/lact-host-lease/mbit10-evaluation*.meta.json
+    cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor /sys/devices/system/cpu/intel_pstate/no_turbo 2>&1 || echo "cpufreq/pstate controls unavailable"
+    grep -H '"state"' /data1/yanruj/lact-host-lease/mbit10-evaluation*.meta.json || true
     echo "code $CODE $(git -C "$CODE" rev-parse --abbrev-ref HEAD) $(git -C "$CODE" rev-parse HEAD)"
   } >> "$DISPATCH/host.txt" 2>&1
 }
