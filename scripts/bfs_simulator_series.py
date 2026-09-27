@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """Run one bounded BFS simulator sample grid using public workflow commands.
 
-Updated: 2026-09-26 (Eastern Time). A pilot accepts unchanged baselines only.
+Updated: 2026-09-27 (Eastern Time). A pilot accepts unchanged baselines only.
+2026-09-27 (R3): an optional lane gem5-slot pool lets two family series share one
+socket job with at most N concurrent simulators; the profile limit is explicit.
 A frozen series evaluates an already selected candidate; it never picks a
 strategy, freezes settings, retries a failure, or makes a gain claim.
 """
 import argparse
 from datetime import datetime
+import fcntl
 import json
 import os
 from pathlib import Path
@@ -43,6 +46,28 @@ def admit_capacity(receipt, node, command):
     receipt.setdefault('capacity_admissions', []).append({'command': command, **snapshot})
     if snapshot['result']['eligible'] is not True:
         raise ValueError('fresh node/global capacity admission failed before ' + command)
+
+
+def acquire_gem5_slot(directory, slots, deadline, check, pause=1.0):
+    """R3: hold one of ``slots`` exclusive flocks before a gem5-running execute.
+
+    The caller passes the descriptor to dx100-execute and closes its own copy
+    after spawn; the child closes it after its last simulator stage. Waiting
+    is bounded by the series deadline and retained in the receipt.
+    """
+    began = time.monotonic()
+    while True:
+        for index in range(slots):
+            fd = os.open(Path(directory) / f'gem5-slot-{index}.lock', os.O_RDWR | os.O_CREAT, 0o644)
+            try:
+                fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                return fd, index, time.monotonic() - began
+            except BlockingIOError:
+                os.close(fd)
+        check()
+        if time.monotonic() + pause >= deadline:
+            raise TimeoutError('lane gem5 slot wait exhausted the series deadline')
+        time.sleep(pause)
 
 
 def select_verifier(requested, frozen):
@@ -183,11 +208,18 @@ def main():
                         help='opt-in lossless gem5 gzip debug file; omitted preserves legacy output')
     parser.add_argument('--verifier', choices=('dx100.bfs.verifier.v1', 'dx100.bfs.verifier.v2'),
                         help='explicit pilot checker; frozen series inherits its immutable checker')
+    parser.add_argument('--profile-seconds', type=int, default=120,
+                        help='dx100-profile collector budget; public collector cap is 600')
+    parser.add_argument('--gem5-slot-dir', type=Path, help='shared lane gem5-slot lock directory (R3)')
+    parser.add_argument('--gem5-slots', type=int, default=1, help='maximum concurrent lane gem5 processes')
     parser.add_argument('--owned-cleanup-ledger', type=Path)
     parser.add_argument('--owned-cleanup-binding')
     args = parser.parse_args()
     if bool(args.owned_cleanup_ledger) != bool(args.owned_cleanup_binding):
         parser.error('prospective supervision needs the exact shared cleanup ledger and binding')
+    if args.gem5_slot_dir and (not args.owned_cleanup_ledger or not 1 <= args.gem5_slots <= 4
+                               or not args.gem5_slot_dir.is_absolute() or not args.gem5_slot_dir.is_dir()):
+        parser.error('gem5 slots need owned supervision, 1-4 slots and an existing absolute directory')
     if socket.gethostname().split('.')[0] != 'mbit10':
         parser.error('this driver requires the mbit10 execution host')
     if not re.fullmatch(r'[a-z0-9][a-z0-9._-]*', args.id):
@@ -198,7 +230,8 @@ def main():
         parser.error('primary-build requires a frozen complete-call series without author-binary')
     limits = {'total_seconds': (1, 86400 if args.author_binary else 43200),
               'checkpoint_seconds': (1, 3600), 'run_seconds': (1, 14400 if args.author_binary else 3600),
-              'diagnostic_seconds': (180, 600), 'memory_gib': (1, 48),
+              'diagnostic_seconds': (180, 14400 if args.author_binary else 600), 'memory_gib': (1, 48),
+              'profile_seconds': (1, 600),
               'storage_gib': (1, 15 if args.author_binary else 10),
               'batch_storage_gib': (1, 60 if args.author_binary else 40),
               'verification_ticks': (1, 10**15)}
@@ -227,6 +260,9 @@ def main():
                'repository_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()}
     if args.trace_transport:
         receipt['trace_transport'] = args.trace_transport
+    if args.gem5_slot_dir:
+        receipt['gem5_concurrency'] = {'slot_dir': str(args.gem5_slot_dir), 'slots': args.gem5_slots,
+                                       'acquisitions': []}
     started = entry_started if args.owned_cleanup_ledger else time.monotonic()
     owned = guard = None
     if args.owned_cleanup_ledger:
@@ -271,15 +307,35 @@ def main():
     def call(command, *rest, timeout=180):
         profile._verified_lane(Store(args.records).get('mbit10', 'machine'), lane)
         check_bounds()
-        if args.require_capacity and command in {'dx100-compile', 'dx100-execute'}:
-            admit_capacity(receipt, args.lane, command)
-            save()
+        slot = None
+        if args.gem5_slot_dir and command == 'dx100-execute':
+            fd, number, waited = acquire_gem5_slot(args.gem5_slot_dir, args.gem5_slots,
+                                                   started + args.total_seconds - 30, check_bounds)
+            slot = {'fd': fd}
+            receipt['gem5_concurrency']['acquisitions'].append({'slot': number, 'wait_seconds': waited,
+                'acquired': lifecycle.stamp(), 'stage_index': len(receipt['stages'])})
+        try:
+            if args.require_capacity and command in {'dx100-compile', 'dx100-execute'}:
+                admit_capacity(receipt, args.lane, command)
+                save()
+        except BaseException:
+            if slot: os.close(slot['fd'])
+            raise
         index = len(receipt['stages'])
         out, err = folder / f'{index:03d}-{command}.json', folder / f'{index:03d}-{command}.stderr'
         argv = [sys.executable, '-m', 'swdb', command, *map(str, rest), '--records', str(args.records),
                 '--db', str(database), '--format', 'json']
         try:
-            if owned:
+            if owned and slot:
+                def spawned():
+                    if slot.get('fd') is not None:
+                        os.close(slot['fd']); slot['fd'] = None
+                lifecycle.run_stage(receipt, folder, argv, timeout=timeout,
+                    deadline=min(started+args.total_seconds-30, owned.budget.deadline-30), cwd=ROOT,
+                    output=out, stderr=err, owned=owned, monitor=guard.check,
+                    env={**os.environ, 'SWDB_GEM5_SLOT_FD': str(slot['fd'])},
+                    pass_fds=(slot['fd'],), spawned=spawned)
+            elif owned:
                 lifecycle.run_stage(receipt, folder, argv, timeout=timeout,
                     deadline=min(started+args.total_seconds-30, owned.budget.deadline-30), cwd=ROOT,
                     output=out, stderr=err, owned=owned, monitor=guard.check)
@@ -288,6 +344,8 @@ def main():
                           deadline=started + args.total_seconds - 30, cwd=ROOT,
                           output=out, stderr=err, monitor=check_bounds)
         finally:
+            if slot and slot.get('fd') is not None:
+                os.close(slot['fd']); slot['fd'] = None
             stage_failure = sys.exc_info()[1]
             if len(receipt['stages']) > index:
                 receipt['stages'][index]['stdout'] = str(out)
@@ -423,7 +481,7 @@ def main():
                 primary = pair['primary']
                 collected = request('dx100-profile', {'message_version': '1.0', 'id': prefix + '.profile',
                     'evaluation': primary['id'], 'diagnostic_evaluation': pair['diagnostic']['id'],
-                    'budget': {'total_seconds': 120}}, timeout=180)
+                    'budget': {'total_seconds': args.profile_seconds}}, timeout=args.profile_seconds + 60)
                 context = primary['context']
                 package = request('profile-package', {'message_version': '1.0', 'id': prefix + '.package',
                     'implementation': candidate['implementation'], 'evaluation': primary['id'], 'region_profile': collected['id'],

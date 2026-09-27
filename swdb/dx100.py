@@ -177,6 +177,20 @@ def _terminate(child):
     stop_group(child, grace_seconds=15)
 
 
+def _release_gem5_slot():
+    """R3 (2026-09-27): close an inherited lane gem5-slot lock after the last gem5.
+
+    A series may pass one flock descriptor so that at most N simulators run in a
+    lane while postprocessing overlaps. Without the variable nothing changes.
+    """
+    value = os.environ.pop("SWDB_GEM5_SLOT_FD", None)
+    if value is not None:
+        try:
+            os.close(int(value))
+        except (OSError, ValueError):
+            pass
+
+
 def _bounded_process(session, name, command, timeout, memory, storage, env=None):
     """Monitor real children and preserve completed evidence on interrupted work."""
     allowed = min(timeout, session.remaining())
@@ -803,7 +817,10 @@ def execute(args):
                    "--cmd", str(binary), "--options", options, "--checkpoint-dir", str(checkpoint), "-r", "1"]
         log = session.folder / f"{len(data['stages']):03d}-simulation.log"
         try:
-            _bounded_process(session, "simulation", command, run_seconds, budget["memory_gib"], budget["storage_gib"], env)
+            try:
+                _bounded_process(session, "simulation", command, run_seconds, budget["memory_gib"], budget["storage_gib"], env)
+            finally:
+                _release_gem5_slot()
         except (Failure, StageFailure, Stopped, OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as simulation_error:
             # A supervisor may end its cleanup grace while postmortem scans a
             # large log. Save the operational failure before that optional work,
