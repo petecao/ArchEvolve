@@ -255,3 +255,16 @@ readback failures are preserved and qualification is deferred to mandatory
 publication steps, with no third standalone attempt. Final acceptance remains
 0/8 and no qualified gain is claimed. This checkpoint is not the final
 post-completion Standards/Spec review.
+
+
+## Fresh coverage checkpoint — 2026-09-26 21:44 ET
+
+The [fresh public query](../observations/acceptance-checkpoint-20260926-a3.json)
+reconstructed the report with a new temporary index from 218 valid local
+records. All eight final cells remain incomplete, with no qualified gain and
+external artifact verification incomplete. T16 author protocols are published,
+but active simulator work has no completed comparison; T15 candidate protocol
+freezes and held host evidence remain absent from this local query. The tracker
+is 14 resolved and seven claimed. Full regression at exact `d5e2159` is running;
+final independent Standards and Spec reviews against `1bdb7d4` remain required
+after actual acceptance and remaining fixes. No fixture closes this ticket.

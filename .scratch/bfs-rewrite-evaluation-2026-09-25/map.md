@@ -83,6 +83,77 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Actual correction proofs and fresh coverage — 2026-09-26 21:44 ET
+
+The [new d5e Linux proof group](observations/t15-correction-linux-actual-20260926.json)
+completed at 21:38:25 ET: four owned-cleanup cases and two public interruption
+cases passed; helper, fixture, independent auditor and wrapper exits were zero.
+Node-1 generations 414 and 415 released. The final five-root read-only count was
+1,527,808 bytes after 184.252108 seconds. The full reserved 600 seconds and 2 GiB
+remain charged, without refund. Both closed original-root pairs matched the new
+allocator against Linux `du`. Final actual admission review is pending; no
+corrected guest run has started.
+
+The [fresh public coverage query](observations/acceptance-checkpoint-20260926-a3.json)
+rebuilt its own temporary index from 218 valid local records. The result remains
+0/8 completed cells, incomplete acceptance and no qualified gain. Published
+T16 protocols do not imply completed comparisons; no candidate protocol or
+reference comparison is selectable yet. Held remote provider/native evidence
+and external raw-artifact availability remain outside this local report.
+
+## Host and worker checkpoint — 2026-09-26 21:33 ET
+
+The [full host audit](observations/health-20260926-2133.json) confirms node 0
+held at generation 332 for T16, node 1 released at 413, and legacy 77 released.
+T16's first scalar source/repetition remains running with zero completed samples,
+30,931,394,560 bytes of tree RSS, and 1,715,388,416 charged bytes. Its unchanged
+simulation limit is 14,400 seconds, not T15's one-hour limit. Free disk was
+17,370,226,688 bytes on `/data1` and 182,565,216,256 on `/data`; load was
+1.09/1.19/1.25. Active measured code and historical receipts remain unchanged.
+All three workers are responsive; completed preparation/review workers are
+reassigned to review the actual correction admission and T17 diagnostic build.
+
+| Ticket or case | State | Host / lane | Evidence and next action |
+|---|---|---|---|
+| 01–14 | resolved | — | 14 of 21; no acceptance inferred from later fixtures |
+| T15 original | failed, closed | mbit10 / released | Storage guard; retain all failures |
+| T15 correction | preparing admission | mbit10 / node 1 | Exact d5e export and wrappers reviewed; new Linux proofs required |
+| T16 | running; zero samples | mbit10 / node 0, 332 | First scalar execution; monitor original clock |
+| Scalar v2 | four builds complete, outer preparation failed | mbit10 / released | Reopen individual builds before reuse; no rebuild |
+| T17 diagnostic | prepared | local | 24 focused checks; independent review pending |
+| Full regression | running | local / d5e2159 | Exact exported code; no result claimed |
+| Final acceptance | 0/8 complete | — | Seven tickets claimed; no qualified ROI gain |
+
+The [wrapper review](observations/t15-correction-wrapper-standards-20260926.json)
+found no issue in the fixed 600-second proof-group scripts. The
+[T17 preparation receipt](observations/t17-diagnostic-build-preparation-20260926.json)
+separates actual subprocess tests from synthetic host/compiler outputs. Neither
+is a completed BFS acceptance case. Next full host/worker audit: 22:03 ET.
+
+## Corrective runtime exported — 2026-09-26 21:29 ET
+
+The reviewed 21-file correction export `d5e215966a7d4d673050a78c6a6d77053aa62a85`
+is pushed and its remote tip verified, directly parented by scalar preparation
+`6732d53`; [exact inventory](observations/t15-gzip-correction-export-20260926.json).
+It contains 533,439 bytes of code, tests, fixed plan and procedures, with no
+held application source/profile packet. The new mbit10 checkout is pristine;
+active T16 remains on `8c39ae0`.
+
+The [combined targeted suite](observations/t15-correction-storage-preparation-20260926.json)
+passed 351 tests with three Linux-only skips in 27.50 seconds.
+[Independent storage review](observations/storage-standards-review-20260926.json)
+passed real local `du` parity, actual cleanup-overlap and path-substitution checks.
+A separate full regression started at this exact export in the reused clean
+validation worktree at 21:28:47 ET; its result is pending. These local checks do
+not replace the new actual Linux proofs or retained-host-root allocation parity.
+The fixed 600-second proof group follows the 21:33 health check, then a new
+sealed admission is required before the corrected T15 BFS run.
+
+The apparent one-hour T16 timeout concern was rejected by reading its exact
+retained request and stage: the simulation allowance is 14,400 seconds, with a
+separate 3,600-second checkpoint allowance. The live stage started at 20:24:25 ET
+and remains within that original limit. No setting or process was changed.
+
 ## Four scalar builds retained; supervisor failure preserved — 2026-09-26 21:21 ET
 
 All four scalar v2 public compilations and their four result/chain checks returned

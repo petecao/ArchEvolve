@@ -81,3 +81,23 @@ The actual binary hash is `852e62314b7114079975fe25d70da4e77596490bcfa89fb4f7c64
 Correctness remains unverified, profiling incomplete, and timings empty. This
 proves compilation only. Both graph families, actual accelerated correctness,
 reprofiling and frozen-protocol comparison still remain; the ticket stays claimed.
+
+
+## Diagnostic preparation — 2026-09-26 21:40 ET
+
+A [new bounded diagnostic build](../../../docs/bfs-t17-diagnostic-build-20260926.md)
+retains the completed primary binary and candidate without rebuilding or
+resubmitting them. Its [preparation receipt](../observations/t17-diagnostic-build-preparation-20260926.json)
+records 24 passing focused tests and the distinction between real short-lived
+subprocess checks and synthetic host/compiler fixtures. The fixed request adds
+only a fresh ID and diagnostic-region instrumentation. Independent review,
+same-host isolated record materialization, admission and actual compilation
+remain pending; no new guest execution or acceptance is claimed.
+
+
+2026-09-26 21:49 ET review: independent review reproduced an admission input
+outside the counted dispatch directory. The [repair](../observations/t17-diagnostic-admission-fix-20260926.json)
+requires the exact canonical admission path and rejects symlinks. All 27 author
+checks pass; the [independent review](../observations/t17-diagnostic-standards-review-20260926.json)
+retains the original red and passing follow-ups. Actual diagnostic compilation
+and host admission remain pending; the existing primary is unchanged.

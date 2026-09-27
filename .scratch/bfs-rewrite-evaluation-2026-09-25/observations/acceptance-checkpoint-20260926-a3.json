@@ -1,0 +1,375 @@
+{
+  "created": "2026-09-26",
+  "started_at_et": "2026-09-26T21:42:23.013359-04:00",
+  "finished_at_et": "2026-09-26T21:42:35.455539-04:00",
+  "kind": "fresh_local_public_coverage_query",
+  "code_commit": "5a2b669044d8bc0826e4a483532a8acabcb47324",
+  "exit_code": 0,
+  "request": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/acceptance-checkpoint-20260926-a3.json",
+    "bytes": 191,
+    "sha256": "c8b8efdd8769b491c912ec97323205116cce16d331149ec0848f116b97645e56"
+  },
+  "output": {
+    "path": "/private/tmp/bfs-acceptance-checkpoint-20260926-a3.json",
+    "bytes": 946726,
+    "sha256": "2378b5d43f076e988c55a03fe10be25f7ec9e96830840356aa388c7422ae75f0"
+  },
+  "stderr": {
+    "path": "/private/tmp/bfs-acceptance-checkpoint-20260926-a3.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "fresh_index": "/private/tmp/bfs-acceptance-checkpoint-20260926-a3.sqlite",
+  "report_identity": "5a5f231dfc7ed9c20ae1b163ce095a2b13bc26f6bbdebf27306f0d4553008af4",
+  "acceptance": "incomplete",
+  "gain_claim": false,
+  "matrix": [
+    {
+      "starting_implementation": "dx100-bfs-scalar",
+      "route": "instruction",
+      "payload": "natural_language",
+      "graph_family": "kronecker",
+      "required_basis": "simulated",
+      "accelerator_required": true,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "dx100-bfs-scalar",
+      "route": "instruction",
+      "payload": "natural_language",
+      "graph_family": "uniform_random",
+      "required_basis": "simulated",
+      "accelerator_required": true,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "dx100-bfs-scalar",
+      "route": "supplied_code",
+      "payload": "patch",
+      "graph_family": "kronecker",
+      "required_basis": "measured",
+      "accelerator_required": false,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "dx100-bfs-scalar",
+      "route": "supplied_code",
+      "payload": "patch",
+      "graph_family": "uniform_random",
+      "required_basis": "measured",
+      "accelerator_required": false,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "gapbs-bfs-do",
+      "route": "instruction",
+      "payload": "structured_instructions",
+      "graph_family": "kronecker",
+      "required_basis": "measured",
+      "accelerator_required": false,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "gapbs-bfs-do",
+      "route": "instruction",
+      "payload": "structured_instructions",
+      "graph_family": "uniform_random",
+      "required_basis": "measured",
+      "accelerator_required": false,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "gapbs-bfs-do",
+      "route": "supplied_code",
+      "payload": "annotated_source",
+      "graph_family": "kronecker",
+      "required_basis": "simulated",
+      "accelerator_required": true,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "gapbs-bfs-do",
+      "route": "supplied_code",
+      "payload": "annotated_source",
+      "graph_family": "uniform_random",
+      "required_basis": "simulated",
+      "accelerator_required": true,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    }
+  ],
+  "criteria": {
+    "AC01": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "shared BFS source contexts are queried independently"
+    },
+    "AC02": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "complete real packages retain discovered function/loop rankings and coverage"
+    },
+    "AC03": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "a new helper or loop absent from prior compiler discovery must appear among the five highest measured regions of its kind",
+      "evidence": [
+        {
+          "profile_package": "bfs-package-smoke-20260925-a1.after.package.v1.81772095f055cd8b",
+          "region": "function:bfs.cc:13265:6fc5eb0a7ba83e8f"
+        },
+        {
+          "profile_package": "bfs-package-smoke-20260925-a1.after.package.v1.81772095f055cd8b",
+          "region": "loop:bfs.cc:13349:04801d9eee488cf7"
+        },
+        {
+          "profile_package": "bfs-package-smoke-20260925-a1.after.package.v1.81772095f055cd8b",
+          "region": "loop:bfs.cc:13399:fb59de3ee2e8a6f6"
+        }
+      ]
+    },
+    "AC04": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "qualifying packages contain dynamic memory observations tied to diagnostic execution"
+    },
+    "AC05": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "forward applicability and reverse package-bound matches preserve unresolved conditions without performance promises",
+      "evidence": [
+        "bfs-native-pilot-20260925-dx10018-a1.kronecker.package.v1.1d44ec6b44f05000",
+        "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718",
+        "bfs-native-pilot-20260925-upstream18-a2.kronecker.package.v1.6a34b061dcca355b",
+        "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6",
+        "bfs-package-smoke-20260925-a1.before.package.v1.1187f3a8ca4968d0",
+        "bfs-package-smoke-20260925-a1.after.package.v1.81772095f055cd8b"
+      ]
+    },
+    "AC06": {
+      "state": "incomplete",
+      "reason": "all eight fixed source/payload/family cells must qualify"
+    },
+    "AC07": {
+      "state": "incomplete",
+      "reason": "qualifying cells require a changed candidate and retained proposal chain"
+    },
+    "AC08": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "stale source, unsupported operation, and protected verifier/ROI requests must retain explicit non-success records",
+      "evidence": {
+        "source": [
+          "bfs-contract-20260925-a3.stale-source"
+        ],
+        "operations": [
+          "bfs-contract-20260925-a3.unsupported-operation"
+        ],
+        "protected": [
+          "bfs-contract-20260925-a3.protected-verifier"
+        ]
+      }
+    },
+    "AC09": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "failure contracts must remain retrievable; unfavorable fixture ratios demonstrate handling only, never empirical regression",
+      "evidence": {
+        "build_failure": [
+          "bfs-contract-20260925-a3.build-failure",
+          "bfs-dx100-build-20260925-a1",
+          "bfs-instruction-smoke-20260925-a1.structured-instructions.evaluation"
+        ],
+        "verifier_failure_exit_zero": [
+          "bfs-contract-20260925-a3.incorrect"
+        ],
+        "timeout": [
+          "bfs-contract-20260925-a3.timeout"
+        ],
+        "budget_exhausted": [
+          "bfs-contract-20260925-a3.budget",
+          "bfs-dx100-smoke-20260925-a4",
+          "bfs-dx100-smoke-20260925-a5"
+        ],
+        "missing_observation": [
+          "bfs-contract-20260925-a3.missing",
+          "bfs-dx100-exit-probe-20260926-a1",
+          "bfs-dx100-profile-20260926-a1.diagnostic",
+          "bfs-dx100-profile-20260926-a1.primary",
+          "bfs-dx100-smoke-20260925-a3",
+          "bfs-dx100-smoke-20260925-a6"
+        ],
+        "regression": []
+      },
+      "unfavorable_fixture_demonstrations": [
+        {
+          "comparison": "bfs-contract-20260925-a3.comparison",
+          "classification": "contract_fixture",
+          "outcome": "unfavorable_fixture_ratio",
+          "fixture_ratio": 0.5,
+          "empirical_regression": false,
+          "gain_claim": false
+        }
+      ],
+      "classified_failures": {
+        "build_failure": [
+          {
+            "id": "bfs-contract-20260925-a3.build-failure",
+            "classification": "contract_fixture"
+          },
+          {
+            "id": "bfs-dx100-build-20260925-a1",
+            "classification": "execution"
+          },
+          {
+            "id": "bfs-instruction-smoke-20260925-a1.structured-instructions.evaluation",
+            "classification": "execution"
+          }
+        ],
+        "verifier_failure_exit_zero": [
+          {
+            "id": "bfs-contract-20260925-a3.incorrect",
+            "classification": "contract_fixture"
+          }
+        ],
+        "timeout": [
+          {
+            "id": "bfs-contract-20260925-a3.timeout",
+            "classification": "contract_fixture"
+          }
+        ],
+        "budget_exhausted": [
+          {
+            "id": "bfs-contract-20260925-a3.budget",
+            "classification": "contract_fixture"
+          },
+          {
+            "id": "bfs-dx100-smoke-20260925-a4",
+            "classification": "execution"
+          },
+          {
+            "id": "bfs-dx100-smoke-20260925-a5",
+            "classification": "execution"
+          }
+        ],
+        "missing_observation": [
+          {
+            "id": "bfs-contract-20260925-a3.missing",
+            "classification": "contract_fixture"
+          },
+          {
+            "id": "bfs-dx100-exit-probe-20260926-a1",
+            "classification": "execution"
+          },
+          {
+            "id": "bfs-dx100-profile-20260926-a1.diagnostic",
+            "classification": "execution"
+          },
+          {
+            "id": "bfs-dx100-profile-20260926-a1.primary",
+            "classification": "execution"
+          },
+          {
+            "id": "bfs-dx100-smoke-20260925-a3",
+            "classification": "execution"
+          },
+          {
+            "id": "bfs-dx100-smoke-20260925-a6",
+            "classification": "execution"
+          }
+        ],
+        "regression": []
+      }
+    },
+    "AC10": {
+      "state": "incomplete",
+      "reason": "timed structural checks plus observed full/tail/parent-update cases are required"
+    },
+    "AC11": {
+      "state": "incomplete",
+      "reason": "one identical correct accelerated candidate per source must cover both families"
+    },
+    "AC12": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "real native CPU execution requires independent checks and complete dynamic profiling"
+    },
+    "AC13": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "actual profiling demonstrations retain primary ROI separately from diagnostic region and memory quantities"
+    },
+    "AC14": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "a retained compatible comparison must resolve a baseline different from source ancestry; fixtures prove this contract only",
+      "evidence": [
+        "bfs-contract-20260925-a3.comparison"
+      ]
+    },
+    "AC15": {
+      "state": "incomplete",
+      "reason": "artifact-reference and controlled-reference comparisons are distinct obligations"
+    },
+    "AC16": {
+      "state": "incomplete",
+      "reason": "every accepted cell binds its actual workload and settings to a current immutable pre-execution protocol"
+    },
+    "AC17": {
+      "state": "incomplete",
+      "reason": "at least one generated correct candidate must pass its frozen profitability policy against its unaccelerated source baseline"
+    },
+    "AC18": {
+      "state": "incomplete",
+      "reason": "all required cases, reference obligations, failures, and regressions must be accounted for"
+    },
+    "AC19": {
+      "state": "incomplete",
+      "reason": "declared operation support must be backed by an executable backend and actual accelerated candidate runs",
+      "evidence": [
+        "dx100-e4fc4af-4c"
+      ]
+    },
+    "AC20": {
+      "state": "incomplete",
+      "reason": "versioned linked handoff artifacts and real labeled SW/HW test-client submissions are required; live collaborator integration is not claimed"
+    }
+  },
+  "limitations": [
+    "No candidate protocol or reference comparison is selectable: T15 candidate protocol freezes and T16 comparisons remain incomplete.",
+    "T16 author protocols are published, but their ongoing evaluations are not completed comparison evidence.",
+    "Held provider and native results remain on mbit10; this local query does not import them or verify external raw artifacts."
+  ],
+  "catalog_valid_records": 218,
+  "catalog_validation": {
+    "command": "python3.12 -m swdb validate --records records",
+    "exit_code": 0,
+    "output": "OK: 218 record(s) valid"
+  },
+  "matrix_summary": {
+    "complete": 0,
+    "required": 8
+  }
+}

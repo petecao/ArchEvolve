@@ -7,7 +7,23 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 21:03 ET
+## Current checkpoint — 2026-09-26 21:40 ET
+
+The exact reviewed correction runtime `d5e215966a7d4d673050a78c6a6d77053aa62a85`
+is exported and pristine on mbit10; see [inventory](../observations/t15-gzip-correction-export-20260926.json)
+and [independent export review](../observations/t15-correction-export-standards-20260926.json).
+It preserves gem5 event bytes through native gzip output and removes the
+monitoring subprocess/cleanup race with process-free allocated-byte accounting.
+The separately declared fixed correction deducts 1,124 seconds and
+11,014,971,392 bytes for the original failure, 472 seconds and 200,704 bytes for
+the smoke envelope, and a nonrefundable 600 seconds/2 GiB for fresh Linux proofs.
+The remaining original aggregate allowance is 41,004 seconds and
+29,787,017,216 bytes. No corrected guest run or protocol publication has begun;
+final actual proof and admission readback are pending. Full regression at the
+exact export is running; targeted local checks passed 351 tests with three
+Linux-only skips. This ticket remains claimed.
+
+## Historical checkpoint — 2026-09-26 21:03 ET
 
 The actual native gzip transport smoke passed and is independently closed;
 [proof](../observations/gem5-gzip-actual-20260926.json). It used an empty gem5
