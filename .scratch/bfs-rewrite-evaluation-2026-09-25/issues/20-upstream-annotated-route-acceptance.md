@@ -1,13 +1,21 @@
 # 20 — Upstream BFS: annotated-source route acceptance
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-26 (Eastern Time)
+Updated: 2026-09-27 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 05, 10, 15
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
+
+## Context submission running — 2026-09-27 00:38 ET
+
+The [one-call continuation](../observations/provider-context1-launched-20260927.json)
+started at 00:37:05.675084 ET on node 1 after actual Linux proof closure.
+It runs runtime `8cbfee6` and Git-delivered recipe `cb9d274`, with the unchanged
+750-second outer deadline at 00:49:35.675084 ET. This is an in-progress submission,
+not candidate correctness, profiling, accelerator execution or acceptance.
 
 ## Context continuation preparation — 2026-09-26 23:40 ET
 

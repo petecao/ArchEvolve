@@ -7,6 +7,16 @@ Updated: 2026-09-27 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
+## Actual Linux recovery proofs — 2026-09-27 00:38 ET
+
+The [independently closed proof group](../observations/proofgroup-independent-closure-20260927.json)
+passed 42 supplemental, five ownership and two interruption cases without skips.
+The complete group consumed 26.359140 seconds and 3,223,552 allocated bytes;
+its full 600-second/2-GiB reservation remains charged. No scientific sample ran.
+Full batch admission exposed a canonical-path mismatch for the same Python binary;
+a narrow consumer repair is in progress. The original tested runtime and all
+proof artifacts remain immutable; no proof rerun or refund is claimed.
+
 ## Recovery preparation — 2026-09-27 00:16 ET
 
 The new fixed supervision-recovery plan remains prospective. Independent local

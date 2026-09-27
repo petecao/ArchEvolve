@@ -83,6 +83,23 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Actual proof and provider checkpoint — 2026-09-27 00:38 ET
+
+The [Linux proof group](observations/proofgroup-independent-closure-20260927.json)
+passed all 49 cases without skips and independent operational closure. Its
+26.359140 seconds / 3,223,552 bytes remain charged at the full reserved 600 seconds
+/ 2 GiB for each task. Full batch admission separately exposed a venv-versus-resolved
+Python path comparison defect; the reader repair preserves the original proof
+runtime and requires unchanged tested primitives. No scientific batch has started.
+
+The [bounded provider continuation](observations/provider-context1-launched-20260927.json)
+started on node 1 at 00:37:05.675084 ET, with original end 00:49:35.675084 ET.
+T17 diagnostic data-view preparation proceeds independently. Three workers are
+active. The older exact-c282 full regression is past 67% and has two failure
+markers; full diagnostics remain pending completion. No failure is discarded.
+Tickets remain 14 resolved / 7 claimed, 0/8 final cells and no qualified gain.
+Next scheduled host/worker/table check: 2026-09-27 01:03 ET.
+
 ## Recovery and evidence checkpoint — 2026-09-27 00:18 ET
 
 Inactive workers were replaced; local recovery implementation and independent
