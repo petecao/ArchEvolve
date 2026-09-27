@@ -210,6 +210,8 @@ def main():
                         help='explicit pilot checker; frozen series inherits its immutable checker')
     parser.add_argument('--profile-seconds', type=int, default=120,
                         help='dx100-profile collector budget; public collector cap is 3600')
+    parser.add_argument('--package-seconds', type=int, default=180,
+                        help='profile-package call timeout; it rereads both full traces (2026-09-27 b2 gate)')
     parser.add_argument('--gem5-slot-dir', type=Path, help='shared lane gem5-slot lock directory (R3)')
     parser.add_argument('--gem5-slots', type=int, default=1, help='maximum concurrent lane gem5 processes')
     parser.add_argument('--owned-cleanup-ledger', type=Path)
@@ -231,7 +233,7 @@ def main():
     limits = {'total_seconds': (1, 86400 if args.author_binary else 43200),
               'checkpoint_seconds': (1, 3600), 'run_seconds': (1, 14400 if args.author_binary else 3600),
               'diagnostic_seconds': (180, 14400 if args.author_binary else 600), 'memory_gib': (1, 48),
-              'profile_seconds': (1, 3600),
+              'profile_seconds': (1, 3600), 'package_seconds': (1, 7200),
               'storage_gib': (1, 15 if args.author_binary else 10),
               'batch_storage_gib': (1, 60 if args.author_binary else 40),
               'verification_ticks': (1, 10**15)}
@@ -488,7 +490,7 @@ def main():
                     'context': {'source_sha256': candidate['artifact']['sha256'],
                         'canonical_graph_sha256': context['workload']['canonical_sha256'], 'sources': context['sources'],
                         'target': context['target'], 'target_configuration': context['backend_configuration'],
-                        'threads': context['threads'], 'roi': context['roi']}})
+                        'threads': context['threads'], 'roi': context['roi']}}, timeout=args.package_seconds)
                 refreshed = call('get', primary['id'])
                 receipt['samples'].append({'source_position': position, 'source': vertex, 'repetition': repetition,
                     'evaluation': primary['id'], 'diagnostic_evaluation': pair['diagnostic']['id'],

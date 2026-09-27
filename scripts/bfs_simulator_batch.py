@@ -40,7 +40,8 @@ PLAN_HASHES = {'t15-pilot-b2': '0545e3f47fa09feabd673fa1d4a69fb8326abe2691535e1b
 PILOT_KIND = 't15-pilot'
 PILOT_ID = 'bfs-t15-pilot-simulator-batch-20260927-b1'
 # 2026-09-27: b1 failed its first-pair 120-s profile gate; b2 is the fresh relaunch.
-PILOT_PLANS = {PILOT_KIND: PILOT_ID, 't15-pilot-b2': 'bfs-t15-pilot-simulator-batch-20260927-b2'}
+PILOT_PLANS = {PILOT_KIND: PILOT_ID, 't15-pilot-b2': 'bfs-t15-pilot-simulator-batch-20260927-b2',
+               't15-pilot-b3': 'bfs-t15-pilot-simulator-batch-20260927-b3'}
 PILOT_POLICY = 't15_incremental_allocation.v1'
 PILOT_TEST_CASES = {
     'owned_cleanup': {
@@ -832,6 +833,8 @@ def series_command(plan, row, admission, config, runs, records, node, seconds, s
         command += ['--protocol', admission['protocols'][row['protocol_key']]['id'], '--protocol-role', row['protocol_role']]
     if 'profile_seconds' in b:
         command += ['--profile-seconds', str(b['profile_seconds'])]
+    if 'package_seconds' in b:
+        command += ['--package-seconds', str(b['package_seconds'])]
     if slots is not None:
         command += ['--gem5-slot-dir', str(slots), '--gem5-slots', str(plan['concurrency']['gem5_slots'])]
     return command
@@ -871,8 +874,9 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
         ('checkpoint_seconds', 'run_seconds', 'diagnostic_seconds', 'memory_gib', 'storage_gib')}
     expected_bounds.update(total_seconds=seconds, batch_storage_gib=storage,
                            verification_ticks=plan['verification_ticks'])
-    if 'profile_seconds' in plan['bounds']:
-        expected_bounds['profile_seconds'] = plan['bounds']['profile_seconds']
+    for name in ('profile_seconds', 'package_seconds'):
+        if name in plan['bounds']:
+            expected_bounds[name] = plan['bounds'][name]
     expected_protocol = admission['protocols'][row['protocol_key']]['id'] if row['protocol_key'] else None
     require(child.get('state') == 'complete' and child.get('id') == row['id']
             and child.get('candidate') == row['candidate'] and child.get('workload') == row['workload']
