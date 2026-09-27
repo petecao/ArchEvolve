@@ -1,4 +1,4 @@
-"""Prospective paired native collection and receipt admission. Updated: 2026-09-26."""
+"""Prospective paired native collection and receipt admission. Updated: 2026-09-27."""
 
 import copy
 import json
@@ -169,9 +169,17 @@ def run(args):
     return data
 
 
-def validate_receipt(store, baseline, candidate, settings):
-    """Admit only exact complete paired evidence; no metadata-only relabeling."""
-    from swdb.bfs_protocol import _timestamp, materialize_workload
+def validate_receipt(store, baseline, candidate, settings, *, verify_raw=True):
+    """Admit only exact complete paired evidence; no metadata-only relabeling.
+
+    `verify_raw=False` (2026-09-27 ET) is only for a reader that cannot reach the
+    collecting host's files, such as the acceptance report on the Mac. It still
+    checks every retained record binding, digest, schedule, and correctness
+    claim, but skips reopening the graph, binaries, logs, and raw parent vectors.
+    The caller must report that the raw evidence is unverified; this mode never
+    turns missing local evidence into verified evidence.
+    """
+    from swdb.bfs_protocol import _get, _timestamp, materialize_workload, verify_immutable
     collection = settings["sampling"]["collection"]
     evaluations = dict(zip(ROLES, (baseline, candidate)))
     pairing = baseline.get("context", {}).get("pairing")
@@ -190,7 +198,12 @@ def validate_receipt(store, baseline, candidate, settings):
             "paired schedule differs from the prospective seeded order")
     require(len(pair["observations"]) == len(planned), "paired receipt has incomplete trial coverage")
     workload_id = baseline["context"]["workload"]["id"]
-    canonical, actual_workload = bfs_native.canonical_graph(materialize_workload(store, workload_id))
+    if verify_raw:
+        canonical, actual_workload = bfs_native.canonical_graph(materialize_workload(store, workload_id))
+    else:
+        registered = _get(store, workload_id, "workload")
+        verify_immutable(registered)
+        canonical, actual_workload = None, {"canonical_sha256": registered["definition"]["canonical_sha256"]}
     require(all(evaluation["context"]["workload"].get("id") == workload_id
                 and evaluation["context"]["workload"].get("canonical_sha256") == actual_workload["canonical_sha256"]
                 for evaluation in evaluations.values()), "paired graph differs from revalidated canonical adjacency")
@@ -206,7 +219,7 @@ def validate_receipt(store, baseline, candidate, settings):
         builds = [stage for stage in evaluation["stages"] if stage["stage"] in {"build", "build_reuse"}]
         require(len(builds) == 1 and builds[0]["state"] == "complete"
                 and _timestamp(builds[0]["finished"]) <= previous, "both artifacts must be ready before paired trials")
-        require(artifacts.file_hash(evaluation["build"]["binary"]) == evaluation["build"]["binary_sha256"],
+        require(not verify_raw or artifacts.file_hash(evaluation["build"]["binary"]) == evaluation["build"]["binary_sha256"],
                 "paired timed binary changed or is unavailable")
     if baseline["candidate"] == candidate["candidate"]:
         require(baseline["build"]["binary"] == candidate["build"]["binary"]
@@ -236,6 +249,11 @@ def validate_receipt(store, baseline, candidate, settings):
                 "paired receipt is not linked to its actual execution stage")
         require(observation["output"] not in outputs, "paired trials must have distinct process outputs")
         outputs.add(observation["output"])
+        if not verify_raw:
+            require(check.get("graph_sha256") == actual_workload["canonical_sha256"] and check.get("passed") is True
+                    and check.get("source") == slot["source"],
+                    "paired retained correctness does not bind a passed check to the registered graph and source")
+            continue
         try:
             raw, raw_hash = bfs_native.json_observation(observation["output"], bfs_native.MAX_VERTICES * 24 + 4096,
                                                        "paired raw execution output")

@@ -1,0 +1,264 @@
+{
+  "content": {
+    "candidate": "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
+    "candidate_state": "unverified",
+    "comparison": {
+      "comparison_baseline": "dx100-bfs-scalar",
+      "protocol": "bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3",
+      "protocol_binding": {
+        "bound_at": "2026-09-27T15:26:46.323432+00:00",
+        "frozen_at": "2026-09-27T14:21:13.266454+00:00",
+        "frozen_sha256": "0d2d6da657751ff391f75087bd620737cae90206767b97d0ee474acb0342e034",
+        "protocol": "bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3",
+        "role": "candidate",
+        "settings_sha256": "8922af7122885ae08e1c52320fa2f9f91cecf28983664552131e8aea7ab2a8f7",
+        "workload_id": "bfs-20260925-kronecker18.48de8267ac2098d5",
+        "workload_sha256": "48de8267ac2098d5e5d6085c49c63da4fac6f2d143330bc4a35058d5db0536cb"
+      },
+      "protocol_sampling": {
+        "collection": {
+          "method": "native_paired.v1",
+          "order_seed": 20260926
+        },
+        "repetitions": 10
+      },
+      "results": [
+        {
+          "baseline_evaluation": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.baseline.evaluation",
+          "confidence_interval": {
+            "confidence": 0.95,
+            "lower": 0.9958370576595712,
+            "method": "paired_repetition_block_bootstrap.v1",
+            "resamples": 2000,
+            "upper": 1.0197415184444678
+          },
+          "decision": "inconclusive",
+          "evidence_kind": "execution",
+          "gain_claim": false,
+          "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.comparison",
+          "roi_speedup": 1.0003511744314062,
+          "role": "candidate"
+        }
+      ],
+      "shared_protocol_bindings": []
+    },
+    "correctness": {
+      "checks": 30,
+      "passed": 30,
+      "state": "passed",
+      "verifier": "swdb.bfs.structural.v1"
+    },
+    "evidence_kind": "execution",
+    "incompleteness": [],
+    "instrumentation": {
+      "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95",
+      "treatment": "included"
+    },
+    "outcome": {
+      "reason": null,
+      "stage": "evaluation",
+      "state": "complete"
+    },
+    "performance_claim": "none",
+    "profiling": {
+      "reasons": [
+        "automatic function attribution not collected",
+        "automatic loop attribution not collected",
+        "dynamic memory observations not collected"
+      ],
+      "state": "unavailable"
+    },
+    "proposal": "bfs-campaign-preparation-20260925-a1.dx100-patch",
+    "raw_artifacts": [
+      {
+        "host": "mbit10",
+        "kind": "evaluation_run",
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation"
+      },
+      {
+        "host": "mbit10",
+        "kind": "evaluation_build",
+        "path": "/data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation"
+      },
+      {
+        "evidence_kind": "execution",
+        "host": "mbit10",
+        "host_wall_s": 0.07402216456830502,
+        "kind": "host_observation",
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation/host-observation.json",
+        "sha256": "207654293dada9341e915d66f178f657a205f17f4a9a304231176b0ddc96537f",
+        "unavailable_commands": 2
+      }
+    ],
+    "region_measurements": {
+      "profile_packages": [
+        "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.package.v1.d612335972200df6"
+      ],
+      "region_comparisons": [
+        {
+          "comparison": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.comparison",
+          "regions": 0
+        }
+      ]
+    },
+    "result_class": "completed_evaluation",
+    "roi_measurements": {
+      "note": "native seconds and simulated ticks/seconds are separate bases and are never compared",
+      "quantities": [
+        [
+          "measured",
+          "native_roi_wall_seconds"
+        ]
+      ],
+      "roi": "bfs.complete_call.v1",
+      "summary": {
+        "by_source_position": [
+          {
+            "median_roi_seconds": 0.0231894445,
+            "source": 0,
+            "source_position": 0
+          },
+          {
+            "median_roi_seconds": 0.023051405,
+            "source": 1234,
+            "source_position": 1
+          },
+          {
+            "median_roi_seconds": 0.0235173995,
+            "source": 7777,
+            "source_position": 2
+          }
+        ],
+        "gain_claim": false,
+        "median_roi_seconds": 0.0232262975,
+        "trials": 30
+      },
+      "trials": 30
+    },
+    "software_hardware_pair": {
+      "backend_configuration": {
+        "lane": "mbit10-evaluation-node1"
+      },
+      "basis": "measured",
+      "binary_sha256": "e65d00dcb476e12adca0cfdcd19e8fbc7ebef0b9c554396ee1fd6dba9a01fddf",
+      "candidate_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+      "implementation": "dx100-bfs-scalar",
+      "model": null,
+      "target": "mbit10",
+      "threads": 1
+    },
+    "stage_outcomes": [
+      {
+        "count": 1,
+        "stage": "aggregation",
+        "state": "complete"
+      },
+      {
+        "count": 1,
+        "stage": "build",
+        "state": "complete"
+      },
+      {
+        "count": 1,
+        "stage": "compiler_identity",
+        "state": "complete"
+      },
+      {
+        "count": 30,
+        "stage": "correctness",
+        "state": "complete"
+      },
+      {
+        "count": 30,
+        "stage": "execution",
+        "state": "complete"
+      },
+      {
+        "count": 1,
+        "stage": "source_resolution",
+        "state": "complete"
+      },
+      {
+        "count": 1,
+        "stage": "workload_resolution",
+        "state": "complete"
+      }
+    ]
+  },
+  "format": "swdb.bfs.handoff.evaluation_result",
+  "format_version": "1.0",
+  "id": "evaluation_result/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation",
+  "inputs": [
+    {
+      "id": "bfs-campaign-preparation-20260925-a1.dx100-patch",
+      "kind": "proposal",
+      "sha256": "f59bbbd6b536420fd8b2c9159f0f00c8294cab3c204048d4c0b2027bcd348dca",
+      "state": "present"
+    },
+    {
+      "id": "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
+      "kind": "candidate",
+      "sha256": "822aa2376c6df046b22c3463d8999506f69091a54cc0f518184593de286f6ef4",
+      "state": "present"
+    },
+    {
+      "id": "bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3",
+      "kind": "protocol",
+      "sha256": "d77cd1b5d677970ab6c05a0f5b10b9e7c2b59733d08749bc5fa22f732be435d4",
+      "state": "present"
+    },
+    {
+      "id": "bfs-20260925-kronecker18.48de8267ac2098d5",
+      "kind": "workload",
+      "sha256": "38ecdcb6ed58c15b9dbd3ed1449f18e4ffc69ddc2f2ab6a8192b144c25030199",
+      "state": "present"
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.pair",
+      "kind": "evaluation_pair",
+      "sha256": "432eceff774885b0792d6464fb601482b20a8dd1ca33be9675c12feac65214fb",
+      "state": "present"
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.package.v1.d612335972200df6",
+      "kind": "profile_package",
+      "sha256": "dd180cdf95bc8dc772e03862e7a524b33c795f9feb3ea6205182e92cca894f42",
+      "state": "present"
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.comparison",
+      "kind": "comparison_result",
+      "sha256": "f752025d72f4d76a7c3b2efd4b95a3b0caa41b171818f9c079f3ff1d41f02cc9",
+      "state": "present"
+    }
+  ],
+  "producer": {
+    "name": "swdb",
+    "role": "operator",
+    "test_client": false
+  },
+  "provenance": {
+    "live_collaborator_integration": false,
+    "record_provenance": [
+      {
+        "description": "Created through the public SWDB workflow.",
+        "id": "workflow",
+        "kind": "agent_run",
+        "uri": null
+      }
+    ],
+    "statement": "Submitted by a representative test client; not a live collaborator integration.",
+    "submission_producer": {
+      "name": "swdb-representative-dx100-patch",
+      "role": "sw",
+      "test_client": true
+    },
+    "test_client": true
+  },
+  "record": {
+    "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation",
+    "kind": "evaluation",
+    "schema_version": "0.4",
+    "sha256": "d4463fd030ccca9d15af8d8ab1ec84ce41e06176746ef10deb44105585c20062"
+  }
+}

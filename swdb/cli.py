@@ -198,6 +198,11 @@ def main(argv=None):
     sub = command("bfs-coverage", "reconstruct the fixed BFS acceptance matrix and retained history", db=True, fmt=True)
     sub.add_argument("file", type=Path)
 
+    sub = command("handoff-message", "render a versioned D06 handoff message (profile package, rewrite proposal, "
+                  "or evaluation result) from an existing record", db=True, fmt=True)
+    sub.add_argument("message", choices=["profile_package", "rewrite_proposal", "evaluation_result"])
+    sub.add_argument("id")
+
     for name, help_text in (
         ("register-workload", "register graph representations after checking canonical adjacency identity"),
         ("freeze-protocol", "freeze an immutable workload and comparison protocol"),
@@ -293,6 +298,12 @@ def _dispatch(args):
         from swdb import bfs_coverage
 
         _emit(bfs_coverage.report(args), args.format)
+        return 0
+
+    if args.command == "handoff-message":
+        from swdb import handoff
+
+        _emit(handoff.message(args), args.format)
         return 0
 
     workflow_commands = {"source-snapshot": "snapshot", "fixture-package": "fixture_package",

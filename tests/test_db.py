@@ -163,17 +163,19 @@ def test_a_changed_record_is_seen_even_with_an_older_timestamp(repo):
 
 
 def test_unknown_counter_availability_stays_null(repo):
-    edit_path = repo.path / "machines" / "mbit10.yaml"
-    # 2026-09-27 ET: frozen native protocols bind the exact mbit10 record digest,
-    # so this synthetic machine edit drops them from the throwaway copy.
-    for frozen in (repo.path / "protocols").glob("bfs-native-one-thread-*.yaml"):
-        frozen.unlink()
-    import yaml as _yaml
-    data = _yaml.safe_load(edit_path.read_text())
+    # 2026-09-27 ET: frozen native protocols, and the comparisons that reference
+    # them, bind the exact mbit10 record digest. Editing mbit10 in place would
+    # invalidate that retained chain, so the unknown case is a separate synthetic
+    # machine record; the real mbit10 record and its dependents stay unchanged.
+    data = repo.read("machines/mbit10.yaml")
+    data["id"] = "unknown-counters-probe"
+    data["hostname"] = "unknown-counters-probe"
     data["counters"]["hardware_counters_available"] = {"value": None, "basis": "unknown", "evidence_refs": []}
-    edit_path.write_text(_yaml.safe_dump(data, sort_keys=False))
-    rows = out(repo.swdb("sql", "select counters_available from machines where id = 'mbit10'", "--format", "json"))
-    assert rows == [{"counters_available": None}]
+    repo.write("machines/unknown-counters-probe.yaml", data)
+    rows = out(repo.swdb("sql", "select id, counters_available from machines "
+                         "where id in ('mbit10', 'unknown-counters-probe') order by id", "--format", "json"))
+    assert rows == [{"id": "mbit10", "counters_available": 0},
+                    {"id": "unknown-counters-probe", "counters_available": None}]
 
 
 def test_known_counter_availability_is_zero_or_one(repo):

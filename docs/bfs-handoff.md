@@ -1,7 +1,7 @@
 # BFS workflow handoff
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-27 (Eastern Time)
+Updated: 2026-09-27 17:05 ET (final report regeneration and the D06 contract)
 
 This handoff describes the implemented interfaces and the evidence available during
 implementation. Campaign acceptance is still pending. The final coverage query,
@@ -291,3 +291,59 @@ The user requested consolidating all branch work into main. Resume from `main`;
 BFS implementation and snapshot histories are consolidated there. Historical
 branch refs and immutable runtime commits remain for provenance. Evaluation
 remains paused and the heartbeat remains deleted.
+
+## Versioned D06 contract and examples — 2026-09-27 17:05 ET
+
+The three linked messages (profile package, rewrite proposal, and evaluation
+result) are defined in [the format 1.0 contract](bfs-handoff-contract-v1.md).
+They are rendered from master records by the public command
+`swdb handoff-message KIND ID`. Six examples in
+[`bfs-handoff-examples/`](bfs-handoff-examples/) come from actual records: the
+T18 candidate package, the SW patch, the HW annotated-source submission
+(context6, which uses `stream-json` capture and the `full_files` edit format),
+the retained failed context5, the completed but inconclusive T18 Kronecker
+evaluation, and the interrupted T18 b1 evaluation. Every submission is labeled
+as coming from a test client, and every message states
+`live_collaborator_integration: false`. The contract also shows where R10
+shared protocol bindings, R11 determinism evidence, and R12 post-ROI CPU records
+appear. Those records are on branch `codex/bfs-t16-reference-20260927-b1` and
+are not yet on main. Run `python3 scripts/bfs_handoff_examples.py --check` to
+confirm the examples still match the records.
+
+## Final report regeneration — 2026-09-27
+
+One public command produces the coverage report, the AC01–AC20 states, the AC17
+gain gate, and the AC18 accounting. Run it from the repository root:
+
+```sh
+query_dir=$(mktemp -d "${TMPDIR:-/tmp}/bfs-acceptance.XXXXXX")
+python3 -B -m swdb bfs-coverage \
+  .scratch/bfs-rewrite-evaluation-2026-09-25/requests/acceptance-report-20260927-e1.json \
+  --db "$query_dir/index.sqlite" --format json > "$query_dir/report.json"
+```
+
+The request selects the two frozen native protocols (T18/T19) and names the
+handoff contract by path and hash. It has no reference comparisons yet. When
+the remaining evidence lands, write a new dated request (`…-e2.json`) that adds:
+
+- the frozen controlled-simulator candidate protocol IDs from T15 to
+  `candidate_protocols`, which the T17/T20 accelerated cells need;
+- the T16 artifact-reference and controlled-reference comparison IDs to
+  `artifact_reference_comparisons` and `controlled_reference_comparisons`;
+- the new contract hash to `handoff.sha256`, if the contract document changed.
+
+The report's `selection_audit` lists every retained protocol and comparison
+that the request leaves out, so an omission is visible. On the Mac, the raw
+evidence for paired native comparisons is on mbit10. Those comparisons are
+therefore checked from record bindings and reported as `remote_unverified`, and
+`external_verification_complete` stays false. For full external verification,
+run the same command on mbit10 in a checkout of the same commit.
+
+Current result (records at `f633f00` plus this branch): all 20 criteria are
+reported, and acceptance is **incomplete**. The four native cells (T18 DX100
+patch and T19 upstream structured instructions, on both families) are
+`satisfied_by_retained_metadata`. Each has a completed workflow case, a complete
+evidence package, and an **inconclusive** comparison outcome (1.0004, 1.0015,
+1.0013, 1.0019). The four accelerated cells have no evaluation, so accelerator
+use, package, and comparison outcome are all `missing`. The report also keeps
+the T18 b1 interruption and the failed T20 contexts 2–5. No gain qualifies.
