@@ -1,0 +1,603 @@
+{
+  "date": "2026-09-27 11:05 ET",
+  "ticket": 17,
+  "scope": "Inspected diagnostic-region correspondence between the unaccelerated dx100-bfs-scalar baseline diagnostic build and the T17 candidate diagnostic build a2. Structural pairing only; no timing, correctness or guest execution.",
+  "baseline": {
+    "record": "records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build.yaml",
+    "sha256": "132a0c310c337f1d035713fe3de74f077cf5d9ac37b112077f5ff6733ad3de39",
+    "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+    "binary_sha256": "a673e39cb190dc578a53e8e6f34f64f7df287e49c60331de377f8644330c0b3f",
+    "accelerated": false,
+    "regions": 31,
+    "collector": "dx100.m5_rpns.source_scopes.v1"
+  },
+  "candidate": {
+    "record": "records/evaluations/bfs-t17-diagnostic-build-only-20260927-a2.yaml",
+    "sha256": "62fdb6ddb306aa2679b9cdf4192df46f58d2f0f5d3361cb2a504d38c2ea2a727",
+    "id": "bfs-t17-diagnostic-build-only-20260927-a2",
+    "binary_sha256": "f0656762f6d666892f461ba900d265bf7cecea370d16ffb7dde85ff569ab1b9a",
+    "accelerated": true,
+    "regions": 31,
+    "collector": "dx100.m5_rpns.source_scopes.v1",
+    "dispatch": "/data/yanruj/EvolveSWDB_runs/stream-c-20260927/t17-diagnostic-a2",
+    "host_commit": "ef42950 on codex/bfs-streamc-records-20260927-c2 (written at 52d27d2)"
+  },
+  "method": "Both discoveries (libclang 18.1.8, same collector) return 31 regions in the same source order. Pair i is accepted only when kind, name and enclosing function all match; text_identical compares each region source_sha256. Both discoveries leave one OpenMP for loop (baseline line 189, candidate line 190, inside TDStepMAA) unresolved; it is not paired.",
+  "changed_regions": [
+    {
+      "name": "TDStepMAA",
+      "kind": "function",
+      "baseline": "function:bfs.cc:2157:ba2f8e639d5daef5",
+      "candidate": "function:bfs.cc:2157:6e2df14488cc294c"
+    },
+    {
+      "name": "while",
+      "kind": "loop",
+      "baseline": "loop:bfs.cc:3718:555ee7236ddd1e7f",
+      "candidate": "loop:bfs.cc:3718:5e0f110de210805b"
+    },
+    {
+      "name": "do",
+      "kind": "loop",
+      "baseline": "loop:bfs.cc:7062:a164130f692c4691",
+      "candidate": "loop:bfs.cc:7062:785a12162348c8fe"
+    },
+    {
+      "name": "DOBFS",
+      "kind": "function",
+      "baseline": "function:bfs.cc:13304:76a956649bfe9705",
+      "candidate": "function:bfs.cc:13347:4d66411f1e0ed09c"
+    },
+    {
+      "name": "while",
+      "kind": "loop",
+      "baseline": "loop:bfs.cc:14239:db5227d6bf4ba808",
+      "candidate": "loop:bfs.cc:15148:0e701bd14ab63511"
+    }
+  ],
+  "semantic_pairs_for_freeze": [
+    {
+      "semantic_region": "bfs.complete_call",
+      "baseline": "function:bfs.cc:13304:76a956649bfe9705",
+      "candidate": "function:bfs.cc:13347:4d66411f1e0ed09c",
+      "note": "Candidate DOBFS allocates and initializes the per-thread MAA tiles/registers inside the call and calls TDStepMAA in its top-down loop; baseline DOBFS is the scalar CPU direction-optimizing loop."
+    },
+    {
+      "semantic_region": "bfs.top_down_step.maa",
+      "baseline": "function:bfs.cc:2157:ba2f8e639d5daef5",
+      "candidate": "function:bfs.cc:2157:6e2df14488cc294c",
+      "note": "TDStepMAA is present in both sources but only the candidate calls it from DOBFS; the baseline region is expected to record zero invocations."
+    }
+  ],
+  "pairs": [
+    {
+      "ordinal": 0,
+      "kind": "function",
+      "name": "TDStepMAA",
+      "function": "TDStepMAA",
+      "baseline": "function:bfs.cc:2157:ba2f8e639d5daef5",
+      "baseline_lines": [
+        66,
+        225
+      ],
+      "candidate": "function:bfs.cc:2157:6e2df14488cc294c",
+      "candidate_lines": [
+        66,
+        226
+      ],
+      "text_identical": false
+    },
+    {
+      "ordinal": 1,
+      "kind": "loop",
+      "name": "while",
+      "function": "TDStepMAA",
+      "baseline": "loop:bfs.cc:3718:555ee7236ddd1e7f",
+      "baseline_lines": [
+        101,
+        218
+      ],
+      "candidate": "loop:bfs.cc:3718:5e0f110de210805b",
+      "candidate_lines": [
+        101,
+        219
+      ],
+      "text_identical": false
+    },
+    {
+      "ordinal": 2,
+      "kind": "loop",
+      "name": "do",
+      "function": "TDStepMAA",
+      "baseline": "loop:bfs.cc:7062:a164130f692c4691",
+      "baseline_lines": [
+        156,
+        194
+      ],
+      "candidate": "loop:bfs.cc:7062:785a12162348c8fe",
+      "candidate_lines": [
+        156,
+        195
+      ],
+      "text_identical": false
+    },
+    {
+      "ordinal": 3,
+      "kind": "loop",
+      "name": "for",
+      "function": "TDStepMAA",
+      "baseline": "loop:bfs.cc:9557:d3183c577229b91e",
+      "baseline_lines": [
+        201,
+        215
+      ],
+      "candidate": "loop:bfs.cc:9600:d3183c577229b91e",
+      "candidate_lines": [
+        202,
+        216
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 4,
+      "kind": "loop",
+      "name": "for",
+      "function": "TDStepMAA",
+      "baseline": "loop:bfs.cc:9659:781ab83e6d1b28c0",
+      "baseline_lines": [
+        203,
+        214
+      ],
+      "candidate": "loop:bfs.cc:9702:781ab83e6d1b28c0",
+      "candidate_lines": [
+        204,
+        215
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 5,
+      "kind": "function",
+      "name": "TDStep",
+      "function": "TDStep",
+      "baseline": "function:bfs.cc:10396:92351720b886b03a",
+      "baseline_lines": [
+        227,
+        259
+      ],
+      "candidate": "function:bfs.cc:10439:92351720b886b03a",
+      "candidate_lines": [
+        228,
+        260
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 6,
+      "kind": "loop",
+      "name": "for",
+      "function": "TDStep",
+      "baseline": "loop:bfs.cc:10980:784979f83d8fbb08",
+      "baseline_lines": [
+        239,
+        253
+      ],
+      "candidate": "loop:bfs.cc:11023:784979f83d8fbb08",
+      "candidate_lines": [
+        240,
+        254
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 7,
+      "kind": "loop",
+      "name": "for",
+      "function": "TDStep",
+      "baseline": "loop:bfs.cc:11105:4abc496fc9c3ddd0",
+      "baseline_lines": [
+        241,
+        252
+      ],
+      "candidate": "loop:bfs.cc:11148:4abc496fc9c3ddd0",
+      "candidate_lines": [
+        242,
+        253
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 8,
+      "kind": "function",
+      "name": "TDStep2",
+      "function": "TDStep2",
+      "baseline": "function:bfs.cc:11694:cd1ef9d28c8c62ca",
+      "baseline_lines": [
+        261,
+        282
+      ],
+      "candidate": "function:bfs.cc:11737:cd1ef9d28c8c62ca",
+      "candidate_lines": [
+        262,
+        283
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 9,
+      "kind": "loop",
+      "name": "for",
+      "function": "TDStep2",
+      "baseline": "loop:bfs.cc:11939:ee8a2407c2e768df",
+      "baseline_lines": [
+        267,
+        278
+      ],
+      "candidate": "loop:bfs.cc:11982:ee8a2407c2e768df",
+      "candidate_lines": [
+        268,
+        279
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 10,
+      "kind": "loop",
+      "name": "range_for",
+      "function": "TDStep2",
+      "baseline": "loop:bfs.cc:12051:d3f90fae3543181f",
+      "baseline_lines": [
+        269,
+        277
+      ],
+      "candidate": "loop:bfs.cc:12094:d3f90fae3543181f",
+      "candidate_lines": [
+        270,
+        278
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 11,
+      "kind": "function",
+      "name": "QueueToBitmap",
+      "function": "QueueToBitmap",
+      "baseline": "function:bfs.cc:12450:3e560c996879193b",
+      "baseline_lines": [
+        284,
+        290
+      ],
+      "candidate": "function:bfs.cc:12493:3e560c996879193b",
+      "candidate_lines": [
+        285,
+        291
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 12,
+      "kind": "loop",
+      "name": "for",
+      "function": "QueueToBitmap",
+      "baseline": "loop:bfs.cc:12547:6fce0a8bf1585475",
+      "baseline_lines": [
+        286,
+        289
+      ],
+      "candidate": "loop:bfs.cc:12590:6fce0a8bf1585475",
+      "candidate_lines": [
+        287,
+        290
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 13,
+      "kind": "function",
+      "name": "BitmapToQueue",
+      "function": "BitmapToQueue",
+      "baseline": "function:bfs.cc:12682:9ca128eb96d3fcc8",
+      "baseline_lines": [
+        292,
+        304
+      ],
+      "candidate": "function:bfs.cc:12725:9ca128eb96d3fcc8",
+      "candidate_lines": [
+        293,
+        305
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 14,
+      "kind": "loop",
+      "name": "for",
+      "function": "BitmapToQueue",
+      "baseline": "loop:bfs.cc:12886:ec35536f223b52f4",
+      "baseline_lines": [
+        298,
+        300
+      ],
+      "candidate": "loop:bfs.cc:12929:ec35536f223b52f4",
+      "candidate_lines": [
+        299,
+        301
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 15,
+      "kind": "function",
+      "name": "InitParent",
+      "function": "InitParent",
+      "baseline": "function:bfs.cc:13056:a64d92c2d52fcfe5",
+      "baseline_lines": [
+        306,
+        312
+      ],
+      "candidate": "function:bfs.cc:13099:a64d92c2d52fcfe5",
+      "candidate_lines": [
+        307,
+        313
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 16,
+      "kind": "loop",
+      "name": "for",
+      "function": "InitParent",
+      "baseline": "loop:bfs.cc:13173:7429be52f28ee4f6",
+      "baseline_lines": [
+        309,
+        310
+      ],
+      "candidate": "loop:bfs.cc:13216:7429be52f28ee4f6",
+      "candidate_lines": [
+        310,
+        311
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 17,
+      "kind": "function",
+      "name": "DOBFS",
+      "function": "DOBFS",
+      "baseline": "function:bfs.cc:13304:76a956649bfe9705",
+      "baseline_lines": [
+        314,
+        364
+      ],
+      "candidate": "function:bfs.cc:13347:4d66411f1e0ed09c",
+      "candidate_lines": [
+        315,
+        388
+      ],
+      "text_identical": false
+    },
+    {
+      "ordinal": 18,
+      "kind": "loop",
+      "name": "while",
+      "function": "DOBFS",
+      "baseline": "loop:bfs.cc:14239:db5227d6bf4ba808",
+      "baseline_lines": [
+        343,
+        352
+      ],
+      "candidate": "loop:bfs.cc:15148:0e701bd14ab63511",
+      "candidate_lines": [
+        367,
+        376
+      ],
+      "text_identical": false
+    },
+    {
+      "ordinal": 19,
+      "kind": "loop",
+      "name": "for",
+      "function": "DOBFS",
+      "baseline": "loop:bfs.cc:14609:01da7bd21c1235d7",
+      "baseline_lines": [
+        354,
+        356
+      ],
+      "candidate": "loop:bfs.cc:15521:01da7bd21c1235d7",
+      "candidate_lines": [
+        378,
+        380
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 20,
+      "kind": "function",
+      "name": "DOBFSMAA",
+      "function": "DOBFSMAA",
+      "baseline": "function:bfs.cc:14857:094895302872aee0",
+      "baseline_lines": [
+        366,
+        443
+      ],
+      "candidate": "function:bfs.cc:15769:094895302872aee0",
+      "candidate_lines": [
+        390,
+        467
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 21,
+      "kind": "loop",
+      "name": "while",
+      "function": "DOBFSMAA",
+      "baseline": "loop:bfs.cc:16664:d6668c43308db1a5",
+      "baseline_lines": [
+        418,
+        431
+      ],
+      "candidate": "loop:bfs.cc:17576:d6668c43308db1a5",
+      "candidate_lines": [
+        442,
+        455
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 22,
+      "kind": "loop",
+      "name": "for",
+      "function": "DOBFSMAA",
+      "baseline": "loop:bfs.cc:17161:01da7bd21c1235d7",
+      "baseline_lines": [
+        433,
+        435
+      ],
+      "candidate": "loop:bfs.cc:18073:01da7bd21c1235d7",
+      "candidate_lines": [
+        457,
+        459
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 23,
+      "kind": "function",
+      "name": "PrintBFSStats",
+      "function": "PrintBFSStats",
+      "baseline": "function:bfs.cc:17409:660ca89daefffcee",
+      "baseline_lines": [
+        445,
+        456
+      ],
+      "candidate": "function:bfs.cc:18321:660ca89daefffcee",
+      "candidate_lines": [
+        469,
+        480
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 24,
+      "kind": "loop",
+      "name": "range_for",
+      "function": "PrintBFSStats",
+      "baseline": "loop:bfs.cc:17535:a8105cce278141c3",
+      "baseline_lines": [
+        448,
+        453
+      ],
+      "candidate": "loop:bfs.cc:18447:a8105cce278141c3",
+      "candidate_lines": [
+        472,
+        477
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 25,
+      "kind": "function",
+      "name": "BFSVerifier",
+      "function": "BFSVerifier",
+      "baseline": "function:bfs.cc:18047:546ec83dfdeaf3fe",
+      "baseline_lines": [
+        463,
+        509
+      ],
+      "candidate": "function:bfs.cc:18959:546ec83dfdeaf3fe",
+      "candidate_lines": [
+        487,
+        533
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 26,
+      "kind": "loop",
+      "name": "for",
+      "function": "BFSVerifier",
+      "baseline": "loop:bfs.cc:18313:859f5c781239d2af",
+      "baseline_lines": [
+        470,
+        478
+      ],
+      "candidate": "loop:bfs.cc:19225:859f5c781239d2af",
+      "candidate_lines": [
+        494,
+        502
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 27,
+      "kind": "loop",
+      "name": "range_for",
+      "function": "BFSVerifier",
+      "baseline": "loop:bfs.cc:18408:696dcb82ce1ee80d",
+      "baseline_lines": [
+        472,
+        477
+      ],
+      "candidate": "loop:bfs.cc:19320:696dcb82ce1ee80d",
+      "candidate_lines": [
+        496,
+        501
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 28,
+      "kind": "loop",
+      "name": "range_for",
+      "function": "BFSVerifier",
+      "baseline": "loop:bfs.cc:18590:5688108067948590",
+      "baseline_lines": [
+        479,
+        507
+      ],
+      "candidate": "loop:bfs.cc:19502:5688108067948590",
+      "candidate_lines": [
+        503,
+        531
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 29,
+      "kind": "loop",
+      "name": "range_for",
+      "function": "BFSVerifier",
+      "baseline": "loop:bfs.cc:18963:61928faa9fc30778",
+      "baseline_lines": [
+        489,
+        498
+      ],
+      "candidate": "loop:bfs.cc:19875:61928faa9fc30778",
+      "candidate_lines": [
+        513,
+        522
+      ],
+      "text_identical": true
+    },
+    {
+      "ordinal": 30,
+      "kind": "function",
+      "name": "main",
+      "function": "main",
+      "baseline": "function:bfs.cc:19650:7a7b5f224b2acf8f",
+      "baseline_lines": [
+        511,
+        536
+      ],
+      "candidate": "function:bfs.cc:20562:7a7b5f224b2acf8f",
+      "candidate_lines": [
+        535,
+        560
+      ],
+      "text_identical": true
+    }
+  ],
+  "public_workflow": "The public command that records correspondence is freeze-protocol (settings.region_pairs with scope/attribution). It needs the T15-derived controlled-simulator protocol, which is not frozen, so no freeze was run. These pairs are the inspected input for that freeze; scope/attribution are chosen then.",
+  "claims": "Build identity and structural correspondence only. No acceptance box changes."
+}

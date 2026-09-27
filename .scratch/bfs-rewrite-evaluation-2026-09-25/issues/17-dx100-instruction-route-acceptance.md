@@ -194,3 +194,26 @@ into Git ([import receipt](../observations/stream-c-scalar-v2-baseline-import-20
 The `dx100.primary`/`dx100.diagnostic` pair is the T17 `dx100-bfs-scalar` comparison baseline.
 Their enclosing preparation stays failed at finalization, and the import does not change that.
 No acceptance box changes.
+
+## Diagnostic build a2 recorded and region correspondence inspected — 2026-09-27 11:15 ET
+
+Job `t17-diagnostic-a2` ran in the node0 lane (dispatch
+`/data/yanruj/EvolveSWDB_runs/stream-c-20260927/t17-diagnostic-a2`, host checkout at `52d27d2`):
+one public `dx100-compile`, outer exit 0, compile step 90 s of its 270 s cap. The record
+`bfs-t17-diagnostic-build-only-20260927-a2` (outcome `complete`, stage `candidate_build`, diagnostic
+binary SHA-256 `f0656762…`) was committed on mbit10 as `ef42950` on
+`codex/bfs-streamc-records-20260927-c2` and brought into Git unchanged. No provider, repair, guest
+run or primary rebuild happened.
+
+The [region correspondence](../observations/t17-diagnostic-a2-region-correspondence-20260927.json)
+pairs the baseline diagnostic build (`bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build`,
+unaccelerated) with the candidate diagnostic build. Both libclang discoveries return 31 regions in the
+same order, and every pair matches on kind, name and enclosing function. Five regions changed:
+`TDStepMAA` and its `while`/`do` loops (the added `wait_ready(tile5)` line), and `DOBFS` and its
+`while` loop. The other 26 are text-identical. Each discovery leaves one OpenMP `for` inside
+`TDStepMAA` unresolved, and it is not paired. The proposed semantic pairs are `DOBFS`
+(complete call) and `TDStepMAA`. The baseline never calls `TDStepMAA`, so its region should record
+zero invocations. The public command that records correspondence is `freeze-protocol`
+(`settings.region_pairs`). It needs the T15-derived controlled-simulator protocol, which is not
+frozen yet, so no freeze was run. This inspection is the input for that freeze. No acceptance box
+changes; guest correctness, offload and timing remain unmeasured.

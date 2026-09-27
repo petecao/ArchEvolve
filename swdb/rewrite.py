@@ -1,6 +1,7 @@
 """Bounded instruction interpretation through an operator-selected provider.
 
-Updated: 2026-09-27. Providers return proposed edits; SWDB applies protections.
+Updated: 2026-09-27 (stream-json capture). Providers return proposed edits;
+SWDB applies protections.
 """
 
 import fnmatch
@@ -23,6 +24,7 @@ OUTPUT_SCHEMA = {
     "properties": {"interpretation": {"type": "string"}, "patch": {"type": "string"},
                    "unresolved": {"type": "array", "items": {"type": "string"}}},
 }
+OUTPUT_FORMATS = ("json", "stream-json")
 
 
 def require_code_change(before, after):
@@ -47,9 +49,15 @@ def configuration(path):
     data = yamlio.load(Path(path))
     if not isinstance(data, dict) or data.get("kind") not in {"claude", "external_fixture"}:
         raise Failure("provider kind must be claude or external_fixture")
-    allowed = {"kind", "command", "timeout_s", "max_repairs", "total_seconds", "budget_usd"}
+    allowed = {"kind", "command", "timeout_s", "max_repairs", "total_seconds", "budget_usd", "output_format"}
     if set(data) - allowed:
         raise Failure("unknown provider configuration fields")
+    # Opt-in (2026-09-27): stream-json keeps partial provider output and progress
+    # after a timeout. Absent means the original single-result json capture.
+    if data.get("output_format", "json") not in OUTPUT_FORMATS:
+        raise Failure("provider output_format must be json or stream-json")
+    if data.get("output_format") == "stream-json" and data["kind"] != "claude":
+        raise Failure("stream-json output capture applies only to the Claude provider")
     for key, default, lower, upper in (("timeout_s", 300, 1, 900), ("max_repairs", 2, 0, 5),
                                       ("total_seconds", 900, 1, 3600), ("budget_usd", 5, 1, 25)):
         value = data.setdefault(key, default)
@@ -207,15 +215,84 @@ def prompt_for(request, source, package, repair=None):
     )
 
 
+def _stream_events(path):
+    """Yield parsed stream-json events; a truncated or non-JSON line is counted, not fatal."""
+    with Path(path).open(errors="replace") as handle:
+        for line in handle:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                event = json.loads(line)
+            except ValueError:
+                yield None
+                continue
+            yield event if isinstance(event, dict) else None
+
+
+def stream_summary(folder):
+    """Progress evidence from a (possibly interrupted) stream-json capture.
+
+    The concatenated text and structured-output JSON deltas are retained as
+    partial_output.txt; they are evidence only and are never parsed as a result.
+    """
+    folder = Path(folder)
+    events, unparsed, types, deltas, chars = 0, 0, {}, {}, {}
+    thinking, model, result, partial = None, None, None, []
+    for event in _stream_events(folder / "stdout.txt"):
+        if event is None:
+            unparsed += 1
+            continue
+        events += 1
+        kind = str(event.get("type"))
+        subtype = event.get("subtype")
+        key = kind if subtype is None else f"{kind}.{subtype}"
+        types[key] = types.get(key, 0) + 1
+        if kind == "system" and subtype == "init":
+            model = event.get("model")
+        elif kind == "system" and subtype == "thinking_tokens" and isinstance(event.get("estimated_tokens"), int):
+            thinking = event["estimated_tokens"]
+        elif kind == "stream_event":
+            delta = (event.get("event") or {}).get("delta") or {}
+            name = delta.get("type")
+            if name:
+                deltas[name] = deltas.get(name, 0) + 1
+                text = delta.get("text") if name == "text_delta" else (
+                    delta.get("partial_json") if name == "input_json_delta" else None)
+                if isinstance(text, str):
+                    chars[name] = chars.get(name, 0) + len(text)
+                    partial.append(text)
+        elif kind == "result":
+            result = {field: event.get(field) for field in (
+                "subtype", "is_error", "stop_reason", "num_turns", "duration_ms", "duration_api_ms",
+                "total_cost_usd", "terminal_reason")}
+            result["output_tokens"] = (event.get("usage") or {}).get("output_tokens")
+    (folder / "partial_output.txt").write_text("".join(partial))
+    return {"events": events, "unparsed_lines": unparsed, "event_types": types, "delta_counts": deltas,
+            "delta_chars": chars, "estimated_thinking_tokens": thinking, "model": model, "result": result,
+            "partial_output": {"path": str(folder / "partial_output.txt"),
+                               "sha256": artifacts.file_hash(folder / "partial_output.txt")}}
+
+
+def stream_result(path):
+    """The final result event of a completed stream-json capture."""
+    results = [event for event in _stream_events(path) if event is not None and event.get("type") == "result"]
+    if not results:
+        raise Failure("rewrite provider stream ended without a result event")
+    return results[-1]
+
+
 def interpret(config, prompt, folder, remaining_s=None):
     """Capture provider output without granting it file-editing or execution tools."""
     folder = Path(folder)
     folder.mkdir(parents=True, exist_ok=False)
     (folder / "prompt.txt").write_text(prompt)
     cmd = list(config["command"])
+    streaming = config.get("output_format") == "stream-json"
     if config["kind"] == "claude":
+        output = ["stream-json", "--verbose", "--include-partial-messages"] if streaming else ["json"]
         cmd += ["-p", "--safe-mode", "--tools", "", "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}',
-                "--no-session-persistence", "--output-format", "json", "--json-schema", json.dumps(OUTPUT_SCHEMA),
+                "--no-session-persistence", "--output-format", *output, "--json-schema", json.dumps(OUTPUT_SCHEMA),
                 "--max-budget-usd", str(config["budget_usd"])]
     timeout = min(config["timeout_s"], config["total_seconds"],
                   config["total_seconds"] if remaining_s is None else remaining_s)
@@ -234,16 +311,28 @@ def interpret(config, prompt, folder, remaining_s=None):
         raise InterruptedError(f"rewrite provider interrupted by signal {signum}")
     previous = {sig: signal.signal(sig, interrupted) for sig in (signal.SIGTERM, signal.SIGINT)}
     child = None
+    progress = {"first_output_s": None, "last_output_s": None}
     try:
         with (folder / "stdout.txt").open("w") as stdout, (folder / "stderr.txt").open("w") as stderr, (folder / "prompt.txt").open() as stdin:
             child = subprocess.Popen(cmd, cwd=folder, stdin=stdin, stdout=stdout, stderr=stderr,
                                      text=True, start_new_session=True)
+            seen = [0]
+
+            def observe():
+                sizes = [(folder / name).stat().st_size for name in ("stdout.txt", "stderr.txt")]
+                if sizes[0] > seen[0]:  # stdout growth times; granularity is the 0.1 s poll
+                    seen[0] = sizes[0]
+                    progress["last_output_s"] = time.monotonic() - started
+                    if progress["first_output_s"] is None:
+                        progress["first_output_s"] = progress["last_output_s"]
+                return sizes
             while child.poll() is None:
                 if time.monotonic() - started > timeout:
                     raise subprocess.TimeoutExpired(cmd, timeout)
-                if any((folder / name).stat().st_size > 10 * 1024 * 1024 for name in ("stdout.txt", "stderr.txt")):
+                if any(size > 10 * 1024 * 1024 for size in observe()):
                     raise Failure("rewrite provider output exceeds the 10 MiB limit")
                 time.sleep(0.1)
+            observe()
             meta.update(state="completed" if child.returncode == 0 else "failed", returncode=child.returncode)
     except BaseException:
         meta.update(state="interrupted_or_timeout")
@@ -255,13 +344,19 @@ def interpret(config, prompt, folder, remaining_s=None):
             for sig, handler in previous.items():
                 signal.signal(sig, handler)
             meta["host_wall_s"] = time.monotonic() - started
+            if streaming:
+                try:
+                    meta["stream"] = {**progress, **stream_summary(folder)}
+                except OSError as exc:
+                    meta["stream"] = {**progress, "summary_error": str(exc)}
             (folder / "provider.json").write_text(json.dumps(meta, indent=2))
     if child.returncode:
         raise Failure(f"rewrite provider exited {child.returncode}; retained {folder}")
     if (folder / "stdout.txt").stat().st_size > 10 * 1024 * 1024:
         raise Failure("rewrite provider output exceeds the 10 MiB limit")
     try:
-        response = json.loads((folder / "stdout.txt").read_text())
+        response = (stream_result(folder / "stdout.txt") if streaming
+                    else json.loads((folder / "stdout.txt").read_text()))
         if config["kind"] == "claude":
             if response.get("is_error"):
                 raise Failure("Claude returned an error; see retained provider output")
