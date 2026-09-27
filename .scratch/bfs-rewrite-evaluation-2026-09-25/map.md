@@ -4,7 +4,7 @@ Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-26 (Eastern Time)
 **Type:** ticket map
 **Status:** claimed
-**Blocked by:** Remaining empirical verification, calibration, artifact/control comparisons, and final acceptance. All three originally approved transfers are complete. The new six-file provider-result packet, 24-file native evidence packet, and context-supplemented provider payload await payload-specific approval after automatic review rejected their transfer. Local/host evaluation continues independently.
+**Blocked by:** Remaining empirical verification, calibration, artifact/control comparisons, and final acceptance. All three originally approved transfers are complete. The new six-file provider-result packet, 24-file native evidence packet, context-supplemented provider payload, and five-file T17 diagnostic export await payload-specific approval after automatic review rejected their transfer. Local/host evaluation continues independently.
 **Spec:** [Refined specification](spec.md)
 
 The user authorized autonomous implementation of all 21 tickets and all necessary builds, installations, benchmark/simulator runs, external access, Git, and Claude Code on 2026-09-25. This supersedes the publication-only hold. The two-lane mbit10 rules and evidence requirements remain in force.
@@ -82,6 +82,32 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC18 — Full coverage including failed/regressing cases | 17–21 |
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
+
+## Host and worker checkpoint — 2026-09-26 22:03 ET
+
+The [full host audit](observations/health-20260926-2203.json) confirms node 0
+held at generation 332 with the expected kernel holder, node 1 released at 416
+with no kernel lock, and legacy 77 released. No other user claimed the free lane.
+All three workers are running and responsive. Historical code, lease helper and
+closed output hashes/counts are unchanged. Free disk is 16.18 GiB on `/data1`
+and 170.00 GiB on `/data`; load is 1.32/1.28/1.26.
+
+| Ticket or case | State | Host / lane | Evidence and next action |
+|---|---|---|---|
+| 01–14 | resolved | — | 14/21; preserve accepted evidence |
+| T15 original and correction | failed, independently closed | mbit10 / node 1 released | No corrected guest execution; local recovery design only |
+| T16 | running, zero samples | mbit10 / node 0, 332 | 30,946,598,912-byte tree RSS, 1,735,983,104 charged bytes; original 14,400-second simulation bound |
+| Allocator repair | reviewed locally | local | 127 affected and 24 independent cases passed; fresh Linux admission remains |
+| T17 diagnostic | prepared, transfer blocked | local | Five-file export question pending; eventual runtime also needs allocator repair |
+| Native candidate preparation | reviewed locally | local | Exact dispatch accounting and retained primary reuse; protocol gates remain |
+| Full regression | running | local / d5e2159 | About 63%; no final result |
+| Final acceptance | 0/8 complete | — | Seven tickets claimed, no qualified gain |
+
+A [bounded 22:05 metadata read](observations/t16-roi-progress-2205-20260926.json)
+found current T16 simulation output at tick 175,936,615,500. The last 16 KiB had
+no ROI-sealed marker or exit cause; sealed ROI/stats/post-ROI files were absent.
+This is activity evidence, not a completed ROI or an estimate of remaining time.
+Next full host/worker audit: 22:33 ET. The heartbeat remains active.
 
 ## Transient SQLite repair reviewed — 2026-09-26 22:01 ET
 

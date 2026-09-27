@@ -101,3 +101,14 @@ requires the exact canonical admission path and rejects symlinks. All 27 author
 checks pass; the [independent review](../observations/t17-diagnostic-standards-review-20260926.json)
 retains the original red and passing follow-ups. Actual diagnostic compilation
 and host admission remain pending; the existing primary is unchanged.
+
+
+## Export checkpoint — 2026-09-26 22:03 ET
+
+The [exact five-file diagnostic export](../observations/t17-diagnostic-export-20260926.json)
+`46f3a264` passed independent blob/dependency review, but automatic approval review
+rejected its push to the private repository because it falls outside the earlier
+exact transfer list. Payload-specific approval is pending; no alternate transfer
+or host build occurs. The future execution runtime must also contain the later
+allocator repair before admission. Existing primary, provider budget and source
+remain unchanged; both-family acceptance remains open.

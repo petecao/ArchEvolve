@@ -128,3 +128,14 @@ Reference and control collection now has reviewed owned-process cleanup, origina
 accounting and failure preservation; see the [verification receipt](../observations/simulator-supervision-verification-20260926.json).
 The actual Linux fixtures, runtime admission and empirical execution remain
 pending. This preparation does not satisfy or change any open acceptance item.
+
+
+## Active execution checkpoint — 2026-09-26 22:03 ET
+
+The [host audit](../observations/health-20260926-2203.json) confirms the original
+T16 batch remains on node 0, generation 332, at code `8c39ae0`. First scalar
+source/repetition is running with zero completed samples and 28.82 GiB sampled
+tree RSS. The original 14,400-second simulation bound is unchanged. A bounded
+[output metadata read](../observations/t16-roi-progress-2205-20260926.json) shows
+advancing tick output but no sealed ROI result; no progress percentage, completed
+comparison or gain is inferred. This ticket remains claimed.
