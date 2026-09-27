@@ -133,3 +133,66 @@ def validate_cleanup_ledger(driver_ref, ledger_ref, *, expected_run_id, expected
             'budget_seconds': 30, 'spent_seconds': spent, 'settled_events': len(events),
             'observed_at': observed.isoformat(), 'embedded_cleanup_snapshots': 'nonfinal',
             'process_absence_verified': False, 'empirical_qualification': False}
+
+
+def validate_storage_accounting(driver_ref, terminal_ref, *, current):
+    """Recount after helper exit and persisted terminal/audit writes (2026-09-26).
+
+    This is read-only. Persist its first result in .dispatch, then call again
+    after the last write; retain the final result without writing into either
+    charged directory. Independent process/lease closure remains a prerequisite.
+    No new storage allowance or cleanup/time reserve is created by this audit.
+    """
+    from scripts import bfs_simulator_batch as batch
+    driver = read_reference(driver_ref, 16 * 1024**2)
+    audit = read_reference(terminal_ref, 16 * 1024**2)
+    plan = driver.get('plan')
+    require(isinstance(plan, dict), 'terminal storage requires the fixed batch plan')
+    kinds = [kind for kind in batch.PLAN_HASHES
+             if plan.get('id') == f'bfs-{kind}-simulator-batch-20260926-a1']
+    require(len(kinds) == 1, 'terminal storage batch identity is unsupported')
+    batch.validate_plan(plan, kinds[0])
+    require(driver.get('id') == plan['id'] and driver.get('plan_sha256') == batch.artifacts.digest(plan)
+            and driver.get('state') in {'complete', 'failed'}, 'terminal storage driver/plan differs')
+    driver_path = Path(driver_ref['path'])
+    runs = driver_path.parent.parent
+    require(runs.name == plan['id'] and driver_path == runs/(plan['id']+'.driver')/'driver.json'
+            and any(base in runs.parents for base in batch.RAW_ROOTS),
+            'terminal storage driver is outside the exact batch directory')
+    paths = batch.batch_storage_paths(runs)
+    require(driver.get('storage_paths') == list(map(str, paths)),
+            'terminal storage roots differ from exact raw/.dispatch siblings')
+    require(Path(terminal_ref['path']) == paths[1]/'terminal-validation.json',
+            'terminal audit must be persisted in the exact .dispatch directory')
+    bound_driver = audit.get('driver', {})
+    require(audit.get('id') == driver['id'] and audit.get('state') == driver['state']
+            and bound_driver.get('path') == driver_ref['path']
+            and bound_driver.get('sha256') == driver_ref['sha256']
+            and audit.get('lease_released') is True
+            and audit.get('cleanup_state') in {'terminal_and_reaped', 'terminal_no_live_owned_processes'},
+            'persisted terminal audit does not bind the terminal driver and closure')
+    observed = timestamp(current)
+    require(timestamp(driver.get('finished')) <= timestamp(audit.get('observed_at')) <= observed,
+            'terminal storage audit clock precedes driver or is in the future')
+    # Reopen fixed source receipts/directories, never trust driver-chosen credit.
+    charges = batch.preparation_charges(plan)
+    require(driver.get('preparation_charges') == charges,
+            'terminal storage preparation charges differ from reopened fixed inputs')
+    prior = sum(row['raw_bytes'] for row in charges)
+    raw = batch.allocated_bytes(paths)
+    ceiling = plan['bounds']['batch_storage_gib'] * batch.GIB
+    require(raw + prior < ceiling, 'post-helper retained bytes exceeded the existing storage ceiling')
+    final = driver.get('final_ledger', {})
+    driver_raw = finite(final.get('raw_bytes'), 'driver storage snapshot')
+    driver_total = finite(final.get('charged_raw_bytes'), 'driver charged storage snapshot')
+    require(driver_raw <= raw and driver_total == driver_raw + prior,
+            'driver storage snapshot is inconsistent with terminal accounting')
+    read_reference(driver_ref, 16 * 1024**2)
+    read_reference(terminal_ref, 16 * 1024**2)
+    return {'state': 'within_existing_storage_budget', 'run_id': driver['id'],
+            'driver': dict(driver_ref), 'terminal_audit': dict(terminal_ref),
+            'storage_paths': list(map(str, paths)), 'raw_bytes': raw,
+            'preparation_charges': charges, 'charged_raw_bytes': raw + prior,
+            'ceiling_bytes': ceiling, 'observed_at': observed.isoformat(),
+            'driver_storage_snapshot': 'nonfinal', 'requires_recheck_after_any_write': True,
+            'process_absence_verified': False, 'empirical_qualification': False}

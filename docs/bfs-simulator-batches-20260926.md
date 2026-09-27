@@ -80,8 +80,13 @@ time is the minimum of the monotonic allowance and a separately sealed absolute
 ET deadline. Before dispatch the admission must state concrete aware timestamps
 `not_before`, `latest_start`, and `absolute_end`; `latest_start` must equal
 `absolute_end - remaining_batch_seconds`. Preparation must precede `not_before`.
-No absolute execution window is currently selected. An unfilled template is not
-admission and cannot launch this driver.
+The unused 19:56 ET admission selected a 20:00–20:30 ET start window on
+2026-09-26. Its storage-accounting correction requires a new exact-code
+admission and matching proofs before guest dispatch; the original latest start,
+absolute ends, and allowances remain unchanged. The corrected admission plans
+`not_before=2026-09-26T20:20:00-04:00` only if its preparation finishes before
+that time, narrowing the start window without backdating. An unfilled template
+is not admission.
 
 The T16 plan fixes three prior preparation identities: uniform22 generation and
 registration, author scalar diagnostic preparation, and author MAA diagnostic
@@ -203,7 +208,10 @@ stalls. These are contract fixtures; no graph performance or coverage is inferre
 Both `swdb.bfs.linux-fixture.v1` receipts must identify mbit10/Linux, the exact
 Git/runtime/test hashes and interpreter, successful unskipped required JUnit
 cases, and at most 90 seconds. Historical Linux receipts do not satisfy these
-new tests. No such prospective fixture or batch has been dispatched.
+new tests. The four ownership and two interruption cases passed on `d11dc04` with independent
+terminal audits. Those receipts identify that exact revision. The dispatch-storage
+correction requires fresh matching fixtures on the corrected revision; no empirical
+batch had started as of 2026-09-26 20:03 ET.
 
 ## Prospective public invocation
 
@@ -248,3 +256,28 @@ Final shutdown and accounting errors remain visible separately from the first
 stage failure. A new finalizer failure makes an otherwise successful coordinator
 exit unsuccessfully; it cannot silently return success with a failed receipt.
 The original stage exception remains authoritative if both fail.
+
+## Dispatch storage correction — 2026-09-26 20:03 ET
+
+The batch's storage boundary includes both the exact new run directory and its
+canonical sibling `<runs>.dispatch`. The sibling retains admission, helper lane
+records, launcher metadata, stdout, stderr, and exit status. Both directories
+count against the same 40-GiB T15 or 60-GiB T16 allowance; no control-file
+exemption or additional storage budget applies. T16's fixed historical
+preparation charges still count as before. Missing, redirected, or duplicate
+storage roots cannot substitute for these exact two directories.
+
+During execution, sampling and driver finalization count both roots. The driver
+snapshot precedes the helper's final writes and is therefore nonfinal for outer
+storage. After independent process and lease closure, persist the terminal audit
+inside the dispatch sibling, then call
+`scripts.bfs_simulator_batch_terminal.validate_storage_accounting` with the exact
+hashed driver and terminal-audit references and the current aware timestamp.
+The reader verifies the fixed plan and preparation charges and recounts both
+roots, including the already-persisted audit. If the caller persists this result,
+repeat the read-only check after that final write. A failure stays a failure;
+this check neither qualifies measurements nor proves process absence itself.
+
+Preserve the unused original admission and launcher preparation. Corrected
+admission uses a new file in the same counted dispatch directory; it does not
+rename a consumed guest attempt or replenish the batch's time or storage.
