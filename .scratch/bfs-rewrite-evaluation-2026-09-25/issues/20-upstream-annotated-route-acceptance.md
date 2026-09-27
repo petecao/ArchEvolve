@@ -9,6 +9,20 @@ Updated: 2026-09-27 (Eastern Time)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
+## Third context continuation timed out — 2026-09-27 04:27 ET
+
+The [independently closed third attempt](../observations/provider-context3-terminal-independent-20260927.json)
+made one bounded provider call and again reached the600-second timeout. The public proposal
+retains `failed` at `rewriting`, with no candidate. The operator retained this outcome and
+exited0; this operational completion is not route acceptance. Actual debit was
+600.3210216322914 seconds, cumulative1367.6099595148116 seconds, leaving
+430.6789783677086 seconds after prior conservative floors. No repair, build, evaluation,
+retry, or gain claim occurred. All14 recorded identities closed in two observations
+except the original zero-RSS zombie pane;21 cleanup events settled within1.188231364 seconds.
+Final raw plus dispatch allocation was28,975,104 bytes. Node0 generation352 released.
+The [two-file private Git packet](../observations/provider-context3-evidence-transfer-20260927.json)
+preserves exact proposal/provider metadata without copying raw traces or response payload files.
+
 ## Second context continuation timed out — 2026-09-27 02:28 ET
 
 The [independent terminal observation](../observations/provider-context2-terminal-independent-20260927.json)

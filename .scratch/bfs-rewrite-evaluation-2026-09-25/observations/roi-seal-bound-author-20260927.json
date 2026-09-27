@@ -1,0 +1,47 @@
+{
+  "date": "2026-09-27",
+  "state": "local_repair_author_tests_passed",
+  "files": {
+    "swdb/dx100_witness.py": {
+      "bytes": 34959,
+      "sha256": "c9d3e14b70a3689799314556fab2922b1723c00960902109af2922a958cd3498"
+    },
+    "swdb/dx100_profile.py": {
+      "bytes": 25700,
+      "sha256": "ad3a721139dd38a1bc4baa3c1114ee44bb55ca5f745087a17d29ecf6892a92c2"
+    },
+    "scripts/dx100_verify.py": {
+      "bytes": 9433,
+      "sha256": "476874619644d1256dcc5ca1e853c47b7be2e1dc56f538aaa2dd783842e7ad10"
+    },
+    "tests/test_dx100_witness.py": {
+      "bytes": 30613,
+      "sha256": "56f6b60c5bca09d1cb6628348773318daf7439a0a5faa402b65d449e7c6832d9"
+    },
+    "docs/bfs-roi-seal-bound-20260927.md": {
+      "bytes": 2686,
+      "sha256": "2dddc6dd35d8569c6414821652917edaf0a996fe906ceb3219b828201209a6df"
+    }
+  },
+  "focused_tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest -q -p no:cacheprovider tests/test_dx100_witness.py",
+    "passed": 116,
+    "seconds": 0.36
+  },
+  "integration_command": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest -q -p no:cacheprovider tests/test_dx100_witness.py tests/test_dx100_resources.py tests/test_dx100_v2.py tests/test_dx100_profile.py",
+  "integration_log": "/private/tmp/bfs-roi-seal-bound-author-20260927.log",
+  "initial_test_failure_preserved": {
+    "passed": 111,
+    "failed": 1,
+    "reason": "Producer save correctly raised standalone runpy WitnessError (ValueError subtype), while test erroneously expected imported module WitnessError identity. Fixed assertion to ValueError and exact bound message; no production change for this failure."
+  },
+  "runtime_changes_deployed": false,
+  "provider_calls": 0,
+  "simulator_calls": 0,
+  "integration_result": {
+    "passed": 172,
+    "seconds": 183.76,
+    "note": "Final malformed/equality cases added after suite collection; final focused116test run verifies those. Independent reviewer runs final frozen integrated collection."
+  },
+  "integration_log_sha256": "c74dcadffc6b5c7b7f65c9b6de51912cfd41faf6a5d3e4a4ae3287f809b776fa"
+}
