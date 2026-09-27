@@ -1,0 +1,429 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs-t17-build-only-20260926-a1
+status: draft
+created: '2026-09-26'
+updated: '2026-09-26'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-t17-build-only-20260926-a1
+  machine: mbit10
+  hardware_target: dx100-e4fc4af-4c
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  build_evaluation: bfs-dx100-build-20260925-a2
+  candidate: bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1
+  function: DOBFS
+  accelerated: true
+  roi: bfs.complete_call.v1
+  diagnostic_regions: false
+  budget:
+    total_seconds: 240
+    build_seconds: 180
+    memory_gib: 16
+    storage_gib: 1
+outcome:
+  state: complete
+  stage: candidate_build
+  reason: Identified candidate compiled; no simulated correctness or timing inferred.
+stages:
+- stage: candidate_compiler_identity
+  state: complete
+  started: '2026-09-26T18:41:50.889744+00:00'
+  command: [/usr/bin/g++-13, --version]
+  timeout_s: 30
+  log: /data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926/bfs-t17-build-only-20260926-a1/000-candidate_compiler_identity.log
+  finished: '2026-09-26T18:41:56.372408+00:00'
+  host_wall_s: 2.0413212226703763
+  returncode: 0
+  log_sha256: b240ade48d7a4743cb2e7940990dd5a8dbc15120543c7eadd9541435edd2efd2
+  reason: null
+  sampled_peak_process_group_rss_kib: 0
+- stage: candidate_compile
+  state: complete
+  started: '2026-09-26T18:42:03.372253+00:00'
+  command:
+  - /usr/bin/g++-13
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -g
+  - -fopenmp
+  - -DGEM5
+  - -DNUM_CORES=4
+  - -DTILE_SIZE=16384
+  - -DMAA
+  - -I/data1/yanruj/DX100-bfs-e4fc4af/include
+  - -I/data1/yanruj/DX100-bfs-e4fc4af/util/m5/src
+  - -I/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/API
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.dx100-instructions/source/benchmarks/gapbs/src
+  - /data1/yanruj/EvolveSWDB_builds/bfs-t17-build-only-20260926-a1/complete_call.cc
+  - /data1/yanruj/DX100-bfs-e4fc4af/util/m5/src/abi/x86/m5op.S
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/bfs-t17-build-only-20260926-a1/bfs
+  timeout_s: 180
+  log: /data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926/bfs-t17-build-only-20260926-a1/001-candidate_compile.log
+  finished: '2026-09-26T18:42:10.974832+00:00'
+  host_wall_s: 4.074227862991393
+  returncode: 0
+  log_sha256: b4bc9d197dd72675c01f5d63683113416e7161535d29fa6e08def255fdf1da28
+  reason: null
+  sampled_peak_process_group_rss_kib: 189496
+timing: []
+correctness:
+  state: unverified
+  checks: []
+profiling:
+  state: incomplete
+  reasons:
+  - BFS ROI, regions, and memory metrics require the profile collector.
+raw_artifacts:
+- host: mbit10
+  path: /data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926/bfs-t17-build-only-20260926-a1
+  kind: dx100_compile
+- host: mbit10
+  kind: host_observation
+  path: /data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926/bfs-t17-build-only-20260926-a1/host-observation.json
+  sha256: 6f84b697a0bc47d9f46b21c7de48c2ad99f85d77dab16c39ab76e32ea06103fb
+  host_wall_s: 0.08147220220416784
+  evidence_kind: execution
+  unavailable_commands: 2
+- host: mbit10
+  kind: process_group_memory
+  path: /data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926/bfs-t17-build-only-20260926-a1/000-candidate_compiler_identity.memory.jsonl
+  sha256: 584028f3e457e2b4edf8799fee0aba11e3872018da07a7c233301863e1250281
+- host: mbit10
+  kind: process_group_memory
+  path: /data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926/bfs-t17-build-only-20260926-a1/001-candidate_compile.memory.jsonl
+  sha256: f5a908ea1bd7e37a57c5ca908612c7235ba29e272c3822682fe37708dfc66141
+- kind: candidate_build
+  artifact:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-t17-build-only-20260926-a1
+    sha256: 1292da4a98d59eff0e3e60192299048b15ee1354ccc99b5a1d21e3865cf4ce1c
+    files:
+    - path: bfs
+      sha256: 852e62314b7114079975fe25d70da4e77596490bcfa89fb4f7c64af585485527
+      bytes: 1031400
+      executable: true
+    - path: complete_call.cc
+      sha256: 569f9615f04574a5a333e839fbeeb677e41b7d1d296dd6f4dbbda051a20ce35c
+      bytes: 9144
+      executable: false
+gain_claim: false
+evidence_kind: execution
+machine: mbit10
+context:
+  backend: dx100-gem5-se
+  target: dx100-e4fc4af-4c
+  target_sha256: 94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1
+  model:
+    id: dx100-gem5
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  interface:
+    id: dx100-mmio
+    version: 1.0-e4fc4af
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  host: mbit10
+  lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 324)'
+  budget:
+    total_seconds: 240
+    build_seconds: 180
+    memory_gib: 16
+    storage_gib: 1
+  load_average: [0.3095703125, 0.1640625, 0.09814453125]
+  roi: bfs.complete_call.v1
+  basis: simulated
+  host_observation:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926/bfs-t17-build-only-20260926-a1/host-observation.json
+    sha256: 6f84b697a0bc47d9f46b21c7de48c2ad99f85d77dab16c39ab76e32ea06103fb
+    host_wall_s: 0.08147220220416784
+    evidence_kind: execution
+    unavailable_commands: 2
+  build_directory: /data1/yanruj/EvolveSWDB_builds/bfs-t17-build-only-20260926-a1
+  candidate_sha256: ca09d2f439a56f295c5ccdc5e18a5fd5a4c2c9726005365f8125cc1d8979740a
+  application: dx100-gapbs
+  source_path: benchmarks/gapbs/src/bfs.cc
+  function: DOBFS
+  accelerated_requested: true
+  model_build: bfs-dx100-build-20260925-a2
+  suppressed_internal_events: [m5_reset_stats, m5_dump_stats, m5_work_begin, m5_work_end, m5_exit]
+  driver:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-t17-build-only-20260926-a1/complete_call.cc
+    sha256: 569f9615f04574a5a333e839fbeeb677e41b7d1d296dd6f4dbbda051a20ce35c
+  timed_source:
+    path: /data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.dx100-instructions/source/benchmarks/gapbs/src/bfs.cc
+    sha256: fda0c52f8114058db6ac9810fa7a97795e92d42cebba9c5868354bc3aecf73e1
+  verifier_source:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-t17-build-only-20260926-a1/complete_call.cc
+    sha256: 569f9615f04574a5a333e839fbeeb677e41b7d1d296dd6f4dbbda051a20ce35c
+    symbol: swdb_original::Graph::verify
+    bounds_check: trusted original-CSR oracle checks exact parent length and range before traversal validation
+  graph_verification:
+    contract: swdb.bfs.original-adjacency.v1
+    input_format: gapbs.sg32
+    byte_order: little
+    adjacency: outgoing CSR from exact registered serialized input
+    maximum_extra_bytes: 2147483648
+    preload: before checkpoint and ROI
+    verification: after ROI on exact returned parent buffer
+    allocation: all oracle adjacency and checker work arrays allocated before ROI
+  protected_bfs_verifier:
+    path: /data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.dx100-instructions/source/benchmarks/gapbs/src/bfs.cc
+    sha256: fda0c52f8114058db6ac9810fa7a97795e92d42cebba9c5868354bc3aecf73e1
+    symbol: BFSVerifier
+    protected_text_sha256: f55852f16a74a11542ccca387a2ddf61d1f538b006e9e35935b50c48662bf721
+    bounds_check: trusted driver validates parent length and values before BFSVerifier
+candidate: bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1
+source_snapshot: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source
+implementation: dx100-bfs-scalar
+proposal: bfs-campaign-preparation-20260925-a1.dx100-instructions
+build:
+  compiler: /usr/bin/g++-13
+  compiler_sha256: 1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769
+  flags:
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -g
+  - -fopenmp
+  - -DGEM5
+  - -DNUM_CORES=4
+  - -DTILE_SIZE=16384
+  - -DMAA
+  driver:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-t17-build-only-20260926-a1/complete_call.cc
+    sha256: 569f9615f04574a5a333e839fbeeb677e41b7d1d296dd6f4dbbda051a20ce35c
+  m5ops:
+    path: /data1/yanruj/DX100-bfs-e4fc4af/util/m5/src/abi/x86/m5op.S
+    sha256: fe20d70d689c341ee614121d7aac1431b81d2178943a113ea1aa1d7c5ef50c69
+  binary: /data1/yanruj/EvolveSWDB_builds/bfs-t17-build-only-20260926-a1/bfs
+  source_artifact:
+    path: /data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.dx100-instructions/source
+    sha256: ca09d2f439a56f295c5ccdc5e18a5fd5a4c2c9726005365f8125cc1d8979740a
+    files:
+    - path: LICENSE
+      sha256: b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2
+      bytes: 1208
+      executable: false
+    - path: PROVENANCE.md
+      sha256: 9d4f2794ed7b492fae1cb946cce45b3247d9e27c7dfaae11df71d310701206a5
+      bytes: 661
+      executable: false
+    - path: SHA256SUMS
+      sha256: 8cc8eb45740c436260623bda72b765524ec4692ddfee5c1c7dfd5f48ca8caf9a
+      bytes: 4907
+      executable: false
+    - path: benchmarks/API/.gitignore
+      sha256: ca7fabf7f4bedcc521ae2346c034463db580111de0da3494ed3f58c2558b7a88
+      bytes: 14
+      executable: false
+    - path: benchmarks/API/MAA.hpp
+      sha256: 4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd
+      bytes: 1323
+      executable: false
+    - path: benchmarks/API/MAA_atomics.hpp
+      sha256: 896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a
+      bytes: 845
+      executable: false
+    - path: benchmarks/API/MAA_compiler_api.cpp
+      sha256: 15df982719e46110a9ba3d1a86ac34b65019f37c5b00199eaace7379159370d5
+      bytes: 4089
+      executable: false
+    - path: benchmarks/API/MAA_functional.hpp
+      sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+      bytes: 25345
+      executable: false
+    - path: benchmarks/API/MAA_gem5.hpp
+      sha256: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+      bytes: 27473
+      executable: false
+    - path: benchmarks/API/MAA_gem5_magic.hpp
+      sha256: e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32
+      bytes: 9802
+      executable: false
+    - path: benchmarks/API/MAA_utility.hpp
+      sha256: 3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e
+      bytes: 786
+      executable: false
+    - path: benchmarks/API/README.md
+      sha256: f67f7c2e7e8f08f1f92f701accf39fcd981df373552caa1ad24ead487505a328
+      bytes: 6773
+      executable: false
+    - path: benchmarks/API/gen_chkpt.sh
+      sha256: f4a89124276963302b13546a84745cf25d3ce2b7032956201e7263384e2726ac
+      bytes: 354
+      executable: false
+    - path: benchmarks/API/make.sh
+      sha256: a3ebeedbe09348c70a7ac8f87a8ba796bf1c58e50f910029b16900e62468ee3f
+      bytes: 4253
+      executable: false
+    - path: benchmarks/API/make_functional.sh
+      sha256: 09b2c73bccf0ada756ede4292d6c35f65972f77d892beef7c541eca4960adbe3
+      bytes: 550
+      executable: false
+    - path: benchmarks/API/prefetch_depricated.cpp
+      sha256: b0d93940467e0a72964f3e0a53e32f7da0a86fead090ef074aaf16be22611f8c
+      bytes: 11952
+      executable: false
+    - path: benchmarks/API/run_chkpt.sh
+      sha256: bf097be9e4ff373e9dafd11f20163446e8f1d105549d89970953c09162329010
+      bytes: 886
+      executable: false
+    - path: benchmarks/API/test.cpp
+      sha256: 5157dd85b88d9ca2ef0a7126e7d88dfea027031cd1053a6e3979cb1ce7cb75d1
+      bytes: 88043
+      executable: false
+    - path: benchmarks/API/test_compiler.cpp
+      sha256: 9384dbb08f1e8e7897ba517074e5d528d02d82349ceea292282ffbd4eb6d0a48
+      bytes: 2122
+      executable: false
+    - path: benchmarks/API/test_functional.cpp
+      sha256: 20a8702bd7051b2214a18529ffa025dd956c0aaa6591eec1f5cf792549d46dc4
+      bytes: 67088
+      executable: false
+    - path: benchmarks/API/test_strided.cpp
+      sha256: f2cf4aca9883ebb0e777b114624002f2ac83c3117161a9c712fadfbef5147cc0
+      bytes: 66926
+      executable: false
+    - path: benchmarks/API/test_tested_parallel.cpp
+      sha256: 9012d12c6664fe383798038f403c214c5da73ea3ed9a8e37471960a571f090f7
+      bytes: 47822
+      executable: false
+    - path: benchmarks/API/test_vectorized.cpp
+      sha256: 0281c06ae9918703f4d5e51b062cd35d5a7328f11274282cd7096b4e5a411335
+      bytes: 4342
+      executable: false
+    - path: benchmarks/gapbs/LICENSE
+      sha256: bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3
+      bytes: 1499
+      executable: false
+    - path: benchmarks/gapbs/Makefile
+      sha256: cc5a39f4950dc8bdfbbc32834043e379b13d9db79e4f96158d7960ac561f9daa
+      bytes: 3375
+      executable: false
+    - path: benchmarks/gapbs/src/bc.cc
+      sha256: 9732327b347c5da72526923f44b4250afcd7816c3b0ca1d0c8a43cd1d77f36ea
+      bytes: 33804
+      executable: false
+    - path: benchmarks/gapbs/src/bc_maa_full.cc
+      sha256: a5f0e1467edfa7931db7546b6bcb4a41669a448d55cbe43c3846cd19c15dbaae
+      bytes: 8682
+      executable: false
+    - path: benchmarks/gapbs/src/bc_new.cc
+      sha256: b34131eaea5d8afa460b9fffbe7de83fe6abb5bde1d2b2ad6e9575ff7e2db0f0
+      bytes: 41934
+      executable: false
+    - path: benchmarks/gapbs/src/benchmark.h
+      sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+      bytes: 3565
+      executable: false
+    - path: benchmarks/gapbs/src/bfs.cc
+      sha256: fda0c52f8114058db6ac9810fa7a97795e92d42cebba9c5868354bc3aecf73e1
+      bytes: 21429
+      executable: false
+    - path: benchmarks/gapbs/src/bfs_bu.cc
+      sha256: ecd5f574fd10458703ad4af3bdf85ec522cca3821591e15456309f9906c70986
+      bytes: 4616
+      executable: false
+    - path: benchmarks/gapbs/src/bitmap.h
+      sha256: 6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465
+      bytes: 1706
+      executable: false
+    - path: benchmarks/gapbs/src/builder.h
+      sha256: 2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01
+      bytes: 16778
+      executable: false
+    - path: benchmarks/gapbs/src/cc.cc
+      sha256: 0986d8a21cf79e85c88b4615ef1b8aacc1ec1090784b2437d92ee22ae1163fd6
+      bytes: 7422
+      executable: false
+    - path: benchmarks/gapbs/src/cc_sv.cc
+      sha256: f239bd71cee27cba37f3824ae7b2520c291b116ccc83a329d09484b631c599ee
+      bytes: 4994
+      executable: false
+    - path: benchmarks/gapbs/src/command_line.h
+      sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+      bytes: 8511
+      executable: false
+    - path: benchmarks/gapbs/src/converter.cc
+      sha256: 8c5ce5fc37304103c16390f67f27b565aa4f7d3d178dc02cf12b3f5e25b42648
+      bytes: 775
+      executable: false
+    - path: benchmarks/gapbs/src/generator.h
+      sha256: 24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe
+      bytes: 6418
+      executable: false
+    - path: benchmarks/gapbs/src/graph.h
+      sha256: 79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0
+      bytes: 8276
+      executable: false
+    - path: benchmarks/gapbs/src/platform_atomics.h
+      sha256: 9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd
+      bytes: 4198
+      executable: false
+    - path: benchmarks/gapbs/src/pr.cc
+      sha256: 9379044698f6c296b8d2a17e1dcc651e7d2f45a147882ccc4dd5334b332727c0
+      bytes: 12267
+      executable: false
+    - path: benchmarks/gapbs/src/pr_spmv.cc
+      sha256: ea1e58b6957b0bcc1e76f4fde54131aa52bdefd2014dae604a9b7d9d1a5dae70
+      bytes: 3540
+      executable: false
+    - path: benchmarks/gapbs/src/pvector.h
+      sha256: b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d
+      bytes: 4265
+      executable: false
+    - path: benchmarks/gapbs/src/reader.h
+      sha256: 951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1
+      bytes: 9268
+      executable: false
+    - path: benchmarks/gapbs/src/sliding_queue.h
+      sha256: 3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c
+      bytes: 2502
+      executable: false
+    - path: benchmarks/gapbs/src/sssp.cc
+      sha256: a3442b7f4c5f155dde5b3d76896d2dfc7d1a72deb7bea4581401f2d281b316b2
+      bytes: 21897
+      executable: false
+    - path: benchmarks/gapbs/src/sssp_maa.cc
+      sha256: 3ed0f58d042c107aa8abdaa476ed86ab38d47670b55b1c36931b6dc3798d4c67
+      bytes: 13800
+      executable: false
+    - path: benchmarks/gapbs/src/tc.cc
+      sha256: de3a1a453e1e632ab2338a36c5a8f846a078a096f5c9ab7e7320b9448bbb43cb
+      bytes: 4327
+      executable: false
+    - path: benchmarks/gapbs/src/timer.h
+      sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+      bytes: 1161
+      executable: false
+    - path: benchmarks/gapbs/src/util.h
+      sha256: a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6
+      bytes: 1953
+      executable: false
+    - path: benchmarks/gapbs/src/writer.h
+      sha256: 3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea
+      bytes: 2898
+      executable: false
+    - path: include/gem5/asm/generic/m5ops.h
+      sha256: 28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d
+      bytes: 5479
+      executable: false
+    - path: include/gem5/m5ops.h
+      sha256: bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8
+      bytes: 3937
+      executable: false
+  compiler_version:
+  - g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  - Copyright (C) 2023 Free Software Foundation, Inc.
+  adapter: dx100.complete_call.v2
+  binary_sha256: 852e62314b7114079975fe25d70da4e77596490bcfa89fb4f7c64af585485527
