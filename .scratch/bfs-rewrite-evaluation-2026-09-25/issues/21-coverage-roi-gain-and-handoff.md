@@ -289,3 +289,31 @@ entry verified against the original Git blobs. See the [repair receipt](../obser
 No full-suite rerun or green result for later HEAD is claimed. This ticket remains
 claimed: actual acceptance, coverage/gain evidence, synchronization and final
 Standards/Spec reviews remain outstanding.
+
+
+## Fresh public retrieval and handoff — 2026-09-27
+
+The [local checkpoint](../observations/acceptance-checkpoint-20260927-a1.json)
+regenerated an external SQLite index from 251 valid master records using the
+`3c3efd3` query implementation at observed HEAD `d1ac452`. All four public
+coverage/get commands exited zero. The eight cells remain incomplete, with no
+qualified gain and incomplete external artifact verification. Ten criteria remain
+incomplete: AC06, AC07, AC10, AC11, AC15, AC16, AC17, AC18, AC19 and AC20.
+The 18-proposal, 63-evaluation, one-comparison history includes failed attempts
+and contract fixtures; it is not an acceptance count.
+
+Fresh `get --chain` calls retrieved the actual context3 rewriting timeout
+(37 records), existing DX100 patch candidate (43), and existing upstream
+instruction candidate (38). No provider call or evaluation was launched.
+The [handoff](../../../docs/bfs-handoff.md#local-retrieval-checkpoint--2026-09-27)
+contains reproducible public commands and explicitly empty current candidate
+protocol/comparison selections because qualifying evidence is still absent.
+
+The [independently closed T16 failure](../observations/t16-seal-terminal-independent-20260927.json)
+has zero accepted samples and failed before simulation; its
+[instrumentation preparation diagnosis](../../../docs/bfs-t16-instrumentation-preparation-20260927.md)
+keeps the frozen-identity gate intact. It remains separate from local master
+metadata, and this local readback does not verify remote raw artifacts. Ticket 21
+stays claimed. Final all-ticket review follows the remaining implementation and
+actual acceptance; the prior interim reviews and focused query tests do not
+substitute for it.

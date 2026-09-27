@@ -1,7 +1,7 @@
 # BFS workflow handoff
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-26 (Eastern Time)
+Updated: 2026-09-27 (Eastern Time)
 
 This handoff describes the implemented interfaces and the evidence available during
 implementation. Campaign acceptance is still pending. The final coverage query,
@@ -223,6 +223,45 @@ durable fixtures complete Ticket 21 or substitute for the pilot/empirical batche
 Use `bfs-coverage` with explicitly selected current candidate protocols and
 artifact/control comparison IDs to obtain the current assessment; missing
 evidence stays visible rather than being filled with earlier diagnostic runs.
+
+## Local retrieval checkpoint — 2026-09-27
+
+The [fresh public query receipt](../.scratch/bfs-rewrite-evaluation-2026-09-25/observations/acceptance-checkpoint-20260927-a1.json)
+records a new external SQLite index containing 251 valid master records. All
+four public commands exited zero. Coverage remains **incomplete: 0/8 cells, no
+qualified gain, and incomplete external artifact verification**. The retained
+history contains 18 proposals, 63 evaluations and one comparison result; these
+counts include failures and contract fixtures, not that many accepted cases.
+The query uses the SQLite snapshot implementation from `3c3efd3`; the observed
+checkout was `d1ac452`. No remote raw data was reopened.
+
+From the repository root, reproduce this local assessment with:
+
+```sh
+query_dir=$(mktemp -d /private/tmp/bfs-handoff-query.XXXXXX)
+python3 -B -m swdb bfs-coverage \
+  .scratch/bfs-rewrite-evaluation-2026-09-25/requests/acceptance-checkpoint-20260927-a1.json \
+  --db "$query_dir/index.sqlite" --format json
+python3 -B -m swdb get \
+  bfs-campaign-preparation-20260925-a1.upstream-annotated-context3 \
+  --chain --db "$query_dir/index.sqlite" --format json
+```
+
+The empty current candidate-protocol and reference-comparison selections are
+intentional: accepted candidate freezes and completed reference comparisons are
+still missing. Published author protocol metadata alone is not a comparison.
+The context3 proposal remains a rewriting timeout, retrievable with its 37-record
+chain. The existing DX100 patch and upstream instruction candidates remain
+retrievable with 43- and 38-record chains. These local queries neither rerun the
+provider nor evaluate the candidates.
+
+The [closed T16 seal-recovery attempt](../.scratch/bfs-rewrite-evaluation-2026-09-25/observations/t16-seal-terminal-independent-20260927.json)
+failed before simulation with zero accepted samples; the
+[instrumentation diagnosis](bfs-t16-instrumentation-preparation-20260927.md)
+identifies repaired runtime hashes paired with the old frozen treatment. Its
+ownership cleanup is verified, but that does not establish scientific execution.
+This remote failure is retained separately and is not silently added to the
+local master-record report. Ticket 21 and final Standards/Spec review remain open.
 
 ## Extending hardware/software co-design
 
