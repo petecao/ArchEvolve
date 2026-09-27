@@ -2441,3 +2441,19 @@ T16 admission independently passed and waits for external node 0 generation 347
 to release; no T16 scientific job was launched. The legacy lease is free.
 Tickets remain 14 resolved / seven claimed, with zero completed final acceptance
 cells. The heartbeat remains active while evaluation and review work continue.
+
+## Periodic host check — 2026-09-27 02:45 ET
+
+T15 remains running on node 1 generation 444, with live batch, series and guest
+processes and updating logs; no completed sample is reported. The guest RSS was
+about 28.8 GiB, within unchanged bounds. Node 0 generation 347 is externally held;
+the legacy lease is released. Free space was approximately 158.8 GiB on `/data`
+and 15.8 GiB on `/data1`; raw output remains under `/data`.
+All delegated workers are responsive. T20's opt-in prompt projection and bounded
+continuation are under review; no additional provider call or allowance was used.
+
+The [typed health observation](observations/host-health-20260927-0243.json)
+retains process start identities and log freshness. The prompt projection passed
+eight author and eight independent public contract tests; six independent default
+prompt comparisons remained byte-identical. Full profile packages remain retained.
+This local change does not establish provider completion or candidate acceptance.

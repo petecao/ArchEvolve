@@ -1,0 +1,96 @@
+{
+  "observed_at": "2026-09-27T02:43:49.858670-04:00",
+  "id": "bfs-t15-lease-recovery-simulator-batch-20260927-a1",
+  "state": "running",
+  "outer_started": "2026-09-27T02:39:53.162109-04:00",
+  "outer_deadline": "2026-09-27T09:14:09.851819-04:00",
+  "processes": [
+    {
+      "pid": 3339785,
+      "start_ticks": 499312600,
+      "state": "S",
+      "parent_pid": 3339775,
+      "cpu_ticks": 52,
+      "rss_pages": 384,
+      "role": "batch/helper"
+    },
+    {
+      "pid": 3339820,
+      "start_ticks": 499312653,
+      "state": "S",
+      "parent_pid": 3339785,
+      "cpu_ticks": 3,
+      "rss_pages": 768,
+      "role": "batch/helper"
+    },
+    {
+      "pid": 3339889,
+      "start_ticks": 499312675,
+      "state": "S",
+      "parent_pid": 3339820,
+      "cpu_ticks": 4742,
+      "rss_pages": 20175,
+      "role": "batch/helper"
+    },
+    {
+      "pid": 3340067,
+      "start_ticks": 499316134,
+      "state": "S",
+      "parent_pid": 3339889,
+      "cpu_ticks": 1672,
+      "rss_pages": 23750,
+      "role": "series"
+    },
+    {
+      "pid": 3340261,
+      "start_ticks": 499319438,
+      "state": "S",
+      "parent_pid": 3340067,
+      "cpu_ticks": 3351,
+      "rss_pages": 25351,
+      "role": "public dx100-execute"
+    },
+    {
+      "pid": 3340814,
+      "start_ticks": 499330547,
+      "state": "R",
+      "parent_pid": 3340261,
+      "cpu_ticks": 5726,
+      "rss_pages": 7539021,
+      "role": "gem5"
+    }
+  ],
+  "logs": {
+    "bfs-t15-lease-recovery-simulator-batch-20260927-a1.driver/ledger.jsonl": {
+      "bytes": 1988940,
+      "mtime_ns": 1790491429707325767,
+      "age_seconds_at_observation": 0.15134429931640625
+    },
+    "bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18.driver/006-dx100-execute.stderr": {
+      "bytes": 0,
+      "mtime_ns": 1790491261494558995,
+      "age_seconds_at_observation": 168.36411094665527
+    },
+    "bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18.driver/006-dx100-execute.json": {
+      "bytes": 0,
+      "mtime_ns": 1790491261494558995,
+      "age_seconds_at_observation": 168.36411094665527
+    },
+    "bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18.s0.r0.primary.evaluation/002-simulation.log": {
+      "bytes": 1290,
+      "mtime_ns": 1790491374944750509,
+      "age_seconds_at_observation": 54.91391944885254
+    },
+    "bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18.s0.r0.primary.evaluation/001-checkpoint.log": {
+      "bytes": 4188,
+      "mtime_ns": 1790491357536567659,
+      "age_seconds_at_observation": 72.3221025466919
+    }
+  },
+  "disk_available_bytes": {
+    "/data": 170521145344,
+    "/data1": 16998842368
+  },
+  "mutations": false,
+  "accepted_samples_inferred": false
+}
