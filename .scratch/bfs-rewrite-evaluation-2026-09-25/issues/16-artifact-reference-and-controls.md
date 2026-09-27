@@ -9,7 +9,26 @@ Updated: 2026-09-26 (Eastern Time)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
-## Current checkpoint — 2026-09-26 19:33 ET
+## Current checkpoint — 2026-09-26 20:23 ET
+
+The fixed T16 simulator batch actually started on mbit10 node 0 at
+20:20:30 ET, generation 332, on exact `8c39ae0`. Charged admission validation
+passed and the first artifact-scalar series began at 20:21:06 ET. The original
+86,400-second allowance retains the 253-second preparation charge; 86,147
+seconds remain, with an actual clipped end of 2026-09-27 20:16:17 ET. The two
+protocols were frozen before execution. Before-run policy and host admission
+requirements are evidenced; completed measurements and comparisons remain
+pending. A running series is not a successful reference/control result.
+
+[Actual launch](../observations/campaign-actual-launch-20260926.json),
+[corrected Linux proofs](../observations/standard-fixtures-a2-actual-20260926.json),
+[sealed admissions](../observations/campaign-admissions-a2-20260926.json), and
+[independent review](../observations/campaign-admission-a2-standards-review-20260926.json)
+retain the exact clocks and identities. Both run and dispatch output share the
+original storage allowance. This ticket stays claimed; no candidate acceptance
+or gain is asserted.
+
+## Historical checkpoint — 2026-09-26 19:33 ET
 
 Both exact prospective policies are now published and freshly retrieved:
 `bfs-author-reference-20260925.b4cbd3924b40e7df` and
@@ -43,7 +62,7 @@ Implements D10–D14 and AC10, AC13–AC16, AC18. The artifact pair preserves th
 
 ## Acceptance criteria
 
-- [ ] Before execution, record a bounded BFS-only run plan, attempt/time/resource/storage limits, and host/lane checks. Instantiate and freeze this slice's graph/source identities, build settings, ROI, exact configurations, correctness scope, instrumentation treatment, repetitions/aggregation, and profitability/claim rules independently of ticket 15. These rules assess any reported gain; a positive gain is not required to complete the reference comparison.
+- [x] Before execution, record a bounded BFS-only run plan, attempt/time/resource/storage limits, and host/lane checks. Instantiate and freeze this slice's graph/source identities, build settings, ROI, exact configurations, correctness scope, instrumentation treatment, repetitions/aggregation, and profitability/claim rules independently of ticket 15. These rules assess any reported gain; a positive gain is not required to complete the reference comparison.
 - [x] Resolve the artifact's prescribed graph family/scale and actual input identity from the pinned source, retaining generated/serialized identities and realized graph properties. A convenient smaller graph or matching filename is not silently accepted as the artifact case.
 - [ ] Complete real scalar and author-accelerated BFS executions under the authors' BASE/accelerated configuration pair. Retain their actual configuration difference, including the LLC difference, instead of normalizing it away and calling the result a reproduction.
 - [ ] Complete the additional controlled reference comparisons with matched CPU, cache, memory, workload, traversal sources, threads, and semantic ROI as declared. Enumerate remaining software and accelerator changes; do not claim an isolated software-rewrite gain from a joint hardware/software comparison.

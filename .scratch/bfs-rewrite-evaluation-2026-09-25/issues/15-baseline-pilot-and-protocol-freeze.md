@@ -7,7 +7,24 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 19:27 ET
+## Current checkpoint — 2026-09-26 20:23 ET
+
+The fixed T15 simulator batch actually started on mbit10 node 1 at
+20:21:15 ET, generation 411, on exact `8c39ae0`. Charged admission validation
+passed and the first uniform18 series began at 20:21:49 ET. The original
+43,200-second allowance yields an actual clipped end of 2026-09-27 08:21:15 ET.
+Native collection is complete but qualification and source-specific protocol
+publication remain pending. A running series is not a completed guest result.
+
+[Actual launch](../observations/campaign-actual-launch-20260926.json),
+[corrected Linux proofs](../observations/standard-fixtures-a2-actual-20260926.json),
+[sealed admissions](../observations/campaign-admissions-a2-20260926.json), and
+[independent review](../observations/campaign-admission-a2-standards-review-20260926.json)
+retain the exact clocks and identities. Both run and dispatch output share the
+original storage allowance. This ticket stays claimed; no candidate acceptance
+or gain is asserted.
+
+## Historical checkpoint — 2026-09-26 19:27 ET
 
 The fixed DX100 A2 run and exact completed-artifact reader passed with actual
 full/tail/competing-parent coverage; see [actual readback](../observations/dx100-coverage-a2-completed-readback-20260926.json).

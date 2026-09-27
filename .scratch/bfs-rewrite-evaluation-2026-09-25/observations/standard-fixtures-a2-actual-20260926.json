@@ -1,0 +1,672 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T20:16:13.905844-04:00",
+  "code_commit": "8c39ae09406dad0da253b21dbe2c87e263f8c5fb",
+  "root": "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2",
+  "runtime_sha256": "bbfc9713bcbdacc62dcaffbdcb230ed7779d0fddcc2df36c570cd985504b7d5f",
+  "python": {
+    "path": "/usr/bin/python3.12",
+    "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+  },
+  "checkout_pristine": true,
+  "fixtures": {
+    "owned_cleanup": {
+      "proof": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a2/proof.json",
+        "sha256": "819f73fd38b6cb0d7f01b0a356502183dd30a8b2d8ba973dbaa3633e31932a99",
+        "bytes": 3307
+      },
+      "pending": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a2/proof.pending.json",
+        "sha256": "e8364971e4fd1281c6fa7723a98ea72b18f5d2e592d10f8c5b5db4495d7ada9b",
+        "bytes": 2869
+      },
+      "pending_unchanged": true,
+      "terminal": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a2/terminal-audit.json",
+        "sha256": "5ddf3c82a55287776408b6034446ee07592ffe39afe9a8b319c5e519dbac8ac6",
+        "bytes": 12393
+      },
+      "external_audit": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a2.dispatch/audit-receipt.json",
+        "sha256": "f3deb1327baadc41ea730b88089c9897f24cd14db1e375e11a74bbe7f68bd122",
+        "bytes": 1848
+      },
+      "code_commit": "8c39ae09406dad0da253b21dbe2c87e263f8c5fb",
+      "started": "2026-09-26T20:13:09.849628-04:00",
+      "finished": "2026-09-26T20:13:19.946098-04:00",
+      "outer_deadline": "2026-09-26T20:14:39.849628-04:00",
+      "elapsed_seconds": 10.08836,
+      "outer_exit": 0,
+      "auditor_exit": 0,
+      "audit_clock": {
+        "audit_started": "2026-09-26T20:13:54.500178-04:00",
+        "audit_finished": "2026-09-26T20:13:55.425848-04:00",
+        "host_wall_s": 0.9256918299943209,
+        "outer_seconds": 60,
+        "returncode": 0
+      },
+      "testcases": [
+        "test_linux_owned_stage_reaps_detached_child[False]",
+        "test_linux_owned_stage_reaps_detached_child[True]",
+        "test_linux_nested_interruption_uses_one_cleanup_budget",
+        "test_linux_term_resistant_nested_cleanup_keeps_final_kill_reserve"
+      ],
+      "junit_counts": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "runtime_matches_current": true,
+      "lease_generation": 409,
+      "lease_released": true,
+      "lease_observations": [
+        {
+          "mbit10-evaluation": {
+            "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+            "state": "released",
+            "generation": 77,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node0": {
+            "sha256": "3cfb64ea35b87c875c5262d783b8601f0ad8cf5973f6778953d178130f806736",
+            "state": "released",
+            "generation": 331,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node1": {
+            "sha256": "943e858de18aac41259a4ea8bb55f100c9b79fe17e0020cc711ed061d6c0ff2e",
+            "state": "released",
+            "generation": 409,
+            "kernel_held": false
+          }
+        },
+        {
+          "mbit10-evaluation": {
+            "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+            "state": "released",
+            "generation": 77,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node0": {
+            "sha256": "3cfb64ea35b87c875c5262d783b8601f0ad8cf5973f6778953d178130f806736",
+            "state": "released",
+            "generation": 331,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node1": {
+            "sha256": "943e858de18aac41259a4ea8bb55f100c9b79fe17e0020cc711ed061d6c0ff2e",
+            "state": "released",
+            "generation": 409,
+            "kernel_held": false
+          }
+        }
+      ],
+      "process_observations": [
+        [
+          {
+            "pid": 3088684,
+            "parent_pid": 359742,
+            "start_ticks": 496992269,
+            "state": "Z",
+            "rss_bytes": 0,
+            "role": "tmux_launcher"
+          },
+          {
+            "pid": 3088687,
+            "start_ticks": 496992274,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3088688,
+            "start_ticks": 496992274,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3088758,
+            "start_ticks": 496992297,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3088773,
+            "start_ticks": 496992531,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3088784,
+            "start_ticks": 496992663,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3088785,
+            "start_ticks": 496992672,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3088786,
+            "start_ticks": 496992680,
+            "state": "absent",
+            "current_identity": null
+          }
+        ],
+        [
+          {
+            "pid": 3088684,
+            "parent_pid": 359742,
+            "start_ticks": 496992269,
+            "state": "Z",
+            "rss_bytes": 0,
+            "role": "tmux_launcher"
+          },
+          {
+            "pid": 3088687,
+            "start_ticks": 496992274,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3088688,
+            "start_ticks": 496992274,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3088758,
+            "start_ticks": 496992297,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3088773,
+            "start_ticks": 496992531,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3088784,
+            "start_ticks": 496992663,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3088785,
+            "start_ticks": 496992672,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3088786,
+            "start_ticks": 496992680,
+            "state": "absent",
+            "current_identity": null
+          }
+        ]
+      ],
+      "owned_processes": [
+        {
+          "pid": 3088684,
+          "parent_pid": 359742,
+          "start_ticks": 496992269,
+          "state": "Z",
+          "rss_bytes": 0,
+          "role": "tmux_launcher"
+        },
+        {
+          "pid": 3088687,
+          "start_ticks": 496992274,
+          "state": "absent",
+          "current_identity": null
+        },
+        {
+          "pid": 3088688,
+          "start_ticks": 496992274,
+          "state": "absent",
+          "current_identity": null
+        },
+        {
+          "pid": 3088758,
+          "start_ticks": 496992297,
+          "state": "absent",
+          "current_identity": null
+        },
+        {
+          "pid": 3088773,
+          "start_ticks": 496992531,
+          "state": "absent",
+          "current_identity": null
+        },
+        {
+          "pid": 3088784,
+          "start_ticks": 496992663,
+          "state": "absent",
+          "current_identity": null
+        },
+        {
+          "pid": 3088785,
+          "start_ticks": 496992672,
+          "state": "absent",
+          "current_identity": null
+        },
+        {
+          "pid": 3088786,
+          "start_ticks": 496992680,
+          "state": "absent",
+          "current_identity": null
+        }
+      ],
+      "cleanup_state": "terminal_no_live_owned_processes",
+      "ledger_ref": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a2/cleanup-ledger.json",
+        "sha256": "6a4a52352e298271f275fd0b3ddd3758ef44ed52b3a9c11cbbb13aa27a631745",
+        "bytes": 1535
+      },
+      "ledger": {
+        "format": "swdb.bfs.shared-cleanup.v1",
+        "budget_seconds": 30,
+        "absolute_end": "2026-09-26T20:14:39.849628-04:00",
+        "created": "2026-09-26T20:13:10.613045-04:00",
+        "creator": {
+          "pid": 3088758,
+          "parent_pid": 3088688,
+          "start_ticks": 496992297,
+          "state": "R",
+          "rss_bytes": 41648128
+        },
+        "spent_seconds": 0.2865335959941149,
+        "monotonic_end": 4970012.738605301,
+        "reservations": {},
+        "events": [
+          {
+            "pid": 3088758,
+            "seconds": 5,
+            "started": "2026-09-26T20:13:19.843337-04:00",
+            "purpose": "cleanup_or_finalization",
+            "elapsed_seconds": 0.055623077973723414,
+            "finished": "2026-09-26T20:13:19.848264-04:00",
+            "exceeded_grant": false
+          },
+          {
+            "pid": 3088758,
+            "seconds": 5,
+            "started": "2026-09-26T20:13:19.849490-04:00",
+            "purpose": "cleanup_or_finalization",
+            "elapsed_seconds": 0.052408824861049655,
+            "finished": "2026-09-26T20:13:19.851609-04:00",
+            "exceeded_grant": false
+          },
+          {
+            "pid": 3088758,
+            "seconds": 5,
+            "started": "2026-09-26T20:13:19.925756-04:00",
+            "purpose": "cleanup_or_finalization",
+            "elapsed_seconds": 0.05192941352725029,
+            "finished": "2026-09-26T20:13:19.927506-04:00",
+            "exceeded_grant": false
+          },
+          {
+            "pid": 3088758,
+            "seconds": 5,
+            "started": "2026-09-26T20:13:19.928244-04:00",
+            "purpose": "cleanup_or_finalization",
+            "elapsed_seconds": 0.051027359627187255,
+            "finished": "2026-09-26T20:13:19.929119-04:00",
+            "exceeded_grant": false
+          },
+          {
+            "pid": 3088758,
+            "seconds": 5,
+            "started": "2026-09-26T20:13:19.929810-04:00",
+            "purpose": "cleanup_or_finalization",
+            "elapsed_seconds": 0.07554492000490427,
+            "finished": "2026-09-26T20:13:19.955223-04:00",
+            "exceeded_grant": false
+          }
+        ]
+      },
+      "resource_validation": {
+        "samples": 5,
+        "peak_sampled_rss_bytes": 161652736,
+        "observed_identities": [
+          {
+            "pid": 3088758,
+            "start_ticks": 496992297
+          },
+          {
+            "pid": 3088773,
+            "start_ticks": 496992531
+          },
+          {
+            "pid": 3088784,
+            "start_ticks": 496992663
+          },
+          {
+            "pid": 3088785,
+            "start_ticks": 496992672
+          },
+          {
+            "pid": 3088786,
+            "start_ticks": 496992680
+          }
+        ],
+        "hard_memory_quota": false
+      },
+      "sample_count": 5,
+      "peak_rss_bytes": 161652736,
+      "maximum_allocated_output_bytes": 163840,
+      "terminal_observed_at": "2026-09-26T20:13:55.374353-04:00"
+    },
+    "dx100_interruption": {
+      "proof": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a2/proof.json",
+        "sha256": "387ce8c85863c7fe2804f5a3c8d8a1552c0e035b286bd916026c23800966c968",
+        "bytes": 3392
+      },
+      "pending": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a2/proof.pending.json",
+        "sha256": "9515201234b7995ab6c584fe3079759b738f4acb42ea78602c55ff4e917d24ca",
+        "bytes": 2940
+      },
+      "pending_unchanged": true,
+      "terminal": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a2/terminal-audit.json",
+        "sha256": "123f20065291b6298d8216b34ace366231535d5abcce567acc981a5006f64ea5",
+        "bytes": 11395
+      },
+      "external_audit": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a2.dispatch/audit-receipt.json",
+        "sha256": "6108cf0070c3052e157da27bcace39a0b0da8c4650b0fb8cbf9c287916c9524b",
+        "bytes": 1904
+      },
+      "code_commit": "8c39ae09406dad0da253b21dbe2c87e263f8c5fb",
+      "started": "2026-09-26T20:14:15.631006-04:00",
+      "finished": "2026-09-26T20:14:23.442648-04:00",
+      "outer_deadline": "2026-09-26T20:15:45.631006-04:00",
+      "elapsed_seconds": 7.803125,
+      "outer_exit": 0,
+      "auditor_exit": 0,
+      "audit_clock": {
+        "audit_started": "2026-09-26T20:14:48.553626-04:00",
+        "audit_finished": "2026-09-26T20:14:49.471127-04:00",
+        "host_wall_s": 0.9175228020176291,
+        "outer_seconds": 60,
+        "returncode": 0
+      },
+      "testcases": [
+        "test_public_interruption_is_durable_before_postmortem[raises]",
+        "test_public_interruption_is_durable_before_postmortem[stalls]"
+      ],
+      "junit_counts": {
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "runtime_matches_current": true,
+      "lease_generation": 410,
+      "lease_released": true,
+      "lease_observations": [
+        {
+          "mbit10-evaluation": {
+            "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+            "state": "released",
+            "generation": 77,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node0": {
+            "sha256": "3cfb64ea35b87c875c5262d783b8601f0ad8cf5973f6778953d178130f806736",
+            "state": "released",
+            "generation": 331,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node1": {
+            "sha256": "690732272b5b90af76a014fb9a93ffc439ad7d97f6a93c44afdaeb0f1686a13f",
+            "state": "released",
+            "generation": 410,
+            "kernel_held": false
+          }
+        },
+        {
+          "mbit10-evaluation": {
+            "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+            "state": "released",
+            "generation": 77,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node0": {
+            "sha256": "3cfb64ea35b87c875c5262d783b8601f0ad8cf5973f6778953d178130f806736",
+            "state": "released",
+            "generation": 331,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node1": {
+            "sha256": "690732272b5b90af76a014fb9a93ffc439ad7d97f6a93c44afdaeb0f1686a13f",
+            "state": "released",
+            "generation": 410,
+            "kernel_held": false
+          }
+        }
+      ],
+      "process_observations": [
+        [
+          {
+            "pid": 3089032,
+            "parent_pid": 359742,
+            "start_ticks": 496998847,
+            "state": "Z",
+            "rss_bytes": 0,
+            "role": "tmux_launcher"
+          },
+          {
+            "pid": 3089035,
+            "start_ticks": 496998852,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3089036,
+            "start_ticks": 496998852,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3089106,
+            "start_ticks": 496998877,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3089118,
+            "start_ticks": 496999091,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3089125,
+            "start_ticks": 496999351,
+            "state": "absent",
+            "current_identity": null
+          }
+        ],
+        [
+          {
+            "pid": 3089032,
+            "parent_pid": 359742,
+            "start_ticks": 496998847,
+            "state": "Z",
+            "rss_bytes": 0,
+            "role": "tmux_launcher"
+          },
+          {
+            "pid": 3089035,
+            "start_ticks": 496998852,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3089036,
+            "start_ticks": 496998852,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3089106,
+            "start_ticks": 496998877,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3089118,
+            "start_ticks": 496999091,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3089125,
+            "start_ticks": 496999351,
+            "state": "absent",
+            "current_identity": null
+          }
+        ]
+      ],
+      "owned_processes": [
+        {
+          "pid": 3089032,
+          "parent_pid": 359742,
+          "start_ticks": 496998847,
+          "state": "Z",
+          "rss_bytes": 0,
+          "role": "tmux_launcher"
+        },
+        {
+          "pid": 3089035,
+          "start_ticks": 496998852,
+          "state": "absent",
+          "current_identity": null
+        },
+        {
+          "pid": 3089036,
+          "start_ticks": 496998852,
+          "state": "absent",
+          "current_identity": null
+        },
+        {
+          "pid": 3089106,
+          "start_ticks": 496998877,
+          "state": "absent",
+          "current_identity": null
+        },
+        {
+          "pid": 3089118,
+          "start_ticks": 496999091,
+          "state": "absent",
+          "current_identity": null
+        },
+        {
+          "pid": 3089125,
+          "start_ticks": 496999351,
+          "state": "absent",
+          "current_identity": null
+        }
+      ],
+      "cleanup_state": "terminal_no_live_owned_processes",
+      "ledger_ref": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a2/cleanup-ledger.json",
+        "sha256": "c1e0cf836aa89d561aa0dc58b151d2ac981a2967d1afb904cdb80cd3b598a9a9",
+        "bytes": 1534
+      },
+      "ledger": {
+        "format": "swdb.bfs.shared-cleanup.v1",
+        "budget_seconds": 30,
+        "absolute_end": "2026-09-26T20:15:45.631006-04:00",
+        "created": "2026-09-26T20:14:16.395617-04:00",
+        "creator": {
+          "pid": 3089106,
+          "parent_pid": 3089036,
+          "start_ticks": 496998877,
+          "state": "R",
+          "rss_bytes": 41451520
+        },
+        "spent_seconds": 0.28894136659801006,
+        "monotonic_end": 4970078.519984103,
+        "reservations": {},
+        "events": [
+          {
+            "pid": 3089106,
+            "seconds": 5,
+            "started": "2026-09-26T20:14:23.350864-04:00",
+            "purpose": "cleanup_or_finalization",
+            "elapsed_seconds": 0.05514545012265444,
+            "finished": "2026-09-26T20:14:23.355348-04:00",
+            "exceeded_grant": false
+          },
+          {
+            "pid": 3089106,
+            "seconds": 5,
+            "started": "2026-09-26T20:14:23.356896-04:00",
+            "purpose": "cleanup_or_finalization",
+            "elapsed_seconds": 0.052847203053534034,
+            "finished": "2026-09-26T20:14:23.359227-04:00",
+            "exceeded_grant": false
+          },
+          {
+            "pid": 3089106,
+            "seconds": 5,
+            "started": "2026-09-26T20:14:23.422490-04:00",
+            "purpose": "cleanup_or_finalization",
+            "elapsed_seconds": 0.05148768536746502,
+            "finished": "2026-09-26T20:14:23.423822-04:00",
+            "exceeded_grant": false
+          },
+          {
+            "pid": 3089106,
+            "seconds": 5,
+            "started": "2026-09-26T20:14:23.424305-04:00",
+            "purpose": "cleanup_or_finalization",
+            "elapsed_seconds": 0.05071124639362097,
+            "finished": "2026-09-26T20:14:23.424888-04:00",
+            "exceeded_grant": false
+          },
+          {
+            "pid": 3089106,
+            "seconds": 5,
+            "started": "2026-09-26T20:14:23.425336-04:00",
+            "purpose": "cleanup_or_finalization",
+            "elapsed_seconds": 0.07874978166073561,
+            "finished": "2026-09-26T20:14:23.453976-04:00",
+            "exceeded_grant": false
+          }
+        ]
+      },
+      "resource_validation": {
+        "samples": 5,
+        "peak_sampled_rss_bytes": 153092096,
+        "observed_identities": [
+          {
+            "pid": 3089106,
+            "start_ticks": 496998877
+          },
+          {
+            "pid": 3089118,
+            "start_ticks": 496999091
+          },
+          {
+            "pid": 3089125,
+            "start_ticks": 496999351
+          }
+        ],
+        "hard_memory_quota": false
+      },
+      "sample_count": 5,
+      "peak_rss_bytes": 153092096,
+      "maximum_allocated_output_bytes": 1056768,
+      "terminal_observed_at": "2026-09-26T20:14:49.419400-04:00"
+    }
+  }
+}

@@ -83,6 +83,29 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Both simulator batches launched — 2026-09-26 20:23 ET
+
+Both fixed batches are actually running on the isolated, unchanged `8c39ae0`
+checkout: [actual launch observation](observations/campaign-actual-launch-20260926.json).
+The corrected [Linux proofs](observations/standard-fixtures-a2-actual-20260926.json)
+passed all four ownership and two interruption cases, with independent audits
+and released proof leases. The [new admissions](observations/campaign-admissions-a2-20260926.json)
+were sealed at 20:15:15 ET, before the narrowed 20:20 ET earliest start;
+[independent admission and launcher review](observations/campaign-admission-a2-standards-review-20260926.json)
+passed. The original unused admissions remain retained.
+
+| Batch | Actual start / host lane | Current observation | Same original allowance / actual clipped end | Next action |
+|---|---|---|---|---|
+| T15 | 2026-09-26 20:21:15 ET / mbit10 node 1, generation 411 | Charged input validation passed; first uniform18 series entered at 20:21:49 ET | 43,200 seconds; 2026-09-27 08:21:15 ET | Complete ordered pilot collection, then qualify evidence and freeze source-specific protocols |
+| T16 | 2026-09-26 20:20:30 ET / mbit10 node 0, generation 332 | Charged input validation passed; first artifact-scalar series entered at 20:21:06 ET | 86,147 remaining seconds after 253 seconds prior preparation; 2026-09-27 20:16:17 ET | Complete ordered reference/control collection and two public comparisons |
+
+These starts and series-entry events do not establish a completed guest result,
+correctness, profiling success, or gain. Both keep the same storage limits and
+one shared 30-second cleanup reserve each, including the corrected dispatch
+accounting. No third lane is used. The next full host/worker check is 20:33 ET.
+Ticket totals remain 14 resolved and seven claimed, with 0/8 final candidate
+acceptance cells and no qualified gain.
+
 ## Dispatch storage repair verified locally — 2026-09-26 20:11 ET
 
 The repair counts the exact canonical run root and sibling `.dispatch` in
