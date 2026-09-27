@@ -80,6 +80,8 @@ def diagnostic_regions(store, request, evaluation, candidate, root, deadline):
             or diagnostic.get('evidence_kind') != evaluation['evidence_kind']
             or artifacts.digest(_context(diagnostic)) != artifacts.digest(_context(evaluation))):
         raise Failure('diagnostic execution differs from the exact primary source/workload/configuration/ROI')
+    from swdb.dx100_coverage import validate_trace
+    validate_trace(diagnostic, deadline)
     trial = _trial(diagnostic, require_explicit=True)
     if trial != _trial(evaluation, require_explicit=True):
         raise Failure('diagnostic execution trial differs from the actual primary source/position/repetition')
@@ -129,6 +131,8 @@ def diagnostic_regions(store, request, evaluation, candidate, root, deadline):
         'evidence_kind': diagnostic['evidence_kind'], 'correctness': copy.deepcopy(diagnostic['correctness']),
         'execution_outcome': copy.deepcopy(diagnostic['outcome']),
         'differences_from_primary': [definition['difference']], 'host_cost_is_performance': False}
+    if diagnostic['context'].get('debug_trace'):
+        run['debug_trace'] = copy.deepcopy(diagnostic['context']['debug_trace'])
     return regions, definition['discovery'], run, {'path': str(binary), 'sha256': run['binary_sha256'], 'difference': definition['difference']}
 
 
@@ -267,6 +271,8 @@ def collect(args):
         if not evaluation or evaluation.get("context", {}).get("backend") != "dx100-gem5-se":
             raise Failure("evaluation does not identify DX100 execution")
         context = evaluation["context"]
+        from swdb.dx100_coverage import validate_trace
+        validate_trace(evaluation, deadline)
         trial = _trial(evaluation, require_explicit=bool(request.get('diagnostic_evaluation')))
         candidate = store.get(evaluation.get("candidate"), "candidate")
         discovery = store.get(request.get("discovery_profile"), "region_profile")
@@ -328,6 +334,8 @@ def collect(args):
             "evidence_kind": evaluation["evidence_kind"], "correctness": copy.deepcopy(evaluation["correctness"]),
             "roi": context["roi"], "statistics": stats_reference, "output": log_reference,
             "differences_from_primary": [], "host_cost_is_performance": False}]
+        if context.get('debug_trace'):
+            data['executions'][0]['debug_trace'] = copy.deepcopy(context['debug_trace'])
         if request.get('diagnostic_evaluation'):
             regions, discovered, run, binary = diagnostic_regions(store, request, evaluation, candidate, root, deadline)
             data.update(regions=regions, discovery=discovered, reasons=[])
@@ -349,6 +357,8 @@ def collect(args):
                 data['reasons'].append('No invoked function and loop pair has complete diagnostic timing.')
         data["raw_artifacts"] = [{"kind": "statistics", **stats_reference}, {"kind": "log", **log_reference},
                                  {"kind": "configuration", **context["actual_configuration"]}]
+        if context.get('debug_trace'):
+            data['raw_artifacts'].append({'kind': 'debug_trace', **context['debug_trace']})
         timing = {**trial,
             "duration_s": roi["duration_s"], "roi": context["roi"], "basis": "simulated", "quantity": "simulated_roi_seconds",
             "binary_sha256": evaluation["build"]["binary_sha256"], "output": str(log), "output_sha256": log_reference["sha256"],

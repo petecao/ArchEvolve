@@ -1,6 +1,6 @@
 # Four unchanged scalar v2 builds
 
-Prepared: 2026-09-26 (Eastern Time). Prospective interface v1; no dispatch.
+Prepared: 2026-09-26 (Eastern Time). Interface v1; actual outcome recorded below.
 
 `scripts/bfs_scalar_v2_builds.py` consumes the exact four requests and
 `scalar-v2-20260926-a1.preparation.json` under the BFS scratch requests directory.
@@ -139,3 +139,36 @@ its own reap or later wrapper writes. Retain the final read-only count outside
 both charged roots, with no later writes to them. Any missing identity, failed
 stage, exhausted deadline, cleanup error or storage crossing keeps the attempt
 unsuccessful. Do not retry under this ID or extend its allowance.
+
+## Storage observation correction — 2026-09-26
+
+The actual a1 preparation at the retained `6732` code pin failed during finalization
+at 21:08:44 ET. All four public compile calls and their four fresh chain checks
+returned zero, but the continuous monitor's `du -sk` child was killed during
+owned-descendant cleanup. The failed driver lacks final accounting; successful
+individual build records do not turn that preparation into a passed attempt.
+The independent terminal audit retained the failure, closed the 31 observed
+PID/start identities, and confirmed release of lease generation 413. The original
+attempt, outputs, limits, and successful build records remain unchanged.
+
+The prospective correction replaces storage subprocesses in the shared batch
+allocation helper and series monitor with `scripts/bfs_storage.py`. It counts
+`st_blocks * 512`, including directories and symlinks, without following symlinks;
+hard links are deduplicated within each root and each root is rounded upward to
+KiB, matching the previous separate `du -sk` calls. Directory-relative descriptors
+and `O_NOFOLLOW` reject directory-to-symlink substitution. Missing or unreadable
+entries fail the observation. The bounded walk checks elapsed time between
+filesystem operations and remains subject to the original enclosing guard and
+cleanup clocks; a blocking filesystem syscall is not a separately guaranteed
+hard deadline. It creates no cleanup-owned process, allowing the existing monitor
+to remain active during teardown. No storage or elapsed allowance changes.
+
+Local tests compare allocated-byte totals with actual `du`, reproduce the killed
+accounting child with real OS signals and the production cleanup algorithm, and
+verify the replacement survives the same overlap without spawning an accounting
+child. The portable identity adapter in that regression is contract evidence,
+not an actual Linux ownership proof. Any future host use needs the final code
+pin and its applicable actual Linux lifecycle evidence. Reuse of the four
+successful builds requires independent reopening of their exact public records,
+requests, artifacts and terminal provenance; it must retain the failed common
+preparation cost and may not relabel or rerun a1.

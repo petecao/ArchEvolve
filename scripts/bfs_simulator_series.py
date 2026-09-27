@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from swdb import artifacts, bfs_protocol, profile
 from swdb.store import Store
-from scripts.dx100_build import disk_usage_kib
+from scripts.bfs_storage import allocated_bytes
 from scripts.bfs_process import interruption_signals, run_stage
 from scripts import bfs_owned_execution as lifecycle
 
@@ -142,6 +142,8 @@ def main():
     parser.add_argument('--storage-gib', type=int, default=10)
     parser.add_argument('--batch-storage-gib', type=int, default=40)
     parser.add_argument('--verification-ticks', type=int, default=10**14)
+    parser.add_argument('--trace-transport', choices=('gem5-gzip.v1',),
+                        help='opt-in lossless gem5 gzip debug file; omitted preserves legacy output')
     parser.add_argument('--verifier', choices=('dx100.bfs.verifier.v1', 'dx100.bfs.verifier.v2'),
                         help='explicit pilot checker; frozen series inherits its immutable checker')
     parser.add_argument('--owned-cleanup-ledger', type=Path)
@@ -184,6 +186,8 @@ def main():
                'bounds': {name: getattr(args, name) for name in limits},
                'stages': [], 'samples': [], 'lane': lane,
                'repository_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()}
+    if args.trace_transport:
+        receipt['trace_transport'] = args.trace_transport
     started = entry_started if args.owned_cleanup_ledger else time.monotonic()
     owned = guard = None
     if args.owned_cleanup_ledger:
@@ -202,11 +206,7 @@ def main():
 
     def storage_bytes():
         # A dedicated batch root bounds all of its retained checkpoints and logs.
-        used, warnings = disk_usage_kib(runs)
-        if warnings:
-            receipt.setdefault('monitor_warnings', []).extend(warnings)
-            save()
-        return used * 1024
+        return allocated_bytes([runs])
 
     def check_bounds():
         remaining = args.total_seconds - (time.monotonic() - started)
@@ -358,6 +358,8 @@ def main():
                                    'run_seconds': run_seconds, 'memory_gib': args.memory_gib, 'storage_gib': args.storage_gib}}
                     if verifier == 'dx100.bfs.verifier.v2':
                         payload['verification']['post_roi_trace'] = 'SyscallBase'
+                    if args.trace_transport:
+                        payload['verification']['trace_transport'] = args.trace_transport
                     if compiled: payload['candidate_build'] = compiled['id']
                     if (position, treatment) in checkpoints:
                         payload['checkpoint_manifest'] = checkpoints[position, treatment]

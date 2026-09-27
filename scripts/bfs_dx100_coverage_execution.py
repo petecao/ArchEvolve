@@ -267,7 +267,8 @@ def validate_coverage(evaluation, request, graph, *, run_id=RUN_ID):
             counters.append(int(found[1]))
     log = Path(check['output']['path'])
     require(artifacts.file_hash(log) == check['output']['sha256'], 'coverage trace changed')
-    observed = dx100_coverage.observe(log, values, 16384)
+    observed = dx100_coverage.observe(log, values, 16384,
+                                      trace=dx100_coverage.trace_reference(evaluation))
     retained = check['coverage']
     require(all(artifacts.digest(observed[key]) == artifacts.digest(retained.get(key)) for key in observed),
             'retained coverage differs from the reopened raw trace')

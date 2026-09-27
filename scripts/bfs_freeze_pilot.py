@@ -584,7 +584,7 @@ def supporting_case_evidence(store, item):
     require(availability and all(row['state'] == 'verified' for row in availability),
             'supporting diagnostic raw/build/model artifacts are unavailable or changed')
     from swdb.dx100_profile import statistics
-    from swdb.dx100_coverage import observe
+    from swdb.dx100_coverage import observe, trace_reference
     seal = context['sealed_roi']
     require(profile_package._same(seal['statistics'], context['statistics']), 'supporting diagnostic statistics differ from seal')
     intervals = statistics(Path(context['statistics']['path']), time.monotonic() + 30)
@@ -593,7 +593,8 @@ def supporting_case_evidence(store, item):
     counters = {name: int(value) for name, value in values.items()
                 if re.fullmatch(r'\S*maa\S*\.numInst(?:_[A-Z]+)?', name) and re.fullmatch(r'\d+', value)}
     log = Path(stages[0]['log'])
-    actual = observe(log, values, context['configuration']['tile_elements'])
+    actual = observe(log, values, context['configuration']['tile_elements'],
+                     trace=trace_reference(diagnostic), deadline=time.monotonic() + 30)
     actual.update(instruction_counters=counters,
         accelerator_executed=(context['configuration'].get('mode') == 'MAA'
             and any(value > 0 for name, value in counters.items() if name.endswith('.numInst'))
