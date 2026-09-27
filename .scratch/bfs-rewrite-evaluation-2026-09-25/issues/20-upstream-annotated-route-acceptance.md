@@ -9,6 +9,25 @@ Updated: 2026-09-27 (Eastern Time)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
+## Second context continuation timed out — 2026-09-27 02:28 ET
+
+The [independent terminal observation](../observations/provider-context2-terminal-independent-20260927.json)
+retains one actual Claude Code invocation with the clarified target and source allocation context.
+It hit its fixed 600-second timeout; actual provider wall time was 600.3155390936881 seconds.
+The public proposal is `failed` at `rewriting`, with no candidate. The operator then encountered
+`JSONDecodeError` while reading the empty provider stdout and exited 1. Both failures remain
+preserved; no additional invocation or retry was performed.
+
+The actual debit remains charged: cumulative provider use is 767.2889378825203 seconds,
+with 1031.6844609063119 seconds remaining after the earlier conservative floors. No repair,
+build, evaluation, or gain claim resulted. Independent closure found all 11 recorded process
+identities absent except the original zero-RSS zombie pane, in two observations. The strict
+cleanup ledger settled 15 events within 0.8516778731718662 seconds; node1 generation440
+was released and kernel-unlocked. Final raw plus dispatch allocation is 26,730,496 bytes.
+The source response and raw traces remain on mbit10; only the exact proposal/provider metadata
+are synchronized through the private evidence branch. This ticket remains claimed: route
+acceptance is not established by a timed-out provider attempt.
+
 ## Context continuation unresolved — 2026-09-27 00:44 ET
 
 The [independently closed continuation](../observations/provider-terminal-independent-20260927.json)
