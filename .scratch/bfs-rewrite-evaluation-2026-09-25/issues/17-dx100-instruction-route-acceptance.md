@@ -138,3 +138,30 @@ The reviewed [controlled-simulator readiness note](../../../docs/bfs-t17-control
 identifies the exact retained builds, freeze derivation and finite four-series
 recipe still needed after T15 and diagnostic prerequisites. It creates no
 protocol, allowance or execution claim.
+
+
+## Diagnostic setup failure and prospective allocation — 2026-09-27
+
+The first diagnostic attempt failed at its initial public get because the record
+view omitted two referenced implementation source attachments. No compiler,
+provider, guest, or diagnostic evaluation ran. The exact failed driver and all
+outputs remain retained. The [independent closure receipt](../observations/t17-diagnostic-failed-terminal-20260927.json)
+verifies both process passes, no live owned work (the exact pane was a zero-RSS
+zombie), socket-1 generation 438 released, and a settled four-event cleanup ledger
+using 0.2261140875518322 seconds. Final allocated storage across all three roots
+was 18,321,408 bytes.
+
+The original 00:47:10.605637–00:57:10.605637 ET 600-second window has expired; it is
+not reset. Conservative historical wall accounting retains 593 seconds from outer
+start through the independent final observation (592.764382 seconds before
+rounding), including the readback delay, not a claim of CPU time. Existing primary
+binary/source/provider evidence remains unchanged.
+
+Repair 3c09f3c admits exactly the two runtime-hash-bound `.cc` attachments; root's
+actual-public-get regression and focused checks passed 29 tests. No retry followed.
+The [prospective acceptance manifest](../operator-recipes/t17-acceptance/README.md)
+includes one unused diagnostic request as a charged prerequisite of a future
+route allocation derived from qualified T15 costs. Aggregate and series budgets,
+workloads, protocol, and future clock remain unresolved, with dispatch explicitly
+false. Eight planning-contract tests pass; no empirical acceptance is claimed.
+This ticket remains claimed and all acceptance boxes remain open.

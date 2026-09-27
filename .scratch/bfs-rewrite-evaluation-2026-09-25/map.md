@@ -15,7 +15,7 @@ The user authorized autonomous implementation of all 21 tickets and all necessar
 qualified. The retained Linux recovery group passed 42 supplementary, 5 ownership,
 and 2 interruption tests. Both pristine `6a493a0` simulator runtimes independently
 reopened that immutable evidence with the full 600-second/2-GiB charge retained.
-T15/T16 scientific recovery dispatch is pending reviewed admission and a free lane.
+T15/T16 scientific recovery dispatch was pending reviewed admission and a free lane at this checkpoint.
 
 T17 diagnostic attempt `bfs-t17-diagnostic-build-only-20260926-a1` exited before
 compilation: its YAML-only view omitted two source attachments required by public
@@ -2384,3 +2384,12 @@ Fewer than 1,200 seconds remain in its fixed 10:00 ET window, so dispatch is
 prohibited under that plan. The rejected export is not retried and the deadline
 is not extended. Local paired calibration implementation and fixed-commit
 regression verification continue independently.
+
+## Execution checkpoint — 2026-09-27 01:00 ET
+
+T15 recovery is now running on socket 1 generation 439 with unchanged 09:14 ET
+hard end; the actual uniform-18 gem5 process is live. T16 remains prepared and
+waits for external socket-0 generation 339 to release. All three delegated
+workers are responsive, the prior failed T16 identity set is absent, and the
+legacy lease is released. [Host evidence](observations/host-health-20260927-0100.json).
+No final acceptance cell or gain has been qualified.

@@ -574,3 +574,13 @@ passed 54 focused checks and verified the fifth Linux SQLite case is selected,
 runtime-pinned and required only by the new admission. Fresh actual a4 proofs,
 exact runtime transfer/admission and guest execution remain pending. These local
 checks do not qualify the pilot or resolve this ticket.
+
+## Recovery simulation started — 2026-09-27 01:00 ET
+
+The independently reviewed admission launched the new fixed recovery batch at
+00:58:51.373411 ET on socket 1, lease generation 439, with runtime `6a493a0`.
+Its original hard end remains 09:14:09.851819 ET. Prior failed attempts and the
+full successful proof reservation remain charged. The uniform-18 series and
+actual gem5 process are running; no completed sample, protocol freeze, or gain
+is claimed. See [admission check](../observations/t15-recovery-admission-independent-20260927.json)
+and [host health](../observations/host-health-20260927-0100.json).
