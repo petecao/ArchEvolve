@@ -98,3 +98,10 @@ def test_protocol_binding_requires_one_exported_exact_freeze(tmp_path,monkeypatc
     else:
         with pytest.raises(ValueError,match='exactly one'):m.protocol_bindings(plan,store,recovery,artifacts)
         assert not checked
+
+
+def test_manifest_paths_belong_to_new_operator_checkout():
+    import json
+    expected='/data1/yanruj/EvolveSWDB_protocol_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/protocol-simulator-recovery/runtime-manifest.json'
+    for name in ('t16-config.json','t16-config-template.json'):
+        assert json.loads(P.with_name(name).read_text())['manifest']==expected
