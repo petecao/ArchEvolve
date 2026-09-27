@@ -60,3 +60,24 @@ def test_one_submit_only_no_repair_or_evaluation():
     assert r.ORIGIN_COMMIT=='5f1b8028619976b36df5fa24b8aacb91bf488168'
     wrapper=(HERE/'bfs-provider-context2-launch-20260927.sh').read_text()
     assert 'python3.12 -I -B -c' in wrapper and 'wrapper_entry' in wrapper
+
+
+def test_node0_preflight_refuses_actual_node1(monkeypatch,tmp_path):
+    from swdb import profile
+    call=next(x for x in ast.walk(ast.parse(r.PREFLIGHT)) if isinstance(x,ast.Call) and isinstance(x.func,ast.Attribute) and x.func.attr=='_verified_lane')
+    claimed=call.args[1].value
+    assert claimed=='mbit10-evaluation-node0'
+    wrapper=(HERE/'bfs-provider-context2-launch-20260927.sh').read_text()
+    assert 'bash "$HELPER" 0 swdb' in wrapper and 'bash "$HELPER" 1 swdb' not in wrapper
+    machine={'id':'mbit10','hostname':'mbit10','numa_nodes':[{'node':1,'cpus':'1'}]}
+    monkeypatch.setattr(profile,'lane_required',lambda m:True)
+    monkeypatch.setenv('LACT_SOCKET_LANE_PID','123')
+    monkeypatch.setenv('LACT_SOCKET_LANE_GENERATION','9')
+    monkeypatch.setenv('LACT_LEASE_ROOT',str(tmp_path))
+    monkeypatch.setattr(profile.os,'getpid',lambda:123)
+    monkeypatch.setattr(profile.os,'sched_getaffinity',lambda pid:{1},raising=False)
+    monkeypatch.setattr(profile,'_read_proc',lambda pid,name:'socket_lane.sh' if name=='cmdline' else '0 bind:1')
+    monkeypatch.setattr(profile.os,'readlink',lambda p:str(tmp_path/'mbit10-evaluation-node1.lease'))
+    (tmp_path/'mbit10-evaluation-node1.meta.json').write_text(json.dumps({'state':'held','lease':{'generation':9,'daemon_pid':123}}))
+    with pytest.raises(profile.Failure,match='process is confined'):
+        profile._verified_lane(machine,claimed)

@@ -16,4 +16,17 @@ The prior result is durably preserved as one exact 127,910-byte YAML blob, SHA `
 
 The new operator and wrapper retain context1's isolated pre-import full runtime guard, 750-second outer clock (720 work plus 30 shared cleanup), one public submit, strict PID/start ownership, fresh record retrieval and full final record inventory. The provider runtime stays `8cbfee600f23416a8e9578fa8d3ce3f0e19fced8`; the later batch consumer repair does not change this provider runtime. Prepared inputs are Git-carried read-only files next to the operational recipe. The original runtime remains pristine and separate from operational code.
 
-Dispatch remains pending independent review, Git delivery of this packet, current helper/subtree verification, a fresh free lane with adequate resources, and the ordinary one-call preflight. The prepared wrapper names node1; resealing a different lane requires corresponding review of the recipe's lane-specific preflight. No operational budget or measurement evidence is created by these local contract tests.
+Dispatch remains pending independent review, Git delivery of this packet, current helper/subtree verification, a fresh free lane with adequate resources, and the ordinary one-call preflight. The current reviewed wrapper and lease preflight both name node0; the prior node1 variant is retained as commit `ec4d8da5`. No operational budget or measurement evidence is created by these local contract tests.
+
+## Host readiness and lane binding — 2026-09-27 01:10 ET
+
+Read-only host verification reproduced the exact prompt and reopened the source,
+headers, reference excerpts and retained build. No provider call or output root
+was created. The prospective node0 variant `8e050d4` changes exactly the lease
+assertion and socket argument, plus a wrong-lane regression; all request, prompt,
+budget and import-guard bytes remain identical. Root independently reviewed the
+Git delta and ran all 11 tests (passed in 0.12 seconds). The clean idle operator
+checkout is now at that commit. Socket0 remains externally held (generation340
+at 01:10 ET); dispatch waits for its release and fresh helper/capacity checks.
+See [host readback](host-readonly-20260927.json) and
+[Git delivery](node0-export-20260927.json).

@@ -166,7 +166,7 @@ from swdb.store import Store
 prep=Path(sys.argv[1]); store=Store(Path(sys.argv[2])); line=json.loads((prep/'lineage-and-budget.json').read_text())
 r=json.loads((prep/'upstream-annotated-context2.proposal.json').read_text())
 assert store.get(r['id']) is None
-lane=profile._verified_lane(store.get('mbit10','machine'),'mbit10-evaluation-node1')
+lane=profile._verified_lane(store.get('mbit10','machine'),'mbit10-evaluation-node0')
 for reference in [line['predecessor']['record'],line['predecessor']['original_envelope'],line['predecessor']['provider_receipt']]:
  p=Path(reference['path']);assert artifacts.file_hash(p)==reference['sha256'] and p.stat().st_size==reference['bytes']
 old=store.get(line['predecessor']['id'],'proposal'); assert artifacts.digest(old)==line['predecessor']['record_canonical_sha256']

@@ -37,7 +37,7 @@ print(f'{remaining:.6f}s')
 PY
 )
 set +e
-timeout --signal=TERM --kill-after=30s "$remaining" bash "$HELPER" 1 swdb-bfs-provider-context2-a1 --record "$DISPATCH/lane.json" -- \
+timeout --signal=TERM --kill-after=30s "$remaining" bash "$HELPER" 0 swdb-bfs-provider-context2-a1 --record "$DISPATCH/lane.json" -- \
   env -u PYTHONPATH -u PYTHONHOME -u PYTHONSTARTUP -u PYTHONUSERBASE -u PYTHONOPTIMIZE -u PYTEST_PLUGINS -u LD_PRELOAD -u LD_LIBRARY_PATH \
   PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 PATH=/usr/bin:/bin CLAUDE_CONFIG_DIR=/data1/yanruj/.claude \
   /usr/bin/python3.12 -I -B -c 'import runpy,sys; recipe=sys.argv.pop(1); runpy.run_path(recipe)["wrapper_entry"]()' "$RECIPE" --outer-started "${CLOCK[0]}" --outer-deadline "${CLOCK[1]}" --pane-pid "${CLOCK[2]}" --pane-start-ticks "${CLOCK[3]}" \
