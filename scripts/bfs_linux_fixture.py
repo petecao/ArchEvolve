@@ -34,14 +34,14 @@ from swdb.store import Store
 
 LIMIT_BYTES = 512 * 1024**2
 SELECTIONS = {
-    'owned_cleanup': ('bfs-simulator-owned-linux-20260926-a5',
+    'owned_cleanup': ('bfs-simulator-owned-linux-20260927-a6',
         ['tests/test_bfs_owned_execution.py', '-k', 'linux'], {
             'test_linux_owned_stage_reaps_detached_child[False]',
             'test_linux_owned_stage_reaps_detached_child[True]',
             'test_linux_nested_interruption_uses_one_cleanup_budget',
             'test_linux_term_resistant_nested_cleanup_keeps_final_kill_reserve',
             'test_linux_storage_observation_handles_sqlite_journal_unlink'}),
-    'dx100_interruption': ('bfs-simulator-interruption-linux-20260926-a5',
+    'dx100_interruption': ('bfs-simulator-interruption-linux-20260927-a6',
         ['tests/test_dx100_interruption.py::test_public_interruption_is_durable_before_postmortem'], {
             'test_public_interruption_is_durable_before_postmortem[raises]',
             'test_public_interruption_is_durable_before_postmortem[stalls]'}),
@@ -215,20 +215,24 @@ def execute(kind, folder, begin, end, deadline, code, runtime, pane, lane, pytes
 
 def supplement_configuration(folder):
     """Private fixed group stage; this is never a standard admission proof."""
-    from scripts.bfs_simulator_recovery import GROUP_ID, SUPPLEMENT_SELECTORS
+    from scripts import bfs_simulator_recovery as recovery
     from scripts.bfs_simulator_batch import PLAN_DIR, validate_plan
-    require(Path(folder) == RAW_BASE/(GROUP_ID+'.dispatch')/'supplement', 'supplement requires its fixed group root')
-    plan=json.loads((PLAN_DIR/'bfs-t15-supervision-recovery-simulator-batch-20260926-a1.json').read_text())
-    validate_plan(plan,'t15-supervision-recovery')
+    if Path(folder) == RAW_BASE/(recovery.GROUP_ID+'.dispatch')/'supplement':
+        group_id, selectors, key, count = recovery.GROUP_ID, recovery.SUPPLEMENT_SELECTORS, 't15-supervision-recovery', 42
+    else:
+        group_id, selectors, key, count = recovery.LEASE_GROUP_ID, recovery.LEASE_SUPPLEMENT_SELECTORS, 't15-lease-recovery', 51
+        require(Path(folder) == RAW_BASE/(group_id+'.dispatch')/'supplement', 'supplement requires its fixed group root')
+    plan=json.loads((PLAN_DIR/(recovery.IDS[key]+'.json')).read_text())
+    validate_plan(plan,key)
     names=plan['accounting']['preparation_reservation']['supplement_testcases']
-    require(len(names)==len(set(names))==42,'supplement exact case inventory changed')
-    args=[sys.executable,'-m','pytest',*SUPPLEMENT_SELECTORS,'-q','-p','no:cacheprovider',
+    require(len(names)==len(set(names))==count,'supplement exact case inventory changed')
+    args=[sys.executable,'-m','pytest',*selectors,'-q','-p','no:cacheprovider',
           '--junitxml='+str(Path(folder)/'junit.xml'),'--basetemp='+str(Path(folder)/'pytest')]
-    return GROUP_ID+'.supplement',args,set(names)
+    return group_id+'.supplement',args,set(names)
 
 
 def execute_supplement(folder, begin, end, deadline, code, runtime, pane, lane, pytest_runtime):
-    """One private 42-case stage under the existing 90/60/30 supervision."""
+    """One private fixed-case stage under the existing 90/60/30 supervision."""
     require(end-begin==timedelta(seconds=90) and 0 <= (datetime.now(own.ET)-begin).total_seconds() <= 5,
             'supplement requires its original 90-second outer clock')
     require(lane in (0,1) and Path(folder)==Path(folder).resolve(), 'supplement lane or root is invalid')

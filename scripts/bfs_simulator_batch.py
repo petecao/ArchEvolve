@@ -33,7 +33,7 @@ from swdb.store import Store
 
 ET = ZoneInfo('America/New_York')
 GIB = 1024**3
-PLAN_HASHES = {'t15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
+PLAN_HASHES = {'t15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
 SETUP_RECOVERY_ID = 'bfs-t15-setup-recovery-simulator-batch-20260926-a1'
 SETUP_FAILURE_ID = 'bfs-t15-correction-simulator-batch-20260926-a1'
 SETUP_HARD_END = '2026-09-27T09:14:09.851819-04:00'
@@ -81,7 +81,8 @@ def runtime_identity():
             for path in sorted((ROOT / name).rglob('*')) if path.is_file() and path.suffix in suffixes}
     result.update({name: artifacts.file_hash(ROOT/name) for name in
                    ('tests/test_bfs_owned_execution.py', 'tests/test_dx100_interruption.py',
-                    'tests/test_bfs_owned_rss.py', 'tests/test_bfs_linux_fixture_audit.py')})
+                    'tests/test_bfs_owned_rss.py', 'tests/test_bfs_linux_fixture_audit.py',
+                    'tests/test_bfs_simulator_batch.py')})
     return result
 
 
@@ -258,7 +259,7 @@ def setup_failure_charges(plan):
 
 def preparation_charges(plan):
     """Reopen the fixed retained preparation; caller-supplied credits are forbidden."""
-    if 'supervision_recovery' in plan['accounting']:
+    if 'supervision_recovery' in plan['accounting'] or 'lease_recovery' in plan['accounting']:
         from scripts.bfs_simulator_recovery import preparation_charges as recovery_charges
         return recovery_charges(plan)
     rows = []
@@ -314,6 +315,9 @@ def validate_preparation_reservation(plan, admission):
     Actual proof hashes are sealed later in admission, avoiding a code/plan/proof
     hash cycle. Their complete closed envelopes must fit the fixed reservation.
     """
+    if 'lease_recovery' in plan['accounting']:
+        require('linux_proof_runtime' not in admission and 'linux_proof_provenance' not in plan,
+                'lease recovery requires exact current-runtime Linux proof without consumer exceptions')
     reserved = plan['accounting'].get('preparation_reservation')
     if reserved is None:
         require('preparation_reservation' not in admission, 'unplanned preparation reservation')
@@ -409,7 +413,7 @@ def validate_preparation_reservation(plan, admission):
     used = allocated_bytes(paths)
     require(type(actual['raw_bytes']) is int and used == actual['raw_bytes'] <= reserved['raw_bytes'],
             'preparation output changed or exceeded the full reserved storage allowance')
-    if 'supervision_recovery' in plan['accounting']:
+    if 'supervision_recovery' in plan['accounting'] or 'lease_recovery' in plan['accounting']:
         from scripts.bfs_simulator_recovery import validate_supplement
         validate_supplement(plan, admission)
 
@@ -480,7 +484,7 @@ class Ledger:
         self.charged_bytes = sum(row['raw_bytes'] for row in charged)
         available = self.bounds['batch_seconds'] - self.charged_seconds
         if 'clock_policy' in plan:
-            if 'supervision_recovery' in plan['accounting']:
+            if 'supervision_recovery' in plan['accounting'] or 'lease_recovery' in plan['accounting']:
                 from scripts.bfs_simulator_recovery import hard_end
                 expected_end = hard_end(plan)
             else:
@@ -649,28 +653,72 @@ def validate_cleanup_tests(admission):
 
 
 def lease_observation(machine, node):
+    """Bounded coherent snapshots; only the other socket may change ownership.
+
+    hostlock acquires flock before publishing held metadata, and publishes
+    released metadata before unlocking (2026-09-27 installed protocol audit).
+    Neither short publication window is permission to ignore a persistent
+    disagreement, a legacy conflict, or any change to our own lease.
+    """
     own = f'mbit10-evaluation-node{node}'
+    other = f'mbit10-evaluation-node{1-node}'
+    legacy = 'mbit10-evaluation'
     verified = profile._verified_lane(machine, own)
     root = Path(os.environ.get('LACT_LEASE_ROOT', '/data1/yanruj/lact-host-lease'))
-    rows = {}
-    for name in ('mbit10-evaluation', 'mbit10-evaluation-node0', 'mbit10-evaluation-node1'):
+    own_path = root / (own + '.meta.json')
+    own_raw = own_path.read_bytes()
+    own_value = json.loads(own_raw)
+    require(own_value.get('state') == 'held', 'own lane metadata is not held')
+
+    def snapshot(name):
         path = root / (name + '.meta.json')
-        value = json.loads(path.read_text())
-        kernel_held = None
-        if name != own:
-            with (root / (name + '.lease')).open('rb') as lock:
-                try:
-                    fcntl.flock(lock, fcntl.LOCK_SH | fcntl.LOCK_NB)
-                    kernel_held = False
-                except BlockingIOError:
-                    kernel_held = True
-                finally:
-                    fcntl.flock(lock, fcntl.LOCK_UN)
-            require(value.get('state') == ('held' if kernel_held else 'released'),
-                    'other lease metadata and kernel lock disagree')
-            require(name != 'mbit10-evaluation' or not kernel_held, 'legacy kernel lease is held')
-        rows[name] = {'sha256': artifacts.file_hash(path), 'metadata': value, 'kernel_held': kernel_held}
-    return {'verified_lane': verified, 'leases': rows}
+        before = path.read_bytes()
+        value = json.loads(before)
+        require(value.get('state') in {'held', 'released'}, 'invalid lease metadata state')
+        with (root / (name + '.lease')).open('rb') as lock:
+            try:
+                fcntl.flock(lock, fcntl.LOCK_SH | fcntl.LOCK_NB)
+                held = False
+            except BlockingIOError:
+                held = True
+            finally:
+                fcntl.flock(lock, fcntl.LOCK_UN)
+        after = path.read_bytes()
+        coherent = before == after and value['state'] == ('held' if held else 'released')
+        return {'sha256': hashlib.sha256(before).hexdigest(), 'metadata': value,
+                'kernel_held': held}, coherent
+
+    previous = None
+    # Five reads and at most four 50-ms waits, charged to the caller's clock.
+    # Two consecutive coherent identical observations are required, including
+    # when the first read happens to fall just before an ownership transition.
+    for attempt in range(5):
+        require(own_path.read_bytes() == own_raw
+                and profile._verified_lane(machine, own) == verified,
+                'own lane changed during lease snapshot')
+        legacy_row, legacy_ok = snapshot(legacy)
+        require(legacy_ok, 'other lease metadata and kernel lock disagree (legacy)')
+        require(not legacy_row['kernel_held'], 'legacy kernel lease is held')
+        row, coherent = snapshot(other)
+        require(own_path.read_bytes() == own_raw, 'own lane changed during lease snapshot')
+        if coherent and row == previous:
+            # Do not return after an external read without rechecking legacy
+            # exclusion and the lane's complete kernel/ancestry admission.
+            final_legacy, final_ok = snapshot(legacy)
+            require(final_ok and not final_legacy['kernel_held']
+                    and final_legacy == legacy_row, 'legacy lease changed during snapshot')
+            require(own_path.read_bytes() == own_raw
+                    and profile._verified_lane(machine, own) == verified,
+                    'own lane changed during lease snapshot')
+            return {'verified_lane': verified, 'leases': {
+                legacy: final_legacy,
+                own: {'sha256': hashlib.sha256(own_raw).hexdigest(),
+                      'metadata': own_value, 'kernel_held': None}, other: row},
+                'other_socket_snapshot_attempts': attempt + 1}
+        previous = row if coherent else None
+        if attempt < 4:
+            time.sleep(.05)
+    raise ValueError('other lease metadata and kernel lock disagree or did not stabilize')
 
 
 def series_command(plan, row, admission, config, runs, records, node, seconds, storage, cleanup=None):
@@ -932,7 +980,8 @@ def main():
     parser.add_argument('--pane-pid', type=int, required=True)
     parser.add_argument('--pane-start-ticks', type=int, required=True)
     args = parser.parse_args()
-    plan = yamlio.load(PLAN_DIR / f'bfs-{args.kind}-simulator-batch-20260926-a1.json')
+    date = '20260927' if args.kind in {'t15-lease-recovery', 't16-lease-recovery'} else '20260926'
+    plan = yamlio.load(PLAN_DIR / f'bfs-{args.kind}-simulator-batch-{date}-a1.json')
     validate_plan(plan, args.kind)
     admission_ref = {'path': str(args.admission.absolute()), 'sha256': args.admission_sha256}
     admission = read_reference(admission_ref)
