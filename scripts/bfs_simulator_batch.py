@@ -33,7 +33,7 @@ from swdb.store import Store
 
 ET = ZoneInfo('America/New_York')
 GIB = 1024**3
-PLAN_HASHES = {'t16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
+PLAN_HASHES = {'t16-protocol-recovery': 'eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8', 't16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
 SETUP_RECOVERY_ID = 'bfs-t15-setup-recovery-simulator-batch-20260926-a1'
 SETUP_FAILURE_ID = 'bfs-t15-correction-simulator-batch-20260926-a1'
 SETUP_HARD_END = '2026-09-27T09:14:09.851819-04:00'
@@ -315,7 +315,7 @@ def validate_preparation_reservation(plan, admission):
     Actual proof hashes are sealed later in admission, avoiding a code/plan/proof
     hash cycle. Their complete closed envelopes must fit the fixed reservation.
     """
-    if {'lease_recovery', 'seal_recovery'} & plan['accounting'].keys():
+    if {'lease_recovery', 'seal_recovery', 'protocol_recovery'} & plan['accounting'].keys():
         require('linux_proof_runtime' not in admission and 'linux_proof_provenance' not in plan,
                 'recovery requires exact current-runtime Linux proof without consumer exceptions')
     reserved = plan['accounting'].get('preparation_reservation')
@@ -565,6 +565,9 @@ def validate_inputs(plan, admission, store):
                 and stamp(frozen['frozen_at']) <= stamp(admission['prepared_at']),
                 'protocol must freeze the exact reviewed settings before batch admission')
         protocols[key] = frozen
+    if 'protocol_recovery' in plan['accounting']:
+        from scripts.bfs_simulator_recovery import validate_protocol_runtime
+        validate_protocol_runtime(plan, protocols)
     for row in plan['series']:
         candidate = store.get(row['candidate']); source = store.get(candidate['source_snapshot'])
         implementation = store.get(candidate['implementation']); workload = store.get(row['workload'])
@@ -980,7 +983,7 @@ def main():
     parser.add_argument('--pane-pid', type=int, required=True)
     parser.add_argument('--pane-start-ticks', type=int, required=True)
     args = parser.parse_args()
-    date = '20260927' if args.kind in {'t15-lease-recovery', 't16-lease-recovery', 't16-seal-recovery'} else '20260926'
+    date = '20260927' if args.kind in {'t15-lease-recovery', 't16-lease-recovery', 't16-seal-recovery', 't16-protocol-recovery'} else '20260926'
     plan = yamlio.load(PLAN_DIR / f'bfs-{args.kind}-simulator-batch-{date}-a1.json')
     validate_plan(plan, args.kind)
     admission_ref = {'path': str(args.admission.absolute()), 'sha256': args.admission_sha256}
