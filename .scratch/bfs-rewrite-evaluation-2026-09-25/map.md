@@ -2502,3 +2502,16 @@ The trace-parser optimization passed independent review and is committed as
 seal-reader repair is now under development. T16 is held against this known
 reader defect. Context3's reviewed one-call submission has started on node 0;
 its existing provider allowance and original wrapper limits remain unchanged.
+
+## Provider closure and T16 recovery preparation — 2026-09-27 04:46 ET
+
+Context3 returned a provider timeout with no candidate. Its independent closure
+and exact proposal/provider metadata are retained; actual consumption was
+600.321021632 seconds, leaving 430.678978368 seconds after prior conservative
+floors. No further provider call is admitted by that closed attempt.
+The seal producer/reader repair passed 176 independent tests and is committed
+as `1699d99`. Fresh T16 runtime proof and admission are being prepared with an
+additional 600-second/2-GiB reservation deducted from the existing T16 allowance.
+Its original deadlines and scientific grid remain unchanged. No T15 allowance
+has been restored. [Live health](observations/host-health-20260927-0443.json)
+confirmed node 0 free, node 1 externally held, legacy free, and no owned BFS jobs.

@@ -34,14 +34,14 @@ from swdb.store import Store
 
 LIMIT_BYTES = 512 * 1024**2
 SELECTIONS = {
-    'owned_cleanup': ('bfs-simulator-owned-linux-20260927-a6',
+    'owned_cleanup': ('bfs-simulator-owned-linux-20260927-a7',
         ['tests/test_bfs_owned_execution.py', '-k', 'linux'], {
             'test_linux_owned_stage_reaps_detached_child[False]',
             'test_linux_owned_stage_reaps_detached_child[True]',
             'test_linux_nested_interruption_uses_one_cleanup_budget',
             'test_linux_term_resistant_nested_cleanup_keeps_final_kill_reserve',
             'test_linux_storage_observation_handles_sqlite_journal_unlink'}),
-    'dx100_interruption': ('bfs-simulator-interruption-linux-20260927-a6',
+    'dx100_interruption': ('bfs-simulator-interruption-linux-20260927-a7',
         ['tests/test_dx100_interruption.py::test_public_interruption_is_durable_before_postmortem'], {
             'test_public_interruption_is_durable_before_postmortem[raises]',
             'test_public_interruption_is_durable_before_postmortem[stalls]'}),
@@ -219,6 +219,8 @@ def supplement_configuration(folder):
     from scripts.bfs_simulator_batch import PLAN_DIR, validate_plan
     if Path(folder) == RAW_BASE/(recovery.GROUP_ID+'.dispatch')/'supplement':
         group_id, selectors, key, count = recovery.GROUP_ID, recovery.SUPPLEMENT_SELECTORS, 't15-supervision-recovery', 42
+    elif Path(folder) == RAW_BASE/(recovery.SEAL_GROUP_ID+'.dispatch')/'supplement':
+        group_id, selectors, key, count = recovery.SEAL_GROUP_ID, recovery.SEAL_SUPPLEMENT_SELECTORS, 't16-seal-recovery', 66
     else:
         group_id, selectors, key, count = recovery.LEASE_GROUP_ID, recovery.LEASE_SUPPLEMENT_SELECTORS, 't15-lease-recovery', 51
         require(Path(folder) == RAW_BASE/(group_id+'.dispatch')/'supplement', 'supplement requires its fixed group root')

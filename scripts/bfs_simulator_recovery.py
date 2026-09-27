@@ -14,15 +14,16 @@ from scripts import bfs_owned_execution as owned
 from swdb import artifacts, yamlio
 
 IDS = {
+    't16-seal-recovery': 'bfs-t16-seal-recovery-simulator-batch-20260927-a1',
     't15-lease-recovery': 'bfs-t15-lease-recovery-simulator-batch-20260927-a1',
     't16-lease-recovery': 'bfs-t16-lease-recovery-simulator-batch-20260927-a1',
     't15-supervision-recovery': 'bfs-t15-supervision-recovery-simulator-batch-20260926-a1',
     't16-supervision-recovery': 'bfs-t16-supervision-recovery-simulator-batch-20260926-a1',
 }
-ENDS = {'t15-lease-recovery': '2026-09-27T09:14:09.851819-04:00',
+ENDS = {'t16-seal-recovery': '2026-09-27T20:16:17.225985-04:00','t15-lease-recovery': '2026-09-27T09:14:09.851819-04:00',
         't16-lease-recovery': '2026-09-27T20:16:17.225985-04:00','t15-supervision-recovery': '2026-09-27T09:14:09.851819-04:00',
         't16-supervision-recovery': '2026-09-27T20:16:17.225985-04:00'}
-BASES = {'t15-lease-recovery':'t15-supervision-recovery', 't16-lease-recovery':'t16-supervision-recovery','t15-supervision-recovery': 't15-setup-recovery', 't16-supervision-recovery': 't16'}
+BASES = {'t16-seal-recovery':'t16-lease-recovery','t15-lease-recovery':'t15-supervision-recovery', 't16-lease-recovery':'t16-supervision-recovery','t15-supervision-recovery': 't15-setup-recovery', 't16-supervision-recovery': 't16'}
 GROUP_ID = 'bfs-supervision-recovery-linux-20260926-a1'
 OLD_GROUP = 'bfs-t15-setup-recovery-linux-20260926-a1'
 OLD_T16 = 'bfs-t16-simulator-batch-20260926-a1'
@@ -51,7 +52,13 @@ LEASE_SELECTORS = ['tests/test_bfs_simulator_batch.py::'+name for name in (
 LEASE_SUPPLEMENT_SELECTORS = SUPPLEMENT_SELECTORS + LEASE_SELECTORS
 
 
+SEAL_GROUP_ID = 'bfs-seal-recovery-linux-20260927-a1'
+SEAL_SELECTORS = ['tests/test_dx100_witness.py::test_large_producer_seal_retains_all_progress_and_full_validation', 'tests/test_dx100_witness.py::test_large_diagnostic_seal_uses_same_bound_and_exact_bytes', 'tests/test_dx100_witness.py::test_large_seal_bound_and_regular_identity_still_fail_closed', 'tests/test_dx100_witness.py::test_producer_serialization_unchanged_and_oversize_never_published', 'tests/test_dx100_witness.py::test_large_seal_hash_valid_json_still_requires_exact_retained_object']
+SEAL_SUPPLEMENT_SELECTORS = LEASE_SUPPLEMENT_SELECTORS + SEAL_SELECTORS
+
+
 def supplement_selectors(plan):
+    if 'seal_recovery' in plan['accounting']: return SEAL_SUPPLEMENT_SELECTORS
     return SUPPLEMENT_SELECTORS + (LEASE_SELECTORS if 'lease_recovery' in plan['accounting'] else [])
 
 
@@ -145,7 +152,8 @@ def hard_end(plan):
 
 def base_plan(plan):
     b = batch_api(); key = kind(plan); base = BASES[key]
-    value = json.loads((b.PLAN_DIR / ('bfs-'+base+'-simulator-batch-20260926-a1.json')).read_text())
+    filename = IDS[base]+'.json' if base in IDS else 'bfs-'+base+'-simulator-batch-20260926-a1.json'
+    value = json.loads((b.PLAN_DIR / filename).read_text())
     b.validate_plan(value, base)
     return value
 
@@ -303,6 +311,20 @@ def failed_t16(plan, base):
 
 def preparation_charges(plan):
     b = batch_api(); base = base_plan(plan)
+    if 'seal_recovery' in plan['accounting']:
+        recovery=plan['accounting']['seal_recovery']
+        b.require(kind(plan)=='t16-seal-recovery' and recovery['base_kind']==BASES[kind(plan)]
+                  and recovery['base_plan_sha256']==artifacts.digest(base)
+                  and recovery['prior_proof_reservation']==base['accounting']['preparation_reservation']
+                  and recovery['proof_runtime_policy']=='exact_current_runtime_only_no_consumer_exceptions'
+                  and 'linux_proof_provenance' not in plan,'seal recovery cannot replace its fixed original lineage')
+        rows=preparation_charges(base)
+        fresh=plan['accounting']['preparation_reservation']
+        b.require(fresh['id']==SEAL_GROUP_ID and fresh['elapsed_seconds']==600 and fresh['raw_bytes']==2*b.GIB,
+                  'fresh seal proof reservation changed')
+        rows.append({k:fresh[k] for k in ('id','elapsed_seconds','raw_bytes')})
+        b.require(len({r['id'] for r in rows})==len(rows),'seal recovery repeats a cost')
+        return rows
     if 'lease_recovery' in plan['accounting']:
         recovery=plan['accounting']['lease_recovery']
         b.require(recovery['base_kind']==BASES[kind(plan)] and recovery['base_plan_sha256']==artifacts.digest(base)
