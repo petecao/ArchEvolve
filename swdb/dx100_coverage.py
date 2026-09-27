@@ -1,4 +1,4 @@
-"""Observed MAA coverage inside an exact statistics tick interval. Updated: 2026-09-26."""
+"""Observed MAA coverage inside an exact statistics tick interval. Updated: 2026-09-27."""
 
 import gzip
 import hashlib
@@ -143,7 +143,8 @@ def observe(log, values, tile_elements, *, trace=None, deadline=None):
             for number, line in trace_lines(trace, trace_identity, deadline):
                 yield number, line, 'debug_trace'
     for number, line, origin in lines():
-        storage = re.fullmatch(r"SWDB_BFS_PARENT_STORAGE address=([a-f0-9]+) count=(\d+) element_bytes=4\s*", line)
+        storage = (re.fullmatch(r"SWDB_BFS_PARENT_STORAGE address=([a-f0-9]+) count=(\d+) element_bytes=4\s*", line)
+                   if origin == 'stdout' and line.startswith("SWDB_BFS_PARENT_STORAGE ") else None)
         if storage and origin == 'stdout':
             parent_storage = {"virtual_address": int(storage[1], 16), "count": int(storage[2]), "line": number}
             if trace is not None:
@@ -154,23 +155,26 @@ def observe(log, values, tile_elements, *, trace=None, deadline=None):
         if not match or not start <= int(match[1]) <= end:
             continue
         tick = int(match[1])
-        finished = re.search(r"\b([SIAR])\[\d+\] End \[", line)
+        # Necessary literal prefixes avoid five full regex scans on unrelated
+        # debug messages. Patterns remain the authority; lines are never skipped
+        # from decoding, hashing, numbering, deadline checks, or other matches.
+        finished = re.search(r"\b([SIAR])\[\d+\] End \[", line) if ' End [' in line else None
         if finished:
             units[finished[1]] = units.get(finished[1], 0) + 1
-        size = re.search(r"\bR\[\d+\] executeInstruction: .*tile size: (\d+)", line)
+        size = re.search(r"\bR\[\d+\] executeInstruction: .*tile size: (\d+)", line) if 'tile size: ' in line else None
         if size:
             n = int(size[1]); tile_sizes[n] = tile_sizes.get(n, 0) + 1
-        issued = re.search(r"\bI\[(\d+)\] Start \[(.*)", line)
+        issued = re.search(r"\bI\[(\d+)\] Start \[(.*)", line) if ' Start [' in line else None
         if issued:
             instruction = issued[2]
             base = re.search(r"baseAddr\(0x([a-f0-9]+)\)", instruction)
             current[int(issued[1])] = (int(base[1], 16) if base and "opcode(INDIR_ST_VECTOR)" in instruction
                 and "datatype(INT32)" in instruction else None)
             blocks.pop(int(issued[1]), None)
-        received = re.search(r"\bI\[(\d+)\] \w+: \d+ entries received for addr\(0x([a-f0-9]+)\)", line)
+        received = re.search(r"\bI\[(\d+)\] \w+: \d+ entries received for addr\(0x([a-f0-9]+)\)", line) if ' entries received for addr(0x' in line else None
         if received:
             blocks[int(received[1])] = int(received[2], 16)
-        stored = re.search(r"\bI\[(\d+)\] \w+: new_data\[(\d+)\] = SPD\[\d+\]\[\d+\] = \d+/(-?\d+)/", line)
+        stored = re.search(r"\bI\[(\d+)\] \w+: new_data\[(\d+)\] = SPD\[\d+\]\[\d+\] = \d+/(-?\d+)/", line) if 'new_data[' in line else None
         if stored:
             unit, word, value = map(int, stored.groups())
             base = current.get(unit)
