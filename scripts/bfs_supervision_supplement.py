@@ -23,7 +23,9 @@ from scripts import bfs_simulator_batch as batch
 from scripts import bfs_simulator_recovery as recovery
 from scripts.bfs_process import interruption_signals
 
-GROUP = runner.RAW_BASE/(recovery.GROUP_ID+'.dispatch')
+GROUP_ID = recovery.GROUP_ID
+SELECTORS = recovery.SUPPLEMENT_SELECTORS
+GROUP = runner.RAW_BASE/(GROUP_ID+'.dispatch')
 FOLDER = GROUP/'supplement'
 
 
@@ -35,7 +37,7 @@ def close(plan, code, preflight, lane_ref, exit_ref, *, reader,
     # This durable marker also forbids retry after any failed read or observation.
     audit.write_new(FOLDER/'audit-attempt.json', {'created':'2026-09-27','started':own.stamp(),'code_commit':code})
     driver_ref=audit.reference(FOLDER/'driver.json'); driver=reader.json(driver_ref,4*1024**2)
-    audit.require(driver.get('id')==recovery.GROUP_ID+'.supplement'
+    audit.require(driver.get('id')==GROUP_ID+'.supplement'
                   and driver.get('kind')=='supervision_supplement'
                   and driver.get('standard_proof_kind') is False
                   and driver.get('state')=='complete' and driver.get('returncode')==0
@@ -82,7 +84,7 @@ def close(plan, code, preflight, lane_ref, exit_ref, *, reader,
     audit.write_new(FOLDER/'terminal-validation.json',terminal)
     value={'format':'swdb.bfs.supervision-supplement.v1','state':'passed','code_commit':code,
         'runtime_sha256':driver['runtime_sha256'],'returncode':0,'started':driver['started'],'finished':driver['finished'],
-        'audited_at':own.stamp(),'command':driver['command'],'selectors':recovery.SUPPLEMENT_SELECTORS,
+        'audited_at':own.stamp(),'command':driver['command'],'selectors':SELECTORS,
         'terminal_audit':audit.reference(FOLDER/'terminal-validation.json'),
         'stdout':audit.reference(FOLDER/'pytest.stdout'),'stderr':audit.reference(FOLDER/'pytest.stderr'),
         'junit':audit.reference(FOLDER/'junit.xml')}
@@ -110,8 +112,9 @@ def close(plan, code, preflight, lane_ref, exit_ref, *, reader,
 
 
 def main():
+    global GROUP_ID, SELECTORS, GROUP, FOLDER
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode',choices=('run','audit'));parser.add_argument('--expected-commit',required=True)
+    parser.add_argument('--lease-recovery',action='store_true');parser.add_argument('mode',choices=('run','audit'));parser.add_argument('--expected-commit',required=True)
     parser.add_argument('--python-sha256',required=True);parser.add_argument('--pytest-version',required=True)
     parser.add_argument('--pytest-sha256',required=True)
     parser.add_argument('--outer-started');parser.add_argument('--outer-deadline')
@@ -120,6 +123,10 @@ def main():
     for name in ('preflight','lane-receipt','outer-exit'):
         parser.add_argument('--'+name);parser.add_argument('--'+name+'-sha256')
     args=parser.parse_args();audit_end=time.monotonic()+60
+    key='t15-lease-recovery' if args.lease_recovery else 't15-supervision-recovery'
+    if args.lease_recovery:
+        GROUP_ID, SELECTORS = recovery.LEASE_GROUP_ID, recovery.LEASE_SUPPLEMENT_SELECTORS
+        GROUP=runner.RAW_BASE/(GROUP_ID+'.dispatch');FOLDER=GROUP/'supplement'
     audit.require(sys.platform=='linux' and socket.gethostname().split('.')[0]=='mbit10'
                   and Path('/data1/yanruj') in ROOT.parents,'supplement requires mbit10 data1 runtime')
     audit.require(sys.flags.no_user_site and not sys.flags.optimize
@@ -140,8 +147,8 @@ def main():
             runner.execute_supplement(FOLDER,begin,end,deadline,args.expected_commit,runtime,
                 {'pid':args.pane_pid,'start_ticks':args.pane_start_ticks},args.lane,test_runtime)
     else:
-        plan=json.loads((batch.PLAN_DIR/(recovery.IDS['t15-supervision-recovery']+'.json')).read_text())
-        batch.validate_plan(plan,'t15-supervision-recovery')
+        plan=json.loads((batch.PLAN_DIR/(recovery.IDS[key]+'.json')).read_text())
+        batch.validate_plan(plan,key)
         def ref(name):return {'path':getattr(args,name),'sha256':getattr(args,name+'_sha256')}
         print(json.dumps(close(plan,args.expected_commit,ref('preflight'),ref('lane_receipt'),ref('outer_exit'),
                                reader=audit.Reader(audit_end))))

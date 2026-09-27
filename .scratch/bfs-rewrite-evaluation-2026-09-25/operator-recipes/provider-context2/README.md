@@ -30,3 +30,27 @@ checkout is now at that commit. Socket0 remains externally held (generation340
 at 01:10 ET); dispatch waits for its release and fresh helper/capacity checks.
 See [host readback](host-readonly-20260927.json) and
 [Git delivery](node0-export-20260927.json).
+
+## Node1 readiness after T15 closure — 2026-09-27 02:16 ET
+
+Root requested the original reviewed node1 variant after T15 failed and released
+its lane. The idle host operator checkout was returned through Git to exact
+`ec4d8da5c31903e92d2d49b784371d1edd3667f7`; node0 variant `8e050d4` and its
+export receipt remain preserved. No payload or operational code was changed.
+Independent T15 closure at 02:14:41 ET checked all 280 PID/start identities twice:
+all were absent except the exact original zero-RSS zombie pane. The 86-event
+shared cleanup ledger settled in 14.311253179 seconds, and generation439 was
+released with an unlocked kernel lease.
+
+The [fresh node1 receipt](node1-readiness-20260927.json) at 02:16:43 ET reopens
+runtime8cb before and after read-only source/header/reference/build and exact
+prompt verification. The original5f record view plus exact1b context1 Git blob
+was inspected in memory. An initial inspector without that overlay failed the
+canonical predecessor check; it created no output roots or execution attempt.
+Helper tracking tip `2ffb83ae` matches the installed full host subtree and both
+script hashes. Node1 and legacy leases were stable, released and kernel-free;
+node0 remained externally held at generation345. Existing capacity/disk gates
+passed. This is prospective readiness for root's dispatch, not a provider result;
+lease availability must still hold when the wrapper enters the helper. The
+remaining1,632-second allowance, 750-second outer clock, 600-second call and $10
+per-call cap remain unchanged. This agent made no provider call or lane claim.

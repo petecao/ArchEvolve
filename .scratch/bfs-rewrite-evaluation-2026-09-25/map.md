@@ -2402,3 +2402,12 @@ operator; 125 existing public API contract tests pass.
 [T18/T19 templates](operator-recipes/native-acceptance/README.md) preserve actual
 retained candidate/patch/provider provenance and leave empirical protocol and
 package fields unresolved. No additional evaluation was launched or ticket resolved.
+
+## Lease recovery checkpoint — 2026-09-27 02:25 ET
+
+T15 supervision recovery failed before public correctness verification. Its
+[independent closure](observations/failed-t15-supervision-closure-20260927.json)
+retains the failed result and charges 4,551 seconds / 1,433,210,880 bytes.
+Fresh T15/T16 plans retain original hard ends and require exact-runtime Linux
+lease-transition proof. T20 context2 provider is running on node 1 generation 440;
+node 0 remains externally occupied. No acceptance cell or gain is qualified.

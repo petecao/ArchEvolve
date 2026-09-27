@@ -1,7 +1,7 @@
-"""Fixed failed-supervision cost admission. Created 2026-09-26 ET.
+"""Fixed failed-supervision cost admission. Created 2026-09-26; updated 2026-09-27 ET.
 
 This reader does not repair, settle, qualify, or resume historical evidence.
-Only the two explicitly pinned recovery plans may consume its flat cost rows.
+Only explicitly pinned recovery plans may consume these flat cost rows.
 """
 from datetime import timedelta
 import json
@@ -14,12 +14,15 @@ from scripts import bfs_owned_execution as owned
 from swdb import artifacts, yamlio
 
 IDS = {
+    't15-lease-recovery': 'bfs-t15-lease-recovery-simulator-batch-20260927-a1',
+    't16-lease-recovery': 'bfs-t16-lease-recovery-simulator-batch-20260927-a1',
     't15-supervision-recovery': 'bfs-t15-supervision-recovery-simulator-batch-20260926-a1',
     't16-supervision-recovery': 'bfs-t16-supervision-recovery-simulator-batch-20260926-a1',
 }
-ENDS = {'t15-supervision-recovery': '2026-09-27T09:14:09.851819-04:00',
+ENDS = {'t15-lease-recovery': '2026-09-27T09:14:09.851819-04:00',
+        't16-lease-recovery': '2026-09-27T20:16:17.225985-04:00','t15-supervision-recovery': '2026-09-27T09:14:09.851819-04:00',
         't16-supervision-recovery': '2026-09-27T20:16:17.225985-04:00'}
-BASES = {'t15-supervision-recovery': 't15-setup-recovery', 't16-supervision-recovery': 't16'}
+BASES = {'t15-lease-recovery':'t15-supervision-recovery', 't16-lease-recovery':'t16-supervision-recovery','t15-supervision-recovery': 't15-setup-recovery', 't16-supervision-recovery': 't16'}
 GROUP_ID = 'bfs-supervision-recovery-linux-20260926-a1'
 OLD_GROUP = 'bfs-t15-setup-recovery-linux-20260926-a1'
 OLD_T16 = 'bfs-t16-simulator-batch-20260926-a1'
@@ -35,6 +38,57 @@ SUPPLEMENT_SELECTORS = [
 ]
 
 
+LEASE_GROUP_ID = 'bfs-supervision-lease-recovery-linux-20260927-a1'
+LEASE_SELECTORS = ['tests/test_bfs_simulator_batch.py::'+name for name in (
+    'test_other_socket_transition_requires_stable_real_lock_snapshot',
+    'test_other_socket_persistent_disagreement_is_bounded',
+    'test_snapshot_retry_never_tolerates_own_change_or_legacy_conflict',
+    'test_other_socket_metadata_changes_during_kernel_probe_are_not_returned',
+    'test_external_generations_must_stabilize_before_return',
+    'test_other_socket_can_be_legally_held_without_disrupting_this_lane')]
+
+
+LEASE_SUPPLEMENT_SELECTORS = SUPPLEMENT_SELECTORS + LEASE_SELECTORS
+
+
+def supplement_selectors(plan):
+    return SUPPLEMENT_SELECTORS + (LEASE_SELECTORS if 'lease_recovery' in plan['accounting'] else [])
+
+
+def failed_lease_batch(plan, base):
+    """Charge the immutable failed T15 and its independent closure without qualification."""
+    b=batch_api();entry=plan['accounting']['lease_recovery']['failed_batch']
+    ref=entry['closure_observation'];path=b.ROOT/ref['repository_path']
+    value=b.read_reference({'path':str(path),'sha256':ref['sha256']}, maximum=16*1024**2)
+    driver=b.read_reference(entry['driver'],maximum=16*1024**2)
+    b.require(driver['id']==base['id']==entry['id']==IDS['t15-supervision-recovery']
+              and driver['plan']==base and driver['state']=='failed'
+              and driver['reason']=='ValueError: other lease metadata and kernel lock disagree'
+              and driver['outer_deadline']==ENDS['t15-supervision-recovery'],
+              'failed lease batch identity or original envelope changed')
+    b.require(value['driver_reference']==entry['driver'] and value['cleanup_ledger_reference']==entry['ledger']
+              and value['owned_closure_verified'] is True and value['identity_count']==280
+              and value['series']['samples']==[] and value['public_primary']['reference']==entry['evaluation'],
+              'failed lease batch closure provenance changed')
+    from scripts.bfs_simulator_batch_terminal import validate_cleanup_ledger
+    validate_cleanup_ledger(entry['driver'],entry['ledger'],expected_run_id=entry['id'],
+        expected_outer_start=driver['outer_started'],expected_deadline=driver['outer_deadline'],current=b.now())
+    correction=value['accounting_correction'];closed=b.stamp(entry['closed_at']);outer=b.stamp(driver['outer_started'])
+    b.require(correction['outer_elapsed_seconds_ceiling']==3415,'failed execution cost changed')
+    b.require(math.ceil((closed-outer).total_seconds())==entry['elapsed_seconds']==4551
+              and closed==b.stamp(value['observed_at'])<=b.now()
+              and entry['outer_execution_seconds']==3415,'failed closure wall charge changed')
+    for rows in value['identity_observations']:
+        current_closed(rows,driver['process_observations']['pane_identity'])
+    evaluation=b.read_reference(entry['evaluation'],maximum=16*1024**2)
+    b.require(evaluation['outcome']=={'state':'interrupted','stage':'simulation','reason':'interrupted by SIGTERM'}
+              and evaluation['correctness']=={'state':'unverified','checks':[]},'failed public result was promoted')
+    b.require(entry['storage_paths']==driver['storage_paths']
+              and b.allocated_bytes(entry['storage_paths'])==entry['retained_bytes']==1433210880,
+              'failed lease batch final storage changed')
+    return {'id':entry['id'],'elapsed_seconds':entry['elapsed_seconds'],'raw_bytes':entry['retained_bytes']}
+
+
 
 # The successful 2026-09-27 group tested this immutable runtime. Only its two
 # consumer readers may differ in the new batch; no tested primitive is waived.
@@ -47,6 +101,10 @@ PROOF_PROVENANCE = {'code_commit':PROOF_COMMIT, 'runtime_sha256_digest':PROOF_MA
     'consumer_only_exceptions':PROOF_CONSUMERS, 'evidence_kind':'contract_fixture'}
 
 
+PROOF_COMPAT_COMMIT = '6a493a0d489d8d1c76eba8c3431538d6412fd45a'
+PROOF_COMPAT_CONSUMERS = {'scripts/bfs_simulator_batch.py': '0ffcc7ef83b0be924d8f3c793110e112c9c5e8e6515547f2e233909b5e425183', 'scripts/bfs_simulator_recovery.py': 'bea576ee47e69b56cd33d9d048a041a03613d48f34b59dc78e2603e0347ec64c'}
+
+
 def proof_admission(admission):
     """Keep actual proof identity separate from the current execution runtime."""
     b=batch_api()
@@ -57,6 +115,9 @@ def proof_admission(admission):
               and artifacts.digest(declared['runtime_sha256'])==PROOF_MAP_DIGEST,
               'Linux proof provenance differs from the immutable successful group')
     old,current=declared['runtime_sha256'],admission['runtime_sha256']
+    b.require(admission['code_commit']==PROOF_COMPAT_COMMIT
+              and all(current.get(name)==digest for name,digest in PROOF_COMPAT_CONSUMERS.items()),
+              'historical proof compatibility is restricted to the exact 6a readers')
     b.require(set(old)==set(current) and all(old[name]==digest for name,digest in PROOF_CONSUMERS.items())
               and all(current[name]==digest for name,digest in old.items() if name not in PROOF_CONSUMERS),
               'current runtime changes a tested primitive or proof dependency')
@@ -242,6 +303,20 @@ def failed_t16(plan, base):
 
 def preparation_charges(plan):
     b = batch_api(); base = base_plan(plan)
+    if 'lease_recovery' in plan['accounting']:
+        recovery=plan['accounting']['lease_recovery']
+        b.require(recovery['base_kind']==BASES[kind(plan)] and recovery['base_plan_sha256']==artifacts.digest(base)
+                  and recovery['prior_proof_reservation']==base['accounting']['preparation_reservation']
+                  and recovery['proof_runtime_policy']=='exact_current_runtime_only_no_consumer_exceptions'
+                  and 'linux_proof_provenance' not in plan,'lease recovery cannot reuse historical proof exceptions')
+        rows=preparation_charges(base)
+        if kind(plan)=='t15-lease-recovery':rows.append(failed_lease_batch(plan,base))
+        fresh=plan['accounting']['preparation_reservation']
+        b.require(fresh['id']==LEASE_GROUP_ID and fresh['elapsed_seconds']==600 and fresh['raw_bytes']==2*b.GIB,
+                  'fresh lease proof reservation changed')
+        rows.append({k:fresh[k] for k in ('id','elapsed_seconds','raw_bytes')})
+        b.require(len({r['id'] for r in rows})==len(rows),'lease recovery repeats a cost')
+        return rows
     if kind(plan) == 't15-supervision-recovery':
         failed_group(plan, base)
         rows = b.preparation_charges(base)  # Includes failed a4's FULL reservation.
@@ -299,6 +374,8 @@ def validate_supplement(plan, admission):
     """Separate fixed tests are evidence inside the group, not a third proof kind."""
     b = batch_api(); reservation = plan['accounting']['preparation_reservation']
     actual = admission['preparation_reservation']; group = Path(reservation['storage_paths'][-1])
+    if 'lease_recovery' in plan['accounting']:
+        b.require('linux_proof_runtime' not in admission, 'fresh lease proof cannot use historical runtime aliases')
     ref = actual['supplement']; value = b.read_reference(ref, maximum=4*1024**2)
     _validate_supplement_value(plan, admission, ref, value)
 
@@ -317,11 +394,11 @@ def _validate_supplement_value(plan, admission, ref, value):
     b.require(b.stamp(pre['observed_at']) <= start <= finish <= b.stamp(actual['finished'])
               and (finish-start).total_seconds() <= 90, 'supplement exceeds its original finite stage')
     command = value['command']; junit = value['junit']; stdout = value['stdout']
-    expected = [command[0],'-m','pytest',*SUPPLEMENT_SELECTORS,'-q','-p','no:cacheprovider',
+    expected = [command[0],'-m','pytest',*supplement_selectors(plan),'-q','-p','no:cacheprovider',
                 '--junitxml='+junit['path'],'--basetemp='+str(group/'supplement/pytest')]
     b.require(command == expected and Path(command[0]).is_absolute()
               and Path(command[0]).resolve()==Path(admission['python']['path']).resolve()
-              and value.get('selectors') == SUPPLEMENT_SELECTORS,
+              and value.get('selectors') == supplement_selectors(plan),
               'supplement must run the full fixed RSS suite and exact lease-reader cases')
     for item in (junit, stdout, value['stderr']):
         p = Path(item['path'])
@@ -337,7 +414,7 @@ def _validate_supplement_value(plan, admission, ref, value):
     terminal = b.read_reference(value['terminal_audit'], maximum=16*1024**2)
     lane = b.read_reference(terminal['lane'])['socket_lane']; outer_exit = b.read_reference(terminal['outer_exit'])
     b.require(Path(value['terminal_audit']['path']) == group/'supplement/terminal-validation.json'
-              and terminal.get('id') == GROUP_ID+'.supplement' and terminal.get('state') == 'complete'
+              and terminal.get('id') == reservation['id']+'.supplement' and terminal.get('state') == 'complete'
               and terminal.get('code_commit') == admission['code_commit']
               and terminal.get('lease_released') is True and terminal.get('complete_retained_identity_union') is True
               and terminal.get('cleanup_state') in {'terminal_and_reaped','terminal_no_live_owned_processes'}

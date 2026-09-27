@@ -1,4 +1,4 @@
-"""Prospective coordinator contracts; fixtures are not BFS evidence. Dated 2026-09-26 ET."""
+"""Prospective coordinator contracts; fixtures are not BFS evidence. Updated 2026-09-27 ET."""
 import copy
 from datetime import datetime, timedelta
 import hashlib
@@ -647,3 +647,118 @@ def test_resource_sampling_uses_cleanup_clock_without_extending_outer_deadline(t
     assert events[1]==('stop',clock.mono+.25),events
     saved=json.loads((runs/(policy['id']+'.driver')/'driver.json').read_text())
     assert saved['state']==('failed' if cleanup_seconds > 30 else 'complete')
+
+
+@pytest.mark.parametrize('transition', ['acquire', 'release'])
+def test_other_socket_transition_requires_stable_real_lock_snapshot(tmp_path, monkeypatch, transition):
+    """Actual flock + hostlock publication ordering; no measured simulator work."""
+    import fcntl
+    monkeypatch.setenv('LACT_LEASE_ROOT', str(tmp_path))
+    monkeypatch.setattr(batch.profile, '_verified_lane', lambda *args: 'verified own lane')
+    for name in ('mbit10-evaluation', 'mbit10-evaluation-node0', 'mbit10-evaluation-node1'):
+        (tmp_path / (name + '.lease')).touch()
+        (tmp_path / (name + '.meta.json')).write_text(json.dumps({'state': 'held' if name.endswith('node0') else 'released'}))
+    other = tmp_path / 'mbit10-evaluation-node1.meta.json'
+    pauses = []
+    with (tmp_path / 'mbit10-evaluation-node1.lease').open('rb') as lock:
+        # Both hostlock windows can expose released metadata with a held kernel lock.
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        def settle(seconds):
+            pauses.append(seconds)
+            if transition == 'acquire':
+                temp = other.with_suffix('.tmp')
+                temp.write_text(json.dumps({'state': 'held', 'lease': {'generation': 2}}))
+                temp.replace(other)
+            else:
+                fcntl.flock(lock, fcntl.LOCK_UN)
+        monkeypatch.setattr(batch.time, 'sleep', settle)
+        result = batch.lease_observation({}, 0)
+        row = result['leases']['mbit10-evaluation-node1']
+        assert row['kernel_held'] is (transition == 'acquire')
+        assert row['sha256'] == hashlib.sha256(other.read_bytes()).hexdigest()
+        assert len(pauses) >= 2 and sum(pauses) <= .25
+
+
+def test_other_socket_persistent_disagreement_is_bounded(tmp_path, monkeypatch):
+    import fcntl
+    monkeypatch.setenv('LACT_LEASE_ROOT', str(tmp_path))
+    monkeypatch.setattr(batch.profile, '_verified_lane', lambda *args: 'verified own lane')
+    for name in ('mbit10-evaluation', 'mbit10-evaluation-node0', 'mbit10-evaluation-node1'):
+        (tmp_path / (name + '.lease')).touch()
+        (tmp_path / (name + '.meta.json')).write_text(json.dumps({'state': 'held' if name.endswith('node0') else 'released'}))
+    pauses = []
+    monkeypatch.setattr(batch.time, 'sleep', pauses.append)
+    with (tmp_path / 'mbit10-evaluation-node1.lease').open('rb') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        with pytest.raises(ValueError, match='metadata and kernel'):
+            batch.lease_observation({}, 0)
+    assert len(pauses) == 4 and sum(pauses) <= .25
+
+
+@pytest.mark.parametrize('fault', ['own', 'legacy'])
+def test_snapshot_retry_never_tolerates_own_change_or_legacy_conflict(tmp_path, monkeypatch, fault):
+    import fcntl
+    monkeypatch.setenv('LACT_LEASE_ROOT', str(tmp_path))
+    monkeypatch.setattr(batch.profile, '_verified_lane', lambda *args: 'verified own lane')
+    for name in ('mbit10-evaluation', 'mbit10-evaluation-node0', 'mbit10-evaluation-node1'):
+        (tmp_path / (name + '.lease')).touch()
+        (tmp_path / (name + '.meta.json')).write_text(json.dumps({'state': 'held' if name.endswith('node0') else 'released'}))
+    pauses = []
+    with (tmp_path / 'mbit10-evaluation-node1.lease').open('rb') as other, (tmp_path / 'mbit10-evaluation.lease').open('rb') as legacy:
+        fcntl.flock(other, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        def change(seconds):
+            pauses.append(seconds)
+            if fault == 'own':
+                (tmp_path / 'mbit10-evaluation-node0.meta.json').write_text(json.dumps({'state': 'held', 'lease': {'generation': 999}}))
+            else:
+                fcntl.flock(legacy, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        monkeypatch.setattr(batch.time, 'sleep', change)
+        with pytest.raises(ValueError, match='own lane|legacy|metadata and kernel'):
+            batch.lease_observation({}, 0)
+    assert len(pauses) == 1
+
+
+def test_other_socket_metadata_changes_during_kernel_probe_are_not_returned(tmp_path, monkeypatch):
+    import fcntl
+    monkeypatch.setenv('LACT_LEASE_ROOT', str(tmp_path))
+    monkeypatch.setattr(batch.profile, '_verified_lane', lambda *args: 'verified own lane')
+    for name in ('mbit10-evaluation', 'mbit10-evaluation-node0', 'mbit10-evaluation-node1'):
+        (tmp_path / (name + '.lease')).touch()
+        (tmp_path / (name + '.meta.json')).write_text(json.dumps({'state': 'held' if name.endswith('node0') else 'released'}))
+    path = tmp_path / 'mbit10-evaluation-node1.meta.json'
+    real_flock = fcntl.flock
+    probes = []
+    def torn(fd, operation):
+        # The fourth shared probe is the other socket after legacy on pass two.
+        if operation == fcntl.LOCK_SH | fcntl.LOCK_NB:
+            probes.append(fd)
+            if len(probes) == 4:
+                temp = path.with_suffix('.tmp')
+                temp.write_text(json.dumps({'state': 'released', 'lease': {'generation': 2}}))
+                temp.replace(path)
+        return real_flock(fd, operation)
+    monkeypatch.setattr(batch.fcntl, 'flock', torn)
+    pauses = []
+    monkeypatch.setattr(batch.time, 'sleep', pauses.append)
+    result = batch.lease_observation({}, 0)
+    row = result['leases']['mbit10-evaluation-node1']
+    assert result['other_socket_snapshot_attempts'] == 4
+    assert row['metadata']['lease']['generation'] == 2
+    assert row['sha256'] == hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def test_external_generations_must_stabilize_before_return(tmp_path, monkeypatch):
+    monkeypatch.setenv('LACT_LEASE_ROOT', str(tmp_path))
+    monkeypatch.setattr(batch.profile, '_verified_lane', lambda *args: 'verified own lane')
+    for name in ('mbit10-evaluation', 'mbit10-evaluation-node0', 'mbit10-evaluation-node1'):
+        (tmp_path / (name + '.lease')).touch()
+        (tmp_path / (name + '.meta.json')).write_text(json.dumps({'state': 'held' if name.endswith('node0') else 'released'}))
+    path = tmp_path / 'mbit10-evaluation-node1.meta.json'
+    pauses = []
+    def churn(seconds):
+        pauses.append(seconds)
+        path.write_text(json.dumps({'state': 'released', 'lease': {'generation': len(pauses)}}))
+    monkeypatch.setattr(batch.time, 'sleep', churn)
+    with pytest.raises(ValueError, match='did not stabilize'):
+        batch.lease_observation({}, 0)
+    assert len(pauses) == 4

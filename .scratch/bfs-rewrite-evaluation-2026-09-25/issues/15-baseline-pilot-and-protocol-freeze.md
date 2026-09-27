@@ -7,6 +7,22 @@ Updated: 2026-09-27 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
+## Failed lease observation — 2026-09-27 02:25 ET
+
+The supervision-recovery attempt failed because an external socket transition
+produced a temporary mismatch between lease metadata and its kernel lock.
+The guest subprocess exited successfully, but the public evaluation was interrupted
+before correctness verification; there are zero accepted samples. The
+[independent closure](../observations/failed-t15-supervision-closure-20260927.json)
+verified the retained process identities, settled cleanup and 1,433,210,880 retained
+bytes. Charge 4,551 seconds through independent closure, including 3,415 seconds
+of execution. All earlier costs and proof reservations remain charged.
+
+The new lease-recovery plan preserves the original hard end and scientific settings.
+Its bounded coherent-snapshot repair requires fresh Linux proof from the exact new
+runtime; local tests and the historical proof group cannot admit it. Independent
+integration review is pending. This ticket remains claimed.
+
 ## Actual Linux recovery proofs — 2026-09-27 00:38 ET
 
 The [independently closed proof group](../observations/proofgroup-independent-closure-20260927.json)

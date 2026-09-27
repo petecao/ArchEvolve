@@ -407,8 +407,8 @@ def declared_proof_admission():
     # Construct an admissible synthetic current map from the frozen evidence;
     # unrelated main-branch changes must not relabel that historical proof.
     actual=batch.runtime_identity()
-    current={**original,**{name:actual[name] for name in mod.PROOF_CONSUMERS}}
-    return {'code_commit':'b'*40,'runtime_sha256':current,
+    current={**original,**mod.PROOF_COMPAT_CONSUMERS}
+    return {'code_commit':mod.PROOF_COMPAT_COMMIT,'runtime_sha256':current,
             'linux_proof_runtime':{'code_commit':mod.PROOF_COMMIT,'runtime_sha256':original}}
 
 
@@ -417,7 +417,7 @@ def test_fixed_proof_runtime_is_explicit_and_does_not_relabel_current_execution(
     actual=mod.proof_admission(admission)
     assert actual['code_commit']==mod.PROOF_COMMIT
     assert artifacts.digest(actual['runtime_sha256'])==mod.PROOF_MAP_DIGEST
-    assert admission==before and admission['code_commit']=='b'*40
+    assert admission==before and admission['code_commit']==mod.PROOF_COMPAT_COMMIT
     assert mod.proof_admission({'code_commit':'a'*40})=={'code_commit':'a'*40}
 
 
@@ -450,3 +450,38 @@ def test_actual_changed_t17_dependency_cannot_reuse_the_old_proof():
     admission['runtime_sha256'][name]=actual
     with pytest.raises(ValueError,match='tested primitive or proof dependency'):
         mod.proof_admission(admission)
+
+
+def test_changed_lease_consumer_cannot_reuse_historical_proof():
+    admission=declared_proof_admission()
+    admission['runtime_sha256']['scripts/bfs_simulator_batch.py']='f'*64
+    with pytest.raises(ValueError,match='exact 6a readers'):
+        mod.proof_admission(admission)
+
+
+def test_historical_proof_compatibility_rejects_another_commit():
+    admission=declared_proof_admission();admission['code_commit']='f'*40
+    with pytest.raises(ValueError,match='exact 6a readers'):
+        mod.proof_admission(admission)
+
+
+@pytest.mark.parametrize('task',['t15','t16'])
+def test_lease_plan_keeps_science_and_charges_fresh_proof_once(task,monkeypatch):
+    old=policy(task)
+    new=json.loads((batch.PLAN_DIR/f'bfs-{task}-lease-recovery-simulator-batch-20260927-a1.json').read_text())
+    for key in ('bounds','model_build','target','verifier','roi','threads','repetitions','warmups',
+                'verification_ticks','profitability','record_sha256','protocol_requests','clock_policy'):
+        assert new[key]==old[key]
+    assert [{k:v for k,v in row.items() if k!='id'} for row in new['series']]==[
+        {k:v for k,v in row.items() if k!='id'} for row in old['series']]
+    assert 'linux_proof_provenance' not in new
+    assert new['accounting']['preparation_reservation']['id']==mod.LEASE_GROUP_ID
+    prior=[{'id':mod.GROUP_ID,'elapsed_seconds':600,'raw_bytes':2*batch.GIB}]
+    original=mod.preparation_charges
+    monkeypatch.setattr(mod,'base_plan',lambda p:old)
+    monkeypatch.setattr(mod,'preparation_charges',lambda p:prior.copy() if p is old else original(p))
+    monkeypatch.setattr(mod,'failed_lease_batch',lambda p,b:{'id':old['id'],'elapsed_seconds':4551,'raw_bytes':1433210880})
+    rows=original(new)
+    assert rows[0]==prior[0] and rows[-1]=={'id':mod.LEASE_GROUP_ID,'elapsed_seconds':600,'raw_bytes':2*batch.GIB}
+    assert len(rows)==(3 if task=='t15' else 2)
+    assert len({r['id'] for r in rows})==len(rows)
