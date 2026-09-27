@@ -165,4 +165,4 @@ def test_terminal_storage_rejects_resealed_accounting_substitutions(closed_stora
 def test_only_consumed_simulator_fixture_ids_advance():
     assert fixture_runner.SELECTIONS['owned_cleanup'][0] == 'bfs-simulator-owned-linux-20260927-a8'
     assert fixture_runner.SELECTIONS['dx100_interruption'][0] == 'bfs-simulator-interruption-linux-20260927-a8'
-    assert fixture_runner.SELECTIONS['native_campaign_owned_cleanup'][0] == 'bfs-native-campaign-owned-linux-20260926-a1'
+    assert fixture_runner.SELECTIONS['native_campaign_owned_cleanup'][0] == 'bfs-native-campaign-owned-linux-20260927-b2'

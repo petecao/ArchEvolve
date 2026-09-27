@@ -34,7 +34,7 @@ BASE = Path('/data/yanruj/EvolveSWDB_runs')
 LEASES = Path('/data1/yanruj/lact-host-lease')
 HELPER = '/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh'
 HELPER_SHA = '00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8'
-PROOF_ID = 'bfs-native-campaign-owned-linux-20260926-a1'
+PROOF_ID = 'bfs-native-campaign-owned-linux-20260927-b2'
 ENV_REMOVE = ('PYTHONPATH', 'PYTHONHOME', 'PYTHONSTARTUP', 'PYTHONUSERBASE', 'PYTHONOPTIMIZE',
               'PYTEST_ADDOPTS', 'PYTEST_PLUGINS', 'LD_PRELOAD', 'LD_LIBRARY_PATH')
 
@@ -127,7 +127,7 @@ def proof(c, path):
         'import pytest,hashlib,json;print(json.dumps([pytest.__version__,hashlib.sha256(open(pytest.__file__,"rb").read()).hexdigest()]))'],
         text=True, env=environment(True))
     version, pytest_sha = json.loads(probe)
-    session = 'bfs-native-routes-proof-b1'
+    session = 'bfs-native-routes-proof-' + PROOF_ID.rsplit('-', 1)[1]
     body = shlex.join([c['python'], '-I', '-B', str(Path(__file__).resolve()), 'proof-stage', str(path),
                        version, pytest_sha]) + ' "$BASHPID"'
     body += ' >' + shlex.quote(str(dispatch/'pane.stdout')) + ' 2>' + shlex.quote(str(dispatch/'pane.stderr'))

@@ -45,7 +45,7 @@ SELECTIONS = {
         ['tests/test_dx100_interruption.py::test_public_interruption_is_durable_before_postmortem'], {
             'test_public_interruption_is_durable_before_postmortem[raises]',
             'test_public_interruption_is_durable_before_postmortem[stalls]'}),
-    'native_campaign_owned_cleanup': ('bfs-native-campaign-owned-linux-20260926-a1',
+    'native_campaign_owned_cleanup': ('bfs-native-campaign-owned-linux-20260927-b2',
         ['tests/test_bfs_native_execution.py::test_linux_campaign_reaps_detached_child'], {
             'test_linux_campaign_reaps_detached_child[False]',
             'test_linux_campaign_reaps_detached_child[True]'})}

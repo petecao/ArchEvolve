@@ -164,6 +164,10 @@ def test_a_changed_record_is_seen_even_with_an_older_timestamp(repo):
 
 def test_unknown_counter_availability_stays_null(repo):
     edit_path = repo.path / "machines" / "mbit10.yaml"
+    # 2026-09-27 ET: frozen native protocols bind the exact mbit10 record digest,
+    # so this synthetic machine edit drops them from the throwaway copy.
+    for frozen in (repo.path / "protocols").glob("bfs-native-one-thread-*.yaml"):
+        frozen.unlink()
     import yaml as _yaml
     data = _yaml.safe_load(edit_path.read_text())
     data["counters"]["hardware_counters_available"] = {"value": None, "basis": "unknown", "evidence_refs": []}
