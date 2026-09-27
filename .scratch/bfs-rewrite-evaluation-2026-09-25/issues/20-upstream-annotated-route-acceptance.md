@@ -238,3 +238,20 @@ pilot; node1: held since 12:07 ET). Root ruled that neither lane is preempted an
 unconfined. When node1 is released, `CODE_COMMIT=bb42d26… bash launch.sh t20-context6-builds 1
 900` builds `bfs-t20-context6-{primary,diagnostic}-build-20260927-c3`. No build, correctness,
 DX100 or gain evidence exists yet, and no acceptance box changes.
+
+## Context6 builds still pending a lane after 3 h — 2026-09-27 16:45 ET
+
+Following root's instruction, node1 was polled every 15 minutes from 13:42 to 16:27 ET (12
+polls). The node1 lease stayed `held` on every poll. Its last heartbeat was 18:32:44Z (14:32 ET),
+and node0 is still held by the T15 pilot. No lane was preempted and nothing was built unconfined.
+
+The host checkout `/data1/yanruj/EvolveSWDB_streamc_20260927_b1` is still clean at `bb42d26`,
+which holds the context6 records. Root will launch the builds in the next free lane gap with:
+
+```
+cd /data1/yanruj/EvolveSWDB_streamc_20260927_b1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/stream-c-20260927
+CODE_COMMIT=bb42d2650a3dbc08527002cf23cafefbe8b0da08 bash launch.sh t20-context6-builds <NODE> 900
+```
+
+The build IDs `bfs-t20-context6-{primary,diagnostic}-build-20260927-c3` are unused. The candidate
+remains `unverified`, and no acceptance box changes.
