@@ -83,6 +83,28 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Host and worker checkpoint — 2026-09-26 23:33 ET
+
+The [full host audit](observations/health-20260926-2333.json) found both socket
+leases and the legacy lease released (332/429/77), no kernel holders, and no live
+owned BFS work. T16 remains failed with zero completed samples; its exact retained
+944-identity union is closed except the permitted zero-RSS launcher zombie.
+All three current workers are active. Free space: 16.079 GiB on `/data1`, 164.972
+GiB on `/data`; new raw output remains on `/data`. Available node0/node1/global
+memory is 56.506/58.476/117.125 GiB; load is 0.44/0.58/1.71. Installed helper
+bytes and working tree are unchanged. New upstream `15129f88` requires a host
+subtree comparison before any admission. No lane is reserved by this observation.
+
+The independently reviewed RSS and historical lease fixes are committed at
+`a5a63f9223b684d9622d28914c704b175906da7a`; isolated exact runtime `0dc0d4fecfe2903ff0cc1ba9e6b738a8f5c1a4f1`
+passed 158 tests with seven Linux-only skips and was pushed on the authorized
+private runtime branch. Its seven changed blobs match independent review.
+The [T16 cost-only review](observations/t16-failed-cleanup-accounting-review-20260926.json)
+retains the outstanding five-second grant in full and preserves the failed
+cleanup-budget verdict. It does not add that grant a second time to the full
+11,121-second closed wall charge or reset the original hard end. Recovery remains
+preparation. T20 has not called its provider. Next full check: 2026-09-27 00:03 ET.
+
 ## Execution failure and transfer checkpoint — 2026-09-26 23:27 ET
 
 T16 stopped with `ProcessLookupError: [Errno 3] No such process` in the owned
