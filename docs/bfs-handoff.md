@@ -277,3 +277,10 @@ source attribution, and supported dynamic observations. Native hardware counters
 modeled Callgrind events, and simulator memory packets are different observations.
 Missing quantities or unknown legality remain explicit. Producer intent cannot
 supply an invented hardware capability or override evaluator-owned protections.
+
+## User-requested pause — 2026-09-27
+
+Work is paused at the user’s request, and the recurring heartbeat is deleted.
+See the [resume checkpoint](../.scratch/bfs-rewrite-evaluation-2026-09-25/resume.md)
+for retained authorization, incomplete acceptance, resource limits, interruption
+evidence and the next required steps. No task is marked complete because of this pause.

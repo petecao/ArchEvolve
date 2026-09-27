@@ -651,3 +651,14 @@ Its original 7,320-second public-stage timeout ends at approximately 03:01:58 ET
 the batch hard end remains 09:14:09 ET. These observations are progress only,
 not accepted correctness, timing, calibration, or a gain. See
 [the read-only progress receipt](../observations/t15-progress-independent-20260927-0144.json).
+
+## User-requested pause — 2026-09-27
+
+The user requested stopping work and synchronizing documentation for later
+resumption. The heartbeat is deleted; no new execution is running. See
+[resume checkpoint](../resume.md). Status stays claimed because acceptance
+and final review remain incomplete. The reviewed incremental T15 48-hour/96-GiB
+allocation and comparable bounded recoveries have direct user approval, but
+no new T15 implementation, clock or admission started. T16 is physically stopped
+with a retained strict-cleanup accounting failure; this must be addressed
+prospectively before satisfying the T15 serialization prerequisite.

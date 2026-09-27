@@ -352,3 +352,37 @@ was 85,942,552 KiB. No scientific acceptance or terminal closure is claimed.
 T16 limits and charges are unchanged; separately approved T15 preparation
 does not authorize overlapping execution before T16 closure.
 [Live observation](../observations/host-health-20260927-0940.json).
+
+## User-requested stop — 2026-09-27 09:45 ET
+
+Execution is stopped at the user's explicit request. A single identity-checked
+pidfd SIGTERM reached owned supervisor PID 3719483/start 500985340 at
+09:43:26.681201 ET. Its reviewed graceful cleanup ran; outer exit 1 was retained
+at 09:43:34.951657947 ET, with `InterruptedError: driver interrupted by signal 15`.
+No foreign job was signaled. The first primary yielded no accepted sample.
+
+Independent inspection at 09:43:50 checked all 695 retained PID/start identities
+twice: 694 absent and only the launching pane zombie with zero RSS. Our node 1
+lease was released at generation 451; external node 0 generation 370 remained
+held. Raw plus dispatch allocation was stable at 619,712,512 bytes.
+
+**Cleanup accounting did not pass strict validation.** The ledger retains one
+0.226152836-second nested grace reservation for absent series PID 3719515. It
+contains 117 events and 20.861548168 seconds spent. Final accounting additionally
+failed with `resource sample read bound exceeded`. These failures are preserved;
+absence of executing processes does not make this an admission-grade closure.
+
+Actual outer time was 8,695.249736947 seconds. Conservative observation-inclusive
+charge is 8,712 seconds, retaining cumulative T16 totals of **24,325 seconds /
+11,011,186,688 bytes**. No allowance is refunded. Resumption requires explicit
+coordination and addressing the retained accounting blockers; do not resume this
+closed run ID or mutate its evidence. No further evaluation or repair was started.
+
+Remote originals remain under
+`/data/yanruj/EvolveSWDB_runs/bfs-t16-protocol-recovery-simulator-batch-20260927-a1`
+and its `.dispatch` sibling. Driver, ledger and telemetry are in the nested
+`bfs-t16-protocol-recovery-simulator-batch-20260927-a1.driver` directory.
+Exact runtime `/data1/yanruj/EvolveSWDB_t16_protocol_recovery_runtime_20260927_a1`
+remains untouched. Evidence: [signal](../observations/t16-user-stop-signal-20260927.json),
+[closure and retained path hashes](../observations/t16-user-stop-closure-20260927.json),
+and [post-stop health](../observations/t16-user-stop-health-20260927.json).
