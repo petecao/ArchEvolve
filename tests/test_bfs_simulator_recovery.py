@@ -1,4 +1,4 @@
-"""Fixed failed-supervision accounting and fresh supplement contracts. 2026-09-26 ET."""
+"""Fixed failed-supervision accounting and fresh supplement contracts. Updated 2026-09-27 ET."""
 import copy
 from datetime import datetime, timedelta
 import json
@@ -400,9 +400,14 @@ def test_supplement_canonical_python_alias_preserves_actual_argv(supplement,diff
 
 
 def declared_proof_admission():
-    current=batch.runtime_identity()
-    original={**current,**mod.PROOF_CONSUMERS}
-    assert artifacts.digest(original)==mod.PROOF_MAP_DIGEST
+    frozen=json.loads((Path(__file__).parent/'fixtures/bfs_proof_runtime_8cbfee6.json').read_text())
+    original=frozen['runtime_sha256']
+    assert frozen['code_commit']==mod.PROOF_COMMIT and len(original)==157
+    assert frozen['runtime_sha256_digest']==artifacts.digest(original)==mod.PROOF_MAP_DIGEST
+    # Construct an admissible synthetic current map from the frozen evidence;
+    # unrelated main-branch changes must not relabel that historical proof.
+    actual=batch.runtime_identity()
+    current={**original,**{name:actual[name] for name in mod.PROOF_CONSUMERS}}
     return {'code_commit':'b'*40,'runtime_sha256':current,
             'linux_proof_runtime':{'code_commit':mod.PROOF_COMMIT,'runtime_sha256':original}}
 
@@ -435,3 +440,13 @@ def test_new_plans_cannot_omit_explicit_proof_provenance():
         batch.validate_preparation_reservation(policy('t15'),{})
     for key in ('t15','t16'):
         assert policy(key)['linux_proof_provenance']==mod.PROOF_PROVENANCE
+
+
+def test_actual_changed_t17_dependency_cannot_reuse_the_old_proof():
+    admission=declared_proof_admission()
+    name='scripts/bfs_t17_diagnostic_build.py'
+    actual=batch.runtime_identity()[name]
+    assert actual != admission['linux_proof_runtime']['runtime_sha256'][name]
+    admission['runtime_sha256'][name]=actual
+    with pytest.raises(ValueError,match='tested primitive or proof dependency'):
+        mod.proof_admission(admission)
