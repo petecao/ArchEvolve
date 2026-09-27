@@ -30,7 +30,10 @@ def require(value,why):
 
 def digest(data):return hashlib.sha256(data).hexdigest()
 def reference(path):return {'path':str(path),'sha256':digest(Path(path).read_bytes())}
-def git(*args):return subprocess.check_output(['git','-C',str(RUNTIME),*args],timeout=15)
+def git(*args):
+    # Evidence objects are fetched into the separate operator checkout, never the active runtime.
+    source=Path(__file__).resolve().parents[4] if any(arg.startswith(EVIDENCE) for arg in args) else RUNTIME
+    return subprocess.check_output(['git','-C',str(source),*args],timeout=15)
 
 
 def guard(manifest, expected):

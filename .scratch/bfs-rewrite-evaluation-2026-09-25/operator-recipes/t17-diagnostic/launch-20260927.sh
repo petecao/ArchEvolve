@@ -25,7 +25,7 @@ HELPER=/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_l
 # checked before this wrapper is admitted; the existing driver repeats them.
 PREPARER=/data1/yanruj/EvolveSWDB_t17_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/prepare.py
 MANIFEST="$(dirname "$PREPARER")/runtime-manifest.json"
-PREPARER_SHA=7dae8d604d19c874066e715e049b974c68fbbd29018cc7200e3e90355c0d73da
+PREPARER_SHA=3116a2bcf81ddd3316911f5c67e558d430b96363685eb563191dc96a6ef432dd
 MANIFEST_SHA=447ff528f5015587c702d42007a3607cf0373a800714d8ab59a515cdf9c7afc9
 [[ "$(sha256sum "$PREPARER" | cut -d' ' -f1)" == "$PREPARER_SHA" ]] || exit 64
 [[ "$(sha256sum "$MANIFEST" | cut -d' ' -f1)" == "$MANIFEST_SHA" ]] || exit 64
