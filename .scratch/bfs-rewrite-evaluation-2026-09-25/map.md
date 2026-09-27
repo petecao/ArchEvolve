@@ -83,6 +83,31 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Progress check and prelaunch accounting correction — 2026-09-26 20:03 ET
+
+Both socket leases and the legacy lease were released at the full 20:03 ET
+[host audit](observations/health-20260926-2003.json), with no live retained owned processes. All three assigned workers
+were responsive. Both capacity gates passed, with 17,433,550,848 bytes free
+on `/data1` and 194,145,558,528 bytes on `/data`. No simulator batch had started;
+both exact new batch roots were absent.
+
+The [actual standard Linux proof summary](observations/standard-fixtures-actual-20260926.json)
+records four ownership and two interruption cases passing on `d11dc04`, with
+independent cleanup checks and released leases. Both [sealed admissions](observations/campaign-admissions-20260926.json)
+passed real input validation, and [independent literal launch review](observations/campaign-admission-standards-review-20260926.json)
+found their hashes, runtime, clocks, charges, and argv consistent. They remain
+unused preflight evidence. Before launch, the host identified that the batch
+sampled its run root but omitted the sibling `.dispatch` directory containing
+helper and outer-process output. The repair will include both directories in
+the existing storage allowance and recount terminal writes. No empirical
+attempt or budget has been reset. New code requires fresh matching Linux
+proofs; the original `d11dc04` proof evidence remains valid for that pin.
+
+The exact-`d11dc04` full local regression remains running and has progressed
+past 50% without a failure appearing in the log. This is local regression
+progress, not native or DX100 acceptance. Ticket totals remain 14 resolved
+and seven claimed; final candidate acceptance remains 0/8, with no qualified gain.
+
 ## Final-pin checks and future baseline builds — 2026-09-26 19:53 ET
 
 The independently verified campaign export `d11dc04` is published and installed
@@ -91,8 +116,8 @@ on that exact pin, with a 7,200-second limit; [start receipt](observations/full-
 Its result is pending. Both actual standard Linux selections finished with
 exit zero and have independent passed audits: four ownership cases and two
 interruption cases. Both leases released before their original 90-second ends.
-The next step is actual sealed admission and fresh capacity checks, not a new
-code revision. The earlier wrapper newline concern was disproved by byte-level
+The subsequent 20:03 ET entry above records the prelaunch storage-accounting
+correction discovered after these checks. The earlier wrapper newline concern was disproved by byte-level
 and actual local render checks; [independent review](observations/standard-fixture-render-standards-review-20260926.json).
 No change or attempt resulted from that rejected concern.
 
