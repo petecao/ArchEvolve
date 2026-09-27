@@ -1,7 +1,7 @@
 # 21 — Coverage, ROI gain, and collaborator handoff
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-26 (Eastern Time)
+Updated: 2026-09-27 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 16, 17, 18, 19, 20
@@ -268,3 +268,24 @@ freezes and held host evidence remain absent from this local query. The tracker
 is 14 resolved and seven claimed. Full regression at exact `d5e2159` is running;
 final independent Standards and Spec reviews against `1bdb7d4` remain required
 after actual acceptance and remaining fixes. No fixture closes this ticket.
+
+
+## Full regression diagnosis — 2026-09-27
+
+The fixed `c282c9f` suite finished with **2 failed, 2,431 passed and 21 skipped in
+4,377.83 seconds**. Both failures were stale current-runner `a4` assertions after
+the approved fixture IDs advanced to `a5`. The original complete tracebacks and
+stale wrapper JSON are preserved in the [terminal observation](../observations/full-regression-c282c9f-terminal-observation-20260927.json).
+The pytest PID is absent; its old wrapper session is unavailable, so its exit
+code remains unknown and the original `running` receipt is not rewritten.
+
+Current-main test corrections retain historical `a4` plan pins and the native
+`a1` selection. A separate test-fixture correction uses the exact frozen
+157-entry proof map instead of reconstructing historical evidence from changed
+main-branch files; an actual changed T17 dependency remains rejected. Production
+provenance enforcement and the scientific runtime are unchanged. The focused
+suite passed 161 tests and independent review passed 112, with every frozen-map
+entry verified against the original Git blobs. See the [repair receipt](../observations/full-suite-id-and-proof-fixture-repair-20260927.json).
+No full-suite rerun or green result for later HEAD is claimed. This ticket remains
+claimed: actual acceptance, coverage/gain evidence, synchronization and final
+Standards/Spec reviews remain outstanding.
