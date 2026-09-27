@@ -163,3 +163,37 @@ builds (requests in `requests/`) in a root-assigned lane. The unaccelerated `gap
 is the imported scalar v2 `upstream.primary`/`upstream.diagnostic` pair
 ([import receipt](../observations/stream-c-scalar-v2-baseline-import-20260927.json)); its
 enclosing preparation stays failed at finalization. No candidate exists and no acceptance box changes.
+
+## Context4 retained failed; context5 prepared and reviewed, launch blocked — 2026-09-27 11:55 ET
+
+Context4 failed with provider `interrupted_or_timeout` after 900.498 s with empty stdout. Its
+record was committed on mbit10 (`4ecbac8`) and is retained as failed. For the next attempt, root
+defined a fresh allocation: a 1,800 s pool, 900 s and USD 10 per call, and at most two repairs.
+Contexts 1–4 stay charged.
+
+Two changes make the provider task tractable without changing the strategy. First,
+`swdb/rewrite.py` gains an opt-in `output_format: stream-json` capture. Partial output, event
+counts, estimated thinking tokens and first/last output times are retained even on a timeout, and
+the final JSON is parsed from the `result` event. There are seven new tests. Second, the context5
+annotation is richer. Strategy, intent, regions, required operations, constraints,
+source/package identity and focused worker context stay byte-identical to context4 (see the
+[preparation receipt](../observations/t20-context5-preparation-20260927.json)).
+
+1. **The annotations carry producer-authored code blocks.** The representative HW-producer test
+   client (spec D15, `test_client: true`) supplies four insert-only blocks with anchors: includes,
+   the `DX100Prepare`/`TDStepDX100` helper adapted from the author `TDStepMAA`, the DOBFS setup,
+   and the `> NUM_CORES*1024` dispatch. The rewrite worker realizes them as the patch, and its
+   output is limited to those hunks. The blocks spell out the checked int32 offsets, per-thread
+   slots allocated inside DOBFS, the actual tile7 length, the scalar tail, and critical-serialized
+   parent updates with old parents in tile5 and `wait_ready(tile5)`.
+2. **The producer's checks are preparation only, not candidate evidence.** On the Mac, the DX100
+   functional model gave 16/16 GAPBS verifier PASS on each of five graphs, with the DX100 path
+   taken. On mbit10, a `g++-13 -fsyntax-only` check with the gem5 flags returned 0. Candidate
+   correctness comes only from the evaluator on the built candidate.
+
+Root reviewed `39d8902` under R9 and approved one `t20-context5-submit` call with no retry. **This
+worker session's permission gate refused the host tmux launch, so no context5 provider call has
+been made.** The exact launch command was handed to root. If a candidate results, the primary and
+diagnostic builds (`requests/t20-context5-*-build.json`, job `t20-context5-builds`) need a
+root-assigned lane. The unaccelerated baseline remains the imported scalar v2 upstream pair. No
+acceptance box changes.

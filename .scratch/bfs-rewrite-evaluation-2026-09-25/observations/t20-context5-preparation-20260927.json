@@ -1,0 +1,43 @@
+{
+  "date": "2026-09-27 11:55 ET",
+  "ticket": 20,
+  "branch": "codex/bfs-dx100-candidates-20260927-c2",
+  "commit": "39d890293fa33d8a1a033eaf4e769459628bf464",
+  "root_review": "Root approved 39d8902 for one t20-context5-submit call, no retry (R9).",
+  "context4_outcome": {
+    "proposal": "bfs-campaign-preparation-20260925-a1.upstream-annotated-context4",
+    "record_commit": "4ecbac8 (written on mbit10 at 52d27d2, committed on codex/bfs-streamc-records-20260927-c2)",
+    "state": "failed (provider interrupted_or_timeout)",
+    "host_wall_s": 900.4980057384819,
+    "stdout_bytes": 0,
+    "prompt_bytes": 115100,
+    "note": "Retained as failed. The json output format left no partial evidence."
+  },
+  "rewrite_worker_change": {
+    "file": "swdb/rewrite.py",
+    "summary": "Opt-in provider field output_format=stream-json adds --verbose and --include-partial-messages, parses the final result event, and records meta.stream (event and delta counts, delta characters, estimated thinking tokens, model, first/last stdout growth times, result summary) plus partial_output.txt. It records these on timeout as well. The default json capture is unchanged.",
+    "format_probe": "One trivial claude -p stream-json probe on mbit10 (claude 2.1.278, 0.0066 USD, 2 s) confirmed the event shapes. It is not charged to the T20 allocation because it carried no proposal content.",
+    "tests": "tests/test_rewrite_stream.py (7). The regression set of test_rewrite_stream, test_bfs_rewrite, test_bfs_prompt_projection, test_owned_process_cleanup and test_proposals passed 58 tests in 910 s."
+  },
+  "context5_packet": {
+    "proposal": "bfs-campaign-preparation-20260925-a1.upstream-annotated-context5",
+    "prepared": ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/stream-c-20260927/prepared/context5.*",
+    "proposal_sha256": "20dfdb85cc9c326ad78bd48741f9a737086ef1ab919372ed299191908c327474",
+    "provider_sha256": "f582d5cb6dd5903af2adff20feb2b6baaa242f7b68da18235885be72ad40d45c",
+    "prompt_bytes": 115453,
+    "unchanged_from_context4": ["strategy", "intent", "regions", "required_operations", "constraints", "source_snapshot", "profile_package", "source_sha256", "implementation", "hardware_target", "producer", "prompt_projection", "read_only_context", "target_execution_clarification"],
+    "changed": ["payload annotation", "provider_allocation (root fresh allocation: 1800 s pool, 900 s/call, USD 10/call, <=2 repairs)", "provider output_format stream-json", "annotation_revision parameter"],
+    "annotation": "Producer-authored code blocks from the representative HW test client (spec D15, test_client true): four insert-only edits with anchors (includes; DX100Prepare and TDStepDX100 helper; DOBFS setup; frontier > NUM_CORES*1024 dispatch). They cover checked int32 CSR offsets, 8 tiles and 8 registers per thread allocated inside DOBFS, the actual tile7 length, the scalar tail, a critical-serialized parent gather/mask/masked store with old parents in tile5 and wait_ready(tile5), and the scout count. The worker realizes them as a patch; the output is limited to those hunks.",
+    "author_reference": "apps/dx100/benchmarks/gapbs/src/bfs.cc TDStepMAA lines 66-225, sha256 6835fc42... (identical to mbit10 /data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/src/bfs.cc)"
+  },
+  "producer_preparation_checks": {
+    "status": "Producer preparation only. NOT candidate evidence: candidate correctness comes only from the evaluator on the built candidate.",
+    "functional_model": "producer-check/functional-check.sh on the Mac (Homebrew clang++ 21 with libomp, aarch64), DX100 functional model MAA_functional.hpp, OMP_NUM_THREADS=4, 16 trials each on -g 14, -g 16, -u 16, -g 18 and -u 18: 16/16 GAPBS verifier PASS each, with DX100-path steps taken (12, 20, 32, 36 and 44). The CPU-only build also passed 16/16 on each graph.",
+    "gem5_syntax": "mbit10 g++-13 -fsyntax-only with the candidate build flags and pinned DX100 include paths returned 0. No binary was produced."
+  },
+  "launch": {
+    "planned": "CODE_COMMIT=39d8902 launch.sh t20-context5-submit none 1020 in tmux from /data1/yanruj/EvolveSWDB_streamc_20260927_b1 (checkout at 39d8902, clean)",
+    "state": "not launched: the worker session's permission gate refused the host tmux launch (Modify Shared Resources) at about 11:50 ET. The exact command was sent to root. No provider call for context5 has been made, and its allocation is unspent."
+  },
+  "claims": "Preparation only. No candidate, build, correctness, accelerator execution or acceptance."
+}
