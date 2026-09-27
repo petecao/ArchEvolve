@@ -83,6 +83,35 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Regression result and scalar build preparation — 2026-09-26 20:40 ET
+
+The full local suite finished on unchanged `d11dc04` at 20:34 ET:
+**2,101 passed, 20 skipped** in 3,235.89 seconds, exit zero;
+[complete receipt](observations/full-regression-d11dc04-complete-20260926.json).
+This verifies that pinned local code. The later `8c39ae0` dispatch-storage
+correction has its separate 201-pass targeted selection, independent 15-pass
+selection and fresh actual Linux ownership/interruption proofs.
+
+The [four-scalar-build recipe](../../../docs/bfs-scalar-v2-builds-20260926.md)
+is prepared and locally tested: 49 cases passed, and the independent reviewer
+passed 34 selected cases including a real public `get`. The review found a
+concurrent clock-accounting race; it is reproduced, fixed with coherent locked
+state, and retained in the [preparation evidence](observations/scalar-v2-build-preparation-20260926.json).
+Loader overrides are rejected at startup and cleared for child processes;
+[independent review](observations/scalar-v2-standards-review-20260926.json).
+The exact four requests and 1,200-second envelope are unchanged. No build has
+been dispatched, and no host success or guest result follows from these tests.
+
+The 20:33 ET [full host audit](observations/health-20260926-2033.json) found both
+owned socket leases held, the legacy lease free, all workers healthy and both
+first samples in actual gem5. T15's raw volume was dominated by 6.905 GiB of
+per-element debug text. The host subsequently reported its first sample failed
+under the existing 10-GiB per-execution guard, with no completed sample; full
+terminal readback is pending. T16 continues. This failure remains retained;
+there is no automatic restart or increased allowance. A lossless trace transport
+correction is under investigation, with explicit accounting of the consumed
+attempt required before any prospective corrected run. Next full check: 21:03 ET.
+
 ## Both simulator batches launched — 2026-09-26 20:23 ET
 
 Both fixed batches are actually running on the isolated, unchanged `8c39ae0`
