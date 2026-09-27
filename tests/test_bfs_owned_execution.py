@@ -301,3 +301,45 @@ def test_final_owned_cleanup_rejects_retained_errors_after_absence(failure):
     else:
         assert owned.verified_finish(owner)['state']=='all_owned_descendants_absent'
     assert len(calls)==1
+
+
+@pytest.mark.skipif(sys.platform != 'linux', reason='actual Linux SQLite unlink proof required')
+def test_linux_storage_observation_handles_sqlite_journal_unlink(tmp_path, monkeypatch):
+    """A real DELETE-journal commit removes the exact file already enumerated."""
+    import sqlite3
+    from scripts import bfs_storage as storage
+    import threading
+    ready, commit, finished = (threading.Event() for _ in range(3))
+    errors = []
+    db = tmp_path/'.swdb.sqlite.fixture.tmp'
+    with sqlite3.connect(db) as connection:
+        connection.execute('create table retained(value integer)')
+        connection.execute('insert into retained values(1)')
+    def transaction():
+        try:
+            with sqlite3.connect(db) as connection:
+                connection.execute('pragma journal_mode=delete')
+                connection.execute('update retained set value=2')
+                ready.set()
+                if not commit.wait(2):raise TimeoutError('fixture never reached journal observation')
+                connection.commit()
+        except BaseException as error:errors.append(error)
+        finally:finished.set()
+    writer=threading.Thread(target=transaction);writer.start()
+    stat=storage.os.stat;observed=[]
+    def lookup(name, *args, **kwargs):
+        if str(name).endswith('-journal') and not observed:
+            observed.append(str(name));commit.set()
+            assert finished.wait(2), 'real SQLite commit did not finish'
+        return stat(name,*args,**kwargs)
+    try:
+        assert ready.wait(2) and Path(str(db)+'-journal').exists()
+        monkeypatch.setattr(storage.os,'stat',lookup)
+        measured=storage.allocated_bytes([tmp_path])
+    finally:
+        commit.set();writer.join(2)
+    assert not writer.is_alive() and not errors and observed
+    assert not Path(str(db)+'-journal').exists()
+    result = subprocess.run(['du','-sk',str(tmp_path)],check=True,capture_output=True,
+                            text=True,timeout=5,env={**os.environ,'LC_ALL':'C'})
+    assert measured == int(result.stdout.split()[0])*1024
