@@ -1,6 +1,6 @@
 """gem5 entry wrapper: seal the BFS ROI, then resume its verifier.
 
-Updated: 2026-09-26. Executed by the pinned gem5 embedded Python interpreter.
+Updated: 2026-09-27. Executed by the pinned gem5 embedded Python interpreter.
 """
 
 import hashlib
@@ -23,9 +23,12 @@ def digest(path):
 
 
 def save(path, data):
+    # Load the same standalone serializer used by downstream seal consumers.
+    serializer = runpy.run_path(str(Path(__file__).resolve().parents[1] / 'swdb/dx100_witness.py'))['seal_bytes']
+    raw = serializer(data)
     pending = path.with_suffix(".pending")
-    with pending.open('w') as stream:
-        stream.write(json.dumps(data, indent=2, sort_keys=True) + "\n")
+    with pending.open('wb') as stream:
+        stream.write(raw)
         stream.flush()
         os.fsync(stream.fileno())
     pending.replace(path)

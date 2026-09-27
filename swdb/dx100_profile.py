@@ -1,6 +1,6 @@
 """Execution-bound DX100 statistics and selected-region collection.
 
-Updated: 2026-09-26. Source discovery is reused; no static access stream is invented.
+Updated: 2026-09-27. Source discovery is reused; no static access stream is invented.
 """
 
 import configparser
@@ -43,10 +43,18 @@ def _diagnostic_seal(evaluation, deadline):
     """Accept completed observations independently of the later verifier verdict."""
     context = evaluation['context']
     seal = context.get('sealed_roi', {})
-    path = _file({key: seal[key] for key in ('path', 'sha256')}, 'diagnostic ROI seal')
-    if path.stat().st_size > 65536:
-        raise Failure('diagnostic ROI seal exceeds its size bound')
-    actual = json.loads(path.read_text())
+    from swdb.dx100_witness import MAX_SEAL_BYTES, WitnessError, _read, _reference
+    try:
+        reference = _reference(seal, 'diagnostic ROI seal')
+        raw, digest = _read(reference['path'], MAX_SEAL_BYTES, kind='diagnostic ROI seal')
+    except WitnessError as exc:
+        raise Failure(str(exc)) from None
+    if digest != seal['sha256']:
+        raise Failure('diagnostic ROI seal hash differs from retained identity')
+    try:
+        actual = json.loads(raw)
+    except (ValueError, UnicodeError) as exc:
+        raise Failure(f'diagnostic ROI seal is not valid JSON: {exc}') from None
     binding = context['execution_binding']
     binary = {'path': evaluation['build']['binary'], 'sha256': evaluation['build']['binary_sha256']}
     if (not isinstance(actual, dict) or not isinstance(binding, dict)

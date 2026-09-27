@@ -485,3 +485,40 @@ def test_lease_plan_keeps_science_and_charges_fresh_proof_once(task,monkeypatch)
     assert rows[0]==prior[0] and rows[-1]=={'id':mod.LEASE_GROUP_ID,'elapsed_seconds':600,'raw_bytes':2*batch.GIB}
     assert len(rows)==(3 if task=='t15' else 2)
     assert len({r['id'] for r in rows})==len(rows)
+
+
+def seal_plan():
+    return json.loads((batch.PLAN_DIR/'bfs-t16-seal-recovery-simulator-batch-20260927-a1.json').read_text())
+
+
+def test_seal_recovery_preserves_original_t16_science_and_end():
+    new=seal_plan();old=json.loads((batch.PLAN_DIR/'bfs-t16-lease-recovery-simulator-batch-20260927-a1.json').read_text())
+    for key in ('bounds','model_build','target','verifier','roi','threads','repetitions','warmups',
+                'verification_ticks','profitability','record_sha256','protocol_requests','clock_policy'):
+        assert new[key]==old[key]
+    assert [{k:v for k,v in row.items() if k!='id'} for row in new['series']]==[
+        {k:v for k,v in row.items() if k!='id'} for row in old['series']]
+    assert mod.hard_end(new).isoformat()=='2026-09-27T20:16:17.225985-04:00'
+    assert (mod.hard_end(new)-timedelta(seconds=21630)).isoformat()=='2026-09-27T14:15:47.225985-04:00'
+    assert len(new['accounting']['preparation_reservation']['supplement_testcases'])==66
+    assert mod.supplement_selectors(new)==mod.SEAL_SUPPLEMENT_SELECTORS
+    assert 'linux_proof_provenance' not in new
+
+
+@pytest.mark.parametrize('fault',[None,'refunded-prior','extra-proof-time','old-runtime-alias'])
+def test_seal_recovery_deducts_fresh_proof_from_existing_t16_pool(fault,monkeypatch):
+    new=seal_plan();old=json.loads((batch.PLAN_DIR/'bfs-t16-lease-recovery-simulator-batch-20260927-a1.json').read_text())
+    prior=[{'id':mod.GROUP_ID,'elapsed_seconds':600,'raw_bytes':2*batch.GIB},
+           {'id':mod.LEASE_GROUP_ID,'elapsed_seconds':600,'raw_bytes':2*batch.GIB}]
+    original=mod.preparation_charges
+    monkeypatch.setattr(mod,'base_plan',lambda p:old)
+    monkeypatch.setattr(mod,'preparation_charges',lambda p:copy.deepcopy(prior) if p is old else original(p))
+    if fault=='refunded-prior':new['accounting']['seal_recovery']['prior_proof_reservation']['elapsed_seconds']=0
+    elif fault=='extra-proof-time':new['accounting']['preparation_reservation']['elapsed_seconds']=601
+    elif fault=='old-runtime-alias':new['linux_proof_provenance']=mod.PROOF_PROVENANCE
+    if fault:
+        with pytest.raises(ValueError):original(new)
+    else:
+        rows=original(new)
+        assert rows==prior+[{'id':mod.SEAL_GROUP_ID,'elapsed_seconds':600,'raw_bytes':2*batch.GIB}]
+        assert len({r['id'] for r in rows})==len(rows)

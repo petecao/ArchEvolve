@@ -251,3 +251,30 @@ def test_lease_supplement_collects_exact_planned_cases_without_old_group_reuse(t
     assert rid == recovery.LEASE_GROUP_ID + '.supplement'
     assert recovery.GROUP_ID not in rid
     assert argv[3:3 + len(recovery.LEASE_SUPPLEMENT_SELECTORS)] == recovery.LEASE_SUPPLEMENT_SELECTORS
+
+
+def test_seal_supplement_collects_exact_planned_cases_without_old_group_reuse(tmp_path, monkeypatch):
+    """Actual pytest collection binds the 66-case plan; collection is not execution."""
+    import subprocess
+    from scripts import bfs_simulator_recovery as recovery
+    monkeypatch.setattr(runner, 'RAW_BASE', tmp_path)
+    folder = tmp_path / (recovery.SEAL_GROUP_ID + '.dispatch') / 'supplement'
+    rid, argv, names = runner.supplement_configuration(folder)
+    result = subprocess.run([argv[0], '-m', 'pytest', *recovery.SEAL_SUPPLEMENT_SELECTORS,
+                             '--collect-only', '-q', '-p', 'no:cacheprovider'],
+                            cwd=runner.ROOT, capture_output=True, text=True, timeout=20)
+    assert result.returncode == 0, result.stdout + result.stderr
+    actual = [line.rsplit('::', 1)[-1] for line in result.stdout.splitlines()
+              if line.startswith('tests/') and '::' in line]
+    assert len(actual) == len(set(actual)) == len(names) == 66
+    assert set(actual) == names
+    assert rid == recovery.SEAL_GROUP_ID + '.supplement'
+    assert recovery.GROUP_ID not in rid
+    assert argv[3:3 + len(recovery.SEAL_SUPPLEMENT_SELECTORS)] == recovery.SEAL_SUPPLEMENT_SELECTORS
+
+
+def test_seal_regression_bytes_are_bound_in_current_runtime_map():
+    from scripts import bfs_simulator_batch as batch
+    from swdb import artifacts
+    name='tests/test_dx100_witness.py'
+    assert batch.runtime_identity()[name]==artifacts.file_hash(batch.ROOT/name)

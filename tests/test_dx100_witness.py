@@ -135,7 +135,7 @@ def test_trace_hash_identity_and_regular_bounded_file(tmp_path):
         parse_trace(link, enabled_tick=100, end_tick=150, expected_cpu=CPUS[0])
     with path.open('wb') as out:
         out.truncate(MAX_TRACE_BYTES + 1)
-    with pytest.raises(WitnessError, match='32 MiB'):
+    with pytest.raises(WitnessError, match='post-ROI syscall trace exceeds 33554432-byte read bound'):
         parse_trace(path, enabled_tick=100, end_tick=150, expected_cpu=CPUS[0])
 
 
@@ -464,3 +464,98 @@ def test_dangling_symlink_does_not_count_as_remote_missing_file(tmp_path):
     path.symlink_to(tmp_path / 'missing')
     with pytest.raises(Failure, match='symlink'):
         validate_record_witness(data)
+
+
+def large_seal_evaluation(tmp_path):
+    """Valid producer-shaped metadata; no simulator execution evidence."""
+    from swdb.dx100_witness import seal_bytes
+    data=evaluation(tmp_path,line(120,'Calling exit_group(0)...')+line(120,'Returned 0.')+progress()*300)
+    seal=data['context']['sealed_roi'];path=Path(seal['path'])
+    raw=seal_bytes({k:v for k,v in seal.items() if k not in {'path','sha256'}})
+    assert 65536 < len(raw) < 32*1024*1024
+    path.write_bytes(raw);seal['sha256']=hashlib.sha256(raw).hexdigest()
+    data['correctness']['checks'][0]['sealed_roi']['sha256']=seal['sha256']
+    return data
+
+
+def test_large_producer_seal_retains_all_progress_and_full_validation(tmp_path):
+    data=large_seal_evaluation(tmp_path)
+    assert len(validate_completed_witness(data)['progress_records'])==300
+
+
+def test_large_diagnostic_seal_uses_same_bound_and_exact_bytes(tmp_path):
+    from swdb.dx100_profile import _diagnostic_seal
+    from swdb.dx100_witness import seal_bytes
+    data=large_seal_evaluation(tmp_path);context=data['context'];seal=context['sealed_roi']
+    stats=tmp_path/'stats.txt';stats.write_text('Begin Simulation Statistics\nsimTicks 100\nsimFreq 1000\nEnd Simulation Statistics\n')
+    ref={'path':str(stats),'sha256':hashlib.sha256(stats.read_bytes()).hexdigest()}
+    context['statistics']=seal['statistics']=ref
+    context['actual_configuration']=context['verification_driver']
+    raw=seal_bytes({k:v for k,v in seal.items() if k not in {'path','sha256'}})
+    Path(seal['path']).write_bytes(raw);seal['sha256']=hashlib.sha256(raw).hexdigest()
+    _diagnostic_seal(data,float('inf'))
+    from swdb.cli import Failure
+    seal['sha256']='0'*64
+    with pytest.raises(Failure,match='hash differs'):_diagnostic_seal(data,float('inf'))
+
+
+@pytest.mark.parametrize('reader',['witness','diagnostic'])
+@pytest.mark.parametrize('mutation',['oversize','symlink','hash','changed'])
+def test_large_seal_bound_and_regular_identity_still_fail_closed(tmp_path,monkeypatch,mutation,reader):
+    from swdb import dx100_witness as witness
+    from swdb.cli import Failure
+    from types import SimpleNamespace
+    data=large_seal_evaluation(tmp_path);seal=data['context']['sealed_roi'];path=Path(seal['path'])
+    expected={'oversize':'ROI seal exceeds 33554432-byte read bound','symlink':'regular','hash':'retained seal bytes differ','changed':'changed while reading'}[mutation]
+    if mutation=='oversize':
+        with path.open('wb') as stream:stream.truncate(witness.MAX_SEAL_BYTES+1)
+    elif mutation=='symlink':
+        target=tmp_path/'actual-seal';path.rename(target);path.symlink_to(target)
+    elif mutation=='hash':path.write_bytes(path.read_bytes()+b' ')
+    else:
+        original=witness.os.fstat;calls=[]
+        def changed(fd):
+            st=original(fd);calls.append(fd)
+            if len(calls)==2:return SimpleNamespace(st_dev=st.st_dev,st_ino=st.st_ino,st_size=st.st_size,st_mtime_ns=st.st_mtime_ns+1)
+            return st
+        monkeypatch.setattr(witness.os,'fstat',changed)
+    if reader=='diagnostic' and mutation=='hash':expected='hash differs'
+    if reader=='diagnostic' and mutation=='oversize':expected='diagnostic '+expected
+    from swdb.dx100_profile import _diagnostic_seal
+    with pytest.raises(Failure,match=expected):
+        if reader=='witness':validate_completed_witness(data)
+        else:_diagnostic_seal(data,float('inf'))
+
+
+def test_producer_serialization_unchanged_and_oversize_never_published(tmp_path):
+    import ast,os
+    from swdb.dx100_witness import seal_bytes,MAX_SEAL_BYTES
+    small={'b':'Unicode ✓','a':{'rows':[1,2]}}
+    assert seal_bytes(small)==(json.dumps(small,indent=2,sort_keys=True)+'\n').encode()
+    # Execute the actual producer save function without importing gem5 or its
+    # entrypoint. Serialization and durable replacement are production code.
+    source=Path(__file__).resolve().parents[1]/'scripts/dx100_verify.py'
+    tree=ast.parse(source.read_text());function=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='save')
+    ns={'__file__':str(source),'runpy':runpy,'Path':Path,'os':os}
+    exec(compile(ast.Module(body=[function],type_ignores=[]),'producer-save','exec'),ns)
+    path=tmp_path/'seal.json';path.write_bytes(b'existing retained receipt')
+    with pytest.raises(ValueError,match='ROI seal exceeds 33554432-byte read/write bound'):
+        ns['save'](path,{'oversize':'x'*MAX_SEAL_BYTES})
+    assert path.read_bytes()==b'existing retained receipt' and not path.with_suffix('.pending').exists()
+
+
+@pytest.mark.parametrize('reader',['witness','diagnostic'])
+@pytest.mark.parametrize('mutation',['malformed','different_json'])
+def test_large_seal_hash_valid_json_still_requires_exact_retained_object(tmp_path,reader,mutation):
+    from swdb.cli import Failure
+    from swdb.dx100_profile import _diagnostic_seal
+    data=large_seal_evaluation(tmp_path);seal=data['context']['sealed_roi'];path=Path(seal['path'])
+    raw=path.read_bytes()
+    if mutation=='malformed':raw=raw[:-2]+b'!\n'
+    else:
+        obj=json.loads(raw);obj['unexpected_mutation']=True;raw=json.dumps(obj).encode()
+    path.write_bytes(raw);seal['sha256']=hashlib.sha256(raw).hexdigest()
+    data['correctness']['checks'][0]['sealed_roi']['sha256']=seal['sha256']
+    with pytest.raises(Failure):
+        if reader=='witness':validate_completed_witness(data)
+        else:_diagnostic_seal(data,float('inf'))

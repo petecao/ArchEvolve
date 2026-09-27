@@ -1,6 +1,6 @@
 """Bounded DX100 v2 syscall evidence, not a normal-termination oracle.
 
-Updated: 2026-09-26 ET. Parsing loads standalone inside pinned gem5 Python;
+Updated: 2026-09-27 ET. Parsing loads standalone inside pinned gem5 Python;
 SWDB imports belong only in the downstream validator.
 """
 
@@ -18,6 +18,10 @@ import socket
 CHECKER = 'dx100.bfs.verifier.v2'
 FORMAT = 'swdb.dx100.exit-witness.v1'
 MAX_TRACE_BYTES = 32 * 1024 * 1024
+# The seal embeds structured progress observations from the bounded trace.
+# Give that serialized artifact its own explicit producer/consumer ceiling;
+# it need not fit the former 64 KiB assumption. No trace allowance changes.
+MAX_SEAL_BYTES = 32 * 1024 * 1024
 MAX_LINE_BYTES = 8192
 MAX_OUTPUT_BYTES = 2 * 1024**3
 CPUS = tuple(f'system.switch_cpus{i}' for i in range(4))
@@ -89,7 +93,14 @@ def _reference(value, name):
     return {key: value[key] for key in ('path', 'sha256')}
 
 
-def _read(path, limit):
+def seal_bytes(data):
+    """Canonical producer bytes, bounded separately from the raw syscall trace."""
+    raw = (json.dumps(data, indent=2, sort_keys=True) + "\n").encode('utf-8')
+    _need(len(raw) <= MAX_SEAL_BYTES, f"ROI seal exceeds {MAX_SEAL_BYTES}-byte read/write bound")
+    return raw
+
+
+def _read(path, limit, *, kind="evidence"):
     """Hash the same bounded regular-file bytes that the caller consumes."""
     path = Path(path)
     _need(path.is_absolute() and not path.is_symlink(), 'evidence requires an absolute regular file')
@@ -98,10 +109,10 @@ def _read(path, limit):
         with os.fdopen(descriptor, 'rb') as stream:
             before = os.fstat(stream.fileno())
             _need(stat.S_ISREG(before.st_mode), 'evidence requires a regular file')
-            _need(before.st_size <= limit, 'evidence exceeds its 32 MiB or smaller read bound')
+            _need(before.st_size <= limit, f"{kind} exceeds {limit}-byte read bound")
             raw = stream.read(limit + 1)
             after = os.fstat(stream.fileno())
-            _need(len(raw) <= limit, 'evidence exceeds its 32 MiB or smaller read bound')
+            _need(len(raw) <= limit, f"{kind} exceeds {limit}-byte read bound")
             _need((before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns) ==
                   (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns)
                   and len(raw) == before.st_size, 'evidence changed while reading')
@@ -127,7 +138,7 @@ def parse_trace(path, *, enabled_tick, end_tick, expected_cpu, expected_thread=0
           and all(isinstance(cpu, str) and re.fullmatch(r'[A-Za-z_][A-Za-z0-9_.]*', cpu) for cpu in allowed),
           'invalid allowed CPU identity')
     _need(type(allow_incomplete) is bool, 'allow_incomplete must be Boolean')
-    raw, digest = _read(path, MAX_TRACE_BYTES)
+    raw, digest = _read(path, MAX_TRACE_BYTES, kind="post-ROI syscall trace")
     _need(expected_sha256 is None or (_HASH.fullmatch(str(expected_sha256)) and digest == expected_sha256),
           'trace hash differs from retained identity')
     _need(not raw or raw.endswith(b'\n'), 'truncated trace line')
@@ -329,7 +340,8 @@ def _verify_artifact(data, kind, reference):
               and _same(parents, check['parent_results']) and _same(times, check['completion_sequence']['times']),
               'retained protected output observations differ from actual bytes')
     else:
-        raw, digest = _read(reference['path'], 65536 if kind == 'seal' else 8*1024*1024)
+        raw, digest = _read(reference['path'], MAX_SEAL_BYTES if kind == 'seal' else 8*1024*1024,
+                            kind='ROI seal' if kind == 'seal' else kind)
         _need(digest == reference['sha256'], f'retained {kind} bytes differ')
         if kind == 'seal':
             _need(_same(json.loads(raw), {key: value for key, value in seal.items() if key not in {'path', 'sha256'}}),
