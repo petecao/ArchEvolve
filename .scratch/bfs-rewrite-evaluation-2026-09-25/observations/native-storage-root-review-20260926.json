@@ -1,0 +1,56 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T21:56:26.083670-04:00",
+  "state": "scoped_independent_review_clean",
+  "scope": "future native dispatch storage accounting, not empirical acceptance",
+  "files": [
+    {
+      "path": "scripts/bfs_native_campaign.py",
+      "bytes": 79769,
+      "sha256": "e044cd1ad724d590446bde54bf2dff23bfa47199d4026f1456e66c68952d3835"
+    },
+    {
+      "path": "tests/test_bfs_native_storage.py",
+      "bytes": 9957,
+      "sha256": "14e7586274276213396367b774cb5058331730f563128170d25099b4daac95e7"
+    },
+    {
+      "path": "tests/test_bfs_native_execution.py",
+      "bytes": 25280,
+      "sha256": "6c2e67c4af9e841322421fb93689785a0e96737ce9402dbd18bf985ebf327ff9"
+    },
+    {
+      "path": "docs/bfs-native-reassessment-20260926.md",
+      "bytes": 12915,
+      "sha256": "9106ede1dea65e677876f78303d4b3b5054acc8ee2d604d27929d358e295c279"
+    }
+  ],
+  "readback": [
+    "Original 16GiB artifact and4GiB build subset limits unchanged; exact canonical dispatch sibling included in live/final measurements.",
+    "Caller-pinned original admission and terminal references are reopened before counting late helper/auditor/new-record bytes.",
+    "Record view beneath a charged root is counted once; records outside charged roots are charged separately.",
+    "Failed outcomes remain failed; storage readback does not prove process absence or empirical qualification."
+  ],
+  "tests": {
+    "log": {
+      "path": "/private/tmp/bfs-native-storage-root-review-20260926.log",
+      "bytes": 99,
+      "sha256": "d0076864942099852d4eb1a2c8a3d3573b606fccc81d08804e487dc75be8abb3"
+    },
+    "result": "26 passed in 0.38s",
+    "original_reproduction": {
+      "path": "/private/tmp/test_native_dispatch_storage_spec_20260926.py",
+      "bytes": 1141,
+      "sha256": "651300fabbc676591a454c149cd3e47fca4b25cf7ad883126f5553c820db2b91"
+    },
+    "independent_late_write_cases": {
+      "path": "/private/tmp/test_native_storage_root_review_20260926.py",
+      "bytes": 1842,
+      "sha256": "776b97ccde935938695c9846f058b9598bc496c1ef840eb471fcf004de1f2ba9"
+    }
+  },
+  "limitations": [
+    "No host dispatch or new Linux ownership proof.",
+    "Existing native logical/allocated max byte metric preserved; this is separate from the simulator allocated-byte walker currently being repaired."
+  ]
+}

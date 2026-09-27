@@ -1,0 +1,85 @@
+{
+  "format": "swdb.bfs.t15-correction-launch-observation.v1",
+  "date": "2026-09-26",
+  "observed_at": "2026-09-26T21:51:08.647636-04:00",
+  "id": "bfs-t15-correction-simulator-batch-20260926-a1",
+  "repository_commit": "d5e215966a7d4d673050a78c6a6d77053aa62a85",
+  "state": "running",
+  "phase": "charged_admission_preflight_no_series_observed_yet",
+  "outer_started": "2026-09-26T21:50:45.851819-04:00",
+  "outer_deadline": "2026-09-27T09:14:09.851819-04:00",
+  "remaining_seconds": 41004,
+  "driver_started": "2026-09-26T21:50:46.419651-04:00",
+  "pane_identity": {
+    "pid": 3155761,
+    "start_ticks": 497577869
+  },
+  "launch": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch/launch.json",
+    "bytes": 6943,
+    "sha256": "f7a874e1411a230aa1a641624de6b34f3d919850f126dc54f4221c949603eff5"
+  },
+  "admission": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch/admission.json",
+    "bytes": 19324,
+    "sha256": "0c6ed8bcf924587bf6b6473848b2f10115c24e69c21f13b0b5c32dff8a205c7c"
+  },
+  "wrapper": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch/launch.sh",
+    "sha256": "8339fdf0f7700929b0811d1e86285ff6cfaeb21be781ffd2b929492186fa93d9",
+    "bytes": 5078
+  },
+  "leases": {
+    "mbit10-evaluation": {
+      "state": "released",
+      "generation": 77,
+      "daemon_pid": 209457,
+      "acquired_at": "2026-09-12T01:35:42Z"
+    },
+    "mbit10-evaluation-node0": {
+      "state": "held",
+      "generation": 332,
+      "daemon_pid": 3089727,
+      "acquired_at": "2026-09-27T00:20:30Z"
+    },
+    "mbit10-evaluation-node1": {
+      "state": "held",
+      "generation": 416,
+      "daemon_pid": 3155768,
+      "acquired_at": "2026-09-27T01:50:46Z"
+    }
+  },
+  "admission_capacity": {
+    "node_available_kib": 61331656,
+    "global_available_kib": 93225528,
+    "eligible": true
+  },
+  "disk": {
+    "/data": 182551425024,
+    "/data1": 17370226688
+  },
+  "load": [
+    1.111328125,
+    1.13330078125,
+    1.1806640625
+  ],
+  "preparation_charges": [
+    {
+      "id": "bfs-gem5-gzip-transport-20260926-a1",
+      "elapsed_seconds": 472,
+      "raw_bytes": 200704
+    },
+    {
+      "id": "bfs-t15-simulator-batch-20260926-a1",
+      "elapsed_seconds": 1124,
+      "raw_bytes": 11014971392
+    },
+    {
+      "id": "bfs-t15-correction-linux-20260926-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    }
+  ],
+  "claimed_empirical_result": false,
+  "scope": "Actual launch only; no completed sample/coverage/package/frozen calibration claimed."
+}

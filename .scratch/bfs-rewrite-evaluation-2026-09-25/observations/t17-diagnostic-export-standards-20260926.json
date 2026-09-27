@@ -1,0 +1,53 @@
+{
+  "created": "2026-09-26",
+  "state": "exact_export_review_clean",
+  "commit": "46f3a2643c838bf64099d19d6ae42320bd30ca31",
+  "sole_parent": "d5e215966a7d4d673050a78c6a6d77053aa62a85",
+  "source_commit": "6e11106998930d737f4fa00d19ed128e5ecd1c2c",
+  "inventory_sha256": "0c26fc39b9fc261f312e70c14242b94eafa008c01b260afa72cdb7db2b54459d",
+  "files": [
+    {
+      "path": "scripts/bfs_t17_diagnostic_build.py",
+      "mode": "100644",
+      "git_blob": "6e1cfe9c8187782e346ef389c57834ad476cb876",
+      "bytes": 19903,
+      "sha256": "d58d70b0743725a413254e49cc89bd509b1dedb6370930809b082fa4277f99b8"
+    },
+    {
+      "path": "tests/test_bfs_t17_diagnostic_build.py",
+      "mode": "100644",
+      "git_blob": "a745ec9a0673addb256d9cfdfea102a15b2809ee",
+      "bytes": 14539,
+      "sha256": "a81c2f5c813f12bdbaba42d2a16f3b0ed0eca230e39f620c07f098e506ed6873"
+    },
+    {
+      "path": "docs/bfs-t17-diagnostic-build-20260926.md",
+      "mode": "100644",
+      "git_blob": "562104110f3007fff9cbf7a7e7c9da70e5351156",
+      "bytes": 4890,
+      "sha256": "c0a940859cc895587f29158c434245ceb3d3a21b3d8f5896f824508132411941"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/t17-diagnostic-build-only-20260926-a1.json",
+      "mode": "100644",
+      "git_blob": "4f5c2486b7ada0b57b616a8da85ee20210fead68",
+      "bytes": 561,
+      "sha256": "272def5a75dd974d8fa46b3ccdd56016ea1ddf0f2af545990fc02cc25405e5c1"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/t17-build-only-terminal-20260926.json",
+      "mode": "100644",
+      "git_blob": "59bb459fb2d3c15f3b39aadf0ca3fcb68baa71ed",
+      "bytes": 1930,
+      "sha256": "a124548a4d1e71003faeb895d9e09d1e060933ba41a99f1d9ae282689c886536"
+    }
+  ],
+  "total_bytes": 41823,
+  "checks": [
+    "Exact5diffpaths, allmodes100644 andblobSHA/bytes match reviewedlocal andsource6e111069",
+    "All required runtime and original request/preflight dependencies present unchanged fromd5e",
+    "Added1930B source-free typed primary terminal observation exactly matches pinned a124548a",
+    "No canonical records or heldprovider5f ancestry; all30 previously heldpaths absenttree/history; no current primary-reuse delta",
+    "No host actions, imports, compile, or new proof implied"
+  ]
+}

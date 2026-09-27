@@ -186,3 +186,35 @@ This explicitly supersedes the old tests that expected stale numeric signaling;
 new Linux Owned tests retain the required whole-tree guarantee. Newly dispatched
 existing-candidate acceptance cannot use the generic path. Historical checkouts
 and evidence remain unchanged.
+
+
+Prospective storage correction — 2026-09-26 (Eastern Time)
+
+The exact canonical sibling `str(runs_dir) + ".dispatch"` is part of the existing
+16 GiB artifact allowance. It must already exist when the wrapper starts; the
+raw, source, and build directories remain new, mutually disjoint paths. All four
+directories must be canonical, with no symlink substitution. The admission is
+retained at that sibling's `admission.json`. Live samples and final accounting
+include wrapper/helper stdout, stderr, launch/admission files, SQLite and its
+sidecars, and later terminal evidence. The existing native byte metric and
+4 GiB build subset are unchanged. New canonical records outside those four trees
+are added separately; a retained record view inside `.dispatch` is counted once.
+
+The driver's last snapshot predates helper and independent terminal-audit writes.
+After the full PID/start union and released lane are independently verified, call
+`scripts.bfs_native_campaign.validate_storage_accounting(driver_ref, terminal_ref,
+admission_ref=original_admission_ref, current=aware_iso)` with the exact hashed
+references. The terminal audit must be the sibling's `terminal-validation.json`
+and bind the driver, code commit, actual outcome, release, and cleanup state.
+The reader reopens the caller-pinned original admission, its fixed bounds and
+output roots; it does not accept driver-selected accounting credit or extra roots.
+Failed outcomes stay failed even if their retained outputs fit the storage cap.
+
+Persist the first storage readback in `.dispatch`. After all helper, outer exit,
+terminal audit, cleanup-ledger audit, and storage-readback writes are complete,
+perform a final read-only recount and retain its result outside the charged trees.
+Any later write requires another recount. This adds no allowance or cleanup time
+and establishes neither process absence, protocol qualification, nor a gain.
+Historical records and active checkouts are unchanged. The local regressions are
+contract fixtures; fresh actual Linux/runtime admission is still required before
+a future candidate campaign.

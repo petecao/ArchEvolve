@@ -7,7 +7,28 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 21:40 ET
+## Current checkpoint — 2026-09-26 21:56 ET
+
+The [fixed correction failed before guest execution](../observations/t15-correction-failed-terminal-20260926.json)
+because the storage monitor attempted to stat a SQLite temporary journal that
+had just been removed. There are zero completed samples/checks. Independent
+closure verified all 105 retained identities, lane release and settled cleanup
+within 30 seconds. Raw plus dispatch retains 11,886,592 bytes; the full closure
+envelope is ceil 201 seconds. All failed evidence is preserved. The used
+correction plan grants no automatic retry. The transient-child allocator repair
+is local and under independent review; this ticket remains claimed.
+
+## Historical checkpoint — 2026-09-26 21:52 ET
+
+The corrected T15 batch started at 21:50:45.851819 ET on node 1, generation 416,
+after [fresh actual Linux proofs](../observations/t15-correction-linux-actual-20260926.json)
+and [independent admission review](../observations/t15-correction-admission-standards-final-20260926.json).
+Its fixed remaining allowance is 41,004 seconds, ending 2026-09-27
+09:14:09.851819 ET. The original failed attempt and smoke/proof costs remain
+charged. The initial driver readback was still preflight, with no completed
+sample, protocol freeze or acceptance claim. T16 runs separately on node 0.
+
+## Historical checkpoint — 2026-09-26 21:40 ET
 
 The exact reviewed correction runtime `d5e215966a7d4d673050a78c6a6d77053aa62a85`
 is exported and pristine on mbit10; see [inventory](../observations/t15-gzip-correction-export-20260926.json)

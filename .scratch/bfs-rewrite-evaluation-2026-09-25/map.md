@@ -83,6 +83,68 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Future candidate-run fixes reviewed — 2026-09-26 21:56 ET
+
+[Primary reuse](../../docs/bfs-simulator-primary-reuse-20260926.md) adds a
+frozen-complete-call-only `--primary-build` option. The exact retained source,
+compiler, generated inputs and binary are reopened before and after the grid;
+no primary compilation is issued. Defaults for current T15/T16 paths are
+unchanged. [Author checks](observations/primary-reuse-preparation-20260926.json)
+passed 130 cases; [independent review](observations/primary-reuse-standards-review-20260926.json)
+passed 32 cases including post-grid binary and metadata corruption rejection.
+These are local contracts, not a simulator measurement or a new campaign grant.
+
+[Native storage preparation](observations/native-dispatch-storage-preparation-20260926.json)
+now charges the exact wrapper `.dispatch` sibling inside the original 16 GiB
+cap, with no double-counting of a nested record view. The original 4 GiB build
+subset remains. A separate caller-pinned post-helper recount includes terminal
+and late wrapper/record writes. [Independent review](observations/native-storage-root-review-20260926.json)
+passed 26 cases including the original reproducer and new late-write checks;
+65 author cases passed with two Linux-only skips. Actual Linux proof and native
+admission remain pending. This accounting path preserves its existing byte
+metric and is separate from the simulator allocator race now under repair.
+
+## Corrected T15 failed before guest execution — 2026-09-26 21:56 ET
+
+The [failed correction and terminal audit](observations/t15-correction-failed-terminal-20260926.json)
+retain a real storage-monitor race: SQLite removed `.swdb.sqlite.3156540.tmp-journal`
+between directory enumeration and metadata inspection. The driver failed at
+21:52:07 ET; the public operation was interrupted at `execution_identity` before
+any guest execution. There are zero completed samples or correctness checks.
+The original failed attempt and this correction remain separate failed records.
+
+The independent closure checked 105 PID/start identities twice: 104 absent and
+only the exact launcher zombie with zero RSS. Node 1 generation 416 released and
+its kernel lock cleared; node 0 generation 332 remains held for T16. The shared
+cleanup ledger settled all 90 events in 13.349886 seconds without outstanding
+reservations. Final retained raw plus dispatch bytes are 11,886,592. The entire
+outer-start-to-final-recount envelope was 200.296152 seconds (ceil 201), distinct
+from the driver's 82.02284-second interval. No retry is authorized by the used
+fixed correction plan. The allocator's transient-child handling is under local
+repair and independent review; old output roots remain frozen.
+
+The [five-file T17 export](observations/t17-diagnostic-export-20260926.json)
+`46f3a264` passed [independent exact-blob review](observations/t17-diagnostic-export-standards-20260926.json),
+but automatic approval review rejected its push because the earlier exact
+transfer list does not cover this new 41,823-byte internal code/metadata payload.
+A payload-specific approval question is pending; no alternate transfer is used.
+Local implementation and T16 monitoring continue. Counts remain 14 resolved,
+seven claimed, zero of eight final cells, and no qualified gain.
+
+## Corrected T15 started — 2026-09-26 21:52 ET
+
+The separately bounded corrected batch started at 21:50:45.851819 ET on node 1,
+generation 416, with exact code `d5e2159` and
+[admission](observations/t15-correction-admission-20260926.json) `0c6ed8bc`.
+[Independent admission review](observations/t15-correction-admission-standards-final-20260926.json)
+checked the actual proof closures, 152 runtime hashes, original costs and wrapper
+clock. Its hard end is 2026-09-27 09:14:09.851819 ET, exactly 41,004 seconds after
+the actual outer start. The later prospective ceiling cannot extend that clock.
+At the initial 21:51 readback the driver was performing charged preflight with
+zero series or guest samples. T16 remains on node 0, generation 332. Both lanes
+are occupied; there is no third evaluation job. The [actual launch receipt](observations/t15-correction-actual-launch-20260926.json)
+binds original clocks, pane identity, generation, fresh capacity and all charged preparation.
+
 ## Actual correction proofs and fresh coverage — 2026-09-26 21:44 ET
 
 The [new d5e Linux proof group](observations/t15-correction-linux-actual-20260926.json)

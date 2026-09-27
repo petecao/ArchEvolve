@@ -82,6 +82,42 @@ def validate_diagnostic_build(build, candidate, implementation, model, roi, acce
             raise ValueError('diagnostic build differs from the frozen region correspondence/collector')
 
 
+def validate_primary_build(build, candidate, implementation, model, accelerated, frozen, role, verifier):
+    """Reopen a retained complete-call binary without spending another compile allowance."""
+    context, request, compiled = build.get('context', {}), build.get('request', {}), build.get('build', {})
+    adapter = 'dx100.complete_call.v2' if verifier == 'dx100.bfs.verifier.v2' else 'dx100.complete_call.v1'
+    if (not frozen or frozen['settings'].get('roi') != 'bfs.complete_call.v1'
+            or build.get('outcome', {}).get('state') != 'complete'
+            or build['outcome'].get('stage') != 'candidate_build'
+            or build.get('evidence_kind') != 'execution' or request.get('fixture') is True
+            or build.get('candidate') != candidate['id']
+            or context.get('candidate_sha256') != candidate['artifact']['sha256']
+            or context.get('function') != implementation['function']
+            or context.get('model_build') != model['id']
+            or context.get('model_root') != model['context']['model_root']
+            or context.get('target') != model['context']['target']
+            or context.get('roi') != 'bfs.complete_call.v1'
+            or context.get('accelerated_requested') is not accelerated
+            or request.get('diagnostic_regions') is not False or context.get('diagnostic')
+            or compiled.get('adapter') != adapter):
+        raise ValueError('retained primary build differs from exact source/model/ROI/treatment/checker')
+    expected = frozen['settings']['builds'][role]
+    if any(compiled.get(key) != expected[key] for key in ('compiler', 'flags', 'adapter')):
+        raise ValueError('retained primary build differs from frozen compiler/flags/adapter')
+    if compiled.get('source_artifact', {}).get('sha256') != candidate['artifact']['sha256']:
+        raise ValueError('retained primary source artifact differs')
+    artifacts.verify(compiled['source_artifact'])
+    refs = [{'path': compiled['binary'], 'sha256': compiled['binary_sha256']},
+            {'path': compiled['compiler'], 'sha256': compiled['compiler_sha256']},
+            compiled['driver'], compiled['m5ops']]
+    for ref in refs:
+        path = Path(ref['path'])
+        if not path.is_file() or artifacts.file_hash(path) != ref['sha256']:
+            raise ValueError('retained primary binary/compiler/generated input changed')
+    if not os.access(compiled['binary'], os.X_OK):
+        raise ValueError('retained primary binary is not executable')
+
+
 def validate_selection(candidate, source, implementation, workload, frozen, role, author, expected_artifact):
     """Reject strategy assessment disguised as pre-freeze calibration."""
     bfs_protocol.verify_immutable(workload)
@@ -126,6 +162,7 @@ def main():
                         help='exact mode, l3_size_mb, l3_assoc, tile_elements JSON request')
     parser.add_argument('--protocol')
     parser.add_argument('--protocol-role', choices=('baseline', 'candidate'))
+    parser.add_argument('--primary-build', help='reuse an exact completed primary build in a frozen complete-call series')
     parser.add_argument('--diagnostic-build', help='reuse an exact completed diagnostic compile record selected before freeze')
     parser.add_argument('--require-capacity', action='store_true',
                         help='require fresh 52-GiB node/64-GiB global admission before each compile or execution')
@@ -157,6 +194,8 @@ def main():
         parser.error('invalid record identifier')
     if bool(args.protocol) != bool(args.protocol_role):
         parser.error('protocol and protocol-role must be supplied together')
+    if args.primary_build and (not args.protocol or args.author_binary):
+        parser.error('primary-build requires a frozen complete-call series without author-binary')
     limits = {'total_seconds': (1, 86400 if args.author_binary else 43200),
               'checkpoint_seconds': (1, 3600), 'run_seconds': (1, 14400 if args.author_binary else 3600),
               'diagnostic_seconds': (180, 600), 'memory_gib': (1, 48),
@@ -306,6 +345,17 @@ def main():
             if args.author_binary and treatment == 'primary':
                 builds[treatment] = None
                 continue
+            if treatment == 'primary' and args.primary_build:
+                builds[treatment] = call('get', args.primary_build)
+                validate_primary_build(builds[treatment], candidate, implementation, model,
+                                       args.accelerated, frozen, args.protocol_role, verifier)
+                receipt['reused_primary_build'] = {
+                    'evaluation': builds[treatment]['id'], 'sha256': artifacts.digest(builds[treatment]),
+                    'binary': {'path': builds[treatment]['build']['binary'],
+                               'sha256': builds[treatment]['build']['binary_sha256']},
+                    'compile_calls': 0}
+                save()
+                continue
             if treatment == 'diagnostic' and args.diagnostic_build:
                 builds[treatment] = call('get', args.diagnostic_build)
                 continue
@@ -403,6 +453,12 @@ def main():
             if aggregate['outcome']['state'] != 'complete':
                 raise RuntimeError('sample-grid aggregation did not pass its frozen evidence checks')
             call('get', aggregate['id'], '--chain')
+        if args.primary_build:
+            fresh = call('get', args.primary_build)
+            if artifacts.digest(fresh) != receipt['reused_primary_build']['sha256']:
+                raise ValueError('retained primary metadata changed during the series')
+            validate_primary_build(fresh, candidate, implementation, model,
+                                   args.accelerated, frozen, args.protocol_role, verifier)
         receipt['state'] = 'complete'
     except BaseException as exc:
         receipt.update(state='failed', reason=f'{type(exc).__name__}: {exc}')

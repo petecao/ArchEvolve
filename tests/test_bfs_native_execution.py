@@ -36,7 +36,7 @@ def test_public_get_uses_raw_database_and_preserves_runtime(tmp_path, monkeypatc
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=checkout, text=True).strip()
     before = campaign.campaign_runtime(commit, root=checkout)
     runs, sources, builds = (tmp_path / name for name in ('raw', 'sources', 'builds'))
-    for path in (runs, sources, builds): path.mkdir()
+    for path in (runs, Path(str(runs)+'.dispatch'), sources, builds): path.mkdir()
     args = SimpleNamespace(id='db-cache-contract', protocol='unused-fixture-protocol',
         lane='fixture-lane', total_seconds=60, runs_dir=runs, source_runs_dir=sources,
         build_root=builds, records=checkout / 'records', repair_config=None)
@@ -58,6 +58,11 @@ def test_public_get_uses_raw_database_and_preserves_runtime(tmp_path, monkeypatc
     saved = json.loads((worker.folder / 'driver.json').read_text())
     assert saved['database'] == str(database)
     assert accounting.account()['artifact_bytes'] - initial_bytes >= database.stat().st_size
+    before_wrapper = accounting.account()['artifact_bytes']
+    wrapper_log = Path(str(runs)+'.dispatch')/'outer.stdout'
+    wrapper_log.write_bytes(b'x'*32768)
+    assert accounting.account()['artifact_bytes'] - before_wrapper >= 32768
+    assert str(wrapper_log.parent) in accounting.account()['storage_paths']
 
 
 @pytest.mark.parametrize('route',['campaign','shared'])
@@ -231,7 +236,7 @@ def supervised(tmp_path,monkeypatch):
         outer_started=start.isoformat(),outer_deadline=(start+timedelta(seconds=14400)).isoformat(),
         pane_pid=os.getppid(),pane_start_ticks=1,expected_commit='a'*40,proposal=tmp_path/'proposal.json',
         packages=['one','two'],reassessment=None)
-    for path in (args.runs_dir,args.source_runs_dir,args.build_root,args.records):path.mkdir()
+    for path in (args.runs_dir,Path(str(args.runs_dir)+'.dispatch'),args.source_runs_dir,args.build_root,args.records):path.mkdir()
     args.proposal.write_text('{}')
     worker=campaign.Driver(args)
     def identity(pid):return {'pid':pid,'parent_pid':os.getppid() if pid==os.getpid() else os.getpid(),'start_ticks':1}
@@ -334,7 +339,7 @@ def test_admission_is_exact_before_any_public_stage(supervised,monkeypatch,fault
     elif fault=='bounds':value['bounds']['sampled_rss_bytes']=52*1024**3
     elif fault=='commit':value['code_commit']='b'*40
     elif fault=='future':value['prepared_at']=(c.begin+timedelta(seconds=1)).isoformat()
-    path=c.driver.folder/'admission.json';path.write_text(json.dumps(value))
+    path=Path(str(c.args.runs_dir)+'.dispatch')/'admission.json';path.write_text(json.dumps(value))
     c.args.supervision_admission=path;c.args.supervision_sha256=artifacts.file_hash(path)
     try:
         if fault:
@@ -418,7 +423,7 @@ a=SimpleNamespace(id='linux-fixture',protocol='fixture',lane='mbit10-evaluation-
  runs_dir=root/'raw',source_runs_dir=root/'source',build_root=root/'build',records=root/'records',repair_config=None,
  outer_started=start.isoformat(),outer_deadline=(start+timedelta(seconds=14400)).isoformat(),
  pane_pid=os.getppid(),pane_start_ticks=own.identity(os.getppid())['start_ticks'])
-for path in (a.runs_dir,a.source_runs_dir,a.build_root,a.records):path.mkdir()
+for path in (a.runs_dir,Path(str(a.runs_dir)+'.dispatch'),a.source_runs_dir,a.build_root,a.records):path.mkdir()
 w=c.Driver(a);s=c.NativeSupervision(w);w.supervision=s;s.guard.start()
 code='import subprocess,sys;subprocess.Popen([sys.executable,"-c","import time;time.sleep(60)"],start_new_session=True);print("{}");sys.exit('+str(3 if failure else 0)+')'
 result=w.execute('fixture',[sys.executable,'-c',code],timeout=5,required=False)
