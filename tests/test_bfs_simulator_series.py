@@ -274,7 +274,7 @@ def test_client_emits_actual_trial_for_every_primary_and_diagnostic_request(sele
                         lambda *args: {'representation': {'path': '/fixture/graph.sg', 'sha256': 'c' * 64}})
     monkeypatch.setattr(client.subprocess, 'check_output', lambda *args, **kwargs: 'fixture-commit\n')
     monkeypatch.setattr(client.os, 'statvfs', lambda _: SimpleNamespace(f_bavail=100 * 1024**3, f_frsize=1))
-    monkeypatch.setattr(client, 'disk_usage_kib', lambda _: (1, []))
+    monkeypatch.setattr(client, 'allocated_bytes', lambda _: 1024)
     monkeypatch.setattr(client, 'run_stage', stage)
     argv = ['bfs_simulator_series.py', '--id', 'series-fixture', '--candidate', candidate['id'],
         '--workload', workload['id'], '--build-evaluation', model['id'], '--configuration', str(config),
@@ -321,7 +321,7 @@ def test_capacity_flag_gates_only_expensive_public_dispatch(selection, tmp_path,
         'representation': {'path': '/fixture/graph.sg', 'sha256': 'f'*64}})
     monkeypatch.setattr(client, 'validate_diagnostic_build', lambda *args: None)
     monkeypatch.setattr(client.os, 'statvfs', lambda _: SimpleNamespace(f_bavail=100*1024**3, f_frsize=1))
-    monkeypatch.setattr(client, 'disk_usage_kib', lambda _: (0, []))
+    monkeypatch.setattr(client, 'allocated_bytes', lambda _: 0)
     snapshots = []; dispatches = []
     def snapshot(node):
         snapshots.append(node)
@@ -403,7 +403,7 @@ def test_series_samples_through_cleanup_and_clips_monitor_stop(selection, tmp_pa
     monkeypatch.setattr(client.artifacts, 'external_directory', lambda _: root)
     monkeypatch.setattr(client.subprocess, 'check_output', lambda *args, **kwargs: 'fixture-commit\n')
     monkeypatch.setattr(client.os, 'statvfs', lambda _: SimpleNamespace(f_bavail=100*1024**3, f_frsize=1))
-    monkeypatch.setattr(client, 'disk_usage_kib', lambda _: (0, []))
+    monkeypatch.setattr(client, 'allocated_bytes', lambda _: 0)
     monkeypatch.setattr(client.lifecycle, 'SAMPLE_INTERVAL_SECONDS', .002)
     monkeypatch.setattr(client.lifecycle, 'SharedCleanup', Budget)
     monkeypatch.setattr(client.lifecycle, 'Owned', Owner)
@@ -461,7 +461,7 @@ def test_series_original_error_survives_final_accounting_failure(selection, tmp_
     monkeypatch.setattr(client.artifacts,'external_directory',lambda *args:runs)
     monkeypatch.setattr(client.subprocess,'check_output',lambda *args,**kwargs:'fixture-commit\n')
     monkeypatch.setattr(client.os,'statvfs',lambda *args:SimpleNamespace(f_bavail=100*1024**3,f_frsize=1))
-    monkeypatch.setattr(client,'disk_usage_kib',lambda *args:(1,[]))
+    monkeypatch.setattr(client,'allocated_bytes',lambda *args:1024)
     monkeypatch.setattr(client.lifecycle,'SharedCleanup',Budget)
     monkeypatch.setattr(client.lifecycle,'Owned',Owner)
     monkeypatch.setattr(client.lifecycle,'Monitor',Guard)
@@ -516,7 +516,7 @@ def test_series_preserves_original_failure_if_early_save_fails(selection, tmp_pa
     monkeypatch.setattr(client.artifacts,'external_directory',lambda _:root)
     monkeypatch.setattr(client.subprocess,'check_output',lambda *args,**kwargs:'fixture-commit\n')
     monkeypatch.setattr(client.os,'statvfs',lambda _:SimpleNamespace(f_bavail=100*1024**3,f_frsize=1))
-    monkeypatch.setattr(client,'disk_usage_kib',lambda _:(0,[]))
+    monkeypatch.setattr(client,'allocated_bytes',lambda _:0)
     monkeypatch.setattr(client.lifecycle,'SharedCleanup',Budget)
     monkeypatch.setattr(client.lifecycle,'Owned',Owner)
     monkeypatch.setattr(client.lifecycle,'Monitor',Guard)

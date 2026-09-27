@@ -83,6 +83,67 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Four scalar builds retained; supervisor failure preserved — 2026-09-26 21:21 ET
+
+All four scalar v2 public compilations and their four result/chain checks returned
+zero. The shared preparation supervisor then failed during final storage
+accounting when ownership cleanup killed a monitor-spawned `du` process. Its
+helper and outer exit were one; the whole preparation remains failed. The
+[independent terminal audit](observations/scalar-v2-failed-terminal-20260926.json)
+reopened all four completed build records and binary hashes, checked all 31
+retained identities twice (30 absent and the exact zero-RSS pane zombie), and
+verified node 1 generation 413 released. The final cleanup ledger has 37 settled
+events totaling 2.084549 seconds. All output is retained: 17,801,216 bytes total,
+including 4,337,664 build bytes. No build retry is authorized by this result.
+The four binaries remain correctness-unverified, with empty timings and no gain.
+
+The worker reproduced the same `du`/cleanup race locally with a real subprocess.
+A shared process-free allocation reader is being reviewed for future batch,
+series and scalar supervision. Active T16 remains on unchanged `8c39ae0`.
+The successful build records may be revalidated by their future required
+consumers; they do not turn the failed whole preparation into a pass.
+
+The [new fixed corrective T15 plan](requests/bfs-t15-correction-simulator-batch-20260926-a1.json)
+has digest `4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea`.
+It preserves the original science and 43,200-second/40-GiB aggregate, charges
+1,124 seconds for the failed attempt through closure, 472 seconds for the
+smoke preflight-to-final-recount envelope, and a full 600-second/2-GiB
+reservation for two future Linux proofs and their complete audits. The
+remaining allowance is 41,004 seconds and 29,787,017,216 bytes before new
+batch work. Prior plans and IDs remain unchanged. The
+[independent accounting review](observations/correction-reservation-standards-final-v2-20260926.json)
+passed its focused checks after reproducing and fixing omitted auditor exit and
+finish-time validation. This is preparation only; no corrective BFS run has begun.
+
+## Progress check and actual gzip transport proof — 2026-09-26 21:03 ET
+
+The [full host audit](observations/health-20260926-2103.json) confirms T16
+remains on node 0 generation 332 with the same gem5 PID/start identity. Its first
+artifact scalar primary is running with zero completed samples. Sampled tree RSS
+is 30,857,994,240 bytes; charged output is 1,694,466,048 bytes. Node 1 generation
+412 and legacy 77 are released. Disk headroom is 16.20 GiB on `/data1` and
+170.06 GiB on `/data`; the lane helper matches current upstream. All three
+workers are active. There are still 14 resolved and seven claimed tickets,
+zero final candidate acceptances, and no qualified gain. Next full check: 21:33 ET.
+
+The [actual no-guest gzip transport proof](observations/gem5-gzip-actual-20260926.json)
+passed on the pinned gem5 binary: complete gzip EOF/CRC, first event in gzip,
+second event after switching to plain output, and a separate stdout marker.
+It ran from 20:58:40 to 20:58:43 ET and passed independent closure at 21:00 ET.
+All five retained identities are terminal, the final cleanup ledger settled
+within its original reserve, and retained output totals 200,704 bytes. The
+short child fell between RSS samples; the sampled peak is not its measured
+maximum. This is a no-guest transport contract, not BFS execution evidence.
+The [exact two-file auxiliary export](observations/gem5-gzip-export-20260926.json)
+is `179afc0`, directly parented by the unchanged borrowed runtime `8c39ae0`.
+
+The four scalar builds are admitted but were not started at the full audit.
+The gzip adapter is undergoing independent replay review, with reproduced
+provenance defects retained and repaired before export. The separately bounded
+[T15 correction preparation](../../../docs/bfs-t15-gzip-correction-20260926.md)
+retains the original failed attempt and its costs. No corrected BFS attempt or
+new scientific protocol has started.
+
 ## T15 retained storage failure and next prerequisites — 2026-09-26 20:46 ET
 
 T15's first uniform18 primary ended as `budget_exhausted` during simulation:

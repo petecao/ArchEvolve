@@ -7,7 +7,18 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 20:46 ET
+## Current checkpoint — 2026-09-26 21:03 ET
+
+The actual native gzip transport smoke passed and is independently closed;
+[proof](../observations/gem5-gzip-actual-20260926.json). It used an empty gem5
+Root with no guest workload, so it does not complete a baseline sample. Production
+reader/replay review and a separately bounded correction plan remain required.
+The [prospective correction](../../../docs/bfs-t15-gzip-correction-20260926.md)
+retains the failed attempt and deducts its full outer-to-closure time envelope
+and retained bytes from the original aggregate budget. No corrected BFS run,
+protocol publication, or final acceptance has started. This ticket stays claimed.
+
+## Historical checkpoint — 2026-09-26 20:46 ET
 
 The first uniform18 primary failed at the unchanged per-execution 10-GiB storage
 guard. Its canonical outcome is `budget_exhausted`, with no sealed ROI receipt

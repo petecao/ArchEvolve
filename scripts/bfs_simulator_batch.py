@@ -28,18 +28,18 @@ from scripts.bfs_native_paired_pilot import DescendantRSS
 from scripts import bfs_dx100_coverage_execution as coverage_case
 from scripts import dx100_witness_continuation as witness_case
 from scripts.bfs_simulator_series import admit_capacity, validate_diagnostic_build, validate_selection
-from scripts.dx100_build import disk_usage_kib
 from swdb import artifacts, bfs_coverage, bfs_protocol, profile, profile_package, yamlio
 from swdb.store import Store
 
 ET = ZoneInfo('America/New_York')
 GIB = 1024**3
-PLAN_HASHES = {'t15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e'}
+PLAN_HASHES = {'t15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
 PLAN_DIR = ROOT / '.scratch/bfs-rewrite-evaluation-2026-09-25/requests'
 RAW_ROOTS = (Path('/data/yanruj/EvolveSWDB_runs'), Path('/data1/yanruj/EvolveSWDB_runs'))
 BUILD_ROOT = Path('/data1/yanruj/EvolveSWDB_builds')
 CLEANUP_RUNTIME = ('scripts/bfs_simulator_batch.py', 'scripts/bfs_simulator_series.py',
-                   'scripts/bfs_owned_execution.py', 'scripts/bfs_owned_rss.py', 'scripts/bfs_process.py')
+                   'scripts/bfs_owned_execution.py', 'scripts/bfs_owned_rss.py', 'scripts/bfs_process.py',
+                   'scripts/bfs_storage.py')
 
 
 def require(condition, reason):
@@ -82,14 +82,8 @@ def runtime_identity():
 
 
 def allocated_bytes(paths):
-    total = 0
-    for value in paths:
-        path = Path(value)
-        require(path.exists() and path == path.resolve(), 'charged storage path missing or symlinked')
-        used, warnings = disk_usage_kib(path)
-        require(not warnings, 'raw-storage accounting is incomplete')
-        total += used * 1024
-    return total
+    from scripts.bfs_storage import allocated_bytes as observe_allocation
+    return observe_allocation(paths)
 
 
 def batch_storage_paths(runs):
@@ -102,6 +96,51 @@ def batch_storage_paths(runs):
             'batch storage requires canonical raw and exact .dispatch directories')
     require(not runs.samefile(dispatch), 'batch storage roots must be distinct')
     return paths
+
+
+def failed_batch_charge(entry):
+    """Retain a closed failed attempt in a separately fixed correction (2026-09-26).
+
+    Reuse the original terminal readers; failure is a charge, never a completed
+    prerequisite or permission to resume its IDs. The plan pins every reference.
+    """
+    from scripts import bfs_simulator_batch_terminal as terminal
+    driver = read_reference(entry['driver'], maximum=16 * 1024**2)
+    lane = read_reference(entry['lane'])['socket_lane']
+    require(driver.get('id') == entry['id'] and driver.get('state') == 'failed'
+            and type(lane.get('exit_code')) is int and lane['exit_code'] != 0,
+            'retained failed batch is not a closed failed execution')
+    require(not driver.get('plan', {}).get('accounting', {}).get('retained_failed_batches'),
+            'nested corrective attempts are not authorized')
+    observed = now().isoformat()
+    terminal.validate_cleanup_ledger(entry['driver'], entry['cleanup_ledger'],
+        expected_run_id=entry['id'], expected_outer_start=driver['outer_started'],
+        expected_deadline=driver['outer_deadline'], current=observed)
+    storage = terminal.validate_storage_accounting(entry['driver'], entry['terminal'], current=observed)
+    audit = read_reference(entry['terminal'], maximum=16 * 1024**2)
+    dispatch = Path(storage['storage_paths'][1])
+    require(Path(entry['lane']['path']) == dispatch/'lane.json'
+            and all(audit.get('lane', {}).get(key) == entry['lane'][key] for key in ('path', 'sha256'))
+            and lane.get('job') == entry['id'] and lane.get('host') == 'mbit10'
+            and lane.get('lease_generation') == audit.get('lease_generation'),
+            'failed batch helper differs from the independently closed lane')
+    require(storage['storage_paths'] == entry['storage_paths']
+            and type(entry['retained_bytes']) is int and entry['retained_bytes'] > 0
+            and storage['raw_bytes'] == entry['retained_bytes'],
+            'closed failed batch storage changed after independent closure')
+    start, finish = stamp(lane['started_utc']), stamp(lane['ended_utc'])
+    outer, completed = stamp(driver['outer_started']), stamp(driver['finished'])
+    require(outer < start + timedelta(seconds=1) and start <= stamp(driver['started'])
+            and outer <= completed < finish + timedelta(seconds=1)
+            and start <= finish <= stamp(observed), 'failed batch helper and original clock disagree')
+    closed = stamp(entry['closed_at'])
+    require(completed <= stamp(audit['observed_at']) <= closed <= stamp(observed),
+            'failed batch closure endpoint precedes its independent readback')
+    # Whole-second helper endpoints undercount by up to one second. Include the
+    # full outer execution and finalization, not only its child-stage duration.
+    seconds = math.ceil(max((finish+timedelta(seconds=1)-outer).total_seconds(),
+                            (closed-outer).total_seconds()))
+    return {'id': entry['id'], 'elapsed_seconds': seconds, 'raw_bytes': storage['raw_bytes']}
 
 
 def preparation_charges(plan):
@@ -117,9 +156,123 @@ def preparation_charges(plan):
         require(math.isfinite(stage_seconds) and stage_seconds >= 0 and duration >= 0,
                 'preparation cost is malformed')
         # Helper timestamps truncate seconds: charge the conservative upper edge.
-        rows.append({'id': entry['id'], 'elapsed_seconds': math.ceil(max(stage_seconds, duration + 1)),
-                     'raw_bytes': allocated_bytes(entry['storage_paths'])})
+        seconds = math.ceil(max(stage_seconds, duration + 1))
+        raw_bytes = allocated_bytes(entry['storage_paths'])
+        if 'closed_envelope' in entry:
+            envelope = entry['closed_envelope']
+            preflight = read_reference(envelope['preflight'])
+            audit = read_reference(envelope['terminal'], maximum=16 * 1024**2)
+            start, end = stamp(envelope['started']), stamp(envelope['finished'])
+            require(start == stamp(preflight['observed_at'])
+                    and start <= stamp(driver['started']) <= stamp(driver['finished'])
+                    <= stamp(audit['observed_at']) <= end <= now(),
+                    'preparation closure envelope differs from retained execution')
+            require(audit.get('id') == entry['id'] and audit.get('state') == 'complete'
+                    and audit.get('lease_released') is True
+                    and audit.get('cleanup_state') in {'terminal_and_reaped','terminal_no_live_owned_processes'}
+                    and all(audit.get('driver', {}).get(key) == entry['driver'][key]
+                            and audit.get('lane', {}).get(key) == entry['lane'][key]
+                            for key in ('path', 'sha256')),
+                    'preparation envelope lacks matching independent closure')
+            require(type(envelope['retained_bytes']) is int and envelope['retained_bytes'] == raw_bytes,
+                    'preparation storage changed after its final read-only count')
+            seconds = max(seconds, math.ceil((end-start).total_seconds()))
+        rows.append({'id': entry['id'], 'elapsed_seconds': seconds, 'raw_bytes': raw_bytes})
+    retained = plan['accounting'].get('retained_failed_batches', [])
+    require(len(retained) <= 1, 'only one separately planned corrective attempt is authorized')
+    rows.extend(failed_batch_charge(entry) for entry in retained)
+    reservation = plan['accounting'].get('preparation_reservation')
+    if reservation is not None:
+        require(all(type(reservation.get(key)) is int and reservation[key] > 0
+                    for key in ('elapsed_seconds', 'raw_bytes')), 'invalid fixed preparation reservation')
+        rows.append({key: reservation[key] for key in ('id', 'elapsed_seconds', 'raw_bytes')})
+    require(len({row['id'] for row in rows}) == len(rows), 'preparation charges repeat an execution')
     return rows
+
+
+def validate_preparation_reservation(plan, admission):
+    """Charge the full prospectively fixed Linux-proof allowance, with no refund.
+
+    Actual proof hashes are sealed later in admission, avoiding a code/plan/proof
+    hash cycle. Their complete closed envelopes must fit the fixed reservation.
+    """
+    reserved = plan['accounting'].get('preparation_reservation')
+    if reserved is None:
+        require('preparation_reservation' not in admission, 'unplanned preparation reservation')
+        return
+    actual = admission['preparation_reservation']
+    paths = [Path(path) for path in reserved['storage_paths']]
+    require(len(paths) == len(set(paths)) == 5 and all(path.is_absolute() and path == path.resolve()
+            and path.is_dir() and not path.is_symlink() for path in paths),
+            'preparation reservation requires exact canonical output roots')
+    group = paths[-1]
+    require(group.name == reserved['id']+'.dispatch'
+            and Path(actual['preflight']['path']) == group/'preflight.json',
+            'preparation preflight is outside its fixed accounting root')
+    preflight = read_reference(actual['preflight'])
+    start, end = stamp(preflight['observed_at']), stamp(actual['finished'])
+    require(preflight.get('id') == reserved['id'] and preflight.get('code_commit') == admission['code_commit']
+            and start <= end <= stamp(admission['prepared_at'])
+            and (end-start).total_seconds() <= reserved['elapsed_seconds'],
+            'preparation work exceeds or differs from the fixed reserved envelope')
+    require(set(actual['audits']) == set(actual['auditor_readbacks']) == set(reserved['selections']),
+            'preparation reservation omits external auditor completion')
+    expected_paths, seen = [], set()
+    for reference in admission['linux_cleanup_tests']:
+        proof = read_reference(reference)
+        kind = proof.get('kind')
+        require(kind in reserved['selections'] and kind not in seen,
+                'reserved preparation proof selection differs')
+        seen.add(kind)
+        run_id = reserved['selections'][kind]
+        raw = group.parent/run_id; dispatch = Path(str(raw)+'.dispatch')
+        expected_paths.extend([raw,dispatch])
+        audit = read_reference(proof['terminal_audit'], maximum=16 * 1024**2)
+        completion_ref = actual['audits'][kind]
+        completion = read_reference(completion_ref)
+        require(Path(reference['path']) == raw/'proof.json'
+                and Path(proof['terminal_audit']['path']) == raw/'terminal-audit.json'
+                and proof.get('independent_cleanup_verified') is True
+                and audit.get('id') == run_id and audit.get('state') == 'passed'
+                and audit.get('code_commit') == admission['code_commit']
+                and audit.get('lease_released') is True
+                and audit.get('cleanup_state') in {'terminal_and_reaped','terminal_no_live_owned_processes'}
+                and audit.get('driver') == proof.get('driver')
+                and start <= stamp(proof['started']) <= stamp(proof['finished'])
+                <= stamp(audit['observed_at']) <= end,
+                'reserved preparation omits exact independent fixture closure')
+        require(Path(completion_ref['path']) == dispatch/'audit-receipt.json'
+                and completion.get('state') == 'complete'
+                and type(completion.get('returncode')) is int and completion['returncode'] == 0
+                and completion.get('outer_seconds') == 60
+                and type(completion.get('host_wall_s')) in (int,float)
+                and math.isfinite(completion['host_wall_s']) and 0 <= completion['host_wall_s'] <= 60
+                and all(completion.get('proof', {}).get(key) == reference[key]
+                        and completion.get('terminal_audit', {}).get(key) == proof['terminal_audit'][key]
+                        for key in ('path','sha256'))
+                and stamp(proof['finished']) <= stamp(completion['audit_started'])
+                <= stamp(audit['observed_at']) <= stamp(completion['audit_finished']) <= end
+                and (stamp(completion['audit_finished'])-stamp(completion['audit_started'])).total_seconds() <= 60,
+                'preparation external audit failed, escaped its cap, or finished after the envelope')
+        readback_ref = actual['auditor_readbacks'][kind]
+        readback = read_reference(readback_ref)
+        wrapper_exit = read_reference(readback['wrapper_exit'], maximum=16)
+        require(Path(readback_ref['path']) == group/(kind+'.readback.json')
+                and readback.get('id') == run_id
+                and type(readback.get('wrapper_returncode')) is int and readback['wrapper_returncode'] == 0
+                and Path(readback['wrapper_exit']['path']) == group/(kind+'.audit-wrapper.exit')
+                and type(wrapper_exit) is int and wrapper_exit == 0
+                and all(readback.get(field, {}).get(key) == wanted[key]
+                        for field,wanted in (('audit_receipt',completion_ref),('proof',reference),
+                                             ('terminal_audit',proof['terminal_audit']))
+                        for key in ('path','sha256'))
+                and stamp(completion['audit_finished']) <= stamp(readback['finished']) <= end,
+                'preparation auditor wrapper or final hash readback failed or escaped the envelope')
+    require(seen == set(reserved['selections']) and set(paths) == set(expected_paths+[group]),
+            'preparation reservation omits or adds output roots')
+    used = allocated_bytes(paths)
+    require(type(actual['raw_bytes']) is int and used == actual['raw_bytes'] <= reserved['raw_bytes'],
+            'preparation output changed or exceeded the full reserved storage allowance')
 
 
 class OwnedDescendants:
@@ -375,6 +528,9 @@ def series_command(plan, row, admission, config, runs, records, node, seconds, s
         command += ['--owned-cleanup-ledger', str(cleanup.path), '--owned-cleanup-binding', cleanup.binding]
     if row['accelerated']:
         command.append('--accelerated')
+    if 'trace_transport' in plan:
+        require(plan['trace_transport'] == 'gem5-gzip.v1', 'unsupported planned trace transport')
+        command += ['--trace-transport', plan['trace_transport']]
     if row['protocol_key'] is not None:
         command += ['--protocol', admission['protocols'][row['protocol_key']]['id'], '--protocol-role', row['protocol_role']]
     return command
@@ -424,6 +580,8 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
                 'sha256': plan['record_sha256'][row['diagnostic_build']]}
             and child.get('stages') and all(stage.get('state') == 'complete' for stage in child['stages']),
             'series receipt differs from its planned complete identity or bounds')
+    require(child.get('trace_transport') == plan.get('trace_transport'),
+            'series trace transport differs from its explicit planned collector')
     supervision = child.get('owned_supervision', {})
     require(supervision.get('format') == 'swdb.bfs.simulator-supervision.v1'
             and supervision.get('sampled_tree_rss_bytes') == lifecycle.SAMPLED_RSS_BYTES
@@ -449,6 +607,13 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
                 'series sample references differ from the prospective grid')
         package = package_binding(store, sample.get('package'), prefix + '.package', sample['evaluation'],
                                   sample['profile'], row['candidate'])
+        if plan.get('trace_transport') is not None:
+            for key in ('evaluation', 'diagnostic_evaluation'):
+                execution = store.get(sample[key], 'evaluation')
+                require(execution is not None
+                        and execution.get('context', {}).get('trace_transport') == plan['trace_transport']
+                        and execution.get('request', {}).get('verification', {}).get('trace_transport')
+                        == plan['trace_transport'], 'planned trace transport is missing from a public execution')
         require(package.get('completeness') == 'complete' and package['evidence']['classification'] == 'execution',
                 'series package is not complete actual execution evidence')
         context = package['context']
@@ -674,6 +839,7 @@ def main():
             require(not any(rid == row['id'] or rid.startswith(row['id'] + '.') for rid in store.by_id)
                     and not list(BUILD_ROOT.glob(row['id'] + '*')), 'series IDs or build paths already exist; no retry')
         validate_cleanup_tests(admission)
+        validate_preparation_reservation(plan, admission)
         prerequisites, availability = validate_inputs(plan, admission, store)
         receipt.update(code_commit=admission['code_commit'], runtime_sha256=admission['runtime_sha256'],
                        raw_input_verification=availability, prerequisites=prerequisites)

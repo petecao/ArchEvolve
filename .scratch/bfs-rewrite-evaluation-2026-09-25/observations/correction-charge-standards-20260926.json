@@ -1,0 +1,111 @@
+{
+  "created": "2026-09-26T21:11:14.478482-04:00",
+  "kind": "independent_scoped_standards_readback",
+  "state": "clean_at_captured_checkpoint",
+  "scope": "Failed T15 exact lane/full closure charge; smoke full closure charge; optional series transport receipt marker. Prospective reservation admission implementation is not yet reviewed.",
+  "findings_closed": [
+    {
+      "issue": "Failed-attempt charge previously did not bind helper receipt to independent terminal audit lane.",
+      "original_red": "/private/tmp/bfs-correction-lane-red-20260926.log",
+      "recheck": "The fixture now overwrites audit.lane while sealing; v2 preserves the same mutation after seal, rehashes terminal, recounts storage, and rejects at the exact independently closed lane check. Original probe/log left unchanged."
+    }
+  ],
+  "verification": {
+    "result": "26 passed in 0.65s",
+    "command": "PYTHONPATH=\"$PWD/tests:$PWD\" /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest /private/tmp/test_correction_lane_binding_standards_v2_20260926.py tests/test_bfs_simulator_correction.py -q --basetemp=/private/tmp/bfs-correction-standards-recheck-20260926",
+    "log": "/private/tmp/bfs-correction-standards-recheck-20260926.log"
+  },
+  "actual_schema_readback": {
+    "failed_lane": "health2103 exact .dispatch/lane.json with job/host/generation411 and ended_utc agrees with reader",
+    "failed_charge_seconds": 1124,
+    "smoke_charge_seconds": 472,
+    "smoke_driver_started": "2026-09-26T20:58:40.448469-04:00",
+    "no_host_execution": true,
+    "smoke_stage_host_wall_s": 0.29002660512924194,
+    "smoke_terminal_lease_released": true,
+    "smoke_confirmation_basis": "Host worker reopened already-retained metadata fields and reported exact values; no new audit or execution."
+  },
+  "reservation_design": {
+    "status": "prospective design is sound; actual admission implementation pending",
+    "fixed_seconds": 600,
+    "fixed_bytes": 2147483648,
+    "full_nonrefundable_charge": true,
+    "total_prior_seconds": 2196,
+    "remaining_seconds": 41004,
+    "remaining_bytes": 29787017216,
+    "conditions": [
+      "Exact plan-fixed two IDs; proof hashes supplied later in admission",
+      "Reopen actual unchanged-runtime proof and independent terminal closure",
+      "Actual earliest preparation through final recount <=600 seconds",
+      "Combined two exact raw plus .dispatch roots <=2 GiB",
+      "No refund of unused reservation and no double counting its actual bytes"
+    ]
+  },
+  "limitations": [
+    "Synthetic local fixtures are not empirical qualification.",
+    "No simulator/provider invocation, host audit, plan acceptance, or export performed.",
+    "Full correction plan and reservation admission remain separate forthcoming review."
+  ],
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_batch.py",
+      "bytes": 49879,
+      "sha256": "e443a1ebb990831a4532f2fe84cb930297e2225211749c75ed0bfc6abb986978"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_correction.py",
+      "bytes": 8166,
+      "sha256": "166c7b877ca8800d0224b6e00aac65407f6171936b45607084410766407deba7"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-t15-gzip-correction-20260926.md",
+      "bytes": 2942,
+      "sha256": "3c0b2e50ae07dc5d460f56ad07e6b8ec459d40af58c5ac0c9ea4d22b40941a6a"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_series.py",
+      "bytes": 30410,
+      "sha256": "074e00af2b48617355cb135f84065f9fa417a9846b58a116f0c6f004087a2a28"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_series.py",
+      "bytes": 33265,
+      "sha256": "19f5808f46f57f8887c6fb999933f3350415954544e0aff1c5af813f0a6f4b07"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-dx100-gzip-trace-20260926.md",
+      "bytes": 4093,
+      "sha256": "5f138fd9e4302968911e39e79d931e4bdafa53b8be123349dc98e96a79cafe39"
+    },
+    {
+      "path": "/private/tmp/bfs-correction-lane-red-20260926.log",
+      "bytes": 1255,
+      "sha256": "b4a3533719a1e20d2ef0993cd1e9c7118ee24bdc77af5f48cad53cbc3e84ffcc"
+    },
+    {
+      "path": "/private/tmp/test_correction_lane_binding_standards_20260926.py",
+      "bytes": 582,
+      "sha256": "02fd77f2b0469d6183c418695f386c6996f0ea561d270bc096bde53f02c2a219"
+    },
+    {
+      "path": "/private/tmp/test_correction_lane_binding_standards_v2_20260926.py",
+      "bytes": 895,
+      "sha256": "f8bc8eccc578100a666b680bda222edba36c85ccd231c59deea3adbc52e0ab56"
+    },
+    {
+      "path": "/private/tmp/bfs-correction-standards-recheck-20260926.log",
+      "bytes": 99,
+      "sha256": "37a83d9808746dce646e4cfa40c5ebf79c3dadda7a90ca7572f1e96dda2ebb14"
+    },
+    {
+      "path": "/private/tmp/bfs-gem5-gzip-charge-source-20260926.json",
+      "bytes": 1593,
+      "sha256": "dfe5dbd1f5ed5b56b6799fae6acc182b0b1b2bcb917d7d1a93addbf72e173ffb"
+    },
+    {
+      "path": "/private/tmp/bfs-health-2103-20260926.json",
+      "bytes": 22637,
+      "sha256": "c4715b9dc75e3b2e63eb4876748de229d01315a0694d8fc7ac0261eb7032b04f"
+    }
+  ]
+}

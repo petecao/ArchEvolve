@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from swdb import artifacts, bfs_protocol, profile
 from swdb.store import Store
-from scripts.dx100_build import disk_usage_kib
+from scripts.bfs_storage import allocated_bytes
 from scripts.bfs_process import interruption_signals, run_stage
 from scripts import bfs_owned_execution as lifecycle
 
@@ -206,11 +206,7 @@ def main():
 
     def storage_bytes():
         # A dedicated batch root bounds all of its retained checkpoints and logs.
-        used, warnings = disk_usage_kib(runs)
-        if warnings:
-            receipt.setdefault('monitor_warnings', []).extend(warnings)
-            save()
-        return used * 1024
+        return allocated_bytes([runs])
 
     def check_bounds():
         remaining = args.total_seconds - (time.monotonic() - started)
