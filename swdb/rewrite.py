@@ -67,12 +67,67 @@ def configuration(path):
     return data
 
 
+FOCUSED = 'selected_regions_focused_context.v1'
+FOCUSED_KEPT = ('kind', 'id', 'identity_sha256', 'implementation', 'source_snapshot', 'completeness')
+
+
+def _focused_package_context(task, request, package):
+    """Opt-in focused worker view (2026-09-27): package identity, the proposal's
+    selected regions and selected strategy rows only. Every omitted top-level
+    field, region and strategy row is named with its canonical hash; the sealed
+    package is unchanged and remains retrievable under full_package."""
+    selected = request.get('strategy')
+    if not isinstance(selected, str) or not selected.strip():
+        raise Failure('prompt projection requires the explicitly submitted strategy')
+    from swdb.profile_package import verify
+    verify(package)
+    wanted = request.get('regions')
+    regions, strategies = package.get('regions', []), package.get('strategies', [])
+    if (not isinstance(wanted, list) or not wanted or not isinstance(regions, list)
+            or not isinstance(strategies, list)
+            or any(not isinstance(r, dict) or not isinstance(r.get('id'), str) for r in regions)
+            or any(not isinstance(r, dict) or not isinstance(r.get('strategy'), str) for r in strategies)):
+        raise Failure('focused prompt projection requires unambiguous regions and strategy identities')
+    ids = [r['id'] for r in regions]
+    if len(set(ids)) != len(ids) or not set(wanted) <= set(ids):
+        raise Failure('focused prompt projection requires unique package regions covering the request')
+    view = {key: package[key] for key in FOCUSED_KEPT if key in package}
+    view['regions'] = [r for r in regions if r['id'] in wanted]
+    view['strategies'] = [r for r in strategies if r['strategy'] == selected]
+    del task['profile_package']
+    task['profile_package_context'] = view
+    task['prompt_projection'] = {
+        'format': 'swdb.rewrite.profile-context-projection.v1', 'method': FOCUSED,
+        'scope': 'Only package identity, the proposal-selected regions and selected-strategy rows are shown.',
+        'notice': 'profile_package_context is a partial view, not the full sealed profile package. '
+                  'The full package remains retained and retrievable under full_package.',
+        'submitted_strategy': selected,
+        'full_package': {'id': package['id'], 'identity_sha256': package.get('identity_sha256'),
+                         'record_sha256': artifacts.digest(package)},
+        'omitted_fields': {key: artifacts.digest(value) for key, value in sorted(package.items())
+                           if key not in FOCUSED_KEPT and key not in ('regions', 'strategies')},
+        # Compact: count plus the digest of the full omitted-row list, which a
+        # reader recomputes from the retained package with focused_omissions().
+        **focused_omissions(package, wanted, selected)}
+
+
+def focused_omissions(package, wanted, selected):
+    regions = [{'index': i, 'id': r['id'], 'sha256': artifacts.digest(r)}
+               for i, r in enumerate(package.get('regions', [])) if r['id'] not in wanted]
+    rows = [{'index': i, 'strategy': r['strategy'], 'sha256': artifacts.digest(r)}
+            for i, r in enumerate(package.get('strategies', [])) if r['strategy'] != selected]
+    return {'omitted_regions': {'count': len(regions), 'sha256': artifacts.digest(regions)},
+            'omitted_strategy_matches': {'count': len(rows), 'sha256': artifacts.digest(rows)}}
+
+
 def _project_package_context(task, request, package):
     """Opt-in worker view only; the retained handoff package is never changed."""
     parameters = request.get('parameters', {})
     if 'prompt_projection' not in parameters:
         return
     method = parameters['prompt_projection']
+    if method == FOCUSED:
+        return _focused_package_context(task, request, package)
     if method != 'omit_unselected_strategy_catalog.v1':
         raise Failure('unsupported prompt projection')
     selected = request.get('strategy')
