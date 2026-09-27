@@ -34,13 +34,14 @@ from swdb.store import Store
 
 LIMIT_BYTES = 512 * 1024**2
 SELECTIONS = {
-    'owned_cleanup': ('bfs-simulator-owned-linux-20260926-a3',
+    'owned_cleanup': ('bfs-simulator-owned-linux-20260926-a4',
         ['tests/test_bfs_owned_execution.py', '-k', 'linux'], {
             'test_linux_owned_stage_reaps_detached_child[False]',
             'test_linux_owned_stage_reaps_detached_child[True]',
             'test_linux_nested_interruption_uses_one_cleanup_budget',
-            'test_linux_term_resistant_nested_cleanup_keeps_final_kill_reserve'}),
-    'dx100_interruption': ('bfs-simulator-interruption-linux-20260926-a3',
+            'test_linux_term_resistant_nested_cleanup_keeps_final_kill_reserve',
+            'test_linux_storage_observation_handles_sqlite_journal_unlink'}),
+    'dx100_interruption': ('bfs-simulator-interruption-linux-20260926-a4',
         ['tests/test_dx100_interruption.py::test_public_interruption_is_durable_before_postmortem'], {
             'test_public_interruption_is_durable_before_postmortem[raises]',
             'test_public_interruption_is_durable_before_postmortem[stalls]'}),

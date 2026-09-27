@@ -28,7 +28,7 @@ def test_exact_three_commands_preserve_venv_and_fixed_unskipped_selection(tmp_pa
     assert argv[3:3+len(runner.SELECTIONS[kind][1])]==runner.SELECTIONS[kind][1]
     assert '-p' in argv and 'no:cacheprovider' in argv
     assert '--junitxml='+str(tmp_path/'junit.xml') in argv
-    assert len(runner.SELECTIONS[kind][2])==(4 if kind=='owned_cleanup' else 2)
+    assert len(runner.SELECTIONS[kind][2])==(5 if kind=='owned_cleanup' else 2)
 
 
 @pytest.mark.parametrize('fault',[None,'failure','error','skipped','duplicate','missing','extra'])

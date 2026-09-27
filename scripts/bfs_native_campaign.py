@@ -116,6 +116,110 @@ def campaign_inputs(args):
         'runs_dir':str(args.runs_dir),'source_runs_dir':str(args.source_runs_dir),'build_root':str(args.build_root)}
 
 
+def native_dispatch_path(runs):
+    """Only the original wrapper's exact canonical sibling is charged."""
+    runs = Path(runs)
+    dispatch = Path(str(runs)+'.dispatch')
+    require(runs.is_absolute() and runs == runs.resolve()
+            and dispatch.is_dir() and not dispatch.is_symlink() and dispatch == dispatch.resolve(),
+            'native storage requires the exact canonical .dispatch sibling')
+    return dispatch
+
+
+def native_storage_paths(runs, sources, builds):
+    paths = [Path(runs), native_dispatch_path(runs), Path(sources), Path(builds)]
+    require(all(p.is_absolute() and p.is_dir() and not p.is_symlink() and p == p.resolve() for p in paths)
+            and not any(a == b or a in b.parents or b in a.parents
+                        for i,a in enumerate(paths) for b in paths[i+1:]),
+            'native storage roots must be canonical existing disjoint directories')
+    return paths
+
+
+def native_storage_accounting(inputs):
+    """Same native byte metric/caps; include wrapper output and count records once."""
+    from scripts.bfs_dx100_coverage_execution import artifact_bytes
+    paths = native_storage_paths(inputs['runs_dir'],inputs['source_runs_dir'],inputs['build_root'])
+    records = Path(inputs['records']); run_id = inputs['id']
+    require(records.is_absolute() and records.is_dir() and not records.is_symlink()
+            and records == records.resolve() and re.fullmatch(r'[a-z0-9][a-z0-9._-]*',run_id),
+            'native record accounting identity is unsafe')
+    new_records = sorted(records.rglob(run_id+'*.yaml'))
+    require(all(p.is_file() and not p.is_symlink() and p == p.resolve() for p in new_records),
+            'native new record storage is unsafe')
+    # Record views may be retained below .dispatch. Their full retained view is
+    # already charged there; only records outside all charged trees are added.
+    external = [p for p in new_records if not any(root in p.parents for root in paths)]
+    total = artifact_bytes(paths)+sum(p.lstat().st_size for p in external)
+    builds = artifact_bytes([paths[3]])
+    require(total <= NATIVE_BOUNDS['artifact_bytes'] and builds <= NATIVE_BOUNDS['build_bytes'],
+            'native artifact/build bound exceeded')
+    return {'observed_at':now().isoformat(),'artifact_bytes':total,'build_bytes':builds,
+            'storage_paths':list(map(str,paths)),'new_record_paths':list(map(str,new_records)),
+            'separately_charged_record_paths':list(map(str,external))}
+
+
+def validate_storage_accounting(driver_ref, terminal_ref, *, admission_ref, current):
+    """Read-only post-helper recount; caller separately proves process/lane closure.
+
+    Persist a first result inside .dispatch, then recount after every final write.
+    Retain the final result outside the charged roots without modifying them.
+    This creates no new allowance and does not qualify performance or cleanup.
+    """
+    admission = read_reference(admission_ref)
+    driver = read_reference(driver_ref); audit = read_reference(terminal_ref)
+    inputs = admission.get('inputs',{})
+    require(admission.get('format') == 'swdb.bfs.native-campaign-admission.v1'
+            and admission.get('id') == inputs.get('id') == driver.get('id')
+            and artifacts.digest(admission.get('bounds')) == artifacts.digest(NATIVE_BOUNDS)
+            and artifacts.digest(driver.get('supervision_bounds')) == artifacts.digest(NATIVE_BOUNDS)
+            and driver.get('format') == 'swdb.bfs.native-campaign-driver.v2'
+            and driver.get('state') in {'evaluated','incomplete','failed'}
+            and driver.get('supervision_admission',{}).get('path') == admission_ref['path']
+            and driver.get('supervision_admission',{}).get('sha256') == admission_ref['sha256']
+            and artifacts.digest(driver.get('runtime')) == artifacts.digest(admission.get('runtime')),
+            'native terminal storage admission/driver binding differs')
+    paths = native_storage_paths(inputs['runs_dir'],inputs['source_runs_dir'],inputs['build_root'])
+    require(driver.get('storage_paths') == list(map(str,paths))
+            and Path(driver_ref['path']) == paths[0]/(driver['id']+'.driver')/'driver.json'
+            and Path(admission_ref['path']) == paths[1]/'admission.json'
+            and Path(terminal_ref['path']) == paths[1]/'terminal-validation.json',
+            'native terminal storage references differ from the admitted paths')
+    bound = audit.get('driver',{})
+    require(audit.get('id') == driver['id'] and audit.get('state') == driver['state']
+            and bound.get('path') == driver_ref['path'] and bound.get('sha256') == driver_ref['sha256']
+            and audit.get('repository_commit') == admission.get('code_commit')
+            and audit.get('lease_released') is True
+            and audit.get('cleanup_state') in {'terminal_and_reaped','terminal_no_live_owned_processes'},
+            'native terminal audit does not bind the driver and independent closure')
+    begin, end = timestamp(driver['outer_started']), timestamp(driver['outer_deadline'])
+    observed = timestamp(current)
+    require(end-begin == timedelta(seconds=NATIVE_BOUNDS['outer_seconds'])
+            and timestamp(admission['prepared_at']) <= begin <= timestamp(driver['started'])
+            <= timestamp(audit['observed_at']) <= observed,
+            'native terminal storage original clock differs')
+    if driver.get('finished') is not None:
+        require(timestamp(driver['started']) <= timestamp(driver['finished']) <= end
+                and timestamp(driver['finished']) <= timestamp(audit['observed_at']),
+                'native terminal storage finish escaped the original clock')
+    else:
+        require(driver['state'] == 'failed','unfinished native success cannot pass storage readback')
+    result = native_storage_accounting(inputs)
+    snapshot = driver.get('final_accounting')
+    if snapshot is not None:
+        require(snapshot.get('storage_paths') == list(map(str,paths))
+                and all(type(snapshot.get(key)) in (int,float) and math.isfinite(snapshot[key])
+                        and 0 <= snapshot[key] <= result[key] for key in ('artifact_bytes','build_bytes')),
+                'native driver storage snapshot differs from retained terminal output')
+    else:
+        require(driver['state'] == 'failed','native success lacks its final storage snapshot')
+    for ref in (admission_ref,driver_ref,terminal_ref): read_reference(ref)
+    return {**result,'state':'within_existing_storage_budget','run_id':driver['id'],'driver_outcome':driver['state'],
+            'driver':dict(driver_ref),'terminal_audit':dict(terminal_ref),'admission':dict(admission_ref),
+            'observed_at':observed.isoformat(),'ceiling_bytes':NATIVE_BOUNDS['artifact_bytes'],
+            'build_ceiling_bytes':NATIVE_BOUNDS['build_bytes'],'driver_storage_snapshot':'nonfinal',
+            'requires_recheck_after_any_write':True,'process_absence_verified':False,'empirical_qualification':False}
+
+
 def validate_linux_proof(ref, admission):
     proof = read_reference(ref)
     require(proof.get('format') == 'swdb.bfs.linux-fixture.v1'
@@ -170,7 +274,8 @@ class NativeSupervision:
             outer_started=self.begin.isoformat(),outer_deadline=self.end.isoformat(),supervision_bounds=copy.deepcopy(NATIVE_BOUNDS),
             cleanup_budget={'path':str(path),'binding':binding,'budget_seconds':30},cleanup_verified=False,
             process_observations={'driver_identity':ident,'pane_identity':pane,'ancestry':lifecycle.ancestry(ident,pane)},
-            resource_scope='driver and all observed owned descendants across sessions',hard_memory_quota=False)
+            resource_scope='driver and all observed owned descendants across sessions',hard_memory_quota=False,
+            storage_paths=list(map(str,native_storage_paths(args.runs_dir,args.source_runs_dir,args.build_root))))
         self.guard = lifecycle.Monitor(self.observe)
 
     def remaining(self, cleanup=False):
@@ -181,19 +286,15 @@ class NativeSupervision:
         if self.guard and self.guard.last_started is not None: self.guard.check()
 
     def account(self):
-        from scripts.bfs_dx100_coverage_execution import artifact_bytes
-        total = artifact_bytes([self.args.runs_dir,self.args.source_runs_dir,self.args.build_root])
-        total += sum(p.lstat().st_size for p in self.args.records.rglob(self.args.id+'*.yaml'))
-        builds = artifact_bytes([self.args.build_root])
+        storage = native_storage_accounting(vars(self.args))
         free = {}
         for key,path,minimum in (('raw_free_bytes',self.args.runs_dir,NATIVE_BOUNDS['raw_reserve_bytes']),
                 ('build_free_bytes',self.args.source_runs_dir,NATIVE_BOUNDS['build_reserve_bytes']),
                 ('build_volume_free_bytes',self.args.build_root,NATIVE_BOUNDS['build_reserve_bytes'])):
             stat = os.statvfs(path); free[key] = stat.f_bavail*stat.f_frsize
             require(free[key]>=minimum,'native free-space reserve exhausted')
-        require(total<=NATIVE_BOUNDS['artifact_bytes'] and builds<=NATIVE_BOUNDS['build_bytes'], 'native artifact/build bound exceeded')
         self.check_clock()
-        return {'observed_at':now().isoformat(),'artifact_bytes':total,'build_bytes':builds,**free}
+        return {**storage,**free}
 
     def check_clock(self):
         require(self.remaining(True)>0,'native outer deadline exhausted')
@@ -224,6 +325,10 @@ class NativeSupervision:
     def admit(self):
         self.guard.start()
         ref = {'path':str(self.args.supervision_admission),'sha256':self.args.supervision_sha256}
+        require(self.args.supervision_admission == native_dispatch_path(self.args.runs_dir)/'admission.json'
+                and self.args.supervision_admission == self.args.supervision_admission.resolve()
+                and not self.args.supervision_admission.is_symlink(),
+                'native admission must be in the exact accounted dispatch directory')
         value = read_reference(ref); self.driver.receipt['supervision_admission'] = ref
         require(value.get('format')=='swdb.bfs.native-campaign-admission.v1' and value.get('id')==self.args.id
                 and value.get('code_commit')==self.args.expected_commit
@@ -995,14 +1100,16 @@ def main():
         parser.error('prospective supervision requires admission/hash/code/outer clock/pane/build root together')
     if args.existing_candidate and not supervision:
         parser.error('actual existing-candidate campaigns require prospective owned supervision')
-    for key in ('records', 'proposal', 'provider_config', 'repair_config', 'reassessment','supervision_admission'):
+    for key in ('records', 'proposal', 'provider_config', 'repair_config', 'reassessment'):
         if getattr(args, key) is not None: setattr(args, key, getattr(args, key).resolve())
     if socket.gethostname().split('.')[0] != 'mbit10': parser.error('native campaign requires mbit10')
     if supervision:
         for path in (args.runs_dir,args.source_runs_dir,args.build_root):
             if path.exists() or not path.is_absolute() or path != path.resolve():
                 parser.error('supervised raw/source/build roots must be distinct new absolute paths')
-        roots=(args.runs_dir,args.source_runs_dir,args.build_root)
+        try: dispatch = native_dispatch_path(args.runs_dir)
+        except ValueError as exc: parser.error(str(exc))
+        roots=(args.runs_dir,dispatch,args.source_runs_dir,args.build_root)
         if any(a==b or a in b.parents or b in a.parents for i,a in enumerate(roots) for b in roots[i+1:]):
             parser.error('supervised output roots must be disjoint')
         if not args.build_root.is_relative_to('/data1/yanruj'):

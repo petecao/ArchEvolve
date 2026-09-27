@@ -124,8 +124,12 @@ def load_manifest():
     return value
 
 
-def validate_proof(ref, runtime, prepared_at):
-    """Reuse proof of identical ownership primitives, not proof of this driver."""
+def validate_proof(ref, runtime, prepared_at, *, require_storage_case=False):
+    """Reuse exact ownership proof; optionally require the approved SQLite case.
+
+    Historical four-case receipts stay readable. The exact five-case variant
+    additionally binds the storage helper it exercises (2026-09-26).
+    """
     proof = read_reference(ref); audit = read_reference(proof['terminal_audit'])
     driver = read_reference(proof['driver']); pending = read_reference(proof['pending'])
     expected = {'test_linux_owned_stage_reaps_detached_child[False]',
@@ -160,11 +164,25 @@ def validate_proof(ref, runtime, prepared_at):
                 and path.stat().st_size <= maximum and artifacts.file_hash(path) == proof[key]['sha256'],
                 'Linux proof output changed or exceeds read bound')
     cases = XML.fromstring(Path(proof['junit']['path']).read_bytes()).findall('.//testcase')
-    require(len(cases) == 4 and {case.get('name') for case in cases} == expected
+    names = {case.get('name') for case in cases}
+    storage_case = 'test_linux_storage_observation_handles_sqlite_journal_unlink'
+    require(len(cases) == len(names) and names in (expected, expected | {storage_case})
             and all(not any(case.find(k) is not None for k in ('failure','error','skipped')) for case in cases),
-            'ownership cases missing, failed or skipped')
+            'ownership cases missing, duplicated, unapproved, failed or skipped')
+    require(not require_storage_case or storage_case in names,
+            'current diagnostic preparation requires the passed Linux SQLite journal case')
+    proof_files = PROOF_FILES
+    if storage_case in names:
+        dependency = 'scripts/bfs_storage.py'
+        digest = runtime['files'].get(dependency)
+        require(isinstance(digest,str) and len(digest)==64
+                and all(c in '0123456789abcdef' for c in digest)
+                and tested['files'].get(dependency) == runtime['files'][dependency]
+                and proof.get('runtime_sha256', {}).get(dependency) == runtime['files'][dependency],
+                'tested SQLite storage helper differs from selected runtime')
+        proof_files += (dependency,)
     return {'reference':ref, 'actual_proof_commit':proof['code_commit'],
-            'driver_commit':runtime['commit'], 'identical_tested_files':{p:runtime['files'][p] for p in PROOF_FILES},
+            'driver_commit':runtime['commit'], 'identical_tested_files':{p:runtime['files'][p] for p in proof_files},
             'scope':'contract proof of reused ownership primitives; not execution proof of this new driver'}
 
 

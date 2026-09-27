@@ -215,9 +215,9 @@ def test_checker_selection_never_silently_promotes_legacy_evidence(selection):
         client.select_verifier(None, {'settings': {'correctness': {'verifier': 'unknown'}}})
 
 
-@pytest.mark.parametrize('frozen_series', [False, True])
+@pytest.mark.parametrize('frozen_series,reuse_primary', [(False, False), (True, False), (True, True)])
 @pytest.mark.parametrize('trace_transport', [None, 'gem5-gzip.v1'])
-def test_client_emits_actual_trial_for_every_primary_and_diagnostic_request(selection, tmp_path, monkeypatch, frozen_series, trace_transport):
+def test_client_emits_actual_trial_for_every_primary_and_diagnostic_request(selection, tmp_path, monkeypatch, frozen_series, reuse_primary, trace_transport):
     """Exercise the client/public-command boundary without running a simulator."""
     client, candidate, source, implementation, workload, expected = selection
     source['application'] = 'dx100-gapbs'
@@ -227,8 +227,29 @@ def test_client_emits_actual_trial_for_every_primary_and_diagnostic_request(sele
     model = {'id': 'model', 'outcome': {'state': 'complete', 'stage': 'build'}, 'evidence_kind': 'execution',
         'context': {'model_root': '/fixture/model', 'target': 'dx100-e4fc4af-4c'},
         'build': {'details': {'binaries': [{'path': '/fixture/gem5.opt', 'sha256': 'a' * 64}]}}}
+    retained_primary = None
+    if reuse_primary:
+        refs = {}
+        for name in ('bfs', 'compiler', 'driver', 'm5ops'):
+            path = tmp_path/name; path.write_text(name); path.chmod(0o755)
+            refs[name] = {'path':str(path), 'sha256':artifacts.file_hash(path)}
+        build = {'binary':refs['bfs']['path'], 'binary_sha256':refs['bfs']['sha256'],
+            'compiler':refs['compiler']['path'], 'compiler_sha256':refs['compiler']['sha256'],
+            'flags':['-O3'], 'adapter':'dx100.complete_call.v1', 'source_artifact':expected,
+            'driver':refs['driver'], 'm5ops':refs['m5ops']}
+        frozen['settings'].update(roi='bfs.complete_call.v1',
+            builds={'baseline':{key:build[key] for key in ('compiler','flags','adapter')}})
+        seal(frozen)
+        retained_primary = {'id':'retained-primary', 'candidate':candidate['id'],
+            'evidence_kind':'execution', 'outcome':{'state':'complete','stage':'candidate_build'},
+            'request':{'diagnostic_regions':False}, 'build':build,
+            'context':{'candidate_sha256':expected['sha256'], 'function':implementation['function'],
+                'model_build':model['id'], 'model_root':'/fixture/model', 'target':model['context']['target'],
+                'roi':'bfs.complete_call.v1', 'accelerated_requested':False}}
     catalog = {row['id']: row for row in (candidate, source, implementation, workload, model, frozen)}
-    execution_requests = []
+    if retained_primary:
+        catalog[retained_primary['id']] = retained_primary
+    execution_requests, compile_requests = [], []
 
     def stage(receipt, folder, argv, *, output, **kwargs):
         command, argument = argv[3:5]
@@ -238,6 +259,7 @@ def test_client_emits_actual_trial_for_every_primary_and_diagnostic_request(sele
             payload = json.loads(Path(argument).read_text())
             result = {'id': payload['id']}
             if command == 'dx100-compile':
+                compile_requests.append(payload)
                 result.update(candidate=candidate['id'], evidence_kind='execution', request=payload,
                     outcome={'state': 'complete', 'stage': 'candidate_build'},
                     build={'binary': '/fixture/' + result['id'], 'binary_sha256': 'b' * 64},
@@ -283,9 +305,20 @@ def test_client_emits_actual_trial_for_every_primary_and_diagnostic_request(sele
         argv += ['--trace-transport', trace_transport]
     if frozen_series:
         argv += ['--protocol', frozen['id'], '--protocol-role', 'baseline']
+    if reuse_primary:
+        argv += ['--primary-build', retained_primary['id']]
     monkeypatch.setattr(sys, 'argv', argv)
     client.main()
     retained=json.loads((runs/'series-fixture.driver'/'driver.json').read_text())
+    assert len(compile_requests) == (1 if reuse_primary else 2)
+    if reuse_primary:
+        assert all(row['diagnostic_regions'] is True for row in compile_requests)
+        assert retained['reused_primary_build']['sha256'] == artifacts.digest(retained_primary)
+        assert retained['reused_primary_build']['compile_calls'] == 0
+        assert all(row['candidate_build'] == retained_primary['id']
+                   for row in execution_requests if '.primary.' in row['id'])
+    else:
+        assert 'reused_primary_build' not in retained
     assert retained.get('trace_transport') == trace_transport
     assert ('trace_transport' in retained) == bool(trace_transport)
     expected_cells = [(position, vertex, repetition) for position, vertex in enumerate(workload['definition']['sources'])
