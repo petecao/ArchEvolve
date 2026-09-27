@@ -1,7 +1,7 @@
 # Map: BFS profiling, rewrite proposals, and hardware-aware evaluation
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-26 (Eastern Time)
+Updated: 2026-09-27 (Eastern Time)
 **Type:** ticket map
 **Status:** claimed
 **Blocked by:** Remaining empirical verification, calibration, artifact/control comparisons, final acceptance, and free host-lane availability. The user now grants standing authorization for current and future task-related transfers to private ruchou/EvolveSWDB codex/bfs-* branches, mbit10 through Git, and Anthropic through Claude Code. Earlier transfer holds are superseded; original budgets and evidence-preservation rules remain.
@@ -82,6 +82,49 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC18 — Full coverage including failed/regressing cases | 17–21 |
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
+
+## Recovery and evidence checkpoint — 2026-09-27 00:18 ET
+
+Inactive workers were replaced; local recovery implementation and independent
+review resumed. The [scoped review](observations/recovery-independent-review-20260927.json)
+passed 154 tests, including earlier reproduced ancestry and lease-observation
+failures. The new supplemental operator remains under development; no actual
+Linux proof or guest execution follows from these local tests.
+
+The [T17 primary metadata transfer](operator-recipes/t17-diagnostic/primary-evidence-transfer-20260927.json)
+pushed one exact 17,230-byte YAML in commit `efdadb8b1e7ff22562d07e9f63007198a6b6352d`.
+The exact Git blob is now imported locally, and `swdb validate` reports 248 valid
+records. Binary and raw logs remain on mbit10. Diagnostic compilation still
+requires the final corrected runtime and compatible fresh Linux proof.
+
+The [helper comparison](observations/helper-upstream-comparison-20260927-0015.json)
+verified the entire installed host subtree against fetched upstream `1ec1bc40`.
+Node 0 was externally held at generation 333; node 1 and legacy were released
+at 432 and 77. No checkout or active job was changed. Fresh kernel and metadata
+checks remain mandatory before dispatch. The full local regression at `c282c9f`
+is still running. Tickets remain 14 resolved / 7 claimed, with 0/8 final cells.
+
+## Host and worker checkpoint — 2026-09-27 00:03 ET
+
+The [scheduled checkpoint](observations/health-20260927-0003.json) observed host
+state at 00:01:51 ET: both sockets and legacy released (332/430/77), no kernel
+holders or live owned BFS jobs. All 944 retained T16 identities are now absent;
+the failed run's 658,644,992 raw bytes and original failed budget verdict remain
+unchanged. Free space is 16.055 GiB on `/data1` and 164.803 GiB on `/data`;
+node0/node1/global available memory is 56.536/58.267/116.946 GiB. Load is
+0.09/0.29/0.55. No lane is reserved by this observation. Three workers are active.
+
+The prospective recovery implementation has 223 local tests passing and two
+Linux skips; final review and actual Linux proof remain pending. T20 has made
+no continuation call. T17 has operator templates, with exact retained-build Git
+provenance being checked. The independently reviewed lifecycle identity repair
+is committed and pushed at `c282c9f5c57f7756dc3b22e12952eb963683e6d3`.
+A bounded full local regression at that immutable commit started 23:56:21 ET;
+its running worktree must remain unchanged. Tests on that earlier commit may
+retain the subsequently identified stale a4 test assertion; the new recovery
+scope has its own corrected focused verification. There is no final suite result
+or new empirical acceptance. Tickets remain 14 resolved / 7 claimed and 0/8
+final cells. Next full check: 2026-09-27 00:33 ET.
 
 ## Host and worker checkpoint — 2026-09-26 23:33 ET
 

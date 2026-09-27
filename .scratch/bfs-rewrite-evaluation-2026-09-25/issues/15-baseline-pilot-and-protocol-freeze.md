@@ -1,11 +1,20 @@
 # 15 — Baseline pilot and protocol freeze
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-26 (Eastern Time)
+Updated: 2026-09-27 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
+
+## Recovery preparation — 2026-09-27 00:16 ET
+
+The new fixed supervision-recovery plan remains prospective. Independent local
+review passed 154 tests, including the earlier ancestry and post-exit lease
+regressions; see [review receipt](../observations/recovery-independent-review-20260927.json).
+The supplemental operator and actual Linux proof remain pending. All historical
+failures, original absolute deadlines and full preparation charges remain intact.
+No new guest sample, acceptance or gain is claimed.
 
 ## Failed proof preparation — 2026-09-26 23:40 ET
 

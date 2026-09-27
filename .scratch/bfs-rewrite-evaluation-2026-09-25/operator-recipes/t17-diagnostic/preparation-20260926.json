@@ -1,0 +1,66 @@
+{
+  "format": "swdb.bfs.t17-diagnostic-operator-preparation.v1",
+  "created": "2026-09-26",
+  "state": "prospective_templates_unresolved_no_dispatch",
+  "scope": "Existing reviewed driver and fixed request only; no code fork, compile, provider, new scientific plan or budget. Exact primary metadata Git transfer completed separately.",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/README-20260926.md",
+      "bytes": 6961,
+      "sha256": "654688e05cac2af15efd99a2613f62c1188e2e469ba6eb5aab921d081b9ba5d3"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/admission-template-20260926.json",
+      "bytes": 983,
+      "sha256": "5de0d8b737ac72bd223bfa98d64a10a5607ac415fd778e7565b70ea00bd83018"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/launch-template-20260926.sh",
+      "bytes": 3477,
+      "sha256": "5f9bb4aba9d3553ce11ec71585b2dc89ed0c114a498599f6b483bc348dc93952"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/retained-inputs-20260926.json",
+      "bytes": 10716,
+      "sha256": "d437756927dcadf3ac1ac643314f11becb03a9d958ab5fc9642a00ed3af6e6ae"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/primary-evidence-transfer-20260927.json",
+      "bytes": 1080,
+      "sha256": "fcef911a9d99df1ab27c65ec5fbdda538d832bf61f61ed5521c383fb88d032d7"
+    }
+  ],
+  "validation": {
+    "command": "python3 -m pytest /private/tmp/test_t17_operator_preparation_20260926.py -q",
+    "result": "4 passed in 0.22s",
+    "log": {
+      "path": "/private/tmp/bfs-t17-operator-preparation-final-20260927.log",
+      "bytes": 98,
+      "sha256": "44178be163015033384cffd8b0f0ec02d28cb6648af3d8dbe3121b41f45ca4aa"
+    },
+    "test": {
+      "path": "/private/tmp/test_t17_operator_preparation_20260926.py",
+      "bytes": 3284,
+      "sha256": "532b388ac109318009b1c4a1e274c4526a6d64d94b5c3079f48f206a9cd6498f"
+    },
+    "bash_syntax": "passed",
+    "scope": "Historical template validation before the metadata provenance update; unchanged launch/admission templates."
+  },
+  "retained_initial_failure": {
+    "log": {
+      "path": "/private/tmp/bfs-t17-operator-preparation-20260926.log",
+      "bytes": 2316,
+      "sha256": "f708444bae1342185c76999c75f435768f9ec09f459d755ea7b749b249988038"
+    },
+    "explanation": "Mac Bash3 did not apply errexit to a failed [[ ]] guard. Added explicit || exit64 on template preconditions; unresolved template now exits before clock/host-path commands."
+  },
+  "unresolved": [
+    "final runtime root/commit/inventory",
+    "fresh compatible five-case proof ref and proof commit",
+    "full record-view manifest/hash after Git materialization",
+    "free node and fresh host capacity/lease admission",
+    "prepared_at and final admission file hash"
+  ],
+  "provider_operator_files_unchanged": true,
+  "updated": "2026-09-27"
+}
