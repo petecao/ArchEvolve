@@ -584,3 +584,13 @@ full successful proof reservation remain charged. The uniform-18 series and
 actual gem5 process are running; no completed sample, protocol freeze, or gain
 is claimed. See [admission check](../observations/t15-recovery-admission-independent-20260927.json)
 and [host health](../observations/host-health-20260927-0100.json).
+
+## First primary postprocessing — 2026-09-27 01:45 ET
+
+The simulator produced an ROI/exit seal, but the enclosing public evaluation
+remains running and no sample is accepted. Independent observation found the
+public process actively consuming CPU and input bytes; it is not a dead worker.
+Its original 7,320-second public-stage timeout ends at approximately 03:01:58 ET;
+the batch hard end remains 09:14:09 ET. These observations are progress only,
+not accepted correctness, timing, calibration, or a gain. See
+[the read-only progress receipt](../observations/t15-progress-independent-20260927-0144.json).

@@ -1,0 +1,127 @@
+{
+  "observed_at": "2026-09-27T01:44:57.374311-04:00",
+  "case": "T15 uniform18 first primary s0.r0",
+  "state": "public_processing_not_yet_accepted",
+  "public_process_samples": [
+    {
+      "pid": 3285195,
+      "state": "R",
+      "ppid": 3285060,
+      "cpu_ticks": 58552,
+      "start_ticks": 498713172,
+      "rss_pages": 29170,
+      "io": {
+        "rchar": "5651503746",
+        "wchar": "1458003762",
+        "syscr": "2010360",
+        "syscw": "213789",
+        "read_bytes": "582279168",
+        "write_bytes": "1440190464",
+        "cancelled_write_bytes": "4096"
+      }
+    },
+    {
+      "pid": 3285195,
+      "state": "R",
+      "ppid": 3285060,
+      "cpu_ticks": 58752,
+      "start_ticks": 498713172,
+      "rss_pages": 29170,
+      "io": {
+        "rchar": "5653207682",
+        "wchar": "1458003762",
+        "syscr": "2010386",
+        "syscw": "213789",
+        "read_bytes": "582279168",
+        "write_bytes": "1440190464",
+        "cancelled_write_bytes": "4096"
+      }
+    }
+  ],
+  "cpu_ticks_advanced": true,
+  "batch": {
+    "pid": 3284770,
+    "state": "S",
+    "ppid": 3284699,
+    "cpu_ticks": 18314,
+    "start_ticks": 498706496,
+    "rss_pages": 20234,
+    "io": {
+      "rchar": "2887913655",
+      "wchar": "32461714",
+      "syscr": "753161",
+      "syscw": "10931",
+      "read_bytes": "0",
+      "write_bytes": "33959936",
+      "cancelled_write_bytes": "0"
+    }
+  },
+  "series": {
+    "pid": 3285060,
+    "state": "S",
+    "ppid": 3284770,
+    "cpu_ticks": 2457,
+    "start_ticks": 498709944,
+    "rss_pages": 23976,
+    "io": {
+      "rchar": "240681368",
+      "wchar": "12124967",
+      "syscr": "41235",
+      "syscw": "3512",
+      "read_bytes": "0",
+      "write_bytes": "13877248",
+      "cancelled_write_bytes": "4096"
+    }
+  },
+  "public_stdout_bytes": 0,
+  "public_stderr_bytes": 0,
+  "sealed_roi_exit_cause": "m5_exit instruction encountered",
+  "sealed_roi_exit_tick": 8819230415,
+  "sealed_verification": {
+    "state": "finished",
+    "stop_reason": "exit_witness",
+    "exit_cause": "simulate() limit reached",
+    "exit_code": 0,
+    "normal_exit_observed": false,
+    "simulated_ticks": 71000000000,
+    "exit_witness_completed": true
+  },
+  "stage_files": {
+    "checkpoint/stats.txt": {
+      "bytes": 125456,
+      "mtime": 1790485294.5023289
+    },
+    "simulation/roi-seal.json": {
+      "bytes": 72503,
+      "mtime": 1790487318.4538825
+    },
+    "simulation/post-roi-syscalls.log": {
+      "bytes": 39876,
+      "mtime": 1790487318.4338822
+    },
+    "simulation/stats.txt": {
+      "bytes": 2515351,
+      "mtime": 1790487342.558137
+    },
+    "simulation/roi-stats.txt": {
+      "bytes": 1254982,
+      "mtime": 1790486260.5856097
+    }
+  },
+  "limitation": "Read existing metadata only; no second parser or evaluator invoked. ROI seal is not public acceptance.",
+  "mutations": false,
+  "original_budget": {
+    "total_seconds": 7260,
+    "checkpoint_seconds": 3600,
+    "run_seconds": 3600,
+    "memory_gib": 48,
+    "storage_gib": 10
+  },
+  "public_stage": {
+    "started": "2026-09-27T00:59:58.832042-04:00",
+    "timeout_seconds": 7320,
+    "nominal_timeout_at": "2026-09-27T03:01:58.832042-04:00",
+    "outer_hard_end": "2026-09-27T09:14:09.851819-04:00"
+  },
+  "assessment": "Public process alive and consuming CPU/read syscalls, not an absent worker. No accepted sample or correctness result yet; productive completion cannot be inferred from activity alone."
+}
