@@ -1,0 +1,26 @@
+{
+  "observed_at": "2026-09-27T00:30:00.789359-04:00",
+  "state": "scoped_pass_final_delta",
+  "supersedes": "/private/tmp/bfs-group-operator-independent-review-20260927.json",
+  "files": {
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/supervision-recovery/operator.py": "c40875e68a2c28e0c5b47517d63d0b2c40f26e51414c43f4d253154c8d77b992",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/supervision-recovery/launch.sh": "46c0da7a2f679b2e5e35ee1d1322bbd9c813aafc68e605192e796d1807ae1ffc",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/supervision-recovery/config-template.json": "8df4930783fdb23e4be641d1e3b9867b84514c67b543a8fd988f92fe973a0f30",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/supervision-recovery/runtime-manifest.json": "447ff528f5015587c702d42007a3607cf0373a800714d8ab59a515cdf9c7afc9",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/supervision-recovery/test_operator.py": "efb69eb11d11dc21ddf5e1d54e4bc82525e1f7b35c84fba4305da934215abdcb",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/supervision-recovery/README.md": "6b351697c361628a076c2e86343edee1a3d1971134438be3127de3c0aa1a9f7f"
+  },
+  "capacity_review": "guard(c) precedes capacity in run and stage; exact guarded8cb dx100_capacity estimator reused; rawglobal/node/zones retained; actual gates20/24GiB unchanged; embedded estimator52/64 eligibility remains its original diagnostic only",
+  "failure_review": "In-memory ownership flag set only afterexclusive mkdir; prior root untouched even replaying sameCLI clocks; originalerror preserved on receiptwrite failure",
+  "independent_probes": "/private/tmp/test_bfs_operator_final_review_20260927.py",
+  "tests": {
+    "result": "18 passed in 0.23s",
+    "log": "/private/tmp/bfs-group-operator-final-independent-20260927.log",
+    "sha256": "11a0325b6060b3447fd362169f65fd99c3a188fa6dfd7ec5bc03dd76fc5d3cb6"
+  },
+  "limits": [
+    "Configuration helpercomparison remains to seal; freshhostadmission required",
+    "No remote proof/evaluation execution performed",
+    "Original shared600s/2GiB budget unchanged; not whole-task finalreview"
+  ]
+}
