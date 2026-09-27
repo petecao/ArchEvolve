@@ -83,6 +83,24 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Corrected exact runtime packet — 2026-09-26
+
+The superseding local packet `eb2f51d0a02b7d3d1ca9cc02b022a18f1181a3e2` contains
+26 files / 471,563 bytes, solely based on published `d5e2159`, for private branch
+`codex/bfs-recovery-runtime-20260926-a2`. [Exact inventory](observations/recovery-runtime-export-a2-20260926.json),
+[independent dependency review](observations/recovery-runtime-export-a2-standards-20260926.json),
+and [isolated validation](observations/recovery-runtime-isolated-a2-20260926.json)
+are retained. All 553 checks passed with ten Linux-only skips. The reviewer
+verified the complete runtime/test trees, transitive local dependencies, old
+plans, and exclusion of all held provider/native packet paths and ancestry.
+
+This includes the previously rejected T17 code plus its proof-reader repair,
+the SQLite allocator fix, fixed setup recovery, and reviewed native/primary-reuse
+helpers. It remains unpushed and needs new exact payload approval; no attempt
+is made to bypass the earlier automatic-review rejection. The older T17-only
+`46f3a264` and dependency-blocked `37c02c55` packets remain unused. Fresh actual
+Linux proofs, original-clock admission and guest execution remain required.
+
 ## Pinned regression and export integration review — 2026-09-26 22:26 ET
 
 The complete isolated regression at published `d5e2159` finished at 22:25:58 ET:

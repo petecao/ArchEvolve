@@ -112,3 +112,20 @@ exact transfer list. Payload-specific approval is pending; no alternate transfer
 or host build occurs. The future execution runtime must also contain the later
 allocator repair before admission. Existing primary, provider budget and source
 remain unchanged; both-family acceptance remains open.
+
+
+## Current proof reader repaired — 2026-09-26
+
+The combined-runtime review reproduced a four-versus-five-case Linux proof
+mismatch before any transfer. The [repair](../observations/t17-five-case-proof-preparation-20260926.json)
+requires the five exact passed cases and matching allocator identity for new
+T17 admission, preserving historical scalar proof compatibility. Independent
+[review](../observations/proof-cardinality-standards-recheck-20260926.json) passed
+ten checks. The final exact packet's isolated test subset passed 553 checks with
+ten Linux-only skips; actual Linux execution and diagnostic compilation remain
+pending. The earlier five-file export remains unused.
+
+The reviewed [controlled-simulator readiness note](../../../docs/bfs-t17-controlled-simulator-readiness-20260926.md)
+identifies the exact retained builds, freeze derivation and finite four-series
+recipe still needed after T15 and diagnostic prerequisites. It creates no
+protocol, allowance or execution claim.
