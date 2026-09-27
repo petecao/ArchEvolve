@@ -297,3 +297,18 @@ Free space was 155,565,334,528 bytes on `/data` and 16,841,564,160 bytes on
 `/data1`. The original deadline, limits, and prior charges remain unchanged.
 
 Evidence: [live health](../observations/host-health-20260927-0743.json).
+
+## T16 live checkpoint — 2026-09-27 08:13 ET
+
+At 08:13:02 ET the first `artifact.scalar` primary simulation remained active
+with zero accepted samples and no outer exit. Exact gem5 PID 3720651/start
+501007027 had accumulated 304,482 CPU ticks, an increase of 179,881 since
+07:43, and used 30,617,432,064 bytes RSS. The supervisor ledger was 0.10 seconds
+old. The unchanged primary stats file does not imply a completed sample; the
+public stage is still running.
+
+Node 1 remained owned at generation 451; node 0 was externally held at 368.
+Both kernel locks agreed with stable metadata; the legacy lease was free.
+Free space: `/data` 153,478,389,760 bytes; `/data1` 16,840,884,224 bytes.
+Host MemAvailable was 87,241,560 KiB. Original deadlines, limits, and charges
+remain unchanged. [Live evidence](../observations/host-health-20260927-0813.json).
