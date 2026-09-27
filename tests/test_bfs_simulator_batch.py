@@ -428,6 +428,7 @@ def test_batch_admission_uses_real_completed_a2_reader_fixture(tmp_path, monkeyp
 
 @pytest.mark.parametrize('fault', [None,'slow_hash','last_write_time','last_write_storage'])
 def test_final_hash_and_last_persistence_remain_inside_shared_budget(tmp_path, monkeypatch, clock, fault):
+    Path(str(tmp_path)+'.dispatch').mkdir()
     policy=plan(); ledger=batch.Ledger(policy,admission(policy),clock.mono,clock.wall)
     log=tmp_path/'ledger.jsonl';log.write_text('{}\n')
     receipt={'state':'complete'}; writes=[]; raw=[1024]
@@ -464,6 +465,7 @@ def test_public_batch_finalization_preserves_original_failure_and_rejects_new_er
     from contextlib import nullcontext
     policy = plan(); approval = admission(policy); approval['code_commit'] = 'fixture'
     runs = tmp_path / policy['id']
+    Path(str(runs)+'.dispatch').mkdir()
     failure = RuntimeError('original stage failure')
     final_error = ValueError('injected finalizer ' + fault)
     class Budget:
@@ -529,6 +531,7 @@ def test_batch_samples_through_cleanup_and_clips_monitor_stop(tmp_path, monkeypa
     import threading
     policy = plan(); approval = admission(policy); approval['code_commit'] = 'fixture'
     runs = tmp_path / policy['id']; failure = RuntimeError('original stage failure')
+    Path(str(runs)+'.dispatch').mkdir()
     entered_cleanup = threading.Event(); sampled_cleanup = threading.Event(); observations = []
     real_monitor = batch.lifecycle.Monitor
     class Budget:
@@ -591,6 +594,7 @@ def test_resource_sampling_uses_cleanup_clock_without_extending_outer_deadline(t
     from contextlib import contextmanager
     policy=plan(); approval=admission(policy);approval['code_commit']='fixture'
     runs=tmp_path/policy['id'];events=[];guards=[]
+    Path(str(runs)+'.dispatch').mkdir()
     original=RuntimeError('original fixture stage failure')
     class Budget:
         create=staticmethod(lambda *args,**kwargs:'fixture-binding')

@@ -83,6 +83,22 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Dispatch storage repair verified locally — 2026-09-26 20:11 ET
+
+The repair counts the exact canonical run root and sibling `.dispatch` in
+sampling and driver finalization. A separate read-only terminal check reopens
+the fixed plan and preparation charges and counts completed helper/audit output
+against the unchanged ceiling. The host worker confirmed the required persisted
+result followed by a final read-only recount after the last charged-root write.
+[Preparation and tests](observations/simulator-dispatch-storage-preparation-20260926.json)
+retain the reproduced failure and subsequent 201 passes / three Linux skips;
+[independent review](observations/simulator-dispatch-storage-standards-review-20260926.json)
+found no issue and independently passed 15 storage tests. These are local
+contract tests, not empirical execution. The corrected source still needs an
+exact Git export and fresh matching Linux proofs. Only the two consumed
+simulator proof IDs advance to fixed `a2` identities; guest batch IDs and
+budgets remain unchanged.
+
 ## Progress check and prelaunch accounting correction — 2026-09-26 20:03 ET
 
 Both socket leases and the legacy lease were released at the full 20:03 ET

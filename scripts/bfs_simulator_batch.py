@@ -92,6 +92,18 @@ def allocated_bytes(paths):
     return total
 
 
+def batch_storage_paths(runs):
+    """Charge the exact raw root and its wrapper sibling once (2026-09-26)."""
+    runs = Path(runs)
+    dispatch = Path(str(runs) + '.dispatch')
+    paths = [runs, dispatch]
+    require(all(path.is_absolute() and path == path.resolve() and path.is_dir()
+                and not path.is_symlink() for path in paths),
+            'batch storage requires canonical raw and exact .dispatch directories')
+    require(not runs.samefile(dispatch), 'batch storage roots must be distinct')
+    return paths
+
+
 def preparation_charges(plan):
     """Reopen the fixed retained preparation; caller-supplied credits are forbidden."""
     rows = []
@@ -553,7 +565,7 @@ def collect_series(plan, admission, receipt, folder, runs, records, node, ledger
 def finalize_receipt(receipt, folder, runs, ledger, ledger_file):
     """Final hashing and persistence are inside the shared budget, even on failure."""
     def observation():
-        row = ledger.observation(allocated_bytes([runs]))
+        row = ledger.observation(allocated_bytes(batch_storage_paths(runs)))
         require(row['charged_raw_bytes'] < ledger.bounds['batch_storage_gib'] * GIB,
                 'final retained storage exceeded the common allowance')
         require(time.monotonic() <= ledger.monotonic_end and now() <= ledger.end,
@@ -608,6 +620,9 @@ def main():
     require(runs.name == plan['id'] and any(base in runs.parents for base in RAW_ROOTS)
             and runs == runs.resolve(), 'use the exact new batch name in authorized raw storage, without symlinks')
     require(not runs.exists(), 'batch root already exists; resumes and retries are forbidden')
+    dispatch = Path(str(runs) + '.dispatch')
+    require(dispatch.is_dir() and not dispatch.is_symlink() and dispatch == dispatch.resolve(),
+            'batch storage requires the existing exact .dispatch wrapper directory')
     records = ROOT / 'records'
     store = None
     runs.mkdir(parents=True, exist_ok=False)
@@ -617,6 +632,7 @@ def main():
         'outer_started': args.outer_started, 'outer_deadline': args.outer_deadline,
         'stages': [], 'series': [], 'gain_claim': False, 'protocol_freeze': False,
         'automatic_retry_allowed': False, 'ticket_acceptance': False, 'preparation_charges': admission['preparation_charges']}
+    receipt['storage_paths'] = list(map(str, batch_storage_paths(runs)))
     save_receipt(folder, receipt)
     owned = guard = None
     budget_path = folder/'cleanup-ledger.json'
@@ -635,7 +651,7 @@ def main():
                     'common batch deadline exhausted during cleanup')
         else:
             ledger.remaining()
-        raw = allocated_bytes([runs])
+        raw = allocated_bytes(batch_storage_paths(runs))
         require(raw + ledger.charged_bytes < plan['bounds']['batch_storage_gib'] * GIB, 'shared batch raw-storage ceiling exceeded')
         for path, minimum in ((runs, plan['bounds']['raw_reserve_gib']), (BUILD_ROOT.parent, plan['bounds']['build_reserve_gib'])):
             stat = os.statvfs(path)
