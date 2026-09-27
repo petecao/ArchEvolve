@@ -42,7 +42,7 @@ def test_exact_single_submit_no_repair_or_evaluation():
 def test_controlled_environment_and_fixed_input_pins():
     assert {'LD_PRELOAD','LD_LIBRARY_PATH','PYTHONPATH','PYTHONHOME','PYTHONOPTIMIZE'}<=set(m.REMOVED)
     assert m.PROMPT_SHA=='6042ab21a40f270ac9f21007de8e0a2d7c55850ab1448253697c446801d07f63'
-    assert m.SUP_COMMIT=='0dc0d4fecfe2903ff0cc1ba9e6b738a8f5c1a4f1'
+    assert m.SUP_COMMIT=='8cbfee600f23416a8e9578fa8d3ce3f0e19fced8'
     assert m.ORIGIN_COMMIT=='5f1b8028619976b36df5fa24b8aacb91bf488168'
     assert m.PUBLIC==m.SUP and m.PUBLIC_COMMIT==m.SUP_COMMIT
 
@@ -98,7 +98,7 @@ def test_manifest_matches_fixed_git_runtime_and_wrapper_uses_isolation():
     assert m.sha(m.RUNTIME_MANIFEST)==m.RUNTIME_MANIFEST_SHA
     manifest=json.loads(m.RUNTIME_MANIFEST.read_text())
     assert manifest['commit']==m.SUP_COMMIT and manifest['root']==str(m.SUP)
-    assert len(manifest['files'])==372 and 'scripts/bfs_owned_rss.py' in manifest['files']
+    assert len(manifest['files'])==375 and 'scripts/bfs_owned_rss.py' in manifest['files']
     wrapper=P.with_name('bfs-provider-context1-launch-20260926.sh').read_text()
     assert 'python3.12 -I -B -c' in wrapper and 'wrapper_entry' in wrapper
     tree=ast.parse(P.read_text())

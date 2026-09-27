@@ -16,10 +16,10 @@ import time
 from zoneinfo import ZoneInfo
 
 ORIGIN = Path('/data1/yanruj/EvolveSWDB_provider_20260926_a1')
-SUP = Path('/data1/yanruj/EvolveSWDB_provider_context_runtime_20260926_a1')
-SUP_COMMIT = '0dc0d4fecfe2903ff0cc1ba9e6b738a8f5c1a4f1'
+SUP = Path('/data1/yanruj/EvolveSWDB_supervision_recovery_runtime_20260927_a1')
+SUP_COMMIT = '8cbfee600f23416a8e9578fa8d3ce3f0e19fced8'
 RUNTIME_MANIFEST = Path(__file__).with_name('bfs-provider-context1-runtime-20260926.json')
-RUNTIME_MANIFEST_SHA = '83415cf174cb2790b8a4d17b3030d5c09fd90394d49695b90ad054dd04552549'
+RUNTIME_MANIFEST_SHA = '55d236947c3c0907d1f883493137244b99e3906cbd667a732af4dbd1d27a918c'
 PUBLIC=SUP
 PUBLIC_COMMIT=SUP_COMMIT
 ORIGIN_COMMIT='5f1b8028619976b36df5fa24b8aacb91bf488168'

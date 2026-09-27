@@ -1,8 +1,8 @@
 {
   "format": "swdb.bfs.provider-runtime-manifest.v1",
   "created": "2026-09-26",
-  "commit": "0dc0d4fecfe2903ff0cc1ba9e6b738a8f5c1a4f1",
-  "root": "/data1/yanruj/EvolveSWDB_provider_context_runtime_20260926_a1",
+  "commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+  "root": "/data1/yanruj/EvolveSWDB_supervision_recovery_runtime_20260927_a1",
   "runtime_paths": [
     "scripts",
     "swdb",
@@ -572,8 +572,8 @@
       "bytes": 8700
     },
     "scripts/bfs_linux_fixture.py": {
-      "sha256": "81b4dd01692be4e27685abbe7561b9b40b33d39262589557e0a715fb6db72ee9",
-      "bytes": 13323
+      "sha256": "277e0827a079eed032cc8f7cdedcbc2867f8880e247ea20b9e5dbe7096f48c3a",
+      "bytes": 15716
     },
     "scripts/bfs_linux_fixture_audit.py": {
       "sha256": "0575324ff55f43641f7338e5b2aa2377602f058e2a2b2b56d27ff4b8aa5b198d",
@@ -608,8 +608,8 @@
       "bytes": 23642
     },
     "scripts/bfs_owned_execution.py": {
-      "sha256": "58b36373160d8ae95352251786cce5fa84297afcee29ce4818f3580dd0d991a6",
-      "bytes": 22576
+      "sha256": "66d2636b705f6a1ca29c01850b21ef5b3f7a941ca30277d6f4d4da8c9c3b88fb",
+      "bytes": 22595
     },
     "scripts/bfs_owned_observer.py": {
       "sha256": "02e630abd2df9558c13a988cbc47a2211f0203029c670eeb041637b88d57e6e5",
@@ -644,12 +644,16 @@
       "bytes": 26321
     },
     "scripts/bfs_simulator_batch.py": {
-      "sha256": "cdb9fefb2925846f7890aac9d4d53734391f969c9adf657753f878854688022b",
-      "bytes": 66837
+      "sha256": "b08335b912e5e83e58f366ed5294c32c2de06073600c8faf4fe2cb370918b4e6",
+      "bytes": 67829
     },
     "scripts/bfs_simulator_batch_terminal.py": {
       "sha256": "f21e7bcd7cc4ebeef86c66265c3405237fa206c81d92b6c2248b3cbccc7b291b",
       "bytes": 11995
+    },
+    "scripts/bfs_simulator_recovery.py": {
+      "sha256": "e242c904684bd0e433d0c9501c3c1cd2d8e2f342db8188cfe1894b829d657744",
+      "bytes": 27405
     },
     "scripts/bfs_simulator_series.py": {
       "sha256": "09757ee71ac13ace2b7d0cbea0a0ba5b8efb3dd22042189cc0029c5e4cc38bbb",
@@ -658,6 +662,10 @@
     "scripts/bfs_storage.py": {
       "sha256": "20dd7dd37c512a36ac37d7f9b94ec3235eb4ff86753587f4b0bb3fbb93646054",
       "bytes": 4824
+    },
+    "scripts/bfs_supervision_supplement.py": {
+      "sha256": "e2ddf39589b8db49cbf1c89d1dd106dbbd2d54637f3e41582d78a5ad0defaef6",
+      "bytes": 9638
     },
     "scripts/bfs_t17_build_only.py": {
       "sha256": "4f602d03daf3763b22c82c5d6ff43522dbf1fc2a2e91cbe10a2091d83f8c8920",
@@ -1016,8 +1024,8 @@
       "bytes": 11792
     },
     "tests/test_bfs_linux_fixture.py": {
-      "sha256": "69a0be09e3b90b7bf3ff45d32dc67d88d646de8109dab2f1d62032b50ac1252c",
-      "bytes": 10156
+      "sha256": "95221714be8b97a2fb9288a86adedc3d3688b838e01fd56a8975612f2da13da6",
+      "bytes": 12904
     },
     "tests/test_bfs_linux_fixture_audit.py": {
       "sha256": "bc95d5a27ea4a4f8f869c1c03cc34d1cbdfb8c6d283387c91945f067f18484a9",
@@ -1080,8 +1088,8 @@
       "bytes": 4230
     },
     "tests/test_bfs_owned_execution.py": {
-      "sha256": "94d962417a38790b38fe4279ae33ea1d761511851b21358ec44bfc049a6de10f",
-      "bytes": 17237
+      "sha256": "b522507bdef8ef31715955033af2c128f119f64d2a51a30f31c25d99edf909a9",
+      "bytes": 21069
     },
     "tests/test_bfs_owned_observer.py": {
       "sha256": "472120959fa7c3a08119f4aed8e1bd073ce7ab26d6b5be48ca616d68b856fbd6",
@@ -1155,13 +1163,17 @@
       "sha256": "c7f36f2de27aef62b48fca28089715d0975d89e1be749fe86c2c530f7aeaf20d",
       "bytes": 4471
     },
+    "tests/test_bfs_simulator_recovery.py": {
+      "sha256": "02b896a87adacdd6122b3f170c3f71f45db451156a930c65a31a5c6c19f93d75",
+      "bytes": 27261
+    },
     "tests/test_bfs_simulator_series.py": {
       "sha256": "8b6d3a0a4b0b97ff700cecf2e524774a204bdd740ad299b032726a96ef47f80b",
       "bytes": 35420
     },
     "tests/test_bfs_simulator_setup_recovery.py": {
-      "sha256": "b420903cd0423af44908f44575a306c701b17f6733e238930c68769435e21d37",
-      "bytes": 15620
+      "sha256": "e4eee9b891f0284af86ab1e8b623e5e9c0415c1c2b4880c40e99dd4f043641a0",
+      "bytes": 15835
     },
     "tests/test_bfs_simulator_storage.py": {
       "sha256": "230ee542835c361ec11b2610bd23568ef8f35ba5c5ec74729a89b0de7139dcec",
@@ -1523,5 +1535,6 @@
       "sha256": "c2ec38c48b74e040f97acbc509cd40342244dc879bc4cb7d19f1b52d43fd87ba",
       "bytes": 773
     }
-  }
+  },
+  "updated": "2026-09-27"
 }

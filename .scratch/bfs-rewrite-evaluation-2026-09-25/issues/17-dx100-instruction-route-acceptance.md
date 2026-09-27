@@ -1,13 +1,22 @@
 # 17 — DX100 BFS: instruction-route acceptance
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-26 (Eastern Time)
+Updated: 2026-09-27 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 04, 10, 15
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
+
+## Primary evidence durability — 2026-09-27 00:24 ET
+
+The exact existing primary evaluation YAML is now Git-backed in commit
+`efdadb8b1e7ff22562d07e9f63007198a6b6352d` and imported locally; see
+[transfer receipt](../operator-recipes/t17-diagnostic/primary-evidence-transfer-20260927.json)
+and [catalog validation](../observations/t17-primary-local-import-20260927.json).
+This records the retained build without rerunning it. Diagnostic compilation
+and empirical acceptance remain pending the fresh compatible Linux proof.
 
 ## What to build
 

@@ -1,6 +1,6 @@
 # T20 exact context continuation: one-call preflight
 
-Prepared: 2026-09-26 Eastern Time. Operational preparation; no provider call or
+Prepared: 2026-09-26; updated: 2026-09-27 Eastern Time. Operational preparation; no provider call or
 lane claim has occurred. The prior unresolved proposal and all other failed jobs
 remain unchanged. Standing user authorization covers this exact transfer; host
 lease/resource admission and independent recipe review remain prerequisites.
@@ -15,20 +15,20 @@ The existing preparation is `/data1/yanruj/EvolveSWDB_runs/bfs-provider-context1
 | `lineage-and-budget.json` | 13495 | `22c769b924ef704f497b614afa9bb5ff1ebaf3cca64bb7d57563cf0db1037dc0` |
 
 The recipe runs current public and ownership code from pristine
-`/data1/yanruj/EvolveSWDB_provider_context_runtime_20260926_a1`, commit
-`0dc0d4fecfe2903ff0cc1ba9e6b738a8f5c1a4f1`. This separately pinned child of eb2
-contains the reviewed procfs ESRCH and post-exit lease-audit repairs; original
+`/data1/yanruj/EvolveSWDB_supervision_recovery_runtime_20260927_a1`, commit
+`8cbfee600f23416a8e9578fa8d3ce3f0e19fced8`. This separately pinned child of 0dc
+contains the reviewed Owned identity, recovery and supplemental audit code; original
 checkouts remain unchanged. Read-only verification against eb2 at23:19ET passed
 the current package seal, request/capability checks, source manifests and exact
-prepared prompt equality. The same check is required against0dc before the call.
+prepared prompt equality. The same check is required against8cbfee6 before the call.
 No reason remains to execute historical634.
 The original5f checkout supplies only `git archive 5f1b8028619976b36df5fa24b8aacb91bf488168 records`.
 The recipe extracts this bounded no-link archive into a new data-only record
 view; original/provider/recovery records and code are never written.
 
-The Git-carried companion `bfs-provider-context1-runtime-20260926.json` is56767bytes,
-SHA `83415cf174cb2790b8a4d17b3030d5c09fd90394d49695b90ad054dd04552549`.
-It binds372 committed runtime files (3813205bytes) across scripts, swdb, schemas,
+The Git-carried companion `bfs-provider-context1-runtime-20260926.json` is57269bytes,
+SHA `55d236947c3c0907d1f883493137244b99e3906cbd667a732af4dbd1d27a918c`.
+It binds375 committed runtime files (3887708bytes) across scripts, swdb, schemas,
 vocab, tools/bfs_native, tests, apps and pyproject.toml. The wrapper starts isolated
 Python (`-I -B`) and invokes the recipe's stdlib-only `wrapper_entry`; this checks the
 fixed manifest and actual Git HEAD before importing repository code. Main repeats
@@ -101,9 +101,9 @@ or payload is copied directly to the host; operational code arrives through Git.
 Current local contract tests are23passing (not actual Linux/provider evidence),
 with syntax checks. The one already-planned600-second actual Linux proof envelope and free-lane
 handoff remain prerequisites. That proof runs at the final recovery runtime,
-whose commit is recorded separately from provider runtime0dc; admission must
+whose commit is the same final runtime8cbfee6; admission must
 verify that its tested lifecycle, RSS, storage and dependency bytes are identical
-to the corresponding0dc bytes. This is contract proof of those shared primitives,
+to the corresponding8cbfee6 bytes. This is contract proof of those shared primitives,
 not proof of this new recipe. It does not authorize another proof envelope or
 require the two repository HEADs to be identical.
 The original failed T16 and failed a4 proof group remain retained, without promotion.
