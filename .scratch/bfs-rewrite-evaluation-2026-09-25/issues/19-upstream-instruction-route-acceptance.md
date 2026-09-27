@@ -58,3 +58,13 @@ The six-file result packet was committed on mbit10 as `5f1b802`, but automatic
 approval review rejected its new GitHub packet/branch. Exact approval is pending;
 canonical proposal/candidate records have not been imported into this checkout.
 See [the concrete inventory](../observations/provider-export-inventory-20260926.json).
+
+## Native launch preparation — 2026-09-27 ET
+
+[Data-only preparation](../operator-recipes/native-acceptance/README.md) now binds
+the actual original request, candidate, source/package identities, retained patch
+and provider-budget history. All four historical package contexts explicitly use
+four threads; the prospective one-thread reassessment preserves that history.
+Protocol, fresh-package and host-admission fields remain unset pending T15 and
+source-specific qualification/publication. The existing public campaign CLI is
+sufficient; no provider, build, measurement, new allowance or acceptance is claimed.

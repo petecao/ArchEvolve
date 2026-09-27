@@ -2393,3 +2393,12 @@ waits for external socket-0 generation 339 to release. All three delegated
 workers are responsive, the prior failed T16 identity set is absent, and the
 legacy lease is released. [Host evidence](observations/host-health-20260927-0100.json).
 No final acceptance cell or gain has been qualified.
+
+## Remaining client readiness — 2026-09-27 ET
+
+The [T17/T20 audit](operator-recipes/t17-acceptance/README.md) identifies exact
+T15, diagnostic-region, allocation and admission bindings for the remaining fixed
+operator; 125 existing public API contract tests pass.
+[T18/T19 templates](operator-recipes/native-acceptance/README.md) preserve actual
+retained candidate/patch/provider provenance and leave empirical protocol and
+package fields unresolved. No additional evaluation was launched or ticket resolved.

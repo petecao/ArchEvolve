@@ -107,3 +107,13 @@ Native candidate execution now has reviewed owned-process cleanup, original-cloc
 accounting and failure preservation; see the [verification receipt](../observations/native-supervision-verification-20260926.json).
 The actual Linux fixtures, runtime admission and empirical execution remain
 pending. This preparation does not satisfy or change any open acceptance item.
+
+## Native launch preparation — 2026-09-27 ET
+
+[Data-only preparation](../operator-recipes/native-acceptance/README.md) now binds
+the actual original request, candidate, source/package identities, retained patch
+and provider-budget history. All four historical package contexts explicitly use
+four threads; the prospective one-thread reassessment preserves that history.
+Protocol, fresh-package and host-admission fields remain unset pending T15 and
+source-specific qualification/publication. The existing public campaign CLI is
+sufficient; no provider, build, measurement, new allowance or acceptance is claimed.

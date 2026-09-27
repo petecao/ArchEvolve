@@ -1,0 +1,53 @@
+{
+  "constraints": {
+    "editable_files": [
+      "src/bfs.cc"
+    ],
+    "preserve_correctness": true,
+    "preserve_roi": true
+  },
+  "id": "bfs-campaign-preparation-20260925-a1.upstream-instructions",
+  "implementation": "gapbs-bfs-do",
+  "intent": "Eliminate only the initial curr.reset() in DOBFS: BUStep resets its next destination before every read/use. Preserve front.reset(), every BUStep reset, direction switching, and structural BFS semantics.",
+  "message_version": "1.0",
+  "parameters": {
+    "selection": "operator_selected_before_candidate_assessment",
+    "supporting_profile_packages": [
+      "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6",
+      "bfs-native-pilot-20260925-upstream18-a2.kronecker.package.v1.6a34b061dcca355b"
+    ]
+  },
+  "payload": {
+    "content": {
+      "function": "DOBFS",
+      "on_unsatisfied_precondition": "return unresolved; do not choose another strategy",
+      "operation": "remove_dead_initialization",
+      "preconditions": [
+        "BUStep executes next.reset() before destination bitmap writes",
+        "curr is not read before serving as the BUStep destination"
+      ],
+      "preserve": [
+        "front.reset()",
+        "BUStep next.reset()",
+        "all traversal and direction-switch logic",
+        "BFSVerifier",
+        "complete-call ROI"
+      ],
+      "statement": "curr.reset();"
+    },
+    "kind": "structured_instructions"
+  },
+  "producer": {
+    "name": "swdb-representative-upstream-instructions",
+    "role": "sw",
+    "test_client": true
+  },
+  "profile_package": "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6",
+  "regions": [
+    "function:bfs.cc:3477:2152911a89faaaf1"
+  ],
+  "required_operations": [],
+  "source_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+  "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source",
+  "strategy": "remove-dead-initial-bitmap-clear"
+}
