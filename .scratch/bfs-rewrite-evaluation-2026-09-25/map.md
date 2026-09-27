@@ -83,6 +83,30 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Heartbeat and lane coordination — 2026-09-26 22:42 ET
+
+The [fresh bounded observation](observations/host-light-2242-20260926.json)
+confirms T16 remains on node 0 generation 332 with the same gem5 PID/start
+identity, zero completed samples, 30,953,414,656-byte sampled tree RSS and
+1,762,017,280 charged bytes. ROI seal/stats remain absent; advancing tick output
+is not a completion or ETA. The original stage and outer deadlines are unchanged.
+
+Node 1 is now occupied: generation 418 was acquired at 22:40:03 ET by a separate
+MemAcc upstream-reference measurement (`t16_upstream_ref_measure`, with an
+observed RSBench descendant). Owner PID/start and kernel holder match the lease.
+This is not this BFS campaign despite the other job's T16 label. No signal,
+claim, command or lease change was made. Both socket lanes are currently occupied;
+legacy generation 77 remains released. New BFS work must wait for a genuinely
+free lane as well as the pending exact runtime transfer approval.
+
+The [helper comparison](observations/helper-upstream-comparison-20260926.json)
+closed the upstream-revision question: `socket_lane.sh` and the entire host-script
+subtree are byte-identical at installed `42ce8dce` and upstream `8b572e8b`. The
+object was already present; no fetch or active-checkout update occurred. The host
+worker remains responsive, and both review workers completed normally. Next full
+audit remains 23:03 ET; the heartbeat is active. No ticket or coverage cell is
+newly resolved by these operational observations.
+
 ## Host and worker checkpoint — 2026-09-26 22:33 ET
 
 The [full audit](observations/health-20260926-2233.json) confirms node 0 held at
