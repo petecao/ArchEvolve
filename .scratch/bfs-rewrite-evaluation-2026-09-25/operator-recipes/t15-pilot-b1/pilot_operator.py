@@ -38,7 +38,20 @@ COVERAGE_COMMIT = '5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f'
 TESTS = {'owned_cleanup': ['tests/test_bfs_owned_execution.py', '-k', 'linux'],
          'dx100_interruption': ['tests/test_dx100_interruption.py::test_public_interruption_is_durable_before_postmortem']}
 ENV = {'PATH': '/usr/bin:/bin', 'PYTHONDONTWRITEBYTECODE': '1', 'PYTHONNOUSERSITE': '1',
-       'PYTEST_DISABLE_PLUGIN_AUTOLOAD': '1', 'LANG': 'C.UTF-8'}
+       'PYTEST_DISABLE_PLUGIN_AUTOLOAD': '1'}
+REMOVE = ('PYTHONPATH', 'PYTHONHOME', 'PYTHONSTARTUP', 'PYTHONUSERBASE', 'PYTHONOPTIMIZE',
+          'PYTEST_ADDOPTS', 'PYTEST_PLUGINS', 'LD_PRELOAD', 'LD_LIBRARY_PATH')
+
+
+def environment(**extra):
+    """Keep the lane helper's variables (LACT_SOCKET_LANE_PID etc.); drop Python overrides.
+
+    2026-09-27: the first dx100_interruption run used a minimal environment and
+    lost LACT_SOCKET_LANE_PID, which the real mbit10 lane guard requires.
+    """
+    env = {k: v for k, v in os.environ.items() if k not in REMOVE}
+    env.update(ENV, **extra)
+    return env
 
 
 def require(ok, why):
@@ -96,16 +109,16 @@ def setup():
 def run_tests(kind):
     """Run under socket_lane.sh; the receipt binds the exact runtime identity."""
     host(); value = plan(); _, lane, _ = roots(value)
-    folder = lane/'linux-tests'/kind
+    folder = lane/'linux-tests'/commit()[:12]/kind
     require(kind in TESTS and not folder.exists(), 'unknown kind or tests already ran; no retry')
-    folder.mkdir(); (folder/'tmp').mkdir()
+    folder.mkdir(parents=True); (folder/'tmp').mkdir()
     code, runtime = commit(), batch.runtime_identity()
     command = [sys.executable, '-m', 'pytest', *TESTS[kind], '-q', '-p', 'no:cacheprovider',
                '--junitxml=' + str(folder/'junit.xml'), '--basetemp=' + str(folder/'pytest')]
     started = batch.now()
     with (folder/'stdout').open('x') as out:
         result = subprocess.run(command, cwd=ROOT, stdout=out, stderr=subprocess.STDOUT, timeout=240,
-                                env={**ENV, 'TMPDIR': str(folder/'tmp')})
+                                env=environment(TMPDIR=str(folder/'tmp')))
     finished = batch.now()
     require(batch.runtime_identity() == runtime and commit() == code, 'runtime changed during tests')
     write(folder/'receipt.json', {'format': 'swdb.bfs.pilot-linux-tests.v1', 'kind': kind, 'host': 'mbit10',
@@ -124,7 +137,7 @@ def prepare():
     prepared = batch.now()
     available = value['bounds']['batch_seconds'] - sum(r['elapsed_seconds'] for r in batch.preparation_charges(value))
     end = prepared + timedelta(seconds=value['allocation']['total_seconds'])
-    tests = [ref(lane/'linux-tests'/kind/'receipt.json') for kind in TESTS]
+    tests = [ref(lane/'linux-tests'/code[:12]/kind/'receipt.json') for kind in TESTS]
     admission = {'format': 'swdb.bfs.simulator-batch-admission.v1', 'created': '2026-09-27',
         'plan_sha256': artifacts.digest(value), 'prepared_at': prepared.isoformat(),
         'clock': {'not_before': prepared.isoformat(), 'latest_start': (end - timedelta(seconds=available)).isoformat(),
@@ -183,7 +196,7 @@ def launch(admission_sha, pane_pid, pane_ticks):
     write(lane/'launch.json', {'created': '2026-09-27', 'outer_started': start.isoformat(),
         'outer_deadline': end.isoformat(), 'remaining_seconds': remaining, 'command': argv,
         'pane_identity': pane, 'recipe': ref(__file__), 'capacity': capacity()})
-    os.execvpe(argv[0], argv, {**ENV, 'HOME': os.environ.get('HOME', '/tmp')})
+    os.execvpe(argv[0], argv, environment())
 
 
 def capacity():
