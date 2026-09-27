@@ -97,15 +97,21 @@ def pytest_identity():
     return {'version':pytest.__version__,'module':reference(Path(pytest.__file__).resolve())}
 
 
-def execute(kind, folder, begin, end, deadline, code, runtime, pane, lane, pytest_runtime):
+def _execute(kind, folder, begin, end, deadline, code, runtime, pane, lane, pytest_runtime, *, supplement=False):
     """Test seam uses real stage orchestration; main owns fixed host/path admission."""
+    if supplement:
+        rid, args, expected_cases = supplement_configuration(folder)
+        from scripts.bfs_simulator_batch import runtime_identity
+        supplement_runtime = runtime_identity()
+    else:
+        rid, args, expected_cases = SELECTIONS[kind][0], command(kind,folder), SELECTIONS[kind][2]
     folder.mkdir(parents=True, exist_ok=False); (folder/'tmp').mkdir()
     budget_path = folder/'cleanup-ledger.json'
     binding = own.SharedCleanup.create(budget_path, end.isoformat(), deadline=deadline)
     budget = own.SharedCleanup(budget_path, binding, deadline)
     owner = own.Owned(budget)
     driver = own.identity(os.getpid())
-    receipt = {'id': SELECTIONS[kind][0], 'created': '2026-09-26', 'state': 'running',
+    receipt = {'id': rid, 'created': '2026-09-26', 'state': 'running',
         'evidence_kind': 'contract_fixture', 'code_commit': code, 'kind': kind,
         'started': begin.isoformat(), 'outer_deadline': end.isoformat(), 'stages': [],
         'bounds': {'outer_seconds':90, 'work_seconds':60, 'cleanup_seconds':30,
@@ -115,6 +121,9 @@ def execute(kind, folder, begin, end, deadline, code, runtime, pane, lane, pytes
         'process_observations': {'driver_identity':driver, 'pane_identity':pane,
                                 'ancestry':own.ancestry(driver,pane)},
         'cleanup_budget':{'path':str(budget_path),'binding':binding,'budget_seconds':30}}
+    if supplement:
+        receipt.update(kind='supervision_supplement',created='2026-09-27',runtime_sha256=supplement_runtime,
+                       work_deadline=(begin+timedelta(seconds=60)).isoformat(),standard_proof_kind=False)
     samples = folder/'resources.jsonl'; machine = None; failure = None; guard = None
     def observe():
         require(time.monotonic() < deadline and datetime.now(own.ET) <= end, 'fixture original deadline exceeded')
@@ -134,12 +143,12 @@ def execute(kind, folder, begin, end, deadline, code, runtime, pane, lane, pytes
         require(campaign_runtime(code) == runtime and pytest_identity() == pytest_runtime, 'fixture runtime changed before dispatch')
         work_end = deadline-30
         require(time.monotonic() < work_end, 'fixture setup consumed work allowance')
-        args = command(kind,folder)
         row = own.run_stage(receipt,folder,args,timeout=work_end-time.monotonic(),deadline=work_end,
             cwd=ROOT,owned=owner,monitor=guard.check,env=child_environment(folder),
             output=folder/'pytest.stdout',stderr=folder/'pytest.stderr')
         require(time.monotonic() < work_end, 'fixture readback has no remaining work allowance')
-        receipt['testcases'] = junit_cases(folder/'junit.xml',SELECTIONS[kind][2])
+        receipt['testcases'] = junit_cases(folder/'junit.xml',expected_cases)
+        if supplement: require(runtime_identity() == supplement_runtime, 'supplement runtime changed during tests')
         require(campaign_runtime(code) == runtime and pytest_identity() == pytest_runtime, 'fixture runtime changed during tests')
         require(time.monotonic() < work_end, 'fixture readback exceeded work allowance')
         receipt.update(state='complete',command=args,returncode=row['returncode'])
@@ -170,7 +179,7 @@ def execute(kind, folder, begin, end, deadline, code, runtime, pane, lane, pytes
                 receipt['finished'] = own.stamp(); save_receipt(folder,receipt)
                 require(time.monotonic() < deadline and allocated_bytes([folder]) <= LIMIT_BYTES,
                         'fixture final persistence exceeded bounds')
-                if failure is None:
+                if failure is None and not supplement:
                     proof = {'format':'swdb.bfs.linux-fixture.v1','kind':kind,'host':'mbit10','platform':'linux',
                         'evidence_kind':'contract_fixture','state':'tests_passed_cleanup_unverified','returncode':0,'code_commit':code,
                         'started':begin.isoformat(),'finished':receipt['finished'],'command':receipt['command'],
@@ -196,6 +205,34 @@ def execute(kind, folder, begin, end, deadline, code, runtime, pane, lane, pytes
                 receipt['failure_persistence_error']=f'{type(secondary).__name__}: {secondary}'
     if failure is not None: raise failure
     return receipt
+
+
+
+def execute(kind, folder, begin, end, deadline, code, runtime, pane, lane, pytest_runtime):
+    """Preserved standard three-selection callable."""
+    return _execute(kind,folder,begin,end,deadline,code,runtime,pane,lane,pytest_runtime)
+
+
+def supplement_configuration(folder):
+    """Private fixed group stage; this is never a standard admission proof."""
+    from scripts.bfs_simulator_recovery import GROUP_ID, SUPPLEMENT_SELECTORS
+    from scripts.bfs_simulator_batch import PLAN_DIR, validate_plan
+    require(Path(folder) == RAW_BASE/(GROUP_ID+'.dispatch')/'supplement', 'supplement requires its fixed group root')
+    plan=json.loads((PLAN_DIR/'bfs-t15-supervision-recovery-simulator-batch-20260926-a1.json').read_text())
+    validate_plan(plan,'t15-supervision-recovery')
+    names=plan['accounting']['preparation_reservation']['supplement_testcases']
+    require(len(names)==len(set(names))==42,'supplement exact case inventory changed')
+    args=[sys.executable,'-m','pytest',*SUPPLEMENT_SELECTORS,'-q','-p','no:cacheprovider',
+          '--junitxml='+str(Path(folder)/'junit.xml'),'--basetemp='+str(Path(folder)/'pytest')]
+    return GROUP_ID+'.supplement',args,set(names)
+
+
+def execute_supplement(folder, begin, end, deadline, code, runtime, pane, lane, pytest_runtime):
+    """One private 42-case stage under the existing 90/60/30 supervision."""
+    require(end-begin==timedelta(seconds=90) and 0 <= (datetime.now(own.ET)-begin).total_seconds() <= 5,
+            'supplement requires its original 90-second outer clock')
+    require(lane in (0,1) and Path(folder)==Path(folder).resolve(), 'supplement lane or root is invalid')
+    return _execute(None,folder,begin,end,deadline,code,runtime,pane,lane,pytest_runtime,supplement=True)
 
 
 def main():

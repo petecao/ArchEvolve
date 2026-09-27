@@ -41,8 +41,10 @@ def test_fixed_recovery_preserves_science_and_only_flat_costs():
     assert sum(row['raw_bytes'] for row in rows)==15322025984
     assert 43200-2997==40203 and 40*batch.GIB-15322025984==27627646976
     assert len({row['id'] for row in rows})==5
-    assert runner.SELECTIONS['owned_cleanup'][0].endswith('-a4') and CASE in runner.SELECTIONS['owned_cleanup'][2]
-    assert runner.SELECTIONS['dx100_interruption'][0].endswith('-a4')
+    assert value['accounting']['preparation_reservation']['selections']['owned_cleanup'].endswith('-a4')
+    assert value['accounting']['preparation_reservation']['selections']['dx100_interruption'].endswith('-a4')
+    assert runner.SELECTIONS['owned_cleanup'][0].endswith('-a5') and CASE in runner.SELECTIONS['owned_cleanup'][2]
+    assert runner.SELECTIONS['dx100_interruption'][0].endswith('-a5')
     assert runner.SELECTIONS['native_campaign_owned_cleanup'][0].endswith('-a1')
 
 
