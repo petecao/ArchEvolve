@@ -206,3 +206,13 @@ text but no sealed ROI/stats, and the original 14,400-second simulation limit.
 The nominal stage end is September 27 00:24:25.226146 ET; no remaining-time
 estimate or completed comparison is inferred. Node 0 remains owned at generation
 332, and node 1 remains free.
+
+## Fresh runtime proof — 2026-09-27 04:56 ET
+
+The exact `923cf33` runtime passed 66 supplement, five owned-job, and two
+interruption cases on mbit10 with zero skips. Independent closure verified
+strict cleanup, process identities twice, and 5,246,976 retained bytes. The full
+600-second/2-GiB reservation remains charged despite 27.015572 seconds of actual
+execution. See [closure](../observations/seal-proofgroup-independent-closure-20260927.json).
+This closes the fresh infrastructure-proof prerequisite; scientific admission
+and dispatch remain pending. No scientific sample or acceptance is claimed.

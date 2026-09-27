@@ -2515,3 +2515,15 @@ additional 600-second/2-GiB reservation deducted from the existing T16 allowance
 Its original deadlines and scientific grid remain unchanged. No T15 allowance
 has been restored. [Live health](observations/host-health-20260927-0443.json)
 confirmed node 0 free, node 1 externally held, legacy free, and no owned BFS jobs.
+
+## Fresh Linux seal proof — 2026-09-27 04:56 ET
+
+[Independent closure](observations/seal-proofgroup-independent-closure-20260927.json)
+verified the exact `923cf33` runtime: 66 supplement, five owned-job, and two
+interruption cases passed on mbit10 with zero skips. Strict cleanup and all
+recorded process identities were checked twice. Actual wall time was 27.015572
+seconds and retained storage was 5,246,976 bytes; the full 600-second/2-GiB
+reservation remains charged to T16. This is infrastructure proof, not scientific
+acceptance. The fresh T16 scientific checkout matches all 809 pinned files; its
+operator and admission are being sealed before dispatch. Node 0 was released,
+node 1 remained externally held, and the legacy lease was free at closure.
