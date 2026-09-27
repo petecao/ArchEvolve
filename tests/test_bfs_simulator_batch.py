@@ -841,3 +841,20 @@ def test_pilot_requires_fresh_linux_tests_at_exact_runtime(tmp_path, fault):
         batch.validate_pilot_tests(value, approval)
     else:
         with pytest.raises(ValueError): batch.validate_pilot_tests(value, approval)
+
+
+def test_pilot_relaunch_charges_closed_attempt_and_keeps_one_allocation(monkeypatch, tmp_path):
+    value = pilot_plan()
+    value['id'] = 'bfs-t15-pilot-simulator-batch-20260927-b2'
+    value['accounting'] = {'preparation': [], 'retained_attempts': [{'id': 'b1', 'elapsed_seconds': 9000,
+        'raw_bytes': 7 * batch.GIB, 'storage_paths': [str(tmp_path)]}],
+        'preparation_reservation': {'id': 'bfs-t15-pilot-preparation-20260927-b2', 'elapsed_seconds': 3600,
+                                    'raw_bytes': 4 * batch.GIB}}
+    monkeypatch.setattr(batch, 'allocated_bytes', lambda paths: 7 * batch.GIB)
+    rows = batch.preparation_charges(value)
+    assert [r['id'] for r in rows] == ['b1', 'bfs-t15-pilot-preparation-20260927-b2']
+    assert sum(r['elapsed_seconds'] for r in rows) == 12600
+    batch.validate_preparation_reservation(value, {})
+    monkeypatch.setattr(batch, 'allocated_bytes', lambda paths: 7 * batch.GIB + 1)
+    with pytest.raises(ValueError, match='changed after closure'):
+        batch.preparation_charges(value)

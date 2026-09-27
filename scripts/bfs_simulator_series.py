@@ -209,7 +209,7 @@ def main():
     parser.add_argument('--verifier', choices=('dx100.bfs.verifier.v1', 'dx100.bfs.verifier.v2'),
                         help='explicit pilot checker; frozen series inherits its immutable checker')
     parser.add_argument('--profile-seconds', type=int, default=120,
-                        help='dx100-profile collector budget; public collector cap is 600')
+                        help='dx100-profile collector budget; public collector cap is 3600')
     parser.add_argument('--gem5-slot-dir', type=Path, help='shared lane gem5-slot lock directory (R3)')
     parser.add_argument('--gem5-slots', type=int, default=1, help='maximum concurrent lane gem5 processes')
     parser.add_argument('--owned-cleanup-ledger', type=Path)
@@ -231,7 +231,7 @@ def main():
     limits = {'total_seconds': (1, 86400 if args.author_binary else 43200),
               'checkpoint_seconds': (1, 3600), 'run_seconds': (1, 14400 if args.author_binary else 3600),
               'diagnostic_seconds': (180, 14400 if args.author_binary else 600), 'memory_gib': (1, 48),
-              'profile_seconds': (1, 600),
+              'profile_seconds': (1, 3600),
               'storage_gib': (1, 15 if args.author_binary else 10),
               'batch_storage_gib': (1, 60 if args.author_binary else 40),
               'verification_ticks': (1, 10**15)}

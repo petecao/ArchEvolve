@@ -272,8 +272,10 @@ def collect(args):
         if (set(request) not in (base_fields | {'discovery_profile'}, base_fields | {'diagnostic_evaluation'})):
             raise Failure("DX100 profile requires evaluation, exactly one discovery_profile or diagnostic_evaluation, and explicit budget")
         budget = request["budget"]
-        if not isinstance(budget, dict) or set(budget) != {"total_seconds"} or type(budget["total_seconds"]) is not int or not 1 <= budget["total_seconds"] <= 600:
-            raise Failure("collector budget.total_seconds must be an integer from 1 to 600")
+        if not isinstance(budget, dict) or set(budget) != {"total_seconds"} or type(budget["total_seconds"]) is not int or not 1 <= budget["total_seconds"] <= 3600:
+            # 2026-09-27: raised from 600 after the T15 pilot b1 first-pair gate
+            # measured about 760 s of full-trace rereads for one scale-18 pair.
+            raise Failure("collector budget.total_seconds must be an integer from 1 to 3600")
         deadline = time.monotonic() + budget["total_seconds"]
         evaluation = store.get(request["evaluation"], "evaluation")
         if not evaluation or evaluation.get("context", {}).get("backend") != "dx100-gem5-se":
