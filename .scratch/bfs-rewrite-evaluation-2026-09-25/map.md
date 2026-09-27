@@ -2541,3 +2541,31 @@ socket was externally held at generation 447 and the legacy lease was free.
 Evidence: [startup](observations/t16-seal-startup-20260927.json),
 [prelaunch health](observations/t16-seal-prelaunch-health-20260927.json),
 and [sealed admission](observations/t16-seal-admission-readback-20260927.json).
+
+## T16 failed execution identity and closure — 2026-09-27 05:45 ET
+
+The seal-recovery attempt ended at **05:15:13.330974993 ET** with exit 1.
+Its first `artifact.scalar` public execution failed before simulation:
+`actual simulator instrumentation differs from frozen treatment`. Correctness
+remains unverified and the accepted sample count is zero. The immutable failed
+attempt is preserved; it was not retried or promoted.
+
+Independent closure at 05:44:38.693820 ET checked all 106 retained PID/start
+identities twice: 105 absent and only the launching pane zombie with zero RSS.
+The strict cleanup ledger settled 25 events in 1.366244 seconds of its original
+30-second allowance. Raw plus dispatch allocation was stable at 11,907,072 bytes.
+Actual outer time was 73.263337993 seconds; conservative closure-inclusive charge
+is 1,839 seconds, bringing retained totals to 15,013 seconds and 8,243,990,528 bytes.
+The original 20:16:17.225985 ET hard end is unchanged. Both sockets and the legacy
+lease were kernel-unlocked at the 05:43 check; no matching job remained executing.
+
+Evidence: [closure](observations/t16-seal-terminal-independent-20260927.json),
+[failure](observations/t16-seal-execution-identity-failure-20260927.json), and
+[health](observations/host-health-20260927-0543.json).
+
+## Interim Standards finding resolved — 2026-09-27 05:45 ET
+
+The query-index repair was independently verified with 51 passing tests and
+synchronized as `3c3efd3`; see the
+[independent review](observations/bfs-query-index-independent-review-20260927.json).
+This resolves that interim Standards finding. The T16 runtime was not changed.
