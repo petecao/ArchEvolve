@@ -83,6 +83,20 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Pinned regression and export integration review — 2026-09-26 22:26 ET
+
+The complete isolated regression at published `d5e2159` finished at 22:25:58 ET:
+**2,258 passed, 20 skipped in 3,431.29 seconds**, with the same final commit and
+no tracked changes. The [receipt](observations/full-regression-d5e2159-complete-20260926.json)
+pins the full log. Later allocator/recovery/T17 changes are outside that result.
+
+The preliminary combined runtime `37c02c5` passed 489 isolated checks with ten
+Linux-only skips, but [independent export review](observations/recovery-runtime-export-standards-blocker-20260926.json)
+found the inherited T17 proof reader requires four cases while the changed
+runtime supplies five. The exact packet remains local and is marked superseded
+before transfer. A narrow reader repair and regression are in progress; the
+passing subset does not override the reproduced dependency blocker.
+
 ## Setup recovery reviewed — 2026-09-26
 
 The [new fixed recovery plan](../../docs/bfs-t15-setup-recovery-20260926.md) has
