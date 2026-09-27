@@ -62,3 +62,30 @@ Independent fresh group closure confirmed all 51+5+2 cases passed without skips,
 ledgers and two process-union observations closed generations441/442/443. Both
 plans still charge the full600 seconds/2GiB. Root authorized data-only admission
 preparation after this closure; scientific launch remains root-owned.
+
+## Actual preparation checkpoint — 2026-09-27 02:38 ET
+
+The clean operational packet is `a8e0ae312b7ae8352b637faa040e2e7463a79b78`,
+sole parent07ba, private branch `codex/bfs-lease-simulator-operator-20260927-a2`:
+exactly10 files/178,026 bytes. The host operator checkout uses that commit. The
+superseded a1 packet `c817a9e` accidentally included two ignored local bytecode
+files because the exporter enumerated filesystem files. It was never cloned or
+used on the host. Both exports remain preserved; a2 selects only Git-tracked
+reviewed files and adds the exact pinned shared helper. No scientific source or
+runtime was changed by this export correction.
+
+Both bounded admission commands finished with exit0, reopening the actual fresh
+proof, immutable failures and charges, source/build prerequisites and original
+windows. Neither command claims a lane or starts a simulator. Actual references:
+
+| Batch | Prepared at (ET) | Admission bytes | Admission SHA256 |
+| --- | --- | --- | --- |
+| T15 | 2026-09-27 02:36:51.689801 | 20,798 | `60552ea7faabd4145873b17817d986bb3eec675b369d80163da28ef5c6ec6871` |
+| T16 | 2026-09-27 02:36:53.249592 | 20,843 | `49ec34c0579da8205d2a5755d244518a463f4f666692bd8e19a8b80fcfe41fb7` |
+
+See [prepared admissions](prepared-admissions-20260927.json) for exact paths,
+proof references, charges, hard ends and export provenance. Root independently
+reviews admissions before its launch; any later scientific state belongs to that
+separate operation. The unchanged launch wrapper SHA is
+`cbc6f9610ec58b0a9fd23edc02af90965463474f12c0b41fdf5eb9a9fe962059`;
+operator SHA `344a52b6f942237588edb2761b83453d9664b79836a6fb6995cea33402b85670`.
