@@ -83,6 +83,36 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## T15 retained storage failure and next prerequisites — 2026-09-26 20:46 ET
+
+T15's first uniform18 primary ended as `budget_exhausted` during simulation:
+`raw artifact storage budget exhausted`. Correctness is unverified because no
+sealed ROI receipt was produced; no replay, diagnostic, or Kronecker sample
+started. The [canonical failure and independent terminal readback](observations/t15-failed-terminal-20260926.json)
+retain the exact outcome and closure. The outer attempt consumed 942.616 seconds.
+All 181 retained PID/start identities were checked twice: 180 absent and the
+exact pane a zero-RSS zombie. Socket 1 generation 411 released. The final shared
+cleanup ledger has 23 settled events totaling 1.608397 seconds, with no outstanding
+or exceeded grant. Final post-helper/audit storage is 11,014,971,392 bytes across
+both retained roots, below the batch cap; this does not negate the sample's
+10-GiB storage failure. Those roots remain unchanged.
+
+The output is explicit per-element accelerator coverage tracing, dominated by
+`MAAIndirect` messages unused by the coverage parser. The prospective correction
+will preserve every trace byte through gem5's native gzip debug output and reopen
+it consistently in collection and replay. No active settings, graph, model,
+ROI, thresholds, or allowances have been changed. Any explicitly planned corrected
+attempt must retain and charge the failed attempt rather than resume its ID or
+reset its budget. T16's scalar measurement continues unchanged on node 0.
+
+The exact eight-file scalar preparation export `6732d53` is now pushed and its
+remote head verified; [inventory](observations/scalar-v2-export-20260926.json).
+It contains only reviewed build preparation code/tests/docs and the four original
+requests plus fixed manifest. No build has run. The next free-lane sequence is a
+reviewed, bounded no-guest native gzip transport check, followed by the four
+scalar builds with a fresh sealed admission and capacity checks. Neither step
+may take a third lane or alter T16's active checkout.
+
 ## Regression result and scalar build preparation — 2026-09-26 20:40 ET
 
 The full local suite finished on unchanged `d11dc04` at 20:34 ET:

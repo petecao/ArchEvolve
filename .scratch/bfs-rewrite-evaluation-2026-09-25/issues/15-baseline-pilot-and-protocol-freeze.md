@@ -7,7 +7,25 @@ Updated: 2026-09-26 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
-## Current checkpoint — 2026-09-26 20:23 ET
+## Current checkpoint — 2026-09-26 20:46 ET
+
+The first uniform18 primary failed at the unchanged per-execution 10-GiB storage
+guard. Its canonical outcome is `budget_exhausted`, with no sealed ROI receipt
+and correctness unverified. No sample completed; no replay, diagnostic or
+Kronecker case started. The outer attempt consumed 942.616 seconds. All retained
+process identities were checked twice; the lane released, and the final shared
+cleanup ledger settled within 30 seconds. Final retained run-plus-dispatch
+storage is 11,014,971,392 bytes. See [failure and terminal evidence](../observations/t15-failed-terminal-20260926.json).
+
+The cause is required coverage tracing's high-volume per-element debug text.
+A lossless gzip transport correction is under development, preserving all trace
+events and the current model, graph, semantic ROI and coverage requirements.
+There is no automatic retry, silent restart or enlarged budget. Any prospective
+corrected attempt must be explicitly planned and charge the original failed
+cost and retained bytes. Native qualification and all protocol publication
+obligations remain pending; this ticket stays claimed.
+
+## Historical checkpoint — 2026-09-26 20:23 ET
 
 The fixed T15 simulator batch actually started on mbit10 node 1 at
 20:21:15 ET, generation 411, on exact `8c39ae0`. Charged admission validation
