@@ -1,0 +1,55 @@
+{
+  "created": "2026-09-26T23:30:20.808295-04:00",
+  "scope": "Independent local narrow historical-lease and ESRCH source readback; no host commands, production edits, or historical proof promotion",
+  "state": "no_remaining_actionable_finding_in_reviewed_hunks",
+  "files": [
+    {
+      "path": "scripts/bfs_linux_fixture_audit.py",
+      "bytes": 23429,
+      "sha256": "0575324ff55f43641f7338e5b2aa2377602f058e2a2b2b56d27ff4b8aa5b198d"
+    },
+    {
+      "path": "tests/test_bfs_linux_fixture_audit.py",
+      "bytes": 19107,
+      "sha256": "bc95d5a27ea4a4f8f869c1c03cc34d1cbdfb8c6d283387c91945f067f18484a9"
+    },
+    {
+      "path": "scripts/bfs_owned_rss.py",
+      "bytes": 6772,
+      "sha256": "1904023de515879ef89d1929b292ebc92caad599b106ee4cf77e8170bab4afee"
+    },
+    {
+      "path": "tests/test_bfs_owned_rss.py",
+      "bytes": 15804,
+      "sha256": "7c7951191ad19c843e0a206e8d4b436db43e08951d30b5d34a1b83cef10c8aa2"
+    },
+    {
+      "path": "/private/tmp/test_bfs_historical_lease_standards_20260926.py",
+      "bytes": 1736,
+      "sha256": "25b79db1dbab3fcd912988b698b5741e3e0949af0fb4068cd23cb217f4c40d6c"
+    },
+    {
+      "path": "/private/tmp/bfs-historical-lease-standards-20260926.log",
+      "bytes": 113,
+      "sha256": "4a733343954eb537e817884b421fe461fcfdbbc5b223d09ba62b31e4a38048cb"
+    },
+    {
+      "path": "/private/tmp/bfs-rss-esrch-standards-20260926.log",
+      "bytes": 114,
+      "sha256": "f41f385834df0d3bb36520c9755e1708cc35e5df404cd60f834ee89c86dde434"
+    }
+  ],
+  "lease": {
+    "tests": "5 passed,44 deselected,0.14s including independent real local flock probe",
+    "accepted": "A strictly later generation acquired no earlier than fixture helper end establishes earlier generation release under the same monotonic exclusive helper lock. Both full observations retained. Current legacy/other users occupancy remains factual metadata, not admission.",
+    "negative_cases": "Original generation still held; bool/lower generation; earlier/future acquisition; wrong host; metadata/kernel mismatch reject.",
+    "source_basis": "Local MemAcc hostlock.sh lines281-288 increments generation only after acquiring exclusive lock; lines324-328 writes released then unlocks. Root/Host must separately bind actual helper bytes; no arbitrary/fabricated metadata authenticity claim.",
+    "limits": "No retroactive a4 proof promotion; new work still needs separate current admission."
+  },
+  "rss": {
+    "tests": "15 passed,13 deselected,0.08s",
+    "accepted": "At most2 proc reads, independent directory absence confirmation or actual reopened identity/RSS; PID/start matching retained. Permission, malformed, repeated-live-unavailability and ambiguous confirmation fail closed.",
+    "controls": "Process/task exit, finalstat exit, reused PID, surviving thread children, permissions all covered.",
+    "limits": "Local contract tests are not actual Linux lifecycle evidence. Provider recipe needs the corrected pinned runtime and fixed full-runtime admission guard before dispatch."
+  }
+}

@@ -199,3 +199,141 @@ def test_linux_observes_live_child_zombie_and_reaping_without_status_fallback(tm
     (tmp_path / 'linux-rss-lifecycle-result.json').write_text(json.dumps({
         'created':'2026-09-26', 'rss_source':RSS_SOURCE, 'page_size_bytes':sampler.page_size,
         'state':'passed', 'observations':observed, 'remaining_seconds':deadline-time.monotonic()},indent=2)+'\n')
+
+
+@pytest.mark.parametrize('phase', ['stat', 'tasks', 'children', 'final-stat'])
+def test_esrch_exit_is_independently_confirmed_without_zero_rss(tmp_path, monkeypatch, phase):
+    """A procfs syscall may report ESRCH rather than ENOENT during exit."""
+    import errno
+    process(tmp_path, 100, 1, 1000, pages=7, children=[101])
+    child=process(tmp_path,101,100,1001,pages=13)
+    sampler=DescendantRSS(100,tmp_path)
+    # Retain the identity before the raced second sample, as actual monitors do.
+    assert sampler.sample()['rss_bytes']==20*sampler.page_size
+    read=Path.read_text; iterate=Path.iterdir; count=0
+    def text(path,*args,**kwargs):
+        nonlocal count
+        if path==child/'stat':count+=1
+        hit=(phase=='stat' and path==child/'stat' and count==1
+             or phase=='final-stat' and path==child/'stat' and count==2
+             or phase=='children' and path==child/'task/101/children')
+        if hit:
+            shutil.rmtree(child)
+            raise ProcessLookupError(errno.ESRCH,'fixture actual proc exit')
+        return read(path,*args,**kwargs)
+    def entries(path):
+        if phase=='tasks' and path==child/'task':
+            shutil.rmtree(child)
+            raise ProcessLookupError(errno.ESRCH,'fixture task exit')
+        return iterate(path)
+    monkeypatch.setattr(Path,'read_text',text);monkeypatch.setattr(Path,'iterdir',entries)
+    result=sampler.sample()
+    assert sampler.known[101]==1001
+    assert all(row['rss_pages']>0 for row in result['processes'])
+    assert result['rss_bytes']==sum(row['rss_pages'] for row in result['processes'])*sampler.page_size
+    assert 101 not in {row['pid'] for row in sampler.sample()['processes']}
+
+
+def test_esrch_stat_reopened_identity_and_rss_are_used(tmp_path,monkeypatch):
+    import errno
+    folder=process(tmp_path,100,1,1000,pages=7)
+    read=Path.read_text;calls=0
+    def once(path,*args,**kwargs):
+        nonlocal calls
+        if path==folder/'stat':
+            calls+=1
+            if calls==1:raise ProcessLookupError(errno.ESRCH,'raced descriptor')
+        return read(path,*args,**kwargs)
+    monkeypatch.setattr(Path,'read_text',once)
+    result=DescendantRSS(100,tmp_path).sample()
+    assert result['rss_bytes']==7*result['page_size_bytes'] and calls>=2
+
+
+@pytest.mark.parametrize('phase',['stat','tasks','children'])
+def test_esrch_does_not_suppress_unavailable_live_proc_telemetry(tmp_path,monkeypatch,phase):
+    import errno
+    folder=process(tmp_path,100,1,1000,pages=7)
+    read=Path.read_text;iterate=Path.iterdir
+    def unavailable(path,*args,**kwargs):
+        if path==folder/('stat' if phase=='stat' else 'task/100/children') and phase!='tasks':
+            raise ProcessLookupError(errno.ESRCH,'still present')
+        return read(path,*args,**kwargs)
+    def entries(path):
+        if phase=='tasks' and path==folder/'task':raise ProcessLookupError(errno.ESRCH,'still present')
+        return iterate(path)
+    monkeypatch.setattr(Path,'read_text',unavailable);monkeypatch.setattr(Path,'iterdir',entries)
+    with pytest.raises((ValueError,ProcessLookupError),match='unavailable|still present'):
+        DescendantRSS(100,tmp_path).sample()
+
+
+@pytest.mark.parametrize('fault',['permission','malformed','confirmation-permission'])
+def test_esrch_recheck_preserves_unknown_and_invalid_errors(tmp_path,monkeypatch,fault):
+    import errno
+    folder=process(tmp_path,100,1,1000,pages=7)
+    read=Path.read_text;stat=Path.stat;calls=0
+    def changed(path,*args,**kwargs):
+        nonlocal calls
+        if path==folder/'stat':
+            calls+=1
+            if fault=='permission':raise PermissionError(errno.EACCES,'denied')
+            if calls==1:raise ProcessLookupError(errno.ESRCH,'raced descriptor')
+            return 'malformed'
+        return read(path,*args,**kwargs)
+    def confirm(path,*args,**kwargs):
+        if fault=='confirmation-permission' and path==folder:raise PermissionError(errno.EACCES,'confirmation denied')
+        return stat(path,*args,**kwargs)
+    monkeypatch.setattr(Path,'read_text',changed);monkeypatch.setattr(Path,'stat',confirm)
+    with pytest.raises((PermissionError,ValueError),match='denied|malformed'):
+        DescendantRSS(100,tmp_path).sample()
+
+
+def test_esrch_thread_exit_keeps_live_process_and_other_thread_children(tmp_path,monkeypatch):
+    import errno
+    folder=process(tmp_path,100,1,1000,pages=7,extra_thread=[101])
+    process(tmp_path,101,100,1001,pages=13)
+    read=Path.read_text
+    def exiting(path,*args,**kwargs):
+        if path==folder/'task/100/children':
+            shutil.rmtree(folder/'task/100')
+            raise ProcessLookupError(errno.ESRCH,'one thread exited')
+        return read(path,*args,**kwargs)
+    monkeypatch.setattr(Path,'read_text',exiting)
+    result=DescendantRSS(100,tmp_path).sample()
+    assert {row['pid'] for row in result['processes']}=={100,101}
+    assert result['rss_bytes']==20*result['page_size_bytes']
+
+
+def test_esrch_reopen_does_not_adopt_reused_pid(tmp_path,monkeypatch):
+    import errno
+    process(tmp_path,100,1,1000,pages=7,children=[101])
+    child=process(tmp_path,101,100,1001,pages=13)
+    sampler=DescendantRSS(100,tmp_path);sampler.sample()
+    read=Path.read_text;changed=False
+    def reused(path,*args,**kwargs):
+        nonlocal changed
+        if path==child/'stat' and not changed:
+            changed=True;process(tmp_path,101,999,9001,pages=999)
+            # The unrelated replacement is absent from the actual parent's
+            # new child list; a deliberately stale list separately fails closed.
+            process(tmp_path,100,1,1000,pages=7)
+            raise ProcessLookupError(errno.ESRCH,'old descriptor lost')
+        return read(path,*args,**kwargs)
+    monkeypatch.setattr(Path,'read_text',reused)
+    result=sampler.sample()
+    assert [row['pid'] for row in result['processes']]==[100]
+    assert sampler.known[101]==1001 and result['rss_bytes']==7*result['page_size_bytes']
+
+
+@pytest.mark.parametrize('phase',['tasks','children'])
+def test_proc_task_permission_errors_are_not_exit_evidence(tmp_path,monkeypatch,phase):
+    import errno
+    folder=process(tmp_path,100,1,1000)
+    read=Path.read_text;iterate=Path.iterdir
+    def denied(path,*args,**kwargs):
+        if phase=='children' and path==folder/'task/100/children':raise PermissionError(errno.EACCES,'denied children')
+        return read(path,*args,**kwargs)
+    def entries(path):
+        if phase=='tasks' and path==folder/'task':raise PermissionError(errno.EACCES,'denied tasks')
+        return iterate(path)
+    monkeypatch.setattr(Path,'read_text',denied);monkeypatch.setattr(Path,'iterdir',entries)
+    with pytest.raises(PermissionError,match='denied'):DescendantRSS(100,tmp_path).sample()

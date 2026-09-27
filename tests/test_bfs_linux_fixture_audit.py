@@ -164,10 +164,11 @@ def test_exact_process_identity_and_only_captured_zero_rss_pane_exception(tmp_pa
         with pytest.raises((ValueError,PermissionError)):f['run'](inspect=inspect)
 
 
-def test_second_observation_rejects_changed_lease_and_artifacts(tmp_path):
+def test_second_observation_allows_independently_verified_successor_lease(tmp_path):
     f=fixture(tmp_path);calls=[]
     def leases(*args):calls.append(1);return {'mbit10-evaluation-node0':{'generation':10+len(calls)}}
-    with pytest.raises(ValueError,match='lease changed'):f['run'](leases=leases)
+    result,_=f['run'](leases=leases)
+    assert len(result['lease_observations']) == 2
 
 
 def test_real_live_child_cannot_be_mistaken_for_absent(tmp_path):
@@ -191,6 +192,27 @@ def test_real_file_lock_and_exact_generation(tmp_path):
     with (lease_root/'mbit10-evaluation-node0.lease').open() as stream:
         mod.fcntl.flock(stream,mod.fcntl.LOCK_EX|mod.fcntl.LOCK_NB)
         with pytest.raises(ValueError,match='kernel lock'):mod.lease_snapshot(0,10,f['lane']['socket_lane'],f['begin'],f['end'],root=lease_root)
+
+
+@pytest.mark.parametrize('held',[False,True])
+def test_historical_closure_allows_successor_and_records_current_occupancy(tmp_path,held):
+    f=fixture(tmp_path);root=tmp_path/'leases';root.mkdir()
+    for name in ('mbit10-evaluation','mbit10-evaluation-node0','mbit10-evaluation-node1'):
+        write(root/(name+'.meta.json'),{'state':'released','released_at':f['at'](19),
+            'lease':{'generation':10,'host':'mbit10','lease_name':name,'acquired_at':f['at'](0)}})
+        (root/(name+'.lease')).write_text('')
+    name='mbit10-evaluation-node0'
+    successor={'state':'held' if held else 'released','released_at':f['at'](23),
+        'lease':{'generation':11,'host':'mbit10','lease_name':name,'acquired_at':f['at'](20)}}
+    write(root/(name+'.meta.json'),successor)
+    with (root/(name+'.lease')).open() as stream:
+        if held:mod.fcntl.flock(stream,mod.fcntl.LOCK_EX|mod.fcntl.LOCK_NB)
+        result=mod.lease_snapshot(0,10,f['lane']['socket_lane'],f['begin'],f['end'],root=root)
+        assert result[name]['kernel_held'] is held
+        assert result[name]['metadata']==successor
+        for key,value in [('generation',9),('acquired_at',f['at'](18)),('host','other-host')]:
+            bad=copy.deepcopy(successor);bad['lease'][key]=value;write(root/(name+'.meta.json'),bad)
+            with pytest.raises(ValueError):mod.lease_snapshot(0,10,f['lane']['socket_lane'],f['begin'],f['end'],root=root)
 
 
 def test_post_exit_deadline_is_separate_and_pending_survives_expiry(tmp_path):
