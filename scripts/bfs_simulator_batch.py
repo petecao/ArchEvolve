@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Finite sequential simulator-series coordination. Created: 2026-09-26 ET.
+Updated 2026-09-27 ET (R2/R3): the T15 pilot kind runs one family per driver,
+two drivers inside one lane job, sharing a one-slot gem5 pool, the lane-tree
+52-GiB sampled RSS cap and one 96-GiB aggregate storage allowance.
 
 No evaluator, retries, protocol publication, provider calls, or gain decisions.
 Run only under socket_lane.sh and a matching external timeout.
@@ -33,7 +36,20 @@ from swdb.store import Store
 
 ET = ZoneInfo('America/New_York')
 GIB = 1024**3
-PLAN_HASHES = {'t16-protocol-recovery': 'eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8', 't16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
+PLAN_HASHES = {'t15-pilot': 'f515581f5ff0bc933a93eff3ad8e93b0dfcf58a960606c16f1505ca9fb878f8a', 't16-protocol-recovery': 'eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8', 't16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
+PILOT_KIND = 't15-pilot'
+PILOT_ID = 'bfs-t15-pilot-simulator-batch-20260927-b1'
+PILOT_POLICY = 't15_incremental_allocation.v1'
+PILOT_TEST_CASES = {
+    'owned_cleanup': {
+        'test_linux_owned_stage_reaps_detached_child[False]',
+        'test_linux_owned_stage_reaps_detached_child[True]',
+        'test_linux_nested_interruption_uses_one_cleanup_budget',
+        'test_linux_term_resistant_nested_cleanup_keeps_final_kill_reserve',
+        'test_linux_storage_observation_handles_sqlite_journal_unlink',
+        'test_linux_gem5_slot_is_released_by_child_not_parent'},
+    'dx100_interruption': {'test_public_interruption_is_durable_before_postmortem[raises]',
+                           'test_public_interruption_is_durable_before_postmortem[stalls]'}}
 SETUP_RECOVERY_ID = 'bfs-t15-setup-recovery-simulator-batch-20260926-a1'
 SETUP_FAILURE_ID = 'bfs-t15-correction-simulator-batch-20260926-a1'
 SETUP_HARD_END = '2026-09-27T09:14:09.851819-04:00'
@@ -72,6 +88,52 @@ def read_reference(ref, maximum=2 * 1024**2):
 
 def validate_plan(plan, kind):
     require(artifacts.digest(plan) == PLAN_HASHES[kind], 'prospective plan differs from the reviewed fixed scope')
+
+
+def is_pilot(plan):
+    return plan.get('allocation', {}).get('policy') == PILOT_POLICY
+
+
+def plan_path(kind):
+    if kind == PILOT_KIND:
+        return PLAN_DIR / (PILOT_ID + '.json')
+    date = '20260927' if kind in {'t15-lease-recovery', 't16-lease-recovery', 't16-seal-recovery', 't16-protocol-recovery'} else '20260926'
+    return PLAN_DIR / f'bfs-{kind}-simulator-batch-{date}-a1.json'
+
+
+def pilot_storage_paths(plan):
+    """The whole incremental allocation: both family roots and the lane dispatch."""
+    base = Path(plan['raw_root']) / plan['id']
+    return [base, Path(str(base) + '.dispatch')]
+
+
+def validate_pilot_tests(plan, admission):
+    """Fresh Linux ownership/interruption tests at the exact admitted runtime (R9)."""
+    import xml.etree.ElementTree as XML
+    refs = admission['linux_cleanup_tests']
+    require(isinstance(refs, list) and len(refs) == 2, 'two pilot Linux test receipts are required')
+    seen = set()
+    for ref in refs:
+        result = read_reference(ref)
+        kind = result.get('kind')
+        require(kind in PILOT_TEST_CASES and kind not in seen
+                and result.get('format') == 'swdb.bfs.pilot-linux-tests.v1'
+                and result.get('host') == 'mbit10' and result.get('platform') == 'linux'
+                and result.get('code_commit') == admission['code_commit']
+                and result.get('runtime_sha256') == admission['runtime_sha256']
+                and type(result.get('returncode')) is int and result['returncode'] == 0
+                and stamp(result['started']) <= stamp(result['finished']) <= stamp(admission['prepared_at']),
+                'pilot Linux test receipt is missing, failed or differs from this runtime')
+        seen.add(kind)
+        junit = result['junit']; path = Path(junit['path'])
+        require(path.is_absolute() and path.is_file() and not path.is_symlink()
+                and path.stat().st_size <= 4*1024**2 and artifacts.file_hash(path) == junit['sha256'],
+                'pilot Linux JUnit changed')
+        cases = XML.fromstring(path.read_bytes()).findall('.//testcase')
+        require(cases and all(not any(case.find(tag) is not None for tag in ('failure', 'error', 'skipped'))
+                for case in cases) and PILOT_TEST_CASES[kind] <= {case.get('name') for case in cases},
+                'pilot Linux tests omit required cases or contain failures/skips')
+    require(seen == set(PILOT_TEST_CASES), 'both pilot Linux test receipts are required')
 
 
 def runtime_identity():
@@ -315,6 +377,14 @@ def validate_preparation_reservation(plan, admission):
     Actual proof hashes are sealed later in admission, avoiding a code/plan/proof
     hash cycle. Their complete closed envelopes must fit the fixed reservation.
     """
+    if is_pilot(plan):
+        # The incremental allocation reserves its 3,600 preparation seconds and
+        # 4-GiB overhead as one flat row; it carries no historical proof group.
+        reserved = plan['accounting']['preparation_reservation']
+        require(reserved == {'id': 'bfs-t15-pilot-preparation-20260927-b1', 'elapsed_seconds': 3600,
+                             'raw_bytes': 4 * GIB} and 'preparation_reservation' not in admission,
+                'pilot preparation reservation differs from the approved partition')
+        return
     if {'lease_recovery', 'seal_recovery', 'protocol_recovery'} & plan['accounting'].keys():
         require('linux_proof_runtime' not in admission and 'linux_proof_provenance' not in plan,
                 'recovery requires exact current-runtime Linux proof without consumer exceptions')
@@ -513,10 +583,12 @@ class Ledger:
         require(remaining > self.bounds['cleanup_seconds'], 'common batch deadline exhausted')
         return remaining
 
-    def next_allowance(self, raw_bytes):
+    def next_allowance(self, raw_bytes, series_cap_gib=None):
         require(self.remaining() >= self.bounds['series_seconds'] + self.bounds['cleanup_seconds'],
                 'insufficient shared time for the next full series allowance and cleanup')
         storage = math.floor((self.bounds['batch_storage_gib'] * GIB - self.charged_bytes - raw_bytes) / GIB)
+        if series_cap_gib is not None:
+            storage = min(series_cap_gib, storage)
         require(storage >= 1, 'shared batch raw-storage allowance exhausted')
         return self.bounds['series_seconds'], storage
 
@@ -724,7 +796,7 @@ def lease_observation(machine, node):
     raise ValueError('other lease metadata and kernel lock disagree or did not stabilize')
 
 
-def series_command(plan, row, admission, config, runs, records, node, seconds, storage, cleanup=None):
+def series_command(plan, row, admission, config, runs, records, node, seconds, storage, cleanup=None, slots=None):
     b = plan['bounds']
     command = [admission['python']['path'], str(ROOT / 'scripts/bfs_simulator_series.py'),
         '--id', row['id'], '--candidate', row['candidate'], '--workload', row['workload'],
@@ -744,6 +816,10 @@ def series_command(plan, row, admission, config, runs, records, node, seconds, s
         command += ['--trace-transport', plan['trace_transport']]
     if row['protocol_key'] is not None:
         command += ['--protocol', admission['protocols'][row['protocol_key']]['id'], '--protocol-role', row['protocol_role']]
+    if 'profile_seconds' in b:
+        command += ['--profile-seconds', str(b['profile_seconds'])]
+    if slots is not None:
+        command += ['--gem5-slot-dir', str(slots), '--gem5-slots', str(plan['concurrency']['gem5_slots'])]
     return command
 
 
@@ -781,6 +857,8 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
         ('checkpoint_seconds', 'run_seconds', 'diagnostic_seconds', 'memory_gib', 'storage_gib')}
     expected_bounds.update(total_seconds=seconds, batch_storage_gib=storage,
                            verification_ticks=plan['verification_ticks'])
+    if 'profile_seconds' in plan['bounds']:
+        expected_bounds['profile_seconds'] = plan['bounds']['profile_seconds']
     expected_protocol = admission['protocols'][row['protocol_key']]['id'] if row['protocol_key'] else None
     require(child.get('state') == 'complete' and child.get('id') == row['id']
             and child.get('candidate') == row['candidate'] and child.get('workload') == row['workload']
@@ -891,19 +969,24 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
             'series aggregate lacks the complete actual frozen sample grid')
 
 
-def collect_series(plan, admission, receipt, folder, runs, records, node, ledger, owned, monitor):
+def collect_series(plan, admission, receipt, folder, runs, records, node, ledger, owned, monitor,
+                   rows=None, aggregate=None, slots=None):
     """Launch each public series once; terminal readback cannot skip cleanup."""
-    for row in plan['series']:
-        raw = monitor()
+    for row in plan['series'] if rows is None else rows:
+        raw = monitor(force=True) if aggregate is not None else monitor()
         require(runtime_identity() == admission['runtime_sha256'], 'runtime changed during batch')
-        seconds, storage = ledger.next_allowance(raw)
+        if aggregate is not None:
+            seconds, storage = ledger.next_allowance(aggregate(), plan['allocation']['per_series_cap_gib'])
+        else:
+            seconds, storage = ledger.next_allowance(raw)
         admit_capacity(receipt, node, row['id'])
         config = folder / (row['id'] + '.configuration.json')
         with config.open('x') as stream:
             stream.write(json.dumps(row['configuration'], indent=2) + '\n')
         child_root = runs / row['id']
         require(not child_root.exists(), 'series root already exists; no resume')
-        command = series_command(plan, row, admission, config, child_root, records, node, seconds, storage, owned.budget)
+        command = series_command(plan, row, admission, config, child_root, records, node, seconds, storage,
+                                 owned.budget, slots)
         entry = {'id': row['id'], 'state': 'running', 'command': command, 'started': now().isoformat(),
                  'series_seconds': seconds, 'remaining_storage_gib': storage}
         receipt['series'].append(entry); save_receipt(folder, receipt)
@@ -982,10 +1065,17 @@ def main():
     parser.add_argument('--outer-deadline', required=True)
     parser.add_argument('--pane-pid', type=int, required=True)
     parser.add_argument('--pane-start-ticks', type=int, required=True)
+    parser.add_argument('--family', help='pilot only: the one family series this driver runs')
     args = parser.parse_args()
-    date = '20260927' if args.kind in {'t15-lease-recovery', 't16-lease-recovery', 't16-seal-recovery', 't16-protocol-recovery'} else '20260926'
-    plan = yamlio.load(PLAN_DIR / f'bfs-{args.kind}-simulator-batch-{date}-a1.json')
+    plan = yamlio.load(plan_path(args.kind))
     validate_plan(plan, args.kind)
+    pilot = is_pilot(plan)
+    selected = plan['series']
+    if pilot:
+        selected = [row for row in plan['series'] if row['id'] == plan['id'] + '.' + str(args.family)]
+        require(len(selected) == 1, 'pilot driver requires exactly one planned family')
+    else:
+        require(args.family is None, 'family selection is only defined for the pilot')
     admission_ref = {'path': str(args.admission.absolute()), 'sha256': args.admission_sha256}
     admission = read_reference(admission_ref)
     require(socket.gethostname().split('.')[0] == 'mbit10', 'simulator batch execution requires mbit10')
@@ -994,8 +1084,13 @@ def main():
             seconds=plan['bounds']['batch_seconds']-ledger.charged_seconds)),
             'outer deadline differs from the same charged batch allowance')
     runs = args.runs_dir.absolute()
-    require(runs.name == plan['id'] and any(base in runs.parents for base in RAW_ROOTS)
-            and runs == runs.resolve(), 'use the exact new batch name in authorized raw storage, without symlinks')
+    if pilot:
+        # One family root inside the allocation root; both count in the aggregate.
+        require(runs == pilot_storage_paths(plan)[0] / selected[0]['id'] and runs == runs.resolve(),
+                'pilot family root differs from the planned allocation root')
+    else:
+        require(runs.name == plan['id'] and any(base in runs.parents for base in RAW_ROOTS)
+                and runs == runs.resolve(), 'use the exact new batch name in authorized raw storage, without symlinks')
     require(not runs.exists(), 'batch root already exists; resumes and retries are forbidden')
     dispatch = Path(str(runs) + '.dispatch')
     require(dispatch.is_dir() and not dispatch.is_symlink() and dispatch == dispatch.resolve(),
@@ -1010,6 +1105,19 @@ def main():
         'stages': [], 'series': [], 'gain_claim': False, 'protocol_freeze': False,
         'automatic_retry_allowed': False, 'ticket_acceptance': False, 'preparation_charges': admission['preparation_charges']}
     receipt['storage_paths'] = list(map(str, batch_storage_paths(runs)))
+    lane_root = lane_sampler = aggregate = slots = None
+    if pilot:
+        lane_root = lifecycle.identity(os.getppid())
+        # A fresh observer per sample: lane identities are telemetry here, and
+        # each driver's own Owned history retains its complete ownership union.
+        lane_sampler = lambda: lifecycle.DescendantRSS(lane_root['pid']).sample()
+        aggregate_paths = pilot_storage_paths(plan)
+        aggregate = lambda: allocated_bytes(aggregate_paths)
+        slots = aggregate_paths[1] / 'gem5-slots'
+        require(slots.is_dir() and not slots.is_symlink(), 'pilot gem5 slot directory is missing')
+        receipt['concurrency'] = {**plan['concurrency'], 'family': selected[0]['id'], 'lane_root': lane_root,
+            'aggregate_storage_paths': list(map(str, aggregate_paths)), 'gem5_slot_dir': str(slots),
+            'lane_tree_sampled_rss_limit_bytes': lifecycle.SAMPLED_RSS_BYTES}
     save_receipt(folder, receipt)
     owned = guard = None
     budget_path = folder/'cleanup-ledger.json'
@@ -1029,7 +1137,10 @@ def main():
         else:
             ledger.remaining()
         raw = allocated_bytes(batch_storage_paths(runs))
-        require(raw + ledger.charged_bytes < plan['bounds']['batch_storage_gib'] * GIB, 'shared batch raw-storage ceiling exceeded')
+        total = aggregate() if pilot else raw
+        require(total + ledger.charged_bytes < plan['bounds']['batch_storage_gib'] * GIB, 'shared batch raw-storage ceiling exceeded')
+        if pilot:
+            require(raw < plan['allocation']['per_series_cap_gib'] * GIB, 'pilot family storage cap exceeded')
         for path, minimum in ((runs, plan['bounds']['raw_reserve_gib']), (BUILD_ROOT.parent, plan['bounds']['build_reserve_gib'])):
             stat = os.statvfs(path)
             require(stat.f_bavail * stat.f_frsize >= minimum * GIB, 'raw/build free-space reserve violated')
@@ -1038,6 +1149,12 @@ def main():
                   'owned_processes': owned.sample()}
         require(sample['owned_processes']['rss_bytes'] <= lifecycle.SAMPLED_RSS_BYTES,
                 'sampled whole-tree RSS exceeded 52 GiB')
+        if pilot:
+            lane_tree = lane_sampler()
+            sample.update(aggregate_raw_bytes=total, lane_tree_rss_bytes=lane_tree['rss_bytes'],
+                          lane_tree_processes=len(lane_tree['processes']))
+            require(lane_tree['rss_bytes'] <= lifecycle.SAMPLED_RSS_BYTES,
+                    'sampled whole-lane-tree RSS exceeded 52 GiB')
         with ledger_file.open('a') as stream:
             stream.write(json.dumps(sample) + '\n')
         return raw
@@ -1047,17 +1164,30 @@ def main():
         require((now()-stamp(args.outer_started)).total_seconds() <= 30,
                 'first resource observation exceeded outer startup allowance')
         store = Store(records)
-        for row in plan['series']:
+        for row in selected:
             require(not any(rid == row['id'] or rid.startswith(row['id'] + '.') for rid in store.by_id)
                     and not list(BUILD_ROOT.glob(row['id'] + '*')), 'series IDs or build paths already exist; no retry')
-        validate_cleanup_tests(admission)
+        if pilot:
+            validate_pilot_tests(plan, admission)
+        else:
+            validate_cleanup_tests(admission)
         validate_preparation_reservation(plan, admission)
         prerequisites, availability = validate_inputs(plan, admission, store)
         receipt.update(code_commit=admission['code_commit'], runtime_sha256=admission['runtime_sha256'],
                        raw_input_verification=availability, prerequisites=prerequisites)
-        def guarded():
-            guard.check(); return guard.observe()
-        collect_series(plan, admission, receipt, folder, runs, records, args.lane, ledger, owned, guarded)
+        def guarded(force=False):
+            # R2: stage polls every 0.25 s must not append a ledger line each
+            # time; the periodic monitor still bounds the gap to 30 seconds.
+            guard.check()
+            if pilot and not force and guard.last_started is not None and \
+                    time.monotonic() - guard.last_started < lifecycle.SAMPLE_INTERVAL_SECONDS:
+                return None
+            return guard.observe()
+        if pilot:
+            collect_series(plan, admission, receipt, folder, runs, records, args.lane, ledger, owned, guarded,
+                           rows=selected, aggregate=aggregate, slots=slots)
+        else:
+            collect_series(plan, admission, receipt, folder, runs, records, args.lane, ledger, owned, guarded)
         receipt['state'] = 'complete'
     except BaseException as exc:
         receipt.update(state='failed', reason=f'{type(exc).__name__}: {exc}')
@@ -1098,7 +1228,10 @@ def main():
                 'rss_source': lifecycle.RSS_SOURCE, 'maximum_gap_seconds': guard.maximum_gap_seconds,
                 'maximum_guard_seconds': guard.maximum_guard_seconds, 'hard_memory_quota': False}
         try:
-            with cleanup_budget.reservation():
+            # R2: three streaming reads of a long ledger (measured about one
+            # second per 30,000 lines) need more than the default 5-second grant;
+            # the fixed 30-second shared reserve still bounds the total.
+            with (cleanup_budget.reservation(maximum=15) if pilot else cleanup_budget.reservation()):
                 finalize_receipt(receipt, folder, runs, ledger, ledger_file)
         except BaseException as exc:
             failed(exc, 'final_accounting_error')

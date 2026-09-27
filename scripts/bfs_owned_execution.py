@@ -1,4 +1,7 @@
 """Prospective Linux ownership and shared teardown budgets. Dated 2026-09-26 ET.
+Updated 2026-09-27 ET: resume decisions R1 (dead-owner reservations are spent),
+R2 (resource-sample count derived from coverage interval) and R3 (a stage may
+inherit a lane gem5-slot descriptor that the caller closes after spawn).
 
 RSS is sampled from one procfs stat record, never a hard memory quota. The
 shared cleanup file accounts for nested supervisors without holding its lock
@@ -151,7 +154,8 @@ class SharedCleanup:
             require(grant > .05, 'shared cleanup reserve exhausted')
             require(len(value['events']) < 2048, 'cleanup event bound exceeded')
             value['reservations'][key] = {'pid': os.getpid(), 'seconds': grant, 'started': stamp(),
-                                          'purpose': 'grace' if grace else 'cleanup_or_finalization'}
+                                          'purpose': 'grace' if grace else 'cleanup_or_finalization',
+                                          **_owner_start()}
         try:
             require(time.monotonic() < began + grant, 'cleanup reservation metadata exceeded grant')
             yield min(self.deadline, began + grant)
@@ -167,6 +171,43 @@ class SharedCleanup:
             require(time.monotonic()-began <= elapsed and elapsed <= grant
                     and value['spent_seconds'] <= value['budget_seconds'],
                     'cleanup exceeded its shared reservation')
+
+
+def _owner_start():
+    """R1: record the reserving process start so a later reader can prove death."""
+    try:
+        row = identity(os.getpid())
+    except (OSError, ValueError):
+        row = None
+    return {'start_ticks': row['start_ticks']} if row else {}
+
+
+def charge_dead_owner_reservations(value, *, observe=identity):
+    """R1 (2026-09-27): after closure, charge each absent owner's full grant.
+
+    The ledger rule is that a supervisor dying with a reservation consumes all
+    of it. A reservation whose owner is still live, or whose PID is reused
+    without a recorded start time to disprove identity, is not settled here.
+    Returns the conservative spent total; it never edits the ledger file.
+    """
+    rows = value.get('reservations')
+    require(isinstance(rows, dict), 'cleanup reservations are malformed')
+    charged = []
+    for row in rows.values():
+        seconds = row.get('seconds') if isinstance(row, dict) else None
+        require(type(row.get('pid')) is int and row['pid'] > 0 and type(seconds) in (int, float)
+                and math.isfinite(seconds) and 0 < seconds <= 30, 'dead-owner reservation is malformed')
+        live = observe(row['pid'])
+        start = row.get('start_ticks')
+        require(live is None or (type(start) is int and live['start_ticks'] != start),
+                'cleanup reservation owner is live or its identity cannot be disproved')
+        charged.append(seconds)
+    spent = value.get('spent_seconds')
+    require(type(spent) in (int, float) and math.isfinite(spent) and spent >= 0, 'cleanup spent is malformed')
+    total = spent + math.fsum(charged)
+    require(total <= value.get('budget_seconds', 30), 'dead-owner charges exceed the fixed cleanup reserve')
+    return {'dead_owner_reservations': len(charged), 'dead_owner_seconds': math.fsum(charged),
+            'settled_seconds': spent, 'conservative_spent_seconds': total}
 
 
 class Owned:
@@ -336,8 +377,12 @@ class Monitor:
 
 
 def run_stage(receipt, folder, command, *, timeout, deadline, cwd, owned, monitor=None,
-              output=None, stderr=None, env=None):
-    """A public stage and every detached descendant share one cleanup reserve."""
+              output=None, stderr=None, env=None, pass_fds=(), spawned=None):
+    """A public stage and every detached descendant share one cleanup reserve.
+
+    ``pass_fds`` lets the child inherit a lane gem5-slot lock (R3); ``spawned``
+    runs right after Popen so the caller can close its own copy of that lock.
+    """
     folder = Path(folder); step = str(len(receipt['stages'])).zfill(2)
     out = Path(output) if output else folder/(step+'.stdout')
     err = Path(stderr) if stderr else folder/(step+'.stderr')
@@ -349,8 +394,11 @@ def run_stage(receipt, folder, command, *, timeout, deadline, cwd, owned, monito
         allowed = min(timeout, deadline-time.monotonic())
         require(allowed > 0, 'stage deadline exhausted')
         with out.open('x') as stdout, err.open('x') as errors:
-            child = subprocess.Popen(row['command'], cwd=cwd, env=env, stdout=stdout, stderr=errors,
-                                     start_new_session=True)
+            try:
+                child = subprocess.Popen(row['command'], cwd=cwd, env=env, stdout=stdout, stderr=errors,
+                                         start_new_session=True, pass_fds=tuple(pass_fds))
+            finally:
+                if spawned: spawned()
             direct = identity(child.pid); owned.remember(direct); row['identity'] = direct
             row['timeout_s'] = allowed; save_receipt(folder, receipt)
             until = min(deadline, before+timeout)
@@ -393,16 +441,29 @@ def run_stage(receipt, folder, command, *, timeout, deadline, cwd, owned, monito
     return row
 
 
+def sample_count_bound(started, finished):
+    """R2 (2026-09-27): cap lines by the declared interval, not a fixed 20,000.
+
+    At most two writers (the periodic monitor and throttled stage polls) each
+    emit one sample per SAMPLE_INTERVAL_SECONDS; the factor two plus 64 lines
+    covers startup/finalization observations. The historical 20,000-line cap
+    remains a floor so earlier short streams keep their accepted bound.
+    """
+    seconds = max(0.0, (finished - started).total_seconds())
+    return max(20000, 2 * math.ceil(seconds / SAMPLE_INTERVAL_SECONDS) + 64)
+
+
 def validate_samples(path, started, finished, *, nested=False):
     """Stream resource receipt consistency; this cannot detect unsampled peaks."""
     previous, count, peak = datetime.fromisoformat(started), 0, 0
     end = datetime.fromisoformat(finished)
     require(previous.utcoffset() is not None and end.utcoffset() is not None and end >= previous,
             'resource coverage interval is invalid')
+    limit = sample_count_bound(previous, end)
     known = set()
     with Path(path).open() as stream:
         for line in stream:
-            require(len(line) <= 2*1024**2 and count < 20000, 'resource sample read bound exceeded')
+            require(len(line) <= 2*1024**2 and count < limit, 'resource sample read bound exceeded')
             sample = json.loads(line)
             if nested: sample = sample['owned_processes']
             observed = datetime.fromisoformat(sample['sampled_at'])

@@ -762,3 +762,82 @@ def test_external_generations_must_stabilize_before_return(tmp_path, monkeypatch
     with pytest.raises(ValueError, match='did not stabilize'):
         batch.lease_observation({}, 0)
     assert len(pauses) == 4
+
+
+# T15 pilot b1 (resume decisions R2/R3, 2026-09-27 ET): fixtures are not evidence.
+
+def pilot_plan():
+    return json.loads(batch.plan_path(batch.PILOT_KIND).read_text())
+
+
+def test_pilot_plan_keeps_the_unchanged_grid_and_approved_partition():
+    value = pilot_plan(); batch.validate_plan(value, batch.PILOT_KIND)
+    old = json.loads((batch.PLAN_DIR/'bfs-t15-lease-recovery-simulator-batch-20260927-a1.json').read_text())
+    strip = lambda row: {k: v for k, v in row.items() if k != 'id'}
+    assert [strip(r) for r in value['series']] == [strip(r) for r in old['series']]
+    assert [r['id'].rsplit('.', 1)[1] for r in value['series']] == ['uniform18', 'kronecker18']
+    assert {k: value[k] for k in ('repetitions', 'threads', 'roi', 'verifier', 'record_sha256')} == \
+        {k: old[k] for k in ('repetitions', 'threads', 'roi', 'verifier', 'record_sha256')}
+    allocation = value['allocation']
+    assert sum(allocation['partition_seconds'].values()) == allocation['total_seconds'] == 172800
+    assert (allocation['storage_gib'], allocation['overhead_reserve_gib'], allocation['per_series_cap_gib']) == (96, 4, 60)
+    assert value['concurrency']['gem5_slots'] == 1 and value['lane']['node'] == 0
+    assert value['bounds']['profile_seconds'] == 120 and 'clock_policy' not in value
+    assert batch.preparation_charges(value) == [{'id': 'bfs-t15-pilot-preparation-20260927-b1',
+                                                'elapsed_seconds': 3600, 'raw_bytes': 4*batch.GIB}]
+    batch.validate_preparation_reservation(value, {})
+    with pytest.raises(ValueError, match='approved partition'):
+        batch.validate_preparation_reservation(value, {'preparation_reservation': {}})
+    value['concurrency']['gem5_slots'] = 2
+    with pytest.raises(ValueError, match='fixed scope'): batch.validate_plan(value, batch.PILOT_KIND)
+
+
+def test_pilot_series_command_binds_slot_pool_profile_and_bounds(tmp_path):
+    value = pilot_plan(); approval = admission(value)
+    row = value['series'][1]
+    command = batch.series_command(value, row, approval, tmp_path/'c', tmp_path/'raw', tmp_path/'r', 0,
+                                   82800, 60, None, tmp_path/'slots')
+    arg = lambda name: command[command.index(name) + 1]
+    assert arg('--gem5-slot-dir') == str(tmp_path/'slots') and arg('--gem5-slots') == '1'
+    assert arg('--profile-seconds') == '120' and arg('--diagnostic-seconds') == '10800'
+    assert arg('--run-seconds') == '7200' and arg('--batch-storage-gib') == '60' and arg('--lane') == '0'
+    assert '--protocol' not in command and arg('--workload') == row['workload']
+
+
+def test_pilot_allowance_clamps_each_family_to_its_cap_and_the_shared_pool(clock):
+    value = pilot_plan()
+    charges = batch.preparation_charges(value)
+    ledger = batch.Ledger(value, admission(value, charges=charges), clock.mono, clock.wall)
+    assert ledger.next_allowance(0, 60) == (82800, 60)
+    assert ledger.next_allowance(40*batch.GIB, 60) == (82800, 52)  # 96 - 4 overhead - 40 aggregate
+    with pytest.raises(ValueError, match='exhausted'):
+        ledger.next_allowance(92*batch.GIB, 60)
+
+
+def _pilot_receipt(tmp_path, kind, approval, cases, failure=None):
+    junit = tmp_path/(kind+'.xml')
+    body = ''.join(f'<testcase name="{name}">' + ('<failure/>' if name == failure else '') + '</testcase>'
+                   for name in cases)
+    junit.write_text(f'<testsuites><testsuite>{body}</testsuite></testsuites>')
+    return ref(tmp_path/(kind+'.json'), {'format': 'swdb.bfs.pilot-linux-tests.v1', 'kind': kind,
+        'host': 'mbit10', 'platform': 'linux', 'code_commit': approval['code_commit'],
+        'runtime_sha256': approval['runtime_sha256'], 'returncode': 0,
+        'started': '2026-09-27T08:00:00-04:00', 'finished': '2026-09-27T08:01:00-04:00',
+        'junit': {'path': str(junit), 'sha256': artifacts.file_hash(junit)}})
+
+
+@pytest.mark.parametrize('fault', [None, 'failure', 'missing', 'runtime'])
+def test_pilot_requires_fresh_linux_tests_at_exact_runtime(tmp_path, fault):
+    value = pilot_plan(); approval = {**admission(value), 'code_commit': 'c'*40}
+    refs = []
+    for kind, cases in batch.PILOT_TEST_CASES.items():
+        names = sorted(cases)
+        if fault == 'missing' and kind == 'owned_cleanup': names = names[1:]
+        refs.append(_pilot_receipt(tmp_path, kind, approval, names,
+                                   names[0] if fault == 'failure' and kind == 'dx100_interruption' else None))
+    approval['linux_cleanup_tests'] = refs
+    if fault == 'runtime': approval['runtime_sha256'] = {'other': 'x'}
+    if fault is None:
+        batch.validate_pilot_tests(value, approval)
+    else:
+        with pytest.raises(ValueError): batch.validate_pilot_tests(value, approval)

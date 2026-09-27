@@ -662,3 +662,36 @@ allocation and comparable bounded recoveries have direct user approval, but
 no new T15 implementation, clock or admission started. T16 is physically stopped
 with a retained strict-cleanup accounting failure; this must be addressed
 prospectively before satisfying the T15 serialization prerequisite.
+
+## T15 pilot b1 launched — 2026-09-27 10:31 ET
+
+Work resumed under the [resume plan](../resume-plan-20260927.md) (R1–R4, R9). Fresh run
+`bfs-t15-pilot-simulator-batch-20260927-b1` started at 10:30:10 ET on mbit10 node0
+(root lane assignment), lease generation 376, from runtime
+`6ba19a521868813886d117148e8e5051bf1a6ee0` (branch `codex/bfs-t15-pilot-20260927-b1`).
+It uses the approved incremental 48-hour/96-GiB allocation, and its clock started at
+admission (10:29 ET). The outer deadline is 2026-09-29 09:30:10 ET.
+The [request](../requests/bfs-t15-pilot-simulator-batch-20260927-b1.json) keeps the
+unchanged 12-pair grid. The [operator recipe](../operator-recipes/t15-pilot-b1/README.md)
+describes the lane job.
+
+Recorded deviations, approved by root before dispatch:
+
+- **R3 concurrency.** The two family drivers share one lane job and a one-slot gem5
+  pool. A measured 29.5–33.5 GiB sampled RSS per gem5 makes four concurrent
+  simulators infeasible under the 52-GiB lane-tree cap.
+- **Two cleanup ledgers.** Each driver has its own 30-second cleanup ledger.
+- **Bounds.** Restored-run limit 7,200 s (was 3,600). Diagnostic total 10,800 s
+  (was 600; a 270-s restore share cannot fit a scale-18 O3 traversal). The
+  120-s profile limit stays as the first-pair gate.
+
+Pre-launch state:
+
+- `/data` had 134.7 GiB free, against the 126 GiB required.
+- node0 estimated available memory was 56 GiB (eligible).
+- All three leases were released.
+- The fresh pilot Linux tests passed at the exact runtime. The first
+  `dx100_interruption` receipt failed on a stripped lane environment and is
+  retained.
+
+No sample, correctness or freeze is claimed by this launch.

@@ -419,3 +419,127 @@ def test_signal_never_admits_reused_or_unknown_identity(tmp_path,monkeypatch,fau
         with pytest.raises(ProcessLookupError,match='confirmation'):owner.signal({'pid':pid,'start_ticks':1001},owned.signal.SIGTERM)
     else:owner.signal({'pid':pid,'start_ticks':1001},owned.signal.SIGTERM)
     assert not sent and closed==[77]
+
+
+# Resume decisions R1-R3 (2026-09-27 ET): prospective regressions only.
+
+def test_dead_owner_reservation_is_charged_in_full_as_spent():
+    value = {'budget_seconds': 30, 'spent_seconds': 20.5,
+             'reservations': {'a': {'pid': 11, 'seconds': 0.25, 'start_ticks': 7},
+                              'b': {'pid': 12, 'seconds': 2}}}
+    result = owned.charge_dead_owner_reservations(value, observe=lambda pid: None)
+    assert result['dead_owner_reservations'] == 2
+    assert result['conservative_spent_seconds'] == pytest.approx(22.75)
+    # A reused PID is dead only when the recorded start disproves identity.
+    reused = lambda pid: {'pid': pid, 'start_ticks': 8}
+    assert owned.charge_dead_owner_reservations(
+        {**value, 'reservations': {'a': value['reservations']['a']}}, observe=reused)['dead_owner_seconds'] == .25
+    with pytest.raises(ValueError, match='live or its identity'):
+        owned.charge_dead_owner_reservations(value, observe=reused)  # 'b' lacks start_ticks
+    with pytest.raises(ValueError, match='live or its identity'):
+        owned.charge_dead_owner_reservations(value, observe=lambda pid: {'pid': pid, 'start_ticks': 7})
+    with pytest.raises(ValueError, match='exceed the fixed cleanup reserve'):
+        owned.charge_dead_owner_reservations({**value, 'spent_seconds': 29}, observe=lambda pid: None)
+
+
+def test_new_reservations_record_owner_start(tmp_path, monkeypatch):
+    budget = ledger(tmp_path, monkeypatch)
+    with budget.reservation():
+        row = next(iter(budget.snapshot()['reservations'].values()))
+    assert type(row['start_ticks']) is int and row['pid'] == os.getpid()
+
+
+def test_terminal_reader_keeps_strict_default_and_opt_in_dead_owner_charge():
+    import inspect
+    from scripts import bfs_simulator_batch_terminal as terminal
+    assert inspect.signature(terminal.validate_cleanup_ledger).parameters['charge_dead_owners'].default is False
+
+
+def _sample_line(at, pid=1):
+    row = {'pid': pid, 'parent_pid': 0, 'start_ticks': 1, 'state': 'S', 'rss_pages': 1, 'rss_bytes': 4096}
+    return json.dumps({'sampled_at': at.isoformat(), 'processes': [row], 'rss_bytes': 4096,
+                       'rss_source': owned.RSS_SOURCE, 'page_size_bytes': 4096}) + '\n'
+
+
+def test_sample_bound_is_derived_from_coverage_interval(tmp_path):
+    start = datetime(2026, 9, 27, 12, tzinfo=owned.ET)
+    assert owned.sample_count_bound(start, start + timedelta(seconds=14400)) == 20000
+    assert owned.sample_count_bound(start, start + timedelta(seconds=172800)) == 2 * 34560 + 64
+    # A long run at the nominal period exceeds the old fixed cap and passes.
+    count = 20100
+    path = tmp_path / 'long.jsonl'
+    path.write_text(''.join(_sample_line(start + timedelta(seconds=5 * i)) for i in range(count)))
+    end = start + timedelta(seconds=5 * (count - 1) + 1)
+    assert owned.validate_samples(path, start.isoformat(), end.isoformat())['samples'] == count
+    # Many more lines than the interval supports are still rejected.
+    dense = tmp_path / 'dense.jsonl'
+    dense.write_text(''.join(_sample_line(start + timedelta(milliseconds=i)) for i in range(20001)))
+    with pytest.raises(ValueError, match='read bound exceeded'):
+        owned.validate_samples(dense, start.isoformat(), (start + timedelta(seconds=21)).isoformat())
+
+
+def test_gem5_slot_is_exclusive_and_bounded(tmp_path):
+    from scripts.bfs_simulator_series import acquire_gem5_slot
+    fd, index, waited = acquire_gem5_slot(tmp_path, 1, time.monotonic() + 5, lambda: None)
+    assert index == 0 and waited < 1
+    checks = []
+    with pytest.raises(TimeoutError, match='slot wait'):
+        acquire_gem5_slot(tmp_path, 1, time.monotonic() + .3, lambda: checks.append(1), pause=.05)
+    assert checks
+    os.close(fd)
+    again, _, _ = acquire_gem5_slot(tmp_path, 1, time.monotonic() + 5, lambda: None)
+    os.close(again)
+
+
+def test_dx100_releases_inherited_slot_descriptor(tmp_path, monkeypatch):
+    import fcntl
+    from swdb import dx100
+    from scripts.bfs_simulator_series import acquire_gem5_slot
+    fd, _, _ = acquire_gem5_slot(tmp_path, 1, time.monotonic() + 5, lambda: None)
+    monkeypatch.setenv('SWDB_GEM5_SLOT_FD', str(fd))
+    dx100._release_gem5_slot()
+    assert 'SWDB_GEM5_SLOT_FD' not in os.environ
+    with pytest.raises(OSError):
+        os.fstat(fd)
+    probe = os.open(tmp_path / 'gem5-slot-0.lock', os.O_RDWR)
+    fcntl.flock(probe, fcntl.LOCK_EX | fcntl.LOCK_NB); os.close(probe)
+    dx100._release_gem5_slot()  # absent variable is a no-op
+
+
+@pytest.mark.skipif(sys.platform != 'linux', reason='actual Linux subreaper/pidfd proof required')
+def test_linux_gem5_slot_is_released_by_child_not_parent(tmp_path):
+    script = '''
+from pathlib import Path
+from datetime import datetime,timedelta
+import json,os,sys,threading,time
+from scripts.bfs_owned_execution import *
+from scripts.bfs_simulator_series import acquire_gem5_slot
+folder=Path(sys.argv[1]); slots=folder/'slots'; slots.mkdir()
+p=folder/'budget.json'; binding=SharedCleanup.create(p,(datetime.now(ET)+timedelta(seconds=20)).isoformat())
+budget=SharedCleanup(p,binding,time.monotonic()+20); owner=Owned(budget)
+fd,_,_=acquire_gem5_slot(slots,1,time.monotonic()+5,lambda:None); holder={'fd':fd}
+def spawned():
+    os.close(holder['fd']); holder['fd']=None
+code=("import os,time; time.sleep(1); os.close(int(os.environ['SWDB_GEM5_SLOT_FD'])); "
+      "open(os.environ['MARK'],'w').close(); time.sleep(2)")
+env={**os.environ,'SWDB_GEM5_SLOT_FD':str(fd),'MARK':str(folder/'released')}
+observed={}
+def probe():
+    time.sleep(.5)
+    try: acquire_gem5_slot(slots,1,time.monotonic()+.2,lambda:None,pause=.05); observed['early']=True
+    except TimeoutError: observed['early']=False
+    while not (folder/'released').exists(): time.sleep(.02)
+    f,_,_=acquire_gem5_slot(slots,1,time.monotonic()+1,lambda:None,pause=.05); os.close(f); observed['late']=time.monotonic()
+t=threading.Thread(target=probe); t.start()
+receipt={'stages':[]}
+run_stage(receipt,folder,[sys.executable,'-c',code],timeout=10,deadline=time.monotonic()+15,cwd=Path.cwd(),
+          owned=owner,env=env,pass_fds=(fd,),spawned=spawned)
+finished=time.monotonic(); t.join(5)
+assert holder['fd'] is None and observed['early'] is False and observed['late'] < finished
+assert receipt['stages'][0]['cleanup']['state']=='all_owned_descendants_absent'
+print(json.dumps(budget.snapshot()))
+'''
+    result = subprocess.run([sys.executable, '-c', script, str(tmp_path)],
+                            capture_output=True, text=True, timeout=30)
+    assert result.returncode == 0, result.stderr
+    assert json.loads(result.stdout)['spent_seconds'] < 30

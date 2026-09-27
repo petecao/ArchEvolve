@@ -1,4 +1,5 @@
 """Final simulator-batch cleanup-budget readback. Created 2026-09-26 ET.
+Updated 2026-09-27 ET: prospective R1 option charges dead-owner reservations.
 
 Call only after the independent terminal audit establishes no live owned writers.
 This read-only check proves settled accounting consistency, not process absence,
@@ -12,7 +13,7 @@ import math
 from pathlib import Path
 import re
 
-from scripts.bfs_owned_execution import FORMAT, SharedCleanup
+from scripts.bfs_owned_execution import FORMAT, SharedCleanup, charge_dead_owner_reservations
 
 
 def require(value, reason):
@@ -61,7 +62,7 @@ def read_reference(ref, maximum):
 
 
 def validate_cleanup_ledger(driver_ref, ledger_ref, *, expected_run_id, expected_outer_start,
-                            expected_deadline, current):
+                            expected_deadline, current, charge_dead_owners=False):
     """Reopen final bytes after closure; caller supplies the original outer clock.
 
     The caller must separately validate terminal lane release and the full
@@ -103,7 +104,13 @@ def validate_cleanup_ledger(driver_ref, ledger_ref, *, expected_run_id, expected
     finite(value.get('monotonic_end'), 'cleanup host monotonic deadline', positive=True)
     created = timestamp(value.get('created'))
     require(started <= created <= finished, 'cleanup ledger creation is outside the driver clock')
-    require(value.get('reservations') == {}, 'final cleanup ledger has outstanding reservations')
+    # R1 (2026-09-27): a prospective reader may charge an absent owner's whole
+    # reservation as spent. Historical readers keep the strict default.
+    dead = None
+    if charge_dead_owners and value.get('reservations'):
+        dead = charge_dead_owner_reservations(value)
+    else:
+        require(value.get('reservations') == {}, 'final cleanup ledger has outstanding reservations')
     spent = finite(value.get('spent_seconds'), 'cleanup spent seconds')
     events = value.get('events')
     require(isinstance(events, list) and 0 < len(events) <= 2048, 'cleanup settled events are missing or exceed bound')
@@ -128,6 +135,7 @@ def validate_cleanup_ledger(driver_ref, ledger_ref, *, expected_run_id, expected
     # A concurrently changed file cannot silently replace the admitted bytes.
     read_reference(ledger_ref, 256 * 1024)
     return {'state': 'settled_within_budget', 'driver': dict(driver_ref), 'ledger': dict(ledger_ref),
+            'dead_owner_charges': dead,
             'run_id': expected_run_id, 'driver_outcome': driver['state'], 'binding': reference['binding'],
             'creator': {'pid': value['creator']['pid'], 'start_ticks': value['creator']['start_ticks']},
             'budget_seconds': 30, 'spent_seconds': spent, 'settled_events': len(events),
