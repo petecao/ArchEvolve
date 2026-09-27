@@ -2457,3 +2457,15 @@ retains process start identities and log freshness. The prompt projection passed
 eight author and eight independent public contract tests; six independent default
 prompt comparisons remained byte-identical. Full profile packages remain retained.
 This local change does not establish provider completion or candidate acceptance.
+
+## Periodic evaluation checkpoint — 2026-09-27 03:15 ET
+
+[Live host observation](observations/host-health-20260927-0313.json), taken at
+03:14:19 ET, confirms T15's unchanged gem5 process is making CPU progress, with
+fresh telemetry and simulation logs. Its first primary ROI seal exists; verification
+is still running and accepted samples remain zero. RSS is about 32.56 GiB, below
+the unchanged limits. Node 1 generation 444 is ours; node 0 generation 348 remains
+externally held, and legacy generation 77 is released. T16 remains admitted but
+unlaunched. The context3 operator packet `4f57306c` is Git-delivered for readiness
+inspection; no fourth provider call has run. Tickets remain 14 resolved / seven
+claimed, with no final acceptance cell qualified.

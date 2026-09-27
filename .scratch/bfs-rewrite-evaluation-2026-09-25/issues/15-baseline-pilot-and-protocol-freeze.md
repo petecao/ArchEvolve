@@ -7,6 +7,14 @@ Updated: 2026-09-27 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
+## Live verification checkpoint — 2026-09-27 03:15 ET
+
+The first primary ROI seal has been produced, but verification remains running;
+accepted samples are still zero. [Live process and telemetry evidence](../observations/host-health-20260927-0313.json)
+shows CPU progress at 03:14:19 ET and RSS within the original limits. The unchanged
+09:14:09.851819 ET hard end remains binding. This is execution progress, not a
+protocol freeze or correctness acceptance.
+
 ## Fresh lease-recovery execution started — 2026-09-27 02:40 ET
 
 The [independent admission](../observations/t15-lease-admission-independent-20260927.json)
