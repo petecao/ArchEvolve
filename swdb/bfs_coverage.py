@@ -1,4 +1,4 @@
-"""Evidence-based BFS acceptance reporting; never dispatches work. Updated 2026-09-26."""
+"""Evidence-based BFS acceptance reporting; never dispatches work. Updated 2026-09-27."""
 
 import copy
 import math
@@ -7,7 +7,7 @@ from types import SimpleNamespace
 from pathlib import Path
 
 from swdb import artifacts, bfs_protocol as protocol, db, profile_package
-from swdb.cli import Failure, _require_valid
+from swdb.cli import Failure
 
 SOURCES = ("dx100-bfs-scalar", "gapbs-bfs-do")
 FAMILIES = ("kronecker", "uniform_random")
@@ -386,9 +386,7 @@ def _evaluation(store, evaluation, comparisons, current):
 
 def report(args):
     request = protocol._request(args)
-    store = _require_valid(args.records)
-    index = args.db or db.default_path(args.records)
-    if db.is_stale(args.records, index): db.build(args.records, index)
+    store = db.query_store(args.records, getattr(args, "db", None))
     current = request.get("candidate_protocols", [])
     references = {name: request.get(name, []) for name in ("artifact_reference_comparisons", "controlled_reference_comparisons")}
     for name, values in {"candidate_protocols": current, **references}.items():

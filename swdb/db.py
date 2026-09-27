@@ -11,7 +11,7 @@ import sqlite3
 import time
 from pathlib import Path
 
-from swdb.store import Store, record_files
+from swdb.store import Record, Store, record_files
 from swdb.strategy import SEMANTIC_FIELDS, entry, pattern_outcome
 
 SCHEMA = f"""
@@ -246,6 +246,22 @@ def sql(db_path, query):
         raise _failure(f"SQL error: {exc}") from None
     finally:
         con.close()
+
+
+def query_store(records_dir, db_path=None):
+    """Validated, freshness-checked SQLite record snapshot for public queries.
+
+    Updated: 2026-09-27. Raw-artifact verification remains the query owner's job.
+    A single SELECT supplies roots, ancestors and descendants from one snapshot.
+    """
+    from swdb.cli import _require_valid
+
+    _require_valid(records_dir)
+    selected = db_path if db_path is not None else default_path(records_dir)
+    if is_stale(records_dir, selected):
+        build(records_dir, selected)
+    rows = sql(selected, "SELECT path, json FROM records ORDER BY path")
+    return Store(Path(records_dir), indexed_records=[Record(row["path"], json.loads(row["json"])) for row in rows])
 
 
 def _semantic_column(name):

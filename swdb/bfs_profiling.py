@@ -1,6 +1,6 @@
 """Execution-bound automatic BFS source attribution and modeled memory events.
 
-Updated: 2026-09-26. Diagnostic artifacts never replace primary native ROI timing.
+Updated: 2026-09-27. Diagnostic artifacts never replace primary native ROI timing.
 """
 import copy
 import itertools
@@ -14,7 +14,7 @@ import sys
 import uuid
 from pathlib import Path
 
-from swdb import artifacts, bfs_discovery, bfs_native as native, paths, profile, workflow
+from swdb import artifacts, bfs_discovery, bfs_native as native, db, paths, profile, workflow
 from swdb.cli import Failure, _require_valid
 
 RUNTIME = paths.HOME / "tools/bfs_profile/runtime.hpp"
@@ -430,7 +430,7 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
 
 
 def query(args):
-    store = _require_valid(args.records)
+    store = db.query_store(args.records, getattr(args, "db", None))
     data = store.get(args.id, "region_profile")
     if not data: raise Failure("region profile does not exist")
     if getattr(args, "evaluation", None) and args.evaluation != data.get("evaluation"):

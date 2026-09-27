@@ -1,6 +1,6 @@
 """Public, durable proposal workflow. Source changes never imply correctness.
 
-Updated: 2026-09-26. YAML records remain authoritative; raw artifacts are external.
+Updated: 2026-09-27. YAML records remain authoritative; raw artifacts are external.
 """
 
 import copy
@@ -139,16 +139,11 @@ def baseline_candidate(args):
 
 
 def get_record(args):
-    _require_valid(args.records)
-    if db.is_stale(args.records, args.db or db.default_path(args.records)):
-        db.build(args.records, args.db or db.default_path(args.records))
-    rows = db.sql(args.db or db.default_path(args.records),
-                  "SELECT json FROM records WHERE id = '" + args.id.replace("'", "''") + "'")
-    if not rows:
+    store = db.query_store(args.records, getattr(args, "db", None))
+    data = store.get(args.id)
+    if data is None:
         raise Failure(f"record {args.id!r} does not exist")
-    data = json.loads(rows[0]["json"])
     if getattr(args, "chain", False):
-        store = Store(args.records)
         seen = {}
         downstream = {}
         for kind, keys in (("evaluation", ("candidate", "proposal")),

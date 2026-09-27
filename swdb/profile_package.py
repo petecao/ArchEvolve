@@ -1,4 +1,4 @@
-"""Exact evidence assembly and bidirectional strategy lookup. Updated 2026-09-26."""
+"""Exact evidence assembly and bidirectional strategy lookup. Updated 2026-09-27."""
 
 import copy
 import hashlib
@@ -538,7 +538,7 @@ def _query_evidence(store, package):
 
 
 def strategies(args):
-    store = _require_valid(args.records)
+    store = db.query_store(args.records, getattr(args, "db", None))
     package = _get(store, args.package, "profile_package")
     verify(package)
     matches = copy.deepcopy(package.get("strategies", []))
@@ -551,7 +551,7 @@ def strategies(args):
 
 
 def regions(args):
-    store = _require_valid(args.records)
+    store = db.query_store(args.records, getattr(args, "db", None))
     chosen = _get(store, args.strategy, "strategy")
     static = [row for impl in store.of_kind("implementation") for row in _static_rows(store, chosen, impl.data)
               if row["outcome"] != "illegal"]

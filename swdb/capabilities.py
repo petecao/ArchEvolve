@@ -1,15 +1,16 @@
 """Source-backed accelerator contracts and fail-closed proposal checks.
 
-Updated: 2026-09-26. A supported declaration is not an executable build receipt.
+Updated: 2026-09-27. A supported declaration is not an executable build receipt.
 """
 
 import json
 
 
 def query(args):
-    from swdb.cli import Failure, _require_valid
+    from swdb.cli import Failure
+    from swdb import db
 
-    store = _require_valid(args.records)
+    store = db.query_store(args.records, getattr(args, "db", None))
     target = store.get(args.target, "hardware_target")
     if target is None:
         raise Failure(f"unknown hardware target {args.target!r}")

@@ -36,13 +36,18 @@ class Record:
 
 
 class Store:
-    def __init__(self, records_dir):
+    def __init__(self, records_dir, *, indexed_records=None):
         self.dir = records_dir
         self.records = []      # every file that parsed to a mapping
         self.problems = []     # files that could not be read as records
         self.by_id = {}        # first record seen for each ID
-        for path, rel in record_files(records_dir):
-            self._load(path, rel)
+        if indexed_records is None:
+            for path, rel in record_files(records_dir):
+                self._load(path, rel)
+        else:
+            # One generated SQLite snapshot; never reopen YAML during a query.
+            for record in indexed_records:
+                self.add(record)
 
     def _load(self, path, rel):
         try:

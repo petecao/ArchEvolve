@@ -161,7 +161,7 @@ def main(argv=None):
     sub.add_argument("file", type=Path)
     sub.add_argument("--runs-dir", type=Path, required=True)
 
-    sub = command("capabilities", "query source-backed operations and executable readiness of a target", fmt=True)
+    sub = command("capabilities", "query source-backed operations and executable readiness of a target", db=True, fmt=True)
     sub.add_argument("target")
 
     sub = command("evaluate", "build and evaluate an identified native BFS candidate", db=True, fmt=True)

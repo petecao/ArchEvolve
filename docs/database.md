@@ -1,6 +1,6 @@
 # The SQLite database
 
-Updated: 2026-09-25
+Updated: 2026-09-27
 
 `swdb build` writes `build/swdb.sqlite` next to the repo's `records/` folder (another
 records folder `X` gets `build/swdb-X.sqlite`; `build/` is ignored by git). It deletes and
@@ -10,6 +10,15 @@ size, and modification time of each); `swdb find`, `swdb implementations`, `swdb
 rebuild the file first unless the folder and the fingerprint match the folder being queried
 and the file was built by the same `swdb` code (so a newer `swdb` never queries a file that
 lacks its tables or fills them differently).
+
+The BFS queries (`capabilities`, `bfs-hotspots`, `profile-strategies`,
+`strategy-regions`, `bfs-coverage`, and `get`) use the selected `--db` path, or
+its normal default. They validate the YAML records, refresh a stale index, then
+load one SQLite record snapshot. `get --chain` resolves its root, ancestors and
+descendants from that same snapshot. Changes made after the snapshot are visible
+on the next query. Raw source, profile and evaluation artifacts are still checked
+at query time; a fresh metadata index does not make changed or missing raw evidence
+valid.
 
 Record loading uses PyYAML's safe LibYAML parser when that optional extension is
 installed, with the Python safe parser as a fallback. Both preserve dates as text

@@ -35,9 +35,11 @@ def source_only_target(records):
     return target
 
 
-def test_public_capabilities_distinguish_source_from_executable(records):
+def test_public_capabilities_distinguish_source_from_executable(records, tmp_path):
     source_only_target(records)
-    data = output(records.swdb("capabilities", TARGET, "--format", "json"))
+    selected = tmp_path/"capabilities-query.sqlite"
+    data = output(records.swdb("capabilities", TARGET, "--db", selected, "--format", "json"))
+    assert selected.is_file()
     assert data["target"]["backend"]["readiness"] == "source_supported"
     assert data["target"]["backend"]["build_evidence"] == []
     assert data["target"]["execution_host"] is None

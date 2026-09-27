@@ -1,0 +1,59 @@
+{
+  "date": "2026-09-27 ET",
+  "scope": "ADR0002 query selected SQLite snapshot repair; no runtime deployment",
+  "files": {
+    "swdb/store.py": {
+      "bytes": 6461,
+      "sha256": "ba9feae9caba59d535a90aaa2c608189073f30cf88b97611e1a509b1bda476ae"
+    },
+    "swdb/db.py": {
+      "bytes": 25931,
+      "sha256": "2cac05b0ed0bf1dc50a2d5d20a40933da8ba72edd86da56279275dc86841a17a"
+    },
+    "swdb/capabilities.py": {
+      "bytes": 5276,
+      "sha256": "786d2961fdea895e68621fe980f4a2b316ef6179e2b108c9bc006d7109328d3d"
+    },
+    "swdb/bfs_profiling.py": {
+      "bytes": 34128,
+      "sha256": "48f2f7c8dd48748f9c56917f8928c027c35da8a4299eda8da273006844e46903"
+    },
+    "swdb/profile_package.py": {
+      "bytes": 35211,
+      "sha256": "817a6b4f1ed09dc637df4b2dc6e5f275af56769c75164a1a873a58372f010730"
+    },
+    "swdb/workflow.py": {
+      "bytes": 27668,
+      "sha256": "bf18c294ef294a57ad812c512e86083249e2d0c5a3af3a73c6d0cc0c0b5e3d2f"
+    },
+    "swdb/cli.py": {
+      "bytes": 22123,
+      "sha256": "f1b5a2630dcb86d9bd249395db1a19217ee3fef5d43defa8ab240e43ce463c06"
+    },
+    "swdb/bfs_coverage.py": {
+      "bytes": 49527,
+      "sha256": "65e3790575884b28404cce9f3c138c58180a21084ce5f4d9ec96765cb324e6d7"
+    },
+    "docs/database.md": {
+      "bytes": 13843,
+      "sha256": "d0514369c19247c6949388eadd5f3ba31a0b2e2ea50a52beee4589d9e35eb28c"
+    },
+    "tests/test_query_index.py": {
+      "bytes": 4467,
+      "sha256": "41076ff78a07dcaa2f33e8465c5f0191adbed8d6943d14ca63dd47329590c469"
+    },
+    "tests/test_capabilities.py": {
+      "bytes": 11017,
+      "sha256": "ef606bba8a9082d0726e0439ba721b694064bdc2870079ca0225b8c78283436e"
+    },
+    "tests/test_profile_package_freshness.py": {
+      "bytes": 4172,
+      "sha256": "c226b49812fccd56d45741e9886840cf65fb24844e39b03b959759335fba3e29"
+    }
+  },
+  "command": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest -q -p no:cacheprovider tests/test_query_index.py tests/test_profile_package_freshness.py tests/test_db.py tests/test_capabilities.py::test_public_capabilities_distinguish_source_from_executable tests/test_profile_packages.py::test_result_query_discovers_refreshed_profiles_and_packages",
+  "log": "/private/tmp/bfs-query-index-final-20260927.log",
+  "result": "36 passed in 115.91s (0:01:55)",
+  "git_diff_check": "passed",
+  "prior_harness_failure": "Initial three date-object expectation failures fixed by reading persisted YAML string dates; no product behavior changed for that correction."
+}
