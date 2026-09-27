@@ -331,6 +331,24 @@ def _check_observations(profile, evaluation, candidate):
     return reasons
 
 
+def _trace_evidence(store, evaluation, profile):
+    """Reopen optional lossless transport without changing semantic identity."""
+    from swdb.dx100_coverage import validate_trace
+    checked = {}
+    if evaluation.get('context', {}).get('backend') == 'dx100-gem5-se':
+        checked[evaluation['id']] = validate_trace(evaluation)
+    for run in (profile or {}).get('executions', []):
+        observed = store.get(run.get('evaluation'), 'evaluation')
+        if run.get('debug_trace') is not None:
+            _fail(observed and observed.get('context', {}).get('backend') == 'dx100-gem5-se',
+                  'profile debug trace lacks its actual DX100 execution')
+        if observed and observed.get('context', {}).get('backend') == 'dx100-gem5-se':
+            if observed['id'] not in checked:
+                checked[observed['id']] = validate_trace(observed)
+            _fail(_same(run.get('debug_trace'), checked[observed['id']]),
+                  'profile debug trace differs from its actual execution')
+
+
 def assemble(args):
     request = _request(args)
     store = _require_valid(args.records)
@@ -354,6 +372,7 @@ def assemble(args):
         unchanged_application = False
     reasons, regions, dynamic = [], [], []
     profile = store.get(request.get("region_profile"), "region_profile")
+    _trace_evidence(store, evaluation, profile)
     if request.get("region_profile") and profile is None:
         reasons.append("requested region profile is unavailable")
     elif profile is None:
@@ -486,6 +505,15 @@ def _query_evidence(store, package):
             invalid.extend(reasons)
             if not _same(package.get('dynamic_memory'), current.get('dynamic_memory')):
                 invalid.append('retained package memory differs from its identified diagnostic profile')
+    try:
+        primary = store.get(package.get('evaluation'), 'evaluation')
+        diagnostic = store.get(package.get('region_profile'), 'region_profile')
+        if primary:
+            _trace_evidence(store, primary, diagnostic)
+    except (Failure, KeyError, TypeError, ValueError) as exc:
+        invalid.append('compressed debug evidence: ' + str(exc))
+    except OSError as exc:
+        unavailable.append('compressed debug evidence: ' + str(exc))
     references = {}
     for row in package.get('dynamic_memory', []):
         if row.get('available') is True:

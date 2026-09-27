@@ -216,7 +216,8 @@ def test_checker_selection_never_silently_promotes_legacy_evidence(selection):
 
 
 @pytest.mark.parametrize('frozen_series', [False, True])
-def test_client_emits_actual_trial_for_every_primary_and_diagnostic_request(selection, tmp_path, monkeypatch, frozen_series):
+@pytest.mark.parametrize('trace_transport', [None, 'gem5-gzip.v1'])
+def test_client_emits_actual_trial_for_every_primary_and_diagnostic_request(selection, tmp_path, monkeypatch, frozen_series, trace_transport):
     """Exercise the client/public-command boundary without running a simulator."""
     client, candidate, source, implementation, workload, expected = selection
     source['application'] = 'dx100-gapbs'
@@ -278,14 +279,21 @@ def test_client_emits_actual_trial_for_every_primary_and_diagnostic_request(sele
     argv = ['bfs_simulator_series.py', '--id', 'series-fixture', '--candidate', candidate['id'],
         '--workload', workload['id'], '--build-evaluation', model['id'], '--configuration', str(config),
         '--runs-dir', '/data/yanruj/EvolveSWDB_runs/series-fixture', '--records', str(tmp_path / 'records'), '--lane', '1']
+    if trace_transport:
+        argv += ['--trace-transport', trace_transport]
     if frozen_series:
         argv += ['--protocol', frozen['id'], '--protocol-role', 'baseline']
     monkeypatch.setattr(sys, 'argv', argv)
     client.main()
+    retained=json.loads((runs/'series-fixture.driver'/'driver.json').read_text())
+    assert retained.get('trace_transport') == trace_transport
+    assert ('trace_transport' in retained) == bool(trace_transport)
     expected_cells = [(position, vertex, repetition) for position, vertex in enumerate(workload['definition']['sources'])
                       for repetition in range(2) for _ in ('primary', 'diagnostic')]
     assert [(row['protocol_trial']['source_position'], row['workload']['source'], row['protocol_trial']['repetition'])
             for row in execution_requests] == expected_cells
+    assert all(row['verification'].get('trace_transport') == trace_transport for row in execution_requests)
+    assert all(('trace_transport' in row['verification']) == bool(trace_transport) for row in execution_requests)
     assert all(set(row['protocol_trial']) == {'source_position', 'repetition'} for row in execution_requests)
     assert all(('protocol' in row) == (frozen_series and '.primary.' in row['id']) for row in execution_requests)
 

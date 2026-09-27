@@ -860,6 +860,9 @@ def _check_verifier_identity(evaluation, store=None):
               'complete-call original-adjacency checker differs from compiled wrapper')
     components = evaluation.get("component_evaluations", [])
     if not components:
+        if verifier.startswith('dx100.'):
+            from swdb.dx100_coverage import validate_trace
+            validate_trace(evaluation)
         if verifier == "dx100.bfs.verifier.v2":
             from swdb.dx100_witness import validate_record_witness
             validate_record_witness(evaluation)

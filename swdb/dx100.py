@@ -456,7 +456,12 @@ def _correctness(session, request, result_folder, log, completed):
             and verdicts[0]['line'] < completion_times[0]['line'] < completion_times[1]['line'])
     state = "failed" if explicit_failure else "passed" if valid else "unverified"
     from swdb.dx100_coverage import observe
-    coverage = observe(log, interval_values, request["configuration"]["tile_elements"])
+    from swdb.dx100_coverage import TRACE_NAME, TRANSPORT
+    trace = result_folder / TRACE_NAME if request['verification'].get('trace_transport') == TRANSPORT else None
+    coverage = observe(log, interval_values, request["configuration"]["tile_elements"],
+                       trace=trace, deadline=session.deadline)
+    if trace is not None:
+        data['context']['debug_trace'] = coverage['debug_trace']
     trace_ends = coverage["completed_trace_units"]
     acceleration = (request["configuration"]["mode"] == "MAA"
         and any(value > 0 for key, value in counters.items() if key.endswith(".numInst"))
@@ -667,7 +672,7 @@ def execute(args):
         verify = request.get("verification")
         driver = paths.HOME / "scripts/dx100_verify.py"
         if verify is not None:
-            if (not isinstance(verify, dict) or set(verify) - {"checker", "max_ticks", "coverage", "post_roi_trace"}
+            if (not isinstance(verify, dict) or set(verify) - {"checker", "max_ticks", "coverage", "post_roi_trace", "trace_transport"}
                     or verify.get("checker") not in {"dx100.bfs.verifier.v1", "dx100.bfs.verifier.v2"} or "max_ticks" not in verify):
                 raise Failure("verification requires checker dx100.bfs.verifier.v1 or v2 and max_ticks")
             if type(verify.get("coverage", False)) is not bool:
@@ -677,6 +682,8 @@ def execute(args):
                 raise Failure('verification.post_roi_trace must be SyscallBase when present')
             if verify['checker'] == 'dx100.bfs.verifier.v2' and verify.get('post_roi_trace') != 'SyscallBase':
                 raise Failure('v2 verification requires explicit post_roi_trace: SyscallBase')
+            if 'trace_transport' in verify and verify['trace_transport'] != 'gem5-gzip.v1':
+                raise Failure('verification.trace_transport must be gem5-gzip.v1 when present')
             _integer(verify["max_ticks"], "verification.max_ticks", maximum=10**15)
             if not compiled:
                 source_file = root / "benchmarks/gapbs/src/bfs.cc"
@@ -711,6 +718,8 @@ def execute(args):
             'debug_flags': 'MAATrace,MAARangeFuser,MAAIndirect' if verify and verify.get('coverage') else 'MAATrace'}
         if 'graph_verification' in data['context']:
             instrumentation['graph_verification'] = dict(data['context']['graph_verification'])
+        if verify and 'trace_transport' in verify:
+            data['context']['trace_transport'] = verify['trace_transport']
         if verify and verify['checker'] == 'dx100.bfs.verifier.v2':
             instrumentation['verifier_runtime'] = {
                 'driver_sha256': data['context']['verification_driver']['sha256'],
@@ -786,7 +795,11 @@ def execute(args):
         result_folder.mkdir()
         debug_flags = "MAATrace,MAARangeFuser,MAAIndirect" if verify and verify.get("coverage") else "MAATrace"
         data["context"]["debug_flags"] = debug_flags
-        command = [str(simulator), f"--debug-flags={debug_flags}", f"--outdir={result_folder}", str(driver if verify else script), *settings,
+        trace_options = []
+        if verify and verify.get('trace_transport') == 'gem5-gzip.v1':
+            from swdb.dx100_coverage import TRACE_NAME
+            trace_options = [f'--debug-file={result_folder / TRACE_NAME}']
+        command = [str(simulator), f"--debug-flags={debug_flags}", *trace_options, f"--outdir={result_folder}", str(driver if verify else script), *settings,
                    "--cmd", str(binary), "--options", options, "--checkpoint-dir", str(checkpoint), "-r", "1"]
         log = session.folder / f"{len(data['stages']):03d}-simulation.log"
         try:
