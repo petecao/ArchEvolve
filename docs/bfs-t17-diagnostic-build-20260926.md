@@ -43,6 +43,18 @@ reusable only for identical tested ownership/Python bytes; retain its actual
 proof commit separately from this driver's commit. It is contract evidence for
 the reused primitives, not proof that this new driver or diagnostic build ran.
 
+Proof compatibility update — 2026-09-26: the shared reader accepts only the exact
+historical four-case selection or the approved five-case selection, with distinct
+names and no failures/skips. T17 explicitly requires the five-case variant,
+including `test_linux_storage_observation_handles_sqlite_journal_unlink`.
+The fifth case additionally binds `scripts/bfs_storage.py` in the tested driver,
+sealed proof and selected runtime; its hash is retained in the result. Historical
+four-case scalar receipts remain readable, but cannot admit this diagnostic.
+The current T17 guard rejects them before any public get or compile. No old proof,
+plan, test outcome or consumed build is rewritten, and no extra fixture allowance
+is granted. This uses the same already selected owned-proof job, not a third job.
+
+
 ```sh
 "$PY" -s "$CODE/scripts/bfs_t17_diagnostic_build.py" \
   --expected-commit "$CODE_COMMIT" --admission "$DISPATCH/admission.json" \

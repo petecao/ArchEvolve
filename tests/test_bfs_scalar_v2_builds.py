@@ -280,6 +280,70 @@ def proof(tmp_path):
     return value,audit,runtime,seal
 
 
+def storage_proof_fixture(proof):
+    """Reseal the exact approved fifth-case shape using synthetic files only."""
+    value,audit,runtime,seal=proof
+    dependency='scripts/bfs_storage.py';digest=artifacts.digest(dependency)
+    runtime['files'][dependency]=digest;value['runtime_sha256'][dependency]=digest
+    path=Path(value['driver']['path']);driver=json.loads(path.read_text())
+    driver['runtime']['files'][dependency]=digest;path.write_text(json.dumps(driver))
+    value['driver']['sha256']=artifacts.file_hash(path);audit['driver']=value['driver']
+    path=Path(value['pending']['path']);pending=json.loads(path.read_text());pending['driver']=value['driver']
+    path.write_text(json.dumps(pending));value['pending']['sha256']=artifacts.file_hash(path);audit['pending']=value['pending']
+    path=Path(value['junit']['path']);xml=XML.fromstring(path.read_bytes())
+    XML.SubElement(xml,'testcase',name='test_linux_storage_observation_handles_sqlite_journal_unlink')
+    path.write_bytes(XML.tostring(xml));value['junit']['sha256']=artifacts.file_hash(path)
+    return proof
+
+
+@pytest.mark.parametrize('required',[False,True])
+def test_exact_five_case_proof_adds_storage_runtime_identity(proof,required):
+    value,audit,runtime,seal=storage_proof_fixture(proof)
+    result=build.validate_proof(seal(),runtime,build.stamp('2026-09-26T11:00:00-04:00'),
+                                require_storage_case=required)
+    assert result['identical_tested_files']['scripts/bfs_storage.py']==runtime['files']['scripts/bfs_storage.py']
+    assert len(result['identical_tested_files'])==len(build.PROOF_FILES)+1
+
+
+def test_historical_four_case_proof_cannot_satisfy_required_storage_case(proof):
+    value,audit,runtime,seal=proof
+    with pytest.raises(ValueError,match='SQLite'):
+        build.validate_proof(seal(),runtime,build.stamp('2026-09-26T11:00:00-04:00'),require_storage_case=True)
+
+
+@pytest.mark.parametrize('fault',['unknown-extra','duplicate','skipped','failed','runtime-missing',
+    'runtime-changed','tested-missing','tested-changed','proof-missing','proof-changed','all-null'])
+def test_five_case_proof_rejects_extra_cases_or_unbound_storage(proof,fault):
+    value,audit,runtime,seal=storage_proof_fixture(proof);key='scripts/bfs_storage.py'
+    if fault=='all-null':
+        runtime['files'][key]=value['runtime_sha256'][key]=None
+        path=Path(value['driver']['path']);driver=json.loads(path.read_text());driver['runtime']['files'][key]=None
+        path.write_text(json.dumps(driver));value['driver']['sha256']=artifacts.file_hash(path);audit['driver']=value['driver']
+        path=Path(value['pending']['path']);pending=json.loads(path.read_text());pending['driver']=value['driver']
+        path.write_text(json.dumps(pending));value['pending']['sha256']=artifacts.file_hash(path);audit['pending']=value['pending']
+    elif fault in {'unknown-extra','duplicate','skipped','failed'}:
+        path=Path(value['junit']['path']);xml=XML.fromstring(path.read_bytes())
+        if fault=='unknown-extra':XML.SubElement(xml,'testcase',name='unapproved')
+        elif fault=='duplicate':XML.SubElement(xml,'testcase',name=xml[-1].get('name'))
+        else:XML.SubElement(xml[-1],'skipped' if fault=='skipped' else 'failure')
+        path.write_bytes(XML.tostring(xml));value['junit']['sha256']=artifacts.file_hash(path)
+    elif fault.startswith('runtime'):
+        if fault.endswith('missing'):runtime['files'].pop(key)
+        else:runtime['files'][key]='e'*64
+    elif fault.startswith('proof'):
+        if fault.endswith('missing'):value['runtime_sha256'].pop(key)
+        else:value['runtime_sha256'][key]='e'*64
+    else:
+        path=Path(value['driver']['path']);driver=json.loads(path.read_text())
+        if fault.endswith('missing'):driver['runtime']['files'].pop(key)
+        else:driver['runtime']['files'][key]='e'*64
+        path.write_text(json.dumps(driver));value['driver']['sha256']=artifacts.file_hash(path);audit['driver']=value['driver']
+        path=Path(value['pending']['path']);pending=json.loads(path.read_text());pending['driver']=value['driver']
+        path.write_text(json.dumps(pending));value['pending']['sha256']=artifacts.file_hash(path);audit['pending']=value['pending']
+    with pytest.raises(ValueError):
+        build.validate_proof(seal(),runtime,build.stamp('2026-09-26T11:00:00-04:00'))
+
+
 def test_prior_proof_commit_can_differ_only_with_identical_helpers(proof):
     value,audit,runtime,seal=proof
     result=build.validate_proof(seal(),runtime,build.stamp('2026-09-26T11:00:00-04:00'))

@@ -94,8 +94,12 @@ The preliminary combined runtime `37c02c5` passed 489 isolated checks with ten
 Linux-only skips, but [independent export review](observations/recovery-runtime-export-standards-blocker-20260926.json)
 found the inherited T17 proof reader requires four cases while the changed
 runtime supplies five. The exact packet remains local and is marked superseded
-before transfer. A narrow reader repair and regression are in progress; the
-passing subset does not override the reproduced dependency blocker.
+before transfer. The [reader repair](observations/t17-five-case-proof-preparation-20260926.json)
+now requires the current five-case proof and exact allocator identity for T17,
+while preserving historical scalar four-case reads. Ninety affected checks and
+28 final focused checks passed; [independent review](observations/proof-cardinality-standards-recheck-20260926.json)
+passed ten checks, including the actual T17 orchestration seam. A superseding
+exact packet still needs isolated validation and payload-specific approval.
 
 ## Setup recovery reviewed — 2026-09-26
 

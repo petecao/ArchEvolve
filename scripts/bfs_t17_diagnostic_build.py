@@ -235,7 +235,8 @@ class Driver(scalar.Driver):
                 and artifacts.digest(admission.get('runtime')) == artifacts.digest(runtime), 'diagnostic admission differs')
         view=validate_record_view(admission['record_view'])
         self.receipt.update(admission=ref,runtime=runtime,record_view=admission['record_view'],
-            linux_ownership_proof=scalar.validate_proof(admission['linux_proof'],runtime,stamp(admission['prepared_at'])))
+            linux_ownership_proof=scalar.validate_proof(admission['linux_proof'],runtime,
+                stamp(admission['prepared_at']),require_storage_case=True))
         request=load_request(); store=Store(RECORDS)
         require(store.get(RUN_ID) is None, 'diagnostic ID already exists; no retry')
         self.machine=store.get('mbit10','machine')

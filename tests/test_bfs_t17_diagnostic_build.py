@@ -12,7 +12,7 @@ from types import SimpleNamespace
 import pytest
 from scripts import bfs_t17_diagnostic_build as build
 from swdb import artifacts, yamlio
-from test_bfs_scalar_v2_builds import FixtureOwned, proof
+from test_bfs_scalar_v2_builds import FixtureOwned, proof, storage_proof_fixture
 from test_bfs_t17_build_only import execution_fixture
 
 
@@ -167,11 +167,12 @@ def test_one_compile_with_real_origin_primary_and_diagnostic_validators(bound_re
     assert worker.receipt['build']['binary_sha256'] != worker.receipt['primary_binary_sha256']
 
 
-@pytest.mark.parametrize('admission_fault',[None,'outside','file-symlink','parent-symlink'])
+@pytest.mark.parametrize('admission_fault',[None,'outside','file-symlink','parent-symlink','legacy-proof'])
 def test_full_admitted_collection_reopens_view_proof_and_primary(bound_results,proof,tmp_path,monkeypatch,admission_fault):
     """Fixture host admission, actual proof/view readers and complete driver flow."""
     worker,pins,values,previous,result,store,calls=bound_results
     worker.guard.stop(time.monotonic()+1)
+    if admission_fault != 'legacy-proof':storage_proof_fixture(proof)
     _,_,runtime,seal=proof
     monkeypatch.setattr(build,'campaign_runtime',lambda _:copy.deepcopy(runtime))
     driver=tmp_path/'prior-driver.json';driver.write_text('{}')
@@ -212,6 +213,10 @@ def test_full_admitted_collection_reopens_view_proof_and_primary(bound_results,p
             return 'explicit kernel contract fixture'
         return read(path,*args,**kwargs)
     monkeypatch.setattr(Path,'read_text',kernel)
+    if admission_fault == 'legacy-proof':
+        with pytest.raises(ValueError,match='SQLite'):worker.execute()
+        assert calls==[] and 'linux_ownership_proof' not in worker.receipt
+        return
     if admission_fault:
         outside=tmp_path/'outside-admission.json';outside.write_bytes(admission.read_bytes())
         if admission_fault=='outside':worker.args.admission=outside
@@ -229,6 +234,7 @@ def test_full_admitted_collection_reopens_view_proof_and_primary(bound_results,p
     assert saved['state']=='complete' and saved['provider_budget_unchanged']
     assert saved['linux_ownership_proof']['actual_proof_commit']=='b'*40
     assert saved['linux_ownership_proof']['driver_commit']=='a'*40
+    assert 'scripts/bfs_storage.py' in saved['linux_ownership_proof']['identical_tested_files']
     assert len(calls)==10 and saved['final_accounting']['artifact_bytes']>0
 
 
