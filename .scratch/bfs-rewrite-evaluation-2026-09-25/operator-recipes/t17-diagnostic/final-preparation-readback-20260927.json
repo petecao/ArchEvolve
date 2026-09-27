@@ -1,0 +1,34 @@
+{
+  "created": "2026-09-27",
+  "observed_at": "2026-09-27T00:45:19.757321-04:00",
+  "admission": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-diagnostic-build-only-20260926-a1.dispatch/admission.json",
+    "bytes": 30442,
+    "sha256": "716b27f0a765e43c69ed1140798aede85e0adc836b7184d417df87b29a47d34a"
+  },
+  "manifest": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-diagnostic-build-only-20260926-a1.dispatch/record-view-manifest.json",
+    "bytes": 51335,
+    "sha256": "d8af973c393a6b4e94c23ff19fc4c26369e210b8f3c5430b78f46b590665c4da"
+  },
+  "records_verified": 214,
+  "runtime_clean": true,
+  "proof_sha256": "bdbb418f9eaecb8b0d551ebb6473d028f318669075470290a8a1b01cc290149c",
+  "non_record_source_files_retained_in_archive": [
+    {
+      "path": "records/implementations/gapbs-cc-sv/cc_sv.cc",
+      "bytes": 4994,
+      "sha256": "f239bd71cee27cba37f3824ae7b2520c291b116ccc83a329d09484b631c599ee",
+      "retained_in": "records-base.tar"
+    },
+    {
+      "path": "records/implementations/gapbs-pr-jacobi/pr_spmv.cc",
+      "bytes": 3540,
+      "sha256": "ea1e58b6957b0bcc1e76f4fde54131aa52bdefd2014dae604a9b7d9d1a5dae70",
+      "retained_in": "records-base.tar"
+    }
+  ],
+  "identical_partial_records_reused": 82,
+  "raw_run_exists": false,
+  "admission_prepared_at": "2026-09-27T00:44:23.905516-04:00"
+}

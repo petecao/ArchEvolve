@@ -102,13 +102,13 @@
     "backend": "dx100-gem5-se",
     "backend_readiness": "built"
   },
-  "runtime_root": null,
-  "runtime_commit": null,
-  "runtime_state": "Final reviewed combined runtime unresolved; no old runtime is selected.",
+  "runtime_root": "/data1/yanruj/EvolveSWDB_supervision_recovery_runtime_20260927_a1",
+  "runtime_commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+  "runtime_state": "Pristine final runtime rechecked after data-only preparation; no diagnostic build launched by this worker.",
   "record_view": {
     "records": "/data/yanruj/EvolveSWDB_runs/bfs-t17-diagnostic-build-only-20260926-a1.dispatch/record-view/records",
     "manifest_path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-diagnostic-build-only-20260926-a1.dispatch/record-view-manifest.json",
-    "base_commit": null,
+    "base_commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
     "overlay_records": [
       {
         "path": "records/proposals/bfs-campaign-preparation-20260925-a1.dx100-instructions.yaml",
@@ -136,13 +136,13 @@
         "git_blob": "773fb58808699530045e77bb61c4d22b6f9db9ed"
       }
     ],
-    "full_manifest_sha256": null,
-    "state": "Not materialized; include every base record plus exact missing overlays with Git/blob/archive provenance. Equal existing bytes may be reused; conflicting bytes fail."
+    "full_manifest_sha256": "d8af973c393a6b4e94c23ff19fc4c26369e210b8f3c5430b78f46b590665c4da",
+    "state": "214 YAML records materialized from exact Git base and evidence overlay; complete source archive preserved separately within dispatch."
   },
   "linux_proof": {
-    "path": null,
-    "sha256": null,
-    "actual_proof_commit": null,
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a5/proof.json",
+    "sha256": "bdbb418f9eaecb8b0d551ebb6473d028f318669075470290a8a1b01cc290149c",
+    "actual_proof_commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
     "required_cases": [
       "test_linux_owned_stage_reaps_detached_child[False]",
       "test_linux_owned_stage_reaps_detached_child[True]",
@@ -158,7 +158,7 @@
       "scripts/bfs_storage.py"
     ],
     "python_reference_must_match": true,
-    "state": "Unresolved current five-case all-pass/unskipped sealed proof. Historical successful proof with different Owned/test bytes is not usable."
+    "state": "Actual five-case all-pass unskipped proof validated with scalar.validate_proof against canonical Python and runtime bytes."
   },
   "bounds": {
     "outer_seconds": 600,
@@ -188,11 +188,8 @@
   "new_primary_builds": 0,
   "retry_allowed": false,
   "unresolved": [
-    "final runtime root/commit/inventory",
-    "fresh compatible five-case proof ref and proof commit",
-    "full record-view manifest/hash after Git materialization",
-    "free node and fresh host capacity/lease admission",
-    "prepared_at and final admission file hash"
+    "fresh free node and host capacity/helper checks immediately before root-controlled launch",
+    "actual diagnostic build and independent post-exit closure"
   ],
   "source_snapshot": {
     "id": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source",
@@ -217,5 +214,10 @@
     "target": "dx100-e4fc4af-4c",
     "primary_evaluation": "bfs-t17-build-only-20260926-a1"
   },
-  "updated": "2026-09-27"
+  "updated": "2026-09-27",
+  "prepared_admission": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-diagnostic-build-only-20260926-a1.dispatch/admission.json",
+    "sha256": "716b27f0a765e43c69ed1140798aede85e0adc836b7184d417df87b29a47d34a"
+  },
+  "prepared_at": "2026-09-27T00:44:23.905516-04:00"
 }

@@ -9,6 +9,30 @@ Updated: 2026-09-27 (Eastern Time)
 
 The user authorized autonomous implementation of all 21 tickets and all necessary builds, installations, benchmark/simulator runs, external access, Git, and Claude Code on 2026-09-25. This supersedes the publication-only hold. The two-lane mbit10 rules and evidence requirements remain in force.
 
+## Live checkpoint — 2026-09-27 00:56 ET
+
+14 tickets are resolved and 7 remain claimed. No final campaign cell or gain is
+qualified. The retained Linux recovery group passed 42 supplementary, 5 ownership,
+and 2 interruption tests. Both pristine `6a493a0` simulator runtimes independently
+reopened that immutable evidence with the full 600-second/2-GiB charge retained.
+T15/T16 scientific recovery dispatch is pending reviewed admission and a free lane.
+
+T17 diagnostic attempt `bfs-t17-diagnostic-build-only-20260926-a1` exited before
+compilation: its YAML-only view omitted two source attachments required by public
+catalog validation. The failed attempt remains preserved; the source-attachment
+inventory repair passes 29 focused tests, including an actual public lookup over
+the full record view. This is no diagnostic build or acceptance result.
+
+T20 context1 finished unresolved with no candidate and used 104.553762 seconds.
+Its exact Git-backed result is imported locally; all 249 records validate.
+[Terminal evidence](observations/provider-terminal-independent-20260927.json)
+retains closure and accounting. A context2 clarification is prepared but uncalled;
+its shared provider allowance is conservatively floored to 1,632 seconds.
+
+The isolated full regression run at `c282c9f` is still running with two failure
+markers; no full-suite pass is claimed. Independent final Standards and Spec
+reviews remain required after acceptance and fixes.
+
 ## Approved tickets
 
 The user approved this 21-ticket decomposition on 2026-09-25. Each link is one independently reviewable ticket. Blockers are ticket dependencies. Status and evidence are synchronized as work proceeds; acceptance is not inferred from fixture tests.

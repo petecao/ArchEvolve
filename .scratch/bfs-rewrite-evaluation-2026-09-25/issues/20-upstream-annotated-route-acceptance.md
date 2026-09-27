@@ -9,6 +9,19 @@ Updated: 2026-09-27 (Eastern Time)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
+## Context continuation unresolved — 2026-09-27 00:44 ET
+
+The [independently closed continuation](../observations/provider-terminal-independent-20260927.json)
+returned unresolved interpretation and no candidate. Public submit exited 1;
+the operator exited 0 after retaining and querying that outcome. Actual provider
+consumption was 104.55376222543418 seconds, cumulative 166.97339878883213 seconds;
+the retained floored allowance has 1632.4462377745658 seconds remaining. No repair,
+compile or evaluation ran. Cleanup and process closure passed; final retained
+allocation is 28,147,712 bytes. The response treated historical native profiling
+as the requested target and lacked the pinned per-thread allocation example.
+A source-backed clarification is being prepared within the same strategy and
+remaining budget; no additional call has started.
+
 ## Context submission running — 2026-09-27 00:38 ET
 
 The [one-call continuation](../observations/provider-context1-launched-20260927.json)
