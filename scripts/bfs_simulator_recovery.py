@@ -14,16 +14,17 @@ from scripts import bfs_owned_execution as owned
 from swdb import artifacts, yamlio
 
 IDS = {
+    't16-protocol-recovery': 'bfs-t16-protocol-recovery-simulator-batch-20260927-a1',
     't16-seal-recovery': 'bfs-t16-seal-recovery-simulator-batch-20260927-a1',
     't15-lease-recovery': 'bfs-t15-lease-recovery-simulator-batch-20260927-a1',
     't16-lease-recovery': 'bfs-t16-lease-recovery-simulator-batch-20260927-a1',
     't15-supervision-recovery': 'bfs-t15-supervision-recovery-simulator-batch-20260926-a1',
     't16-supervision-recovery': 'bfs-t16-supervision-recovery-simulator-batch-20260926-a1',
 }
-ENDS = {'t16-seal-recovery': '2026-09-27T20:16:17.225985-04:00','t15-lease-recovery': '2026-09-27T09:14:09.851819-04:00',
+ENDS = {'t16-protocol-recovery': '2026-09-27T20:16:17.225985-04:00','t16-seal-recovery': '2026-09-27T20:16:17.225985-04:00','t15-lease-recovery': '2026-09-27T09:14:09.851819-04:00',
         't16-lease-recovery': '2026-09-27T20:16:17.225985-04:00','t15-supervision-recovery': '2026-09-27T09:14:09.851819-04:00',
         't16-supervision-recovery': '2026-09-27T20:16:17.225985-04:00'}
-BASES = {'t16-seal-recovery':'t16-lease-recovery','t15-lease-recovery':'t15-supervision-recovery', 't16-lease-recovery':'t16-supervision-recovery','t15-supervision-recovery': 't15-setup-recovery', 't16-supervision-recovery': 't16'}
+BASES = {'t16-protocol-recovery':'t16-seal-recovery','t16-seal-recovery':'t16-lease-recovery','t15-lease-recovery':'t15-supervision-recovery', 't16-lease-recovery':'t16-supervision-recovery','t15-supervision-recovery': 't15-setup-recovery', 't16-supervision-recovery': 't16'}
 GROUP_ID = 'bfs-supervision-recovery-linux-20260926-a1'
 OLD_GROUP = 'bfs-t15-setup-recovery-linux-20260926-a1'
 OLD_T16 = 'bfs-t16-simulator-batch-20260926-a1'
@@ -55,6 +56,8 @@ LEASE_SUPPLEMENT_SELECTORS = SUPPLEMENT_SELECTORS + LEASE_SELECTORS
 SEAL_GROUP_ID = 'bfs-seal-recovery-linux-20260927-a1'
 SEAL_SELECTORS = ['tests/test_dx100_witness.py::test_large_producer_seal_retains_all_progress_and_full_validation', 'tests/test_dx100_witness.py::test_large_diagnostic_seal_uses_same_bound_and_exact_bytes', 'tests/test_dx100_witness.py::test_large_seal_bound_and_regular_identity_still_fail_closed', 'tests/test_dx100_witness.py::test_producer_serialization_unchanged_and_oversize_never_published', 'tests/test_dx100_witness.py::test_large_seal_hash_valid_json_still_requires_exact_retained_object']
 SEAL_SUPPLEMENT_SELECTORS = LEASE_SUPPLEMENT_SELECTORS + SEAL_SELECTORS
+PROTOCOL_GROUP_ID = 'bfs-protocol-recovery-linux-20260927-a1'
+PROTOCOL_SUPPLEMENT_SELECTORS = SEAL_SUPPLEMENT_SELECTORS
 
 
 def supplement_selectors(plan):
@@ -311,6 +314,23 @@ def failed_t16(plan, base):
 
 def preparation_charges(plan):
     b = batch_api(); base = base_plan(plan)
+    if 'protocol_recovery' in plan['accounting']:
+        recovery = plan['accounting']['protocol_recovery']
+        b.require(kind(plan) == 't16-protocol-recovery' and recovery['base_kind'] == BASES[kind(plan)]
+                  and recovery['base_plan_sha256'] == artifacts.digest(base)
+                  and recovery['prior_proof_reservation'] == base['accounting']['preparation_reservation']
+                  and recovery['proof_runtime_policy'] == 'exact_current_runtime_only_no_consumer_exceptions'
+                  and 'linux_proof_provenance' not in plan, 'protocol recovery lineage changed')
+        rows = preparation_charges(base)
+        rows.append(failed_protocol_batch(plan, base))
+        fresh = plan['accounting']['preparation_reservation']
+        b.require(fresh['id'] == PROTOCOL_GROUP_ID and fresh['elapsed_seconds'] == 600
+                  and fresh['raw_bytes'] == 2*b.GIB, 'fresh protocol proof reservation changed')
+        rows.append({k:fresh[k] for k in ('id','elapsed_seconds','raw_bytes')})
+        b.require(len({r['id'] for r in rows}) == len(rows)
+                  and sum(r['elapsed_seconds'] for r in rows) == 15613
+                  and sum(r['raw_bytes'] for r in rows) == 10391474176, 'protocol recovery cumulative charge changed')
+        return rows
     if 'seal_recovery' in plan['accounting']:
         recovery=plan['accounting']['seal_recovery']
         b.require(kind(plan)=='t16-seal-recovery' and recovery['base_kind']==BASES[kind(plan)]
@@ -523,3 +543,60 @@ def _validate_supplement_value(plan, admission, ref, value):
     retained_supplement_closure(terminal,lane,union,ident(declared['pane_identity']),start,end)
     reader.recheck()
     current_closed(terminal['owned_processes'], declared['pane_identity'])
+
+
+def failed_protocol_batch(plan, base):
+    """Charge closed preparation failure; never turn it into execution evidence."""
+    b = batch_api(); entry = plan['accounting']['protocol_recovery']['failed_batch']
+    ref = entry['closure_observation']
+    audit = b.read_reference({'path': str(b.ROOT/ref['repository_path']), 'sha256': ref['sha256']}, maximum=16*1024**2)
+    driver = b.read_reference(entry['driver'], maximum=16*1024**2)
+    b.require(driver['id'] == base['id'] == entry['id'] == IDS['t16-seal-recovery']
+              and driver['plan'] == base and driver['state'] == 'failed'
+              and driver['reason'] == 'ValueError: public stage exited 1'
+              and driver['outer_deadline'] == ENDS['t16-seal-recovery'], 'failed protocol batch identity changed')
+    b.require(audit['driver_reference'] == entry['driver'] and audit['cleanup_ledger_reference'] == entry['ledger']
+              and audit['strict_cleanup_ledger']['passed'] is True and audit['identity_count'] == 106
+              and audit['series']['samples'] == [] and audit['outer_exit'] == '1', 'failed protocol closure changed')
+    from scripts.bfs_simulator_batch_terminal import validate_cleanup_ledger
+    validate_cleanup_ledger(entry['driver'], entry['ledger'], expected_run_id=entry['id'],
+        expected_outer_start=driver['outer_started'], expected_deadline=driver['outer_deadline'], current=b.now())
+    closed = b.stamp(entry['closed_at'])
+    b.require(closed == b.stamp(audit['observed_at']) <= b.now()
+              and math.ceil((closed-b.stamp(driver['outer_started'])).total_seconds()) == entry['elapsed_seconds'] == 1839,
+              'failed protocol closure-inclusive time changed')
+    evaluation = b.read_reference(entry['evaluation'], maximum=16*1024**2)
+    b.require(evaluation['outcome'] == {'state':'failed', 'stage':'execution_identity',
+                  'reason':'actual simulator instrumentation differs from frozen treatment'}
+              and evaluation['correctness'] == {'state':'unverified','checks':[]}
+              and evaluation['timing'] == [], 'failed protocol outcome was promoted')
+    b.require(len(audit['identity_observations']) == 2, 'failed protocol needs two retained identity observations')
+    for rows in audit['identity_observations']:
+        b.require(len(rows) == audit['identity_count'], 'failed protocol identity union changed')
+        current_closed(rows, driver['process_observations']['pane_identity'])
+    b.require(entry['storage_paths'] == driver['storage_paths']
+              and b.allocated_bytes(entry['storage_paths']) == entry['retained_bytes'] == audit['final_allocated_bytes'] == 11907072,
+              'failed protocol retained storage changed')
+    b.require(preparation_charges(base) == driver['preparation_charges'], 'failed protocol prior charges differ')
+    return {'id':entry['id'], 'elapsed_seconds':entry['elapsed_seconds'], 'raw_bytes':entry['retained_bytes']}
+
+
+def validate_protocol_runtime(plan, protocols):
+    """Reject a stale freeze before launching a series; science remains unchanged."""
+    import copy
+    b = batch_api(); base = base_plan(plan)
+    runtime = {key: artifacts.file_hash(b.ROOT/path) for key,path in (
+        ('driver_sha256','scripts/dx100_verify.py'), ('parser_sha256','swdb/dx100_witness.py'),
+        ('observer_sha256','scripts/dx100_host_memory.py'))}
+    b.require(runtime == {'driver_sha256':'476874619644d1256dcc5ca1e853c47b7be2e1dc56f538aaa2dd783842e7ad10',
+        'parser_sha256':'c9d3e14b70a3689799314556fab2922b1723c00960902109af2922a958cd3498',
+        'observer_sha256':'655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd'},
+        'protocol continuation must retain exact reviewed verifier runtime')
+    b.require(set(protocols) == {'artifact','control'}, 'both independent protocols are required')
+    for key, protocol in protocols.items():
+        original = yamlio.load(b.ROOT/base['protocol_requests'][key]['path'])
+        expected = copy.deepcopy(original['settings'])
+        for role in ('baseline','candidate'):
+            expected['instrumentation'][role]['verifier_runtime'] = copy.deepcopy(runtime)
+        b.require(protocol['settings'] == expected,
+                  'fresh protocol changes scientific settings or has stale verifier runtime')

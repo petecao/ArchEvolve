@@ -44,3 +44,24 @@ same pool; it is not a renewed attempt allowance. Admission must verify both
 roles' frozen instrumentation against the exact selected runtime before spending
 another execution stage. No new plan, freeze, remote execution or budget was
 created by this diagnosis.
+
+## Prospective continuation prepared later on 2026-09-27
+
+The new `bfs-t16-protocol-recovery-simulator-batch-20260927-a1` plan retains the
+entire failed lineage and adds a fresh 600-second / 2-GiB proof reservation inside
+the original T16 pool. Cumulative reserved charges are 15,613 seconds and
+10,391,474,176 bytes. The proof group is
+`bfs-protocol-recovery-linux-20260927-a1`, with a8 standard fixture identities and
+the same 66 supplemental cases. It requires the exact new runtime; no historical
+proof alias is permitted. This prospective preparation does not resume the failed
+attempt or expand a deadline.
+
+Two fresh request files, `author-reference-seal-runtime-freeze-20260927-a1.yaml`
+and `author-matched-control-seal-runtime-freeze-20260927-a1.yaml`, change only their
+requested IDs and the driver/parser hash leaves for both roles. The protocol
+consumer checks both protocols against the actual selected runtime and the
+original scientific settings before a series can launch. The operator also
+performs this check during preparation. Each immutable protocol must be created
+through the public freeze API before export; its timestamp-derived actual ID is
+then obtained from the validated exported records. Neither protocol's actual
+freeze identity is invented or taken from the failed attempt.

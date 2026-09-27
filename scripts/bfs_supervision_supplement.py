@@ -115,7 +115,7 @@ def main():
     global GROUP_ID, SELECTORS, GROUP, FOLDER
     parser=argparse.ArgumentParser(description=__doc__)
     group=parser.add_mutually_exclusive_group()
-    group.add_argument('--lease-recovery',action='store_true');group.add_argument('--seal-recovery',action='store_true')
+    group.add_argument('--lease-recovery',action='store_true');group.add_argument('--seal-recovery',action='store_true');group.add_argument('--protocol-recovery',action='store_true')
     parser.add_argument('mode',choices=('run','audit'));parser.add_argument('--expected-commit',required=True)
     parser.add_argument('--python-sha256',required=True);parser.add_argument('--pytest-version',required=True)
     parser.add_argument('--pytest-sha256',required=True)
@@ -126,7 +126,11 @@ def main():
         parser.add_argument('--'+name);parser.add_argument('--'+name+'-sha256')
     args=parser.parse_args();audit_end=time.monotonic()+60
     key='t15-lease-recovery' if args.lease_recovery else 't15-supervision-recovery'
-    if args.seal_recovery:
+    if args.protocol_recovery:
+        key='t16-protocol-recovery'
+        GROUP_ID, SELECTORS = recovery.PROTOCOL_GROUP_ID, recovery.PROTOCOL_SUPPLEMENT_SELECTORS
+        GROUP=runner.RAW_BASE/(GROUP_ID+'.dispatch');FOLDER=GROUP/'supplement'
+    elif args.seal_recovery:
         key='t16-seal-recovery'
         GROUP_ID, SELECTORS = recovery.SEAL_GROUP_ID, recovery.SEAL_SUPPLEMENT_SELECTORS
         GROUP=runner.RAW_BASE/(GROUP_ID+'.dispatch');FOLDER=GROUP/'supplement'
