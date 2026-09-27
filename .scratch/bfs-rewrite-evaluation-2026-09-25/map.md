@@ -2411,3 +2411,13 @@ retains the failed result and charges 4,551 seconds / 1,433,210,880 bytes.
 Fresh T15/T16 plans retain original hard ends and require exact-runtime Linux
 lease-transition proof. T20 context2 provider is running on node 1 generation 440;
 node 0 remains externally occupied. No acceptance cell or gain is qualified.
+
+## Provider and repair checkpoint — 2026-09-27 02:30 ET
+
+The context2 provider attempt timed out after 600.315539094 seconds, returned no
+candidate, and was independently closed; its subsequent wrapper JSON parsing
+failure remains preserved. [Terminal observation](observations/provider-context2-terminal-independent-20260927.json).
+No automatic retry was launched. The remaining floored provider allowance is
+1,031 seconds. The reviewed lease repair is committed as `4743d52`; its minimal
+runtime export is `07baead5` (806 files), pending fresh actual Linux proof.
+The original simulator deadlines and all failed-attempt charges remain intact.

@@ -9,6 +9,17 @@ Updated: 2026-09-27 (Eastern Time)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
+## Lease recovery preparation — 2026-09-27 02:28 ET
+
+The unlaunched supervision-recovery admission is held because its runtime has the
+same lease-publication race found in T15. The new fixed plan retains all historical
+charges and the original 20:16:17.225985 ET hard end, reserves 600 seconds / 2 GiB
+for fresh exact-runtime Linux proof, and cannot reuse historical proof exceptions.
+[Integrated review](../observations/lease-integrated-review-20260927.json) passed
+215 local tests with two existing Linux-only skips. Runtime `07baead5` is exported;
+actual proof and a free socket are still required. No new reference/control sample
+or acceptance is claimed.
+
 ## Actual Linux recovery proofs — 2026-09-27 00:38 ET
 
 The [independently closed proof group](../observations/proofgroup-independent-closure-20260927.json)
