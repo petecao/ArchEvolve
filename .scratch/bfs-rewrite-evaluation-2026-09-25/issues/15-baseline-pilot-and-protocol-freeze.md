@@ -7,6 +7,16 @@ Updated: 2026-09-27 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
+## Fresh lease-recovery execution started — 2026-09-27 02:40 ET
+
+The [independent admission](../observations/t15-lease-admission-independent-20260927.json)
+passed complete input, source, build, cost, and fresh proof checks. The exact 806-file runtime
+manifest matched `07baead5`; no historical proof alias was used. Root launched the new attempt
+at 02:39:53.162109 ET, preserving the original 09:14:09.851819 ET hard end.
+The [startup observation](../observations/t15-lease-startup-independent-20260927.json) at
+02:40:29 ET confirms a running batch and series on node1 generation444. Node0 generation347
+remains externally held. This is execution progress, not an accepted sample or completion.
+
 ## Fresh lease-proof checkpoint — 2026-09-27 02:31 ET
 
 The [independent closure](../observations/lease-proofgroup-independent-closure-20260927.json)

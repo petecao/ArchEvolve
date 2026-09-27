@@ -2431,3 +2431,13 @@ identities were checked twice, and node-1 generations 441–443 released. Actual
 execution took 27.728543 seconds and retained 3,395,584 bytes across all five roots.
 Both tasks retain the full 600-second/2-GiB reservation. This is contract proof;
 T15/T16 scientific admission is being prepared and no acceptance cell is complete.
+
+## Scientific recovery launch — 2026-09-27 02:41 ET
+
+T15 launched at 02:39:53.162109 ET on node 1 generation 444 with unchanged
+09:14:09.851819 ET hard end. The uniform-18 series is running; no accepted sample
+is yet reported. [Independent startup](observations/t15-lease-startup-independent-20260927.json).
+T16 admission independently passed and waits for external node 0 generation 347
+to release; no T16 scientific job was launched. The legacy lease is free.
+Tickets remain 14 resolved / seven claimed, with zero completed final acceptance
+cells. The heartbeat remains active while evaluation and review work continue.

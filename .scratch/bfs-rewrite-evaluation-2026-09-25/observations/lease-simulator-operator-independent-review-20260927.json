@@ -1,0 +1,24 @@
+{
+  "date": "2026-09-27",
+  "scope": "Prospective operator local review only; host admission pending",
+  "result": "scoped pass",
+  "runtime_commit": "07baead5fe5cf3718e18e1d2313db6899f2638c8",
+  "files": {
+    "operator.py": "344a52b6f942237588edb2761b83453d9664b79836a6fb6995cea33402b85670",
+    "launch.sh": "cbc6f9610ec58b0a9fd23edc02af90965463474f12c0b41fdf5eb9a9fe962059",
+    "t15-config.json": "fa97a1db79cf2a4af4696b6c2f0eddf00945dbe536e8a65688f33429c53ce74f",
+    "t16-config.json": "e13ace16cfc5cd62565547ec6fc23c51ed3abdd0f413e9e170e52ece47db1df1",
+    "runtime-manifest.json": "3e8b39c40d5e8dae066becb74ffd97a7d7c70cccec493774b53219505d0a4b14"
+  },
+  "tests": "6 passed in0.02s",
+  "unchanged": [
+    "canonical Python",
+    "original absolute hard ends",
+    "full-series latest-start cutoff",
+    "retained cost admission",
+    "bounded supervisor command and cleanup",
+    "original scientific prerequisites"
+  ],
+  "new_guard": "fresh07ba proof fullmap equality, no historical runtime aliases",
+  "dispatch": false
+}
