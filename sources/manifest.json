@@ -1,0 +1,32 @@
+{
+  "recorded_on": "2026-09-24",
+  "purpose": "Source inspection; no benchmark build or run performed.",
+  "comparison_note": "Upstream current snapshot is a reference, not a verified historical base of the DX100 fork.",
+  "repositories": [
+    {
+      "name": "DX100",
+      "repository": "https://github.com/arkhadem/DX100.git",
+      "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+      "local_path": "sources/DX100",
+      "sparse_paths": [
+        "benchmarks/gapbs/src",
+        "benchmarks/API"
+      ],
+      "bfs_path": "benchmarks/gapbs/src/bfs.cc",
+      "bfs_sha256": "6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465",
+      "bfs_lines": 536
+    },
+    {
+      "name": "GAPBS upstream",
+      "repository": "https://github.com/sbeamer/gapbs.git",
+      "commit": "2972aeb2703165bafd921222f4ed7196f542d3a8",
+      "local_path": "sources/gapbs-upstream",
+      "sparse_paths": [
+        "src"
+      ],
+      "bfs_path": "src/bfs.cc",
+      "bfs_sha256": "7c32c3c8dc43bf7be417fc5c530b4578bfe3697d8eb47a161cdb142487823f73",
+      "bfs_lines": 266
+    }
+  ]
+}

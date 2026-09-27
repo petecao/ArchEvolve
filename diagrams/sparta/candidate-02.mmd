@@ -1,0 +1,32 @@
+---
+title: "ILLUSTRATIVE | sparta-sort-peter-example-1 | sparta-sort-declared-fetch-1 | conditional"
+config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 320, "nodeSpacing": 24, "rankSpacing": 60, "padding": 12}}
+---
+flowchart LR
+  subgraph b0["stream-description-front-end"]
+    direction TB
+    b0_info["Component: unknown<br/>Function: Accept a description of the indirect<br/>access work."]:::annotation
+    b0_in0["IN: work-description<br/>Source/index references and bounds; exact<br/>contract TBD<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+    b0_out0["OUT: declared-stream<br/>Declared access-stream information<br/>unknown; unknown B/element<br/>internal"]:::internalPort
+  end
+  subgraph b1["indirect-fetch-engine"]
+    direction TB
+    b1_info["Component: unknown<br/>Function: Form indirect addresses and request<br/>their data.<br/>request_window_entries: OPEN #91;entries#93;"]:::annotation
+    b1_in0["IN: declared-stream<br/>Declared access-stream information<br/>unknown; unknown B/element<br/>internal"]:::internalPort
+    b1_in1["IN: memory-responses<br/>Returned target values; freshness requirements<br/>unresolved<br/>integer; unknown B/element<br/>memory-facing"]:::memoryPort
+    b1_out0["OUT: memory-requests<br/>Indirect memory requests<br/>unknown; unknown B/element<br/>memory-facing"]:::memoryPort
+    b1_out1["OUT: fetched-values<br/>Fetched integer values<br/>integer; unknown B/element<br/>internal"]:::internalPort
+  end
+  subgraph b2["return-storage"]
+    direction TB
+    b2_info["Component: unknown<br/>Function: Hold fetched values for CPU<br/>consumption.<br/>storage_bytes: OPEN #91;bytes#93;"]:::annotation
+    b2_in0["IN: fetched-values<br/>Fetched integer values<br/>integer; unknown B/element<br/>internal"]:::internalPort
+    b2_out0["OUT: values-to-cpu<br/>Values for the CPU; delivery order and<br/>synchronization TBD<br/>integer; unknown B/element<br/>host-facing"]:::hostPort
+  end
+  b0_out0 -->|"declared stream"| b1_in0
+  b1_out1 -->|"fetched values"| b2_in0
+  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3
+  classDef hostPort fill:#dbeafe,stroke:#2563eb,color:#172554
+  classDef memoryPort fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef internalPort fill:#f1f5f9,stroke:#64748b,color:#0f172a
+  classDef unknownPort fill:#fef3c7,stroke:#d97706,color:#78350f

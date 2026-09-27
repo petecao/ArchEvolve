@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Arch Evolve workload description v0.1 (proposed)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "workload_id", "benchmark", "function", "provenance", "patterns"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "workload_id": {"type": "string", "minLength": 1},
+    "benchmark": {"type": "string", "minLength": 1},
+    "function": {"type": "string", "minLength": 1},
+    "provenance": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "type_declarations": {
+      "description": "Reported declarations; their layout and use in an array are not assumed without build and binding evidence.",
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["reported_symbol", "type_name", "declaration", "evidence_refs"],
+        "properties": {
+          "reported_symbol": {"type": "string", "minLength": 1},
+          "type_name": {"type": "string", "minLength": 1},
+          "declaration": {"type": "string", "minLength": 1},
+          "evidence_refs": {"$ref": "#/$defs/refs"}
+        }
+      }
+    },
+    "code": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "uri": {"type": ["string", "null"]},
+        "revision": {"type": ["string", "null"]},
+        "location": {"type": ["string", "null"]},
+        "pseudocode": {"type": ["string", "null"]},
+        "evidence_refs": {"$ref": "#/$defs/refs"}
+      }
+    },
+    "environment": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "processor": {"type": ["string", "null"]},
+        "threads": {"type": ["integer", "null"], "minimum": 1},
+        "ranks": {"type": ["integer", "null"], "minimum": 1},
+        "build": {"type": ["string", "null"]},
+        "workload": {"type": ["string", "null"]},
+        "evidence_refs": {"$ref": "#/$defs/refs"}
+      }
+    },
+    "patterns": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/pattern"}},
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "iterations": {
+          "type": "object", "additionalProperties": false,
+          "required": ["value", "scope", "evidence_refs"],
+          "properties": {
+            "value": {"type": ["integer", "null"], "minimum": 0},
+            "scope": {"enum": ["per_invocation", "per_rank_per_invocation", "aggregate", "unknown"]},
+            "evidence_refs": {"$ref": "#/$defs/refs"}
+          }
+        },
+        "repetitions": {
+          "type": "object", "additionalProperties": false,
+          "required": ["value", "meaning", "evidence_refs"],
+          "properties": {
+            "value": {"type": ["integer", "null"], "minimum": 0},
+            "meaning": {"enum": ["benchmark_runs", "kernel_invocations", "iteration_set_repetitions", "timesteps", "unknown"]},
+            "evidence_refs": {"$ref": "#/$defs/refs"}
+          }
+        }
+      }
+    },
+    "bottleneck": {
+      "type": "object", "additionalProperties": false,
+      "required": ["classification", "basis", "evidence_refs"],
+      "properties": {
+        "classification": {"enum": ["memory_bound", "compute_bound", "communication_bound", "mixed", "unknown"]},
+        "basis": {"enum": ["reported", "measurement_based", "hypothesis", "illustrative"]},
+        "memory_limit": {"enum": ["latency", "bandwidth", "translation", "coherence", "mixed", "unknown"]},
+        "evidence_refs": {"$ref": "#/$defs/refs"}
+      }
+    },
+    "metrics": {"type": "array", "items": {"$ref": "#/$defs/metric"}},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "description"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["human_report", "source_code", "measurement", "analysis", "illustrative"]},
+        "description": {"type": "string", "minLength": 1},
+        "uri": {"type": ["string", "null"]}
+      }
+    },
+    "pattern": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "expression", "memory_operation", "evidence_refs"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "expression": {"type": "string", "minLength": 1},
+        "symbol_mapping": {
+          "description": "Mapping from generalized notation to concrete source expressions. Null means the bindings are unresolved.",
+          "type": ["object", "null"],
+          "additionalProperties": {"type": ["string", "null"], "minLength": 1}
+        },
+        "memory_operation": {"enum": ["read", "write", "read_modify_write", "mixed", "unknown"]},
+        "update": {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "kind": {"enum": ["none", "increment", "reduction", "arbitrary_function", "other", "unknown"]},
+            "pseudocode": {"type": ["string", "null"]},
+            "side_effects": {"type": ["string", "null"]}
+          }
+        },
+        "arrays": {"type": "array", "items": {"$ref": "#/$defs/array"}},
+        "semantics": {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "duplicate_target_indices": {"type": ["boolean", "null"]},
+            "index_modified_during_loop": {"type": ["boolean", "null"]},
+            "loop_carried_dependencies": {"type": ["boolean", "null"]},
+            "shared_target_between_threads": {"type": ["boolean", "null"]},
+            "atomic_updates_required": {"type": ["boolean", "null"]},
+            "ordering": {"enum": ["preserve_iteration_order", "preserve_per_target_order", "unrestricted", "unknown"]},
+            "numerical_requirement": {"enum": ["exact", "tolerance", "unknown"]},
+            "numerical_tolerance_spec": {"type": ["string", "null"]}
+          }
+        },
+        "evidence_refs": {"$ref": "#/$defs/refs"}
+      }
+    },
+    "array": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "role"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "role": {"enum": ["index", "target", "input", "output", "other"]},
+        "element_type": {"type": ["string", "null"]},
+        "element_bytes": {"type": ["integer", "null"], "minimum": 1},
+        "element_count": {"type": ["integer", "null"], "minimum": 0},
+        "layout": {"enum": ["contiguous", "strided", "array_of_structs", "struct_of_arrays", "other", "unknown"]}
+      }
+    },
+    "metric": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "value", "unit", "scope", "kind", "evidence_refs"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "value": {"type": "number"},
+        "unit": {"type": "string", "minLength": 1},
+        "scope": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["measured", "modeled", "illustrative"]},
+        "evidence_refs": {"$ref": "#/$defs/refs"}
+      }
+    }
+  }
+}

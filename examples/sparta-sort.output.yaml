@@ -1,0 +1,148 @@
+# Historical v0.1 output. Current BFS output describes a hardware block graph
+# and leaves intrinsic specification to Peter; see hardware-request.template.yaml.
+schema_version: "0.1"
+workload_id: sparta-sort-peter-example-1
+origin: illustrative
+summary: >-
+  Manually authored example of the intended response. The reported indirect
+  increment pattern suggests two families to investigate. Peter's update and
+  count clarifications are incorporated; symbol bindings, ordering, and
+  footprint information remain unresolved. Neither candidate is currently
+  specified well enough for implementation or evaluation. No performance
+  ranking or concrete API is justified by the supplied evidence.
+
+sources:
+  - id: taxonomy-v2
+    uri: https://docs.google.com/document/d/1UrN3eGHzfgB8qoMtqP_BT8gXWkrLE9PMZoOX26ndbtQ/edit
+    description: Eric's design axes; capability claims still need reference verification.
+  - id: taxonomy-v3
+    uri: https://docs.google.com/document/d/1G3a_2qzG1-G7z3qMtZVTO6HvCXEQQ_YF2J9OTEZAazg/edit
+    description: Eric's speculative/declared taxonomy; these references are not executable templates.
+
+candidates:
+  - id: sparta-sort-prefetch-1
+    pattern_ids: [indirect-rmw-1]
+    status: conditional
+    family: speculative_indirect_prefetch
+    taxonomy_refs: [A.1.2]
+    rationale: >-
+      Investigate whether an indirect prefetch mechanism can bring target
+      data closer to the CPU while the CPU retains the original RMW behavior.
+      Indirect addressing alone does not establish predictability or benefit.
+    evidence_refs: [peter-example, peter-clarification-2026-09-22, taxonomy-v2, taxonomy-v3]
+    legality_status: unknown
+    unresolved_requirements: [symbol-mapping, update-semantics, memory-footprint, runtime-evidence, prefetch-template]
+    rejection_reason: null
+    hardware_spec:
+      template_ref: null
+      configuration_complete: false
+      compute_location: host_cpu
+      properties:
+        initiation: speculative
+        storage: cache_hierarchy
+        placement: null
+      parameters: []
+      model_ref: null
+    software_contract:
+      status: unresolved
+      form: unknown
+      header: null
+      symbol: null
+      signature: null
+      arguments: []
+      behavior: >-
+        The investigated mechanism would prefetch; the CPU would still execute
+        the updates. A passive implementation may need no kernel API, but
+        that must be established from the chosen template.
+      preconditions: []
+      postconditions: []
+      synchronization: null
+      target_location: null
+      usage_example: null
+      specification_ref: null
+
+  - id: sparta-sort-declared-fetch-1
+    pattern_ids: [indirect-rmw-1]
+    status: conditional
+    family: declared_indirect_fetch
+    taxonomy_refs: [B.1.2]
+    rationale: >-
+      Investigate declared fetching if software can expose the address stream
+      and a concrete design preserves all required RMW semantics. The clarified
+      increment is not assumed to be supported for execution by a fetch engine,
+      nor does ++ establish atomicity or permission to reorder. Buffering target
+      values must not introduce stale reads when indices repeat.
+    evidence_refs: [peter-example, peter-clarification-2026-09-22, taxonomy-v2, taxonomy-v3]
+    legality_status: unknown
+    unresolved_requirements: [symbol-mapping, update-semantics, index-stability, memory-footprint, runtime-evidence, declared-template]
+    rejection_reason: null
+    hardware_spec:
+      template_ref: null
+      configuration_complete: false
+      compute_location: host_cpu
+      properties:
+        initiation: declared
+        storage: null
+        placement: null
+      parameters: []
+      model_ref: null
+    software_contract:
+      status: unresolved
+      form: unknown
+      header: null
+      symbol: null
+      signature: null
+      arguments: []
+      behavior: >-
+        A future contract would describe which address/data streams can be
+        declared, how completion is observed, and how updates remain correct.
+        No pragma, intrinsic, signature, or hardware capability is claimed here.
+      preconditions: []
+      postconditions: []
+      synchronization: null
+      target_location: null
+      usage_example: null
+      specification_ref: null
+
+questions:
+  - id: symbol-mapping
+    owner: software
+    question: >-
+      How do A.B[A.C[i]], the OnePart struct, the integer arrays B/C, and the
+      abbreviated update a[i]++ correspond? A few lines showing the actual
+      index calculation and update are sufficient; a full application is not required.
+    blocks: [access_pattern_binding, software_contract]
+  - id: update-semantics
+    owner: software
+    question: >-
+      The update is now known to be increment. Do target indices repeat, must
+      updates preserve order, is the target shared, and does the surrounding
+      loop have other effects or dependencies? What result equivalence is required?
+    blocks: [legal_transformation, software_contract]
+  - id: index-stability
+    owner: software
+    question: Can the index stream be read ahead, or can earlier updates change future addresses?
+    blocks: [declared_fetch_applicability]
+  - id: memory-footprint
+    owner: software
+    question: >-
+      B and C are known to be integer arrays. What are their extents,
+      integer widths/signedness, and layouts, and how is OnePart stored/accessed?
+    blocks: [configuration, cost_estimation]
+  - id: runtime-evidence
+    owner: software
+    question: >-
+      The iteration count is per call and the iteration set is repeated 50 times.
+      When available, provide baseline timing, measurement scope/environment,
+      and evidence for the memory bottleneck.
+    blocks: [performance_comparison]
+  - id: prefetch-template
+    owner: hardware_catalog
+    question: Which concrete indirect prefetch template, parameters, software controls, and model are available?
+    blocks: [configuration, software_contract, evaluation]
+  - id: declared-template
+    owner: hardware_catalog
+    question: >-
+      Which declared-fetch template can legally support this RMW use case,
+      including storage/coherence, software interface, parameter ranges, and model?
+    blocks: [configuration, software_contract, evaluation]

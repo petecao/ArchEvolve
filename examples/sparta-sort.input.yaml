@@ -1,0 +1,108 @@
+# Historical v0.1 example. The September 24 target is modified GAP BFS;
+# see bfs.features.template.yaml for the current provisional handoff shape.
+schema_version: "0.1"
+workload_id: sparta-sort-peter-example-1
+benchmark: Sparta
+function: sort()
+
+provenance:
+  - id: peter-example
+    kind: human_report
+    description: >-
+      Peter's handwritten/generalized example, shared by Josh on 2026-09-21.
+      The original message supplied no code, measurement output, or exact
+      source revision. Some fields are refined by the later clarification.
+    uri: null
+  - id: peter-clarification-2026-09-22
+    kind: human_report
+    description: >-
+      Peter clarified that the RMW operation is a[i]++, A is the supplied
+      OnePart struct, and B and C are integer arrays. The iteration count is
+      per call; 50 repetitions means 50 repetitions of those iterations.
+      The exact correspondence between these symbols and the original
+      access expression was not supplied. This is not measurement output.
+    uri: null
+
+code: null
+environment: null
+
+type_declarations:
+  - reported_symbol: A
+    type_name: OnePart
+    declaration: |
+      struct SPARTA_ALIGN(16) OnePart {
+        int id;             // particle ID
+        int ispecies;       // particle species index
+        int icell;          // which local Grid::cells the particle is in
+        int flag;           // used for migration status
+        double x[3];        // particle position
+        double v[3];        // particle velocity
+        double erot;        // rotational energy
+        double evib;        // vibrational energy
+        double dtremain;    // portion of move timestep remaining
+        double weight;      // particle or cell weight, if weighting enabled
+      };
+    evidence_refs: [peter-clarification-2026-09-22]
+
+patterns:
+  - id: indirect-rmw-1
+    expression: A.B[A.C[i]]
+    symbol_mapping: null
+    memory_operation: read_modify_write
+    update:
+      kind: increment
+      pseudocode: a[i]++
+      side_effects: null
+    arrays:
+      # Roles follow the generalized access expression. Concrete source bindings
+      # remain unresolved; B and C are not assumed to be OnePart members.
+      - name: B
+        role: target
+        element_type: integer
+        element_bytes: null
+        element_count: null
+        layout: unknown
+      - name: C
+        role: index
+        element_type: integer
+        element_bytes: null
+        element_count: null
+        layout: unknown
+    semantics:
+      duplicate_target_indices: null
+      index_modified_during_loop: null
+      loop_carried_dependencies: null
+      shared_target_between_threads: null
+      atomic_updates_required: null
+      ordering: unknown
+      numerical_requirement: unknown
+    evidence_refs: [peter-example, peter-clarification-2026-09-22]
+
+counts:
+  iterations:
+    value: 19471976073
+    scope: per_invocation
+    evidence_refs: [peter-example, peter-clarification-2026-09-22]
+  repetitions:
+    value: 50
+    meaning: iteration_set_repetitions
+    evidence_refs: [peter-example, peter-clarification-2026-09-22]
+
+bottleneck:
+  classification: memory_bound
+  basis: reported
+  memory_limit: unknown
+  evidence_refs: [peter-example]
+
+# No actual profiler output or runtime measurements were supplied.
+metrics: []
+
+notes:
+  - General code patterns are the current focus, per Peter's discussion with Scott.
+  - Each repetition covers the reported per-call iteration set; the timing harness and number of separate launches are not specified.
+  - Iteration counts do not establish array extents or working-set size.
+  - B and C are reported integer arrays; widths, signedness, extents, and physical layout remain unknown.
+  - The OnePart declaration has no B or C member; the original expression is retained as generalized notation with unresolved source bindings.
+  - The update a[i]++ is an abbreviated operation, not a complete loop or proof that the access is direct.
+  - Struct size, member offsets, and the expansion of SPARTA_ALIGN depend on the actual build and are not inferred here.
+  - Unknown semantic properties must not be treated as permission to reorder or parallelize updates.

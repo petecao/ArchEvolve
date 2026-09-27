@@ -1,0 +1,63 @@
+# Unfilled structure example, not a proposed BFS architecture or runnable spec.
+# The block graph is the source for tools/render_mermaid.py.
+contract_version: draft-0.2
+record_kind: template
+input_ref: null
+input_revision: null
+catalog_ref: null
+catalog_revision: null
+kernel_id: gap-bfs-dx100
+
+candidates:
+  - id: "<candidate-id>"
+    status: needs_evidence # Candidate-stage vocabulary is provisional.
+    target_statement_ids: ["<statement-id>"]
+    target_access_ids: ["<access-id>"]
+    rationale: null
+    evidence_refs: []
+    applicability_conditions: []
+    unresolved_requirements: []
+    hardware:
+      blocks:
+        - id: "<block-id>"
+          component_ref: null
+          component_revision: null
+          function: null
+          inputs:
+            - id: "<input-port-id>"
+              payload: null
+              type: null
+              element_bytes: null
+              endpoint_role: unknown # host-facing, memory-facing, or internal
+          outputs:
+            - id: "<output-port-id>"
+              payload: null
+              type: null
+              element_bytes: null
+              endpoint_role: unknown
+          behavior:
+            address_interpretation: null
+            memory_effects: null
+            ordering: null
+            completion: null
+            visibility: null
+          parameters:
+            - name: "<catalog-parameter-name>"
+              state: open
+              value: null
+              unit: null
+              allowed_values_or_range: null
+              constraint_evidence_refs: []
+      connections: [] # Name from_block/from_port and to_block/to_port for each edge.
+    software_handoff:
+      intrinsic_spec_owner: Peter
+      target_statement_ids: ["<statement-id>"]
+      boundary_notes: null
+      # Block behavior and I/O inform Peter's intrinsic spec; no invented C signature.
+    parameter_tuning_owner: arch_evolve
+    diagram:
+      format: mermaid
+      generated_from: hardware.blocks_and_connections
+      artifact_ref: null # No diagram has been generated for this unfilled template.
+
+clarification_requests: [] # Include IDs, missing feature/capability, affected statements.

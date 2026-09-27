@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Arch Evolve hardware candidate plan v0.1 (proposed)",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "workload_id", "origin", "summary", "sources", "candidates", "questions"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "workload_id": {"type": "string", "minLength": 1},
+    "origin": {"enum": ["agent_proposal", "human_proposal", "illustrative"]},
+    "summary": {"type": "string", "minLength": 1},
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "uri", "description"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "uri": {"type": "string", "minLength": 1},
+          "description": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "candidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+    "questions": {"type": "array", "items": {"$ref": "#/$defs/question"}}
+  },
+  "$defs": {
+    "strings": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "text": {"type": "string", "minLength": 1},
+    "candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "pattern_ids", "status", "family", "taxonomy_refs", "rationale", "evidence_refs", "legality_status", "unresolved_requirements", "rejection_reason", "hardware_spec", "software_contract"],
+      "properties": {
+        "id": {"$ref": "#/$defs/text"},
+        "pattern_ids": {"$ref": "#/$defs/strings", "minItems": 1},
+        "status": {"enum": ["conditional", "ready_for_evaluation", "rejected"]},
+        "family": {"$ref": "#/$defs/text"},
+        "taxonomy_refs": {"$ref": "#/$defs/strings", "minItems": 1},
+        "rationale": {"$ref": "#/$defs/text"},
+        "evidence_refs": {"$ref": "#/$defs/strings", "minItems": 1},
+        "legality_status": {"enum": ["unknown", "supported", "incompatible"]},
+        "unresolved_requirements": {"$ref": "#/$defs/strings"},
+        "rejection_reason": {"type": ["string", "null"]},
+        "hardware_spec": {"$ref": "#/$defs/hardware"},
+        "software_contract": {"$ref": "#/$defs/software"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "conditional"}}},
+          "then": {"properties": {"unresolved_requirements": {"minItems": 1}, "rejection_reason": {"type": "null"}, "legality_status": {"enum": ["unknown", "supported"]}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "ready_for_evaluation"}}},
+          "then": {
+            "properties": {
+              "unresolved_requirements": {"maxItems": 0},
+              "legality_status": {"const": "supported"},
+              "rejection_reason": {"type": "null"},
+              "hardware_spec": {
+                "properties": {
+                  "template_ref": {"$ref": "#/$defs/text"},
+                  "configuration_complete": {"const": true},
+                  "model_ref": {"$ref": "#/$defs/text"}
+                }
+              },
+              "software_contract": {"properties": {"status": {"enum": ["specified", "none_required"]}}}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"status": {"const": "rejected"}}},
+          "then": {"properties": {"rejection_reason": {"$ref": "#/$defs/text"}}}
+        }
+      ]
+    },
+    "hardware": {
+      "type": "object", "additionalProperties": false,
+      "required": ["template_ref", "configuration_complete", "compute_location", "properties", "parameters", "model_ref"],
+      "properties": {
+        "template_ref": {"type": ["string", "null"]},
+        "configuration_complete": {"type": "boolean"},
+        "compute_location": {"enum": ["host_cpu", "accelerator", "mixed", "unknown"]},
+        "properties": {"type": "object", "additionalProperties": {"type": ["string", "null"]}},
+        "parameters": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["name", "value", "unit", "evidence_ref"],
+            "properties": {
+              "name": {"$ref": "#/$defs/text"},
+              "value": {"type": ["number", "string", "boolean"]},
+              "unit": {"$ref": "#/$defs/text"},
+              "evidence_ref": {"$ref": "#/$defs/text"}
+            }
+          }
+        },
+        "model_ref": {"type": ["string", "null"]}
+      }
+    },
+    "software": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "form", "header", "symbol", "signature", "arguments", "behavior", "preconditions", "postconditions", "synchronization", "target_location", "usage_example", "specification_ref"],
+      "properties": {
+        "status": {"enum": ["unresolved", "specified", "none_required"]},
+        "form": {"enum": ["pragma", "intrinsic", "library_api", "none", "unknown"]},
+        "header": {"type": ["string", "null"]},
+        "symbol": {"type": ["string", "null"]},
+        "signature": {"type": ["string", "null"]},
+        "arguments": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["name", "type", "role"],
+            "properties": {
+              "name": {"$ref": "#/$defs/text"},
+              "type": {"$ref": "#/$defs/text"},
+              "role": {"$ref": "#/$defs/text"}
+            }
+          }
+        },
+        "behavior": {"type": ["string", "null"]},
+        "preconditions": {"$ref": "#/$defs/strings"},
+        "postconditions": {"$ref": "#/$defs/strings"},
+        "synchronization": {"type": ["string", "null"]},
+        "target_location": {"type": ["string", "null"]},
+        "usage_example": {"type": ["string", "null"]},
+        "specification_ref": {"type": ["string", "null"]}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "specified"}}},
+          "then": {
+            "properties": {
+              "form": {"enum": ["pragma", "intrinsic", "library_api"]},
+              "symbol": {"$ref": "#/$defs/text"},
+              "signature": {"$ref": "#/$defs/text"},
+              "behavior": {"$ref": "#/$defs/text"},
+              "postconditions": {"minItems": 1},
+              "synchronization": {"$ref": "#/$defs/text"},
+              "target_location": {"$ref": "#/$defs/text"},
+              "usage_example": {"$ref": "#/$defs/text"},
+              "specification_ref": {"$ref": "#/$defs/text"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"status": {"const": "none_required"}}},
+          "then": {
+            "properties": {
+              "form": {"const": "none"},
+              "header": {"type": "null"},
+              "symbol": {"type": "null"},
+              "signature": {"type": "null"},
+              "arguments": {"maxItems": 0},
+              "behavior": {"$ref": "#/$defs/text"},
+              "specification_ref": {"$ref": "#/$defs/text"}
+            }
+          }
+        }
+      ]
+    },
+    "question": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "owner", "question", "blocks"],
+      "properties": {
+        "id": {"$ref": "#/$defs/text"},
+        "owner": {"enum": ["software", "hardware_catalog", "evaluator", "coordinator"]},
+        "question": {"$ref": "#/$defs/text"},
+        "blocks": {"$ref": "#/$defs/strings", "minItems": 1}
+      }
+    }
+  }
+}

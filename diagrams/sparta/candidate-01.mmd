@@ -1,0 +1,23 @@
+---
+title: "ILLUSTRATIVE | sparta-sort-peter-example-1 | sparta-sort-prefetch-1 | conditional"
+config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 320, "nodeSpacing": 24, "rankSpacing": 60, "padding": 12}}
+---
+flowchart LR
+  subgraph b0["indirect-pattern-observer"]
+    direction TB
+    b0_info["Component: unknown<br/>Function: Observe the access stream and propose<br/>target addresses."]:::annotation
+    b0_in0["IN: observed-accesses<br/>Observed address/index traffic; exact signals<br/>TBD<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+    b0_out0["OUT: predicted-addresses<br/>Predicted target addresses<br/>address; unknown B/element<br/>internal"]:::internalPort
+  end
+  subgraph b1["prefetch-request-issuer"]
+    direction TB
+    b1_info["Component: unknown<br/>Function: Issue speculative requests into the<br/>cache hierarchy.<br/>request_window_entries: OPEN #91;entries#93;"]:::annotation
+    b1_in0["IN: predicted-addresses<br/>Predicted target addresses<br/>address; unknown B/element<br/>internal"]:::internalPort
+    b1_out0["OUT: prefetch-requests<br/>Speculative prefetch requests; cache interface<br/>TBD<br/>unknown; unknown B/element<br/>memory-facing"]:::memoryPort
+  end
+  b0_out0 -->|"predicted addresses"| b1_in0
+  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3
+  classDef hostPort fill:#dbeafe,stroke:#2563eb,color:#172554
+  classDef memoryPort fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef internalPort fill:#f1f5f9,stroke:#64748b,color:#0f172a
+  classDef unknownPort fill:#fef3c7,stroke:#d97706,color:#78350f

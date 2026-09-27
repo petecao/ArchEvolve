@@ -1,0 +1,79 @@
+# Unfilled handoff sketch. This is not extracted BFS data.
+# Replace placeholder records using the DX100-modified source and annotations.
+# Field names will be aligned with Peter and LANL; the v0.1 schemas do not apply.
+contract_version: draft-0.2
+record_kind: template
+kernel:
+  id: gap-bfs-dx100
+  variant: dx100_modified_for_loops
+  repository: https://github.com/arkhadem/DX100
+  revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  source_file: benchmarks/gapbs/src/bfs.cc
+  annotated_source_ref: null
+workload:
+  dataset_ref: null
+  profile_ref: null
+  environment_ref: null
+
+statements:
+  - id: "<statement-id>"
+    location:
+      file: null
+      start_line: null
+      end_line: null
+    code: null
+    loop_id: null
+    related_statement_ids: [] # Connect expressions split across source lines.
+    annotation_refs: []
+    accesses:
+      - id: "<access-id>"
+        pattern:
+          family: unknown
+          address_expression: null
+          index_expression: null
+          index_arithmetic: null
+        operation:
+          kind: unknown        # read, write, or read_modify_write when established
+          rmw_subtype: unknown # e.g. increment; do not infer the actual BFS update
+          update_expression: null
+        data:
+          type: null
+          element_bytes: null
+          index_type: null
+          index_element_bytes: null
+        reuse:
+          distance:
+            value: null
+            unit: null
+            aggregation: null
+            scope: null
+            evidence_refs: []
+          frequency:
+            value: null
+            denominator: null
+            observation_window: null
+            evidence_refs: []
+        stride:
+          kind: unknown        # regular or irregular
+          value: null
+          unit: null           # e.g. elements or bytes
+          statistic: null      # exact, mean_signed, mean_absolute; agree definition
+          scope: null
+          evidence_refs: []
+        working_set:
+          bytes: null
+          scope: null          # identify loop, tile, or observation window
+          method: null
+          evidence_refs: []
+        semantics:
+          duplicate_targets: null
+          index_modified_during_loop: null
+          update_ordering: unknown
+          sharing: unknown
+          correctness_requirement: null
+        evidence_refs: []
+
+evidence: [] # Identify code/measurement/report/derivation and its source.
+missing_information:
+  - The source revision is now recorded; Yan-Ru's annotations are still pending.
+  - Real statement/access records and profiling-derived features have not been supplied.

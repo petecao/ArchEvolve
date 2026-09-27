@@ -1,0 +1,138 @@
+contract_version: draft-0.2
+record_kind: source_analysis
+analysis_origin: Manual source review by Codex; not Peter feature extraction or profiling.
+kernel:
+  id: gap-bfs-dx100
+  repository: https://github.com/arkhadem/DX100
+  revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  source_file: benchmarks/gapbs/src/bfs.cc
+  local_source: sources/DX100/benchmarks/gapbs/src/bfs.cc
+  feature_function_proposal: TDStep
+  accelerated_reference_function: TDStepMAA
+  selection_confirmed_by_team: false
+  annotated_source_ref: null
+type_evidence:
+- file: benchmarks/gapbs/src/benchmark.h
+  line: 29
+  declaration: typedef int32_t NodeID;
+- file: benchmarks/gapbs/src/graph.h
+  line: 90
+  declaration: typedef int32_t SGOffset;
+statements:
+- id: bfs-td-frontier
+  location:
+    file: benchmarks/gapbs/src/bfs.cc
+    start_line: 240
+    end_line: 240
+  code: NodeID u = queue.shared[i];
+  operation: read
+  access_expression: queue.shared[i]
+  data_type: NodeID = int32_t
+  array_element_bits: 32
+  related_statement_ids: []
+  interpretation: Sequential frontier read in logical i order; thread interleaving
+    depends on execution.
+- id: bfs-td-row-bounds
+  location:
+    file: benchmarks/gapbs/src/bfs.cc
+    start_line: 241
+    end_line: 241
+  code: for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+  operation: read
+  access_expression: VertexOffsets[u] and VertexOffsets[u + 1]
+  data_type: SGOffset = int32_t
+  array_element_bits: 32
+  related_statement_ids:
+  - bfs-td-frontier
+  interpretation: Two offset accesses indexed by a loaded vertex ID; the +1 is index
+    arithmetic.
+- id: bfs-td-neighbor
+  location:
+    file: benchmarks/gapbs/src/bfs.cc
+    start_line: 242
+    end_line: 242
+  code: NodeID v = g.out_neighbors_[j];
+  operation: read
+  access_expression: g.out_neighbors_[j]
+  data_type: NodeID = int32_t
+  array_element_bits: 32
+  related_statement_ids:
+  - bfs-td-row-bounds
+  interpretation: Sequential within each adjacency segment; transitions between segments
+    are data-dependent.
+- id: bfs-td-parent-read
+  location:
+    file: benchmarks/gapbs/src/bfs.cc
+    start_line: 243
+    end_line: 243
+  code: NodeID curr_val = parent[v];
+  operation: read
+  access_expression: parent[v]
+  data_type: NodeID = int32_t
+  array_element_bits: 32
+  related_statement_ids:
+  - bfs-td-neighbor
+  interpretation: Indirect read indexed by the loaded neighbor ID.
+- id: bfs-td-parent-cas
+  location:
+    file: benchmarks/gapbs/src/bfs.cc
+    start_line: 247
+    end_line: 247
+  code: if (compare_and_swap(parent[v], curr_val, u)) {
+  operation: read_modify_write
+  access_expression: compare_and_swap(parent[v], curr_val, u)
+  data_type: NodeID = int32_t
+  array_element_bits: 32
+  related_statement_ids:
+  - bfs-td-frontier
+  - bfs-td-neighbor
+  - bfs-td-parent-read
+  interpretation: Subtype is compare-and-swap, guarded by curr_val < 0; successful
+    discovery controls queue insertion.
+- id: bfs-td-parent-store
+  location:
+    file: benchmarks/gapbs/src/bfs.cc
+    start_line: 248
+    end_line: 248
+  code: parent[v] = u;
+  operation: write
+  access_expression: parent[v] = u
+  data_type: NodeID = int32_t
+  array_element_bits: 32
+  related_statement_ids:
+  - bfs-td-parent-cas
+  interpretation: Explicit store inside the successful CAS branch; preserve in any
+    analysis of side effects.
+- id: bfs-td-queue-append
+  location:
+    file: benchmarks/gapbs/src/bfs.cc
+    start_line: 249
+    end_line: 249
+  code: lqueue.push_back(v);
+  operation: call_with_side_effects
+  access_expression: lqueue.push_back(v)
+  data_type: NodeID = int32_t
+  array_element_bits: 32
+  related_statement_ids:
+  - bfs-td-parent-cas
+  interpretation: Thread-local queue buffering followed by lqueue.flush(); not a plain
+    target-array access.
+unmeasured_features:
+  reuse_distance: null
+  reuse_frequency: null
+  average_irregular_stride: null
+  working_set_bytes: null
+  runtime: null
+  dataset: null
+  profile_environment: null
+notes:
+- These are source observations and proposed IDs for discussion, not measured features
+  or the agreed Peter-to-Josh YAML.
+- Array elements are explicitly 32-bit types. A byte width of 4 applies to the artifact
+  x86 build; no run was performed.
+- The exact graph and iteration/frontier determine reuse, irregular stride, duplicate
+  destinations, and working set.
+- TDStep is proposed as feature input; TDStepMAA is existing accelerator code for
+  reference. Confirm this choice with Peter/Yan-Ru.
+- Host while/do-while loops remain in the artifact. Do not model all loop control
+  as accelerated.
