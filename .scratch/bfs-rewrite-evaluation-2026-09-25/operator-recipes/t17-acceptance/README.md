@@ -44,3 +44,21 @@ T20 additionally requires an actual resolved continuation candidate and that can
 Validation: the four existing test modules above passed **125 tests in 276.19 seconds** on local macOS (2026-09-27 ET). Exact invocation and hashes are retained in `/private/tmp/bfs-t17-client-api-audit-20260927.json`; raw test output is `/private/tmp/bfs-t17-client-api-audit-20260927.log`. This checks public API contracts with explicit fixtures, not actual DX100 acceptance.
 
 The existing four-module public API audit passed **125 tests in 276.19 seconds**. The [exact invocation and hashes](../../observations/t17-client-api-audit-20260927.json) distinguish these fixture-backed contract checks from actual acceptance.
+
+## Fixed client wiring prepared — 2026-09-27 ET
+
+`prepare_operator.py` now provides the pure `series_argv` builder for the existing
+public series client. It requires both retained build IDs, a frozen protocol and
+role, explicit workload/configuration paths, the original shared cleanup binding,
+and every stage/resource option. It never invokes subprocesses or allocates a lane.
+Candidate rows alone receive `--accelerated`; `--author-binary` is never emitted.
+The current [preview](operator-preview-20260927.json) retains unresolved aggregate
+bounds and all T15-dependent inputs. It is not an executable admission or a new budget.
+
+Validation: 39 local controls passed, including parsing all four synthetic commands
+against the actual series client's argparse definitions without executing its main.
+The synthetic test bounds are only parser fixtures. The manifest's aggregate bounds,
+clock, selected workloads, and protocol remain unset. Once qualified T15 evidence
+arrives, the remaining work is to bind and review the actual allocation, complete
+the diagnostic prerequisite, freeze the protocol, and wrap these existing client
+calls in the established owned supervisor. No new evaluation engine was introduced.

@@ -165,3 +165,13 @@ route allocation derived from qualified T15 costs. Aggregate and series budgets,
 workloads, protocol, and future clock remain unresolved, with dispatch explicitly
 false. Eight planning-contract tests pass; no empirical acceptance is claimed.
 This ticket remains claimed and all acceptance boxes remain open.
+
+## Fixed client wiring checkpoint — 2026-09-27 02:46 ET
+
+The [pure operator preparation](../observations/t17-operator-preparation-20260927.json)
+now renders the four fixed series through the existing public client with both retained
+build IDs, the complete-call frozen protocol, explicit stage/resource bounds, and shared
+cleanup binding. All four synthetic commands parse with the actual client argument
+definitions; 39 local planning/command controls passed. No subprocess or remote execution
+was performed. The preview preserves null aggregate bounds, clock, and T15-dependent
+workloads/protocol; dispatch remains false and acceptance criteria remain open.
