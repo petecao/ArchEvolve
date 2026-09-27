@@ -68,3 +68,15 @@ incomplete result. Native qualification and candidate acceptance remain separate
 
 T16 continues on its unchanged admitted checkout and settings. This correction
 must not mutate the active T16 execution or rebind its existing evidence.
+
+
+Execution follow-up — 2026-09-26 22:01 ET
+
+This historical fixed plan was consumed at 21:50:45 ET and failed during
+metadata setup on a concurrently removed SQLite journal before guest execution.
+The [failed-attempt receipt](../.scratch/bfs-rewrite-evaluation-2026-09-25/observations/t15-correction-failed-terminal-20260926.json)
+retains its exact closed time/storage envelope. No retry or resume is granted by
+this plan. The [local allocator repair](bfs-storage-transient-entries-20260926.md)
+does not modify the original plan, run IDs, checkout or failed records. Any
+further work requires a separate prospective plan within all retained aggregate
+and absolute-clock limits; it cannot retroactively make this attempt successful.

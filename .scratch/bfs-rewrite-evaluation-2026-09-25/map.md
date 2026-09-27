@@ -83,6 +83,27 @@ These four cases cover all eight source/route/graph cells, all four payload form
 | AC19 — Executable capabilities and honest wrapper support | 10, 17, 20 |
 | AC20 — Real workflow with labeled SW/HW test clients and handoff | 17–21 |
 
+## Transient SQLite repair reviewed — 2026-09-26 22:01 ET
+
+The [process-free allocator repair](../../docs/bfs-storage-transient-entries-20260926.md)
+handles descriptor-relative confirmed nested `ENOENT` without treating a missing
+charged root, permission error or unsafe replacement as zero bytes. Reappearing
+entries are measured without following symlinks; root identity is checked again
+at the end. Allocation semantics, guards and final quiescent recount stay fixed.
+The [author's affected group](observations/storage-transient-entry-preparation-20260926.json)
+passed 127 cases, and [independent review](observations/storage-sqlite-standards-review-20260926.json)
+passed 24, including the unchanged real SQLite race reproducer and root/error/
+deadline controls. Original source, red logs and both actual failed attempts are
+retained. No new Linux proof, guest run or acceptance is inferred.
+
+Assumption for prospective planning: a separately reviewed setup-failure recovery
+may proceed under the user's autonomous bug-fix/evaluation authorization, while
+the used correction remains consumed. It must charge every prior envelope and
+all new preparation inside the original 43,200 seconds/40 GiB, keep the earlier
+actual hard end of 2026-09-27 09:14:09.851819 ET, and require each complete series'
+21,600 seconds plus cleanup before starting. This is design work only, not a
+retry, new allowance, export approval or extension of the historical plan.
+
 ## Future candidate-run fixes reviewed — 2026-09-26 21:56 ET
 
 [Primary reuse](../../docs/bfs-simulator-primary-reuse-20260926.md) adds a

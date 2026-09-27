@@ -107,7 +107,7 @@ def test_directory_replaced_with_symlink_cannot_escape_root(tmp_path, monkeypatc
     assert replaced
 
 
-def test_unreadable_or_disappearing_metadata_is_not_zero(tmp_path, monkeypatch):
+def test_unknown_missing_metadata_is_not_zero(tmp_path, monkeypatch):
     root = tmp_path / 'root'; root.mkdir(); (root / 'file').write_bytes(b'x')
     original = storage.os.stat
     def disappear(name, *args, **kwargs):
@@ -165,3 +165,141 @@ def test_live_monitor_accounting_survives_owned_descendant_cleanup(worker, monke
         for child in children.values():
             if child.poll() is None:child.kill()
             child.wait(timeout=1)
+
+
+def test_actual_sqlite_journal_unlinked_between_enumeration_and_stat(tmp_path, monkeypatch):
+    """A real DELETE-journal commit removes the exact file already enumerated."""
+    import sqlite3
+    import threading
+    ready, commit, finished = (threading.Event() for _ in range(3))
+    errors = []
+    db = tmp_path/'.swdb.sqlite.fixture.tmp'
+    with sqlite3.connect(db) as connection:
+        connection.execute('create table retained(value integer)')
+        connection.execute('insert into retained values(1)')
+    def transaction():
+        try:
+            with sqlite3.connect(db) as connection:
+                connection.execute('pragma journal_mode=delete')
+                connection.execute('update retained set value=2')
+                ready.set()
+                if not commit.wait(2):raise TimeoutError('fixture never reached journal observation')
+                connection.commit()
+        except BaseException as error:errors.append(error)
+        finally:finished.set()
+    writer=threading.Thread(target=transaction);writer.start()
+    stat=storage.os.stat;observed=[]
+    def lookup(name, *args, **kwargs):
+        if str(name).endswith('-journal') and not observed:
+            observed.append(str(name));commit.set()
+            assert finished.wait(2), 'real SQLite commit did not finish'
+        return stat(name,*args,**kwargs)
+    try:
+        assert ready.wait(2) and Path(str(db)+'-journal').exists()
+        monkeypatch.setattr(storage.os,'stat',lookup)
+        measured=storage.allocated_bytes([tmp_path])
+    finally:
+        commit.set();writer.join(2)
+    assert not writer.is_alive() and not errors and observed
+    assert not Path(str(db)+'-journal').exists()
+    assert measured==du_bytes(tmp_path)
+
+
+@pytest.mark.parametrize('operation',['unlink','rename'])
+def test_nested_directory_disappearing_before_open_is_confirmed_without_escape(tmp_path,monkeypatch,operation):
+    root=tmp_path/'root';root.mkdir();nested=root/'nested';nested.mkdir()
+    (nested/'payload').write_bytes(b'x'*32768)
+    moved=tmp_path/'outside';original=storage.os.open;changed=[]
+    def move(name,flags,*args,**kwargs):
+        if name=='nested' and not changed:
+            changed.append(True)
+            if operation=='rename':nested.rename(moved)
+            else:(nested/'payload').unlink();nested.rmdir()
+        return original(name,flags,*args,**kwargs)
+    monkeypatch.setattr(storage.os,'open',move)
+    assert storage.allocated_bytes([root])==du_bytes(root)
+    assert changed
+
+
+def test_entry_reappearing_after_enoent_is_measured_without_following_symlink(tmp_path,monkeypatch):
+    import errno
+    root=tmp_path/'root';root.mkdir();entry=root/'entry';entry.write_bytes(b'old')
+    outside=tmp_path/'outside';outside.mkdir();(outside/'large').write_bytes(b'x'*1024**2)
+    stat=storage.os.stat;changed=[]
+    def replace(name,*args,**kwargs):
+        if name=='entry' and not changed:
+            changed.append(True);entry.unlink();entry.symlink_to(outside,target_is_directory=True)
+            raise FileNotFoundError(errno.ENOENT,'entry was replaced',name)
+        return stat(name,*args,**kwargs)
+    monkeypatch.setattr(storage.os,'stat',replace)
+    assert storage.allocated_bytes([root])==du_bytes(root)
+    assert changed
+
+
+def test_root_disappearing_after_preflight_is_still_an_error(tmp_path,monkeypatch):
+    root=tmp_path/'root';root.mkdir();original=storage.os.open
+    def remove(name,flags,*args,**kwargs):
+        if name==root:root.rmdir()
+        return original(name,flags,*args,**kwargs)
+    monkeypatch.setattr(storage.os,'open',remove)
+    with pytest.raises(FileNotFoundError):storage.allocated_bytes([root])
+
+
+def test_enoent_confirmation_cannot_hide_permission_failure(tmp_path,monkeypatch):
+    import errno
+    root=tmp_path/'root';root.mkdir();(root/'entry').touch();original=storage.os.stat;calls=[]
+    def fail(name,*args,**kwargs):
+        if name=='entry':
+            calls.append(1)
+            if len(calls)==1:raise FileNotFoundError(errno.ENOENT,'observed absence',name)
+            raise PermissionError(errno.EACCES,'cannot confirm absence',name)
+        return original(name,*args,**kwargs)
+    monkeypatch.setattr(storage.os,'stat',fail)
+    with pytest.raises(PermissionError):storage.allocated_bytes([root])
+
+
+def test_concurrent_real_sqlite_commit_walks_finish_with_quiescent_du_parity(tmp_path):
+    import sqlite3
+    stop=threading.Event();ready=threading.Event();errors=[];commits=[]
+    db=tmp_path/'swdb.sqlite'
+    with sqlite3.connect(db) as connection:
+        connection.execute('create table record(value integer)')
+        connection.execute('insert into record values(0)')
+    def write():
+        try:
+            with sqlite3.connect(db) as connection:
+                ready.set()
+                while not stop.is_set():
+                    connection.execute('update record set value=value+1');connection.commit();commits.append(1)
+        except BaseException as error:errors.append(error)
+    writer=threading.Thread(target=write);writer.start()
+    try:
+        assert ready.wait(2)
+        for _ in range(30):assert storage.allocated_bytes([tmp_path],deadline=time.monotonic()+2)>=0
+    finally:stop.set();writer.join(2)
+    assert not writer.is_alive() and commits and not errors
+    assert storage.allocated_bytes([tmp_path])==du_bytes(tmp_path)
+
+
+def test_root_symlink_substitution_between_preflight_and_visit_is_rejected(tmp_path,monkeypatch):
+    root=tmp_path/'root';root.mkdir();outside=tmp_path/'outside';outside.mkdir()
+    original=storage.os.stat;replaced=[]
+    def replace(name,*args,**kwargs):
+        if name==root and 'dir_fd' in kwargs and kwargs.get('follow_symlinks') is False and not replaced:
+            root.rmdir();root.symlink_to(outside,target_is_directory=True);replaced.append(True)
+        return original(name,*args,**kwargs)
+    monkeypatch.setattr(storage.os,'stat',replace)
+    with pytest.raises(ValueError,match='root became a symlink'):
+        storage.allocated_bytes([root])
+
+
+def test_root_removed_during_child_lookup_does_not_become_zero_observation(tmp_path,monkeypatch):
+    root=tmp_path/'root';root.mkdir();child=root/'entry';child.write_bytes(b'x')
+    stat=storage.os.stat;removed=[]
+    def remove(name,*args,**kwargs):
+        if name=='entry' and not removed:
+            child.unlink();root.rmdir();removed.append(True)
+        return stat(name,*args,**kwargs)
+    monkeypatch.setattr(storage.os,'stat',remove)
+    with pytest.raises(FileNotFoundError):storage.allocated_bytes([root])
+    assert removed
