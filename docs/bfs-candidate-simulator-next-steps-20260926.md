@@ -1,10 +1,22 @@
 # T17/T20 controlled-simulator next steps
 
-Prepared: 2026-09-26 (Eastern Time). Local source/record audit only; no dispatch,
+Prepared: 2026-09-26 (Eastern Time). Updated: 2026-09-26 22:17 ET.
+Local source/record audit only; no dispatch,
 provider call, transfer, new allowance, or protocol is created by this document.
 The [dependency inventory](../.scratch/bfs-rewrite-evaluation-2026-09-25/observations/candidate-simulator-dependencies-20260926.json)
 pins the records and code inspected. Host-only identities below come from retained
 observations and still need live artifact verification before reuse.
+
+The four scalar v2 builds have since completed, although their enclosing
+preparation failed during final storage observation. Their individual build
+records and binaries require the exact retained-build checks; the failed
+preparation remains failed. T17's diagnostic build and retained-primary reuse
+are now implemented and independently reviewed locally. The diagnostic export
+was rejected by automatic approval review and has not reached mbit10. Any future
+runtime must include the reviewed transient SQLite storage repair and pass its
+required Linux proof. See the current [ticket map](../.scratch/bfs-rewrite-evaluation-2026-09-25/map.md)
+for actual execution and transfer state. The tables below retain the original
+dependency audit; they are not authority to repeat completed compilations.
 
 T17 can next reuse its existing changed candidate and successful primary build.
 T20 cannot yet enter compilation: its actual annotated submission is unresolved
@@ -111,12 +123,13 @@ needs 24 primary plus 24 diagnostic executions across both roles/families,
 24 packages, four aggregates and two comparisons. These are pending cells,
 not completed samples or a grant of their summed worst-case runtime.
 
-There is one concrete orchestration limitation: `bfs_simulator_series.py` reuses
-`--diagnostic-build` but always recompiles a complete-call primary with hardcoded
-300-second build/600-second API limits. It cannot reuse T17's existing primary
-or inherit its consumed 180-second compilation allowance. Prefer a sealed finite
-manifest of the public requests above to reuse exact binaries; any future
-primary-reuse option is a separate reviewed code change. The existing T15/T16
+The reviewed `bfs_simulator_series.py --primary-build ID` path now reuses an exact
+completed primary in a frozen complete-call series, independently of
+`--diagnostic-build`. It verifies the retained build before and after the grid
+and issues no primary compilation. See the
+[reuse contract](bfs-simulator-primary-reuse-20260926.md). Its local tests are
+orchestration evidence, not guest execution. A sealed finite candidate manifest
+and current Linux/runtime admission are still required. The existing T15/T16
 batch coordinator admits unchanged author series, not these candidates.
 
 Before dispatch, Root/Host must seal that manifest's original finite clock,
