@@ -7,6 +7,17 @@ Updated: 2026-09-27 (Eastern Time)
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
+## Fresh lease-proof checkpoint — 2026-09-27 02:31 ET
+
+The [independent closure](../observations/lease-proofgroup-independent-closure-20260927.json)
+verified the new exact `07baead5` runtime: 51 supplemental lease/RSS cases, five owned-cleanup
+cases, and two interruption cases passed with zero skips. All three strict cleanup ledgers
+passed; retained ownership unions were checked twice and generations441–443 were released.
+The five charged roots, including wrapper output, total 3,395,584 allocated bytes. Actual
+group wall time was 27.728543 seconds; the full new 600-second / 2-GiB reservation remains
+charged without refund. This is contract-fixture proof, not scientific acceptance. Fresh
+simulator admission and execution remain separate requirements; historical attempts stay closed.
+
 ## Failed lease observation — 2026-09-27 02:25 ET
 
 The supervision-recovery attempt failed because an external socket transition

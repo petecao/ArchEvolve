@@ -9,6 +9,17 @@ Updated: 2026-09-27 (Eastern Time)
 
 **Execution authorization (2026-09-25):** The user explicitly authorized autonomous implementation, builds, installations, benchmark/simulator runs, remote access, Git, and Claude Code. The earlier publication-only hold is lifted; ticket dependencies and host resource rules still apply.
 
+## Fresh lease-proof checkpoint — 2026-09-27 02:31 ET
+
+The [independent closure](../observations/lease-proofgroup-independent-closure-20260927.json)
+verified the new exact `07baead5` runtime: 51 supplemental lease/RSS cases, five owned-cleanup
+cases, and two interruption cases passed with zero skips. All three strict cleanup ledgers
+passed; retained ownership unions were checked twice and generations441–443 were released.
+The five charged roots, including wrapper output, total 3,395,584 allocated bytes. Actual
+group wall time was 27.728543 seconds; the full new 600-second / 2-GiB reservation remains
+charged without refund. This is contract-fixture proof, not scientific acceptance. Fresh
+simulator admission and execution remain separate requirements; historical attempts stay closed.
+
 ## Lease recovery preparation — 2026-09-27 02:28 ET
 
 The unlaunched supervision-recovery admission is held because its runtime has the

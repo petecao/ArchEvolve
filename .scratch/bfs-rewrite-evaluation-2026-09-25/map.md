@@ -2421,3 +2421,13 @@ No automatic retry was launched. The remaining floored provider allowance is
 1,031 seconds. The reviewed lease repair is committed as `4743d52`; its minimal
 runtime export is `07baead5` (806 files), pending fresh actual Linux proof.
 The original simulator deadlines and all failed-attempt charges remain intact.
+
+## Fresh Linux lease proof — 2026-09-27 02:36 ET
+
+[Independent closure](observations/lease-proofgroup-independent-closure-20260927.json)
+verified 51 supplemental, five ownership and two interruption cases, all passing
+without skips on runtime `07baead5`. All three cleanup ledgers settled, retained
+identities were checked twice, and node-1 generations 441–443 released. Actual
+execution took 27.728543 seconds and retained 3,395,584 bytes across all five roots.
+Both tasks retain the full 600-second/2-GiB reservation. This is contract proof;
+T15/T16 scientific admission is being prepared and no acceptance cell is complete.
