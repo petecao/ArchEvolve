@@ -54,7 +54,7 @@ def test_parent_traversal_rejected(monkeypatch,tmp_path):
 def test_conflicting_overlay_never_replaces_base(monkeypatch,tmp_path):
     dispatch,records=setup(monkeypatch,tmp_path,'records/overlay.yaml')
     with pytest.raises(RuntimeError,match='conflict'):op.materialize()
-    assert (records/'overlay.yaml').read_bytes()==b'id: base\n'
+    assert not dispatch.exists()
 
 
 def test_manifest_guard_rejects_added_import_before_runtime_execution(monkeypatch,tmp_path):
@@ -62,3 +62,45 @@ def test_manifest_guard_rejects_added_import_before_runtime_execution(monkeypatc
     monkeypatch.setattr(op,'RUNTIME',root);monkeypatch.setattr(op,'git',lambda *args:op.COMMIT.encode())
     manifest=tmp_path/'manifest.json';manifest.write_text(json.dumps({'commit':op.COMMIT,'files':{}}))
     with pytest.raises(RuntimeError,match='runtime bytes differ'):op.guard(manifest,op.digest(manifest.read_bytes()))
+
+
+def test_non_record_source_stays_in_archive_not_yaml_view(monkeypatch,tmp_path):
+    name='records/implementations/gapbs-cc-sv/cc_sv.cc'
+    dispatch,records=setup(monkeypatch,tmp_path,name);op.materialize()
+    assert not (records/'implementations/gapbs-cc-sv/cc_sv.cc').exists()
+    manifest=json.loads((dispatch/'record-view-manifest.json').read_text())
+    assert manifest['git_provenance'][0]['non_record_sources_retained_in_archive'][0]['path']==name
+    assert (dispatch/'records-base.tar').read_bytes()==archive(name,b'id: base\n')
+
+
+@pytest.mark.parametrize('changed',[False,True])
+def test_explicit_partial_completion_never_overwrites(monkeypatch,tmp_path,changed):
+    dispatch,records=setup(monkeypatch,tmp_path);records.mkdir(parents=True)
+    (dispatch/'records-base.tar').write_bytes(archive('records/base.yaml',b'id: base\n'))
+    previous=b'changed\n' if changed else b'id: base\n';(records/'base.yaml').write_bytes(previous)
+    if changed:
+        with pytest.raises(RuntimeError,match='partial record changed'):op.materialize(True)
+        assert not (records/'overlay.yaml').exists()
+    else:
+        op.materialize(True)
+        assert (records/'overlay.yaml').read_bytes()==b'id: retained\n'
+    assert (records/'base.yaml').read_bytes()==previous
+
+
+def test_partial_completion_cannot_touch_sealed_admission(monkeypatch,tmp_path):
+    dispatch,records=setup(monkeypatch,tmp_path);dispatch.mkdir();(dispatch/'admission.json').write_text('sealed')
+    with pytest.raises(RuntimeError,match='sealed or unknown'):op.materialize(True)
+    assert (dispatch/'admission.json').read_text()=='sealed'
+
+
+def test_actual_git_archive_and_evidence_projection(monkeypatch,tmp_path):
+    import subprocess
+    dispatch=tmp_path/'dispatch';records=dispatch/'record-view/records'
+    monkeypatch.setattr(op,'DISPATCH',dispatch);monkeypatch.setattr(op,'RECORDS',records)
+    monkeypatch.setattr(op,'git',lambda *args:subprocess.check_output(['git',*args],cwd=HERE.parents[3],timeout=15))
+    op.materialize()
+    value=json.loads((dispatch/'record-view-manifest.json').read_text())
+    assert len(value['git_provenance'][0]['non_record_sources_retained_in_archive'])==2
+    assert all(p.suffix=='.yaml' for p in records.rglob('*') if p.is_file())
+    for name,wanted in op.OVERLAYS.items():
+        assert op.digest((records/Path(*Path(name).parts[1:])).read_bytes())==wanted

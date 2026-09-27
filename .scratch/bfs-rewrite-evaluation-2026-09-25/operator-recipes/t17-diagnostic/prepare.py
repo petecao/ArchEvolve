@@ -54,32 +54,54 @@ def guard(manifest, expected):
     require(sys.flags.no_user_site and sys.dont_write_bytecode and not sys.flags.optimize,'isolated Python flags required')
 
 
-def materialize():
-    require(not DISPATCH.exists(),'dispatch already exists; never overwrite prepared evidence')
-    # Obtain every source before creating a destination; the only writes below are data.
+def materialize(complete_partial=False):
+    require(not DISPATCH.exists() or complete_partial,'dispatch already exists; never overwrite prepared evidence')
     archive=git('archive','--format=tar',COMMIT,'records')
     require(len(archive)<=32*1024**2,'record archive exceeds bound')
     overlays={name:git('show',EVIDENCE+':'+name) for name in OVERLAYS}
     require(all(digest(data)==OVERLAYS[name] for name,data in overlays.items()),'overlay bytes differ')
-    DISPATCH.mkdir();RECORDS.mkdir(parents=True)
-    (DISPATCH/'records-base.tar').write_bytes(archive)
+    records={};excluded=[]
+    allowed_sources={'records/implementations/gapbs-cc-sv/cc_sv.cc','records/implementations/gapbs-pr-jacobi/pr_spmv.cc'}
     with tarfile.open(fileobj=io.BytesIO(archive),mode='r:') as tar:
         members=tar.getmembers();require(len(members)<=4096,'too many archive entries')
         for member in members:
             path=Path(member.name)
             require(path.parts[0]=='records' and not path.is_absolute() and '..' not in path.parts,'unsafe archive path')
             if member.isdir():continue
-            require(member.isfile() and path.suffix=='.yaml' and member.size<=4*1024**2,'unsafe record archive member')
-            dest=RECORDS/Path(*path.parts[1:]);dest.parent.mkdir(parents=True,exist_ok=True)
-            with dest.open('xb') as stream:stream.write(tar.extractfile(member).read())
-    provenance=[{'commit':COMMIT,'tree':git('rev-parse',COMMIT+':records').decode().strip(),
-                 'archive':reference(DISPATCH/'records-base.tar'),'scope':'complete base records'}]
+            require(member.isfile() and member.size<=4*1024**2,'unsafe record archive member')
+            data=tar.extractfile(member).read()
+            if path.suffix!='.yaml':
+                require(member.name in allowed_sources,'unexpected non-record source')
+                excluded.append({'path':member.name,'bytes':len(data),'sha256':digest(data),'retained_in':'records-base.tar'})
+                continue
+            require(member.name not in records,'duplicate archive record')
+            records[member.name]=data
     for name,data in overlays.items():
-        dest=RECORDS/Path(*Path(name).parts[1:])
-        if dest.exists():require(dest.read_bytes()==data,'base/overlay conflict')
-        else:
-            dest.parent.mkdir(parents=True,exist_ok=True)
+        require(name not in records or records[name]==data,'base/overlay conflict')
+        records[name]=data
+    reused=[]
+    if DISPATCH.exists():
+        require(DISPATCH==DISPATCH.resolve() and not DISPATCH.is_symlink(),'unsafe partial dispatch')
+        require({p.name for p in DISPATCH.iterdir()} <= {'records-base.tar','record-view'},'partial dispatch contains sealed or unknown evidence')
+        require((DISPATCH/'records-base.tar').is_file() and (DISPATCH/'records-base.tar').read_bytes()==archive,'retained archive changed')
+        for path in DISPATCH.rglob('*'):
+            require(not path.is_symlink(),'partial view symlink')
+            if path.is_dir() or path==DISPATCH/'records-base.tar':continue
+            require(path.is_relative_to(RECORDS),'unexpected partial file')
+            name='records/'+str(path.relative_to(RECORDS))
+            require(name in records and path.read_bytes()==records[name],'partial record changed')
+            reused.append(name)
+    else:
+        DISPATCH.mkdir();RECORDS.mkdir(parents=True)
+        with (DISPATCH/'records-base.tar').open('xb') as stream:stream.write(archive)
+    provenance=[{'commit':COMMIT,'tree':git('rev-parse',COMMIT+':records').decode().strip(),
+                 'archive':reference(DISPATCH/'records-base.tar'),'scope':'all base YAML records',
+                 'non_record_sources_retained_in_archive':excluded,'identical_partial_records_reused':sorted(reused)}]
+    for name,data in records.items():
+        dest=RECORDS/Path(*Path(name).parts[1:]);dest.parent.mkdir(parents=True,exist_ok=True)
+        if not dest.exists():
             with dest.open('xb') as stream:stream.write(data)
+    for name,data in overlays.items():
         provenance.append({'commit':EVIDENCE,'path':name,'blob':git('rev-parse',EVIDENCE+':'+name).decode().strip(),'sha256':digest(data),'bytes':len(data)})
     files=[{'path':str(p.relative_to(RECORDS)),'bytes':p.stat().st_size,'sha256':digest(p.read_bytes())} for p in sorted(RECORDS.rglob('*.yaml'))]
     value={'format':'swdb.bfs.record-view.v1','created':'2026-09-27','records':str(RECORDS),'git_provenance':provenance,'files':files}
@@ -89,7 +111,7 @@ def materialize():
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('mode',choices=('prepare','invoke'));p.add_argument('--manifest',type=Path,required=True);p.add_argument('--manifest-sha256',required=True)
-    p.add_argument('--proof',type=Path);p.add_argument('--proof-sha256');p.add_argument('--node',type=int,choices=(0,1))
+    p.add_argument('--proof',type=Path);p.add_argument('--proof-sha256');p.add_argument('--node',type=int,choices=(0,1));p.add_argument('--complete-partial-view',action='store_true')
     args,rest=p.parse_known_args();guard(args.manifest,args.manifest_sha256)
     require(socket.gethostname().split('.')[0]=='mbit10' and sys.platform=='linux','requires mbit10')
     sys.path.insert(0,str(RUNTIME))
@@ -104,7 +126,7 @@ def main():
     runtime=campaign_runtime(COMMIT);prepared=stamp()
     proof={'path':str(args.proof),'sha256':args.proof_sha256}
     scalar.validate_proof(proof,runtime,diagnostic.stamp(prepared),require_storage_case=True)
-    diagnostic.load_request();materialize()
+    diagnostic.load_request();materialize(args.complete_partial_view)
     manifest=reference(DISPATCH/'record-view-manifest.json');diagnostic.validate_record_view(manifest)
     guard(args.manifest,args.manifest_sha256)
     admission={'format':'swdb.bfs.t17-diagnostic-build-admission.v1','id':diagnostic.RUN_ID,'request_sha256':diagnostic.REQUEST_SHA,
