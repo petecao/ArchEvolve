@@ -8,6 +8,20 @@ from scripts import bfs_simulator_batch as batch, bfs_simulator_recovery as reco
 from swdb import artifacts, yamlio
 
 
+HISTORICAL_RUNTIME = {  # the a1 continuation's reviewed verifier runtime (2026-09-27)
+    'scripts/dx100_verify.py': '476874619644d1256dcc5ca1e853c47b7be2e1dc56f538aaa2dd783842e7ad10',
+    'swdb/dx100_witness.py': 'c9d3e14b70a3689799314556fab2922b1723c00960902109af2922a958cd3498'}
+
+
+@pytest.fixture(autouse=True)
+def historical_runtime(monkeypatch):
+    """The closed a1 plan pins its own runtime; later R12 helper edits must not
+    turn these historical admission contracts into checks of the current files."""
+    original = artifacts.file_hash
+    pinned = {batch.ROOT/name: digest for name, digest in HISTORICAL_RUNTIME.items()}
+    monkeypatch.setattr(artifacts, 'file_hash', lambda path: pinned.get(path, None) or original(path))
+
+
 def plan():
     return json.loads((batch.PLAN_DIR/'bfs-t16-protocol-recovery-simulator-batch-20260927-a1.json').read_text())
 

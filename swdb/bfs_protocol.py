@@ -1,4 +1,10 @@
-"""Canonical BFS workloads and immutable comparison policy. Updated 2026-09-26."""
+"""Canonical BFS workloads and immutable comparison policy. Updated 2026-09-26.
+
+2026-09-27 (R10): one simulator execution may bind to several frozen protocols
+only when every protocol-relevant identity actually matches. The execution names
+each additional protocol explicitly (``shared_protocols``) and retains one exact
+binding per protocol; aggregation and comparison select the binding they use.
+"""
 
 import copy
 import datetime
@@ -502,7 +508,15 @@ def _validate_settings(settings, store, *, require_simulation_identity=False):
               "author reference must require candidate accelerator execution with no scalar acceleration requirement")
     sampling = settings.get("sampling")
     _fail(isinstance(sampling, dict), "sampling policy is required")
-    _integer(sampling.get("repetitions"), "repetitions", 5 if mode == "native" else 2)
+    # R11 (2026-09-27): a simulated policy may fix one replay per ordered source
+    # only by declaring the deterministic-replay basis and naming its evidence.
+    determinism = sampling.get("determinism")
+    if determinism is not None:
+        _fail(mode != "native" and isinstance(determinism, dict) and set(determinism) == {"basis", "evidence"}
+              and determinism["basis"] == "deterministic_simulator_replay.v1"
+              and isinstance(determinism["evidence"], str) and determinism["evidence"].strip(),
+              "one-replay sampling needs a simulated deterministic-replay basis and named evidence")
+    _integer(sampling.get("repetitions"), "repetitions", 5 if mode == "native" else 1 if determinism else 2)
     _fail(sampling.get("aggregation") == "geomean_source_median_ratio", "unsupported sampling aggregate")
     _fail(sampling.get("warmups") == 0, "this backend currently supports zero untimed warmups; declare zero")
     policy = settings.get("profitability")
@@ -655,6 +669,15 @@ def validate_protocol_for_evaluation(store, request, candidate, actual_build=Non
             "frozen_at": protocol["frozen_at"], "bound_at": _now(), "settings_sha256": artifacts.digest(settings)}
 
 
+def protocol_binding(context, protocol_id):
+    """Return the exact binding an execution retains for one frozen protocol (R10)."""
+    if context.get("protocol_binding", {}).get("protocol") == protocol_id:
+        return context["protocol_binding"]
+    shared = context.get("shared_protocol_bindings") or {}
+    _fail(isinstance(shared, dict), "shared protocol bindings are malformed")
+    return shared.get(protocol_id, {})
+
+
 def _timestamp(value):
     try:
         timestamp = datetime.datetime.fromisoformat(value.replace("Z", "+00:00"))
@@ -674,7 +697,40 @@ def validate_protocol_for_simulation(store, request, candidate, *, actual_target
     turns a requested repetition count into completed evidence.
     """
     if not request.get("protocol"):
+        _fail("shared_protocols" not in request, "shared protocols require a primary frozen protocol")
         return None
+    shared_ids = request.get("shared_protocols")
+    if shared_ids is not None:
+        _fail(isinstance(shared_ids, list) and shared_ids and len(set(shared_ids)) == len(shared_ids)
+              and all(isinstance(pid, str) for pid in shared_ids) and request["protocol"] not in shared_ids,
+              "shared_protocols must name distinct additional frozen protocols")
+        arguments = dict(actual_target=actual_target, actual_configuration=actual_configuration,
+                         actual_build=actual_build, actual_instrumentation=actual_instrumentation,
+                         actual_threads=actual_threads, actual_roi=actual_roi, actual_verifier=actual_verifier)
+        single = {key: value for key, value in request.items() if key != "shared_protocols"}
+        primary = validate_protocol_for_simulation(store, single, candidate, **arguments)
+        main_settings = _get(store, request["protocol"], "protocol")["settings"]
+        role = request.get("protocol_role")
+        specific = ("protocol", "protocol_binding")
+        bindings = {}
+        for pid in shared_ids:
+            other = validate_protocol_for_simulation(store, {**single, "protocol": pid}, candidate, **arguments)
+            other_settings = _get(store, pid, "protocol")["settings"]
+            # Every identity that decides this role's traversal must match; the
+            # policies may differ only in their other role and disclosures.
+            for key in ("kernel", "workloads", "roi", "threads", "sampling", "correctness", "simulation_identity"):
+                _fail(artifacts.digest(other_settings.get(key)) == artifacts.digest(main_settings.get(key)),
+                      f"shared protocol {key} differs; one execution cannot satisfy both")
+            for key in ("targets", "builds", "instrumentation", "reference_artifacts"):
+                _fail(artifacts.digest(other_settings.get(key, {}).get(role))
+                      == artifacts.digest(main_settings.get(key, {}).get(role)),
+                      f"shared protocol {role} {key} differs; one execution cannot satisfy both")
+            _fail(artifacts.digest({k: v for k, v in other["context"].items() if k not in specific})
+                  == artifacts.digest({k: v for k, v in primary["context"].items() if k not in specific}),
+                  "shared protocol binds a different actual traversal")
+            bindings[pid] = other["binding"]
+        primary["context"]["shared_protocol_bindings"] = bindings
+        return primary
     frozen = _get(store, request["protocol"], "protocol")
     fingerprint = verify_immutable(frozen)
     settings = frozen["settings"]
@@ -779,7 +835,7 @@ def aggregate_evaluations(args):
             _fail(all(component.get(key) == first.get(key) for key in ("candidate", "implementation", "source_snapshot", "machine", "evidence_kind")), "component candidate/source/machine/evidence identities differ")
             _fail(artifacts.digest(component["build"]) == artifacts.digest(first["build"]), "component timed binaries or build/model identity differ")
             _fail(all(artifacts.digest(context.get(key)) == artifacts.digest(first["context"].get(key)) for key in common_keys), "component target/configuration/ROI/source identity differs")
-            binding = context.get("protocol_binding", {})
+            binding = protocol_binding(context, frozen["id"])
             _fail(binding.get("protocol") == frozen["id"] and binding.get("frozen_sha256") == frozen["identity_sha256"]
                   and binding.get("settings_sha256") == artifacts.digest(frozen["settings"]) and binding.get("role") == role
                   and binding.get("workload_id") == wid and binding.get("workload_sha256") == workload["identity_sha256"],
@@ -814,6 +870,11 @@ def aggregate_evaluations(args):
         _fail(cells == expected, "aggregation is missing required frozen source/repetition executions")
         data["context"].update(sources=definition["sources"], repetitions=frozen["settings"]["sampling"]["repetitions"], correctness_cases=sorted(cases))
         data["context"]["workload"]["sources"] = definition["sources"]
+        # R10: the aggregate belongs to this one protocol, even when its
+        # components also retain exact bindings for another matching policy.
+        data["context"]["protocol_binding"] = copy.deepcopy(protocol_binding(first["context"], frozen["id"]))
+        data["context"]["protocol"] = frozen["id"]
+        data["context"].pop("shared_protocol_bindings", None)
         data["context"]["protocol_binding"]["bound_at"] = earliest.isoformat()
         data["context"].pop("protocol_trial", None)
         data["request"]["protocol"] = frozen["id"]
@@ -907,7 +968,7 @@ def _evaluation_samples(store, evaluation, protocol, role):
             _fail(all(artifacts.digest(component_context.get(key)) == artifacts.digest(context.get(key)) for key in
                       ("target", "backend_configuration", "instrumentation", "adapter", "threads", "roi", "verifier", "basis", "candidate_sha256", "model", "interface")),
                   "aggregate target/configuration differs from its components")
-            component_binding = component_context.get("protocol_binding", {})
+            component_binding = protocol_binding(component_context, protocol["id"])
             _fail(component_binding.get("protocol") == protocol["id"]
                   and component_binding.get("frozen_sha256") == protocol["identity_sha256"]
                   and component_binding.get("settings_sha256") == artifacts.digest(settings)

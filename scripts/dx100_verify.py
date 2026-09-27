@@ -1,6 +1,10 @@
 """gem5 entry wrapper: seal the BFS ROI, then resume its verifier.
 
 Updated: 2026-09-27. Executed by the pinned gem5 embedded Python interpreter.
+2026-09-27 (R12): an opt-in post-ROI CPU treatment switches the same machine's
+O3 CPUs to its restore AtomicSimpleCPUs after the ROI statistics are sealed, so
+only the verifier continuation runs in atomic mode. Without the variable the
+behavior is unchanged.
 """
 
 import hashlib
@@ -49,6 +53,9 @@ def main():
         raise RuntimeError('unsupported post-ROI trace flag')
     if witnessed and trace != 'SyscallBase':
         raise RuntimeError('v2 verification requires its explicit post-ROI SyscallBase trace')
+    post_cpu = os.environ.get('SWDB_DX100_POST_ROI_CPU')
+    if post_cpu is not None and (post_cpu != 'AtomicSimpleCPU' or not witnessed):
+        raise RuntimeError('unsupported post-ROI CPU treatment')
     root = Path(os.environ["SWDB_DX100_MODEL_ROOT"])
     entry = root / "configs/deprecated/example/se.py"
     folder = Path(m5.options.outdir)
@@ -154,12 +161,40 @@ def main():
         save(folder / 'roi-seal.json', receipt)
         print('SWDB_DX100_POST_ROI_TRACE ' + json.dumps(
             receipt['verification']['post_roi_trace'], sort_keys=True), flush=True)
+    timed = ['system.switch_cpus' + str(index) for index in range(4)]
+    caller, allowed = timed[0], list(timed)
+    if post_cpu:
+        # R12: the sealed interval is closed; the verifier continuation alone
+        # moves to the same system's switched-out restore CPUs (atomic memory).
+        from m5.objects import Root
+        system = Root.getInstance().system
+        pairs = list(zip(system.switch_cpus, system.cpu))
+        restore = ['system.cpu' + str(index) for index in range(4)]
+        if (len(pairs) != 4 or [old.path() for old, _ in pairs] != timed
+                or [new.path() for _, new in pairs] != restore
+                or any(old.switchedOut() or not new.switchedOut() for old, new in pairs)
+                or any(new.memory_mode() != 'atomic' for _, new in pairs)):
+            raise RuntimeError('post-ROI CPU switch requires the four active timed and restore CPUs')
+        observer.write('post_roi_cpu_switch_begin', tick=int(m5.curTick()))
+        m5.switchCpus(system, pairs, verbose=False)
+        switched = int(m5.curTick())
+        observer.write('post_roi_cpu_switch_end', tick=switched)
+        receipt['verification']['post_roi_cpu'] = {
+            'type': post_cpu, 'memory_mode': 'atomic', 'from': timed, 'to': restore,
+            'requested_tick': enable_tick, 'switched_tick': switched,
+            'scope': 'post-seal verifier continuation only'}
+        caller, allowed = restore[0], timed + restore
+        save(folder / 'roi-seal.json', receipt)
+        print('SWDB_DX100_POST_ROI_CPU ' + json.dumps(receipt['verification']['post_roi_cpu'], sort_keys=True),
+              flush=True)
     # This is the same instantiated machine and guest address space. It resumes
     # immediately after the m5_exit and returns the exact timed parent array.
     observer.write('verification_begin')
     if witnessed:
         terminal = receipt['verification']
-        start_tick = int(m5.curTick())
+        # Count from the sealed ROI exit, so a post-ROI CPU switch that drains
+        # the machine is inside the continuation interval (identical otherwise).
+        start_tick = enable_tick
         while terminal['simulated_ticks'] < terminal['max_ticks']:
             before_tick = int(m5.curTick())
             allowance = min(terminal['chunk_ticks'], terminal['max_ticks'] - terminal['simulated_ticks'])
@@ -169,8 +204,7 @@ def main():
             if end_tick < before_tick or end_tick - before_tick > allowance:
                 raise RuntimeError('post-ROI simulation exceeded its declared tick interval')
             witness = parse_trace(trace_path, enabled_tick=enable_tick, end_tick=end_tick,
-                expected_cpu='system.switch_cpus0', expected_thread=0,
-                allowed_cpus=['system.switch_cpus' + str(i) for i in range(4)], allow_incomplete=True)
+                expected_cpu=caller, expected_thread=0, allowed_cpus=allowed, allow_incomplete=True)
             terminal['post_roi_trace']['sha256'] = witness['trace']['sha256']
             terminal['post_roi_trace']['bytes'] = witness['trace']['bytes']
             terminal['normal_exit_observed'] = (event.getCause() == 'exiting with last active thread context'
