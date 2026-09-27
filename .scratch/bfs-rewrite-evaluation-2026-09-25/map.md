@@ -94,8 +94,10 @@ result followed by a final read-only recount after the last charged-root write.
 retain the reproduced failure and subsequent 201 passes / three Linux skips;
 [independent review](observations/simulator-dispatch-storage-standards-review-20260926.json)
 found no issue and independently passed 15 storage tests. These are local
-contract tests, not empirical execution. The corrected source still needs an
-exact Git export and fresh matching Linux proofs. Only the two consumed
+contract tests, not empirical execution. The exact six-file export `8c39ae0` was pushed and its remote head verified;
+[export inventory](observations/dispatch-storage-export-20260926.json) and
+[independent Git-tree review](observations/dispatch-storage-export-standards-review-20260926.json). Fresh
+matching Linux proofs are next. Only the two consumed
 simulator proof IDs advance to fixed `a2` identities; guest batch IDs and
 budgets remain unchanged.
 
