@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One fixed retained-candidate diagnostic build. Interface v1, 2026-09-26 ET.
+"""One fixed retained-candidate diagnostic build. Interface v1, 2026-09-27 ET.
 
 Original 600-second wrapper clock: 570 work plus shared 30 cleanup. No retry,
 provider, repair, guest execution or primary rebuild. See the dated interface doc.
@@ -94,8 +94,14 @@ def record_inventory():
         if path == RECORDS/'.swdb.lock':
             require(path.is_file() and path.stat().st_size == 0, 'public writer lock differs')
             continue
-        require(path.is_file() and path.suffix == '.yaml' and len(rows) < 4096,
+        relative = path.relative_to(RECORDS).as_posix()
+        source_paths = {'implementations/gapbs-cc-sv/cc_sv.cc',
+                        'implementations/gapbs-pr-jacobi/pr_spmv.cc'}
+        require(path.is_file() and (path.suffix == '.yaml' or relative in source_paths) and len(rows) < 4096,
                 'unexpected or oversized record view')
+        if relative in source_paths:
+            require(artifacts.file_hash(path) == artifacts.file_hash(ROOT/'records'/relative),
+                    'record source attachment differs from pinned runtime')
         rows.append({'path':path.relative_to(RECORDS).as_posix(), 'bytes':path.stat().st_size,
                      'sha256':artifacts.file_hash(path)})
     return rows

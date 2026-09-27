@@ -1,4 +1,4 @@
-"""One diagnostic compile contracts; no empirical build evidence. 2026-09-26 ET."""
+"""One diagnostic compile contracts; no empirical build evidence. 2026-09-27 ET."""
 import copy
 from datetime import timedelta
 import json
@@ -60,6 +60,18 @@ def test_actual_public_get_uses_counted_db_and_record_view(worker):
     assert row['command'][-6:]==['--records',str(build.RECORDS),'--db',str(build.RAW/'swdb.sqlite'),'--format','json']
     assert row['returncode']==0 and row['cleanup']['direct_reaped']
     assert worker.account()['artifact_bytes']>before
+
+
+def test_full_git_record_view_keeps_source_dependencies_for_public_get(worker):
+    shutil.copytree(build.ROOT/'records', build.RECORDS, dirs_exist_ok=True)
+    rows = build.record_inventory()
+    assert any(row['path'].endswith('/cc_sv.cc') for row in rows)
+    assert any(row['path'].endswith('/pr_spmv.cc') for row in rows)
+    assert worker.call(['get','mbit10'])['id'] == 'mbit10'
+    source = build.RECORDS/'implementations/gapbs-cc-sv/cc_sv.cc'
+    source.write_text(source.read_text()+'\n// altered attachment\n')
+    with pytest.raises(ValueError, match='source attachment differs'):
+        build.record_inventory()
 
 
 @pytest.mark.parametrize('mode',['fail','slow'])
