@@ -24,7 +24,7 @@ from scripts import bfs_owned_execution as own  # noqa: E402
 from swdb import artifacts  # noqa: E402
 from swdb.store import Store  # noqa: E402
 
-NODE = 0  # Root lane assignment 2026-09-27 (node1 belongs to Stream B native timing).
+NODE = 1  # Root lane assignment 2026-09-28 19:05 ET: a2 runs on node1 (node0 held by the owner's MemAcc cell).
 KIND = 't17-t20-routes-a2'  # v2 source-0 routes (2026-09-28, option A).
 HELPER = Path('/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh')
 HELPER_SHA = '00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8'
