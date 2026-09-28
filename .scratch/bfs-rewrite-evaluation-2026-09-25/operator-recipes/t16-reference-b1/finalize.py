@@ -7,6 +7,11 @@ after both protocols are frozen through the public ``swdb freeze-protocol`` CLI.
 Scientific settings are the seal-runtime policies except: replay count (R11),
 the verifier runtime of this checkout, and the opt-in atomic verifier continuation
 (R12). Targets, graph, source, builds, ROI, correctness and profitability are unchanged.
+
+Updated 2026-09-28 ET (low storage): ``requests --low-storage`` writes version-2
+requests that supersede the frozen b1 protocols and change only the candidate
+debug flags to MAATrace (unit Start/End lines, which prove accelerator execution);
+``plan`` then pins the MAATrace-only trace treatment and the smaller storage.
 """
 import argparse
 import copy
@@ -27,8 +32,27 @@ NAMES = {'artifact': 'author-reference-t16-b1-20260927', 'control': 'author-matc
 PLAN_ID = 'bfs-t16-reference-simulator-batch-20260927-b1'
 
 
-def request_path(key):
-    return REQUESTS/f'{NAMES[key]}-freeze.yaml'
+def request_path(key, low_storage=False):
+    return REQUESTS/f'{NAMES[key]}-freeze{"-v2" if low_storage else ""}.yaml'
+
+
+def low_storage_requests():
+    """Version 2 of each frozen b1 request: candidate debug flags MAATrace only."""
+    store = Store(ROOT/'records')
+    for key in SOURCES:
+        original = yamlio.load(request_path(key))
+        frozen = [row.data for row in store.of_kind('protocol') if row.data.get('requested_id') == original['id']
+                  and row.data['settings'] == original['settings']]
+        assert len(frozen) == 1, 'the version-1 protocol must be frozen exactly once'
+        settings = copy.deepcopy(original['settings'])
+        assert settings['instrumentation']['baseline']['debug_flags'] == 'MAATrace'
+        settings['instrumentation']['candidate']['debug_flags'] = 'MAATrace'
+        value = {'message_version': '1.0', 'id': original['id'], 'version': 2, 'supersedes': frozen[0]['id'],
+                 'settings': settings}
+        header = ('# Created 2026-09-28 (Eastern Time): T16 b1 low-storage version 2; only the candidate debug flags '
+                  'change (MAATrace-only unit Start/End trace). Supersedes ' + frozen[0]['id'] + '.\n')
+        request_path(key, True).write_text(header + yamlio.dumps(value))
+        print(request_path(key, True))
 
 
 def runtime():
@@ -59,22 +83,24 @@ def write_requests(repetitions, atomic, evidence=None):
 def write_plan():
     store = Store(ROOT/'records')
     protocols, repetitions, atomic = {}, set(), set()
+    low_storage = all(request_path(key, True).is_file() for key in SOURCES)
     for key in SOURCES:
-        path = request_path(key); request = yamlio.load(path)
-        frozen = [row.data for row in store.of_kind('protocol') if row.data.get('requested_id') == request['id']]
-        assert len(frozen) == 1 and frozen[0]['settings'] == request['settings'], 'freeze the request exactly once first'
+        path = request_path(key, low_storage); request = yamlio.load(path)
+        frozen = [row.data for row in store.of_kind('protocol') if row.data.get('requested_id') == request['id']
+                  and row.data['settings'] == request['settings']]
+        assert len(frozen) == 1, 'freeze the request exactly once first'
         protocols[key] = {'path': str(path.relative_to(ROOT)), 'sha256': artifacts.file_hash(path),
                           'frozen_id': frozen[0]['id']}
         repetitions.add(request['settings']['sampling']['repetitions'])
         atomic.add('post_roi_cpu' in request['settings']['instrumentation']['candidate'])
     assert len(repetitions) == len(atomic) == 1
-    plan = build_plan(protocols, repetitions.pop(), atomic.pop())
+    plan = build_plan(protocols, repetitions.pop(), atomic.pop(), low_storage)
     path = REQUESTS/f'{PLAN_ID}.json'
     path.write_text(json.dumps(plan, indent=1) + '\n')
     print(path, artifacts.digest(plan))
 
 
-def build_plan(protocols, reps, atomic):
+def build_plan(protocols, reps, atomic, low_storage=False):
     """The fixed T16 b1 plan for already frozen protocol references."""
     old = json.loads((REQUESTS/'bfs-t16-protocol-recovery-simulator-batch-20260927-a1.json').read_text())
     pilot = json.loads((REQUESTS/'bfs-t15-pilot-simulator-batch-20260927-b1.json').read_text())
@@ -86,6 +112,10 @@ def build_plan(protocols, reps, atomic):
     # two chain readbacks, each bounded by aggregate_seconds.
     primary_envelope, diagnostic_envelope = min(86400, 3600 + run + 60), diagnostic
     profile, package, aggregate = 36000, 36000, 14400
+    if low_storage:
+        # MAATrace-only traces are about 1/1000 of the full stream, so trace
+        # rereads no longer dominate; the remaining work is log/statistics parsing.
+        profile, package, aggregate = 7200, 7200, 3600
     series_seconds = ((executions // 2) * (primary_envelope + diagnostic_envelope)
                       + reps * (profile + package) + 4 * aggregate)
     plan = {key: pilot[key] for key in ('format', 'automatic_retry_allowed', 'gain_claim', 'model_build', 'target',
@@ -145,6 +175,26 @@ def build_plan(protocols, reps, atomic):
         series=[])
     if atomic:
         plan['post_roi_cpu'] = 'AtomicSimpleCPU'
+    if low_storage:
+        storage, per_execution, per_series, reserve = 16, 4, 8, 10
+        plan['trace_flags'] = 'MAATrace'
+        plan['allocation'].update(storage_gib=storage, shared_series_gib=storage - 4, per_series_cap_gib=per_series,
+            free_space_required_at_admission_gib=storage + reserve,
+            reserve_change='raw_reserve_gib 30 -> 10 GiB, root-approved 2026-09-28 (low-storage variant; '
+                           '/data expected at 35-50 GiB free after T17/T20)',
+            notes=plan['allocation']['notes'][:2] + [
+                'Low storage (2026-09-28): accelerated executions record only the MAATrace unit Start/End '
+                'trace (verification.coverage false). Measured on T15 b3 uniform18: MAATrace lines are a '
+                'negligible share of the full stream; scalar traces are empty (20 bytes). Per execution the '
+                'retained raw output is dominated by its uniform22 checkpoint (about 0.52 GB).',
+                'Tile-size and indirect-store (competing-parent) observations are unobserved by design; '
+                'accelerator execution (the frozen required case) stays observed. No trace is deleted.'])
+        plan['bounds'].update(storage_gib=per_execution, batch_storage_gib=storage, raw_reserve_gib=reserve)
+        plan['bound_changes'].update(
+            storage_gib='24 -> 4 in the low-storage variant: checkpoint about 0.52 GB plus MAATrace-only trace and logs',
+            profile_seconds='36,000 -> 7,200 in the low-storage variant (no full trace to reread)',
+            package_seconds='36,000 -> 7,200 in the low-storage variant (no full trace to reread)',
+            aggregate_seconds='14,400 -> 3,600 in the low-storage variant (no full trace to reread)')
     for name, key, role, scalar, config in (
             ('artifact.scalar', 'artifact', 'baseline', True, {'mode': 'BASE', 'l3_size_mb': 10, 'l3_assoc': 20}),
             ('control.scalar', 'control', 'baseline', True, {'mode': 'BASE', 'l3_size_mb': 8, 'l3_assoc': 16}),
@@ -167,8 +217,12 @@ def main():
     parser.add_argument('--repetitions', type=int, choices=(1, 2))
     parser.add_argument('--atomic', action=argparse.BooleanOptionalAction)
     parser.add_argument('--evidence', help='R11: repository path of the retained T15 replay-determinism observation')
+    parser.add_argument('--low-storage', action='store_true',
+                        help='write version-2 requests superseding the frozen b1 protocols (MAATrace-only candidate)')
     args = parser.parse_args()
-    if args.mode == 'requests':
+    if args.mode == 'requests' and args.low_storage:
+        low_storage_requests()
+    elif args.mode == 'requests':
         if args.repetitions is None or args.atomic is None:
             parser.error('requests need --repetitions and --atomic/--no-atomic from the R11/R12 evidence')
         if args.repetitions == 1 and not (args.evidence and (ROOT/args.evidence).is_file()):

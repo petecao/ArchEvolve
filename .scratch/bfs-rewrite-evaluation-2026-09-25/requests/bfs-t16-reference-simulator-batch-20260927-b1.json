@@ -68,14 +68,14 @@
  },
  "protocol_requests": {
   "artifact": {
-   "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-reference-t16-b1-20260927-freeze.yaml",
-   "sha256": "dbc0eebb07d3f8f75302660f10fb2fd3b3bec47bfbfaeb5cbe4ecf57ac03f7a3",
-   "frozen_id": "author-reference-t16-b1-20260927.df9f8f66b18fe1ed"
+   "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-reference-t16-b1-20260927-freeze-v2.yaml",
+   "sha256": "e30d3549831ccf7b67b7efd933ff4d92228e4a6c436352644b8a59875814e191",
+   "frozen_id": "author-reference-t16-b1-20260927.75c1f44c5f653f3a"
   },
   "control": {
-   "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-matched-control-t16-b1-20260927-freeze.yaml",
-   "sha256": "ee26539818a65e599a49bf5638ee944220a8436f0224113db0bcfcdc4c44161c",
-   "frozen_id": "author-matched-control-t16-b1-20260927.4074e7f7ca8d1099"
+   "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-matched-control-t16-b1-20260927-freeze-v2.yaml",
+   "sha256": "062fbc2347dbfee7268ff8b6ead3b5d24b606b079d41b28ca15ed0620b43b88d",
+   "frozen_id": "author-matched-control-t16-b1-20260927.7daeae1ccc961a49"
   }
  },
  "lane": {
@@ -89,23 +89,24 @@
  "budget_authority": "Root decisions R10-R12 (2026-09-27) on the resumed plan: one MAA execution set bound to both protocols, one replay per source when T15 replays are deterministic, and an atomic post-ROI verifier continuation proven on kron14. Historical T16 charges (24,325 s / 11,011,186,688 bytes, including the stopped protocol-recovery a1 run and its 0.226 s dead-owner reservation under R1) remain retained separately. No resume of any failed ID, no automatic retry.",
  "allocation": {
   "policy": "t16_incremental_allocation.v1",
-  "total_seconds": 514980,
+  "total_seconds": 414180,
   "partition_seconds": {
    "preparation": 3600,
-   "series": 507780,
+   "series": 406980,
    "finalization": 3570,
    "scientific_cleanup": 30
   },
-  "storage_gib": 64,
+  "storage_gib": 16,
   "overhead_reserve_gib": 4,
-  "shared_series_gib": 60,
-  "per_series_cap_gib": 50,
-  "free_space_required_at_admission_gib": 84,
-  "reserve_change": "raw_reserve_gib 30 -> 20 GiB, root-approved 2026-09-28 11:15 ET because /data had about 94 GiB free with T17/T20 queued before T16",
+  "shared_series_gib": 12,
+  "per_series_cap_gib": 8,
+  "free_space_required_at_admission_gib": 26,
+  "reserve_change": "raw_reserve_gib 30 -> 10 GiB, root-approved 2026-09-28 (low-storage variant; /data expected at 35-50 GiB free after T17/T20)",
   "notes": [
    "The three series run concurrently (R3) behind one gem5 slot; each series allowance is a ceiling inside the same envelope, sized as every planned execution at its run bound.",
    "Each series driver has its own 30-second shared cleanup ledger (three drivers).",
-   "Storage: MAA uniform22 trace about 19.3 GiB per execution (T15 uniform18 1.30 GB x 16); scalar traces near zero; no trace is deleted in flight."
+   "Low storage (2026-09-28): accelerated executions record only the MAATrace unit Start/End trace (verification.coverage false). Measured on T15 b3 uniform18: MAATrace lines are a negligible share of the full stream; scalar traces are empty (20 bytes). Per execution the retained raw output is dominated by its uniform22 checkpoint (about 0.52 GB).",
+   "Tile-size and indirect-store (competing-parent) observations are unobserved by design; accelerator execution (the frozen required case) stays observed. No trace is deleted."
   ]
  },
  "concurrency": {
@@ -116,19 +117,19 @@
   "lane_tree_sampled_rss_gib": 52
  },
  "bounds": {
-  "batch_seconds": 514980,
-  "series_seconds": 507780,
+  "batch_seconds": 414180,
+  "series_seconds": 406980,
   "cleanup_seconds": 30,
   "checkpoint_seconds": 3600,
   "run_seconds": 43200,
   "diagnostic_seconds": 79200,
-  "profile_seconds": 36000,
-  "package_seconds": 36000,
-  "aggregate_seconds": 14400,
+  "profile_seconds": 7200,
+  "package_seconds": 7200,
+  "aggregate_seconds": 3600,
   "memory_gib": 48,
-  "storage_gib": 24,
-  "batch_storage_gib": 64,
-  "raw_reserve_gib": 20,
+  "storage_gib": 4,
+  "batch_storage_gib": 16,
+  "raw_reserve_gib": 10,
   "build_reserve_gib": 10,
   "monitor_interval_seconds": 5,
   "sampled_tree_memory_gib": 52,
@@ -137,10 +138,10 @@
  "bound_changes": {
   "run_seconds": "raised 14,400 -> 43,200: uniform22 scalar ROI measured > 10,700 s and estimated 15,000-30,000 s (0.219 simulated s in <= 8,100 host s; about 0.5 simulated s remained); bound only",
   "diagnostic_seconds": "raised 600 -> 79,200: T15 diagnostics took 1.4-1.5x the primary ROI host time (region markers); 7,200 s is its checkpoint bound, leaving 71,970 s for simulation; bound only",
-  "storage_gib": "raised 15 -> 24: MAA uniform22 debug trace estimated 19.3 GiB; bound only",
-  "profile_seconds": "raised -> 36,000: T15 b2 measured dx100-profile 900 s for uniform18 (17.8-GB decoded traces); uniform22 traces are about 16x larger (about 14,400 s); 2.5x margin; bound only",
-  "package_seconds": "new 36,000: profile-package re-validates both full traces (T15 about 815 s for uniform18, about 13,000 s scaled to uniform22); 2.8x margin; bound only",
-  "aggregate_seconds": "new 14,400 (default 180): aggregation and chain readback re-validate each primary trace; T15 scale-18 aggregation took about 21 min for its primaries (about 3.5 min each), about 1 h for one uniform22 MAA primary; 4x margin; bound only"
+  "storage_gib": "24 -> 4 in the low-storage variant: checkpoint about 0.52 GB plus MAATrace-only trace and logs",
+  "profile_seconds": "36,000 -> 7,200 in the low-storage variant (no full trace to reread)",
+  "package_seconds": "36,000 -> 7,200 in the low-storage variant (no full trace to reread)",
+  "aggregate_seconds": "14,400 -> 3,600 in the low-storage variant (no full trace to reread)"
  },
  "accounting": {
   "preparation": [],
@@ -210,5 +211,6 @@
    ]
   }
  ],
- "post_roi_cpu": "AtomicSimpleCPU"
+ "post_roi_cpu": "AtomicSimpleCPU",
+ "trace_flags": "MAATrace"
 }
