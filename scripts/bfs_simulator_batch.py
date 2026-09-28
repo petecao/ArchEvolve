@@ -40,7 +40,7 @@ from swdb.store import Store
 
 ET = ZoneInfo('America/New_York')
 GIB = 1024**3
-PLAN_HASHES = {'t15-pilot-b3': '85b0b76901b008b28fcce1da0245e98f4904ca8ee3a97edf4da1dc78397c4368', 't15-pilot-b2': '0545e3f47fa09feabd673fa1d4a69fb8326abe2691535e1b0dffab29ed3da3be', 't15-pilot': 'f515581f5ff0bc933a93eff3ad8e93b0dfcf58a960606c16f1505ca9fb878f8a', 't16-protocol-recovery': 'eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8', 't16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
+PLAN_HASHES = {'t17-t20-routes': '29d4adf356147e932a0c5654d0b447c7cfd4839b709c590c4313eb97fa1ca06f', 't15-pilot-b3': '85b0b76901b008b28fcce1da0245e98f4904ca8ee3a97edf4da1dc78397c4368', 't15-pilot-b2': '0545e3f47fa09feabd673fa1d4a69fb8326abe2691535e1b0dffab29ed3da3be', 't15-pilot': 'f515581f5ff0bc933a93eff3ad8e93b0dfcf58a960606c16f1505ca9fb878f8a', 't16-protocol-recovery': 'eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8', 't16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
 PILOT_KIND = 't15-pilot'
 PILOT_ID = 'bfs-t15-pilot-simulator-batch-20260927-b1'
 # 2026-09-27: b1 failed its first-pair 120-s profile gate; b2 is the fresh relaunch.
@@ -50,9 +50,15 @@ PILOT_POLICY = 't15_incremental_allocation.v1'
 T16_KIND = 't16-reference'
 T16_ID = 'bfs-t16-reference-simulator-batch-20260927-b1'
 T16_POLICY = 't16_incremental_allocation.v1'
-PILOT_PLANS[T16_KIND] = T16_ID
-# Incremental one-lane allocation policies (T15 pilot attempts, T16 reference).
-INCREMENTAL = {PILOT_POLICY, T16_POLICY}
+# Incremental one-lane allocations: policy -> (kind, plan ID, flat preparation row).
+# 2026-09-28: T17/T20 controlled-simulator routes reuse the pilot lane-job design;
+# rows carry a driver `group` and retained primary builds instead of author binaries.
+ROUTES_KIND = 't17-t20-routes'
+ROUTES_ID = 'bfs-t17-t20-routes-simulator-batch-20260928-a1'
+ROUTES_POLICY = 'routes_incremental_allocation.v1'
+INCREMENTAL = {PILOT_POLICY: (PILOT_KIND, PILOT_ID, 'bfs-t15-pilot-preparation-20260927-b1'),
+               ROUTES_POLICY: (ROUTES_KIND, ROUTES_ID, 'bfs-t17-t20-routes-preparation-20260928-a1'),
+               T16_POLICY: (T16_KIND, T16_ID, 'bfs-t16-reference-preparation-20260927-b1')}
 PILOT_TEST_CASES = {
     'owned_cleanup': {
         'test_linux_owned_stage_reaps_detached_child[False]',
@@ -111,6 +117,9 @@ def is_pilot(plan):
 def plan_path(kind):
     if kind in PILOT_PLANS:
         return PLAN_DIR / (PILOT_PLANS[kind] + '.json')
+    for plan_kind, plan_id, _ in INCREMENTAL.values():
+        if kind == plan_kind:
+            return PLAN_DIR / (plan_id + '.json')
     date = '20260927' if kind in {'t15-lease-recovery', 't16-lease-recovery', 't16-seal-recovery', 't16-protocol-recovery'} else '20260926'
     return PLAN_DIR / f'bfs-{kind}-simulator-batch-{date}-a1.json'
 
@@ -407,7 +416,8 @@ def validate_preparation_reservation(plan, admission):
         # The incremental allocation reserves its 3,600 preparation seconds and
         # 4-GiB overhead as one flat row; it carries no historical proof group.
         reserved = plan['accounting']['preparation_reservation']
-        require(reserved == {'id': plan['id'].replace('-simulator-batch-', '-preparation-'), 'elapsed_seconds': 3600,
+        known = set(PILOT_PLANS.values()) | {plan_id for _, plan_id, _ in INCREMENTAL.values()}
+        require(plan['id'] in known and reserved == {'id': plan['id'].replace('-simulator-batch-', '-preparation-'), 'elapsed_seconds': 3600,
                              'raw_bytes': 4 * GIB} and 'preparation_reservation' not in admission,
                 'pilot preparation reservation differs from the approved partition')
         return
@@ -670,7 +680,8 @@ def validate_inputs(plan, admission, store):
         candidate = store.get(row['candidate']); source = store.get(candidate['source_snapshot'])
         implementation = store.get(candidate['implementation']); workload = store.get(row['workload'])
         frozen = protocols.get(row['protocol_key'])
-        validate_selection(candidate, source, implementation, workload, frozen, row['protocol_role'], True,
+        validate_selection(candidate, source, implementation, workload, frozen, row['protocol_role'],
+                           not row.get('primary_build'),
                            artifacts.identify(artifacts.source_root(store, implementation)))
         require(workload['definition']['sources'] == row['sources'], 'ordered workload sources changed')
         validate_diagnostic_build(store.get(row['diagnostic_build']), candidate, implementation,
@@ -828,7 +839,8 @@ def series_command(plan, row, admission, config, runs, records, node, seconds, s
         '--id', row['id'], '--candidate', row['candidate'], '--workload', row['workload'],
         '--build-evaluation', plan['model_build'], '--diagnostic-build', row['diagnostic_build'],
         '--configuration', str(config), '--runs-dir', str(runs), '--records', str(records), '--lane', str(node),
-        '--author-binary', '--verifier', plan['verifier'], '--require-capacity',
+        *(['--primary-build', row['primary_build']] if row.get('primary_build') else ['--author-binary']),
+        '--verifier', plan['verifier'], '--require-capacity',
         '--total-seconds', str(seconds), '--checkpoint-seconds', str(b['checkpoint_seconds']),
         '--run-seconds', str(b['run_seconds']), '--diagnostic-seconds', str(b['diagnostic_seconds']),
         '--memory-gib', str(b['memory_gib']), '--storage-gib', str(b['storage_gib']),
@@ -850,6 +862,8 @@ def series_command(plan, row, admission, config, runs, records, node, seconds, s
         command += ['--profile-seconds', str(b['profile_seconds'])]
     if 'package_seconds' in b:
         command += ['--package-seconds', str(b['package_seconds'])]
+    if 'aggregate_seconds' in b:
+        command += ['--aggregate-seconds', str(b['aggregate_seconds'])]
     if slots is not None:
         command += ['--gem5-slot-dir', str(slots), '--gem5-slots', str(plan['concurrency']['gem5_slots'])]
     return command
@@ -889,7 +903,7 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
         ('checkpoint_seconds', 'run_seconds', 'diagnostic_seconds', 'memory_gib', 'storage_gib')}
     expected_bounds.update(total_seconds=seconds, batch_storage_gib=storage,
                            verification_ticks=plan['verification_ticks'])
-    for name in ('profile_seconds', 'package_seconds'):
+    for name in ('profile_seconds', 'package_seconds', 'aggregate_seconds'):
         if name in plan['bounds']:
             expected_bounds[name] = plan['bounds'][name]
     expected_protocol = admission['protocols'][row['protocol_key']]['id'] if row['protocol_key'] else None
@@ -1122,7 +1136,11 @@ def main():
     validate_plan(plan, args.kind)
     pilot = is_pilot(plan)
     selected = plan['series']
-    if pilot:
+    grouped = pilot and any('group' in row for row in plan['series'])
+    if grouped:
+        selected = [row for row in plan['series'] if row.get('group') == args.family]
+        require(selected, 'route driver requires a planned series group')
+    elif pilot:
         selected = [row for row in plan['series'] if row['id'] == plan['id'] + '.' + str(args.family)]
         require(len(selected) == 1, 'pilot driver requires exactly one planned family')
     else:
@@ -1137,7 +1155,8 @@ def main():
     runs = args.runs_dir.absolute()
     if pilot:
         # One family root inside the allocation root; both count in the aggregate.
-        require(runs == pilot_storage_paths(plan)[0] / selected[0]['id'] and runs == runs.resolve(),
+        driver_root = plan['id'] + '.' + args.family if grouped else selected[0]['id']
+        require(runs == pilot_storage_paths(plan)[0] / driver_root and runs == runs.resolve(),
                 'pilot family root differs from the planned allocation root')
     else:
         require(runs.name == plan['id'] and any(base in runs.parents for base in RAW_ROOTS)

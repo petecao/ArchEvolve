@@ -82,11 +82,12 @@ def build_plan(protocols, reps, atomic):
     run, diagnostic = 43200, 79200  # diagnostic: 7,200 checkpoint + 71,970 simulation + 30
     # Every execution's full public envelope, serialized behind one gem5 slot,
     # plus this series' own profile and package calls (they do not hold the slot)
-    # and 3,600 s for aggregation and readback after its last sample.
+    # and, for the MAA series with its shared protocol, two aggregate calls and
+    # two chain readbacks, each bounded by aggregate_seconds.
     primary_envelope, diagnostic_envelope = min(86400, 3600 + run + 60), diagnostic
-    profile, package = 36000, 36000
+    profile, package, aggregate = 36000, 36000, 14400
     series_seconds = ((executions // 2) * (primary_envelope + diagnostic_envelope)
-                      + reps * (profile + package) + 3600)
+                      + reps * (profile + package) + 4 * aggregate)
     plan = {key: pilot[key] for key in ('format', 'automatic_retry_allowed', 'gain_claim', 'model_build', 'target',
             'verifier', 'roi', 'threads', 'warmups', 'verification_ticks', 'profitability', 'historical_failure',
             'required_a3', 'required_coverage', 'historical_coverage_failure', 'supervision', 'trace_transport')}
@@ -118,7 +119,7 @@ def build_plan(protocols, reps, atomic):
                      'lane_tree_sampled_rss_gib': 52},
         bounds={'batch_seconds': 3600 + series_seconds + 3570 + 30, 'series_seconds': series_seconds,
                 'cleanup_seconds': 30, 'checkpoint_seconds': 3600, 'run_seconds': run,
-                'diagnostic_seconds': diagnostic, 'profile_seconds': profile, 'package_seconds': package, 'memory_gib': 48, 'storage_gib': 24,
+                'diagnostic_seconds': diagnostic, 'profile_seconds': profile, 'package_seconds': package, 'aggregate_seconds': aggregate, 'memory_gib': 48, 'storage_gib': 24,
                 'batch_storage_gib': 64 if reps == 1 else 124, 'raw_reserve_gib': 30, 'build_reserve_gib': 10,
                 'monitor_interval_seconds': 5, 'sampled_tree_memory_gib': 52, 'maximum_telemetry_gap_seconds': 30},
         bound_changes={
@@ -130,7 +131,10 @@ def build_plan(protocols, reps, atomic):
             'profile_seconds': 'raised -> 36,000: T15 b2 measured dx100-profile 900 s for uniform18 (17.8-GB decoded traces); '
                                'uniform22 traces are about 16x larger (about 14,400 s); 2.5x margin; bound only',
             'package_seconds': 'new 36,000: profile-package re-validates both full traces (T15 about 815 s for uniform18, '
-                               'about 13,000 s scaled to uniform22); 2.8x margin; bound only'},
+                               'about 13,000 s scaled to uniform22); 2.8x margin; bound only',
+            'aggregate_seconds': 'new 14,400 (default 180): aggregation and chain readback re-validate each primary trace; '
+                                 'T15 scale-18 aggregation took about 21 min for its primaries (about 3.5 min each), '
+                                 'about 1 h for one uniform22 MAA primary; 4x margin; bound only'},
         accounting={'preparation': [], 'preparation_reservation': {
             'id': 'bfs-t16-reference-preparation-20260927-b1', 'elapsed_seconds': 3600, 'raw_bytes': 4294967296},
             'excluded': 'All earlier T16 attempts, proofs and failures remain charged in their own records.'},

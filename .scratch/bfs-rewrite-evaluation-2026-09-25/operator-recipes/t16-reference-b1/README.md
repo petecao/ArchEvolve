@@ -44,15 +44,16 @@ The grid has three series: `artifact.scalar` (BASE, 10 MiB/20-way), `control.sca
 | diagnostic_seconds | 79,200 | 7,200 checkpoint + 71,970 simulation + 30; T15 diagnostic ROI took 1.4–1.5x the primary host time |
 | storage_gib (per execution) | 24 | MAA trace about 19.3 GiB (1.30 GB x 16) |
 | profile_seconds / package_seconds | 36,000 / 36,000 | T15 b2 uniform18: 900 s / about 815 s, x16 for uniform22 |
-| series_seconds | 453,780 | all 6 execution envelopes behind one slot + own profile/package + 3,600 |
-| allocation | 460,980 s (128.1 h) | 3,600 preparation + series + 3,600 finalization/cleanup |
+| aggregate_seconds | 14,400 | aggregation re-validates each primary trace (T15: about 3.5 min per scale-18 primary) |
+| series_seconds | 507,780 | all 6 execution envelopes behind one slot + own profile/package + 2 aggregates and 2 readbacks |
+| allocation | 514,980 s (143.1 h) | 3,600 preparation + series + 3,600 finalization/cleanup |
 | storage allocation | 64 GiB | 2 x 24 (MAA) + scalar/ledgers, per-series cap 50 |
 | /data free at admission | >= 94 GiB | 64 + 30 reserve |
 
 The expected cost is lower than the bound: about 200,000–215,000 s (55–60 h),
 assuming atomic verification cuts the roughly 30,000 s O3 verifier to a few
 thousand seconds. The 2-replay fallback doubles the executions. Its series
-bound is 903,960 s and it needs 124 GiB of storage, which does not fit /data after
+bound exceeds the 864,000-s series cap and it needs 124 GiB of storage, which does not fit /data after
 T15 unless traces are reduced.
 
 ## Steps (all on mbit10, in the immutable runtime checkout)

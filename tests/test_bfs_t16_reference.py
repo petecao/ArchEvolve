@@ -49,8 +49,9 @@ def test_plan_keeps_the_frozen_grid_and_sizes_the_allocation_from_bounds():
     bounds, allocation = value['bounds'], value['allocation']
     primary = bounds['checkpoint_seconds'] + bounds['run_seconds'] + 60
     post = bounds['profile_seconds'] + bounds['package_seconds']
-    assert bounds['series_seconds'] == 3 * (primary + bounds['diagnostic_seconds']) + post + 3600 == 453780
-    assert sum(allocation['partition_seconds'].values()) == allocation['total_seconds'] == bounds['batch_seconds'] == 460980
+    tail = 4 * bounds['aggregate_seconds']
+    assert bounds['series_seconds'] == 3 * (primary + bounds['diagnostic_seconds']) + post + tail == 507780
+    assert sum(allocation['partition_seconds'].values()) == allocation['total_seconds'] == bounds['batch_seconds'] == 514980
     assert bounds['diagnostic_seconds'] - min(bounds['diagnostic_seconds'] // 2, 7200) - 30 >= bounds['run_seconds'] - 30
     assert (allocation['storage_gib'], allocation['per_series_cap_gib'], bounds['storage_gib']) == (64, 50, 24)
     assert allocation['free_space_required_at_admission_gib'] == 94
@@ -62,7 +63,7 @@ def test_plan_keeps_the_frozen_grid_and_sizes_the_allocation_from_bounds():
     with pytest.raises(ValueError, match='approved partition'):
         batch.validate_preparation_reservation(changed, {})
     two = t16_plan(reps=2)
-    assert two['bounds']['series_seconds'] == 6 * (primary + bounds['diagnostic_seconds']) + 2 * post + 3600
+    assert two['bounds']['series_seconds'] == 6 * (primary + bounds['diagnostic_seconds']) + 2 * post + tail
     assert 'post_roi_cpu' not in t16_plan(atomic=False)
 
 
@@ -82,7 +83,7 @@ def test_series_commands_bind_shared_protocol_and_atomic_verifier(tmp_path):
     for command in commands.values():
         assert arg(command, '--run-seconds') == '43200' and arg(command, '--diagnostic-seconds') == '79200'
         assert arg(command, '--storage-gib') == '24' and arg(command, '--profile-seconds') == '36000'
-        assert arg(command, '--package-seconds') == '36000'
+        assert arg(command, '--package-seconds') == '36000' and arg(command, '--aggregate-seconds') == '14400'
         assert arg(command, '--gem5-slots') == '1' and arg(command, '--batch-storage-gib') == '50'
 
 
