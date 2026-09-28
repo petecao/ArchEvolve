@@ -858,3 +858,49 @@ def test_pilot_relaunch_charges_closed_attempt_and_keeps_one_allocation(monkeypa
     monkeypatch.setattr(batch, 'allocated_bytes', lambda paths: 7 * batch.GIB + 1)
     with pytest.raises(ValueError, match='changed after closure'):
         batch.preparation_charges(value)
+
+
+# T17/T20 routes (2026-09-28 ET): retained primary builds, frozen protocols, one replay.
+
+def routes_plan():
+    return json.loads(batch.plan_path(batch.ROUTES_KIND).read_text())
+
+
+def test_routes_plan_binds_frozen_protocols_and_grouped_drivers():
+    value = routes_plan(); batch.validate_plan(value, batch.ROUTES_KIND)
+    assert batch.is_pilot(value) and value['repetitions'] == 1 and value['roi'] == 'bfs.complete_call.v1'
+    groups = {}
+    for row in value['series']:
+        groups.setdefault(row['group'], []).append(row['protocol_role'])
+        assert row['primary_build'] and row['accelerated'] == (row['protocol_role'] == 'candidate')
+        assert row['sources'] == [0, 1234, 7777] and row['protocol_key'] in {'t17', 't20'}
+    assert groups == {g: ['baseline', 'candidate'] for g in
+                      ('t17.kronecker18', 't17.uniform18', 't20.kronecker18', 't20.uniform18')}
+    store = Store(REPO / 'records')
+    for key, ref in value['protocol_requests'].items():
+        frozen = [r for r in store.of_kind('protocol')
+                  if r.data.get('requested_id') == f'bfs-{key}-controlled-simulator-20260928']
+        assert len(frozen) == 1 and frozen[0].data['settings']['sampling']['repetitions'] == 1
+        assert artifacts.file_hash(REPO / ref['path']) == ref['sha256']
+    assert batch.preparation_charges(value) == [{'id': 'bfs-t17-t20-routes-preparation-20260928-a1',
+                                                'elapsed_seconds': 3600, 'raw_bytes': 4 * batch.GIB}]
+    batch.validate_preparation_reservation(value, {})
+
+
+def test_route_series_command_uses_retained_primary_build_not_author_binary(tmp_path):
+    value = routes_plan()
+    approval = {**admission(value), 'protocols': {key: {'id': key + '.frozen', 'sha256': 'x'}
+                                                  for key in value['protocol_requests']}}
+    for row in value['series']:
+        command = batch.series_command(value, row, approval, tmp_path/'c', tmp_path/'raw', tmp_path/'r', 0,
+                                       72000, 16, None, tmp_path/'slots')
+        arg = lambda name: command[command.index(name) + 1]
+        assert '--author-binary' not in command and arg('--primary-build') == row['primary_build']
+        assert arg('--protocol') == row['protocol_key'] + '.frozen' and arg('--protocol-role') == row['protocol_role']
+        assert arg('--aggregate-seconds') == '7200' and arg('--package-seconds') == '2400'
+        assert ('--accelerated' in command) is row['accelerated']
+    # Author pilot rows keep the unchanged author-binary path.
+    pilot = pilot_plan()
+    command = batch.series_command(pilot, pilot['series'][0], admission(pilot), tmp_path/'c', tmp_path/'raw',
+                                   tmp_path/'r', 0, 82800, 60, None, tmp_path/'slots')
+    assert '--author-binary' in command and '--primary-build' not in command

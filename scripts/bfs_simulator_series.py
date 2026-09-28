@@ -219,6 +219,8 @@ def main():
                         help='dx100-profile collector budget; public collector cap is 3600')
     parser.add_argument('--package-seconds', type=int, default=180,
                         help='profile-package call timeout; it rereads both full traces (2026-09-27 b2 gate)')
+    parser.add_argument('--aggregate-seconds', type=int, default=180,
+                        help='aggregate-evaluations and its chain retrieval re-validate every primary trace (2026-09-28)')
     parser.add_argument('--gem5-slot-dir', type=Path, help='shared lane gem5-slot lock directory (R3)')
     parser.add_argument('--gem5-slots', type=int, default=1, help='maximum concurrent lane gem5 processes')
     parser.add_argument('--owned-cleanup-ledger', type=Path)
@@ -248,7 +250,7 @@ def main():
     limits = {'total_seconds': (1, 864000 if args.author_binary else 86400),
               'checkpoint_seconds': (1, 3600), 'run_seconds': (1, 72000 if args.author_binary else 14400),
               'diagnostic_seconds': (180, 86400 if args.author_binary else 14400), 'memory_gib': (1, 48),
-              'profile_seconds': (1, 3600), 'package_seconds': (1, 7200),
+              'profile_seconds': (1, 3600), 'package_seconds': (1, 7200), 'aggregate_seconds': (1, 14400),
               'storage_gib': (1, 32 if args.author_binary else 15),
               'batch_storage_gib': (1, 200 if args.author_binary else 60),
               'verification_ticks': (1, 10**15)}
@@ -543,18 +545,18 @@ def main():
                 'median_seconds': median, 'relative_spread': (max(values) - min(values)) / median})
         if frozen:
             aggregate = request('aggregate-evaluations', {'message_version': '1.0', 'id': args.id + '.aggregate',
-                'protocol': frozen['id'], 'protocol_role': args.protocol_role, 'evaluations': primary_ids})
+                'protocol': frozen['id'], 'protocol_role': args.protocol_role, 'evaluations': primary_ids}, timeout=args.aggregate_seconds)
             receipt['aggregate'] = aggregate['id']
             if aggregate['outcome']['state'] != 'complete':
                 raise RuntimeError('sample-grid aggregation did not pass its frozen evidence checks')
-            call('get', aggregate['id'], '--chain')
+            call('get', aggregate['id'], '--chain', timeout=args.aggregate_seconds)
             # R10: the same completed primaries, aggregated separately under
             # each named shared protocol; no execution is repeated or relabeled.
             receipt['shared_aggregates'] = {}
             for index, other in enumerate(shared):
                 extra = request('aggregate-evaluations', {'message_version': '1.0',
                     'id': f'{args.id}.shared{index}.aggregate', 'protocol': other['id'],
-                    'protocol_role': args.protocol_role, 'evaluations': primary_ids})
+                    'protocol_role': args.protocol_role, 'evaluations': primary_ids}, timeout=args.aggregate_seconds)
                 receipt['shared_aggregates'][other['id']] = extra['id']
                 if extra['outcome']['state'] != 'complete':
                     raise RuntimeError('shared-protocol aggregation did not pass its frozen evidence checks')
