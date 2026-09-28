@@ -879,7 +879,8 @@ def test_routes_plan_binds_frozen_protocols_and_grouped_drivers():
     store = Store(REPO / 'records')
     for key, ref in value['protocol_requests'].items():
         frozen = [r for r in store.of_kind('protocol')
-                  if r.data.get('requested_id') == f'bfs-{key}-controlled-simulator-20260928']
+                  if r.data.get('requested_id') == f'bfs-{key}-controlled-simulator-20260928'
+                  and r.data.get('version') == 1]
         assert len(frozen) == 1 and frozen[0].data['settings']['sampling']['repetitions'] == 1
         assert artifacts.file_hash(REPO / ref['path']) == ref['sha256']
     assert batch.preparation_charges(value) == [{'id': 'bfs-t17-t20-routes-preparation-20260928-a1',
@@ -904,3 +905,14 @@ def test_route_series_command_uses_retained_primary_build_not_author_binary(tmp_
     command = batch.series_command(pilot, pilot['series'][0], admission(pilot), tmp_path/'c', tmp_path/'raw',
                                    tmp_path/'r', 0, 82800, 60, None, tmp_path/'slots')
     assert '--author-binary' in command and '--primary-build' not in command
+
+
+def test_routes_a2_binds_v2_source0_protocols():
+    value = json.loads(batch.plan_path('t17-t20-routes-a2').read_text()); batch.validate_plan(value, 't17-t20-routes-a2')
+    assert batch.is_pilot(value) and all(row['sources'] == [0] for row in value['series']) and len(value['series']) == 8
+    store = Store(REPO / 'records')
+    for key, ref in value['protocol_requests'].items():
+        request = json.loads((REPO / ref['path']).read_text())
+        assert request['version'] == 2 and request['supersedes'].startswith(f'bfs-{key}-controlled-simulator-20260928.')
+        assert all(store.get(w, 'workload')['definition']['sources'] == [0] for w in request['settings']['workloads'])
+    batch.validate_preparation_reservation(value, {})
