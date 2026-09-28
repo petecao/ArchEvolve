@@ -137,7 +137,7 @@ def test_shared_series_without_the_shared_binding_is_refused(completed, monkeypa
     refused = bfs_protocol.aggregate_evaluations(SimpleNamespace(records=None))
     assert refused['outcome']['state'] == 'incompatible' and 'binding' in refused['outcome']['reason']
     completed.child['shared_protocols'] = []
-    with pytest.raises(ValueError, match='shared-protocol or post-ROI CPU'):
+    with pytest.raises(ValueError, match='shared-protocol, post-ROI CPU'):
         admit(completed)
 
 
@@ -162,3 +162,42 @@ def test_one_replay_requires_declared_deterministic_simulator_basis():
     settings['sampling']['repetitions'] = 0
     with pytest.raises(Failure, match='repetitions'):
         bfs_protocol._validate_settings(settings, store, require_simulation_identity=True)
+
+
+def test_low_storage_plan_keeps_grid_and_only_narrows_trace_and_storage(tmp_path):
+    full, low = t16_plan(), finalize().build_plan(
+        {key: {'path': f'.scratch/x/{key}.yaml', 'sha256': key[0]*64, 'frozen_id': key + '.v2'}
+         for key in ('artifact', 'control')}, 1, True, low_storage=True)
+    assert low['trace_flags'] == 'MAATrace' and 'trace_flags' not in full
+    assert low['series'] == full['series'] and low['post_roi_cpu'] == full['post_roi_cpu']
+    bounds, allocation = low['bounds'], low['allocation']
+    assert (bounds['storage_gib'], bounds['batch_storage_gib'], bounds['raw_reserve_gib']) == (4, 16, 10)
+    assert allocation['free_space_required_at_admission_gib'] == 26 and allocation['per_series_cap_gib'] == 8
+    for key in ('run_seconds', 'diagnostic_seconds', 'checkpoint_seconds'):
+        assert bounds[key] == full['bounds'][key]
+    primary = bounds['checkpoint_seconds'] + bounds['run_seconds'] + 60
+    assert bounds['series_seconds'] == (3 * (primary + bounds['diagnostic_seconds'])
+        + bounds['profile_seconds'] + bounds['package_seconds'] + 4 * bounds['aggregate_seconds'])
+    assert sum(allocation['partition_seconds'].values()) == allocation['total_seconds'] == bounds['batch_seconds']
+    approval = admission(low)
+    approval['protocols'] = {'artifact': {'id': 'artifact.v2', 'sha256': 'a'*64}, 'control': {'id': 'control.v2', 'sha256': 'c'*64}}
+    for row in low['series']:
+        command = batch.series_command(low, row, approval, tmp_path/'c', tmp_path/'raw', tmp_path/'r', 0,
+                                       bounds['series_seconds'], 8, None, tmp_path/'slots')
+        assert command[command.index('--trace-flags') + 1] == 'MAATrace'
+
+
+def test_maatrace_only_stream_still_proves_accelerator_execution(tmp_path):
+    """MAATrace emits only unit Start/End lines; they alone carry the required 'executed' case."""
+    from swdb import bfs_protocol
+    from swdb.dx100_coverage import observe
+    log = tmp_path / 'trace'
+    log.write_text('\n'.join(f'{110 + i}: global: {unit}[0] {edge} [INSTR]' for i, (unit, edge) in enumerate(
+        (u, e) for u in 'SIRA' for e in ('Start', 'End'))) + '\n')
+    coverage = observe(log, {'simTicks': '100', 'finalTick': '200'}, 16384)
+    assert coverage['completed_trace_units'] == {'S': 1, 'I': 1, 'R': 1, 'A': 1}
+    assert coverage['full_tiles']['state'] == coverage['tail_tiles']['state'] == 'unobserved'
+    assert coverage['competing_parent_updates']['state'] == 'unobserved'
+    check = {'coverage': {**coverage, 'accelerator_executed': True,
+                          'instruction_counters': {'system.maa.numInst': 5}}}
+    assert bfs_protocol.accelerator_cases(check) == {'executed'}

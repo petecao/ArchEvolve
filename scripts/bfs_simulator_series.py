@@ -192,6 +192,10 @@ def main():
     parser.add_argument('--protocol-role', choices=('baseline', 'candidate'))
     parser.add_argument('--shared-protocol', action='append', default=[],
                         help='R10: an additional frozen protocol whose exact identities match this role')
+    parser.add_argument('--trace-flags', choices=('MAATrace',),
+                        help='2026-09-28 (T16 low-storage): accelerated executions request only the unit '
+                             'Start/End trace (verification.coverage false); tile-size and indirect '
+                             'store observations are then unobserved, accelerator execution is not')
     parser.add_argument('--post-roi-cpu', choices=('AtomicSimpleCPU',),
                         help='R12: opt-in atomic verifier continuation after the sealed ROI')
     parser.add_argument('--primary-build', help='reuse an exact completed primary build in a frozen complete-call series')
@@ -285,6 +289,8 @@ def main():
         receipt['shared_protocols'] = list(args.shared_protocol)
     if args.post_roi_cpu:
         receipt['post_roi_cpu'] = args.post_roi_cpu
+    if args.trace_flags:
+        receipt['trace_flags'] = args.trace_flags
     if args.gem5_slot_dir:
         receipt['gem5_concurrency'] = {'slot_dir': str(args.gem5_slot_dir), 'slots': args.gem5_slots,
                                        'acquisitions': []}
@@ -498,7 +504,7 @@ def main():
                         'protocol_trial': {'source_position': position, 'repetition': repetition},
                         'configuration': configuration,
                         'verification': {'checker': verifier, 'max_ticks': args.verification_ticks,
-                                         'coverage': args.accelerated},
+                                         'coverage': args.accelerated and not args.trace_flags},
                         'budget': {'total_seconds': total_seconds, 'checkpoint_seconds': checkpoint_seconds,
                                    'run_seconds': run_seconds, 'memory_gib': args.memory_gib, 'storage_gib': args.storage_gib}}
                     if verifier == 'dx100.bfs.verifier.v2':

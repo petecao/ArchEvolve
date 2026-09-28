@@ -40,7 +40,7 @@ from swdb.store import Store
 
 ET = ZoneInfo('America/New_York')
 GIB = 1024**3
-PLAN_HASHES = {'t16-reference': '5d2216412a91ce7bd9326016511a105e779152fd6d2ed47336bf1e49ebd8094c', 't17-t20-routes': '29d4adf356147e932a0c5654d0b447c7cfd4839b709c590c4313eb97fa1ca06f', 't15-pilot-b3': '85b0b76901b008b28fcce1da0245e98f4904ca8ee3a97edf4da1dc78397c4368', 't15-pilot-b2': '0545e3f47fa09feabd673fa1d4a69fb8326abe2691535e1b0dffab29ed3da3be', 't15-pilot': 'f515581f5ff0bc933a93eff3ad8e93b0dfcf58a960606c16f1505ca9fb878f8a', 't16-protocol-recovery': 'eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8', 't16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
+PLAN_HASHES = {'t16-reference': 'a6749593b06e983f6c13bc11940a5e0da37f2551f0271ec1cb912a2a0f7785ca', 't17-t20-routes': '29d4adf356147e932a0c5654d0b447c7cfd4839b709c590c4313eb97fa1ca06f', 't15-pilot-b3': '85b0b76901b008b28fcce1da0245e98f4904ca8ee3a97edf4da1dc78397c4368', 't15-pilot-b2': '0545e3f47fa09feabd673fa1d4a69fb8326abe2691535e1b0dffab29ed3da3be', 't15-pilot': 'f515581f5ff0bc933a93eff3ad8e93b0dfcf58a960606c16f1505ca9fb878f8a', 't16-protocol-recovery': 'eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8', 't16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea'}
 PILOT_KIND = 't15-pilot'
 PILOT_ID = 'bfs-t15-pilot-simulator-batch-20260927-b1'
 # 2026-09-27: b1 failed its first-pair 120-s profile gate; b2 is the fresh relaunch.
@@ -858,6 +858,8 @@ def series_command(plan, row, admission, config, runs, records, node, seconds, s
         command += ['--shared-protocol', admission['protocols'][key]['id']]
     if 'post_roi_cpu' in plan:
         command += ['--post-roi-cpu', plan['post_roi_cpu']]
+    if 'trace_flags' in plan:
+        command += ['--trace-flags', plan['trace_flags']]
     if 'profile_seconds' in b:
         command += ['--profile-seconds', str(b['profile_seconds'])]
     if 'package_seconds' in b:
@@ -911,8 +913,9 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
     repetitions = 2
     if expected_protocol:
         repetitions = store.get(expected_protocol, 'protocol')['settings']['sampling']['repetitions']
-    require(child.get('shared_protocols', []) == shared_ids and child.get('post_roi_cpu') == plan.get('post_roi_cpu'),
-            'series shared-protocol or post-ROI CPU treatment differs from the plan')
+    require(child.get('shared_protocols', []) == shared_ids and child.get('post_roi_cpu') == plan.get('post_roi_cpu')
+            and child.get('trace_flags') == plan.get('trace_flags'),
+            'series shared-protocol, post-ROI CPU or trace-flag treatment differs from the plan')
     require(child.get('state') == 'complete' and child.get('id') == row['id']
             and child.get('candidate') == row['candidate'] and child.get('workload') == row['workload']
             and child.get('configuration') == row['configuration'] and child.get('roi') == plan['roi']

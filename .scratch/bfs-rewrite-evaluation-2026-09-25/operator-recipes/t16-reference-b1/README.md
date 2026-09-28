@@ -56,6 +56,28 @@ thousand seconds. The 2-replay fallback doubles the executions. Its series
 bound exceeds the 864,000-s series cap and it needs 124 GiB of storage, which does not fit /data after
 T15 unless traces are reduced.
 
+## Low-storage variant (pinned 2026-09-28; replaces the table above for launch)
+
+[Measurements](../../observations/t16-low-storage-measurements-20260928.json) on the
+T15 b3 uniform18 trace show that 99.99% of its bytes come from `MAAIndirect` and
+`MAARangeFuser`. The frozen required accelerator case (`executed`) needs only the
+`MAATrace` unit Start/End lines (7.4e-5 of the stream). Scalar traces are empty.
+Recompression would save at most about 40% (zstd -19). So the pinned plan sets
+`trace_flags: MAATrace`, which makes accelerated executions request
+`verification.coverage: false`. The protocols were re-frozen as version 2, changing
+only the candidate debug flags: `author-reference-t16-b1-20260927.75c1f44c5f653f3a`
+and `author-matched-control-t16-b1-20260927.7daeae1ccc961a49`, each with `supersedes`
+set to the version-1 record. Tile-size and competing-parent observations become
+unobserved by design.
+
+| Bound | Low-storage value |
+|---|---|
+| storage per execution / per series / allocation | 4 / 8 / 16 GiB |
+| raw reserve | 10 GiB (root-approved 2026-09-28) |
+| /data free at admission | >= 26 GiB |
+| profile / package / aggregate | 7,200 / 7,200 / 3,600 s |
+| series_seconds / allocation | 406,980 s / 414,180 s (115.1 h) |
+
 ## Steps (all on mbit10, in the immutable runtime checkout)
 
 ```sh

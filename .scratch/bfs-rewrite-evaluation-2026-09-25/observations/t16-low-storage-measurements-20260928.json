@@ -1,0 +1,34 @@
+{
+ "format": "swdb.bfs.t16-low-storage-measurements.v1",
+ "created": "2026-09-28",
+ "observed_at": "2026-09-28 13:06 ET",
+ "purpose": "Size a lower-storage T16 b1 variant (root request 2026-09-28): which traces are needed, transport compression, scalar trace size.",
+ "method": "Off-lane on mbit10 with nice 10, read-only over the retained T15 b3 uniform18 s0 r0 primary roi-debug.trace.gz (1,297,018,969 bytes). A 1-GiB decoded prefix was written to /data1/yanruj/tmp/t16-storage-20260928/sample.txt for single-threaded compression tests and then removed; no retained evaluation artifact was modified.",
+ "trace_composition": {
+  "decoded_bytes": 17790653260,
+  "lines": 186549103,
+  "maatrace_lines": 6576,
+  "maatrace_bytes": 1322298,
+  "maatrace_fraction": 7.432543261202315e-05,
+  "end_units": {"S": 36, "I": 2192, "R": 548, "A": 512},
+  "python_gzip_decode_seconds": 189.6,
+  "first_2e9_bytes_by_message": "95.7% IndirectAccess unit I[...] lines (fillRowTable, recvData, packets: MAAIndirect), 4.3% RangeFuser R[...] (MAARangeFuser); unit Start/End lines (MAATrace) about 0.01%",
+  "source_flags": "At model e4fc4af, the unit Start/End lines are DPRINTF(MAATrace) in ALU.cc:79/834, IndirectAccess.cc:535/769, RangeFuser.cc:227, StreamAccess.cc:323; 'tile size' is MAARangeFuser (RangeFuser.cc:242); 'entries received'/'new_data[' are MAAIndirect (IndirectAccess.cc:879/927)."
+ },
+ "what_each_execution_needs": {
+  "primary_accelerated": "The frozen T16 requirement is candidate accelerator case 'executed': positive *.numInst counters plus completed S/I/R/A unit End lines, all MAATrace. Full/tail tile sizes (MAARangeFuser) and competing-parent stores (MAAIndirect) are not required; competing-parent updates are unobservable for the unmodified author binary anyway (no parent address is printed).",
+  "diagnostic": "dx100-profile takes region metrics from the diagnostic stdout region counters and sealed statistics; the diagnostic trace is only re-validated for consistency with its own recorded coverage. No profile or package quantity depends on MAAIndirect or MAARangeFuser lines.",
+  "scalar": "Scalar (BASE) traces are empty: 20-byte gzip streams in the R12 kron14 probe; the stopped uniform22 scalar primary wrote 0 bytes over 8,695 s."
+ },
+ "compression_on_1_GiB_decoded_sample": {
+  "gzip -6 (gem5 stream default level)": {"bytes": 85964185, "ratio": 12.49, "compress_s": 12.2, "decompress_s": 3.58},
+  "gzip -9": {"bytes": 81679456, "ratio": 13.15, "compress_s": 29.9, "decompress_s": 3.92},
+  "zstd -3 -T1": {"bytes": 79414939, "ratio": 13.52, "compress_s": 2.04, "decompress_s": 0.75},
+  "zstd -19 -T1 --long=27": {"bytes": 51058429, "ratio_approx": 21.0, "compress_s": 681.1,
+   "note": "Approximate: the sample file received its final 3,481 bytes while zstd was reading, so the frame was incomplete; the ratio of the compressed prefix is still indicative."},
+  "python_line_iteration_s": 1.94
+ },
+ "decision": "Use the MAATrace-only trace (verification.coverage false) for accelerated T16 executions. It keeps accelerator execution observed and removes about 99.99% of the trace volume. Uniform22 MAATrace estimate: 1.32 MB x 16 = about 21 MB decoded per execution. Better compression would save at most about 40% (zstd -19, at 55x the compression time, and would need a new gem5 transport). Scalar traces are already empty.",
+ "storage_estimate_low_storage": "Per execution: the uniform22 checkpoint (about 0.52 GB; retained a1 run: 480 MB pmem + 41 MB cpt), plus logs and MAATrace trace. Six executions come to about 3.2 GB; with three driver ledgers, series streams and databases, about 7 GB. Planned 16 GiB (4 GiB per execution, 8 GiB per series) plus a 10-GiB raw reserve gives an admission floor of 26 GiB free on /data.",
+ "raw_location": "mbit10 only; temporary sample and compressed copies removed 2026-09-28 13:06 ET."
+}
