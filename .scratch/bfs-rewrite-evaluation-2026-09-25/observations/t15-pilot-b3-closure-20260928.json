@@ -1,0 +1,2602 @@
+{
+ "created": "2026-09-27",
+ "id": "bfs-t15-pilot-simulator-batch-20260927-b3",
+ "observations": [
+  {
+   "family": "uniform18",
+   "driver_state": "complete",
+   "driver_reason": null,
+   "series_reason": null,
+   "gem5_slot_waits_seconds": [
+    8.004065603017807e-05,
+    1361.9462714474648,
+    33.15205267909914,
+    1294.8807114697993,
+    3.6061741411685944e-05,
+    1378.5640947790816,
+    13.115844293497503,
+    1292.1336216069758,
+    0.00010700058192014694,
+    1382.4417361514643,
+    6.881449371576309e-05,
+    1297.4996901489794
+   ],
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 6.50649836175143,
+    "settled_events": 84,
+    "dead_owner_charges": null
+   },
+   "executions": {
+    "s0.r0.primary": {
+     "tick_interval": [
+      3089784508,
+      8821394810
+     ],
+     "checkpoint_reused": false,
+     "source": 0,
+     "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 77.52106811758131,
+      "simulation": 2015.2708451366052,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.005731610302,
+     "full_tiles": 476,
+     "tail_tiles": 36,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 1297018969,
+     "trace_uncompressed_bytes": 17790653260
+    },
+    "s0.r0.diagnostic": {
+     "tick_interval": [
+      3212903058,
+      18627014364
+     ],
+     "checkpoint_reused": false,
+     "source": 0,
+     "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 77.5181803368032,
+      "simulation": 2503.4566740840673,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015414111306,
+     "full_tiles": 476,
+     "tail_tiles": 36,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 1296759565,
+     "trace_uncompressed_bytes": 17785454367
+    },
+    "s0.r1.primary": {
+     "tick_interval": [
+      3089784508,
+      8821394810
+     ],
+     "checkpoint_reused": true,
+     "source": 0,
+     "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint_resolution": null,
+      "simulation": 2012.391516411677,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.005731610302,
+     "full_tiles": 476,
+     "tail_tiles": 36,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 1297018969,
+     "trace_uncompressed_bytes": 17790653260
+    },
+    "s0.r1.diagnostic": {
+     "tick_interval": [
+      3212903058,
+      18627014364
+     ],
+     "checkpoint_reused": true,
+     "source": 0,
+     "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint_resolution": null,
+      "simulation": 2478.3082707105204,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015414111306,
+     "full_tiles": 476,
+     "tail_tiles": 36,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 1296759565,
+     "trace_uncompressed_bytes": 17785454367
+    },
+    "s1.r0.primary": {
+     "tick_interval": [
+      3089831771,
+      9048863178
+     ],
+     "checkpoint_reused": false,
+     "source": 1234,
+     "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 77.52753786370158,
+      "simulation": 2027.384051430039,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.005959031407,
+     "full_tiles": 484,
+     "tail_tiles": 24,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 1298570830,
+     "trace_uncompressed_bytes": 17787871151
+    },
+    "s1.r0.diagnostic": {
+     "tick_interval": [
+      3212886469,
+      18834152443
+     ],
+     "checkpoint_reused": false,
+     "source": 1234,
+     "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 77.55223630741239,
+      "simulation": 2485.353677400388,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015621265974,
+     "full_tiles": 484,
+     "tail_tiles": 24,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 1298891623,
+     "trace_uncompressed_bytes": 17793653949
+    },
+    "s1.r1.primary": {
+     "tick_interval": [
+      3089831771,
+      9048863178
+     ],
+     "checkpoint_reused": true,
+     "source": 1234,
+     "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint_resolution": null,
+      "simulation": 2023.4004421243444,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.005959031407,
+     "full_tiles": 484,
+     "tail_tiles": 24,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 1298570830,
+     "trace_uncompressed_bytes": 17787871151
+    },
+    "s1.r1.diagnostic": {
+     "tick_interval": [
+      3212886469,
+      18834152443
+     ],
+     "checkpoint_reused": true,
+     "source": 1234,
+     "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint_resolution": null,
+      "simulation": 2495.6433363081887,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015621265974,
+     "full_tiles": 484,
+     "tail_tiles": 24,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 1298891623,
+     "trace_uncompressed_bytes": 17793653949
+    },
+    "s2.r0.primary": {
+     "tick_interval": [
+      3089854307,
+      8995304183
+     ],
+     "checkpoint_reused": false,
+     "source": 7777,
+     "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 77.52173507772386,
+      "simulation": 2040.3582007959485,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.005905449876,
+     "full_tiles": 476,
+     "tail_tiles": 36,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 1297458127,
+     "trace_uncompressed_bytes": 17775441295
+    },
+    "s2.r0.diagnostic": {
+     "tick_interval": [
+      3212953138,
+      18796573350
+     ],
+     "checkpoint_reused": false,
+     "source": 7777,
+     "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 77.53036808501929,
+      "simulation": 2510.590849937871,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015583620212,
+     "full_tiles": 476,
+     "tail_tiles": 36,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 1297473767,
+     "trace_uncompressed_bytes": 17780846741
+    },
+    "s2.r1.primary": {
+     "tick_interval": [
+      3089854307,
+      8995304183
+     ],
+     "checkpoint_reused": true,
+     "source": 7777,
+     "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint_resolution": null,
+      "simulation": 2015.4025679500774,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.005905449876,
+     "full_tiles": 476,
+     "tail_tiles": 36,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 1297458127,
+     "trace_uncompressed_bytes": 17775441295
+    },
+    "s2.r1.diagnostic": {
+     "tick_interval": [
+      3212953138,
+      18796573350
+     ],
+     "checkpoint_reused": true,
+     "source": 7777,
+     "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint_resolution": null,
+      "simulation": 2493.5131370741874,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015583620212,
+     "full_tiles": 476,
+     "tail_tiles": 36,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 1297473767,
+     "trace_uncompressed_bytes": 17780846741
+    }
+   },
+   "samples": [
+    {
+     "source_position": 0,
+     "source": 0,
+     "repetition": 0,
+     "evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s0.r0.primary.evaluation",
+     "diagnostic_evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s0.r0.diagnostic.evaluation",
+     "profile": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s0.r0.profile",
+     "package": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s0.r0.package.v1.0ed64bd93d3d1555",
+     "completeness": "complete",
+     "timing": [
+      {
+       "source": 0,
+       "source_position": 0,
+       "repetition": 0,
+       "duration_s": 0.005731610302,
+       "roi": "bfs.dx100.traversal.v1",
+       "basis": "simulated",
+       "quantity": "simulated_roi_seconds",
+       "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+       "output": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s0.r0.primary.evaluation/002-simulation.log",
+       "output_sha256": "ebabc40c368d7fa119cf449701b594076dd65ceb59e4001c29bee088d6f8b7fc",
+       "statistics_sha256": "776efd238eb7e45797dcc33fddb3795ba53a43cf47554d81f7daedcde804cfa2",
+       "verified": true,
+       "evidence_kind": "execution"
+      }
+     ],
+     "coverage": {
+      "state": "observed",
+      "tick_interval": [
+       3089784508,
+       8821394810
+      ],
+      "completed_trace_units": {
+       "S": 36,
+       "I": 2192,
+       "R": 548,
+       "A": 512
+      },
+      "address_space_contract": {
+       "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+       "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+       "recvData_addr": "translated physical cache line; compared only with other physical words",
+       "source_evidence": [
+        {
+         "path": "src/mem/MAA/IF.cc",
+         "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+         "lines": [
+          38,
+          63
+         ]
+        },
+        {
+         "path": "src/mem/MAA/IndirectAccess.cc",
+         "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+         "lines": [
+          494,
+          505
+         ]
+        }
+       ]
+      },
+      "range_output_tile_sizes": {
+       "16384": 476,
+       "3701": 1,
+       "3593": 1,
+       "3850": 1,
+       "0": 36,
+       "3086": 1,
+       "1126": 1,
+       "1042": 1,
+       "768": 1,
+       "1124": 1,
+       "11333": 1,
+       "14569": 1,
+       "11154": 1,
+       "11425": 1,
+       "3010": 1,
+       "7813": 1,
+       "5240": 1,
+       "6545": 1,
+       "7770": 1,
+       "11077": 1,
+       "15570": 1,
+       "13731": 1,
+       "11888": 1,
+       "10396": 1,
+       "13930": 1,
+       "12288": 1,
+       "13775": 1,
+       "13365": 1,
+       "13574": 1,
+       "13681": 1,
+       "11855": 1,
+       "9620": 1,
+       "11410": 1,
+       "10336": 1,
+       "14266": 1,
+       "13661": 1,
+       "12959": 1,
+       "13411": 1
+      },
+      "full_tiles": {
+       "state": "observed",
+       "count": 476,
+       "capacity": 16384
+      },
+      "tail_tiles": {
+       "state": "observed",
+       "count": 36,
+       "capacity": 16384
+      },
+      "competing_parent_updates": {
+       "state": "unobserved",
+       "count": 0,
+       "samples": [],
+       "parent_storage": null,
+       "target_tracking_truncated": false,
+       "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."
+      },
+      "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded.",
+      "debug_trace": {
+       "format": "swdb.dx100.debug-trace.v1",
+       "transport": "gem5-gzip.v1",
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s0.r0.primary.evaluation/simulation/roi-debug.trace.gz",
+       "sha256": "a01109d65ca837aec117fb963ba4c7539d7a644af3b28b48c1e985e38a2bf0a4",
+       "bytes": 1297018969,
+       "uncompressed_sha256": "c6d7738b57b4dae3c03bc3613d79c00fb76d4fd89c9bbc527c0f3c69bf075c7d",
+       "uncompressed_bytes": 17790653260,
+       "lines": 186549103
+      },
+      "accelerator_executed": true,
+      "instruction_counters": {
+       "system.maa.numInst_INDRD": 1680,
+       "system.maa.numInst_INDWR": 512,
+       "system.maa.numInst_STRRD": 36,
+       "system.maa.numInst_RANGE": 548,
+       "system.maa.numInst_ALUS": 512,
+       "system.maa.numInst_INV": 1198,
+       "system.maa.numInst": 4486
+      }
+     }
+    },
+    {
+     "source_position": 0,
+     "source": 0,
+     "repetition": 1,
+     "evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s0.r1.primary.evaluation",
+     "diagnostic_evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s0.r1.diagnostic.evaluation",
+     "profile": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s0.r1.profile",
+     "package": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s0.r1.package.v1.8c51b9e68035f2dd",
+     "completeness": "complete",
+     "timing": [
+      {
+       "source": 0,
+       "source_position": 0,
+       "repetition": 1,
+       "duration_s": 0.005731610302,
+       "roi": "bfs.dx100.traversal.v1",
+       "basis": "simulated",
+       "quantity": "simulated_roi_seconds",
+       "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+       "output": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s0.r1.primary.evaluation/002-simulation.log",
+       "output_sha256": "daddbec612dc736c88f53c09993ac951ae8a1228e8acd9439d0eb85584cb6007",
+       "statistics_sha256": "daac7c687d12b80711574c0be4c8febb03862e427298908f6d141805d899b2f8",
+       "verified": true,
+       "evidence_kind": "execution"
+      }
+     ],
+     "coverage": {
+      "state": "observed",
+      "tick_interval": [
+       3089784508,
+       8821394810
+      ],
+      "completed_trace_units": {
+       "S": 36,
+       "I": 2192,
+       "R": 548,
+       "A": 512
+      },
+      "address_space_contract": {
+       "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+       "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+       "recvData_addr": "translated physical cache line; compared only with other physical words",
+       "source_evidence": [
+        {
+         "path": "src/mem/MAA/IF.cc",
+         "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+         "lines": [
+          38,
+          63
+         ]
+        },
+        {
+         "path": "src/mem/MAA/IndirectAccess.cc",
+         "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+         "lines": [
+          494,
+          505
+         ]
+        }
+       ]
+      },
+      "range_output_tile_sizes": {
+       "16384": 476,
+       "3701": 1,
+       "3593": 1,
+       "3850": 1,
+       "0": 36,
+       "3086": 1,
+       "1126": 1,
+       "1042": 1,
+       "768": 1,
+       "1124": 1,
+       "11333": 1,
+       "14569": 1,
+       "11154": 1,
+       "11425": 1,
+       "3010": 1,
+       "7813": 1,
+       "5240": 1,
+       "6545": 1,
+       "7770": 1,
+       "11077": 1,
+       "15570": 1,
+       "13731": 1,
+       "11888": 1,
+       "10396": 1,
+       "13930": 1,
+       "12288": 1,
+       "13775": 1,
+       "13365": 1,
+       "13574": 1,
+       "13681": 1,
+       "11855": 1,
+       "9620": 1,
+       "11410": 1,
+       "10336": 1,
+       "14266": 1,
+       "13661": 1,
+       "12959": 1,
+       "13411": 1
+      },
+      "full_tiles": {
+       "state": "observed",
+       "count": 476,
+       "capacity": 16384
+      },
+      "tail_tiles": {
+       "state": "observed",
+       "count": 36,
+       "capacity": 16384
+      },
+      "competing_parent_updates": {
+       "state": "unobserved",
+       "count": 0,
+       "samples": [],
+       "parent_storage": null,
+       "target_tracking_truncated": false,
+       "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."
+      },
+      "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded.",
+      "debug_trace": {
+       "format": "swdb.dx100.debug-trace.v1",
+       "transport": "gem5-gzip.v1",
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s0.r1.primary.evaluation/simulation/roi-debug.trace.gz",
+       "sha256": "a01109d65ca837aec117fb963ba4c7539d7a644af3b28b48c1e985e38a2bf0a4",
+       "bytes": 1297018969,
+       "uncompressed_sha256": "c6d7738b57b4dae3c03bc3613d79c00fb76d4fd89c9bbc527c0f3c69bf075c7d",
+       "uncompressed_bytes": 17790653260,
+       "lines": 186549103
+      },
+      "accelerator_executed": true,
+      "instruction_counters": {
+       "system.maa.numInst_INDRD": 1680,
+       "system.maa.numInst_INDWR": 512,
+       "system.maa.numInst_STRRD": 36,
+       "system.maa.numInst_RANGE": 548,
+       "system.maa.numInst_ALUS": 512,
+       "system.maa.numInst_INV": 1198,
+       "system.maa.numInst": 4486
+      }
+     }
+    },
+    {
+     "source_position": 1,
+     "source": 1234,
+     "repetition": 0,
+     "evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r0.primary.evaluation",
+     "diagnostic_evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r0.diagnostic.evaluation",
+     "profile": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r0.profile",
+     "package": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r0.package.v1.a21b854a4c423a76",
+     "completeness": "complete",
+     "timing": [
+      {
+       "source": 1234,
+       "source_position": 1,
+       "repetition": 0,
+       "duration_s": 0.005959031407,
+       "roi": "bfs.dx100.traversal.v1",
+       "basis": "simulated",
+       "quantity": "simulated_roi_seconds",
+       "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+       "output": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r0.primary.evaluation/002-simulation.log",
+       "output_sha256": "ffbcea53aa4fe6fdb883e0f4c0cda29500bc858fc1dff55e33f182b0d350ca58",
+       "statistics_sha256": "98d1dbd1930c0e47f0722b56658c0f9812d24a05f48a7fd79a1aca8c297e1a19",
+       "verified": true,
+       "evidence_kind": "execution"
+      }
+     ],
+     "coverage": {
+      "state": "observed",
+      "tick_interval": [
+       3089831771,
+       9048863178
+      ],
+      "completed_trace_units": {
+       "S": 24,
+       "I": 2128,
+       "R": 532,
+       "A": 508
+      },
+      "address_space_contract": {
+       "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+       "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+       "recvData_addr": "translated physical cache line; compared only with other physical words",
+       "source_evidence": [
+        {
+         "path": "src/mem/MAA/IF.cc",
+         "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+         "lines": [
+          38,
+          63
+         ]
+        },
+        {
+         "path": "src/mem/MAA/IndirectAccess.cc",
+         "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+         "lines": [
+          494,
+          505
+         ]
+        }
+       ]
+      },
+      "range_output_tile_sizes": {
+       "16384": 484,
+       "8123": 1,
+       "7612": 1,
+       "8083": 1,
+       "0": 24,
+       "8142": 1,
+       "11988": 1,
+       "11021": 1,
+       "8165": 1,
+       "11586": 1,
+       "8057": 1,
+       "3347": 1,
+       "774": 1,
+       "5954": 1,
+       "14353": 1,
+       "5560": 1,
+       "3233": 1,
+       "10437": 1,
+       "9394": 1,
+       "12808": 1,
+       "10288": 1,
+       "5792": 1,
+       "12165": 1,
+       "13055": 1,
+       "13599": 1,
+       "13458": 1
+      },
+      "full_tiles": {
+       "state": "observed",
+       "count": 484,
+       "capacity": 16384
+      },
+      "tail_tiles": {
+       "state": "observed",
+       "count": 24,
+       "capacity": 16384
+      },
+      "competing_parent_updates": {
+       "state": "unobserved",
+       "count": 0,
+       "samples": [],
+       "parent_storage": null,
+       "target_tracking_truncated": false,
+       "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."
+      },
+      "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded.",
+      "debug_trace": {
+       "format": "swdb.dx100.debug-trace.v1",
+       "transport": "gem5-gzip.v1",
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r0.primary.evaluation/simulation/roi-debug.trace.gz",
+       "sha256": "dba02fb5a82b037a90b4a4eb9b1cec6ae637f7d91a4342d22cbf59da6c0efd39",
+       "bytes": 1298570830,
+       "uncompressed_sha256": "0efbd405d5a3d06cc0c8a71392b0525b323b1f56fe4d17f3322aff8fd9a77b7f",
+       "uncompressed_bytes": 17787871151,
+       "lines": 186496549
+      },
+      "accelerator_executed": true,
+      "instruction_counters": {
+       "system.maa.numInst_INDRD": 1620,
+       "system.maa.numInst_INDWR": 508,
+       "system.maa.numInst_STRRD": 24,
+       "system.maa.numInst_RANGE": 532,
+       "system.maa.numInst_ALUS": 508,
+       "system.maa.numInst_INV": 1191,
+       "system.maa.numInst": 4383
+      }
+     }
+    },
+    {
+     "source_position": 1,
+     "source": 1234,
+     "repetition": 1,
+     "evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r1.primary.evaluation",
+     "diagnostic_evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r1.diagnostic.evaluation",
+     "profile": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r1.profile",
+     "package": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r1.package.v1.98944348d4468811",
+     "completeness": "complete",
+     "timing": [
+      {
+       "source": 1234,
+       "source_position": 1,
+       "repetition": 1,
+       "duration_s": 0.005959031407,
+       "roi": "bfs.dx100.traversal.v1",
+       "basis": "simulated",
+       "quantity": "simulated_roi_seconds",
+       "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+       "output": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r1.primary.evaluation/002-simulation.log",
+       "output_sha256": "151482b9e14f27b3d67533f1a622477b281c11730b45043a69fda8c1f93c6095",
+       "statistics_sha256": "e8baae54809e4c9c2415849cb1d4a9c7c4f65f71c55ca70679d4bbc9a2c37052",
+       "verified": true,
+       "evidence_kind": "execution"
+      }
+     ],
+     "coverage": {
+      "state": "observed",
+      "tick_interval": [
+       3089831771,
+       9048863178
+      ],
+      "completed_trace_units": {
+       "S": 24,
+       "I": 2128,
+       "R": 532,
+       "A": 508
+      },
+      "address_space_contract": {
+       "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+       "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+       "recvData_addr": "translated physical cache line; compared only with other physical words",
+       "source_evidence": [
+        {
+         "path": "src/mem/MAA/IF.cc",
+         "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+         "lines": [
+          38,
+          63
+         ]
+        },
+        {
+         "path": "src/mem/MAA/IndirectAccess.cc",
+         "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+         "lines": [
+          494,
+          505
+         ]
+        }
+       ]
+      },
+      "range_output_tile_sizes": {
+       "16384": 484,
+       "8123": 1,
+       "7612": 1,
+       "8083": 1,
+       "0": 24,
+       "8142": 1,
+       "11988": 1,
+       "11021": 1,
+       "8165": 1,
+       "11586": 1,
+       "8057": 1,
+       "3347": 1,
+       "774": 1,
+       "5954": 1,
+       "14353": 1,
+       "5560": 1,
+       "3233": 1,
+       "10437": 1,
+       "9394": 1,
+       "12808": 1,
+       "10288": 1,
+       "5792": 1,
+       "12165": 1,
+       "13055": 1,
+       "13599": 1,
+       "13458": 1
+      },
+      "full_tiles": {
+       "state": "observed",
+       "count": 484,
+       "capacity": 16384
+      },
+      "tail_tiles": {
+       "state": "observed",
+       "count": 24,
+       "capacity": 16384
+      },
+      "competing_parent_updates": {
+       "state": "unobserved",
+       "count": 0,
+       "samples": [],
+       "parent_storage": null,
+       "target_tracking_truncated": false,
+       "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."
+      },
+      "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded.",
+      "debug_trace": {
+       "format": "swdb.dx100.debug-trace.v1",
+       "transport": "gem5-gzip.v1",
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r1.primary.evaluation/simulation/roi-debug.trace.gz",
+       "sha256": "dba02fb5a82b037a90b4a4eb9b1cec6ae637f7d91a4342d22cbf59da6c0efd39",
+       "bytes": 1298570830,
+       "uncompressed_sha256": "0efbd405d5a3d06cc0c8a71392b0525b323b1f56fe4d17f3322aff8fd9a77b7f",
+       "uncompressed_bytes": 17787871151,
+       "lines": 186496549
+      },
+      "accelerator_executed": true,
+      "instruction_counters": {
+       "system.maa.numInst_INDRD": 1620,
+       "system.maa.numInst_INDWR": 508,
+       "system.maa.numInst_STRRD": 24,
+       "system.maa.numInst_RANGE": 532,
+       "system.maa.numInst_ALUS": 508,
+       "system.maa.numInst_INV": 1191,
+       "system.maa.numInst": 4383
+      }
+     }
+    },
+    {
+     "source_position": 2,
+     "source": 7777,
+     "repetition": 0,
+     "evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s2.r0.primary.evaluation",
+     "diagnostic_evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s2.r0.diagnostic.evaluation",
+     "profile": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s2.r0.profile",
+     "package": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s2.r0.package.v1.a874e06bc3f88979",
+     "completeness": "complete",
+     "timing": [
+      {
+       "source": 7777,
+       "source_position": 2,
+       "repetition": 0,
+       "duration_s": 0.005905449876,
+       "roi": "bfs.dx100.traversal.v1",
+       "basis": "simulated",
+       "quantity": "simulated_roi_seconds",
+       "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+       "output": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s2.r0.primary.evaluation/002-simulation.log",
+       "output_sha256": "4f72cce263c388f2f2e77e8ccf53ae3c393a29a7809501ac5fb6bf67631c60e1",
+       "statistics_sha256": "335066776cf835ed16e55055b2ee1baba498ee9bc84e8857d7471a5f09344add",
+       "verified": true,
+       "evidence_kind": "execution"
+      }
+     ],
+     "coverage": {
+      "state": "observed",
+      "tick_interval": [
+       3089854307,
+       8995304183
+      ],
+      "completed_trace_units": {
+       "S": 36,
+       "I": 2192,
+       "R": 548,
+       "A": 512
+      },
+      "address_space_contract": {
+       "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+       "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+       "recvData_addr": "translated physical cache line; compared only with other physical words",
+       "source_evidence": [
+        {
+         "path": "src/mem/MAA/IF.cc",
+         "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+         "lines": [
+          38,
+          63
+         ]
+        },
+        {
+         "path": "src/mem/MAA/IndirectAccess.cc",
+         "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+         "lines": [
+          494,
+          505
+         ]
+        }
+       ]
+      },
+      "range_output_tile_sizes": {
+       "16384": 476,
+       "3483": 1,
+       "0": 36,
+       "3329": 1,
+       "3799": 1,
+       "3839": 1,
+       "2124": 1,
+       "1157": 1,
+       "2127": 1,
+       "2297": 1,
+       "13436": 1,
+       "11225": 1,
+       "11637": 1,
+       "10126": 1,
+       "5626": 1,
+       "1999": 1,
+       "5472": 1,
+       "8160": 1,
+       "11500": 1,
+       "4057": 1,
+       "8458": 1,
+       "15466": 1,
+       "11658": 1,
+       "12971": 1,
+       "9823": 1,
+       "9459": 1,
+       "13669": 1,
+       "12802": 1,
+       "12810": 1,
+       "14324": 1,
+       "14602": 1,
+       "14162": 1,
+       "14347": 1,
+       "14899": 1,
+       "13767": 1,
+       "12308": 1,
+       "12300": 1,
+       "13011": 1
+      },
+      "full_tiles": {
+       "state": "observed",
+       "count": 476,
+       "capacity": 16384
+      },
+      "tail_tiles": {
+       "state": "observed",
+       "count": 36,
+       "capacity": 16384
+      },
+      "competing_parent_updates": {
+       "state": "unobserved",
+       "count": 0,
+       "samples": [],
+       "parent_storage": null,
+       "target_tracking_truncated": false,
+       "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."
+      },
+      "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded.",
+      "debug_trace": {
+       "format": "swdb.dx100.debug-trace.v1",
+       "transport": "gem5-gzip.v1",
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s2.r0.primary.evaluation/simulation/roi-debug.trace.gz",
+       "sha256": "db149001fe789c999c466bc7a9a70ab7e497e97ae98db56d47cf428d0da4d895",
+       "bytes": 1297458127,
+       "uncompressed_sha256": "d3b8652537519dfd96dbe369428f1fd03d8cdee2862200f91668339888215513",
+       "uncompressed_bytes": 17775441295,
+       "lines": 186386283
+      },
+      "accelerator_executed": true,
+      "instruction_counters": {
+       "system.maa.numInst_INDRD": 1680,
+       "system.maa.numInst_INDWR": 512,
+       "system.maa.numInst_STRRD": 36,
+       "system.maa.numInst_RANGE": 548,
+       "system.maa.numInst_ALUS": 512,
+       "system.maa.numInst_INV": 1202,
+       "system.maa.numInst": 4490
+      }
+     }
+    },
+    {
+     "source_position": 2,
+     "source": 7777,
+     "repetition": 1,
+     "evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s2.r1.primary.evaluation",
+     "diagnostic_evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s2.r1.diagnostic.evaluation",
+     "profile": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s2.r1.profile",
+     "package": "bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s2.r1.package.v1.ba8d42f4df46f018",
+     "completeness": "complete",
+     "timing": [
+      {
+       "source": 7777,
+       "source_position": 2,
+       "repetition": 1,
+       "duration_s": 0.005905449876,
+       "roi": "bfs.dx100.traversal.v1",
+       "basis": "simulated",
+       "quantity": "simulated_roi_seconds",
+       "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+       "output": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s2.r1.primary.evaluation/002-simulation.log",
+       "output_sha256": "6041e555ead8a0c96837db091fde01b91d68cea07746f719702224f849f2aad9",
+       "statistics_sha256": "1559fd6285d8f0cb8f4d5a0cf9ca46d2b3cf67f9c480c6f7adbf1a14350db0f3",
+       "verified": true,
+       "evidence_kind": "execution"
+      }
+     ],
+     "coverage": {
+      "state": "observed",
+      "tick_interval": [
+       3089854307,
+       8995304183
+      ],
+      "completed_trace_units": {
+       "S": 36,
+       "I": 2192,
+       "R": 548,
+       "A": 512
+      },
+      "address_space_contract": {
+       "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+       "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+       "recvData_addr": "translated physical cache line; compared only with other physical words",
+       "source_evidence": [
+        {
+         "path": "src/mem/MAA/IF.cc",
+         "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+         "lines": [
+          38,
+          63
+         ]
+        },
+        {
+         "path": "src/mem/MAA/IndirectAccess.cc",
+         "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+         "lines": [
+          494,
+          505
+         ]
+        }
+       ]
+      },
+      "range_output_tile_sizes": {
+       "16384": 476,
+       "3483": 1,
+       "0": 36,
+       "3329": 1,
+       "3799": 1,
+       "3839": 1,
+       "2124": 1,
+       "1157": 1,
+       "2127": 1,
+       "2297": 1,
+       "13436": 1,
+       "11225": 1,
+       "11637": 1,
+       "10126": 1,
+       "5626": 1,
+       "1999": 1,
+       "5472": 1,
+       "8160": 1,
+       "11500": 1,
+       "4057": 1,
+       "8458": 1,
+       "15466": 1,
+       "11658": 1,
+       "12971": 1,
+       "9823": 1,
+       "9459": 1,
+       "13669": 1,
+       "12802": 1,
+       "12810": 1,
+       "14324": 1,
+       "14602": 1,
+       "14162": 1,
+       "14347": 1,
+       "14899": 1,
+       "13767": 1,
+       "12308": 1,
+       "12300": 1,
+       "13011": 1
+      },
+      "full_tiles": {
+       "state": "observed",
+       "count": 476,
+       "capacity": 16384
+      },
+      "tail_tiles": {
+       "state": "observed",
+       "count": 36,
+       "capacity": 16384
+      },
+      "competing_parent_updates": {
+       "state": "unobserved",
+       "count": 0,
+       "samples": [],
+       "parent_storage": null,
+       "target_tracking_truncated": false,
+       "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."
+      },
+      "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded.",
+      "debug_trace": {
+       "format": "swdb.dx100.debug-trace.v1",
+       "transport": "gem5-gzip.v1",
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s2.r1.primary.evaluation/simulation/roi-debug.trace.gz",
+       "sha256": "db149001fe789c999c466bc7a9a70ab7e497e97ae98db56d47cf428d0da4d895",
+       "bytes": 1297458127,
+       "uncompressed_sha256": "d3b8652537519dfd96dbe369428f1fd03d8cdee2862200f91668339888215513",
+       "uncompressed_bytes": 17775441295,
+       "lines": 186386283
+      },
+      "accelerator_executed": true,
+      "instruction_counters": {
+       "system.maa.numInst_INDRD": 1680,
+       "system.maa.numInst_INDWR": 512,
+       "system.maa.numInst_STRRD": 36,
+       "system.maa.numInst_RANGE": 548,
+       "system.maa.numInst_ALUS": 512,
+       "system.maa.numInst_INV": 1202,
+       "system.maa.numInst": 4490
+      }
+     }
+    }
+   ],
+   "series_stages": [
+    [
+     "get",
+     "complete",
+     6.262636832892895
+    ],
+    [
+     "get",
+     "complete",
+     3.875005849637091
+    ],
+    [
+     "get",
+     "complete",
+     3.7255041105672717
+    ],
+    [
+     "get",
+     "complete",
+     3.67519283760339
+    ],
+    [
+     "get",
+     "complete",
+     3.7260388769209385
+    ],
+    [
+     "get",
+     "complete",
+     3.6764345560222864
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2614.489369709976
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     3108.0819676797837
+    ],
+    [
+     "dx100-profile",
+     "complete",
+     908.3613044749945
+    ],
+    [
+     "profile-package",
+     "complete",
+     862.1172511344776
+    ],
+    [
+     "get",
+     "complete",
+     4.2660082913935184
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2551.083846819587
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     3023.517498040572
+    ],
+    [
+     "dx100-profile",
+     "complete",
+     906.5184343298897
+    ],
+    [
+     "profile-package",
+     "complete",
+     864.969312088564
+    ],
+    [
+     "get",
+     "complete",
+     5.134643994271755
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2668.1146535510197
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     3145.872859187424
+    ],
+    [
+     "dx100-profile",
+     "complete",
+     923.0568347722292
+    ],
+    [
+     "profile-package",
+     "complete",
+     860.9080045595765
+    ],
+    [
+     "get",
+     "complete",
+     5.989362222142518
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2615.997416404076
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     3091.6015487723053
+    ],
+    [
+     "dx100-profile",
+     "complete",
+     922.205417576246
+    ],
+    [
+     "profile-package",
+     "complete",
+     874.775279019028
+    ],
+    [
+     "get",
+     "complete",
+     6.889166593551636
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2737.624960338697
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     3223.418270070106
+    ],
+    [
+     "dx100-profile",
+     "complete",
+     935.1527626914904
+    ],
+    [
+     "profile-package",
+     "complete",
+     885.8766050832346
+    ],
+    [
+     "get",
+     "complete",
+     7.444560116156936
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2664.287923119031
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     3148.3990863459185
+    ],
+    [
+     "dx100-profile",
+     "complete",
+     940.408950259909
+    ],
+    [
+     "profile-package",
+     "complete",
+     890.625126956962
+    ],
+    [
+     "get",
+     "complete",
+     8.292879730463028
+    ]
+   ],
+   "profile_outcome": null,
+   "exit": "0"
+  },
+  {
+   "family": "kronecker18",
+   "driver_state": "complete",
+   "driver_reason": null,
+   "series_reason": null,
+   "gem5_slot_waits_seconds": [
+    2150.3721133070067,
+    2248.5425673620775,
+    228.03541242796928,
+    2149.912362099625,
+    344.22951899375767,
+    2238.222357348539,
+    172.4858958395198,
+    2181.517238563858,
+    310.1265096068382,
+    2352.619241199456,
+    529.1616079481319,
+    2265.2088504005224
+   ],
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 6.68714666720479,
+    "settled_events": 84,
+    "dead_owner_charges": null
+   },
+   "executions": {
+    "s0.r0.primary": {
+     "tick_interval": [
+      3211008782,
+      9063000449
+     ],
+     "checkpoint_reused": false,
+     "source": 0,
+     "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 75.50144874397665,
+      "simulation": 1695.1975000053644,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.005851991667,
+     "full_tiles": 436,
+     "tail_tiles": 16,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 987175855,
+     "trace_uncompressed_bytes": 15017831797
+    },
+    "s0.r0.diagnostic": {
+     "tick_interval": [
+      3452757149,
+      19359072536
+     ],
+     "checkpoint_reused": false,
+     "source": 0,
+     "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 75.49336623772979,
+      "simulation": 2149.1117452448234,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015906315387,
+     "full_tiles": 417,
+     "tail_tiles": 16,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 944753205,
+     "trace_uncompressed_bytes": 14375146493
+    },
+    "s0.r1.primary": {
+     "tick_interval": [
+      3211008782,
+      9063000449
+     ],
+     "checkpoint_reused": true,
+     "source": 0,
+     "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint_resolution": null,
+      "simulation": 1695.1653180504218,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.005851991667,
+     "full_tiles": 436,
+     "tail_tiles": 16,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 987175855,
+     "trace_uncompressed_bytes": 15017831797
+    },
+    "s0.r1.diagnostic": {
+     "tick_interval": [
+      3452757149,
+      19359072536
+     ],
+     "checkpoint_reused": true,
+     "source": 0,
+     "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint_resolution": null,
+      "simulation": 2158.3239474259317,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015906315387,
+     "full_tiles": 417,
+     "tail_tiles": 16,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 944753205,
+     "trace_uncompressed_bytes": 14375146493
+    },
+    "s1.r0.primary": {
+     "tick_interval": [
+      3211049785,
+      9727848757
+     ],
+     "checkpoint_reused": false,
+     "source": 1234,
+     "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 77.52554416842759,
+      "simulation": 1693.1257171183825,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.006516798972,
+     "full_tiles": 437,
+     "tail_tiles": 16,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 983636648,
+     "trace_uncompressed_bytes": 15059828717
+    },
+    "s1.r0.diagnostic": {
+     "tick_interval": [
+      3452868890,
+      19825367103
+     ],
+     "checkpoint_reused": false,
+     "source": 1234,
+     "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 75.50101456325501,
+      "simulation": 2144.171770427376,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.016372498213,
+     "full_tiles": 439,
+     "tail_tiles": 16,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 985459315,
+     "trace_uncompressed_bytes": 15099316468
+    },
+    "s1.r1.primary": {
+     "tick_interval": [
+      3211049785,
+      9727848757
+     ],
+     "checkpoint_reused": true,
+     "source": 1234,
+     "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint_resolution": null,
+      "simulation": 1680.1395205901936,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.006516798972,
+     "full_tiles": 437,
+     "tail_tiles": 16,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 983636648,
+     "trace_uncompressed_bytes": 15059828717
+    },
+    "s1.r1.diagnostic": {
+     "tick_interval": [
+      3452868890,
+      19825367103
+     ],
+     "checkpoint_reused": true,
+     "source": 1234,
+     "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint_resolution": null,
+      "simulation": 2141.1934427423403,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.016372498213,
+     "full_tiles": 439,
+     "tail_tiles": 16,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 985459315,
+     "trace_uncompressed_bytes": 15099316468
+    },
+    "s2.r0.primary": {
+     "tick_interval": [
+      3211040395,
+      9608916895
+     ],
+     "checkpoint_reused": false,
+     "source": 7777,
+     "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 75.49112302996218,
+      "simulation": 1691.4167220881209,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.0063978765,
+     "full_tiles": 346,
+     "tail_tiles": 28,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 804213687,
+     "trace_uncompressed_bytes": 12073761502
+    },
+    "s2.r0.diagnostic": {
+     "tick_interval": [
+      3452813176,
+      19431861312
+     ],
+     "checkpoint_reused": false,
+     "source": 7777,
+     "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 77.54593800846487,
+      "simulation": 2128.2616970343515,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015979048136,
+     "full_tiles": 348,
+     "tail_tiles": 28,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 804596366,
+     "trace_uncompressed_bytes": 12076868923
+    },
+    "s2.r1.primary": {
+     "tick_interval": [
+      3211040395,
+      9608916895
+     ],
+     "checkpoint_reused": true,
+     "source": 7777,
+     "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint_resolution": null,
+      "simulation": 1675.0281174965203,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.0063978765,
+     "full_tiles": 346,
+     "tail_tiles": 28,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 804213687,
+     "trace_uncompressed_bytes": 12073761502
+    },
+    "s2.r1.diagnostic": {
+     "tick_interval": [
+      3452813176,
+      19431861312
+     ],
+     "checkpoint_reused": true,
+     "source": 7777,
+     "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint_resolution": null,
+      "simulation": 2138.1871957043186,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015979048136,
+     "full_tiles": 348,
+     "tail_tiles": 28,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 804596366,
+     "trace_uncompressed_bytes": 12076868923
+    }
+   },
+   "samples": [
+    {
+     "source_position": 0,
+     "source": 0,
+     "repetition": 0,
+     "evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s0.r0.primary.evaluation",
+     "diagnostic_evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s0.r0.diagnostic.evaluation",
+     "profile": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s0.r0.profile",
+     "package": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s0.r0.package.v1.c65308a18e8a2a0d",
+     "completeness": "complete",
+     "timing": [
+      {
+       "source": 0,
+       "source_position": 0,
+       "repetition": 0,
+       "duration_s": 0.005851991667,
+       "roi": "bfs.dx100.traversal.v1",
+       "basis": "simulated",
+       "quantity": "simulated_roi_seconds",
+       "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+       "output": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s0.r0.primary.evaluation/002-simulation.log",
+       "output_sha256": "59a697e2ea3c2f32cd12bab41472d97c9c6318be920cd31514f97e602175bb34",
+       "statistics_sha256": "889ea859a668d2ecfc1b18ca58ed1eccf67cb7350fa908ad2eb1dd483b4b9f4f",
+       "verified": true,
+       "evidence_kind": "execution"
+      }
+     ],
+     "coverage": {
+      "state": "observed",
+      "tick_interval": [
+       3211008782,
+       9063000449
+      ],
+      "completed_trace_units": {
+       "S": 16,
+       "I": 1872,
+       "R": 468,
+       "A": 452
+      },
+      "address_space_contract": {
+       "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+       "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+       "recvData_addr": "translated physical cache line; compared only with other physical words",
+       "source_evidence": [
+        {
+         "path": "src/mem/MAA/IF.cc",
+         "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+         "lines": [
+          38,
+          63
+         ]
+        },
+        {
+         "path": "src/mem/MAA/IndirectAccess.cc",
+         "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+         "lines": [
+          494,
+          505
+         ]
+        }
+       ]
+      },
+      "range_output_tile_sizes": {
+       "16384": 436,
+       "4833": 1,
+       "15302": 1,
+       "0": 16,
+       "12731": 1,
+       "324": 1,
+       "11444": 1,
+       "15010": 1,
+       "5577": 1,
+       "15724": 1,
+       "768": 1,
+       "3480": 1,
+       "15143": 1,
+       "1731": 1,
+       "15386": 1,
+       "1218": 1,
+       "1554": 1,
+       "1333": 1
+      },
+      "full_tiles": {
+       "state": "observed",
+       "count": 436,
+       "capacity": 16384
+      },
+      "tail_tiles": {
+       "state": "observed",
+       "count": 16,
+       "capacity": 16384
+      },
+      "competing_parent_updates": {
+       "state": "unobserved",
+       "count": 0,
+       "samples": [],
+       "parent_storage": null,
+       "target_tracking_truncated": false,
+       "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."
+      },
+      "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded.",
+      "debug_trace": {
+       "format": "swdb.dx100.debug-trace.v1",
+       "transport": "gem5-gzip.v1",
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s0.r0.primary.evaluation/simulation/roi-debug.trace.gz",
+       "sha256": "9985f000180929681299fb6e0a4cf64744d0ae8386976cbdc29dc87988019d0e",
+       "bytes": 987175855,
+       "uncompressed_sha256": "e770a1729defbc899b2d1525146b973aa5edb520a9f91a2bf52ddb624972c9e8",
+       "uncompressed_bytes": 15017831797,
+       "lines": 156689645
+      },
+      "accelerator_executed": true,
+      "instruction_counters": {
+       "system.maa.numInst_INDRD": 1420,
+       "system.maa.numInst_INDWR": 452,
+       "system.maa.numInst_STRRD": 16,
+       "system.maa.numInst_RANGE": 468,
+       "system.maa.numInst_ALUS": 452,
+       "system.maa.numInst_INV": 1351,
+       "system.maa.numInst": 4159
+      }
+     }
+    },
+    {
+     "source_position": 0,
+     "source": 0,
+     "repetition": 1,
+     "evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s0.r1.primary.evaluation",
+     "diagnostic_evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s0.r1.diagnostic.evaluation",
+     "profile": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s0.r1.profile",
+     "package": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s0.r1.package.v1.46924dd7af14d647",
+     "completeness": "complete",
+     "timing": [
+      {
+       "source": 0,
+       "source_position": 0,
+       "repetition": 1,
+       "duration_s": 0.005851991667,
+       "roi": "bfs.dx100.traversal.v1",
+       "basis": "simulated",
+       "quantity": "simulated_roi_seconds",
+       "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+       "output": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s0.r1.primary.evaluation/002-simulation.log",
+       "output_sha256": "2c5c313830ffcd71d558167f374ee26c468211dbda96ba019693ded6b831d153",
+       "statistics_sha256": "4a0fd3fd67cad307643f555389bde9ef7cb287bae449aed2dac2b3eb0ceafb6e",
+       "verified": true,
+       "evidence_kind": "execution"
+      }
+     ],
+     "coverage": {
+      "state": "observed",
+      "tick_interval": [
+       3211008782,
+       9063000449
+      ],
+      "completed_trace_units": {
+       "S": 16,
+       "I": 1872,
+       "R": 468,
+       "A": 452
+      },
+      "address_space_contract": {
+       "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+       "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+       "recvData_addr": "translated physical cache line; compared only with other physical words",
+       "source_evidence": [
+        {
+         "path": "src/mem/MAA/IF.cc",
+         "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+         "lines": [
+          38,
+          63
+         ]
+        },
+        {
+         "path": "src/mem/MAA/IndirectAccess.cc",
+         "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+         "lines": [
+          494,
+          505
+         ]
+        }
+       ]
+      },
+      "range_output_tile_sizes": {
+       "16384": 436,
+       "4833": 1,
+       "15302": 1,
+       "0": 16,
+       "12731": 1,
+       "324": 1,
+       "11444": 1,
+       "15010": 1,
+       "5577": 1,
+       "15724": 1,
+       "768": 1,
+       "3480": 1,
+       "15143": 1,
+       "1731": 1,
+       "15386": 1,
+       "1218": 1,
+       "1554": 1,
+       "1333": 1
+      },
+      "full_tiles": {
+       "state": "observed",
+       "count": 436,
+       "capacity": 16384
+      },
+      "tail_tiles": {
+       "state": "observed",
+       "count": 16,
+       "capacity": 16384
+      },
+      "competing_parent_updates": {
+       "state": "unobserved",
+       "count": 0,
+       "samples": [],
+       "parent_storage": null,
+       "target_tracking_truncated": false,
+       "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."
+      },
+      "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded.",
+      "debug_trace": {
+       "format": "swdb.dx100.debug-trace.v1",
+       "transport": "gem5-gzip.v1",
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s0.r1.primary.evaluation/simulation/roi-debug.trace.gz",
+       "sha256": "9985f000180929681299fb6e0a4cf64744d0ae8386976cbdc29dc87988019d0e",
+       "bytes": 987175855,
+       "uncompressed_sha256": "e770a1729defbc899b2d1525146b973aa5edb520a9f91a2bf52ddb624972c9e8",
+       "uncompressed_bytes": 15017831797,
+       "lines": 156689645
+      },
+      "accelerator_executed": true,
+      "instruction_counters": {
+       "system.maa.numInst_INDRD": 1420,
+       "system.maa.numInst_INDWR": 452,
+       "system.maa.numInst_STRRD": 16,
+       "system.maa.numInst_RANGE": 468,
+       "system.maa.numInst_ALUS": 452,
+       "system.maa.numInst_INV": 1351,
+       "system.maa.numInst": 4159
+      }
+     }
+    },
+    {
+     "source_position": 1,
+     "source": 1234,
+     "repetition": 0,
+     "evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s1.r0.primary.evaluation",
+     "diagnostic_evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s1.r0.diagnostic.evaluation",
+     "profile": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s1.r0.profile",
+     "package": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s1.r0.package.v1.c70c4c336d7a33cd",
+     "completeness": "complete",
+     "timing": [
+      {
+       "source": 1234,
+       "source_position": 1,
+       "repetition": 0,
+       "duration_s": 0.006516798972,
+       "roi": "bfs.dx100.traversal.v1",
+       "basis": "simulated",
+       "quantity": "simulated_roi_seconds",
+       "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+       "output": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s1.r0.primary.evaluation/002-simulation.log",
+       "output_sha256": "96a39f34989c68622b4debcd4eb9dcf1c5766e9a4869511bc530e6d3172cce11",
+       "statistics_sha256": "446fb2a75a9d7f99976dbef9fbb5c9e592f0293b0baabac07e38168c24f3333e",
+       "verified": true,
+       "evidence_kind": "execution"
+      }
+     ],
+     "coverage": {
+      "state": "observed",
+      "tick_interval": [
+       3211049785,
+       9727848757
+      ],
+      "completed_trace_units": {
+       "S": 16,
+       "I": 1876,
+       "R": 469,
+       "A": 453
+      },
+      "address_space_contract": {
+       "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+       "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+       "recvData_addr": "translated physical cache line; compared only with other physical words",
+       "source_evidence": [
+        {
+         "path": "src/mem/MAA/IF.cc",
+         "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+         "lines": [
+          38,
+          63
+         ]
+        },
+        {
+         "path": "src/mem/MAA/IndirectAccess.cc",
+         "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+         "lines": [
+          494,
+          505
+         ]
+        }
+       ]
+      },
+      "range_output_tile_sizes": {
+       "16384": 437,
+       "12229": 1,
+       "0": 16,
+       "15913": 1,
+       "3923": 1,
+       "3455": 1,
+       "13547": 1,
+       "1585": 1,
+       "9257": 1,
+       "5590": 1,
+       "1608": 1,
+       "13784": 1,
+       "10710": 1,
+       "1836": 1,
+       "14483": 1,
+       "4129": 1,
+       "16187": 1,
+       "4414": 1
+      },
+      "full_tiles": {
+       "state": "observed",
+       "count": 437,
+       "capacity": 16384
+      },
+      "tail_tiles": {
+       "state": "observed",
+       "count": 16,
+       "capacity": 16384
+      },
+      "competing_parent_updates": {
+       "state": "unobserved",
+       "count": 0,
+       "samples": [],
+       "parent_storage": null,
+       "target_tracking_truncated": false,
+       "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."
+      },
+      "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded.",
+      "debug_trace": {
+       "format": "swdb.dx100.debug-trace.v1",
+       "transport": "gem5-gzip.v1",
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s1.r0.primary.evaluation/simulation/roi-debug.trace.gz",
+       "sha256": "d64a0e594133d1eb3e7070205f2c4e04b7b28b281de80634a6ee61218fb5a825",
+       "bytes": 983636648,
+       "uncompressed_sha256": "2e3b05344e56c0de5647a6a0d749a4f916a0b7ef74a9478dc60b95ded2af14ed",
+       "uncompressed_bytes": 15059828717,
+       "lines": 157116510
+      },
+      "accelerator_executed": true,
+      "instruction_counters": {
+       "system.maa.numInst_INDRD": 1423,
+       "system.maa.numInst_INDWR": 453,
+       "system.maa.numInst_STRRD": 16,
+       "system.maa.numInst_RANGE": 469,
+       "system.maa.numInst_ALUS": 453,
+       "system.maa.numInst_INV": 1351,
+       "system.maa.numInst": 4165
+      }
+     }
+    },
+    {
+     "source_position": 1,
+     "source": 1234,
+     "repetition": 1,
+     "evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s1.r1.primary.evaluation",
+     "diagnostic_evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s1.r1.diagnostic.evaluation",
+     "profile": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s1.r1.profile",
+     "package": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s1.r1.package.v1.c15dcc540900dd5d",
+     "completeness": "complete",
+     "timing": [
+      {
+       "source": 1234,
+       "source_position": 1,
+       "repetition": 1,
+       "duration_s": 0.006516798972,
+       "roi": "bfs.dx100.traversal.v1",
+       "basis": "simulated",
+       "quantity": "simulated_roi_seconds",
+       "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+       "output": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s1.r1.primary.evaluation/002-simulation.log",
+       "output_sha256": "6ec13d90a5e0b6998b46c94bc4ee3ff3d8c699ebe33ef29f77218e11e18a3140",
+       "statistics_sha256": "8efaf709aaf75cc7feb6e75b579c4202db156c52637034422def58fb9439bf40",
+       "verified": true,
+       "evidence_kind": "execution"
+      }
+     ],
+     "coverage": {
+      "state": "observed",
+      "tick_interval": [
+       3211049785,
+       9727848757
+      ],
+      "completed_trace_units": {
+       "S": 16,
+       "I": 1876,
+       "R": 469,
+       "A": 453
+      },
+      "address_space_contract": {
+       "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+       "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+       "recvData_addr": "translated physical cache line; compared only with other physical words",
+       "source_evidence": [
+        {
+         "path": "src/mem/MAA/IF.cc",
+         "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+         "lines": [
+          38,
+          63
+         ]
+        },
+        {
+         "path": "src/mem/MAA/IndirectAccess.cc",
+         "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+         "lines": [
+          494,
+          505
+         ]
+        }
+       ]
+      },
+      "range_output_tile_sizes": {
+       "16384": 437,
+       "12229": 1,
+       "0": 16,
+       "15913": 1,
+       "3923": 1,
+       "3455": 1,
+       "13547": 1,
+       "1585": 1,
+       "9257": 1,
+       "5590": 1,
+       "1608": 1,
+       "13784": 1,
+       "10710": 1,
+       "1836": 1,
+       "14483": 1,
+       "4129": 1,
+       "16187": 1,
+       "4414": 1
+      },
+      "full_tiles": {
+       "state": "observed",
+       "count": 437,
+       "capacity": 16384
+      },
+      "tail_tiles": {
+       "state": "observed",
+       "count": 16,
+       "capacity": 16384
+      },
+      "competing_parent_updates": {
+       "state": "unobserved",
+       "count": 0,
+       "samples": [],
+       "parent_storage": null,
+       "target_tracking_truncated": false,
+       "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."
+      },
+      "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded.",
+      "debug_trace": {
+       "format": "swdb.dx100.debug-trace.v1",
+       "transport": "gem5-gzip.v1",
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s1.r1.primary.evaluation/simulation/roi-debug.trace.gz",
+       "sha256": "d64a0e594133d1eb3e7070205f2c4e04b7b28b281de80634a6ee61218fb5a825",
+       "bytes": 983636648,
+       "uncompressed_sha256": "2e3b05344e56c0de5647a6a0d749a4f916a0b7ef74a9478dc60b95ded2af14ed",
+       "uncompressed_bytes": 15059828717,
+       "lines": 157116510
+      },
+      "accelerator_executed": true,
+      "instruction_counters": {
+       "system.maa.numInst_INDRD": 1423,
+       "system.maa.numInst_INDWR": 453,
+       "system.maa.numInst_STRRD": 16,
+       "system.maa.numInst_RANGE": 469,
+       "system.maa.numInst_ALUS": 453,
+       "system.maa.numInst_INV": 1351,
+       "system.maa.numInst": 4165
+      }
+     }
+    },
+    {
+     "source_position": 2,
+     "source": 7777,
+     "repetition": 0,
+     "evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s2.r0.primary.evaluation",
+     "diagnostic_evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s2.r0.diagnostic.evaluation",
+     "profile": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s2.r0.profile",
+     "package": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s2.r0.package.v1.2658e56982fb3506",
+     "completeness": "complete",
+     "timing": [
+      {
+       "source": 7777,
+       "source_position": 2,
+       "repetition": 0,
+       "duration_s": 0.0063978765,
+       "roi": "bfs.dx100.traversal.v1",
+       "basis": "simulated",
+       "quantity": "simulated_roi_seconds",
+       "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+       "output": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s2.r0.primary.evaluation/002-simulation.log",
+       "output_sha256": "4f20c5466df68f30b6f42f34ae8c1f12ec62e67d6358737c65b6821e5d6c6976",
+       "statistics_sha256": "48a57ea589454afdebe26f3c4099a035aa5195923b6c64cf8acb0e5ac697de58",
+       "verified": true,
+       "evidence_kind": "execution"
+      }
+     ],
+     "coverage": {
+      "state": "observed",
+      "tick_interval": [
+       3211040395,
+       9608916895
+      ],
+      "completed_trace_units": {
+       "S": 28,
+       "I": 1608,
+       "R": 402,
+       "A": 374
+      },
+      "address_space_contract": {
+       "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+       "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+       "recvData_addr": "translated physical cache line; compared only with other physical words",
+       "source_evidence": [
+        {
+         "path": "src/mem/MAA/IF.cc",
+         "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+         "lines": [
+          38,
+          63
+         ]
+        },
+        {
+         "path": "src/mem/MAA/IndirectAccess.cc",
+         "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+         "lines": [
+          494,
+          505
+         ]
+        }
+       ]
+      },
+      "range_output_tile_sizes": {
+       "16384": 346,
+       "15574": 1,
+       "536": 1,
+       "0": 28,
+       "2697": 1,
+       "6368": 1,
+       "570": 1,
+       "9529": 1,
+       "14579": 1,
+       "2263": 1,
+       "5663": 1,
+       "13177": 1,
+       "16185": 1,
+       "3229": 1,
+       "9892": 1,
+       "14233": 1,
+       "10995": 1,
+       "77": 1,
+       "15190": 1,
+       "2838": 1,
+       "15736": 1,
+       "3896": 1,
+       "4627": 1,
+       "4840": 1,
+       "1288": 1,
+       "1674": 1,
+       "1122": 1,
+       "1318": 1,
+       "5742": 1,
+       "1413": 1
+      },
+      "full_tiles": {
+       "state": "observed",
+       "count": 346,
+       "capacity": 16384
+      },
+      "tail_tiles": {
+       "state": "observed",
+       "count": 28,
+       "capacity": 16384
+      },
+      "competing_parent_updates": {
+       "state": "unobserved",
+       "count": 0,
+       "samples": [],
+       "parent_storage": null,
+       "target_tracking_truncated": false,
+       "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."
+      },
+      "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded.",
+      "debug_trace": {
+       "format": "swdb.dx100.debug-trace.v1",
+       "transport": "gem5-gzip.v1",
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s2.r0.primary.evaluation/simulation/roi-debug.trace.gz",
+       "sha256": "4eb8e0b847e48daaca58c84028ab5f20756dd29677f84dfbd421e151218d7030",
+       "bytes": 804213687,
+       "uncompressed_sha256": "3f187d2458874d942430ceed729d27edf6b02c907fd5584897150687c4a4e9be",
+       "uncompressed_bytes": 12073761502,
+       "lines": 125744528
+      },
+      "accelerator_executed": true,
+      "instruction_counters": {
+       "system.maa.numInst_INDRD": 1234,
+       "system.maa.numInst_INDWR": 374,
+       "system.maa.numInst_STRRD": 28,
+       "system.maa.numInst_RANGE": 402,
+       "system.maa.numInst_ALUS": 374,
+       "system.maa.numInst_INV": 1112,
+       "system.maa.numInst": 3524
+      }
+     }
+    },
+    {
+     "source_position": 2,
+     "source": 7777,
+     "repetition": 1,
+     "evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s2.r1.primary.evaluation",
+     "diagnostic_evaluation": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s2.r1.diagnostic.evaluation",
+     "profile": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s2.r1.profile",
+     "package": "bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s2.r1.package.v1.f8b2f957e9123475",
+     "completeness": "complete",
+     "timing": [
+      {
+       "source": 7777,
+       "source_position": 2,
+       "repetition": 1,
+       "duration_s": 0.0063978765,
+       "roi": "bfs.dx100.traversal.v1",
+       "basis": "simulated",
+       "quantity": "simulated_roi_seconds",
+       "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+       "output": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s2.r1.primary.evaluation/002-simulation.log",
+       "output_sha256": "e6c0805c3d225fb083508c7b7cee8f4392a763ee4d9b68cbde259d294b0e096e",
+       "statistics_sha256": "7ad89a3e9e316a98eb22d34b0770df8f1cf4f1c41749f5e4fd19a1ba4867c56d",
+       "verified": true,
+       "evidence_kind": "execution"
+      }
+     ],
+     "coverage": {
+      "state": "observed",
+      "tick_interval": [
+       3211040395,
+       9608916895
+      ],
+      "completed_trace_units": {
+       "S": 28,
+       "I": 1608,
+       "R": 402,
+       "A": 374
+      },
+      "address_space_contract": {
+       "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+       "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+       "recvData_addr": "translated physical cache line; compared only with other physical words",
+       "source_evidence": [
+        {
+         "path": "src/mem/MAA/IF.cc",
+         "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+         "lines": [
+          38,
+          63
+         ]
+        },
+        {
+         "path": "src/mem/MAA/IndirectAccess.cc",
+         "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+         "lines": [
+          494,
+          505
+         ]
+        }
+       ]
+      },
+      "range_output_tile_sizes": {
+       "16384": 346,
+       "15574": 1,
+       "536": 1,
+       "0": 28,
+       "2697": 1,
+       "6368": 1,
+       "570": 1,
+       "9529": 1,
+       "14579": 1,
+       "2263": 1,
+       "5663": 1,
+       "13177": 1,
+       "16185": 1,
+       "3229": 1,
+       "9892": 1,
+       "14233": 1,
+       "10995": 1,
+       "77": 1,
+       "15190": 1,
+       "2838": 1,
+       "15736": 1,
+       "3896": 1,
+       "4627": 1,
+       "4840": 1,
+       "1288": 1,
+       "1674": 1,
+       "1122": 1,
+       "1318": 1,
+       "5742": 1,
+       "1413": 1
+      },
+      "full_tiles": {
+       "state": "observed",
+       "count": 346,
+       "capacity": 16384
+      },
+      "tail_tiles": {
+       "state": "observed",
+       "count": 28,
+       "capacity": 16384
+      },
+      "competing_parent_updates": {
+       "state": "unobserved",
+       "count": 0,
+       "samples": [],
+       "parent_storage": null,
+       "target_tracking_truncated": false,
+       "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."
+      },
+      "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded.",
+      "debug_trace": {
+       "format": "swdb.dx100.debug-trace.v1",
+       "transport": "gem5-gzip.v1",
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s2.r1.primary.evaluation/simulation/roi-debug.trace.gz",
+       "sha256": "4eb8e0b847e48daaca58c84028ab5f20756dd29677f84dfbd421e151218d7030",
+       "bytes": 804213687,
+       "uncompressed_sha256": "3f187d2458874d942430ceed729d27edf6b02c907fd5584897150687c4a4e9be",
+       "uncompressed_bytes": 12073761502,
+       "lines": 125744528
+      },
+      "accelerator_executed": true,
+      "instruction_counters": {
+       "system.maa.numInst_INDRD": 1234,
+       "system.maa.numInst_INDWR": 374,
+       "system.maa.numInst_STRRD": 28,
+       "system.maa.numInst_RANGE": 402,
+       "system.maa.numInst_ALUS": 374,
+       "system.maa.numInst_INV": 1112,
+       "system.maa.numInst": 3524
+      }
+     }
+    }
+   ],
+   "series_stages": [
+    [
+     "get",
+     "complete",
+     6.426688217557967
+    ],
+    [
+     "get",
+     "complete",
+     3.6749357962980866
+    ],
+    [
+     "get",
+     "complete",
+     3.7253834744915366
+    ],
+    [
+     "get",
+     "complete",
+     3.7773362724110484
+    ],
+    [
+     "get",
+     "complete",
+     3.8763013212010264
+    ],
+    [
+     "get",
+     "complete",
+     3.6763747185468674
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2220.0618587210774
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2669.0576911782846
+    ],
+    [
+     "dx100-profile",
+     "complete",
+     741.0798165453598
+    ],
+    [
+     "profile-package",
+     "complete",
+     708.9860392501578
+    ],
+    [
+     "get",
+     "complete",
+     4.630799546837807
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2168.228605112992
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2618.7371446909383
+    ],
+    [
+     "dx100-profile",
+     "complete",
+     753.7366122798994
+    ],
+    [
+     "profile-package",
+     "complete",
+     712.1848632451147
+    ],
+    [
+     "get",
+     "complete",
+     5.4391767317429185
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2275.141121839173
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2725.3095079343766
+    ],
+    [
+     "dx100-profile",
+     "complete",
+     768.6490394175053
+    ],
+    [
+     "profile-package",
+     "complete",
+     743.5722187673673
+    ],
+    [
+     "get",
+     "complete",
+     6.524331324733794
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2204.030802514404
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2677.863414318301
+    ],
+    [
+     "dx100-profile",
+     "complete",
+     784.9405800513923
+    ],
+    [
+     "profile-package",
+     "complete",
+     749.4927900582552
+    ],
+    [
+     "get",
+     "complete",
+     7.024867569096386
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2244.6473842365667
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2697.5739510580897
+    ],
+    [
+     "dx100-profile",
+     "complete",
+     644.9270867472515
+    ],
+    [
+     "profile-package",
+     "complete",
+     609.6904325848445
+    ],
+    [
+     "get",
+     "complete",
+     7.894085818901658
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2182.394603382796
+    ],
+    [
+     "dx100-execute",
+     "complete",
+     2649.6678421990946
+    ],
+    [
+     "dx100-profile",
+     "complete",
+     647.7682758392766
+    ],
+    [
+     "profile-package",
+     "complete",
+     608.6034522736445
+    ],
+    [
+     "get",
+     "complete",
+     8.598696227185428
+    ]
+   ],
+   "profile_outcome": null,
+   "exit": "0"
+  }
+ ],
+ "identity_checks": [
+  {
+   "at": "2026-09-28T11:12:44.335193-04:00",
+   "identities": 408,
+   "live": [],
+   "allocated_bytes": 27490381824
+  },
+  {
+   "at": "2026-09-28T11:12:49.362930-04:00",
+   "identities": 408,
+   "live": [],
+   "allocated_bytes": 27490381824
+  }
+ ],
+ "lease": {
+  "state": "held",
+  "generation": 383,
+  "released_at": null
+ },
+ "lane": {
+  "lease_generation": 382,
+  "started_utc": "2026-09-27T20:10:52Z",
+  "ended_utc": "2026-09-28T11:31:42Z",
+  "exit_code": 0
+ },
+ "outer_exit": "0",
+ "closed_at": "2026-09-28T11:12:54.378068-04:00",
+ "elapsed_seconds_since_admission": 68546,
+ "storage_stable": true,
+ "retained_bytes": 27490381824,
+ "closed_ok": true,
+ "closed_ok_note": "All 408 retained owned identities absent in two observations; b3 lane generation 382 ended 2026-09-28 07:31:42 ET (lane.json exit 0); node0 was afterwards held by a successor (generation 383, Stream C T20 builds). Storage stable at 27,490,381,824 bytes. Both drivers complete (exit 0); both cleanup ledgers settled strictly (6.51 s and 6.69 s), no dead-owner charges. Closure accepted 2026-09-28 11:13 ET."
+}
