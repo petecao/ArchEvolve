@@ -48,7 +48,7 @@ The grid has three series: `artifact.scalar` (BASE, 10 MiB/20-way), `control.sca
 | series_seconds | 507,780 | all 6 execution envelopes behind one slot + own profile/package + 2 aggregates and 2 readbacks |
 | allocation | 514,980 s (143.1 h) | 3,600 preparation + series + 3,600 finalization/cleanup |
 | storage allocation | 64 GiB | 2 x 24 (MAA) + scalar/ledgers, per-series cap 50 |
-| /data free at admission | >= 94 GiB | 64 + 30 reserve |
+| /data free at admission | >= 84 GiB | 64 + 20 reserve (root-approved 2026-09-28 11:15 ET: reserve 30 -> 20 GiB) |
 
 The expected cost is lower than the bound: about 200,000–215,000 s (55–60 h),
 assuming atomic verification cuts the roughly 30,000 s O3 verifier to a few

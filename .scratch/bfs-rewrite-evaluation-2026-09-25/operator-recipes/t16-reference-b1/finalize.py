@@ -107,7 +107,11 @@ def build_plan(protocols, reps, atomic):
                                           'finalization': 3570, 'scientific_cleanup': 30},
                     'storage_gib': 64 if reps == 1 else 124, 'overhead_reserve_gib': 4,
                     'shared_series_gib': 60 if reps == 1 else 120, 'per_series_cap_gib': 50 if reps == 1 else 98,
-                    'free_space_required_at_admission_gib': (64 if reps == 1 else 124) + 30,
+                    # Root 2026-09-28 11:15 ET: /data had 94 GiB free with T17/T20 queued first;
+                    # the raw reserve may drop from 30 to 20 GiB for T16 (recorded below).
+                    'free_space_required_at_admission_gib': (64 if reps == 1 else 124) + 20,
+                    'reserve_change': 'raw_reserve_gib 30 -> 20 GiB, root-approved 2026-09-28 11:15 ET because '
+                                      '/data had about 94 GiB free with T17/T20 queued before T16',
                     'notes': ['The three series run concurrently (R3) behind one gem5 slot; each series allowance is a '
                               'ceiling inside the same envelope, sized as every planned execution at its run bound.',
                               'Each series driver has its own 30-second shared cleanup ledger (three drivers).',
@@ -120,7 +124,7 @@ def build_plan(protocols, reps, atomic):
         bounds={'batch_seconds': 3600 + series_seconds + 3570 + 30, 'series_seconds': series_seconds,
                 'cleanup_seconds': 30, 'checkpoint_seconds': 3600, 'run_seconds': run,
                 'diagnostic_seconds': diagnostic, 'profile_seconds': profile, 'package_seconds': package, 'aggregate_seconds': aggregate, 'memory_gib': 48, 'storage_gib': 24,
-                'batch_storage_gib': 64 if reps == 1 else 124, 'raw_reserve_gib': 30, 'build_reserve_gib': 10,
+                'batch_storage_gib': 64 if reps == 1 else 124, 'raw_reserve_gib': 20, 'build_reserve_gib': 10,
                 'monitor_interval_seconds': 5, 'sampled_tree_memory_gib': 52, 'maximum_telemetry_gap_seconds': 30},
         bound_changes={
             'run_seconds': 'raised 14,400 -> 43,200: uniform22 scalar ROI measured > 10,700 s and estimated 15,000-30,000 s '

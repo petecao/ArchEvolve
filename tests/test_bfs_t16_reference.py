@@ -54,7 +54,7 @@ def test_plan_keeps_the_frozen_grid_and_sizes_the_allocation_from_bounds():
     assert sum(allocation['partition_seconds'].values()) == allocation['total_seconds'] == bounds['batch_seconds'] == 514980
     assert bounds['diagnostic_seconds'] - min(bounds['diagnostic_seconds'] // 2, 7200) - 30 >= bounds['run_seconds'] - 30
     assert (allocation['storage_gib'], allocation['per_series_cap_gib'], bounds['storage_gib']) == (64, 50, 24)
-    assert allocation['free_space_required_at_admission_gib'] == 94
+    assert allocation['free_space_required_at_admission_gib'] == 84 and bounds['raw_reserve_gib'] == 20
     assert batch.is_pilot(value) and batch.plan_path(batch.T16_KIND).name == batch.T16_ID + '.json'
     assert batch.preparation_charges(value) == [{'id': 'bfs-t16-reference-preparation-20260927-b1',
                                                 'elapsed_seconds': 3600, 'raw_bytes': 4*batch.GIB}]

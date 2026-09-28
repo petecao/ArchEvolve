@@ -1,0 +1,1002 @@
+{
+ "format": "swdb.bfs.t16-r12-probe-observation.v1",
+ "created": "2026-09-28",
+ "observed_at": "2026-09-28 11:46 ET",
+ "purpose": "R12 feasibility proof for the opt-in atomic post-ROI verifier continuation used by T16 b1.",
+ "summary_reference": {
+  "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-r12-probe-20260927-b1/summary.json",
+  "sha256": "b693190d8faf16721bb581bbc943c35ba5ecf95384d96c3a395d1cb0d430fe77"
+ },
+ "lane": {
+  "socket_lane": {
+   "aligned_cell_age_s": "",
+   "aligned_to": "no_gapbs_batch_running",
+   "command": [
+    "timeout",
+    "9000",
+    "/usr/bin/python3.12",
+    "-I",
+    "-B",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t16-reference-b1/t16_operator.py",
+    "probe"
+   ],
+   "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+   "ended_utc": "2026-09-28T15:43:41Z",
+   "exit_code": 0,
+   "host": "mbit10",
+   "job": "bfs-t16-r12-probe-20260927-b1",
+   "lease_generation": 385,
+   "lease_name": "mbit10-evaluation-node0",
+   "load1_at_start": 2.83,
+   "load1_max": 32,
+   "node": 0,
+   "numa_memory_policy": "bind:0",
+   "numactl": "--cpunodebind=0 --membind=0",
+   "preregistration_sha256": null,
+   "started_utc": "2026-09-28T15:25:30Z"
+  }
+ },
+ "outer_exit": 0,
+ "result": {
+  "passed": true,
+  "modeled_roi_statistics_identical": {
+   "maa": true,
+   "scalar": true
+  },
+  "both_verifiers_passed": {
+   "maa": true,
+   "scalar": true
+  },
+  "simulation_stage_host_seconds": {
+   "maa": {
+    "o3": 218.42364384047687,
+    "atomic": 175.1632561730221
+   },
+   "scalar": {
+    "o3": 226.45425542164594,
+    "atomic": 188.2215136680752
+   }
+  },
+  "post_roi_host_seconds_scalar_second_dump": {
+   "o3": 135.86,
+   "atomic": 96.12
+  },
+  "continuation_simulated_ticks": {
+   "maa": {
+    "o3": 2000000000,
+    "atomic": 4000112680
+   },
+   "scalar": {
+    "o3": 2000000000,
+    "atomic": 4000009703
+   }
+  }
+ },
+ "interpretation": "Switching the four timed O3 CPUs to the restore AtomicSimpleCPUs after the sealed ROI works on the pinned DX100 model for both BASE and MAA (no MAA atomic-snoop assertion), keeps the modeled ROI statistics byte-identical to the unswitched run from the same checkpoint, and both verifiers pass. On kron14 the post-ROI host time fell only about 1.4x because fixed exit/teardown costs dominate a tiny verifier; the scale-22 saving is an estimate, not measured here, so T16 bounds do not rely on it.",
+ "summary": {
+  "format": "swdb.bfs.t16-r12-probe.v1",
+  "created": "2026-09-27",
+  "id": "bfs-t16-r12-probe-20260927-b1",
+  "code_commit": "974bda5ec16877a2329d4c6934256765fdce2521",
+  "runtime_sha256": "218212aec2a0e346736526530e200fc9f5a94a67cab2bab3f20e3bd96d54c7b8",
+  "lane_node": 0,
+  "workload": "bfs-20260925-kronecker14.d03827828666f7dd",
+  "source": 0,
+  "started": "2026-09-28T11:25:35.367029-04:00",
+  "cases": {
+   "maa": {
+    "runs": {
+     "o3": {
+      "returncode": 0,
+      "started": "2026-09-28T11:25:35.376803-04:00",
+      "finished": "2026-09-28T11:31:02.148111-04:00",
+      "outcome": {
+       "state": "complete",
+       "stage": "execution",
+       "reason": "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+      },
+      "correctness": "passed",
+      "verdicts": [
+       {
+        "verdict": "PASS",
+        "line": 237,
+        "after_seal": true
+       }
+      ],
+      "simulation_host_wall_s": 218.42364384047687,
+      "continuation": {
+       "checker": "dx100.bfs.verifier.v2",
+       "chunk_ticks": 1000000000,
+       "exit_cause": "simulate() limit reached",
+       "exit_code": 0,
+       "exit_tick": 4669455556,
+       "exit_witness": {
+        "allowed_cpus": [
+         "system.switch_cpus0",
+         "system.switch_cpus1",
+         "system.switch_cpus2",
+         "system.switch_cpus3"
+        ],
+        "caller": {
+         "cpu": "system.switch_cpus0",
+         "thread": 0
+        },
+        "completed": true,
+        "enabled_tick": 2669455556,
+        "end_tick": 4669455556,
+        "events_after_exit": 0,
+        "exit_request": {
+         "call_line": 41,
+         "return_line": 42,
+         "return_value": 0,
+         "status": 0,
+         "tick": 4386120958
+        },
+        "format": "swdb.dx100.exit-witness.v1",
+        "initial_partial_calls": [],
+        "line_count": 42,
+        "pending_calls": [],
+        "progress_records": [
+         {
+          "cpu": "system.switch_cpus3",
+          "event": 335,
+          "interval_committed": 7383920,
+          "ipc": "02.31117",
+          "line": 21,
+          "tick": 3146536500,
+          "total_committed": 7383920
+         },
+         {
+          "cpu": "system.switch_cpus2",
+          "event": 334,
+          "interval_committed": 8311899,
+          "ipc": "02.60162",
+          "line": 22,
+          "tick": 3146536500,
+          "total_committed": 8311899
+         },
+         {
+          "cpu": "system.switch_cpus1",
+          "event": 333,
+          "interval_committed": 8341077,
+          "ipc": "02.61076",
+          "line": 23,
+          "tick": 3146536500,
+          "total_committed": 8341077
+         },
+         {
+          "cpu": "system.switch_cpus0",
+          "event": 332,
+          "interval_committed": 7425702,
+          "ipc": "02.32424",
+          "line": 24,
+          "tick": 3146536500,
+          "total_committed": 7425702
+         },
+         {
+          "cpu": "system.switch_cpus0",
+          "event": 332,
+          "interval_committed": 5172996,
+          "ipc": "01.61915",
+          "line": 25,
+          "tick": 4146536500,
+          "total_committed": 12598698
+         },
+         {
+          "cpu": "system.switch_cpus1",
+          "event": 333,
+          "interval_committed": 0,
+          "ipc": "00000000",
+          "line": 26,
+          "tick": 4146536500,
+          "total_committed": 8341077
+         },
+         {
+          "cpu": "system.switch_cpus2",
+          "event": 334,
+          "interval_committed": 0,
+          "ipc": "00000000",
+          "line": 27,
+          "tick": 4146536500,
+          "total_committed": 8311899
+         },
+         {
+          "cpu": "system.switch_cpus3",
+          "event": 335,
+          "interval_committed": 0,
+          "ipc": "00000000",
+          "line": 28,
+          "tick": 4146536500,
+          "total_committed": 7383920
+         }
+        ],
+        "trace": {
+         "bytes": 3924,
+         "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-r12-probe-20260927-b1/runs/bfs-t16-r12-probe-20260927-b1.maa.o3/simulation/post-roi-syscalls.log",
+         "sha256": "9853a06d6c70b9c900bf1dcd0e6d701b5f805091df4e6ec53ca510e8a1e6bc25"
+        }
+       },
+       "max_ticks": 100000000000000,
+       "normal_exit_observed": false,
+       "parser_sha256": "0eed08d570ed6ce2a5728e7d51c1e86268096eaa21aa3acfeeb38b9dcf7e5a26",
+       "post_roi_trace": {
+        "bytes": 3924,
+        "disabled_format_flags": [
+         "FmtTicksOff",
+         "FmtStackTrace"
+        ],
+        "disabled_roi_flags": [
+         "MAATrace",
+         "MAARangeFuser",
+         "MAAIndirect"
+        ],
+        "enabled_tick": 2669455556,
+        "flag": "SyscallBase",
+        "format_flags": [
+         "FmtFlag"
+        ],
+        "output": "separate_simulator_trace",
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-r12-probe-20260927-b1/runs/bfs-t16-r12-probe-20260927-b1.maa.o3/simulation/post-roi-syscalls.log",
+        "scope": "post-seal verifier continuation only",
+        "sha256": "9853a06d6c70b9c900bf1dcd0e6d701b5f805091df4e6ec53ca510e8a1e6bc25"
+       },
+       "simulated_ticks": 2000000000,
+       "state": "finished",
+       "stop_reason": "exit_witness"
+      },
+      "roi_stats": {
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-r12-probe-20260927-b1/runs/bfs-t16-r12-probe-20260927-b1.maa.o3/simulation/roi-stats.txt",
+       "sha256": "7a83f2425b96c6392f591b78d704d162af197ed161cb849d850d581ca0160033"
+      }
+     },
+     "atomic": {
+      "returncode": 0,
+      "started": "2026-09-28T11:31:02.148959-04:00",
+      "finished": "2026-09-28T11:34:33.683007-04:00",
+      "outcome": {
+       "state": "complete",
+       "stage": "execution",
+       "reason": "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+      },
+      "correctness": "passed",
+      "verdicts": [
+       {
+        "verdict": "PASS",
+        "line": 243,
+        "after_seal": true
+       }
+      ],
+      "simulation_host_wall_s": 175.1632561730221,
+      "continuation": {
+       "checker": "dx100.bfs.verifier.v2",
+       "chunk_ticks": 1000000000,
+       "exit_cause": "simulate() limit reached",
+       "exit_code": 0,
+       "exit_tick": 6669568236,
+       "exit_witness": {
+        "allowed_cpus": [
+         "system.switch_cpus0",
+         "system.switch_cpus1",
+         "system.switch_cpus2",
+         "system.switch_cpus3",
+         "system.cpu0",
+         "system.cpu1",
+         "system.cpu2",
+         "system.cpu3"
+        ],
+        "caller": {
+         "cpu": "system.cpu0",
+         "thread": 0
+        },
+        "completed": true,
+        "enabled_tick": 2669455556,
+        "end_tick": 6669568236,
+        "events_after_exit": 0,
+        "exit_request": {
+         "call_line": 49,
+         "return_line": 50,
+         "return_value": 0,
+         "status": 0,
+         "tick": 6464701061
+        },
+        "format": "swdb.dx100.exit-witness.v1",
+        "initial_partial_calls": [],
+        "line_count": 50,
+        "pending_calls": [],
+        "progress_records": [
+         {
+          "cpu": "system.cpu3",
+          "event": 331,
+          "interval_committed": 1306501,
+          "ipc": "0.408935",
+          "line": 15,
+          "tick": 3146536500,
+          "total_committed": 1306501
+         },
+         {
+          "cpu": "system.cpu2",
+          "event": 330,
+          "interval_committed": 1306501,
+          "ipc": "0.408935",
+          "line": 16,
+          "tick": 3146536500,
+          "total_committed": 1306501
+         },
+         {
+          "cpu": "system.cpu1",
+          "event": 329,
+          "interval_committed": 1306500,
+          "ipc": "0.408935",
+          "line": 17,
+          "tick": 3146536500,
+          "total_committed": 1306500
+         },
+         {
+          "cpu": "system.cpu0",
+          "event": 328,
+          "interval_committed": 1300126,
+          "ipc": "0.406939",
+          "line": 18,
+          "tick": 3146536500,
+          "total_committed": 1300126
+         },
+         {
+          "cpu": "system.cpu0",
+          "event": 328,
+          "interval_committed": 2735992,
+          "ipc": "0.856366",
+          "line": 25,
+          "tick": 4146536500,
+          "total_committed": 4036118
+         },
+         {
+          "cpu": "system.cpu1",
+          "event": 329,
+          "interval_committed": 2307925,
+          "ipc": "0.722381",
+          "line": 26,
+          "tick": 4146536500,
+          "total_committed": 3614425
+         },
+         {
+          "cpu": "system.cpu2",
+          "event": 330,
+          "interval_committed": 2307920,
+          "ipc": "0.722379",
+          "line": 27,
+          "tick": 4146536500,
+          "total_committed": 3614421
+         },
+         {
+          "cpu": "system.cpu3",
+          "event": 331,
+          "interval_committed": 2307923,
+          "ipc": "00.72238",
+          "line": 28,
+          "tick": 4146536500,
+          "total_committed": 3614424
+         },
+         {
+          "cpu": "system.cpu3",
+          "event": 331,
+          "interval_committed": 0,
+          "ipc": "00000000",
+          "line": 29,
+          "tick": 5146536500,
+          "total_committed": 3614424
+         },
+         {
+          "cpu": "system.cpu2",
+          "event": 330,
+          "interval_committed": 0,
+          "ipc": "00000000",
+          "line": 30,
+          "tick": 5146536500,
+          "total_committed": 3614421
+         },
+         {
+          "cpu": "system.cpu1",
+          "event": 329,
+          "interval_committed": 0,
+          "ipc": "00000000",
+          "line": 31,
+          "tick": 5146536500,
+          "total_committed": 3614425
+         },
+         {
+          "cpu": "system.cpu0",
+          "event": 328,
+          "interval_committed": 2736168,
+          "ipc": "0.856421",
+          "line": 32,
+          "tick": 5146536500,
+          "total_committed": 6772286
+         },
+         {
+          "cpu": "system.cpu0",
+          "event": 328,
+          "interval_committed": 2698034,
+          "ipc": "0.844485",
+          "line": 33,
+          "tick": 6146536500,
+          "total_committed": 9470320
+         },
+         {
+          "cpu": "system.cpu1",
+          "event": 329,
+          "interval_committed": 0,
+          "ipc": "00000000",
+          "line": 34,
+          "tick": 6146536500,
+          "total_committed": 3614425
+         },
+         {
+          "cpu": "system.cpu2",
+          "event": 330,
+          "interval_committed": 0,
+          "ipc": "00000000",
+          "line": 35,
+          "tick": 6146536500,
+          "total_committed": 3614421
+         },
+         {
+          "cpu": "system.cpu3",
+          "event": 331,
+          "interval_committed": 0,
+          "ipc": "00000000",
+          "line": 36,
+          "tick": 6146536500,
+          "total_committed": 3614424
+         }
+        ],
+        "trace": {
+         "bytes": 4570,
+         "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-r12-probe-20260927-b1/runs/bfs-t16-r12-probe-20260927-b1.maa.atomic/simulation/post-roi-syscalls.log",
+         "sha256": "ba22a2be7f549be297952d82dfc1cc387482daf7ea0afb95ca31e71b26098393"
+        }
+       },
+       "max_ticks": 100000000000000,
+       "normal_exit_observed": false,
+       "parser_sha256": "0eed08d570ed6ce2a5728e7d51c1e86268096eaa21aa3acfeeb38b9dcf7e5a26",
+       "post_roi_cpu": {
+        "from": [
+         "system.switch_cpus0",
+         "system.switch_cpus1",
+         "system.switch_cpus2",
+         "system.switch_cpus3"
+        ],
+        "memory_mode": "atomic",
+        "requested_tick": 2669455556,
+        "scope": "post-seal verifier continuation only",
+        "switched_tick": 2669568236,
+        "to": [
+         "system.cpu0",
+         "system.cpu1",
+         "system.cpu2",
+         "system.cpu3"
+        ],
+        "type": "AtomicSimpleCPU"
+       },
+       "post_roi_trace": {
+        "bytes": 4570,
+        "disabled_format_flags": [
+         "FmtTicksOff",
+         "FmtStackTrace"
+        ],
+        "disabled_roi_flags": [
+         "MAATrace",
+         "MAARangeFuser",
+         "MAAIndirect"
+        ],
+        "enabled_tick": 2669455556,
+        "flag": "SyscallBase",
+        "format_flags": [
+         "FmtFlag"
+        ],
+        "output": "separate_simulator_trace",
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-r12-probe-20260927-b1/runs/bfs-t16-r12-probe-20260927-b1.maa.atomic/simulation/post-roi-syscalls.log",
+        "scope": "post-seal verifier continuation only",
+        "sha256": "ba22a2be7f549be297952d82dfc1cc387482daf7ea0afb95ca31e71b26098393"
+       },
+       "simulated_ticks": 4000112680,
+       "state": "finished",
+       "stop_reason": "exit_witness"
+      },
+      "roi_stats": {
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-r12-probe-20260927-b1/runs/bfs-t16-r12-probe-20260927-b1.maa.atomic/simulation/roi-stats.txt",
+       "sha256": "2a6b86d515f33366433e72a7d7544a20b58a4f34312462867b0d9185dc873189"
+      }
+     }
+    },
+    "modeled_roi_statistics_identical": true,
+    "both_passed": true,
+    "verification_host_seconds": {
+     "o3": 218.42364384047687,
+     "atomic": 175.1632561730221
+    },
+    "continuation_simulated_ticks": {
+     "o3": 2000000000,
+     "atomic": 4000112680
+    },
+    "atomic_switch": {
+     "from": [
+      "system.switch_cpus0",
+      "system.switch_cpus1",
+      "system.switch_cpus2",
+      "system.switch_cpus3"
+     ],
+     "memory_mode": "atomic",
+     "requested_tick": 2669455556,
+     "scope": "post-seal verifier continuation only",
+     "switched_tick": 2669568236,
+     "to": [
+      "system.cpu0",
+      "system.cpu1",
+      "system.cpu2",
+      "system.cpu3"
+     ],
+     "type": "AtomicSimpleCPU"
+    }
+   },
+   "scalar": {
+    "runs": {
+     "o3": {
+      "returncode": 0,
+      "started": "2026-09-28T11:34:33.707490-04:00",
+      "finished": "2026-09-28T11:40:03.096089-04:00",
+      "outcome": {
+       "state": "complete",
+       "stage": "execution",
+       "reason": "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+      },
+      "correctness": "passed",
+      "verdicts": [
+       {
+        "verdict": "PASS",
+        "line": 202,
+        "after_seal": true
+       }
+      ],
+      "simulation_host_wall_s": 226.45425542164594,
+      "continuation": {
+       "checker": "dx100.bfs.verifier.v2",
+       "chunk_ticks": 1000000000,
+       "exit_cause": "simulate() limit reached",
+       "exit_code": 0,
+       "exit_tick": 4928470568,
+       "exit_witness": {
+        "allowed_cpus": [
+         "system.switch_cpus0",
+         "system.switch_cpus1",
+         "system.switch_cpus2",
+         "system.switch_cpus3"
+        ],
+        "caller": {
+         "cpu": "system.switch_cpus0",
+         "thread": 0
+        },
+        "completed": true,
+        "enabled_tick": 2928470568,
+        "end_tick": 4928470568,
+        "events_after_exit": 0,
+        "exit_request": {
+         "call_line": 41,
+         "return_line": 42,
+         "return_value": 0,
+         "status": 0,
+         "tick": 4634986632
+        },
+        "format": "swdb.dx100.exit-witness.v1",
+        "initial_partial_calls": [],
+        "line_count": 42,
+        "pending_calls": [],
+        "progress_records": [
+         {
+          "cpu": "system.switch_cpus3",
+          "event": 292,
+          "interval_committed": 10963600,
+          "ipc": "03.43161",
+          "line": 15,
+          "tick": 3146256000,
+          "total_committed": 10963600
+         },
+         {
+          "cpu": "system.switch_cpus2",
+          "event": 291,
+          "interval_committed": 10670148,
+          "ipc": "03.33976",
+          "line": 16,
+          "tick": 3146256000,
+          "total_committed": 10670148
+         },
+         {
+          "cpu": "system.switch_cpus1",
+          "event": 290,
+          "interval_committed": 9392400,
+          "ipc": "02.93982",
+          "line": 17,
+          "tick": 3146256000,
+          "total_committed": 9392400
+         },
+         {
+          "cpu": "system.switch_cpus0",
+          "event": 289,
+          "interval_committed": 5721754,
+          "ipc": "01.79091",
+          "line": 18,
+          "tick": 3146256000,
+          "total_committed": 5721754
+         },
+         {
+          "cpu": "system.switch_cpus0",
+          "event": 289,
+          "interval_committed": 6702664,
+          "ipc": "02.09793",
+          "line": 25,
+          "tick": 4146256000,
+          "total_committed": 12424418
+         },
+         {
+          "cpu": "system.switch_cpus1",
+          "event": 290,
+          "interval_committed": 729789,
+          "ipc": "0.228424",
+          "line": 26,
+          "tick": 4146256000,
+          "total_committed": 10122189
+         },
+         {
+          "cpu": "system.switch_cpus2",
+          "event": 291,
+          "interval_committed": 729629,
+          "ipc": "0.228374",
+          "line": 27,
+          "tick": 4146256000,
+          "total_committed": 11399777
+         },
+         {
+          "cpu": "system.switch_cpus3",
+          "event": 292,
+          "interval_committed": 729320,
+          "ipc": "0.228277",
+          "line": 28,
+          "tick": 4146256000,
+          "total_committed": 11692920
+         }
+        ],
+        "trace": {
+         "bytes": 3942,
+         "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-r12-probe-20260927-b1/runs/bfs-t16-r12-probe-20260927-b1.scalar.o3/simulation/post-roi-syscalls.log",
+         "sha256": "e38e00833f70ffc179fa89327094d6e6a5ee572747ac8c9ec575c4d2744f20c5"
+        }
+       },
+       "max_ticks": 100000000000000,
+       "normal_exit_observed": false,
+       "parser_sha256": "0eed08d570ed6ce2a5728e7d51c1e86268096eaa21aa3acfeeb38b9dcf7e5a26",
+       "post_roi_trace": {
+        "bytes": 3942,
+        "disabled_format_flags": [
+         "FmtTicksOff",
+         "FmtStackTrace"
+        ],
+        "disabled_roi_flags": [
+         "MAATrace",
+         "MAARangeFuser",
+         "MAAIndirect"
+        ],
+        "enabled_tick": 2928470568,
+        "flag": "SyscallBase",
+        "format_flags": [
+         "FmtFlag"
+        ],
+        "output": "separate_simulator_trace",
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-r12-probe-20260927-b1/runs/bfs-t16-r12-probe-20260927-b1.scalar.o3/simulation/post-roi-syscalls.log",
+        "scope": "post-seal verifier continuation only",
+        "sha256": "e38e00833f70ffc179fa89327094d6e6a5ee572747ac8c9ec575c4d2744f20c5"
+       },
+       "simulated_ticks": 2000000000,
+       "state": "finished",
+       "stop_reason": "exit_witness"
+      },
+      "roi_stats": {
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-r12-probe-20260927-b1/runs/bfs-t16-r12-probe-20260927-b1.scalar.o3/simulation/roi-stats.txt",
+       "sha256": "5d8345c4a9ac1a6b61f11c0a88b446af8e5f903a0c08dbe7dbe79f711785f195"
+      }
+     },
+     "atomic": {
+      "returncode": 0,
+      "started": "2026-09-28T11:40:03.096944-04:00",
+      "finished": "2026-09-28T11:43:41.449530-04:00",
+      "outcome": {
+       "state": "complete",
+       "stage": "execution",
+       "reason": "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+      },
+      "correctness": "passed",
+      "verdicts": [
+       {
+        "verdict": "PASS",
+        "line": 206,
+        "after_seal": true
+       }
+      ],
+      "simulation_host_wall_s": 188.2215136680752,
+      "continuation": {
+       "checker": "dx100.bfs.verifier.v2",
+       "chunk_ticks": 1000000000,
+       "exit_cause": "simulate() limit reached",
+       "exit_code": 0,
+       "exit_tick": 6928480271,
+       "exit_witness": {
+        "allowed_cpus": [
+         "system.switch_cpus0",
+         "system.switch_cpus1",
+         "system.switch_cpus2",
+         "system.switch_cpus3",
+         "system.cpu0",
+         "system.cpu1",
+         "system.cpu2",
+         "system.cpu3"
+        ],
+        "caller": {
+         "cpu": "system.cpu0",
+         "thread": 0
+        },
+        "completed": true,
+        "enabled_tick": 2928470568,
+        "end_tick": 6928480271,
+        "events_after_exit": 0,
+        "exit_request": {
+         "call_line": 49,
+         "return_line": 50,
+         "return_value": 0,
+         "status": 0,
+         "tick": 6866886968
+        },
+        "format": "swdb.dx100.exit-witness.v1",
+        "initial_partial_calls": [],
+        "line_count": 50,
+        "pending_calls": [],
+        "progress_records": [
+         {
+          "cpu": "system.cpu3",
+          "event": 288,
+          "interval_committed": 596708,
+          "ipc": "00.18677",
+          "line": 15,
+          "tick": 3146256000,
+          "total_committed": 596708
+         },
+         {
+          "cpu": "system.cpu2",
+          "event": 287,
+          "interval_committed": 596709,
+          "ipc": "00.18677",
+          "line": 16,
+          "tick": 3146256000,
+          "total_committed": 596709
+         },
+         {
+          "cpu": "system.cpu1",
+          "event": 286,
+          "interval_committed": 596709,
+          "ipc": "00.18677",
+          "line": 17,
+          "tick": 3146256000,
+          "total_committed": 596709
+         },
+         {
+          "cpu": "system.cpu0",
+          "event": 285,
+          "interval_committed": 592110,
+          "ipc": "00.18533",
+          "line": 18,
+          "tick": 3146256000,
+          "total_committed": 592110
+         },
+         {
+          "cpu": "system.cpu0",
+          "event": 285,
+          "interval_committed": 2734711,
+          "ipc": "0.855965",
+          "line": 19,
+          "tick": 4146256000,
+          "total_committed": 3326821
+         },
+         {
+          "cpu": "system.cpu1",
+          "event": 286,
+          "interval_committed": 2738475,
+          "ipc": "0.857143",
+          "line": 20,
+          "tick": 4146256000,
+          "total_committed": 3335184
+         },
+         {
+          "cpu": "system.cpu2",
+          "event": 287,
+          "interval_committed": 2738475,
+          "ipc": "0.857143",
+          "line": 21,
+          "tick": 4146256000,
+          "total_committed": 3335184
+         },
+         {
+          "cpu": "system.cpu3",
+          "event": 288,
+          "interval_committed": 2738476,
+          "ipc": "0.857143",
+          "line": 22,
+          "tick": 4146256000,
+          "total_committed": 3335184
+         },
+         {
+          "cpu": "system.cpu3",
+          "event": 288,
+          "interval_committed": 279232,
+          "ipc": "0.0873996",
+          "line": 29,
+          "tick": 5146256000,
+          "total_committed": 3614416
+         },
+         {
+          "cpu": "system.cpu2",
+          "event": 287,
+          "interval_committed": 279228,
+          "ipc": "0.0873984",
+          "line": 30,
+          "tick": 5146256000,
+          "total_committed": 3614412
+         },
+         {
+          "cpu": "system.cpu1",
+          "event": 286,
+          "interval_committed": 279228,
+          "ipc": "0.0873984",
+          "line": 31,
+          "tick": 5146256000,
+          "total_committed": 3614412
+         },
+         {
+          "cpu": "system.cpu0",
+          "event": 285,
+          "interval_committed": 2736561,
+          "ipc": "0.856544",
+          "line": 32,
+          "tick": 5146256000,
+          "total_committed": 6063382
+         },
+         {
+          "cpu": "system.cpu0",
+          "event": 285,
+          "interval_committed": 2716170,
+          "ipc": "0.850161",
+          "line": 33,
+          "tick": 6146256000,
+          "total_committed": 8779552
+         },
+         {
+          "cpu": "system.cpu1",
+          "event": 286,
+          "interval_committed": 0,
+          "ipc": "00000000",
+          "line": 34,
+          "tick": 6146256000,
+          "total_committed": 3614412
+         },
+         {
+          "cpu": "system.cpu2",
+          "event": 287,
+          "interval_committed": 0,
+          "ipc": "00000000",
+          "line": 35,
+          "tick": 6146256000,
+          "total_committed": 3614412
+         },
+         {
+          "cpu": "system.cpu3",
+          "event": 288,
+          "interval_committed": 0,
+          "ipc": "00000000",
+          "line": 36,
+          "tick": 6146256000,
+          "total_committed": 3614416
+         }
+        ],
+        "trace": {
+         "bytes": 4580,
+         "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-r12-probe-20260927-b1/runs/bfs-t16-r12-probe-20260927-b1.scalar.atomic/simulation/post-roi-syscalls.log",
+         "sha256": "5313148a0fb434c07218065c77971ad62f6982c79d29019922e196a7819e87d2"
+        }
+       },
+       "max_ticks": 100000000000000,
+       "normal_exit_observed": false,
+       "parser_sha256": "0eed08d570ed6ce2a5728e7d51c1e86268096eaa21aa3acfeeb38b9dcf7e5a26",
+       "post_roi_cpu": {
+        "from": [
+         "system.switch_cpus0",
+         "system.switch_cpus1",
+         "system.switch_cpus2",
+         "system.switch_cpus3"
+        ],
+        "memory_mode": "atomic",
+        "requested_tick": 2928470568,
+        "scope": "post-seal verifier continuation only",
+        "switched_tick": 2928480271,
+        "to": [
+         "system.cpu0",
+         "system.cpu1",
+         "system.cpu2",
+         "system.cpu3"
+        ],
+        "type": "AtomicSimpleCPU"
+       },
+       "post_roi_trace": {
+        "bytes": 4580,
+        "disabled_format_flags": [
+         "FmtTicksOff",
+         "FmtStackTrace"
+        ],
+        "disabled_roi_flags": [
+         "MAATrace",
+         "MAARangeFuser",
+         "MAAIndirect"
+        ],
+        "enabled_tick": 2928470568,
+        "flag": "SyscallBase",
+        "format_flags": [
+         "FmtFlag"
+        ],
+        "output": "separate_simulator_trace",
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-r12-probe-20260927-b1/runs/bfs-t16-r12-probe-20260927-b1.scalar.atomic/simulation/post-roi-syscalls.log",
+        "scope": "post-seal verifier continuation only",
+        "sha256": "5313148a0fb434c07218065c77971ad62f6982c79d29019922e196a7819e87d2"
+       },
+       "simulated_ticks": 4000009703,
+       "state": "finished",
+       "stop_reason": "exit_witness"
+      },
+      "roi_stats": {
+       "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-r12-probe-20260927-b1/runs/bfs-t16-r12-probe-20260927-b1.scalar.atomic/simulation/roi-stats.txt",
+       "sha256": "a71d69d12404ba948287b096adbea68eac54640a0b9362e42eb96f262d9860fe"
+      }
+     }
+    },
+    "modeled_roi_statistics_identical": true,
+    "both_passed": true,
+    "verification_host_seconds": {
+     "o3": 226.45425542164594,
+     "atomic": 188.2215136680752
+    },
+    "continuation_simulated_ticks": {
+     "o3": 2000000000,
+     "atomic": 4000009703
+    },
+    "atomic_switch": {
+     "from": [
+      "system.switch_cpus0",
+      "system.switch_cpus1",
+      "system.switch_cpus2",
+      "system.switch_cpus3"
+     ],
+     "memory_mode": "atomic",
+     "requested_tick": 2928470568,
+     "scope": "post-seal verifier continuation only",
+     "switched_tick": 2928480271,
+     "to": [
+      "system.cpu0",
+      "system.cpu1",
+      "system.cpu2",
+      "system.cpu3"
+     ],
+     "type": "AtomicSimpleCPU"
+    }
+   }
+  },
+  "evidence_kind": "execution",
+  "scope": "R12 feasibility probe; not T16 reference evidence",
+  "finished": "2026-09-28T11:43:41.469702-04:00",
+  "passed": true
+ },
+ "raw_location": "mbit10 only; traces and checkpoints were not copied to the Mac."
+}
