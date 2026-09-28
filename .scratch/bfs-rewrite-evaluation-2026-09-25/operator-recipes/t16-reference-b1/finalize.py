@@ -81,9 +81,13 @@ def build_plan(protocols, reps, atomic):
     executions = 3 * 2 * reps  # three series, primary + diagnostic per replay
     run, diagnostic = 43200, 79200  # diagnostic: 7,200 checkpoint + 71,970 simulation + 30
     # Every execution's full public envelope, serialized behind one gem5 slot,
-    # plus 3,600 s per series for profile/package/aggregation after its last gem5.
+    # plus this series' own profile and package calls (they do not hold the slot)
+    # and, for the MAA series with its shared protocol, two aggregate calls and
+    # two chain readbacks, each bounded by aggregate_seconds.
     primary_envelope, diagnostic_envelope = min(86400, 3600 + run + 60), diagnostic
-    series_seconds = (executions // 2) * (primary_envelope + diagnostic_envelope) + 3 * 3600
+    profile, package, aggregate = 36000, 36000, 14400
+    series_seconds = ((executions // 2) * (primary_envelope + diagnostic_envelope)
+                      + reps * (profile + package) + 4 * aggregate)
     plan = {key: pilot[key] for key in ('format', 'automatic_retry_allowed', 'gain_claim', 'model_build', 'target',
             'verifier', 'roi', 'threads', 'warmups', 'verification_ticks', 'profitability', 'historical_failure',
             'required_a3', 'required_coverage', 'historical_coverage_failure', 'supervision', 'trace_transport')}
@@ -103,7 +107,11 @@ def build_plan(protocols, reps, atomic):
                                           'finalization': 3570, 'scientific_cleanup': 30},
                     'storage_gib': 64 if reps == 1 else 124, 'overhead_reserve_gib': 4,
                     'shared_series_gib': 60 if reps == 1 else 120, 'per_series_cap_gib': 50 if reps == 1 else 98,
-                    'free_space_required_at_admission_gib': (64 if reps == 1 else 124) + 30,
+                    # Root 2026-09-28 11:15 ET: /data had 94 GiB free with T17/T20 queued first;
+                    # the raw reserve may drop from 30 to 20 GiB for T16 (recorded below).
+                    'free_space_required_at_admission_gib': (64 if reps == 1 else 124) + 20,
+                    'reserve_change': 'raw_reserve_gib 30 -> 20 GiB, root-approved 2026-09-28 11:15 ET because '
+                                      '/data had about 94 GiB free with T17/T20 queued before T16',
                     'notes': ['The three series run concurrently (R3) behind one gem5 slot; each series allowance is a '
                               'ceiling inside the same envelope, sized as every planned execution at its run bound.',
                               'Each series driver has its own 30-second shared cleanup ledger (three drivers).',
@@ -115,8 +123,8 @@ def build_plan(protocols, reps, atomic):
                      'lane_tree_sampled_rss_gib': 52},
         bounds={'batch_seconds': 3600 + series_seconds + 3570 + 30, 'series_seconds': series_seconds,
                 'cleanup_seconds': 30, 'checkpoint_seconds': 3600, 'run_seconds': run,
-                'diagnostic_seconds': diagnostic, 'profile_seconds': 600, 'memory_gib': 48, 'storage_gib': 24,
-                'batch_storage_gib': 64 if reps == 1 else 124, 'raw_reserve_gib': 30, 'build_reserve_gib': 10,
+                'diagnostic_seconds': diagnostic, 'profile_seconds': profile, 'package_seconds': package, 'aggregate_seconds': aggregate, 'memory_gib': 48, 'storage_gib': 24,
+                'batch_storage_gib': 64 if reps == 1 else 124, 'raw_reserve_gib': 20, 'build_reserve_gib': 10,
                 'monitor_interval_seconds': 5, 'sampled_tree_memory_gib': 52, 'maximum_telemetry_gap_seconds': 30},
         bound_changes={
             'run_seconds': 'raised 14,400 -> 43,200: uniform22 scalar ROI measured > 10,700 s and estimated 15,000-30,000 s '
@@ -124,7 +132,13 @@ def build_plan(protocols, reps, atomic):
             'diagnostic_seconds': 'raised 600 -> 79,200: T15 diagnostics took 1.4-1.5x the primary ROI host time (region markers); 7,200 s is its checkpoint bound, '
                                   'leaving 71,970 s for simulation; bound only',
             'storage_gib': 'raised 15 -> 24: MAA uniform22 debug trace estimated 19.3 GiB; bound only',
-            'profile_seconds': 'raised 120 -> 600 (public collector cap) for uniform22 statistics'},
+            'profile_seconds': 'raised -> 36,000: T15 b2 measured dx100-profile 900 s for uniform18 (17.8-GB decoded traces); '
+                               'uniform22 traces are about 16x larger (about 14,400 s); 2.5x margin; bound only',
+            'package_seconds': 'new 36,000: profile-package re-validates both full traces (T15 about 815 s for uniform18, '
+                               'about 13,000 s scaled to uniform22); 2.8x margin; bound only',
+            'aggregate_seconds': 'new 14,400 (default 180): aggregation and chain readback re-validate each primary trace; '
+                                 'T15 scale-18 aggregation took about 21 min for its primaries (about 3.5 min each), '
+                                 'about 1 h for one uniform22 MAA primary; 4x margin; bound only'},
         accounting={'preparation': [], 'preparation_reservation': {
             'id': 'bfs-t16-reference-preparation-20260927-b1', 'elapsed_seconds': 3600, 'raw_bytes': 4294967296},
             'excluded': 'All earlier T16 attempts, proofs and failures remain charged in their own records.'},

@@ -244,13 +244,15 @@ def main():
         parser.error('primary-build requires a frozen complete-call series without author-binary')
     # 2026-09-27 (T16 b1): author-binary uniform22 bounds are sized from measured
     # scale-22 progress; see the T16 reference request for the derivation.
+    # Profile/package/aggregate reread full traces; uniform22 traces are about
+    # 16x uniform18, so their author-binary ceilings are 43,200 s (T16 b1).
     # 2026-09-28 (T15 b3): complete-call scale-18 bounds follow the measured T15
     # costs (primary ~2,040 s simulation, diagnostic ~2,510 s, profile/package
     # ~900 s each); ceilings only, each series request states its own values.
     limits = {'total_seconds': (1, 864000 if args.author_binary else 86400),
               'checkpoint_seconds': (1, 3600), 'run_seconds': (1, 72000 if args.author_binary else 14400),
               'diagnostic_seconds': (180, 86400 if args.author_binary else 14400), 'memory_gib': (1, 48),
-              'profile_seconds': (1, 3600), 'package_seconds': (1, 7200), 'aggregate_seconds': (1, 14400),
+              'profile_seconds': (1, 43200), 'package_seconds': (1, 43200), 'aggregate_seconds': (1, 43200),
               'storage_gib': (1, 32 if args.author_binary else 15),
               'batch_storage_gib': (1, 200 if args.author_binary else 60),
               'verification_ticks': (1, 10**15)}
@@ -560,7 +562,7 @@ def main():
                 receipt['shared_aggregates'][other['id']] = extra['id']
                 if extra['outcome']['state'] != 'complete':
                     raise RuntimeError('shared-protocol aggregation did not pass its frozen evidence checks')
-                call('get', extra['id'], '--chain')
+                call('get', extra['id'], '--chain', timeout=args.aggregate_seconds)
         if args.primary_build:
             fresh = call('get', args.primary_build)
             if artifacts.digest(fresh) != receipt['reused_primary_build']['sha256']:
