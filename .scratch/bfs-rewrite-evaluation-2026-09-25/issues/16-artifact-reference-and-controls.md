@@ -457,3 +457,34 @@ tmux new -d -s t16ref "OPERATOR=$PWD/$OP OPERATOR_SHA=6dd4c253d25e8671fb64831fc4
 
 Run `launch` within 3,600 s of `prepare`. No reference or control sample, comparison
 or acceptance box is claimed by this preparation. This ticket stays claimed.
+
+## Low-storage b1 variant pinned — 2026-09-28 13:20 ET
+
+Root asked for a variant that fits about 35–50 GiB free on `/data` once T17/T20
+release node0. Off-lane measurements on the T15 b3 uniform18 trace are in
+[low-storage measurements](../observations/t16-low-storage-measurements-20260928.json):
+- `MAAIndirect` and `MAARangeFuser` are 99.99% of the 17.8-GB decoded stream.
+- The unit Start/End lines (`MAATrace`, 7.4e-5 of the stream) alone carry the
+  frozen required accelerator case `executed`.
+- Scalar traces are empty.
+- zstd -19 would save only about 40% over the current gzip stream, and gzip -9 about 5%.
+
+The pinned plan therefore records MAATrace-only traces for accelerated executions
+(`trace_flags: MAATrace`, `verification.coverage: false`). Full/tail tile sizes and
+competing-parent stores become unobserved by design; the parent case was already
+unobservable for the author binary.
+
+The protocols were re-frozen as version 2 with `supersedes`, changing only the
+candidate debug flags: `author-reference-t16-b1-20260927.75c1f44c5f653f3a` and
+`author-matched-control-t16-b1-20260927.7daeae1ccc961a49`.
+
+The plan `bfs-t16-reference-simulator-batch-20260927-b1` was re-pinned at digest
+`a6749593…85ca`, code `f3b1988b`:
+- storage 16 GiB and raw reserve 10 GiB (root-approved), so admission needs at least
+  26 GiB free on `/data`;
+- allocation 414,180 s.
+
+The runtime is `/data1/yanruj/EvolveSWDB_t16_reference_lowstorage_runtime_20260928_b1`
+@ `f3b1988b`, clean and verified. The launch sequence is the one above, run in this
+runtime, with the same operator sha256 `6dd4c253…4eb4`. Not launched. No sample
+or acceptance is claimed.
