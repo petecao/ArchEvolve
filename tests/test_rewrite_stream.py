@@ -137,3 +137,38 @@ def test_public_submit_retains_stream_progress_after_timeout(proposal_setup, fak
     later = records.swdb('get', data['id'], '--format', 'json')
     assert later.returncode == 0
     assert json.loads(later.stdout)['attempts'][0]['provider']['stream'] == provider['stream']
+
+
+def test_stream_capture_allows_amplified_output_above_the_json_cap(fake_claude, tmp_path):
+    """2026-09-28: stream-json amplifies ~40x, so its stdout cap exceeds 10 MiB."""
+    pad = delta('text_delta', 'x' * (1024 * 1024))
+    config = rewrite.configuration(fake_claude([pad] * 11 + events()))
+    response, meta = rewrite.interpret(config, 'prompt', tmp_path / 'p1')
+    assert response == RESPONSE and (tmp_path / 'p1/stdout.txt').stat().st_size > rewrite.JSON_OUTPUT_LIMIT
+    assert rewrite.STREAM_OUTPUT_LIMIT >= 64 * 1024 * 1024
+
+
+def test_json_capture_keeps_the_10_mib_cap(fake_claude, tmp_path):
+    path = fake_claude(['x' * (1024 * 1024)] * 11)
+    data = yaml.safe_load(path.read_text())
+    del data['output_format']
+    path.write_text(yaml.safe_dump(data))
+    with pytest.raises(Failure, match='10 MiB'):
+        rewrite.interpret(rewrite.configuration(path), 'prompt', tmp_path / 'p1')
+
+
+def test_interpret_off_the_main_thread_skips_signal_handlers(fake_claude, tmp_path):
+    """2026-09-28: signal.signal raises off the main thread; interpret still runs."""
+    import threading
+    config = rewrite.configuration(fake_claude(events()))
+    outcome = {}
+
+    def work():
+        try:
+            outcome['response'] = rewrite.interpret(config, 'prompt', tmp_path / 'p1')[0]
+        except BaseException as exc:  # surfaced to the main thread below
+            outcome['error'] = exc
+    worker = threading.Thread(target=work)
+    worker.start()
+    worker.join(30)
+    assert outcome.get('error') is None and outcome['response'] == RESPONSE

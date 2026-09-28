@@ -1,6 +1,7 @@
 """Public, durable proposal workflow. Source changes never imply correctness.
 
-Updated: 2026-09-27 (opt-in full_files provider edit format). YAML records remain authoritative; raw artifacts are external.
+Updated: 2026-09-27 (opt-in full_files provider edit format); 2026-09-28 (patch headers
+parsed outside hunk bodies only). YAML records remain authoritative; raw artifacts are external.
 """
 
 import copy
@@ -227,20 +228,43 @@ def check_capabilities(request, store):
     return None
 
 
-def apply_patch(source, destination, patch, allowed, protections):
-    if not isinstance(patch, str) or not patch.strip():
-        raise Failure("patch payload must contain an actual unified diff")
-    if re.search(r"\bmode 120000\b", patch) or "GIT binary patch" in patch:
-        raise Failure("symbolic-link and binary patches are not supported")
-    mentioned = []
+def _patch_paths(patch):
+    """Names from per-file '--- '/'+++ ' headers; hunk bodies are skipped by their @@ line counts (2026-09-28)."""
+    mentioned, old, new = [], 0, 0
     for line in patch.splitlines():
-        if line.startswith(("--- ", "+++ ")):
+        if old > 0 or new > 0:
+            tag = line[:1]
+            if tag == "\\":
+                continue
+            if tag in (" ", ""):
+                old, new = old - 1, new - 1
+                continue
+            if tag == "-":
+                old -= 1
+                continue
+            if tag == "+":
+                new -= 1
+                continue
+            old = new = 0  # malformed hunk; the apply check below rejects it
+        hunk = re.match(r"@@ -\d+(?:,(\d+))? \+\d+(?:,(\d+))? @@", line)
+        if hunk:
+            old, new = (1 if count is None else int(count) for count in hunk.groups())
+        elif line.startswith(("--- ", "+++ ")):
             name = line[4:].split("\t", 1)[0]
             if name == "/dev/null":
                 continue
             if not name.startswith(("a/", "b/")):
                 raise Failure("patch paths must use a/ and b/ prefixes")
             mentioned.append(artifacts.relative_path(name[2:]))
+    return mentioned
+
+
+def apply_patch(source, destination, patch, allowed, protections):
+    if not isinstance(patch, str) or not patch.strip():
+        raise Failure("patch payload must contain an actual unified diff")
+    if re.search(r"\bmode 120000\b", patch) or "GIT binary patch" in patch:
+        raise Failure("symbolic-link and binary patches are not supported")
+    mentioned = _patch_paths(patch)
     if not mentioned:
         raise Failure("patch has no textual file edits")
     for name in mentioned:

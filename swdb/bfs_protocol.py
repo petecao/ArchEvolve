@@ -4,6 +4,8 @@
 only when every protocol-relevant identity actually matches. The execution names
 each additional protocol explicitly (``shared_protocols``) and retains one exact
 binding per protocol; aggregation and comparison select the binding they use.
+
+2026-09-28 (R11): determinism evidence is a repository file bound by sha256.
 """
 
 import copy
@@ -436,6 +438,40 @@ def accelerator_cases(check):
     return observed
 
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+# R11 evidence named by bare string in protocols frozen before 2026-09-28 (T16 v2/v3,
+# T17/T20 v2). Each is accepted only as this existing repository file with this hash.
+LEGACY_DETERMINISM_EVIDENCE = {
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/t16-r11-replay-determinism-20260927.json":
+        "166688506e4b05080164afc10950e1ef88aa7b726449011f112a66fbcf5c3a27",
+}
+
+
+def _determinism_evidence(evidence, *, freezing):
+    """Bind R11 evidence to a repository file by sha256 (2026-09-28).
+
+    New freezes need ``{path, sha256}`` and an existing matching file. A frozen
+    ``{path, sha256}`` is rechecked whenever the file is present. The legacy string
+    form is accepted only for already-frozen protocols, only for a pinned path, and
+    only when that file exists here with the pinned hash.
+    """
+    legacy = isinstance(evidence, str)
+    if legacy:  # "<path>" (T16 v2/v3) or "<path> sha256:<hex>" (T17/T20 v2)
+        _fail(not freezing, "new protocols must bind determinism evidence as {path, sha256}")
+        named = re.fullmatch(r"(\S+)(?: sha256:([0-9a-f]{64}))?", evidence.strip())
+        pinned = LEGACY_DETERMINISM_EVIDENCE.get(named and named[1])
+        _fail(named is not None and named[2] in {None, pinned},
+              "determinism evidence must name a pinned repository file and its sha256")
+        evidence = {"path": named[1], "sha256": pinned}
+    _fail(isinstance(evidence, dict) and set(evidence) == {"path", "sha256"} and isinstance(evidence["path"], str)
+          and isinstance(evidence["sha256"], str) and re.fullmatch(r"[0-9a-f]{64}", evidence["sha256"]),
+          "determinism evidence must name a pinned repository file and its sha256")
+    path = REPO_ROOT / artifacts.relative_path(evidence["path"])
+    if freezing or legacy or path.exists():
+        _fail(path.is_file() and artifacts.file_hash(path) == evidence["sha256"],
+              "determinism evidence file is missing or differs from its bound sha256")
+
+
 def _validate_settings(settings, store, *, require_simulation_identity=False):
     _fail(isinstance(settings, dict), "settings must be a mapping")
     mode = settings.get("mode")
@@ -514,8 +550,10 @@ def _validate_settings(settings, store, *, require_simulation_identity=False):
     if determinism is not None:
         _fail(mode != "native" and isinstance(determinism, dict) and set(determinism) == {"basis", "evidence"}
               and determinism["basis"] == "deterministic_simulator_replay.v1"
-              and isinstance(determinism["evidence"], str) and determinism["evidence"].strip(),
+              and (isinstance(determinism["evidence"], dict)
+                   or isinstance(determinism["evidence"], str) and determinism["evidence"].strip()),
               "one-replay sampling needs a simulated deterministic-replay basis and named evidence")
+        _determinism_evidence(determinism["evidence"], freezing=require_simulation_identity)
     _integer(sampling.get("repetitions"), "repetitions", 5 if mode == "native" else 1 if determinism else 2)
     _fail(sampling.get("aggregation") == "geomean_source_median_ratio", "unsupported sampling aggregate")
     _fail(sampling.get("warmups") == 0, "this backend currently supports zero untimed warmups; declare zero")
