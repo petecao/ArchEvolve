@@ -1,7 +1,7 @@
 # 16 — Artifact reference and controls
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-27 (Eastern Time)
+Updated: 2026-09-28 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 11, 13, 14
@@ -386,3 +386,74 @@ Exact runtime `/data1/yanruj/EvolveSWDB_t16_protocol_recovery_runtime_20260927_a
 remains untouched. Evidence: [signal](../observations/t16-user-stop-signal-20260927.json),
 [closure and retained path hashes](../observations/t16-user-stop-closure-20260927.json),
 and [post-stop health](../observations/t16-user-stop-health-20260927.json).
+
+## Fresh b1 preparation, R12 proof and launch sequence — 2026-09-28 11:55 ET
+
+T16 b1 is prepared on the repaired runtime but **not launched**. Root holds the lane: node0
+runs the T17/T20 routes job until about 2026-09-29 00:00 ET, node1 holds the owner's rev18
+chain, and `/data` will temporarily drop below the 84-GiB admission floor. The stopped
+protocol-recovery a1 run stays closed and charged; no failed ID is resumed.
+
+**Scope under root decisions R10–R12 (2026-09-27/28).**
+- **R10.** `artifact.maa` and `control.maa` use one execution set. They share the binary,
+  configuration (MAA, 8 MiB/16-way), graph, source and target. Each primary binds
+  exactly to both frozen protocols through `shared_protocols`; the binding is refused
+  unless every identity for that role matches. Each protocol gets its own public
+  aggregate.
+- **R11.** One replay per source. `sampling.determinism` names the shared observation
+  [t16-r11-replay-determinism](../observations/t16-r11-replay-determinism-20260927.json):
+  32 T15 executions with identical modeled statistics.
+- **R12.** Verification after the ROI runs on AtomicSimpleCPU, opt-in, after the ROI statistics are sealed.
+  The actual [kron14 probe](../observations/t16-r12-probe-20260928.json) ran on node0
+  from 11:25 to 11:44 ET, commit `974bda5`, outer exit 0. For both MAA and BASE, the
+  modeled ROI statistics matched the unswitched run byte for byte, from the same
+  checkpoint, and all four verifiers passed. The host-time saving on kron14 was small
+  (about 1.4x), and the uniform22 bounds do not rely on it.
+
+**Frozen inputs.** `author-reference-t16-b1-20260927.df9f8f66b18fe1ed` and
+`author-matched-control-t16-b1-20260927.4074e7f7ca8d1099`. Targets, graph, source, builds,
+ROI, correctness and profitability are unchanged from the earlier T16 policies. What
+changed: one replay, the verifier runtime of this checkout, and the atomic
+continuation. The plan
+[`bfs-t16-reference-simulator-batch-20260927-b1`](../requests/bfs-t16-reference-simulator-batch-20260927-b1.json)
+has digest `5d221641…094c`; code `f2868640` is on `codex/bfs-t16-reference-20260927-b1`.
+
+**Grid.** Three series share one lane job and one gem5 slot: `artifact.scalar`
+(10 MiB/20-way), `control.scalar` (8 MiB/16-way) and `maa`. That is 3 primary and
+3 diagnostic executions, 3 packages, 4 aggregates and, later, 2 comparisons.
+
+**Bounds, derived from measurements.**
+- run 43,200 s. The stopped uniform22 scalar ROI was still unfinished after
+  10,700 s; its estimate is 15,000–30,000 s.
+- diagnostic 79,200 s. T15 diagnostics took 1.4–1.5x the primary ROI.
+- 24 GiB per execution. The MAA trace is about 19.3 GiB (T15 uniform18 x16).
+- profile and package 36,000 s each. T15 uniform18 took 900 s and about 815 s, x16.
+- aggregate and chain readback 14,400 s each.
+- The allocation is 514,980 s (143.1 h), with an expected actual cost of about
+  55–60 h. It holds 64 GiB of storage with a 20-GiB raw reserve (root-approved change
+  from 30 GiB), so admission needs at least 84 GiB free on `/data`.
+- Raw traces are never deleted in flight.
+
+**AC10 reference limit.** The unmodified author `bfs_maa` never prints parent
+addresses. Competing-parent updates therefore cannot be observed in the reference
+primaries. This is a documented observability limit of the unmodified artifact,
+not a correctness failure, and not evidence for or against those updates.
+
+**Launch sequence** (node N assigned by root). Run it in the clean runtime
+`/data1/yanruj/EvolveSWDB_t16_reference_runtime_20260927_b1` @ `f2868640`, where the
+plan hash, all 52 input artifacts, both protocols and every row's selection and
+diagnostic-build checks were verified 2026-09-28.
+
+```sh
+OP=.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t16-reference-b1/t16_operator.py
+H=/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh
+/usr/bin/python3.12 -I -B $OP setup
+bash $H N bfs-t16-reference-linux-tests-20260927-b1 -- timeout 300 /data1/yanruj/venvs/evolveswdb-test/bin/python -I -B $OP tests --kind owned_cleanup
+bash $H N bfs-t16-reference-linux-tests-20260927-b1 -- timeout 300 /data1/yanruj/venvs/evolveswdb-test/bin/python -I -B $OP tests --kind dx100_interruption
+/usr/bin/python3.12 -I -B $OP prepare --node N    # clock starts; requires /data >= 84 GiB
+A=/data/yanruj/EvolveSWDB_runs/bfs-t16-reference-simulator-batch-20260927-b1.dispatch/admission.json
+tmux new -d -s t16ref "OPERATOR=$PWD/$OP OPERATOR_SHA=6dd4c253d25e8671fb64831fc4480bfe05e6add3bc8ad132ee207c5b5b344eb4 ADMISSION_SHA=$(sha256sum $A|cut -d' ' -f1) bash $PWD/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t16-reference-b1/launch.sh"
+```
+
+Run `launch` within 3,600 s of `prepare`. No reference or control sample, comparison
+or acceptance box is claimed by this preparation. This ticket stays claimed.
