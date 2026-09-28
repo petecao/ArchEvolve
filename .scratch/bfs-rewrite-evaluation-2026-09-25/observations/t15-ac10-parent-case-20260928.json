@@ -1,0 +1,26 @@
+{
+ "created": "2026-09-28",
+ "updated": "2026-09-28",
+ "id": "bfs-t15-ac10-parent-case-20260928-a1",
+ "lane": {"node": 0, "lease_generation": 384, "tmux": "t15-ac10", "started": "2026-09-28 11:16:21 ET", "finished": "2026-09-28 11:24:46 ET"},
+ "runtime": {"path": "/data1/yanruj/EvolveSWDB_t15_pilot_runtime_20260927_b3", "commit": "8f9e64f978bf1aa2f8d9e49bafc38b6889678260"},
+ "receipt": {"path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-ac10-parent-case-20260928-a1/receipt.json"},
+ "record": {"id": "bfs-t15-ac10-parent-case-20260928-a1.execute", "sha256": "bd7d1224b33145cc1330681ea9bfc397913d669ea4f5c7c5ab2464f91b1afcbc"},
+ "timed_binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+ "workload": "bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e",
+ "outcome": {
+  "execute_returncode": 0,
+  "execute_host_wall_s": 489.8,
+  "correctness": "passed",
+  "roi_seconds": 0.000234927158,
+  "completed_trace_units": {"S": 8, "I": 96, "R": 24, "A": 16},
+  "full_tiles": 8,
+  "tail_tiles": 8,
+  "competing_parent_updates": {"state": "unobserved", "count": 0, "parent_storage": null},
+  "outer_exit": 1,
+  "ac10_parent_case_passed": false
+ },
+ "diagnosis": "The unchanged author timed binary (bfs_maa, traversal ROI) never reports its parent array's virtual address, so the coverage observer cannot attribute vector stores to the returned parent array; parent_storage is null and competing-parent updates are unobservable by construction, not shown absent. Same graph under the complete-call wrapper (coverage a2) observed 14,546 updates with parent_storage discovered; every T15 b3 diagnostic observed them with parent_storage from stdout. This case is retained as a failed correctness-only execution; no retry.",
+ "consequence": "AC10 parent-update coverage on the timed binary cannot be established for the unmodified author reference binary. For candidate routes (T17/T20), primaries use the dx100.complete_call.v2 wrapper, which reports parent storage; the frozen protocol therefore requires the companion collision-graph case to observe competing_parent_updates on each candidate's exact timed binary.",
+ "gain_claim": false
+}
