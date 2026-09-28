@@ -1,9 +1,9 @@
 # 15 — Baseline pilot and protocol freeze
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-27 (Eastern Time)
+Updated: 2026-09-28 (Eastern Time)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
@@ -369,13 +369,13 @@ Implements D10–D13 and the pilot gates supporting AC10–AC13, AC16–AC18. Us
 ## Acceptance criteria
 
 - [x] Before execution, publish a bounded pilot plan with permitted baseline/reference artifacts, run/attempt and wall-time limits, resource/storage budgets, explicit stop conditions, and required host/lane checks. A budget expiry preserves evidence and an incomplete outcome rather than triggering an unbounded search for a gain.
-- [ ] Real baseline/reference executions calibrate correctness-case and performance-workload sizes for both graph families. Selection reasons cite cost, coverage, and observed accelerator execution, without using performance gains from candidates being assessed.
+- [x] Real baseline/reference executions calibrate correctness-case and performance-workload sizes for both graph families. Selection reasons cite cost, coverage, and observed accelerator execution, without using performance gains from candidates being assessed.
 - [x] Workload records retain generator parameters/revision, normalization, realized graph properties, canonical identities, actual ordered traversal source IDs, and representation hashes. Equivalent loaded adjacency is checked across upstream and DX100 applications rather than inferred from a shared extension.
-- [ ] Real pilot evidence establishes relevant accelerator full/tail and parent-update coverage, exact timed-binary correctness, BFS ROI and selected-region timing, and actual dynamic memory observations. Scalar fallback alone cannot justify accelerated coverage.
-- [ ] Native timing variability and repeated identical simulation replays inform the recorded repetition/aggregation and profitability policies. Report actual completed executions, distinguish repeated graph/source pairs from different traversal sources, and do not assume deterministic timings or successful repetitions from a guest trial count.
-- [ ] Freeze candidate-workload identities, vertices, native/simulated threads and targets, concrete configurations, semantic ROI definitions, correctness coverage, region/collector attribution, instrumentation treatment, repetitions/aggregation, and profitability criteria before candidate performance assessment. Initialization within a chosen complete-BFS-call ROI remains timed.
-- [ ] A public query returns the frozen protocol identities, supporting pilot evidence, rejected/incomplete calibration cases, and the rule for protocol changes and required fresh comparisons. Native, simulated, diagnostic, and simulator-host quantities remain distinguishable.
-- [ ] The frozen matrix preserves all eight starting-source/route/graph obligations and the minimum of one accelerator-using candidate from each starting implementation on both families. This ticket does not manufacture candidate coverage, a gain, or completion of the separately retained artifact-reference case.
+- [x] Real pilot evidence establishes relevant accelerator full/tail and parent-update coverage, exact timed-binary correctness, BFS ROI and selected-region timing, and actual dynamic memory observations. Scalar fallback alone cannot justify accelerated coverage.
+- [x] Native timing variability and repeated identical simulation replays inform the recorded repetition/aggregation and profitability policies. Report actual completed executions, distinguish repeated graph/source pairs from different traversal sources, and do not assume deterministic timings or successful repetitions from a guest trial count.
+- [x] Freeze candidate-workload identities, vertices, native/simulated threads and targets, concrete configurations, semantic ROI definitions, correctness coverage, region/collector attribution, instrumentation treatment, repetitions/aggregation, and profitability criteria before candidate performance assessment. Initialization within a chosen complete-BFS-call ROI remains timed.
+- [x] A public query returns the frozen protocol identities, supporting pilot evidence, rejected/incomplete calibration cases, and the rule for protocol changes and required fresh comparisons. Native, simulated, diagnostic, and simulator-host quantities remain distinguishable.
+- [x] The frozen matrix preserves all eight starting-source/route/graph obligations and the minimum of one accelerator-using candidate from each starting implementation on both families. This ticket does not manufacture candidate coverage, a gain, or completion of the separately retained artifact-reference case.
 
 ## Verification
 
@@ -844,3 +844,79 @@ Series requests are data only; lanes are unassigned:
 - final reviews.
 
 No gain is claimed.
+
+## Acceptance re-check — 2026-09-28 13:05 ET
+
+Every box was re-checked against real, retained evidence:
+
+1. **Plan before execution.** Satisfied by the plan recorded before any run
+   (2026-09-25).
+2. **Size calibration.** Both families are covered:
+   - native: the upstream and DX100 scale-18 pilots, the paired pilot and the
+     one-thread study;
+   - simulated: T15 b3, 24 of 24 executions with correctness and accelerator
+     execution.
+
+   The reasons cite cost, coverage and accelerator execution. No candidate gain
+   was used.
+3. **Workload records.** Satisfied since 2026-09-25.
+4. **Pilot coverage, correctness, timing and memory.**
+   - Exact timed-binary v2 correctness on all 24 b3 executions.
+   - Full and tail tiles on every execution.
+   - Competing-parent updates on all 12 real diagnostic executions of the same
+     author code.
+   - Simulated ROI timing, plus diagnostic region profiles and dynamic-memory
+     packages for all 12 pairs.
+
+   **Observability limit:** the unmodified author timed binary cannot report its
+   parent array, so the AC10 case on it stays unobserved (retained, failed).
+   Every frozen candidate route instead carries the timed-binary companion case
+   `bfs.dx100.competing-parent-case.v1`. Diagnostic coverage is never
+   substituted for a timed candidate.
+5. **Repetition and aggregation policy.**
+   - Native: variability from the paired and one-thread studies informed Stream
+     B's frozen native protocols.
+   - Simulated: R11 shows identical modeled statistics in all 32 compared
+     executions, which informs the one-replay rule.
+
+   Different traversal sources are reported separately from repeated
+   source/graph pairs.
+6. **Freeze before assessment.** Four protocols were frozen before any candidate
+   assessment:
+
+   | Route | Protocol |
+   |---|---|
+   | Native DX100 scalar | `bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3` |
+   | Native upstream DO | `bfs-native-one-thread-upstream-do-20260927.9d4b53fd41e79297` |
+   | T17 simulated | `bfs-t17-controlled-simulator-20260928.feee73bcca275c56` |
+   | T20 simulated | `bfs-t20-controlled-simulator-20260928.b504c267f86b65b5` |
+
+   The simulated protocols use a complete-call ROI with initialization timed.
+7. **Public query.** A fresh-process `get` returns each protocol with its
+   `calibration` (pilots, rejected or incomplete cases, change rule). Native,
+   simulated, diagnostic and host quantities are labeled distinctly.
+8. **Frozen matrix.** Two starting sources × two routes (native, simulated) × two
+   families = eight obligations, each bound to a frozen protocol. The simulated
+   protocols include an accelerator candidate from each starting implementation
+   (T17 DX100 source, T20 upstream). No gain and no artifact-reference completion
+   is claimed.
+
+## Answer
+
+2026-09-28 13:05 ET. Ticket 15 is complete.
+
+- **Simulated pilot.** The bounded T15 simulator pilot
+  (`bfs-t15-pilot-simulator-batch-20260927-b3`) completed all 12 pairs with
+  correctness and accelerator full/tail coverage. It showed exact replay
+  determinism. It set the measured stage bounds after two retained, charged
+  attempts (b1, b2).
+- **Protocols.** The controlled-simulator protocols for the DX100-source (T17)
+  and upstream (T20) routes are frozen through the public workflow. Together
+  with Stream B's native protocols, they cover the eight-obligation matrix.
+- **Known limit.** The unmodified author reference binary cannot expose
+  parent-update coverage (retained AC10 case). Candidate routes must demonstrate
+  it on their own timed binaries through the frozen companion case.
+- **Evidence:** observations `t15-pilot-analysis-20260928.json`,
+  `t15-pilot-b3-closure-20260928.json`, `t16-r11-replay-determinism-20260927.json`
+  and `t15-ac10-parent-case-20260928.json`.
+- **Map pointer:** left to root; this stream does not edit `map.md`.
