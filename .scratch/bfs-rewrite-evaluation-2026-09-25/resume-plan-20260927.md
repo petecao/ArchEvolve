@@ -86,3 +86,18 @@ statistics identical to an unswitched run. T15's running protocol is not changed
 
 T16 measurements behind this (Stream D, 12:15 ET): uniform22 scalar ROI ≈ 27,000 host s, MAA ROI
 ≈ 13,000–20,000 s, O3 verification ≈ 30,000 s per execution, MAA trace ≈ 20 GiB per execution.
+
+## Schedule compression — 2026-09-28 19:00 ET (user-approved options A + B + C)
+
+R13. **T17/T20 one source per family.** Protocols re-frozen as version 2 with sources [0] only;
+routes a1 is stopped and retained as interrupted (only baseline pairs existed, so the change
+precedes candidate assessment). Deterministic simulation makes this a loss of source coverage,
+not of statistical confidence.
+
+R14. **T16 scalar diagnostics dropped.** Protocols re-frozen as version 3: scalar roles keep
+primary timing, simulated statistics and memory observations; the MAA primary and diagnostic stay.
+T16 b1 is stopped and retained as interrupted.
+
+R15. **T16 split across lanes.** Scalar primaries run on node1; the MAA job runs on node0 after
+routes a2. node0 then returns to the owner's MemAcc session (about 2026-09-29 18:00 ET).
+Target: all tickets and the final review done 2026-09-29 evening.
