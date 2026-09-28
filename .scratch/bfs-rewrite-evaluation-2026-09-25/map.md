@@ -2743,3 +2743,12 @@ Resumed 2026-09-27 10:20 ET under [resume-plan-20260927.md](resume-plan-20260927
   [region correspondence](observations/t17-diagnostic-a2-region-correspondence-20260927.json).
 - **T20.** Context4 failed (provider timeout, retained); context5 prepared
   ([receipt](observations/t20-context5-preparation-20260927.json)), launch awaiting user.
+- **T15 resolved (2026-09-28 13:06 ET).** Pilot `bfs-t15-pilot-simulator-batch-20260927-b3`
+  (12/12 pairs, 24/24 correct, deterministic replays; b1/b2 retained as failed). Frozen
+  controlled-simulator protocols `bfs-t17-controlled-simulator-20260928.feee73bcca275c56` and
+  `bfs-t20-controlled-simulator-20260928.b504c267f86b65b5`; native protocols from T18/T19.
+  AC10 author-binary parent-update limit retained
+  ([case](observations/t15-ac10-parent-case-20260928.json)); see
+  [analysis](observations/t15-pilot-analysis-20260928.json) and [ticket 15](issues/15-baseline-pilot-and-protocol-freeze.md).
+- **T20.** Context6 candidate created (full_files); primary/diagnostic DX100 builds complete
+  (`bfs-t20-context6-{primary,diagnostic}-build-20260927-c3`).
