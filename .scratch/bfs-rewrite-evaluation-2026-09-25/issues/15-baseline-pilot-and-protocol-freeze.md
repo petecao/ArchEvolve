@@ -764,3 +764,83 @@ Before b3, every bounded call was audited against measured trace-processing cost
 generation 382, from runtime `b68bd6df7ea458e9413dedf44ac5c296b84df8af`. It stays
 inside the same allocation: b1, b2 and a 16.7-MB off-lane measurement directory
 are charged, and the absolute end remains 2026-09-29 10:29:47 ET.
+
+## T15 pilot b3 complete, AC10 case and controlled-simulator freezes — 2026-09-28 12:40 ET
+
+**Grid complete.** `bfs-t15-pilot-simulator-batch-20260927-b3` finished all 12
+primary/diagnostic pairs. It ran 2026-09-27 16:10 ET to 2026-09-28 07:31 ET on node0,
+generation 382, and both drivers exited 0.
+[Closure](../observations/t15-pilot-b3-closure-20260928.json):
+
+- All 408 identities are absent.
+- Storage is stable at 27,490,381,824 bytes.
+- Both cleanup ledgers settled strictly.
+
+Results ([analysis](../observations/t15-pilot-analysis-20260928.json)):
+
+- **Correctness.** All 24 executions passed the v2 verifier on the exact timed
+  (6abd8190…) and diagnostic (c0d2efb8…) binaries.
+- **Accelerator coverage.** Every execution observed full and tail tiles (uniform
+  476–484 full / 24–36 tail; Kronecker 346–439 / 16–28).
+- **Simulated ROI** (ms):
+
+  | Family | s0 | s1234 | s7777 |
+  |---|---:|---:|---:|
+  | uniform18 | 5.731610302 | 5.959031407 | 5.905449876 |
+  | kronecker18 | 5.851991667 | 6.516798972 | 6.397876500 |
+
+- **Determinism.** Replays r0 and r1 have identical simulated tick intervals; r1
+  restored r0's checkpoint. The
+  [R11 observation](../observations/t16-r11-replay-determinism-20260927.json)
+  (`t15_b3_extension_20260928`) shows identical modeled statistics in all 32
+  compared executions. Source 0 also matches b1 and b2, which created their own
+  checkpoints.
+- **Cost.** Primary simulation took 1,675–2,040 s, diagnostic 2,128–2,511 s;
+  profile 733–908 s; package 683–862 s.
+
+**Parent-update coverage (AC10).**
+
+- Every diagnostic observed competing-parent updates; no primary did.
+- The companion correctness case `bfs-t15-ac10-parent-case-20260928-a1`
+  ([observation](../observations/t15-ac10-parent-case-20260928.json)) ran the exact
+  timed author binary on the collision graph. It completed with correctness passed
+  and full/tail tiles, but parent updates remained **unobserved**.
+- Cause: the unmodified author binary never reports its parent-array address
+  (`parent_storage` is null), so these updates are unobservable by construction.
+  The complete-call wrapper on the same graph observed 14,546.
+- The case is retained as failed, with no retry.
+
+**Controlled-simulator protocols frozen** through public `freeze-protocol`, both
+retrieved in a fresh process and generated from the actual build records:
+
+| Route | Protocol |
+|---|---|
+| T17, DX100 source (baseline `dx100-bfs-scalar` scalar-v2) | `bfs-t17-controlled-simulator-20260928.feee73bcca275c56` |
+| T20, upstream (baseline `gapbs-bfs-do` scalar-v2) | `bfs-t20-controlled-simulator-20260928.b504c267f86b65b5` |
+
+Both protocols freeze:
+
+- the scale-18 uniform and Kronecker workloads with sources `[0, 1234, 7777]`;
+- complete-call v2 builds, matched BASE/MAA targets at 8 MiB/16-way/16,384, four
+  threads, and the exact instrumentation and verifier-runtime maps;
+- per-trial candidate cases `executed`, `full_tiles`, `tail_tiles`;
+- the AC10 companion case: the exact candidate timed binary must observe competing
+  parent updates on the collision graph;
+- one replay per ordered source under R6/R11 `deterministic_simulator_replay.v1`;
+- the unchanged 1.05/0.10/95%/2,000/20260925 profitability policy;
+- inspected region pairs;
+- `calibration`: supporting pilot, rejected or incomplete attempts, size rationale
+  and change rule.
+
+Series requests are data only; lanes are unassigned:
+[T17](../requests/bfs-t17-routes-series-20260928-a1.json) and
+[T20](../requests/bfs-t20-routes-series-20260928-a1.json).
+
+**Acceptance status.** This ticket stays claimed. Still open:
+
+- timed-binary parent-update coverage for the author reference;
+- the native protocol freeze (Stream B);
+- the eight-cell matrix, including native routes;
+- final reviews.
+
+No gain is claimed.
