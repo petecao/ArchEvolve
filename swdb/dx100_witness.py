@@ -1,7 +1,9 @@
 """Bounded DX100 v2 syscall evidence, not a normal-termination oracle.
 
 Updated: 2026-09-27 ET. Parsing loads standalone inside pinned gem5 Python;
-SWDB imports belong only in the downstream validator.
+SWDB imports belong only in the downstream validator. 2026-09-27 (R12): an
+explicitly requested post-ROI AtomicSimpleCPU continuation names the restore
+CPUs after its recorded switch; unrequested executions keep the timed CPUs only.
 """
 
 import copy
@@ -25,6 +27,10 @@ MAX_SEAL_BYTES = 32 * 1024 * 1024
 MAX_LINE_BYTES = 8192
 MAX_OUTPUT_BYTES = 2 * 1024**3
 CPUS = tuple(f'system.switch_cpus{i}' for i in range(4))
+ATOMIC_CPUS = tuple(f'system.cpu{i}' for i in range(4))
+POST_ROI_CPU = 'AtomicSimpleCPU'
+POST_ROI_CPU_TREATMENT = {'type': POST_ROI_CPU, 'memory_mode': 'atomic',
+                          'scope': 'post-seal verifier continuation only'}
 _HASH = re.compile(r'[0-9a-f]{64}')
 _LINE = re.compile(r' *(\d{1,24}): SyscallBase: ([A-Za-z_][A-Za-z0-9_.]*): T(\d{1,4}) : syscall (.+)')
 _DECIMAL = r'[0-9]{1,24}(?:\.[0-9]{1,24})?(?:[eE][+-]?[0-9]{1,3})?'
@@ -315,6 +321,30 @@ def _output_evidence(path):
     return digest.hexdigest(), verdicts, parents, times
 
 
+def _post_roi_cpus(data):
+    """Return (caller, allowed CPUs); an atomic continuation must be requested and recorded."""
+    request, context = data['request'], data['context']
+    continuation = data['correctness']['checks'][0]['continuation']
+    requested = request['verification'].get('post_roi_cpu')
+    switched = continuation.get('post_roi_cpu')
+    treatment = context['instrumentation'].get('post_roi_cpu')
+    if requested is None:
+        _need(switched is None and treatment is None, 'unrequested post-ROI CPU treatment')
+        return CPUS[0], CPUS
+    _need(requested == POST_ROI_CPU and _same(treatment, POST_ROI_CPU_TREATMENT),
+          'post-ROI CPU treatment differs from its request')
+    _need(isinstance(switched, dict) and set(switched) == {
+        'type', 'memory_mode', 'from', 'to', 'requested_tick', 'switched_tick', 'scope'}
+          and all(_same(switched[key], value) for key, value in POST_ROI_CPU_TREATMENT.items())
+          and switched['from'] == list(CPUS) and switched['to'] == list(ATOMIC_CPUS),
+          'recorded post-ROI CPU switch differs from its treatment')
+    start = _integer(continuation['post_roi_trace']['enabled_tick'], 'trace enable tick')
+    _need(_integer(switched['requested_tick'], 'switch request tick') == start
+          <= _integer(switched['switched_tick'], 'switch tick') <= _integer(continuation['exit_tick'], 'exit tick'),
+          'post-ROI CPU switch lies outside the verifier continuation')
+    return ATOMIC_CPUS[0], CPUS + ATOMIC_CPUS
+
+
 def _witness_artifacts(data):
     context, check = data['context'], data['correctness']['checks'][0]
     rows = [('seal', context['sealed_roi']), ('parser', context['verification_parser']),
@@ -331,8 +361,9 @@ def _verify_artifact(data, kind, reference):
     context, check = data['context'], data['correctness']['checks'][0]
     seal, witness = context['sealed_roi'], check['continuation']['exit_witness']
     if kind == 'trace':
+        caller, allowed = _post_roi_cpus(data)
         actual = parse_trace(reference['path'], enabled_tick=witness['enabled_tick'], end_tick=witness['end_tick'],
-            expected_cpu=CPUS[0], expected_thread=0, allowed_cpus=CPUS, expected_sha256=reference['sha256'])
+            expected_cpu=caller, expected_thread=0, allowed_cpus=allowed, expected_sha256=reference['sha256'])
         _need(_same(actual, witness), 'retained witness differs from actual simulator trace')
     elif kind == 'output':
         digest, verdicts, parents, times = _output_evidence(reference['path'])
@@ -449,8 +480,9 @@ def validate_completed_witness(evaluation, *, verify_artifacts=True, require_com
                   f'trace {key} differs from declared post-seal treatment')
         _need(_integer(treatment['chunk_ticks'], 'instrumentation chunk ticks') == continuation['chunk_ticks'],
               'trace chunk treatment differs')
+        caller, allowed = _post_roi_cpus(data)
         _need(witness.get('format') == FORMAT and witness.get('completed') is True
-              and _same(witness['caller'], {'cpu': CPUS[0], 'thread': 0}) and witness['allowed_cpus'] == list(CPUS)
+              and _same(witness['caller'], {'cpu': caller, 'thread': 0}) and witness['allowed_cpus'] == list(allowed)
               and _integer(witness['enabled_tick'], 'witness enable tick') == start
               and _integer(witness['end_tick'], 'witness end tick') == end,
               'completed witness identity or interval differs')
@@ -470,7 +502,7 @@ def validate_completed_witness(evaluation, *, verify_artifacts=True, require_com
               'invalid progress observation list')
         previous_line, previous_tick = 0, start
         for row in progress_rows:
-            _validate_progress(row, CPUS, start, end)
+            _validate_progress(row, allowed, start, end)
             _need(previous_line < row['line'] <= witness['line_count']
                   and row['line'] not in {exit_request['call_line'], exit_request['return_line']}
                   and previous_tick <= row['tick'], 'invalid progress observation order or line')
@@ -479,20 +511,20 @@ def validate_completed_witness(evaluation, *, verify_artifacts=True, require_com
                   'progress observation tick differs from exit ordering')
             previous_line, previous_tick = row['line'], row['tick']
         pending = witness['pending_calls']
-        _need(isinstance(pending, list) and len(pending) <= len(CPUS), 'invalid pending syscall list')
+        _need(isinstance(pending, list) and len(pending) <= len(allowed), 'invalid pending syscall list')
         seen = set()
         for row in pending:
             key = (row['cpu'], _integer(row['thread'], 'pending thread'))
-            _need(key not in seen and key[0] in CPUS and key[1] == 0 and row['name'] != 'exit_group'
+            _need(key not in seen and key[0] in allowed and key[1] == 0 and row['name'] != 'exit_group'
                   and re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', row['name']) and row['state'] in {'calling', 'retry'},
                   'invalid pending syscall identity')
             seen.add(key)
         initial = witness['initial_partial_calls']
-        _need(isinstance(initial, list) and len(initial) <= len(CPUS), 'invalid initial partial syscall list')
+        _need(isinstance(initial, list) and len(initial) <= len(allowed), 'invalid initial partial syscall list')
         seen = set()
         for row in initial:
             key = (row['cpu'], _integer(row['thread'], 'initial partial thread'))
-            _need(key not in seen and key[0] in CPUS and key[1] == 0 and row['name'] != 'exit_group'
+            _need(key not in seen and key[0] in allowed and key[1] == 0 and row['name'] != 'exit_group'
                   and re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', row['name'])
                   and start <= _integer(row['tick'], 'initial partial tick') <= end
                   and 1 <= _integer(row['line'], 'initial partial line') <= witness['line_count'],

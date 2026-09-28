@@ -106,7 +106,7 @@ def _prepare(args, action, store, request, data):
     elif action == "compile":
         fields |= {"candidate", "build_evaluation", "function", "accelerated", "roi", "fixture_compiler", "diagnostic_regions", "discovery"}
     else:
-        fields |= {"simulator", "binary", "workload", "configuration", "checkpoint_manifest", "checkpoint_evaluation", "build_evaluation", "verification", "candidate", "candidate_build", "protocol", "protocol_role", "protocol_trial"}
+        fields |= {"simulator", "binary", "workload", "configuration", "checkpoint_manifest", "checkpoint_evaluation", "build_evaluation", "verification", "candidate", "candidate_build", "protocol", "protocol_role", "protocol_trial", "shared_protocols"}
     if request.keys() - fields:
         raise Failure(f"unknown DX100 request fields: {sorted(request.keys() - fields)}")
     if not isinstance(request.get("fixture", False), bool):
@@ -137,9 +137,12 @@ def _prepare(args, action, store, request, data):
     budget = request.get("budget")
     if not isinstance(budget, dict):
         raise Failure("DX100 request requires explicit budget")
-    total = _integer(budget.get("total_seconds"), "budget.total_seconds", maximum=18000 if action == 'execute' else 7200)
+    # 2026-09-27: uniform22 artifact executions need more than the former
+    # 18,000-second / 20-GiB execute caps (measured T16 scalar ROI > 10,700 s,
+    # MAA uniform18 trace 1.3 GB scaling to about 20 GiB); callers still pin budgets.
+    total = _integer(budget.get("total_seconds"), "budget.total_seconds", maximum=86400 if action == 'execute' else 7200)
     memory = _integer(budget.get("memory_gib"), "budget.memory_gib", maximum=48)
-    storage = _integer(budget.get("storage_gib"), "budget.storage_gib", maximum=20)
+    storage = _integer(budget.get("storage_gib"), "budget.storage_gib", maximum=32)
     if action == "build":
         _integer(budget.get("jobs"), "budget.jobs", maximum=8)
         if storage > 10 or set(budget) != {"total_seconds", "memory_gib", "storage_gib", "jobs"}:
@@ -523,7 +526,7 @@ def execute(args):
         session, target, root = _prepare(args, "execute", store, request, data)
         budget = request["budget"]
         checkpoint_seconds = _integer(budget["checkpoint_seconds"], "checkpoint_seconds", maximum=7200)
-        run_seconds = _integer(budget["run_seconds"], "run_seconds", maximum=14400)
+        run_seconds = _integer(budget["run_seconds"], "run_seconds", maximum=86400)
         session.begin("execution_identity")
         simulator = _file(request.get("simulator"), "simulator")
         binary = _file(request.get("binary"), "BFS binary")
@@ -683,10 +686,11 @@ def execute(args):
         env = dict(os.environ, OMP_NUM_THREADS="4", OMP_PROC_BIND="false", OMP_DYNAMIC="FALSE")
         # A caller's environment cannot silently opt into diagnostic tracing.
         env.pop('SWDB_DX100_POST_ROI_TRACE', None)
+        env.pop('SWDB_DX100_POST_ROI_CPU', None)
         verify = request.get("verification")
         driver = paths.HOME / "scripts/dx100_verify.py"
         if verify is not None:
-            if (not isinstance(verify, dict) or set(verify) - {"checker", "max_ticks", "coverage", "post_roi_trace", "trace_transport"}
+            if (not isinstance(verify, dict) or set(verify) - {"checker", "max_ticks", "coverage", "post_roi_trace", "trace_transport", "post_roi_cpu"}
                     or verify.get("checker") not in {"dx100.bfs.verifier.v1", "dx100.bfs.verifier.v2"} or "max_ticks" not in verify):
                 raise Failure("verification requires checker dx100.bfs.verifier.v1 or v2 and max_ticks")
             if type(verify.get("coverage", False)) is not bool:
@@ -696,6 +700,10 @@ def execute(args):
                 raise Failure('verification.post_roi_trace must be SyscallBase when present')
             if verify['checker'] == 'dx100.bfs.verifier.v2' and verify.get('post_roi_trace') != 'SyscallBase':
                 raise Failure('v2 verification requires explicit post_roi_trace: SyscallBase')
+            # R12 (2026-09-27): opt-in atomic verifier continuation after the ROI seal.
+            if 'post_roi_cpu' in verify and (verify['post_roi_cpu'] != 'AtomicSimpleCPU'
+                                             or verify['checker'] != 'dx100.bfs.verifier.v2'):
+                raise Failure('verification.post_roi_cpu must be AtomicSimpleCPU with the v2 checker')
             if 'trace_transport' in verify and verify['trace_transport'] != 'gem5-gzip.v1':
                 raise Failure('verification.trace_transport must be gem5-gzip.v1 when present')
             _integer(verify["max_ticks"], "verification.max_ticks", maximum=10**15)
@@ -726,6 +734,8 @@ def execute(args):
                 SWDB_DX100_VERIFY_MAX_TICKS=str(verify["max_ticks"]))
             if 'post_roi_trace' in verify:
                 env['SWDB_DX100_POST_ROI_TRACE'] = verify['post_roi_trace']
+            if 'post_roi_cpu' in verify:
+                env['SWDB_DX100_POST_ROI_CPU'] = verify['post_roi_cpu']
         instrumentation = {'treatment': 'source_scope_diagnostic' if compiled and compiled['context'].get('diagnostic') else 'primary',
             'roi': data['context']['roi'], 'suppressed_internal_events': compiled['context']['suppressed_internal_events'] if compiled else [],
             'verification': 'same_guest_post_roi' if verify else 'none',
@@ -746,6 +756,9 @@ def execute(args):
                 instrumentation['post_roi_trace'].update(output='separate_simulator_trace', format_flags=['FmtFlag'],
                     disabled_format_flags=['FmtTicksOff', 'FmtStackTrace'],
                     disabled_roi_flags=['MAATrace', 'MAARangeFuser', 'MAAIndirect'], chunk_ticks=10**9)
+        if verify and 'post_roi_cpu' in verify:
+            from swdb.dx100_witness import POST_ROI_CPU_TREATMENT
+            instrumentation['post_roi_cpu'] = dict(POST_ROI_CPU_TREATMENT)
         data['context'].update(instrumentation=instrumentation, verifier=verify['checker'] if verify else None, repetitions=1)
         if request.get('protocol'):
             if not request.get('candidate') or not verify:

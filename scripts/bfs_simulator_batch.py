@@ -3,6 +3,10 @@
 Updated 2026-09-27 ET (R2/R3): the T15 pilot kind runs one family per driver,
 two drivers inside one lane job, sharing a one-slot gem5 pool, the lane-tree
 52-GiB sampled RSS cap and one 96-GiB aggregate storage allowance.
+Updated 2026-09-27 ET (T16 b1): the same incremental one-lane shape serves the
+T16 reference kind (one driver per series); frozen protocols may fix one replay
+(R11), one MAA series may bind both protocols (R10), and an opt-in atomic
+post-ROI verifier continuation (R12) is passed to every execution.
 
 No evaluator, retries, protocol publication, provider calls, or gain decisions.
 Run only under socket_lane.sh and a matching external timeout.
@@ -43,6 +47,12 @@ PILOT_ID = 'bfs-t15-pilot-simulator-batch-20260927-b1'
 PILOT_PLANS = {PILOT_KIND: PILOT_ID, 't15-pilot-b2': 'bfs-t15-pilot-simulator-batch-20260927-b2',
                't15-pilot-b3': 'bfs-t15-pilot-simulator-batch-20260927-b3'}
 PILOT_POLICY = 't15_incremental_allocation.v1'
+T16_KIND = 't16-reference'
+T16_ID = 'bfs-t16-reference-simulator-batch-20260927-b1'
+T16_POLICY = 't16_incremental_allocation.v1'
+# Incremental one-lane allocations: policy -> (kind, plan ID, flat preparation row).
+INCREMENTAL = {PILOT_POLICY: (PILOT_KIND, PILOT_ID, 'bfs-t15-pilot-preparation-20260927-b1'),
+               T16_POLICY: (T16_KIND, T16_ID, 'bfs-t16-reference-preparation-20260927-b1')}
 PILOT_TEST_CASES = {
     'owned_cleanup': {
         'test_linux_owned_stage_reaps_detached_child[False]',
@@ -94,12 +104,16 @@ def validate_plan(plan, kind):
 
 
 def is_pilot(plan):
-    return plan.get('allocation', {}).get('policy') == PILOT_POLICY
+    """True for every incremental one-lane allocation (T15 pilot, T16 reference)."""
+    return plan.get('allocation', {}).get('policy') in INCREMENTAL
 
 
 def plan_path(kind):
     if kind in PILOT_PLANS:
         return PLAN_DIR / (PILOT_PLANS[kind] + '.json')
+    for plan_kind, plan_id, _ in INCREMENTAL.values():
+        if kind == plan_kind:
+            return PLAN_DIR / (plan_id + '.json')
     date = '20260927' if kind in {'t15-lease-recovery', 't16-lease-recovery', 't16-seal-recovery', 't16-protocol-recovery'} else '20260926'
     return PLAN_DIR / f'bfs-{kind}-simulator-batch-{date}-a1.json'
 
@@ -396,7 +410,8 @@ def validate_preparation_reservation(plan, admission):
         # The incremental allocation reserves its 3,600 preparation seconds and
         # 4-GiB overhead as one flat row; it carries no historical proof group.
         reserved = plan['accounting']['preparation_reservation']
-        require(reserved == {'id': plan['id'].replace('-simulator-batch-', '-preparation-'), 'elapsed_seconds': 3600,
+        known = set(PILOT_PLANS.values()) | {plan_id for _, plan_id, _ in INCREMENTAL.values()}
+        require(plan['id'] in known and reserved == {'id': plan['id'].replace('-simulator-batch-', '-preparation-'), 'elapsed_seconds': 3600,
                              'raw_bytes': 4 * GIB} and 'preparation_reservation' not in admission,
                 'pilot preparation reservation differs from the approved partition')
         return
@@ -831,6 +846,10 @@ def series_command(plan, row, admission, config, runs, records, node, seconds, s
         command += ['--trace-transport', plan['trace_transport']]
     if row['protocol_key'] is not None:
         command += ['--protocol', admission['protocols'][row['protocol_key']]['id'], '--protocol-role', row['protocol_role']]
+    for key in row.get('shared_protocol_keys', []):
+        command += ['--shared-protocol', admission['protocols'][key]['id']]
+    if 'post_roi_cpu' in plan:
+        command += ['--post-roi-cpu', plan['post_roi_cpu']]
     if 'profile_seconds' in b:
         command += ['--profile-seconds', str(b['profile_seconds'])]
     if 'package_seconds' in b:
@@ -878,10 +897,16 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
         if name in plan['bounds']:
             expected_bounds[name] = plan['bounds'][name]
     expected_protocol = admission['protocols'][row['protocol_key']]['id'] if row['protocol_key'] else None
+    shared_ids = [admission['protocols'][key]['id'] for key in row.get('shared_protocol_keys', [])]
+    repetitions = 2
+    if expected_protocol:
+        repetitions = store.get(expected_protocol, 'protocol')['settings']['sampling']['repetitions']
+    require(child.get('shared_protocols', []) == shared_ids and child.get('post_roi_cpu') == plan.get('post_roi_cpu'),
+            'series shared-protocol or post-ROI CPU treatment differs from the plan')
     require(child.get('state') == 'complete' and child.get('id') == row['id']
             and child.get('candidate') == row['candidate'] and child.get('workload') == row['workload']
             and child.get('configuration') == row['configuration'] and child.get('roi') == plan['roi']
-            and child.get('model_build') == plan['model_build'] and child.get('repetitions') == 2
+            and child.get('model_build') == plan['model_build'] and child.get('repetitions') == repetitions
             and child.get('protocol') == expected_protocol and child.get('bounds') == expected_bounds
             and child.get('diagnostic_build') == {'evaluation': row['diagnostic_build'],
                 'sha256': plan['record_sha256'][row['diagnostic_build']]}
@@ -902,7 +927,8 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
             and child.get('owned_cleanup', {}).get('state') == 'all_owned_descendants_absent'
             and all(stage.get('cleanup', {}).get('state') == 'all_owned_descendants_absent'
                     for stage in child['stages']), 'series lacks the prospective whole-tree/cleanup contract')
-    expected = [(position, source, repetition) for position, source in enumerate(row['sources']) for repetition in range(2)]
+    expected = [(position, source, repetition) for position, source in enumerate(row['sources'])
+                for repetition in range(repetitions)]
     samples = child.get('samples', [])
     require([(sample.get('source_position'), sample.get('source'), sample.get('repetition'))
              for sample in samples] == expected, 'series did not retain its complete ordered sample grid')
@@ -933,15 +959,24 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
     if expected_protocol is None:
         require(child.get('aggregate') is None, 'unfrozen calibration series cannot declare a protocol aggregate')
         return
+    require(child.get('aggregate') == row['id'] + '.aggregate', 'series aggregate identity differs from the planned aggregate')
+    require(child.get('shared_aggregates', {}) == {pid: f"{row['id']}.shared{index}.aggregate"
+                                                    for index, pid in enumerate(shared_ids)},
+            'series shared aggregates differ from the planned protocols')
+    keys = [row['protocol_key'], *row.get('shared_protocol_keys', [])]
+    for key, aggregate_id in zip(keys, [child['aggregate'], *child.get('shared_aggregates', {}).values()]):
+        validate_series_aggregate(plan, row, admission, samples, store, key, aggregate_id, expected_protocol)
 
+
+def validate_series_aggregate(plan, row, admission, samples, store, key, aggregate_id, primary_protocol):
+    """Reopen one public aggregate under one admitted protocol (R10: possibly shared)."""
     # A completed child declaration is not evidence of the public aggregation.
     # Reopen its exact ordered primaries and the admitted immutable policy before
     # using the same semantic/grid reader as a subsequent public comparison.
-    aggregate_id = row['id'] + '.aggregate'
-    require(child.get('aggregate') == aggregate_id, 'series aggregate identity differs from the planned aggregate')
+    expected_protocol = admission['protocols'][key]['id']
     frozen = store.get(expected_protocol, 'protocol')
     require(frozen and frozen.get('id') == expected_protocol
-            and artifacts.digest(frozen) == admission['protocols'][row['protocol_key']]['sha256'],
+            and artifacts.digest(frozen) == admission['protocols'][key]['sha256'],
             'series aggregate protocol differs from the admitted frozen record')
     bfs_protocol.verify_immutable(frozen)
     bfs_protocol._validate_settings(frozen['settings'], store)
@@ -963,7 +998,9 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
                 and primary.get('candidate') == row['candidate'], 'series aggregate primary identity differs')
         trial = {'source_position': sample['source_position'], 'repetition': sample['repetition']}
         request, context = primary.get('request', {}), primary.get('context', {})
-        require(request.get('protocol') == context.get('protocol') == expected_protocol
+        binding = bfs_protocol.protocol_binding(context, expected_protocol)
+        require(request.get('protocol') == context.get('protocol') == primary_protocol
+                and binding.get('protocol') == expected_protocol and binding.get('role') == row['protocol_role']
                 and request.get('protocol_role') == row['protocol_role']
                 and request.get('fixture') is not True and primary.get('evidence_kind') == 'execution'
                 and artifacts.digest(request.get('protocol_trial')) == artifacts.digest(trial)
@@ -983,7 +1020,7 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
         store, aggregate, frozen, row['protocol_role'])
     require(classification == 'execution' and workload_id == row['workload']
             and set(observations) == set(range(len(row['sources'])))
-            and all(len(values) == 2 for values in observations.values()),
+            and all(len(values) == frozen['settings']['sampling']['repetitions'] for values in observations.values()),
             'series aggregate lacks the complete actual frozen sample grid')
 
 

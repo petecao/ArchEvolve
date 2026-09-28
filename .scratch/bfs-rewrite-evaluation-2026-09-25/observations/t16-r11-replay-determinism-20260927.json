@@ -1,0 +1,118 @@
+{
+ "format": "swdb.bfs.t16-r11-replay-determinism.v1",
+ "created": "2026-09-27",
+ "observed_at": "2026-09-27 14:50 ET",
+ "purpose": "R11 evidence for T16 b1 one-replay protocols: identical T15 cells replayed by separate gem5 processes.",
+ "method": "Read-only on mbit10: each ROI-sealed roi-stats.txt under bfs-t15-pilot-simulator-batch-20260927-b1/-b2; modeled statistics = every statistic line except hostSeconds, hostTickRate, hostMemory, hostInstRate, hostOpRate, values without comments; SHA-256 over the joined lines.",
+ "scope": "Cross-attempt replays (b1 ended with outer exit 1 after these executions completed; b2 is the running pilot). Same binary, simulator, graph, source and configuration; within-attempt r1 replays were not yet available at observation time.",
+ "cells": [
+  {
+   "family": "kronecker18",
+   "source_position": "s0",
+   "treatment": "diagnostic",
+   "observations": [
+    {
+     "attempt": "b2",
+     "replay": "r0",
+     "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b2/bfs-t15-pilot-simulator-batch-20260927-b2.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b2.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b2.kronecker18.s0.r0.diagnostic.evaluation/simulation/roi-stats.txt",
+     "modeled_sha256": "5b6362ac3562f7db3d9f65a0712c37f11194ee4f162be6759038031ecc781933",
+     "modeled_lines": 9042,
+     "sim_ticks": 15906315387,
+     "file_sha256": "8b54609cc6ca13f48e75929af885906c82e909faf0bd802e28728bb695f8f571"
+    },
+    {
+     "attempt": "b1",
+     "replay": "r0",
+     "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b1/bfs-t15-pilot-simulator-batch-20260927-b1.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b1.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b1.kronecker18.s0.r0.diagnostic.evaluation/simulation/roi-stats.txt",
+     "modeled_sha256": "5b6362ac3562f7db3d9f65a0712c37f11194ee4f162be6759038031ecc781933",
+     "modeled_lines": 9042,
+     "sim_ticks": 15906315387,
+     "file_sha256": "894494ecf68cb7e13dc7634b02099ddc525ac67fb0c47f65f24fedaa1f388a7f"
+    }
+   ],
+   "replays": 2,
+   "identical_modeled_statistics": true,
+   "identical_sim_ticks": true
+  },
+  {
+   "family": "kronecker18",
+   "source_position": "s0",
+   "treatment": "primary",
+   "observations": [
+    {
+     "attempt": "b2",
+     "replay": "r0",
+     "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b2/bfs-t15-pilot-simulator-batch-20260927-b2.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b2.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b2.kronecker18.s0.r0.primary.evaluation/simulation/roi-stats.txt",
+     "modeled_sha256": "724e208b645e2ca96b80ff98623997efc0ee084ad0b7b217e8a80f62be77a5b7",
+     "modeled_lines": 9021,
+     "sim_ticks": 5851991667,
+     "file_sha256": "0fca1494e4787343b0d3d8f3bf722a76e67ce9c5ff31f59bb69d318f59a19247"
+    },
+    {
+     "attempt": "b1",
+     "replay": "r0",
+     "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b1/bfs-t15-pilot-simulator-batch-20260927-b1.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b1.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b1.kronecker18.s0.r0.primary.evaluation/simulation/roi-stats.txt",
+     "modeled_sha256": "724e208b645e2ca96b80ff98623997efc0ee084ad0b7b217e8a80f62be77a5b7",
+     "modeled_lines": 9021,
+     "sim_ticks": 5851991667,
+     "file_sha256": "bf5d08e935786c691d9e71b2695bc5f992550789996fec3dd9aa5fd2ce15d00b"
+    }
+   ],
+   "replays": 2,
+   "identical_modeled_statistics": true,
+   "identical_sim_ticks": true
+  },
+  {
+   "family": "uniform18",
+   "source_position": "s0",
+   "treatment": "diagnostic",
+   "observations": [
+    {
+     "attempt": "b1",
+     "replay": "r0",
+     "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b1/bfs-t15-pilot-simulator-batch-20260927-b1.uniform18/bfs-t15-pilot-simulator-batch-20260927-b1.uniform18/bfs-t15-pilot-simulator-batch-20260927-b1.uniform18.s0.r0.diagnostic.evaluation/simulation/roi-stats.txt",
+     "modeled_sha256": "13ca82d58033d88a4fc7013ca4a59c23c5f4e669e60f907d737cf1b64cde0e65",
+     "modeled_lines": 8954,
+     "sim_ticks": 15414111306,
+     "file_sha256": "78897d87f99895862f329156911d0c382582f468ca571c12fbfcd1dd09fa6322"
+    }
+   ],
+   "replays": 1,
+   "identical_modeled_statistics": true,
+   "identical_sim_ticks": true
+  },
+  {
+   "family": "uniform18",
+   "source_position": "s0",
+   "treatment": "primary",
+   "observations": [
+    {
+     "attempt": "b2",
+     "replay": "r0",
+     "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b2/bfs-t15-pilot-simulator-batch-20260927-b2.uniform18/bfs-t15-pilot-simulator-batch-20260927-b2.uniform18/bfs-t15-pilot-simulator-batch-20260927-b2.uniform18.s0.r0.primary.evaluation/simulation/roi-stats.txt",
+     "modeled_sha256": "6ae60c599b4befed0e21878b6b86be2b32c17368c8b2d310fc991cf432966144",
+     "modeled_lines": 8968,
+     "sim_ticks": 5731610302,
+     "file_sha256": "cc04dcb96ee09252e4f50db09b40f03f94a2a7b79ff4ac8e613673f428f067d6"
+    },
+    {
+     "attempt": "b1",
+     "replay": "r0",
+     "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b1/bfs-t15-pilot-simulator-batch-20260927-b1.uniform18/bfs-t15-pilot-simulator-batch-20260927-b1.uniform18/bfs-t15-pilot-simulator-batch-20260927-b1.uniform18.s0.r0.primary.evaluation/simulation/roi-stats.txt",
+     "modeled_sha256": "6ae60c599b4befed0e21878b6b86be2b32c17368c8b2d310fc991cf432966144",
+     "modeled_lines": 8968,
+     "sim_ticks": 5731610302,
+     "file_sha256": "84b05d56d4a582e558449846482e81925884cf95ea9d5ab708360c29396c9235"
+    }
+   ],
+   "replays": 2,
+   "identical_modeled_statistics": true,
+   "identical_sim_ticks": true
+  }
+ ],
+ "result": {
+  "cells_with_two_replays": 3,
+  "all_replayed_cells_identical": true
+ },
+ "raw_location": "mbit10 only; nothing copied to the Mac."
+}

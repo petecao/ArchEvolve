@@ -4,6 +4,9 @@
 Updated: 2026-09-27 (Eastern Time). A pilot accepts unchanged baselines only.
 2026-09-27 (R3): an optional lane gem5-slot pool lets two family series share one
 socket job with at most N concurrent simulators; the profile limit is explicit.
+2026-09-27 (T16 b1, R10-R12): a frozen protocol may fix one replay per source;
+primaries may also bind named shared protocols (one aggregate per protocol);
+an opt-in atomic post-ROI verifier continuation is passed through unchanged.
 A frozen series evaluates an already selected candidate; it never picks a
 strategy, freezes settings, retries a failure, or makes a gain claim.
 """
@@ -187,6 +190,10 @@ def main():
                         help='exact mode, l3_size_mb, l3_assoc, tile_elements JSON request')
     parser.add_argument('--protocol')
     parser.add_argument('--protocol-role', choices=('baseline', 'candidate'))
+    parser.add_argument('--shared-protocol', action='append', default=[],
+                        help='R10: an additional frozen protocol whose exact identities match this role')
+    parser.add_argument('--post-roi-cpu', choices=('AtomicSimpleCPU',),
+                        help='R12: opt-in atomic verifier continuation after the sealed ROI')
     parser.add_argument('--primary-build', help='reuse an exact completed primary build in a frozen complete-call series')
     parser.add_argument('--diagnostic-build', help='reuse an exact completed diagnostic compile record selected before freeze')
     parser.add_argument('--require-capacity', action='store_true',
@@ -226,16 +233,24 @@ def main():
         parser.error('this driver requires the mbit10 execution host')
     if not re.fullmatch(r'[a-z0-9][a-z0-9._-]*', args.id):
         parser.error('invalid record identifier')
+    if args.shared_protocol and (not args.protocol or len(set(args.shared_protocol)) != len(args.shared_protocol)
+                                 or args.protocol in args.shared_protocol):
+        parser.error('shared protocols need a distinct primary frozen protocol')
     if bool(args.protocol) != bool(args.protocol_role):
         parser.error('protocol and protocol-role must be supplied together')
     if args.primary_build and (not args.protocol or args.author_binary):
         parser.error('primary-build requires a frozen complete-call series without author-binary')
-    limits = {'total_seconds': (1, 86400 if args.author_binary else 43200),
-              'checkpoint_seconds': (1, 3600), 'run_seconds': (1, 14400 if args.author_binary else 3600),
-              'diagnostic_seconds': (180, 14400 if args.author_binary else 600), 'memory_gib': (1, 48),
+    # 2026-09-27 (T16 b1): author-binary uniform22 bounds are sized from measured
+    # scale-22 progress; see the T16 reference request for the derivation.
+    # 2026-09-28 (T15 b3): complete-call scale-18 bounds follow the measured T15
+    # costs (primary ~2,040 s simulation, diagnostic ~2,510 s, profile/package
+    # ~900 s each); ceilings only, each series request states its own values.
+    limits = {'total_seconds': (1, 864000 if args.author_binary else 86400),
+              'checkpoint_seconds': (1, 3600), 'run_seconds': (1, 72000 if args.author_binary else 14400),
+              'diagnostic_seconds': (180, 86400 if args.author_binary else 14400), 'memory_gib': (1, 48),
               'profile_seconds': (1, 3600), 'package_seconds': (1, 7200),
-              'storage_gib': (1, 15 if args.author_binary else 10),
-              'batch_storage_gib': (1, 60 if args.author_binary else 40),
+              'storage_gib': (1, 32 if args.author_binary else 15),
+              'batch_storage_gib': (1, 200 if args.author_binary else 60),
               'verification_ticks': (1, 10**15)}
     for name, (low, high) in limits.items():
         if not low <= getattr(args, name) <= high:
@@ -262,6 +277,10 @@ def main():
                'repository_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()}
     if args.trace_transport:
         receipt['trace_transport'] = args.trace_transport
+    if args.shared_protocol:
+        receipt['shared_protocols'] = list(args.shared_protocol)
+    if args.post_roi_cpu:
+        receipt['post_roi_cpu'] = args.post_roi_cpu
     if args.gem5_slot_dir:
         receipt['gem5_concurrency'] = {'slot_dir': str(args.gem5_slot_dir), 'slots': args.gem5_slots,
                                        'acquisitions': []}
@@ -391,8 +410,17 @@ def main():
         if args.accelerated != (implementation['function'] == 'DOBFSMAA') and args.author_binary:
             raise ValueError('author accelerated selection differs from identified function')
         repetitions = frozen['settings']['sampling']['repetitions'] if frozen else 2
-        if repetitions != 2:
-            raise ValueError('this bounded series permits exactly two real simulator replays')
+        # R11: a frozen protocol may fix one replay per ordered source.
+        if repetitions not in ({1, 2} if frozen else {2}):
+            raise ValueError('this bounded series permits one or two frozen real simulator replays')
+        shared = []
+        for pid in args.shared_protocol:
+            other = call('get', pid)
+            validate_selection(candidate, source, implementation, workload, other, args.protocol_role,
+                               args.author_binary, expected_artifact)
+            if other['settings']['sampling']['repetitions'] != repetitions:
+                raise ValueError('a shared protocol must fix the same replay grid')
+            shared.append(other)
         selected = bfs_protocol.workload_representation(Store(args.records), workload['id'], source['application'])
         graph = {key: selected['representation'][key] for key in ('path', 'sha256')}
         binaries = {Path(row['path']).name: row for row in model['build']['details']['binaries']}
@@ -451,9 +479,12 @@ def main():
                     diagnostic = treatment == 'diagnostic'
                     # Tiny guest serialization took 91.7s plus stage overhead;
                     # reserve half the fixed budget for its 16GB checkpoint.
-                    checkpoint_seconds = args.diagnostic_seconds // 2 if diagnostic else args.checkpoint_seconds
+                    # 2026-09-27: capped at the public 7,200-second checkpoint
+                    # limit, which changes nothing for diagnostics <= 14,400 s.
+                    checkpoint_seconds = (min(args.diagnostic_seconds // 2, 7200) if diagnostic
+                                          else args.checkpoint_seconds)
                     run_seconds = args.diagnostic_seconds - checkpoint_seconds - 30 if diagnostic else args.run_seconds
-                    total_seconds = args.diagnostic_seconds if diagnostic else min(18000, checkpoint_seconds + run_seconds + 60)
+                    total_seconds = args.diagnostic_seconds if diagnostic else min(86400, checkpoint_seconds + run_seconds + 60)
                     payload = {'message_version': '1.0', 'id': prefix + '.' + treatment + '.evaluation',
                         'machine': 'mbit10', 'hardware_target': 'dx100-e4fc4af-4c',
                         'model_root': model['context']['model_root'], 'build_evaluation': model['id'],
@@ -470,11 +501,15 @@ def main():
                         payload['verification']['post_roi_trace'] = 'SyscallBase'
                     if args.trace_transport:
                         payload['verification']['trace_transport'] = args.trace_transport
+                    if args.post_roi_cpu:
+                        payload['verification']['post_roi_cpu'] = args.post_roi_cpu
                     if compiled: payload['candidate_build'] = compiled['id']
                     if (position, treatment) in checkpoints:
                         payload['checkpoint_manifest'] = checkpoints[position, treatment]
                     if frozen and not diagnostic:
                         payload.update(protocol=frozen['id'], protocol_role=args.protocol_role)
+                        if shared:
+                            payload['shared_protocols'] = [row['id'] for row in shared]
                     pair[treatment] = request('dx100-execute', payload, timeout=total_seconds + 60, execute=True)
                     if (pair[treatment]['outcome']['state'] != 'complete'
                             or pair[treatment]['correctness']['state'] != 'passed'):
@@ -513,6 +548,17 @@ def main():
             if aggregate['outcome']['state'] != 'complete':
                 raise RuntimeError('sample-grid aggregation did not pass its frozen evidence checks')
             call('get', aggregate['id'], '--chain')
+            # R10: the same completed primaries, aggregated separately under
+            # each named shared protocol; no execution is repeated or relabeled.
+            receipt['shared_aggregates'] = {}
+            for index, other in enumerate(shared):
+                extra = request('aggregate-evaluations', {'message_version': '1.0',
+                    'id': f'{args.id}.shared{index}.aggregate', 'protocol': other['id'],
+                    'protocol_role': args.protocol_role, 'evaluations': primary_ids})
+                receipt['shared_aggregates'][other['id']] = extra['id']
+                if extra['outcome']['state'] != 'complete':
+                    raise RuntimeError('shared-protocol aggregation did not pass its frozen evidence checks')
+                call('get', extra['id'], '--chain')
         if args.primary_build:
             fresh = call('get', args.primary_build)
             if artifacts.digest(fresh) != receipt['reused_primary_build']['sha256']:
