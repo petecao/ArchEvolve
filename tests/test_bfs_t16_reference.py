@@ -201,3 +201,31 @@ def test_maatrace_only_stream_still_proves_accelerator_execution(tmp_path):
     check = {'coverage': {**coverage, 'accelerator_executed': True,
                           'instruction_counters': {'system.maa.numInst': 5}}}
     assert bfs_protocol.accelerator_cases(check) == {'executed'}
+
+
+@pytest.mark.parametrize('job,names,primary_only', [('m', ('maa',), False), ('s1', ('artifact.scalar',), True),
+                                                     ('s2', ('control.scalar',), True)])
+def test_split_jobs_keep_rows_and_drop_only_scalar_diagnostics(tmp_path, job, names, primary_only):
+    """2026-09-28 B+C replan: one series per job, fresh IDs; scalar jobs run primaries only."""
+    protocols = {key: {'path': f'.scratch/x/{key}.yaml', 'sha256': key[0]*64, 'frozen_id': key + '.v3'}
+                 for key in ('artifact', 'control')}
+    module = finalize(); full = module.build_plan(protocols, 1, True, low_storage=True)
+    plan = module.build_split(protocols, job, names)
+    assert plan['id'] == batch.T16_SPLIT['t16-reference-' + job] and len(plan['series']) == 1
+    row = plan['series'][0]
+    original = next(r for r in full['series'] if r['id'].endswith('.' + names[0]))
+    assert {k: v for k, v in row.items() if k not in ('id', 'primary_only')} == \
+        {k: v for k, v in original.items() if k != 'id'}
+    assert row.get('primary_only', False) is primary_only and row['id'] == plan['id'] + '.' + names[0]
+    assert plan['trace_flags'] == 'MAATrace' and plan['concurrency']['drivers'] == 1
+    assert plan['accounting']['preparation_reservation']['id'] == plan['id'].replace('-simulator-batch-', '-preparation-')
+    batch.validate_preparation_reservation(plan, {})
+    b, a = plan['bounds'], plan['allocation']
+    assert sum(a['partition_seconds'].values()) == a['total_seconds'] == b['batch_seconds']
+    assert a['free_space_required_at_admission_gib'] == b['batch_storage_gib'] + b['raw_reserve_gib']
+    approval = admission(plan)
+    approval['protocols'] = {'artifact': {'id': 'artifact.v3', 'sha256': 'a'*64}, 'control': {'id': 'control.v3', 'sha256': 'c'*64}}
+    command = batch.series_command(plan, row, approval, tmp_path/'c', tmp_path/'raw', tmp_path/'r', 0,
+                                   b['series_seconds'], a['per_series_cap_gib'], None, tmp_path/'slots')
+    assert ('--primary-only' in command) is primary_only
+    assert ('--shared-protocol' in command) is (job == 'm')

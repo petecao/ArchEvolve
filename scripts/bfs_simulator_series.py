@@ -196,6 +196,9 @@ def main():
                         help='2026-09-28 (T16 low-storage): accelerated executions request only the unit '
                              'Start/End trace (verification.coverage false); tile-size and indirect '
                              'store observations are then unobserved, accelerator execution is not')
+    parser.add_argument('--primary-only', action='store_true',
+                        help='2026-09-28 (T16 v3): run only the timed primary per sample; no diagnostic '
+                             'execution, region profile or profile package (frozen policy has no region pairs)')
     parser.add_argument('--post-roi-cpu', choices=('AtomicSimpleCPU',),
                         help='R12: opt-in atomic verifier continuation after the sealed ROI')
     parser.add_argument('--primary-build', help='reuse an exact completed primary build in a frozen complete-call series')
@@ -291,6 +294,8 @@ def main():
         receipt['post_roi_cpu'] = args.post_roi_cpu
     if args.trace_flags:
         receipt['trace_flags'] = args.trace_flags
+    if args.primary_only:
+        receipt['primary_only'] = True
     if args.gem5_slot_dir:
         receipt['gem5_concurrency'] = {'slot_dir': str(args.gem5_slot_dir), 'slots': args.gem5_slots,
                                        'acquisitions': []}
@@ -481,7 +486,7 @@ def main():
             for repetition in range(repetitions):
                 prefix = f'{args.id}.s{position}.r{repetition}'
                 pair = {}
-                for treatment in ('primary', 'diagnostic'):
+                for treatment in ('primary',) if args.primary_only else ('primary', 'diagnostic'):
                     compiled = builds[treatment]
                     binary = ({'path': compiled['build']['binary'], 'sha256': compiled['build']['binary_sha256']}
                               if compiled else {key: binaries['bfs_maa' if args.accelerated else 'bfs'][key]
@@ -526,6 +531,16 @@ def main():
                         raise RuntimeError(f'{treatment} execution did not complete with exact timed-binary correctness')
                     checkpoints[position, treatment] = pair[treatment]['context']['checkpoint_manifest']
                 primary = pair['primary']
+                if args.primary_only:
+                    # T16 v3: timing, sealed statistics, verifier and coverage of the
+                    # primary are the scalar evidence; nothing diagnostic is claimed.
+                    refreshed = call('get', primary['id'])
+                    receipt['samples'].append({'source_position': position, 'source': vertex, 'repetition': repetition,
+                        'evaluation': primary['id'], 'completeness': 'primary_only',
+                        'timing': refreshed['timing'], 'coverage': refreshed['correctness']['checks'][0].get('coverage')})
+                    save()
+                    primary_ids.append(primary['id'])
+                    continue
                 collected = request('dx100-profile', {'message_version': '1.0', 'id': prefix + '.profile',
                     'evaluation': primary['id'], 'diagnostic_evaluation': pair['diagnostic']['id'],
                     'budget': {'total_seconds': args.profile_seconds}}, timeout=args.profile_seconds + 60)

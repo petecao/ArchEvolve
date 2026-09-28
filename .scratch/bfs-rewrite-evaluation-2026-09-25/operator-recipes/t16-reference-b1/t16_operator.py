@@ -30,7 +30,8 @@ from scripts import bfs_owned_execution as own  # noqa: E402
 from swdb import artifacts  # noqa: E402
 from swdb.store import Store  # noqa: E402
 
-KIND = batch.T16_KIND
+KIND = batch.T16_KIND  # 2026-09-28: main() selects the job (b1, m, s1, s2)
+JOBS = {'b1': batch.T16_KIND, **{kind.rsplit('-', 1)[1]: kind for kind in batch.T16_SPLIT}}
 PROBE_ID = 'bfs-t16-r12-probe-20260927-b1'
 PROBE_WORKLOAD = 'bfs-20260925-kronecker14.d03827828666f7dd'
 PROBE_CASES = {
@@ -207,7 +208,7 @@ def prepare(node):
         'preparation_charges': batch.preparation_charges(value), 'code_commit': code,
         'runtime_sha256': batch.runtime_identity(), 'python': ref(pilot.PYTHON.resolve()),
         'proofs': {}, 'coverage_commit': pilot.COVERAGE_COMMIT, 'protocols': protocols, 'linux_cleanup_tests': tests,
-        'lane_node': node, 'concurrency': value['concurrency']}
+        'lane_node': node, 'concurrency': value['concurrency'], 'kind': KIND}
     for key, (name, digest) in pilot.PROOFS.items():
         item = ref(pilot.BASE/name); require(item['sha256'] == digest, 'retained prerequisite changed: ' + key)
         admission['proofs'][key] = item
@@ -236,6 +237,7 @@ def launch(admission_sha, pane_pid, pane_ticks):
     ad = json.loads(path.read_text()); node = ad['lane_node']
     require(batch.stamp(ad['clock']['not_before']) <= start <= batch.stamp(ad['clock']['latest_start']),
             'outside the admitted launch window')
+    require(ad.get('kind', batch.T16_KIND) == KIND, 'admission belongs to another T16 job')
     remaining = value['bounds']['batch_seconds'] - sum(r['elapsed_seconds'] for r in ad['preparation_charges'])
     end = min(batch.stamp(ad['clock']['absolute_end']), start + timedelta(seconds=remaining))
     pane = own.identity(pane_pid)
@@ -277,8 +279,11 @@ def main():
     p.add_argument('mode', choices=('probe', 'setup', 'tests', 'prepare', 'launch'))
     p.add_argument('--kind', choices=tuple(pilot.TESTS))
     p.add_argument('--node', type=int, choices=(0, 1))
+    p.add_argument('--job', choices=tuple(JOBS), default='b1', help='T16 lane job (2026-09-28 split: m, s1, s2)')
     p.add_argument('--admission-sha256'); p.add_argument('--pane-pid', type=int); p.add_argument('--pane-start-ticks', type=int)
     a = p.parse_args()
+    global KIND
+    KIND = JOBS[a.job]
     if a.mode == 'probe': probe()
     elif a.mode == 'setup': setup()
     elif a.mode == 'tests': run_tests(a.kind)

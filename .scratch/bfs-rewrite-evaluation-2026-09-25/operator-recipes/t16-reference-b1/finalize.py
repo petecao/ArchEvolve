@@ -32,8 +32,93 @@ NAMES = {'artifact': 'author-reference-t16-b1-20260927', 'control': 'author-matc
 PLAN_ID = 'bfs-t16-reference-simulator-batch-20260927-b1'
 
 
-def request_path(key, low_storage=False):
-    return REQUESTS/f'{NAMES[key]}-freeze{"-v2" if low_storage else ""}.yaml'
+def request_path(key, low_storage=False, version=None):
+    version = version or (2 if low_storage else 1)
+    return REQUESTS/f'{NAMES[key]}-freeze{"" if version == 1 else "-v" + str(version)}.yaml'
+
+
+def v3_requests():
+    """2026-09-28 B+C replan: version 3 drops only the region correspondence.
+
+    The scalar roles no longer run diagnostic executions, so no scalar region
+    package exists; a diagnostic region comparison cannot be formed and the policy
+    must not require one. Primary timing, correctness, coverage, instrumentation,
+    replay grid and profitability are unchanged from version 2.
+    """
+    store = Store(ROOT/'records')
+    for key in SOURCES:
+        original = yamlio.load(request_path(key, version=2))
+        frozen = [row.data for row in store.of_kind('protocol') if row.data.get('requested_id') == original['id']
+                  and row.data['settings'] == original['settings']]
+        assert len(frozen) == 1, 'the version-2 protocol must be frozen exactly once'
+        settings = copy.deepcopy(original['settings'])
+        settings['region_pairs'] = []
+        value = {'message_version': '1.0', 'id': original['id'], 'version': 3, 'supersedes': frozen[0]['id'],
+                 'settings': settings}
+        header = ('# Created 2026-09-28 (Eastern Time): T16 version 3 for the user-approved B+C replan. Only change: '
+                  'region_pairs removed because the scalar roles run primary executions only (no diagnostic, '
+                  'region profile or package); scalar evidence is primary timing, sealed statistics, verifier and '
+                  'memory statistics. Supersedes ' + frozen[0]['id'] + '.\n')
+        request_path(key, version=3).write_text(header + yamlio.dumps(value))
+        print(request_path(key, version=3))
+
+
+SPLIT = {'m': ('maa',), 's1': ('artifact.scalar',), 's2': ('control.scalar',)}
+
+
+def split_plans():
+    """Three single-series plans on the version-3 protocols (fresh IDs, low storage)."""
+    store = Store(ROOT/'records')
+    protocols = {}
+    for key in SOURCES:
+        path = request_path(key, version=3); request = yamlio.load(path)
+        frozen = [row.data for row in store.of_kind('protocol') if row.data.get('requested_id') == request['id']
+                  and row.data['settings'] == request['settings']]
+        assert len(frozen) == 1, 'freeze the version-3 request exactly once first'
+        protocols[key] = {'path': str(path.relative_to(ROOT)), 'sha256': artifacts.file_hash(path),
+                          'frozen_id': frozen[0]['id']}
+    for job, names in SPLIT.items():
+        plan = build_split(protocols, job, names)
+        path = REQUESTS/f"{plan['id']}.json"
+        path.write_text(json.dumps(plan, indent=1) + '\n')
+        print(job, path.name, artifacts.digest(plan))
+
+
+def build_split(protocols, job, names):
+    base = build_plan(protocols, 1, True, low_storage=True)
+    plan_id = f'bfs-t16-reference-{job}-simulator-batch-20260928-c1'
+    rows = []
+    for row in base['series']:
+        name = row['id'][len(PLAN_ID) + 1:]
+        if name in names:
+            row = {**row, 'id': f'{plan_id}.{name}'}
+            if row['accelerated'] is False:
+                row['primary_only'] = True
+            rows.append(row)
+    bounds = base['bounds']
+    primary = min(86400, bounds['checkpoint_seconds'] + bounds['run_seconds'] + 60)
+    if job == 'm':
+        series_seconds = (primary + bounds['diagnostic_seconds'] + bounds['profile_seconds']
+                          + bounds['package_seconds'] + 4 * bounds['aggregate_seconds'])
+        storage = 12
+    else:
+        series_seconds = primary + 2 * bounds['aggregate_seconds']
+        storage = 8
+    total = 3600 + series_seconds + 3570 + 30
+    base.update(id=plan_id, series=rows, updated='2026-09-28',
+        lane={'nodes': [0, 1], 'assigned_by': 'root 2026-09-28: M on node0 after the MemAcc cell; S1 on node1 after '
+                                              'routes a2; S2 on node0 after M'},
+        budget_authority=('User-approved B+C replan (root 2026-09-28): T16 v3 as three single-series lane jobs. The '
+                          'interrupted b1 run (user-confirmed stop 18:53:29 ET) and every earlier T16 charge stay '
+                          'retained separately; no failed or interrupted ID is resumed; no automatic retry.'),
+        concurrency={**base['concurrency'], 'drivers': 1})
+    base['allocation'].update(total_seconds=total,
+        partition_seconds={'preparation': 3600, 'series': series_seconds, 'finalization': 3570, 'scientific_cleanup': 30},
+        storage_gib=storage, shared_series_gib=storage - 4, per_series_cap_gib=storage - 4,
+        free_space_required_at_admission_gib=storage + base['bounds']['raw_reserve_gib'])
+    bounds.update(batch_seconds=total, series_seconds=series_seconds, batch_storage_gib=storage)
+    base['accounting']['preparation_reservation']['id'] = plan_id.replace('-simulator-batch-', '-preparation-')
+    return base
 
 
 def low_storage_requests():
@@ -213,14 +298,18 @@ def build_plan(protocols, reps, atomic, low_storage=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=('requests', 'plan'))
+    parser.add_argument('mode', choices=('requests', 'plan', 'v3-requests', 'split-plans'))
     parser.add_argument('--repetitions', type=int, choices=(1, 2))
     parser.add_argument('--atomic', action=argparse.BooleanOptionalAction)
     parser.add_argument('--evidence', help='R11: repository path of the retained T15 replay-determinism observation')
     parser.add_argument('--low-storage', action='store_true',
                         help='write version-2 requests superseding the frozen b1 protocols (MAATrace-only candidate)')
     args = parser.parse_args()
-    if args.mode == 'requests' and args.low_storage:
+    if args.mode == 'v3-requests':
+        v3_requests()
+    elif args.mode == 'split-plans':
+        split_plans()
+    elif args.mode == 'requests' and args.low_storage:
         low_storage_requests()
     elif args.mode == 'requests':
         if args.repetitions is None or args.atomic is None:

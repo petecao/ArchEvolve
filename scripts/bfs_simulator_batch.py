@@ -40,7 +40,7 @@ from swdb.store import Store
 
 ET = ZoneInfo('America/New_York')
 GIB = 1024**3
-PLAN_HASHES = {'t17-t20-routes-a2': '0782f3bff214cbaef20a0ef06710db98c8b0e0b9759a6860aac8ba0213b7cc77', 't17-t20-routes': '29d4adf356147e932a0c5654d0b447c7cfd4839b709c590c4313eb97fa1ca06f', 't15-pilot-b3': '85b0b76901b008b28fcce1da0245e98f4904ca8ee3a97edf4da1dc78397c4368', 't15-pilot-b2': '0545e3f47fa09feabd673fa1d4a69fb8326abe2691535e1b0dffab29ed3da3be', 't15-pilot': 'f515581f5ff0bc933a93eff3ad8e93b0dfcf58a960606c16f1505ca9fb878f8a', 't16-protocol-recovery': 'eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8', 't16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea', 't16-reference': 'a6749593b06e983f6c13bc11940a5e0da37f2551f0271ec1cb912a2a0f7785ca'}
+PLAN_HASHES = {'t16-reference-m': 'c01004198e4be94b6b5df834bf35a3f568bafaa9bb0713cf5df73d432319f50f', 't16-reference-s1': '9d2961f946ad7de62a241087bf1069f33e514cd57bcd5fa6f2dfbb6b1041b801', 't16-reference-s2': 'd132d249f53f0e60612ec401dc00d40506efb5aa6b0042558cb287492924f6a6', 't17-t20-routes-a2': '0782f3bff214cbaef20a0ef06710db98c8b0e0b9759a6860aac8ba0213b7cc77', 't17-t20-routes': '29d4adf356147e932a0c5654d0b447c7cfd4839b709c590c4313eb97fa1ca06f', 't15-pilot-b3': '85b0b76901b008b28fcce1da0245e98f4904ca8ee3a97edf4da1dc78397c4368', 't15-pilot-b2': '0545e3f47fa09feabd673fa1d4a69fb8326abe2691535e1b0dffab29ed3da3be', 't15-pilot': 'f515581f5ff0bc933a93eff3ad8e93b0dfcf58a960606c16f1505ca9fb878f8a', 't16-protocol-recovery': 'eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8', 't16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea', 't16-reference': 'a6749593b06e983f6c13bc11940a5e0da37f2551f0271ec1cb912a2a0f7785ca'}
 PILOT_KIND = 't15-pilot'
 PILOT_ID = 'bfs-t15-pilot-simulator-batch-20260927-b1'
 # 2026-09-27: b1 failed its first-pair 120-s profile gate; b2 is the fresh relaunch.
@@ -50,6 +50,12 @@ PILOT_POLICY = 't15_incremental_allocation.v1'
 T16_KIND = 't16-reference'
 T16_ID = 'bfs-t16-reference-simulator-batch-20260927-b1'
 T16_POLICY = 't16_incremental_allocation.v1'
+# 2026-09-28 (user-approved B+C replan): T16 v3 runs as three single-series lane
+# jobs with fresh IDs: M (MAA primary + diagnostic), S1/S2 (scalar primaries only).
+T16_SPLIT = {'t16-reference-m': 'bfs-t16-reference-m-simulator-batch-20260928-c1',
+             't16-reference-s1': 'bfs-t16-reference-s1-simulator-batch-20260928-c1',
+             't16-reference-s2': 'bfs-t16-reference-s2-simulator-batch-20260928-c1'}
+PILOT_PLANS.update(T16_SPLIT)
 # Incremental one-lane allocations: policy -> (kind, plan ID, flat preparation row).
 # 2026-09-28: T17/T20 controlled-simulator routes reuse the pilot lane-job design;
 # rows carry a driver `group` and retained primary builds instead of author binaries.
@@ -863,6 +869,8 @@ def series_command(plan, row, admission, config, runs, records, node, seconds, s
         command += ['--post-roi-cpu', plan['post_roi_cpu']]
     if 'trace_flags' in plan:
         command += ['--trace-flags', plan['trace_flags']]
+    if row.get('primary_only'):
+        command.append('--primary-only')
     if 'profile_seconds' in b:
         command += ['--profile-seconds', str(b['profile_seconds'])]
     if 'package_seconds' in b:
@@ -917,7 +925,8 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
     if expected_protocol:
         repetitions = store.get(expected_protocol, 'protocol')['settings']['sampling']['repetitions']
     require(child.get('shared_protocols', []) == shared_ids and child.get('post_roi_cpu') == plan.get('post_roi_cpu')
-            and child.get('trace_flags') == plan.get('trace_flags'),
+            and child.get('trace_flags') == plan.get('trace_flags')
+            and child.get('primary_only', False) == row.get('primary_only', False),
             'series shared-protocol, post-ROI CPU or trace-flag treatment differs from the plan')
     require(child.get('state') == 'complete' and child.get('id') == row['id']
             and child.get('candidate') == row['candidate'] and child.get('workload') == row['workload']
@@ -950,6 +959,18 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
              for sample in samples] == expected, 'series did not retain its complete ordered sample grid')
     for sample in samples:
         prefix = f"{row['id']}.s{sample['source_position']}.r{sample['repetition']}"
+        if row.get('primary_only'):
+            # T16 v3: primary-only samples carry no diagnostic, profile or package.
+            require(sample.get('completeness') == 'primary_only' and sample.get('evaluation') == prefix + '.primary.evaluation'
+                    and not any(key in sample for key in ('diagnostic_evaluation', 'profile', 'package')),
+                    'primary-only sample differs from the prospective grid')
+            execution = store.get(sample['evaluation'], 'evaluation')
+            require(execution is not None and execution.get('evidence_kind') == 'execution'
+                    and execution.get('outcome', {}).get('state') == 'complete'
+                    and execution.get('correctness', {}).get('state') == 'passed'
+                    and execution.get('context', {}).get('trace_transport') == plan.get('trace_transport'),
+                    'primary-only sample is not a complete verified public execution')
+            continue
         require(sample.get('completeness') == 'complete' and all(sample.get(key) == prefix + suffix
                 for key, suffix in (('evaluation', '.primary.evaluation'), ('diagnostic_evaluation', '.diagnostic.evaluation'),
                                     ('profile', '.profile'))),
