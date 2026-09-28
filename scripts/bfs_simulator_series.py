@@ -216,7 +216,9 @@ def main():
     parser.add_argument('--verifier', choices=('dx100.bfs.verifier.v1', 'dx100.bfs.verifier.v2'),
                         help='explicit pilot checker; frozen series inherits its immutable checker')
     parser.add_argument('--profile-seconds', type=int, default=120,
-                        help='dx100-profile collector budget; public collector cap is 600')
+                        help='dx100-profile collector budget; public collector cap is 3600')
+    parser.add_argument('--package-seconds', type=int, default=180,
+                        help='profile-package call timeout; it rereads both full traces (2026-09-27 b2 gate)')
     parser.add_argument('--gem5-slot-dir', type=Path, help='shared lane gem5-slot lock directory (R3)')
     parser.add_argument('--gem5-slots', type=int, default=1, help='maximum concurrent lane gem5 processes')
     parser.add_argument('--owned-cleanup-ledger', type=Path)
@@ -239,11 +241,12 @@ def main():
     if args.primary_build and (not args.protocol or args.author_binary):
         parser.error('primary-build requires a frozen complete-call series without author-binary')
     # 2026-09-27 (T16 b1): author-binary uniform22 bounds are sized from measured
-    # scale-22 progress; see the T16 reference request for the derivation.
+    # scale-22 progress; profile/package reread full traces (T15 uniform18:
+    # 900 s / about 815 s), so scale-22 needs about 16x. See the T16 request.
     limits = {'total_seconds': (1, 864000 if args.author_binary else 43200),
               'checkpoint_seconds': (1, 3600), 'run_seconds': (1, 72000 if args.author_binary else 3600),
               'diagnostic_seconds': (180, 86400 if args.author_binary else 600), 'memory_gib': (1, 48),
-              'profile_seconds': (1, 600),
+              'profile_seconds': (1, 43200), 'package_seconds': (1, 43200),
               'storage_gib': (1, 32 if args.author_binary else 10),
               'batch_storage_gib': (1, 200 if args.author_binary else 40),
               'verification_ticks': (1, 10**15)}
@@ -520,7 +523,7 @@ def main():
                     'context': {'source_sha256': candidate['artifact']['sha256'],
                         'canonical_graph_sha256': context['workload']['canonical_sha256'], 'sources': context['sources'],
                         'target': context['target'], 'target_configuration': context['backend_configuration'],
-                        'threads': context['threads'], 'roi': context['roi']}})
+                        'threads': context['threads'], 'roi': context['roi']}}, timeout=args.package_seconds)
                 refreshed = call('get', primary['id'])
                 receipt['samples'].append({'source_position': position, 'source': vertex, 'repetition': repetition,
                     'evaluation': primary['id'], 'diagnostic_evaluation': pair['diagnostic']['id'],

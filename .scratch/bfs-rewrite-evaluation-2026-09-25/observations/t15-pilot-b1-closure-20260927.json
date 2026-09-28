@@ -1,0 +1,155 @@
+{
+ "created": "2026-09-27",
+ "id": "bfs-t15-pilot-simulator-batch-20260927-b1",
+ "observations": [
+  {
+   "family": "uniform18",
+   "driver_state": "failed",
+   "driver_reason": "ValueError: public stage exited 1",
+   "series_reason": "ValueError: public stage exited 1",
+   "gem5_slot_waits_seconds": [
+    1837.9755531214178,
+    1810.1182923084125
+   ],
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 1.7652337526902564,
+    "settled_events": 27,
+    "dead_owner_charges": null
+   },
+   "executions_s0_r0": {
+    "primary": {
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 77.50470240414143,
+      "simulation": 2017.1602752320468,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.005731610302,
+     "full_tiles": 476,
+     "tail_tiles": 36,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 1297018969,
+     "trace_uncompressed_bytes": 17790653260
+    },
+    "diagnostic": {
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 77.50509999878705,
+      "simulation": 2486.2290848484263,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015414111306,
+     "full_tiles": 476,
+     "tail_tiles": 36,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 1296759565,
+     "trace_uncompressed_bytes": 17785454367
+    }
+   },
+   "profile_outcome": null,
+   "exit": "1"
+  },
+  {
+   "family": "kronecker18",
+   "driver_state": "failed",
+   "driver_reason": "ValueError: public stage exited 1",
+   "series_reason": "ValueError: public stage exited 1",
+   "gem5_slot_waits_seconds": [
+    8.360017091035843e-05,
+    1756.9811148410663
+   ],
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 1.6850899592041977,
+    "settled_events": 27,
+    "dead_owner_charges": null
+   },
+   "executions_s0_r0": {
+    "primary": {
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 75.50074680428952,
+      "simulation": 1705.2196690570563,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.005851991667,
+     "full_tiles": 436,
+     "tail_tiles": 16,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 987175855,
+     "trace_uncompressed_bytes": 15017831797
+    },
+    "diagnostic": {
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 75.49193274136633,
+      "simulation": 2148.9761730413884,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015906315387,
+     "full_tiles": 417,
+     "tail_tiles": 16,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 944753205,
+     "trace_uncompressed_bytes": 14375146493
+    }
+   },
+   "profile_outcome": null,
+   "exit": "1"
+  }
+ ],
+ "identity_checks": [
+  {
+   "at": "2026-09-27T13:11:03.470380-04:00",
+   "identities": 68,
+   "live": [
+    [
+     4064708,
+     502134291,
+     "Z"
+    ]
+   ],
+   "allocated_bytes": 4834476032
+  },
+  {
+   "at": "2026-09-27T13:11:08.480822-04:00",
+   "identities": 68,
+   "live": [
+    [
+     4064708,
+     502134291,
+     "Z"
+    ]
+   ],
+   "allocated_bytes": 4834476032
+  }
+ ],
+ "lease": {
+  "state": "released",
+  "generation": 376,
+  "released_at": "2026-09-27T17:09:36Z"
+ },
+ "lane": {
+  "lease_generation": 376,
+  "started_utc": "2026-09-27T14:30:10Z",
+  "ended_utc": "2026-09-27T17:09:36Z",
+  "exit_code": 1
+ },
+ "outer_exit": "1",
+ "closed_at": "2026-09-27T13:11:13.495446-04:00",
+ "elapsed_seconds_since_admission": 9687,
+ "storage_stable": true,
+ "retained_bytes": 4834476032,
+ "closed_ok": false,
+ "closed_ok_note": "closed_ok is false only because the exact tmux launcher pane 4064708/502134291 is a zombie (state Z) awaiting tmux reap; the retained readers allow exactly that pane identity. All other 67 owned identities are absent in both observations, node0 generation 376 is released and storage is stable at 4,834,476,032 bytes. Closure accepted 2026-09-27 13:12 ET.",
+ "gate_failure": "Both families failed at s0r0 dx100-profile: debug trace read exceeded the 120-s caller deadline (first-pair gate)."
+}
