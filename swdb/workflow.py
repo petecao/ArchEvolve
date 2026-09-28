@@ -1,6 +1,6 @@
 """Public, durable proposal workflow. Source changes never imply correctness.
 
-Updated: 2026-09-27. YAML records remain authoritative; raw artifacts are external.
+Updated: 2026-09-27 (opt-in full_files provider edit format). YAML records remain authoritative; raw artifacts are external.
 """
 
 import copy
@@ -329,20 +329,23 @@ def submit(args):
                                      "used_seconds": 0, "repairs": 0}
             data["attempts"][-1]["stage"] = "interpretation"
             persist(args.records, data, args.db)
-            prompt = rewrite.prompt_for(request, source, package)
+            prompt = rewrite.prompt_for(request, source, package,
+                                        edit_format=config.get("edit_format", "patch"))
             response, meta = rewrite.interpret(config, prompt, run_dir / "provider-1")
-            data["interpretation"] = response
+            data["interpretation"] = rewrite.response_record(config, response)
             data["repair_budget"]["used_seconds"] = meta["host_wall_s"]
             data["attempts"][-1]["provider"] = meta
             if response["unresolved"]:
                 data["outcome"] = {"state": "unresolved", "stage": "interpretation", "reason": "; ".join(response["unresolved"])}
                 data["attempts"][-1]["state"] = "unresolved"
                 return persist(args.records, data, args.db)
-            patch = response["patch"]
-            if not patch.strip() or not response["interpretation"].strip():
+            if not rewrite.response_has_edits(config, response) or not response["interpretation"].strip():
                 raise Failure("rewrite interpretation must produce actual edits and explain them")
             data["attempts"][-1]["stage"] = stage
             persist(args.records, data, args.db)
+            # full_files: SWDB computes the diff; the patch route returns the provider's diff.
+            patch = rewrite.response_patch(config, response, source_path, request["constraints"]["editable_files"],
+                                           source["protections"], run_dir / "full-files")
         candidate_source = _source_destination(args.runs_dir, rid)
         candidate_artifact = apply_patch(source_path, candidate_source, patch,
                                          request["constraints"]["editable_files"], source["protections"])
@@ -453,24 +456,28 @@ def repair(args):
                     if stage.get("log_sha256") and artifacts.file_hash(log) != stage["log_sha256"]:
                         raise Failure("repair diagnostic log differs from its retained identity")
                     evidence["logs"].append({"stage": stage["stage"], "text": log.read_text(errors="replace")[-32000:]})
-            prompt = rewrite.prompt_for(data["request"], current_source, package, repair=evidence)
+            prompt = rewrite.prompt_for(data["request"], current_source, package, repair=evidence,
+                                        edit_format=config.get("edit_format", "patch"))
             response, meta = rewrite.interpret(config, prompt, folder / "provider", remaining_s=seconds)
             budget["used_seconds"] += meta["host_wall_s"]
-            attempt.update(interpretation=response, provider=meta)
+            attempt.update(interpretation=rewrite.response_record(config, response), provider=meta)
             if response["unresolved"]:
                 reason = "unresolved repair requirements: " + "; ".join(response["unresolved"])
                 attempt.update(state="unresolved", reason=reason)
                 data["outcome"] = {"state": "unresolved", "stage": "repair", "reason": reason}
                 return persist(args.records, data, args.db)
-            if not response["interpretation"].strip() or not response["patch"].strip():
+            if not response["interpretation"].strip() or not rewrite.response_has_edits(config, response):
                 raise Failure("repair must explain its interpretation and produce actual code edits")
+            patch = rewrite.response_patch(config, response, source_path,
+                                           data["request"]["constraints"]["editable_files"],
+                                           prior["protections"], folder / "full-files")
             candidate_source = _source_destination(args.runs_dir, f"{proposal_id}.repair-{number}")
-            artifact = apply_patch(source_path, candidate_source, response["patch"],
+            artifact = apply_patch(source_path, candidate_source, patch,
                                    data["request"]["constraints"]["editable_files"], prior["protections"])
             rewrite.require_code_change(source_path, candidate_source)
             artifacts.verify(prior["artifact"])
             diff = folder / "candidate.diff"
-            diff.write_text(response["patch"])
+            diff.write_text(patch)
             candidate = record("candidate", f"{proposal_id}.candidate-{number+1}", producer=data["producer"],
                 proposal=proposal_id, implementation=prior["implementation"], source_snapshot=prior["source_snapshot"],
                 artifact=artifact, diff=str(diff), diff_sha256=artifacts.file_hash(diff), state="unverified",

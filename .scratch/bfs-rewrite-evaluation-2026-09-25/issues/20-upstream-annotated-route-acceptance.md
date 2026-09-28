@@ -140,3 +140,118 @@ The companion requires separate fresh retrieval of the original and supplement;
 generic chain traversal does not follow the arbitrary predecessor parameter.
 Explicit approval for this new payload and bounded repairs is pending. It has
 not been sent. No strategy replacement or performance tuning is introduced.
+
+## R8 focused-context submission prepared, launch not performed — 2026-09-27 10:40 ET
+
+Under resume-plan R8, the new allocation is: 1,800 s pool, 900 s and USD 10 per call, and at
+most two repairs. Contexts 1–3 stay failed and charged under the old pool (1,367.61 s); nothing is
+refunded. Context4 (`bfs-campaign-preparation-20260925-a1.upstream-annotated-context4`) keeps the
+campaign-plan row 20 strategy, intent, annotated payload (with the author `TDStepMAA` reference),
+regions, required operations and source/package identities byte-identical to context3. Only the
+worker context changes. The new opt-in projection `selected_regions_focused_context.v1` in
+`swdb/rewrite.py` keeps the package identity, the two selected regions and the selected-strategy
+rows. Everything omitted is named by a canonical hash. Headers are reduced to MAA_gem5, MAA and
+MAA_utility plus upstream sliding_queue, pvector and graph. The prompt is 115,100 bytes, down from
+275,533. There are 12 projection tests and 3 packet tests, all passing locally. The packet is in
+`../operator-recipes/stream-c-20260927/prepared/` (proposal SHA `edd9132c…`, provider SHA
+`58000bf4…`) at commit `b1fcf76`, and root reviewed it.
+
+Root approved one unconfined `swdb submit` (provider only, no lane). **This session's permission
+gate blocked the host launch, so no provider call has been made**, and the allocation is unspent.
+Once a candidate exists, job `t20-context4-builds` compiles the primary and diagnostic accelerated
+builds (requests in `requests/`) in a root-assigned lane. The unaccelerated `gapbs-bfs-do` baseline
+is the imported scalar v2 `upstream.primary`/`upstream.diagnostic` pair
+([import receipt](../observations/stream-c-scalar-v2-baseline-import-20260927.json)); its
+enclosing preparation stays failed at finalization. No candidate exists and no acceptance box changes.
+
+## Context4 retained failed; context5 prepared and reviewed, launch blocked — 2026-09-27 11:55 ET
+
+Context4 failed with provider `interrupted_or_timeout` after 900.498 s with empty stdout. Its
+record was committed on mbit10 (`4ecbac8`) and is retained as failed. For the next attempt, root
+defined a fresh allocation: a 1,800 s pool, 900 s and USD 10 per call, and at most two repairs.
+Contexts 1–4 stay charged.
+
+Two changes make the provider task tractable without changing the strategy. First,
+`swdb/rewrite.py` gains an opt-in `output_format: stream-json` capture. Partial output, event
+counts, estimated thinking tokens and first/last output times are retained even on a timeout, and
+the final JSON is parsed from the `result` event. There are seven new tests. Second, the context5
+annotation is richer. Strategy, intent, regions, required operations, constraints,
+source/package identity and focused worker context stay byte-identical to context4 (see the
+[preparation receipt](../observations/t20-context5-preparation-20260927.json)).
+
+1. **The annotations carry producer-authored code blocks.** The representative HW-producer test
+   client (spec D15, `test_client: true`) supplies four insert-only blocks with anchors: includes,
+   the `DX100Prepare`/`TDStepDX100` helper adapted from the author `TDStepMAA`, the DOBFS setup,
+   and the `> NUM_CORES*1024` dispatch. The rewrite worker realizes them as the patch, and its
+   output is limited to those hunks. The blocks spell out the checked int32 offsets, per-thread
+   slots allocated inside DOBFS, the actual tile7 length, the scalar tail, and critical-serialized
+   parent updates with old parents in tile5 and `wait_ready(tile5)`.
+2. **The producer's checks are preparation only, not candidate evidence.** On the Mac, the DX100
+   functional model gave 16/16 GAPBS verifier PASS on each of five graphs, with the DX100 path
+   taken. On mbit10, a `g++-13 -fsyntax-only` check with the gem5 flags returned 0. Candidate
+   correctness comes only from the evaluator on the built candidate.
+
+Root reviewed `39d8902` under R9 and approved one `t20-context5-submit` call with no retry. **This
+worker session's permission gate refused the host tmux launch, so no context5 provider call has
+been made.** The exact launch command was handed to root. If a candidate results, the primary and
+diagnostic builds (`requests/t20-context5-*-build.json`, job `t20-context5-builds`) need a
+root-assigned lane. The unaccelerated baseline remains the imported scalar v2 upstream pair. No
+acceptance box changes.
+
+## Context5 retained failed; context6 (full_files) created a candidate — 2026-09-27 13:55 ET
+
+Context5 ran once (505.39 s, USD 1.15, `unresolved` empty). It **failed at application**: `git
+apply` reported a corrupt patch at line 174. The provider had hand-written hunks with wrong header
+counts and context lines that do not exist in `bfs.cc`, so `--recount` and `patch --fuzz=3` also
+fail. The record was committed on mbit10 (`1937365`) and is retained as failed. No repair or retry
+was run; the repair loop is keyed to an evaluated candidate, and there was none.
+
+The fix is an output format change, not a strategy change. `swdb/rewrite.py` gains an opt-in
+provider field, `edit_format: full_files`. The worker returns the complete new contents of each
+changed file. SWDB then:
+
+- rejects unsafe, non-canonical, out-of-scope and whole-file protected paths;
+- computes the real diff itself (`git diff --no-index`);
+- sends that diff through the unchanged `apply_patch` protection checks and the code-change check.
+
+Submit and repair both use this path. The default patch mode and its prompt are byte-unchanged.
+There are 12 new tests, and 62 pass across the regression set. Context6 is context5 byte-for-byte
+(strategy, intent, annotation, regions, operations, constraints, focused projection, stream-json)
+except for `edit_format` and root's fresh allocation (1,800 s pool, 900 s and USD 10 per call, at
+most two repairs). The annotation still asks for a unified diff, so the full_files prompt states
+that its output format overrides that request.
+
+One `t20-context6-submit` ran at `1e8548b` (13:37–13:41 ET, no lane):
+
+- **Outcome:** `candidate_created`. The provider completed in 167.36 s at USD 0.47
+  (`claude-sonnet-5`, Claude Code 2.1.278). The pool has used 167.36 of 1,800 s, with 0 repairs.
+- **Candidate:** `bfs-campaign-preparation-20260925-a1.upstream-annotated-context6.candidate-1`,
+  state `unverified`, artifact `7465dde4…`, diff `ebec00c2…` (169 added lines, 0 removed).
+- **Comparison with the producer's reference:** the candidate `bfs.cc` differs from the test
+  client's `producer-check/reference-bfs.cc` only by three missing blank lines. This is a coherence
+  note, not candidate evidence.
+- **Records:** committed on mbit10 at `bb42d26`
+  ([receipt](../observations/t20-context6-submission-20260927.json)).
+
+**The DX100 builds are pending a lane.** At 13:41 ET both socket leases were held (node0: T15
+pilot; node1: held since 12:07 ET). Root ruled that neither lane is preempted and nothing is built
+unconfined. When node1 is released, `CODE_COMMIT=bb42d26… bash launch.sh t20-context6-builds 1
+900` builds `bfs-t20-context6-{primary,diagnostic}-build-20260927-c3`. No build, correctness,
+DX100 or gain evidence exists yet, and no acceptance box changes.
+
+## Context6 builds still pending a lane after 3 h — 2026-09-27 16:45 ET
+
+Following root's instruction, node1 was polled every 15 minutes from 13:42 to 16:27 ET (12
+polls). The node1 lease stayed `held` on every poll. Its last heartbeat was 18:32:44Z (14:32 ET),
+and node0 is still held by the T15 pilot. No lane was preempted and nothing was built unconfined.
+
+The host checkout `/data1/yanruj/EvolveSWDB_streamc_20260927_b1` is still clean at `bb42d26`,
+which holds the context6 records. Root will launch the builds in the next free lane gap with:
+
+```
+cd /data1/yanruj/EvolveSWDB_streamc_20260927_b1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/stream-c-20260927
+CODE_COMMIT=bb42d2650a3dbc08527002cf23cafefbe8b0da08 bash launch.sh t20-context6-builds <NODE> 900
+```
+
+The build IDs `bfs-t20-context6-{primary,diagnostic}-build-20260927-c3` are unused. The candidate
+remains `unverified`, and no acceptance box changes.

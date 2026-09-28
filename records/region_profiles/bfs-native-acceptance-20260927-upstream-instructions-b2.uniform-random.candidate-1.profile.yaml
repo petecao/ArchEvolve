@@ -1,0 +1,2380 @@
+kind: region_profile
+schema_version: '0.4'
+id: bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile
+status: draft
+created: '2026-09-27'
+updated: '2026-09-27'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile
+  evaluation: bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation
+  memory: true
+  correspondence: bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.profile
+  repetitions: 1
+  budget:
+    discovery_seconds: 120
+    build_seconds: 180
+    run_seconds: 600
+    total_seconds: 1200
+  build_directory: /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile
+outcome:
+  state: partial
+  stage: profiling
+  reason: bounded source attribution; see explicit coverage and metric limits
+stages:
+- stage: compiler_identity
+  state: complete
+  started: '2026-09-27T15:51:08.782326+00:00'
+  command: [/usr/bin/g++, --version]
+  timeout_s: 30
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/000-compiler_identity.log
+  finished: '2026-09-27T15:51:09.862444+00:00'
+  returncode: 0
+  host_wall_s: 0.004466199316084385
+  log_sha256: 59d1cbef41d4ae78d5063d525b7aa13d18dc0493ea00537efc19b2ee398cb5a8
+- stage: preprocessor_identity
+  state: complete
+  started: '2026-09-27T15:51:10.822288+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -dM
+  - -E
+  - -v
+  - -x
+  - c++
+  - /dev/null
+  timeout_s: 30
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/001-preprocessor_identity.log
+  finished: '2026-09-27T15:51:11.920343+00:00'
+  returncode: 0
+  host_wall_s: 0.0327072748914361
+  log_sha256: 4a2d2fcdecc70ff1fd64ef7e487dd5c734bcbcc35d699db5ebc5c8453b724c7a
+- stage: source_discovery
+  state: complete
+  started: '2026-09-27T15:51:12.992931+00:00'
+  command:
+  - /data1/yanruj/venvs/evolveswdb-test/bin/python3
+  - /data1/yanruj/EvolveSWDB_native_routes_campaign_runtime_20260927_b3/swdb/bfs_discovery.py
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/discovery-request.json
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/discovery.json
+  timeout_s: 120.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/002-source_discovery.log
+  finished: '2026-09-27T15:51:14.575005+00:00'
+  returncode: 0
+  host_wall_s: 0.6161948405206203
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: region_build
+  state: complete
+  started: '2026-09-27T15:51:15.782197+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.upstream-instructions/source/src
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/regions_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/bfs-regions
+  timeout_s: 180.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/003-region_build.log
+  finished: '2026-09-27T15:51:19.398521+00:00'
+  returncode: 0
+  host_wall_s: 2.521421682089567
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: region_execution
+  state: complete
+  started: '2026-09-27T15:51:20.583489+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/bfs-regions
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation/graph.swdb
+  - '0'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/regions-0-0.json
+  timeout_s: 600.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/004-region_execution.log
+  finished: '2026-09-27T15:51:24.010732+00:00'
+  returncode: 0
+  host_wall_s: 2.421321075409651
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: region_execution
+  state: complete
+  started: '2026-09-27T15:51:27.161173+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/bfs-regions
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation/graph.swdb
+  - '1234'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/regions-0-1.json
+  timeout_s: 600.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/005-region_execution.log
+  finished: '2026-09-27T15:51:30.497747+00:00'
+  returncode: 0
+  host_wall_s: 2.2204624637961388
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: region_execution
+  state: complete
+  started: '2026-09-27T15:51:33.508536+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/bfs-regions
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation/graph.swdb
+  - '7777'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/regions-0-2.json
+  timeout_s: 600.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/006-region_execution.log
+  finished: '2026-09-27T15:51:36.891430+00:00'
+  returncode: 0
+  host_wall_s: 2.2702747713774443
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: memory_collector_identity
+  state: complete
+  started: '2026-09-27T15:51:39.918229+00:00'
+  command: [/usr/bin/valgrind, --version]
+  timeout_s: 30
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/007-memory_collector_identity.log
+  finished: '2026-09-27T15:51:41.056468+00:00'
+  returncode: 0
+  host_wall_s: 0.008545934222638607
+  log_sha256: 06bd4b41e0b515a43bbb6fa5d24e6596c4604fbc070ea04aa1dd8d2ad3035a53
+- stage: memory_build
+  state: complete
+  started: '2026-09-27T15:51:42.183016+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -g
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.upstream-instructions/source/src
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/memory_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/bfs-memory
+  timeout_s: 180.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/008-memory_build.log
+  finished: '2026-09-27T15:51:46.230084+00:00'
+  returncode: 0
+  host_wall_s: 3.022644294425845
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: memory_execution
+  state: complete
+  started: '2026-09-27T15:51:47.367017+00:00'
+  command:
+  - /usr/bin/valgrind
+  - --tool=callgrind
+  - --cache-sim=yes
+  - --collect-atstart=yes
+  - --instr-atstart=no
+  - --separate-threads=no
+  - --I1=32768,8,64
+  - --D1=49152,12,64
+  - --LL=25165824,12,64
+  - --callgrind-out-file=/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-0.out
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/bfs-memory
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation/graph.swdb
+  - '0'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/memory-0-0.json
+  timeout_s: 600.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/009-memory_execution.log
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-09-27T15:51:57.779672+00:00'
+  returncode: 0
+  host_wall_s: 9.288903230801225
+  log_sha256: ade6d5af0792217dbda09cd12d9dc00a365106cfc28383116486548204ee4cd3
+- stage: memory_execution
+  state: complete
+  started: '2026-09-27T15:52:00.982607+00:00'
+  command:
+  - /usr/bin/valgrind
+  - --tool=callgrind
+  - --cache-sim=yes
+  - --collect-atstart=yes
+  - --instr-atstart=no
+  - --separate-threads=no
+  - --I1=32768,8,64
+  - --D1=49152,12,64
+  - --LL=25165824,12,64
+  - --callgrind-out-file=/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-1.out
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/bfs-memory
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation/graph.swdb
+  - '1234'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/memory-0-1.json
+  timeout_s: 600.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/010-memory_execution.log
+  repetition: 0
+  source_position: 1
+  source: 1234
+  finished: '2026-09-27T15:52:11.054834+00:00'
+  returncode: 0
+  host_wall_s: 8.937693336978555
+  log_sha256: 1cd0c41083cc94759b24af4fe5beac7e6af91a92f1c8648d79f53a9e1b7a5a6b
+- stage: memory_execution
+  state: complete
+  started: '2026-09-27T15:52:14.172054+00:00'
+  command:
+  - /usr/bin/valgrind
+  - --tool=callgrind
+  - --cache-sim=yes
+  - --collect-atstart=yes
+  - --instr-atstart=no
+  - --separate-threads=no
+  - --I1=32768,8,64
+  - --D1=49152,12,64
+  - --LL=25165824,12,64
+  - --callgrind-out-file=/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-2.out
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/bfs-memory
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation/graph.swdb
+  - '7777'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/memory-0-2.json
+  timeout_s: 600.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/011-memory_execution.log
+  repetition: 0
+  source_position: 2
+  source: 7777
+  finished: '2026-09-27T15:52:24.349670+00:00'
+  returncode: 0
+  host_wall_s: 9.037662114948034
+  log_sha256: 3f9dc2022b81133054924716239fea5c9de15a74ecaf4134401a354a517905e0
+regions:
+- id: function:bfs.cc:1492:3572ab9d57119395
+  kind: function
+  name: BUStep
+  path: src/bfs.cc
+  lines: [46, 64]
+  byte_range: [1492, 2001]
+  insertion_range: [1593, 2001]
+  source_sha256: 3572ab9d571193951297d21d9285db5b84d0bbb4a350cc2409c44c022a825f12
+  text: |-
+    int64_t BUStep(const Graph &g, pvector<NodeID> &parent, Bitmap &front,
+                   Bitmap &next) {
+      int64_t awake_count = 0;
+      next.reset();
+      #pragma omp parallel for reduction(+ : awake_count) schedule(dynamic, 1024)
+      for (NodeID u=0; u < g.num_nodes(); u++) {
+        if (parent[u] < 0) {
+          for (NodeID v : g.in_neigh(u)) {
+            if (front.get_bit(v)) {
+              parent[u] = v;
+              awake_count++;
+              next.set_bit(u);
+              break;
+            }
+          }
+        }
+      }
+      return awake_count;
+    }
+  function: BUStep
+  usr: c:@F@BUStep#&1$@S@CSRGraph>#I#I#Vb1#&$@S@pvector>#I#&$@S@Bitmap#S4_#
+  helpers: [reset, num_nodes, 'operator[]', in_neigh, get_bit, set_bit]
+  callers: [DOBFS]
+  referenced_types: [int64_t, Graph, pvector, NodeID, Bitmap]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 1.078291447
+    exclusive_thread_cpu_seconds: 0.389297196
+    invocations: 7
+    exclusive_function_thread_cpu_seconds: 1.078291447
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:1492:3572ab9d57119395
+- id: loop:bfs.cc:1717:6e2a9b58e359bcfa
+  kind: loop
+  name: for
+  path: src/bfs.cc
+  lines: [51, 62]
+  byte_range: [1717, 1977]
+  insertion_range: [1758, 1977]
+  source_sha256: 6e2a9b58e359bcfaaa0c1d475fb9b43ced72573511bda25975e4ca21575d92f5
+  text: |-
+    for (NodeID u=0; u < g.num_nodes(); u++) {
+        if (parent[u] < 0) {
+          for (NodeID v : g.in_neigh(u)) {
+            if (front.get_bit(v)) {
+              parent[u] = v;
+              awake_count++;
+              next.set_bit(u);
+              break;
+            }
+          }
+        }
+      }
+  function: BUStep
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types: [int64_t, Graph, pvector, NodeID, Bitmap]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.688994251
+    exclusive_thread_cpu_seconds: 0.5248151050000001
+    invocations: 1835008
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:1492:3572ab9d57119395
+- id: loop:bfs.cc:1791:c91be0a18a4752c0
+  kind: loop
+  name: range_for
+  path: src/bfs.cc
+  lines: [53, 60]
+  byte_range: [1791, 1967]
+  insertion_range: [1791, 1967]
+  source_sha256: c91be0a18a4752c0917043529033810fe87047265a03106ab5161ba05d8962d1
+  text: |-
+    for (NodeID v : g.in_neigh(u)) {
+            if (front.get_bit(v)) {
+              parent[u] = v;
+              awake_count++;
+              next.set_bit(u);
+              break;
+            }
+          }
+  function: BUStep
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types: [int64_t, Graph, pvector, NodeID, Bitmap]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.164179146
+    exclusive_thread_cpu_seconds: 0.164179146
+    invocations: 726463
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:1492:3572ab9d57119395
+- id: function:bfs.cc:2004:ffc8e4d681ba23b5
+  kind: function
+  name: TDStep
+  path: src/bfs.cc
+  lines: [67, 89]
+  byte_range: [2004, 2668]
+  insertion_range: [2105, 2668]
+  source_sha256: ffc8e4d681ba23b54efb9de1ecaf4cef44a5fbef3230d646a69da558fa41de9c
+  text: |-
+    int64_t TDStep(const Graph &g, pvector<NodeID> &parent,
+                   SlidingQueue<NodeID> &queue) {
+      int64_t scout_count = 0;
+      #pragma omp parallel
+      {
+        QueueBuffer<NodeID> lqueue(queue);
+        #pragma omp for reduction(+ : scout_count) nowait
+        for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+          NodeID u = *q_iter;
+          for (NodeID v : g.out_neigh(u)) {
+            NodeID curr_val = parent[v];
+            if (curr_val < 0) {
+              if (compare_and_swap(parent[v], curr_val, u)) {
+                lqueue.push_back(v);
+                scout_count += -curr_val;
+              }
+            }
+          }
+        }
+        lqueue.flush();
+      }
+      return scout_count;
+    }
+  function: TDStep
+  usr: c:@F@TDStep#&1$@S@CSRGraph>#I#I#Vb1#&$@S@pvector>#I#&$@S@SlidingQueue>#I#
+  helpers:
+  - QueueBuffer
+  - begin
+  - end
+  - out_neigh
+  - operator[]
+  - compare_and_swap
+  - push_back
+  - flush
+  callers: [DOBFS]
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.015200861999999999
+    exclusive_thread_cpu_seconds: 0.003066381
+    invocations: 11
+    exclusive_function_thread_cpu_seconds: 0.015200861999999999
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:2004:ffc8e4d681ba23b5
+- id: loop:bfs.cc:2257:ac1d48c6461c4614
+  kind: loop
+  name: for
+  path: src/bfs.cc
+  lines: [74, 85]
+  byte_range: [2257, 2620]
+  insertion_range: [2323, 2620]
+  source_sha256: ac1d48c6461c461477e7c1cef41f1e29e752050c84fc61578662fef10e0b7e07
+  text: |-
+    for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+          NodeID u = *q_iter;
+          for (NodeID v : g.out_neigh(u)) {
+            NodeID curr_val = parent[v];
+            if (curr_val < 0) {
+              if (compare_and_swap(parent[v], curr_val, u)) {
+                lqueue.push_back(v);
+                scout_count += -curr_val;
+              }
+            }
+          }
+        }
+  function: TDStep
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.012134480999999999
+    exclusive_thread_cpu_seconds: 0.006035563
+    invocations: 14326
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:2004:ffc8e4d681ba23b5
+- id: loop:bfs.cc:2357:401922b5b521a378
+  kind: loop
+  name: range_for
+  path: src/bfs.cc
+  lines: [76, 84]
+  byte_range: [2357, 2614]
+  insertion_range: [2357, 2614]
+  source_sha256: 401922b5b521a378b9b4c7ddda8b39c07cc3a84643f84bf6dccc86bf49b6e157
+  text: |-
+    for (NodeID v : g.out_neigh(u)) {
+            NodeID curr_val = parent[v];
+            if (curr_val < 0) {
+              if (compare_and_swap(parent[v], curr_val, u)) {
+                lqueue.push_back(v);
+                scout_count += -curr_val;
+              }
+            }
+          }
+  function: TDStep
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.006098918
+    exclusive_thread_cpu_seconds: 0.006098918
+    invocations: 14326
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:2004:ffc8e4d681ba23b5
+- id: function:bfs.cc:2671:2a4525d5109853ff
+  kind: function
+  name: QueueToBitmap
+  path: src/bfs.cc
+  lines: [92, 98]
+  byte_range: [2671, 2891]
+  insertion_range: [2738, 2891]
+  source_sha256: 2a4525d5109853ffb3eb27606adaef8634325ba1a2e90b6c9d2975d4e97cc465
+  text: |-
+    void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+      #pragma omp parallel for
+      for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+        NodeID u = *q_iter;
+        bm.set_bit_atomic(u);
+      }
+    }
+  function: QueueToBitmap
+  usr: c:@F@QueueToBitmap#&1$@S@SlidingQueue>#I#&$@S@Bitmap#
+  helpers: [begin, end, set_bit_atomic]
+  callers: [DOBFS]
+  referenced_types: [SlidingQueue, NodeID, Bitmap]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.035191443
+    exclusive_thread_cpu_seconds: 0.017775133
+    invocations: 3
+    exclusive_function_thread_cpu_seconds: 0.035191442999999996
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:2671:2a4525d5109853ff
+- id: loop:bfs.cc:2768:13bf9af6e8aa2202
+  kind: loop
+  name: for
+  path: src/bfs.cc
+  lines: [94, 97]
+  byte_range: [2768, 2889]
+  insertion_range: [2834, 2889]
+  source_sha256: 13bf9af6e8aa2202a1f9205b841d1da27cd823272374b5d67e9d92d86eacb393
+  text: |-
+    for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+        NodeID u = *q_iter;
+        bm.set_bit_atomic(u);
+      }
+  function: QueueToBitmap
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types: [SlidingQueue, NodeID, Bitmap]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.017416309999999997
+    exclusive_thread_cpu_seconds: 0.017416309999999997
+    invocations: 83891
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:2671:2a4525d5109853ff
+- id: function:bfs.cc:2893:998b567e01b31fa7
+  kind: function
+  name: BitmapToQueue
+  path: src/bfs.cc
+  lines: [100, 112]
+  byte_range: [2893, 3237]
+  insertion_range: [2995, 3237]
+  source_sha256: 998b567e01b31fa778793b1646567e817b56d4cb25a3fa4e6f989a5619f1c16e
+  text: |-
+    void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                       SlidingQueue<NodeID> &queue) {
+      #pragma omp parallel
+      {
+        QueueBuffer<NodeID> lqueue(queue);
+        #pragma omp for nowait
+        for (NodeID n=0; n < g.num_nodes(); n++)
+          if (bm.get_bit(n))
+            lqueue.push_back(n);
+        lqueue.flush();
+      }
+      queue.slide_window();
+    }
+  function: BitmapToQueue
+  usr: c:@F@BitmapToQueue#&1$@S@CSRGraph>#I#I#Vb1#&1$@S@Bitmap#&$@S@SlidingQueue>#I#
+  helpers: [QueueBuffer, num_nodes, get_bit, push_back, flush, slide_window]
+  callers: [DOBFS]
+  referenced_types: [Graph, Bitmap, SlidingQueue, NodeID, QueueBuffer]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.324535151
+    exclusive_thread_cpu_seconds: 0.166861543
+    invocations: 3
+    exclusive_function_thread_cpu_seconds: 0.324535151
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:2893:998b567e01b31fa7
+- id: loop:bfs.cc:3093:d28ec09d2dd27686
+  kind: loop
+  name: for
+  path: src/bfs.cc
+  lines: [106, 108]
+  byte_range: [3093, 3187]
+  insertion_range: [3140, 3187]
+  source_sha256: d28ec09d2dd276862395055ecb249d6616275ae540625acf48e7dd7f3f64f908
+  text: |-
+    for (NodeID n=0; n < g.num_nodes(); n++)
+          if (bm.get_bit(n))
+            lqueue.push_back(n);
+  function: BitmapToQueue
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types: [Graph, Bitmap, SlidingQueue, NodeID, QueueBuffer]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.15767360800000002
+    exclusive_thread_cpu_seconds: 0.15767360800000002
+    invocations: 786432
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:2893:998b567e01b31fa7
+- id: function:bfs.cc:3239:228dafe7b10a6cec
+  kind: function
+  name: InitParent
+  path: src/bfs.cc
+  lines: [114, 120]
+  byte_range: [3239, 3475]
+  insertion_range: [3283, 3475]
+  source_sha256: 228dafe7b10a6cec97589d03a00042a742c9a7a072166e3176b675ba315a331c
+  text: |-
+    pvector<NodeID> InitParent(const Graph &g) {
+      pvector<NodeID> parent(g.num_nodes());
+      #pragma omp parallel for
+      for (NodeID n=0; n < g.num_nodes(); n++)
+        parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+      return parent;
+    }
+  function: InitParent
+  usr: c:@F@InitParent#&1$@S@CSRGraph>#I#I#Vb1#
+  helpers: [pvector, num_nodes, 'operator[]', out_degree]
+  callers: [DOBFS]
+  referenced_types: [pvector, NodeID, Graph]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.325538346
+    exclusive_thread_cpu_seconds: 0.166732196
+    invocations: 3
+    exclusive_function_thread_cpu_seconds: 0.325538346
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:3239:228dafe7b10a6cec
+- id: loop:bfs.cc:3354:4fc081ce5a20fcdd
+  kind: loop
+  name: for
+  path: src/bfs.cc
+  lines: [117, 118]
+  byte_range: [3354, 3456]
+  insertion_range: [3399, 3456]
+  source_sha256: 4fc081ce5a20fcdd6c4837980fb3f9234874515948b63e4d699b9fdafcab10bb
+  text: |-
+    for (NodeID n=0; n < g.num_nodes(); n++)
+        parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+  function: InitParent
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types: [pvector, NodeID, Graph]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.15880615
+    exclusive_thread_cpu_seconds: 0.15880615
+    invocations: 786432
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:3239:228dafe7b10a6cec
+- id: function:bfs.cc:3477:b4a61d2ea72abcea
+  kind: function
+  name: DOBFS
+  path: src/bfs.cc
+  lines: [122, 178]
+  byte_range: [3477, 5290]
+  insertion_range: [3614, 5290]
+  source_sha256: b4a61d2ea72abceaffa18258c4efae11ca2a09037dee595e6735591cd7d3dae5
+  text: |-
+    pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                          int alpha = 15, int beta = 18) {
+      if (logging_enabled)
+        PrintStep("Source", static_cast<int64_t>(source));
+      Timer t;
+      t.Start();
+      pvector<NodeID> parent = InitParent(g);
+      t.Stop();
+      if (logging_enabled)
+        PrintStep("i", t.Seconds());
+      parent[source] = source;
+      SlidingQueue<NodeID> queue(g.num_nodes());
+      queue.push_back(source);
+      queue.slide_window();
+      Bitmap curr(g.num_nodes());
+      Bitmap front(g.num_nodes());
+      front.reset();
+      int64_t edges_to_check = g.num_edges_directed();
+      int64_t scout_count = g.out_degree(source);
+      while (!queue.empty()) {
+        if (scout_count > edges_to_check / alpha) {
+          int64_t awake_count, old_awake_count;
+          TIME_OP(t, QueueToBitmap(queue, front));
+          if (logging_enabled)
+            PrintStep("e", t.Seconds());
+          awake_count = queue.size();
+          queue.slide_window();
+          do {
+            t.Start();
+            old_awake_count = awake_count;
+            awake_count = BUStep(g, parent, front, curr);
+            front.swap(curr);
+            t.Stop();
+            if (logging_enabled)
+              PrintStep("bu", t.Seconds(), awake_count);
+          } while ((awake_count >= old_awake_count) ||
+                   (awake_count > g.num_nodes() / beta));
+          TIME_OP(t, BitmapToQueue(g, front, queue));
+          if (logging_enabled)
+            PrintStep("c", t.Seconds());
+          scout_count = 1;
+        } else {
+          t.Start();
+          edges_to_check -= scout_count;
+          scout_count = TDStep(g, parent, queue);
+          queue.slide_window();
+          t.Stop();
+          if (logging_enabled)
+            PrintStep("td", t.Seconds(), queue.size());
+        }
+      }
+      #pragma omp parallel for
+      for (NodeID n = 0; n < g.num_nodes(); n++)
+        if (parent[n] < -1)
+          parent[n] = -1;
+      return parent;
+    }
+  function: DOBFS
+  usr: c:@F@DOBFS#&1$@S@CSRGraph>#I#I#Vb1#I#b#I#I#
+  helpers:
+  - PrintStep
+  - basic_string
+  - Timer
+  - Start
+  - InitParent
+  - Stop
+  - Seconds
+  - operator[]
+  - SlidingQueue
+  - num_nodes
+  - push_back
+  - slide_window
+  - Bitmap
+  - reset
+  - num_edges_directed
+  - out_degree
+  - empty
+  - QueueToBitmap
+  - size
+  - BUStep
+  - swap
+  - BitmapToQueue
+  - TDStep
+  - pvector
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 2.103990977
+    exclusive_thread_cpu_seconds: 0.167098522
+    invocations: 3
+    exclusive_function_thread_cpu_seconds: 0.325233728
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:3477:b4a61d2ea72abcea
+- id: loop:bfs.cc:4127:f22f36344da32b9b
+  kind: loop
+  name: while
+  path: src/bfs.cc
+  lines: [141, 172]
+  byte_range: [4127, 5153]
+  insertion_range: [4127, 5153]
+  source_sha256: f22f36344da32b9b5d014d4ae1dae346bdb493200cc8e267e0aeab7e92fb2089
+  text: |-
+    while (!queue.empty()) {
+        if (scout_count > edges_to_check / alpha) {
+          int64_t awake_count, old_awake_count;
+          TIME_OP(t, QueueToBitmap(queue, front));
+          if (logging_enabled)
+            PrintStep("e", t.Seconds());
+          awake_count = queue.size();
+          queue.slide_window();
+          do {
+            t.Start();
+            old_awake_count = awake_count;
+            awake_count = BUStep(g, parent, front, curr);
+            front.swap(curr);
+            t.Stop();
+            if (logging_enabled)
+              PrintStep("bu", t.Seconds(), awake_count);
+          } while ((awake_count >= old_awake_count) ||
+                   (awake_count > g.num_nodes() / beta));
+          TIME_OP(t, BitmapToQueue(g, front, queue));
+          if (logging_enabled)
+            PrintStep("c", t.Seconds());
+          scout_count = 1;
+        } else {
+          t.Start();
+          edges_to_check -= scout_count;
+          scout_count = TDStep(g, parent, queue);
+          queue.slide_window();
+          t.Stop();
+          if (logging_enabled)
+            PrintStep("td", t.Seconds(), queue.size());
+        }
+      }
+  function: DOBFS
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 1.4532336860000001
+    exclusive_thread_cpu_seconds: 1.0247e-05
+    invocations: 3
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:3477:b4a61d2ea72abcea
+- id: loop:bfs.cc:4423:e30e02362196352a
+  kind: loop
+  name: do
+  path: src/bfs.cc
+  lines: [149, 158]
+  byte_range: [4423, 4770]
+  insertion_range: [4423, 4770]
+  source_sha256: e30e02362196352a81f341e15ede3adf29f9f75028ae405f5db4787d13f34681
+  text: |-
+    do {
+            t.Start();
+            old_awake_count = awake_count;
+            awake_count = BUStep(g, parent, front, curr);
+            front.swap(curr);
+            t.Stop();
+            if (logging_enabled)
+              PrintStep("bu", t.Seconds(), awake_count);
+          } while ((awake_count >= old_awake_count) ||
+                   (awake_count > g.num_nodes() / beta));
+  function: DOBFS
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 1.078295983
+    exclusive_thread_cpu_seconds: 4.536e-06
+    invocations: 3
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:3477:b4a61d2ea72abcea
+- id: loop:bfs.cc:5183:82c2122db9c90924
+  kind: loop
+  name: for
+  path: src/bfs.cc
+  lines: [174, 176]
+  byte_range: [5183, 5271]
+  insertion_range: [5230, 5271]
+  source_sha256: 82c2122db9c90924e5e1dd1805648f1c5c6ce81a9b20498b82d9daa193e40f9e
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+        if (parent[n] < -1)
+          parent[n] = -1;
+  function: DOBFS
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.158120423
+    exclusive_thread_cpu_seconds: 0.158120423
+    invocations: 786432
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:3477:b4a61d2ea72abcea
+- id: function:bfs.cc:5293:d0f2b5ebff7dad68
+  kind: function
+  name: PrintBFSStats
+  path: src/bfs.cc
+  lines: [181, 192]
+  byte_range: [5293, 5633]
+  insertion_range: [5362, 5633]
+  source_sha256: d0f2b5ebff7dad68c5c8f220ea496caa1b4afafe2bf3c95bf7082f65df71a504
+  text: |-
+    void PrintBFSStats(const Graph &g, const pvector<NodeID> &bfs_tree) {
+      int64_t tree_size = 0;
+      int64_t n_edges = 0;
+      for (NodeID n : g.vertices()) {
+        if (bfs_tree[n] >= 0) {
+          n_edges += g.out_degree(n);
+          tree_size++;
+        }
+      }
+      cout << "BFS Tree has " << tree_size << " nodes and ";
+      cout << n_edges << " edges" << endl;
+    }
+  function: PrintBFSStats
+  usr: c:@F@PrintBFSStats#&1$@S@CSRGraph>#I#I#Vb1#&1$@S@pvector>#I#
+  helpers: [operator*, vertices, 'operator[]', out_degree, operator<<]
+  callers: []
+  referenced_types: [Graph, pvector, NodeID, int64_t]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:5293:d0f2b5ebff7dad68
+- id: loop:bfs.cc:5413:9bd85a1cc9b495c8
+  kind: loop
+  name: range_for
+  path: src/bfs.cc
+  lines: [184, 189]
+  byte_range: [5413, 5535]
+  insertion_range: [5413, 5535]
+  source_sha256: 9bd85a1cc9b495c8cd43cf0d4ec8c8bec9272fbce08ca062a2aa063e017521dc
+  text: |-
+    for (NodeID n : g.vertices()) {
+        if (bfs_tree[n] >= 0) {
+          n_edges += g.out_degree(n);
+          tree_size++;
+        }
+      }
+  function: PrintBFSStats
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [Graph, pvector, NodeID, int64_t]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:5293:d0f2b5ebff7dad68
+- id: function:bfs.cc:5900:2b6f1ed2dc699b9c
+  kind: function
+  name: BFSVerifier
+  path: src/bfs.cc
+  lines: [200, 246]
+  byte_range: [5900, 7235]
+  insertion_range: [5997, 7235]
+  source_sha256: 2b6f1ed2dc699b9cc79184498cc8e309c049019fdf769c82fafec07392ce44b9
+  text: |-
+    bool BFSVerifier(const Graph &g, NodeID source,
+                     const pvector<NodeID> &parent) {
+      pvector<int> depth(g.num_nodes(), -1);
+      depth[source] = 0;
+      vector<NodeID> to_visit;
+      to_visit.reserve(g.num_nodes());
+      to_visit.push_back(source);
+      for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+        NodeID u = *it;
+        for (NodeID v : g.out_neigh(u)) {
+          if (depth[v] == -1) {
+            depth[v] = depth[u] + 1;
+            to_visit.push_back(v);
+          }
+        }
+      }
+      for (NodeID u : g.vertices()) {
+        if ((depth[u] != -1) && (parent[u] != -1)) {
+          if (u == source) {
+            if (!((parent[u] == u) && (depth[u] == 0))) {
+              cout << "Source wrong" << endl;
+              return false;
+            }
+            continue;
+          }
+          bool parent_found = false;
+          for (NodeID v : g.in_neigh(u)) {
+            if (v == parent[u]) {
+              if (depth[v] != depth[u] - 1) {
+                cout << "Wrong depths for " << u << " & " << v << endl;
+                return false;
+              }
+              parent_found = true;
+              break;
+            }
+          }
+          if (!parent_found) {
+            cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+            return false;
+          }
+        } else if (depth[u] != parent[u]) {
+          cout << "Reachability mismatch" << endl;
+          return false;
+        }
+      }
+      return true;
+    }
+  function: BFSVerifier
+  usr: c:@F@BFSVerifier#&1$@S@CSRGraph>#I#I#Vb1#I#&1$@S@pvector>#I#
+  helpers:
+  - pvector
+  - num_nodes
+  - operator[]
+  - vector
+  - reserve
+  - push_back
+  - begin
+  - operator!=
+  - end
+  - operator++
+  - operator*
+  - out_neigh
+  - vertices
+  - operator<<
+  - in_neigh
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:5900:2b6f1ed2dc699b9c
+- id: loop:bfs.cc:6154:4ceb0d60b5955b90
+  kind: loop
+  name: for
+  path: src/bfs.cc
+  lines: [207, 215]
+  byte_range: [6154, 6384]
+  insertion_range: [6154, 6384]
+  source_sha256: 4ceb0d60b5955b90825f703eb4cfa8b5fd9fdb7444a52cc9fa8271a8fc6f5834
+  text: |-
+    for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+        NodeID u = *it;
+        for (NodeID v : g.out_neigh(u)) {
+          if (depth[v] == -1) {
+            depth[v] = depth[u] + 1;
+            to_visit.push_back(v);
+          }
+        }
+      }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:5900:2b6f1ed2dc699b9c
+- id: loop:bfs.cc:6241:c225c5fe3cf7b090
+  kind: loop
+  name: range_for
+  path: src/bfs.cc
+  lines: [209, 214]
+  byte_range: [6241, 6380]
+  insertion_range: [6241, 6380]
+  source_sha256: c225c5fe3cf7b09079a60963f997270e9cb89b4a489c79127b735e9ad1cbb558
+  text: |-
+    for (NodeID v : g.out_neigh(u)) {
+          if (depth[v] == -1) {
+            depth[v] = depth[u] + 1;
+            to_visit.push_back(v);
+          }
+        }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:5900:2b6f1ed2dc699b9c
+- id: loop:bfs.cc:6387:55f75502f46fcf22
+  kind: loop
+  name: range_for
+  path: src/bfs.cc
+  lines: [216, 244]
+  byte_range: [6387, 7218]
+  insertion_range: [6387, 7218]
+  source_sha256: 55f75502f46fcf2247886a24394c9aef7dcf1285a474714ae8c736290d2464f0
+  text: |-
+    for (NodeID u : g.vertices()) {
+        if ((depth[u] != -1) && (parent[u] != -1)) {
+          if (u == source) {
+            if (!((parent[u] == u) && (depth[u] == 0))) {
+              cout << "Source wrong" << endl;
+              return false;
+            }
+            continue;
+          }
+          bool parent_found = false;
+          for (NodeID v : g.in_neigh(u)) {
+            if (v == parent[u]) {
+              if (depth[v] != depth[u] - 1) {
+                cout << "Wrong depths for " << u << " & " << v << endl;
+                return false;
+              }
+              parent_found = true;
+              break;
+            }
+          }
+          if (!parent_found) {
+            cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+            return false;
+          }
+        } else if (depth[u] != parent[u]) {
+          cout << "Reachability mismatch" << endl;
+          return false;
+        }
+      }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:5900:2b6f1ed2dc699b9c
+- id: loop:bfs.cc:6688:b02c84cfbb728bfa
+  kind: loop
+  name: range_for
+  path: src/bfs.cc
+  lines: [226, 235]
+  byte_range: [6688, 6964]
+  insertion_range: [6688, 6964]
+  source_sha256: b02c84cfbb728bfa26ae074e36446306fb67fa839a58378cc048aa3bdb4c01df
+  text: |-
+    for (NodeID v : g.in_neigh(u)) {
+            if (v == parent[u]) {
+              if (depth[v] != depth[u] - 1) {
+                cout << "Wrong depths for " << u << " & " << v << endl;
+                return false;
+              }
+              parent_found = true;
+              break;
+            }
+          }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:5900:2b6f1ed2dc699b9c
+- id: function:bfs.cc:7238:a7c09efa2e36f00e
+  kind: function
+  name: main
+  path: src/bfs.cc
+  lines: [249, 265]
+  byte_range: [7238, 7828]
+  insertion_range: [7272, 7828]
+  source_sha256: a7c09efa2e36f00e12626d1297b3e17e80bec4e2850fb6ad29ae31d82e80223c
+  text: |-
+    int main(int argc, char* argv[]) {
+      CLApp cli(argc, argv, "breadth-first search");
+      if (!cli.ParseArgs())
+        return -1;
+      Builder b(cli);
+      Graph g = b.MakeGraph();
+      SourcePicker<Graph> sp(g, cli.start_vertex());
+      auto BFSBound = [&sp,&cli] (const Graph &g) {
+        return DOBFS(g, sp.PickNext(), cli.logging_en());
+      };
+      SourcePicker<Graph> vsp(g, cli.start_vertex());
+      auto VerifierBound = [&vsp] (const Graph &g, const pvector<NodeID> &parent) {
+        return BFSVerifier(g, vsp.PickNext(), parent);
+      };
+      BenchmarkKernel(cli, g, BFSBound, PrintBFSStats, VerifierBound);
+      return 0;
+    }
+  function: main
+  usr: c:@F@main#I#**C#
+  helpers:
+  - CLApp
+  - basic_string
+  - ParseArgs
+  - BuilderBase
+  - MakeGraph
+  - SourcePicker
+  - start_vertex
+  - DOBFS
+  - PickNext
+  - logging_en
+  - BFSVerifier
+  - BenchmarkKernel
+  - (lambda at /data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.upstream-instructions/source/src/bfs.cc:256:19)
+  - (lambda at /data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.upstream-instructions/source/src/bfs.cc:260:24)
+  callers: []
+  referenced_types: [CLApp, Builder, Graph, SourcePicker, pvector, NodeID]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function_region: function:bfs.cc:7238:a7c09efa2e36f00e
+dynamic_memory:
+- metric: Dr
+  available: true
+  value: 12239686
+  unit: references
+  definition: executed data read references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-0.out.1
+  raw_sha256: e37e7b97bbfdec989cda473922f5853b0a8ec4e86e1dab654a81fbeda845dcc9
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: Dw
+  available: true
+  value: 3906445
+  unit: references
+  definition: executed data write references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-0.out.1
+  raw_sha256: e37e7b97bbfdec989cda473922f5853b0a8ec4e86e1dab654a81fbeda845dcc9
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mr
+  available: true
+  value: 669478
+  unit: misses
+  definition: simulated first-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-0.out.1
+  raw_sha256: e37e7b97bbfdec989cda473922f5853b0a8ec4e86e1dab654a81fbeda845dcc9
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mw
+  available: true
+  value: 22281
+  unit: misses
+  definition: simulated first-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-0.out.1
+  raw_sha256: e37e7b97bbfdec989cda473922f5853b0a8ec4e86e1dab654a81fbeda845dcc9
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmr
+  available: true
+  value: 397401
+  unit: misses
+  definition: simulated last-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-0.out.1
+  raw_sha256: e37e7b97bbfdec989cda473922f5853b0a8ec4e86e1dab654a81fbeda845dcc9
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmw
+  available: true
+  value: 19982
+  unit: misses
+  definition: simulated last-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-0.out.1
+  raw_sha256: e37e7b97bbfdec989cda473922f5853b0a8ec4e86e1dab654a81fbeda845dcc9
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: Dr
+  available: true
+  value: 9863701
+  unit: references
+  definition: executed data read references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 1234
+    source_position: 1
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-1.out.1
+  raw_sha256: 37f7a6972ae813d7ed3e3f693e4411ea27434f89bd12061bd3319f9e9378ec3e
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: Dw
+  available: true
+  value: 3075428
+  unit: references
+  definition: executed data write references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 1234
+    source_position: 1
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-1.out.1
+  raw_sha256: 37f7a6972ae813d7ed3e3f693e4411ea27434f89bd12061bd3319f9e9378ec3e
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mr
+  available: true
+  value: 696207
+  unit: misses
+  definition: simulated first-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 1234
+    source_position: 1
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-1.out.1
+  raw_sha256: 37f7a6972ae813d7ed3e3f693e4411ea27434f89bd12061bd3319f9e9378ec3e
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mw
+  available: true
+  value: 23804
+  unit: misses
+  definition: simulated first-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 1234
+    source_position: 1
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-1.out.1
+  raw_sha256: 37f7a6972ae813d7ed3e3f693e4411ea27434f89bd12061bd3319f9e9378ec3e
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmr
+  available: true
+  value: 348241
+  unit: misses
+  definition: simulated last-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 1234
+    source_position: 1
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-1.out.1
+  raw_sha256: 37f7a6972ae813d7ed3e3f693e4411ea27434f89bd12061bd3319f9e9378ec3e
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmw
+  available: true
+  value: 20972
+  unit: misses
+  definition: simulated last-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 1234
+    source_position: 1
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-1.out.1
+  raw_sha256: 37f7a6972ae813d7ed3e3f693e4411ea27434f89bd12061bd3319f9e9378ec3e
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: Dr
+  available: true
+  value: 11393379
+  unit: references
+  definition: executed data read references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 7777
+    source_position: 2
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-2.out.1
+  raw_sha256: 67be1a00f4a7de616c54bb4c0de84fb8d6c9dc32b0f0ce019ec33e7994805a2b
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: Dw
+  available: true
+  value: 3434106
+  unit: references
+  definition: executed data write references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 7777
+    source_position: 2
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-2.out.1
+  raw_sha256: 67be1a00f4a7de616c54bb4c0de84fb8d6c9dc32b0f0ce019ec33e7994805a2b
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mr
+  available: true
+  value: 846758
+  unit: misses
+  definition: simulated first-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 7777
+    source_position: 2
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-2.out.1
+  raw_sha256: 67be1a00f4a7de616c54bb4c0de84fb8d6c9dc32b0f0ce019ec33e7994805a2b
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mw
+  available: true
+  value: 23536
+  unit: misses
+  definition: simulated first-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 7777
+    source_position: 2
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-2.out.1
+  raw_sha256: 67be1a00f4a7de616c54bb4c0de84fb8d6c9dc32b0f0ce019ec33e7994805a2b
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmr
+  available: true
+  value: 370376
+  unit: misses
+  definition: simulated last-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 7777
+    source_position: 2
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-2.out.1
+  raw_sha256: 67be1a00f4a7de616c54bb4c0de84fb8d6c9dc32b0f0ce019ec33e7994805a2b
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmw
+  available: true
+  value: 21021
+  unit: misses
+  definition: simulated last-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  source_artifact_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 7777
+    source_position: 2
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-2.out.1
+  raw_sha256: 67be1a00f4a7de616c54bb4c0de84fb8d6c9dc32b0f0ce019ec33e7994805a2b
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+executions:
+- kind: regions
+  source: 0
+  source_position: 0
+  repetition: 0
+  binary_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/regions-0-0.json
+  region_output: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/regions-0-0.json.regions.json
+  region_output_sha256: a4e83d4561ef50caf856a7abf99c5af55fdbb08da2cf9da2bce23819d4a4752f
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 262144
+  output_sha256: 358f75dec590c40790cba982ebc33e286437c36eaca11a3a825694498a3c285e
+  diagnostic_wall_seconds: 0.773719364
+- kind: regions
+  source: 1234
+  source_position: 1
+  repetition: 0
+  binary_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/regions-0-1.json
+  region_output: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/regions-0-1.json.regions.json
+  region_output_sha256: 87de6a618b19c069c6b42076bdb966362c74388387c9ef9c349e2272a35877ce
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 262144
+  output_sha256: 42a4ee0945347a0bea96b45afa358c2bff78f2af1ed51e001f48687683438bea
+  diagnostic_wall_seconds: 0.66214742
+- kind: regions
+  source: 7777
+  source_position: 2
+  repetition: 0
+  binary_sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/regions-0-2.json
+  region_output: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/regions-0-2.json.regions.json
+  region_output_sha256: 7d5c1e7595de980a9aac96533c28d6cd2e7421817b4cf4c914c8b470ca8b4270
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 262144
+  output_sha256: 5c2664bfbd528dfc0015f8f83fd10083e48510c6f016662aacd88f79641f4bc0
+  diagnostic_wall_seconds: 0.66818274
+- kind: memory
+  source: 0
+  source_position: 0
+  repetition: 0
+  binary_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/memory-0-0.json
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-0.out.1
+  raw_sha256: e37e7b97bbfdec989cda473922f5853b0a8ec4e86e1dab654a81fbeda845dcc9
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 262144
+  output_sha256: 0a28dc18097c332f4679856a2052e042e11a5c6d2e247af1cda5b647d02b697a
+  diagnostic_wall_seconds: 0.570317881
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+- kind: memory
+  source: 1234
+  source_position: 1
+  repetition: 0
+  binary_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/memory-0-1.json
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-1.out.1
+  raw_sha256: 37f7a6972ae813d7ed3e3f693e4411ea27434f89bd12061bd3319f9e9378ec3e
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 262144
+  output_sha256: 990e4ff78d86a7c30d8ffeea73c84ad7f85ba5cbf09fe9e282736305c22a8cbf
+  diagnostic_wall_seconds: 0.46020716
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+- kind: memory
+  source: 7777
+  source_position: 2
+  repetition: 0
+  binary_sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/memory-0-2.json
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/callgrind-0-2.out.1
+  raw_sha256: 67be1a00f4a7de616c54bb4c0de84fb8d6c9dc32b0f0ce019ec33e7994805a2b
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 262144
+  output_sha256: 60d0fc9330e881dcf772d3ffacf0c4ccd442fc27c806dd268a2cf05f24da0be4
+  diagnostic_wall_seconds: 0.521108825
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+raw_artifacts:
+- host: mbit10
+  path: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile
+  kind: diagnostic_profile
+- host: mbit10
+  path: /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile
+  kind: diagnostic_build
+- host: mbit10
+  kind: host_observation
+  path: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/host-observation.json
+  sha256: 7c92f67f8e93748c7945714ca91b74925327510dfb93a7e7470c7bd1d4565ff2
+  host_wall_s: 0.08554255403578281
+  evidence_kind: execution
+  unavailable_commands: 2
+reasons:
+- 'source coverage: header-defined, library, virtual/member and compiler-outlined code is not independently
+  attributed'
+- 'source coverage: free function template timing combines instantiations sharing one source extent'
+- 'source coverage: inlined source scopes remain source scopes, not machine-code symbols'
+- 'source coverage: OpenMP-disabled metadata inventory preserves _OPENMP; actual diagnostic execution
+  retains original OpenMP flags'
+- 'source coverage: metadata parser substitutes Clang builtin/OpenMP declarations in the compiler-private
+  header slot while preserving actual system-library search order; execution uses original compiler headers'
+- 'source coverage: metadata uses Clang predefined compiler macros; compiler-identity/feature tokens in
+  the source file are rejected, while header-defined macro conditions and indirect expansions remain outside
+  branch-equivalence guarantees'
+- 'source coverage: transformation-specific OpenMP pragmas and macro-generated loop extents may remain
+  unresolved'
+- 'source coverage: GNU __restrict__ erased for source inventory only; alias semantics are not inferred;
+  actual builds retain original source and qualifiers'
+gain_claim: false
+candidate: bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1
+source_snapshot: bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source
+implementation: gapbs-bfs-do
+machine: mbit10
+evaluation: bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation
+context:
+  candidate_sha256: 533cd1f33addb9d8917e889db1db45060257ac82d4f2f3d3f8e0e0bff331c249
+  function: DOBFS
+  source_revision: 2972aeb2703165bafd921222f4ed7196f542d3a8
+  application: gapbs
+  adapter: gapbs_native
+  target: mbit10
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  threads: 1
+  sources: [0, 1234, 7777]
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  protocol: bfs-native-one-thread-upstream-do-20260927.9d4b53fd41e79297
+  basis: measured
+  process_policy: one fresh process per source and repetition; graph construction before ROI
+  verifier: swdb.bfs.structural.v1
+  verifier_sha256: e385e50961b9c96ea7c6018aaa09a30df4c49f3286e56500e7ed3f1376a6e942
+  backend_configuration:
+    lane: mbit10-evaluation-node1
+  instrumentation:
+    template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+    treatment: included
+  host: mbit10
+  architecture: x86_64
+  lane: 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 456)'
+  load_average: [3.11083984375, 3.4208984375, 3.4130859375]
+  budget:
+    discovery_seconds: 120.0
+    build_seconds: 180.0
+    run_seconds: 600.0
+    total_seconds: 1200.0
+  pairing:
+    pair_id: bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.pair
+    role: candidate
+    collection:
+      method: native_paired.v1
+      order_seed: 20260926
+    schedule_sha256: d86e7631fe22327762de7b21145fd968d40661a3c53a3051c36f7b981f25001c
+  host_observation:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/host-observation.json
+    sha256: 7c92f67f8e93748c7945714ca91b74925327510dfb93a7e7470c7bd1d4565ff2
+    host_wall_s: 0.08554255403578281
+    evidence_kind: execution
+    unavailable_commands: 2
+  workload:
+    id: bfs-20260925-uniform18.cd2169a5c421baf7
+    family: uniform_random
+    generator:
+      name: DX100 GAPBS converter
+      revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      parameters:
+        scale: 18
+        edge_factor: 16
+        seed: 27491095
+        symmetrize: true
+        binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+        source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+        explicit_symmetrize_flag: false
+      command:
+      - /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20260925/bfs-20260925-uniform18/converter
+      - -u
+      - '18'
+      - -k
+      - '16'
+      - -b
+      - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/graph.sg32
+    representation:
+      id: bfs-20260925-uniform18.dx100
+      path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/graph.sg32
+      sha256: c6a430be5cf64a1b144d01f9bcbaeab2fcb45e0fac2359da36de8087b1b4790d
+      format: gapbs_sg32le
+      application: dx100-gapbs
+      canonical_sha256: 7d7dd24c2397071f4ad8fb3125079a4e42ecdbaa853745d84161bcd410d0164b
+      bytes: 34600749
+      loader: swdb.gapbs-representation.v1
+      adjacency_verified: true
+    normalization: 'simple graph: remove self loops and duplicates; symmetrize if undirected; sort neighbors'
+    canonical_sha256: 7d7dd24c2397071f4ad8fb3125079a4e42ecdbaa853745d84161bcd410d0164b
+    adjacency_order_sha256: 7d7dd24c2397071f4ad8fb3125079a4e42ecdbaa853745d84161bcd410d0164b
+    num_vertices: 262144
+    num_directed_edges: 8388040
+    directed: false
+    sources: [0, 1234, 7777]
+    canonical_path: /data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation/graph.swdb
+    canonical_file_sha256: 2b1b9a757733e7d55614f54686721ae8a2eda176ce56f969edcef730364c7313
+  protocol_binding:
+    protocol: bfs-native-one-thread-upstream-do-20260927.9d4b53fd41e79297
+    frozen_sha256: 9d4b53fd41e7929722d21c9eb8103a313d1ef0e6d149110ddc54cd1d4c59ba0c
+    workload_id: bfs-20260925-uniform18.cd2169a5c421baf7
+    workload_sha256: cd2169a5c421baf7a2c03febab6d8d86edcd74860c887c83a0d5a2c9d28bc49b
+    role: candidate
+    frozen_at: '2026-09-27T14:30:08.384499+00:00'
+    bound_at: '2026-09-27T15:42:15.037666+00:00'
+    settings_sha256: 4c8c5233711861ded4acaaa1cef7a371bc0b51ed730346a3f7b50230d5986416
+  primary_binary_sha256: 0865b973175f613905fccb88a8ee37c76b6c187f1d80959f44f895ad69b6f4ea
+  primary_evaluation: bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation
+  primary_load_average: [4.072265625, 3.65869140625, 3.31396484375]
+  timing_basis: diagnostic accumulated thread CPU seconds; primary ROI wall timing remains in evaluation
+  overhead_treatment: scope instrumentation overhead is included; no synthetic subtraction or gain claim
+discovery:
+  backend: libclang-cindex
+  version: clang version 18.1.8
+  library: /data1/yanruj/llvm18/lib/libclang.so
+  arguments:
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.upstream-instructions/source/src
+  - -isystem
+  - /usr/include/c++/13
+  - -isystem
+  - /usr/include/x86_64-linux-gnu/c++/13
+  - -isystem
+  - /usr/include/c++/13/backward
+  - -isystem
+  - /data1/yanruj/llvm18/lib/clang/18/include
+  - -isystem
+  - /usr/local/include
+  - -isystem
+  - /usr/include/x86_64-linux-gnu
+  - -isystem
+  - /usr/include
+  - -D_OPENMP=201511
+  - -D__restrict__=
+  - -fno-openmp
+  - -Wno-unknown-pragmas
+  - -resource-dir
+  - /data1/yanruj/llvm18/lib/clang/18
+  diagnostics: []
+  parser_adaptations:
+  - GNU __restrict__ erased for source inventory only; alias semantics are not inferred; actual builds
+    retain original source and qualifiers
+  unresolved: []
+  scope: free functions and ordinary loops defined in the BFS translation-unit source file
+  limitations:
+  - header-defined, library, virtual/member and compiler-outlined code is not independently attributed
+  - free function template timing combines instantiations sharing one source extent
+  - inlined source scopes remain source scopes, not machine-code symbols
+  - OpenMP-disabled metadata inventory preserves _OPENMP; actual diagnostic execution retains original
+    OpenMP flags
+  - metadata parser substitutes Clang builtin/OpenMP declarations in the compiler-private header slot
+    while preserving actual system-library search order; execution uses original compiler headers
+  - metadata uses Clang predefined compiler macros; compiler-identity/feature tokens in the source file
+    are rejected, while header-defined macro conditions and indirect expansions remain outside branch-equivalence
+    guarantees
+  - transformation-specific OpenMP pragmas and macro-generated loop extents may remain unresolved
+  - GNU __restrict__ erased for source inventory only; alias semantics are not inferred; actual builds
+    retain original source and qualifiers
+  library_sha256: 27b38bfdb37d164878767c40c8ce9538c96e801a37d2a67234bee043945de139
+  pass_sha256: 6f5414eb9844688dfe5f651cb030d5885f6b70ad6c7e10b4ddf1d7cd04e60021
+  collector_sha256: 48f2f7c8dd48748f9c56917f8928c027c35da8a4299eda8da273006844e46903
+build:
+  directory: /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile
+  compiler: /usr/bin/g++
+  compiler_version:
+  - g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  - Copyright (C) 2023 Free Software Foundation, Inc.
+  flags: [-std=c++11, -O3, -Wall, -fopenmp]
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.upstream-instructions/source/src
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/regions_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/bfs-regions
+  wrapper_sha256: bbc44b7e49b301b981e47e7bdc26bea14bb16d6ce10f84b5c2dc8bd09b14fa22
+  runtime_sha256: 7f74da428f5c5ef984c156ebb89d987d3f6cd08de830ce7131564238c54b3c11
+  instrumented_source_sha256: 6014236754ed3dc6885eb25b628727c96344ae372a3a50647fc87f6578ca931b
+  native_runtime:
+    version: 1
+    environment:
+      OMP_NUM_THREADS: '1'
+      OMP_DYNAMIC: 'FALSE'
+      OMP_PROC_BIND: close
+      OMP_PLACES: cores
+      OMP_THREAD_LIMIT: null
+      OMP_WAIT_POLICY: null
+      GOMP_SPINCOUNT: null
+      GOMP_CPU_AFFINITY: null
+artifacts:
+  primary_binary_sha256: 0865b973175f613905fccb88a8ee37c76b6c187f1d80959f44f895ad69b6f4ea
+  region_binary:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/bfs-regions
+    sha256: b10b76338716f353637fbc7e86275c0c21ba903217d8165996c5c175687256b6
+    difference: automatic source scope guards; original build flags retained
+  memory_binary:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile/bfs-memory
+    sha256: bf24795c87c4108e4bb8b015d38b8fdd7660fad3e16eaca28342f00db84ead38
+    flags: [-std=c++11, -O3, -Wall, -fopenmp, -g]
+    wrapper_sha256: 4b595484ec1a804dda0cb9cdaed0e2d5c6a527319738bf1999a240d559e0ffb8
+    difference: original candidate source; client ROI guards and debug info, no region guards
+correspondence:
+  previous_profile: bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.profile
+  resolved:
+  - current: function:bfs.cc:1492:3572ab9d57119395
+    previous: function:bfs.cc:1492:3572ab9d57119395
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:1717:6e2a9b58e359bcfa
+    previous: loop:bfs.cc:1717:6e2a9b58e359bcfa
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:1791:c91be0a18a4752c0
+    previous: loop:bfs.cc:1791:c91be0a18a4752c0
+    basis: identical source fragment and containing function
+  - current: function:bfs.cc:2004:ffc8e4d681ba23b5
+    previous: function:bfs.cc:2004:ffc8e4d681ba23b5
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:2257:ac1d48c6461c4614
+    previous: loop:bfs.cc:2257:ac1d48c6461c4614
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:2357:401922b5b521a378
+    previous: loop:bfs.cc:2357:401922b5b521a378
+    basis: identical source fragment and containing function
+  - current: function:bfs.cc:2671:2a4525d5109853ff
+    previous: function:bfs.cc:2671:2a4525d5109853ff
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:2768:13bf9af6e8aa2202
+    previous: loop:bfs.cc:2768:13bf9af6e8aa2202
+    basis: identical source fragment and containing function
+  - current: function:bfs.cc:2893:998b567e01b31fa7
+    previous: function:bfs.cc:2893:998b567e01b31fa7
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:3093:d28ec09d2dd27686
+    previous: loop:bfs.cc:3093:d28ec09d2dd27686
+    basis: identical source fragment and containing function
+  - current: function:bfs.cc:3239:228dafe7b10a6cec
+    previous: function:bfs.cc:3239:228dafe7b10a6cec
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:3354:4fc081ce5a20fcdd
+    previous: loop:bfs.cc:3354:4fc081ce5a20fcdd
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:4127:f22f36344da32b9b
+    previous: loop:bfs.cc:4143:f22f36344da32b9b
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:4423:e30e02362196352a
+    previous: loop:bfs.cc:4439:e30e02362196352a
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:5183:82c2122db9c90924
+    previous: loop:bfs.cc:5199:82c2122db9c90924
+    basis: identical source fragment and containing function
+  - current: function:bfs.cc:5293:d0f2b5ebff7dad68
+    previous: function:bfs.cc:5309:d0f2b5ebff7dad68
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:5413:9bd85a1cc9b495c8
+    previous: loop:bfs.cc:5429:9bd85a1cc9b495c8
+    basis: identical source fragment and containing function
+  - current: function:bfs.cc:5900:2b6f1ed2dc699b9c
+    previous: function:bfs.cc:5916:2b6f1ed2dc699b9c
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:6154:4ceb0d60b5955b90
+    previous: loop:bfs.cc:6170:4ceb0d60b5955b90
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:6241:c225c5fe3cf7b090
+    previous: loop:bfs.cc:6257:c225c5fe3cf7b090
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:6387:55f75502f46fcf22
+    previous: loop:bfs.cc:6403:55f75502f46fcf22
+    basis: identical source fragment and containing function
+  - current: loop:bfs.cc:6688:b02c84cfbb728bfa
+    previous: loop:bfs.cc:6704:b02c84cfbb728bfa
+    basis: identical source fragment and containing function
+  - current: function:bfs.cc:7238:a7c09efa2e36f00e
+    previous: function:bfs.cc:7254:a7c09efa2e36f00e
+    basis: identical source fragment and containing function
+  current_unresolved:
+  - function:bfs.cc:3477:b4a61d2ea72abcea
+  previous_unresolved:
+  - function:bfs.cc:3477:2152911a89faaaf1
+  region_gain_claim: false
+  limits: changed, split, fused, and ambiguous repeated fragments are unresolved; no timings or semantics
+    are inherited

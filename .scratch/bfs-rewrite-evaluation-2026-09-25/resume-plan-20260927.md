@@ -66,3 +66,23 @@ plus a root review of each diff before dispatch. The final Standards and Spec co
 | C — DX100 candidates | 17, 20 | builds only until protocol freeze | T17 diagnostic build, T20 fresh candidate, builds |
 | D — artifact reference | 16 | after A frees capacity | fresh T16 request on repaired runtime |
 | E — report | 21 | none | coverage report, handoff, final reviews |
+
+## Added decisions — 2026-09-27 12:30 ET
+
+R10. **Shared identical executions.** When two protocol roles name the same binary,
+configuration, graph, source and target (T16 artifact.maa and control.maa), one real
+execution set satisfies both, with the identity match stated and both protocol IDs referenced.
+This follows the spec's coverage-accounting rule that one run may satisfy several obligations
+when identities and requirements actually match; it supersedes the earlier "relabeling" ruling.
+
+R11. **T16 repetitions.** One repetition per role if T15's replays show identical simulated
+ticks; otherwise two. The re-frozen T16 protocols get new IDs.
+
+R12. **Fast post-ROI verification (opt-in, pending proof).** After ROI statistics are sealed,
+the same simulation may switch to an atomic CPU for the in-guest verifier. The binary, process
+and memory state are unchanged, so the verifier outcome is the same evidence; only host cost
+falls. It is adopted only after a tiny-graph proof shows an identical verifier outcome and ROI
+statistics identical to an unswitched run. T15's running protocol is not changed.
+
+T16 measurements behind this (Stream D, 12:15 ET): uniform22 scalar ROI ≈ 27,000 host s, MAA ROI
+≈ 13,000–20,000 s, O3 verification ≈ 30,000 s per execution, MAA trace ≈ 20 GiB per execution.

@@ -1,0 +1,888 @@
+{
+ "created": "2026-09-27 12:20 ET",
+ "stream": "B",
+ "host": "mbit10",
+ "scope": "T18/T19 native acceptance under the one-thread native protocols frozen per R7; Mac never received raw traces or binaries",
+ "branch": "codex/bfs-native-routes-20260927-b1",
+ "protocols": {
+  "dx100-bfs-scalar": {
+   "id": "bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3",
+   "review_sha256": "9f07d7b10e53b37d224129ad9b38d1f30252f39d72ea9ecb7cf23f871de92b65",
+   "freeze_request_sha256": "c2b54ab41c0817cf79192340ef576eb6a8e499d3f5637edf17ddc9a4778eaeaf",
+   "publishable": true,
+   "unmet_gates": []
+  },
+  "gapbs-bfs-do": {
+   "id": "bfs-native-one-thread-upstream-do-20260927.9d4b53fd41e79297",
+   "review_sha256": "8c3dcf13e7c78df5ca7179cd6a2d22467cac6fd41442d53b2ab98098bb90e35f",
+   "freeze_request_sha256": "f465dd0af9f3554a6dbd197de19157729b0dbaa2bb16458ef1c708d188025e92",
+   "publishable": true,
+   "unmet_gates": []
+  },
+  "route": "scripts/bfs_freeze_pilot.py prepare/publish, one-thread calibration bfs-native-one-thread-pilot-20260926-a1 (collector 319645e), pinned reader in the original collector checkout, R7 native-only size scope bound to resume-plan hash",
+  "runtime": {
+   "path": "/data1/yanruj/EvolveSWDB_native_routes_runtime_20260927_b1",
+   "commit": "9aa23822a7f34dc55f2b220e730acb1bcc597c7f"
+  },
+  "raw": "/data/yanruj/EvolveSWDB_runs/bfs-native-protocol-20260927-b1",
+  "reader_invocations": 4,
+  "operations_wall": "about 4 min each, outside any lane (root-approved, read-only)",
+  "fixed_policy": {
+   "threads": 1,
+   "repetitions": 10,
+   "warmups": 0,
+   "collection": "native_paired.v1 seed 20260926",
+   "analysis": "paired_repetition_block_bootstrap.v1",
+   "minimum_speedup": 1.05,
+   "maximum_relative_spread": 0.1,
+   "confidence": 0.95,
+   "bootstrap_resamples": 2000,
+   "bootstrap_seed": 20260925,
+   "lane": "mbit10-evaluation-node1"
+  }
+ },
+ "fresh_baseline_packages": {
+  "dx100-bfs-scalar": [
+   "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.b8f33855cc6c657e",
+   "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.122d39652ae0c326"
+  ],
+  "gapbs-bfs-do": [
+   "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.ffd9925db46a63a9",
+   "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.f613a3b01a24e380"
+  ],
+  "note": "Complete one-thread diagnostic packages from the completed study; admitted by both publications. Each campaign additionally ran new protocol-bound unaccelerated baseline trials in its paired grid."
+ },
+ "linux_proofs": {
+  "bfs-native-campaign-owned-linux-20260926-a1": {
+   "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-campaign-owned-linux-20260926-a1/proof.json",
+   "sha256": "2c9f735dabc44f7dcfdc720e39dc3b562f00e21162906c2e3f7bf27fb24a888b",
+   "runtime_commit": "61698e391a653aae232ad5ee054aaaa7349f3fa6",
+   "used_by": "b1 admissions"
+  },
+  "bfs-native-campaign-owned-linux-20260927-b2": {
+   "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-campaign-owned-linux-20260927-b2/proof.json",
+   "sha256": "c55c7f5d1ff66e9e5b3c37137b7e8c9a493a4c34b7231dff99b485379255d2fd",
+   "runtime_commit": "820f32b7397a981357cee02731a892dec30672ee",
+   "used_by": "b2 admissions"
+  }
+ },
+ "campaign_runtimes": {
+  "b2 (b1 runs)": {
+   "path": "/data1/yanruj/EvolveSWDB_native_routes_campaign_runtime_20260927_b2",
+   "commit": "61698e391a653aae232ad5ee054aaaa7349f3fa6"
+  },
+  "b3 (b2 runs)": {
+   "path": "/data1/yanruj/EvolveSWDB_native_routes_campaign_runtime_20260927_b3",
+   "commit": "820f32b7397a981357cee02731a892dec30672ee"
+  }
+ },
+ "harness_persist_diagnostic": {
+  "finding": "b1 paired trials took about 70 s (15.2 s save-bracketed run window plus 55 s gap) against the pilot 7.7 s plus 23.6 s; projected pair about 4,200 s against the fixed 2,400 s bound. The ~0.047 s ROI is unaffected; the overhead is harness persistence outside the ROI.",
+  "trial_equivalent_persist_seconds": {
+   "before (61698e3, 21 MB/258-record view)": [
+    8.94,
+    8.64,
+    8.63,
+    8.72,
+    8.72
+   ],
+   "after (af100f1, parse cache plus 12 MB/121-record reference-closure view)": [
+    0.98,
+    1.0,
+    0.99,
+    0.99,
+    0.98
+   ]
+  },
+  "measured_after": "b2 paired trials about 8 s each; T18 b2 campaign 1,661 s, T19 b2 1,646 s",
+  "probe_placement": "node0 CPUs via numactl, single thread, no lease (diagnostic only; not a measurement)"
+ },
+ "campaigns": {
+  "dx100-patch": {
+   "run_id": "bfs-native-acceptance-20260927-dx100-patch-b2",
+   "state": "evaluated",
+   "started": "2026-09-27T11:10:14.969964-04:00",
+   "finished": "2026-09-27T11:37:55.702638-04:00",
+   "host_wall_s": 1661.198206,
+   "peak_sampled_rss_bytes": 1440423936,
+   "candidate": "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
+   "protocol": "bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3",
+   "repository_commit": "820f32b7397a981357cee02731a892dec30672ee",
+   "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+     "/data1/yanruj/venvs/evolveswdb-test/bin/python3",
+     "-s",
+     "-B",
+     "/data1/yanruj/EvolveSWDB_native_routes_campaign_runtime_20260927_b3/scripts/bfs_native_campaign.py",
+     "--id",
+     "bfs-native-acceptance-20260927-dx100-patch-b2",
+     "--existing-candidate",
+     "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
+     "--proposal",
+     "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2.dispatch/proposal.json",
+     "--reassessment",
+     "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2.dispatch/reassessment.json",
+     "--packages",
+     "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.b8f33855cc6c657e",
+     "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.122d39652ae0c326",
+     "--protocol",
+     "bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3",
+     "--records",
+     "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2.dispatch/records",
+     "--runs-dir",
+     "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2",
+     "--source-runs-dir",
+     "/data1/yanruj/EvolveSWDB_sources/bfs-native-acceptance-20260927-dx100-patch-b2",
+     "--build-root",
+     "/data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-dx100-patch-b2",
+     "--lane",
+     "mbit10-evaluation-node1",
+     "--total-seconds",
+     "14400",
+     "--supervision-admission",
+     "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2.dispatch/admission.json",
+     "--supervision-sha256",
+     "c6cf57994ff18fe7972af88bd8b530600621d99152dcae4a09d8f5568bcf8070",
+     "--expected-commit",
+     "820f32b7397a981357cee02731a892dec30672ee",
+     "--outer-started",
+     "2026-09-27T11:10:14.504441-04:00",
+     "--outer-deadline",
+     "2026-09-27T15:10:14.504441-04:00",
+     "--pane-pid",
+     "4077114",
+     "--pane-start-ticks",
+     "502374733"
+    ],
+    "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+    "ended_utc": "2026-09-27T15:37:55Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "bfs-native-acceptance-20260927-dx100-patch-b2",
+    "lease_generation": 455,
+    "lease_name": "mbit10-evaluation-node1",
+    "load1_at_start": 2.42,
+    "load1_max": 32,
+    "node": 1,
+    "numa_memory_policy": "bind:1",
+    "numactl": "--cpunodebind=1 --membind=1",
+    "preregistration_sha256": null,
+    "started_utc": "2026-09-27T15:10:14Z"
+   },
+   "families": {
+    "uniform-random": {
+     "comparison": "bfs-native-acceptance-20260927-dx100-patch-b2.uniform-random.candidate-1.comparison",
+     "decision": {
+      "state": "inconclusive",
+      "reasons": [
+       "Timing spread exceeds the frozen threshold."
+      ]
+     },
+     "roi_speedup": 1.001516532112668,
+     "ci95": [
+      0.9976870486156303,
+      1.0107621818633041
+     ],
+     "per_source_position_speedup": {
+      "0": 1.0026370871619705,
+      "1": 0.9995128296954805,
+      "2": 1.0024027047591961
+     },
+     "relative_spread": {
+      "baseline": {
+       "0": 0.021153819575222617,
+       "1": 0.020505618618174817,
+       "2": 0.14291472054717844
+      },
+      "candidate": {
+       "0": 0.0226235965271567,
+       "1": 0.17153088505478326,
+       "2": 0.021925309255729487
+      }
+     },
+     "pair": "bfs-native-acceptance-20260927-dx100-patch-b2.uniform-random.candidate-1.pair",
+     "pair_outcome": {
+      "state": "complete",
+      "stage": "collection",
+      "reason": null
+     },
+     "pair_receipt_sha256": "1cfe4c319b69eb9d0623dba313c89fa1740e618a81b7bb0d8a1c1e5dc3a5a80a",
+     "pair_started": "2026-09-27T15:12:03.021867+00:00",
+     "pair_finished": "2026-09-27T15:22:03.718946+00:00",
+     "evaluations": {
+      "baseline": {
+       "id": "bfs-native-acceptance-20260927-dx100-patch-b2.uniform-random.candidate-1.baseline.evaluation",
+       "median_roi_seconds": 0.0460337795,
+       "by_source_position": [
+        0.046017316,
+        0.046038455,
+        0.046065709499999996
+       ],
+       "correctness": "passed",
+       "checks": 30,
+       "binary_sha256": "42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424",
+       "load_average": [
+        3.013671875,
+        2.833984375,
+        2.8603515625
+       ]
+      },
+      "candidate": {
+       "id": "bfs-native-acceptance-20260927-dx100-patch-b2.uniform-random.candidate-1.evaluation",
+       "median_roi_seconds": 0.045963588,
+       "by_source_position": [
+        0.045896283499999996,
+        0.046060894500000005,
+        0.045955292499999995
+       ],
+       "correctness": "passed",
+       "checks": 30,
+       "binary_sha256": "e65d00dcb476e12adca0cfdcd19e8fbc7ebef0b9c554396ee1fd6dba9a01fddf",
+       "load_average": [
+        3.0849609375,
+        2.87841796875,
+        2.87548828125
+       ]
+      }
+     },
+     "candidate_profile_package": {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b2.uniform-random.candidate-1.package.v1.5df6a96f028565a1",
+      "completeness": "complete",
+      "region_profile": "bfs-native-acceptance-20260927-dx100-patch-b2.uniform-random.candidate-1.profile",
+      "regions": 31,
+      "dynamic_memory_rows": 18,
+      "collector": "Callgrind valgrind-3.22.0",
+      "memory_sample_source0": [
+       {
+        "metric": "Dr",
+        "value": 54592634,
+        "unit": "references",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "Dw",
+        "value": 2185563,
+        "unit": "references",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "D1mr",
+        "value": 9013949,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "D1mw",
+        "value": 75496,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "DLmr",
+        "value": 616010,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "DLmw",
+        "value": 51411,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       }
+      ]
+     }
+    },
+    "kronecker": {
+     "comparison": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.comparison",
+     "decision": {
+      "state": "inconclusive",
+      "reasons": [
+       "Timing spread exceeds the frozen threshold."
+      ]
+     },
+     "roi_speedup": 1.0003511744314062,
+     "ci95": [
+      0.9958370576595712,
+      1.0197415184444678
+     ],
+     "per_source_position_speedup": {
+      "0": 1.0007660381860377,
+      "1": 0.9992948369090735,
+      "2": 1.0009934984520714
+     },
+     "relative_spread": {
+      "baseline": {
+       "0": 0.1294497785030889,
+       "1": 0.13814474835197516,
+       "2": 0.13767667013695906
+      },
+      "candidate": {
+       "0": 0.014727994023315262,
+       "1": 0.02112691178693874,
+       "2": 0.020871737965755865
+      }
+     },
+     "pair": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.pair",
+     "pair_outcome": {
+      "state": "complete",
+      "stage": "collection",
+      "reason": null
+     },
+     "pair_receipt_sha256": "72eed40f2f3ed80916eb112db8acb29ee1b392c499b589b014a27366753194f4",
+     "pair_started": "2026-09-27T15:25:22.776969+00:00",
+     "pair_finished": "2026-09-27T15:34:52.743515+00:00",
+     "evaluations": {
+      "baseline": {
+       "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.baseline.evaluation",
+       "median_roi_seconds": 0.0232588355,
+       "by_source_position": [
+        0.0232072085,
+        0.02303515,
+        0.023540764
+       ],
+       "correctness": "passed",
+       "checks": 30,
+       "binary_sha256": "42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424",
+       "load_average": [
+        3.37353515625,
+        3.2001953125,
+        3.064453125
+       ]
+      },
+      "candidate": {
+       "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation",
+       "median_roi_seconds": 0.0232262975,
+       "by_source_position": [
+        0.0231894445,
+        0.023051405,
+        0.0235173995
+       ],
+       "correctness": "passed",
+       "checks": 30,
+       "binary_sha256": "e65d00dcb476e12adca0cfdcd19e8fbc7ebef0b9c554396ee1fd6dba9a01fddf",
+       "load_average": [
+        3.16064453125,
+        3.16748046875,
+        3.0595703125
+       ]
+      }
+     },
+     "candidate_profile_package": {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.package.v1.d612335972200df6",
+      "completeness": "complete",
+      "region_profile": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile",
+      "regions": 31,
+      "dynamic_memory_rows": 18,
+      "collector": "Callgrind valgrind-3.22.0",
+      "memory_sample_source0": [
+       {
+        "metric": "Dr",
+        "value": 48848625,
+        "unit": "references",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "Dw",
+        "value": 1646475,
+        "unit": "references",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "D1mr",
+        "value": 7480001,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "D1mw",
+        "value": 57921,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "DLmr",
+        "value": 526217,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "DLmw",
+        "value": 45915,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       }
+      ]
+     }
+    }
+   }
+  },
+  "upstream-instructions": {
+   "run_id": "bfs-native-acceptance-20260927-upstream-instructions-b2",
+   "state": "evaluated",
+   "started": "2026-09-27T11:38:55.855465-04:00",
+   "finished": "2026-09-27T12:06:21.002446-04:00",
+   "host_wall_s": 1645.588694,
+   "peak_sampled_rss_bytes": 1464520704,
+   "candidate": "bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1",
+   "protocol": "bfs-native-one-thread-upstream-do-20260927.9d4b53fd41e79297",
+   "repository_commit": "820f32b7397a981357cee02731a892dec30672ee",
+   "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+     "/data1/yanruj/venvs/evolveswdb-test/bin/python3",
+     "-s",
+     "-B",
+     "/data1/yanruj/EvolveSWDB_native_routes_campaign_runtime_20260927_b3/scripts/bfs_native_campaign.py",
+     "--id",
+     "bfs-native-acceptance-20260927-upstream-instructions-b2",
+     "--existing-candidate",
+     "bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1",
+     "--proposal",
+     "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2.dispatch/proposal.json",
+     "--reassessment",
+     "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2.dispatch/reassessment.json",
+     "--packages",
+     "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.ffd9925db46a63a9",
+     "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.f613a3b01a24e380",
+     "--protocol",
+     "bfs-native-one-thread-upstream-do-20260927.9d4b53fd41e79297",
+     "--records",
+     "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2.dispatch/records",
+     "--runs-dir",
+     "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2",
+     "--source-runs-dir",
+     "/data1/yanruj/EvolveSWDB_sources/bfs-native-acceptance-20260927-upstream-instructions-b2",
+     "--build-root",
+     "/data1/yanruj/EvolveSWDB_builds/bfs-native-acceptance-20260927-upstream-instructions-b2",
+     "--lane",
+     "mbit10-evaluation-node1",
+     "--total-seconds",
+     "14400",
+     "--supervision-admission",
+     "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2.dispatch/admission.json",
+     "--supervision-sha256",
+     "0869e584479531a6a7185bd5c1f722b3f669c35068d79a9f71be61f14a625bcf",
+     "--expected-commit",
+     "820f32b7397a981357cee02731a892dec30672ee",
+     "--outer-started",
+     "2026-09-27T11:38:55.413761-04:00",
+     "--outer-deadline",
+     "2026-09-27T15:38:55.413761-04:00",
+     "--pane-pid",
+     "4084730",
+     "--pane-start-ticks",
+     "502546824"
+    ],
+    "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+    "ended_utc": "2026-09-27T16:06:21Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "bfs-native-acceptance-20260927-upstream-instructions-b2",
+    "lease_generation": 456,
+    "lease_name": "mbit10-evaluation-node1",
+    "load1_at_start": 3.44,
+    "load1_max": 32,
+    "node": 1,
+    "numa_memory_policy": "bind:1",
+    "numactl": "--cpunodebind=1 --membind=1",
+    "preregistration_sha256": null,
+    "started_utc": "2026-09-27T15:38:55Z"
+   },
+   "families": {
+    "uniform-random": {
+     "comparison": "bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.comparison",
+     "decision": {
+      "state": "inconclusive",
+      "reasons": [
+       "Timing spread exceeds the frozen threshold."
+      ]
+     },
+     "roi_speedup": 1.0018788949939867,
+     "ci95": [
+      0.9993904120868462,
+      1.0048379030326307
+     ],
+     "per_source_position_speedup": {
+      "0": 1.0047025057756511,
+      "1": 1.0015431383631173,
+      "2": 0.9993981449382544
+     },
+     "relative_spread": {
+      "baseline": {
+       "0": 0.008613537922271819,
+       "1": 0.15576854694835596,
+       "2": 0.0117434662612057
+      },
+      "candidate": {
+       "0": 0.015436908430563813,
+       "1": 0.011494022084435285,
+       "2": 0.00950128524142267
+      }
+     },
+     "pair": "bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.pair",
+     "pair_outcome": {
+      "state": "complete",
+      "stage": "collection",
+      "reason": null
+     },
+     "pair_receipt_sha256": "51fdcc9b0270625145c9c274b944c7123bf96eec3e8b07667a2bd35d0750786b",
+     "pair_started": "2026-09-27T15:40:44.512777+00:00",
+     "pair_finished": "2026-09-27T15:50:43.027163+00:00",
+     "evaluations": {
+      "baseline": {
+       "id": "bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.baseline.evaluation",
+       "median_roi_seconds": 0.0073276439999999995,
+       "by_source_position": [
+        0.0073221945,
+        0.0072078030000000005,
+        0.0077837324999999995
+       ],
+       "correctness": "passed",
+       "checks": 30,
+       "binary_sha256": "741493a212d925d2a382dacabb7cd171895db2384ed799387e9631d842cb56b3",
+       "load_average": [
+        4.169921875,
+        3.59375,
+        3.27490234375
+       ]
+      },
+      "candidate": {
+       "id": "bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation",
+       "median_roi_seconds": 0.007287923,
+       "by_source_position": [
+        0.007287923,
+        0.0071966975,
+        0.00778842
+       ],
+       "correctness": "passed",
+       "checks": 30,
+       "binary_sha256": "0865b973175f613905fccb88a8ee37c76b6c187f1d80959f44f895ad69b6f4ea",
+       "load_average": [
+        4.072265625,
+        3.65869140625,
+        3.31396484375
+       ]
+      }
+     },
+     "candidate_profile_package": {
+      "id": "bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.package.v1.b8238c548d000951",
+      "completeness": "complete",
+      "region_profile": "bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.profile",
+      "regions": 24,
+      "dynamic_memory_rows": 18,
+      "collector": "Callgrind valgrind-3.22.0",
+      "memory_sample_source0": [
+       {
+        "metric": "Dr",
+        "value": 12239686,
+        "unit": "references",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "Dw",
+        "value": 3906445,
+        "unit": "references",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "D1mr",
+        "value": 669478,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "D1mw",
+        "value": 22281,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "DLmr",
+        "value": 397401,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "DLmw",
+        "value": 19982,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       }
+      ]
+     }
+    },
+    "kronecker": {
+     "comparison": "bfs-native-acceptance-20260927-upstream-instructions-b2.kronecker.candidate-1.comparison",
+     "decision": {
+      "state": "inconclusive",
+      "reasons": [
+       "Timing spread exceeds the frozen threshold."
+      ]
+     },
+     "roi_speedup": 1.0013060198253787,
+     "ci95": [
+      0.9989945657457544,
+      1.029763124266882
+     ],
+     "per_source_position_speedup": {
+      "0": 1.001287155804253,
+      "1": 1.0007278070378864,
+      "2": 1.0019034419759578
+     },
+     "relative_spread": {
+      "baseline": {
+       "0": 0.17927793150963936,
+       "1": 0.18745514164920343,
+       "2": 0.17824064753198735
+      },
+      "candidate": {
+       "0": 0.17731402516077951,
+       "1": 0.18210809513787696,
+       "2": 0.1775262051624678
+      }
+     },
+     "pair": "bfs-native-acceptance-20260927-upstream-instructions-b2.kronecker.candidate-1.pair",
+     "pair_outcome": {
+      "state": "complete",
+      "stage": "collection",
+      "reason": null
+     },
+     "pair_receipt_sha256": "3dda03b3a3c6d8c18ff237155ca011454a9916b23a826e7c838914865e5e5fcf",
+     "pair_started": "2026-09-27T15:53:57.503770+00:00",
+     "pair_finished": "2026-09-27T16:03:23.155112+00:00",
+     "evaluations": {
+      "baseline": {
+       "id": "bfs-native-acceptance-20260927-upstream-instructions-b2.kronecker.candidate-1.baseline.evaluation",
+       "median_roi_seconds": 0.005998931,
+       "by_source_position": [
+        0.0059922155,
+        0.0059722715,
+        0.007723603
+       ],
+       "correctness": "passed",
+       "checks": 30,
+       "binary_sha256": "741493a212d925d2a382dacabb7cd171895db2384ed799387e9631d842cb56b3",
+       "load_average": [
+        3.0546875,
+        3.255859375,
+        3.3447265625
+       ]
+      },
+      "candidate": {
+       "id": "bfs-native-acceptance-20260927-upstream-instructions-b2.kronecker.candidate-1.evaluation",
+       "median_roi_seconds": 0.005992593,
+       "by_source_position": [
+        0.005984512500000001,
+        0.005967928000000001,
+        0.0077089294999999995
+       ],
+       "correctness": "passed",
+       "checks": 30,
+       "binary_sha256": "0865b973175f613905fccb88a8ee37c76b6c187f1d80959f44f895ad69b6f4ea",
+       "load_average": [
+        3.0244140625,
+        3.21826171875,
+        3.3271484375
+       ]
+      }
+     },
+     "candidate_profile_package": {
+      "id": "bfs-native-acceptance-20260927-upstream-instructions-b2.kronecker.candidate-1.package.v1.151e5e95d47bac6c",
+      "completeness": "complete",
+      "region_profile": "bfs-native-acceptance-20260927-upstream-instructions-b2.kronecker.candidate-1.profile",
+      "regions": 24,
+      "dynamic_memory_rows": 18,
+      "collector": "Callgrind valgrind-3.22.0",
+      "memory_sample_source0": [
+       {
+        "metric": "Dr",
+        "value": 5598655,
+        "unit": "references",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "Dw",
+        "value": 1435169,
+        "unit": "references",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "D1mr",
+        "value": 518554,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "D1mw",
+        "value": 27807,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "DLmr",
+        "value": 108098,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       },
+       {
+        "metric": "DLmw",
+        "value": 22950,
+        "unit": "misses",
+        "basis": "simulated",
+        "scope": "ROI"
+       }
+      ]
+     }
+    }
+   }
+  }
+ },
+ "closure": {
+  "bfs-native-acceptance-20260927-dx100-patch-b1": {
+   "state": "failed",
+   "reason": "InterruptedError: driver interrupted by signal 15 (root-approved single SIGTERM at 2026-09-27 10:51:26 ET to driver PID 4066460/start 502145701)",
+   "cleanup_state": "terminal_and_reaped",
+   "owned_identities": 44,
+   "absent": 44,
+   "lease_generation": 453,
+   "lease_released": true,
+   "load1_at_start": 3.09,
+   "outer_started": "2026-09-27T10:32:03.911263-04:00",
+   "outer_exit": 1,
+   "artifact_bytes": 290910208,
+   "build_bytes": 286720,
+   "admission_sha256": "4f8f46ef3b48944095bef130b4eb6e53ad7408cc125062430a0bf4b7cd8c1456",
+   "driver": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b1/bfs-native-acceptance-20260927-dx100-patch-b1.driver/driver.json",
+    "sha256": "7b450fb2ef3bc5cedb32076347447ea99570cf959ee34d5c2e746e387eae511e"
+   },
+   "terminal_validation": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b1.dispatch/terminal-validation.json",
+    "sha256": "cdcc8ea5caf7131292619b513aef6e52c15a5ae5f7e48cd16d76c4ec173ce422"
+   },
+   "final_storage": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b1.final-storage.json",
+    "sha256": "f79fc94f9121cb4ec191dfe6b50c78ff42de9bd6d9e6b286ce104d3415140813"
+   }
+  },
+  "bfs-native-acceptance-20260927-dx100-patch-b2": {
+   "state": "evaluated",
+   "cleanup_state": "terminal_and_reaped",
+   "owned_identities": 94,
+   "absent": 94,
+   "lease_generation": 455,
+   "lease_released": true,
+   "load1_at_start": 2.42,
+   "outer_started": "2026-09-27T11:10:14.504441-04:00",
+   "outer_exit": 0,
+   "artifact_bytes": 738914304,
+   "build_bytes": 2957312,
+   "admission_sha256": "c6cf57994ff18fe7972af88bd8b530600621d99152dcae4a09d8f5568bcf8070",
+   "driver": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.driver/driver.json",
+    "sha256": "3ae51766f6ffd5bcbb5097479f70e5e04944a520c8104f6b2e0c3e3b0de21b03"
+   },
+   "terminal_validation": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2.dispatch/terminal-validation.json",
+    "sha256": "472f9593579058302d36f7e6f4037641de1368cda12997cf7bf82ea512c3044b"
+   },
+   "final_storage": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2.final-storage.json",
+    "sha256": "c2358af46646ac06f8412df19d5506800eb4ecc8779165cc1c254f03a76a36f5"
+   }
+  },
+  "bfs-native-acceptance-20260927-upstream-instructions-b2": {
+   "state": "evaluated",
+   "cleanup_state": "terminal_no_live_owned_processes",
+   "owned_identities": 111,
+   "absent": 110,
+   "retained_nonrunning": "exact zero-RSS tmux launcher pane only",
+   "lease_generation": 456,
+   "lease_released": true,
+   "load1_at_start": 3.44,
+   "outer_started": "2026-09-27T11:38:55.413761-04:00",
+   "outer_exit": 0,
+   "artifact_bytes": 718532608,
+   "build_bytes": 2965504,
+   "admission_sha256": "0869e584479531a6a7185bd5c1f722b3f669c35068d79a9f71be61f14a625bcf",
+   "driver": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2/bfs-native-acceptance-20260927-upstream-instructions-b2.driver/driver.json",
+    "sha256": "dcfc659e84c90cfe2be3a7894d8e6a5053f5ac477820a66be6390aec16a71947"
+   },
+   "terminal_validation": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2.dispatch/terminal-validation.json",
+    "sha256": "71465f3532edc545815de8405af0d1b9d60017d43a8d29c4a1e4e7768e6303e8"
+   },
+   "final_storage": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b2.final-storage.json",
+    "sha256": "1755071a13c3f0d92f15ef089eaa42b18f25eae3b5c7f96925850ee9152c7aa3"
+   }
+  }
+ },
+ "unused_admission": {
+  "bfs-native-acceptance-20260927-upstream-instructions-b1": {
+   "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-upstream-instructions-b1.dispatch/admission.json",
+   "sha256": "b6be9ee279890df8d822e3a7e2d0b4780318b2629903472ab6edfb2960301b65",
+   "state": "admitted, never launched (superseded by b2 after the persist fix); retained"
+  }
+ },
+ "fresh_public_retrieval": {
+  "method": "new process, swdb get ID --chain, fresh SQLite, copy of each run record view",
+  "folder": "/data/yanruj/EvolveSWDB_runs/bfs-native-routes-retrieval-20260927-b2",
+  "results_sha256": {
+   "bfs-campaign-preparation-20260925-a1.dx100-patch": "e1d7915c68ed1a47951c769a1b8d539ea03c8e10553f23e71d6953a7b6bfa087",
+   "bfs-campaign-preparation-20260925-a1.upstream-instructions": "d1454687a5be6c8b76beb6f5a2c55138d2716bb40e39bf8456d61fdb0f5ba8a3",
+   "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.comparison": "6740c32d3820bb54fb72f33130eb7b29355ae8ebf2dadf9e019c4d87fc1aebf3",
+   "bfs-native-acceptance-20260927-dx100-patch-b2.uniform-random.candidate-1.comparison": "00f3aa011395e5d0e1d21f1ffc6d6327dffc3279058505c9b444ba51dc1369a1",
+   "bfs-native-acceptance-20260927-upstream-instructions-b2.kronecker.candidate-1.comparison": "15b3ab718c9b0733ffa9170557319846b3ef4f169ca6a5f3c8e7c948a96d5f37",
+   "bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.comparison": "8d89e8db3c3835d7b095c5b67921a7bae747fbd5f8578b1bc9f1317903972da6"
+  },
+  "kinds_in_every_chain": [
+   "proposal",
+   "candidate",
+   "evaluation",
+   "evaluation_pair",
+   "profile_package",
+   "region_profile",
+   "protocol",
+   "machine",
+   "workload",
+   "source_snapshot",
+   "implementation"
+  ]
+ },
+ "host_context": "node0 ran Stream A T15 gem5 (one host thread, ~34 GiB node0 memory) throughout; an orphaned MemAcc quicksilver bash used one node1 core at 100% (not ours, not signaled); load1 at start 2.42-3.44",
+ "limits": [
+  "All four comparisons are inconclusive under the frozen 0.10 spread veto; no gain or regression is claimed.",
+  "Diagnostic region timing and Callgrind memory rows come from separate instrumented binaries, not the timed binary.",
+  "T19 changed DOBFS region is reported as unresolved correspondence (changed body); other 23 regions resolved identically.",
+  "T18 changed regions (TDStep, two loops, DOBFS, its while loop) are unresolved correspondence; 26 regions resolved identically.",
+  "Records were imported through Git branch codex/bfs-native-routes-records-20260927-b2 (commit cc598bc); raw artifacts remain on mbit10."
+ ]
+}

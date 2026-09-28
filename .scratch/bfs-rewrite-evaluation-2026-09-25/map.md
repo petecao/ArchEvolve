@@ -2720,3 +2720,26 @@ Exact runtime `/data1/yanruj/EvolveSWDB_t16_protocol_recovery_runtime_20260927_a
 remains untouched. Evidence: [signal](observations/t16-user-stop-signal-20260927.json),
 [closure and retained path hashes](observations/t16-user-stop-closure-20260927.json),
 and [post-stop health](observations/t16-user-stop-health-20260927.json).
+
+## Resumed execution — 2026-09-27
+
+Resumed 2026-09-27 10:20 ET under [resume-plan-20260927.md](resume-plan-20260927.md)
+(decisions R1–R9). Evaluation is no longer paused.
+
+- **T18 resolved (2026-09-27 12:40 ET).** Native frozen protocol
+  `bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3` (R7). Run
+  `bfs-native-acceptance-20260927-dx100-patch-b2`: both families correct, inconclusive
+  (uniform 1.0015, Kronecker 1.0004; spread veto). b1 interrupted and retained (harness
+  persistence cost). See [ticket 18](issues/18-dx100-patch-route-acceptance.md) and
+  [observations](observations/native-routes-t18-t19-20260927.json).
+- **T19 resolved (2026-09-27 12:40 ET).** Protocol
+  `bfs-native-one-thread-upstream-do-20260927.9d4b53fd41e79297`. Run
+  `bfs-native-acceptance-20260927-upstream-instructions-b2`: both families correct,
+  inconclusive (uniform 1.0019, Kronecker 1.0013). See
+  [ticket 19](issues/19-upstream-instruction-route-acceptance.md).
+- **T15 running.** `bfs-t15-pilot-simulator-batch-20260927-b1` on node0 since 10:30 ET,
+  outer deadline 2026-09-29 09:30 ET.
+- **T17.** Diagnostic build `bfs-t17-diagnostic-build-only-20260927-a2` complete;
+  [region correspondence](observations/t17-diagnostic-a2-region-correspondence-20260927.json).
+- **T20.** Context4 failed (provider timeout, retained); context5 prepared
+  ([receipt](observations/t20-context5-preparation-20260927.json)), launch awaiting user.

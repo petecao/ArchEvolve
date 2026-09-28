@@ -1,4 +1,4 @@
-"""Evidence-based BFS acceptance reporting; never dispatches work. Updated 2026-09-27."""
+"""Evidence-based BFS acceptance reporting; never dispatches work. Updated 2026-09-27 (Stream E)."""
 
 import copy
 import math
@@ -6,7 +6,7 @@ import socket
 from types import SimpleNamespace
 from pathlib import Path
 
-from swdb import artifacts, bfs_protocol as protocol, db, profile_package
+from swdb import artifacts, bfs_protocol as protocol, db, paths, profile_package
 from swdb.cli import Failure
 
 SOURCES = ("dx100-bfs-scalar", "gapbs-bfs-do")
@@ -187,17 +187,44 @@ def _fixture_comparison(store, comparison):
         return None
 
 
+def _local_host():
+    return socket.gethostname().split(".")[0]
+
+
+def _raw_reachable(baseline, candidate):
+    """Raw paired evidence is reopened unless it provably lives on another host.
+
+    Evidence is treated as remote only when its recorded host differs from this
+    host and none of its declared raw paths exist here. Anything partially present
+    is reopened in full, so a local change or deletion still fails.
+    """
+    hosts = {row.get('context', {}).get('host') for row in (baseline, candidate)}
+    if hosts & {None, _local_host()}:
+        return True
+    paths = [row.get('build', {}).get('binary') for row in (baseline, candidate)]
+    paths += [timing.get('output') for row in (baseline, candidate) for timing in row.get('timing', [])]
+    paths.append(_mapping(_mapping(baseline.get('context', {}).get('workload')).get('representation')).get('path'))
+    return any(isinstance(path, str) and Path(path).exists() for path in paths)
+
+
 def _collection_identity(store, comparison, baseline, candidate, settings):
-    """Reopen paired evidence under the same admission used by public comparison."""
+    """Reopen paired evidence under the same admission used by public comparison.
+
+    Returns the raw verification state: `verified` (raw evidence reopened here),
+    `remote_unverified` (record bindings checked; raw evidence is on another host),
+    or `not_applicable` (unpaired serial evidence).
+    """
     if settings['sampling'].get('collection') is not None:
         from swdb.bfs_native_pair import validate_receipt
-        actual = validate_receipt(store, baseline, candidate, settings)
+        reachable = _raw_reachable(baseline, candidate)
+        actual = validate_receipt(store, baseline, candidate, settings, verify_raw=reachable)
         protocol._fail(profile_package._same(comparison.get('metrics', {}).get('paired_collection'), actual),
                        'comparison paired collection identity differs from its reopened receipt')
-    else:
-        protocol._fail(not any(row.get('context', {}).get('pairing') for row in (baseline, candidate))
-                       and comparison.get('metrics', {}).get('paired_collection') is None,
-                       'paired evidence cannot use an independent serial coverage analysis')
+        return 'verified' if reachable else 'remote_unverified'
+    protocol._fail(not any(row.get('context', {}).get('pairing') for row in (baseline, candidate))
+                   and comparison.get('metrics', {}).get('paired_collection') is None,
+                   'paired evidence cannot use an independent serial coverage analysis')
+    return 'not_applicable'
 
 
 def _unfavorable_fixture(store, comparison):
@@ -308,7 +335,7 @@ def _comparison(store, comparison, allowed, mode=None):
             reasons.append("comparison does not name its actual explicit baseline")
         if comparison.get("decision", {}).get("state") not in {"gain", "regression", "no_gain", "inconclusive"}:
             reasons.append("comparison has no valid empirical policy decision")
-        _collection_identity(store, comparison, a, b, p['settings'])
+        raw_verification = _collection_identity(store, comparison, a, b, p['settings'])
         metrics = protocol._statistics(left, right, p["settings"]["profitability"], p['settings']['sampling'])
         recorded = comparison.get("metrics", {}).get("roi_speedup")
         if type(recorded) not in (int, float) or not math.isfinite(recorded) or not math.isclose(recorded, metrics["roi_speedup"], rel_tol=1e-12):
@@ -338,7 +365,8 @@ def _comparison(store, comparison, allowed, mode=None):
                 "mode": p["settings"]["mode"], "baseline_evaluation": a["id"], "candidate_evaluation": b["id"],
                 "comparison_baseline": a.get("implementation"), "candidate_implementation": b.get("implementation"),
                 "workload": wid, "gain": gain and not reasons, "metrics": metrics,
-                "differences": p["settings"]["differences"], "decision": comparison["decision"]}
+                "differences": p["settings"]["differences"], "decision": comparison["decision"],
+                "raw_verification": raw_verification}
     except (Failure, KeyError, TypeError, ValueError, OverflowError, AttributeError, OSError) as exc:
         reasons.append(str(exc))
         return {"id": comparison["id"], "qualified": False, "reasons": reasons,
@@ -382,6 +410,84 @@ def _evaluation(store, evaluation, comparisons, current):
             "profile_packages": [p["id"] for p in packages], "rejected_packages": rejected,
             "comparisons": associated, "acceleration": _acceleration(evaluation, store), "artifacts": availability,
             "external_verification": "verified" if availability and all(ref["state"] == "verified" for ref in availability) else "unverified"}
+
+
+def _proposal_source(store, proposal):
+    request = _mapping(proposal.get("request"))
+    if isinstance(request.get("implementation"), str):
+        return request["implementation"]
+    snapshot = store.get(request.get("source_snapshot"), "source_snapshot") or {}
+    return snapshot.get("implementation")
+
+
+def _cell_proposals(store, source, payload, family):
+    """Every retained proposal for a cell's source and payload, including failures.
+
+    A failed or unresolved proposal has no evaluation and so never appears among
+    a cell's attempts; listing it here keeps it from disappearing (AC18).
+    """
+    rows = []
+    for record in store.of_kind("proposal"):
+        proposal = record.data
+        if (_proposal_source(store, proposal) != source
+                or _mapping(_mapping(proposal.get("request")).get("payload")).get("kind") != payload):
+            continue
+        evaluations = []
+        for other in store.of_kind("evaluation"):
+            evaluation = other.data
+            if evaluation.get("proposal") != record.id and not (
+                    proposal.get("candidate") and evaluation.get("candidate") == proposal.get("candidate")):
+                continue
+            workload = store.get(_mapping(evaluation.get("context", {}).get("workload")).get("id"), "workload")
+            if workload and workload["definition"].get("family") == family:
+                evaluations.append({"id": other.id, "state": _mapping(evaluation.get("outcome")).get("state"),
+                                    "basis": evaluation.get("context", {}).get("basis")})
+        outcome = _mapping(proposal.get("outcome"))
+        rows.append({"id": record.id, "state": outcome.get("state"), "stage": outcome.get("stage"),
+                     "reason": outcome.get("reason"), "candidate": proposal.get("candidate"),
+                     "producer": _mapping(proposal.get("request")).get("producer"),
+                     "evaluations_on_family": sorted(evaluations, key=lambda row: row["id"])})
+    return sorted(rows, key=lambda row: row["id"])
+
+
+def _cell_summary(attempts, proposals, accelerated, mode, source):
+    """Separate the questions a reader asks of one cell; missing is never neutral.
+
+    Only a qualified comparison of the required mode against the cell's own
+    unaccelerated source baseline yields an outcome or a ratio. Everything else
+    reports `missing` with no ratio.
+    """
+    completed = [a for a in attempts if _mapping(a.get("outcome")).get("state") == "complete"
+                 and _mapping(a.get("correctness")).get("state") == "passed"]
+    packaged = [a for a in completed if a.get("profile_packages")]
+    comparisons = [c for a in attempts for c in a.get("comparisons", [])
+                   if c.get("qualified") and c.get("mode") == mode and c.get("comparison_baseline") == source]
+    outcomes = sorted({_mapping(c.get("decision")).get("state") for c in comparisons})
+    raw = sorted({c.get("raw_verification") for c in comparisons if c.get("raw_verification")})
+    if not attempts and not proposals:
+        workflow = "not_attempted"
+    elif completed:
+        workflow = "completed"
+    elif attempts:
+        workflow = "evaluated_not_completed"
+    else:
+        workflow = "proposal_without_evaluation"
+    return {
+        "workflow_case": workflow,
+        "completed_evaluations": [a["evaluation"] for a in completed],
+        "retained_failures": ([{"evaluation": a["evaluation"], "state": _mapping(a.get("outcome")).get("state"),
+                                "reason": _mapping(a.get("outcome")).get("reason")} for a in attempts if a not in completed]
+                              + [{"proposal": p["id"], "state": p["state"], "reason": p["reason"]} for p in proposals
+                                 if p["state"] in {"failed", "unresolved", "rejected"}]),
+        "accelerator_use": ("not_required" if not accelerated else
+                            "demonstrated" if any(a["acceleration"]["executed"] for a in completed) else "missing"),
+        "evidence_package": "complete" if packaged else "missing",
+        "comparison_outcome": (outcomes[0] if len(outcomes) == 1 else "mixed" if outcomes else "missing"),
+        "comparisons": [{"id": c["id"], "decision": _mapping(c.get("decision")).get("state"),
+                         "roi_speedup": c["metrics"]["roi_speedup"], "confidence_interval": c["metrics"]["confidence_interval"],
+                         "protocol": c["protocol"], "raw_verification": c.get("raw_verification")} for c in comparisons],
+        "raw_verification": raw[0] if len(raw) == 1 else "mixed" if raw else "missing",
+    }
 
 
 def report(args):
@@ -436,9 +542,12 @@ def report(args):
                     item["qualified"] = not item["reasons"]
                     attempts.append(item)
                 qualified = [a for a in attempts if a["qualified"]]
+                proposals = _cell_proposals(store, source, payload, family)
                 cells.append({"starting_implementation": source, "route": route, "payload": payload, "graph_family": family,
                     "required_basis": basis, "accelerator_required": accelerated, "state": "satisfied_by_retained_metadata" if qualified else "incomplete",
-                    "attempts": attempts, "reasons": [] if qualified else ["no qualifying current execution for this required cell"]})
+                    "summary": _cell_summary(attempts, proposals, accelerated, "controlled_simulator" if accelerated else "native", source),
+                    "attempts": attempts, "proposals": proposals,
+                    "reasons": [] if qualified else ["no qualifying current execution for this required cell"]})
     reference_results = {}
     for name, ids in references.items():
         mode = "artifact_reference" if name.startswith("artifact") else "controlled_simulator"
@@ -638,7 +747,11 @@ def report(args):
                  and all((store.get(op, "operation") or {}).get("support") == "source_supported" for op in r.data["operations"])]
     mark(19, bool(supported) and all_acceleration, "declared operation support must be backed by an executable backend and actual accelerated candidate runs")
     criterion["AC19"]["evidence"] = supported
-    handoff = request.get("handoff", {})
+    handoff = copy.deepcopy(_mapping(request.get("handoff")))
+    # 2026-09-27: a repository-relative handoff document resolves against the
+    # checkout, so a committed request works on any host; its hash is still checked.
+    if isinstance(handoff.get("path"), str) and not Path(handoff["path"]).is_absolute():
+        handoff["path"] = str(paths.HOME / handoff["path"])
     proposal_ids = {a["proposal"] for a in good}
     producers = [store.get(rid, "proposal").get("request", {}).get("producer", {}) for rid in proposal_ids]
     handoff_artifacts = _availability([handoff], socket.gethostname().split(".")[0])
@@ -666,8 +779,67 @@ def report(args):
               "limits": ["Unestablished contract, changed-source, and collaborator handoff criteria remain incomplete.",
                          "Remote raw artifacts remain unverified on a host that cannot read them.",
                          "No gain over the authors' accelerated implementation is required."]}
+    cell_key = lambda cell: f'{cell["starting_implementation"]}/{cell["route"]}/{cell["payload"]}/{cell["graph_family"]}'
+    result["gain_gate"] = {
+        "criterion": "AC17", "state": criterion["AC17"]["state"],
+        "qualifying_gains": [c["id"] for c in gains],
+        "observed_outcomes": [{"cell": cell_key(cell), **row} for cell in cells for row in cell["summary"]["comparisons"]],
+        "cells_without_outcome": [cell_key(cell) for cell in cells if cell["summary"]["comparison_outcome"] == "missing"],
+        "rule": "one correct candidate with a qualified frozen-policy gain against its unaccelerated source baseline; "
+                "inconclusive, no_gain, regression, and missing outcomes never count",
+    }
+    result["accounting"] = {
+        "criterion": "AC18", "state": criterion["AC18"]["state"],
+        "cells": [{"cell": cell_key(cell), "state": cell["state"], "accelerator_required": cell["accelerator_required"],
+                   **{key: cell["summary"][key] for key in ("workflow_case", "accelerator_use", "evidence_package",
+                                                            "comparison_outcome", "raw_verification")}} for cell in cells],
+        "source_acceleration_minima": [{"starting_implementation": row["starting_implementation"], "state": row["state"]}
+                                       for row in acceleration],
+        "reference_obligations": {name: {"state": value["state"], "comparisons": [c["id"] for c in value["comparisons"]],
+                                         "requested": bool(references[name])}
+                                  for name, value in reference_results.items()},
+        "retained_failures": {
+            "evaluations": sorted(({"id": r.id, "state": _mapping(r.data.get("outcome")).get("state"),
+                                    "stage": _mapping(r.data.get("outcome")).get("stage"),
+                                    "reason": _mapping(r.data.get("outcome")).get("reason")}
+                                   for r in store.of_kind("evaluation")
+                                   if _mapping(r.data.get("outcome")).get("state") not in {"complete", None}),
+                                  key=lambda row: row["id"]),
+            "proposals": sorted(({"id": r.id, "state": _mapping(r.data.get("outcome")).get("state"),
+                                  "stage": _mapping(r.data.get("outcome")).get("stage"),
+                                  "reason": _mapping(r.data.get("outcome")).get("reason")}
+                                 for r in store.of_kind("proposal")
+                                 if _mapping(r.data.get("outcome")).get("state") in {"failed", "unresolved", "rejected"}),
+                                key=lambda row: row["id"]),
+            "empirical_regressions": failures["regression"],
+        },
+        "missing": ([f"cell {cell_key(cell)}" for cell in cells if cell["state"] == "incomplete"]
+                    + [f"accelerated minimum for {row['starting_implementation']}" for row in acceleration if row["state"] == "incomplete"]
+                    + [f"{name} (none requested)" if not references[name] else name
+                       for name, value in reference_results.items() if value["state"] == "incomplete"]),
+    }
+    # Selection stays explicit (a protocol can be replaced without a recorded
+    # `supersedes` link), but nothing retained is silently left out of view.
+    selected_references = {rid for ids in references.values() for rid in ids}
+    reference_candidates = []
+    for record in store.of_kind("comparison_result"):
+        frozen = store.get(record.data.get("protocol"), "protocol") or {}
+        if (_mapping(frozen.get("settings")).get("mode") in {"artifact_reference", "controlled_simulator"}
+                and (store.get(record.data.get("candidate_evaluation"), "evaluation") or {}).get("implementation")
+                == "dx100-bfs-maa-reference" and record.id not in selected_references):
+            reference_candidates.append(record.id)
+    result["selection_audit"] = {
+        "unselected_protocols": sorted(r.id for r in store.of_kind("protocol") if r.id not in current),
+        "comparisons_under_unselected_protocols": sorted(r.id for r in store.of_kind("comparison_result")
+                                                         if r.data.get("protocol") not in current
+                                                         and r.id not in selected_references),
+        "unselected_reference_comparisons": sorted(reference_candidates),
+        "rule": "the request names current protocols and reference comparisons explicitly; listed records are retained but not counted",
+    }
     all_criteria = all(item["state"] == "satisfied_by_retained_metadata" for item in criterion.values())
     external_verified = (bool(good) and all(a["external_verification"] == "verified" for a in good)
+                         and all(c.get("raw_verification") in {"verified", "not_applicable"}
+                                 for a in good for c in a["comparisons"] if c.get("qualified"))
                          and all(a["external_verification"] == "verified" for a in demonstrations)
                          and all(all(ref["state"] == "verified" for ref in c.get("artifacts", []))
                                  for obligation in reference_results.values() for c in obligation["comparisons"]))

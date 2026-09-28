@@ -75,3 +75,53 @@ def test_projection_rejects_ambiguous_or_changed_inputs(proposal_setup,fault):
     elif fault=='malformed-catalog':package['strategies']=[{'effect':'unknown strategy'}]
     else:package.update(package_version=1,requested_id='test-package',identity_sha256='a'*64)
     with pytest.raises((Failure,ValueError)):rewrite.prompt_for(envelope,snapshot,package)
+
+
+FOCUSED='selected_regions_focused_context.v1'
+
+
+def test_focused_projection_keeps_identity_selected_regions_and_names_omissions(proposal_setup, provider):
+    """2026-09-27 ET: focused worker view for the T20 R8 allocation."""
+    records,runs,snapshot,request=proposal_setup
+    package=records.read('profile_packages/test-package.yaml')
+    package['strategies']=[{'strategy':'selected','strategy_sha256':'a'*64},{'strategy':'other','strategy_sha256':'b'*64}]
+    records.write('profile_packages/test-package.yaml',package)
+    original=copy.deepcopy(package)
+    assert len(original['regions'])>1
+    wanted=[original['regions'][0]['id']]
+    patch=yaml.safe_load(request().read_text())['payload']['content']
+    path=request(strategy='selected',regions=wanted,parameters={'prompt_projection':FOCUSED},
+                 payload={'kind':'natural_language','content':'Use alpha14 only; preserve everything else.'})
+    result=records.swdb('submit',path,'--provider-config',provider(patch),'--runs-dir',runs,'--format','json')
+    assert result.returncode==0,result.stderr+result.stdout
+    proposal=json.loads(result.stdout)
+    projected=task(next(runs.rglob('prompt.txt')).read_text())
+    view=projected['profile_package_context']
+    assert 'profile_package' not in projected
+    assert [r['id'] for r in view['regions']]==wanted and view['regions'][0]==original['regions'][0]
+    assert view['strategies']==original['strategies'][:1] and view['id']==original['id']
+    manifest=projected['prompt_projection']
+    assert manifest['method']==FOCUSED and manifest['full_package']['record_sha256']==artifacts.digest(original)
+    rows=[{'index':i,'id':r['id'],'sha256':artifacts.digest(r)} for i,r in enumerate(original['regions']) if i]
+    assert manifest['omitted_regions']=={'count':len(rows),'sha256':artifacts.digest(rows)}
+    assert manifest['omitted_strategy_matches']['count']==1
+    assert {k:manifest[k] for k in ('omitted_regions','omitted_strategy_matches')}==rewrite.focused_omissions(original,wanted,'selected')
+    assert set(manifest['omitted_fields'])|set(view)>=set(original)
+    for key,digest in manifest['omitted_fields'].items():
+        assert digest==artifacts.digest(original[key])
+    assert projected['source_files']['src/bfs.cc']==(Path(snapshot['artifact']['path'])/'src/bfs.cc').read_text()
+    assert projected['protected_inputs']==snapshot['protections']
+    chain=json.loads(records.swdb('get',proposal['candidate'],'--chain','--format','json').stdout)['records']
+    assert chain['test-package']==original
+
+
+@pytest.mark.parametrize('fault',['missing-strategy','unknown-region','duplicate-region'])
+def test_focused_projection_rejects_ambiguous_inputs(proposal_setup,fault):
+    records,_,snapshot,request=proposal_setup
+    package=records.read('profile_packages/test-package.yaml')
+    envelope=yaml.safe_load(request(strategy='selected',parameters={'prompt_projection':FOCUSED},
+                                    payload={'kind':'natural_language','content':'Keep intent.'}).read_text())
+    if fault=='missing-strategy':envelope.pop('strategy')
+    elif fault=='unknown-region':envelope['regions']=['function:none']
+    else:package['regions'].append(copy.deepcopy(package['regions'][0]))
+    with pytest.raises((Failure,ValueError)):rewrite.prompt_for(envelope,snapshot,package)
