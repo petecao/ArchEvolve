@@ -1,6 +1,6 @@
 # T16 reference b1 operator
 
-Created: 2026-09-27 ET. Updated: 2026-09-27 ET.
+Created: 2026-09-27 ET. Updated: 2026-09-28 ET.
 
 This recipe prepares a fresh launch of Ticket 16 (the artifact reference pair and
 the matched control on uniform22, source 2,796,003, 4 guest cores) on the repaired
@@ -43,15 +43,16 @@ The grid has three series: `artifact.scalar` (BASE, 10 MiB/20-way), `control.sca
 | run_seconds | 43,200 | scalar ROI > 10,700 s measured, estimated 15,000–30,000 s |
 | diagnostic_seconds | 79,200 | 7,200 checkpoint + 71,970 simulation + 30; T15 diagnostic ROI took 1.4–1.5x the primary host time |
 | storage_gib (per execution) | 24 | MAA trace about 19.3 GiB (1.30 GB x 16) |
-| series_seconds | 388,980 | all 6 execution envelopes behind one slot + 3 x 3,600 |
-| allocation | 396,180 s (110.1 h) | 3,600 preparation + series + 3,600 finalization/cleanup |
+| profile_seconds / package_seconds | 36,000 / 36,000 | T15 b2 uniform18: 900 s / about 815 s, x16 for uniform22 |
+| series_seconds | 453,780 | all 6 execution envelopes behind one slot + own profile/package + 3,600 |
+| allocation | 460,980 s (128.1 h) | 3,600 preparation + series + 3,600 finalization/cleanup |
 | storage allocation | 64 GiB | 2 x 24 (MAA) + scalar/ledgers, per-series cap 50 |
 | /data free at admission | >= 94 GiB | 64 + 30 reserve |
 
-The expected cost is lower than the bound: about 190,000–200,000 s (53–56 h),
+The expected cost is lower than the bound: about 200,000–215,000 s (55–60 h),
 assuming atomic verification cuts the roughly 30,000 s O3 verifier to a few
 thousand seconds. The 2-replay fallback doubles the executions. Its series
-bound is 767,160 s and it needs 124 GiB of storage, which does not fit /data after
+bound is 903,960 s and it needs 124 GiB of storage, which does not fit /data after
 T15 unless traces are reduced.
 
 ## Steps (all on mbit10, in the immutable runtime checkout)
