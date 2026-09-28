@@ -488,3 +488,46 @@ The runtime is `/data1/yanruj/EvolveSWDB_t16_reference_lowstorage_runtime_202609
 @ `f3b1988b`, clean and verified. The launch sequence is the one above, run in this
 runtime, with the same operator sha256 `6dd4c253…4eb4`. Not launched. No sample
 or acceptance is claimed.
+
+## b1 launch, user-approved stop and v3 split — 2026-09-28 19:05 ET
+
+**b1 ran and was stopped.** Root launched b1 at 15:52:45 ET on node1 (generation 476) from
+the low-storage runtime `f3b1988b`; Linux tests passed at generations 474/475. The first
+execution, the control.scalar s0.r0 primary, was running when the user approved a
+faster replan (options B+C). At 18:53:29 ET root sent the user-confirmed stop: one
+identity-checked SIGTERM to each of the three batch drivers. Outer exit was 1 at
+18:53:37 ET.
+
+[Closure](../observations/t16-b1-stop-closure-20260928.json):
+- All 102 retained PID/start identities were absent in two reads.
+- Storage was stable at 634,376,192 allocated bytes.
+- Generation 476 was released.
+- No sample completed.
+- The in-driver cleanup snapshots were taken inside open reservations and are not a
+  strict final-ledger readback.
+
+b1 is retained as interrupted and will not be resumed. Its time (10,852 s of outer time
+plus closure) and its bytes are charged.
+
+**Version 3.** The scalar roles now run primary executions only. The protocols were
+re-frozen as version 3 with `supersedes`. The only change is that `region_pairs` was
+removed: without scalar diagnostics there is no scalar region package, so a
+diagnostic region comparison cannot be formed.
+- `author-reference-t16-b1-20260927.0f066c355d8c00cd`
+- `author-matched-control-t16-b1-20260927.f96224c3ef85d07e`
+
+Scalar evidence is now primary timing, sealed simulated statistics (including memory
+system statistics), the verifier result and coverage. The MAA role keeps its primary
+and diagnostic execution, profile and package.
+
+**Three single-series lane jobs.** All use fresh c1 IDs and the low-storage settings;
+code `b5f6ff7`, runtime `/data1/yanruj/EvolveSWDB_t16_reference_split_runtime_20260928_c1`.
+- M: MAA primary + diagnostic, bound to both protocols.
+- S1: artifact.scalar primary.
+- S2: control.scalar primary.
+
+Planned lanes (root): M on node0 after the owner's MemAcc cell, S1 on node1 after the
+T17/T20 routes a2 job, S2 on node0 after M. Bounds: M 162,060 s, 12 GiB (needs /data
+at least 22 GiB free); S1 and S2 61,260 s, 8 GiB each (at least 18 GiB).
+
+No sample, comparison or acceptance is claimed yet.
