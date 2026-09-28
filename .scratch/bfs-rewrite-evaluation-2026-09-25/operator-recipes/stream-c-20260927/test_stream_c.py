@@ -122,3 +122,36 @@ def test_context5_build_requests_follow_context4():
         assert new['id'] == f'bfs-t20-context5-{role}-build-20260927-c2'
         assert {k: v for k, v in new.items() if k not in ('id', 'candidate')} == \
                {k: v for k, v in old.items() if k not in ('id', 'candidate')}
+
+
+# Context6 (2026-09-27 13:45 ET): context5 unchanged except the full_files provider edit format.
+def prepare6():
+    spec = importlib.util.spec_from_file_location('prepare_context6', HERE / 'prepare_context6.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_context6_changes_only_edit_format_and_allocation(monkeypatch):
+    monkeypatch.chdir(ROOT)
+    module = prepare6()
+    request = module.build()
+    prior = load(HERE / 'prepared/context5.proposal.json')
+    assert request['id'].endswith('-context6')
+    assert {k: v for k, v in request.items() if k not in ('id', 'parameters')} == \
+           {k: v for k, v in prior.items() if k not in ('id', 'parameters')}
+    changed = {k for k in request['parameters'] if request['parameters'][k] != prior['parameters'].get(k)}
+    assert changed == {'predecessor_proposal', 'provider_allocation', 'edit_format_revision'}
+    assert load(HERE / 'prepared/context6.proposal.json') == request
+    provider = load(HERE / 'prepared/context6.provider.json')
+    old = load(HERE / 'prepared/context5.provider.json')
+    assert provider == {**old, 'edit_format': 'full_files'} == module.PROVIDER
+    prompt = module.render(request)
+    assert len(prompt.encode()) == load(HERE / 'prepared/context6.summary.json')['prompt_bytes']
+    assert 'Return JSON with interpretation, files, unresolved' in prompt
+    for role, diagnostic in (('primary', False), ('diagnostic', True)):
+        new = load(HERE / f'requests/t20-context6-{role}-build.json')
+        base = load(HERE / f'requests/t20-context5-{role}-build.json')
+        assert new['candidate'] == request['id'] + '.candidate-1' and new['diagnostic_regions'] is diagnostic
+        assert {k: v for k, v in new.items() if k not in ('id', 'candidate')} == \
+               {k: v for k, v in base.items() if k not in ('id', 'candidate')}

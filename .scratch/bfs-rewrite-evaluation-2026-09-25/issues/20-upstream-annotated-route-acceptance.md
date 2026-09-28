@@ -197,3 +197,61 @@ been made.** The exact launch command was handed to root. If a candidate results
 diagnostic builds (`requests/t20-context5-*-build.json`, job `t20-context5-builds`) need a
 root-assigned lane. The unaccelerated baseline remains the imported scalar v2 upstream pair. No
 acceptance box changes.
+
+## Context5 retained failed; context6 (full_files) created a candidate — 2026-09-27 13:55 ET
+
+Context5 ran once (505.39 s, USD 1.15, `unresolved` empty). It **failed at application**: `git
+apply` reported a corrupt patch at line 174. The provider had hand-written hunks with wrong header
+counts and context lines that do not exist in `bfs.cc`, so `--recount` and `patch --fuzz=3` also
+fail. The record was committed on mbit10 (`1937365`) and is retained as failed. No repair or retry
+was run; the repair loop is keyed to an evaluated candidate, and there was none.
+
+The fix is an output format change, not a strategy change. `swdb/rewrite.py` gains an opt-in
+provider field, `edit_format: full_files`. The worker returns the complete new contents of each
+changed file. SWDB then:
+
+- rejects unsafe, non-canonical, out-of-scope and whole-file protected paths;
+- computes the real diff itself (`git diff --no-index`);
+- sends that diff through the unchanged `apply_patch` protection checks and the code-change check.
+
+Submit and repair both use this path. The default patch mode and its prompt are byte-unchanged.
+There are 12 new tests, and 62 pass across the regression set. Context6 is context5 byte-for-byte
+(strategy, intent, annotation, regions, operations, constraints, focused projection, stream-json)
+except for `edit_format` and root's fresh allocation (1,800 s pool, 900 s and USD 10 per call, at
+most two repairs). The annotation still asks for a unified diff, so the full_files prompt states
+that its output format overrides that request.
+
+One `t20-context6-submit` ran at `1e8548b` (13:37–13:41 ET, no lane):
+
+- **Outcome:** `candidate_created`. The provider completed in 167.36 s at USD 0.47
+  (`claude-sonnet-5`, Claude Code 2.1.278). The pool has used 167.36 of 1,800 s, with 0 repairs.
+- **Candidate:** `bfs-campaign-preparation-20260925-a1.upstream-annotated-context6.candidate-1`,
+  state `unverified`, artifact `7465dde4…`, diff `ebec00c2…` (169 added lines, 0 removed).
+- **Comparison with the producer's reference:** the candidate `bfs.cc` differs from the test
+  client's `producer-check/reference-bfs.cc` only by three missing blank lines. This is a coherence
+  note, not candidate evidence.
+- **Records:** committed on mbit10 at `bb42d26`
+  ([receipt](../observations/t20-context6-submission-20260927.json)).
+
+**The DX100 builds are pending a lane.** At 13:41 ET both socket leases were held (node0: T15
+pilot; node1: held since 12:07 ET). Root ruled that neither lane is preempted and nothing is built
+unconfined. When node1 is released, `CODE_COMMIT=bb42d26… bash launch.sh t20-context6-builds 1
+900` builds `bfs-t20-context6-{primary,diagnostic}-build-20260927-c3`. No build, correctness,
+DX100 or gain evidence exists yet, and no acceptance box changes.
+
+## Context6 builds still pending a lane after 3 h — 2026-09-27 16:45 ET
+
+Following root's instruction, node1 was polled every 15 minutes from 13:42 to 16:27 ET (12
+polls). The node1 lease stayed `held` on every poll. Its last heartbeat was 18:32:44Z (14:32 ET),
+and node0 is still held by the T15 pilot. No lane was preempted and nothing was built unconfined.
+
+The host checkout `/data1/yanruj/EvolveSWDB_streamc_20260927_b1` is still clean at `bb42d26`,
+which holds the context6 records. Root will launch the builds in the next free lane gap with:
+
+```
+cd /data1/yanruj/EvolveSWDB_streamc_20260927_b1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/stream-c-20260927
+CODE_COMMIT=bb42d2650a3dbc08527002cf23cafefbe8b0da08 bash launch.sh t20-context6-builds <NODE> 900
+```
+
+The build IDs `bfs-t20-context6-{primary,diagnostic}-build-20260927-c3` are unused. The candidate
+remains `unverified`, and no acceptance box changes.
