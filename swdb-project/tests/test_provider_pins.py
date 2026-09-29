@@ -69,6 +69,38 @@ def test_submit_emulates_pinned_cli(proposal_setup, emulated_provider, kind, mod
     else:
         assert argv[argv.index('--effort')+1] == effort and emulated_provider.stdin()
 
+
+def test_official_shaped_single_command_fixture_preserves_requested_launcher(proposal_setup, emulated_provider, tmp_path):
+    """An npm-shaped fixture remains a fixture even when a native sibling exists."""
+    patch = yaml.safe_load(proposal_setup[3]().read_text())['payload']['content']
+    config_path = emulated_provider(patch=patch)
+    config = yaml.safe_load(config_path.read_text())
+    package = tmp_path / 'npm/node_modules/@openai/codex'
+    wrapper = package / 'bin/codex.js'
+    wrapper.parent.mkdir(parents=True)
+    (package / 'package.json').write_text(json.dumps({'name':'@openai/codex'}))
+    # These are deliberately contract programs, not installed model CLIs.
+    wrapper.write_text('#!' + sys.executable + '\nimport os, sys\nargv = ' + repr(config['command']) +
+                       '\nos.execv(argv[0], argv + sys.argv[1:])\n')
+    wrapper.chmod(0o755)
+    for name, triple in (('codex-linux-x64','x86_64-unknown-linux-musl'),
+                        ('codex-linux-arm64','aarch64-unknown-linux-musl')):
+        root = package / 'node_modules/@openai' / name
+        native = root / 'vendor' / triple / 'bin/codex'
+        native.parent.mkdir(parents=True)
+        (root / 'package.json').write_text(json.dumps({'name':'@openai/' + name}))
+        native.write_text('#!' + sys.executable + '\nraise SystemExit("fixture native must not be selected")\n')
+        native.chmod(0o755)
+    config['command'] = [str(wrapper)]
+    config_path.write_text(yaml.safe_dump(config))
+    result, proposal = submit(proposal_setup, config_path)
+    assert result.returncode == 0, result.stderr
+    receipt = proposal['attempts'][0]['provider']
+    assert receipt['classification'] == 'contract_fixture'
+    assert receipt['command'][0] == str(wrapper)
+    assert receipt['provider']['command'] == [str(wrapper)]
+    assert receipt['cli_version'] == '0.1-contract-fixture'
+
 @pytest.mark.parametrize('field', ['model','effort','model_reasoning_effort'])
 def test_submit_refuses_pin_overrides(proposal_setup, emulated_provider, field):
     result, data = submit(proposal_setup, emulated_provider(**{field:'different'}))

@@ -77,7 +77,7 @@ print(json.dumps(results))
             wrapped = context["wrap_command"](command)
             # This diagnostic also records execs to verify Claude's actual
             # shell-prefix launcher; environment values are omitted by strace.
-            wrapped[wrapped.index("trace=connect")] = "trace=connect,execve"
+            wrapped[wrapped.index("trace=connect")] = "trace=connect,execve,openat,readlink"
             child = subprocess.Popen(wrapped, cwd=workspace, env=context["env"],
                                      stdin=stdin, stdout=stdout, stderr=stderr, start_new_session=True)
             while child.poll() is None:
@@ -95,7 +95,11 @@ print(json.dumps(results))
             from swdb import provider_audit
             receipt["event_audit"] = provider_audit.audit(folder / "stdout.txt", args.kind, workspace,
                 ["probe.cc"], home, (login,), ["probe.cc"], network_reasons=receipt["guard_audit"]["reasons"])
-            receipt["passed"] = child.returncode == 0 and receipt["event_audit"]["passed"]
+            receipt["task"] = {"source_changed": "return 1" in (workspace / "probe.cc").read_text(),
+                               "binary_exists": (workspace / "build/probe").is_file()}
+            receipt["passed"] = child.returncode == 0 and receipt["event_audit"]["passed"] and all(receipt["task"].values())
+            if not receipt["passed"] and child.returncode == 0 and receipt["event_audit"]["passed"]:
+                receipt["reason"] = "provider completed a turn but did not finish the requested toy edit/build"
     except Exception as exc:
         receipt["passed"] = False
         receipt["reason"] = str(exc)

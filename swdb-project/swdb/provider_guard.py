@@ -133,7 +133,8 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
         tracer = shutil.which("strace")
         if not tracer:
             raise GuardError("SWDB provider guard requires strace for outbound connection auditing")
-        command = config["command"][0]
+        from swdb import provider_adapters
+        command = provider_adapters.get(config).launch_command(config)[0]
         command_path = Path(shutil.which(command) or command).absolute()
         executable = command_path.resolve()
         install = executable.parent
@@ -160,7 +161,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
             roots += [str(Path(p).resolve()) for p in config["command"][1:] if Path(p).is_file()]
         policy = {"enforced": True, "landlock_abi": abi(), "lane": lane,
                   "read_roots": sorted(set(str(Path(p).resolve()) for p in roots if Path(p).exists())),
-                  "runtime_self_reads": ["maps", "cgroup"],
+                  "runtime_self_reads": ["maps", "cgroup", "statm", "status"],
                   "execution_cpus": sorted(os.sched_getaffinity(0))[:4],
                   "write_roots": [str(workspace), str(home)], "tcp_connect_ports": [443],
                   "inner_tcp_connect_ports": [], "tcp_bind_ports": [],

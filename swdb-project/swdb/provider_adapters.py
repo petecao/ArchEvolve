@@ -5,8 +5,12 @@ version discovery and final-response decoding. Fixtures can use the identical CL
 contract without being classified as model-generated research evidence.
 """
 import json
+import os
+import platform
 import re
+import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 from swdb.cli import Failure
@@ -58,8 +62,11 @@ class Adapter:
     prompt_argument = False
     audit_events = False
 
-    def command(self, config, prompt, folder, schema):
+    def launch_command(self, config):
         return list(config["command"])
+
+    def command(self, config, prompt, folder, schema):
+        return self.launch_command(config)
 
     def streaming(self, config):
         return False
@@ -125,6 +132,46 @@ class CodexAdapter(Adapter):
     def streaming(self, config):
         return True
 
+    def launch_command(self, config):
+        """Skip only the official Linux npm wrapper's persistent Node parent."""
+        command = list(config["command"])
+        if config.get("kind") != self.kind or sys.platform != "linux" or len(command) != 1:
+            return command
+        targets = {"x86_64": ("codex-linux-x64", "x86_64-unknown-linux-musl"),
+                   "aarch64": ("codex-linux-arm64", "aarch64-unknown-linux-musl")}
+        target = targets.get(platform.machine())
+        if target is None:
+            return command
+        try:
+            wrapper = Path(shutil.which(command[0]) or command[0]).resolve(strict=True)
+            if wrapper.parts[-4:] != ("@openai", "codex", "bin", "codex.js"):
+                return command
+            package = wrapper.parent.parent
+            metadata = json.loads((package / "package.json").read_text())
+            if not isinstance(metadata, dict) or metadata.get("name") != "@openai/codex":
+                return command
+            name, triple = target
+            # The installed wrapper resolves the nearest platform package with
+            # Node's package lookup, then falls back to its own vendor directory.
+            for parent in (wrapper.parent, *wrapper.parent.parents):
+                if parent.name == "node_modules":
+                    continue
+                root = parent / "node_modules" / "@openai" / name
+                manifest = root / "package.json"
+                if manifest.is_file():
+                    metadata = json.loads(manifest.read_text())
+                    if not isinstance(metadata, dict) or metadata.get("name") != "@openai/" + name:
+                        return command
+                    native = root / "vendor" / triple / "bin" / "codex"
+                    break
+            else:
+                native = package / "vendor" / triple / "bin" / "codex"
+            if native.is_file() and os.access(native, os.X_OK):
+                return [str(native.resolve())]
+        except (OSError, ValueError):
+            pass
+        return command
+
     def schema(self, config, schema):
         if not config.get("workspace", True) and config.get("edit_format") == "full_files":
             schema = json.loads(json.dumps(schema))
@@ -143,7 +190,7 @@ class CodexAdapter(Adapter):
         # silently truncate a legacy prompt containing full source bodies.
         if len(prompt.encode()) > 96 * 1024:
             raise Failure("Codex provider prompt exceeds the 96 KiB argv limit; use a compact workspace request")
-        argv = [*config["command"], "exec", "--model", PINS[self.kind]["model"],
+        argv = [*self.launch_command(config), "exec", "--model", PINS[self.kind]["model"],
                 "-c", 'model_reasoning_effort="xhigh"', "-c", 'web_search="disabled"',
                 "-c", "project_doc_max_bytes=0", "--ignore-user-config", "--ignore-rules",
                 "--ephemeral", "--skip-git-repo-check", "--dangerously-bypass-approvals-and-sandbox",
@@ -161,7 +208,7 @@ class CodexAdapter(Adapter):
         return [*argv, prompt]
 
     def version(self, config, env=None):
-        return ClaudeAdapter.version(self, config, env)
+        return ClaudeAdapter.version(self, {**config, "command": self.launch_command(config)}, env)
 
     def extract(self, config, folder):
         rows = list(events(Path(folder) / "stdout.txt"))
