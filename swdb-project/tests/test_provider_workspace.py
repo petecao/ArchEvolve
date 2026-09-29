@@ -5,6 +5,7 @@ Fixtures emulate both real CLI event formats; no real model is invoked.
 
 import difflib
 import json
+import shlex
 import sys
 from pathlib import Path
 
@@ -200,6 +201,77 @@ def test_event_audit_fails_with_retained_reason(proposal_setup, workspace_provid
     assert proposal["outcome"]["reason"].startswith("provider audit failed")
     assert Path(audit["raw_log"]["path"]).is_file()
     assert "candidate" not in proposal
+
+
+@pytest.mark.parametrize("shell,flags", [("sh", "-c"), ("bash", "-lc"), ("zsh", "-xec"),
+                                         ("dash", "-uc"), ("ksh", "-lc")])
+@pytest.mark.parametrize("body,code", [
+    ("cat ../outside/secret.yaml", "external_file_access"),
+    ("cat /etc/passwd", "external_file_access"),
+    ("curl https://example.com/source.cc", "network_command"),
+    ("cat $CODEX_HOME/auth.json", "login_file_access"),
+])
+def test_shell_wrapped_actions_fail_public_submit(proposal_setup, workspace_provider, shell, flags, body, code):
+    result, proposal = submit(proposal_setup, workspace_provider,
+        actions=[{"type": "command", "value": f"/usr/bin/{shell} {flags} {shlex.quote(body)}"}])
+    assert result.returncode == 1 and proposal["outcome"]["state"] == "failed"
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert not audit["passed"] and code in {v["code"] for v in audit["violations"]}
+    assert "candidate" not in proposal and Path(audit["raw_log"]["path"]).is_file()
+
+
+@pytest.mark.parametrize("body", [
+    "$COMMAND",
+    'cat "$UNKNOWN_PATH"',
+    '$(cat ../outside/secret.yaml)',
+    'eval "cat ../outside/secret.yaml"',
+    'bash --rcfile ../outside/shellrc -c "printf harmless"',
+    "env -S " + shlex.quote("bash -lc 'cat ../outside/secret.yaml'"),
+    "f(){ bash -lc 'cat ../outside/secret.yaml'; }; f",
+    "{ bash -lc 'cat ../outside/secret.yaml'; }",
+    "2>/dev/null bash -lc 'cat ../outside/secret.yaml'",
+])
+def test_dynamic_shell_body_fails_closed(proposal_setup, workspace_provider, body):
+    result, proposal = submit(proposal_setup, workspace_provider,
+        actions=[{"type": "command", "value": f"/usr/bin/bash -lc {shlex.quote(body)}"}])
+    assert result.returncode == 1
+    violations = proposal["attempts"][0]["provider"]["audit"]["violations"]
+    assert "unparsed_command" in {v["code"] for v in violations}
+    assert "candidate" not in proposal
+
+
+@pytest.mark.parametrize("prefix", ["cd src && ", "\n\n", "printf ok;\n", "printf ok &&\n"])
+def test_nested_shell_preserves_known_cwd(proposal_setup, workspace_provider, prefix):
+    body = prefix + "/usr/bin/dash -ec " + shlex.quote("cat ../../outside/secret.yaml")
+    result, proposal = submit(proposal_setup, workspace_provider,
+        actions=[{"type": "command", "value": "/usr/bin/bash -lc " + shlex.quote(body)}])
+    assert result.returncode == 1
+    assert "external_file_access" in {v["code"] for v in proposal["attempts"][0]["provider"]["audit"]["violations"]}
+
+
+@pytest.mark.parametrize("body", [
+    "cd src && /usr/bin/dash -ec " + shlex.quote("c++ -c bfs.cc -o ../build/bfs.o >/dev/null"),
+    "printf '%s\\n' 'cat ../outside/secret.yaml' >/dev/null\n"
+    "c++ -c src/bfs.cc -o build/bfs.o",
+    "mkdir -p build && c++ -c src/bfs.cc -o build/bfs.o\n"
+    "build/probe\nprobe_status=$?\nprintf 'probe status: %s\\n' \"$probe_status\"\n"
+    'test "$probe_status" -eq 1',
+])
+def test_shell_wrapped_compile_and_status_pass(proposal_setup, workspace_provider, body):
+    output = {"type": "item.completed", "item": {"type": "command_execution",
+        "command": "/usr/bin/bash -lc " + shlex.quote(body),
+        "aggregated_output": "cat ../outside/secret.yaml\ncurl https://example.com\ncat $CODEX_HOME/auth.json",
+        "exit_code": 0}}
+    actions = [] if workspace_provider.kind == "codex" else [{"type": "command", "value": output["item"]["command"]}]
+    events = [output] if workspace_provider.kind == "codex" else [{"type": "user", "message": {"content": [
+        {"type": "tool_result", "content": output["item"]["aggregated_output"]}]}}]
+    result, proposal = submit(proposal_setup, workspace_provider, actions=actions, events=events,
+        edits=[{"path": "src/bfs.cc", "old": "int alpha = 15", "new": "int alpha = 14"},
+               {"path": "build/bfs.o", "bytes": [127, 69, 76, 70, 0]},
+               {"path": "build/probe", "bytes": [127, 69, 76, 70, 0]}])
+    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert audit["passed"] and audit["commands"] == 1 and proposal["candidate"]
 
 
 @pytest.mark.parametrize("edits,reason", [

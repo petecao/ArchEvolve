@@ -79,9 +79,9 @@ def restrict(policy, inner=False):
     finally:
         os.close(fd)
     resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
-    # The observer verifies the full socket before launching. Limiting the
-    # provider to two cores inside that socket keeps runtime worker pools
-    # within the separately enforced 16-thread session budget.
+    # The observer verifies the full socket before launching. The provider uses
+    # one CPU within that socket; the full process tree still has a separate
+    # 16-thread cap, including idle runtime workers and the external tracer.
     if policy.get("execution_cpus"):
         os.sched_setaffinity(0, policy["execution_cpus"])
     # V8 and JavaScriptCore reserve large, mostly uncommitted address ranges.
@@ -138,6 +138,11 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
         command = provider_adapters.get(config).launch_command(config)[0]
         command_path = Path(shutil.which(command) or command).absolute()
         executable = command_path.resolve()
+        # Only the selected real native CLI can own a persistent Code Mode
+        # service. Fixtures and installation wrappers receive no exemption.
+        native_codex = executable if (not fixture and config.get("kind") == "codex"
+                                       and executable.name == "codex") else None
+        code_mode_host = native_codex.with_name("codex-code-mode-host") if native_codex else None
         install = executable.parent
         for parent in executable.parents:
             if parent.name == "node_modules":
@@ -182,6 +187,9 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
         if kind == "codex":
             policy["session_state"] = {"sqlite_home": str(guard_folder / "ephemeral-state"),
                                        "writable": False, "ephemeral": True}
+            policy["persistent_services"] = ([{"executable": str(code_mode_host),
+                "parent_executable": str(native_codex), "direct_parent_required": True,
+                "resource_accounting": "included"}] if native_codex else [])
         path = guard_folder / "policy.json"
         path.write_text(json.dumps(policy, indent=2))
         trace = folder / "network.trace"
@@ -251,22 +259,30 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
             # Codex has no shell-prefix setting in the verified CLI. Its tool
             # commands inherit the outer TCP policy; observe their wall time
             # from outside that tree and stop the entire attempt on overrun.
+            executables = {}
+
+            def process_executable(pid):
+                if pid not in executables:
+                    try:
+                        executables[pid] = Path(f"/proc/{pid}/exe").resolve(strict=True)
+                    except OSError:
+                        executables[pid] = None
+                return executables[pid]
+
+            native_roots = {pid for pid in children if native_codex is not None
+                and int(table.get(pid, {}).get("PPid", 0)) == child.pid
+                and process_executable(pid) == native_codex}
             for pid in children:
-                try:
-                    comm = Path(f"/proc/{pid}/comm").read_text().strip()
-                except OSError:
-                    continue
                 parent = int(table.get(pid, {}).get("PPid", 0))
                 # The tracer's direct child is the provider launcher. Native
-                # Codex also has a Node installation wrapper; everything else
-                # is a provider-created command, including Python/Node helpers.
+                # Codex's exact sibling service may outlive a tool invocation,
+                # but only as a direct child of that selected native CLI. It
+                # remains in the aggregate thread/RSS counts above. Model shells
+                # and helpers, including same-named binaries, keep the watchdog.
                 provider_root = pid == child.pid or parent == child.pid
-                if comm == "codex" and parent in children:
-                    try:
-                        provider_root = Path(f"/proc/{pid}/exe").resolve().is_relative_to(install)
-                    except OSError:
-                        pass
-                if not provider_root:
+                persistent_service = (parent in native_roots
+                    and process_executable(pid) == code_mode_host)
+                if not provider_root and not persistent_service:
                     started.setdefault(pid, time.monotonic())
                     if time.monotonic() - started[pid] > 120:
                         reasons.append("provider tool command exceeds the 120 s wall-time limit")

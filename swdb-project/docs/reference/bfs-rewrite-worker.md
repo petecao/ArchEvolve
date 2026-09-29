@@ -33,15 +33,36 @@ build outputs, and rejects unapproved new files or edits to immutable inputs.
 Existing protected-input and actual-code-change checks still apply.
 
 Real providers run only on mbit10 inside an owned socket lane, under SWDB's Linux
-Landlock guard. Reads are confined to the workspace, toolchain, provider install,
-and fresh provider home; writes to the workspace and fresh home. The CLI may make
-TCP connections on port 443. Claude shell commands receive an inner no-TCP layer.
-Codex has no verified shell-prefix setting: its commands inherit the outer policy,
-and an external connection trace rejects non-model-API TCP destinations. Event
-audits also reject forbidden file access, login-file commands, network commands,
-and unknown tools. ABI 4 leaves UDP unrestricted; this accepted limitation is
-recorded in the guard policy. A login-file copy is deleted after every session.
+Landlock guard. SWDB first verifies the lane's full socket affinity and memory
+binding, then confines the provider to one CPU from that socket. Reads are
+confined to the workspace, toolchain, provider install, fresh provider home, and
+selected runtime files, including the process's own memory/status metadata.
+Persistent writes are confined to the workspace and fresh home; `/dev/null` is
+also available as an output sink.
+
+The CLI may make TCP connections on port 443. Claude shell commands pass through
+one SWDB-owned executable prefix that applies an inner no-TCP layer and command
+timeout. Codex has no verified shell-prefix setting: its commands inherit the
+outer policy. An external connection trace rejects non-model-API TCP destinations
+for either provider. Event audits also reject forbidden file access, login-file
+commands, network commands, and unknown tools. ABI 4 leaves UDP unrestricted, and
+the copied login file remains readable during the session; both residual risks
+are recorded in the guard policy. The login copy is deleted after every session.
 Real sessions fail closed when the guard or lane cannot be verified.
+
+On Linux, the adapter can replace the official single-command Codex npm wrapper
+with its verified bundled native executable, including the pinned platform-package
+alias. The receipt preserves the requested command and records the actual argv,
+executable hash, and native CLI version. Custom commands retain their configured
+launch path. Codex uses an empty, read-only `sqlite_home`; its unavailable-state
+fallback avoids persistent SQLite state and worker pools even with `--ephemeral`.
+Analytics and telemetry exporters are disabled. Apps, plugins, hooks, memory,
+extra agents, and browser/computer access are disabled. Codex's bundled skills
+and skill instruction catalog are disabled; host skill scanning is not asserted
+to be disabled. Workspace guidance directs Codex to call the ordinary file and
+shell functions directly. Code mode remains available, and any execution route
+that exceeds the aggregate resource limits is rejected. Claude uses safe mode
+and a limited local tool set.
 
 For DX100 from-scratch proposals, use the registered
 `bfs-dx100-scalar-only-20260929-a1.source` snapshot. It removes `TDStepMAA` and
@@ -65,8 +86,9 @@ configuration cannot increase the proposal's previously recorded limits.
 
 An external deterministic provider is supported for contract tests and is explicitly
 classified as a fixture. Its success does not establish general natural-language
-understanding or an empirical gain. The real demonstration uses actual source edits
-and the independently checked native/simulated execution paths.
+understanding or an empirical gain. A real demonstration must include actual source
+edits and independently checked native/simulated execution paths. A provider turn
+or guard check alone does not satisfy those acceptance requirements.
 
 Natural-language, structured-instruction, and annotated-source payloads share the
 same worker. Structured instructions describe intent and requirements; they are
@@ -80,8 +102,10 @@ or unsupported requirements produce an unresolved result.
 Operator-selected bounds are recorded before each provider call. Initial defaults
 are one generation attempt, at most two build/correctness repairs, 1200 seconds per
 provider call (at most 1800), and a 3600-second total provider budget. The guard
-limits sessions to 16 threads, 32 GiB of aggregate resident memory, 120 seconds per tool command,
-and a 5 GiB workspace. Claude calls also carry a
+limits the provider process tree, including its external `strace` launcher, to
+16 aggregate threads and 32 GiB of aggregate resident memory. Tool commands have
+a 120-second limit, and the workspace has a 5 GiB limit. Resource excess rejects
+the attempt. Claude calls also carry a
 five-dollar API budget cap where supported by the configured account. Codex records
 `budget_usd_enforced: false`; a ChatGPT subscription does not provide that cap. These are
 maximum attempts and provider time, not a promise of completion. Native builds and

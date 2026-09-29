@@ -104,11 +104,22 @@ Workspace mode is the default, with two pinned real providers:
 
 A minimal provider configuration is `kind: codex`; `kind: claude` selects the
 alternative. Model and effort overrides are rejected. Real sessions run on
-mbit10 inside an owned socket lane under SWDB's Landlock guard. The provider
+mbit10 under SWDB's Landlock guard, using one CPU within a verified owned socket
+lane. The provider
 can explore and edit the derived source workspace, while evaluator inputs,
-real workloads, records, and other candidates remain hidden. SWDB audits the
-events and computes the diff; it drops build outputs and rejects out-of-scope
+real workloads, records, and other candidates remain hidden. Its structured final
+response contains only `interpretation` and `unresolved`. SWDB audits the events
+and computes the source diff; it drops build outputs and rejects out-of-scope
 files. The login copy is deleted after the attempt.
+
+The provider tree, including the external tracer, is limited to 16 aggregate
+threads and 32 GiB resident memory, with 120 seconds per tool command and a
+5 GiB workspace. Claude shell commands receive an inner no-TCP guard. Codex
+commands inherit the outer TCP-443 policy; connection and event audits enforce
+model-API-only use. The [worker contract](../reference/bfs-rewrite-worker.md)
+details Codex's verified native launch, read-only SQLite fallback, disabled
+customizations, and the retained UDP/login-readability limitations. These controls
+and a completed provider turn do not establish correctness or a gain.
 
 DX100 from-scratch proposals use
 `bfs-dx100-scalar-only-20260929-a1.source`, which omits the authors' accelerator

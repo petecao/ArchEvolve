@@ -60,9 +60,13 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
             return
         fail("external_file_access", f"provider file access outside the visible set: {name}", event)
 
-    def command(value, event, cwd=None):
+    def command(value, event, cwd=None, *, depth=0):
         nonlocal commands
-        commands += 1
+        if depth == 0:
+            commands += 1
+        if depth > 8:
+            fail("unparsed_command", "provider shell command nesting cannot be audited", event)
+            return
         if isinstance(value, list) and all(isinstance(x, str) for x in value):
             value = shlex.join(value)
         if not isinstance(value, str) or not value.strip():
@@ -73,7 +77,8 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                 or re.search(r"(?:\$\{?(?:CODEX_HOME|CLAUDE_CONFIG_DIR)\}?|[~/]\.codex|[~/]\.claude)", value)):
             fail("login_file_access", "provider command touches the login file or provider home", event)
         try:
-            lexer = shlex.shlex(value, posix=True, punctuation_chars=True)
+            lexer = shlex.shlex(value, posix=True, punctuation_chars="();<>|&\n")
+            lexer.whitespace = " \t\r"
             lexer.whitespace_split = True
             lexer.commenters = ""
             tokens = list(lexer)
@@ -90,16 +95,96 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
         if isinstance(cwd, str):
             file_access(cwd, event)
             working = (root / cwd).resolve()
+        # A shell's command-string operand is executable input, unlike other
+        # quoted arguments or retained stdout. Recursively audit only that
+        # operand, preserving the cwd established by preceding commands.
+        shells = {"sh", "bash", "zsh", "dash", "ksh"}
+        separators = {"&&", "||", ";", "|", "&", "\n"}
+        def separator(token):
+            return token in separators or bool(re.fullmatch(r"(?:&&|\|\||[;|&\n])+", token))
+
+        bodies = set()
+        start, executable, command_index, prefix = True, None, 0, None
         # Command paths are checked as well as file-tool paths. Shell redirections
         # and relative traversal count as accesses; system executable paths do not.
         for index, token in enumerate(tokens):
+            if index in bodies:
+                continue
+            if separator(token):
+                start, executable, prefix = True, None, None
+                continue
+            if depth and (token in {"{", "}"} or token.startswith("<<")
+                          or re.fullmatch(r"[();<>|&\n]+", token) and any(c in token for c in "()")
+                          or "$(" in token or "`" in token):
+                fail("unparsed_command", "provider shell body has unsupported dynamic syntax", event)
+            if depth and start and (token in {"<", ">", ">>", "<>"}
+                                    or token.isdigit() and index + 1 < len(tokens)
+                                    and tokens[index + 1] in {"<", ">", ">>", "<>"}):
+                fail("unparsed_command", "provider shell body has an unsupported leading redirection", event)
+            assignment = start and re.fullmatch(r"[A-Za-z_]\w*=.*", token, re.S)
+            if assignment:
+                # Literal assignments and exit-status capture do not execute a
+                # command. Their later use as a target still fails closed below.
+                rhs = token.split("=", 1)[1]
+                if ("$" in rhs and rhs != "$?") or "`" in rhs:
+                    fail("unparsed_command", "provider shell assignment cannot be resolved", event)
+                continue
+            if start and token in {"env", "exec", "command"}:
+                prefix = token
+                continue
+            if start and prefix and token.startswith("-"):
+                if token != "--" and not (prefix == "env" and token == "-i"):
+                    fail("unparsed_command", "provider execution prefix cannot be resolved", event)
+                continue
+            is_executable = start
+            if start:
+                executable = Path(token).name
+                command_index = index
+                start = False
+                if executable in shells:
+                    body_index = None
+                    for option_index in range(index + 1, len(tokens)):
+                        option = tokens[option_index]
+                        if option in {"--login", "--noprofile", "--norc", "--posix"}:
+                            continue
+                        if (not re.fullmatch(r"-[a-zA-Z]+", option)
+                                or set(option[1:]) - set("abcefhlmnprstuvxBCEHPT")):
+                            break
+                        if "c" in option[1:]:
+                            body_index = option_index + 1
+                            break
+                    if body_index is None or body_index >= len(tokens) or not tokens[body_index].strip():
+                        fail("unparsed_command", "provider shell command body cannot be resolved", event)
+                    else:
+                        bodies.add(body_index)
+                        command(tokens[body_index], event, str(working), depth=depth + 1)
+                elif executable in {"fish", "csh", "tcsh"} or depth and executable in {"eval", "source", ".", "if", "for", "while", "until", "case",
+                                              "select", "function", "coproc"}:
+                    fail("unparsed_command", "provider shell body uses unsupported delegated execution", event)
+                elif "$" in token or "`" in token:
+                    fail("unparsed_command", "provider command target cannot be resolved", event)
+            elif depth and ("$" in token or "`" in token):
+                # Status reporting may consume scalar variables as data. Do not
+                # treat them as filenames, or accept them for arbitrary tools.
+                scalar = re.fullmatch(r"(?:\$[A-Za-z_]\w*|\$\{[A-Za-z_]\w*\}|\$\?)", token)
+                end = next((i for i in range(index + 1, len(tokens)) if separator(tokens[i])), len(tokens))
+                arguments = tokens[command_index + 1:end]
+                numeric_test = executable in {"test", "["} and any(
+                    t in {"-eq", "-ne", "-gt", "-ge", "-lt", "-le"} for t in arguments) and not any(
+                    t in {"-e", "-f", "-d", "-r", "-w", "-x", "-s", "-L", "-h"} for t in arguments)
+                if not scalar or not (executable in {"printf", "echo"} or numeric_test):
+                    fail("unparsed_command", "provider shell argument cannot be resolved", event)
             candidate = token.lstrip("<>")
+            if index and tokens[index - 1] in {"<", ">", ">>", "<>"}:
+                if candidate not in {"/dev/null", "/dev/stdout", "/dev/stderr"}:
+                    file_access(candidate, event, writing=tokens[index - 1] != "<", cwd=working)
+                continue
             if index and tokens[index - 1] == "cd":
                 file_access(candidate, event, cwd=working)
                 working = (working / candidate).resolve()
                 continue
             if candidate.startswith("/"):
-                if index == 0 or tokens[index - 1] in {"&&", "||", ";", "|"}:
+                if is_executable:
                     continue
                 if candidate in {"/dev/null", "/dev/stdout", "/dev/stderr"}:
                     continue

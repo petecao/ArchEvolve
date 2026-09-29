@@ -74,7 +74,7 @@ print(json.dumps({"type":"turn.completed","usage":{"output_tokens":1}}),flush=Tr
     assert not (Path(meta["workspace_manifest"]["root"]).parent / "forbidden.txt").exists()
 
 
-RESOURCE_PROGRAM = '''import json, os, subprocess, sys, threading, time
+RESOURCE_PROGRAM = '''import json, os, shutil, subprocess, sys, threading, time
 from pathlib import Path
 if "--version" in sys.argv:
  print("resource-guard-fixture-1"); raise SystemExit(0)
@@ -93,7 +93,12 @@ elif mode == "workspace":
   with Path("build", name).open("wb") as handle:
    handle.truncate(3 * 1024**3)
 elif mode == "command_timeout":
- command = subprocess.Popen(["/usr/bin/sleep", "130"])
+ # A model-selected helper named like Codex's persistent service must retain
+ # the tool watchdog: its executable and parent are not the selected CLI.
+ helper = Path("build/codex-code-mode-host")
+ shutil.copyfile("/usr/bin/sleep", helper)
+ helper.chmod(0o700)
+ command = subprocess.Popen([str(helper.resolve()), "130"])
  pidfile.write_text(json.dumps({"provider":os.getpid(), "command":command.pid}))
 print(json.dumps({"type":"item.completed", "item":{"type":"command_execution", "command":"local resource fixture probe", "exit_code":0, "aggregated_output":"allocated:"+mode}}), flush=True)
 if mode == "command_timeout": command.wait()
@@ -128,6 +133,8 @@ def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_pat
     assert meta["classification"] == "contract_fixture" and meta["guard_policy"]["enforced"]
     if mode == "command_timeout":
         assert 120 <= meta["host_wall_s"] < 130, "fixture reached its own completion instead of being stopped by the guard"
+        assert meta["guard_policy"]["persistent_services"] == []
+        assert (Path(meta["workspace_manifest"]["root"]) / "build/codex-code-mode-host").is_file()
     else:
         assert meta["host_wall_s"] < 10, "fixture reached its own completion instead of being stopped by the guard"
     violations = meta["audit"]["violations"]

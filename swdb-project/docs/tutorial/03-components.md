@@ -1,6 +1,6 @@
 # 3. Find your way through the components
 
-Updated: 2026-09-28 (Eastern Time). Reading budget: 7 minutes.
+Updated: 2026-09-29 (Eastern Time). Reading budget: 7 minutes.
 
 [Tutorial](README.md) · [Previous](02-records-and-queries.md) · [Next](04-bfs-workflow.md)
 
@@ -62,6 +62,7 @@ definitions rather than a prose-only specification.
 |---|---|
 | [Artifacts](../../swdb/artifacts.py), [workflow](../../swdb/workflow.py) | Hash/copy/verify source, protect evaluator inputs, retain submissions and candidates, expose linked history |
 | [Rewrite](../../swdb/rewrite.py), [capabilities](../../swdb/capabilities.py) | Interpret selected intent through bounded providers; check target operation requirements before accepting edits |
+| [Provider adapters](../../swdb/provider_adapters.py), [workspace](../../swdb/provider_workspace.py), [guard](../../swdb/provider_guard.py), [audit](../../swdb/provider_audit.py) | Pin provider settings and transport, derive visible inputs, confine real sessions, audit tools/connections, and compute permitted source edits |
 | [Native evaluator](../../swdb/bfs_native.py), [paired collector](../../swdb/bfs_native_pair.py) | Build exact candidates, own ROI/result checking, execute trials, retain prospective A/A or A/B schedules and receipts |
 | [Discovery](../../swdb/bfs_discovery.py), [profiling](../../swdb/bfs_profiling.py) | Discover functions/loops from compiler information, instrument regions, collect timing and modeled memory observations |
 | [Protocol](../../swdb/bfs_protocol.py), [SG reader](../../swdb/sg_stream.py) | Register canonical graph identity, freeze policies, validate bindings, aggregate/compare evaluations, inspect large serialized graphs |
