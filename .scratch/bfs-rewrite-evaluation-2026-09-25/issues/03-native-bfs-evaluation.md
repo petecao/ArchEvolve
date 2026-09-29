@@ -1,5 +1,7 @@
 # 03 — Evaluate a native BFS candidate and retrieve its durable result
 
+Navigation updated: 2026-09-28 (Eastern Time).
+
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
@@ -52,7 +54,7 @@ Ticket 02 provides candidates, protected source context, and durable proposal ou
 Resolved 2026-09-25 (Eastern Time). `swdb evaluate` now builds and executes the
 exact candidate through an evaluator-owned complete-call ROI driver, verifies the
 returned parent vector structurally, and durably records every stage and failure.
-See [native evaluator design](../../../docs/bfs-native-evaluator-design.md).
+See [native evaluator design](../../../docs/reference/bfs-native-evaluator-design.md).
 
 Seventeen public contract cases cover alternate valid trees, invalid depth/edge/
 source/reachability, build and execution failure, missing observations, timeout,

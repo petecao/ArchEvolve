@@ -1,5 +1,7 @@
 # 16 — Artifact reference and controls
 
+Navigation updated: 2026-09-28 (Eastern Time).
+
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-28 (Eastern Time)
 **Type:** slice
@@ -157,7 +159,7 @@ This resolves only the prescribed-input criterion. Reference/control freezes,
 simulated executions, exact timed-binary verification, diagnostic profiles,
 and comparisons remain pending; no reproduction or gain is claimed.
 
-2026-09-25: The identity agent prepared [the concrete freeze recipe](../../../docs/bfs-artifact-freeze-recipe-20260925.md)
+2026-09-25: The identity agent prepared [the concrete freeze recipe](../../../docs/archive/bfs-artifact-freeze-recipe-20260925.md)
 with exact retained model/guest/runtime identities, the now-registered scale22
 graph and actual SourcePicker result, remaining region-policy inputs, two separate
 policies, and the public command sequence. Isolated
@@ -172,7 +174,7 @@ are now available in `../observations/dx100-compile-extension-a1.json`.
 
 ## Remaining execution audit — 2026-09-26 11:42 ET
 
-The [simulation sequence audit](../../../docs/bfs-remaining-simulation-sequence-20260926.md)
+The [simulation sequence audit](../../../docs/archive/bfs-remaining-simulation-sequence-20260926.md)
 identifies four independent role/policy series: eight fresh primary and eight
 fresh diagnostic executions, eight packages, four aggregates and two comparisons.
 The original author binaries and compatible author-ROI diagnostic builds can be

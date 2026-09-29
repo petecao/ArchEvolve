@@ -1,5 +1,7 @@
 # 18 — DX100 BFS: patch-route acceptance
 
+Navigation updated: 2026-09-28 (Eastern Time).
+
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-27 12:25 ET
 **Type:** slice
@@ -70,7 +72,7 @@ submission and existing-candidate fixture evaluation remain covered.
 
 Independent scoped review reports no remaining actionable finding; 40 focused
 tests passed, with 23 deselected, in 27.74 seconds. See the
-[review receipt](../../../docs/bfs-interim-review-20260926.md) for the retained
+[review receipt](../../../docs/archive/bfs-interim-review-20260926.md) for the retained
 tool-result transcript and intermediate fixture-setup failure. No actual Ticket
 18 candidate execution occurred, no frozen-protocol result was added, and this
 ticket remains claimed behind Ticket 15 and current synchronization holds.

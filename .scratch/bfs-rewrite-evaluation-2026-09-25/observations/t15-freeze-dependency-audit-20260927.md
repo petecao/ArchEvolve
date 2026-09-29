@@ -1,5 +1,7 @@
 # T15 freeze dependency audit
 
+Navigation updated: 2026-09-28 (Eastern Time).
+
 Created: 2026-09-27 ET. Read-only spec, fixed-plan, and implementation audit. No dispatch, trace replay, runtime change, or budget extension.
 
 ## Finding
@@ -18,7 +20,7 @@ The driver enforces the entire next-series allowance in [bfs_simulator_batch.py:
 - Its accelerator gate requires actual distinct unchanged author-reference simulator executions at [line 628](../../../scripts/bfs_freeze_pilot.py#L628), exact source/replay cells and verified positive simulated ROI at [line 635](../../../scripts/bfs_freeze_pilot.py#L635), and observed accelerator execution at [line 645](../../../scripts/bfs_freeze_pilot.py#L645).
 - [Lines 665–686](../../../scripts/bfs_freeze_pilot.py#L665) require six actual executions per workload, two identical configured replays for each of three sources, repeatability within the fixed ceiling, and full-tile, tail-tile, and competing-parent coverage. Supporting diagnostics at line 651 can supplement coverage cases; they do not replace missing timing cells or graph families.
 - Publication refuses unmet gates at [bfs_freeze_pilot.py:720](../../../scripts/bfs_freeze_pilot.py#L720).
-- The [native qualification continuation:11–15](../../../docs/bfs-native-qualification-continuation-20260926.md#L11) requires actual T15 simulator packages before the separately bounded source-specific native prepare/publish operations. Each still invokes the original pinned qualification reader; neither cached qualification nor a third standalone readback is authorized by that continuation.
+- The [native qualification continuation:11–15](../../../docs/archive/bfs-native-qualification-continuation-20260926.md#L13) requires actual T15 simulator packages before the separately bounded source-specific native prepare/publish operations. Each still invokes the original pinned qualification reader; neither cached qualification nor a third standalone readback is authorized by that continuation.
 
 Thus a partial uniform run, existing ROI seal, diagnostic fixture, old tiny witness, or T16 artifact workload cannot establish current T15 completion or T18/T19 native acceptance. Changing the source grid, admitting a series after its fixed gate, or extending the deadline needs a new empirical plan; it is not a parser implementation choice.
 

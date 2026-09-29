@@ -1,5 +1,7 @@
 # Map: BFS profiling, rewrite proposals, and hardware-aware evaluation
 
+Navigation updated: 2026-09-28 (Eastern Time).
+
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-27 (Eastern Time)
 **Type:** ticket map
@@ -336,7 +338,7 @@ exact packet still needs isolated validation and payload-specific approval.
 
 ## Setup recovery reviewed — 2026-09-26
 
-The [new fixed recovery plan](../../docs/bfs-t15-setup-recovery-20260926.md) has
+The [new fixed recovery plan](../../docs/archive/bfs-t15-setup-recovery-20260926.md) has
 266 passing affected tests, eight Linux-only skips, and 54 passing independent
 review checks. The prior failed attempts remain failed. Flat charges, the actual
 09:14:09.851819 ET hard end, and full-series admission remain enforced. A new
@@ -373,7 +375,7 @@ Next full host/worker audit: 22:33 ET. The heartbeat remains active.
 
 ## Transient SQLite repair reviewed — 2026-09-26 22:01 ET
 
-The [process-free allocator repair](../../docs/bfs-storage-transient-entries-20260926.md)
+The [process-free allocator repair](../../docs/archive/bfs-storage-transient-entries-20260926.md)
 handles descriptor-relative confirmed nested `ENOENT` without treating a missing
 charged root, permission error or unsafe replacement as zero bytes. Reappearing
 entries are measured without following symlinks; root identity is checked again
@@ -394,7 +396,7 @@ retry, new allowance, export approval or extension of the historical plan.
 
 ## Future candidate-run fixes reviewed — 2026-09-26 21:56 ET
 
-[Primary reuse](../../docs/bfs-simulator-primary-reuse-20260926.md) adds a
+[Primary reuse](../../docs/archive/bfs-simulator-primary-reuse-20260926.md) adds a
 frozen-complete-call-only `--primary-build` option. The exact retained source,
 compiler, generated inputs and binary are reopened before and after the grid;
 no primary compilation is issued. Defaults for current T15/T16 paths are
@@ -582,7 +584,7 @@ is `179afc0`, directly parented by the unchanged borrowed runtime `8c39ae0`.
 The four scalar builds are admitted but were not started at the full audit.
 The gzip adapter is undergoing independent replay review, with reproduced
 provenance defects retained and repaired before export. The separately bounded
-[T15 correction preparation](../../../docs/bfs-t15-gzip-correction-20260926.md)
+[T15 correction preparation](../../docs/archive/bfs-t15-gzip-correction-20260926.md)
 retains the original failed attempt and its costs. No corrected BFS attempt or
 new scientific protocol has started.
 
@@ -625,7 +627,7 @@ This verifies that pinned local code. The later `8c39ae0` dispatch-storage
 correction has its separate 201-pass targeted selection, independent 15-pass
 selection and fresh actual Linux ownership/interruption proofs.
 
-The [four-scalar-build recipe](../../../docs/bfs-scalar-v2-builds-20260926.md)
+The [four-scalar-build recipe](../../docs/archive/bfs-scalar-v2-builds-20260926.md)
 is prepared and locally tested: 49 cases passed, and the independent reviewer
 passed 34 selected cases including a real public `get`. The review found a
 concurrent clock-accounting race; it is reproduced, fixed with coherent locked
@@ -804,8 +806,8 @@ independent review is clean. [Fix receipt](observations/native-campaign-database
 and [Spec review](observations/native-campaign-database-spec-review-20260926.json)
 retain red and green evidence. This change does not alter measured checkouts.
 
-[T16 preflight](../../docs/bfs-t16-freeze-preflight-20260926.md) and the
-[post-A2 sequence](../../docs/bfs-post-a2-batch-sequence-20260926.md) now explicitly
+[T16 preflight](../../docs/archive/bfs-t16-freeze-preflight-20260926.md) and the
+[post-A2 sequence](../../docs/archive/bfs-post-a2-batch-sequence-20260926.md) now explicitly
 place public SQLite caches outside the runtime checkout. Actual T15/T16 batches,
 protocol publication and candidate acceptance remain pending.
 
@@ -945,7 +947,7 @@ These are contract admission proofs; no A2 simulator execution has occurred.
 
 The [actual native reader proof](observations/native-reader-fast-exit-actual-20260926.json)
 also passed at `5e8b750`, retaining the real fast child's identity before reap.
-The corrected [readback recipe](../../docs/bfs-native-readback-preflight-a2-20260926.md)
+The corrected [readback recipe](../../docs/archive/bfs-native-readback-preflight-a2-20260926.md)
 has independent review and a Git-only auxiliary export `5e4e895`. One bounded
 invocation is scheduled after 19:00 ET, followed by A2 after fresh lane checks.
 No empirical freeze, candidate acceptance, or gain is claimed.
@@ -997,7 +999,7 @@ cleanup deadline. Observer errors reject admission while preserving an earlier
 reader failure; deterministic qualification output is unchanged. The full local
 file passes 57 with one Linux-only skip; independent checks pass 10 with that
 same Linux skip, including three boundary probes. Actual Linux fast-exit proof
-remains required. The [separate corrected attempt](../../docs/bfs-native-readback-correction-20260926.md)
+remains required. The [separate corrected attempt](../../docs/archive/bfs-native-readback-correction-20260926.md)
 has one 990-second allowance and a fixed window; final code/recipe admission is
 not sealed. The failed first attempt and completed measurements stay unchanged.
 
@@ -1348,7 +1350,7 @@ kernel locks empty, no live owned evaluation work, 16.42 GiB free on `/data1` an
 
 A deterministic local reproduction exposes the old sampler's cross-file exit
 race; it is a supported explanation for the actual failure, not a proved cause.
-The [new observer](../../docs/bfs-owned-rss-20260926.md) reads one identity-bound
+The [new observer](../../docs/archive/bfs-owned-rss-20260926.md) reads one identity-bound
 stat record and passes 12 local checks plus independent review, with one Linux
 case still skipped. Its minimal export is `a8b89115` on
 `codex/bfs-owned-rss-20260926`; actual Linux validation remains required before
@@ -1722,7 +1724,7 @@ open.
 
 The pinned `721fa72` full suite completed with **1,164 passed, 3 failed, and
 3 skipped in 2,474.56 seconds**. Its original log and exact hash are retained in
-[the review receipt](../../docs/bfs-interim-review-20260926.md). The failures were
+[the review receipt](../../docs/archive/bfs-interim-review-20260926.md). The failures were
 the incomplete campaign fixture and two paired-field documentation checks.
 The serial/paired fixture correction is in `6346189` and passed within the
 213-case group; the documentation correction is in `d53c226` and all four format
@@ -1739,7 +1741,7 @@ actionable issue after repair. The focused group passed **40 tests with
 23 deselected in 27.74 seconds**, including fresh submit, actual local patch
 replay, public fixture evaluation, cleanup, and serial/paired flow. Paired receipt
 bounds now report their existing 2,400-second allowance accurately. The
-[campaign plan](campaign-plan.md) and [handoff](../../docs/bfs-handoff.md) describe
+[campaign plan](campaign-plan.md) and [handoff](../../docs/archive/bfs-handoff-20260927.md) describe
 the interface and evidence limits.
 
 All workers finished normally. The full-suite process has exited. All 21 ticket
@@ -1801,7 +1803,7 @@ The full suite at pinned `721fa72` is still running. Its one observed failure is
 an incomplete campaign fixture, reproduced and corrected in `6346189` for serial
 and paired modes; both fixed cases are in the 213-test passing group. The original
 full run and failure remain intact and are not reported as green. See
-[interim review](../../docs/bfs-interim-review-20260926.md). Final post-acceptance
+[interim review](../../docs/archive/bfs-interim-review-20260926.md). Final post-acceptance
 Standards/Spec reviews remain required. The heartbeat stays active; the next full
 progress check is due **2026-09-26 10:34 ET**.
 
@@ -1919,7 +1921,7 @@ The next periodic check is due **2026-09-26 08:34 ET**.
 Local follow-up review found and repaired surviving-process cleanup, simulated
 hotspot metric selection, and empty-operation executable-readiness enforcement.
 Focused checks and the separately pinned 1,097-test suite are recorded in the
-[interim review receipt](../../docs/bfs-interim-review-20260926.md). The final
+[interim review receipt](../../docs/archive/bfs-interim-review-20260926.md). The final
 post-acceptance review remains outstanding. The local
 [export inventory](observations/export-inventory-20260926.json) identifies 14
 remote evidence files and their proposed destination; preparation is not export
@@ -1953,7 +1955,7 @@ gain or empirical protocol freeze. All three workers are responsive. Interim
 Standards/Spec review found four concrete defects: unsafe mutable-graph checking,
 missing native package-backed region comparisons, incomplete descendant cleanup,
 and YAML-only messages breaking durable JSON retrieval. Repairs and independent
-cross-review are recorded in the [interim review receipt](../../docs/bfs-interim-review-20260926.md).
+cross-review are recorded in the [interim review receipt](../../docs/archive/bfs-interim-review-20260926.md).
 The final required review still follows acceptance.
 
 | Ticket/case | Status | Host/lane | Evidence | Next action |
@@ -2108,7 +2110,7 @@ new evidence export packet.
   hashes. [Preparation receipt](../../docs/evidence/bfs-campaign-preparation-20260925-a1.yaml)
   records that no candidate execution or performance timing occurred. Ticket 18
   remains claimed pending the frozen native evaluation.
-- [Post-ROI diagnosis](../../docs/bfs-post-roi-termination-diagnosis.md) identifies a
+- [Post-ROI diagnosis](../../docs/archive/bfs-post-roi-termination-diagnosis.md) identifies a
   plausible lost clone-process association in serialized gem5 checkpoints. Runtime
   pointer aliasing is not yet observed. One bounded post-seal syscall trace is being
   prepared; no simulator modification or acceptance change has been applied.
@@ -2298,11 +2300,11 @@ do not override the subsequent authorization and execution evidence.
   (12), and package (28) checks passed. Native profiling attempt a3 is still running;
   no profiling or simulator ticket is resolved from this checkpoint alone.
 
-- 2026-09-25: [Ticket 10](issues/10-dx100-operation-contracts.md) resolved: seven pinned source-backed operation contracts and 14 passing public capability/proposal tests. [Capability contract](../../docs/bfs-capabilities.md) separates model/interface support from executable readiness; no DX100 execution is yet claimed.
+- 2026-09-25: [Ticket 10](issues/10-dx100-operation-contracts.md) resolved: seven pinned source-backed operation contracts and 14 passing public capability/proposal tests. [Capability contract](../../docs/reference/bfs-capabilities.md) separates model/interface support from executable readiness; no DX100 execution is yet claimed.
 
-- 2026-09-25: [Ticket 02](issues/02-patch-proposal-to-candidate.md) resolved with 10 passing public subprocess tests: actual patch materialization, protected-source rejection, stable candidate identity, and fresh-process/index retrieval. [Workflow format](../../docs/format-v0.4.md) and `schemas/messages/rewrite-proposal.schema.json` define the provisional contract; no correctness or performance claim follows from candidate creation.
+- 2026-09-25: [Ticket 02](issues/02-patch-proposal-to-candidate.md) resolved with 10 passing public subprocess tests: actual patch materialization, protected-source rejection, stable candidate identity, and fresh-process/index retrieval. [Workflow format](../../docs/reference/format-v0.4.md) and `schemas/messages/rewrite-proposal.schema.json` define the provisional contract; no correctness or performance claim follows from candidate creation.
 
-- 2026-09-25: [Ticket 01](issues/01-shared-bfs-identity-and-baselines.md) resolved: additive 0.4 source/evaluator ownership, scoped verification, and explicit comparison baselines. See [source contract](../../docs/bfs-source-identity.md), `tests/test_bfs_identity.py` (22 passing public workflow tests), and `apps/dx100/PROVENANCE.md` for the pinned unmodified import. DX100 source remains unchecked until real evaluation.
+- 2026-09-25: [Ticket 01](issues/01-shared-bfs-identity-and-baselines.md) resolved: additive 0.4 source/evaluator ownership, scoped verification, and explicit comparison baselines. See [source contract](../../docs/reference/bfs-source-identity.md), `tests/test_bfs_identity.py` (22 passing public workflow tests), and `apps/dx100/PROVENANCE.md` for the pinned unmodified import. DX100 source remains unchecked until real evaluation.
 
 - 2026-09-25: Execution authorized; [implementation plan](implementation-plan.md) records assumptions and module ownership. Ticket 01 claimed. Review baseline: `1bdb7d4037916dea782c40239a6415b61a47f3c1`. A thread heartbeat checks progress, worker health, and evaluation state every 30 minutes.
 
@@ -2364,15 +2366,15 @@ The spec preserves these evidence boundaries. It does not import historical timi
 Ticket [03](issues/03-native-bfs-evaluation.md) is resolved: evaluator-owned native
 ROI and structural correctness, durable failure stages, 17 contract cases, and a
 real three-source mbit10 lane-1 DX100 scalar diagnostic. See
-[native evaluator design](../../docs/bfs-native-evaluator-design.md) and metadata
+[native evaluator design](../../docs/reference/bfs-native-evaluator-design.md) and metadata
 commit `283467878fcce65a988f7dc28f151cc6d022d520`. This is pre-freeze diagnostic
 evidence; automatic function/loop/memory collection remains tickets 06–09.
 
-- 2026-09-25: [Ticket 11](issues/11-workloads-and-comparison-protocols.md) resolved with 27 protocol tests, 8 compiled streaming-SG tests, and 12 add/document checks. [Protocol contract](../../docs/bfs-protocol.md), `swdb/bfs_protocol.py`, `swdb/sg_stream.py`, and `tools/bfs_native/sg_identity.cc` define immutable workload identity and comparison enforcement. This is contract acceptance, not a candidate gain or empirical protocol freeze.
+- 2026-09-25: [Ticket 11](issues/11-workloads-and-comparison-protocols.md) resolved with 27 protocol tests, 8 compiled streaming-SG tests, and 12 add/document checks. [Protocol contract](../../docs/reference/bfs-protocol.md), `swdb/bfs_protocol.py`, `swdb/sg_stream.py`, and `tools/bfs_native/sg_identity.cc` define immutable workload identity and comparison enforcement. This is contract acceptance, not a candidate gain or empirical protocol freeze.
 
 ### Instruction and annotated-source acceptance — 2026-09-25
 
-Tickets [04](issues/04-instruction-rewriting-and-repair.md) and [05](issues/05-annotated-source-rewriting.md) are resolved: real Claude source changes for natural-language, structured, and annotated inputs each have a three-source independently verified native diagnostic. The ten-test bounded rewrite suite passes, and earlier failed attempts remain linked. See [handoff](../../docs/bfs-handoff.md) for exact record IDs. Tickets 17–20 remain separate frozen-workload acceptance obligations.
+Tickets [04](issues/04-instruction-rewriting-and-repair.md) and [05](issues/05-annotated-source-rewriting.md) are resolved: real Claude source changes for natural-language, structured, and annotated inputs each have a three-source independently verified native diagnostic. The ten-test bounded rewrite suite passes, and earlier failed attempts remain linked. See [handoff](../../docs/archive/bfs-handoff-20260927.md) for exact record IDs. Tickets 17–20 remain separate frozen-workload acceptance obligations.
 
 - 2026-09-25: [Campaign plan](campaign-plan.md) records operator-selected strategies, provider/evaluation limits, and failure rules before candidate assessment. Native and proposal client drivers are preparatory; no frozen coverage or gain is claimed.
 
@@ -2572,7 +2574,7 @@ This resolves that interim Standards finding. The T16 runtime was not changed.
 
 ## Protocol preparation checkpoint — 2026-09-27 06:14 ET
 
-The [diagnosis](../../docs/bfs-t16-instrumentation-preparation-20260927.md)
+The [diagnosis](../../docs/archive/bfs-t16-instrumentation-preparation-20260927.md)
 confirms a preparation defect: repaired verifier hashes were paired with old
 frozen protocol records. The identity gate remains unchanged. New immutable
 author-reference and matched-control requests are being prepared, preserving

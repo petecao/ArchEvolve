@@ -1,5 +1,7 @@
 # 17 — DX100 BFS: instruction-route acceptance
 
+Navigation updated: 2026-09-28 (Eastern Time).
+
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-27 (Eastern Time)
 **Type:** slice
@@ -94,7 +96,7 @@ reprofiling and frozen-protocol comparison still remain; the ticket stays claime
 
 ## Diagnostic preparation — 2026-09-26 21:40 ET
 
-A [new bounded diagnostic build](../../../docs/bfs-t17-diagnostic-build-20260926.md)
+A [new bounded diagnostic build](../../../docs/archive/bfs-t17-diagnostic-build-20260926.md)
 retains the completed primary binary and candidate without rebuilding or
 resubmitting them. Its [preparation receipt](../observations/t17-diagnostic-build-preparation-20260926.json)
 records 24 passing focused tests and the distinction between real short-lived
@@ -134,7 +136,7 @@ ten checks. The final exact packet's isolated test subset passed 553 checks with
 ten Linux-only skips; actual Linux execution and diagnostic compilation remain
 pending. The earlier five-file export remains unused.
 
-The reviewed [controlled-simulator readiness note](../../../docs/bfs-t17-controlled-simulator-readiness-20260926.md)
+The reviewed [controlled-simulator readiness note](../../../docs/archive/bfs-t17-controlled-simulator-readiness-20260926.md)
 identifies the exact retained builds, freeze derivation and finite four-series
 recipe still needed after T15 and diagnostic prerequisites. It creates no
 protocol, allowance or execution claim.

@@ -1,5 +1,7 @@
 # Representative BFS campaign plan
 
+Navigation updated: 2026-09-28 (Eastern Time).
+
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-26 (Eastern Time)
 
@@ -57,13 +59,13 @@ the earlier outcomes. No source-dependent graph substitution is allowed.
   patch replay, and original consumed provider budget remain retained. Unknown
   historical runtime inputs are not inferred. This mode forbids provider and
   repair configurations and performs no submission or repair, even after a build
-  failure. [Contract and evidence](../../docs/bfs-native-reassessment-20260926.md).
+  failure. [Contract and evidence](../../docs/archive/bfs-native-reassessment-20260926.md).
   Its implementation does not qualify calibration or publish a protocol.
 - Native interpretation uses at most 300 seconds per call, one repair, a 600-second
   provider total, and a USD 5 provider-call cap. Each evaluation permits 180 seconds
   to build and 60 seconds per trial. Serial evaluations permit 1,200 seconds total;
   a newly frozen paired protocol permits 2,400 seconds per complete pair and per
-  member including waiting, as fixed in the [paired contract](../../docs/bfs-native-paired.md).
+  member including waiting, as fixed in the [paired contract](../../docs/reference/bfs-native-paired.md).
   These new-mode bounds do not alter any earlier pilot's allowance. Each diagnostic collector
   permits 120 seconds for discovery, 180 seconds to build, 600 seconds per case,
   and 1,200 seconds total. The enclosing native campaign is capped at four hours

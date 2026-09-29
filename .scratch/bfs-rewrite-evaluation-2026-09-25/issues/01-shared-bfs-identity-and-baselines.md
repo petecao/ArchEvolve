@@ -1,5 +1,7 @@
 # 01 — Query shared BFS identity with source-specific context and explicit baselines
 
+Navigation updated: 2026-09-28 (Eastern Time).
+
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-25 (Eastern Time)
 **Type:** slice
@@ -46,7 +48,7 @@ Implemented additive format 0.4 ownership, evaluator, scoped verification, sourc
 baseline, and explicit comparison baseline. Formats 0.2/0.3 preserve historical
 kernel defaults and ancestry profile pairing. The versioning and compatibility
 choices were documented before the interface changes in
-[the source-context contract](../../../docs/bfs-source-identity.md).
+[the source-context contract](../../../docs/reference/bfs-source-identity.md).
 
 `swdb implementations gapbs-bfs` returns upstream direction-optimizing BFS and
 DX100 scalar top-down BFS with independently resolved sources, revisions, headers,
@@ -75,6 +77,6 @@ and two format-document checks affected by concurrently introduced workflow sche
 validate. Source-specific evaluator execution and fresh-process index regeneration
 are tested; fixtures establish contract behavior, not performance evidence.
 
-Context pointer: [source-context compatibility and command contract](../../../docs/bfs-source-identity.md),
+Context pointer: [source-context compatibility and command contract](../../../docs/reference/bfs-source-identity.md),
 [public workflow tests](../../../tests/test_bfs_identity.py),
 and [DX100 source provenance](../../../apps/dx100/PROVENANCE.md).

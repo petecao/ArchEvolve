@@ -1,5 +1,7 @@
 # 15 — Baseline pilot and protocol freeze
 
+Navigation updated: 2026-09-28 (Eastern Time).
+
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-28 (Eastern Time)
 **Type:** slice
@@ -138,7 +140,7 @@ The actual native gzip transport smoke passed and is independently closed;
 [proof](../observations/gem5-gzip-actual-20260926.json). It used an empty gem5
 Root with no guest workload, so it does not complete a baseline sample. Production
 reader/replay review and a separately bounded correction plan remain required.
-The [prospective correction](../../../docs/bfs-t15-gzip-correction-20260926.md)
+The [prospective correction](../../../docs/archive/bfs-t15-gzip-correction-20260926.md)
 retains the failed attempt and deducts its full outer-to-closure time envelope
 and retained bytes from the original aggregate budget. No corrected BFS run,
 protocol publication, or final acceptance has started. This ticket stays claimed.
@@ -192,7 +194,7 @@ because of a retained checkout-root pytest cache. Both failures and that cache
 remain intact. There is no third standalone readback. Qualification will occur
 inside the separately bounded, already-required source-specific prepare/publish
 operations after actual T15 simulator packages exist; see
-[continuation](../../../docs/bfs-native-qualification-continuation-20260926.md).
+[continuation](../../../docs/archive/bfs-native-qualification-continuation-20260926.md).
 
 The native campaign's generated SQLite cache is now explicitly inside accounted
 raw output; the real CLI regression and independent review pass. T15 simulator
@@ -303,7 +305,7 @@ original time, resource and negative-control gates remain fixed.
 
 The [11:33 host checkpoint](../observations/progress-20260926-1133.json)
 records the full lease, process, load, capacity and history audit. The
-[remaining simulator sequence](../../../docs/bfs-remaining-simulation-sequence-20260926.md)
+[remaining simulator sequence](../../../docs/archive/bfs-remaining-simulation-sequence-20260926.md)
 distinguishes the minimum shared simulator gate from all of this ticket's
 requirements: two exact scale-18 families, three sources and two actual replays
 require 12 primary executions and 12 separately checked diagnostic packages.
@@ -323,7 +325,7 @@ The shared accelerator gate remains required. Reviewers report no remaining
 actionable finding in these paths.
 
 The final combined group passed **213 tests in 158.00 seconds**; see
-[the interim review and retained log](../../../docs/bfs-interim-review-20260926.md).
+[the interim review and retained log](../../../docs/archive/bfs-interim-review-20260926.md).
 These are local contract and subprocess checks, not empirical calibration.
 The actual paired study remains unrun behind the exact code-export hold. Its
 11:58 ET latest dispatch and 15:00 ET absolute end are unchanged; no retries or
@@ -334,7 +336,7 @@ not a reservation. This ticket remains claimed and no protocol was published.
 ## Paired calibration preparation — 2026-09-26 09:34 ET
 
 The original expired pilot and both serial native blocks remain unchanged.
-The prospective [paired pilot](../../../docs/bfs-native-paired-pilot-20260926.md)
+The prospective [paired pilot](../../../docs/archive/bfs-native-paired-pilot-20260926.md)
 uses all four fixed implementation/graph cells, ten repetitions per ordered
 source and role, one exact compiled executable per A/A cell, and seeded balanced
 adjacent order. It changes collection and whole-repetition resampling only for
@@ -610,7 +612,7 @@ No native or simulator protocol is published.
 Standalone readback a2 failed before reader spawn on the manual test's retained
 `.pytest_cache` entry; its node 0 generation 328 was released and independently
 closed. Both standalone failures remain evidence. No third standalone readback
-will run. The [independently checked continuation](../../../docs/bfs-native-qualification-continuation-20260926.md)
+will run. The [independently checked continuation](../../../docs/archive/bfs-native-qualification-continuation-20260926.md)
 keeps full native validation inside the already-required, separately bounded
 prepare/publish operations after actual simulator packages exist. These steps
 must run from a pristine future checkout; import guards and policy stay intact.
@@ -620,7 +622,7 @@ qualification and the native/controlled-simulator freezes remain outstanding.
 
 ## Setup recovery preparation — 2026-09-26
 
-The separately fixed [setup recovery](../../../docs/bfs-t15-setup-recovery-20260926.md)
+The separately fixed [setup recovery](../../../docs/archive/bfs-t15-setup-recovery-20260926.md)
 retains both failed attempts and the consumed Linux proof reservation. Its five
 flat charges total 2,997 seconds and 15,322,025,984 bytes; the new work remains
 inside the original aggregate and actual September 27 09:14:09.851819 ET hard end.

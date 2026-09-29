@@ -1,5 +1,7 @@
 # Kernel identity spans sources, and comparisons name their baseline
 
+Navigation updated: 2026-09-28 (Eastern Time).
+
 Date: 2026-09-25
 Updated: 2026-09-25
 Status: accepted; source-context and explicit-comparator interfaces implemented after authorization
@@ -22,6 +24,6 @@ code rewritten and does not implicitly select the comparator.
   or an author reference, but must identify the comparator and comparison protocol.
 - The additive format 0.4 interface names application ownership and evaluator
   bindings on implementations while preserving historical kernel defaults for
-  format 0.2/0.3 records. See [the compatibility contract](../bfs-source-identity.md).
+  format 0.2/0.3 records. See [the compatibility contract](../reference/bfs-source-identity.md).
   The user separately authorized implementation and execution on 2026-09-25;
   fixture comparison behavior does not establish experimental acceptance.

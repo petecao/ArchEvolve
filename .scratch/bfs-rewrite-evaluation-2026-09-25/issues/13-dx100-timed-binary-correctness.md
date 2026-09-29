@@ -1,5 +1,7 @@
 # 13 — DX100 timed-binary correctness
 
+Navigation updated: 2026-09-28 (Eastern Time).
+
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-26 (Eastern Time)
 **Type:** slice
@@ -84,7 +86,7 @@ closed a progress/exit tick-ordering defect. The final parser/adapter/probe test
 set passed **121 tests in 57.30 seconds**. Local catalog validation reports 186
 valid records. These checks do not establish real execution of the correction.
 
-The [one corrective a2 plan](../../../docs/bfs-dx100-witness-correction-20260926.md)
+The [one corrective a2 plan](../../../docs/archive/bfs-dx100-witness-correction-20260926.md)
 retains the 10:00 ET absolute end and requires at least 1,200 seconds at dispatch.
 Automatic approval review rejected the new two-commit GitHub synchronization;
 an exact payload/destination question remains pending. There is no a2 dispatch
@@ -188,8 +190,8 @@ retrievable but cannot execute or qualify through comparisons/aggregates.
 
 Compiled local regression cases reject the false PASS and accept valid alternative
 parent trees; they are not actual DX100 acceptance. Unchanged author traversal
-remains a distinct treatment. See [oracle contract](../../../docs/bfs-original-graph-oracle-20260926.md)
-and [interim review](../../../docs/bfs-interim-review-20260926.md). The actual v2
+remains a distinct treatment. See [oracle contract](../../../docs/archive/bfs-original-graph-oracle-20260926.md)
+and [interim review](../../../docs/archive/bfs-interim-review-20260926.md). The actual v2
 proof, accelerated coverage, code synchronization, and evidence synchronization
 remain pending. This ticket remains claimed.
 
@@ -217,7 +219,7 @@ before parsing; no execution was retried.
 
 This is `diagnostic_reparse` only. A1 remains failed/unverified with zero admitted
 timings and unchanged raw/record bytes. A2 remains expired and unexecuted.
-The [new prospective a3 plan](../../../docs/bfs-dx100-witness-continuation-20260926.md)
+The [new prospective a3 plan](../../../docs/archive/bfs-dx100-witness-continuation-20260926.md)
 waits for paired native calibration and provider generation to terminate,
 retains one actual attempt and the same 1,200-second/resource caps, and has a
 15:20 ET latest launch / 15:40 ET absolute end. No a3 simulation has run.
@@ -335,7 +337,7 @@ S/I/R/A instruction counts 8/96/24/16. Parent-address binding distinguishes
 guest virtual addresses from physical trace words. These are observed finite
 cases, not inferred coverage from graph topology or a proof for all graphs.
 
-The [original-adjacency checker](../../../docs/bfs-original-graph-oracle-20260926.md)
+The [original-adjacency checker](../../../docs/archive/bfs-original-graph-oracle-20260926.md)
 and compiled tests cover source/self-parent, reachability, preceding-depth
 edges, alternative valid trees, and candidate graph mutation. Public adapter
 tests retain FAIL with exit zero as incorrect and absent/ambiguous outcomes as

@@ -1,5 +1,7 @@
 # 21 — Coverage, ROI gain, and collaborator handoff
 
+Navigation updated: 2026-09-28 (Eastern Time).
+
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-27 18:35 ET
 **Type:** slice
@@ -88,7 +90,7 @@ findings have local repairs with focused regression evidence: durable invalid
 message retrieval, descendant cleanup, independent original-graph correctness,
 and native diagnostic-region comparisons. Two integration follow-ups preserve
 v2 bounded repair and prevent legacy aggregate qualification. See
-[the interim review receipt](../../../docs/bfs-interim-review-20260926.md).
+[the interim review receipt](../../../docs/archive/bfs-interim-review-20260926.md).
 
 A clean suite at `6a1bd7d` passed 951 tests with three skipped, before these
 review repairs. The final fresh Standards/Spec review remains required after all
@@ -247,7 +249,7 @@ completion of the remaining actual evaluations and synchronization.
 
 ## Complete evidence-gap checkpoint — 2026-09-26 19:03 ET
 
-The [all-ticket checkpoint](../../../docs/bfs-remaining-evidence-gaps-20260926.md)
+The [all-ticket checkpoint](../../../docs/archive/bfs-remaining-evidence-gaps-20260926.md)
 retains every remaining obligation, including source-specific controlled
 simulator freezes and the unresolved HW candidate. The [host audit](../observations/health-20260926-1903.json)
 found no live owned jobs and both lanes free; A2 remains unexecuted. Native
@@ -305,13 +307,13 @@ and contract fixtures; it is not an acceptance count.
 Fresh `get --chain` calls retrieved the actual context3 rewriting timeout
 (37 records), existing DX100 patch candidate (43), and existing upstream
 instruction candidate (38). No provider call or evaluation was launched.
-The [handoff](../../../docs/bfs-handoff.md#local-retrieval-checkpoint--2026-09-27)
+The [handoff](../../../docs/archive/bfs-handoff-20260927.md#local-retrieval-checkpoint--2026-09-27)
 contains reproducible public commands and explicitly empty current candidate
 protocol/comparison selections because qualifying evidence is still absent.
 
 The [independently closed T16 failure](../observations/t16-seal-terminal-independent-20260927.json)
 has zero accepted samples and failed before simulation; its
-[instrumentation preparation diagnosis](../../../docs/bfs-t16-instrumentation-preparation-20260927.md)
+[instrumentation preparation diagnosis](../../../docs/archive/bfs-t16-instrumentation-preparation-20260927.md)
 keeps the frozen-identity gate intact. It remains separate from local master
 metadata, and this local readback does not verify remote raw artifacts. Ticket 21
 stays claimed. Final all-ticket review follows the remaining implementation and
@@ -371,7 +373,7 @@ protocols bind.
 
 **Regeneration.** Use the request
 [`acceptance-report-20260927-e1.json`](../requests/acceptance-report-20260927-e1.json);
-the command is in the [handoff](../../../docs/bfs-handoff.md#final-report-regeneration--2026-09-27).
+the command is in the [handoff](../../../docs/archive/bfs-handoff-20260927.md#final-report-regeneration--2026-09-27).
 The current result has 11 of 20 criteria satisfied by retained metadata: AC01–05,
 07–09, and 12–14. AC06, AC10, AC11, and AC15–AC20 remain incomplete, and
 acceptance is incomplete. Next, add the T15 controlled-simulator protocol IDs and
