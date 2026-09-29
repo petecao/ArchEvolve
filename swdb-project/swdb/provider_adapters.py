@@ -22,7 +22,7 @@ CODEX_DISABLED_FEATURES = (
     "hooks", "image_generation", "view_image", "browser_use", "browser_use_external",
     "browser_use_full_cdp_access", "computer_use", "in_app_browser",
     "skill_search", "skill_mcp_dependency_install", "workspace_dependencies",
-    "shell_snapshot", "shell_snapshot_v2",
+    "shell_snapshot", "shell_snapshot_v2", "unified_exec",
 )
 USAGE_LIMIT = re.compile(
     r"usage[_ -]?limit|quota[_ -]?(?:exceeded|exhausted)|"
@@ -215,7 +215,7 @@ class CodexAdapter(Adapter):
                 "-c", "sqlite_home=" + json.dumps(str(sqlite_home)),
                 "-c", "analytics.enabled=false", "-c", 'otel.exporter="none"',
                 "-c", 'otel.trace_exporter="none"', "-c", 'otel.metrics_exporter="none"',
-                "-c", "skills.bundled.enabled=false", "--enable", "skip_host_skill_discovery",
+                "-c", "skills.bundled.enabled=false", "-c", "skills.include_instructions=false",
                 "-c", "project_doc_max_bytes=0", "--ignore-user-config", "--ignore-rules",
                 "--ephemeral", "--skip-git-repo-check", "--dangerously-bypass-approvals-and-sandbox",
                 "--json", "--output-schema", str(schema_path), "--output-last-message",
