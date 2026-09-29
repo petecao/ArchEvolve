@@ -2,7 +2,7 @@
 
 Created: 2026-09-29
 **Type:** prototype
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** None — can start immediately (needs a free socket lane)
 **Spec:** `../spec.md`
 

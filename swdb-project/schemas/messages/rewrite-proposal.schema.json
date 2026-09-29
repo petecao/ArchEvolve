@@ -148,6 +148,14 @@
     },
     "require_executable_backend": {
       "type": "boolean"
+    },
+    "visible_files": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
     }
   }
 }

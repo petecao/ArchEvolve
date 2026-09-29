@@ -1,4 +1,4 @@
-"""Opt-in full_files provider edit format: SWDB computes the diff. 2026-09-27 ET.
+"""Opt-in full_files provider edit format: SWDB computes the diff. 2026-09-29 ET.
 
 The provider returns complete new file contents; SWDB checks scope and protections,
 computes the real unified diff, and passes it through the unchanged patch checks.
@@ -32,7 +32,7 @@ def files_provider(tmp_path):
         path.write_text(json.dumps(response or {'interpretation': 'Apply alpha 14.', 'files': files,
                                                 'unresolved': unresolved or []}))
         provider = tmp_path / 'provider.yaml'
-        provider.write_text(yaml.safe_dump({'kind': 'external_fixture', 'edit_format': 'full_files',
+        provider.write_text(yaml.safe_dump({'kind': 'external_fixture', 'workspace': False, 'edit_format': 'full_files',
             'command': [sys.executable, str(program), str(path)],
             'timeout_s': 10, 'max_repairs': 1, 'total_seconds': 30, **config}))
         return provider

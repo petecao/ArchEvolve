@@ -146,7 +146,7 @@ def main(argv=None):
     sub.add_argument("--runs-dir", type=Path, required=True)
     sub.add_argument("--provider-config", type=Path)
 
-    sub = command("repair", "produce a bounded repair of a failed build or correctness evaluation", db=True, fmt=True)
+    sub = command("repair", "repair a build/correctness failure or retry an unavailable initial provider", db=True, fmt=True)
     sub.add_argument("evaluation")
     sub.add_argument("--runs-dir", type=Path, required=True)
     sub.add_argument("--provider-config", type=Path, required=True)
@@ -314,7 +314,7 @@ def _dispatch(args):
 
         result = getattr(workflow, workflow_commands[args.command])(args)
         _emit(result, args.format)
-        return 1 if args.command in {"submit", "repair"} and result.get("outcome", {}).get("state") in {"rejected", "unresolved", "failed"} else 0
+        return 1 if args.command in {"submit", "repair"} and result.get("outcome", {}).get("state") in {"rejected", "unresolved", "failed", "provider_unavailable"} else 0
 
     from swdb import db
 

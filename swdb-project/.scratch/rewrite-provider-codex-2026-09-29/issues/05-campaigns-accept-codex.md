@@ -2,7 +2,7 @@
 
 Created: 2026-09-29
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 03
 **Spec:** `../spec.md`
 

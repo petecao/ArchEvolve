@@ -16,11 +16,11 @@ sys.path.insert(0, str(ROOT))
 
 from swdb import artifacts, db, writer
 from swdb.cli import Failure
-from swdb.store import Store
+from swdb.store import Record, Store
 
 SEEDS = [f"bfs-t17-routes-20260928-a3.{role}.{family}.aggregate"
          for role in ("baseline", "candidate") for family in ("uniform18", "kronecker18")]
-SEEDS += ["bfs-t17-ac10-companion-20260928-a3"]
+SEEDS += ["bfs-t17-ac10-companion-20260928-a3.execute"]
 ANNOTATIONS = {"updated", "extensions", "loops", "access_patterns", "notes"}
 
 
@@ -38,16 +38,28 @@ def strings(value):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--retained-records", type=Path, required=True)
+    parser.add_argument("--retained-records", type=Path, action="append", required=True,
+                        help="repeat for a separate companion runtime; overlay ID collisions must be identical")
     parser.add_argument("--records", type=Path, default=ROOT / "records")
     parser.add_argument("--prefer-current-implementation", action="append", default=[],
                         help="retain a named implementation's current source annotations, after checking source/build/evaluator equality")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    if args.records.resolve() == args.retained_records.resolve():
+    if any(args.records.resolve() == root.resolve() for root in args.retained_records):
         raise Failure("import needs distinct retained and current record folders")
-    retained, current = Store(args.retained_records), Store(args.records)
-    if retained.problems or current.problems:
+    merged = {}
+    for root in args.retained_records:
+        overlay = Store(root)
+        if overlay.problems:
+            raise Failure(f"record parsing failed in {root}; nothing imported")
+        for item in overlay.records:
+            previous = merged.get(item.id)
+            if previous and artifacts.digest(previous.data) != artifacts.digest(item.data):
+                raise Failure(f"retained metadata overlays disagree on {item.id}; nothing imported")
+            merged[item.id] = Record(str(root / item.rel), item.data)
+    retained = Store(args.retained_records[0], indexed_records=list(merged.values()))
+    current = Store(args.records)
+    if current.problems:
         raise Failure("record parsing failed; nothing imported")
     prefer = set(args.prefer_current_implementation)
     seen, needed, equal, annotations = set(), {}, [], []
@@ -95,7 +107,7 @@ def main():
     written = writer.commit(args.records, new=list(needed.values())) if needed else []
     if written:
         db.build(args.records, db.default_path(args.records))
-    summary = {"created": "2026-09-29", "retained_records": str(args.retained_records.resolve()),
+    summary = {"created": "2026-09-29", "retained_records": [str(root.resolve()) for root in args.retained_records],
                "current_records": str(args.records.resolve()), "seeds": SEEDS,
                "imported": [{"id": rid, "sha256": artifacts.digest(data),
                               "kind": data["kind"]} for rid, data in sorted(needed.items())],

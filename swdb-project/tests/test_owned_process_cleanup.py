@@ -92,7 +92,7 @@ def test_public_provider_reaps_descendant_and_retains_outcome(proposal_setup, tm
     code = code.replace('print("ready",flush=True)', 'print(' + repr(json.dumps(response)) + ',flush=True)')
     if mode == 'failed':
         code += 'raise SystemExit(7)\n'
-    config.write_text(yaml.safe_dump({'kind': 'external_fixture',
+    config.write_text(yaml.safe_dump({'kind': 'external_fixture', 'workspace': False,
         'command': [sys.executable, '-c', code],
         'timeout_s': 1, 'max_repairs': 1, 'total_seconds': 10}))
     try:

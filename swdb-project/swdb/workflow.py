@@ -1,6 +1,6 @@
 """Public, durable proposal workflow. Source changes never imply correctness.
 
-Updated: 2026-09-27 (opt-in full_files provider edit format); 2026-09-28 (patch headers
+Updated: 2026-09-29 (pinned repair identity and unavailable-provider retries); 2026-09-28 (patch headers
 parsed outside hunk bodies only). YAML records remain authoritative; raw artifacts are external.
 """
 
@@ -353,12 +353,11 @@ def submit(args):
                                      "used_seconds": 0, "repairs": 0}
             data["attempts"][-1]["stage"] = "interpretation"
             persist(args.records, data, args.db)
-            prompt = rewrite.prompt_for(request, source, package,
-                                        edit_format=config.get("edit_format", "patch"))
-            response, meta = rewrite.interpret(config, prompt, run_dir / "provider-1")
+            response, meta = rewrite.call(config, request, source, package, store, run_dir / "provider-1")
             data["interpretation"] = rewrite.response_record(config, response)
             data["repair_budget"]["used_seconds"] = meta["host_wall_s"]
             data["attempts"][-1]["provider"] = meta
+            _provider_receipt(data, meta, run_dir / "provider-1")
             if response["unresolved"]:
                 data["outcome"] = {"state": "unresolved", "stage": "interpretation", "reason": "; ".join(response["unresolved"])}
                 data["attempts"][-1]["state"] = "unresolved"
@@ -390,14 +389,17 @@ def submit(args):
     except (Failure, OSError, ValueError, subprocess.SubprocessError) as exc:
         if isinstance(exc, Failure) and "persisted, but query indexing failed" in str(exc):
             raise
-        data["outcome"] = {"state": "rejected" if stage == "validation" else "failed", "stage": stage, "reason": str(exc)}
+        unavailable = isinstance(exc, rewrite.provider_adapters.ProviderUnavailable) if "provider" in data else False
+        data["outcome"] = {"state": "provider_unavailable" if unavailable else
+                           ("rejected" if stage == "validation" else "failed"), "stage": stage, "reason": str(exc)}
         if data["attempts"]:
-            data["attempts"][-1].update(state="failed", reason=str(exc))
+            data["attempts"][-1].update(state="provider_unavailable" if unavailable else "failed", reason=str(exc))
             if "provider" in data and "provider" not in data["attempts"][-1]:
                 metadata = run_dir / "provider-1" / "provider.json"
                 if metadata.is_file():
                     meta = json.loads(metadata.read_text())
                     data["attempts"][-1]["provider"] = meta
+                    _provider_receipt(data, meta, run_dir / "provider-1")
                     data["repair_budget"]["used_seconds"] += meta.get("host_wall_s", 0)
     return persist(args.records, data, args.db)
 
@@ -426,6 +428,9 @@ def repair(args):
     from swdb import rewrite
 
     store = _require_valid(args.records)
+    unavailable = store.get(args.evaluation, "proposal")
+    if unavailable and unavailable.get("outcome", {}).get("state") == "provider_unavailable" and not unavailable.get("candidate"):
+        return _retry_initial_provider(args, store, unavailable)
     evaluation = store.get(args.evaluation, "evaluation")
     if not evaluation or not evaluation.get("proposal"):
         raise Failure("repair requires a retained candidate evaluation")
@@ -438,6 +443,8 @@ def repair(args):
         store = Store(args.records)
         data = copy.deepcopy(store.get(proposal_id, "proposal"))
         config = rewrite.configuration(args.provider_config)
+        rewrite.require_same_provider(data.get("provider"), config)
+        data.setdefault("provider", config)
         budget = data.setdefault("repair_budget", {"max_repairs": config["max_repairs"],
             "total_seconds": config["total_seconds"], "used_seconds": 0, "repairs": 0})
         maximum = min(budget["max_repairs"], config["max_repairs"])
@@ -455,7 +462,7 @@ def repair(args):
             data["outcome"] = {"state": "unresolved", "stage": "repair", "reason": reason}
             return persist(args.records, data, args.db)
         number = budget["repairs"] + 1
-        folder = artifacts.external_directory(args.runs_dir) / f"{proposal_id}.repair-{number}"
+        folder = artifacts.external_directory(args.runs_dir) / f"{proposal_id}.repair-{number}.attempt-{len(data['attempts'])+1}"
         folder.mkdir(exist_ok=False)
         budget["repairs"] = number
         attempt = {"number": len(data["attempts"]) + 1, "stage": "repair", "state": "running",
@@ -480,10 +487,10 @@ def repair(args):
                     if stage.get("log_sha256") and artifacts.file_hash(log) != stage["log_sha256"]:
                         raise Failure("repair diagnostic log differs from its retained identity")
                     evidence["logs"].append({"stage": stage["stage"], "text": log.read_text(errors="replace")[-32000:]})
-            prompt = rewrite.prompt_for(data["request"], current_source, package, repair=evidence,
-                                        edit_format=config.get("edit_format", "patch"))
-            response, meta = rewrite.interpret(config, prompt, folder / "provider", remaining_s=seconds)
+            response, meta = rewrite.call(config, data["request"], current_source, package, store,
+                                          folder / "provider", repair=evidence, remaining_s=seconds)
             budget["used_seconds"] += meta["host_wall_s"]
+            _provider_receipt(data, meta, folder / "provider")
             attempt.update(interpretation=rewrite.response_record(config, response), provider=meta)
             if response["unresolved"]:
                 reason = "unresolved repair requirements: " + "; ".join(response["unresolved"])
@@ -518,6 +525,95 @@ def repair(args):
                 meta = json.loads(metadata.read_text())
                 budget["used_seconds"] += meta.get("host_wall_s", 0)
                 attempt["provider"] = meta
-            attempt.update(state="failed", reason=str(exc))
-            data["outcome"] = {"state": "failed", "stage": "repair", "reason": str(exc)}
+                _provider_receipt(data, meta, folder / "provider")
+            unavailable = isinstance(exc, rewrite.provider_adapters.ProviderUnavailable)
+            if unavailable:
+                budget["repairs"] -= 1
+            state = "provider_unavailable" if unavailable else "failed"
+            attempt.update(state=state, reason=str(exc))
+            data["outcome"] = {"state": state, "stage": "repair", "reason": str(exc)}
         return persist(args.records, data, args.db)
+
+
+def _retry_initial_provider(args, store, proposal):
+    """Retry an unavailable first session using the retained immutable request.
+
+    An initial usage-limit outcome has no evaluation to name. `repair <proposal>`
+    therefore retries this case without consuming the build/correctness budget.
+    """
+    from swdb import rewrite
+    proposal_id = proposal["id"]
+    with (Path(args.records) / f".swdb-rewrite.{proposal_id}.lock").open("a") as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            raise Failure("a repair of this proposal is already running") from None
+        store = Store(args.records)
+        data = copy.deepcopy(store.get(proposal_id, "proposal"))
+        if data.get("candidate") or data["outcome"]["state"] != "provider_unavailable":
+            raise Failure("proposal no longer admits an unavailable-provider retry")
+        config = rewrite.configuration(args.provider_config)
+        rewrite.require_same_provider(data.get("provider"), config)
+        budget = data["repair_budget"]
+        seconds = min(budget["total_seconds"], config["total_seconds"]) - budget["used_seconds"]
+        if seconds <= 0:
+            data["outcome"] = {"state": "unresolved", "stage": "retry", "reason": "provider-time budget exhausted"}
+            return persist(args.records, data, args.db)
+        folder = artifacts.external_directory(args.runs_dir) / f"{proposal_id}.retry-{len(data['attempts'])+1}"
+        folder.mkdir(exist_ok=False)
+        attempt = {"number": len(data["attempts"])+1, "stage": "interpretation", "state": "running"}
+        data["attempts"].append(attempt)
+        data["raw_artifacts"].append({"stage": "retry", "path": str(folder)})
+        persist(args.records, data, args.db)
+        try:
+            source = store.get(data["source_snapshot"], "source_snapshot")
+            package = store.get(data["profile_package"], "profile_package")
+            source_path = artifacts.verify(source["artifact"])
+            response, meta = rewrite.call(config, data["request"], source, package, store,
+                                          folder / "provider", remaining_s=seconds)
+            budget["used_seconds"] += meta["host_wall_s"]
+            attempt["provider"] = meta
+            _provider_receipt(data, meta, folder / "provider")
+            if response["unresolved"]:
+                attempt.update(state="unresolved", reason="; ".join(response["unresolved"]))
+                data["outcome"] = {"state": "unresolved", "stage": "interpretation", "reason": attempt["reason"]}
+                return persist(args.records, data, args.db)
+            if not response["interpretation"].strip() or not rewrite.response_has_edits(config, response):
+                raise Failure("rewrite interpretation must produce actual edits and explain them")
+            data["interpretation"] = rewrite.response_record(config, response)
+            patch = rewrite.response_patch(config, response, source_path,
+                data["request"]["constraints"]["editable_files"], source["protections"], folder / "full-files")
+            candidate_source = _source_destination(args.runs_dir, proposal_id)
+            artifact = apply_patch(source_path, candidate_source, patch,
+                data["request"]["constraints"]["editable_files"], source["protections"])
+            rewrite.require_code_change(source_path, candidate_source)
+            artifacts.verify(source["artifact"])
+            diff = folder / "candidate.diff"; diff.write_text(patch)
+            candidate = record("candidate", f"{proposal_id}.candidate-1", producer=data["producer"], proposal=proposal_id,
+                implementation=source["implementation"], source_snapshot=source["id"], artifact=artifact,
+                diff=str(diff), diff_sha256=artifacts.file_hash(diff), state="unverified",
+                protections=source["protections"], context=source["context"])
+            persist(args.records, candidate, args.db, create=True)
+            data["candidate"] = candidate["id"]
+            attempt.update(stage="rewriting", state="completed", candidate=candidate["id"])
+            data["outcome"] = {"state": "candidate_created", "stage": "rewriting", "reason": None}
+        except (Failure, OSError, ValueError, subprocess.SubprocessError) as exc:
+            if isinstance(exc, Failure) and "persisted, but query indexing failed" in str(exc):
+                raise
+            metadata = folder / "provider" / "provider.json"
+            if metadata.is_file() and "provider" not in attempt:
+                meta = json.loads(metadata.read_text()); attempt["provider"] = meta
+                _provider_receipt(data, meta, folder / "provider")
+                budget["used_seconds"] += meta.get("host_wall_s", 0)
+            state = "provider_unavailable" if isinstance(exc, rewrite.provider_adapters.ProviderUnavailable) else "failed"
+            attempt.update(state=state, reason=str(exc))
+            data["outcome"] = {"state": state, "stage": "retry", "reason": str(exc)}
+        return persist(args.records, data, args.db)
+
+
+def _provider_receipt(data, meta, folder):
+    """Bind the resolved record block to its retained per-attempt receipt."""
+    data["provider"].update({key: meta[key] for key in
+        ("resolved_kind", "model", "effort", "cli_version", "workspace", "guard_policy", "audit") if key in meta})
+    meta["provider"] = copy.deepcopy(data["provider"])
+    (Path(folder) / "provider.json").write_text(json.dumps(meta, indent=2))

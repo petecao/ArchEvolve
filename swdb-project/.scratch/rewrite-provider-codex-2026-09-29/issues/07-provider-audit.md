@@ -2,7 +2,7 @@
 
 Created: 2026-09-29
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 02, 06
 **Spec:** `../spec.md`
 
@@ -17,3 +17,7 @@ also fails the attempt.
 - [ ] Fixture sessions with scripted events fail with the right reason for each case, and a clean session passes.
 - [ ] The event log is retained as a raw artifact and linked from the proposal.
 - [ ] The audit result is recorded in the proposal's provider block.
+
+## Comments
+
+2026-09-29: Claimed by provider_workspace agent for workspace derivation, diff, audit, and public fixture coverage.

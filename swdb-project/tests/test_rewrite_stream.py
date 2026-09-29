@@ -1,4 +1,4 @@
-"""Stream-json provider capture: partial output survives a timeout. 2026-09-27 ET.
+"""Stream-json provider capture: partial output survives a timeout. 2026-09-29 ET.
 
 A local fake `claude` executable replays scripted stream-json events. No real
 provider is called; these check SWDB's capture, parsing and retention only.
@@ -54,7 +54,7 @@ def fake_claude(tmp_path):
 
     def make(rows, sleep=0, exit=0, **config):
         (program.parent / 'plan.json').write_text(json.dumps({'events': rows, 'sleep': sleep, 'exit': exit}))
-        data = {'kind': 'claude', 'command': [str(program)], 'timeout_s': 5, 'max_repairs': 1,
+        data = {'kind': 'external_fixture', 'emulates': 'claude', 'workspace': False, 'command': [str(program)], 'timeout_s': 5, 'max_repairs': 1,
                 'total_seconds': 30, 'budget_usd': 5, 'output_format': 'stream-json', **config}
         path = tmp_path / 'provider.yaml'
         path.write_text(yaml.safe_dump(data))
@@ -116,7 +116,7 @@ def test_default_capture_is_unchanged_and_output_format_is_checked(fake_claude, 
     assert response == RESPONSE and 'stream' not in meta
     argv = fake_claude.argv()
     assert argv[argv.index('--output-format') + 1] == 'json' and '--verbose' not in argv
-    for bad in ({'output_format': 'text'}, {'output_format': 'stream-json', 'kind': 'external_fixture'}):
+    for bad in ({'output_format': 'text'}, {'output_format': 'stream-json', 'kind': 'external_fixture', 'emulates': 'codex'}):
         path.write_text(yaml.safe_dump({**data, **bad}))
         with pytest.raises(Failure, match='output'):
             rewrite.configuration(path)

@@ -675,7 +675,7 @@ def validate_existing_candidate(request, submitted, candidate, source, package, 
     else:
         provider = submitted.get('provider', {})
         observed = attempts[0].get('provider', {})
-        require(submitted.get('provider', {}).get('kind') == 'claude'
+        require(submitted.get('provider', {}).get('kind') in {'codex', 'claude'}
                 and observed.get('classification') == 'rewrite_provider'
                 and observed.get('state') == 'completed' and type(observed.get('returncode')) is int
                 and observed['returncode'] == 0 and observed.get('provider') == provider,
@@ -866,7 +866,7 @@ class Driver:
         if not existing:
             extra = ['--provider-config', self.args.provider_config] if self.args.provider_config else []
             return self.request('submit', proposal, '--runs-dir', self.args.source_runs_dir, *extra,
-                                timeout=1000, required=False)
+                                timeout=1860, required=False)
         if self.args.provider_config:
             raise ValueError('--provider-config cannot accompany --existing-candidate; reuse never invokes a provider')
         path = self.retain_request(proposal)
@@ -970,7 +970,7 @@ class Driver:
         for file in (args.provider_config, args.repair_config):
             if file:
                 config = rewrite.configuration(file)
-                if config['kind'] != 'claude': raise ValueError('real campaign cannot use an external fixture provider')
+                if config['kind'] not in {'codex', 'claude'}: raise ValueError('real campaign cannot use an external fixture provider')
         self.receipt.update(implementation=proposal['implementation'], proposal=proposal['id'],
             proposal_sha256=artifacts.digest(proposal), protocol_sha256=frozen['identity_sha256'],
             inputs=[{'id': package['id'], 'sha256': artifacts.digest(package)} for package in packages],
@@ -1045,7 +1045,7 @@ class Driver:
                 self.save()
             if getattr(args, 'reassessment', None) or not repairable or not args.repair_config or round_number == 2: break
             repaired = self.call('repair', repairable[0], '--runs-dir', args.source_runs_dir,
-                                 '--provider-config', args.repair_config, timeout=1000, required=False)
+                                 '--provider-config', args.repair_config, timeout=1860, required=False)
             self.receipt['repair_attempts'].append({'trigger': repairable[0], 'outcome': (repaired or {}).get('outcome'),
                                                    'candidate': (repaired or {}).get('candidate')})
             self.save()

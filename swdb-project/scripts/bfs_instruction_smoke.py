@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Real bounded Claude interpretation and native BFS diagnostics. Updated 2026-09-25.
+"""Real guarded provider interpretation and native BFS diagnostics. Updated 2026-09-29.
 
 Run inside an owned mbit10 lane. These small correctness cases do not assess gains.
 """
@@ -16,6 +16,7 @@ def main():
     parser.add_argument('--runs-dir',type=Path,required=True)
     parser.add_argument('--records',type=Path,default=Path('records'))
     parser.add_argument('--lane',required=True)
+    parser.add_argument('--kind',choices=['codex','claude'],default='codex')
     parser.add_argument('--routes',nargs='+',choices=['natural_language','structured_instructions','annotated_source'],
                         default=['natural_language','structured_instructions','annotated_source'])
     parser.add_argument('--reevaluate',help='retain a new evaluation of an existing candidate after an evaluator fix')
@@ -25,15 +26,15 @@ def main():
     folder=args.runs_dir/(args.id+'.driver')
     folder.mkdir(parents=True,exist_ok=False)
     provider=folder/'provider.json'
-    provider.write_text(json.dumps({'kind':'claude','command':['claude'],'timeout_s':300,
-                                   'max_repairs':1,'total_seconds':600,'budget_usd':5}))
+    provider.write_text(json.dumps({'kind':args.kind,'command':[args.kind],'timeout_s':1200,
+                                   'max_repairs':1,'total_seconds':3600,'budget_usd':5}))
     serial=0
     def call(command,*rest):
         nonlocal serial
         serial+=1
         argv=[sys.executable,'-m','swdb',command,*map(str,rest),
               '--records',str(args.records),'--format','json']
-        result=subprocess.run(argv,cwd=root,capture_output=True,text=True,timeout=700)
+        result=subprocess.run(argv,cwd=root,capture_output=True,text=True,timeout=1860)
         (folder/f'{serial:02}-{command}.stdout.json').write_text(result.stdout)
         (folder/f'{serial:02}-{command}.stderr.txt').write_text(result.stderr)
         if result.returncode:

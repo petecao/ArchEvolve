@@ -1,4 +1,4 @@
-"""Public bounded rewrite and repair contracts. Updated: 2026-09-26."""
+"""Public bounded rewrite and repair contracts. Updated: 2026-09-29."""
 
 import difflib
 import json
@@ -26,7 +26,7 @@ def provider(tmp_path):
         response.write_text(json.dumps({'interpretation':'Apply the submitted parameter adjustment.',
                                         'patch':patch,'unresolved':unresolved or []}))
         path = tmp_path / 'provider.yaml'
-        path.write_text(yaml.safe_dump({'kind':'external_fixture',
+        path.write_text(yaml.safe_dump({'kind':'external_fixture','workspace':False,
             'command':[sys.executable,str(program),str(response)],
             'timeout_s':10,'max_repairs':1,'total_seconds':30,**config}))
         return path

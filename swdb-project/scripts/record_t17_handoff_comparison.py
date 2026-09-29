@@ -48,7 +48,10 @@ def companion(store, closure, frozen):
             and observation.get("competing_parent_updates", {}).get("state") == "observed"
             and observation["competing_parent_updates"].get("count", 0) > 0,
             "a3 closure lacks the T17 competing-parent companion acceptance")
-    actual = record(store, observation["id"], "evaluation")
+    # The closure names the run stem; the public dx100-execute record appends
+    # .execute. Its exact retained digest, rather than the spelling, is binding.
+    actual_id = observation["id"] if store.get(observation["id"], "evaluation") else observation["id"] + ".execute"
+    actual = record(store, actual_id, "evaluation")
     require(artifacts.digest(actual) == observation["record_sha256"], "T17 companion record differs from a3 closure")
     require(actual["outcome"]["state"] == "complete" and actual["correctness"]["state"] == "passed"
             and actual["candidate"] == frozen["settings"]["route"]["candidate"]

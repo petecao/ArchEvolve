@@ -1,6 +1,6 @@
 """Bounded instruction interpretation through an operator-selected provider.
 
-Updated: 2026-09-27 (stream-json capture; opt-in full_files edit format). Providers
+Updated: 2026-09-29 (pinned adapters, workspace/guard seam and provider audit). Providers
 return proposed edits; SWDB applies protections. 2026-09-28: stream-json stdout cap
 sized for partial-message amplification; signal handlers only on the main thread.
 """
@@ -17,7 +17,7 @@ import threading
 import time
 from pathlib import Path
 
-from swdb import artifacts, yamlio
+from swdb import artifacts, yamlio, provider_adapters
 from swdb.cli import Failure
 from swdb.processes import stop_group
 
@@ -71,34 +71,44 @@ def configuration(path):
     if path is None:
         raise Failure("instruction and annotated-source routes require --provider-config")
     data = yamlio.load(Path(path))
-    if not isinstance(data, dict) or data.get("kind") not in {"claude", "external_fixture"}:
-        raise Failure("provider kind must be claude or external_fixture")
-    allowed = {"kind", "command", "timeout_s", "max_repairs", "total_seconds", "budget_usd", "output_format",
-               "edit_format"}
+    if not isinstance(data, dict):
+        raise Failure("provider configuration must be an object")
+    data.setdefault("kind", "codex")
+    if data["kind"] not in provider_adapters.ADAPTERS:
+        raise Failure("provider kind must be codex, claude or external_fixture")
+    if {"model", "effort", "model_reasoning_effort"} & set(data):
+        raise Failure("provider model and effort are pinned in code and cannot be overridden")
+    allowed = {"kind", "command", "timeout_s", "max_repairs", "total_seconds", "budget_usd",
+               "output_format", "edit_format", "workspace", "emulates"}
     if set(data) - allowed:
         raise Failure("unknown provider configuration fields")
-    # Opt-in (2026-09-27): stream-json keeps partial provider output and progress
-    # after a timeout. Absent means the original single-result json capture.
+    if "emulates" in data and (data["kind"] != "external_fixture" or data["emulates"] not in provider_adapters.PINS):
+        raise Failure("provider emulates applies only to external_fixture and must be codex or claude")
+    if not isinstance(data.setdefault("workspace", True), bool):
+        raise Failure("provider workspace must be a boolean")
     if data.get("output_format", "json") not in OUTPUT_FORMATS:
         raise Failure("provider output_format must be json or stream-json")
-    if data.get("output_format") == "stream-json" and data["kind"] != "claude":
+    adapter = provider_adapters.get(data)
+    if data.get("output_format") == "stream-json" and adapter.kind != "claude":
         raise Failure("stream-json output capture applies only to the Claude provider")
     if data.get("edit_format", "patch") not in EDIT_FORMATS:
         raise Failure("provider edit_format must be patch or full_files")
-    for key, default, lower, upper in (("timeout_s", 300, 1, 900), ("max_repairs", 2, 0, 5),
-                                      ("total_seconds", 900, 1, 3600), ("budget_usd", 5, 1, 25)):
+    for key, default, lower, upper in (("timeout_s", 1200, 1, 1800), ("max_repairs", 2, 0, 5),
+                                      ("total_seconds", 3600, 1, 3600), ("budget_usd", 5, 1, 25)):
         value = data.setdefault(key, default)
         if isinstance(value, bool) or not isinstance(value, int) or not lower <= value <= upper:
             raise Failure(f"provider {key} must be an integer in [{lower}, {upper}]")
-    cmd = data.setdefault("command", ["claude"] if data["kind"] == "claude" else None)
+    cmd = data.setdefault("command", [data["kind"]] if data["kind"] in provider_adapters.PINS else None)
     if not isinstance(cmd, list) or not cmd or not all(isinstance(x, str) and x for x in cmd):
         raise Failure("provider command must be a nonempty argv list")
-    if data["kind"] == "claude" and len(cmd) != 1:
-        raise Failure("Claude provider command must contain only the executable path")
+    if data["kind"] in provider_adapters.PINS and len(cmd) != 1:
+        raise Failure("real provider command must contain only the executable path")
     found = shutil.which(cmd[0])
     if not found:
         raise Failure(f"rewrite provider executable is unavailable: {cmd[0]}")
     cmd[0] = found
+    data.update(provider_adapters.identity(data))
+    data["budget_usd_enforced"] = adapter.kind == "claude"
     return data
 
 
@@ -323,7 +333,7 @@ def files_to_patch(source_root, files, allowed, protections, folder):
 
 def response_patch(config, response, source_root, allowed, protections, folder):
     """The candidate diff from a provider response in the configured edit format."""
-    if config.get("edit_format") == "full_files":
+    if not config.get("workspace", True) and config.get("edit_format") == "full_files":
         return files_to_patch(source_root, response["files"], allowed, protections, folder)
     return response["patch"]
 
@@ -331,7 +341,7 @@ def response_patch(config, response, source_root, allowed, protections, folder):
 def response_record(config, response):
     """Durable interpretation: full file bodies stay in the raw provider output and are
     recorded here by size and digest."""
-    if config.get("edit_format") != "full_files":
+    if config.get("workspace", True) or config.get("edit_format") != "full_files":
         return response
     files = {path: {"bytes": len(text.encode()), "sha256": hashlib.sha256(text.encode()).hexdigest()}
              for path, text in response["files"].items()}
@@ -340,7 +350,7 @@ def response_record(config, response):
 
 
 def response_has_edits(config, response):
-    if config.get("edit_format") == "full_files":
+    if not config.get("workspace", True) and config.get("edit_format") == "full_files":
         return bool(response["files"])
     return bool(response["patch"].strip())
 
@@ -412,29 +422,41 @@ def stream_result(path):
     return results[-1]
 
 
-def interpret(config, prompt, folder, remaining_s=None):
-    """Capture provider output without granting it file-editing or execution tools."""
+def interpret(config, prompt, folder, remaining_s=None, *, run_context=None):
+    """Capture an adapter under the supplied workspace/guard process context."""
     folder = Path(folder)
-    folder.mkdir(parents=True, exist_ok=False)
+    folder.mkdir(parents=True, exist_ok=run_context is not None)
     (folder / "prompt.txt").write_text(prompt)
-    cmd = list(config["command"])
-    streaming = config.get("output_format") == "stream-json"
-    if config["kind"] == "claude":
-        output = ["stream-json", "--verbose", "--include-partial-messages"] if streaming else ["json"]
-        cmd += ["-p", "--safe-mode", "--tools", "", "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}',
-                "--no-session-persistence", "--output-format", *output, "--json-schema", json.dumps(output_schema(config)),
-                "--max-budget-usd", str(config["budget_usd"])]
-    timeout = min(config["timeout_s"], config["total_seconds"],
-                  config["total_seconds"] if remaining_s is None else remaining_s)
-    if timeout <= 0:
-        raise Failure("rewrite provider total budget exhausted")
-    meta = {"provider": config, "command": cmd, "timeout_s": timeout,
-            "classification": "contract_fixture" if config["kind"] == "external_fixture" else "rewrite_provider",
-            "prompt_sha256": artifacts.file_hash(folder / "prompt.txt"), "state": "running"}
-    meta["executable_sha256"] = artifacts.file_hash(cmd[0])
-    if config["kind"] == "claude":
-        version = subprocess.run([cmd[0], "--version"], capture_output=True, text=True, timeout=10)
-        meta["version"] = version.stdout.strip()
+    context = run_context or {}
+    if config["kind"] != "external_fixture" and not context.get("wrap_command"):
+        from swdb import provider_guard
+        context = provider_guard.prompt_context(config, folder)
+    adapter = provider_adapters.get(config)
+    schema = adapter.schema(config, context.get("schema", output_schema(config)))
+    try:
+        cmd = adapter.command(config, prompt, folder, schema)
+        streaming = adapter.streaming(config)
+        timeout = min(config["timeout_s"], config["total_seconds"],
+                      config["total_seconds"] if remaining_s is None else remaining_s)
+        if timeout <= 0:
+            raise Failure("rewrite provider total budget exhausted")
+        meta = {"provider": config, "command": cmd, "timeout_s": timeout,
+                "classification": "contract_fixture" if config["kind"] == "external_fixture" else "rewrite_provider",
+                "prompt_sha256": artifacts.file_hash(folder / "prompt.txt"), "state": "running"}
+        meta["executable_sha256"] = artifacts.file_hash(cmd[0])
+        meta.update(provider_adapters.identity(config))
+        meta["workspace"] = config.get("workspace", True)
+        meta["budget_usd_enforced"] = config.get("budget_usd_enforced", False)
+        meta["guard_policy"] = context.get("guard_policy")
+        version = adapter.version(config, context.get("env"))
+        meta["version"] = meta["cli_version"] = version
+        if context.get("wrap_command"):
+            cmd = context["wrap_command"](cmd)
+            meta["guard_command"] = cmd
+    except BaseException:
+        if context.get("cleanup"):
+            context["cleanup"]()
+        raise
     (folder / "provider.json").write_text(json.dumps(meta, indent=2))
     started = time.monotonic()
     def interrupted(signum, _frame):
@@ -447,9 +469,9 @@ def interpret(config, prompt, folder, remaining_s=None):
     child = None
     progress = {"first_output_s": None, "last_output_s": None}
     try:
-        with (folder / "stdout.txt").open("w") as stdout, (folder / "stderr.txt").open("w") as stderr, (folder / "prompt.txt").open() as stdin:
-            child = subprocess.Popen(cmd, cwd=folder, stdin=stdin, stdout=stdout, stderr=stderr,
-                                     text=True, start_new_session=True)
+        with (folder / "stdout.txt").open("w") as stdout, (folder / "stderr.txt").open("w") as stderr, (open(os.devnull) if adapter.prompt_argument else (folder / "prompt.txt").open()) as stdin:
+            child = subprocess.Popen(cmd, cwd=context.get("cwd", folder), env=context.get("env"),
+                                     stdin=stdin, stdout=stdout, stderr=stderr, text=True, start_new_session=True)
             seen = [0]
 
             def observe():
@@ -463,6 +485,8 @@ def interpret(config, prompt, folder, remaining_s=None):
             while child.poll() is None:
                 if time.monotonic() - started > timeout:
                     raise subprocess.TimeoutExpired(cmd, timeout)
+                if context.get("monitor"):
+                    context["monitor"](child)
                 stdout_size, stderr_size = observe()
                 if stdout_size > stdout_limit:
                     raise Failure(limit_message)
@@ -486,22 +510,82 @@ def interpret(config, prompt, folder, remaining_s=None):
                     meta["stream"] = {**progress, **stream_summary(folder)}
                 except OSError as exc:
                     meta["stream"] = {**progress, "summary_error": str(exc)}
+            if context.get("finish"):
+                meta["guard_result"] = context["finish"]()
             (folder / "provider.json").write_text(json.dumps(meta, indent=2))
+            if context.get("cleanup"):
+                context["cleanup"]()
+    try:
+        provider_adapters.check_usage(folder)
+    except provider_adapters.ProviderUnavailable:
+        meta["state"] = "provider_unavailable"
+        (folder / "provider.json").write_text(json.dumps(meta, indent=2))
+        raise
+    guard_result = meta.get("guard_result") or {}
+    if guard_result.get("reasons"):
+        raise Failure("provider guard failed: " + "; ".join(guard_result["reasons"]))
     if child.returncode:
         raise Failure(f"rewrite provider exited {child.returncode}; retained {folder}")
     if (folder / "stdout.txt").stat().st_size > stdout_limit:
         raise Failure(limit_message)
+    if (folder / "stderr.txt").stat().st_size > JSON_OUTPUT_LIMIT:
+        raise Failure("rewrite provider stderr exceeds the 10 MiB limit")
     try:
-        response = (stream_result(folder / "stdout.txt") if streaming
-                    else json.loads((folder / "stdout.txt").read_text()))
-        if config["kind"] == "claude":
-            if response.get("is_error"):
-                raise Failure("Claude returned an error; see retained provider output")
-            response = response.get("structured_output") or json.loads(response.get("result", "{}"))
+        response = adapter.extract(config, folder)
         from jsonschema import Draft202012Validator
-        errors = list(Draft202012Validator(output_schema(config)).iter_errors(response))
+        errors = list(Draft202012Validator(schema).iter_errors(response))
         if errors:
             raise Failure("rewrite provider returned invalid structured output: " + errors[0].message)
-        return response, meta
+        return adapter.normalize(config, response), meta
     except (ValueError, TypeError) as exc:
         raise Failure(f"rewrite provider output is not valid structured JSON: {exc}") from None
+
+
+def call(config, request, source, package, store, folder, repair=None, remaining_s=None):
+    """The proposal-based provider seam shared by initial submissions and repairs."""
+    if config.get("workspace", True):
+        from swdb import provider_workspace
+        return provider_workspace.run(config, request, source, package, store, folder,
+                                      repair=repair, remaining_s=remaining_s)
+    prompt = prompt_for(request, source, package, repair=repair,
+                        edit_format=config.get("edit_format", "patch"))
+    response, meta, error = None, {}, None
+    try:
+        response, meta = interpret(config, prompt, folder, remaining_s=remaining_s)
+    except BaseException as exc:
+        error = exc
+    if provider_adapters.get(config).kind in provider_adapters.PINS:
+        from swdb import provider_audit
+        receipt = Path(folder) / "provider.json"
+        if receipt.is_file():
+            meta = json.loads(receipt.read_text())
+        network = (meta.get("guard_result") or {}).get("reasons", [])
+        audit = provider_audit.audit(Path(folder) / "stdout.txt", provider_adapters.get(config).kind,
+            Path(folder) / "workspace", [], Path(folder) / "provider-home", network_reasons=network)
+        if audit["commands"] or audit["file_accesses"]:
+            audit["passed"] = False
+            audit["state"] = "failed"
+            audit["reasons"].append("prompt-only provider emitted forbidden tool activity")
+        meta["audit"] = audit
+        (Path(folder) / "audit.json").write_text(json.dumps(audit, indent=2))
+        receipt.write_text(json.dumps(meta, indent=2))
+        actionable = any(v["code"] != "missing_event_log" for v in audit["violations"])
+        if not audit["passed"] and (error is None or actionable):
+            error = Failure("provider audit failed: " + "; ".join(audit["reasons"]))
+    if error is not None:
+        raise error
+    return response, meta
+
+
+def require_same_provider(original, selected):
+    """Refuse identity changes without inventing model settings for old receipts."""
+    if not original:
+        return
+    old = provider_adapters.identity(original)
+    new = provider_adapters.identity(selected)
+    for key in ("resolved_kind", "model", "effort"):
+        expected = original.get(key, old[key] if key == "resolved_kind" else None)
+        if expected is None and original.get("kind") in provider_adapters.PINS:
+            raise Failure(f"first attempt provider {key} is unknown; cannot verify repair identity")
+        if expected is not None and new[key] != expected:
+            raise Failure(f"repair provider {key} differs from the first attempt")

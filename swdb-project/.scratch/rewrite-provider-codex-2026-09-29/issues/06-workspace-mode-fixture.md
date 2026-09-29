@@ -2,7 +2,7 @@
 
 Created: 2026-09-29
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 03
 **Spec:** `../spec.md`
 
@@ -19,3 +19,7 @@ ticket 08 adds the guard; the fixture exercises the whole path.
 - [ ] The per-run provider home holds only a login-file copy, which is deleted when the session ends; the rest is retained.
 - [ ] The existing protections still apply (a protected-input change or a comment-only edit is rejected).
 - [ ] `workspace: false` behaves exactly as before, and real kinds in workspace mode refuse with a clear message until the guard exists.
+
+## Comments
+
+2026-09-29: Claimed by provider_workspace agent for workspace derivation, diff, audit, and public fixture coverage.

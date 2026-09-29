@@ -172,9 +172,16 @@ def interpreted_fixture(case):
     return request, submitted
 
 
-def test_interpreted_reuse_preserves_original_provider_time_and_repair_budget(reuse_case):
+@pytest.mark.parametrize('kind', ['claude', 'codex'])
+def test_interpreted_reuse_preserves_original_provider_time_and_repair_budget(reuse_case, kind):
     case = reuse_case
     request, submitted = interpreted_fixture(case)
+    submitted['provider']['kind'] = kind
+    submitted['attempts'][0]['provider']['provider']['kind'] = kind
+    if kind == 'codex':
+        pins = {'resolved_kind':'codex','model':'gpt-5.6-sol','effort':'xhigh'}
+        submitted['provider'].update(pins)
+        submitted['attempts'][0]['provider']['provider'].update(pins)
     result = campaign.validate_existing_candidate(request, submitted, case.candidate, case.source, case.package, case.worker.replay_candidate)
     assert result['repair_budget'] == {'max_repairs': 1, 'total_seconds': 60, 'used_seconds': 2.0, 'repairs': 0}
     assert result['gain_claim'] is False
