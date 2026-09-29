@@ -19,6 +19,14 @@ Current handoff sketches:
 
 These YAML files are **unfilled templates** for the proposed handoff. The [DX100 artifact BFS source is available locally](sources/README.md) at a recorded revision. Peter's preliminary sparse/dense v1.1 reports are now preserved under [examples/received](examples/received); their exact profiled source and raw logs remain unbound. Yan-Ru's source annotations and Eric's reviewed machine-readable catalog are still pending.
 
+## Software database (`swdb-project/`)
+
+Added 2026-09-29 ET. Yan-Ru's EvolveSWDB repository now lives in [`swdb-project/`](swdb-project/README.md), imported with `git subtree` so its full history is kept. It holds the kernel records, schemas, vocabularies, profiling scripts, and the `swdb` tool. Its own rules ([AGENTS.md](swdb-project/AGENTS.md), [CONTEXT.md](swdb-project/CONTEXT.md), [ADRs](swdb-project/docs/adr/)) apply inside that folder only.
+
+```sh
+cd swdb-project && python3 -m pytest -q
+```
+
 ## Working offline forward path
 
 The [offline pipeline](docs/offline-pipeline.md) now normalizes Peter's reports, selects exploratory candidates from a [provisional catalog seed](catalog/README.md), and generates hardware-request YAML plus diagrams. It is rule-based and makes **no LLM/API calls**. No accelerator, software rewrite, or evaluator has been run.
