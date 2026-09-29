@@ -1,8 +1,9 @@
 # Domain Docs
 
-Updated: 2026-09-22
+Updated: 2026-09-29
 
-This repo is **single-context**: one `CONTEXT.md` and one `docs/adr/` at the root.
+This project is **single-context**: one `CONTEXT.md` and one `docs/adr/` at the `swdb-project/`
+root (inside the ArchEvolve monorepo; not the ArchEvolve root).
 
 How the engineering skills should consume this repo's domain documentation when exploring the codebase.
 

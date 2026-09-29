@@ -1,6 +1,7 @@
 # Lab Hosts (mbit10) — Rules
 
-Adapted 2026-09-22 from the owner's MemAcc rules for EvolveSWDB.
+Adapted 2026-09-22 from the owner's MemAcc rules for EvolveSWDB. Updated 2026-09-29:
+EvolveSWDB now lives in the ArchEvolve monorepo as `swdb-project/`.
 
 > **Scope: durable rules only.** Volatile state (free space, leases, load, which branch
 > a checkout holds) is read from the host, never recorded here.
@@ -15,7 +16,7 @@ Adapted 2026-09-22 from the owner's MemAcc rules for EvolveSWDB.
 | Role | **the only lab host for EvolveSWDB** | frozen for another project; do not use |
 | SSH | alias `mbit10` (`mbit10.eecs.umich.edu`), user `yanruj` | — |
 | Work root | `/data1/yanruj/` — **never `$HOME`** | — |
-| EvolveSWDB clone | `/data1/yanruj/EvolveSWDB` | — |
+| ArchEvolve clone | `/data1/yanruj/ArchEvolve` (work in `swdb-project/`, branch `yanrujhou_main`) | — |
 
 The two hosts are separate machines with separate disks; nothing crosses except by git.
 

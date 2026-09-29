@@ -1,13 +1,13 @@
 # Profiling on mbit10
 
-Updated: 2026-09-28 (Eastern Time).
+Updated: 2026-09-29 (Eastern Time).
 
 [Guide](README.md) · [Setup and profiler details](reference/mbit10-profiling.md)
 
 Use mbit10 for EvolveSWDB measurements. The Mac is ARM; mbit10 is x86_64, and their
 measurements are not comparable. Before remote work, read the
-[host rules](../.claude/rules/remote_server.md) and
-[mbit10 procedure](../.claude/skills/mbit10-runs/SKILL.md).
+[host rules](../../.claude/rules/remote_server.md) and
+[mbit10 procedure](../../.claude/skills/mbit10-runs/SKILL.md).
 
 ## Run a profile
 

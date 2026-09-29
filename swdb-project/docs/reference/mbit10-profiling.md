@@ -2,7 +2,7 @@
 
 Navigation updated: 2026-09-28 (Eastern Time).
 
-Updated: 2026-09-22
+Updated: 2026-09-22; clone paths updated 2026-09-29 for the ArchEvolve monorepo.
 
 How `swdb profile` runs on the lab host. The always-on rules are in
 `.claude/rules/remote_server.md`; the host facts and the lane mechanism are in the
@@ -12,7 +12,7 @@ How `swdb profile` runs on the lab host. The always-on rules are in
 
 ```
 ssh mbit10
-cd /data1/yanruj && git clone git@github.com:ruchou/EvolveSWDB.git
+cd /data1/yanruj && git clone git@github.com:petecao/ArchEvolve.git   # EvolveSWDB is swdb-project/
 # the lane script: a small sparse clone of MemAcc on the owner's main branch
 git clone --depth 1 --branch yanrujhou_main --filter=blob:none --sparse \
     git@github.com:MaizeHPC/MemAcc.git Memacc-evolveswdb-lane
@@ -26,7 +26,8 @@ them. `profile_in_lane.sh` refuses to run if this clone's `socket_lane.sh` or
 ## Every session
 
 1. Sync code by git only: push from the Mac, then on mbit10
-   `cd /data1/yanruj/EvolveSWDB && git fetch && git checkout <commit>` and note
+   `cd /data1/yanruj/ArchEvolve && git fetch && git checkout <commit>`, then work in
+   `swdb-project/`, and note
    `git rev-parse --abbrev-ref HEAD` and `git rev-parse HEAD`. Never pull while a profile
    from this checkout is running.
 2. Check the lanes: `grep -H '"state"' /data1/yanruj/lact-host-lease/mbit10-evaluation*.meta.json`.

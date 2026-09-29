@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Run `swdb profile` for one implementation and input on mbit10, inside a socket lane.
-# Created 2026-09-22. Procedure: docs/mbit10-profiling.md. Rules: .claude/rules/remote_server.md.
+# Created 2026-09-22. Procedure: docs/mbit10-profiling.md. Rules: .claude/rules/remote_server.md at the ArchEvolve root.
 #
 # USAGE (on mbit10, from anywhere)
 #   bash scripts/mbit10/profile_in_lane.sh <node> <implementation> <input> [swdb profile options...]
@@ -75,8 +75,10 @@ mkdir -p "$RUNS/lanes"
 # 4. the checkout: report it; refuse local edits outside records/
 cd "$REPO"
 echo "EvolveSWDB $(git rev-parse --abbrev-ref HEAD) $(git rev-parse HEAD)"
-if git status --porcelain --untracked-files=no | grep -v ' records/' | grep -q .; then
-  git status --short --untracked-files=no >&2
+# 2026-09-29 ET: pathspec scoped to swdb-project/ (ArchEvolve monorepo); porcelain paths are
+# repo-root relative, so records/ is excluded by pathspec rather than by grep.
+if git status --porcelain --untracked-files=no -- . ':!records' | grep -q .; then
+  git status --short --untracked-files=no -- . ':!records' >&2
   die "tracked files outside records/ are modified"
 fi
 

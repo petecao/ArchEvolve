@@ -1,5 +1,8 @@
 # Agent Rules — EvolveSWDB
 
+Updated: 2026-09-29. EvolveSWDB is the `swdb-project/` folder of the ArchEvolve monorepo;
+the ArchEvolve root `AGENTS.md` sets branch and scope rules.
+
 ## Language and documents
 
 - Use the terms in `CONTEXT.md`. Respect the decisions in `docs/adr/`.
@@ -26,4 +29,5 @@ The five default role strings, used as the `Status:` value. See `docs/agents/tri
 
 ### Domain docs
 
-Single-context: `CONTEXT.md` and `docs/adr/` at the root. See `docs/agents/domain.md`.
+Single-context: `CONTEXT.md` and `docs/adr/` at the `swdb-project/` root (not the ArchEvolve
+root). See `docs/agents/domain.md`.

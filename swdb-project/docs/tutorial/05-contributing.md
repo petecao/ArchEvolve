@@ -1,6 +1,6 @@
 # 5. Contribute records and understand profiling
 
-Updated: 2026-09-28 (Eastern Time). Reading budget: 7 minutes.
+Updated: 2026-09-29 (Eastern Time). Reading budget: 7 minutes.
 
 [Tutorial](README.md) · [Previous](04-bfs-workflow.md)
 
@@ -111,8 +111,8 @@ avoid updating a checkout while it is measuring.
 The local Mac is ARM and mbit10 is x86_64. Local catalog exercises need neither
 OpenMP nor a simulator; running native or simulated workloads has additional
 toolchain and host prerequisites. Read the [profiling guide](../mbit10-profiling.md),
-[host rules](../../.claude/rules/remote_server.md), and
-[mbit10 procedure](../../.claude/skills/mbit10-runs/SKILL.md) before remote work.
+[host rules](../../../.claude/rules/remote_server.md), and
+[mbit10 procedure](../../../.claude/skills/mbit10-runs/SKILL.md) before remote work.
 
 ## Troubleshoot by the failing boundary
 

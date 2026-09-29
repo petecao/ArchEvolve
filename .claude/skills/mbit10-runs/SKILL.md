@@ -1,12 +1,13 @@
 ---
 name: mbit10-runs
-description: How to work ON the mbit10 lab host for EvolveSWDB — the connection check, host facts (CPU, disks, tools, what profiling is possible without counters), cloning and syncing EvolveSWDB, the two-lane socket dispatch procedure (MemAcc ADR 0010 leases), and the no-sudo measurement protocol. Load before SSHing to mbit10, capturing a machine record, or running any profile there. The always-on rules live in .claude/rules/remote_server.md.
+description: How to work ON the mbit10 lab host for EvolveSWDB — the connection check, host facts (CPU, disks, tools, what profiling is possible without counters), cloning and syncing the ArchEvolve monorepo (EvolveSWDB is its swdb-project/ folder), the two-lane socket dispatch procedure (MemAcc ADR 0010 leases), and the no-sudo measurement protocol. Load before SSHing to mbit10, capturing a machine record, or running any profile there. The always-on rules live in .claude/rules/remote_server.md.
 ---
 
 # mbit10 — Procedures
 
 Adapted 2026-09-22 from the owner's MemAcc `remote-mbit-runs` skill; MemAcc-only
-recipes (LLVM bridge, Kokkos, LACT, mbit9) were left out.
+recipes (LLVM bridge, Kokkos, LACT, mbit9) were left out. Updated 2026-09-29: EvolveSWDB
+moved into the ArchEvolve monorepo (`swdb-project/`); the old EvolveSWDB repo is retired.
 
 > Read `.claude/rules/remote_server.md` first. This file is the how-to. Facts below are
 > dated; re-check anything a decision depends on.
@@ -39,8 +40,8 @@ the sandbox disabled. Then, in the checkout you will use:
   host's L3 as its last level; callgrind, lackey, dhat, massif also installed),
   `/usr/bin/time`, `strace`, `ltrace`. Not installed: DynamoRIO, Pin, SDE (DynamoRIO can
   be unpacked from its GitHub release into `/data1/yanruj/` without sudo).
-- GitHub: the key `~/.ssh/github_memacc` authenticates as `ruchou`, so the private
-  EvolveSWDB repo can be cloned over SSH.
+- GitHub: the key `~/.ssh/github_memacc` authenticates as `ruchou`. Access to
+  `petecao/ArchEvolve` over that key is not yet verified (2026-09-29); check before cloning.
 
 ## Disks
 
@@ -50,12 +51,12 @@ the sandbox disabled. Then, in the checkout you will use:
 | `/data1` | 1.8 T | repos, builds, toolchains, and run output (24 G free on 2026-09-22) |
 | `/data` | 1.8 T | overflow for run output when `/data1` has under 20 G free |
 
-## Clone and sync EvolveSWDB
+## Clone and sync ArchEvolve
 
 ```
-cd /data1/yanruj && git clone git@github.com:ruchou/EvolveSWDB.git   # first time
-cd /data1/yanruj/EvolveSWDB && git fetch && git checkout <commit-or-branch>
-python3 -m swdb validate
+cd /data1/yanruj && git clone git@github.com:petecao/ArchEvolve.git   # first time
+cd /data1/yanruj/ArchEvolve && git fetch && git checkout <commit-or-yanrujhou_main>
+cd swdb-project && python3 -m swdb validate
 ```
 
 Code only arrives by git. Never edit records on the host and copy them back by hand;
@@ -75,7 +76,7 @@ At most two jobs at once, one per socket.
 3. **Dispatch** from that checkout's `AgenticRefiner/`:
    ```
    bash scripts/host/socket_lane.sh <node> <job-name> [--record <path.json>] -- \
-        bash -c 'cd /data1/yanruj/EvolveSWDB && <command>'
+        bash -c 'cd /data1/yanruj/ArchEvolve/swdb-project && <command>'
    ```
    It re-runs itself under `numactl --cpunodebind=<node> --membind=<node>`, takes the
    socket lease, records affinity, load, and policy, then runs the command. Options:
