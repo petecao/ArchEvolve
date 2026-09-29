@@ -70,11 +70,12 @@ print(json.dumps(results))
             adapter = provider_adapters.get(config)
             receipt["cli_version"] = adapter.version(config)
             prompt = "Read probe.cc, change main to return 1, compile it with g++ into build/probe, run it and confirm exit status 1. Work only here. Return interpretation and unresolved as JSON."
+            (folder / "prompt.txt").write_text(prompt)
             command = adapter.command(config, prompt, folder, SCHEMA)
         receipt["command"] = command
-        with (folder / "stdout.txt").open("w") as stdout, (folder / "stderr.txt").open("w") as stderr:
+        with (folder / "stdout.txt").open("w") as stdout, (folder / "stderr.txt").open("w") as stderr, (folder / "prompt.txt").open() if args.kind == "claude" else open(os.devnull) as stdin:
             child = subprocess.Popen(context["wrap_command"](command), cwd=workspace, env=context["env"],
-                                     stdin=subprocess.DEVNULL, stdout=stdout, stderr=stderr, start_new_session=True)
+                                     stdin=stdin, stdout=stdout, stderr=stderr, start_new_session=True)
             while child.poll() is None:
                 context["monitor"](child)
                 if time.monotonic() - started > 300:
@@ -87,7 +88,10 @@ print(json.dumps(results))
             receipt["checks"] = result
             receipt["passed"] = all(result[k] == "allowed" for k in ("inside_read", "allowed_tcp")) and all(result[k].startswith("blocked:") for k in ("outside_read", "outside_write", "outside_tcp"))
         elif args.kind != "probe":
-            receipt["passed"] = child.returncode == 0 and receipt["guard_audit"]["passed"]
+            from swdb import provider_audit
+            receipt["event_audit"] = provider_audit.audit(folder / "stdout.txt", args.kind, workspace,
+                ["probe.cc"], home, (login,), ["probe.cc"], network_reasons=receipt["guard_audit"]["reasons"])
+            receipt["passed"] = child.returncode == 0 and receipt["event_audit"]["passed"]
     except Exception as exc:
         receipt["passed"] = False
         receipt["reason"] = str(exc)
