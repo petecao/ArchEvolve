@@ -25,7 +25,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("kind", choices=("probe", "codex", "claude"))
     parser.add_argument("--runs-dir", type=Path, required=True)
+    parser.add_argument("--readonly-sqlite-home", action="store_true",
+                        help="Codex diagnostic: confine session state to an empty read-only guard folder")
     args = parser.parse_args()
+    if args.readonly_sqlite_home and args.kind != "codex":
+        parser.error("--readonly-sqlite-home is a Codex diagnostic")
     folder = args.runs_dir.resolve()
     folder.mkdir(parents=True, exist_ok=False)
     workspace, home = folder / "workspace", folder / "provider-home"
@@ -72,6 +76,11 @@ print(json.dumps(results))
             prompt = "Read probe.cc, change main to return 1, compile it with g++ into build/probe, run it and confirm exit status 1. Work only here. Return interpretation and unresolved as JSON."
             (folder / "prompt.txt").write_text(prompt)
             command = adapter.command(config, prompt, folder, SCHEMA)
+            if args.readonly_sqlite_home:
+                state = folder / "guard" / "ephemeral-state"
+                state.mkdir()
+                command[-1:-1] = ["-c", "sqlite_home=" + json.dumps(str(state))]
+                receipt["variant"] = {"sqlite_home": str(state), "writable": False}
         receipt["command"] = command
         with (folder / "stdout.txt").open("w") as stdout, (folder / "stderr.txt").open("w") as stderr, (folder / "prompt.txt").open() if args.kind == "claude" else open(os.devnull) as stdin:
             wrapped = context["wrap_command"](command)
