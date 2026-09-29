@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""T16 v3 post-batch comparisons and fresh-process retrieval. Created 2026-09-28 ET.
+"""T16 v4 (c2) post-batch comparisons and fresh-process retrieval. Created 2026-09-28 ET; c2 IDs 2026-09-29 ET.
 
 Usage: compare.py <runtime checkout>. The runtime checkout must hold the public
 records written by the three completed split jobs (M, S1, S2) in its records
@@ -7,7 +7,7 @@ folder. This script reads their completed series receipts, issues exactly two
 public compare-evaluations requests (artifact pair, matched control) and
 retrieves every result in fresh processes. It runs no execution, retries
 nothing and changes no protocol. An existing output folder or comparison ID is
-refused. The version-3 protocols have no region pairs, so no region packages
+refused. The version-4 protocols have no region pairs, so no region packages
 are passed.
 """
 import json
@@ -17,10 +17,10 @@ import sys
 
 ROOT = Path(sys.argv[1]).resolve() if len(sys.argv) == 2 else None
 RUNS = Path('/data/yanruj/EvolveSWDB_runs')
-JOBS = {'maa': 'bfs-t16-reference-m-simulator-batch-20260928-c1',
-        'artifact.scalar': 'bfs-t16-reference-s1-simulator-batch-20260928-c1',
-        'control.scalar': 'bfs-t16-reference-s2-simulator-batch-20260928-c1'}
-OUT = RUNS/'bfs-t16-reference-comparisons-20260928-c1'
+JOBS = {'maa': 'bfs-t16-reference-m-simulator-batch-20260929-c2',
+        'artifact.scalar': 'bfs-t16-reference-s1-simulator-batch-20260929-c2',
+        'control.scalar': 'bfs-t16-reference-s2-simulator-batch-20260929-c2'}
+OUT = RUNS/'bfs-t16-reference-comparisons-20260929-c2'
 
 
 def series(family):
@@ -49,7 +49,7 @@ def main():
     OUT.mkdir(exist_ok=False)
     summary = {'created': '2026-09-28', 'runtime': str(ROOT), 'comparisons': {}}
     for key in ('artifact', 'control'):
-        request = {'message_version': '1.0', 'id': f'bfs-t16-reference-20260928-c1.{key}.comparison', 'protocol': frozen[key],
+        request = {'message_version': '1.0', 'id': f'bfs-t16-reference-20260929-c2.{key}.comparison', 'protocol': frozen[key],
                    'baseline_evaluation': scalar[key]['aggregate'], 'candidate_evaluation': candidate[key],
                    'comparison_baseline': 'dx100-bfs-scalar'}
         path = OUT/(request['id'] + '.request.json')
