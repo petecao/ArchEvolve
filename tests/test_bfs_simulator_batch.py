@@ -223,7 +223,7 @@ def test_sequential_collection_stops_on_failure_and_keeps_first_logs(tmp_path, m
         destination = runs/row['id']/(row['id']+'.driver'); destination.mkdir(parents=True)
         ref(destination/'driver.json', child); out.write_text(json.dumps(child))
     monkeypatch.setattr(batch.lifecycle, 'run_stage', run)
-    monkeypatch.setattr(batch.lifecycle, 'validate_samples', lambda *args: {})
+    monkeypatch.setattr(batch.lifecycle, 'validate_samples', lambda *args, **kwargs: {})
     invoke = lambda: batch.collect_series(policy, approval, receipt, folder, runs, tmp_path/'records', 1,
                                           ledger, SimpleNamespace(finish=finish, budget=SimpleNamespace(path=tmp_path/'budget', binding='fixture')),
                                           lambda: len(calls)*batch.GIB)

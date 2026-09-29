@@ -31,7 +31,7 @@ from swdb import artifacts  # noqa: E402
 from swdb.store import Store  # noqa: E402
 
 KIND = batch.T16_KIND  # 2026-09-28: main() selects the job (b1, m, s1, s2)
-JOBS = {'b1': batch.T16_KIND, **{kind.rsplit('-', 1)[1]: kind for kind in batch.T16_SPLIT}}
+JOBS = {'b1': batch.T16_KIND, **{kind[len('t16-reference-'):]: kind for kind in batch.T16_SPLIT}}
 PROBE_ID = 'bfs-t16-r12-probe-20260927-b1'
 PROBE_WORKLOAD = 'bfs-20260925-kronecker14.d03827828666f7dd'
 PROBE_CASES = {

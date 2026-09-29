@@ -12,6 +12,7 @@ JOB=${JOB:-b1}
 case "$JOB" in
   b1) PLAN_ID=bfs-t16-reference-simulator-batch-20260927-b1 ;;
   m|s1|s2) PLAN_ID=bfs-t16-reference-$JOB-simulator-batch-20260928-c1 ;;
+  m-c2|s1-c2|s2-c2) PLAN_ID=bfs-t16-reference-${JOB%-c2}-simulator-batch-20260929-c2 ;;
   *) exit 64 ;;
 esac
 D=/data/yanruj/EvolveSWDB_runs/$PLAN_ID.dispatch

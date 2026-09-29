@@ -33,6 +33,9 @@ FORMAT = 'swdb.bfs.shared-cleanup.v1'
 MAX_GAP_SECONDS = 30
 SAMPLE_INTERVAL_SECONDS = 5
 SAMPLED_RSS_BYTES = 52 * 1024**3
+# 2026-09-29 (T16 c2): a plan may raise the sampled cap for a single-slot
+# uniform22 job up to this ceiling (one NUMA node holds about 62 GB).
+MAX_SAMPLED_RSS_BYTES = 56 * 1024**3
 
 
 def require(value, reason):
@@ -455,7 +458,7 @@ def sample_count_bound(started, finished):
     return max(20000, 2 * math.ceil(seconds / SAMPLE_INTERVAL_SECONDS) + 64)
 
 
-def validate_samples(path, started, finished, *, nested=False):
+def validate_samples(path, started, finished, *, nested=False, rss_limit=SAMPLED_RSS_BYTES):
     """Stream resource receipt consistency; this cannot detect unsampled peaks."""
     previous, count, peak = datetime.fromisoformat(started), 0, 0
     end = datetime.fromisoformat(finished)
@@ -482,7 +485,7 @@ def validate_samples(path, started, finished, *, nested=False):
                         ('pid','parent_pid','start_ticks','rss_pages','rss_bytes')) and row['pid'] > 0
                         and row['rss_bytes'] == row['rss_pages']*page, 'resource row arithmetic is invalid')
             require(type(sample['rss_bytes']) is int and sample['rss_bytes'] == sum(row['rss_bytes'] for row in rows)
-                    and sample['rss_bytes'] <= SAMPLED_RSS_BYTES, 'sampled whole-tree RSS exceeds its bound')
+                    and sample['rss_bytes'] <= rss_limit, 'sampled whole-tree RSS exceeds its bound')
             known.update(identities); require(len(known) <= MAX_IDENTITIES, 'retained resource identities exceeded')
             peak = max(peak,sample['rss_bytes']); previous=observed; count+=1
     require(count > 0 and 0 <= (end-previous).total_seconds() <= MAX_GAP_SECONDS,

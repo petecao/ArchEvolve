@@ -196,6 +196,8 @@ def main():
                         help='2026-09-28 (T16 low-storage): accelerated executions request only the unit '
                              'Start/End trace (verification.coverage false); tile-size and indirect '
                              'store observations are then unobserved, accelerator execution is not')
+    parser.add_argument('--sampled-rss-gib', type=int, default=52,
+                        help='2026-09-29: plan-declared whole-tree sampled RSS cap (52 default, at most 56)')
     parser.add_argument('--primary-only', action='store_true',
                         help='2026-09-28 (T16 v3): run only the timed primary per sample; no diagnostic '
                              'execution, region profile or profile package (frozen policy has no region pairs)')
@@ -242,6 +244,9 @@ def main():
         parser.error('this driver requires the mbit10 execution host')
     if not re.fullmatch(r'[a-z0-9][a-z0-9._-]*', args.id):
         parser.error('invalid record identifier')
+    if not 52 <= args.sampled_rss_gib <= lifecycle.MAX_SAMPLED_RSS_BYTES // 1024**3:
+        parser.error('sampled RSS cap must be 52-56 GiB')
+    rss_limit = args.sampled_rss_gib * 1024**3
     if args.shared_protocol and (not args.protocol or len(set(args.shared_protocol)) != len(args.shared_protocol)
                                  or args.protocol in args.shared_protocol):
         parser.error('shared protocols need a distinct primary frozen protocol')
@@ -258,7 +263,7 @@ def main():
     # ~900 s each); ceilings only, each series request states its own values.
     limits = {'total_seconds': (1, 864000 if args.author_binary else 86400),
               'checkpoint_seconds': (1, 3600), 'run_seconds': (1, 72000 if args.author_binary else 14400),
-              'diagnostic_seconds': (180, 86400 if args.author_binary else 14400), 'memory_gib': (1, 48),
+              'diagnostic_seconds': (180, 86400 if args.author_binary else 14400), 'memory_gib': (1, 54 if args.author_binary else 48),
               'profile_seconds': (1, 43200), 'package_seconds': (1, 43200), 'aggregate_seconds': (1, 43200),
               'storage_gib': (1, 32 if args.author_binary else 15),
               'batch_storage_gib': (1, 200 if args.author_binary else 60),
@@ -308,7 +313,7 @@ def main():
         receipt['owned_started'] = lifecycle.stamp()
         receipt['owned_supervision'] = {'format': 'swdb.bfs.simulator-supervision.v1',
             'cleanup_ledger': str(cleanup.path), 'cleanup_binding': cleanup.binding,
-            'sampled_tree_rss_bytes': lifecycle.SAMPLED_RSS_BYTES, 'maximum_gap_seconds': 30,
+            'sampled_tree_rss_bytes': rss_limit, 'maximum_gap_seconds': 30,
             'rss_source': lifecycle.RSS_SOURCE, 'hard_memory_quota': False}
 
     def save():
@@ -334,8 +339,8 @@ def main():
     def continuous_guard():
         remaining = check_bounds()
         sample = owned.sample()
-        if sample['rss_bytes'] > lifecycle.SAMPLED_RSS_BYTES:
-            raise ValueError('series sampled whole-tree RSS exceeded 52 GiB')
+        if sample['rss_bytes'] > rss_limit:
+            raise ValueError(f'series sampled whole-tree RSS exceeded {args.sampled_rss_gib} GiB')
         with (folder/'owned-resources.jsonl').open('a') as stream:
             stream.write(json.dumps(sample)+'\n')
         return remaining
@@ -625,7 +630,7 @@ def main():
                         receipt['owned_resource_artifact'] = {'path': str(samples), 'sha256': artifacts.file_hash(samples)}
                         try:
                             receipt['owned_resource_validation'] = lifecycle.validate_samples(samples,
-                                receipt['owned_started'], lifecycle.stamp())
+                                receipt['owned_started'], lifecycle.stamp(), rss_limit=rss_limit)
                         except BaseException as exc:
                             error = error or exc
                     try:
@@ -659,7 +664,8 @@ def main():
             save()
             try:
                 check_bounds()
-                lifecycle.validate_samples(folder/'owned-resources.jsonl', receipt['owned_started'], lifecycle.stamp())
+                lifecycle.validate_samples(folder/'owned-resources.jsonl', receipt['owned_started'], lifecycle.stamp(),
+                                           rss_limit=rss_limit)
                 if time.monotonic() > owned.budget.deadline: raise TimeoutError('shared deadline exceeded during finalization')
             except BaseException as exc:
                 receipt.update(state='failed', finalization_error=f'{type(exc).__name__}: {exc}'); save(); raise

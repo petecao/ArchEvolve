@@ -40,7 +40,7 @@ from swdb.store import Store
 
 ET = ZoneInfo('America/New_York')
 GIB = 1024**3
-PLAN_HASHES = {'t17-t20-routes-a3': '04e99a1875516fe80936a23301f85dfff4a91db2a2ce68e8ffe6570f4744653b', 't17-t20-routes-a2': '0782f3bff214cbaef20a0ef06710db98c8b0e0b9759a6860aac8ba0213b7cc77', 't17-t20-routes': '29d4adf356147e932a0c5654d0b447c7cfd4839b709c590c4313eb97fa1ca06f', 't15-pilot-b3': '85b0b76901b008b28fcce1da0245e98f4904ca8ee3a97edf4da1dc78397c4368', 't15-pilot-b2': '0545e3f47fa09feabd673fa1d4a69fb8326abe2691535e1b0dffab29ed3da3be', 't15-pilot': 'f515581f5ff0bc933a93eff3ad8e93b0dfcf58a960606c16f1505ca9fb878f8a', 't16-protocol-recovery': 'eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8', 't16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea', 't16-reference-m': 'c01004198e4be94b6b5df834bf35a3f568bafaa9bb0713cf5df73d432319f50f', 't16-reference-s1': '9d2961f946ad7de62a241087bf1069f33e514cd57bcd5fa6f2dfbb6b1041b801', 't16-reference-s2': 'd132d249f53f0e60612ec401dc00d40506efb5aa6b0042558cb287492924f6a6', 't16-reference': 'a6749593b06e983f6c13bc11940a5e0da37f2551f0271ec1cb912a2a0f7785ca'}
+PLAN_HASHES = {'t16-reference-m-c2': '56611edf9d13c4887b70f0966609482d073f6a5f6c23ad43cebc2e82b5855282', 't16-reference-s1-c2': 'df3c9554f3a234919a028e1b0887c0ac2632b85a671131f3c2d3428f0323639e', 't16-reference-s2-c2': '277ec003aa83de0b4eda628c8b12b42e969cc06de66eca89490d089917b7d926', 't17-t20-routes-a3': '04e99a1875516fe80936a23301f85dfff4a91db2a2ce68e8ffe6570f4744653b', 't17-t20-routes-a2': '0782f3bff214cbaef20a0ef06710db98c8b0e0b9759a6860aac8ba0213b7cc77', 't17-t20-routes': '29d4adf356147e932a0c5654d0b447c7cfd4839b709c590c4313eb97fa1ca06f', 't15-pilot-b3': '85b0b76901b008b28fcce1da0245e98f4904ca8ee3a97edf4da1dc78397c4368', 't15-pilot-b2': '0545e3f47fa09feabd673fa1d4a69fb8326abe2691535e1b0dffab29ed3da3be', 't15-pilot': 'f515581f5ff0bc933a93eff3ad8e93b0dfcf58a960606c16f1505ca9fb878f8a', 't16-protocol-recovery': 'eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8', 't16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea', 't16-reference-m': 'c01004198e4be94b6b5df834bf35a3f568bafaa9bb0713cf5df73d432319f50f', 't16-reference-s1': '9d2961f946ad7de62a241087bf1069f33e514cd57bcd5fa6f2dfbb6b1041b801', 't16-reference-s2': 'd132d249f53f0e60612ec401dc00d40506efb5aa6b0042558cb287492924f6a6', 't16-reference': 'a6749593b06e983f6c13bc11940a5e0da37f2551f0271ec1cb912a2a0f7785ca'}
 PILOT_KIND = 't15-pilot'
 PILOT_ID = 'bfs-t15-pilot-simulator-batch-20260927-b1'
 # 2026-09-27: b1 failed its first-pair 120-s profile gate; b2 is the fresh relaunch.
@@ -55,6 +55,10 @@ T16_POLICY = 't16_incremental_allocation.v1'
 T16_SPLIT = {'t16-reference-m': 'bfs-t16-reference-m-simulator-batch-20260928-c1',
              't16-reference-s1': 'bfs-t16-reference-s1-simulator-batch-20260928-c1',
              't16-reference-s2': 'bfs-t16-reference-s2-simulator-batch-20260928-c1'}
+# 2026-09-29: c2 (O3 verification, v4 protocols) after the c1 M drain hang.
+T16_SPLIT.update({'t16-reference-m-c2': 'bfs-t16-reference-m-simulator-batch-20260929-c2',
+                  't16-reference-s1-c2': 'bfs-t16-reference-s1-simulator-batch-20260929-c2',
+                  't16-reference-s2-c2': 'bfs-t16-reference-s2-simulator-batch-20260929-c2'})
 PILOT_PLANS.update(T16_SPLIT)
 # Incremental one-lane allocations: policy -> (kind, plan ID, flat preparation row).
 # 2026-09-28: T17/T20 controlled-simulator routes reuse the pilot lane-job design;
@@ -864,6 +868,13 @@ def lease_observation(machine, node):
     raise ValueError('other lease metadata and kernel lock disagree or did not stabilize')
 
 
+def rss_limit(plan):
+    """2026-09-29: plan-declared sampled whole-tree cap; 52 GiB unless raised (<= 56)."""
+    gib = plan['bounds'].get('sampled_tree_memory_gib', 52)
+    require(type(gib) is int and 52 <= gib <= lifecycle.MAX_SAMPLED_RSS_BYTES // GIB, 'sampled RSS cap must be 52-56 GiB')
+    return gib * GIB
+
+
 def series_command(plan, row, admission, config, runs, records, node, seconds, storage, cleanup=None, slots=None):
     b = plan['bounds']
     command = [admission['python']['path'], str(ROOT / 'scripts/bfs_simulator_series.py'),
@@ -893,6 +904,8 @@ def series_command(plan, row, admission, config, runs, records, node, seconds, s
         command += ['--trace-flags', plan['trace_flags']]
     if row.get('primary_only'):
         command.append('--primary-only')
+    if rss_limit(plan) != lifecycle.SAMPLED_RSS_BYTES:
+        command += ['--sampled-rss-gib', str(rss_limit(plan) // GIB)]
     if 'profile_seconds' in b:
         command += ['--profile-seconds', str(b['profile_seconds'])]
     if 'package_seconds' in b:
@@ -963,7 +976,7 @@ def validate_series_result(plan, row, admission, child, seconds, storage, store)
             'series trace transport differs from its explicit planned collector')
     supervision = child.get('owned_supervision', {})
     require(supervision.get('format') == 'swdb.bfs.simulator-supervision.v1'
-            and supervision.get('sampled_tree_rss_bytes') == lifecycle.SAMPLED_RSS_BYTES
+            and supervision.get('sampled_tree_rss_bytes') == rss_limit(plan)
             and supervision.get('maximum_gap_seconds') == 30
             and supervision.get('rss_source') == lifecycle.RSS_SOURCE
             and supervision.get('hard_memory_quota') is False
@@ -1129,7 +1142,8 @@ def collect_series(plan, admission, receipt, folder, runs, records, node, ledger
                 'series did not use this shared cleanup reserve')
         sample_ref = child['owned_resource_artifact']
         require(artifacts.file_hash(sample_ref['path']) == sample_ref['sha256'], 'series resource stream changed')
-        lifecycle.validate_samples(sample_ref['path'], child['owned_started'], child['owned_finished'])
+        lifecycle.validate_samples(sample_ref['path'], child['owned_started'], child['owned_finished'],
+                                   rss_limit=rss_limit(plan))
         validate_series_result(plan, row, admission, child, seconds, storage, Store(records))
         entry.update(state='complete', finished=now().isoformat(), receipt=child_ref)
         monitor()
@@ -1150,7 +1164,7 @@ def finalize_receipt(receipt, folder, runs, ledger, ledger_file):
             receipt['ledger_artifact'] = {'path': str(ledger_file), 'sha256': artifacts.file_hash(ledger_file)}
             if receipt.get('outer_started'):
                 receipt['resource_validation'] = lifecycle.validate_samples(ledger_file, receipt['outer_started'],
-                    now().isoformat(), nested=True)
+                    now().isoformat(), nested=True, rss_limit=rss_limit(receipt['plan']))
         # The second write retains the first post-persistence observation. Both
         # writes are checked afterward; failure must not leave a complete receipt.
         for _ in range(2):
@@ -1159,7 +1173,8 @@ def finalize_receipt(receipt, folder, runs, ledger, ledger_file):
             save_receipt(folder, receipt)
             observation()
             if receipt.get('outer_started'):
-                lifecycle.validate_samples(ledger_file, receipt['outer_started'], now().isoformat(), nested=True)
+                lifecycle.validate_samples(ledger_file, receipt['outer_started'], now().isoformat(), nested=True,
+                                           rss_limit=rss_limit(receipt['plan']))
     except BaseException as exc:
         receipt.update(state='failed', final_accounting_error=f'{type(exc).__name__}: {exc}',
                        finished=now().isoformat(), elapsed_seconds=time.monotonic() - ledger.started)
@@ -1236,7 +1251,7 @@ def main():
         require(slots.is_dir() and not slots.is_symlink(), 'pilot gem5 slot directory is missing')
         receipt['concurrency'] = {**plan['concurrency'], 'family': selected[0]['id'], 'lane_root': lane_root,
             'aggregate_storage_paths': list(map(str, aggregate_paths)), 'gem5_slot_dir': str(slots),
-            'lane_tree_sampled_rss_limit_bytes': lifecycle.SAMPLED_RSS_BYTES}
+            'lane_tree_sampled_rss_limit_bytes': rss_limit(plan)}
     save_receipt(folder, receipt)
     owned = guard = None
     budget_path = folder/'cleanup-ledger.json'
@@ -1266,13 +1281,13 @@ def main():
         sample = {**ledger.observation(raw), **(lease_observation(store.get('mbit10'), args.lane)
                   if store else {'lease_admission': 'record_store_loading'}),
                   'owned_processes': race_tolerant(owned.sample) if pilot else owned.sample()}
-        require(sample['owned_processes']['rss_bytes'] <= lifecycle.SAMPLED_RSS_BYTES,
+        require(sample['owned_processes']['rss_bytes'] <= rss_limit(plan),
                 'sampled whole-tree RSS exceeded 52 GiB')
         if pilot:
             lane_tree = race_tolerant(lane_sampler)
             sample.update(aggregate_raw_bytes=total, lane_tree_rss_bytes=lane_tree['rss_bytes'],
                           lane_tree_processes=len(lane_tree['processes']))
-            require(lane_tree['rss_bytes'] <= lifecycle.SAMPLED_RSS_BYTES,
+            require(lane_tree['rss_bytes'] <= rss_limit(plan),
                     'sampled whole-lane-tree RSS exceeded 52 GiB')
         with ledger_file.open('a') as stream:
             stream.write(json.dumps(sample) + '\n')
@@ -1343,7 +1358,7 @@ def main():
         except BaseException as exc:
             failed(exc, 'cleanup_accounting_error')
         if guard:
-            receipt['telemetry'] = {'sampled_rss_limit_bytes': lifecycle.SAMPLED_RSS_BYTES,
+            receipt['telemetry'] = {'sampled_rss_limit_bytes': rss_limit(plan),
                 'rss_source': lifecycle.RSS_SOURCE, 'maximum_gap_seconds': guard.maximum_gap_seconds,
                 'maximum_guard_seconds': guard.maximum_guard_seconds, 'hard_memory_quota': False}
         try:
