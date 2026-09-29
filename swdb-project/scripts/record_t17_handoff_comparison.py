@@ -10,7 +10,9 @@ import json
 import socket
 import subprocess
 import sys
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -33,6 +35,11 @@ CLAIM = (
 def require(condition, reason):
     if not condition:
         raise Failure(reason)
+
+
+def progress(message):
+    timestamp = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M ET")
+    print(f"{timestamp}: {message}", file=sys.stderr, flush=True)
 
 
 def record(store, identifier, kind):
@@ -100,7 +107,9 @@ def main():
     scalar = code[code.index("pvector<NodeID> DOBFS("):code.index("pvector<NodeID> DOBFSMAA(")]
     require("TDStepMAA(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);" in scalar
             and "wait_ready(tile5);" in code, "T17 source does not retain the documented author-path reuse and fix")
+    progress("Checking the retained exact-binary T17 companion and raw witness")
     ac10 = companion(store, closure, frozen)
+    progress("Companion check passed; preparing public family comparisons")
     results = []
     for family in ("uniform18", "kronecker18"):
         group = closure["groups"]["t17." + family]
@@ -135,14 +144,20 @@ def main():
         if existing:
             require(existing["request"] == request, "existing comparison has a different immutable request")
             result = existing
+            progress(f"{family}: reusing the existing exact-request comparison")
         else:
-            process = subprocess.run([sys.executable, "-B", "-m", "swdb", "compare-evaluations", str(request_path),
-                                      "--records", str(args.records), "--format", "json"],
-                                     cwd=ROOT, capture_output=True, text=True, timeout=7200)
-            (output / (family + ".stdout.json")).write_text(process.stdout)
-            (output / (family + ".stderr.txt")).write_text(process.stderr)
+            progress(f"{family}: submitting public compare-evaluations with retained raw evidence")
+            stdout_path = output / (family + ".stdout.json")
+            stderr_path = output / (family + ".stderr.txt")
+            # Direct files preserve diagnostics even if the bounded subprocess
+            # times out; no timing, parser, protocol, or request changes.
+            with stdout_path.open("w") as stdout, stderr_path.open("w") as stderr:
+                process = subprocess.run([sys.executable, "-B", "-m", "swdb", "compare-evaluations", str(request_path),
+                                          "--records", str(args.records), "--format", "json"],
+                                         cwd=ROOT, stdout=stdout, stderr=stderr, text=True, timeout=7200)
             require(process.returncode == 0, "compare-evaluations failed; raw command logs retained")
-            result = json.loads(process.stdout)
+            result = json.loads(stdout_path.read_text())
+        progress(f"{family}: decision={result['decision']['state']}, gain_claim={result['gain_claim']}")
         results.append({"family": family, "comparison": result["id"], "decision": result["decision"],
                         "gain_claim": result["gain_claim"], "metrics": result["metrics"]})
     summary = {"created": "2026-09-29", "protocol": PROTOCOL, "protocol_sha256": frozen["identity_sha256"],

@@ -50,6 +50,20 @@ the copied login file remains readable during the session; both residual risks
 are recorded in the guard policy. The login copy is deleted after every session.
 Real sessions fail closed when the guard or lane cannot be verified.
 
+The tracer is a child subreaper, so helpers that double-fork or start a new
+session remain in the observed tree. The observer pins PID plus kernel start time,
+uses pidfds where available, and stops owned descendants before the tracer.
+Only the original CLI and its exact installed, directly parented Codex service
+are exempt from the command timer; both remain in thread and memory accounting.
+The policy records the selected provider package installation root and cleanup
+receipts retain the observed identities and any surviving descendants.
+
+Event auditing checks direct shell inputs, explicit nested shell bodies, Glob
+search roots, executable paths and compiler file options. Unresolved substitutions,
+delegated execution and opaque inline interpreter programs fail closed. Ordinary
+workspace scripts and synthetic programs may run under the guard; auditing their
+invocation does not prove the semantics of their source.
+
 On Linux, the adapter can replace the official single-command Codex npm wrapper
 with its verified bundled native executable, including the pinned platform-package
 alias. The receipt preserves the requested command and records the actual argv,

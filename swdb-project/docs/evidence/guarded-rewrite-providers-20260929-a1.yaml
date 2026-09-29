@@ -1,0 +1,1223 @@
+{
+  "format": "swdb.guarded-rewrite-provider-evidence.v1",
+  "created": "2026-09-29",
+  "updated_et": "2026-09-29 19:39 ET",
+  "state": "validation_pending",
+  "host": "mbit10",
+  "scope": "Guard feasibility and actual provider-native correctness; no performance gain claim.",
+  "implementation_checkout": "0cc5f9d712d148a0fa158c8e5f4452576317429d",
+  "toy_turns": [
+    {
+      "kind": "codex",
+      "checkout": "dbaf1a7f39af28580ef4c7b3e2f9e6e060bc7e9b",
+      "cli_version": "codex-cli 0.153.0",
+      "returncode": 0,
+      "passed": true,
+      "wall_s": 14.745525480248034,
+      "guard_policy": {
+        "enforced": true,
+        "landlock_abi": 4,
+        "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 421)",
+        "read_roots": [
+          "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules",
+          "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/guard",
+          "/dev/null",
+          "/dev/random",
+          "/dev/urandom",
+          "/dev/zero",
+          "/etc/hosts",
+          "/etc/ld.so.cache",
+          "/etc/nsswitch.conf",
+          "/etc/passwd",
+          "/etc/ssl/certs",
+          "/etc/ssl/openssl.cnf",
+          "/proc/sys/vm/mmap_min_addr",
+          "/run/systemd/resolve/stub-resolv.conf",
+          "/usr",
+          "/usr/bin",
+          "/usr/lib",
+          "/usr/lib64",
+          "/usr/share/zoneinfo/America/Detroit"
+        ],
+        "runtime_self_reads": [
+          "maps",
+          "cgroup",
+          "stat",
+          "statm",
+          "status"
+        ],
+        "device_write_roots": [
+          "/dev/null"
+        ],
+        "execution_cpus": [
+          0
+        ],
+        "resource_scope": "provider process tree including its external strace launcher",
+        "write_roots": [
+          "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/workspace",
+          "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/provider-home"
+        ],
+        "tcp_connect_ports": [
+          443
+        ],
+        "inner_tcp_connect_ports": [],
+        "tcp_bind_ports": [],
+        "model_api": {
+          "hosts": [
+            "chatgpt.com",
+            "api.openai.com",
+            "auth.openai.com"
+          ],
+          "addresses": [
+            "104.18.32.47",
+            "104.18.41.241",
+            "162.159.140.245",
+            "172.64.146.15",
+            "172.64.155.209",
+            "172.66.0.243",
+            "2606:4700:4400::6812:29f1",
+            "2606:4700:4408::ac40:9bd1",
+            "2606:4700:7::f3",
+            "2a06:98c1:3101::6812:202f",
+            "2a06:98c1:310c::ac40:920f",
+            "2a06:98c1:58::f3"
+          ]
+        },
+        "login_path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/provider-home/auth.json",
+        "limits": {
+          "threads": 16,
+          "memory_bytes": 34359738368,
+          "command_seconds": 120,
+          "workspace_bytes": 5368709120
+        },
+        "residual_risks": [
+          "Landlock ABI 4 does not restrict UDP",
+          "login copy readable during session"
+        ],
+        "command_network_wrapper": false,
+        "session_state": {
+          "sqlite_home": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/guard/ephemeral-state",
+          "writable": false,
+          "ephemeral": true
+        }
+      },
+      "guard_audit": {
+        "passed": true,
+        "reasons": [],
+        "trace": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/network.trace"
+      },
+      "event_audit": {
+        "format": "swdb.provider-audit.v1",
+        "state": "passed",
+        "passed": true,
+        "events": 11,
+        "commands": 4,
+        "file_accesses": 2,
+        "reasons": [],
+        "violations": [],
+        "raw_log": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/stdout.txt",
+          "sha256": "dcccb03a62d55b2881795b6307a515ee8e5ee7075953f8f16a8fe4116c628293",
+          "bytes": 2506
+        }
+      },
+      "task": {
+        "source_changed": true,
+        "binary_exists": true
+      },
+      "raw_folder": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex",
+      "invocation": [
+        "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+        "exec",
+        "--model",
+        "gpt-5.6-sol",
+        "-c",
+        "model_reasoning_effort=\"xhigh\"",
+        "-c",
+        "web_search=\"disabled\"",
+        "-c",
+        "sqlite_home=\"/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/guard/ephemeral-state\"",
+        "-c",
+        "analytics.enabled=false",
+        "-c",
+        "otel.exporter=\"none\"",
+        "-c",
+        "otel.trace_exporter=\"none\"",
+        "-c",
+        "otel.metrics_exporter=\"none\"",
+        "-c",
+        "skills.bundled.enabled=false",
+        "-c",
+        "skills.include_instructions=false",
+        "-c",
+        "features.code_mode.direct_only_tool_namespaces=[\"functions\"]",
+        "-c",
+        "project_doc_max_bytes=0",
+        "--ignore-user-config",
+        "--ignore-rules",
+        "--ephemeral",
+        "--skip-git-repo-check",
+        "--dangerously-bypass-approvals-and-sandbox",
+        "--json",
+        "--output-schema",
+        "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/provider-home/output-schema.json",
+        "--output-last-message",
+        "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/provider-home/final-message.json",
+        "--disable",
+        "apps",
+        "--disable",
+        "plugins",
+        "--disable",
+        "remote_plugin",
+        "--disable",
+        "memories",
+        "--disable",
+        "multi_agent",
+        "--disable",
+        "multi_agent_v2",
+        "--disable",
+        "hooks",
+        "--disable",
+        "image_generation",
+        "--disable",
+        "view_image",
+        "--disable",
+        "browser_use",
+        "--disable",
+        "browser_use_external",
+        "--disable",
+        "browser_use_full_cdp_access",
+        "--disable",
+        "computer_use",
+        "--disable",
+        "in_app_browser",
+        "--disable",
+        "skill_search",
+        "--disable",
+        "skill_mcp_dependency_install",
+        "--disable",
+        "workspace_dependencies",
+        "--disable",
+        "shell_snapshot",
+        "--disable",
+        "shell_snapshot_v2",
+        "--disable",
+        "unified_exec"
+      ],
+      "lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "none",
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-09-29T23:23:35Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "swdb-provider-real-a16",
+        "lease_generation": 421,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 9.04,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-09-29T23:23:20Z"
+      },
+      "usage": {
+        "input_tokens": 31424,
+        "cached_input_tokens": 14976,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 394,
+        "reasoning_output_tokens": 20
+      },
+      "raw_artifacts": {
+        "receipt.json": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/receipt.json",
+          "bytes": 5803,
+          "sha256": "6b168d9ae5ba6092b01abf6b3110e0608e39ef1247b532c5f6810d1929679376"
+        },
+        "stdout.txt": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/stdout.txt",
+          "bytes": 2506,
+          "sha256": "dcccb03a62d55b2881795b6307a515ee8e5ee7075953f8f16a8fe4116c628293"
+        },
+        "stderr.txt": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/stderr.txt",
+          "bytes": 39,
+          "sha256": "1aa26269eb1cc57f86b235a03cda53c004edb5b1e9fc99d4da4f00843293d721"
+        },
+        "network.trace": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/network.trace",
+          "bytes": 506937,
+          "sha256": "c727a9e0fecd6d93fb4a3fc921e8b284183fd1b532307203f93b0c959469eca5"
+        },
+        "prompt.txt": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/prompt.txt",
+          "bytes": 173,
+          "sha256": "7a2bbad007f3cb4e58ccf382f06b71b29d08e438dd3ee6e13d2ef55bd52ed80e"
+        }
+      },
+      "login_copy_deleted": true
+    },
+    {
+      "kind": "claude",
+      "checkout": "119d918d88b7e16a7ede8599c88304e5bb5e8a9b",
+      "cli_version": "2.1.278 (Claude Code)",
+      "returncode": 0,
+      "passed": true,
+      "wall_s": 8.146294252946973,
+      "guard_policy": {
+        "enforced": true,
+        "landlock_abi": 4,
+        "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 415)",
+        "read_roots": [
+          "/data1/yanruj/.npm-global/lib/node_modules",
+          "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/guard",
+          "/dev/null",
+          "/dev/random",
+          "/dev/urandom",
+          "/dev/zero",
+          "/etc/hosts",
+          "/etc/ld.so.cache",
+          "/etc/nsswitch.conf",
+          "/etc/passwd",
+          "/etc/ssl/certs",
+          "/etc/ssl/openssl.cnf",
+          "/proc/sys/vm/mmap_min_addr",
+          "/run/systemd/resolve/stub-resolv.conf",
+          "/usr",
+          "/usr/bin",
+          "/usr/lib",
+          "/usr/lib64",
+          "/usr/share/zoneinfo/America/Detroit"
+        ],
+        "runtime_self_reads": [
+          "maps",
+          "cgroup",
+          "stat",
+          "statm",
+          "status"
+        ],
+        "device_write_roots": [
+          "/dev/null"
+        ],
+        "execution_cpus": [
+          0,
+          2
+        ],
+        "resource_scope": "provider process tree including its external strace launcher",
+        "write_roots": [
+          "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/workspace",
+          "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/provider-home"
+        ],
+        "tcp_connect_ports": [
+          443
+        ],
+        "inner_tcp_connect_ports": [],
+        "tcp_bind_ports": [],
+        "model_api": {
+          "hosts": [
+            "api.anthropic.com",
+            "claude.ai"
+          ],
+          "addresses": [
+            "160.79.104.10",
+            "2607:6bc0::10"
+          ]
+        },
+        "login_path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/provider-home/.credentials.json",
+        "limits": {
+          "threads": 16,
+          "memory_bytes": 34359738368,
+          "command_seconds": 120,
+          "workspace_bytes": 5368709120
+        },
+        "residual_risks": [
+          "Landlock ABI 4 does not restrict UDP",
+          "login copy readable during session"
+        ],
+        "command_network_wrapper": true,
+        "command_shell": "/bin/bash"
+      },
+      "guard_audit": {
+        "passed": true,
+        "reasons": [],
+        "trace": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/network.trace"
+      },
+      "event_audit": {
+        "format": "swdb.provider-audit.v1",
+        "state": "passed",
+        "passed": true,
+        "events": 144,
+        "commands": 1,
+        "file_accesses": 5,
+        "reasons": [],
+        "violations": [],
+        "raw_log": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/stdout.txt",
+          "sha256": "fe494b5af5cf4b3b5dde3160374389123eb140273dc46ec04a7dd630340b5170",
+          "bytes": 45624
+        }
+      },
+      "task": {
+        "source_changed": true,
+        "binary_exists": true
+      },
+      "raw_folder": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude",
+      "invocation": [
+        "/data1/yanruj/.npm-global/bin/claude",
+        "-p",
+        "--safe-mode",
+        "--tools",
+        "Read,Glob,Grep,Edit,Write,Bash",
+        "--strict-mcp-config",
+        "--mcp-config",
+        "{\"mcpServers\":{}}",
+        "--no-session-persistence",
+        "--output-format",
+        "stream-json",
+        "--verbose",
+        "--include-partial-messages",
+        "--json-schema",
+        "{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"interpretation\", \"unresolved\"], \"properties\": {\"interpretation\": {\"type\": \"string\"}, \"unresolved\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}}}",
+        "--max-budget-usd",
+        "5",
+        "--model",
+        "claude-sonnet-5-5",
+        "--effort",
+        "high",
+        "--permission-mode",
+        "bypassPermissions",
+        "--disable-slash-commands",
+        "--setting-sources",
+        ""
+      ],
+      "lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "none",
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-09-29T23:12:34Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "swdb-provider-real-a10",
+        "lease_generation": 415,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 2.3,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-09-29T23:12:20Z"
+      },
+      "usage": {
+        "input_tokens": 6,
+        "cache_creation_input_tokens": 1202,
+        "cache_read_input_tokens": 38111,
+        "output_tokens": 558,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 1202,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [],
+        "speed": "standard"
+      },
+      "raw_artifacts": {
+        "receipt.json": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/receipt.json",
+          "bytes": 3784,
+          "sha256": "2e0c6ab00ae3196fdd2b31ef431f9ebc2cca48bba2bcc79edfe2cefc768408c1"
+        },
+        "stdout.txt": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/stdout.txt",
+          "bytes": 45624,
+          "sha256": "fe494b5af5cf4b3b5dde3160374389123eb140273dc46ec04a7dd630340b5170"
+        },
+        "stderr.txt": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/stderr.txt",
+          "bytes": 84,
+          "sha256": "9d964e38782224607fa42ba370ebe77b63de1422e2752bb13e70edf98112e629"
+        },
+        "network.trace": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/network.trace",
+          "bytes": 402092,
+          "sha256": "5795e3cc11db6f2f2f32e512a6295f6bf35d497266c71773d55b6589ed5b1989"
+        },
+        "prompt.txt": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/prompt.txt",
+          "bytes": 173,
+          "sha256": "7a2bbad007f3cb4e58ccf382f06b71b29d08e438dd3ee6e13d2ef55bd52ed80e"
+        }
+      },
+      "login_copy_deleted": true
+    }
+  ],
+  "dx100_smoke": {
+    "lane": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "none",
+        "command": [
+          "timeout",
+          "-k",
+          "30",
+          "8500",
+          "bash",
+          "-c",
+          "cd /data1/yanruj/ArchEvolve/swdb-project\nexport PATH=/data1/yanruj/.npm-global/bin:/usr/bin:/bin\nexport PYTHONDONTWRITEBYTECODE=1 TMPDIR=/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/system-tmp CODEX_HOME=/data1/yanruj/.codex CLAUDE_CONFIG_DIR=/data1/yanruj/.claude\n(date -u; uptime; who; df -h /data1 /data; uname -a; git rev-parse HEAD; lscpu; numactl --hardware; cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor; cat /sys/devices/system/cpu/intel_pstate/no_turbo) > /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/environment.txt 2>&1\ntimeout -k 30 4200 python3 -B -m scripts.bfs_instruction_smoke --id provider-dx100-codex-20260929-a1 --runs-dir /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex --lane mbit10-evaluation-node0 --routes natural_language --kind codex > /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex.log 2>&1\ntimeout -k 30 4200 python3 -B -m scripts.bfs_instruction_smoke --id provider-dx100-claude-20260929-a1 --runs-dir /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude --lane mbit10-evaluation-node0 --routes natural_language --kind claude > /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude.log 2>&1"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-09-29T23:28:05Z",
+        "exit_code": 1,
+        "host": "mbit10",
+        "job": "swdb-provider-dx100-a1",
+        "lease_generation": 422,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 7.45,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-09-29T23:24:36Z"
+      }
+    },
+    "smoke_runs": [
+      {
+        "kind": "codex",
+        "proposal": "provider-dx100-codex-20260929-a1.natural-language.proposal",
+        "checkout": "dbaf1a7f39af28580ef4c7b3e2f9e6e060bc7e9b",
+        "pins": {
+          "resolved_kind": "codex",
+          "model": "gpt-5.6-sol",
+          "effort": "xhigh",
+          "cli_version": "codex-cli 0.153.0",
+          "budget_usd_enforced": false
+        },
+        "provider_wall_s": 51.26261004433036,
+        "returncode": 0,
+        "state": "completed",
+        "outcome": {
+          "state": "candidate_created",
+          "stage": "rewriting",
+          "reason": null
+        },
+        "audit": {
+          "format": "swdb.provider-audit.v1",
+          "state": "passed",
+          "passed": true,
+          "events": 19,
+          "commands": 10,
+          "file_accesses": 2,
+          "reasons": [],
+          "violations": [],
+          "raw_log": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+            "sha256": "18ffb5a54d5e36a022b0ac1a43c98c3e315d528455f5fa6728c84dac1b63492f",
+            "bytes": 32220
+          }
+        },
+        "guard_result": {
+          "passed": true,
+          "reasons": [],
+          "trace": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/network.trace"
+        },
+        "guard_policy": {
+          "enforced": true,
+          "landlock_abi": 4,
+          "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 422)",
+          "read_roots": [
+            "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules",
+            "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/guard",
+            "/dev/null",
+            "/dev/random",
+            "/dev/urandom",
+            "/dev/zero",
+            "/etc/hosts",
+            "/etc/ld.so.cache",
+            "/etc/nsswitch.conf",
+            "/etc/passwd",
+            "/etc/ssl/certs",
+            "/etc/ssl/openssl.cnf",
+            "/proc/sys/vm/mmap_min_addr",
+            "/run/systemd/resolve/stub-resolv.conf",
+            "/usr",
+            "/usr/bin",
+            "/usr/lib",
+            "/usr/lib64",
+            "/usr/share/zoneinfo/America/Detroit"
+          ],
+          "runtime_self_reads": [
+            "maps",
+            "cgroup",
+            "stat",
+            "statm",
+            "status"
+          ],
+          "device_write_roots": [
+            "/dev/null"
+          ],
+          "execution_cpus": [
+            0
+          ],
+          "resource_scope": "provider process tree including its external strace launcher",
+          "write_roots": [
+            "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/workspace",
+            "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/provider-home"
+          ],
+          "tcp_connect_ports": [
+            443
+          ],
+          "inner_tcp_connect_ports": [],
+          "tcp_bind_ports": [],
+          "model_api": {
+            "hosts": [
+              "chatgpt.com",
+              "api.openai.com",
+              "auth.openai.com"
+            ],
+            "addresses": [
+              "104.18.32.47",
+              "104.18.41.241",
+              "162.159.140.245",
+              "172.64.146.15",
+              "172.64.155.209",
+              "172.66.0.243",
+              "2606:4700:4400::6812:29f1",
+              "2606:4700:4408::ac40:9bd1",
+              "2606:4700:7::f3",
+              "2a06:98c1:3101::6812:202f",
+              "2a06:98c1:310c::ac40:920f",
+              "2a06:98c1:58::f3"
+            ]
+          },
+          "login_path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/provider-home/auth.json",
+          "limits": {
+            "threads": 16,
+            "memory_bytes": 34359738368,
+            "command_seconds": 120,
+            "workspace_bytes": 5368709120
+          },
+          "residual_risks": [
+            "Landlock ABI 4 does not restrict UDP",
+            "login copy readable during session"
+          ],
+          "command_network_wrapper": false,
+          "session_state": {
+            "sqlite_home": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/guard/ephemeral-state",
+            "writable": false,
+            "ephemeral": true
+          }
+        },
+        "summary": [
+          {
+            "route": "natural_language",
+            "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+            "provider_kind": "codex",
+            "proposal": "provider-dx100-codex-20260929-a1.natural-language.proposal",
+            "evaluation": "provider-dx100-codex-20260929-a1.natural-language.evaluation",
+            "correctness": "passed",
+            "accepted": true,
+            "trials": 3,
+            "gain_claim": false,
+            "records_retrieved": 10
+          }
+        ],
+        "usage": {
+          "input_tokens": 100164,
+          "cached_input_tokens": 82176,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2084,
+          "reasoning_output_tokens": 895
+        },
+        "login_copy_deleted": true,
+        "raw_artifacts": {
+          "provider.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/provider.json",
+            "bytes": 23058,
+            "sha256": "218ea4a0d37c4b6156f703934a5384f9b9d1d3d1fee1cf287d0cf2118c0db6eb"
+          },
+          "workspace.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/workspace.json",
+            "bytes": 4403,
+            "sha256": "333a917c872b2099a3db82663d7d129307145ca5158ae5b9a92819a91ac18709"
+          },
+          "stdout.txt": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+            "bytes": 32220,
+            "sha256": "18ffb5a54d5e36a022b0ac1a43c98c3e315d528455f5fa6728c84dac1b63492f"
+          },
+          "stderr.txt": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/stderr.txt",
+            "bytes": 39,
+            "sha256": "1aa26269eb1cc57f86b235a03cda53c004edb5b1e9fc99d4da4f00843293d721"
+          },
+          "audit.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/audit.json",
+            "bytes": 458,
+            "sha256": "83ba783f818173e860538cf9c81d6b9fc84209426a6a2d8a4f3550a27e85f191"
+          },
+          "guard-audit.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/guard-audit.json",
+            "bytes": 204,
+            "sha256": "79973b271138c21e46b4a12d32fd7d44ee27b77c82ced04b895bbfd90d2aed74"
+          },
+          "network.trace": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/network.trace",
+            "bytes": 24030,
+            "sha256": "1c77a42c7e7bb88b42e46ccee46292085c49ecd5352a734b1881311c9b65205b"
+          }
+        },
+        "candidate": "provider-dx100-codex-20260929-a1.natural-language.proposal.candidate-1",
+        "candidate_artifact": {
+          "path": "/data1/yanruj/EvolveSWDB_sources/398895cb3064c446/provider-dx100-codex-20260929-a1.natural-language.proposal/source",
+          "sha256": "8917adf523b122154df153b24744485bb6dbcc9c6a35134f1eebb724792917de",
+          "files": [
+            {
+              "path": "LICENSE",
+              "sha256": "b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2",
+              "bytes": 1208,
+              "executable": false
+            },
+            {
+              "path": "PROVENANCE.md",
+              "sha256": "3009aa7f259294b67bfbbee311ead96d66050a86f1a7bfde715556f10174e6c6",
+              "bytes": 619,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/API/MAA.hpp",
+              "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+              "bytes": 1323,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/API/MAA_atomics.hpp",
+              "sha256": "896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a",
+              "bytes": 845,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/API/MAA_functional.hpp",
+              "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc",
+              "bytes": 25345,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/API/MAA_gem5.hpp",
+              "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+              "bytes": 27473,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/API/MAA_gem5_magic.hpp",
+              "sha256": "e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32",
+              "bytes": 9802,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/API/MAA_utility.hpp",
+              "sha256": "3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e",
+              "bytes": 786,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/LICENSE",
+              "sha256": "bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3",
+              "bytes": 1499,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/benchmark.h",
+              "sha256": "87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f",
+              "bytes": 3565,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/bfs.cc",
+              "sha256": "295ecc37b50cd98472376d6cfbff0299c57ecb729ac0cffaee6a3c1f83413956",
+              "bytes": 9287,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/bitmap.h",
+              "sha256": "6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465",
+              "bytes": 1706,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/builder.h",
+              "sha256": "2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01",
+              "bytes": 16778,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/command_line.h",
+              "sha256": "de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2",
+              "bytes": 8511,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/generator.h",
+              "sha256": "24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe",
+              "bytes": 6418,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/graph.h",
+              "sha256": "79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0",
+              "bytes": 8276,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/platform_atomics.h",
+              "sha256": "9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd",
+              "bytes": 4198,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/pvector.h",
+              "sha256": "b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d",
+              "bytes": 4265,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/reader.h",
+              "sha256": "951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1",
+              "bytes": 9268,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/sliding_queue.h",
+              "sha256": "3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c",
+              "bytes": 2502,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/timer.h",
+              "sha256": "3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb",
+              "bytes": 1161,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/util.h",
+              "sha256": "a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6",
+              "bytes": 1953,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/writer.h",
+              "sha256": "3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea",
+              "bytes": 2898,
+              "executable": false
+            },
+            {
+              "path": "include/gem5/asm/generic/m5ops.h",
+              "sha256": "28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d",
+              "bytes": 5479,
+              "executable": false
+            },
+            {
+              "path": "include/gem5/m5ops.h",
+              "sha256": "bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8",
+              "bytes": 3937,
+              "executable": false
+            }
+          ]
+        },
+        "evaluation_metadata": {
+          "id": "provider-dx100-codex-20260929-a1.natural-language.evaluation",
+          "correctness": {
+            "state": "passed",
+            "checks": [
+              {
+                "passed": true,
+                "reason": null,
+                "reachable_vertices": 6,
+                "source": 0,
+                "source_position": 0,
+                "repetition": 0,
+                "trial": 0,
+                "output_sha256": "24351e0895b5d479c9260a7a74d78324c8271751e46cde57c0fa6463775932a3",
+                "binary_sha256": "e93c5a7e32953c41af4f3800c703d6db3f90b569cebd4a75606f44fe578791ac",
+                "graph_sha256": "3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7",
+                "verifier": "swdb.bfs.structural.v1"
+              },
+              {
+                "passed": true,
+                "reason": null,
+                "reachable_vertices": 3,
+                "source": 3,
+                "source_position": 1,
+                "repetition": 0,
+                "trial": 1,
+                "output_sha256": "2b0e8f3fdb726281490be9532a317c145c60fdbcc9cbf6a0d24591465769070e",
+                "binary_sha256": "e93c5a7e32953c41af4f3800c703d6db3f90b569cebd4a75606f44fe578791ac",
+                "graph_sha256": "3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7",
+                "verifier": "swdb.bfs.structural.v1"
+              },
+              {
+                "passed": true,
+                "reason": null,
+                "reachable_vertices": 1,
+                "source": 8,
+                "source_position": 2,
+                "repetition": 0,
+                "trial": 2,
+                "output_sha256": "1b66b285e0e6da77004d43260a3a9a9c9c2ec6d81eb8b1c77d80b551af80bda5",
+                "binary_sha256": "e93c5a7e32953c41af4f3800c703d6db3f90b569cebd4a75606f44fe578791ac",
+                "graph_sha256": "3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7",
+                "verifier": "swdb.bfs.structural.v1"
+              }
+            ]
+          },
+          "build": {
+            "directory": "/data1/yanruj/EvolveSWDB_builds/provider-dx100-codex-20260929-a1.natural-language.evaluation",
+            "compiler": "/usr/bin/g++",
+            "flags": [
+              "-std=c++11",
+              "-O3",
+              "-Wall",
+              "-fopenmp",
+              "-pthread",
+              "-DFUNC"
+            ],
+            "command": [
+              "/usr/bin/g++",
+              "-std=c++11",
+              "-O3",
+              "-Wall",
+              "-fopenmp",
+              "-pthread",
+              "-DFUNC",
+              "-I/data1/yanruj/EvolveSWDB_sources/398895cb3064c446/provider-dx100-codex-20260929-a1.natural-language.proposal/source/benchmarks/gapbs/src",
+              "-I/data1/yanruj/EvolveSWDB_sources/398895cb3064c446/provider-dx100-codex-20260929-a1.natural-language.proposal/source/benchmarks/API",
+              "/data1/yanruj/EvolveSWDB_builds/provider-dx100-codex-20260929-a1.natural-language.evaluation/native_driver.cc",
+              "-o",
+              "/data1/yanruj/EvolveSWDB_builds/provider-dx100-codex-20260929-a1.natural-language.evaluation/bfs-native"
+            ],
+            "wrapper_sha256": "0b4e3e292a228da513fe770adab2b7120eb782b09c3db72fb6470a8e2025be8f",
+            "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95",
+            "compiler_version": [
+              "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+              "Copyright (C) 2023 Free Software Foundation, Inc."
+            ],
+            "binary": "/data1/yanruj/EvolveSWDB_builds/provider-dx100-codex-20260929-a1.natural-language.evaluation/bfs-native",
+            "binary_sha256": "e93c5a7e32953c41af4f3800c703d6db3f90b569cebd4a75606f44fe578791ac",
+            "execution_environment": {
+              "OMP_NUM_THREADS": "1",
+              "OMP_DYNAMIC": "FALSE",
+              "OMP_PROC_BIND": "close",
+              "OMP_PLACES": "cores"
+            },
+            "native_runtime": {
+              "version": 1,
+              "environment": {
+                "OMP_NUM_THREADS": "1",
+                "OMP_DYNAMIC": "FALSE",
+                "OMP_PROC_BIND": "close",
+                "OMP_PLACES": "cores",
+                "OMP_THREAD_LIMIT": null,
+                "OMP_WAIT_POLICY": null,
+                "GOMP_SPINCOUNT": null,
+                "GOMP_CPU_AFFINITY": null
+              }
+            }
+          },
+          "timing": [
+            {
+              "source": 0,
+              "source_position": 0,
+              "repetition": 0,
+              "duration_s": 0.000245729,
+              "roi": "bfs.complete_call.v1",
+              "basis": "measured",
+              "quantity": "native_roi_wall_seconds",
+              "binary_sha256": "e93c5a7e32953c41af4f3800c703d6db3f90b569cebd4a75606f44fe578791ac",
+              "output": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.evaluation/trial-0-0.json",
+              "output_sha256": "24351e0895b5d479c9260a7a74d78324c8271751e46cde57c0fa6463775932a3",
+              "verified": true,
+              "evidence_kind": "execution"
+            },
+            {
+              "source": 3,
+              "source_position": 1,
+              "repetition": 0,
+              "duration_s": 0.000249883,
+              "roi": "bfs.complete_call.v1",
+              "basis": "measured",
+              "quantity": "native_roi_wall_seconds",
+              "binary_sha256": "e93c5a7e32953c41af4f3800c703d6db3f90b569cebd4a75606f44fe578791ac",
+              "output": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.evaluation/trial-0-1.json",
+              "output_sha256": "2b0e8f3fdb726281490be9532a317c145c60fdbcc9cbf6a0d24591465769070e",
+              "verified": true,
+              "evidence_kind": "execution"
+            },
+            {
+              "source": 8,
+              "source_position": 2,
+              "repetition": 0,
+              "duration_s": 0.000095026,
+              "roi": "bfs.complete_call.v1",
+              "basis": "measured",
+              "quantity": "native_roi_wall_seconds",
+              "binary_sha256": "e93c5a7e32953c41af4f3800c703d6db3f90b569cebd4a75606f44fe578791ac",
+              "output": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.evaluation/trial-0-2.json",
+              "output_sha256": "1b66b285e0e6da77004d43260a3a9a9c9c2ec6d81eb8b1c77d80b551af80bda5",
+              "verified": true,
+              "evidence_kind": "execution"
+            }
+          ],
+          "lane": null,
+          "environment": null
+        }
+      },
+      {
+        "kind": "claude",
+        "proposal": "provider-dx100-claude-20260929-a1.natural-language.proposal",
+        "checkout": "dbaf1a7f39af28580ef4c7b3e2f9e6e060bc7e9b",
+        "pins": {
+          "resolved_kind": "claude",
+          "model": "claude-sonnet-5-5",
+          "effort": "high",
+          "cli_version": "2.1.278 (Claude Code)",
+          "budget_usd_enforced": true
+        },
+        "provider_wall_s": 0.5755291050300002,
+        "returncode": 1,
+        "state": "failed",
+        "outcome": {
+          "state": "failed",
+          "stage": "rewriting",
+          "reason": "rewrite provider exited 1; retained /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1"
+        },
+        "audit": {
+          "format": "swdb.provider-audit.v1",
+          "state": "passed",
+          "passed": true,
+          "events": 4,
+          "commands": 0,
+          "file_accesses": 0,
+          "reasons": [],
+          "violations": [],
+          "raw_log": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+            "sha256": "07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa",
+            "bytes": 3165
+          }
+        },
+        "guard_result": {
+          "passed": true,
+          "reasons": [],
+          "trace": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/network.trace"
+        },
+        "guard_policy": {
+          "enforced": true,
+          "landlock_abi": 4,
+          "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 422)",
+          "read_roots": [
+            "/data1/yanruj/.npm-global/lib/node_modules",
+            "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/guard",
+            "/dev/null",
+            "/dev/random",
+            "/dev/urandom",
+            "/dev/zero",
+            "/etc/hosts",
+            "/etc/ld.so.cache",
+            "/etc/nsswitch.conf",
+            "/etc/passwd",
+            "/etc/ssl/certs",
+            "/etc/ssl/openssl.cnf",
+            "/proc/sys/vm/mmap_min_addr",
+            "/run/systemd/resolve/stub-resolv.conf",
+            "/usr",
+            "/usr/bin",
+            "/usr/lib",
+            "/usr/lib64",
+            "/usr/share/zoneinfo/America/Detroit"
+          ],
+          "runtime_self_reads": [
+            "maps",
+            "cgroup",
+            "stat",
+            "statm",
+            "status"
+          ],
+          "device_write_roots": [
+            "/dev/null"
+          ],
+          "execution_cpus": [
+            0
+          ],
+          "resource_scope": "provider process tree including its external strace launcher",
+          "write_roots": [
+            "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/workspace",
+            "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/provider-home"
+          ],
+          "tcp_connect_ports": [
+            443
+          ],
+          "inner_tcp_connect_ports": [],
+          "tcp_bind_ports": [],
+          "model_api": {
+            "hosts": [
+              "api.anthropic.com",
+              "claude.ai"
+            ],
+            "addresses": [
+              "160.79.104.10",
+              "2607:6bc0::10"
+            ]
+          },
+          "login_path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/provider-home/.credentials.json",
+          "limits": {
+            "threads": 16,
+            "memory_bytes": 34359738368,
+            "command_seconds": 120,
+            "workspace_bytes": 5368709120
+          },
+          "residual_risks": [
+            "Landlock ABI 4 does not restrict UDP",
+            "login copy readable during session"
+          ],
+          "command_network_wrapper": true,
+          "command_shell": "/bin/bash"
+        },
+        "summary": [
+          {
+            "route": "natural_language",
+            "stage": "interpretation",
+            "proposal": "provider-dx100-claude-20260929-a1.natural-language.proposal",
+            "outcome": {
+              "state": "failed",
+              "stage": "rewriting",
+              "reason": "rewrite provider exited 1; retained /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1"
+            }
+          }
+        ],
+        "usage": {
+          "output_tokens_details": {
+            "thinking_tokens": 0
+          },
+          "input_tokens": 0,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "output_tokens": 0,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [],
+          "speed": "standard"
+        },
+        "login_copy_deleted": true,
+        "raw_artifacts": {
+          "provider.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/provider.json",
+            "bytes": 15043,
+            "sha256": "e498339819ef7213b3837ae53ea23846980767899d2d7f87d03dad4a1f71b1e0"
+          },
+          "workspace.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/workspace.json",
+            "bytes": 4408,
+            "sha256": "4835ca10f42f58fa0cc22a5dab8879215e168c34f8d09acf4dfe0de722c3c2b6"
+          },
+          "stdout.txt": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+            "bytes": 3165,
+            "sha256": "07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa"
+          },
+          "stderr.txt": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stderr.txt",
+            "bytes": 84,
+            "sha256": "9d964e38782224607fa42ba370ebe77b63de1422e2752bb13e70edf98112e629"
+          },
+          "audit.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/audit.json",
+            "bytes": 457,
+            "sha256": "47e46e51bd69b21d1a40fc13d701ddfabf1f35da7c52a6267cf964814c4ccb94"
+          },
+          "guard-audit.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/guard-audit.json",
+            "bytes": 206,
+            "sha256": "3323af979efe98d230e2ed588304be6d06c94d85bceb470d6c7759a79bfd1923"
+          },
+          "network.trace": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/network.trace",
+            "bytes": 1940,
+            "sha256": "3e4cb12d7f1f2e8ce76fe7c105ff547079984faf529b3ffa74a7d2364d81b44d"
+          }
+        },
+        "failure_message": "Failed to authenticate: OAuth session expired and could not be refreshed"
+      }
+    ]
+  },
+  "linux_validation": {
+    "state": "running",
+    "raw_folder": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5",
+    "command": "python -B -m pytest tests/test_provider_guard.py tests/test_provider_workspace.py tests/test_provider_pins.py -q -p no:cacheprovider --basetemp=<raw>/tests --tb=short --junitxml=<raw>/pytest.xml",
+    "retained_reaudit": "<raw>/retained-reaudit.json"
+  },
+  "local_validation": {
+    "state": "running",
+    "full_regression_started_et": "2026-09-29 19:14 ET",
+    "log": ".scratch/rewrite-provider-codex-2026-09-29/validation/full-regression-final.log",
+    "note": "The long run began before the final audit additions; separately recorded fresh targeted cases and final Linux collection cover those changes.",
+    "targeted_workspace": {
+      "passed": 114,
+      "seconds": 232.67,
+      "final_targeted_passed": 24,
+      "final_targeted_deselected": 98,
+      "final_targeted_seconds": 48.41
+    },
+    "targeted_guard": {
+      "passed": 16,
+      "skipped_linux_only": 8,
+      "seconds": 262.32
+    }
+  },
+  "primary_cli_reference": {
+    "repository": "https://github.com/openai/codex",
+    "tag": "rust-v0.153.0",
+    "commit": "41e22fee981a63b3698df7ed36bad393cda24715",
+    "paths": [
+      "codex-rs/core/src/tools/spec_plan.rs",
+      "codex-rs/exec/src/lib.rs"
+    ],
+    "findings": [
+      "CodeModeOnly can expose ordinary tools directly through code_mode.direct_only_tool_namespaces.",
+      "--ephemeral does not itself disable global SQLite initialization.",
+      "No verified Codex command-prefix override; explicit no-wrapper fallback is retained."
+    ]
+  },
+  "limits": {
+    "threads": 16,
+    "memory_bytes": 34359738368,
+    "command_seconds": 120,
+    "workspace_bytes": 5368709120,
+    "scope": "Entire provider tree including external tracer; exact installed persistent Codex service remains in aggregate accounting."
+  },
+  "limitations": [
+    "Codex DX100 native correctness is source-0/3/8 with one trial per source; no performance claim.",
+    "Claude DX100 attempt failed before tools because the OAuth session expired; no Claude BFS candidate or correctness claim.",
+    "Earlier Claude toy edit/build/run completed under guard on the recorded two-CPU subset; current production uses one CPU.",
+    "Landlock ABI 4 leaves UDP unrestricted; login copy remains readable during the session and is deleted afterwards.",
+    "Codex commands inherit outer TCP443 permission; independent model-API connection audit plus event-command audit is the accepted fallback.",
+    "Codex JSON command_execution items omit cwd; audit uses workspace-root semantics and explicitly observable cd commands.",
+    "Resource excess and audit failure are retained, never omitted as noise."
+  ]
+}

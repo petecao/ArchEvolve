@@ -104,22 +104,28 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
             return token in separators or bool(re.fullmatch(r"(?:&&|\|\||[;|&\n])+", token))
 
         bodies = set()
+        operands = set()
+        system_bins = tuple(Path(p).resolve() for p in ("/usr/bin", "/bin", "/usr/local/bin"))
+        compiler_names = ("cc", "c++", "gcc", "g++", "clang", "clang++", "icc", "icpc", "icx", "icpx",
+                          "gfortran", "flang", "flang-new", "nvcc", "hipcc", "mpicc", "mpicxx", "mpic++")
+        compiler_pattern = r"(?:[\w.+-]+-)?(?:" + "|".join(re.escape(n) for n in compiler_names) + r")(?:-\d+(?:\.\d+)*)?"
+        compiler_flags = ("--sysroot", "-include", "-imacros", "-isystem", "-iquote", "-idirafter", "-isysroot", "-I", "-L", "-o")
         start, executable, command_index, prefix = True, None, 0, None
         # Command paths are checked as well as file-tool paths. Shell redirections
         # and relative traversal count as accesses; system executable paths do not.
         for index, token in enumerate(tokens):
-            if index in bodies:
+            if index in bodies or index in operands:
                 continue
             if separator(token):
                 start, executable, prefix = True, None, None
                 continue
-            if depth and (token in {"{", "}"} or token.startswith("<<")
-                          or re.fullmatch(r"[();<>|&\n]+", token) and any(c in token for c in "()")
-                          or "$(" in token or "`" in token):
+            if (token in {"{", "}"} or token.startswith("<<")
+                    or re.fullmatch(r"[();<>|&\n]+", token) and any(c in token for c in "()")
+                    or "$(" in token or "`" in token):
                 fail("unparsed_command", "provider shell body has unsupported dynamic syntax", event)
-            if depth and start and (token in {"<", ">", ">>", "<>"}
-                                    or token.isdigit() and index + 1 < len(tokens)
-                                    and tokens[index + 1] in {"<", ">", ">>", "<>"}):
+            if start and (token in {"<", ">", ">>", "<>"}
+                          or token.isdigit() and index + 1 < len(tokens)
+                          and tokens[index + 1] in {"<", ">", ">>", "<>"}):
                 fail("unparsed_command", "provider shell body has an unsupported leading redirection", event)
             assignment = start and re.fullmatch(r"[A-Za-z_]\w*=.*", token, re.S)
             if assignment:
@@ -158,12 +164,33 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                     else:
                         bodies.add(body_index)
                         command(tokens[body_index], event, str(working), depth=depth + 1)
-                elif executable in {"fish", "csh", "tcsh"} or depth and executable in {"eval", "source", ".", "if", "for", "while", "until", "case",
-                                              "select", "function", "coproc"}:
+                elif executable in {"fish", "csh", "tcsh", "eval", "source", ".", "if", "for", "while", "until", "case",
+                                    "select", "function", "coproc"}:
                     fail("unparsed_command", "provider shell body uses unsupported delegated execution", event)
                 elif "$" in token or "`" in token:
                     fail("unparsed_command", "provider command target cannot be resolved", event)
-            elif depth and ("$" in token or "`" in token):
+                if re.fullmatch(r"(?:python|pypy|perl|ruby|php|lua|tclsh)(?:\d+(?:\.\d+)*)?"
+                                r"|node(?:js)?|bun|deno|luajit|julia|R(?:script)?|pwsh|powershell", executable):
+                    end = next((i for i in range(index + 1, len(tokens)) if separator(tokens[i])), len(tokens))
+                    if executable.startswith(("python", "pypy")):
+                        flags = "c"
+                    elif executable.startswith("php"):
+                        flags = "rRBE"
+                    elif executable.startswith("perl") or executable == "julia":
+                        flags = "eE"
+                    else:
+                        flags = "ep" if executable in {"node", "nodejs", "bun"} else "e"
+                    inline = any(t == "-" or t == "eval" or t.lower().startswith(
+                        ("--eval", "--execute", "--command", "--encodedcommand", "--print"))
+                        or executable in {"pwsh", "powershell"} and t.lower().startswith(("-command", "-encodedcommand", "-c", "-e"))
+                        or t.startswith("-") and not t.startswith("--") and any(f in t[1:] for f in flags)
+                        for t in tokens[index + 1:end])
+                    if inline:
+                        # Encodings and language semantics are opaque here. A
+                        # workspace script may run under the independent guard;
+                        # inline programs cannot get a static audit approval.
+                        fail("unparsed_command", "provider interpreter inline body cannot be audited", event)
+            elif "$" in token or "`" in token:
                 # Status reporting may consume scalar variables as data. Do not
                 # treat them as filenames, or accept them for arbitrary tools.
                 scalar = re.fullmatch(r"(?:\$[A-Za-z_]\w*|\$\{[A-Za-z_]\w*\}|\$\?)", token)
@@ -174,6 +201,28 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                     t in {"-e", "-f", "-d", "-r", "-w", "-x", "-s", "-L", "-h"} for t in arguments)
                 if not scalar or not (executable in {"printf", "echo"} or numeric_test):
                     fail("unparsed_command", "provider shell argument cannot be resolved", event)
+            if not is_executable and executable and re.fullmatch(compiler_pattern, executable):
+                for flag in compiler_flags:
+                    operand = None
+                    if token == flag:
+                        if index + 1 < len(tokens) and not separator(tokens[index + 1]):
+                            operand = tokens[index + 1]
+                            operands.add(index + 1)
+                        else:
+                            fail("unparsed_command", "provider compiler file operand is missing", event)
+                    elif flag == "--sysroot" and token.startswith(flag + "="):
+                        operand = token[len(flag) + 1:]
+                    elif not flag.startswith("--") and token.startswith(flag):
+                        operand = token[len(flag):]
+                    else:
+                        continue
+                    if operand is not None:
+                        if (not operand or operand.startswith(("-", "=", "~")) or "$" in operand
+                                or "`" in operand or "\\" in operand):
+                            fail("unparsed_command", "provider compiler file operand cannot be resolved", event)
+                        elif not (flag == "-o" and operand == "/dev/null"):
+                            file_access(operand, event, writing=flag == "-o", cwd=working)
+                    break
             candidate = token.lstrip("<>")
             if index and tokens[index - 1] in {"<", ">", ">>", "<>"}:
                 if candidate not in {"/dev/null", "/dev/stdout", "/dev/stderr"}:
@@ -184,7 +233,7 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                 working = (working / candidate).resolve()
                 continue
             if candidate.startswith("/"):
-                if is_executable:
+                if is_executable and any(Path(candidate).resolve().is_relative_to(p) for p in system_bins):
                     continue
                 if candidate in {"/dev/null", "/dev/stdout", "/dev/stderr"}:
                     continue
@@ -194,6 +243,31 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
             elif (not candidate.startswith("-") and re.fullmatch(r"[\w.+@/-]+", candidate)
                   and ("/" in candidate or Path(candidate).suffix in {".c", ".cc", ".cpp", ".h", ".hpp", ".py", ".sh", ".json", ".yaml", ".el", ".graph"})):
                 file_access(candidate, event, writing=bool(index and tokens[index - 1] in {">", ">>", "-o"}), cwd=working)
+
+    def glob_access(inputs, event):
+        pattern = inputs.get("pattern")
+        base = inputs.get("path", ".")
+        file_access(base, event)
+        if not isinstance(base, str) or not base.strip():
+            return
+        if not isinstance(pattern, str) or not pattern.strip():
+            fail("invalid_file_access", "provider Glob has an invalid pattern", event)
+            return
+        if pattern.startswith("~") or "$" in pattern or "\\" in pattern:
+            fail("external_file_access", "provider Glob pattern cannot be resolved within the workspace", event)
+            return
+        prefix, wildcard = [], False
+        for part in Path(pattern).parts:
+            if wildcard and part == "..":
+                fail("external_file_access", "provider Glob pattern has unresolved traversal", event)
+                return
+            wildcard = wildcard or any(c in part for c in "*?[")
+            if not wildcard:
+                prefix.append(part)
+        # Match expansion stays inside this statically known search root. A
+        # parent traversal after a wildcard cannot supply such a root.
+        search = str(Path(*prefix)) if wildcard else pattern
+        file_access(search, event, cwd=(root / base).resolve())
 
     def tool(name, inputs, event):
         if not isinstance(inputs, dict):
@@ -207,7 +281,10 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
             command(inputs.get("command", inputs.get("cmd")), event,
                     inputs.get("cwd", inputs.get("workdir")))
             return
-        if name in {"Read", "Write", "Edit", "MultiEdit", "NotebookEdit", "Glob", "Grep",
+        if name == "Glob":
+            glob_access(inputs, event)
+            return
+        if name in {"Read", "Write", "Edit", "MultiEdit", "NotebookEdit", "Grep",
                     "read_file", "write_file", "edit_file", "list_directory"}:
             key = next((k for k in ("file_path", "path", "notebook_path") if k in inputs), None)
             file_access(inputs.get(key) if key else ".", event, writing=name in {"Write", "Edit", "MultiEdit", "write_file", "edit_file"})

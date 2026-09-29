@@ -500,7 +500,11 @@ def interpret(config, prompt, folder, remaining_s=None, *, run_context=None):
         raise
     finally:
         try:
-            stop_group(child, grace_seconds=2)
+            try:
+                if context.get("stop_owned"):
+                    context["stop_owned"](child)
+            finally:
+                stop_group(child, grace_seconds=2)
         finally:
             try:
                 for sig, handler in previous.items():

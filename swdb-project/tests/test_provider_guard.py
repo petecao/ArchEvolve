@@ -4,7 +4,9 @@ Run on mbit10 inside socket_lane.sh. Probes report actual kernel results in
 retained fixture events; these are confinement checks, not provider evidence.
 """
 import json
+import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -14,6 +16,24 @@ import yaml
 from test_provider_workspace import proposal_setup
 
 pytestmark = pytest.mark.skipif(sys.platform != "linux", reason="Landlock ABI 4 checks require Linux")
+
+
+def test_standalone_probe_uses_registered_fixture_and_owned_cleanup(tmp_path):
+    project = Path(__file__).resolve().parents[1]
+    folder = tmp_path / "guard-probe"
+    result = subprocess.run([sys.executable, str(project / "scripts/provider_guard_spike.py"),
+                             "probe", "--runs-dir", str(folder)], cwd=project,
+                            env={**os.environ, "PYTHONPATH": str(project)},
+                            capture_output=True, text=True, timeout=60)
+    assert result.returncode == 0, result.stdout + result.stderr
+    receipt = json.loads((folder / "receipt.json").read_text())
+    assert receipt["kind"] == "probe" and receipt["passed"]
+    assert receipt["guard_policy"]["model_api"] == {"hosts": [], "addresses": []}
+    assert receipt["guard_policy"]["process_ownership"]["subreaper"] is True
+    assert receipt["guard_audit"]["passed"]
+    assert receipt["guard_audit"]["original_provider"] is not None
+    assert receipt["guard_audit"]["process_cleanup"]["passed"]
+    assert receipt["guard_audit"]["process_cleanup"]["survivors"] == []
 
 
 @pytest.mark.parametrize("probe,blocked", [("inside_read", False), ("outside_read", True),
@@ -74,7 +94,7 @@ print(json.dumps({"type":"turn.completed","usage":{"output_tokens":1}}),flush=Tr
     assert not (Path(meta["workspace_manifest"]["root"]).parent / "forbidden.txt").exists()
 
 
-RESOURCE_PROGRAM = '''import json, os, shutil, subprocess, sys, threading, time
+RESOURCE_PROGRAM = '''import json, os, shutil, sys, threading, time
 from pathlib import Path
 if "--version" in sys.argv:
  print("resource-guard-fixture-1"); raise SystemExit(0)
@@ -92,16 +112,32 @@ elif mode == "workspace":
  for name in ("resource-growth-a.bin", "resource-growth-b.bin"):
   with Path("build", name).open("wb") as handle:
    handle.truncate(3 * 1024**3)
-elif mode == "command_timeout":
+elif mode in {"orphan_threads", "command_timeout"}:
  # A model-selected helper named like Codex's persistent service must retain
  # the tool watchdog: its executable and parent are not the selected CLI.
- helper = Path("build/codex-code-mode-host")
- shutil.copyfile("/usr/bin/sleep", helper)
- helper.chmod(0o700)
- command = subprocess.Popen([str(helper.resolve()), "130"])
- pidfile.write_text(json.dumps({"provider":os.getpid(), "command":command.pid}))
+ if mode == "command_timeout":
+  helper = Path("build/codex-code-mode-host")
+  shutil.copyfile("/usr/bin/sleep", helper)
+  helper.chmod(0o700)
+ provider, tracer, provider_session = os.getpid(), os.getppid(), os.getsid(0)
+ first = os.fork()
+ if first == 0:
+  os.setsid()
+  if os.fork() != 0: os._exit(0)
+  # Double-forking used to escape PPid closure and process-group cleanup.
+  # Allocate only after adoption so the observer must find the orphan.
+  deadline = time.monotonic() + 5
+  while os.getppid() != tracer and time.monotonic() < deadline: time.sleep(.01)
+  Path("build/detached-pid.json").write_text(json.dumps({"pid":os.getpid(),
+   "parent":os.getppid(), "session":os.getsid(0), "provider_session":provider_session}))
+  if mode == "command_timeout": os.execv(str(helper.resolve()), [str(helper), "130"])
+  gate = threading.Event()
+  for number in range(17): threading.Thread(target=gate.wait, daemon=True).start()
+  time.sleep(130)
+  os._exit(0)
+ os.waitpid(first, 0)
 print(json.dumps({"type":"item.completed", "item":{"type":"command_execution", "command":"local resource fixture probe", "exit_code":0, "aggregated_output":"allocated:"+mode}}), flush=True)
-if mode == "command_timeout": command.wait()
+if mode == "command_timeout": time.sleep(140)
 else: time.sleep(10)
 Path("build/unexpected-completion.json").write_text("{}")
 result={"interpretation":"Resource fixture completed unexpectedly.", "unresolved":[]}
@@ -112,6 +148,7 @@ print(json.dumps({"type":"turn.completed"}), flush=True)
 
 @pytest.mark.parametrize("mode,reason", [
     ("threads", "provider resource limit exceeded"),
+    ("orphan_threads", "provider resource limit exceeded"),
     ("workspace", "provider workspace exceeds"),
     ("command_timeout", "provider tool command exceeds the 120 s wall-time limit"),
 ])
@@ -150,7 +187,34 @@ def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_pat
     assert policy["limits"]["threads"] == 16 and policy["limits"]["memory_bytes"] == 32*1024**3
     assert policy["limits"]["command_seconds"] == 120
     assert policy["limits"]["workspace_bytes"] == 5*1024**3 and "test_override" not in policy
-    if mode == "threads":
+    assert policy["process_ownership"]["subreaper"] is True
+    cleanup = meta["guard_result"]["process_cleanup"]
+    assert cleanup["passed"] and cleanup["survivors"] == []
+    assert meta["guard_result"]["original_provider"]["pid"] == json.loads(
+        (workspace / "build/resource-pid.json").read_text())["provider"]
+    assert any(row["pid"] == cleanup["tracer_pid"] for row in cleanup["processes_observed"])
+    if mode in {"orphan_threads", "command_timeout"}:
+        detached = json.loads((workspace / "build/detached-pid.json").read_text())
+        assert detached["parent"] == cleanup["tracer_pid"]
+        assert detached["session"] != detached["provider_session"]
+        identity = next(row for row in cleanup["processes_observed"] if row["pid"] == detached["pid"])
+        # PID reuse is harmless; a remaining process with this same kernel
+        # identity (including an unreaped zombie) means owned cleanup failed.
+        try:
+            fields = Path(f'/proc/{detached["pid"]}/stat').read_text().rsplit(")", 1)[1].split()
+        except FileNotFoundError:
+            pass
+        else:
+            assert int(fields[19]) != identity["start_time_ticks"], "detached owned helper survived cleanup"
+        if mode == "orphan_threads":
+            details = json.loads((Path(meta["audit"]["raw_log"]["path"]).parent / "resource-overrun.json").read_text())
+            orphan = next(row for row in details if row["pid"] == detached["pid"])
+            assert orphan["parent"] == cleanup["tracer_pid"] and orphan["threads"] > 1
+            # The observer may catch the allocation before all 17 requested
+            # threads start. Admission depends on the actual aggregate count.
+            assert sum(row["threads"] for row in details) > policy["limits"]["threads"]
+            assert any(row["pid"] == cleanup["tracer_pid"] for row in details)
+    if mode in {"threads", "orphan_threads"}:
         measured = next(r for r in meta["guard_result"]["reasons"] if reason in r)
         assert int(re.search(r"threads=(\d+)", measured)[1]) > 16
     elif mode == "workspace":
