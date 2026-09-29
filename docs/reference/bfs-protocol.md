@@ -161,9 +161,10 @@ cannot substitute for primary BFS ROI timing.
 
 Baseline-not-invoked rule (added 2026-09-29 ET). A frozen simulated pair may name
 a region that the baseline binary never executes (the T17 scalar baseline never
-calls `TDStepMAA`). When the baseline region's raw-verified invocation count and
-both inclusive and exclusive seconds are exactly zero in every replay cell, the
-comparison is not rejected. The pair is reported with `state:
+calls `TDStepMAA`). When the baseline region's raw-verified invocation count is
+zero in every replay cell, and its inclusive and exclusive seconds are absent (as
+the collector records a never-entered region) or exactly zero, the comparison is
+not rejected. The pair is reported with `state:
 baseline_not_invoked`, `duration_ratio: null`, `baseline_invocations: 0`, the
 candidate's per-cell invocations and per-source median durations, and
 `gain_claim: false`. The primary BFS ROI decision and every other region pair are

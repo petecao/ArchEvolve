@@ -4,7 +4,7 @@ Native thread CPU and simulated thread elapsed quantities remain separate from B
 
 Baseline-not-invoked rule (2026-09-29, root decision for T17): a frozen simulated
 diagnostic pair whose baseline region has an exactly zero raw-verified invocation
-count and zero inclusive/exclusive time in every replay cell does not reject the
+count and absent-or-zero inclusive/exclusive time in every replay cell does not reject the
 comparison. It is reported as ``state: baseline_not_invoked`` with the candidate's
 invocations and durations, no ``duration_ratio``, and ``gain_claim: false``; the
 primary BFS ROI decision is unaffected. Every other invalid count or duration is
@@ -143,7 +143,10 @@ def _sample(store, primary, package_id, pair, role):
     invocations = _integer(metrics.get("invocations"), "diagnostic invocation count", 0 if role == "baseline" else 1)
     not_invoked = invocations == 0
     if not_invoked:
-        inclusive, exclusive = metrics.get("inclusive_simulated_seconds"), metrics.get("exclusive_simulated_seconds")
+        # The collector omits both seconds fields for a never-entered region; explicit
+        # zeros are also accepted. Any recorded nonzero time is rejected, and the raw
+        # report below must still show zero invocations and zero nanoseconds.
+        inclusive, exclusive = metrics.get("inclusive_simulated_seconds", 0), metrics.get("exclusive_simulated_seconds", 0)
         _fail(type(inclusive) in (int, float) and type(exclusive) in (int, float) and inclusive == 0 and exclusive == 0,
               "diagnostic region with zero invocations must record zero inclusive and exclusive seconds")
     else:

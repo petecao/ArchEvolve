@@ -89,8 +89,9 @@ def package_fixture(records, tmp, primary, collector, runtime, now, ns, zero_fun
         evidence_kind='contract_fixture', correctness=copy.deepcopy(diagnostic['correctness']))
     for row in regions:
         zero = zero_function and row['id'] == 'fixture-function'
-        row.update(metrics=dict(inclusive_simulated_seconds=0 if zero else ns*2/1e9,
-                                exclusive_simulated_seconds=0 if zero else ns/1e9, invocations=0 if zero else 2),
+        # A never-entered region carries only its zero count, as the real collector records it.
+        row.update(metrics=dict(invocations=0) if zero else dict(inclusive_simulated_seconds=ns*2/1e9,
+                                exclusive_simulated_seconds=ns/1e9, invocations=2),
             basis='simulated', scope='accumulated simulated elapsed per executing thread within ' + primary['context']['roi'],
             artifact_sha256=ref(binary)['sha256'], attribution=dict(inclusive=True,
             exclusive='nested guarded intervals subtracted on the same thread', whole_lexical_region=True,
