@@ -78,6 +78,7 @@ print(json.dumps(results))
             # This diagnostic also records execs to verify Claude's actual
             # shell-prefix launcher; environment values are omitted by strace.
             wrapped[wrapped.index("trace=connect")] = "trace=connect,execve,openat,readlink"
+            wrapped[1:1] = ["-s", "512"]
             child = subprocess.Popen(wrapped, cwd=workspace, env=context["env"],
                                      stdin=stdin, stdout=stdout, stderr=stderr, start_new_session=True)
             while child.poll() is None:

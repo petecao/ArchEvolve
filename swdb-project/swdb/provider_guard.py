@@ -284,7 +284,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                     failures.append("provider outbound connection trace is missing")
                 else:
                     for line in trace.read_text(errors="replace").splitlines():
-                        if "AF_INET" not in line or not re.search(r"\bconnect\(", line):
+                        if "AF_INET" not in line or not re.search(r"^(?:\d+\s+)?connect\(", line):
                             continue
                         if re.search(r"<UDP(?:v6)?:", line):
                             # ABI 4 leaves UDP unrestricted; DNS connections

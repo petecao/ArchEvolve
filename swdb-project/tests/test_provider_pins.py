@@ -62,6 +62,8 @@ def test_submit_emulates_pinned_cli(proposal_setup, emulated_provider, kind, mod
     assert argv[argv.index('--model')+1] == model
     if kind == 'codex':
         assert 'model_reasoning_effort="xhigh"' in argv and '--json' in argv
+        assert 'analytics.enabled=false' in argv
+        assert all('otel.' + key + '="none"' in argv for key in ('exporter','trace_exporter','metrics_exporter'))
         assert emulated_provider.stdin() == ''
         schema = json.loads(Path(argv[argv.index('--output-schema')+1]).read_text())
         assert schema['additionalProperties'] is False

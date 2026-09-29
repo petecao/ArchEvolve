@@ -207,6 +207,8 @@ class CodexAdapter(Adapter):
             raise Failure("Codex provider prompt exceeds the 96 KiB argv limit; use a compact workspace request")
         argv = [*self.launch_command(config), "exec", "--model", PINS[self.kind]["model"],
                 "-c", 'model_reasoning_effort="xhigh"', "-c", 'web_search="disabled"',
+                "-c", "analytics.enabled=false", "-c", 'otel.exporter="none"',
+                "-c", 'otel.trace_exporter="none"', "-c", 'otel.metrics_exporter="none"',
                 "-c", "project_doc_max_bytes=0", "--ignore-user-config", "--ignore-rules",
                 "--ephemeral", "--skip-git-repo-check", "--dangerously-bypass-approvals-and-sandbox",
                 "--json", "--output-schema", str(schema_path), "--output-last-message",
