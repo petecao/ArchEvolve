@@ -206,6 +206,9 @@ class CodexAdapter(Adapter):
         # silently truncate a legacy prompt containing full source bodies.
         if len(prompt.encode()) > 96 * 1024:
             raise Failure("Codex provider prompt exceeds the 96 KiB argv limit; use a compact workspace request")
+        if config.get("workspace", True):
+            prompt = ("Use direct local shell and edit tool calls. Do not use the JavaScript exec or wait "
+                      "tools: their additional runtime exceeds this session's 16-thread budget. " + prompt)
         # The guard supplies an empty read-only state directory. Codex 0.153
         # initializes process SQLite pools even for --ephemeral sessions; its
         # nonfatal unavailable-state fallback avoids those persistent workers.
