@@ -42,9 +42,14 @@ def message_from_text(raw):
 
 
 def _source_destination(runs_dir, rid):
-    """Keep buildable source on mbit10's source/build volume (2026-09-25)."""
-    base = (Path('/data1/yanruj/EvolveSWDB_sources')
-            if socket.gethostname().split('.')[0] == 'mbit10' else Path(runs_dir))
+    """Keep source on mbit10's build volume, scoped by run (2026-09-29)."""
+    if socket.gethostname().split('.')[0] == 'mbit10':
+        # Independent record stores can use the same snapshot ID. Namespace by
+        # the run directory so fixtures and separate campaigns cannot collide.
+        namespace = hashlib.sha256(str(Path(runs_dir).resolve()).encode()).hexdigest()[:16]
+        base = Path('/data1/yanruj/EvolveSWDB_sources') / namespace
+    else:
+        base = Path(runs_dir)
     return artifacts.external_directory(base) / rid / 'source'
 
 
