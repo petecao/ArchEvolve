@@ -74,8 +74,9 @@ def restrict(policy, inner=False):
     finally:
         os.close(fd)
     resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
-    memory = policy["limits"]["memory_bytes"]
-    resource.setrlimit(resource.RLIMIT_AS, (memory, memory))
+    # V8 and JavaScriptCore reserve large, mostly uncommitted address ranges.
+    # The 32 GiB limit is aggregate resident memory, observed by the parent;
+    # an address-space rlimit would abort these CLIs before they use that RAM.
     resource.setrlimit(resource.RLIMIT_FSIZE, (policy["limits"]["workspace_bytes"],) * 2)
     if inner:
         resource.setrlimit(resource.RLIMIT_CPU, (120, 120))
@@ -132,7 +133,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                 install = parent
                 break
         roots = ["/usr", "/bin", "/lib", "/lib64", "/etc/ld.so.cache", "/etc/ssl/certs",
-                 "/etc/resolv.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/passwd", "/etc/localtime",
+                 "/etc/ssl/openssl.cnf", "/etc/resolv.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/passwd", "/etc/localtime",
                  "/dev/null", "/dev/urandom", "/dev/random", "/dev/zero", str(install)]
         # A venv's executable symlink resolves into /usr, but Python still reads
         # its adjacent configuration and libraries during interpreter startup.

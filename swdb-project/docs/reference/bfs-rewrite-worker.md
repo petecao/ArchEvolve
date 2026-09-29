@@ -80,7 +80,7 @@ or unsupported requirements produce an unresolved result.
 Operator-selected bounds are recorded before each provider call. Initial defaults
 are one generation attempt, at most two build/correctness repairs, 1200 seconds per
 provider call (at most 1800), and a 3600-second total provider budget. The guard
-limits sessions to 16 threads, 32 GiB of memory, 120 seconds per tool command,
+limits sessions to 16 threads, 32 GiB of aggregate resident memory, 120 seconds per tool command,
 and a 5 GiB workspace. Claude calls also carry a
 five-dollar API budget cap where supported by the configured account. Codex records
 `budget_usd_enforced: false`; a ChatGPT subscription does not provide that cap. These are
