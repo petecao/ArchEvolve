@@ -40,8 +40,9 @@ the sandbox disabled. Then, in the checkout you will use:
   host's L3 as its last level; callgrind, lackey, dhat, massif also installed),
   `/usr/bin/time`, `strace`, `ltrace`. Not installed: DynamoRIO, Pin, SDE (DynamoRIO can
   be unpacked from its GitHub release into `/data1/yanruj/` without sudo).
-- GitHub: the key `~/.ssh/github_memacc` authenticates as `ruchou`. Access to
-  `petecao/ArchEvolve` over that key is not yet verified (2026-09-29); check before cloning.
+- GitHub: the key `~/.ssh/github_memacc` authenticates as `ruchou` and can clone and
+  fetch `petecao/ArchEvolve` over SSH (verified 2026-09-29). The ArchEvolve checkout is
+  `/data1/yanruj/ArchEvolve` (cloned 2026-09-29).
 
 ## Disks
 
