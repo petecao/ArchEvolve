@@ -502,19 +502,21 @@ def interpret(config, prompt, folder, remaining_s=None, *, run_context=None):
         try:
             stop_group(child, grace_seconds=2)
         finally:
-            for sig, handler in previous.items():
-                signal.signal(sig, handler)
-            meta["host_wall_s"] = time.monotonic() - started
-            if streaming:
-                try:
-                    meta["stream"] = {**progress, **stream_summary(folder)}
-                except OSError as exc:
-                    meta["stream"] = {**progress, "summary_error": str(exc)}
-            if context.get("finish"):
-                meta["guard_result"] = context["finish"]()
-            (folder / "provider.json").write_text(json.dumps(meta, indent=2))
-            if context.get("cleanup"):
-                context["cleanup"]()
+            try:
+                for sig, handler in previous.items():
+                    signal.signal(sig, handler)
+                meta["host_wall_s"] = time.monotonic() - started
+                if streaming:
+                    try:
+                        meta["stream"] = {**progress, **stream_summary(folder)}
+                    except OSError as exc:
+                        meta["stream"] = {**progress, "summary_error": str(exc)}
+                if context.get("finish"):
+                    meta["guard_result"] = context["finish"]()
+                (folder / "provider.json").write_text(json.dumps(meta, indent=2))
+            finally:
+                if context.get("cleanup"):
+                    context["cleanup"]()
     try:
         provider_adapters.check_usage(folder)
     except provider_adapters.ProviderUnavailable:
@@ -559,9 +561,9 @@ def call(config, request, source, package, store, folder, repair=None, remaining
         receipt = Path(folder) / "provider.json"
         if receipt.is_file():
             meta = json.loads(receipt.read_text())
-        network = (meta.get("guard_result") or {}).get("reasons", [])
+        guard_reasons = (meta.get("guard_result") or {}).get("reasons", [])
         audit = provider_audit.audit(Path(folder) / "stdout.txt", provider_adapters.get(config).kind,
-            Path(folder) / "workspace", [], Path(folder) / "provider-home", network_reasons=network)
+            Path(folder) / "workspace", [], Path(folder) / "provider-home", guard_reasons=guard_reasons)
         if audit["commands"] or audit["file_accesses"]:
             audit["passed"] = False
             audit["state"] = "failed"

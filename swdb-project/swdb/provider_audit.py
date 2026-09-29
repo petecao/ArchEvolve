@@ -14,7 +14,7 @@ from swdb import artifacts
 
 
 def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths=(),
-          editable_files=(), network_reasons=()):
+          editable_files=(), network_reasons=(), guard_reasons=()):
     """Return a JSON-compatible receipt, including failures and raw-log identity."""
     path, root = Path(path), Path(workspace_root).resolve()
     visible = set(visible_files)
@@ -172,6 +172,15 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                 fail("outbound_connection", "provider made an outbound connection outside its model API", number)
     for reason in network_reasons:
         fail("outbound_connection", str(reason), 0)
+    for reason in guard_reasons:
+        text = str(reason)
+        if re.search(r"resource limit|workspace exceeds|tool command exceeds|memory limit|thread limit", text, re.I):
+            code = "resource_limit"
+        elif "outbound connection is outside" in text:
+            code = "outbound_connection"
+        else:
+            code = "guard_violation"
+        fail(code, text, 0)
     receipt = {"format": "swdb.provider-audit.v1", "state": "passed" if not violations else "failed",
                "passed": not violations, "events": events, "commands": commands, "file_accesses": accesses,
                "reasons": list(dict.fromkeys(v["reason"] for v in violations)), "violations": violations,

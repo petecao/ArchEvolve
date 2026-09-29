@@ -84,28 +84,14 @@ def restrict(policy, inner=False):
 def _lane():
     if socket.gethostname().split(".")[0] != "mbit10":
         raise GuardError("real rewrite providers require a verified socket lane on mbit10")
-    affinity = os.sched_getaffinity(0)
-    for node in (0, 1):
-        names = Path(f"/sys/devices/system/node/node{node}/cpulist").read_text().strip()
-        cpus = set()
-        for part in names.split(","):
-            bounds = [int(x) for x in part.split("-")]
-            cpus.update(range(bounds[0], bounds[-1] + 1))
-        if affinity and affinity <= cpus:
-            maps = Path("/proc/self/numa_maps").read_text().splitlines()
-            if not maps or any(line.split()[1] != f"bind:{node}" for line in maps if len(line.split()) > 1):
-                continue
-            meta = Path(f"/data1/yanruj/lact-host-lease/mbit10-evaluation-node{node}.meta.json")
-            receipt = json.loads(meta.read_text())
-            holder = receipt.get("lease", {}).get("daemon_pid")
-            ancestors, pid = set(), os.getpid()
-            while pid > 1 and pid not in ancestors:
-                ancestors.add(pid)
-                status = Path(f"/proc/{pid}/status").read_text()
-                pid = int(re.search(r"^PPid:\s*(\d+)", status, re.M)[1])
-            if receipt.get("state") == "held" and holder in ancestors:
-                return f"mbit10-evaluation-node{node}"
-    raise GuardError("real rewrite providers require verified CPU/memory confinement and an ancestor-owned socket lease")
+    # Reuse the evaluator's kernel-backed verification: exact socket affinity,
+    # memory binding, ancestor launcher, lease descriptor and generation.
+    from swdb.profile import _verified_lane
+    machine = {"id": "mbit10", "hostname": "mbit10", "lane_required": True,
+               "numa_nodes": [{"node": node,
+                   "cpus": Path(f"/sys/devices/system/node/node{node}/cpulist").read_text().strip()}
+                   for node in (0, 1)]}
+    return _verified_lane(machine, None)
 
 
 def _api_addresses(kind):
@@ -224,7 +210,16 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                     if time.monotonic() - started[pid] > 120:
                         reasons.append("provider tool command exceeds the 120 s wall-time limit")
                         raise Failure(reasons[-1])
-            size = sum(p.stat().st_size for p in workspace.rglob("*") if p.is_file() and not p.is_symlink())
+            size = 0
+            for path in workspace.rglob("*"):
+                # Build commands legitimately remove temporary files while the
+                # external observer walks the workspace. A disappeared file
+                # contributes no live bytes; other errors still fail closed.
+                try:
+                    if path.is_file() and not path.is_symlink():
+                        size += path.stat().st_size
+                except FileNotFoundError:
+                    continue
             if size > policy["limits"]["workspace_bytes"]:
                 reasons.append("provider workspace exceeds the 5 GB limit")
                 raise Failure(reasons[-1])
@@ -261,8 +256,8 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
 def _environment(home, workspace, kind):
     # Never inherit credentials, proxy settings, project variables, or user homes.
     env = {"PATH": "/usr/bin:/bin", "HOME": str(home), "TMPDIR": str(workspace / "build"),
-           "LANG": "C.UTF-8", "OMP_NUM_THREADS": "16", "OPENBLAS_NUM_THREADS": "16",
-           "MAKEFLAGS": "-j16", "UV_THREADPOOL_SIZE": "2", "TOKIO_WORKER_THREADS": "2",
+           "LANG": "C.UTF-8", "OMP_NUM_THREADS": "4", "OPENBLAS_NUM_THREADS": "4",
+           "MAKEFLAGS": "-j4", "UV_THREADPOOL_SIZE": "2", "TOKIO_WORKER_THREADS": "2",
            "RAYON_NUM_THREADS": "2", "NODE_OPTIONS": "--max-old-space-size=4096",
            "DISABLE_TELEMETRY": "1", "DISABLE_ERROR_REPORTING": "1",
            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1", "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",

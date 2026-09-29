@@ -217,29 +217,33 @@ def prepare(request, source, package, store, output_dir, config):
     kind = config.get("emulates", config["kind"])
     login_name = "auth.json" if kind == "codex" else ".credentials.json"
     workspace.login_path = home / login_name
-    if config["kind"] == "external_fixture":
-        workspace.login_path.write_text('{"fixture":true}\n')
-    else:
-        original = (Path(os.environ.get("CODEX_HOME", str(Path.home() / ".codex"))) / login_name
-                    if kind == "codex" else Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude"))) / login_name)
-        if original.is_symlink() or not original.is_file():
-            raise Failure("rewrite provider login file is unavailable")
-        shutil.copyfile(original, workspace.login_path)
-    workspace.login_path.chmod(0o600)
-    workspace.metadata = {"format": "swdb.provider-workspace.v1", "root": str(root), "home": str(home),
-                          "source_files": sorted(workspace.source_files), "visible_files": sorted(workspace.visible),
-                          "extra_files": list(extras), "immutable_files": sorted(set(workspace.visible) - {
-                              n for n in workspace.source_files if any(fnmatch.fnmatchcase(n, p) for p in request["constraints"]["editable_files"])}),
-                          "hidden_files": sorted(hidden), "hidden_fragments": [{"path": name, "count": len(parts)}
-                              for name, parts in workspace.redactions.items()], "login_copy_deleted": False,
-                          "profile_package_projection": {"format": "swdb.provider-profile-view.v1",
-                              "source_id": package["id"], "source_identity_sha256": package.get("identity_sha256"),
-                              "source_record_sha256": artifacts.digest(package),
-                              "omitted_field_names": ["protections", "evaluator", "verification", "correctness_check"],
-                              "protected_fragments_redacted": bool(replacements),
-                              "notice": "Provider-visible context projection; the authoritative sealed package is retained unchanged."},
-                          "starting_files_sha256": artifacts.digest(workspace.visible), "dropped_build_outputs": []}
-    (folder / "workspace.json").write_text(json.dumps(workspace.metadata, indent=2))
+    try:
+        if config["kind"] == "external_fixture":
+            workspace.login_path.write_text('{"fixture":true}\n')
+        else:
+            original = (Path(os.environ.get("CODEX_HOME", str(Path.home() / ".codex"))) / login_name
+                        if kind == "codex" else Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude"))) / login_name)
+            if original.is_symlink() or not original.is_file():
+                raise Failure("rewrite provider login file is unavailable")
+            shutil.copyfile(original, workspace.login_path)
+        workspace.login_path.chmod(0o600)
+        workspace.metadata = {"format": "swdb.provider-workspace.v1", "root": str(root), "home": str(home),
+                              "source_files": sorted(workspace.source_files), "visible_files": sorted(workspace.visible),
+                              "extra_files": list(extras), "immutable_files": sorted(set(workspace.visible) - {
+                                  n for n in workspace.source_files if any(fnmatch.fnmatchcase(n, p) for p in request["constraints"]["editable_files"])}),
+                              "hidden_files": sorted(hidden), "hidden_fragments": [{"path": name, "count": len(parts)}
+                                  for name, parts in workspace.redactions.items()], "login_copy_deleted": False,
+                              "profile_package_projection": {"format": "swdb.provider-profile-view.v1",
+                                  "source_id": package["id"], "source_identity_sha256": package.get("identity_sha256"),
+                                  "source_record_sha256": artifacts.digest(package),
+                                  "omitted_field_names": ["protections", "evaluator", "verification", "correctness_check"],
+                                  "protected_fragments_redacted": bool(replacements),
+                                  "notice": "Provider-visible context projection; the authoritative sealed package is retained unchanged."},
+                              "starting_files_sha256": artifacts.digest(workspace.visible), "dropped_build_outputs": []}
+        (folder / "workspace.json").write_text(json.dumps(workspace.metadata, indent=2))
+    except BaseException:
+        workspace.cleanup()
+        raise
     return workspace
 
 
@@ -370,10 +374,10 @@ def run(config, request, source, package, store, output_dir, repair=None, remain
                 metadata["network_audit"] = metadata["guard_result"]
             elif context.get("finish"):
                 metadata["network_audit"] = context["finish"]()
-        network = metadata.get("network_audit", {}).get("reasons", [])
+        guard_reasons = metadata.get("network_audit", {}).get("reasons", [])
         audit = provider_audit.audit(workspace.folder / "stdout.txt", config.get("emulates", config["kind"]),
             workspace.root, workspace.visible, workspace.home, (workspace.login_path,),
-            request["constraints"]["editable_files"], network_reasons=network)
+            request["constraints"]["editable_files"], guard_reasons=guard_reasons)
         metadata["audit"] = audit
         (workspace.folder / "audit.json").write_text(json.dumps(audit, indent=2))
         receipt.write_text(json.dumps(metadata, indent=2))
