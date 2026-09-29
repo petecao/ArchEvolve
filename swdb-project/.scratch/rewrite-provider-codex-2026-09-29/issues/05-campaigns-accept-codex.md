@@ -33,3 +33,14 @@ ticket 10; no real provider sessions ran on the Mac.
 
 Context: `scripts/bfs_native_campaign.py`, `scripts/bfs_instruction_smoke.py`,
 `tests/test_bfs_campaign_reuse.py`.
+
+Follow-up on 2026-09-29: the natural-language DX100 smoke defaults to the registered
+`bfs-dx100-scalar-only-20260929-a1.source`, rather than regenerating the full author source.
+`--source-snapshot` selects another registered scalar-only derivative; missing registration
+or a full author snapshot is refused before submission. Full snapshots remain selectable
+by explicit author-code reuse proposals through `swdb submit`. Smoke summaries retain the
+selected snapshot and provider kind.
+Validation for the follow-up: `tests/test_bfs_instruction_smoke.py` completed with **4 passed**,
+covering missing scalar registration before provider dispatch, default Codex and explicit
+Claude selection, full author-snapshot refusal, and CLI help. The driver also checks that
+the selected BFS text has no `TDStepMAA` or `DOBFSMAA` calls/definitions before submission.

@@ -19,3 +19,21 @@ Created: 2026-09-29
 ## Acceptance
 
 - A new file in `records/comparison_results/`; `python3 -m swdb validate` passes.
+
+## Progress
+
+2026-09-29: Protocol v2 was already frozen before a3 dispatch at
+`2026-09-28T22:44:22.338507+00:00`; its content-addressed identity remains unchanged.
+Recreating or editing that freeze would invalidate its historical binding, so the
+implementation preserves it and checks the exact a3 evidence under it.
+
+`scripts/import_retained_t17_metadata.py` imports the actual retained runtime metadata
+dependency closure without moving raw files, with collision digest checks and atomic
+record validation. `scripts/record_t17_handoff_comparison.py` checks the source-0/
+repetition-0 closure samples, exact timed companion, raw v2 witness/coverage, author-path
+source reuse and `wait_ready(tile5)` fix, then invokes public `compare-evaluations` once
+per graph family with explicit sealed diagnostic packages and claim scope.
+
+The root agent coordinates this work in an owned mbit10 lane, where the raw observations
+and binary/source artifacts are available. The ticket remains claimed until the two
+retained comparison results are verified and synced locally.

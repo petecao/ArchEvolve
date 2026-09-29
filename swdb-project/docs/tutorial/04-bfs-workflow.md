@@ -1,6 +1,6 @@
 # 4. Follow BFS from source to comparison
 
-Updated: 2026-09-28 (Eastern Time). Reading budget: 9 minutes.
+Updated: 2026-09-29 (Eastern Time). Reading budget: 9 minutes.
 
 [Tutorial](README.md) · [Previous](03-components.md) · [Next](05-contributing.md)
 
@@ -81,9 +81,10 @@ sequenceDiagram
     participant R as Rewrite provider
     participant E as Evaluator
     P->>W: Intent, source/package, edit scope
-    W->>R: Bounded context and instructions
-    R-->>W: Edits and unresolved requirements
-    W->>W: Check scope and protections
+    W->>R: Guarded workspace and proposal
+    R->>R: Read, edit, build, synthetic tests
+    R-->>W: Interpretation and unresolved requirements
+    W->>W: Audit events, compute source diff, check protections
     W-->>P: Candidate or retained rejection
     P->>E: Candidate and evaluation request
     E-->>P: Build, correctness, timing, failures
@@ -93,14 +94,35 @@ sequenceDiagram
     end
 ```
 
-The operator selects provider configuration independently of proposal text. The
-current worker supports Claude and an explicitly labeled external fixture
-provider. It accepts patch output or opt-in complete-file output, from which
-SWDB computes a diff. Generation/repair limits are retained with the proposal.
-Evaluator-owned verifier, input, driver, and ROI protections remain enforced.
+The operator must select `--provider-config` independently of proposal text.
+Workspace mode is the default, with two pinned real providers:
+
+| Kind | Model | Effort |
+|---|---|---|
+| Codex (default) | `gpt-5.6-sol` | `xhigh` |
+| Claude | `claude-sonnet-5-5` | `high` |
+
+A minimal provider configuration is `kind: codex`; `kind: claude` selects the
+alternative. Model and effort overrides are rejected. Real sessions run on
+mbit10 inside an owned socket lane under SWDB's Landlock guard. The provider
+can explore and edit the derived source workspace, while evaluator inputs,
+real workloads, records, and other candidates remain hidden. SWDB audits the
+events and computes the diff; it drops build outputs and rejects out-of-scope
+files. The login copy is deleted after the attempt.
+
+DX100 from-scratch proposals use
+`bfs-dx100-scalar-only-20260929-a1.source`, which omits the authors' accelerator
+BFS functions. The full source remains available for declared author-code reuse.
+Set `workspace: false` for the retained prompt-only patch or complete-file route.
+Deterministic providers are labeled fixtures and establish contract behavior.
+Generation/repair limits, actual model settings, guard policy, event audit, and
+raw-log identity are retained with the proposal. Evaluator-owned verifier,
+input, driver, and ROI protections remain enforced.
 
 A valid regression does not trigger tuning. A bounded repair addresses eligible
-build/correctness failures while preserving the submitted intent. Unsupported
+build/correctness failures while preserving the submitted intent and first
+attempt's provider settings. Usage limits become `provider_unavailable`, consume
+elapsed time, and leave the repair count unchanged. Unsupported
 requirements and exhausted budgets remain visible outcomes.
 
 ## Inspect a retained example locally

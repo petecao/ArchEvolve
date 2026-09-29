@@ -142,6 +142,9 @@ def test_workspace_derivation_diff_and_login_cleanup(proposal_setup, workspace_p
     assert ".swdb-context/selected-strategy.json" in workspace["visible_files"]
     assert "bool BFSVerifier" not in (root / "src/bfs.cc").read_text()
     assert "bool BFSVerifier" not in (root / ".swdb-context/profile-package.json").read_text()
+    projection = workspace["profile_package_projection"]
+    assert projection["source_id"] == "test-package" and projection["source_record_sha256"]
+    assert projection["protected_fragments_redacted"] and "retained unchanged" in projection["notice"]
     assert "src/bfs.cc" in workspace["source_files"]
     log = provider["audit"]["raw_log"]
     assert provider["audit"]["passed"] and Path(log["path"]).is_file() and log["sha256"]

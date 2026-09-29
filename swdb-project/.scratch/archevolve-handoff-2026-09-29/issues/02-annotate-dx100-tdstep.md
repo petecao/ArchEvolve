@@ -27,7 +27,9 @@ with pinned revision, source line ranges, code, zero-based `(access pattern, ste
 pairs, and statement dependencies. Every code string was checked against the local
 unmodified `e4fc4af` source at Josh's exact lines 240, 241, 242, 243, 247, 248, and 249.
 The catalog now describes the frontier → CSR bounds → neighbors → parent read/CAS/store
-chains. Queue insertion is a conditional thread-local stream whose successful CAS
+chains. The row-bounds statement maps separately to the start read (identity) and the
+end read (`u + 1`, affine), preserving one terminal expression per access pattern.
+Queue insertion is a conditional thread-local stream whose successful CAS
 dependency is retained; parent values do not supply queue storage addresses.
 
 Assumption: Until Peter provides his format, the existing schema's experimental

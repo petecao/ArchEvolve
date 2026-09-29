@@ -31,6 +31,8 @@ extensions:
       access_pattern_steps:
       - pattern: td-row-bounds-read
         step: 1
+      - pattern: td-row-end-read
+        step: 1
       depends_on: [bfs-td-frontier]
       basis: code_reading
       evidence_refs: [src-dx100-bfs]
@@ -227,7 +229,7 @@ access_patterns:
       evidence_refs: [src-dx100-bfs]
   evidence_refs: [src-dx100-bfs]
 - id: td-row-bounds-read
-  expression: VertexOffsets[u], VertexOffsets[u + 1]
+  expression: VertexOffsets[u]
   loop: td-frontier
   steps:
   - array:
@@ -248,7 +250,64 @@ access_patterns:
       layout: contiguous
     address_shape: single_valued_indirect
     index_transform: identity
-    note: Reads row start VertexOffsets[u] and row end VertexOffsets[u + 1]; +1 is affine index arithmetic.
+    note: Reads the row start indexed by the frontier vertex u.
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+- id: td-row-end-read
+  expression: VertexOffsets[u + 1]
+  loop: td-frontier
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsets
+      role: target
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: affine
+    note: Reads the row end using u + 1; the +1 is affine index arithmetic on the loaded vertex ID.
   update_kind: read
   update:
     pseudocode: null
@@ -590,7 +649,8 @@ access_patterns:
     address_shape: stream
     stride: 1
     note: One position per successful discovery within this thread-local QueueBuffer; resets on flush.
-      Append is controlled by CAS success, not indexed by parent values.
+      Append is controlled by CAS success, not indexed by parent values. Buffer slots may be reused after
+      a flush in the same frontier.
   update_kind: write
   update:
     pseudocode: if local buffer is full, flush; local_queue[in++] = v
@@ -598,7 +658,7 @@ access_patterns:
       buffer; TDStep flushes at line 254 before the level finishes.
   semantics:
     duplicate_target_indices:
-      value: false
+      value: true
       basis: code_reading
       evidence_refs: [src-dx100-bfs]
     index_modified_during_loop:
@@ -636,3 +696,5 @@ notes:
 - No -DMAA flag is passed; native functional API setup is not accelerated performance evidence.
 - Duplicate parent destinations may occur across frontier vertices; the three parent patterns record this
   possibility, not a measured duplicate rate.
+- The row-bounds statement maps separately to the VertexOffsets[u] and VertexOffsets[u + 1] read patterns;
+  its two reads are not collapsed into one terminal access expression.

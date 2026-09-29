@@ -133,7 +133,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
     try:
         if abi() < 4:
             raise GuardError("SWDB provider guard requires Linux Landlock ABI >= 4; refusing unguarded session")
-        lane = _lane() if not fixture else None
+        lane = _lane() if not fixture or socket.gethostname().split(".")[0] == "mbit10" else None
         tracer = shutil.which("strace")
         if not tracer:
             raise GuardError("SWDB provider guard requires strace for outbound connection auditing")

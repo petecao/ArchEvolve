@@ -2,12 +2,17 @@
 """Real guarded provider interpretation and native BFS diagnostics. Updated 2026-09-29.
 
 Run inside an owned mbit10 lane. These small correctness cases do not assess gains.
+The DX100 scalar cleanup uses a registered scalar-only snapshot under ADR 0006;
+full author-code reuse belongs to an explicitly identified reuse proposal.
 """
 import argparse
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
+
+SCALAR_SNAPSHOT = 'bfs-dx100-scalar-only-20260929-a1.source'
 
 
 def main():
@@ -17,6 +22,8 @@ def main():
     parser.add_argument('--records',type=Path,default=Path('records'))
     parser.add_argument('--lane',required=True)
     parser.add_argument('--kind',choices=['codex','claude'],default='codex')
+    parser.add_argument('--source-snapshot',default=SCALAR_SNAPSHOT,
+        help='registered scalar-only DX100 snapshot for natural_language (default: %(default)s)')
     parser.add_argument('--routes',nargs='+',choices=['natural_language','structured_instructions','annotated_source'],
                         default=['natural_language','structured_instructions','annotated_source'])
     parser.add_argument('--reevaluate',help='retain a new evaluation of an existing candidate after an evaluator fix')
@@ -63,17 +70,31 @@ def main():
         if route not in args.routes:
             continue
         rid=args.id+'.'+route.replace('_','-')
-        source=call('source-snapshot',implementation,'--id',rid+'.source','--runs-dir',args.runs_dir)
+        if route=='natural_language':
+            source=call('get',args.source_snapshot)
+            if source.get('kind')!='source_snapshot' or source.get('implementation')!=implementation:
+                raise SystemExit('DX100 instruction smoke requires a registered scalar-only source snapshot: '
+                                 +args.source_snapshot+'; register it before running the provider')
+            removed=set(source.get('context',{}).get('source_derivation',{}).get('removed_functions',[]))
+            if not {'TDStepMAA','DOBFSMAA'}<=removed:
+                raise SystemExit('DX100 instruction smoke refuses full author-code source: '+args.source_snapshot
+                    +'; choose a registered scalar-only snapshot. An explicit author-code reuse proposal '
+                     'may still select the full snapshot through swdb submit.')
+        else:
+            source=call('source-snapshot',implementation,'--id',rid+'.source','--runs-dir',args.runs_dir)
         if 'artifact' not in source:
             summary.append({'route':route,'stage':'snapshot','outcome':source});continue
         package=call('fixture-package',source['id'],'--id',rid+'.package')
         path='benchmarks/gapbs/src/bfs.cc' if implementation=='dx100-bfs-scalar' else 'src/bfs.cc'
         original=(Path(source['artifact']['path'])/path).read_text()
         if route=='natural_language':
+            if re.search(r'\b(?:TDStepMAA|DOBFSMAA)\s*\(',original):
+                raise SystemExit('registered scalar-only snapshot still contains author accelerator BFS code')
             intent=('Remove the redundant parent[v] = u store immediately following successful '
                     'compare_and_swap(parent[v], curr_val, u) in the scalar TDStep. The successful '
                     'CAS already performs that write. Preserve the CAS, queue insertion, scout count, '
-                    'and every other algorithmic step. Do not change the accelerator branch.')
+                    'and every other algorithmic step. The registered scalar-only snapshot excludes '
+                    'the authors\' accelerator BFS functions; do not introduce an accelerator branch.')
             payload={'kind':route,'content':intent}
             parameters={'remove_redundant_post_cas_store':True}
         elif route=='structured_instructions':
@@ -120,7 +141,8 @@ def main():
         chain=call('get',evaluation['id'],'--chain')
         success=(evaluation.get('correctness',{}).get('state')=='passed' and
                  len(evaluation.get('timing',[]))==3 and not evaluation.get('gain_claim'))
-        summary.append({'route':route,'proposal':submitted['id'],'evaluation':evaluation['id'],
+        summary.append({'route':route,'source_snapshot':source['id'],'provider_kind':args.kind,
+                        'proposal':submitted['id'],'evaluation':evaluation['id'],
                         'correctness':evaluation.get('correctness',{}).get('state'),'accepted':success,
                         'trials':len(evaluation.get('timing',[])),'gain_claim':False,
                         'records_retrieved':len(chain.get('records',{}))})
