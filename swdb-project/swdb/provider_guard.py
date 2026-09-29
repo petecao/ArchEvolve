@@ -7,9 +7,9 @@ import ctypes
 import json
 import os
 import platform
+import pwd
 import re
 import resource
-import shlex
 import shutil
 import socket
 import sys
@@ -80,7 +80,7 @@ def restrict(policy, inner=False):
         os.close(fd)
     resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
     # The observer verifies the full socket before launching. Limiting the
-    # provider to four cores inside that socket keeps runtime worker pools
+    # provider to two cores inside that socket keeps runtime worker pools
     # within the separately enforced 16-thread session budget.
     if policy.get("execution_cpus"):
         os.sched_setaffinity(0, policy["execution_cpus"])
@@ -164,7 +164,8 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                   "read_roots": sorted(set(str(Path(p).resolve()) for p in roots if Path(p).exists())),
                   "runtime_self_reads": ["maps", "cgroup", "stat", "statm", "status"],
                   "device_write_roots": ["/dev/null"],
-                  "execution_cpus": sorted(os.sched_getaffinity(0))[:4],
+                  "execution_cpus": sorted(os.sched_getaffinity(0))[:2],
+                  "resource_scope": "provider process tree including its external strace launcher",
                   "write_roots": [str(workspace), str(home)], "tcp_connect_ports": [443],
                   "inner_tcp_connect_ports": [], "tcp_bind_ports": [],
                   "model_api": _api_addresses(kind) if not fixture else {"hosts": [], "addresses": []},
@@ -177,7 +178,22 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
         path.write_text(json.dumps(policy, indent=2))
         trace = folder / "network.trace"
         env = _environment(home, workspace, kind)
-        env["CLAUDE_CODE_SHELL_PREFIX"] = shlex.join([sys.executable, str(launcher), str(path), "--inner", "--"])
+        if kind == "claude":
+            # Claude passes this value as one executable, followed by -- and
+            # one shell command string. It is not a shell-joined argv prefix.
+            shell = pwd.getpwuid(os.getuid()).pw_shell
+            shell = shutil.which(shell) or "/usr/bin/bash"
+            policy["command_shell"] = shell
+            path.write_text(json.dumps(policy, indent=2))
+            prefix = guard_folder / "shell-prefix"
+            prefix.write_text(f"#!{sys.executable}\nimport os, sys\n"
+                "args = sys.argv[1:]\n"
+                "if args[:1] == ['--']: args = args[1:]\n"
+                "if len(args) != 1: raise SystemExit('SWDB shell prefix expects one command')\n"
+                f"os.execv({sys.executable!r}, [{sys.executable!r}, {str(launcher)!r}, {str(path)!r}, "
+                f"'--inner', '--', {shell!r}, '-c', args[0]])\n")
+            prefix.chmod(0o700)
+            env["CLAUDE_CODE_SHELL_PREFIX"] = str(prefix)
         started = {}
         reasons = []
 
@@ -203,10 +219,25 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                 if grown == children:
                     break
                 children = grown
-            threads = sum(int(table[p].get("Threads", 0)) for p in children if p in table)
-            rss = sum(int(table[p].get("VmRSS", 0)) * 1024 for p in children if p in table)
-            # The observer and standalone launcher count toward the aggregate.
+            confined = children
+            threads = sum(int(table[p].get("Threads", 0)) for p in confined if p in table)
+            rss = sum(int(table[p].get("VmRSS", 0)) * 1024 for p in confined if p in table)
+            # Charge the external tracer as well as every provider descendant.
             if threads > 16 or rss > policy["limits"]["memory_bytes"]:
+                details = []
+                for p in sorted(confined & table.keys()):
+                    names = []
+                    try:
+                        for task in Path(f"/proc/{p}/task").iterdir():
+                            try:
+                                names.append((task / "comm").read_text().strip())
+                            except OSError:
+                                pass
+                    except OSError:
+                        pass
+                    details.append({"pid": p, "threads": int(table[p].get("Threads", 0)),
+                                    "resident_bytes": int(table[p].get("VmRSS", 0))*1024, "tasks": names})
+                (folder / "resource-overrun.json").write_text(json.dumps(details, indent=2))
                 reasons.append(f"provider resource limit exceeded: threads={threads}, resident_bytes={rss}")
                 raise Failure(reasons[-1])
             # Codex has no shell-prefix setting in the verified CLI. Its tool
@@ -279,8 +310,8 @@ def _environment(home, workspace, kind):
     # Never inherit credentials, proxy settings, project variables, or user homes.
     env = {"PATH": "/usr/bin:/bin", "HOME": str(home), "TMPDIR": str(workspace / "build"),
            "LANG": "C.UTF-8", "OMP_NUM_THREADS": "4", "OPENBLAS_NUM_THREADS": "4",
-           "MAKEFLAGS": "-j4", "UV_THREADPOOL_SIZE": "2", "TOKIO_WORKER_THREADS": "2",
-           "RAYON_NUM_THREADS": "2", "NODE_OPTIONS": "--max-old-space-size=4096 --v8-pool-size=2",
+           "MAKEFLAGS": "-j4", "UV_THREADPOOL_SIZE": "1", "TOKIO_WORKER_THREADS": "1",
+           "RAYON_NUM_THREADS": "1", "NODE_OPTIONS": "--max-old-space-size=4096 --v8-pool-size=1",
            "DISABLE_TELEMETRY": "1", "DISABLE_ERROR_REPORTING": "1",
            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1", "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
            "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1", "DISABLE_AUTOUPDATER": "1",
