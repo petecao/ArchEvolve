@@ -1,0 +1,45 @@
+{
+ "created": "2026-09-29",
+ "id": "bfs-t20-ac10-companion-20260929-b1.preparation",
+ "authority": "root 2026-09-29: T20 AC10 fix approved; register off-lane now, run in node1 when the MemAcc session hands it back (ahead of T16 S1)",
+ "a3_failure": {
+  "id": "bfs-t20-ac10-companion-20260928-a3",
+  "stage": "execution_identity",
+  "reason": "workload needs exactly one serialized representation for the selected application",
+  "cause": "The A2 collision graph was registered only with application=dx100-gapbs (sg32); the t20 upstream timed binary loads application=gapbs (sg64)."
+ },
+ "workload": {
+  "id": "bfs-dx100-coverage-20260929-b1.workload.458b302ba97083f5",
+  "receipt": "observations/t20-ac10-b1-workload-reregistration-20260929.json",
+  "d13_equivalent": true,
+  "canonical_sha256": "e03a3905f9105b898b730387092d92a68b854cdd44280adb39b1bd9423a4a968",
+  "host_commit": "0b2fe58394ca2548bb0d515cfc4a04260adbfcaa"
+ },
+ "runtime": {
+  "path": "/data1/yanruj/EvolveSWDB_t20_ac10_runtime_20260929_b1",
+  "commit": "0b2fe58394ca2548bb0d515cfc4a04260adbfcaa"
+ },
+ "request_preview": {
+  "run_id": "bfs-t20-ac10-companion-20260929-b1",
+  "existing_record": false,
+  "template_sha256": "531c497035afa9e071d6d102e6a718151361e5875903cec7944307c4f5e1a3e3",
+  "template_matches_primary_build": true,
+  "template_coverage": true,
+  "primary_build": "bfs-t20-context6-primary-build-20260927-c3",
+  "timed_binary_sha256": "25df930f07ef1632e12807ee5e88409342096dcde54ea1ca10cc9783e8dc7c9c",
+  "template_route_workload_application": "gapbs",
+  "workload": {
+   "id": "bfs-dx100-coverage-20260929-b1.workload.458b302ba97083f5",
+   "source": 0,
+   "representation": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260929-b1/coverage.sg64",
+    "sha256": "eeac4da06fb920df509e0604227e821e658d62426894d4832e4cf5278900553b",
+    "application": "gapbs"
+   }
+  },
+  "budget": {"total_seconds": 3300, "checkpoint_seconds": 600, "run_seconds": 2400, "memory_gib": 48, "storage_gib": 10},
+  "outer_timeout_seconds": 3600
+ },
+ "launch": "cd /data1/yanruj/EvolveSWDB_t20_ac10_runtime_20260929_b1 && NODE=1 WORKLOAD=bfs-dx100-coverage-20260929-b1.workload.458b302ba97083f5 bash .scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t20-ac10-companion-b1/launch.sh (in tmux, only after root assigns node1)",
+ "state": "prepared; not dispatched"
+}
