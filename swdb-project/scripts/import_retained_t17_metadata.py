@@ -28,9 +28,8 @@ def strings(value):
     if isinstance(value, str):
         yield value
     elif isinstance(value, dict):
-        for key, child in value.items():
-            if key != "id":
-                yield from strings(child)
+        for child in value.values():
+            yield from strings(child)
     elif isinstance(value, list):
         for child in value:
             yield from strings(child)

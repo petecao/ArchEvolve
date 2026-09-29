@@ -444,7 +444,6 @@ def repair(args):
         data = copy.deepcopy(store.get(proposal_id, "proposal"))
         config = rewrite.configuration(args.provider_config)
         rewrite.require_same_provider(data.get("provider"), config)
-        data.setdefault("provider", config)
         budget = data.setdefault("repair_budget", {"max_repairs": config["max_repairs"],
             "total_seconds": config["total_seconds"], "used_seconds": 0, "repairs": 0})
         maximum = min(budget["max_repairs"], config["max_repairs"])
@@ -461,6 +460,7 @@ def repair(args):
         if reason:
             data["outcome"] = {"state": "unresolved", "stage": "repair", "reason": reason}
             return persist(args.records, data, args.db)
+        data.setdefault("provider", config)
         number = budget["repairs"] + 1
         folder = artifacts.external_directory(args.runs_dir) / f"{proposal_id}.repair-{number}.attempt-{len(data['attempts'])+1}"
         folder.mkdir(exist_ok=False)
@@ -613,7 +613,10 @@ def _retry_initial_provider(args, store, proposal):
 
 def _provider_receipt(data, meta, folder):
     """Bind the resolved record block to its retained per-attempt receipt."""
-    data["provider"].update({key: meta[key] for key in
-        ("resolved_kind", "model", "effort", "cli_version", "workspace", "guard_policy", "audit") if key in meta})
-    meta["provider"] = copy.deepcopy(data["provider"])
+    runtime = {key: meta[key] for key in
+        ("resolved_kind", "model", "effort", "cli_version", "workspace", "guard_policy", "audit") if key in meta}
+    actual_config = copy.deepcopy(meta.get("provider", data["provider"]))
+    data["provider"].update(runtime)
+    actual_config.update(runtime)
+    meta["provider"] = actual_config
     (Path(folder) / "provider.json").write_text(json.dumps(meta, indent=2))

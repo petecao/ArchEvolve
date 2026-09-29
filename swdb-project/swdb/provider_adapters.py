@@ -56,6 +56,7 @@ def check_usage(folder):
 class Adapter:
     kind = "external_fixture"
     prompt_argument = False
+    audit_events = False
 
     def command(self, config, prompt, folder, schema):
         return list(config["command"])
@@ -78,6 +79,7 @@ class Adapter:
 
 class ClaudeAdapter(Adapter):
     kind = "claude"
+    audit_events = True
 
     def streaming(self, config):
         return config.get("workspace", True) or config.get("output_format") == "stream-json"
@@ -118,6 +120,7 @@ class ClaudeAdapter(Adapter):
 class CodexAdapter(Adapter):
     kind = "codex"
     prompt_argument = True
+    audit_events = True
 
     def streaming(self, config):
         return True
@@ -189,3 +192,7 @@ def get(config):
 def identity(config):
     kind = config.get("emulates", config["kind"])
     return {"resolved_kind": kind, **PINS.get(kind, {"model": None, "effort": None})}
+
+
+def classification(config):
+    return "contract_fixture" if config["kind"] == "external_fixture" else "rewrite_provider"

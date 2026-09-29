@@ -214,6 +214,50 @@ def test_provider_cannot_self_authorize_a_network_event(proposal_setup, workspac
     assert "outbound_connection" in {v["code"] for v in proposal["attempts"][0]["provider"]["audit"]["violations"]}
 
 
+def test_audit_failure_takes_precedence_over_usage_limit(proposal_setup, workspace_provider):
+    result, proposal = submit(proposal_setup, workspace_provider,
+        actions=[{"type": "command", "value": "curl https://example.com/answer.cc"}],
+        events=[{"type": "error", "message": "usage_limit exceeded"}])
+    assert result.returncode == 1 and proposal["outcome"]["state"] == "failed"
+    assert proposal["outcome"]["reason"].startswith("provider audit failed")
+    assert proposal["repair_budget"]["used_seconds"] > 0
+
+
+def test_annotated_source_hides_verifier_and_preserves_payload_fields(proposal_setup, workspace_provider):
+    records, _, snapshot, _ = proposal_setup
+    original = (Path(snapshot["artifact"]["path"]) / "src/bfs.cc").read_text()
+    annotated = original.replace("int alpha = 15", "/* requested alpha 14 */ int alpha = 15")
+    result, proposal = submit(proposal_setup, workspace_provider,
+        request_changes={"payload": {"kind": "annotated_source", "content": {"files": {"src/bfs.cc": annotated}}}})
+    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    root = Path(proposal["attempts"][0]["provider"]["workspace_manifest"]["root"])
+    visible = json.loads((root / ".swdb-context/proposal.json").read_text())
+    assert "requested alpha 14" in visible["payload"]["content"]["files"]["src/bfs.cc"]
+    assert "bool BFSVerifier" not in visible["payload"]["content"]["files"]["src/bfs.cc"]
+    assert proposal["request"]["payload"]["content"]["files"]["src/bfs.cc"] == annotated
+    candidate = json.loads(records.swdb("get", proposal["candidate"], "--format", "json").stdout)
+    assert "bool BFSVerifier" in (Path(candidate["artifact"]["path"]) / "src/bfs.cc").read_text()
+
+
+def test_annotated_source_cannot_expose_an_altered_verifier(proposal_setup, workspace_provider):
+    _, _, snapshot, _ = proposal_setup
+    original = (Path(snapshot["artifact"]["path"]) / "src/bfs.cc").read_text()
+    result, proposal = submit(proposal_setup, workspace_provider,
+        request_changes={"payload": {"kind": "annotated_source", "content": {"files": {
+            "src/bfs.cc": original.replace("bool BFSVerifier", "bool AlteredVerifier")}}}})
+    assert result.returncode == 1
+    assert "annotated source changes a protected evaluator input" in proposal["outcome"]["reason"]
+
+
+def test_structured_payload_field_names_are_preserved(proposal_setup, workspace_provider):
+    content = {"evaluator": "Preserve the independent evaluator.", "parameter": {"alpha": 14}}
+    result, proposal = submit(proposal_setup, workspace_provider,
+        request_changes={"payload": {"kind": "structured_instructions", "content": content}})
+    assert result.returncode == 0, proposal["outcome"]
+    root = Path(proposal["attempts"][0]["provider"]["workspace_manifest"]["root"])
+    assert json.loads((root / ".swdb-context/proposal.json").read_text())["payload"]["content"] == content
+
+
 def test_timeout_keeps_audit_and_deletes_login_copy(proposal_setup, workspace_provider):
     config = workspace_provider(sleep=5, actions=[{"type": "command", "value": "cat $CODEX_HOME/auth.json"}])
     data = yaml.safe_load(config.read_text()); data["timeout_s"] = 1; config.write_text(yaml.safe_dump(data))

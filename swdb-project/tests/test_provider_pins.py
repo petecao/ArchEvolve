@@ -18,6 +18,7 @@ if '--version' in sys.argv:
 plan = json.loads(Path(sys.argv[1]).read_text())
 Path(sys.argv[1]).with_suffix('.argv.json').write_text(json.dumps(sys.argv[2:]))
 Path(sys.argv[1]).with_suffix('.stdin.txt').write_text(sys.stdin.read())
+for event in plan.get('events', []): print(json.dumps(event))
 if plan.get('unavailable'):
     print(json.dumps({'type':'turn.failed', 'error':{'message':'You have hit your ChatGPT usage limit'}}))
     raise SystemExit(1)
@@ -28,10 +29,10 @@ if '--output-last-message' in sys.argv:
 else:
     print(json.dumps({'type':'result', 'is_error':False, 'structured_output':response}))
 ''')
-    def make(kind='codex', patch='', response=None, unavailable=False, **fields):
+    def make(kind='codex', patch='', response=None, unavailable=False, events=None, **fields):
         plan = tmp_path / 'cli-plan.json'
         plan.write_text(json.dumps({'response':response or {'interpretation':'Apply alpha change.',
-            'patch':patch, 'unresolved':[]}, 'unavailable':unavailable}))
+            'patch':patch, 'unresolved':[]}, 'unavailable':unavailable, 'events':events or []}))
         config = tmp_path / 'provider.yaml'
         config.write_text(yaml.safe_dump({'kind':'external_fixture', 'emulates':kind,
             'workspace':False, 'command':[sys.executable,str(program),str(plan)], **fields}))
@@ -149,3 +150,14 @@ def test_omitted_kind_records_default_codex_before_guard_refusal(proposal_setup,
     assert result.returncode == 1
     assert data['provider']['kind'] == data['provider']['resolved_kind'] == 'codex'
     assert data['provider']['model'] == 'gpt-5.6-sol' and data['provider']['effort'] == 'xhigh'
+
+
+@pytest.mark.parametrize('unavailable', [False, True])
+def test_prompt_only_rejects_tool_activity_even_if_usage_is_unavailable(proposal_setup, emulated_provider, unavailable):
+    patch = yaml.safe_load(proposal_setup[3]().read_text())['payload']['content']
+    event = {'type':'item.completed','item':{'type':'command_execution','command':'printf harmless'}}
+    result, data = submit(proposal_setup,emulated_provider(patch=patch,events=[event],unavailable=unavailable))
+    assert result.returncode == 1 and data['outcome']['state'] == 'failed'
+    assert 'candidate' not in data
+    assert data['attempts'][0]['provider']['audit']['passed'] is False
+    assert 'prompt-only' in data['outcome']['reason']

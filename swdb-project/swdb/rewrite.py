@@ -428,7 +428,7 @@ def interpret(config, prompt, folder, remaining_s=None, *, run_context=None):
     folder.mkdir(parents=True, exist_ok=run_context is not None)
     (folder / "prompt.txt").write_text(prompt)
     context = run_context or {}
-    if config["kind"] != "external_fixture" and not context.get("wrap_command"):
+    if provider_adapters.classification(config) == "rewrite_provider" and not context.get("wrap_command"):
         from swdb import provider_guard
         context = provider_guard.prompt_context(config, folder)
     adapter = provider_adapters.get(config)
@@ -441,7 +441,7 @@ def interpret(config, prompt, folder, remaining_s=None, *, run_context=None):
         if timeout <= 0:
             raise Failure("rewrite provider total budget exhausted")
         meta = {"provider": config, "command": cmd, "timeout_s": timeout,
-                "classification": "contract_fixture" if config["kind"] == "external_fixture" else "rewrite_provider",
+                "classification": provider_adapters.classification(config),
                 "prompt_sha256": artifacts.file_hash(folder / "prompt.txt"), "state": "running"}
         meta["executable_sha256"] = artifacts.file_hash(cmd[0])
         meta.update(provider_adapters.identity(config))
@@ -554,7 +554,7 @@ def call(config, request, source, package, store, folder, repair=None, remaining
         response, meta = interpret(config, prompt, folder, remaining_s=remaining_s)
     except BaseException as exc:
         error = exc
-    if provider_adapters.get(config).kind in provider_adapters.PINS:
+    if provider_adapters.get(config).audit_events:
         from swdb import provider_audit
         receipt = Path(folder) / "provider.json"
         if receipt.is_file():
@@ -565,7 +565,9 @@ def call(config, request, source, package, store, folder, repair=None, remaining
         if audit["commands"] or audit["file_accesses"]:
             audit["passed"] = False
             audit["state"] = "failed"
-            audit["reasons"].append("prompt-only provider emitted forbidden tool activity")
+            reason = "prompt-only provider emitted forbidden tool activity"
+            audit["reasons"].append(reason)
+            audit["violations"].append({"code":"prompt_only_tool", "reason":reason, "event":0})
         meta["audit"] = audit
         (Path(folder) / "audit.json").write_text(json.dumps(audit, indent=2))
         receipt.write_text(json.dumps(meta, indent=2))
