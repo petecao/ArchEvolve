@@ -124,6 +124,22 @@ def test_full_files_new_file_and_missing_trailing_newline(tmp_path):
     assert (tmp_path / 'candidate/src/new.h').read_text() == '#pragma once\n'
 
 
+def test_patch_headers_are_not_read_from_hunk_bodies(tmp_path):
+    """2026-09-28: removed '-- x' / added '++ y' lines are hunk content, not file headers."""
+    from swdb.workflow import apply_patch
+    source = tmp_path / 'source'
+    (source / 'src').mkdir(parents=True)
+    (source / 'src/a.sql').write_text('-- old comment\nselect 1;\n')
+    patch = ('--- a/src/a.sql\n+++ b/src/a.sql\n@@ -1,2 +1,2 @@\n'
+             '--- old comment\n+++ new comment\n select 1;\n')
+    after = apply_patch(source, tmp_path / 'candidate', patch, ['src/*'], [])
+    assert {f['path'] for f in after['files']} == {'src/a.sql'}
+    assert (tmp_path / 'candidate/src/a.sql').read_text() == '++ new comment\nselect 1;\n'
+    escaping = patch.replace('src/a.sql', 'other/a.sql', 2)
+    with pytest.raises(Failure, match='outside its declared edit scope: other/a.sql'):
+        apply_patch(source, tmp_path / 'candidate2', escaping, ['src/*'], [])
+
+
 def test_edit_format_is_opt_in_and_checked(files_provider, tmp_path):
     path = files_provider({'src/bfs.cc': 'x'})
     config = rewrite.configuration(path)

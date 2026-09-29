@@ -189,12 +189,14 @@ def charge_dead_owner_reservations(value, *, observe=identity):
     of it. A reservation whose owner is still live, or whose PID is reused
     without a recorded start time to disprove identity, is not settled here.
     Returns the conservative spent total; it never edits the ledger file.
+    2026-09-28: a non-mapping row raises the malformed-reservation error.
     """
     rows = value.get('reservations')
     require(isinstance(rows, dict), 'cleanup reservations are malformed')
     charged = []
     for row in rows.values():
-        seconds = row.get('seconds') if isinstance(row, dict) else None
+        require(isinstance(row, dict), 'dead-owner reservation is malformed')  # 2026-09-28
+        seconds = row.get('seconds')
         require(type(row.get('pid')) is int and row['pid'] > 0 and type(seconds) in (int, float)
                 and math.isfinite(seconds) and 0 < seconds <= 30, 'dead-owner reservation is malformed')
         live = observe(row['pid'])

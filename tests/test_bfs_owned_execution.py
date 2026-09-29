@@ -440,6 +440,9 @@ def test_dead_owner_reservation_is_charged_in_full_as_spent():
         owned.charge_dead_owner_reservations(value, observe=lambda pid: {'pid': pid, 'start_ticks': 7})
     with pytest.raises(ValueError, match='exceed the fixed cleanup reserve'):
         owned.charge_dead_owner_reservations({**value, 'spent_seconds': 29}, observe=lambda pid: None)
+    for row in (None, 12, ['pid', 12]):  # 2026-09-28: non-mapping rows are malformed, not AttributeError
+        with pytest.raises(ValueError, match='dead-owner reservation is malformed'):
+            owned.charge_dead_owner_reservations({**value, 'reservations': {'c': row}}, observe=lambda pid: None)
 
 
 def test_new_reservations_record_owner_start(tmp_path, monkeypatch):

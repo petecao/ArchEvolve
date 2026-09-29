@@ -174,6 +174,23 @@ def test_missing_remote_artifacts_are_exposed_as_unverified(package_setup, tmp_p
     assert report["external_verification_complete"] is False
 
 
+def test_raw_reachability_follows_recorded_host_then_all_declared_paths(tmp_path, monkeypatch):
+    """2026-09-28: partial path presence on another host must not force raw verification."""
+    from swdb import bfs_coverage
+    monkeypatch.setattr(bfs_coverage, "_local_host", lambda: "here")
+    present = tmp_path / "binary"
+    present.write_text("x")
+
+    def row(host, binary, output):
+        return {"context": {"host": host}, "build": {"binary": str(binary)}, "timing": [{"output": str(output)}]}
+    missing = tmp_path / "missing"
+    assert bfs_coverage._raw_reachable(row("here", missing, missing), row("here", missing, missing))
+    assert not bfs_coverage._raw_reachable(row("there", present, present), row("there", present, missing))
+    assert not bfs_coverage._raw_reachable(row("here", present, present), row("there", present, present))
+    assert not bfs_coverage._raw_reachable(row(None, present, present), row(None, present, missing))
+    assert bfs_coverage._raw_reachable(row(None, present, present), row(None, present, present))
+
+
 @pytest.mark.parametrize('run_returncode', [0, 1])
 def test_exit_zero_failure_requires_the_actual_verdict_producing_execution(package_setup, tmp_path, run_returncode):
     records, _, evaluation, _, _ = package_setup

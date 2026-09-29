@@ -1,7 +1,8 @@
 """Bounded instruction interpretation through an operator-selected provider.
 
 Updated: 2026-09-27 (stream-json capture; opt-in full_files edit format). Providers
-return proposed edits; SWDB applies protections.
+return proposed edits; SWDB applies protections. 2026-09-28: stream-json stdout cap
+sized for partial-message amplification; signal handlers only on the main thread.
 """
 
 import fnmatch
@@ -12,6 +13,7 @@ import re
 import shutil
 import signal
 import subprocess
+import threading
 import time
 from pathlib import Path
 
@@ -38,6 +40,11 @@ FULL_FILES_SCHEMA = {
 }
 EDIT_FORMATS = ("patch", "full_files")
 FULL_FILES_LIMIT = 512 * 1024
+# Provider stdout caps (2026-09-28 ET). stream-json with partial messages repeats the
+# response roughly 40x (deltas plus assistant snapshots plus the result event), so the
+# streaming cap keeps a 128x margin over FULL_FILES_LIMIT; json mode keeps 10 MiB.
+JSON_OUTPUT_LIMIT = 10 * 1024 * 1024
+STREAM_OUTPUT_LIMIT = 128 * FULL_FILES_LIMIT
 
 
 def output_schema(config):
@@ -432,7 +439,11 @@ def interpret(config, prompt, folder, remaining_s=None):
     started = time.monotonic()
     def interrupted(signum, _frame):
         raise InterruptedError(f"rewrite provider interrupted by signal {signum}")
-    previous = {sig: signal.signal(sig, interrupted) for sig in (signal.SIGTERM, signal.SIGINT)}
+    # signal.signal only works on the main thread; elsewhere the caller owns interrupts.
+    previous = ({sig: signal.signal(sig, interrupted) for sig in (signal.SIGTERM, signal.SIGINT)}
+                if threading.current_thread() is threading.main_thread() else {})
+    stdout_limit = STREAM_OUTPUT_LIMIT if streaming else JSON_OUTPUT_LIMIT
+    limit_message = f"rewrite provider output exceeds the {stdout_limit // (1024 * 1024)} MiB limit"
     child = None
     progress = {"first_output_s": None, "last_output_s": None}
     try:
@@ -452,8 +463,11 @@ def interpret(config, prompt, folder, remaining_s=None):
             while child.poll() is None:
                 if time.monotonic() - started > timeout:
                     raise subprocess.TimeoutExpired(cmd, timeout)
-                if any(size > 10 * 1024 * 1024 for size in observe()):
-                    raise Failure("rewrite provider output exceeds the 10 MiB limit")
+                stdout_size, stderr_size = observe()
+                if stdout_size > stdout_limit:
+                    raise Failure(limit_message)
+                if stderr_size > JSON_OUTPUT_LIMIT:
+                    raise Failure("rewrite provider stderr exceeds the 10 MiB limit")
                 time.sleep(0.1)
             observe()
             meta.update(state="completed" if child.returncode == 0 else "failed", returncode=child.returncode)
@@ -475,8 +489,8 @@ def interpret(config, prompt, folder, remaining_s=None):
             (folder / "provider.json").write_text(json.dumps(meta, indent=2))
     if child.returncode:
         raise Failure(f"rewrite provider exited {child.returncode}; retained {folder}")
-    if (folder / "stdout.txt").stat().st_size > 10 * 1024 * 1024:
-        raise Failure("rewrite provider output exceeds the 10 MiB limit")
+    if (folder / "stdout.txt").stat().st_size > stdout_limit:
+        raise Failure(limit_message)
     try:
         response = (stream_result(folder / "stdout.txt") if streaming
                     else json.loads((folder / "stdout.txt").read_text()))

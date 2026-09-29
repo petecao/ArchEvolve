@@ -157,8 +157,30 @@ def test_one_replay_requires_declared_deterministic_simulator_basis():
         settings['sampling']['determinism'] = bad
         with pytest.raises(Failure, match='deterministic-replay'):
             bfs_protocol._validate_settings(settings, store, require_simulation_identity=True)
-    settings['sampling']['determinism'] = {'basis': 'deterministic_simulator_replay.v1', 'evidence': 'observation.json'}
+    # 2026-09-28: evidence is an existing repository file bound by sha256.
+    legacy, digest = next(iter(bfs_protocol.LEGACY_DETERMINISM_EVIDENCE.items()))
+    settings['sampling']['determinism'] = {'basis': 'deterministic_simulator_replay.v1',
+                                           'evidence': {'path': legacy, 'sha256': digest}}
     bfs_protocol._validate_settings(settings, store, require_simulation_identity=True)
+    for bad in ({'path': legacy, 'sha256': '0' * 64}, {'path': 'missing/observation.json', 'sha256': digest},
+                {'path': '../outside.json', 'sha256': digest}, {'path': legacy}):
+        settings['sampling']['determinism']['evidence'] = bad
+        with pytest.raises(Failure, match='determinism evidence|unsafe artifact path'):
+            bfs_protocol._validate_settings(settings, store, require_simulation_identity=True)
+    # A frozen {path, sha256} whose file is absent here keeps its binding unchecked.
+    settings['sampling']['determinism']['evidence'] = {'path': 'missing/observation.json', 'sha256': digest}
+    bfs_protocol._validate_settings(settings, store)
+    # Legacy strings: already-frozen records only, pinned path, existing matching file.
+    for text in (legacy, f'{legacy} sha256:{digest}'):
+        settings['sampling']['determinism']['evidence'] = text
+        bfs_protocol._validate_settings(settings, store)
+        with pytest.raises(Failure, match='new protocols must bind'):
+            bfs_protocol._validate_settings(settings, store, require_simulation_identity=True)
+    for text in ('observation.json', f'{legacy} sha256:{"0" * 64}'):
+        settings['sampling']['determinism']['evidence'] = text
+        with pytest.raises(Failure, match='determinism evidence'):
+            bfs_protocol._validate_settings(settings, store)
+    settings['sampling']['determinism']['evidence'] = {'path': legacy, 'sha256': digest}
     settings['sampling']['repetitions'] = 0
     with pytest.raises(Failure, match='repetitions'):
         bfs_protocol._validate_settings(settings, store, require_simulation_identity=True)

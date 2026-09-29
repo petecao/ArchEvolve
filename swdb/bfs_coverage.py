@@ -192,19 +192,21 @@ def _local_host():
 
 
 def _raw_reachable(baseline, candidate):
-    """Raw paired evidence is reopened unless it provably lives on another host.
+    """Whether raw paired evidence is reopened here (updated 2026-09-28).
 
-    Evidence is treated as remote only when its recorded host differs from this
-    host and none of its declared raw paths exist here. Anything partially present
-    is reopened in full, so a local change or deletion still fails.
+    Recorded hosts decide when both rows name one: the evidence is local only when
+    every recorded host is this host, so a local change or deletion still fails.
+    Without recorded hosts, every declared raw path must exist here; partial
+    presence (a stray same-named path) never forces raw verification.
     """
     hosts = {row.get('context', {}).get('host') for row in (baseline, candidate)}
-    if hosts & {None, _local_host()}:
-        return True
+    if None not in hosts:
+        return hosts == {_local_host()}
     paths = [row.get('build', {}).get('binary') for row in (baseline, candidate)]
     paths += [timing.get('output') for row in (baseline, candidate) for timing in row.get('timing', [])]
     paths.append(_mapping(_mapping(baseline.get('context', {}).get('workload')).get('representation')).get('path'))
-    return any(isinstance(path, str) and Path(path).exists() for path in paths)
+    declared = [path for path in paths if isinstance(path, str)]
+    return bool(declared) and all(Path(path).exists() for path in declared)
 
 
 def _collection_identity(store, comparison, baseline, candidate, settings):
