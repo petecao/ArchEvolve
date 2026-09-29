@@ -1,4 +1,4 @@
-"""Dispatch storage belongs to the existing batch cap. Updated 2026-09-27 ET.
+"""Dispatch storage belongs to the existing batch cap. Updated 2026-09-29 ET.
 
 Small allocated files and scaled byte units are contract fixtures, not host runs.
 """
@@ -75,7 +75,12 @@ def test_public_monitor_refuses_large_dispatch_before_any_series(tmp_path, monke
         '--admission-sha256','fixture','--runs-dir',str(runs),'--lane','1',
         '--outer-started',begin.isoformat(),'--outer-deadline',(begin+timedelta(seconds=43200)).isoformat(),
         '--pane-pid','10','--pane-start-ticks','100'])
+    actual_gib = batch.GIB
     monkeypatch.setattr(batch, 'GIB', 4096)
+    # main validates RSS before entering its monitor. Keep the byte-valued RSS
+    # bounds in the same scaled units as the disk fixture, without bypassing it.
+    for name in ('SAMPLED_RSS_BYTES', 'MAX_SAMPLED_RSS_BYTES'):
+        monkeypatch.setattr(batch.lifecycle, name, getattr(batch.lifecycle, name) * batch.GIB // actual_gib)
     monkeypatch.setattr(batch, 'RAW_ROOTS', (tmp_path,))
     monkeypatch.setattr(batch, 'read_reference', lambda *args: approval)
     monkeypatch.setattr(batch.socket, 'gethostname', lambda: 'mbit10')

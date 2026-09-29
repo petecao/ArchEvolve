@@ -1,16 +1,18 @@
-"""The format document covers every field the schemas define. Created 2026-09-22;
-updated 2026-09-23 to check the v0.3 document."""
+"""The format references cover every schema field. Updated 2026-09-29 ET."""
 
 import json
 
 from conftest import REPO
 
-DOC = REPO / "docs" / "format-v0.3.md"
+REFERENCE = REPO / "docs" / "reference"
+DOC = REFERENCE / "format-v0.3.md"
 
 
 def documentation():
     """Additive formats and workflow contracts keep their own dated documents."""
-    paths = sorted((REPO / "docs").glob("format-v*.md"))
+    paths = sorted(REFERENCE.glob("format-v*.md"))
+    paths += sorted(REFERENCE.glob("bfs-*.md"))
+    # The hash-pinned handoff contract remains at its original public path.
     paths += sorted((REPO / "docs").glob("bfs-*.md"))
     return "\n".join(path.read_text() for path in paths)
 

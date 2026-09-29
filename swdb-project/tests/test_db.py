@@ -1,4 +1,4 @@
-"""`swdb build`, `sql`, `find`, and `implementations` (ADR 0002). Updated 2026-09-25."""
+"""`swdb build`, `sql`, `find`, and `implementations` (ADR 0002). Updated 2026-09-29."""
 
 import json
 import re
@@ -121,7 +121,7 @@ def test_queries_rebuild_a_stale_database(repo):
 def test_every_table_and_column_is_documented(repo):
     repo.swdb("build")
     tables = out(repo.swdb("sql", "select name from sqlite_master where type = 'table'", "--format", "json"))
-    doc = (REPO / "docs" / "database.md").read_text()
+    doc = (REPO / "docs" / "reference" / "database.md").read_text()
     for table in (t["name"] for t in tables):
         assert f"`{table}`" in doc, f"table {table} is not documented"
         columns = out(repo.swdb("sql", f"select name from pragma_table_info('{table}')", "--format", "json"))

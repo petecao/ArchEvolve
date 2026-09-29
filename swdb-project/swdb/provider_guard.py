@@ -169,7 +169,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                   "read_roots": sorted(set(str(Path(p).resolve()) for p in roots if Path(p).exists())),
                   "runtime_self_reads": ["maps", "cgroup", "stat", "statm", "status"],
                   "device_write_roots": ["/dev/null"],
-                  "execution_cpus": sorted(os.sched_getaffinity(0))[:2],
+                  "execution_cpus": sorted(os.sched_getaffinity(0))[:1],
                   "resource_scope": "provider process tree including its external strace launcher",
                   "write_roots": [str(workspace), str(home)], "tcp_connect_ports": [443],
                   "inner_tcp_connect_ports": [], "tcp_bind_ports": [],
