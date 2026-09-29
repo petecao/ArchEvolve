@@ -114,8 +114,17 @@ def test_retry_refuses_changed_provider(proposal_setup, emulated_provider):
 
 def test_repair_usage_limit_does_not_consume_budget(evaluation_setup, emulated_provider):
     records,runs,_,base = evaluation_setup
-    result, failed = evaluate(evaluation_setup,mode='build_fail')
-    assert result.returncode == 1
+    machine = records.read('machines/native-testhost.yaml')
+    if machine['hostname'] == 'mbit10':
+        # The public evaluator verifies the inherited socket lease itself.
+        machine['lane_required'] = True
+        records.write('machines/native-testhost.yaml', machine)
+    result, failed = evaluate(evaluation_setup,mode='build_fail',
+                              build_directory=str(runs / 'usage-limit-native-build'))
+    assert result.returncode == 1, result.stderr
+    assert failed['outcome']['state'] == 'failed' and failed['outcome']['stage'] == 'build', failed['outcome']
+    if machine['hostname'] == 'mbit10':
+        assert 'verified: affinity' in failed['context']['lane']
     retry = records.swdb('repair',failed['id'],'--provider-config',emulated_provider(unavailable=True),
         '--runs-dir',runs,'--format','json')
     unavailable = json.loads(retry.stdout)

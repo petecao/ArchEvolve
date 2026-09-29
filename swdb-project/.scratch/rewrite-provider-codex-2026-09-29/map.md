@@ -1,7 +1,7 @@
 # Map: Codex and Claude rewrite providers in a guarded workspace
 
 Created: 2026-09-29 17:30 ET
-Updated: 2026-09-29 18:02 ET
+Updated: 2026-09-29 18:40 ET
 **Type:** ticket map
 **Status:** in-progress
 **Spec:** [spec.md](spec.md)
@@ -9,7 +9,7 @@ Updated: 2026-09-29 18:02 ET
 | # | Ticket | Status | Blocked by |
 |---|---|---|---|
 | 01 | [Prefactor: one interface for all provider kinds](issues/01-prefactor-provider-adapters.md) | resolved | — |
-| 02 | [Spike: both providers under a Landlock launcher on mbit10](issues/02-spike-providers-under-landlock.md) | claimed | free lane after T17 recheck |
+| 02 | [Spike: both providers under a Landlock launcher on mbit10](issues/02-spike-providers-under-landlock.md) | claimed | final bounded-runtime spike queued after Linux suite |
 | 03 | [Codex as a pinned rewrite provider (prompt-only mode)](issues/03-codex-pinned-provider.md) | resolved | — |
 | 04 | [Repairs keep their provider; usage limits don't consume repairs](issues/04-repairs-keep-provider.md) | resolved | — |
 | 05 | [Campaigns and the smoke script accept Codex](issues/05-campaigns-accept-codex.md) | resolved | — |
@@ -19,9 +19,13 @@ Updated: 2026-09-29 18:02 ET
 | 09 | [DX100 scalar-only source snapshot](issues/09-dx100-scalar-only-snapshot.md) | resolved | — |
 | 10 | [Real smoke runs on mbit10, plus docs](issues/10-real-smoke-runs-and-docs.md) | claimed | 02, 08 |
 
-Frontier now: 02, 08, 10. Code and local fixtures are integrated; Linux and real-provider
-receipts remain pending. A full local regression suite is running. Final code review and
-ticket reconciliation follow those checks.
+Frontier now: 02, 08, 10. Code and local fixtures are integrated. Linux guard tests passed;
+the corrected Linux workspace/pin suite is running in node0 generation 408. Claude
+completed a toy turn; its IPv6 UDP audit classification was corrected. Codex's wrapper
+plus runtime exceeded 16 threads, so the next spike records a four-CPU subset of the
+verified socket while retaining the aggregate cap. Real DX100 receipts remain pending.
+A full local regression suite is running. Final code review and ticket reconciliation
+follow those checks. The live node1 lease belongs to another job and is preserved.
 
 ## Context pointers
 
