@@ -196,8 +196,9 @@ def main():
                         help='2026-09-28 (T16 low-storage): accelerated executions request only the unit '
                              'Start/End trace (verification.coverage false); tile-size and indirect '
                              'store observations are then unobserved, accelerator execution is not')
-    parser.add_argument('--sampled-rss-gib', type=int, default=52,
-                        help='2026-09-29: plan-declared whole-tree sampled RSS cap (52 default, at most 56)')
+    parser.add_argument('--sampled-rss-gib', type=int, default=lifecycle.SAMPLED_RSS_BYTES // 1024**3,
+                        help='2026-09-29: plan-declared whole-tree sampled RSS cap (default and maximum '
+                             'from bfs_owned_execution)')
     parser.add_argument('--primary-only', action='store_true',
                         help='2026-09-28 (T16 v3): run only the timed primary per sample; no diagnostic '
                              'execution, region profile or profile package (frozen policy has no region pairs)')
@@ -244,8 +245,9 @@ def main():
         parser.error('this driver requires the mbit10 execution host')
     if not re.fullmatch(r'[a-z0-9][a-z0-9._-]*', args.id):
         parser.error('invalid record identifier')
-    if not 52 <= args.sampled_rss_gib <= lifecycle.MAX_SAMPLED_RSS_BYTES // 1024**3:
-        parser.error('sampled RSS cap must be 52-56 GiB')
+    rss_low, rss_high = lifecycle.SAMPLED_RSS_BYTES // 1024**3, lifecycle.MAX_SAMPLED_RSS_BYTES // 1024**3
+    if not rss_low <= args.sampled_rss_gib <= rss_high:
+        parser.error(f'sampled RSS cap must be {rss_low}-{rss_high} GiB')
     rss_limit = args.sampled_rss_gib * 1024**3
     if args.shared_protocol and (not args.protocol or len(set(args.shared_protocol)) != len(args.shared_protocol)
                                  or args.protocol in args.shared_protocol):

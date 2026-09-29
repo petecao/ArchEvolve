@@ -3,9 +3,9 @@
 Navigation updated: 2026-09-28 (Eastern Time).
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-27 (Eastern Time)
+Updated: 2026-09-29 14:30 ET
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 04, 10, 15
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -219,3 +219,17 @@ zero invocations. The public command that records correspondence is `freeze-prot
 (`settings.region_pairs`). It needs the T15-derived controlled-simulator protocol, which is not
 frozen yet, so no freeze was run. This inspection is the input for that freeze. No acceptance box
 changes; guest correctness, offload and timing remain unmeasured.
+
+## Answer
+
+Closed 2026-09-29 14:30 ET by owner scope change: the requirements changed in other sessions, so all remaining evaluation for this ticket is dropped and every running job was stopped. Unchecked acceptance boxes above stay unchecked; they are not met, and this closure does not claim them. Retained host evidence under `/data/yanruj/EvolveSWDB_runs/` was not imported into Git unless a record ID is named below.
+
+- Delivered: context-three candidate, primary and diagnostic builds, a3 routes series, and comparator rule
+  `baseline_not_invoked` (87a1f4b, 7576a38) for the frozen `bfs.top_down_step.maa` pair whose baseline region
+  `TDStepMAA` runs zero times.
+- Primary BFS ROI (simulated, one deterministic replay, degenerate 95% CI): uniform18 baseline 0.019544523158 s,
+  candidate 0.006344415474 s; comparison `bfs-t17-routes-20260929-a3c4.uniform18.comparison` decided **gain,
+  3.0806×** (host runtime `/data1/yanruj/EvolveSWDB_t17_compare_runtime_20260929_c3`, not imported).
+  kronecker18: primary ratio about 2.80× (0.018487688048 / 0.006605155742 s); its c4 comparison was stopped
+  before a decision. c1–c3 rejections are retained on the host.
+- Not delivered: a finished two-family comparison and a fresh-query reconstruction (boxes 4–7).

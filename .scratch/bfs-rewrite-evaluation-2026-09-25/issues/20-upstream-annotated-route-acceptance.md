@@ -1,9 +1,9 @@
 # 20 — Upstream BFS: annotated-source route acceptance
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-27 (Eastern Time)
+Updated: 2026-09-29 14:30 ET
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 05, 10, 15
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -255,3 +255,15 @@ CODE_COMMIT=bb42d2650a3dbc08527002cf23cafefbe8b0da08 bash launch.sh t20-context6
 
 The build IDs `bfs-t20-context6-{primary,diagnostic}-build-20260927-c3` are unused. The candidate
 remains `unverified`, and no acceptance box changes.
+
+## Answer
+
+Closed 2026-09-29 14:30 ET by owner scope change: the requirements changed in other sessions, so all remaining evaluation for this ticket is dropped and every running job was stopped. Unchecked acceptance boxes above stay unchecked; they are not met, and this closure does not claim them. Retained host evidence under `/data/yanruj/EvolveSWDB_runs/` was not imported into Git unless a record ID is named below.
+
+- Delivered: focused context projection, stream-json capture, `full_files` edit format; context6 candidate
+  (context4 timeout and context5 corrupt patch retained as failures); primary/diagnostic builds; AC10 companion
+  workload re-registered with an upstream sg64 representation (558386c).
+- Comparisons `bfs-t20-routes-20260929-a3c2.*` (one deterministic replay, degenerate 95% CI): uniform18
+  **regression, 0.5162×**; kronecker18 **regression, 0.4122×** (host a3 runtime, not imported).
+- The AC10 companion b1 was started on node0 at 13:54 ET and stopped by the owner's closure; no result.
+- Not delivered: an accelerating candidate on both families, AC10 parent-update evidence, fresh-query reconstruction.

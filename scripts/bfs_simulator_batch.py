@@ -870,8 +870,9 @@ def lease_observation(machine, node):
 
 def rss_limit(plan):
     """2026-09-29: plan-declared sampled whole-tree cap; 52 GiB unless raised (<= 56)."""
-    gib = plan['bounds'].get('sampled_tree_memory_gib', 52)
-    require(type(gib) is int and 52 <= gib <= lifecycle.MAX_SAMPLED_RSS_BYTES // GIB, 'sampled RSS cap must be 52-56 GiB')
+    low, high = lifecycle.SAMPLED_RSS_BYTES // GIB, lifecycle.MAX_SAMPLED_RSS_BYTES // GIB
+    gib = plan['bounds'].get('sampled_tree_memory_gib', low)
+    require(type(gib) is int and low <= gib <= high, f'sampled RSS cap must be {low}-{high} GiB')
     return gib * GIB
 
 
@@ -1199,6 +1200,7 @@ def main():
     plan = yamlio.load(plan_path(args.kind))
     validate_plan(plan, args.kind)
     pilot = is_pilot(plan)
+    rss_cap = rss_limit(plan)  # validated once; used by every monitor sample
     selected = plan['series']
     grouped = pilot and any('group' in row for row in plan['series'])
     if grouped:
@@ -1251,7 +1253,7 @@ def main():
         require(slots.is_dir() and not slots.is_symlink(), 'pilot gem5 slot directory is missing')
         receipt['concurrency'] = {**plan['concurrency'], 'family': selected[0]['id'], 'lane_root': lane_root,
             'aggregate_storage_paths': list(map(str, aggregate_paths)), 'gem5_slot_dir': str(slots),
-            'lane_tree_sampled_rss_limit_bytes': rss_limit(plan)}
+            'lane_tree_sampled_rss_limit_bytes': rss_cap}
     save_receipt(folder, receipt)
     owned = guard = None
     budget_path = folder/'cleanup-ledger.json'
@@ -1280,15 +1282,15 @@ def main():
             require(stat.f_bavail * stat.f_frsize >= minimum * GIB, 'raw/build free-space reserve violated')
         sample = {**ledger.observation(raw), **(lease_observation(store.get('mbit10'), args.lane)
                   if store else {'lease_admission': 'record_store_loading'}),
-                  'owned_processes': race_tolerant(owned.sample) if pilot else owned.sample()}
-        require(sample['owned_processes']['rss_bytes'] <= rss_limit(plan),
-                'sampled whole-tree RSS exceeded 52 GiB')
+                  'owned_processes': race_tolerant(owned.sample)}
+        require(sample['owned_processes']['rss_bytes'] <= rss_cap,
+                f'sampled whole-tree RSS exceeded {rss_cap // GIB} GiB')
         if pilot:
             lane_tree = race_tolerant(lane_sampler)
             sample.update(aggregate_raw_bytes=total, lane_tree_rss_bytes=lane_tree['rss_bytes'],
                           lane_tree_processes=len(lane_tree['processes']))
-            require(lane_tree['rss_bytes'] <= rss_limit(plan),
-                    'sampled whole-lane-tree RSS exceeded 52 GiB')
+            require(lane_tree['rss_bytes'] <= rss_cap,
+                    f'sampled whole-lane-tree RSS exceeded {rss_cap // GIB} GiB')
         with ledger_file.open('a') as stream:
             stream.write(json.dumps(sample) + '\n')
         return raw
@@ -1358,7 +1360,7 @@ def main():
         except BaseException as exc:
             failed(exc, 'cleanup_accounting_error')
         if guard:
-            receipt['telemetry'] = {'sampled_rss_limit_bytes': rss_limit(plan),
+            receipt['telemetry'] = {'sampled_rss_limit_bytes': rss_cap,
                 'rss_source': lifecycle.RSS_SOURCE, 'maximum_gap_seconds': guard.maximum_gap_seconds,
                 'maximum_guard_seconds': guard.maximum_guard_seconds, 'hard_memory_quota': False}
         try:

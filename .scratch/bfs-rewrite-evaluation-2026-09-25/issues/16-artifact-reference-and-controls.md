@@ -3,9 +3,9 @@
 Navigation updated: 2026-09-28 (Eastern Time).
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-29 (Eastern Time)
+Updated: 2026-09-29 14:30 ET
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 11, 13, 14
 **Spec:** `../spec.md`
 
@@ -583,3 +583,19 @@ The fresh c2 plans (M, S1, S2) keep the same rows and the low-storage settings, 
 
 Planned lanes: M, then S2, on node0; S1 on node1 after the owner's MemAcc session, on
 root's go. No sample, comparison or acceptance is claimed yet.
+
+## Answer
+
+Closed 2026-09-29 14:30 ET by owner scope change: the requirements changed in other sessions, so all remaining evaluation for this ticket is dropped and every running job was stopped. Unchecked acceptance boxes above stay unchecked; they are not met, and this closure does not claim them. Retained host evidence under `/data/yanruj/EvolveSWDB_runs/` was not imported into Git unless a record ID is named below.
+
+- Delivered: frozen v4 simulator protocols with O3 post-ROI verification, the M/S1/S2 split plans (c1, c2),
+  the plan-declared 52–56 GiB sampled RSS cap, low-storage MAATrace-only collection, `compare.py`
+  (branch `codex/bfs-t16-reference-20260927-b1`, db41416, merged 2026-09-29).
+- Execution: M c1 failed (R12 atomic-switch drain hang at uniform22). M c2 sealed its ROI at 07:43 ET and its
+  guest verifier printed `Verification: PASS` (verification 2.06420 s simulated, trial 0.22628 s) at 13:49 ET,
+  but the execution was rejected because the DX100 v2 verification END line (1,315,455 B, one progress record
+  per 1e9 ticks per CPU) exceeds the 1-MiB line bound in `swdb/dx100_witness.py`. No sample was recorded.
+  S1/S2 c2 were withdrawn before launch.
+- Known defect left open: uniform22 executions need the witness progress moved out of the END line (for
+  example a hash-bound sidecar) before any future T16 run. Measured post-seal verifier cost: about 22.5 ks host time.
+- Not delivered: the artifact reference pair and controls (boxes 1–4).

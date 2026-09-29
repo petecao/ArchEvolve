@@ -337,7 +337,8 @@ def compare(store, a, b, settings, packages):
                 "candidate_invocations": [row["invocations"] for row in samples["candidate"]],
                 "candidate_duration_s": {str(position): value for position, value in candidate.items()},
                 "samples": samples, "primary_bfs_roi": False, "gain_claim": False,
-                "note": ("The baseline never executes this region (raw-verified zero invocations and time); "
+                "note": ("The baseline never executes this region (zero invocations and time, checked against the raw "
+                         "report wherever it is reachable); "
                          "no regional ratio exists. Candidate time is reported alone; the primary BFS result is separate.")})
             continue
         ratios = {position: statistics.median(row["duration_s"] for row in samples["baseline"] if row["source_position"] == position)

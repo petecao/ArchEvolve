@@ -141,7 +141,8 @@ def _prepare(args, action, store, request, data):
     # 18,000-second / 20-GiB execute caps (measured T16 scalar ROI > 10,700 s,
     # MAA uniform18 trace 1.3 GB scaling to about 20 GiB); callers still pin budgets.
     total = _integer(budget.get("total_seconds"), "budget.total_seconds", maximum=86400 if action == 'execute' else 7200)
-    # 2026-09-29: 54 for uniform22 author executions under a 56-GiB sampled cap.
+    # 2026-09-29: 54 is the execute ceiling (uniform22 author runs under a 56-GiB sampled
+    # cap); the series driver still pins 48 for non-author executions.
     memory = _integer(budget.get("memory_gib"), "budget.memory_gib", maximum=54 if action == 'execute' else 48)
     storage = _integer(budget.get("storage_gib"), "budget.storage_gib", maximum=32)
     if action == "build":
