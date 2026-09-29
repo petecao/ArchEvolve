@@ -1,0 +1,31 @@
+name: isa_extensions
+description: ISA extensions an intrinsic needs, named as lscpu prints them on its Flags line (the Linux /proc/cpuinfo names).
+values:
+  - value: sse
+    meaning: x86 SSE (CPUID SSE); part of the x86-64 baseline.
+  - value: sse2
+    meaning: x86 SSE2 (CPUID SSE2); part of the x86-64 baseline.
+  - value: pni
+    meaning: x86 SSE3 (Linux calls it pni, Prescott New Instructions).
+  - value: ssse3
+    meaning: x86 Supplemental SSE3.
+  - value: sse4_1
+    meaning: x86 SSE4.1 (compiler flag -msse4.1).
+  - value: sse4_2
+    meaning: x86 SSE4.2 (compiler flag -msse4.2).
+  - value: avx
+    meaning: x86 AVX (256-bit floating-point vectors).
+  - value: avx2
+    meaning: x86 AVX2 (256-bit integer vectors and AVX2 gathers).
+  - value: fma
+    meaning: x86 FMA3 fused multiply-add.
+  - value: avx512f
+    meaning: x86 AVX-512 Foundation (512-bit vectors, masks, and gathers/scatters).
+  - value: avx512cd
+    meaning: x86 AVX-512 Conflict Detection.
+  - value: avx512dq
+    meaning: x86 AVX-512 Doubleword and Quadword instructions.
+  - value: avx512bw
+    meaning: x86 AVX-512 Byte and Word instructions.
+  - value: avx512vl
+    meaning: x86 AVX-512 Vector Length extensions (AVX-512 instructions on 128- and 256-bit vectors).

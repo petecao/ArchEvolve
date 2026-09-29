@@ -1,0 +1,9 @@
+name: numerical_requirements
+description: What the result of an access pattern's updates must preserve numerically.
+values:
+  - value: exact
+    meaning: Results must be bit-identical (integer or exact data movement).
+  - value: fp_reassociation_allowed
+    meaning: Floating-point operations may be reordered; results need only pass the kernel's correctness check tolerance.
+  - value: any_valid_result
+    meaning: Any result the correctness check accepts is valid (for example any valid BFS parent).

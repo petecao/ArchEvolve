@@ -1,0 +1,121 @@
+kind: implementation
+schema_version: '0.4'
+status: draft
+deprecated_by: null
+extensions: {}
+id: dx100-bfs-scalar
+created: '2026-09-25'
+updated: '2026-09-25'
+provenance:
+- id: src-dx100-bfs
+  kind: source_code
+  description: DX100 bfs.cc scalar DOBFS calls only TDStep; main selects it when MAA is undefined. Read
+    2026-09-25.
+  uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/bfs.cc
+name: DX100 scalar top-down BFS
+kernel: gapbs-bfs
+application: dx100-gapbs
+source_baseline: dx100-bfs-scalar
+function: DOBFS
+origin:
+  kind: application_source
+  description: Scalar non-MAA starting implementation in pinned DX100 source.
+  derived_from: null
+code:
+- root: application
+  path: benchmarks/gapbs/src/bfs.cc
+  sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+build:
+  compiler: g++
+  flags: -std=c++11 -O3 -Wall -fopenmp -pthread -DFUNC
+  command: '{cxx} {flags} -I{app}/benchmarks/API -I{app}/benchmarks/gapbs/src {source} -o {binary}'
+run:
+  command: '{binary} {input_args} -n {trials}'
+  timer: gapbs_trial_time
+  threads_env: OMP_NUM_THREADS
+  kernel_symbols: [DOBFS, TDStep, InitParent]
+  index_stream: null
+evaluator:
+  backend: native
+  command: '{binary} {input_args} -n 1 -v'
+  pass_regex: Verification:\s+PASS
+  verifier:
+    description: DX100 BFSVerifier structurally checks parent edges, depths and reachability from the
+      same source. Native FUNC binding; GEM5 post-ROI correctness requires its own evaluator.
+    code:
+      root: application
+      path: benchmarks/gapbs/src/bfs.cc
+      sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+      lines: [458, 509]
+verification:
+  status: unchecked
+  evidence: []
+  scope: Imported source only; no native or simulated target/workload has been checked by this record.
+loops:
+- id: td-frontier
+  description: TDStep visits each vertex in the current queue window.
+  parent: null
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-dx100-bfs]
+  parallel:
+    construct: omp_for_in_parallel_region
+    schedule: null
+    reduction: null
+access_patterns:
+- id: td-frontier-read
+  expression: NodeID u = queue.shared[i]
+  loop: td-frontier
+  steps:
+  - array:
+      name: queue.shared
+      role: target
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+notes:
+- The imported access-pattern catalog records one frontier read, not complete discovery or dynamic profiling.
+- Despite its retained direction-optimizing header, scalar DOBFS calls TDStep only.
+- The pinned graph representation uses int32_t SGOffset; upstream GAPBS serialization must not be assumed
+  equivalent.
+- No -DMAA flag is passed; native functional API setup is not accelerated performance evidence.

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evaluation_pair",
+  "title": "Native paired evaluation receipt",
+  "description": "Introduced 2026-09-26. Prospective native_paired.v1 schedule and complete or partial paired evidence.",
+  "properties": {
+    "kind": {
+      "const": "evaluation_pair"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "message_version": {
+      "const": "1.0"
+    },
+    "producer": {
+      "type": "object"
+    },
+    "request": {
+      "type": "object"
+    },
+    "collection": {
+      "type": "object"
+    },
+    "schedule": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "evaluation_identities": {
+      "type": "object"
+    },
+    "outcome": {
+      "type": "object"
+    },
+    "gain_claim": {
+      "const": false
+    },
+    "evidence_kind": {
+      "enum": [
+        "execution",
+        "contract_fixture"
+      ]
+    },
+    "schedule_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "request_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "receipt_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "started": {
+      "type": "string"
+    },
+    "prepared_at": {
+      "type": "string"
+    },
+    "finished": {
+      "type": "string"
+    },
+    "baseline_evaluation": {
+      "$ref": "#/$defs/id",
+      "x-ref": "evaluation"
+    },
+    "candidate_evaluation": {
+      "$ref": "#/$defs/id",
+      "x-ref": "evaluation"
+    }
+  },
+  "required": [
+    "message_version",
+    "producer",
+    "request",
+    "collection",
+    "schedule",
+    "schedule_sha256",
+    "request_sha256",
+    "observations",
+    "evaluation_identities",
+    "outcome",
+    "gain_claim",
+    "evidence_kind",
+    "started"
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "created": "2026-09-26",
+  "recorded_at": "2026-09-26T17:45:28.264561-04:00",
+  "state": "pushed_and_remote_head_verified",
+  "repository": "ruchou/EvolveSWDB",
+  "repository_id": "1382305006",
+  "visibility": "private",
+  "destination_metadata_verified_via": "GitHub connector before push; admin/push permissions true",
+  "branch": "codex/bfs-supervision-20260926-a1",
+  "commit": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+  "parent": "67313d9b2a45d9f0fb23d935b56e755a3a19fa7f",
+  "root_source_commit": "6b1102daa7c405fb85014e41072a64680f7802ff",
+  "file_count": 56,
+  "total_file_bytes": 857716,
+  "inventory": {
+    "path": "/private/tmp/bfs-supervision-export-inventory-v2-20260926.json",
+    "bytes": 15877,
+    "sha256": "6a3eab5f0341ac28043797e31857a2c0e295eb5deab79252c8c81e8c15029f81"
+  },
+  "Standards": {
+    "path": "/private/tmp/bfs-exact-export-standards-review-v2-20260926.json",
+    "bytes": 20365,
+    "sha256": "9bfae09a1f7807b1ffefd329d5bdce2a3baa5d94b97a8d662325a775335bdd24"
+  },
+  "Spec_dispatch": {
+    "path": "/private/tmp/bfs-a2-fixture-dispatch-spec-final-pin-20260926.md",
+    "bytes": 1308,
+    "sha256": "f9cc6f575f304464054331885b97e06e8a1cbbb95846705f418603dac5dc8999"
+  },
+  "verification": {
+    "original_export": {
+      "commit": "c0df79eaa1575d4b4cb9d84f4c2a90d802721698",
+      "result": "558 passed,9 skipped,2 fixture failures",
+      "receipt": {
+        "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/observations/supervision-export-c0df79e-tests-20260926.json",
+        "bytes": 2579,
+        "sha256": "5cff1efdc2d40430359fd202cee9df650dea72da59f741b13f26824764cfeea2"
+      },
+      "preserved_local_branch": "codex/bfs-supervision-checkpoint-20260926-c0df79e"
+    },
+    "superseding_export": {
+      "result": "61 passed in10.91s;206 catalog records valid",
+      "receipt": {
+        "path": "/private/tmp/bfs-supervision-export-v2-tests-20260926.json",
+        "bytes": 1912,
+        "sha256": "7a6dd8e8a5247883edff8bd587129af3541f224673eabb1e0def16f95d804b29"
+      },
+      "production_diff_from_original": "empty; only two reviewed test modules plus typed repair receipt changed"
+    }
+  },
+  "push": {
+    "command": [
+      "git",
+      "push",
+      "origin",
+      "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07:refs/heads/codex/bfs-supervision-20260926-a1"
+    ],
+    "returncode": 0,
+    "output": "new branch created"
+  },
+  "remote_verification": {
+    "command": [
+      "git",
+      "ls-remote",
+      "--heads",
+      "origin",
+      "refs/heads/codex/bfs-supervision-20260926-a1"
+    ],
+    "returncode": 0,
+    "advertised_commit": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07"
+  },
+  "excluded": [
+    "Held six provider-result paths and their source-containing history",
+    "Raw host artifacts",
+    "Unrelated weeklogs",
+    "Whole root commit history"
+  ],
+  "catalog_difference": "Seven root-only exit-probe/T14 records are outside fixed T15/T16 input sets. All10 T15 and13 T16 bindings, request/settings hashes and historical failure pins match.",
+  "limits": [
+    "Code transfer and local contract verification only; no new Linux fixture or empirical acceptance follows.",
+    "Native pilot remains on319645e; A2 fixture tested runtime remains67313d9 in a separate checkout.",
+    "Final actual Linux proofs must bind this exact supervisor runtime and their original clocks.",
+    "The independent broad suite at7fe4c34 remains a separate in-progress run with retained older fixture failures."
+  ]
+}

@@ -1,0 +1,39 @@
+kind: intrinsic
+schema_version: '0.3'
+id: mm512_i32gather_ps
+status: draft
+deprecated_by: null
+created: '2026-09-23'
+updated: '2026-09-23'
+provenance:
+- id: intel-guide
+  kind: vendor_reference
+  description: Intel Intrinsics Guide entry for _mm512_i32gather_ps (CPUID flag AVX512F, instruction
+    VGATHERDPS zmm, 16 lanes of 32-bit floats, header immintrin.h). The guide page could not be
+    fetched automatically on 2026-09-23, so the facts were checked against the two sources below.
+  uri: https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm512_i32gather_ps
+- id: gcc-header
+  kind: source_code
+  description: 'GCC gcc/config/i386/avx512fintrin.h (master, read 2026-09-23): __m512 _mm512_i32gather_ps
+    (__m512i __index, void const *__addr, int __scale), compiled under #pragma GCC target("avx512f"), calls
+    __builtin_ia32_gathersiv16sf with mask 0xFFFF (16 lanes); immintrin.h includes it.'
+  uri: https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/avx512fintrin.h
+- id: rust-core-arch
+  kind: vendor_reference
+  description: 'Rust core::arch::x86_64::_mm512_i32gather_ps documentation, which reproduces Intel''s
+    description ("32-bit elements are loaded from addresses starting at base_addr and offset by each
+    32-bit element in vindex (each index is scaled by the factor in scale)") under target feature avx512f.'
+  uri: https://doc.rust-lang.org/core/arch/x86_64/fn._mm512_i32gather_ps.html
+name: _mm512_i32gather_ps
+isa_family: x86
+isa_extensions:
+- avx512f
+header: immintrin.h
+memory_kind: gather
+address_shape: single_valued_indirect
+element_bits: 32
+lanes: 16
+notes:
+- scale must be 1, 2, 4, or 8. Each lane's address is base + index[lane] * scale, one
+  single_valued_indirect access per lane; all 16 lanes are active (the masked form is
+  _mm512_mask_i32gather_ps).

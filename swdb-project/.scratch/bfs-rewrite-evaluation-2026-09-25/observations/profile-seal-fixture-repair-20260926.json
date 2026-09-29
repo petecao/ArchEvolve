@@ -1,0 +1,67 @@
+{
+  "created": "2026-09-26",
+  "status": "local_contract_fixtures_reviewed",
+  "scope": "Two test modules updated to current profile-package assembly seals; no production validator changes",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_native_campaign.py",
+      "bytes": 7303,
+      "sha256": "25ca9173144202d9929f00674cd57050da16d141353d2127f11bcb44914807bc"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_native_reassessment.py",
+      "bytes": 16390,
+      "sha256": "f8953a74a19d1086d1d5d57755a7170099bc950e8cae58af8850f01fdbff6b5b"
+    }
+  ],
+  "unchanged_production_seal": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/profile_package.py",
+    "bytes": 33633,
+    "sha256": "dc61800651d043a16b25b1a79903a6ed5553211684c60d2fb3bae99bfe12ba83"
+  },
+  "diagnosis": "Synthetic execution-class package fixtures omitted current assembly seals or mutated sealed fields without rebuilding identity and references. Production rejection is correct.",
+  "correction": "Use verified current assembly identity in both fixtures; refresh content-addressed records/proposal/manifest references after intentional semantic mutations. Preserve positive transition, unknown historical inputs, semantic mismatch rejection, and no-provider/no-repair failure behavior.",
+  "author_receipts": {
+    "campaign": {
+      "path": "/private/tmp/bfs-native-campaign-fixture-repair-20260926.json",
+      "bytes": 2370,
+      "sha256": "35930f62f9780b84c38b7363894986c79d808f46288f9e2b2312862621d54a92"
+    },
+    "reassessment": {
+      "path": "/private/tmp/bfs-native-reassessment-fixture-repair-20260926.json",
+      "bytes": 3558,
+      "sha256": "95609844bae65e57cb131727325978caa95c56b756c0c997a461cc6dc6fcfeed"
+    }
+  },
+  "checks": {
+    "campaign": "16 passed in0.20s; independently16 passed in0.19s",
+    "reassessment": "45 passed in11.65s; independently24 selected passed,21 deselected in0.32s"
+  },
+  "independent_reviews": {
+    "Standards_campaign": {
+      "path": "/private/tmp/bfs-native-reassessment-fixture-repair-20260926.json",
+      "bytes": 3558,
+      "sha256": "95609844bae65e57cb131727325978caa95c56b756c0c997a461cc6dc6fcfeed"
+    },
+    "Spec_reassessment": {
+      "path": "/private/tmp/bfs-reassessment-seal-spec-cross-20260926.json",
+      "bytes": 1840,
+      "sha256": "970a356f66b73144dd840cb9886a6fc477b7344d73932a26bfbba8bde3a2bdf6"
+    }
+  },
+  "retained_original_export": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/observations/supervision-export-c0df79e-tests-20260926.json",
+    "bytes": 2579,
+    "sha256": "5cff1efdc2d40430359fd202cee9df650dea72da59f741b13f26824764cfeea2"
+  },
+  "original_full_regression": {
+    "commit": "7fe4c348046d829cbbdad455eb2323f93ad00175",
+    "state_at_receipt": "running_with16campaign_fixture_failures",
+    "receipt_path": "/private/tmp/bfs-full-suite-7fe4c34-20260926.json"
+  },
+  "limits": [
+    "Synthetic fixture checks supply no empirical evidence, freeze or candidate gain.",
+    "The earlier failed broad/export results remain unchanged.",
+    "The superseding exact export still needs its affected-module and catalog readback before push."
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "created": "2026-09-26",
+  "state": "passed",
+  "evidence_kind": "contract_fixture",
+  "code_commit": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+  "proof": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-reader-fast-exit-linux-20260926-a1/proof.json",
+    "sha256": "79f349b0e348e4ee47e63a4a74ff04565497e7c7df45848c6cd9e1aad940b4b1"
+  },
+  "proof_bytes": 2914,
+  "terminal_audit": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-reader-fast-exit-linux-20260926-a1.dispatch/terminal-validation.json",
+    "sha256": "dfc60af762b51e2c38ffebd0218d8be4a9b90027691991b737f7f38895df91bc"
+  },
+  "audit_bytes": 11884,
+  "closure_state": "terminal_no_live_owned_processes",
+  "retained_identity_count": 7,
+  "owned_processes": [
+    {
+      "pid": 3079200,
+      "parent_pid": 359742,
+      "start_ticks": 496450134,
+      "state": "Z",
+      "rss_bytes": 0,
+      "role": "tmux_launcher"
+    },
+    {
+      "pid": 3079203,
+      "start_ticks": 496450139,
+      "state": "absent",
+      "current_identity": null
+    },
+    {
+      "pid": 3079204,
+      "start_ticks": 496450139,
+      "state": "absent",
+      "current_identity": null
+    },
+    {
+      "pid": 3079275,
+      "start_ticks": 496450165,
+      "state": "absent",
+      "current_identity": null
+    },
+    {
+      "pid": 3079276,
+      "start_ticks": 496450165,
+      "state": "absent",
+      "current_identity": null
+    },
+    {
+      "pid": 3079277,
+      "start_ticks": 496450165,
+      "state": "absent",
+      "current_identity": null
+    },
+    {
+      "pid": 3079278,
+      "start_ticks": 496450236,
+      "state": "absent",
+      "current_identity": null
+    }
+  ],
+  "events_reference": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-reader-fast-exit-linux-20260926-a1/pytest/test_linux_fast_reader_retains0/linux-reader-events.jsonl",
+    "sha256": "30d871ed6d87350783340cbeca2f484605656b1de57d46dc866f2fe70ff121ec"
+  },
+  "events": [
+    {
+      "event": "spawn",
+      "hard_deadline_monotonic": 4965432.36404933,
+      "identity": {
+        "parent_pid": 3079276,
+        "pid": 3079278,
+        "rss_bytes": 0,
+        "start_ticks": 496450236,
+        "state": "Z"
+      },
+      "observed_at": "2026-09-26T22:42:49.558392+00:00",
+      "work_deadline_monotonic": 4965402.36404933
+    },
+    {
+      "cleanup_deadline_monotonic": 4964532.449256803,
+      "cleanup_elapsed_before_event_seconds": 0.00009322352707386017,
+      "cleanup_error": null,
+      "cleanup_started_monotonic": 4964502.449256803,
+      "direct_reaped": true,
+      "event": "finished",
+      "hard_deadline_monotonic": 4965432.36404933,
+      "identity": {
+        "parent_pid": 3079276,
+        "pid": 3079278,
+        "rss_bytes": 0,
+        "start_ticks": 496450236,
+        "state": "Z"
+      },
+      "observed_at": "2026-09-26T22:42:49.560345+00:00",
+      "original_error": null,
+      "pid": 3079278,
+      "returncode": 0
+    }
+  ],
+  "outer_started": "2026-09-26T18:42:48.498884-04:00",
+  "outer_deadline": "2026-09-26T18:44:18.498884-04:00",
+  "finished": "2026-09-26T18:42:49.746469-04:00",
+  "outer_elapsed_seconds": 1.247585,
+  "pytest_result": {
+    "passed": 1,
+    "skipped": 0,
+    "failed": 0,
+    "elapsed_seconds": 0.6
+  },
+  "exit_codes": {
+    "pytest": 0,
+    "helper": 0,
+    "outer": 0
+  },
+  "lane": {
+    "node": 0,
+    "generation": 327,
+    "released": true,
+    "kernel_held": false,
+    "observations": 2
+  },
+  "runtime": {
+    "test": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_reader_20260926_a2/tests/test_bfs_one_thread_freeze.py",
+      "sha256": "75c5910d9c237c6dccf0a2178f871089e4a7bc95d9d3d48ad53097f38aee3d08"
+    },
+    "reader": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_reader_20260926_a2/scripts/bfs_one_thread_calibration.py",
+      "sha256": "77fc98b00e745122668b35e7b1f3bbe383a80009315a5a24865f992b08da201a"
+    }
+  },
+  "python": {
+    "path": "/usr/bin/python3.12",
+    "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+  },
+  "pytest_identity": {
+    "pid": 3079276,
+    "parent_pid": 3079275,
+    "start_ticks": 496450165,
+    "state": "R",
+    "rss_bytes": 11534336
+  },
+  "audited_at": "2026-09-26T18:44:41.296877-04:00",
+  "audit_seconds": 0.03895471151918173,
+  "automatic_retry_allowed": false,
+  "qualification": "Synthetic Linux lifecycle evidence only; no empirical native or simulator qualification."
+}

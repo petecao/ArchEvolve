@@ -1,0 +1,17 @@
+name: update_kinds
+description: What an access pattern does to the final array of its chain.
+values:
+  - value: read
+    meaning: Reads the element; does not change it.
+  - value: write
+    meaning: Stores a value that does not depend on the element's old value.
+  - value: add_update
+    meaning: Adds to the element (element += x).
+  - value: min_max_update
+    meaning: Replaces the element with the min or max of it and a new value.
+  - value: compare_and_swap
+    meaning: Replaces the element only if it still holds an expected value, as one atomic step.
+  - value: arbitrary
+    meaning: Any other read-modify-write of the element.
+  - value: prefetch
+    meaning: A non-binding early access that returns no data (a software prefetch); it never changes the element.

@@ -1,0 +1,101 @@
+{
+  "date": "2026-09-26",
+  "timezone": "America/New_York",
+  "state": "prospective_not_dispatched",
+  "observation_scope": "Read-only host metadata and candidate artifact verification; no source text, proposal payload, provider response, or raw log included.",
+  "observed_interval": {
+    "started": "2026-09-26T13:05:37-04:00",
+    "finished": "2026-09-26T13:07:25-04:00"
+  },
+  "host": "mbit10",
+  "checkout": {
+    "path": "/data1/yanruj/EvolveSWDB_provider_20260926_a1",
+    "branch": "codex/bfs-provider-evidence-20260926-a1",
+    "commit": "5f1b8028619976b36df5fa24b8aacb91bf488168",
+    "code_parent": "6346189b55132f195b02544b729f34100d10ba92",
+    "tracked_scripts_swdb_schemas_clean": true
+  },
+  "request": {
+    "repository_path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/t17-build-only-20260926-a1.json",
+    "bytes": 551,
+    "sha256": "de1b10536fa91f675bb3372f9104c10fbf160f952ac9016538c5d38cdb6fc211",
+    "id_absent_when_observed": true
+  },
+  "proposal": {
+    "id": "bfs-campaign-preparation-20260925-a1.dx100-instructions",
+    "canonical_sha256": "a72f2cdd2503cb719169ef2d2dd2c61ad1f622e711e097cdbddba24a8e17705c",
+    "record_file_sha256": "a556d0ca47c2f04661eaa9af35c6c86b5fff0afd22a76ebcd9f6d5df5b1551f6",
+    "outcome": {"state": "candidate_created", "stage": "rewriting", "reason": null},
+    "producer": {"name": "swdb-representative-dx100-instructions", "role": "sw", "test_client": true},
+    "attempt_count": 1,
+    "profile_package": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718",
+    "retained_provider_budget": {"max_repairs": 2, "repairs": 0, "total_seconds": 1800, "used_seconds": 233.21830715797842},
+    "new_provider_calls": 0,
+    "budget_reset_or_extension": false
+  },
+  "candidate": {
+    "id": "bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1",
+    "canonical_sha256": "e31ff21a5676c29c653d0c443f13faaf32cad7e8cdf41754404422dc9a94ac11",
+    "record_file_sha256": "2a4691b9036c7ecbbae4be956ece6d602e55a2a0f296f45a958f7e91c2ce9ac4",
+    "proposal": "bfs-campaign-preparation-20260925-a1.dx100-instructions",
+    "parent": null,
+    "artifact_path": "/data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.dx100-instructions/source",
+    "artifact_sha256": "ca09d2f439a56f295c5ccdc5e18a5fd5a4c2c9726005365f8125cc1d8979740a",
+    "artifact_file_count": 53,
+    "artifact_manifest_reopened_and_verified": true,
+    "diff_path": "/data1/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/bfs-campaign-preparation-20260925-a1.dx100-instructions/candidate.diff",
+    "diff_replayed_in_this_observation": false
+  },
+  "source_snapshot": {
+    "id": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source",
+    "canonical_sha256": "c579930c7b04e98868966fab10c9c5d30c506ed3c515d1b3681beb0b8f975443",
+    "record_file_sha256": "9197acdaf7fb101b9c19aed50def7553042e6ee7c93b650e23af0fc0a71734e5",
+    "artifact_path": "/data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source",
+    "recorded_artifact_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+    "original_artifact_rehashed_in_this_observation": false,
+    "function": "DOBFS"
+  },
+  "implementation": {
+    "id": "dx100-bfs-scalar",
+    "canonical_sha256": "81ffac2bdf90e50f2350675edd53c16162c0251e8bb23fc17d4cfe421cd32e61",
+    "record_file_sha256": "d8db5a38ad78cb7a92059724991c623550ee41a5a6b5cd7517fbbf0d4ba37f76"
+  },
+  "model": {
+    "root": "/data1/yanruj/DX100-bfs-e4fc4af",
+    "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+    "tracked_clean": true,
+    "build_evaluation": "bfs-dx100-build-20260925-a2",
+    "build_canonical_sha256": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea",
+    "build_record_file_sha256": "e61de36a9c80a5f2c272c08bf12f0050c3ba9c25c7243432e2ea6cb4e29cecaf",
+    "build_outcome": {"state": "complete", "stage": "build"},
+    "receipt": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/build-receipt.json",
+      "sha256": "c465447ddc5cc37faa7cb3127a7f9f00b6b557c326e8319e5d694ee9933f8d6c",
+      "reopened_and_verified": true
+    },
+    "target": "dx100-e4fc4af-4c",
+    "target_canonical_sha256": "94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1",
+    "target_record_file_sha256": "66e9458534e293b63b81cb813d4d268d7bb599f2862073adc74e5c86d1aa755f",
+    "backend": "dx100-gem5-se",
+    "backend_readiness": "built"
+  },
+  "compiler": {
+    "path": "/usr/bin/g++-13",
+    "sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769",
+    "version_command_executed_in_this_observation": false
+  },
+  "prospective_outputs": {
+    "raw_root": "/data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926",
+    "raw_root_absent_when_observed": true,
+    "build_directory": "/data1/yanruj/EvolveSWDB_builds/bfs-t17-build-only-20260926-a1",
+    "build_directory_absent_when_observed": true
+  },
+  "evidence_limits": {
+    "build_dispatched": false,
+    "candidate_correctness_established": false,
+    "accelerator_execution_established": false,
+    "profiling_completed": false,
+    "gain_claim": false,
+    "ticket17_accepted": false
+  }
+}

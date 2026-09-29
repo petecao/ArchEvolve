@@ -1,0 +1,78 @@
+{
+  "created": "2026-09-26T19:17:03.200669-04:00",
+  "state": "fixed locally; independently reviewed; not committed/exported by author",
+  "issue": {
+    "priority": "P2",
+    "trigger": "native campaign uses default/common ROOT/records; any real public get builds the default ROOT/build/swdb.sqlite",
+    "consequence": "final campaign_runtime rejects the newly created top-level build directory after otherwise successful public work",
+    "pointers": [
+      "scripts/bfs_native_campaign.py:Driver.call",
+      "swdb/db.py:default_path",
+      "swdb/workflow.py:get_record",
+      "scripts/bfs_native_campaign.py:validate_root_entries",
+      "scripts/bfs_native_campaign.py:main final runtime check"
+    ]
+  },
+  "baseline": {
+    "root_head_at_seal": "c8db6ca870b6efac46c2a22e8b250dc67e46c801",
+    "campaign_head_sha256": "e341ada6cec7ee628c7fb75576b47f863ce4b6d30059ae100ad5acdea58cb0e4"
+  },
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_native_campaign.py",
+      "bytes": 72667,
+      "sha256": "92a2e17d0cb8813da75e03d6ade2c0ff9d1792c5df34f26831d7b9a585c51a3b"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_native_execution.py",
+      "bytes": 24844,
+      "sha256": "079ac071c5f6c8309be3eb0a0973f363abf14c554ad0bb6f9a45ee79b0806b13"
+    }
+  ],
+  "implementation": [
+    "Derive self.database as self.folder/swdb.sqlite in the already required-new external raw driver directory.",
+    "Pass --db explicitly on every Driver.call public command. Direct non-SWDB execute stages are unchanged.",
+    "Retain database path in driver receipt. Existing NativeSupervision recursive raw accounting includes DB and any sidecars.",
+    "Do not weaken runtime/root guard, change public SWDB defaults, canonical records, provider/repair boundaries, clocks, or active host pins."
+  ],
+  "validation": {
+    "original_probe": {
+      "path": "/private/tmp/test_bfs_campaign_database_standards_20260926.py",
+      "bytes": 2515,
+      "sha256": "01d4ae46586d61b3eb81bc0b8bd9ed0eca12fea8545049dcb91bf457e2dd30f8"
+    },
+    "original_red": {
+      "path": "/private/tmp/bfs-campaign-db-standards-red-20260926.log",
+      "bytes": 4188,
+      "sha256": "2cefd71fd1d101584744f9972ee9bd1d0eb590e6421e8414a43027450dd8f517"
+    },
+    "original_red_result": "1 failed in0.64s; real public get succeeded then production campaign_runtime rejected ROOT/build",
+    "permanent_red": {
+      "path": "/private/tmp/bfs-campaign-db-permanent-red-20260926.log",
+      "bytes": 4027,
+      "sha256": "bd65c814585f9f6750d596f200947929756a0caa3456a42e4450373ca48f67d5"
+    },
+    "permanent_red_result": "1 failed in0.56s at same root guard",
+    "targeted_green": {
+      "path": "/private/tmp/bfs-campaign-db-targeted-green-20260926.log",
+      "bytes": 98,
+      "sha256": "3d5d4adb74b114a61c91f32c4f7e9b71d1c684729712ae18c89dd9966ddabceb"
+    },
+    "targeted_green_result": "2 passed in1.28s: unchanged original repro plus permanent actualCLI regression",
+    "focused_command": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_native_campaign.py tests/test_bfs_native_execution.py tests/test_bfs_campaign_cleanup.py tests/test_bfs_campaign_reuse.py tests/test_bfs_native_reassessment.py tests/test_owned_process_cleanup.py -q -p no:cacheprovider --basetemp /private/tmp/bfs-campaign-db-focused-20260926",
+    "focused_log": {
+      "path": "/private/tmp/bfs-campaign-db-focused-20260926.log",
+      "bytes": 283,
+      "sha256": "a953265973dad0842be610ac50c882590642d7d57327baf8f86ff72d5e54d29c"
+    },
+    "focused_result": "149 passed,2 Linux-only skipped in109.40s",
+    "diff_check": "passed"
+  },
+  "independent_review": {
+    "path": "/private/tmp/bfs-campaign-db-spec-review-20260926.json",
+    "bytes": 2589,
+    "sha256": "815f170759ff63c46ec7035b22cd67b80eecefca873f7b94f34fa88c7f474124"
+  },
+  "scope": "Only campaign.py and existing test_bfs_native_execution.py; no map/ticket/host/A2 alteration.",
+  "fixture_limits": "Disposable tracked local checkout and actual public get/SQLite/runtime/accounting. Host lane/free-space and accounting clock are synthetic; this is no host measurement or Linux supervision admission."
+}

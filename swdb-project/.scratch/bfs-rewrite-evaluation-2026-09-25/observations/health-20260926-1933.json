@@ -1,0 +1,317 @@
+{
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260926-1933.json",
+    "bytes": 171028,
+    "sha256": "b25e56fe81f980725a0c5d8f7c08ced7b4b177282d4dd45619e39ce07defb933"
+  },
+  "observed_at": "2026-09-26T19:33:35.567971-04:00",
+  "leases": {
+    "mbit10-evaluation-node0": {
+      "state": "released",
+      "generation": 331,
+      "kernel": [],
+      "owner": null
+    },
+    "mbit10-evaluation-node1": {
+      "state": "released",
+      "generation": 406,
+      "kernel": [],
+      "owner": null
+    },
+    "mbit10-evaluation": {
+      "state": "released",
+      "generation": 77,
+      "kernel": [],
+      "owner": null
+    }
+  },
+  "disk": {
+    "/data1": {
+      "free_bytes": 17453592576
+    },
+    "/data": {
+      "free_bytes": 194147344384
+    }
+  },
+  "load": "0.49 0.31 0.32 1/1525 3085225",
+  "capacity": [
+    {
+      "node": 0,
+      "estimated_available_kib": 60052856,
+      "global_available_kib": 123418892,
+      "eligible": true
+    },
+    {
+      "node": 1,
+      "estimated_available_kib": 61375520,
+      "global_available_kib": 123418892,
+      "eligible": true
+    }
+  ],
+  "heads": {
+    "active_acceptance": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_acceptance_20260926_a1",
+      "head": "53f2e7686a41d3472c9e0824a0a9b09117884e0b",
+      "branch": "HEAD"
+    },
+    "native_paired": {
+      "path": "/data1/yanruj/EvolveSWDB_native_paired_20260926_a1",
+      "head": "98b5f50e93f531ce0395fe7e161f812a406d6d9d",
+      "branch": "HEAD"
+    },
+    "a3": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_continuation_20260926_a3",
+      "head": "1018432fdb3800522d723afb874f3bffa41dd0e5",
+      "branch": "HEAD"
+    },
+    "historical_dx": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_20260925_a1",
+      "head": "5802a5a76599de952f58a57d00c193ea9f1341d7",
+      "branch": "HEAD"
+    },
+    "historical_native": {
+      "path": "/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18",
+      "head": "41303ed7fb02f9a5c515e2e951d27e20869c73e9",
+      "branch": "codex/bfs-native-repeatability-evidence-20260926-a1"
+    },
+    "historical_witness": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_witness_20260926_a1",
+      "head": "51df06120982e23e4f3f0590ec3132ebf23f9af3",
+      "branch": "codex/bfs-dx100-witness-evidence-20260926-a1"
+    },
+    "helper": {
+      "path": "/data1/yanruj/Memacc-evolveswdb-lane",
+      "head": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+      "branch": "yanrujhou_main"
+    },
+    "orchestration": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_orchestration_20260926_a1",
+      "head": "a53e619de11278e2763c7a22576308d1a23f19bf",
+      "branch": "HEAD"
+    },
+    "native_one_thread": {
+      "path": "/data1/yanruj/EvolveSWDB_native_one_thread_20260926_a1",
+      "head": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+      "branch": "HEAD"
+    },
+    "a2_tested": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926",
+      "head": "67313d9b2a45d9f0fb23d935b56e755a3a19fa7f",
+      "branch": "HEAD"
+    },
+    "supervision": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a1",
+      "head": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+      "branch": "HEAD"
+    },
+    "reader_a2": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_reader_20260926_a2",
+      "head": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+      "branch": "HEAD"
+    },
+    "a2_tested_v2": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2",
+      "head": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+      "branch": "HEAD"
+    },
+    "supervision_v2": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a2",
+      "head": "4c109430d4c7b80df220c4064e4e2c9ddbc66005",
+      "branch": "HEAD"
+    },
+    "t16_freeze": {
+      "path": "/data1/yanruj/EvolveSWDB_t16_freeze_20260926_a1",
+      "head": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07"
+    }
+  },
+  "helper": {
+    "path": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+    "bytes": 10510,
+    "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8"
+  },
+  "upstream": {
+    "observed_at": "2026-09-26T19:33:36.358218-04:00",
+    "value": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65\trefs/heads/yanrujhou_main",
+    "method": "git ls-remote only; no fetch or checkout update"
+  },
+  "historical_hashes_unchanged": true,
+  "terminal_same_identities": [],
+  "coverage_a2": {
+    "state": "complete",
+    "finished": "2026-09-26T19:16:17.959851-04:00",
+    "host_wall_s": 431.562888,
+    "terminal": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2.dispatch/terminal-validation.json",
+      "bytes": 14315,
+      "sha256": "6df37b96da525b36e79a351096bf8e565550a61050f247d798e8366f9a1f3815"
+    },
+    "completed_readback": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2.dispatch/completed-readback.json",
+      "bytes": 4551,
+      "sha256": "deabf45fe14b64f12574c700d396edf4bbff2bdd8bb17293927095010943eba1"
+    },
+    "outer_exit": "0"
+  },
+  "t16_freeze": {
+    "original_start": "2026-09-26T19:30:05-04:00",
+    "original_end": "2026-09-26T19:40:05-04:00",
+    "first_wrapper_exit": "1",
+    "first_wrapper_error": "literal dollar instead of pane PID; before any public command",
+    "dispatch2_exit": "0",
+    "phase": {
+      "state": "complete",
+      "started": "2026-09-26T19:30:05-04:00",
+      "absolute_end": "2026-09-26T19:40:05-04:00",
+      "entry_at": "2026-09-26T19:32:49.838509-04:00",
+      "finished": "2026-09-26T19:33:21.471410-04:00",
+      "host_wall_seconds": 196.471424,
+      "error": null,
+      "driver_identity": {
+        "parent_pid": 3085026,
+        "pid": 3085095,
+        "rss_bytes": 35651584,
+        "start_ticks": 496750248,
+        "state": "R"
+      },
+      "preflight_completed": "2026-09-26T19:32:55.253844-04:00",
+      "protocols": {
+        "artifact": {
+          "file": {
+            "bytes": 10990,
+            "path": "/data1/yanruj/EvolveSWDB_t16_freeze_20260926_a1/records/protocols/bfs-author-reference-20260925.b4cbd3924b40e7df.yaml",
+            "sha256": "a1e80b7b7d8e0e8ecc75934420a18266d136184ca41127da0c565eb0786c8c97"
+          },
+          "id": "bfs-author-reference-20260925.b4cbd3924b40e7df",
+          "identity_sha256": "b4cbd3924b40e7dfc2bdb7beff3c46a08fc723491aa0b8b86288f3a2eb2a702c",
+          "settings_sha256": "a2b5ba1101647802a393ab416837e736c5e6f2917056a2240576a0fb7aa46dc7",
+          "sha256": "2794aa124bcef6d923a43d5842872e5e5a6c6b338292634a4d860e4e16cc5524"
+        },
+        "control": {
+          "file": {
+            "bytes": 11066,
+            "path": "/data1/yanruj/EvolveSWDB_t16_freeze_20260926_a1/records/protocols/bfs-author-matched-control-20260925.d02e719e2d375764.yaml",
+            "sha256": "603c82f4ae48da45be93a6a1da1b6bb03609b5c3cebead8881812bf26c22edd7"
+          },
+          "id": "bfs-author-matched-control-20260925.d02e719e2d375764",
+          "identity_sha256": "d02e719e2d37576481275756bef67a3a38f7b3ee49227aa66a3cc281661cd74a",
+          "settings_sha256": "19b7319d8c2775f5e9f44d0091c3bd29968465701b6105e3bb283b49e1a38a5b",
+          "sha256": "453fc651d8bdcc2e670eb7a086ea65eb3cbe222cbb2020aa4944cb8be7d80778"
+        }
+      },
+      "stages": [
+        {
+          "name": "artifact.freeze",
+          "started": "2026-09-26T19:32:55.254796-04:00",
+          "finished": "2026-09-26T19:33:04.546341-04:00",
+          "returncode": 0,
+          "identity": {
+            "parent_pid": 3085095,
+            "pid": 3085102,
+            "rss_bytes": 0,
+            "start_ticks": 496750814,
+            "state": "R"
+          },
+          "stdout": {
+            "bytes": 13702,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/artifact.freeze.json",
+            "sha256": "0c72470daacff0623736c05a332c88f1da3ee62bf66babaebbd78b8778f6a825"
+          },
+          "stderr": {
+            "bytes": 0,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/artifact.freeze.stderr",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "name": "control.freeze",
+          "started": "2026-09-26T19:33:04.573648-04:00",
+          "finished": "2026-09-26T19:33:13.664691-04:00",
+          "returncode": 0,
+          "identity": {
+            "parent_pid": 3085095,
+            "pid": 3085107,
+            "rss_bytes": 0,
+            "start_ticks": 496751746,
+            "state": "R"
+          },
+          "stdout": {
+            "bytes": 13772,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/control.freeze.json",
+            "sha256": "f40116ed1b8913eb8b9994a53de3b386155dbdcffb9028db992854274a55fc59"
+          },
+          "stderr": {
+            "bytes": 0,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/control.freeze.stderr",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "name": "artifact.get-chain",
+          "started": "2026-09-26T19:33:13.692376-04:00",
+          "finished": "2026-09-26T19:33:17.568885-04:00",
+          "returncode": 0,
+          "identity": {
+            "parent_pid": 3085095,
+            "pid": 3085114,
+            "rss_bytes": 0,
+            "start_ticks": 496752658,
+            "state": "R"
+          },
+          "stdout": {
+            "bytes": 603036,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/artifact.get-chain.json",
+            "sha256": "48d8e8e50d0225a7dbd4e942a350a03ce1613678456d18370969e722fef0195e"
+          },
+          "stderr": {
+            "bytes": 0,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/artifact.get-chain.stderr",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "name": "control.get-chain",
+          "started": "2026-09-26T19:33:17.581174-04:00",
+          "finished": "2026-09-26T19:33:21.458362-04:00",
+          "returncode": 0,
+          "identity": {
+            "parent_pid": 3085095,
+            "pid": 3085117,
+            "rss_bytes": 0,
+            "start_ticks": 496753047,
+            "state": "R"
+          },
+          "stdout": {
+            "bytes": 603118,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/control.get-chain.json",
+            "sha256": "2022b7e556f661acc898bfb5a1ef44eac0c9f409cac3bb3af29ff9d539601a72"
+          },
+          "stderr": {
+            "bytes": 0,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/control.get-chain.stderr",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      ]
+    },
+    "current_driver": null
+  },
+  "readback_a2": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2.dispatch/terminal-validation.json",
+    "bytes": 11104,
+    "sha256": "33ff5c13e67bc317156014c800a17d02aaf27107e28631aa2efbfe6e2dc68e33"
+  },
+  "corrected_a2_proofs": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/proof.json",
+      "bytes": 89558,
+      "sha256": "0011d3a010e46be3e2cc015d4a6811ce42f85c43df20ce4e874b2077c6178350"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/proof.json",
+      "bytes": 89642,
+      "sha256": "b4b91938989edc68998207e3be47bb18b486a13597ab586642d9db716dd6b29a"
+    }
+  ],
+  "created": "2026-09-26",
+  "scope": "Typed derived host metadata only; raw logs and source omitted"
+}

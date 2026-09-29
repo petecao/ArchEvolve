@@ -1,0 +1,62 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T18:33:23-04:00",
+  "host": "mbit10",
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260926-1833.json",
+    "bytes": 143583,
+    "sha256": "254ab443ef1415eddd37ac3171d04dbbb92130f6df74a5ccc642bb1beb1c09ad"
+  },
+  "leases": {
+    "node0": {
+      "state": "released",
+      "generation": 326
+    },
+    "node1": {
+      "state": "released",
+      "generation": 404
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    },
+    "kernel_locks": "empty; owners absent"
+  },
+  "owned_processes": "No live owned jobs. Native131 and historical retained unions absent. First fixture7 absent; failed fixture5 absent plus exact paneZ/RSS0. Failed readback knownpane absent; historical union remains incomplete.",
+  "load_average": [
+    0.01,
+    0.07,
+    0.15
+  ],
+  "free_bytes": {
+    "/data1": 17539538944,
+    "/data": 194454585344
+  },
+  "estimated_available_kib": {
+    "node0": 60102108,
+    "node1": 61361096,
+    "global": 123455048
+  },
+  "historical_pins": "all unchanged; original319/673/3f38 checkouts untouched",
+  "helper_commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+  "helper_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+  "native": {
+    "primary_checked": 240,
+    "packages_complete": 4,
+    "qualification": "pending; readbacka1 failed"
+  },
+  "a2": {
+    "owned_fixture": "passed against673",
+    "interruption_fixture": "failed validation against673",
+    "empirical_execution": "not launched"
+  },
+  "workers": "All three responsive; completed workers restarted for next concrete tasks. No dead agent.",
+  "counts": {
+    "resolved_tickets": 13,
+    "claimed_tickets": 8,
+    "final_acceptance_cells": 0,
+    "required_cells": 8
+  },
+  "next_full_check_et": "2026-09-26 19:03 ET",
+  "observation_source": "Typed metadata from host_dx100 full read-only audit; raw audit remains on mbit10."
+}

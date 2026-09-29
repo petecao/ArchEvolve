@@ -1,0 +1,83 @@
+{
+  "created": "2026-09-26T19:34:40.474449-04:00",
+  "role": "independent_spec_review",
+  "state": "passed",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_series.py",
+      "bytes": 30014,
+      "sha256": "cc8f514127ab509c4ea16fdd4a06c6c45d704e4fdb718c53ad9fcd9dfaf6edb6"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_freeze_pilot.py",
+      "bytes": 54812,
+      "sha256": "5b7722c46afdd19f483516963ddd11764bb2e54aaa8ff3d1a061f598eb6b3552"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_client_databases.py",
+      "bytes": 7326,
+      "sha256": "8e7ada1c355f667da171037c8a7caab33dfb7484c630d0d608acb00f32e88fa0"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_freeze_pilot.py",
+      "bytes": 33294,
+      "sha256": "23f09c0239549ed5b8ad328a6e8ecf5fe0a1ccf9a2a8249ba781ce0ac89667ae"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-pilot-freeze.md",
+      "bytes": 10245,
+      "sha256": "96e632220d7f49d413371e23deb28592a32f9487a86788c037cff4aa538a0a24"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-one-thread-freeze-20260926.md",
+      "bytes": 8437,
+      "sha256": "0216b06cc93a141939b7e64d5268948a59dc0df7bca12fa010ce2e1b6d565054"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/private/tmp/bfs-public-db-spec-red-20260926.log",
+      "bytes": 5950,
+      "sha256": "8e548c0988c2ffc4a520bf4f174e8b491d6b953abdbdc79680b9405bffa952d2"
+    },
+    {
+      "path": "/private/tmp/bfs-client-db-spec-green-20260926.log",
+      "bytes": 113,
+      "sha256": "fd12350084d6f2507e297600a03462b639e52b8324d77de9e886871f003560bc"
+    },
+    {
+      "path": "/private/tmp/bfs-client-db-publish-spec-green-20260926.log",
+      "bytes": 99,
+      "sha256": "ec7d13d8c6912eb6364b0e16248d1bf21de44e81a15fcb462d6304d3d5c13765"
+    }
+  ],
+  "original_repro": {
+    "probe": {
+      "path": "/private/tmp/test_bfs_public_database_standards_20260926.py",
+      "bytes": 4191,
+      "sha256": "a6f1da5ea8cd329092046dac492b925a8656c11643fd3282652d5244a96d11c0"
+    },
+    "result": "2 failed; each real get created 180224-byte code/build/swdb.sqlite outside raw accounting; batch runtime map unchanged"
+  },
+  "commands": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_client_databases.py -k 'not public_freeze' -q --basetemp /private/tmp/bfs-client-db-spec-green-20260926",
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_client_databases.py::test_public_freeze_and_fresh_get_share_explicit_cache -q --basetemp /private/tmp/bfs-client-db-publish-spec-green-20260926"
+  ],
+  "verification": [
+    "..........                                                               [100%]\n10 passed, 1 deselected in 1.24s",
+    ".                                                                        [100%]\n1 passed in 39.39s"
+  ],
+  "findings_remaining": [],
+  "verified_boundaries": [
+    "series all public calls use folder/swdb.sqlite inside recursive raw accounting and expose receipt path",
+    "publisher requires resolved absolute nonsymlinked external database and forwards to initial get, freeze-protocol and final get",
+    "code/records/input/new-output/directory/implicit paths reject before subprocess",
+    "failed qualification leaves cache but no output/protocol and preserves original error",
+    "qualification function, deterministic review identity, original per-call bounds and output creation order unchanged"
+  ],
+  "limits": [
+    "local contract fixtures only; no remote work, production edits or empirical qualification",
+    "caller must include publisher explicit external cache parent in its prospective storage accounting",
+    "new source runtime requires prospective export and matching proofs; historical host pins unchanged"
+  ]
+}

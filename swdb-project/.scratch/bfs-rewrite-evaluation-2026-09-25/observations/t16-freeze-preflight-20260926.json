@@ -1,0 +1,294 @@
+{
+  "created": "2026-09-26",
+  "purpose": "Read-only T16 public freeze/comparison preflight; no freeze, host invocation, builds or policy changes",
+  "repository_commit": "cfebdae98fa3062cbeb89ff391c928ead266492c",
+  "result": "no_local_field_version_ROI_or_diagnostic_identity_mismatch_found",
+  "scope_limit": "Remote model/binary/checkpoint/diagnostic/source raw files were not reopened. Their live unchanged-byte checks remain Host admission work.",
+  "plan": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-simulator-batch-20260926-a1.json",
+    "bytes": 11036,
+    "sha256": "7436deb684d55883c8c8caac9099d021a9c0d6caf5bc00e17943b0e969525a04",
+    "canonical_sha256": "8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e"
+  },
+  "requests": {
+    "artifact": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-reference-freeze-v1.yaml",
+      "bytes": 10582,
+      "sha256": "ade4b75e4a59181f3582645b808675eaa5e88519689255749a56070e7f0eba96",
+      "canonical_sha256": "c3ce79ff752d653ab68a277b4cfa96bc635cf86b18ae65ec2fc86b94e605c7da",
+      "settings_sha256": "a2b5ba1101647802a393ab416837e736c5e6f2917056a2240576a0fb7aa46dc7",
+      "requested_id": "bfs-author-reference-20260925",
+      "version": 1,
+      "workload_identity": "f23b09bb0c0601b55084fffc8cf94b0ffe381580c6252f212a65cf0f7ecd1477",
+      "simulation_identity": {
+        "version": "1.0",
+        "model_build": {
+          "evaluation": "bfs-dx100-build-20260925-a2",
+          "sha256": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea"
+        },
+        "simulator": {
+          "path": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+          "sha256": "f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b"
+        }
+      },
+      "reference_artifacts": {
+        "baseline": {
+          "candidate": "bfs-author-scalar-compile-20260925-a1.candidate",
+          "candidate_sha256": "8814d635964686e49889e590e030eb05e012bb87d052741a4d52ef1e522f5ec2",
+          "source_snapshot": "bfs-author-scalar-compile-20260925-a1.source",
+          "source_snapshot_sha256": "53ae9d2c9697a94eaf6ede230d29287c869f8110f6417eccded81acd34c99cb3",
+          "source_artifact_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+          "binary": {
+            "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs",
+            "sha256": "70301ad2e587c2dd55a730da5e0135337cb6b46ddd72999a843f86fd4b070dd1"
+          }
+        },
+        "candidate": {
+          "candidate": "bfs-author-maa-compile-20260925-a1.candidate",
+          "candidate_sha256": "1018e9002c86a2e0ef7850be0bc66dbec9849d388cced45542c61a18cd619fff",
+          "source_snapshot": "bfs-author-maa-compile-20260925-a1.source",
+          "source_snapshot_sha256": "f1b53e83398c74871f0cf46dc8f98b728254992a8ee63aaf7419732680b42fb6",
+          "source_artifact_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+          "binary": {
+            "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs_maa",
+            "sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d"
+          }
+        }
+      },
+      "diagnostic_collector": {
+        "backend": "libclang-cindex",
+        "collector": "dx100.m5_rpns.source_scopes.v1",
+        "library_sha256": "27b38bfdb37d164878767c40c8ce9538c96e801a37d2a67234bee043945de139",
+        "pass_sha256": "9bee90040d1c4defa96793774ca877d2d26c351303d8e1927448ba0ef0d20ffb",
+        "runtime_sha256": "618d8e874eccaf2914a87462e46a1d36a42194e98f1bbfde1f91eadd3818c31d"
+      },
+      "verifier_runtime": {
+        "driver_sha256": "371657977d56816a37f4885f19923f37175331d2d15b5d7f6e6049d3fa8c1395",
+        "parser_sha256": "2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091",
+        "observer_sha256": "655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd"
+      },
+      "future_frozen_id": "Read returned id; includes actual frozen_at and cannot be precomputed"
+    },
+    "control": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-matched-control-freeze-v1.yaml",
+      "bytes": 10652,
+      "sha256": "0208354fccf9e7c2b13eb340b1fcfa121f8a443ccac98ba72f8e558b1a339705",
+      "canonical_sha256": "994d22cd6b62c15ed36651fc1d045e71ac46e390f83e2c7a8e9369021ede6bfa",
+      "settings_sha256": "19b7319d8c2775f5e9f44d0091c3bd29968465701b6105e3bb283b49e1a38a5b",
+      "requested_id": "bfs-author-matched-control-20260925",
+      "version": 1,
+      "workload_identity": "f23b09bb0c0601b55084fffc8cf94b0ffe381580c6252f212a65cf0f7ecd1477",
+      "simulation_identity": {
+        "version": "1.0",
+        "model_build": {
+          "evaluation": "bfs-dx100-build-20260925-a2",
+          "sha256": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea"
+        },
+        "simulator": {
+          "path": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+          "sha256": "f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b"
+        }
+      },
+      "reference_artifacts": {
+        "baseline": {
+          "candidate": "bfs-author-scalar-compile-20260925-a1.candidate",
+          "candidate_sha256": "8814d635964686e49889e590e030eb05e012bb87d052741a4d52ef1e522f5ec2",
+          "source_snapshot": "bfs-author-scalar-compile-20260925-a1.source",
+          "source_snapshot_sha256": "53ae9d2c9697a94eaf6ede230d29287c869f8110f6417eccded81acd34c99cb3",
+          "source_artifact_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+          "binary": {
+            "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs",
+            "sha256": "70301ad2e587c2dd55a730da5e0135337cb6b46ddd72999a843f86fd4b070dd1"
+          }
+        },
+        "candidate": {
+          "candidate": "bfs-author-maa-compile-20260925-a1.candidate",
+          "candidate_sha256": "1018e9002c86a2e0ef7850be0bc66dbec9849d388cced45542c61a18cd619fff",
+          "source_snapshot": "bfs-author-maa-compile-20260925-a1.source",
+          "source_snapshot_sha256": "f1b53e83398c74871f0cf46dc8f98b728254992a8ee63aaf7419732680b42fb6",
+          "source_artifact_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+          "binary": {
+            "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs_maa",
+            "sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d"
+          }
+        }
+      },
+      "diagnostic_collector": {
+        "backend": "libclang-cindex",
+        "collector": "dx100.m5_rpns.source_scopes.v1",
+        "library_sha256": "27b38bfdb37d164878767c40c8ce9538c96e801a37d2a67234bee043945de139",
+        "pass_sha256": "9bee90040d1c4defa96793774ca877d2d26c351303d8e1927448ba0ef0d20ffb",
+        "runtime_sha256": "618d8e874eccaf2914a87462e46a1d36a42194e98f1bbfde1f91eadd3818c31d"
+      },
+      "verifier_runtime": {
+        "driver_sha256": "371657977d56816a37f4885f19923f37175331d2d15b5d7f6e6049d3fa8c1395",
+        "parser_sha256": "2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091",
+        "observer_sha256": "655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd"
+      },
+      "future_frozen_id": "Read returned id; includes actual frozen_at and cannot be precomputed"
+    }
+  },
+  "fixed_records": {
+    "bfs-20260925-uniform22.f23b09bb0c0601b5": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/records/workloads/bfs-20260925-uniform22.f23b09bb0c0601b5.yaml",
+      "bytes": 3201,
+      "sha256": "e9273fb3215ff3f7d73c2b247cf9132a6e3954986817c279eec09eb7c419490b",
+      "canonical_sha256": "fc48bf0cf2d8351f484fb0987519287ad7ef7624c6558b74ad52319ffee9c79e"
+    },
+    "bfs-author-maa-compile-20260925-a1.candidate": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/records/candidates/bfs-author-maa-compile-20260925-a1.candidate.yaml",
+      "bytes": 22902,
+      "sha256": "4b23eaeef1cd472d598af974baa845d62f67218f477c42ab9ea780a700a4789e",
+      "canonical_sha256": "1018e9002c86a2e0ef7850be0bc66dbec9849d388cced45542c61a18cd619fff"
+    },
+    "bfs-author-maa-compile-20260925-a1.diagnostic.build": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/records/evaluations/bfs-author-maa-compile-20260925-a1.diagnostic.build.yaml",
+      "bytes": 88262,
+      "sha256": "55bcec2362c2d2368ea84bb18f7ae2355ffde73b73e7e595f248960e8b06086c",
+      "canonical_sha256": "de0c71b6f0fe54a88be05ca5fb93bb5980d44fc787294964a63568c70d785beb"
+    },
+    "bfs-author-maa-compile-20260925-a1.source": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/records/source_snapshots/bfs-author-maa-compile-20260925-a1.source.yaml",
+      "bytes": 45677,
+      "sha256": "143c3fad1b93bc8d32a7c50d87e190d99f8593759f4b54e949ae91918b416675",
+      "canonical_sha256": "f1b53e83398c74871f0cf46dc8f98b728254992a8ee63aaf7419732680b42fb6"
+    },
+    "bfs-author-scalar-compile-20260925-a1.candidate": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/records/candidates/bfs-author-scalar-compile-20260925-a1.candidate.yaml",
+      "bytes": 22562,
+      "sha256": "47cd14bd40aacf10b310ebd31d0478f024158da021d3dda3ec34db831baf47a0",
+      "canonical_sha256": "8814d635964686e49889e590e030eb05e012bb87d052741a4d52ef1e522f5ec2"
+    },
+    "bfs-author-scalar-compile-20260925-a1.diagnostic.build": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/records/evaluations/bfs-author-scalar-compile-20260925-a1.diagnostic.build.yaml",
+      "bytes": 88015,
+      "sha256": "33848b3b442602f5c5a04e8a9581bc86e9f3d0b57f3e8409a3fb50abbc6e431c",
+      "canonical_sha256": "7ba0257570dc65d3067a2b7e1c9341ea2be7ed88d84500e759cb74906cc9be3c"
+    },
+    "bfs-author-scalar-compile-20260925-a1.source": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/records/source_snapshots/bfs-author-scalar-compile-20260925-a1.source.yaml",
+      "bytes": 45334,
+      "sha256": "fdda88105e4ce422ab019c3f116648651c76722621b79c19325e44417ffe4fd6",
+      "canonical_sha256": "53ae9d2c9697a94eaf6ede230d29287c869f8110f6417eccded81acd34c99cb3"
+    },
+    "bfs-dx100-build-20260925-a2": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/records/evaluations/bfs-dx100-build-20260925-a2.yaml",
+      "bytes": 11533,
+      "sha256": "e61de36a9c80a5f2c272c08bf12f0050c3ba9c25c7243432e2ea6cb4e29cecaf",
+      "canonical_sha256": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea"
+    },
+    "bfs-dx100-witness-20260926-a1": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/records/evaluations/bfs-dx100-witness-20260926-a1.yaml",
+      "bytes": 34448,
+      "sha256": "9a941cdff315e283b13563bf81ef2f45ba0712bbcf6d31b92f6232488efa3b42",
+      "canonical_sha256": "c5ec9b7ca044728d61fb01be67616ea66e6364bd1c160569ab5dad9382570b8e"
+    },
+    "dx100-bfs-maa-reference": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/records/implementations/dx100-bfs-maa-reference.yaml",
+      "bytes": 5133,
+      "sha256": "92c410d40f148dfd2ac14e0937a2045cdb7cda3100b6f6d68ef11d53c529a156",
+      "canonical_sha256": "3f8646f57df66f2db9f8236240c82fcdf2d610f47d28b7814e749333bceb9ae0"
+    },
+    "dx100-bfs-scalar": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/records/implementations/dx100-bfs-scalar.yaml",
+      "bytes": 3835,
+      "sha256": "d8db5a38ad78cb7a92059724991c623550ee41a5a6b5cd7517fbbf0d4ba37f76",
+      "canonical_sha256": "81ffac2bdf90e50f2350675edd53c16162c0251e8bb23fc17d4cfe421cd32e61"
+    },
+    "dx100-e4fc4af-4c": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/records/hardware_targets/dx100-e4fc4af-4c.yaml",
+      "bytes": 2302,
+      "sha256": "66e9458534e293b63b81cb813d4d268d7bb599f2862073adc74e5c86d1aa755f",
+      "canonical_sha256": "94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1"
+    },
+    "mbit10": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/records/machines/mbit10.yaml",
+      "bytes": 3740,
+      "sha256": "87f35682542df1d875a4544c7593aca4be57d3e2791e4bbcba1b926a223c6d7b",
+      "canonical_sha256": "fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79"
+    }
+  },
+  "runtime_files": {
+    "swdb/bfs_protocol.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/bfs_protocol.py",
+      "bytes": 79345,
+      "sha256": "cb75a06225e090abdb4bffc88352b2fdefdcecc418d74911806b523f969cb88f"
+    },
+    "swdb/cli.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/cli.py",
+      "bytes": 22114,
+      "sha256": "d613805c26fb22edb3f8b3eb8553d7cb39ec9669443f2319538e025391d9e738"
+    },
+    "swdb/workflow.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/workflow.py",
+      "bytes": 27977,
+      "sha256": "37aa80bb4adc947fdfe0ff4556d3205f000fd1ef98774c84317d79098441607f"
+    },
+    "swdb/dx100.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/dx100.py",
+      "bytes": 57054,
+      "sha256": "f4e82d3163d3c2d3d4764aace07da952b0ca67c0aaf480c3738ccd9f0641deec"
+    },
+    "swdb/dx100_witness.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/dx100_witness.py",
+      "bytes": 34287,
+      "sha256": "2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091"
+    },
+    "swdb/bfs_region_comparison.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/bfs_region_comparison.py",
+      "bytes": 24058,
+      "sha256": "dc047b2893bbd65b5b4354a749af5580fbacd1f392b5e5892b9f21c85d152b94"
+    },
+    "swdb/profile_package.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/profile_package.py",
+      "bytes": 33633,
+      "sha256": "dc61800651d043a16b25b1a79903a6ed5553211684c60d2fb3bae99bfe12ba83"
+    },
+    "scripts/dx100_verify.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/dx100_verify.py",
+      "bytes": 9260,
+      "sha256": "371657977d56816a37f4885f19923f37175331d2d15b5d7f6e6049d3fa8c1395"
+    },
+    "scripts/dx100_host_memory.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/dx100_host_memory.py",
+      "bytes": 2866,
+      "sha256": "655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd"
+    },
+    "scripts/bfs_simulator_batch.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_batch.py",
+      "bytes": 43797,
+      "sha256": "17a61980fb944046ed06f2f500d90e94d5bddc80f56501e655eb11e39633630c"
+    },
+    "scripts/bfs_simulator_series.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_series.py",
+      "bytes": 29895,
+      "sha256": "db5cdac5425c4c50ef8054274b8a56697e494d61eecbe2026a47f71de897279a"
+    }
+  },
+  "checks": [
+    {
+      "series": "bfs-t16-simulator-batch-20260926-a1.artifact.scalar",
+      "state": "local_diagnostic_identity_pass",
+      "binary_sha256": "0b28af6ac6a32c31f38d7b28062f57b7f4db4917aae2a196db117d846d29b47a",
+      "definition_sha256": "1fe5ff481c9bfda953c76a869beac48ddeb37c777563dfccc11b8aa748012eb9"
+    },
+    {
+      "series": "bfs-t16-simulator-batch-20260926-a1.artifact.maa",
+      "state": "local_diagnostic_identity_pass",
+      "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+      "definition_sha256": "c203b18a5c14c6c482f7df1d5788799fc47c1af3c6e9a98b58148e457907f5fe"
+    },
+    {
+      "series": "bfs-t16-simulator-batch-20260926-a1.control.scalar",
+      "state": "local_diagnostic_identity_pass",
+      "binary_sha256": "0b28af6ac6a32c31f38d7b28062f57b7f4db4917aae2a196db117d846d29b47a",
+      "definition_sha256": "1fe5ff481c9bfda953c76a869beac48ddeb37c777563dfccc11b8aa748012eb9"
+    },
+    {
+      "series": "bfs-t16-simulator-batch-20260926-a1.control.maa",
+      "state": "local_diagnostic_identity_pass",
+      "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+      "definition_sha256": "c203b18a5c14c6c482f7df1d5788799fc47c1af3c6e9a98b58148e457907f5fe"
+    }
+  ]
+}

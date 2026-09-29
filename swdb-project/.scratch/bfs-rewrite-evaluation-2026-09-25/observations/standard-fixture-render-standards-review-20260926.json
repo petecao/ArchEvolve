@@ -1,0 +1,49 @@
+{
+  "created": "2026-09-26T19:44:51.791862-04:00",
+  "state": "passed",
+  "scope": "Synthetic local rendering and bash argv only; no host activity",
+  "source": {
+    "path": "/private/tmp/bfs-standard-fixture-launch-prepared-20260926.py",
+    "sha256": "e3fb3fe4e7177b775c89e2d084b5305e2ce84c9ea790c71a567d5e729ec1ba92"
+  },
+  "audit": {
+    "path": "/private/tmp/bfs-standard-fixture-audit-prepared-20260926.py",
+    "sha256": "7d1c600ae981a4dae6838b721f8c33a0fae7b637c4c80b69540c43542fb0dd98",
+    "newline_constants": [
+      {
+        "length": 1,
+        "ordinals": [
+          10
+        ]
+      },
+      {
+        "length": 1,
+        "ordinals": [
+          10
+        ]
+      },
+      {
+        "length": 1,
+        "ordinals": [
+          10
+        ]
+      }
+    ]
+  },
+  "rendered_folder": "/private/tmp/bfs-standard-fixture-render-7qhr4_pm",
+  "launch_json_parsed": true,
+  "actual_newline_bytes": [
+    10,
+    10
+  ],
+  "bash_final_arguments": [
+    "--lane",
+    "1"
+  ],
+  "launch_clock_seconds": 90,
+  "synthetic_proc_identity": {
+    "pid": 88500,
+    "start_ticks": 123456789
+  },
+  "finding": "No newline defect reproduced in exact e3fb3fe4/7d1c600a prepared recipes; repr of LF is backslash-n, but length1/ordinal10 establishes actual LF."
+}

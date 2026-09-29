@@ -1,0 +1,39 @@
+{
+  "created": "2026-09-26T19:40:17.453193-04:00",
+  "commit": "d11dc04449997734a93b982646977b04008afeff",
+  "cwd": "/Users/yanrujhou/.codex/worktrees/bfs-validation/EvolveSWDB",
+  "command": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/private/tmp/bfs-full-suite-d11dc04-20260926"
+  ],
+  "state": "finished",
+  "timeout_seconds": 7200,
+  "classification": "local_contract_regression_not_empirical_evidence",
+  "python": {
+    "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "bytes": 33816,
+    "sha256": "08fa4dbadc420090dfee2acf433b827ae05541f728d1478d96879122f53b4328"
+  },
+  "pid": 84650,
+  "returncode": 0,
+  "finished": "2026-09-26T20:34:13.540906-04:00",
+  "elapsed_seconds": 3236.0696826661006,
+  "log": {
+    "path": "/private/tmp/bfs-full-suite-d11dc04-20260926.log",
+    "bytes": 2446,
+    "sha256": "9263c2502d4f6947df68b9079d887c6c420c841a052238056cc40003b3e3a1a8"
+  },
+  "final_commit": "d11dc04449997734a93b982646977b04008afeff",
+  "tracked_diff": "",
+  "pytest_result": {
+    "passed": 2101,
+    "skipped": 20,
+    "elapsed_seconds": 3235.89
+  }
+}

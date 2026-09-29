@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel",
+  "title": "Kernel: a computation defined by what it computes and by its correctness check (ADR 0001)",
+  "description": "Code, loops, access patterns, and semantics belong to implementations, not kernels.",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "kernel"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "application": {
+      "type": "string",
+      "x-ref": "application"
+    },
+    "computes": {
+      "type": "string",
+      "minLength": 1
+    },
+    "correctness_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Template run by the profiler; {binary} and {input_args} are filled in."
+        },
+        "verifier": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "code": {
+              "$ref": "#/$defs/code_ref"
+            }
+          },
+          "required": [
+            "description",
+            "code"
+          ]
+        },
+        "pass_criterion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tolerance": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "measure": {
+              "type": "string",
+              "minLength": 1
+            },
+            "note": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "measure"
+          ]
+        },
+        "pass_regex": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Python regular expression; the check passes when the command exits 0 and its output matches."
+        }
+      },
+      "required": [
+        "command",
+        "verifier",
+        "pass_criterion",
+        "tolerance",
+        "pass_regex"
+      ]
+    },
+    "baseline_implementation": {
+      "type": "string",
+      "x-ref": "implementation"
+    }
+  },
+  "required": [
+    "name",
+    "application",
+    "computes",
+    "correctness_check",
+    "baseline_implementation"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "application",
+  "title": "Application: a program that contains kernels, from one source at one version",
+  "description": "Kernels point to their application; the application does not list them.",
+  "type": "object",
+  "properties": {
+    "kind": {"const": "application"},
+    "name": {"type": "string", "minLength": 1},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin", "uri", "commit"],
+      "properties": {
+        "origin": {"type": "string", "x-vocab": "source_origins"},
+        "uri": {"type": "string", "minLength": 1},
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$",
+          "x-reason": "must be a full 40-character git commit hash"
+        },
+        "local_path": {"type": ["string", "null"]}
+      }
+    },
+    "license": {"type": "string", "minLength": 1},
+    "language": {"type": "string", "minLength": 1},
+    "parallel_model": {"type": "string", "x-vocab": "parallel_models"},
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command"],
+      "properties": {
+        "command": {"type": "string", "minLength": 1},
+        "flags": {"type": "string"}
+      }
+    },
+    "domain": {"type": "string", "x-vocab": "domains"}
+  },
+  "required": ["name", "source", "license", "language", "parallel_model", "build", "domain"]
+}

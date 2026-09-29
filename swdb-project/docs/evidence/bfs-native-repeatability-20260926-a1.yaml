@@ -1,0 +1,660 @@
+id: bfs-native-repeatability-20260926-a1
+created: '2026-09-26'
+updated: '2026-09-26'
+role: second_unchanged_native_block_and_descriptive_negative_control
+evidence_kind: execution
+state: complete
+gain_claim: false
+protocol_freeze: false
+candidate_assessment: false
+repository_commit: 8c178a73880bbd2dbe646eda5883196bdf441060
+driver:
+  path: /data/yanruj/EvolveSWDB_runs/bfs-native-repeatability-20260926/bfs-native-repeatability-20260926-a1.driver/driver.json
+  sha256: 26ea5d69db8a7b06f48e35876fa2308aa849a654c0cab351c6f70ae4777f4583
+  started: '2026-09-26T00:31:26.270497-04:00'
+  finished: '2026-09-26T00:59:07.059314-04:00'
+  host_wall_s: 1662.2224003598094
+  bounds:
+    driver_seconds: 5400
+    outer_seconds: 5520
+    evaluation_seconds: 1200
+    evaluation_cli_seconds: 1260
+    build_seconds: 180
+    run_seconds: 60
+    trials: 60
+    threads: 4
+    repetitions: 5
+    warmups: 0
+    retries: 0
+    batch_raw_bytes: 4294967296
+lane:
+  socket_lane:
+    aligned_cell_age_s: ''
+    aligned_to: no_gapbs_batch_running
+    command:
+    - bash
+    - -lc
+    - cd /data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18 && exec python3 scripts/bfs_native_repeatability.py
+      --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-native-repeatability-20260926 --records /data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records
+      --lane mbit10-evaluation-node1 --pilot-remaining-seconds 19513
+    cpus_allowed_list: 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63
+    ended_utc: '2026-09-26T04:59:07Z'
+    exit_code: 0
+    host: mbit10
+    job: bfs-native-repeatability-20260926-a1
+    lease_generation: 397
+    lease_name: mbit10-evaluation-node1
+    load1_at_start: 8.2
+    load1_max: 32
+    node: 1
+    numa_memory_policy: bind:1
+    numactl: --cpunodebind=1 --membind=1
+    preregistration_sha256: null
+    started_utc: '2026-09-26T04:31:24Z'
+external_overlap:
+  observed_et: '2026-09-26T00:55:23.848546-04:00'
+  scope: read-only opposite-lane interference observation; no attribution of native timing variation
+  lane0:
+    active_session: null
+    heartbeat_at: '2026-09-26T04:50:09Z'
+    lease:
+      acquired_at: '2026-09-26T04:50:09Z'
+      daemon_pid: 2660466
+      daemon_start_token: sh2660466-1790398209
+      generation: 277
+      host: mbit10
+      lease_name: mbit10-evaluation-node0
+      mode: measure
+      session_id: null
+    attempt_pid: null
+    attempt_start_token: null
+    recovered_from_generation: null
+    released_at: null
+    session_note: null
+    session_state: none
+    state: held
+    writer: hostlock.sh
+  holder:
+    pid: 2660466
+    owner: yanruj
+    comm: bash
+    cwd: /data1/yanruj/Memacc-retarget/AgenticRefiner
+    argv_prefix:
+    - bash
+    - /data1/yanruj/Memacc-retarget/AgenticRefiner/scripts/host/socket_lane.sh
+    - '0'
+    - retargetgpu_20260922_spatter_A5_spatter_gpupure_irregular
+  observation_receipt:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-native-repeatability-20260926-a1.dispatch/lane0-interference.json
+    sha256: bb8c7f16004f35dea9fa485d3e71e4bca1897dac90fadf907b534bcc95bbe2eb
+  interpretation: Observed external lease overlap; no trial discarded or retried, no causal attribution.
+final_host_observation:
+  path: /data/yanruj/EvolveSWDB_runs/bfs-native-repeatability-20260926-a1.dispatch/final-host/host-observation.json
+  sha256: d9969c26aaa8a45245c2d6f0684aa002f6289b2e804846d95b8e0fc0bb7ced54
+  host_wall_s: 0.0816448274999857
+  evidence_kind: execution
+  unavailable_commands: 2
+analysis_policy:
+  kind: descriptive unchanged-source A/A negative control, no frozen comparison
+  bootstrap_seed: 20260925
+  bootstrap_resamples: 2000
+  confidence: 0.95
+  diagnostic_lower_bound_threshold: 1.05
+  maximum_relative_spread: null
+  threshold_crossing_is_not_a_gain: true
+limitations:
+- First-block compiler executable hashes and inherited runtime knobs were not retained.
+- Compiler version, source, primary binary, driver, and recorded OpenMP settings are checked.
+- Host interference remains uncontrolled; this is calibration, not a frozen gain comparison.
+- Two blocks and five samples per source do not validate bootstrap coverage or statistical power.
+- The earlier and current whole evaluator-module hashes differ; the timed source, wrapper, primary binary,
+  compiler version/flags and recorded OpenMP settings match.
+- External Spatter activity overlaps part of the second block.
+- No spread ceiling, protocol, candidate timing, or gain was selected.
+cells:
+- evaluation: bfs-native-repeatability-20260926-a1.dx100.uniform-random.evaluation
+  first_evaluation: bfs-native-pilot-20260925-dx10018-a1.uniform-random.evaluation
+  record_sha256: e13ea20f1378b2f01241ca2832271c174e2fdf38205390e708f6c68289af2780
+  first_record_sha256: fb1887b0117c875eb483065cb5ad6f1faa106d0026fb32aca292295e3e03522e
+  implementation: dx100-bfs-scalar
+  workload: bfs-20260925-uniform18.cd2169a5c421baf7
+  source_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  primary_binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  wrapper_sha256: 0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1
+  source_binary_wrapper_settings_match: true
+  checked_trials: 15
+  first_block:
+  - source: 0
+    samples_seconds: [0.029600096, 0.023600655, 0.020445374, 0.026276661, 0.031154373]
+    median_seconds: 0.026276661
+    relative_spread: 0.4075479376926924
+    sample_coefficient_of_variation: 0.166254166496608
+  - source: 1234
+    samples_seconds: [0.022053206, 0.020932875, 0.02577145, 0.022068036, 0.032049358]
+    median_seconds: 0.022068036
+    relative_spread: 0.5037368527040649
+    sample_coefficient_of_variation: 0.18559079626056518
+  - source: 7777
+    samples_seconds: [0.019810991, 0.020052135, 0.032004669, 0.030644373, 0.022069061]
+    median_seconds: 0.022069061
+    relative_spread: 0.5525236438469221
+    sample_coefficient_of_variation: 0.23818950496300714
+  second_block:
+  - source: 0
+    samples_seconds: [0.020666918, 0.020833627, 0.019949399, 0.019050305, 0.019547253]
+    median_seconds: 0.019949399
+    relative_spread: 0.08939226690488272
+    sample_coefficient_of_variation: 0.037471558800989645
+  - source: 1234
+    samples_seconds: [0.019864388, 0.019216152, 0.02014161, 0.019272806, 0.019940573]
+    median_seconds: 0.019864388
+    relative_spread: 0.04658880001739799
+    sample_coefficient_of_variation: 0.021183423920413093
+  - source: 7777
+    samples_seconds: [0.021711388, 0.021164822, 0.019817251, 0.019853554, 0.019779891]
+    median_seconds: 0.019853554
+    relative_spread: 0.09728721618305725
+    sample_coefficient_of_variation: 0.04442270875598667
+  negative_control:
+  - direction: first_over_second
+    geometric_mean_median_ratio: 1.1760473740114274
+    per_source_position_median_ratio:
+      0: 1.3171655446863337
+      1: 1.1109346031702563
+      2: 1.1115924634954528
+    confidence_interval:
+      confidence: 0.95
+      lower: 1.0661420913449708
+      upper: 1.4483030993109027
+      method: independent per-source bootstrap of median ratios
+      resamples: 2000
+    nominal_1_05_lower_bound_component_crossed: true
+    is_gain: false
+  - direction: second_over_first
+    geometric_mean_median_ratio: 0.8503058823124273
+    per_source_position_median_ratio:
+      0: 0.7592060117531676
+      1: 0.9001429941477348
+      2: 0.8996102734049264
+    confidence_interval:
+      confidence: 0.95
+      lower: 0.6947068265404203
+      upper: 0.9385336769188248
+      method: independent per-source bootstrap of median ratios
+      resamples: 2000
+    nominal_1_05_lower_bound_component_crossed: false
+    is_gain: false
+  host_load_at_evaluation_start:
+    first_block: [11.33740234375, 13.5390625, 14.95654296875]
+    second_block: [8.37890625, 9.21826171875, 11.755859375]
+  source_order: [0, 1234, 7777]
+  process_order:
+  - [0, 0]
+  - [0, 1]
+  - [0, 2]
+  - [1, 0]
+  - [1, 1]
+  - [1, 2]
+  - [2, 0]
+  - [2, 1]
+  - [2, 2]
+  - [3, 0]
+  - [3, 1]
+  - [3, 2]
+  - [4, 0]
+  - [4, 1]
+  - [4, 2]
+  stage_interval:
+    started: '2026-09-26T04:31:36.464028+00:00'
+    finished: '2026-09-26T04:38:31.226058+00:00'
+    elapsed_seconds: 414.76203
+  subprocess_host_seconds: 33.52668539527804
+  execution_subprocess_host_seconds: 30.851656086742878
+  recorded_host_cost_not_bfs_roi: true
+  external_lease_overlapping_execution_stages: []
+  overlap_precision: Stage envelopes include process setup and result handling; not per-ROI interference
+    telemetry.
+  raw_verification:
+    references: 37
+    all_verified: true
+  verifier_module_sha256:
+    first_block: 807d685a889a30741a9d06215314c44cbb333676d4be03663a22821d3a543730
+    second_block: 9560dbea64b750842b91f614f60c976a070e877d971a36fa477954706a360b5a
+- evaluation: bfs-native-repeatability-20260926-a1.upstream.uniform-random.evaluation
+  first_evaluation: bfs-native-pilot-20260925-upstream18-a2.uniform-random.evaluation
+  record_sha256: 99ec18c005542126b179cbe8ee7cb9e58bac12fe68a0e7f97d9df09d7df74a38
+  first_record_sha256: a9f8516c6a38ecf743b338e6351c6bf73cd4adccc5bb8c1483b717adc4d770f1
+  implementation: gapbs-bfs-do
+  workload: bfs-20260925-uniform18.cd2169a5c421baf7
+  source_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+  primary_binary_sha256: 741493a212d925d2a382dacabb7cd171895db2384ed799387e9631d842cb56b3
+  wrapper_sha256: e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c
+  source_binary_wrapper_settings_match: true
+  checked_trials: 15
+  first_block:
+  - source: 0
+    samples_seconds: [0.004893488, 0.004337344, 0.004729244, 0.005268395, 0.006248497]
+    median_seconds: 0.004893488
+    relative_spread: 0.3905502578120148
+    sample_coefficient_of_variation: 0.14250675500056473
+  - source: 1234
+    samples_seconds: [0.005790999, 0.004142641, 0.006332351, 0.005124849, 0.005099929]
+    median_seconds: 0.005124849
+    relative_spread: 0.42727307672869974
+    sample_coefficient_of_variation: 0.1555571859519795
+  - source: 7777
+    samples_seconds: [0.008173827, 0.00580816, 0.006909457, 0.005573794, 0.007044821]
+    median_seconds: 0.006909457
+    relative_spread: 0.3763006268075769
+    sample_coefficient_of_variation: 0.15646742353851567
+  second_block:
+  - source: 0
+    samples_seconds: [0.005302292, 0.005181212, 0.005337802, 0.005372715, 0.005388363]
+    median_seconds: 0.005337802
+    relative_spread: 0.038808295998989856
+    sample_coefficient_of_variation: 0.015534287716203743
+  - source: 1234
+    samples_seconds: [0.005451205, 0.005433784, 0.005542008, 0.005545616, 0.00541357]
+    median_seconds: 0.005451205
+    relative_spread: 0.02422326806641823
+    sample_coefficient_of_variation: 0.011361566369232707
+  - source: 7777
+    samples_seconds: [0.005737852, 0.005918174, 0.005657768, 0.005820147, 0.0057994]
+    median_seconds: 0.0057994
+    relative_spread: 0.04490223126530337
+    sample_coefficient_of_variation: 0.016749075627138107
+  negative_control:
+  - direction: first_over_second
+    geometric_mean_median_ratio: 1.0088698893662786
+    per_source_position_median_ratio:
+      0: 0.9167608689868976
+      1: 0.940131402139527
+      2: 1.1914089388557438
+    confidence_interval:
+      confidence: 0.95
+      lower: 0.9214248011416251
+      upper: 1.1295468620874747
+      method: independent per-source bootstrap of median ratios
+      resamples: 2000
+    nominal_1_05_lower_bound_component_crossed: false
+    is_gain: false
+  - direction: second_over_first
+    geometric_mean_median_ratio: 0.9912080938684271
+    per_source_position_median_ratio:
+      0: 1.0907969938824822
+      1: 1.0636810957747243
+      2: 0.8393423680037374
+    confidence_interval:
+      confidence: 0.95
+      lower: 0.8925647498353269
+      upper: 1.0915429661691756
+      method: independent per-source bootstrap of median ratios
+      resamples: 2000
+    nominal_1_05_lower_bound_component_crossed: false
+    is_gain: false
+  host_load_at_evaluation_start:
+    first_block: [11.90283203125, 14.1181640625, 14.59326171875]
+    second_block: [7.28466796875, 8.41064453125, 10.52587890625]
+  source_order: [0, 1234, 7777]
+  process_order:
+  - [0, 0]
+  - [0, 1]
+  - [0, 2]
+  - [1, 0]
+  - [1, 1]
+  - [1, 2]
+  - [2, 0]
+  - [2, 1]
+  - [2, 2]
+  - [3, 0]
+  - [3, 1]
+  - [3, 2]
+  - [4, 0]
+  - [4, 1]
+  - [4, 2]
+  stage_interval:
+    started: '2026-09-26T04:38:46.800733+00:00'
+    finished: '2026-09-26T04:45:20.104653+00:00'
+    elapsed_seconds: 393.30392
+  subprocess_host_seconds: 34.28704588487744
+  execution_subprocess_host_seconds: 31.761502971872687
+  recorded_host_cost_not_bfs_roi: true
+  external_lease_overlapping_execution_stages: []
+  overlap_precision: Stage envelopes include process setup and result handling; not per-ROI interference
+    telemetry.
+  raw_verification:
+    references: 37
+    all_verified: true
+  verifier_module_sha256:
+    first_block: 807d685a889a30741a9d06215314c44cbb333676d4be03663a22821d3a543730
+    second_block: 9560dbea64b750842b91f614f60c976a070e877d971a36fa477954706a360b5a
+- evaluation: bfs-native-repeatability-20260926-a1.dx100.kronecker.evaluation
+  first_evaluation: bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation
+  record_sha256: 008fe50de58158f40a581247accd7cf7bf4739eaabc485e8302728cddd68e79d
+  first_record_sha256: 8566de7181de7c8fa042c683392f959d788a7f02cfbe2d0d166f5d2f8182149c
+  implementation: dx100-bfs-scalar
+  workload: bfs-20260925-kronecker18.48de8267ac2098d5
+  source_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  primary_binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  wrapper_sha256: 0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1
+  source_binary_wrapper_settings_match: true
+  checked_trials: 15
+  first_block:
+  - source: 0
+    samples_seconds: [0.020383814, 0.023016542, 0.024892328, 0.018639852, 0.020373133]
+    median_seconds: 0.020383814
+    relative_spread: 0.30673729656285126
+    sample_coefficient_of_variation: 0.11531035890658828
+  - source: 1234
+    samples_seconds: [0.015601714, 0.016254953, 0.019607609, 0.024922672, 0.02375507]
+    median_seconds: 0.019607609
+    relative_spread: 0.4753745344473158
+    sample_coefficient_of_variation: 0.211615553763885
+  - source: 7777
+    samples_seconds: [0.021165393, 0.018452187, 0.026276676, 0.017459517, 0.016659581]
+    median_seconds: 0.018452187
+    relative_spread: 0.5211899814368888
+    sample_coefficient_of_variation: 0.19485045471181017
+  second_block:
+  - source: 0
+    samples_seconds: [0.023582494, 0.016990275, 0.016488888, 0.015961573, 0.016697779]
+    median_seconds: 0.016697779
+    relative_spread: 0.45640327375275475
+    sample_coefficient_of_variation: 0.17689379892679422
+  - source: 1234
+    samples_seconds: [0.024146183, 0.015920073, 0.015524779, 0.01543418, 0.01550279]
+    median_seconds: 0.015524779
+    relative_spread: 0.5611676018061191
+    sample_coefficient_of_variation: 0.22124267295022698
+  - source: 7777
+    samples_seconds: [0.016069245, 0.015233323, 0.01600995, 0.015835414, 0.016682646]
+    median_seconds: 0.01600995
+    relative_spread: 0.09052639140034785
+    sample_coefficient_of_variation: 0.032545490770298884
+  negative_control:
+  - direction: first_over_second
+    geometric_mean_median_ratio: 1.2112336861768254
+    per_source_position_median_ratio:
+      0: 1.2207500171130545
+      1: 1.2629879626627858
+      2: 1.1525449486100832
+    confidence_interval:
+      confidence: 0.95
+      lower: 1.0267505511840438
+      upper: 1.4192667366964353
+      method: independent per-source bootstrap of median ratios
+      resamples: 2000
+    nominal_1_05_lower_bound_component_crossed: false
+    is_gain: false
+  - direction: second_over_first
+    geometric_mean_median_ratio: 0.8256045149771472
+    per_source_position_median_ratio:
+      0: 0.8191685324444189
+      1: 0.791773183563585
+      2: 0.8676451197898656
+    confidence_interval:
+      confidence: 0.95
+      lower: 0.6967107733139996
+      upper: 0.9686735534950138
+      method: independent per-source bootstrap of median ratios
+      resamples: 2000
+    nominal_1_05_lower_bound_component_crossed: false
+    is_gain: false
+  host_load_at_evaluation_start:
+    first_block: [23.0888671875, 16.9599609375, 16.15673828125]
+    second_block: [2.1376953125, 4.31201171875, 7.9248046875]
+  source_order: [0, 1234, 7777]
+  process_order:
+  - [0, 0]
+  - [0, 1]
+  - [0, 2]
+  - [1, 0]
+  - [1, 1]
+  - [1, 2]
+  - [2, 0]
+  - [2, 1]
+  - [2, 2]
+  - [3, 0]
+  - [3, 1]
+  - [3, 2]
+  - [4, 0]
+  - [4, 1]
+  - [4, 2]
+  stage_interval:
+    started: '2026-09-26T04:45:35.747184+00:00'
+    finished: '2026-09-26T04:51:50.475097+00:00'
+    elapsed_seconds: 374.727913
+  subprocess_host_seconds: 21.59527835343033
+  execution_subprocess_host_seconds: 18.968789311125875
+  recorded_host_cost_not_bfs_roi: true
+  external_lease_overlapping_execution_stages:
+  - source: 7777
+    source_position: 2
+    repetition: 3
+    started: '2026-09-26T04:50:21.594348+00:00'
+    finished: '2026-09-26T04:50:27.524761+00:00'
+  - source: 0
+    source_position: 0
+    repetition: 4
+    started: '2026-09-26T04:50:42.402520+00:00'
+    finished: '2026-09-26T04:50:48.820817+00:00'
+  - source: 1234
+    source_position: 1
+    repetition: 4
+    started: '2026-09-26T04:51:03.790175+00:00'
+    finished: '2026-09-26T04:51:09.721853+00:00'
+  - source: 7777
+    source_position: 2
+    repetition: 4
+    started: '2026-09-26T04:51:24.915478+00:00'
+    finished: '2026-09-26T04:51:30.736056+00:00'
+  overlap_precision: Stage envelopes include process setup and result handling; not per-ROI interference
+    telemetry.
+  raw_verification:
+    references: 37
+    all_verified: true
+  verifier_module_sha256:
+    first_block: 807d685a889a30741a9d06215314c44cbb333676d4be03663a22821d3a543730
+    second_block: 9560dbea64b750842b91f614f60c976a070e877d971a36fa477954706a360b5a
+- evaluation: bfs-native-repeatability-20260926-a1.upstream.kronecker.evaluation
+  first_evaluation: bfs-native-pilot-20260925-upstream18-a2.kronecker.evaluation
+  record_sha256: b31989ef4e7491d60739f051a63e4c916137762d0d3163840a5c1285f69ae8aa
+  first_record_sha256: 923b409064c9665d882eb5673faee9fcc594b23b3f36d3dfad0bfee8022fc9ff
+  implementation: gapbs-bfs-do
+  workload: bfs-20260925-kronecker18.48de8267ac2098d5
+  source_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+  primary_binary_sha256: 741493a212d925d2a382dacabb7cd171895db2384ed799387e9631d842cb56b3
+  wrapper_sha256: e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c
+  source_binary_wrapper_settings_match: true
+  checked_trials: 15
+  first_block:
+  - source: 0
+    samples_seconds: [0.006369765, 0.006381815, 0.007271143, 0.006341302, 0.004845842]
+    median_seconds: 0.006369765
+    relative_spread: 0.3807520371630664
+    sample_coefficient_of_variation: 0.13998823228359894
+  - source: 1234
+    samples_seconds: [0.008160028, 0.005915747, 0.007747723, 0.004875526, 0.006685496]
+    median_seconds: 0.006685496
+    relative_spread: 0.4912877070003482
+    sample_coefficient_of_variation: 0.20052838205237228
+  - source: 7777
+    samples_seconds: [0.004286861, 0.005260357, 0.00419623, 0.004602018, 0.006324185]
+    median_seconds: 0.004602018
+    relative_spread: 0.46239606190153987
+    sample_coefficient_of_variation: 0.1787832012103782
+  second_block:
+  - source: 0
+    samples_seconds: [0.006520551, 0.006535729, 0.005968357, 0.00656183, 0.00669084]
+    median_seconds: 0.006535729
+    relative_spread: 0.11054359812042396
+    sample_coefficient_of_variation: 0.04344789424702087
+  - source: 1234
+    samples_seconds: [0.006377675, 0.006008231, 0.006347148, 0.006000714, 0.007143085]
+    median_seconds: 0.006347148
+    relative_spread: 0.1799817807935155
+    sample_coefficient_of_variation: 0.07295575131781025
+  - source: 7777
+    samples_seconds: [0.005855001, 0.006244113, 0.00580447, 0.005690566, 0.006161268]
+    median_seconds: 0.005855001
+    relative_spread: 0.09454259700382625
+    sample_coefficient_of_variation: 0.04017450887955031
+  negative_control:
+  - direction: first_over_second
+    geometric_mean_median_ratio: 0.9309690444607944
+    per_source_position_median_ratio:
+      0: 0.9746066582626055
+      1: 1.053307091626034
+      2: 0.7859978162258213
+    confidence_interval:
+      confidence: 0.95
+      lower: 0.8196706275988045
+      upper: 1.069530974820406
+      method: independent per-source bootstrap of median ratios
+      resamples: 2000
+    nominal_1_05_lower_bound_component_crossed: false
+    is_gain: false
+  - direction: second_over_first
+    geometric_mean_median_ratio: 1.074149571298783
+    per_source_position_median_ratio:
+      0: 1.026054964351118
+      1: 0.9493907407917079
+      2: 1.272268165835075
+    confidence_interval:
+      confidence: 0.95
+      lower: 0.9503076313790213
+      upper: 1.2221480359634194
+      method: independent per-source bootstrap of median ratios
+      resamples: 2000
+    nominal_1_05_lower_bound_component_crossed: false
+    is_gain: false
+  host_load_at_evaluation_start:
+    first_block: [17.03125, 16.3173828125, 15.509765625]
+    second_block: [2.88134765625, 2.97216796875, 6.00634765625]
+  source_order: [0, 1234, 7777]
+  process_order:
+  - [0, 0]
+  - [0, 1]
+  - [0, 2]
+  - [1, 0]
+  - [1, 1]
+  - [1, 2]
+  - [2, 0]
+  - [2, 1]
+  - [2, 2]
+  - [3, 0]
+  - [3, 1]
+  - [3, 2]
+  - [4, 0]
+  - [4, 1]
+  - [4, 2]
+  stage_interval:
+    started: '2026-09-26T04:52:06.281944+00:00'
+    finished: '2026-09-26T04:58:57.103479+00:00'
+    elapsed_seconds: 410.821535
+  subprocess_host_seconds: 22.84698060527444
+  execution_subprocess_host_seconds: 20.521945196203887
+  recorded_host_cost_not_bfs_roi: true
+  external_lease_overlapping_execution_stages:
+  - source: 0
+    source_position: 0
+    repetition: 0
+    started: '2026-09-26T04:53:04.419943+00:00'
+    finished: '2026-09-26T04:53:10.177075+00:00'
+  - source: 1234
+    source_position: 1
+    repetition: 0
+    started: '2026-09-26T04:53:24.973260+00:00'
+    finished: '2026-09-26T04:53:30.885510+00:00'
+  - source: 7777
+    source_position: 2
+    repetition: 0
+    started: '2026-09-26T04:53:45.879104+00:00'
+    finished: '2026-09-26T04:53:51.821892+00:00'
+  - source: 0
+    source_position: 0
+    repetition: 1
+    started: '2026-09-26T04:54:06.954069+00:00'
+    finished: '2026-09-26T04:54:13.121579+00:00'
+  - source: 1234
+    source_position: 1
+    repetition: 1
+    started: '2026-09-26T04:54:27.986882+00:00'
+    finished: '2026-09-26T04:54:33.913363+00:00'
+  - source: 7777
+    source_position: 2
+    repetition: 1
+    started: '2026-09-26T04:54:49.324671+00:00'
+    finished: '2026-09-26T04:54:56.128485+00:00'
+  - source: 0
+    source_position: 0
+    repetition: 2
+    started: '2026-09-26T04:55:15.017866+00:00'
+    finished: '2026-09-26T04:55:22.374799+00:00'
+  - source: 1234
+    source_position: 1
+    repetition: 2
+    started: '2026-09-26T04:55:40.064371+00:00'
+    finished: '2026-09-26T04:55:47.590225+00:00'
+  - source: 7777
+    source_position: 2
+    repetition: 2
+    started: '2026-09-26T04:56:06.564159+00:00'
+    finished: '2026-09-26T04:56:14.758533+00:00'
+  - source: 0
+    source_position: 0
+    repetition: 3
+    started: '2026-09-26T04:56:34.166321+00:00'
+    finished: '2026-09-26T04:56:41.417589+00:00'
+  - source: 1234
+    source_position: 1
+    repetition: 3
+    started: '2026-09-26T04:56:58.746260+00:00'
+    finished: '2026-09-26T04:57:05.332815+00:00'
+  - source: 7777
+    source_position: 2
+    repetition: 3
+    started: '2026-09-26T04:57:21.691807+00:00'
+    finished: '2026-09-26T04:57:28.324287+00:00'
+  - source: 0
+    source_position: 0
+    repetition: 4
+    started: '2026-09-26T04:57:44.384734+00:00'
+    finished: '2026-09-26T04:57:51.305645+00:00'
+  - source: 1234
+    source_position: 1
+    repetition: 4
+    started: '2026-09-26T04:58:07.458866+00:00'
+    finished: '2026-09-26T04:58:13.885920+00:00'
+  - source: 7777
+    source_position: 2
+    repetition: 4
+    started: '2026-09-26T04:58:30.141100+00:00'
+    finished: '2026-09-26T04:58:36.799770+00:00'
+  overlap_precision: Stage envelopes include process setup and result handling; not per-ROI interference
+    telemetry.
+  raw_verification:
+    references: 37
+    all_verified: true
+  verifier_module_sha256:
+    first_block: 807d685a889a30741a9d06215314c44cbb333676d4be03663a22821d3a543730
+    second_block: 9560dbea64b750842b91f614f60c976a070e877d971a36fa477954706a360b5a
+all_trials_verified: true
+nominal_false_improvement_components:
+- evaluation: bfs-native-repeatability-20260926-a1.dx100.uniform-random.evaluation
+  direction: first_over_second
+  geometric_mean_median_ratio: 1.1760473740114274
+  per_source_position_median_ratio:
+    0: 1.3171655446863337
+    1: 1.1109346031702563
+    2: 1.1115924634954528
+  confidence_interval:
+    confidence: 0.95
+    lower: 1.0661420913449708
+    upper: 1.4483030993109027
+    method: independent per-source bootstrap of median ratios
+    resamples: 2000
+  nominal_1_05_lower_bound_component_crossed: true
+  is_gain: false
+conclusion: Native repeatability calibration remains inconclusive; observed unchanged-code interval components
+  can be compared descriptively, but no frozen profitability qualification or spread threshold is established.

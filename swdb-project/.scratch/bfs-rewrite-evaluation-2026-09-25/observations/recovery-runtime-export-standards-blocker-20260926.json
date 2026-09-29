@@ -1,0 +1,106 @@
+{
+  "format": "swdb.bfs.recovery-export-standards-review.v1",
+  "date": "2026-09-26",
+  "observed_at": "2026-09-26T22:24:49.167750-04:00",
+  "state": "exact_inventory_verified_dependency_blocker",
+  "commit": "37c02c55ed01e8d26e543d7c40703c488b37ee66",
+  "sole_parent": "d5e215966a7d4d673050a78c6a6d77053aa62a85",
+  "source_commit": "99005ee11272115dd2275ea078beb478d03738bf",
+  "inventory": {
+    "path": "/private/tmp/bfs-recovery-runtime-export-20260926.json",
+    "bytes": 7515,
+    "sha256": "5564761b46862f1b70e6967dd1ebadea15693b6231fc9bf412dfae5c0fe3420f"
+  },
+  "total_files": 24,
+  "total_bytes": 418529,
+  "all_modes": "100644",
+  "exact_paths_blobs_modes_hashes_and_source": true,
+  "local_changes_after_blocker_repair_started": [
+    "scripts/bfs_t17_diagnostic_build.py",
+    "tests/test_bfs_t17_diagnostic_build.py"
+  ],
+  "held_paths_absent_tree_and_history": [
+    "records/proposals/bfs-campaign-preparation-20260925-a1.dx100-instructions.yaml",
+    "records/candidates/bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1.yaml",
+    "records/proposals/bfs-campaign-preparation-20260925-a1.upstream-instructions.yaml",
+    "records/candidates/bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1.yaml",
+    "records/proposals/bfs-campaign-preparation-20260925-a1.upstream-annotated.yaml",
+    "docs/evidence/bfs-provider-initial-20260926-a1.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.pair.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.pair.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.pair.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.pair.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.candidate.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.candidate.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.candidate.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.candidate.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.122d39652ae0c326.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.b8f33855cc6c657e.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.f613a3b01a24e380.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.ffd9925db46a63a9.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.profile.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.profile.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.profile.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.profile.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.source.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.source.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.source.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.source.yaml"
+  ],
+  "held_commit_absent_from_rev_list": "5f1b8028619976b36df5fa24b8aacb91bf488168",
+  "canonical_record_changes": [],
+  "unchanged_old_plans": [
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-simulator-batch-20260926-a1.json",
+      "sha256": "2163c763fa9d985800ebab24670889c84680ffe76f2c44e7dd692b59f2e1ef99"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-simulator-batch-20260926-a1.json",
+      "sha256": "7436deb684d55883c8c8caac9099d021a9c0d6caf5bc00e17943b0e969525a04"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-correction-simulator-batch-20260926-a1.json",
+      "sha256": "d93e8c02574e1b2fcf90f8c8b1f79c2c83bd63b81d377e627ede71b7755f7f62"
+    }
+  ],
+  "runtime_and_test_difference_from_source": [],
+  "static_import_targets_present": true,
+  "unchanged_parent_dependencies": [
+    "scripts/bfs_scalar_v2_builds.py",
+    "scripts/bfs_t17_build_only.py",
+    "scripts/bfs_owned_execution.py",
+    "scripts/bfs_owned_rss.py",
+    "scripts/bfs_process.py",
+    "scripts/bfs_linux_fixture_audit.py",
+    "scripts/bfs_simulator_batch_terminal.py",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.preparation.json"
+  ],
+  "sole_added_observation": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/t17-build-only-terminal-20260926.json",
+  "blocker": {
+    "priority": "P2",
+    "file": "scripts/bfs_scalar_v2_builds.py",
+    "description": "Combined runtime changes the fully pinned owned-execution test module and produces five a4 cases, while reused scalar.validate_proof requires exactly four. Historical four-case proof fails test hash; fresh five-case proof fails cardinality. T17 calls this reader, so no planned ownership proof admits T17 at this export.",
+    "probe": {
+      "path": "/private/tmp/test_combined_proof_cardinality_standards_20260926.py",
+      "bytes": 1352,
+      "sha256": "eb618bfcfc34b5051888e70e80669cf70d7d5fd72fe888a6b426469ab387d20b"
+    },
+    "log": {
+      "path": "/private/tmp/bfs-combined-proof-cardinality-red-20260926.log",
+      "bytes": 1929,
+      "sha256": "1abe23af6d857b1bc275bae2973983843cf125884fc8ba995600441848cdd5e6"
+    },
+    "result": "1 failed, 2 passed; no actual Linux or host workload",
+    "caller": "scripts/bfs_t17_diagnostic_build.py:238"
+  },
+  "disposition": "Parent authorized narrow repair; export stays unpushed and must be superseded. Prior denied T17 payload remains subject to new exact payload approval.",
+  "limitations": [
+    "Git-object/source inspection only; no managed worktree modification or isolated export suite by reviewer",
+    "Runtime inventory equality is not proof compatibility or empirical acceptance",
+    "No remote fetch/push/host execution occurred"
+  ]
+}

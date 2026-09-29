@@ -1,0 +1,736 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "implementation",
+  "title": "Implementation: code that realizes a kernel, with its loops, access patterns, and semantics",
+  "description": "Build and run commands are templates: {cxx}, {flags}, {source}, {app}, {records}, {binary}, {input_args}, {trials} are filled in by swdb profile.",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "implementation"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kernel": {
+      "type": "string",
+      "x-ref": "kernel"
+    },
+    "function": {
+      "type": "string",
+      "minLength": 1
+    },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "x-vocab": "implementation_origins"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "derived_from": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "x-ref": "implementation"
+        }
+      },
+      "required": [
+        "kind",
+        "description"
+      ]
+    },
+    "code": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/code_ref"
+      },
+      "description": "First entry is the file built; with lines and excerpt it is the kernel function as copied."
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "compiler": {
+          "type": "string",
+          "minLength": 1
+        },
+        "flags": {
+          "type": "string"
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "compiler",
+        "flags",
+        "command"
+      ]
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timer": {
+          "type": "string",
+          "x-vocab": "timer_formats"
+        },
+        "threads_env": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sweep_log_flag": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "kernel_symbols": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "index_stream": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "required": [
+            "order",
+            "pattern"
+          ],
+          "properties": {
+            "order": {
+              "type": "string",
+              "enum": [
+                "in_neighbors_by_vertex",
+                "out_neighbors_by_vertex"
+              ]
+            },
+            "pattern": {
+              "$ref": "#/$defs/id"
+            },
+            "note": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "sweep_count_regex": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Python regular expression with one group that captures the number of sweeps per call from the benchmark's output (for benchmarks that print a count instead of one line per sweep)."
+        }
+      },
+      "required": [
+        "command",
+        "timer",
+        "threads_env"
+      ]
+    },
+    "loops": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parent": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "trip_count": {
+            "$ref": "#/$defs/count"
+          },
+          "parallel": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "construct": {
+                "type": "string",
+                "x-vocab": "parallel_constructs"
+              },
+              "schedule": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "reduction": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "construct"
+            ]
+          },
+          "code": {
+            "$ref": "#/$defs/code_ref"
+          },
+          "condition": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "When this runs only under a condition (e.g. only on directed inputs, only if relabeling is worth it), the condition in words; null or absent means always."
+          }
+        },
+        "required": [
+          "id",
+          "description",
+          "trip_count",
+          "parallel"
+        ]
+      }
+    },
+    "access_patterns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "expression": {
+            "type": "string",
+            "minLength": 1
+          },
+          "loop": {
+            "type": "string",
+            "minLength": 1
+          },
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "array",
+                "address_shape"
+              ],
+              "properties": {
+                "array": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "role": {
+                      "type": "string",
+                      "x-vocab": "array_roles"
+                    },
+                    "element_type": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "element_bytes": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "element_count": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "minLength": 1,
+                      "description": "Formula over input property symbols, e.g. num_nodes + 1; null when the size depends on the data at run time (say how in the step's note)."
+                    },
+                    "layout": {
+                      "type": "string",
+                      "x-vocab": "layouts"
+                    },
+                    "undirected_alias": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "description": "Name of an array this one is the same memory as when the input graph is undirected (gapbs keeps one CSR for both directions). Footprints count the pair once; mark either side or both."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "role",
+                    "element_type",
+                    "element_bytes",
+                    "element_count",
+                    "layout"
+                  ]
+                },
+                "address_shape": {
+                  "type": "string",
+                  "x-vocab": "address_shapes"
+                },
+                "stride": {
+                  "type": "integer"
+                },
+                "index_transform": {
+                  "type": "string",
+                  "x-vocab": "index_transforms"
+                },
+                "note": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "address_shape": {
+                        "const": "stream"
+                      }
+                    },
+                    "required": [
+                      "address_shape"
+                    ]
+                  },
+                  "then": {
+                    "required": [
+                      "stride"
+                    ],
+                    "x-required-reasons": {
+                      "stride": "a stream step needs a stride (0 means reuse)"
+                    },
+                    "not": {
+                      "required": [
+                        "index_transform"
+                      ]
+                    },
+                    "x-reason": "index_transform belongs only to single_valued_indirect steps"
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "address_shape": {
+                        "const": "single_valued_indirect"
+                      }
+                    },
+                    "required": [
+                      "address_shape"
+                    ]
+                  },
+                  "then": {
+                    "required": [
+                      "index_transform"
+                    ],
+                    "x-required-reasons": {
+                      "index_transform": "a single_valued_indirect step needs an index_transform (identity, affine, hash)"
+                    },
+                    "not": {
+                      "required": [
+                        "stride"
+                      ]
+                    },
+                    "x-reason": "stride belongs only to stream steps"
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "address_shape": {
+                        "enum": [
+                          "ranged_indirect",
+                          "pointer_chase",
+                          "data_dependent_merge"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "address_shape"
+                    ]
+                  },
+                  "then": {
+                    "not": {
+                      "anyOf": [
+                        {
+                          "required": [
+                            "stride"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "index_transform"
+                          ]
+                        }
+                      ]
+                    },
+                    "x-reason": "ranged_indirect, pointer_chase, and data_dependent_merge steps take neither stride nor index_transform"
+                  }
+                }
+              ]
+            }
+          },
+          "update_kind": {
+            "type": "string",
+            "x-vocab": "update_kinds"
+          },
+          "update": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "pseudocode": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "side_effects": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "pseudocode",
+              "side_effects"
+            ]
+          },
+          "semantics": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "duplicate_target_indices": {
+                "$ref": "#/$defs/bool_fact"
+              },
+              "index_modified_during_loop": {
+                "$ref": "#/$defs/bool_fact"
+              },
+              "loop_carried_dependencies": {
+                "$ref": "#/$defs/bool_fact"
+              },
+              "shared_target_between_threads": {
+                "$ref": "#/$defs/bool_fact"
+              },
+              "atomic_updates_required": {
+                "$ref": "#/$defs/bool_fact"
+              },
+              "ordering": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/fact"
+                  },
+                  {
+                    "properties": {
+                      "value": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "x-vocab": "orderings"
+                      }
+                    }
+                  }
+                ]
+              },
+              "numerical_requirement": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/fact"
+                  },
+                  {
+                    "properties": {
+                      "value": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "x-vocab": "numerical_requirements"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "required": [
+              "duplicate_target_indices",
+              "index_modified_during_loop",
+              "loop_carried_dependencies",
+              "shared_target_between_threads",
+              "atomic_updates_required",
+              "ordering",
+              "numerical_requirement"
+            ]
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/evidence_refs"
+          },
+          "note": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "condition": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "When this runs only under a condition (e.g. only on directed inputs, only if relabeling is worth it), the condition in words; null or absent means always."
+          }
+        },
+        "required": [
+          "id",
+          "expression",
+          "loop",
+          "steps",
+          "update_kind",
+          "semantics"
+        ]
+      }
+    },
+    "uses_intrinsics": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "x-ref": "intrinsic"
+      },
+      "description": "IDs of the intrinsics the code calls; the implementation's required ISA is the union of their isa_extensions."
+    },
+    "applies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "strategy",
+          "target",
+          "parameters"
+        ],
+        "properties": {
+          "strategy": {
+            "type": "string",
+            "x-ref": "strategy"
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A loop or access-pattern ID of this record, or `input`; it must match the strategy's target type."
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "number",
+                "string",
+                "boolean"
+              ]
+            },
+            "description": "Values for the strategy's declared parameters, by name."
+          }
+        }
+      },
+      "description": "The optimization strategies this implementation applies, in the order applied; targets refer to the final code."
+    },
+    "application": {
+      "type": "string",
+      "x-ref": "application"
+    },
+    "source_baseline": {
+      "type": "string",
+      "x-ref": "implementation"
+    },
+    "comparison_baseline": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-ref": "implementation"
+    },
+    "evaluator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "backend",
+        "command",
+        "pass_regex",
+        "verifier"
+      ],
+      "properties": {
+        "backend": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Template run by the profiler; {binary} and {input_args} are filled in."
+        },
+        "pass_regex": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Python regular expression; the check passes when the command exits 0 and its output matches."
+        },
+        "verifier": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "code": {
+              "$ref": "#/$defs/code_ref"
+            }
+          },
+          "required": [
+            "description",
+            "code"
+          ]
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "evidence",
+        "scope"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "unchecked",
+            "passed",
+            "failed"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "x-ref": "profile"
+          },
+          "uniqueItems": true
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "passed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "kernel",
+    "function",
+    "origin",
+    "code",
+    "build",
+    "run",
+    "loops",
+    "access_patterns"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": "0.4"
+          }
+        },
+        "required": [
+          "schema_version"
+        ]
+      },
+      "then": {
+        "required": [
+          "application",
+          "source_baseline",
+          "evaluator",
+          "verification"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "application"
+              ]
+            },
+            {
+              "required": [
+                "source_baseline"
+              ]
+            },
+            {
+              "required": [
+                "comparison_baseline"
+              ]
+            },
+            {
+              "required": [
+                "evaluator"
+              ]
+            },
+            {
+              "required": [
+                "verification"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

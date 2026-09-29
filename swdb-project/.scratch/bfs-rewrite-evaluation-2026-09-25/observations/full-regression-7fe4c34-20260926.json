@@ -1,0 +1,55 @@
+{
+  "created": "2026-09-26T17:16:03.130012-04:00",
+  "commit": "7fe4c348046d829cbbdad455eb2323f93ad00175",
+  "cwd": "/Users/yanrujhou/.codex/worktrees/bfs-validation/EvolveSWDB",
+  "command": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/private/tmp/bfs-full-suite-7fe4c34-20260926"
+  ],
+  "state": "finished",
+  "timeout_seconds": 7200,
+  "classification": "local_contract_regression_not_empirical_evidence",
+  "python": {
+    "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "bytes": 33816,
+    "sha256": "08fa4dbadc420090dfee2acf433b827ae05541f728d1478d96879122f53b4328"
+  },
+  "pid": 18152,
+  "returncode": 1,
+  "finished": "2026-09-26T18:11:32.646450-04:00",
+  "elapsed_seconds": 3329.5029806669336,
+  "log": {
+    "path": "/private/tmp/bfs-full-suite-7fe4c34-20260926.log",
+    "bytes": 78021,
+    "sha256": "3dfffedf6a9057b1def32478c1893ebe89811e176c30d8a59f0c2bfc6ae3a8a7"
+  },
+  "final_commit": "7fe4c348046d829cbbdad455eb2323f93ad00175",
+  "tracked_diff": "",
+  "result": {
+    "passed": 2004,
+    "skipped": 18,
+    "failed": 25,
+    "pytest_seconds": 3329.29
+  },
+  "failure_groups": {
+    "test_bfs_native_campaign.py": 16,
+    "test_bfs_native_reassessment.py": 2,
+    "test_bfs_t17_build_only.py": 7
+  },
+  "repairs": {
+    "campaign_and_reassessment": "6b1102d",
+    "t17": "e4c401585a2cec8319ecc06ff2f7662bcd352730"
+  },
+  "superseding_suite": {
+    "commit": "e4c401585a2cec8319ecc06ff2f7662bcd352730",
+    "started": "2026-09-26T17:59:51.880298-04:00",
+    "state": "running"
+  },
+  "limits": "All original failures retained; focused repairs are independently checked, but this completed suite is failed and no superseding full-suite pass is claimed."
+}

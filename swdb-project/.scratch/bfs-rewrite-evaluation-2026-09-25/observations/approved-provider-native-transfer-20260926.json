@@ -1,0 +1,477 @@
+{
+  "format": "swdb.bfs.approved-evidence-transfer.v1",
+  "created": "2026-09-26T23:18:31.297734-04:00",
+  "state": "pushed_fetched_exact_records_imported",
+  "authorization": {
+    "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/standing-transfer-authorization-20260926.json",
+    "bytes": 1379,
+    "sha256": "d272ed3dd13d35acae1cda421271ff02016a048b93a985107e0841c239a02c64"
+  },
+  "destination": {
+    "repository": "git@github.com:ruchou/EvolveSWDB.git",
+    "github_repository_id": "1382305006",
+    "visibility": "private",
+    "push_permission_verified": true
+  },
+  "scope": {
+    "files": 30,
+    "canonical_records": 29,
+    "evidence_documents": 1,
+    "bytes": 4118139,
+    "embedded_private_source_and_research_data": "explicitly authorized; exact previously prepared packets",
+    "credentials_and_unrelated_files": "excluded by exact allowlist; targeted credential-pattern scan found no matches"
+  },
+  "packets": [
+    {
+      "name": "provider",
+      "commit": "5f1b8028619976b36df5fa24b8aacb91bf488168",
+      "parent": "6346189b55132f195b02544b729f34100d10ba92",
+      "branch": "refs/heads/codex/bfs-provider-evidence-20260926-a1",
+      "total_bytes": 169515,
+      "files": [
+        {
+          "path": "records/proposals/bfs-campaign-preparation-20260925-a1.dx100-instructions.yaml",
+          "bytes": 10454,
+          "sha256": "a556d0ca47c2f04661eaa9af35c6c86b5fff0afd22a76ebcd9f6d5df5b1551f6",
+          "git_blob": "0e277d8649b617dc8685eae1d666223d63e5b18a",
+          "mode": "100644",
+          "id": "bfs-campaign-preparation-20260925-a1.dx100-instructions",
+          "kind": "proposal",
+          "canonical_sha256": "a72f2cdd2503cb719169ef2d2dd2c61ad1f622e711e097cdbddba24a8e17705c"
+        },
+        {
+          "path": "records/candidates/bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1.yaml",
+          "bytes": 66369,
+          "sha256": "2a4691b9036c7ecbbae4be956ece6d602e55a2a0f296f45a958f7e91c2ce9ac4",
+          "git_blob": "af99e6b3ae8f02c09306e5e1f4f841d0bcb93daa",
+          "mode": "100644",
+          "id": "bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1",
+          "kind": "candidate",
+          "canonical_sha256": "e31ff21a5676c29c653d0c443f13faaf32cad7e8cdf41754404422dc9a94ac11"
+        },
+        {
+          "path": "records/proposals/bfs-campaign-preparation-20260925-a1.upstream-instructions.yaml",
+          "bytes": 5787,
+          "sha256": "67358a5bf833d8c6b74ea96cae6719f0364a5a68a927e55fdd322ab1778699d3",
+          "git_blob": "14f9875e285d21a64330fd5273454f010b78ca4f",
+          "mode": "100644",
+          "id": "bfs-campaign-preparation-20260925-a1.upstream-instructions",
+          "kind": "proposal",
+          "canonical_sha256": "36fe65fa454de66346ac2b94af490818b503bb0905fce39fa72461a0ab5546c5"
+        },
+        {
+          "path": "records/candidates/bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1.yaml",
+          "bytes": 27922,
+          "sha256": "0de28d0baa815453b27791196316ba72af1b9658266e18880a79872f21f9ec59",
+          "git_blob": "a13f5bb8f40781ede80929b2d1cca962962b6bef",
+          "mode": "100644",
+          "id": "bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1",
+          "kind": "candidate",
+          "canonical_sha256": "b1da8316bfbcaef80d24a69bd4defb75ed59c7438cc90eefaa646d00967cb4f3"
+        },
+        {
+          "path": "records/proposals/bfs-campaign-preparation-20260925-a1.upstream-annotated.yaml",
+          "bytes": 35067,
+          "sha256": "d8cffc3c1fe014830df2c0b5d504e130d17c2570265c40e06c96dbcfef53952a",
+          "git_blob": "5a3716e382339421621a19fd304c0f79959d031e",
+          "mode": "100644",
+          "id": "bfs-campaign-preparation-20260925-a1.upstream-annotated",
+          "kind": "proposal",
+          "canonical_sha256": "b6fe6bbb94e268498765ac4b27bdc076b1328a28d8bc3a6b4aafe80030c2e521"
+        },
+        {
+          "path": "docs/evidence/bfs-provider-initial-20260926-a1.yaml",
+          "bytes": 23916,
+          "sha256": "fe44b437a629b39d540561c4035de8cc5b41530594b6d75197d6b0068574f868",
+          "git_blob": "0d9176795d4fe30a64416b28c395d1591c8fdca6",
+          "mode": "100644"
+        }
+      ]
+    },
+    {
+      "name": "native",
+      "commit": "c6f16004acf8d12cef96dd7e3220405cdc209390",
+      "parent": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+      "branch": "refs/heads/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "total_bytes": 3948624,
+      "files": [
+        {
+          "path": "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.pair.yaml",
+          "bytes": 54755,
+          "sha256": "12eb3b5f0060c1d95e05eb5eb0fa69893f810b7044431ef69c07f7e2597ffa3f",
+          "git_blob": "1823bbcf8bd10a479dacbdc1e99ec970b5d82b9f",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.pair",
+          "kind": "evaluation_pair",
+          "canonical_sha256": "fd644a8170296a028066ceb24b09a23185a7c1d02ba1b4ac409af78219483daf"
+        },
+        {
+          "path": "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.pair.yaml",
+          "bytes": 55401,
+          "sha256": "3eb3cd10ee8a45ef0a3274b77e138dbd4f4d79c548de8b7ebfb3313745aed842",
+          "git_blob": "450d3122e3b717e339444a6c34ac1c1ee68b7cae",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.pair",
+          "kind": "evaluation_pair",
+          "canonical_sha256": "12e876e468f8bf0b3b1b1f464ae0ac66c0af8d4e8840ad7cf74f3d55d6e62a8f"
+        },
+        {
+          "path": "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.pair.yaml",
+          "bytes": 55107,
+          "sha256": "a509bbbf0f2c4f90985a51e40a1b8199a0510e9f6a6156bd306a41c7d16646ac",
+          "git_blob": "972fd515a14a5900b49f1a62e6766232ffd6c5af",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.pair",
+          "kind": "evaluation_pair",
+          "canonical_sha256": "9852d087a9e56d0acf3be09f7b1a7e88c0cadfc119fb6f57f823108ca776bb0b"
+        },
+        {
+          "path": "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.pair.yaml",
+          "bytes": 55753,
+          "sha256": "90f3448cd3a9b5254d8b1f7f7794c144fec38ed0dd498e6c1953b0b5975c84d0",
+          "git_blob": "7e0eceda4cd43a7ffe9d764956a9b85b52386d16",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.pair",
+          "kind": "evaluation_pair",
+          "canonical_sha256": "569bf1ae801e188991dbc08ae854761c361fc23f5d94741bad8d9d48ba2ce5d8"
+        },
+        {
+          "path": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.yaml",
+          "bytes": 107475,
+          "sha256": "4c78b7c5b1329ca7996c93e367b516ff16033bf09eb61801473c9e3f51128182",
+          "git_blob": "3abfc5f73a192fb316c7eda955c249f7c8c695cf",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline",
+          "kind": "evaluation",
+          "canonical_sha256": "fa453cb602161401a295c1b8292e694c7aaa8cf2984617cf7d47591daedcfa88"
+        },
+        {
+          "path": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.candidate.yaml",
+          "bytes": 106451,
+          "sha256": "24eb71c8fb242c9d15e3b6e2545c35b95b11f28b3da1b7730c98cf3f1467f783",
+          "git_blob": "7ebf140fdcb60a18a881d995fcd8e1809a6cbcba",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.candidate",
+          "kind": "evaluation",
+          "canonical_sha256": "88532c25eb19e325cef847e9d9afe52bcd4f42219dfbd5e25b178ee41a75d0f8"
+        },
+        {
+          "path": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.yaml",
+          "bytes": 108895,
+          "sha256": "f35e38e6c43988efe954f8ac354b67858f8e14558917da64d869539d7d48c344",
+          "git_blob": "30836f371dd721d86b86483176a3838300a9c50e",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline",
+          "kind": "evaluation",
+          "canonical_sha256": "8f5c9d45921444466c77d4cc6673c268fb24c11a5b60d0c36748b50602dfa80b"
+        },
+        {
+          "path": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.candidate.yaml",
+          "bytes": 107871,
+          "sha256": "bad6a3b2d8378c3620c0962995455de4b99867e3be7f8f7fe052eeeecf33f724",
+          "git_blob": "4f46610a2bf4217063a5d9976548f494f273c6dc",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.candidate",
+          "kind": "evaluation",
+          "canonical_sha256": "e4a0d2c383456523cee5a255a18dff39a0454a4bcc9385b3007f8868db4fcd6c"
+        },
+        {
+          "path": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.yaml",
+          "bytes": 107993,
+          "sha256": "087d545ffd00676e676f510dfb1a637b0df9d41c7301e422c8e7131c94224299",
+          "git_blob": "eb5129b2d874a40d1513f23d5f44a6f4547f0912",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline",
+          "kind": "evaluation",
+          "canonical_sha256": "8caaadc91fba8b488270dc9ab98a3570feea1d66d4ce2c401b22eb57e7b32b25"
+        },
+        {
+          "path": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.candidate.yaml",
+          "bytes": 107107,
+          "sha256": "cb7e45bbfdf57f2dbaa828409d32ad02178a9a466113e7ef8405f78b8643907e",
+          "git_blob": "27fb2dd111fe0eabd3847d7ce3fbae713a49b2ec",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.candidate",
+          "kind": "evaluation",
+          "canonical_sha256": "3764f82050714d7882565c9dd3301f733ed5e4eb389aeb4b634f662254665e0b"
+        },
+        {
+          "path": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.yaml",
+          "bytes": 109417,
+          "sha256": "301c1993df61bc131a793b59bb35d7f72c4eeb7bdd348ef83e3728fe2c122216",
+          "git_blob": "085aa673c85c5e6380e3252155c3544760cf0ef9",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline",
+          "kind": "evaluation",
+          "canonical_sha256": "63d10ec6f4d2b7610d67d9f2c41e5ebe9042fdfbea78c3b0502eab781f5b0d29"
+        },
+        {
+          "path": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.candidate.yaml",
+          "bytes": 108520,
+          "sha256": "82ebcb84582ae4469bdc783f1a80b5b7da12135833102b4318e63eebaf01abed",
+          "git_blob": "f175b476eed6a485c34ff7cb30066634e304620c",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.candidate",
+          "kind": "evaluation",
+          "canonical_sha256": "c8f0b2e5183b7bac14a2b264fce42c0413fddf906e658786871eb0b532237544"
+        },
+        {
+          "path": "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.122d39652ae0c326.yaml",
+          "bytes": 548420,
+          "sha256": "6943853af5a3582de18415fa6973ce1e30ec08d0425fd73124d47e43b15b8438",
+          "git_blob": "bbd1ea4436730d34e8d7022f828c952310ed0cbb",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.122d39652ae0c326",
+          "kind": "profile_package",
+          "canonical_sha256": "f8edb6ff478d5beca2851bf68ad230f28c469535900179eeb811cdd22ad762cf",
+          "package_seal_valid": true
+        },
+        {
+          "path": "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.b8f33855cc6c657e.yaml",
+          "bytes": 549637,
+          "sha256": "3ee3dd06c99d7e15cfdbbe10707e7272057dbce509848eb545d6db7dc078e404",
+          "git_blob": "4ece901f40dc2068901ff0d445225c13cff24307",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.b8f33855cc6c657e",
+          "kind": "profile_package",
+          "canonical_sha256": "82ccbd1ae15803bbd42c0f6c68835137136f492bbf91cf0740b0d90a88e08911",
+          "package_seal_valid": true
+        },
+        {
+          "path": "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.f613a3b01a24e380.yaml",
+          "bytes": 460692,
+          "sha256": "3c13a37882ceef4573ee0159d6c59ca49d732d6090c1fe666a629ff53cd9ebac",
+          "git_blob": "4483b220349a3bcc2deec0c632b2fc680b037d7d",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.f613a3b01a24e380",
+          "kind": "profile_package",
+          "canonical_sha256": "70d36109f33e6a6d5c4603d678a44595ff9faf6ad2096f1bb8fe36526f8f101b",
+          "package_seal_valid": true
+        },
+        {
+          "path": "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.ffd9925db46a63a9.yaml",
+          "bytes": 461913,
+          "sha256": "1a2da609cf452715267352c14f51b2962535f839e5c3d4243b1f03e2324d659d",
+          "git_blob": "474420d56b0d7bc887c69ba3eefbff6bd88b8f3e",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.ffd9925db46a63a9",
+          "kind": "profile_package",
+          "canonical_sha256": "258f36bd93862b7821dbdae30c1d69a25399e78d68720da9b38484facb55c48e",
+          "package_seal_valid": true
+        },
+        {
+          "path": "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.profile.yaml",
+          "bytes": 127803,
+          "sha256": "dae3094d5e64725c614976a5925512048e90bdd96ed397bd99105b5325d2d375",
+          "git_blob": "31704c70ad7552be63176a96344a3659b881acf5",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.profile",
+          "kind": "region_profile",
+          "canonical_sha256": "b5c8e020705d7059447b294e36c24710c82ece88c0dbcde9d547c645e1021970"
+        },
+        {
+          "path": "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.profile.yaml",
+          "bytes": 128192,
+          "sha256": "c5783b3687f787ec0767d07f0ebdb4d081d805bb2a13bd4a5359b6d7f4306eb5",
+          "git_blob": "c7d9e8dda5a3c1a25d8a6bd9685f9f3cb26ecae4",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.profile",
+          "kind": "region_profile",
+          "canonical_sha256": "9e2805bd814cc3b1a2b7de15872e0fd585978df5037a35e7b5b5cb0e77708ecc"
+        },
+        {
+          "path": "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.profile.yaml",
+          "bytes": 94582,
+          "sha256": "400fe04f9b0bcf9e60855d14cc7ff1abe9ce582e8cec96ba5835b01d60791c0c",
+          "git_blob": "82d894ed1fafce8f08974eaf811fbf90166250c6",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.profile",
+          "kind": "region_profile",
+          "canonical_sha256": "278f72efaf32c2f9b8b20410148291b21e0e287f8bf7722dca0dfbdba77cb7ac"
+        },
+        {
+          "path": "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.profile.yaml",
+          "bytes": 94968,
+          "sha256": "6f30ad6d7126ca806a87880a16dbff0941b7d4b6d00d9187eccb89925b2ec5d7",
+          "git_blob": "e9e899308de22797df41ac2c05f5e7d8d59b2a6a",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.profile",
+          "kind": "region_profile",
+          "canonical_sha256": "6c1f6fec568fd0d8dab4cdae71f3816027982b70632a258ca811be9d2ffceb53"
+        },
+        {
+          "path": "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.source.yaml",
+          "bytes": 135142,
+          "sha256": "cc481e4a0cfef3eaa4b38c9198e1a5202e25531f019b41c06680ba6b6aa97c87",
+          "git_blob": "0b5dcc1dae183477b07f4467270d937539d9b52f",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.source",
+          "kind": "source_snapshot",
+          "canonical_sha256": "780d2791fa3e7626e2aadbdd345a7f46e3e02f08e380356b5ff52c5d22f35539"
+        },
+        {
+          "path": "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.source.yaml",
+          "bytes": 135104,
+          "sha256": "24f2adb672bcc9f480acfb6db507cbd0f5bfa8783b608f5cf3da85bee67cc4e1",
+          "git_blob": "bd87c437b103bafb75f2659e6707b301a2d9ff92",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.source",
+          "kind": "source_snapshot",
+          "canonical_sha256": "25433cdd6a01b6d05ce47c9cf713b571da5bd70382a6071c73622004ec79348d"
+        },
+        {
+          "path": "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.source.yaml",
+          "bytes": 63731,
+          "sha256": "90e5b3c42df78cffefbaa85eed295392ac78eac934cbad52732138a106f94d91",
+          "git_blob": "3ef80255605897123b7da23f018eed7a78b0f360",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.source",
+          "kind": "source_snapshot",
+          "canonical_sha256": "669f78d26815604cb09c2fb28c131e5b5cfae877994e91e15ac00870f9526bde"
+        },
+        {
+          "path": "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.source.yaml",
+          "bytes": 63695,
+          "sha256": "ad84dd36a53961eafbfab2f6b3e62188c3911f2796d79a4d389177dc2f979d7b",
+          "git_blob": "31ec27f37af118bf17041e68ea081c27466fc973",
+          "mode": "100644",
+          "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.source",
+          "kind": "source_snapshot",
+          "canonical_sha256": "c1cb8287d38cb58cedc0de023ecafe31ff303e08b445ef4df2fcaa0b534ff336"
+        }
+      ]
+    }
+  ],
+  "host_checkouts": [
+    {
+      "path": "/data1/yanruj/EvolveSWDB_provider_20260926_a1",
+      "head": "5f1b8028619976b36df5fa24b8aacb91bf488168",
+      "branch": "codex/bfs-provider-evidence-20260926-a1",
+      "status_before_and_after": "?? records/evaluations/bfs-t17-build-only-20260926-a1.yaml",
+      "unchanged": true
+    },
+    {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a1",
+      "head": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+      "branch": "HEAD",
+      "status_before_and_after": "",
+      "unchanged": true
+    }
+  ],
+  "push_and_remote_verification": [
+    {
+      "kind": "push",
+      "name": "provider",
+      "commit": "5f1b8028619976b36df5fa24b8aacb91bf488168",
+      "branch": "refs/heads/codex/bfs-provider-evidence-20260926-a1",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "remote: \nremote: Create a pull request for 'codex/bfs-provider-evidence-20260926-a1' on GitHub by visiting:        \nremote:      https://github.com/ruchou/EvolveSWDB/pull/new/codex/bfs-provider-evidence-20260926-a1        \nremote: \nTo github.com:ruchou/EvolveSWDB.git\n * [new branch]      5f1b8028619976b36df5fa24b8aacb91bf488168 -> codex/bfs-provider-evidence-20260926-a1\n"
+    },
+    {
+      "kind": "verified",
+      "name": "provider",
+      "commit": "5f1b8028619976b36df5fa24b8aacb91bf488168",
+      "branch": "refs/heads/codex/bfs-provider-evidence-20260926-a1",
+      "remote": "5f1b8028619976b36df5fa24b8aacb91bf488168\trefs/heads/codex/bfs-provider-evidence-20260926-a1",
+      "checkout_unchanged": true,
+      "finished": "2026-09-26T23:16:11.938924-04:00"
+    },
+    {
+      "kind": "push",
+      "name": "native",
+      "commit": "c6f16004acf8d12cef96dd7e3220405cdc209390",
+      "branch": "refs/heads/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "remote: \nremote: Create a pull request for 'codex/bfs-native-one-thread-evidence-20260926-a1' on GitHub by visiting:        \nremote:      https://github.com/ruchou/EvolveSWDB/pull/new/codex/bfs-native-one-thread-evidence-20260926-a1        \nremote: \nTo github.com:ruchou/EvolveSWDB.git\n * [new branch]      c6f16004acf8d12cef96dd7e3220405cdc209390 -> codex/bfs-native-one-thread-evidence-20260926-a1\n"
+    },
+    {
+      "kind": "verified",
+      "name": "native",
+      "commit": "c6f16004acf8d12cef96dd7e3220405cdc209390",
+      "branch": "refs/heads/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "remote": "c6f16004acf8d12cef96dd7e3220405cdc209390\trefs/heads/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "checkout_unchanged": true,
+      "finished": "2026-09-26T23:16:14.597995-04:00"
+    }
+  ],
+  "local_validation": {
+    "root_head": "aa438774a0ff5757e5ce318b33cf49efc43bfc46",
+    "base_record_count": 218,
+    "incoming_records": 29,
+    "combined_record_count": 247,
+    "problems": [],
+    "actual_post_import_cli": {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m swdb validate --records records",
+      "exit_code": 0,
+      "result": "OK: 247 record(s) valid",
+      "log": {
+        "path": "/private/tmp/bfs-approved-evidence-import-catalog-20260926.log",
+        "bytes": 24,
+        "sha256": "b56f6687e2a623cd0176aa4e97fe2806b6ed65cb7df57ca486dc5727d276d7a9"
+      }
+    }
+  },
+  "integration": {
+    "method": "exact fetched Git blobs only; no whole-history merge",
+    "conflicting_paths": [],
+    "conflicting_ids": [],
+    "all_package_seals_verified": true,
+    "old_records_rewritten": false
+  },
+  "evidence_boundaries": {
+    "provider": "Original successful candidates and unresolved annotated attempt retained without rerun or relabeling.",
+    "native": "Completed collection only; standalone readback failures retained separately. Full raw readback, shared gates, freeze, and profitability qualification remain pending.",
+    "host": "No HEAD, index, jobs, leases, measurement settings or raw artifacts altered."
+  },
+  "verification_artifacts": [
+    {
+      "path": "/private/tmp/bfs-approved-evidence-host-verification-20260926.json",
+      "bytes": 19033,
+      "sha256": "0d3a64f9ee7fce1e9311a0d83b537a97ee4de5b60d3e41d4e006afbf358883b7"
+    },
+    {
+      "path": "/private/tmp/bfs-approved-evidence-push-20260926.jsonl",
+      "bytes": 2487,
+      "sha256": "f05cb24b6451a133d668925e523bd5eeb1b9c41d6aa77dff7774000f68e97e53"
+    },
+    {
+      "path": "/private/tmp/bfs-approved-evidence-local-preflight-20260926.json",
+      "bytes": 18120,
+      "sha256": "b4da43536cd90d2a3613e47502ed2b4a64e3c9f16c98df1748f9593a6c148643"
+    }
+  ],
+  "prior_native_readbacks_preserved": [
+    {
+      "id": "bfs-native-paired-review-20260926-a1",
+      "state": "timed_out",
+      "qualification": false,
+      "evidence": {
+        "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/native-paired-terminal-20260926.json",
+        "bytes": 8566,
+        "sha256": "5939f5daf5a528d1930d2a9bc044e3a7cf30950229714fcd78ab51ca63ed865b"
+      }
+    },
+    {
+      "id": "bfs-native-one-thread-readback-20260926-a1",
+      "state": "failed_before_validation",
+      "reason": "Generated child passed str to Store, which requires Path; no completed qualification.",
+      "evidence": {
+        "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/native-readback-failure-20260926.json",
+        "bytes": 2752,
+        "sha256": "d009bff4742e998ea62837a89787e2c325f9228dfb114e74f0bcc00f5987aaa5"
+      }
+    },
+    {
+      "id": "bfs-native-one-thread-readback-20260926-a2",
+      "state": "failed_before_pinned_reader",
+      "reason": "Pristine runtime admission rejected .pytest_cache; no pinned reader started.",
+      "evidence": {
+        "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/native-readback-a2-failure-20260926.json",
+        "bytes": 12220,
+        "sha256": "1c349eca1adbd716d72c6f90d4cdd394843827826238ef97f827f3ff298cf050"
+      }
+    }
+  ]
+}

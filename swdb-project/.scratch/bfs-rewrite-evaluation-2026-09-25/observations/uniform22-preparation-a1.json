@@ -1,0 +1,122 @@
+{
+  "format": "swdb.bfs.workload_preparation_observation.v1",
+  "created": "2026-09-25",
+  "observed": "2026-09-26T02:59:51.222888+00:00",
+  "state": "complete",
+  "workload": "bfs-20260925-uniform22.f23b09bb0c0601b5",
+  "record": {
+    "path": "records/workloads/bfs-20260925-uniform22.f23b09bb0c0601b5.yaml",
+    "sha256": "e9273fb3215ff3f7d73c2b247cf9132a6e3954986817c279eec09eb7c419490b"
+  },
+  "repository_commit": "bdd2046dce829f9d4352dd2108c686f50047bfcf",
+  "source_selection": "pinned_artifact_SourcePicker_first_nonzero_degree",
+  "sources": [
+    2796003
+  ],
+  "selected_source_degree": 40,
+  "realized": {
+    "num_vertices": 4194304,
+    "num_directed_edges": 134217158,
+    "directed": false,
+    "isolated_vertices": 0,
+    "minimum_out_degree": 8,
+    "maximum_out_degree": 62
+  },
+  "canonical_sha256": "b4fb93dcda22c988de996781c6d0adf070e821796e84f469a38cb3a206f109b4",
+  "bounds": {
+    "compile_s": 180,
+    "generate_s": 900,
+    "register_s": 2400,
+    "address_space_gib": 48,
+    "threads": 4,
+    "outer_s": 3600,
+    "cleanup_reserve_s": 30
+  },
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "bash",
+        "-c",
+        "cd /data1/yanruj/EvolveSWDB_dx100_20260925_a1 && exec timeout --signal=TERM --kill-after=30s 3600s python3 scripts/bfs_generate_workload.py --id bfs-20260925-uniform22 --family uniform_random --scale 22 --artifact-default-source --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925 --build-dir /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20260925 --records /data1/yanruj/EvolveSWDB_dx100_20260925_a1/records --lane mbit10-evaluation-node0"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-09-26T02:57:32Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "bfs-20260925-uniform22",
+      "lease_generation": 270,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 16.14,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-09-26T02:55:42Z"
+    }
+  },
+  "raw_receipts": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22/graph-dx100.sg",
+      "sha256": "79da7fa78a5c873e28eb0794c4b262499d643efaedbfe0375ea1f8a55ae2ddd0",
+      "bytes": 553645861,
+      "format": "gapbs_sg32le"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22/graph-upstream.sg",
+      "sha256": "b09dda19dc160e30da395d8f30e08788e2ef99cd3f74fb6bcadb47faafd23121",
+      "bytes": 570423089,
+      "format": "gapbs_sg64le"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22/driver.json",
+      "sha256": "76c0ccc1f67aea4e44a849b36c1c7a95de0336640d71c5f6392daa9e430dc4c7",
+      "bytes": 4340
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22/register.json",
+      "sha256": "56dcc3fe6f55014b5c83383912624dd8b4671bd94436289684a8ac8a0710c69f",
+      "bytes": 1858
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22/register.stdout",
+      "sha256": "c841250574825857caf98e7c7cd607b89cb4dc56391edf0b33c94e8db5f8cbec",
+      "bytes": 3982
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22/pick-source.stdout",
+      "sha256": "fc9c69dc483644bfff0816b7dc3d4e2a9199eb3063d4fe32a0beefa71222402a",
+      "bytes": 49
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22.dispatch-a1/host-observation.json",
+      "sha256": "e5120f39880bfd5172851259ea72ef02b350f8cd2127fc754f03332ec90db378",
+      "bytes": 10889
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22.dispatch-a1/lane.json",
+      "sha256": "da865dd974582cc5ee571d6b7ea56d248fee5e3c0555a5e9851955ec4301af06",
+      "bytes": 1101
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22.dispatch-a1/driver.log",
+      "sha256": "287f7dd4138d4d83b56607fb03409f581595479a48893ce8d08099cfde6bc849",
+      "bytes": 6859
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22.dispatch-a1/exit-code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/smoke-a6-dispatch2-capacity-preclaim.json",
+      "sha256": "b53747a4f734c7441b22e77fd22cce85ae370c29125e5ae99de18bbbfaf86c53",
+      "bytes": 47488
+    }
+  ],
+  "guest_execution": false,
+  "gain_claim": false,
+  "audit": "Both SG bytes, all preparation stage stdout/stderr and the actual pinned SourcePicker output were rehashed on mbit10; source degree independently read from the selected SG32 CSR offsets. No graph regenerated."
+}

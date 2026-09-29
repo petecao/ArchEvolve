@@ -1,0 +1,7 @@
+name: memory_limits
+description: Which property of memory limits a memory-bound kernel.
+values:
+  - value: bandwidth
+    meaning: The memory system is saturated; adding threads stops helping well before one per core.
+  - value: latency
+    meaning: Individual misses dominate; time keeps falling with more threads (more requests in flight).

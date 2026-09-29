@@ -1,0 +1,82 @@
+name: metrics
+description: Metric names a profile may record, each with its one unit; counter metrics are added here later as new names.
+fields: [unit]
+values:
+  - value: time_per_trial_median
+    unit: s
+    meaning: Median over trials of the benchmark's own per-trial timer, at the metric's thread count.
+  - value: time_per_trial_min
+    unit: s
+    meaning: Fastest trial by the benchmark's own timer, at the metric's thread count.
+  - value: time_per_trial_max
+    unit: s
+    meaning: Slowest trial by the benchmark's own timer, at the metric's thread count.
+  - value: time_per_trial_spread
+    unit: ratio
+    meaning: (max - min) / median of the trial times at the metric's thread count.
+  - value: speedup
+    unit: ratio
+    meaning: Median 1-thread time divided by median time at the metric's thread count.
+  - value: parallel_efficiency
+    unit: ratio
+    meaning: Speedup divided by the metric's thread count (1.0 = perfect scaling).
+  - value: footprint_bytes
+    unit: B
+    meaning: Element size times element count of one array (named in the metric's array field), evaluated on the input.
+  - value: total_footprint_bytes
+    unit: B
+    meaning: Sum of footprint_bytes over the distinct arrays of the implementation's access patterns.
+  - value: footprint_llc_ratio
+    unit: ratio
+    meaning: total_footprint_bytes divided by the last-level cache size of one socket.
+  - value: index_stream_length
+    unit: count
+    meaning: Number of index reads in one sweep of the index stream the extractor walked.
+  - value: duplicate_ratio
+    unit: ratio
+    meaning: (index reads - distinct indices) / index reads, over one sweep in visit order.
+  - value: sequential_fraction
+    unit: ratio
+    meaning: Fraction of consecutive index reads where the next index is the previous plus one.
+  - value: same_line_fraction
+    unit: ratio
+    meaning: Fraction of consecutive index reads that fall in the same 64-byte line of the target array.
+  - value: reuse_distance_histogram
+    unit: count
+    meaning: Index reads per log2 bucket of reuse distance (distinct indices between two reads of one index); value is a list of buckets plus cold reads.
+  - value: line_reuse_distance_histogram
+    unit: count
+    meaning: As reuse_distance_histogram, over 64-byte lines of the target array instead of indices.
+  - value: degree_skew
+    unit: ratio
+    meaning: Gini coefficient of the degrees the ranged step walks (0 = all equal, toward 1 = concentrated on few vertices).
+  - value: degree_cv
+    unit: ratio
+    meaning: Population standard deviation over mean of the degrees the ranged step walks.
+  - value: max_degree
+    unit: count
+    meaning: Largest degree the ranged step walks.
+  - value: mean_degree
+    unit: edges_per_vertex
+    meaning: Mean degree the ranged step walks.
+  - value: sim_instructions
+    unit: count
+    meaning: Instructions executed, counted by cachegrind (metric scope says kernel-only or whole run).
+  - value: sim_data_refs
+    unit: count
+    meaning: Data reads plus writes, counted by cachegrind.
+  - value: sim_d1_misses
+    unit: count
+    meaning: First-level data cache read plus write misses simulated by cachegrind.
+  - value: sim_ll_misses
+    unit: count
+    meaning: Last-level cache data read plus write misses simulated by cachegrind.
+  - value: sim_d1_miss_rate
+    unit: ratio
+    meaning: sim_d1_misses / sim_data_refs.
+  - value: sim_ll_miss_rate
+    unit: ratio
+    meaning: sim_ll_misses / sim_data_refs.
+  - value: host_load_1min
+    unit: load
+    meaning: The host's 1-minute load average when the run started (other users share the host).

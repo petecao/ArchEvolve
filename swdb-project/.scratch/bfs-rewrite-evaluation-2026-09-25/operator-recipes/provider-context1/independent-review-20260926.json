@@ -1,0 +1,90 @@
+{
+  "kind": "independent_scoped_review",
+  "observed_at": "2026-09-26T23:48:28.812559-04:00",
+  "scope": "T20 exact one-call Git-carried operator recipe; no host/provider execution",
+  "state": "no_remaining_scoped_finding",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/bfs-provider-context1-20260926.py",
+      "bytes": 24985,
+      "sha256": "db8206aab19da03ac68b9e90076fa651d7349e276b1ec919302bf376fe83319d"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/bfs-provider-context1-launch-20260926.sh",
+      "bytes": 2740,
+      "sha256": "2b423dd61e73cfe143f75ea89f9ddf2923b680123c47670fd04878720b9aceca"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/bfs-provider-context1-runtime-20260926.json",
+      "bytes": 56767,
+      "sha256": "83415cf174cb2790b8a4d17b3030d5c09fd90394d49695b90ad054dd04552549"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/test_bfs_provider_context_recipe_20260926.py",
+      "bytes": 9007,
+      "sha256": "127419b0b2611a35271d7baaeb3652dedfb7f887b53079cde30fa3726e88cced"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/bfs-provider-context1-preflight-20260926.md",
+      "bytes": 8574,
+      "sha256": "874ee51ff38a541ac2637c8d5606924a5b5c1af0c2954ebd6f5a02af791ce2e9"
+    }
+  ],
+  "runtime_manifest_verification": {
+    "commit": "0dc0d4fecfe2903ff0cc1ba9e6b738a8f5c1a4f1",
+    "files": 372,
+    "bytes": 3813205,
+    "all_blobs_equal": true
+  },
+  "validation": {
+    "recipe_contract": "23 passed in 0.48s",
+    "original_untracked_import_probe": "1 passed; adapted only fixture import path to final repo copy",
+    "wrapper": "bash -n plus real isolated full clock bodies/literal argv and real import without bytecode; Linux procfs fixture injected only"
+  },
+  "logs": [
+    {
+      "path": "/private/tmp/bfs-provider-final-standards-v3-20260926.log",
+      "bytes": 99,
+      "sha256": "a83fe8a6d62c6c879256796cce0c017dfdbd5c223c36f403b61dcb1a4ff768e6"
+    },
+    {
+      "path": "/private/tmp/bfs-provider-original-guard-final-recheck-20260926.log",
+      "bytes": 98,
+      "sha256": "c91dad03511eb111dba9f317cdb7962c64ec389c7d259de488e167c78aac1b31"
+    }
+  ],
+  "closed_findings": [
+    "Untracked/ignored runtime import shadow rejected before checkout imports by stdlib full inventory guard",
+    "Both clock here-doc commands use stdin dash after isolated flags",
+    "Outer pane BASHPID captured before process substitution",
+    "Explicit -B prevents isolated Python from ignoring bytecode-control environment"
+  ],
+  "unchanged_contract": {
+    "outer_seconds": 750,
+    "work_seconds": 720,
+    "shared_cleanup_seconds": 30,
+    "one_public_submit_seconds": 660,
+    "provider_per_call_seconds": 600,
+    "remaining_provider_seconds": 1737,
+    "prior_provider_seconds": 62.419636563397944,
+    "provider_repairs_in_this_job": 0,
+    "rss_bytes": 17179869184,
+    "retained_bytes": 1073741824
+  },
+  "budget_failure_boundary": "Initial provider.json is written before provider Popen; existing incomplete receipt retains unknown debit/no retry. No absent timing is treated as available balance.",
+  "remaining_operational_prerequisites": [
+    "Fresh actual final-runtime Linux proof envelope and byte equality to provider0dc lifecycle/RSS/storage dependencies; different proof commit retained",
+    "Fresh host lane/capacity/helper admission before original clock",
+    "Independent post-helper actual PID/start union/lease/ledger closure and final read-only storage recount"
+  ],
+  "limitations": [
+    "Local fixture tests are not Linux/provider execution evidence",
+    "Reviewer did not run provider, host jobs, or mutate production/host source",
+    "Source-bearing payload remains exact authorized prepared request; no correctness/gain claim"
+  ],
+  "prior_failures_retained": [
+    "/private/tmp/bfs-provider-recipe-runtime-spec-red-20260926.log",
+    "/private/tmp/bfs-provider-wrapper-stdin-standards-red-20260926.json",
+    "/private/tmp/bfs-provider-wrapper-bytecode-red-20260926.log"
+  ]
+}

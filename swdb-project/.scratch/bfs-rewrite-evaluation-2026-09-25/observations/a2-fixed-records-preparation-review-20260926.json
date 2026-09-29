@@ -1,0 +1,81 @@
+{
+  "created": "2026-09-26T19:06:29.998298-04:00",
+  "state": "metadata-only preparation correction is consistent with the exact existing runtime/proof contract",
+  "audit": {
+    "path": "/private/tmp/bfs-a2-fixed-records-git-audit-20260926.json",
+    "bytes": 7015,
+    "sha256": "ea898b354533c4dd547a8b296cbd1ff9d9c1fd49e60ef9651f1d5a1d3c106cab"
+  },
+  "tested_commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+  "donor_commit": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+  "plan_canonical_sha256": "d78c09751d9b56abddcce0a7217983fc1652ef6dc83c09fc55ecf8a9a4d4be5a",
+  "missing_exact_records": [
+    {
+      "commit": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+      "id": "bfs-dx100-coverage-20260926-a1.compile",
+      "path": "records/evaluations/bfs-dx100-coverage-20260926-a1.compile.yaml",
+      "state": "exact",
+      "canonical_sha256": "523ec04e019f3ae12ebd2d352b8c2ad6ee28a728322fbdb0dc82d670560dd059",
+      "file_sha256": "01f5339ad5dc2c0d60c037bbae22b62991c53951273059f198881959523fab77",
+      "bytes": 17403
+    },
+    {
+      "commit": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+      "id": "bfs-dx100-coverage-20260926-a1.execute",
+      "path": "records/evaluations/bfs-dx100-coverage-20260926-a1.execute.yaml",
+      "state": "exact",
+      "canonical_sha256": "f64b604d10bf579c832145b07d6b6cee39d81833d23711375a6625f59fbc57f9",
+      "file_sha256": "dfa28a3bbe8170fe2e3dff6b140a41b4bfc7873c3e903fc39d73cc258acac26e",
+      "bytes": 23179
+    },
+    {
+      "commit": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+      "id": "bfs-dx100-coverage-20260926-a1.workload.241d37f1ee522c01",
+      "path": "records/workloads/bfs-dx100-coverage-20260926-a1.workload.241d37f1ee522c01.yaml",
+      "state": "exact",
+      "canonical_sha256": "05c3161d87de0959a8d87eb255ed1117b50861c287abcd61fdde2c8112946f9a",
+      "file_sha256": "c2571d550ae73d64db2341cf0a08969c81b59d2b73d12450e1a08e4c111405dd",
+      "bytes": 1848
+    }
+  ],
+  "total_bytes": 42430,
+  "facts": [
+    "Six of nine fixed records exist at tested5a0 and match canonical digests. Three coverage-a1 records are absent, not altered.",
+    "All nine donor3f38 records match plan pins. Git records-only diff contains precisely the three additions.",
+    "A2 runtime_identity delegates to native runtime directories then adds tests, project_config and exact plans. No records file or records subtree is part of this runtime identity.",
+    "A2 validate_admission separately requires artifacts.digest(Store.get(id)) to equal each of nine fixed plan digests.",
+    "Existing tests/runtime proofs therefore remain applicable only if their full existing runtime equality remains unchanged after materialization."
+  ],
+  "source_pointers": [
+    {
+      "path": "scripts/bfs_native_one_thread_pilot.py",
+      "commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+      "lines": [
+        39,
+        76,
+        89
+      ]
+    },
+    {
+      "path": "scripts/bfs_dx100_coverage_a2.py",
+      "commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+      "lines": [
+        54,
+        69,
+        197,
+        211
+      ]
+    }
+  ],
+  "allowed_preparation_shape": "Materialize the exact three already-published donor Git blobs into existing records/evaluations and records/workloads, without HEAD/index/code/test/plan changes, overwriting nothing. Reopen every byte hash, all nine canonical digests, Store/catalog, exact runtime/proofs and full admission before any launch. Preserve original failed precheck.",
+  "not_performed": [
+    "No host call or file materialization by reviewer",
+    "No Git metadata mutation",
+    "No measurement, reader, auditor, or fixture invocation"
+  ],
+  "limits": [
+    "Only prelaunch metadata admission was attempted; actual A2 attempt remains unused as reported by Host.",
+    "Any later failed runtime/proof/record/admission check must block launch; this conclusion cannot override a failed validator.",
+    "Same A2 run identity/window/latest21:00/original3600/no retry remains unchanged."
+  ]
+}

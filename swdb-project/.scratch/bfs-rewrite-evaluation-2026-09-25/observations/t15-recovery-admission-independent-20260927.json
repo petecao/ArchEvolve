@@ -1,0 +1,26 @@
+{
+  "observed_at": "2026-09-27T00:58:14.631315-04:00",
+  "state": "actual_t15_admission_independently_verified",
+  "admission": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-supervision-recovery-simulator-batch-20260926-a1.dispatch/admission.json",
+    "sha256": "3d723561db50c6ee8e595bd0931b37c9de7a109ed6eede81245bcea62b12875a"
+  },
+  "execution_commit": "6a493a0d489d8d1c76eba8c3431538d6412fd45a",
+  "proof_commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+  "canonical_python": {
+    "path": "/usr/bin/python3.12",
+    "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+  },
+  "clock": {
+    "not_before": "2026-09-27T00:54:54.327820-04:00",
+    "latest_start": "2026-09-27T03:13:39.851819-04:00",
+    "absolute_end": "2026-09-27T09:14:09.851819-04:00"
+  },
+  "nominal_remaining_seconds": 39603,
+  "remaining_storage_bytes": null,
+  "all_prerequisites_inputs_sources_builds_and_proofs_verified": true,
+  "runtime_clean": true,
+  "no_launch_yet": true,
+  "mutations": false,
+  "limitation": "Launch still needs current free lane/capacity/helper checks"
+}

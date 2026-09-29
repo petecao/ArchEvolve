@@ -1,0 +1,1227 @@
+kind: implementation
+schema_version: '0.2'
+id: gapbs-cc-afforest
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: src-gapbs-cc
+  kind: source_code
+  description: gapbs src/cc.cc lines 40-151 (Link, Compress, SampleFrequentElement, Afforest) and 220-229
+    (main), src/graph.h (CSRGraph, Neighborhood start offset), src/pvector.h, src/platform_atomics.h (compare_and_swap)
+    and src/benchmark.h (NodeID) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8, read 2026-09-22.
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/cc.cc#L40-L151
+name: gapbs Connected Components, Afforest (subgraph sampling with Link/Compress)
+kernel: gapbs-cc
+function: Afforest
+origin:
+  kind: application_source
+  description: The connected-components implementation gapbs builds as its cc binary (src/cc.cc).
+  derived_from: null
+code:
+- root: application
+  path: src/cc.cc
+  lines: [95, 151]
+  excerpt: |-
+    pvector<NodeID> Afforest(const Graph &g, bool logging_enabled = false,
+                             int32_t neighbor_rounds = 2) {
+      pvector<NodeID> comp(g.num_nodes());
+
+      // Initialize each node to a single-node self-pointing tree
+      #pragma omp parallel for
+      for (NodeID n = 0; n < g.num_nodes(); n++)
+        comp[n] = n;
+
+      // Process a sparse sampled subgraph first for approximating components.
+      // Sample by processing a fixed number of neighbors for each node (see paper)
+      for (int r = 0; r < neighbor_rounds; ++r) {
+      #pragma omp parallel for schedule(dynamic,16384)
+        for (NodeID u = 0; u < g.num_nodes(); u++) {
+          for (NodeID v : g.out_neigh(u, r)) {
+            // Link at most one time if neighbor available at offset r
+            Link(u, v, comp);
+            break;
+          }
+        }
+        Compress(g, comp);
+      }
+
+      // Sample 'comp' to find the most frequent element -- due to prior
+      // compression, this value represents the largest intermediate component
+      NodeID c = SampleFrequentElement(comp, logging_enabled);
+
+      // Final 'link' phase over remaining edges (excluding the largest component)
+      if (!g.directed()) {
+        #pragma omp parallel for schedule(dynamic, 16384)
+        for (NodeID u = 0; u < g.num_nodes(); u++) {
+          // Skip processing nodes in the largest component
+          if (comp[u] == c)
+            continue;
+          // Skip over part of neighborhood (determined by neighbor_rounds)
+          for (NodeID v : g.out_neigh(u, neighbor_rounds)) {
+            Link(u, v, comp);
+          }
+        }
+      } else {
+        #pragma omp parallel for schedule(dynamic, 16384)
+        for (NodeID u = 0; u < g.num_nodes(); u++) {
+          if (comp[u] == c)
+            continue;
+          for (NodeID v : g.out_neigh(u, neighbor_rounds)) {
+            Link(u, v, comp);
+          }
+          // To support directed graphs, process reverse graph completely
+          for (NodeID v : g.in_neigh(u)) {
+            Link(u, v, comp);
+          }
+        }
+      }
+      // Finally, 'compress' for final convergence
+      Compress(g, comp);
+      return comp;
+    }
+  sha256: null
+- root: application
+  path: src/cc.cc
+  lines: [41, 55]
+  excerpt: |-
+    void Link(NodeID u, NodeID v, pvector<NodeID>& comp) {
+      NodeID p1 = comp[u];
+      NodeID p2 = comp[v];
+      while (p1 != p2) {
+        NodeID high = p1 > p2 ? p1 : p2;
+        NodeID low = p1 + (p2 - high);
+        NodeID p_high = comp[high];
+        // Was already 'low' or succeeded in writing 'low'
+        if ((p_high == low) ||
+            (p_high == high && compare_and_swap(comp[high], high, low)))
+          break;
+        p1 = comp[comp[high]];
+        p2 = comp[low];
+      }
+    }
+  sha256: null
+- root: application
+  path: src/cc.cc
+  lines: [59, 66]
+  excerpt: |-
+    void Compress(const Graph &g, pvector<NodeID>& comp) {
+      #pragma omp parallel for schedule(dynamic, 16384)
+      for (NodeID n = 0; n < g.num_nodes(); n++) {
+        while (comp[n] != comp[comp[n]]) {
+          comp[n] = comp[comp[n]];
+        }
+      }
+    }
+  sha256: null
+- root: application
+  path: src/cc.cc
+  lines: [69, 92]
+  excerpt: |-
+    NodeID SampleFrequentElement(const pvector<NodeID>& comp,
+                                 bool logging_enabled = false,
+                                 int64_t num_samples = 1024) {
+      std::unordered_map<NodeID, int> sample_counts(32);
+      using kvp_type = std::unordered_map<NodeID, int>::value_type;
+      // Sample elements from 'comp'
+      std::mt19937 gen;
+      std::uniform_int_distribution<NodeID> distribution(0, comp.size() - 1);
+      for (NodeID i = 0; i < num_samples; i++) {
+        NodeID n = distribution(gen);
+        sample_counts[comp[n]]++;
+      }
+      // Find most frequent element in samples (estimate of most frequent overall)
+      auto most_frequent = std::max_element(
+        sample_counts.begin(), sample_counts.end(),
+        [](const kvp_type& a, const kvp_type& b) { return a.second < b.second; });
+      float frac_of_graph = static_cast<float>(most_frequent->second) / num_samples;
+      if (logging_enabled)
+        std::cout
+          << "Skipping largest intermediate component (ID: " << most_frequent->first
+          << ", approx. " << static_cast<int>(frac_of_graph * 100)
+          << "% of the graph)" << std::endl;
+      return most_frequent->first;
+    }
+  sha256: null
+build:
+  compiler: g++
+  flags: -std=c++11 -O3 -Wall -fopenmp
+  command: '{cxx} {flags} {source} -o {binary}'
+run:
+  command: '{binary} {input_args} -n {trials}'
+  timer: gapbs_trial_time
+  threads_env: OMP_NUM_THREADS
+  sweep_log_flag: null
+  kernel_symbols: [Afforest, Link, Compress, SampleFrequentElement]
+  index_stream: null
+loops:
+- id: init
+  description: Initialize comp[n] = n for all vertices
+  parent: null
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-cc]
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/cc.cc
+    lines: [100, 102]
+    excerpt: |2-
+        #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+          comp[n] = n;
+    sha256: null
+- id: rounds
+  description: 'Neighbor-sampling rounds r = 0 .. neighbor_rounds-1: link each vertex to its r-th neighbor,
+    then Compress'
+  parent: null
+  trip_count:
+    value: 2
+    formula: null
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-cc]
+    note: neighbor_rounds defaults to 2 (line 96); main calls Afforest(gr, cli.logging_en()) without it
+      (line 226), so it is always 2.
+  parallel:
+    construct: serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/cc.cc
+    lines: [106, 116]
+    excerpt: |2-
+        for (int r = 0; r < neighbor_rounds; ++r) {
+        #pragma omp parallel for schedule(dynamic,16384)
+          for (NodeID u = 0; u < g.num_nodes(); u++) {
+            for (NodeID v : g.out_neigh(u, r)) {
+              // Link at most one time if neighbor available at offset r
+              Link(u, v, comp);
+              break;
+            }
+          }
+          Compress(g, comp);
+        }
+    sha256: null
+- id: sample-vertex
+  description: 'For u over all vertices: Link u with the neighbor at offset r, if any'
+  parent: rounds
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_sweep
+    basis: code_reading
+    evidence_refs: [src-gapbs-cc]
+    note: One sweep is one sampling round.
+  parallel:
+    construct: omp_parallel_for
+    schedule: dynamic, 16384
+    reduction: null
+  code:
+    root: application
+    path: src/cc.cc
+    lines: [107, 114]
+    excerpt: |2-
+        #pragma omp parallel for schedule(dynamic,16384)
+          for (NodeID u = 0; u < g.num_nodes(); u++) {
+            for (NodeID v : g.out_neigh(u, r)) {
+              // Link at most one time if neighbor available at offset r
+              Link(u, v, comp);
+              break;
+            }
+          }
+    sha256: null
+- id: sample-edge
+  description: 'For v in g.out_neigh(u, r): Link(u, v) once, then break'
+  parent: sample-vertex
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-cc]
+    note: One Link per vertex whose out-degree exceeds r (the Neighborhood starts at offset r and the
+      body breaks after one neighbor, lines 109-113), zero otherwise; summed over a round it is the number
+      of vertices with out-degree > r, at most num_nodes.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/cc.cc
+    lines: [109, 113]
+    excerpt: |2-
+            for (NodeID v : g.out_neigh(u, r)) {
+              // Link at most one time if neighbor available at offset r
+              Link(u, v, comp);
+              break;
+            }
+    sha256: null
+- id: sample
+  description: 'SampleFrequentElement: 1024 random reads of comp to estimate the largest intermediate
+    component'
+  parent: null
+  trip_count:
+    value: 1024
+    formula: null
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-cc]
+    note: num_samples defaults to 1024 (line 71); Afforest passes only comp and logging_enabled (line
+      120).
+  parallel:
+    construct: serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/cc.cc
+    lines: [77, 80]
+    excerpt: |2-
+        for (NodeID i = 0; i < num_samples; i++) {
+          NodeID n = distribution(gen);
+          sample_counts[comp[n]]++;
+        }
+    sha256: null
+- id: final-vertex
+  description: 'Final link pass: for u over all vertices not in the sampled largest component c'
+  parent: null
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-cc]
+    note: Lines 124-133 for undirected graphs; the directed branch (lines 135-146) has the same vertex
+      loop. Vertices with comp[u] == c skip their edges.
+  parallel:
+    construct: omp_parallel_for
+    schedule: dynamic, 16384
+    reduction: null
+  code:
+    root: application
+    path: src/cc.cc
+    lines: [124, 133]
+    excerpt: |2-
+          #pragma omp parallel for schedule(dynamic, 16384)
+          for (NodeID u = 0; u < g.num_nodes(); u++) {
+            // Skip processing nodes in the largest component
+            if (comp[u] == c)
+              continue;
+            // Skip over part of neighborhood (determined by neighbor_rounds)
+            for (NodeID v : g.out_neigh(u, neighbor_rounds)) {
+              Link(u, v, comp);
+            }
+          }
+    sha256: null
+- id: final-edge
+  description: 'For v in g.out_neigh(u, neighbor_rounds): Link(u, v) (the neighbors not sampled)'
+  parent: final-vertex
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-cc]
+    note: 'For each u with comp[u] != c, max(out_degree(u) - 2, 0) Links (the Neighborhood starts at offset
+      neighbor_rounds = 2, line 130). How many vertices are skipped depends on the input and on the sampled
+      c; at most num_edges_directed. Directed copy: lines 139-141.'
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/cc.cc
+    lines: [130, 132]
+    excerpt: |2-
+            for (NodeID v : g.out_neigh(u, neighbor_rounds)) {
+              Link(u, v, comp);
+            }
+    sha256: null
+- id: final-in-edge
+  description: 'Directed graphs only: for v in g.in_neigh(u): Link(u, v)'
+  parent: final-vertex
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-cc]
+    note: Runs only when g.directed() (line 134); then in_degree(u) Links for each u with comp[u] != c.
+      The generated gapbs inputs (-g, -u) are symmetrized, so this loop does not run on them.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/cc.cc
+    lines: [143, 145]
+    excerpt: |2-
+            for (NodeID v : g.in_neigh(u)) {
+              Link(u, v, comp);
+            }
+    sha256: null
+  condition: only on directed graphs (g.directed())
+- id: link
+  description: 'Link(u, v): climb both trees until the roots agree or the higher root is hooked under
+    the lower one by compare-and-swap'
+  parent: null
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-cc]
+    note: Called once per iteration of sample-edge, final-edge, and final-in-edge (its parent is any of
+      them). Each call runs until p1 == p2, until comp[high] already equals low, or until its compare_and_swap
+      succeeds (lines 44-54); the number of retries depends on tree depth and on other threads' hooks.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/cc.cc
+    lines: [44, 54]
+    excerpt: |2-
+        while (p1 != p2) {
+          NodeID high = p1 > p2 ? p1 : p2;
+          NodeID low = p1 + (p2 - high);
+          NodeID p_high = comp[high];
+          // Was already 'low' or succeeded in writing 'low'
+          if ((p_high == low) ||
+              (p_high == high && compare_and_swap(comp[high], high, low)))
+            break;
+          p1 = comp[comp[high]];
+          p2 = comp[low];
+        }
+    sha256: null
+- id: compress-vertex
+  description: 'Compress: for n over all vertices, shorten n''s path to its root'
+  parent: null
+  trip_count:
+    value: null
+    formula: 3 * num_nodes
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-cc]
+    note: 'Compress (lines 59-66) runs once per sampling round (line 115, 2 rounds) and once at the end
+      (line 149): 3 passes of num_nodes each per Afforest call.'
+  parallel:
+    construct: omp_parallel_for
+    schedule: dynamic, 16384
+    reduction: null
+  code:
+    root: application
+    path: src/cc.cc
+    lines: [60, 65]
+    excerpt: |2-
+        #pragma omp parallel for schedule(dynamic, 16384)
+        for (NodeID n = 0; n < g.num_nodes(); n++) {
+          while (comp[n] != comp[comp[n]]) {
+            comp[n] = comp[comp[n]];
+          }
+        }
+    sha256: null
+- id: compress-chase
+  description: 'while comp[n] != comp[comp[n]]: comp[n] = comp[comp[n]] (pointer jumping)'
+  parent: compress-vertex
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-cc]
+    note: One iteration per pointer-jumping step; the count depends on tree depths left by Link and on
+      which concurrent updates by other threads a thread sees (lines 62-64).
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/cc.cc
+    lines: [62, 64]
+    excerpt: |2-
+          while (comp[n] != comp[comp[n]]) {
+            comp[n] = comp[comp[n]];
+          }
+    sha256: null
+access_patterns:
+- id: init-comp
+  expression: comp[n] = n
+  loop: init
+  steps:
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: write
+  update:
+    pseudocode: comp[n] = n
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+  evidence_refs: [src-gapbs-cc]
+- id: sample-comp-u
+  expression: p1 = comp[u] in Link(u, v) called from the sampling round
+  loop: sample-vertex
+  steps:
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: line 42, once per u that has a neighbor at offset r
+  update_kind: read
+  update:
+    pseudocode: p1 = comp[u]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: comp[u] can have been hooked by an earlier iteration's Link in the same round (compare_and_swap
+        at line 50 writes comp[high] for a root high, which can be u).
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Other threads' Links read and compare-and-swap comp entries during the same loop.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: A plain load; it may see a label before or after a concurrent hook, and Link re-reads on retry
+        (lines 52-53).
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Which hooks a read sees depends on the schedule (dynamic, 16384) and thread timing.
+    numerical_requirement:
+      value: any_valid_result
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: CCVerifier accepts any labeling that induces the components; which intermediate labels a thread
+        sees depends on the schedule.
+  evidence_refs: [src-gapbs-cc]
+- id: sample-comp-v
+  expression: p2 = comp[v] for the neighbor v at offset r of u (sampling round)
+  loop: sample-edge
+  steps:
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: stream
+    stride: 1
+    note: out_neigh(u, r) reads out_index_[u] and out_index_[u+1] (graph.h lines 109-116)
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: only the element at offset r of u's range out_neighbors_[out_index_[u] .. out_index_[u+1]) is
+      read (line 109, break at line 112)
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: 'line 43: p2 = comp[v]'
+  update_kind: read
+  update:
+    pseudocode: p2 = comp[v]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Several vertices can have the same vertex as their r-th neighbor, so comp[v] can be read more
+        than once per round.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: The graph is const Graph&; out_index_ and out_neighbors_ are not written.
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Links in earlier iterations of the same round may have hooked the root this read returns (line
+        50).
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: All threads read comp while others compare-and-swap roots in it.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: A plain load; Link tolerates stale labels by retrying (lines 44-54).
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Which hooks a read sees depends on the schedule and thread timing.
+    numerical_requirement:
+      value: any_valid_result
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: CCVerifier accepts any labeling that induces the components; which intermediate labels a thread
+        sees depends on the schedule.
+  evidence_refs: [src-gapbs-cc]
+- id: final-skip-check
+  expression: comp[u] == c (skip vertices in the sampled largest component)
+  loop: final-vertex
+  steps:
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: line 127 (and line 137 in the directed branch)
+  update_kind: read
+  update:
+    pseudocode: if (comp[u] == c) continue
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: comp[u] changes during this loop only if u is a root that an earlier Link hooks (line 50).
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Other threads compare-and-swap comp entries in the same loop.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: A plain load.
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Which hooks the check sees depends on the schedule and thread timing.
+    numerical_requirement:
+      value: any_valid_result
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: CCVerifier accepts any labeling that induces the components; which intermediate labels a thread
+        sees depends on the schedule.
+  evidence_refs: [src-gapbs-cc]
+- id: final-comp-u
+  expression: p1 = comp[u] in Link(u, v) called from the final pass
+  loop: final-edge
+  steps:
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 0
+    note: line 42, re-read at the start of every Link for the same u
+  update_kind: read
+  update:
+    pseudocode: p1 = comp[u]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: The same element comp[u] is read once per remaining neighbor of u (stride 0 in this loop).
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: The Link of the previous neighbor may have hooked u if u was a root (line 50).
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Other threads compare-and-swap comp entries in the same loop.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: A plain load; Link retries on a stale value.
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Which hooks a read sees depends on the schedule and thread timing.
+    numerical_requirement:
+      value: any_valid_result
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: CCVerifier accepts any labeling that induces the components; which intermediate labels a thread
+        sees depends on the schedule.
+  evidence_refs: [src-gapbs-cc]
+- id: final-comp-v
+  expression: p2 = comp[v] for v in g.out_neigh(u, 2) (final pass)
+  loop: final-edge
+  steps:
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: stream
+    stride: 1
+    note: out_neigh(u, neighbor_rounds) reads out_index_[u] and out_index_[u+1]
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: walks out_neighbors_[out_index_[u] + 2 .. out_index_[u+1]) (line 130), only for u with comp[u]
+      != c
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: 'line 43: p2 = comp[v]'
+  update_kind: read
+  update:
+    pseudocode: p2 = comp[v]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Each v is read once per remaining in-edge; any vertex with several such edges repeats.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: The graph is const Graph&.
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Hooks by earlier iterations (line 50) change the labels later reads return.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: All threads read comp while others compare-and-swap roots in it.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: A plain load; Link retries on a stale value.
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Which hooks a read sees depends on the schedule (dynamic, 16384) and thread timing.
+    numerical_requirement:
+      value: any_valid_result
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: CCVerifier accepts any labeling that induces the components; which intermediate labels a thread
+        sees depends on the schedule.
+  evidence_refs: [src-gapbs-cc]
+- id: final-in-comp-v
+  expression: p2 = comp[v] for v in g.in_neigh(u) (final pass, directed graphs only)
+  loop: final-in-edge
+  steps:
+  - array:
+      name: g.in_index_
+      role: offsets
+      element_type: NodeID* (pointer into in_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+      undirected_alias: g.out_index_
+    address_shape: stream
+    stride: 1
+    note: in_neigh(u) reads in_index_[u] and in_index_[u+1]; runs only on directed graphs (line 143)
+  - array:
+      name: g.in_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+      undirected_alias: g.out_neighbors_
+    address_shape: ranged_indirect
+    note: walks all of in_neighbors_[in_index_[u] .. in_index_[u+1])
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: line 43 inside Link(u, v) called at line 144
+  update_kind: read
+  update:
+    pseudocode: p2 = comp[v]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Each v is read once per out-edge it has; vertices with several repeat.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: The graph is const Graph&.
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Hooks by earlier iterations (line 50) change the labels later reads return.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: All threads read comp while others compare-and-swap roots in it.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: A plain load; Link retries on a stale value.
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Which hooks a read sees depends on the schedule and thread timing.
+    numerical_requirement:
+      value: any_valid_result
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: CCVerifier accepts any labeling that induces the components; which intermediate labels a thread
+        sees depends on the schedule.
+  evidence_refs: [src-gapbs-cc]
+  condition: only on directed graphs (g.directed()); the pilot inputs are undirected
+- id: link-hook
+  expression: p_high = comp[high]; compare_and_swap(comp[high], high, low) in Link
+  loop: link
+  steps:
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: stream
+    stride: 1
+    note: the calling loop's u (sample-edge, final-edge; in_index_ for final-in-edge)
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: the neighbor v passed to Link
+  - array:
+      name: comp
+      role: index
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: p2 = comp[v] (line 43); on retries p1 and p2 come from the climb at lines 52-53
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: high = max(p1, p2) (line 45), a label read from comp by the previous step or from comp[u]; one
+      lookup comp[high] (line 47), then the compare-and-swap on the same element (line 50)
+  update_kind: compare_and_swap
+  update:
+    pseudocode: high = max(p1, p2); low = min(p1, p2); p_high = comp[high]; if (p_high == low || (p_high
+      == high && CAS(comp[high], high, low))) done
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Many edges lead to the same root, so the same comp[high] is looked up and compare-and-swapped
+        by many Links.
+    index_modified_during_loop:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: The index step is comp itself, which other Links write (line 50) during the same loop.
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: A hook by one Link changes the roots that later Links find.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Threads hook roots in the one shared comp array.
+    atomic_updates_required:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: compare_and_swap (line 50; __sync_bool_compare_and_swap under OpenMP, platform_atomics.h lines
+        29-32) hooks high only if it is still a root; a plain store could overwrite a concurrent hook
+        of the same root, and Afforest has no later sweep that would repair the lost link.
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Which Link hooks a root first depends on the schedule and thread timing; any order gives a
+        valid labeling.
+    numerical_requirement:
+      value: any_valid_result
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: CCVerifier accepts any labeling that induces the components; which intermediate labels a thread
+        sees depends on the schedule.
+  evidence_refs: [src-gapbs-cc]
+- id: link-climb
+  expression: p1 = comp[comp[high]]; p2 = comp[low] on a failed hook in Link
+  loop: link
+  steps:
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: stream
+    stride: 1
+    note: the calling loop's u
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: the neighbor v passed to Link
+  - array:
+      name: comp
+      role: index
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: p2 = comp[v] (line 43)
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: pointer_chase
+    note: 'each retry reads comp at labels just read from comp: comp[comp[high]] (two hops, line 52) and
+      comp[low] (line 53), climbing both trees until the labels meet'
+  update_kind: read
+  update:
+    pseudocode: p1 = comp[comp[high]]; p2 = comp[low]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Paths to the same root are climbed by many Links.
+    index_modified_during_loop:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: comp is written by other Links' hooks (line 50) while this climb reads it.
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Each hop's address is the value the previous hop read; hooks by other Links change the path.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: All threads climb and hook in the one comp array.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Plain loads; a stale label only causes another retry.
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: The path climbed depends on which hooks have happened, so on the schedule and timing.
+    numerical_requirement:
+      value: any_valid_result
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: CCVerifier accepts any labeling that induces the components; which intermediate labels a thread
+        sees depends on the schedule.
+  evidence_refs: [src-gapbs-cc]
+- id: compress-chase
+  expression: comp[comp[n]] in while (comp[n] != comp[comp[n]])
+  loop: compress-chase
+  steps:
+  - array:
+      name: comp
+      role: index
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: comp[n] for n over all vertices (line 62)
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: pointer_chase
+    note: comp[comp[n]] (lines 62-63), repeated with the updated comp[n] until comp[n] is a root's label
+  update_kind: read
+  update:
+    pseudocode: while (comp[n] != comp[comp[n]]) comp[n] = comp[comp[n]]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Every vertex of a tree chases through the same ancestors and root.
+    index_modified_during_loop:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: comp[n], the index step, is rewritten by line 63 in the same loop, and other threads rewrite
+        the ancestors it points to.
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Iteration n reads comp[m] for an ancestor m that iteration m may be rewriting concurrently.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Threads read ancestors that other threads are compressing.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: 'Plain loads and stores: a thread sees an old or a new ancestor, and both lie on the path
+        to the same root, because no Link runs during Compress (Compress is called after the parallel
+        link loops, lines 115 and 149).'
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: The number of hops depends on which concurrent updates a thread sees; the result does not.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: After Compress every comp[n] is the label of its tree's root, whatever the order (roots do
+        not change during Compress).
+  evidence_refs: [src-gapbs-cc]
+- id: compress-store
+  expression: comp[n] = comp[comp[n]]
+  loop: compress-chase
+  steps:
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 0
+    note: the same element comp[n] each iteration of the while loop (line 63)
+  update_kind: arbitrary
+  update:
+    pseudocode: comp[n] = comp[comp[n]]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: comp[n] is stored once per pointer-jumping step of iteration n (stride 0); no other iteration
+        stores it.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Other iterations read comp[n] as an ancestor while n is being compressed.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Other threads read comp[n] through their chases while this thread stores it.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: A plain 4-byte store; readers see the old or the new ancestor, both on the path to the same
+        root.
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: Interleaving with other threads' chases depends on the schedule; the final value does not.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc]
+      note: The final comp[n] is its root's label regardless of order.
+  note: 'Update kind arbitrary: the new value is comp at the old value (pointer jumping), not a value
+    independent of the element (write) nor an add or min/max.'
+  evidence_refs: [src-gapbs-cc]
+notes:
+- NodeID is int32_t (src/benchmark.h line 31); comp is pvector<NodeID>, one 4-byte label per vertex.
+- gapbs CSR index arrays hold pointers (DestID_**), 8 bytes per element on 64-bit hosts; on an undirected
+  graph in_index_/in_neighbors_ are the same memory as out_index_/out_neighbors_ (graph.h lines 138-143).
+- 'run.index_stream is null: the sampling rounds read only the neighbor at offset r of each list (lines
+  109-113), and the final pass skips the first two neighbors of every vertex and every vertex in the sampled
+  largest component (lines 127-130); no single pass visits out_neighbors_ in full CSR order, so the extractor''s
+  out_neighbors_by_vertex order is not this kernel''s order.'
+- 'run.sweep_log_flag is null: with -l, Afforest prints only one line from SampleFrequentElement ("Skipping
+  largest intermediate component ...", lines 86-90), never PrintStep lines, so there is no per-round <step>
+  <value> log.'
+- SampleFrequentElement (lines 69-92) reads comp at 1024 positions drawn from a default-seeded std::mt19937
+  (lines 75-79) and counts them in a std::unordered_map; it has no access pattern because no address shape
+  describes addresses drawn from a random generator (every chain must start with a stream or pointer_chase),
+  and the hash map is not an array. It is 1024 reads per call.
+- The omp parallel for at line 100 has no schedule clause (the OpenMP runtime's default applies).
+- 'Link is not inlined into one loop: it is called from sample-edge (line 111), final-edge (lines 131,
+  140), and final-in-edge (line 144); loop link records its retry loop (lines 44-54) once, with parent
+  null.'
+extensions: {}

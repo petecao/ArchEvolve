@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "evolveswdb"
+version = "0.2.0"
+description = "ArchEvolve Software Database: records, schemas, vocabularies, and the swdb tool"
+requires-python = ">=3.12"
+# Only these two: the tool must run on mbit10's system Python (PyYAML 6.0.1,
+# jsonschema 4.10.3) without installing anything.
+dependencies = ["PyYAML>=6.0", "jsonschema>=4.10"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.scripts]
+swdb = "swdb.cli:main"
+
+[tool.setuptools]
+packages = ["swdb"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# 2026-09-27 ET: never write .pytest_cache into a checkout. A stray cache in a
+# runtime checkout failed native readback a2's root-entry admission.
+addopts = "-p no:cacheprovider"

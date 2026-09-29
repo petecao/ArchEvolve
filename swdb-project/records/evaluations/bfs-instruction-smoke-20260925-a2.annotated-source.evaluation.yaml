@@ -1,0 +1,340 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs-instruction-smoke-20260925-a2.annotated-source.evaluation
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-instruction-smoke-20260925-a2.annotated-source.evaluation
+  candidate: bfs-instruction-smoke-20260925-a2.annotated-source.proposal.candidate-1
+  machine: mbit10
+  threads: 1
+  sources: [0, 3, 8]
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  budget:
+    build_seconds: 180
+    run_seconds: 30
+    total_seconds: 300
+  comparison_baseline: gapbs-bfs-do
+  workload:
+    family: diagnostic
+    graph:
+      num_vertices: 10
+      directed: true
+      edges:
+      - [0, 1]
+      - [0, 2]
+      - [1, 3]
+      - [2, 3]
+      - [3, 4]
+      - [4, 5]
+      - [5, 3]
+      - [6, 7]
+outcome:
+  state: complete
+  stage: evaluation
+  reason: null
+stages:
+- stage: source_resolution
+  state: complete
+  started: '2026-09-25T22:12:39.430353+00:00'
+  finished: '2026-09-25T22:12:48.750563+00:00'
+- stage: workload_resolution
+  state: complete
+  started: '2026-09-25T22:12:58.021698+00:00'
+  finished: '2026-09-25T22:13:07.319977+00:00'
+- stage: compiler_identity
+  state: complete
+  started: '2026-09-25T22:13:16.621037+00:00'
+  command: [/usr/bin/g++, --version]
+  timeout_s: 30
+  log: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/002-compiler_identity.log
+  finished: '2026-09-25T22:13:25.877696+00:00'
+  returncode: 0
+  host_wall_s: 0.004450765438377857
+  log_sha256: 59d1cbef41d4ae78d5063d525b7aa13d18dc0493ea00537efc19b2ee398cb5a8
+- stage: build
+  state: complete
+  started: '2026-09-25T22:13:35.216912+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -I/data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.proposal/source/src
+  - /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/native_driver.cc
+  - -o
+  - /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/bfs-native
+  timeout_s: 180.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/003-build.log
+  finished: '2026-09-25T22:13:46.954876+00:00'
+  returncode: 0
+  host_wall_s: 2.32060210313648
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: execution
+  state: complete
+  started: '2026-09-25T22:14:06.158909+00:00'
+  command:
+  - /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/graph.swdb
+  - '0'
+  - /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/trial-0-0.json
+  timeout_s: 30.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/004-execution.log
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-09-25T22:14:15.697970+00:00'
+  returncode: 0
+  host_wall_s: 0.016732160933315754
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: correctness
+  state: complete
+  started: '2026-09-25T22:14:25.048999+00:00'
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-09-25T22:14:34.338076+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-25T22:14:43.620781+00:00'
+  command:
+  - /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/graph.swdb
+  - '3'
+  - /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/trial-0-1.json
+  timeout_s: 30.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/006-execution.log
+  repetition: 0
+  source_position: 1
+  source: 3
+  finished: '2026-09-25T22:14:52.939210+00:00'
+  returncode: 0
+  host_wall_s: 0.00842137448489666
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: correctness
+  state: complete
+  started: '2026-09-25T22:15:02.294964+00:00'
+  repetition: 0
+  source_position: 1
+  source: 3
+  finished: '2026-09-25T22:15:11.612489+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-25T22:15:20.945454+00:00'
+  command:
+  - /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/graph.swdb
+  - '8'
+  - /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/trial-0-2.json
+  timeout_s: 30.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/008-execution.log
+  repetition: 0
+  source_position: 2
+  source: 8
+  finished: '2026-09-25T22:15:30.336102+00:00'
+  returncode: 0
+  host_wall_s: 0.008210557512938976
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: correctness
+  state: complete
+  started: '2026-09-25T22:15:39.875551+00:00'
+  repetition: 0
+  source_position: 2
+  source: 8
+  finished: '2026-09-25T22:15:49.165642+00:00'
+  reason: null
+- stage: aggregation
+  state: complete
+  started: '2026-09-25T22:15:58.626765+00:00'
+  finished: '2026-09-25T22:16:07.937534+00:00'
+timing:
+- source: 0
+  source_position: 0
+  repetition: 0
+  duration_s: 7.8868e-05
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: f008dd18fd30e2ab801cb2878a894708350f3b57d5912aa2facf94f118870a12
+  output: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/trial-0-0.json
+  output_sha256: ed8a134e746e2deb6c6fafbe225de69f4b18d0b11fd8a8bf3dc48abf8ccee45d
+  verified: true
+  evidence_kind: execution
+- source: 3
+  source_position: 1
+  repetition: 0
+  duration_s: 0.000101951
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: f008dd18fd30e2ab801cb2878a894708350f3b57d5912aa2facf94f118870a12
+  output: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/trial-0-1.json
+  output_sha256: 7a47808e2c5a4e6bbbea82d94fc1ed634cb15675885c77077ac86070a5a1c30f
+  verified: true
+  evidence_kind: execution
+- source: 8
+  source_position: 2
+  repetition: 0
+  duration_s: 6.2372e-05
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: f008dd18fd30e2ab801cb2878a894708350f3b57d5912aa2facf94f118870a12
+  output: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/trial-0-2.json
+  output_sha256: 1eb5668dcbdff0f1b94456a39ac4ab2fdee9556153004cc5fa193c84365f4c66
+  verified: true
+  evidence_kind: execution
+correctness:
+  state: passed
+  checks:
+  - passed: true
+    reason: null
+    reachable_vertices: 6
+    source: 0
+    source_position: 0
+    repetition: 0
+    trial: 0
+    output_sha256: ed8a134e746e2deb6c6fafbe225de69f4b18d0b11fd8a8bf3dc48abf8ccee45d
+    binary_sha256: f008dd18fd30e2ab801cb2878a894708350f3b57d5912aa2facf94f118870a12
+    graph_sha256: 3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 3
+    source: 3
+    source_position: 1
+    repetition: 0
+    trial: 1
+    output_sha256: 7a47808e2c5a4e6bbbea82d94fc1ed634cb15675885c77077ac86070a5a1c30f
+    binary_sha256: f008dd18fd30e2ab801cb2878a894708350f3b57d5912aa2facf94f118870a12
+    graph_sha256: 3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 1
+    source: 8
+    source_position: 2
+    repetition: 0
+    trial: 2
+    output_sha256: 1eb5668dcbdff0f1b94456a39ac4ab2fdee9556153004cc5fa193c84365f4c66
+    binary_sha256: f008dd18fd30e2ab801cb2878a894708350f3b57d5912aa2facf94f118870a12
+    graph_sha256: 3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7
+    verifier: swdb.bfs.structural.v1
+profiling:
+  state: unavailable
+  reasons:
+  - automatic function attribution not collected
+  - automatic loop attribution not collected
+  - dynamic memory observations not collected
+raw_artifacts:
+- host: mbit10
+  path: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation
+  kind: evaluation_run
+gain_claim: false
+evidence_kind: execution
+candidate: bfs-instruction-smoke-20260925-a2.annotated-source.proposal.candidate-1
+source_snapshot: bfs-instruction-smoke-20260925-a2.annotated-source.source
+implementation: gapbs-bfs-do
+proposal: bfs-instruction-smoke-20260925-a2.annotated-source.proposal
+profile_package: bfs-instruction-smoke-20260925-a2.annotated-source.package
+machine: mbit10
+comparison_baseline: gapbs-bfs-do
+context:
+  candidate_sha256: 6bf03e19f0f44ea26811a11c65479fccc2c689dfb3eb376c49ca290a3810790c
+  source_revision: 2972aeb2703165bafd921222f4ed7196f542d3a8
+  application: gapbs
+  adapter: gapbs_native
+  target: mbit10
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  threads: 1
+  sources: [0, 3, 8]
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  protocol: null
+  basis: measured
+  process_policy: one fresh process per source and repetition; graph construction before ROI
+  verifier: swdb.bfs.structural.v1
+  verifier_sha256: cdacd572168ebae7c5ae0cf71c4a25a8ebd901cd6b15c4aeaaf35d4dba7017fd
+  backend_configuration: {}
+  instrumentation:
+    template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+    treatment: included
+  host: mbit10
+  architecture: x86_64
+  lane: 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 378)'
+  load_average: [9.26025390625, 8.78564453125, 8.13671875]
+  budget:
+    build_seconds: 180.0
+    run_seconds: 30.0
+    total_seconds: 300.0
+  workload:
+    id: null
+    family: diagnostic
+    generator: null
+    representation:
+      kind: inline_graph
+      sha256: 691eecc01480d05d8a9d9e5494522a3ff309989f34a2aa60d4fc9ee4abfff270
+    normalization: 'simple graph: remove self loops and duplicates; symmetrize if undirected; sort neighbors'
+    canonical_sha256: 3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7
+    adjacency_order_sha256: 3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7
+    num_vertices: 10
+    num_directed_edges: 8
+    directed: true
+    sources: [0, 3, 8]
+    canonical_path: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/graph.swdb
+    canonical_file_sha256: f1d7afd5722fb22960c08c3c04439291feba97e38fa902b43754a75f9d5fcddf
+build:
+  compiler: /usr/bin/g++
+  flags: [-std=c++11, -O3, -Wall, -fopenmp]
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -I/data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.proposal/source/src
+  - /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/native_driver.cc
+  - -o
+  - /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/bfs-native
+  wrapper_sha256: 92e400f6b1a081955d883d79eac92a0ca2a059043358604fcdf8f98aca2c92de
+  template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+  compiler_version:
+  - g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  - Copyright (C) 2023 Free Software Foundation, Inc.
+  binary: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation/bfs-native
+  binary_sha256: f008dd18fd30e2ab801cb2878a894708350f3b57d5912aa2facf94f118870a12
+  execution_environment:
+    OMP_NUM_THREADS: '1'
+    OMP_DYNAMIC: 'FALSE'
+    OMP_PROC_BIND: close
+    OMP_PLACES: cores
+summary:
+  trials: 3
+  median_roi_seconds: 7.8868e-05
+  by_source_position:
+  - source_position: 0
+    source: 0
+    median_roi_seconds: 7.8868e-05
+  - source_position: 1
+    source: 3
+    median_roi_seconds: 0.000101951
+  - source_position: 2
+    source: 8
+    median_roi_seconds: 6.2372e-05
+  gain_claim: false

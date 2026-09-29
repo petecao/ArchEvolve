@@ -1,0 +1,70 @@
+{
+  "created": "2026-09-27",
+  "observed_at": "2026-09-27T05:02:46.480195-04:00",
+  "admission": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1.dispatch/admission.json",
+    "sha256": "5a4bc09754d8268519e5cc33303bdac0d3ed36d43f3b2b7d7a7aa15d21ea4d65",
+    "bytes": 21018
+  },
+  "code_commit": "923cf33b955104fdf96705b648933e7d486a3810",
+  "clock": {
+    "not_before": "2026-09-27T05:01:54.989105-04:00",
+    "latest_start": "2026-09-27T14:15:47.225985-04:00",
+    "absolute_end": "2026-09-27T20:16:17.225985-04:00"
+  },
+  "charges": [
+    {
+      "id": "bfs-20260925-uniform22",
+      "elapsed_seconds": 111,
+      "raw_bytes": 1124384768
+    },
+    {
+      "id": "bfs-author-scalar-compile-20260925-a1",
+      "elapsed_seconds": 72,
+      "raw_bytes": 3301376
+    },
+    {
+      "id": "bfs-author-maa-compile-20260925-a1",
+      "elapsed_seconds": 70,
+      "raw_bytes": 3301376
+    },
+    {
+      "id": "bfs-t16-simulator-batch-20260926-a1",
+      "elapsed_seconds": 11121,
+      "raw_bytes": 658644992
+    },
+    {
+      "id": "bfs-supervision-recovery-linux-20260926-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    },
+    {
+      "id": "bfs-supervision-lease-recovery-linux-20260927-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    },
+    {
+      "id": "bfs-seal-recovery-linux-20260927-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    }
+  ],
+  "files": {
+    "operator.py": {
+      "path": "/data1/yanruj/EvolveSWDB_seal_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/seal-simulator-recovery/operator.py",
+      "sha256": "e058c399555395150d20fdfa2c51422b3f3613e1f036eb04d8014cdacb4cde96"
+    },
+    "t16-config.json": {
+      "path": "/data1/yanruj/EvolveSWDB_seal_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/seal-simulator-recovery/t16-config.json",
+      "sha256": "01aafd682db66aa1bae11b05d4f54a7796d4d5bff1d86f82ea63409d0a78988f"
+    },
+    "launch.sh": {
+      "path": "/data1/yanruj/EvolveSWDB_seal_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/seal-simulator-recovery/launch.sh",
+      "sha256": "476c6df32d6e65bfd1561c88754b8ce56657d1fab22650ff567451290992fec9"
+    }
+  },
+  "runtime_clean": true,
+  "empirical_execution": false,
+  "prospective_launch_command": "env OPERATOR=/data1/yanruj/EvolveSWDB_seal_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/seal-simulator-recovery/operator.py OPERATOR_SHA=e058c399555395150d20fdfa2c51422b3f3613e1f036eb04d8014cdacb4cde96 CONFIG=/data1/yanruj/EvolveSWDB_seal_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/seal-simulator-recovery/t16-config.json CONFIG_SHA=01aafd682db66aa1bae11b05d4f54a7796d4d5bff1d86f82ea63409d0a78988f KIND=t16 ADMISSION_SHA=5a4bc09754d8268519e5cc33303bdac0d3ed36d43f3b2b7d7a7aa15d21ea4d65 bash /data1/yanruj/EvolveSWDB_seal_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/seal-simulator-recovery/launch.sh",
+  "prospective_tmux_session": "swdb-bfs-t16-seal-recovery-20260927-a1"
+}

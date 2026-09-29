@@ -1,0 +1,17 @@
+{
+  "date": "2026-09-27",
+  "state": "prospective_command_wiring_tested",
+  "dispatch_allowed": false,
+  "allocation_created": false,
+  "tests": "39 passed in0.05s",
+  "validation": "Four synthetic commands parsed by exact actual series argparse definitions; main not invoked",
+  "files": {
+    "prepare_operator.py": "25899ff3020dba24af48b00190d6e161fa3856d00f816439f49b230bbb00e507",
+    "test_prepare_operator.py": "e5a0f68c47f60dde467554b3e66b131c0aa397e14da4b74b16a92ea0a080a66f",
+    "operator-preview-20260927.json": "cffa75404a0c96b3384a17770001b679bb4d0a2393930e1bed9666bf3d84a622"
+  },
+  "remaining": "QualifiedT15selection/costs, aggregatebounds/clock, diagnosticbuild, actualfrozenprotocol, hostadmission/superviseddispatch",
+  "remote_mutations": false,
+  "review_fix": "Explicit -s -B interpreter flags before script; actual CLI parsing begins after script and asserts those flags",
+  "reviewed_test_log": "/private/tmp/bfs-t17-operator-preparation-tests-reviewed-20260927.log"
+}

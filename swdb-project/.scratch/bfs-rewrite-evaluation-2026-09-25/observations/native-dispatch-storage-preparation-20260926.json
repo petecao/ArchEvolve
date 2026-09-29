@@ -1,0 +1,83 @@
+{
+  "format": "swdb.bfs.native-storage-correction-preparation.v1",
+  "date": "2026-09-26",
+  "scope": "future native campaigns only; exact dispatch sibling counted under original16GiB;4GiB build subset unchanged",
+  "files": {
+    "scripts/bfs_native_campaign.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_native_campaign.py",
+      "bytes": 79769,
+      "sha256": "e044cd1ad724d590446bde54bf2dff23bfa47199d4026f1456e66c68952d3835"
+    },
+    "tests/test_bfs_native_execution.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_native_execution.py",
+      "bytes": 25280,
+      "sha256": "6c2e67c4af9e841322421fb93689785a0e96737ce9402dbd18bf985ebf327ff9"
+    },
+    "tests/test_bfs_native_storage.py": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_native_storage.py",
+      "bytes": 9957,
+      "sha256": "14e7586274276213396367b774cb5058331730f563128170d25099b4daac95e7"
+    },
+    "docs/bfs-native-reassessment-20260926.md": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-native-reassessment-20260926.md",
+      "bytes": 12915,
+      "sha256": "9106ede1dea65e677876f78303d4b3b5054acc8ee2d604d27929d358e295c279"
+    }
+  },
+  "validation": {
+    "command": "python3 -m pytest tests/test_bfs_native_storage.py tests/test_bfs_native_execution.py -q --basetemp /private/tmp/bfs-native-storage-frozen-20260926",
+    "result": "65 passed,2 Linux-only skipped in2.55s",
+    "integration": "153 passed,2Linuxskip;1 test expected later admission reason but earlier symlink rejection was correct; expectation repaired and affected group rerun",
+    "initial_fixture_update": "6 prior admission fixtures moved from raw driver to exact dispatch to satisfy new accounting contract",
+    "mistyped_group": "one collection invocation used nonexistent test_bfs_native_campaign_reuse.py; no tests ran; corrected selection retained"
+  },
+  "logs": [
+    {
+      "path": "/private/tmp/bfs-native-dispatch-storage-spec-red-20260926.log",
+      "bytes": 1713,
+      "sha256": "29d06353d4ce6a2ac763450148c0536e84746f497cedfc60b09a1c07cba12740"
+    },
+    {
+      "path": "/private/tmp/bfs-native-storage-red-20260926.log",
+      "bytes": 1640,
+      "sha256": "543aaf9eaf9cf00aeb9bfd5dd4fa8cedde0a28b2be396c7b24a308b88ada1e83"
+    },
+    {
+      "path": "/private/tmp/bfs-native-storage-focused-20260926.log",
+      "bytes": 26779,
+      "sha256": "936e2bf95fbad5a427f31cefc522fc1f852786a0534b6cdb04df73336bebfb97"
+    },
+    {
+      "path": "/private/tmp/bfs-native-storage-integrated-20260926.log",
+      "bytes": 100,
+      "sha256": "ad92325bd1fb1fbf07649b23944990d86de0d25932548a1fd458e16e00f6ad3b"
+    },
+    {
+      "path": "/private/tmp/bfs-native-storage-integrated-v2-20260926.log",
+      "bytes": 4441,
+      "sha256": "b0d24416a103cde6695142be572b5c8cd92b54651600191ea8d106ead3aaf6a2"
+    },
+    {
+      "path": "/private/tmp/bfs-native-storage-final-20260926.log",
+      "bytes": 110,
+      "sha256": "5d4a4a2e6f017586968f4a9f6b1e65891892c8e520238b32fcae57837ef288b4"
+    },
+    {
+      "path": "/private/tmp/bfs-native-storage-frozen-20260926.log",
+      "bytes": 110,
+      "sha256": "0d8dafc2c7cbfa750c2708327b6ca0e69f06cc5b5a550fbd5cf8d9cb3230d5b4"
+    }
+  ],
+  "terminal_api": "validate_storage_accounting(driver_ref,terminal_ref,admission_ref=original_caller_ref,current=aware_iso)",
+  "limits": {
+    "outer_seconds": 14400,
+    "work_seconds": 14370,
+    "cleanup_seconds": 30,
+    "rss_bytes": 17179869184,
+    "artifact_bytes": 17179869184,
+    "build_bytes": 4294967296
+  },
+  "no_host_dispatch": true,
+  "no_policy_or_threshold_change": true,
+  "qualification": false
+}

@@ -1,0 +1,70 @@
+{
+  "created": "2026-09-26",
+  "observed_at_et": "2026-09-26 14:25 ET",
+  "id": "bfs-dx100-coverage-20260926-a1",
+  "outcome": "failed",
+  "correctness": "unverified",
+  "admitted_timing_samples": 0,
+  "coverage_accepted": false,
+  "gain_claim": false,
+  "retry_performed": false,
+  "measured_code_commit": "53f2e7686a41d3472c9e0824a0a9b09117884e0b",
+  "failure_audit": "docs/evidence/bfs-dx100-coverage-20260926-a1-failure.yaml",
+  "terminal_audit": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/terminal-validation.json",
+    "bytes": 8363,
+    "sha256": "65969e8cae4ce113c289ba79c9b3aafd852f36724dcd8c060d8f37837c5c971a"
+  },
+  "terminal_state": "13 identities absent; original pane exact PID/start zombie with zero RSS; node0 generation321 released",
+  "public_record_preservation": "Stale top-level running and interrupted stage retained unchanged. Terminal audit establishes failed collection and no live owned work; no successful coverage is inferred.",
+  "metadata_sync": {
+    "branch": "codex/bfs-dx100-coverage-evidence-20260926-a1",
+    "remote_commit": "238e5daaec85bdfab13a074cdb8df1102690294c",
+    "local_cherry_pick": "2aa0abc3fab046cf71c4c305e7cdcac44bc32929",
+    "ls_remote_verified": true,
+    "files": [
+      {
+        "path": "docs/evidence/bfs-dx100-coverage-20260926-a1-failure.yaml",
+        "bytes": 3996,
+        "sha256": "b7489d2bbe60d98b3400c9349f98e6725457a8ca361fc64a04d16c8a66da635f"
+      },
+      {
+        "path": "records/evaluations/bfs-dx100-coverage-20260926-a1.compile.yaml",
+        "bytes": 17403,
+        "sha256": "01f5339ad5dc2c0d60c037bbae22b62991c53951273059f198881959523fab77"
+      },
+      {
+        "path": "records/evaluations/bfs-dx100-coverage-20260926-a1.execute.yaml",
+        "bytes": 23179,
+        "sha256": "dfa28a3bbe8170fe2e3dff6b140a41b4bfc7873c3e903fc39d73cc258acac26e"
+      },
+      {
+        "path": "records/workloads/bfs-dx100-coverage-20260926-a1.workload.241d37f1ee522c01.yaml",
+        "bytes": 1848,
+        "sha256": "c2571d550ae73d64db2341cf0a08969c81b59d2b73d12450e1a08e4c111405dd"
+      }
+    ],
+    "total_bytes": 46426,
+    "all_bytes_match": true
+  },
+  "health_1403": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260926-1403.json",
+    "bytes": 17745,
+    "sha256": "35e587b9429e43170aaf1ac9b0c86ef1a8b0a3302e4cfdc4503802ba1059bbb3",
+    "socket_generations": [
+      321,
+      401
+    ],
+    "legacy_generation": 77,
+    "all_metadata_released_and_kernel_locks_empty": true,
+    "node_available_gib": [
+      57.3,
+      58.54
+    ],
+    "global_available_gib": 117.75,
+    "data1_free_gib": 16.42,
+    "data_free_gib": 182.29,
+    "active_owned_evaluation_jobs": 0
+  },
+  "next_work": "Review and Linux-verify new RSS observer and bounded clients. Any corrective coverage requires a distinct prospective attempt; old failed result is not repaired or promoted."
+}

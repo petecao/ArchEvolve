@@ -1,0 +1,28 @@
+{
+  "format": "swdb.bfs.helper-upstream-comparison.v1",
+  "observed_at": "2026-09-26T22:36:11.160874-04:00",
+  "installed_checkout": "/data1/yanruj/Memacc-evolveswdb-lane",
+  "old_commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+  "upstream_commit": "8b572e8bbb20d60da32809746ca70fb9840cfc9e",
+  "old_is_ancestor": true,
+  "object_was_already_present": true,
+  "fetch_performed": false,
+  "script": {
+    "path": "AgenticRefiner/scripts/host/socket_lane.sh",
+    "installed_bytes": 10510,
+    "old_bytes": 10510,
+    "upstream_bytes": 10510,
+    "installed_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+    "old_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+    "upstream_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+    "all_bytes_equal": true
+  },
+  "host_subtree_changes": [],
+  "all_changed_paths_count": 67,
+  "installed_head_after": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+  "status_after": "",
+  "trusted_origin": "git@github.com:MaizeHPC/MemAcc.git",
+  "direct_helper_dependency": "AgenticRefiner/scripts/host/hostlock.sh",
+  "conclusion": "Installed helper and entire host subtree are byte-identical to upstream. Active checkout remains unchanged; no separate checkout is needed for byte compatibility.",
+  "no_running_fetch": true
+}

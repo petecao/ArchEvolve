@@ -1,0 +1,75 @@
+{
+  "created_et": "2026-09-26 09:44 ET",
+  "state": "automatic_approval_review_rejected_specific_approval_pending",
+  "destination": "git@github.com:ruchou/EvolveSWDB.git",
+  "branch": "codex/bfs-rewrite-evaluation",
+  "base": "0236631b717d529852664d147d3c4200448c449c",
+  "commits": [
+    "1cc95578ebc84fa6a7bc8ad4add7099b422bb9f6",
+    "b3a2cbe43db143ed03be4d66ead219ed59f6c04b"
+  ],
+  "files": [
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-matched-control-freeze-v1.yaml",
+      "bytes": 10652,
+      "sha256": "0208354fccf9e7c2b13eb340b1fcfa121f8a443ccac98ba72f8e558b1a339705"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-reference-freeze-v1.yaml",
+      "bytes": 10582,
+      "sha256": "ade4b75e4a59181f3582645b808675eaa5e88519689255749a56070e7f0eba96"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-witness-a2.yaml",
+      "bytes": 1424,
+      "sha256": "7972e091eaa5038ca54b8be71957398a129fec57f1290663f875cb2e9f91335c"
+    },
+    {
+      "path": "docs/bfs-dx100-witness-correction-20260926.md",
+      "bytes": 3131,
+      "sha256": "9f062aad0d76353097e36da5753b617227ee17abb6fee9c5698e60c9995c640b"
+    },
+    {
+      "path": "docs/bfs-dx100-witness-v2.md",
+      "bytes": 7232,
+      "sha256": "814fb6ecd27b13e3357c4a82488cefddeef17d2f2b244914934358b75da503a2"
+    },
+    {
+      "path": "docs/evidence/bfs-dx100-witness-20260926-a1.yaml",
+      "bytes": 6524,
+      "sha256": "09558d518a3ace977192af83b4bf05142b2fd252c4ced8aee5a1ae6b17fb671d"
+    },
+    {
+      "path": "records/evaluations/bfs-dx100-witness-20260926-a1.yaml",
+      "bytes": 34448,
+      "sha256": "9a941cdff315e283b13563bf81ef2f45ba0712bbcf6d31b92f6232488efa3b42"
+    },
+    {
+      "path": "scripts/dx100_witness_corrected_probe.py",
+      "bytes": 1208,
+      "sha256": "7331a0405738d99b718daaf1b176619e8ac0a9be59b539ecf6609c7944a9bde1"
+    },
+    {
+      "path": "scripts/dx100_witness_probe.py",
+      "bytes": 1342,
+      "sha256": "9b9db8d25ed8f3b1921908be9b85feff9a8cfc8cc50d468c27fcad721b2413c6"
+    },
+    {
+      "path": "swdb/dx100_witness.py",
+      "bytes": 34287,
+      "sha256": "2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091"
+    },
+    {
+      "path": "tests/test_dx100_witness.py",
+      "bytes": 25145,
+      "sha256": "3535f5b9bd95954a32d502fa201615021b7c09bb761fa9cd63a71a1da484127c"
+    },
+    {
+      "path": "tests/test_dx100_witness_probe.py",
+      "bytes": 2503,
+      "sha256": "466e14a8abf1b845a14578d416ec6e185e108549c30597de04af2684a01888d3"
+    }
+  ],
+  "scope": "DX100 parser correction, focused tests, bounded corrective-proof plan, and already imported failed-a1 metadata. Excludes separately held14filepacket, Anthropic payloads, subsequentpairedcommit, and uncommittedwork.",
+  "a2_status": "Launch cutoff09:40ET passed unused; approval doesnotextend10:00ETwindow."
+}

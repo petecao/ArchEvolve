@@ -1,0 +1,53 @@
+{
+  "created": "2026-09-26",
+  "scope": "T09 profile-package seal downgrade repair; public contract fixtures only",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/profile_package.py",
+      "bytes": 33633,
+      "sha256": "dc61800651d043a16b25b1a79903a6ed5553211684c60d2fb3bae99bfe12ba83"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-profile-packages.md",
+      "bytes": 4773,
+      "sha256": "f8771967012e6c8d3b64ebcbbe088da163ab780a6d953e1f6d634ffd18016715"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_profile_package_identity.py",
+      "bytes": 2216,
+      "sha256": "2efb9c7bcf970d19d29604fb0ada0b61d0a1de79d1c4d17f297de32d40664389"
+    }
+  ],
+  "finding": "Deleting package_version bypassed verification under the unchanged sealed assembly ID. Only explicit unsealed contract fixtures now use the legacy path.",
+  "red": {
+    "path": "/private/tmp/bfs-profile-package-downgrade-red-20260926.log",
+    "bytes": 304208,
+    "sha256": "0b8babdc9bf7fbd5e93d9f2678cfc85641446ce5483feaf74d7ee4728e3a0974",
+    "result": "4 failed,1 passed in34.97s"
+  },
+  "green": {
+    "path": "/private/tmp/bfs-profile-package-downgrade-fixed-20260926.log",
+    "bytes": 111,
+    "sha256": "fadfcdbdd69c0a4c2c13261d96100938515aa4287f383fa1d1a82dbf70adc06c",
+    "command": "python3 -m pytest -q -p no:cacheprovider tests/test_profile_package_identity.py tests/test_profile_packages.py tests/test_profile_package_freshness.py",
+    "result": "49 passed in119.75s"
+  },
+  "catalog": {
+    "path": "/private/tmp/bfs-profile-package-downgrade-catalog-20260926.log",
+    "bytes": 24,
+    "sha256": "662fcf7eff5ed6b6446645a7c1594ca61556e75e82211e2df4498a715a5b37cd",
+    "result": "213 records valid"
+  },
+  "independent_review": {
+    "path": "/private/tmp/bfs-standards-readiness-20260926/repair-recheck/review.json",
+    "bytes": 5929,
+    "sha256": "73c5e1ed4b23936d3e3e781d6befb4b4b2f5c231d31cfa59e0ecc041f621e32a"
+  },
+  "original_review": {
+    "path": "/private/tmp/bfs-standards-readiness-20260926/review.json",
+    "bytes": 4132,
+    "sha256": "8662acd49a75d7a1f9ad672c15486cb4ee82a15e46bdbef902e8ca98d3027526"
+  },
+  "legacy_compatibility": "All six current unsealed legacy contract fixtures remain publicly retrievable. Index rebuild rejects removed seals; source records were not rewritten.",
+  "limitations": "No raw host verification, new measurement, protocol freeze or gain. Full baseline regression runs separately at c2f987b and predates this fix."
+}

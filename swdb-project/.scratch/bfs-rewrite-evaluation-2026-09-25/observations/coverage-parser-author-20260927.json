@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-27",
+  "state": "local_optimization_prepared_no_runtime_update",
+  "source_commit_for_differential_reference": "07baead5fe5cf3718e18e1d2313db6899f2638c8",
+  "files": {
+    "swdb/dx100_coverage.py": {
+      "sha256": "27cfe64295a914193805809ed9c4d7ff08c9ffd462bdade3f97f6bcbe4d30e79",
+      "bytes": 12720
+    },
+    "tests/test_dx100_coverage_scan.py": {
+      "sha256": "325fce2c9ea3194bc0a563a29873e41c71e9d50734530fb99156d5f349440f57",
+      "bytes": 3935
+    }
+  },
+  "tests": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest -q -p no:cacheprovider tests/test_dx100_coverage.py tests/test_dx100_coverage_scan.py tests/test_dx100_gzip_trace.py",
+      "passed": 35,
+      "seconds": 51.83,
+      "note": "Before adding final corruption differential case."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest -q -p no:cacheprovider tests/test_dx100_coverage_scan.py",
+      "passed": 3,
+      "seconds": 0.07,
+      "note": "Includes final corruption differential case."
+    }
+  ],
+  "benchmark": {
+    "date": "2026-09-27",
+    "kind": "local_synthetic_microbenchmark_not_actual_host_trace",
+    "uncompressed_bytes": 22600000,
+    "lines": 100000,
+    "samples": [
+      {
+        "implementation": "old",
+        "process_cpu_seconds": 0.852038
+      },
+      {
+        "implementation": "new",
+        "process_cpu_seconds": 0.10689300000000013
+      },
+      {
+        "implementation": "new",
+        "process_cpu_seconds": 0.11190500000000014
+      },
+      {
+        "implementation": "old",
+        "process_cpu_seconds": 0.8581379999999998
+      }
+    ],
+    "outputs_equal": true,
+    "real_trace_reads": 0,
+    "source_sha256": "27cfe64295a914193805809ed9c4d7ff08c9ffd462bdade3f97f6bcbe4d30e79"
+  },
+  "limits": [
+    "No actual trace rescans or changed running runtime.",
+    "Multiple full validation passes remain unchanged.",
+    "Synthetic workload improvement is not an actual-trace speed or acceptance claim."
+  ],
+  "performance_reason": "Coverage parser performed five regular-expression searches for every in-ROI line; literal necessary conditions safely reject irrelevant lines before those searches."
+}

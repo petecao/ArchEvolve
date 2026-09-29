@@ -1,0 +1,61 @@
+kind: hardware_target
+schema_version: '0.4'
+id: dx100-e4fc4af-4c
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+provenance:
+- id: dx100-pinned-source
+  kind: source_code
+  description: API declaration and model implementation inspected at pinned DX100 revision; no executable
+    or performance claim.
+  uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/API/MAA_gem5.hpp
+name: DX100 pinned four-core simulated target
+model:
+  id: dx100-gem5
+  revision: e4fc4afdf894f295442cef3604667a469fab8e62
+interface:
+  id: dx100-mmio
+  version: 1.0-e4fc4af
+backend:
+  id: dx100-gem5-se
+  readiness: built
+  build_evidence:
+  - uri: ssh://mbit10/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/build-receipt.json
+    sha256: c465447ddc5cc37faa7cb3127a7f9f00b6b557c326e8319e5d694ee9933f8d6c
+execution_host: null
+configuration:
+  guest_isa: x86
+  guest_cores: 4
+  guest_memory: 16GB
+  tile_elements: 16384
+  tiles: 32
+  scalar_registers: 32
+  cpu_model: X86O3CPU
+  cpu_clock: 3.2GHz
+  memory_model: Ramulator2
+  memory_channels: 2
+  comparison_settings: LLC and acceleration enablement must be selected and identified by an evaluation
+    protocol.
+operations:
+- dx100.mmio.v1.const.i32
+- dx100.mmio.v1.stream-load.i32
+- dx100.mmio.v1.indirect-load.i32
+- dx100.mmio.v1.range-loop.i32
+- dx100.mmio.v1.alu-scalar-lt.i32
+- dx100.mmio.v1.indirect-store-vector.i32
+- dx100.mmio.v1.wait-ready
+source_evidence:
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/API/MAA_gem5.hpp#L12-L25
+  path: benchmarks/API/MAA_gem5.hpp
+  sha256: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+  lines: [12, 25]
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/scripts/sim.py#L90-L115
+  path: scripts/sim.py
+  sha256: 82c8d78e4339f1be9249c0e92db8a8d5f9654310f1fe4dc91680da6a9e0f7681
+  lines: [90, 115]
+notes:
+- The pinned model and BFS artifacts were built in evaluation bfs-dx100-build-20260925-a2.
+  The retained receipt establishes build readiness only; it does not establish timed-binary
+  correctness, actual accelerator execution, or a gain.
+- Physical execution host is intentionally null until an execution result identifies it.

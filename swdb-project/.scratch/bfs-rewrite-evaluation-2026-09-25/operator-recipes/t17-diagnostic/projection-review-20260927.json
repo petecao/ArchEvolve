@@ -1,0 +1,23 @@
+{
+  "observed_at": "2026-09-27T00:43:33.243731-04:00",
+  "state": "scoped_projection_repair_pass",
+  "files": {
+    "prepare.py": "2230bc6ffab3be2796bb57993f8e30e965e77b9d7ee7d8b4e1aaf2c1d716e93b",
+    "launch-20260927.sh": "bcedea6c540e64452a7115532677d18e10d8d62c875d88298c046596aa48eee7",
+    "test_prepare.py": "4ecb9ca96a98d1e5e6629983d01349c10e6697ef8c5f1f00fe55d1f89287f63a",
+    "runtime-manifest.json": "447ff528f5015587c702d42007a3607cf0373a800714d8ab59a515cdf9c7afc9"
+  },
+  "tests": "38 passed in 0.54s",
+  "log": "/private/tmp/bfs-t17-projection-independent-20260927.log",
+  "sha256": "c7e7e555b029ad94a9ff5e24ec446dd31186d86ab419a2a2586c2f0eb3f2dec7",
+  "review": [
+    "WholefixedGitarchive and3overlays validated beforewrite",
+    "Exactly2knowncc files retainedinarchive withhash provenance; allYAML projected",
+    "Explicitpartialcontinuation preserves exactarchive andunchangedpartialYAML; sealed/unknown/symlink/modifiedfiles reject",
+    "Preparationonly; no compiler/provider/evaluation rerun ororiginalfailedartifactoverwrite"
+  ],
+  "limitations": [
+    "No actualremote preparedadmission readbackyet",
+    "Commitdelivery mustmatch reviewedhashes"
+  ]
+}

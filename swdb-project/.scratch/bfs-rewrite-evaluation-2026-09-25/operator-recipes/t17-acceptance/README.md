@@ -1,0 +1,64 @@
+# T17 prospective acceptance allocation
+
+Prepared 2026-09-27 Eastern Time. **Planning only: no numeric aggregate allocation, clock, lane reservation, provider call, diagnostic compile, or simulation is authorized by this packet.**
+
+The first diagnostic preparation failed before compilation. Its YAML-only record view omitted the two `.cc` source attachments referenced by existing implementation records, so the first public `get` exited 1. The failed driver is retained with SHA `605cd6461f773d163dd89932c77691cac2e0cbc57f2d182adefbfd9dbede468b`; its launch SHA is `689a3bcbfbdc3a85b9e6134a9627f481c584e730329166f1966d21dd2b4402e9`. No diagnostic binary or guest result is implied. The original packet is preserved in `3db2ae3c4f201a9c8bf60d2494d7e02508639bb3`.
+
+The actual original clock was 2026-09-27 00:47:10.605637–00:57:10.605637 ET. At the first repair-budget review, insufficient time remained for the unchanged 240-second public compile and 30-second cleanup reserve; at 00:58:49 ET the window had expired. No fresh ID can renew it. The driver finished at 00:47:15.920117, but that interval excludes later independent closure and retained dispatch writes: it is **not** the final charged wall time or storage. The independent final observation at 00:57:03.370019 ET closed a conservative 592.764382-second outer-to-readback envelope, charged as 593 seconds including idle readback delay, and retained 18,321,408 allocated bytes across the three roots. Its settled cleanup ledger has four events and 0.2261140875518322 seconds; both process passes show four absent identities and the exact zero-RSS pane zombie, with node1 generation 438 released. The [exact receipt](../../observations/t17-diagnostic-failed-terminal-20260927.json) is preserved without modification. All old raw files, failed attempts, and consumed costs remain retained without refunds.
+
+Root repaired source-attachment admission in `3c09f3c2bd1958bdf0285b50a50260a30a6566df`: accept only the two exact `.cc` files and require their bytes to match the pinned runtime; the regression exercises an actual public get. Root reports 29 tests passed in 4.03 seconds. This useful repair does not authorize rerunning the exhausted diagnostic attempt and does not change batch runtime6a or its readers.
+
+No existing sealed T17 route-level allocation was found in the spec, campaign plan, ticket, acceptance checkpoints, or controlled-simulator readiness document. The latter explicitly requires aggregate and stage bounds to be selected from actual T15 costs and states that CLI maxima do not create an allowance. Consequently this packet records a prospective route allocation with unresolved totals. It does not appropriate T15/T16 time, reset the original 600 seconds, or invent a new numeric allowance.
+
+The manifest names four complete series: baseline and the existing T17 candidate for each of uniform-random and Kronecker. Each family will use T15's actual accepted workload and three ordered traversal sources; none is selected in this template. Two replays and zero warmups yield **24 primary and 24 diagnostic executions**, 24 paired profile packages, four primary aggregates and two family comparisons. Use the existing series client with retained primary/diagnostic builds, `controlled_simulator`, `bfs.complete_call.v1`, four guest cores and the original-adjacency v2 adapter. Do not use the author-binary route or its traversal protocol.
+
+One fresh diagnostic prerequisite is included in the future allocation: request `bfs-t17-diagnostic-build-only-20260927-a2`. Its data differs from the existing successful primary request only by that unused ID and `diagnostic_regions:true`. It retains the 180-second compiler and 240-second public-call maxima; complete preparation, queries, source/view verification and readback must also be budgeted. It reuses the existing primary binary and makes no provider call or source repair. This request is data only; no new driver, retry mechanism, or expired-window operator was added.
+
+Before selecting an aggregate bound, obtain qualified T15 evidence for actual host cost and retained bytes for complete primary and diagnostic cells, including checkpoint, trace compression, parsing and package readback. Document any source-specific cost margin; candidate time cannot be assumed equal to the author's timing. Derive and seal the full diagnostic prerequisite cost, four complete series bounds, protocol freeze, comparison/retrieval, dispatch/accounting and one shared cleanup reserve. Include every new raw/view/cache/build/sidecar path in storage accounting. Carry historical closed costs separately and never credit an unused reservation as negative cost. The template exposes these components as null, with explicit formulas, rather than presenting an unmeasured estimate as an allocation.
+
+Then bind actual diagnostic regions and their correspondence, complete target/configuration/compiler/instrumentation maps, the public content-addressed frozen protocol, exact Git/Python/Linux proof identity, fresh free lane and available resources. Each next series must fit its full sealed allowance and the shared cleanup reserve under the original **new route allocation** clock. That future clock, if justified and assigned, is distinct from the expired diagnostic clock and must be reported as such.
+
+`manifest.schema.json` and `validate_plan.py` check this prospective packet only. Eight local tests passed; negative cases reject dispatch, a renewed old window, invented aggregate time, duplicate or wrong-role series, preselected workloads and primary recompilation. They are planning contracts, not execution evidence. The packet stays non-dispatchable until actual dependencies support a separate, explicit execution manifest.
+
+
+## Fixed client audit — 2026-09-27 ET
+
+Local source audit confirms the existing public APIs already implement freeze, paired series, profile/package collection, aggregation and diagnostic comparison. No independent missing evaluator code was reproduced. The remaining implementation is the fixed bounded operator, which cannot be sealed without the following concrete bindings; no new wrapper or schema was added.
+
+| Required binding | Originating record or field | Remaining dependency |
+|---|---|---|
+| Selected graph identities and three ordered sources per family | T15 qualified package/evaluation chain; workload `definition.sources` and registered application representation | Actual accepted workload and size-selection rationale, not a preselected preferred graph |
+| Sampling, feasibility and accelerator cases | T15 accepted protocol `settings.sampling`, `profitability`, `correctness.required_accelerator_cases` and actual coverage | Preserve policy; candidate source does not establish tile/tail or parent-update coverage |
+| Diagnostic identity and semantic region correspondence | Fresh T17 diagnostic evaluation `build.binary_sha256`, `context.diagnostic.regions`, `discovery`, `runtime`; baseline diagnostic equivalents | Successful separately funded diagnostic build; inspected baseline/candidate region pairs cannot be guessed |
+| Exact frozen primary treatment | Retained primary `build.compiler`, `build.compiler_version`, `build.flags`, `build.adapter`, expanded `dx100._configuration`, model `build.details.binaries`, final runtime's `dx100.py` instrumentation map | Fresh full compiler/version/flags/adapter, configuration, verifier/parser/observer and post-seal identities; not the T16 author protocol |
+| Finite complete route allocation | `manifest-template.json` unresolved `budget_derivation` and per-series bounds, actual T15 host cost/bytes | Include prerequisite, four complete series, freeze/comparison/retrieval and one shared cleanup; old diagnostic window remains expired |
+| Admission and returned protocol | Immutable runtime/Python/Linux proof, free lane/capacity, counted raw/view/cache/build roots, original new-route clock; public freeze's returned ID/digest | Final immutable packet and live preflight, then fresh public chain retrieval |
+| Actual comparison inputs | Completed series receipt `aggregate` and each `samples[].evaluation` / `samples[].package` | Four actual aggregates; per-family `region_packages` covers exactly twelve primary components |
+
+`scripts/bfs_simulator_series.py` already loops over ordered sources and two replays, executes both treatments, collects packages, aggregates primaries and reopens a reused primary. Its general optional build arguments fall back to compilation when omitted: the future fixed operator must require **both** retained build IDs, reject `--author-binary`, and add `--accelerated` only for candidate rows. It must admit a whole next series plus the remaining shared cleanup reserve, stop on failure without retry, then compare and freshly retrieve the resulting chains under the same finite clock. Existing Owned primitives remain the supervision implementation.
+
+The public contract tests inspected are `tests/test_bfs_simulator_series.py` (selection/reuse/orchestration), `tests/test_bfs_aggregation.py` (grid coverage, component identity and changed evidence), `tests/test_bfs_region_comparison.py` (actual public package/compare/get calls with explicit synthetic fixtures and missing/wrong/stale package, collector, correctness and timing rejection), and `tests/test_bfs_protocol.py` (controlled treatment, frozen identity and attribution). These exercise existing APIs; fixture success is not real simulator acceptance.
+
+T20 additionally requires an actual resolved continuation candidate and that candidate's successful primary/diagnostic builds. The prepared context2 packet cannot supply those identities. T20 must retain `gapbs-bfs-do` as its source-specific baseline; T17 uses `dx100-bfs-scalar`. This local audit does not claim the live provider state. Current running runtime `6a493a0d489d8d1c76eba8c3431538d6412fd45a` and all shared production helpers remain unchanged.
+
+Validation: the four existing test modules above passed **125 tests in 276.19 seconds** on local macOS (2026-09-27 ET). Exact invocation and hashes are retained in `/private/tmp/bfs-t17-client-api-audit-20260927.json`; raw test output is `/private/tmp/bfs-t17-client-api-audit-20260927.log`. This checks public API contracts with explicit fixtures, not actual DX100 acceptance.
+
+The existing four-module public API audit passed **125 tests in 276.19 seconds**. The [exact invocation and hashes](../../observations/t17-client-api-audit-20260927.json) distinguish these fixture-backed contract checks from actual acceptance.
+
+## Fixed client wiring prepared — 2026-09-27 ET
+
+`prepare_operator.py` now provides the pure `series_argv` builder for the existing
+public series client. It requires both retained build IDs, a frozen protocol and
+role, explicit workload/configuration paths, the original shared cleanup binding,
+and every stage/resource option. It never invokes subprocesses or allocates a lane.
+Candidate rows alone receive `--accelerated`; `--author-binary` is never emitted.
+The current [preview](operator-preview-20260927.json) retains unresolved aggregate
+bounds and all T15-dependent inputs. It is not an executable admission or a new budget.
+
+Validation: 39 local controls passed, including parsing all four synthetic commands
+against the actual series client's argparse definitions without executing its main.
+The synthetic test bounds are only parser fixtures. The manifest's aggregate bounds,
+clock, selected workloads, and protocol remain unset. Once qualified T15 evidence
+arrives, the remaining work is to bind and review the actual allocation, complete
+the diagnostic prerequisite, freeze the protocol, and wrap these existing client
+calls in the established owned supervisor. No new evaluation engine was introduced.

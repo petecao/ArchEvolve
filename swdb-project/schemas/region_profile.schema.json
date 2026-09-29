@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "region_profile",
+  "title": "Execution-bound BFS region and memory diagnostics",
+  "description": "Introduced 2026-09-25. Diagnostic attribution cannot establish a primary ROI gain.",
+  "properties": {
+    "kind": {"const": "region_profile"},
+    "schema_version": {"const": "0.4"},
+    "message_version": {"const": "1.0"},
+    "producer": {"type": "object"},
+    "request": {},
+    "evaluation": {"$ref": "#/$defs/id", "x-ref": "evaluation"},
+    "candidate": {"$ref": "#/$defs/id", "x-ref": "candidate"},
+    "source_snapshot": {"$ref": "#/$defs/id", "x-ref": "source_snapshot"},
+    "implementation": {"$ref": "#/$defs/id", "x-ref": "implementation"},
+    "machine": {"$ref": "#/$defs/id", "x-ref": "machine"},
+    "context": {"type": "object"},
+    "discovery": {"type": "object"},
+    "build": {"type": "object"},
+    "artifacts": {"type": "object"},
+    "outcome": {"type": "object", "properties": {
+      "state": {"enum": ["submitted", "running", "complete", "partial", "failed", "timed_out", "interrupted", "incorrect", "missing_observation", "incompatible", "budget_exhausted"]},
+      "stage": {"type": "string"}, "reason": {"type": ["string", "null"]}},
+      "required": ["state", "stage", "reason"]},
+    "stages": {"type": "array", "items": {"type": "object"}},
+    "regions": {"type": "array", "items": {"type": "object"}},
+    "dynamic_memory": {"type": "array", "items": {"type": "object"}},
+    "executions": {"type": "array", "items": {"type": "object"}},
+    "correspondence": {"type": "object"},
+    "post_collection_audit": {"type": "object"},
+    "raw_artifacts": {"type": "array", "items": {"type": "object"}},
+    "reasons": {"type": "array", "items": {"type": "string"}},
+    "gain_claim": {"const": false}
+  },
+  "required": ["message_version", "producer", "request", "outcome", "stages", "regions", "dynamic_memory", "executions", "raw_artifacts", "reasons", "gain_claim"]
+}

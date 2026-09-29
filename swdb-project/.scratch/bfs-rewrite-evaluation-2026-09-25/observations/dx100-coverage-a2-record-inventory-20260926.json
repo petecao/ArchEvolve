@@ -1,0 +1,69 @@
+{
+  "inventory": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2.dispatch/canonical-record-inventory.json",
+    "sha256": "7b6f4e3a8861472c5517ed7564ab7992b4b80b0bc49ab676bc778d954caed33a",
+    "bytes": 2640
+  },
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T19:19:22.381090-04:00",
+  "source_checkout": "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2",
+  "source_head": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+  "proposed_parent": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+  "files": [
+    {
+      "path": "records/evaluations/bfs-dx100-coverage-20260926-a2.compile.yaml",
+      "id": "bfs-dx100-coverage-20260926-a2.compile",
+      "kind": "evaluation",
+      "bytes": 17424,
+      "sha256": "cad6474eae6ed7cd588a3a82f57fc0489a9cd5bf515edd791830cba0c1b6fffa",
+      "canonical_sha256": "95e0598b484ab6794f6a2a77d6e5f250cd2ed787c8ada3a70d71f55af65ec8c9",
+      "maximum_string_length": 174,
+      "multiline_string_fields": [],
+      "inline_source_fields": [],
+      "raw_output_text_fields": [],
+      "credential_pattern_fields": [],
+      "outcome": {
+        "state": "complete",
+        "stage": "candidate_build",
+        "reason": "Identified candidate compiled; no simulated correctness or timing inferred."
+      }
+    },
+    {
+      "path": "records/evaluations/bfs-dx100-coverage-20260926-a2.execute.yaml",
+      "id": "bfs-dx100-coverage-20260926-a2.execute",
+      "kind": "evaluation",
+      "bytes": 44835,
+      "sha256": "06c14337c23210cf86c848f803956deddf1afce94fe3d71f1482f8597526eb4c",
+      "canonical_sha256": "c213c93028e8bfcb85aaad4772cc1034953e0cd9e757c4d77c02c2b9f3f90bc6",
+      "maximum_string_length": 179,
+      "multiline_string_fields": [],
+      "inline_source_fields": [],
+      "raw_output_text_fields": [],
+      "credential_pattern_fields": [],
+      "outcome": {
+        "state": "complete",
+        "stage": "execution",
+        "reason": "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+      }
+    },
+    {
+      "path": "records/workloads/bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e.yaml",
+      "id": "bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e",
+      "kind": "workload",
+      "bytes": 1851,
+      "sha256": "00c99c6804b4353472a1d6604b620d1374e6b5f05ba250789a0ec8419a971662",
+      "canonical_sha256": "1e6d910df66c8b9393fd6b33bcd18afe3b6d398afa39532f2867d1a884e8232e",
+      "maximum_string_length": 108,
+      "multiline_string_fields": [],
+      "inline_source_fields": [],
+      "raw_output_text_fields": [],
+      "credential_pattern_fields": [],
+      "outcome": null
+    }
+  ],
+  "file_count": 3,
+  "total_bytes": 64110,
+  "scope": "exact three actual A2 canonical records only; raw files, old metadata imports and held packets excluded",
+  "commit_created": false,
+  "external_push": false
+}

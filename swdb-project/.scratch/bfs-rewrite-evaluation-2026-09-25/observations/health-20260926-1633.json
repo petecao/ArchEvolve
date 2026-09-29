@@ -1,0 +1,111 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T16:32:56.513584-04:00",
+  "host": "mbit10",
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260926-1633.json",
+    "bytes": 71916,
+    "sha256": "5962aa11a6728cba967150ac45a030fb31e23e0dc4c66611c50869f13300a9a9"
+  },
+  "leases": {
+    "node0": {
+      "state": "released",
+      "generation": 325
+    },
+    "node1": {
+      "state": "held",
+      "generation": 402,
+      "helper_pid": 3060483,
+      "helper_start_ticks": 495158793,
+      "kernel_flock_owner_pid": 3060536
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    },
+    "kernel_locks": "node1 FLOCK agrees with active helper tree; node0 and legacy empty"
+  },
+  "native": {
+    "commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+    "driver": {
+      "pid": 3060552,
+      "start_ticks": 495158817,
+      "state": "alive"
+    },
+    "evaluator": {
+      "pid": 3065401,
+      "start_ticks": 495603613,
+      "state": "alive"
+    },
+    "cells": [
+      {
+        "id": "dx100.uniform-random",
+        "state": "complete",
+        "checked": 60,
+        "planned": 60,
+        "fixed_controls": "passed"
+      },
+      {
+        "id": "upstream.uniform-random",
+        "state": "complete",
+        "checked": 60,
+        "planned": 60,
+        "fixed_controls": "passed"
+      },
+      {
+        "id": "dx100.kronecker",
+        "state": "running",
+        "checked": 16,
+        "planned": 60
+      },
+      {
+        "id": "upstream.kronecker",
+        "state": "not_started",
+        "checked": 0,
+        "planned": 60
+      }
+    ],
+    "total_checked": 136,
+    "total_planned": 240,
+    "stderr_bytes": 0,
+    "recent_tree_rss_bytes": 1021583360,
+    "recent_peak_tree_rss_bytes": 1120149504,
+    "failure": false,
+    "retry": false,
+    "first_cell_analysis_sha256": "da79da50a5fb0d6a66f46ac84810533bd3be02c504034aec7fcd70a53511edeb",
+    "retained_raw_bytes": 867378235,
+    "second_cell_analysis_sha256": "d7ebc205d2a82820c4130b541a58c62b58a6ccbdf65e530de76f6e9d2f0f2c3f"
+  },
+  "owned_processes": "Only the native one-thread pilot is active; all historical PID/start unions absent.",
+  "load_average": [
+    1.39,
+    1.29,
+    1.2
+  ],
+  "free_bytes": {
+    "/data1": 17585971200,
+    "/data": 194860605440
+  },
+  "estimated_available_kib": {
+    "node0": 60070572,
+    "node1": 60358256,
+    "global": 122422136
+  },
+  "historical_pins": "unchanged",
+  "receipt_hashes_verified": 15,
+  "expired_witness_a2": "unused",
+  "helper_commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+  "helper_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+  "workers": {
+    "host_dx100": "running",
+    "spec_postfix": "running",
+    "standards_postfix": "running"
+  },
+  "counts": {
+    "resolved_tickets": 13,
+    "claimed_tickets": 8,
+    "final_acceptance_cells": 0,
+    "required_cells": 8
+  },
+  "next_full_check_et": "2026-09-26 17:03 ET"
+}

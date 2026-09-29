@@ -1,0 +1,38 @@
+{
+  "created": "2026-09-27",
+  "state": "scoped_pass",
+  "scope": [
+    "specD06fullimmutablepackage retained/publicfreshchain",
+    "specD07 source/package identity bindings and explicit projectionmanifest",
+    "specD08 submittedstrategy exactmatching only/no strategyselection",
+    "defaultpromptbytes unchanged/source/protection preservation"
+  ],
+  "files": {
+    "swdb/rewrite.py": "5f44f6b9cd06eb4102c1e3f9aebe333124ccea3c17579f8cec586fd2935b64ae",
+    "tests/test_bfs_prompt_projection.py": "f0bc49cd517b52aa9688daf5a13755e033c5b14424e7387d15bff4bc52efd11e"
+  },
+  "tests": {
+    "passed": 8,
+    "seconds": 158.59,
+    "log": "/private/tmp/bfs-prompt-projection-independent-20260927.log",
+    "classification": "local public synthetic-provider contract tests, not real provider/evaluation"
+  },
+  "independent_checks": {
+    "default_prechange_HEAD_prompt_bytes_equal": 6,
+    "payload_forms": [
+      "natural_language",
+      "structured_instructions",
+      "annotated_source"
+    ],
+    "repair_and_no_repair": true,
+    "malformed_catalog_shapes_rejected": 9,
+    "actual_context2_full_sealed_package_verified": true,
+    "actual_omitted_strategy_rows_individually_hashed": 130,
+    "every_other_package_field_unchanged": true,
+    "input_objects_unchanged": true
+  },
+  "findings": [],
+  "provider_dispatch": false,
+  "source_edits": false,
+  "default_comparison_receipt": "/private/tmp/bfs-prompt-projection-default-bytes-20260927.json"
+}

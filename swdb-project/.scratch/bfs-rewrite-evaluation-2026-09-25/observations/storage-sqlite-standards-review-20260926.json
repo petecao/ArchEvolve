@@ -1,0 +1,75 @@
+{
+  "format": "swdb.bfs.storage-sqlite-standards-review.v1",
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T22:00:46.531753-04:00",
+  "state": "independent_scoped_review_clean_after_repair",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_storage.py",
+      "bytes": 4824,
+      "sha256": "20dd7dd37c512a36ac37d7f9b94ec3235eb4ff86753587f4b0bb3fbb93646054"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_storage.py",
+      "bytes": 14389,
+      "sha256": "ec57c2785bdb2b1abc970a598a9cce45fa0599881a9f82f32acdbc318fec285e"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-storage-transient-entries-20260926.md",
+      "bytes": 2631,
+      "sha256": "436d2bd13c8f24fd2e8529c72f7594c99a190776f50a2e0bd6a89849531c1bd6"
+    }
+  ],
+  "original_source": {
+    "path": "/private/tmp/bfs-storage-before-enoent-standards-20260926.py",
+    "bytes": 2586,
+    "sha256": "485914c80e272b1ab4d05d7866d2ba0d981d0c3ba41cb510c509e4acdb8f4eac"
+  },
+  "actual_failure": {
+    "path": "/private/tmp/bfs-t15-correction-failed-terminal-20260926.json",
+    "bytes": 7884,
+    "sha256": "9580bcf546b268e8599abbb61ff91e9d91222bb9cc98b924583f56b2869c1874"
+  },
+  "red": {
+    "result": "1failed1passed0.08s; actual SQLite commit deleted enumerated journal, actual os.stat raisedENOENT",
+    "log": {
+      "path": "/private/tmp/bfs-storage-sqlite-standards-red-20260926.log",
+      "bytes": 3514,
+      "sha256": "72812909e5ca5c397effae0fe31181470d2dc9a6d162bfd9661fece52d05a514"
+    },
+    "probe": {
+      "path": "/private/tmp/test_storage_sqlite_standards_20260926.py",
+      "bytes": 2245,
+      "sha256": "34058c0129ec19eb6e24b7f997dc1d9d74090aa52142f23409824aa8fa933f37"
+    }
+  },
+  "green": {
+    "result": "24passed0.29s",
+    "log": {
+      "path": "/private/tmp/bfs-storage-sqlite-standards-green-20260926.log",
+      "bytes": 99,
+      "sha256": "973cb70ffa10b65de4793fb9ea3599035e60efe5c3f1b5e72ad46ab476d66973"
+    },
+    "probe": {
+      "path": "/private/tmp/test_storage_sqlite_standards_v2_20260926.py",
+      "bytes": 3090,
+      "sha256": "2f3b0d90ebd71184b9d419ac2294a9dec0965e02376c05df92eb76006d94972b"
+    },
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=\"$PWD/tests:$PWD\" /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest /private/tmp/test_storage_sqlite_standards_v2_20260926.py tests/test_bfs_storage.py -q -p no:cacheprovider --basetemp=/private/tmp/bfs-storage-sqlite-standards-green-20260926"
+  },
+  "checks": [
+    "Original SQLite race test body unchanged; v2 adds liveEACCES and callerdeadline controls. Real thread/SQLite deletion, not manufacturedENOENT.",
+    "Only nested FileNotFoundError with errnoENOENT permits bounded descriptor-relative no-follow confirmation. Reappeared entry uses actual metadata; unreadable/unknown/root failures remain errors.",
+    "Root presence/inode/no-symlink condition rechecked afterwalk. Replaced descendant directory cannot traverse symlink; removed directories enter seen-set only after successfulopen.",
+    "Real concurrentSQLite30walks end in quiescentdu parity. Files/directories/hardlinks/sparsefile/symlink and perrootKiBrounding remain passing.",
+    "No subprocess observer; real owned-cleanup overlap regression stillpassing. Original30s walk and earlier callerdeadline/check unchanged."
+  ],
+  "limitations": [
+    "Local macOS contract regression, not newLinuxproof or correctedbatch execution.",
+    "Sampling is not atomic; final quiescent post-helper recount remains mandatory.",
+    "Failed d5e batch staysfailed/no complete samples; original105identity closure/artifacts retained. No retry, hostdispatch or deniedexport attempted.",
+    "No remaining actionable scoped Standards/Spec finding; not finalall-ticket acceptance."
+  ],
+  "production_edits": false,
+  "host_actions": false
+}

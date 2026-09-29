@@ -1,0 +1,217 @@
+{
+  "format": "swdb.bfs.simulator-batch-plan.v1",
+  "created": "2026-09-26",
+  "updated": "2026-09-27",
+  "automatic_retry_allowed": false,
+  "gain_claim": false,
+  "model_build": "bfs-dx100-build-20260925-a2",
+  "target": "dx100-e4fc4af-4c",
+  "verifier": "dx100.bfs.verifier.v2",
+  "roi": "bfs.dx100.traversal.v1",
+  "threads": 4,
+  "repetitions": 2,
+  "warmups": 0,
+  "verification_ticks": 100000000000000,
+  "clock": "Keep actual original absolute end; each new full series requires21600s+30cleanup; no idle-time restoration.",
+  "profitability": {
+    "minimum_speedup": 1.05,
+    "maximum_relative_spread": 0.1,
+    "confidence": 0.95,
+    "bootstrap_resamples": 2000,
+    "bootstrap_seed": 20260925
+  },
+  "historical_failure": {
+    "id": "bfs-dx100-witness-20260926-a1",
+    "file_sha256": "9a941cdff315e283b13563bf81ef2f45ba0712bbcf6d31b92f6232488efa3b42"
+  },
+  "required_a3": "bfs-dx100-witness-20260926-a3",
+  "id": "bfs-t15-supervision-recovery-simulator-batch-20260926-a1",
+  "role": "shared_size_calibration",
+  "bounds": {
+    "batch_seconds": 43200,
+    "series_seconds": 21600,
+    "cleanup_seconds": 30,
+    "checkpoint_seconds": 3600,
+    "run_seconds": 3600,
+    "diagnostic_seconds": 600,
+    "memory_gib": 48,
+    "storage_gib": 10,
+    "batch_storage_gib": 40,
+    "raw_reserve_gib": 30,
+    "build_reserve_gib": 10,
+    "monitor_interval_seconds": 5,
+    "sampled_tree_memory_gib": 52,
+    "maximum_telemetry_gap_seconds": 30
+  },
+  "budget_authority": "One prospective fixed supervision recovery within original aggregate time/storage and actual hardend. Failed records/reservations remain failed; no historical ID resume, refund, automatic retry or budget reset.",
+  "series": [
+    {
+      "id": "bfs-t15-supervision-recovery-simulator-batch-20260926-a1.uniform18",
+      "candidate": "bfs-author-maa-compile-20260925-a1.candidate",
+      "diagnostic_build": "bfs-author-maa-compile-20260925-a1.diagnostic.build",
+      "workload": "bfs-20260925-uniform18.cd2169a5c421baf7",
+      "sources": [
+        0,
+        1234,
+        7777
+      ],
+      "configuration": {
+        "mode": "MAA",
+        "l3_size_mb": 8,
+        "l3_assoc": 16,
+        "tile_elements": 16384
+      },
+      "accelerated": true,
+      "protocol_key": null,
+      "protocol_role": null
+    },
+    {
+      "id": "bfs-t15-supervision-recovery-simulator-batch-20260926-a1.kronecker18",
+      "candidate": "bfs-author-maa-compile-20260925-a1.candidate",
+      "diagnostic_build": "bfs-author-maa-compile-20260925-a1.diagnostic.build",
+      "workload": "bfs-20260925-kronecker18.48de8267ac2098d5",
+      "sources": [
+        0,
+        1234,
+        7777
+      ],
+      "configuration": {
+        "mode": "MAA",
+        "l3_size_mb": 8,
+        "l3_assoc": 16,
+        "tile_elements": 16384
+      },
+      "accelerated": true,
+      "protocol_key": null,
+      "protocol_role": null
+    }
+  ],
+  "record_sha256": {
+    "bfs-20260925-kronecker18.48de8267ac2098d5": "38ecdcb6ed58c15b9dbd3ed1449f18e4ffc69ddc2f2ab6a8192b144c25030199",
+    "bfs-20260925-uniform18.cd2169a5c421baf7": "e345524d8c91f4363292c47e81510c3fe34e3f80284ed9945ce4fa0e4e63afdd",
+    "bfs-author-maa-compile-20260925-a1.candidate": "1018e9002c86a2e0ef7850be0bc66dbec9849d388cced45542c61a18cd619fff",
+    "bfs-author-maa-compile-20260925-a1.diagnostic.build": "de0c71b6f0fe54a88be05ca5fb93bb5980d44fc787294964a63568c70d785beb",
+    "bfs-author-maa-compile-20260925-a1.source": "f1b53e83398c74871f0cf46dc8f98b728254992a8ee63aaf7419732680b42fb6",
+    "bfs-dx100-build-20260925-a2": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea",
+    "bfs-dx100-witness-20260926-a1": "c5ec9b7ca044728d61fb01be67616ea66e6364bd1c160569ab5dad9382570b8e",
+    "dx100-bfs-maa-reference": "3f8646f57df66f2db9f8236240c82fcdf2d610f47d28b7814e749333bceb9ae0",
+    "dx100-e4fc4af-4c": "94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1",
+    "mbit10": "fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79"
+  },
+  "protocol_requests": {},
+  "accounting": {
+    "preparation": [],
+    "supervision_recovery": {
+      "failed_proof_group": {
+        "id": "bfs-t15-setup-recovery-linux-20260926-a1",
+        "code_commit": "eb2f51d0a02b7d3d1ca9cc02b022a18f1181a3e2",
+        "observation": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-setup-recovery-linux-20260926-a1.dispatch/failed-group-observation.json",
+          "sha256": "50a12cb2568a07713a3bd5e6ff6553f81d0a0d9d470e0904a99d25aadd304c08"
+        },
+        "closed_at": "2026-09-26T23:22:10.665645-04:00",
+        "retained_bytes": 1548288
+      }
+    },
+    "preparation_reservation": {
+      "id": "bfs-supervision-recovery-linux-20260926-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648,
+      "selections": {
+        "owned_cleanup": "bfs-simulator-owned-linux-20260926-a5",
+        "dx100_interruption": "bfs-simulator-interruption-linux-20260926-a5"
+      },
+      "storage_paths": [
+        "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a5",
+        "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a5.dispatch",
+        "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a5",
+        "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a5.dispatch",
+        "/data/yanruj/EvolveSWDB_runs/bfs-supervision-recovery-linux-20260926-a1.dispatch"
+      ],
+      "supplement_testcases": [
+        "test_exit_between_stat_and_status_reproduces_old_abort_and_new_sampler_avoids_cross_read",
+        "test_live_rss_is_explicit_stat_pages_not_a_missing_status_fallback",
+        "test_unavailable_live_rss_fails_and_retains_exact_identity[missing-rss]",
+        "test_unavailable_live_rss_fails_and_retains_exact_identity[negative]",
+        "test_unavailable_live_rss_fails_and_retains_exact_identity[noninteger]",
+        "test_follows_all_threads_and_known_reparented_children_but_not_reused_pids",
+        "test_stale_child_list_cannot_adopt_an_unrelated_process",
+        "test_parent_reused_after_discovery_cannot_adopt_new_owners_child",
+        "test_process_changes_while_reading_task_children_do_not_follow_unrelated_descendants[task-reaped]",
+        "test_process_changes_while_reading_task_children_do_not_follow_unrelated_descendants[pid-reused]",
+        "test_missing_live_stat_fails_but_reaped_child_is_skipped",
+        "test_wrong_stat_pid_is_never_owned",
+        "test_linux_observes_live_child_zombie_and_reaping_without_status_fallback",
+        "test_esrch_exit_is_independently_confirmed_without_zero_rss[stat]",
+        "test_esrch_exit_is_independently_confirmed_without_zero_rss[tasks]",
+        "test_esrch_exit_is_independently_confirmed_without_zero_rss[children]",
+        "test_esrch_exit_is_independently_confirmed_without_zero_rss[final-stat]",
+        "test_esrch_stat_reopened_identity_and_rss_are_used",
+        "test_esrch_does_not_suppress_unavailable_live_proc_telemetry[stat]",
+        "test_esrch_does_not_suppress_unavailable_live_proc_telemetry[tasks]",
+        "test_esrch_does_not_suppress_unavailable_live_proc_telemetry[children]",
+        "test_esrch_recheck_preserves_unknown_and_invalid_errors[permission]",
+        "test_esrch_recheck_preserves_unknown_and_invalid_errors[malformed]",
+        "test_esrch_recheck_preserves_unknown_and_invalid_errors[confirmation-permission]",
+        "test_esrch_thread_exit_keeps_live_process_and_other_thread_children",
+        "test_esrch_reopen_does_not_adopt_reused_pid",
+        "test_proc_task_permission_errors_are_not_exit_evidence[tasks]",
+        "test_proc_task_permission_errors_are_not_exit_evidence[children]",
+        "test_identity_esrch_exit_requires_independently_absent_directory",
+        "test_identity_esrch_reopens_actual_identity_and_rss[False]",
+        "test_identity_esrch_reopens_actual_identity_and_rss[True]",
+        "test_identity_does_not_suppress_ambiguous_or_invalid_telemetry[live-esrch]",
+        "test_identity_does_not_suppress_ambiguous_or_invalid_telemetry[permission]",
+        "test_identity_does_not_suppress_ambiguous_or_invalid_telemetry[io]",
+        "test_identity_does_not_suppress_ambiguous_or_invalid_telemetry[malformed]",
+        "test_identity_does_not_suppress_ambiguous_or_invalid_telemetry[confirmation-esrch]",
+        "test_signal_never_admits_reused_or_unknown_identity[reused]",
+        "test_signal_never_admits_reused_or_unknown_identity[confirmation-esrch]",
+        "test_real_file_lock_and_exact_generation",
+        "test_historical_closure_allows_successor_and_records_current_occupancy[False]",
+        "test_historical_closure_allows_successor_and_records_current_occupancy[True]",
+        "test_second_observation_allows_independently_verified_successor_lease"
+      ],
+      "scope": "All preflight, full RSS and lease-reader supplemental stage, unchanged five/two fixture cases, independent auditors, wrapper/hash readbacks and final five-root accounting within600s/2GiB; full reservation charged without refund."
+    },
+    "included": "Flat immutable historical costs plus the full fresh600s/2GiB reservation. New raw and exact.dispatch are both charged; cleanup is inside original wall clock. T16 outstanding5s is retained in conservative cleanup annotation, not double-added to wall time.",
+    "excluded": "Historical common infrastructure and separately budgeted scientific prerequisites retain their earlier scope; no new exclusions."
+  },
+  "required_coverage": "bfs-dx100-coverage-20260926-a2.execute",
+  "historical_coverage_failure": {
+    "id": "bfs-dx100-coverage-20260926-a1.execute",
+    "state": "interrupted_public_marker_retained",
+    "sha256": "f64b604d10bf579c832145b07d6b6cee39d81833d23711375a6625f59fbc57f9",
+    "file_sha256": "dfa28a3bbe8170fe2e3dff6b140a41b4bfc7873c3e903fc39d73cc258acac26e"
+  },
+  "supervision": {
+    "format": "swdb.bfs.simulator-supervision.v1",
+    "cleanup": "shared_atomic_reservations_total_30_seconds",
+    "rss_source": "linux.proc_pid_stat.field24.v1",
+    "hard_memory_quota": false,
+    "outer_helper_preflight_included": true,
+    "required_linux_cases": [
+      "detached_success",
+      "detached_failure",
+      "nested_interruption",
+      "nested_term_resistant",
+      "public_dx100_interruption",
+      "sqlite_journal_unlink"
+    ],
+    "final_kill_and_persistence_reserve_seconds": 10
+  },
+  "trace_transport": "gem5-gzip.v1",
+  "clock_policy": {
+    "method": "original_absolute_end_clamp.v1",
+    "absolute_end": "2026-09-27T09:14:09.851819-04:00"
+  },
+  "linux_proof_provenance": {
+    "code_commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+    "runtime_sha256_digest": "d8529ea6c79f9da1b5998b83eef1f42022b3647c25f598844c74ffe1be8bfa5e",
+    "consumer_only_exceptions": {
+      "scripts/bfs_simulator_batch.py": "b08335b912e5e83e58f366ed5294c32c2de06073600c8faf4fe2cb370918b4e6",
+      "scripts/bfs_simulator_recovery.py": "e242c904684bd0e433d0c9501c3c1cd2d8e2f342db8188cfe1894b829d657744"
+    },
+    "evidence_kind": "contract_fixture"
+  }
+}

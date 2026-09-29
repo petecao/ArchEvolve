@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-27 10:40 ET",
+  "scope": "Hash-checked Git import of four existing scalar v2 build records as the retained unaccelerated baselines for T17 (dx100-bfs-scalar) and T20 (gapbs-bfs-do). No compile, rerun or relabeling.",
+  "source_checkout": {
+    "host": "mbit10",
+    "path": "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1",
+    "branch": "codex/bfs-scalar-v2-preparation-20260926-a1",
+    "commit": "6732d5327c4f9e22d97367ee3eeb3c09118867d3",
+    "state": "the four records were untracked files written by the public dx100-compile calls"
+  },
+  "method": "Read-only ssh cat of each record into this checkout; SHA-256 recomputed locally and compared with the host sha256sum taken 2026-09-27 10:05 ET; local swdb validate passed (257 records).",
+  "provenance_limit": "The enclosing preparation bfs-scalar-v2-preparation-20260926-a1 FAILED during finalization at 2026-09-26 21:08:44 ET (the monitor du child was killed during owned-descendant cleanup; lease generation 413 released; see scalar-v2-failed-terminal-20260926.json). All four public compile calls and chain checks returned zero before that failure. The preparation stays failed and charged; importing these records does not turn it into a passed attempt. Reuse of each binary still requires host reopening of its build hashes before any simulation.",
+  "records": [
+    {"path": "records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build.yaml", "sha256": "09e0abd048169282ce5b8511294c6d7a34e6c0ecea32734aa17c45f13145df29", "candidate": "bfs-dx100-compile-20260925-a1.candidate", "diagnostic_regions": false, "accelerated": false, "binary_sha256": "643f9d68d95157e402772b0aec59b1bc970f54e94d844e380c718ba725cffe2e", "use": "T17 unaccelerated dx100-bfs-scalar baseline, primary"},
+    {"path": "records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build.yaml", "sha256": "132a0c310c337f1d035713fe3de74f077cf5d9ac37b112077f5ff6733ad3de39", "candidate": "bfs-dx100-compile-20260925-a1.candidate", "diagnostic_regions": true, "accelerated": false, "binary_sha256": "a673e39cb190dc578a53e8e6f34f64f7df287e49c60331de377f8644330c0b3f", "use": "T17 baseline, diagnostic"},
+    {"path": "records/evaluations/bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build.yaml", "sha256": "93b38f6c9b814423997da178f49b07e6848d9e45098640fe80ddf8ceccaff922", "candidate": "bfs-upstream-compile-20260925-a1.candidate", "diagnostic_regions": false, "accelerated": false, "binary_sha256": "0a7017e44ae99de873a451010019c3bc517f43241d76821bf34a86f24d83984b", "use": "T20 unaccelerated gapbs-bfs-do baseline, primary"},
+    {"path": "records/evaluations/bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build.yaml", "sha256": "51d5fdcc7369720517120318860b3861de900e783cc2adc5047b94f6a4f081b1", "candidate": "bfs-upstream-compile-20260925-a1.candidate", "diagnostic_regions": true, "accelerated": false, "binary_sha256": "1eafdfc761cc06bdf262b47f04562ffea7face952b4b8f57a4c3d3acca75a093", "use": "T20 baseline, diagnostic"}
+  ],
+  "all_adapters": "dx100.complete_call.v2",
+  "gain_claim": false
+}

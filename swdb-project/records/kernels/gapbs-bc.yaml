@@ -1,0 +1,117 @@
+kind: kernel
+schema_version: '0.2'
+id: gapbs-bc
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: src-gapbs-bc
+  kind: source_code
+  description: gapbs src/bc.cc (BCVerifier, main), src/benchmark.h (SourcePicker) and src/command_line.h
+    (CLIterApp) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8, read 2026-09-22 from the copy in apps/gapbs.
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/bc.cc
+name: gapbs Betweenness Centrality (approximate)
+application: gapbs
+computes: 'Approximate betweenness-centrality scores (pvector<float>) for every vertex: Brandes'' dependency
+  accumulation over unweighted shortest paths (out-edges) from num_iters sources (-i, default 1; CLIterApp(...,
+  1) at bc.cc line 234), summed over the sources and then divided by the largest score so the maximum
+  is 1. Shortest-path counts are double (CountT). Every reached vertex''s dependency, the source''s included,
+  is added to its score. Sources come from SourcePicker (src/benchmark.h lines 46-68): uniformly random
+  vertices with non-zero out-degree from mt19937_64 seeded with kRandSeed = 27491095; -r <node> fixes
+  the source (with -i > 1 gapbs warns and reuses it). The verifier replays the same sources with its own
+  SourcePicker.'
+correctness_check:
+  command: '{binary} {input_args} -n 1 -v'
+  verifier:
+    description: 'BCVerifier: a serial Brandes from the same sources (BFS recording depths and path counts,
+      then dependencies from the farthest depth to the source), normalized by the largest score; every
+      vertex''s tested score must be within float epsilon of it.'
+    code:
+      root: application
+      path: src/bc.cc
+      lines: [164, 230]
+      excerpt: |-
+        // Still uses Brandes algorithm, but has the following differences:
+        // - serial (no need for atomics or dynamic scheduling)
+        // - uses vector for BFS queue
+        // - regenerates farthest to closest traversal order from depths
+        // - regenerates successors from depths
+        bool BCVerifier(const Graph &g, SourcePicker<Graph> &sp, NodeID num_iters,
+                        const pvector<ScoreT> &scores_to_test) {
+          pvector<ScoreT> scores(g.num_nodes(), 0);
+          for (int iter=0; iter < num_iters; iter++) {
+            NodeID source = sp.PickNext();
+            // BFS phase, only records depth & path_counts
+            pvector<int> depths(g.num_nodes(), -1);
+            depths[source] = 0;
+            vector<CountT> path_counts(g.num_nodes(), 0);
+            path_counts[source] = 1;
+            vector<NodeID> to_visit;
+            to_visit.reserve(g.num_nodes());
+            to_visit.push_back(source);
+            for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+              NodeID u = *it;
+              for (NodeID v : g.out_neigh(u)) {
+                if (depths[v] == -1) {
+                  depths[v] = depths[u] + 1;
+                  to_visit.push_back(v);
+                }
+                if (depths[v] == depths[u] + 1)
+                  path_counts[v] += path_counts[u];
+              }
+            }
+            // Get lists of vertices at each depth
+            vector<vector<NodeID>> verts_at_depth;
+            for (NodeID n : g.vertices()) {
+              if (depths[n] != -1) {
+                if (depths[n] >= static_cast<int>(verts_at_depth.size()))
+                  verts_at_depth.resize(depths[n] + 1);
+                verts_at_depth[depths[n]].push_back(n);
+              }
+            }
+            // Going from farthest to closest, compute "dependencies" (deltas)
+            pvector<ScoreT> deltas(g.num_nodes(), 0);
+            for (int depth=verts_at_depth.size()-1; depth >= 0; depth--) {
+              for (NodeID u : verts_at_depth[depth]) {
+                for (NodeID v : g.out_neigh(u)) {
+                  if (depths[v] == depths[u] + 1) {
+                    deltas[u] += (path_counts[u] / path_counts[v]) * (1 + deltas[v]);
+                  }
+                }
+                scores[u] += deltas[u];
+              }
+            }
+          }
+          // Normalize scores
+          ScoreT biggest_score = *max_element(scores.begin(), scores.end());
+          for (NodeID n : g.vertices())
+            scores[n] = scores[n] / biggest_score;
+          // Compare scores
+          bool all_ok = true;
+          for (NodeID n : g.vertices()) {
+            ScoreT delta = abs(scores_to_test[n] - scores[n]);
+            if (delta > std::numeric_limits<ScoreT>::epsilon()) {
+              cout << n << ": " << scores[n] << " != " << scores_to_test[n];
+              cout << "(" << delta << ")" << endl;
+              all_ok = false;
+            }
+          }
+          return all_ok;
+        }
+      sha256: null
+  pass_criterion: 'the run exits 0 and prints Verification: PASS'
+  pass_regex: Verification:\s+PASS
+  tolerance:
+    value: 1.1920928955078125e-07
+    measure: absolute difference per vertex between the tested and the recomputed normalized score; every
+      vertex must be within it (maximum norm)
+    note: std::numeric_limits<ScoreT>::epsilon() with ScoreT = float (bc.cc lines 47, 222-223), 2^-23;
+      fixed in the code, not a command-line option. Scores are normalized to [0, 1], so it is about one
+      float ulp at 1.0.
+baseline_implementation: gapbs-bc-brandes
+notes:
+- Any code whose scores pass BCVerifier implements this kernel (ADR 0001).
+- 'The verifier''s tolerance is absolute and tight: an implementation that reorders the float accumulation
+  may fail it on some inputs.'
+extensions: {}

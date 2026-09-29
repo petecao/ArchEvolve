@@ -1,0 +1,557 @@
+{
+  "created": "2026-09-26",
+  "scope": "Actual T16 metadata-only public freeze outcomes; no guest execution or comparison",
+  "inventory_ref": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/protocol-export-inventory.json",
+    "sha256": "062ee1eeeb1126a561549374bd37a010f630b32786c2c7f221aaea0cdfc8780a",
+    "bytes": 2097
+  },
+  "inventory": {
+    "created": "2026-09-26",
+    "observed_at": "2026-09-26T19:35:13.117579-04:00",
+    "parent": "21d58c4812a368d1707e7d1f5eae9758c0be7a75",
+    "source_head": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+    "source_checkout": "/data1/yanruj/EvolveSWDB_t16_freeze_20260926_a1",
+    "file_count": 2,
+    "total_bytes": 22056,
+    "source_bearing": false,
+    "files": [
+      {
+        "role": "artifact",
+        "path": "records/protocols/bfs-author-reference-20260925.b4cbd3924b40e7df.yaml",
+        "kind": "protocol",
+        "id": "bfs-author-reference-20260925.b4cbd3924b40e7df",
+        "bytes": 10990,
+        "sha256": "a1e80b7b7d8e0e8ecc75934420a18266d136184ca41127da0c565eb0786c8c97",
+        "canonical_sha256": "2794aa124bcef6d923a43d5842872e5e5a6c6b338292634a4d860e4e16cc5524",
+        "identity_sha256": "b4cbd3924b40e7dfc2bdb7beff3c46a08fc723491aa0b8b86288f3a2eb2a702c",
+        "settings_sha256": "a2b5ba1101647802a393ab416837e736c5e6f2917056a2240576a0fb7aa46dc7",
+        "multiline_string_fields": [],
+        "maximum_string_length": 82,
+        "inline_source_or_rawlog_fields": []
+      },
+      {
+        "role": "control",
+        "path": "records/protocols/bfs-author-matched-control-20260925.d02e719e2d375764.yaml",
+        "kind": "protocol",
+        "id": "bfs-author-matched-control-20260925.d02e719e2d375764",
+        "bytes": 11066,
+        "sha256": "603c82f4ae48da45be93a6a1da1b6bb03609b5c3cebead8881812bf26c22edd7",
+        "canonical_sha256": "453fc651d8bdcc2e670eb7a086ea65eb3cbe222cbb2020aa4944cb8be7d80778",
+        "identity_sha256": "d02e719e2d37576481275756bef67a3a38f7b3ee49227aa66a3cc281661cd74a",
+        "settings_sha256": "19b7319d8c2775f5e9f44d0091c3bd29968465701b6105e3bb283b49e1a38a5b",
+        "multiline_string_fields": [],
+        "maximum_string_length": 115,
+        "inline_source_or_rawlog_fields": []
+      }
+    ],
+    "excludes": [
+      "raw chain outputs",
+      "native24",
+      "provider6"
+    ],
+    "terminal": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/terminal-validation.json",
+      "sha256": "2b198edfe65cc3bd72c05871d7b98246e42a053faba97499cce8905eee1efecd",
+      "bytes": 11739
+    }
+  },
+  "terminal_summary": {
+    "union_count": 8,
+    "observations": [
+      {
+        "observed_at": "2026-09-26T19:35:12.892962-04:00",
+        "processes": [
+          {
+            "expected": {
+              "pid": 3085021,
+              "start_ticks": 496750216
+            },
+            "actual": {
+              "pid": 3085021,
+              "parent_pid": 359742,
+              "start_ticks": 496750216,
+              "state": "Z",
+              "rss_bytes": 0
+            },
+            "same_identity_present": true
+          },
+          {
+            "expected": {
+              "pid": 3085025,
+              "start_ticks": 496750224
+            },
+            "actual": null,
+            "same_identity_present": false
+          },
+          {
+            "expected": {
+              "pid": 3085026,
+              "start_ticks": 496750224
+            },
+            "actual": null,
+            "same_identity_present": false
+          },
+          {
+            "expected": {
+              "pid": 3085095,
+              "start_ticks": 496750248
+            },
+            "actual": null,
+            "same_identity_present": false
+          },
+          {
+            "expected": {
+              "pid": 3085102,
+              "start_ticks": 496750814
+            },
+            "actual": null,
+            "same_identity_present": false
+          },
+          {
+            "expected": {
+              "pid": 3085107,
+              "start_ticks": 496751746
+            },
+            "actual": null,
+            "same_identity_present": false
+          },
+          {
+            "expected": {
+              "pid": 3085114,
+              "start_ticks": 496752658
+            },
+            "actual": null,
+            "same_identity_present": false
+          },
+          {
+            "expected": {
+              "pid": 3085117,
+              "start_ticks": 496753047
+            },
+            "actual": null,
+            "same_identity_present": false
+          }
+        ],
+        "leases": {
+          "mbit10-evaluation-node0": {
+            "metadata": {
+              "active_session": null,
+              "heartbeat_at": "2026-09-26T23:33:21Z",
+              "lease": {
+                "acquired_at": "2026-09-26T23:32:49Z",
+                "daemon_pid": 3085026,
+                "daemon_start_token": "sh3085026-1790465569",
+                "generation": 331,
+                "host": "mbit10",
+                "lease_name": "mbit10-evaluation-node0",
+                "mode": "measure",
+                "session_id": null
+              },
+              "attempt_pid": null,
+              "attempt_start_token": null,
+              "recovered_from_generation": null,
+              "released_at": "2026-09-26T23:33:21Z",
+              "session_note": null,
+              "session_state": "none",
+              "state": "released",
+              "writer": "hostlock.sh"
+            },
+            "kernel_rows": []
+          },
+          "mbit10-evaluation-node1": {
+            "metadata": {
+              "active_session": null,
+              "heartbeat_at": "2026-09-26T22:50:54Z",
+              "lease": {
+                "acquired_at": "2026-09-26T22:50:45Z",
+                "daemon_pid": 3080597,
+                "daemon_start_token": "sh3080597-1790463045",
+                "generation": 406,
+                "host": "mbit10",
+                "lease_name": "mbit10-evaluation-node1",
+                "mode": "measure",
+                "session_id": null
+              },
+              "attempt_pid": null,
+              "attempt_start_token": null,
+              "recovered_from_generation": null,
+              "released_at": "2026-09-26T22:50:54Z",
+              "session_note": null,
+              "session_state": "none",
+              "state": "released",
+              "writer": "hostlock.sh"
+            },
+            "kernel_rows": []
+          },
+          "mbit10-evaluation": {
+            "metadata": {
+              "active_session": null,
+              "heartbeat_at": "2026-09-12T04:49:11Z",
+              "lease": {
+                "acquired_at": "2026-09-12T01:35:42Z",
+                "daemon_pid": 209457,
+                "daemon_start_token": "sh209457-1789176942",
+                "generation": 77,
+                "host": "mbit10",
+                "lease_name": "mbit10-evaluation",
+                "mode": "measure",
+                "session_id": null
+              },
+              "attempt_pid": null,
+              "attempt_start_token": null,
+              "recovered_from_generation": null,
+              "released_at": "2026-09-12T04:49:11Z",
+              "session_note": null,
+              "session_state": "none",
+              "state": "released",
+              "writer": "hostlock.sh"
+            },
+            "kernel_rows": []
+          }
+        }
+      },
+      {
+        "observed_at": "2026-09-26T19:35:13.104814-04:00",
+        "processes": [
+          {
+            "expected": {
+              "pid": 3085021,
+              "start_ticks": 496750216
+            },
+            "actual": {
+              "pid": 3085021,
+              "parent_pid": 359742,
+              "start_ticks": 496750216,
+              "state": "Z",
+              "rss_bytes": 0
+            },
+            "same_identity_present": true
+          },
+          {
+            "expected": {
+              "pid": 3085025,
+              "start_ticks": 496750224
+            },
+            "actual": null,
+            "same_identity_present": false
+          },
+          {
+            "expected": {
+              "pid": 3085026,
+              "start_ticks": 496750224
+            },
+            "actual": null,
+            "same_identity_present": false
+          },
+          {
+            "expected": {
+              "pid": 3085095,
+              "start_ticks": 496750248
+            },
+            "actual": null,
+            "same_identity_present": false
+          },
+          {
+            "expected": {
+              "pid": 3085102,
+              "start_ticks": 496750814
+            },
+            "actual": null,
+            "same_identity_present": false
+          },
+          {
+            "expected": {
+              "pid": 3085107,
+              "start_ticks": 496751746
+            },
+            "actual": null,
+            "same_identity_present": false
+          },
+          {
+            "expected": {
+              "pid": 3085114,
+              "start_ticks": 496752658
+            },
+            "actual": null,
+            "same_identity_present": false
+          },
+          {
+            "expected": {
+              "pid": 3085117,
+              "start_ticks": 496753047
+            },
+            "actual": null,
+            "same_identity_present": false
+          }
+        ],
+        "leases": {
+          "mbit10-evaluation-node0": {
+            "metadata": {
+              "active_session": null,
+              "heartbeat_at": "2026-09-26T23:33:21Z",
+              "lease": {
+                "acquired_at": "2026-09-26T23:32:49Z",
+                "daemon_pid": 3085026,
+                "daemon_start_token": "sh3085026-1790465569",
+                "generation": 331,
+                "host": "mbit10",
+                "lease_name": "mbit10-evaluation-node0",
+                "mode": "measure",
+                "session_id": null
+              },
+              "attempt_pid": null,
+              "attempt_start_token": null,
+              "recovered_from_generation": null,
+              "released_at": "2026-09-26T23:33:21Z",
+              "session_note": null,
+              "session_state": "none",
+              "state": "released",
+              "writer": "hostlock.sh"
+            },
+            "kernel_rows": []
+          },
+          "mbit10-evaluation-node1": {
+            "metadata": {
+              "active_session": null,
+              "heartbeat_at": "2026-09-26T22:50:54Z",
+              "lease": {
+                "acquired_at": "2026-09-26T22:50:45Z",
+                "daemon_pid": 3080597,
+                "daemon_start_token": "sh3080597-1790463045",
+                "generation": 406,
+                "host": "mbit10",
+                "lease_name": "mbit10-evaluation-node1",
+                "mode": "measure",
+                "session_id": null
+              },
+              "attempt_pid": null,
+              "attempt_start_token": null,
+              "recovered_from_generation": null,
+              "released_at": "2026-09-26T22:50:54Z",
+              "session_note": null,
+              "session_state": "none",
+              "state": "released",
+              "writer": "hostlock.sh"
+            },
+            "kernel_rows": []
+          },
+          "mbit10-evaluation": {
+            "metadata": {
+              "active_session": null,
+              "heartbeat_at": "2026-09-12T04:49:11Z",
+              "lease": {
+                "acquired_at": "2026-09-12T01:35:42Z",
+                "daemon_pid": 209457,
+                "daemon_start_token": "sh209457-1789176942",
+                "generation": 77,
+                "host": "mbit10",
+                "lease_name": "mbit10-evaluation",
+                "mode": "measure",
+                "session_id": null
+              },
+              "attempt_pid": null,
+              "attempt_start_token": null,
+              "recovered_from_generation": null,
+              "released_at": "2026-09-12T04:49:11Z",
+              "session_note": null,
+              "session_state": "none",
+              "state": "released",
+              "writer": "hostlock.sh"
+            },
+            "kernel_rows": []
+          }
+        }
+      }
+    ],
+    "first_wrapper_current_survivors": [
+      {
+        "pid": 3085021,
+        "parent_pid": 359742,
+        "start_ticks": 496750216,
+        "state": "Z",
+        "rss_bytes": 0,
+        "argv": ""
+      }
+    ]
+  },
+  "phase": {
+    "started": "2026-09-26T19:30:05-04:00",
+    "finished": "2026-09-26T19:33:21.471410-04:00",
+    "host_wall_seconds": 196.471424,
+    "bounds": {
+      "cleanup_seconds": 30,
+      "outer_seconds": 600,
+      "public_command_seconds": 90,
+      "work_seconds": 570
+    },
+    "preflight_completed": "2026-09-26T19:32:55.253844-04:00"
+  },
+  "artifact_check_count": 42,
+  "export": {
+    "commit": "5db2bec9735524b92d6ffd40dd10e76854584141",
+    "parent": "21d58c4812a368d1707e7d1f5eae9758c0be7a75",
+    "branch": "codex/bfs-t16-protocol-evidence-20260926-a1",
+    "tree": "0587cd80cf208ca1f897d781f84d83e49b8200c8",
+    "files": [
+      {
+        "bytes": 10990,
+        "canonical_sha256": "2794aa124bcef6d923a43d5842872e5e5a6c6b338292634a4d860e4e16cc5524",
+        "id": "bfs-author-reference-20260925.b4cbd3924b40e7df",
+        "identity_sha256": "b4cbd3924b40e7dfc2bdb7beff3c46a08fc723491aa0b8b86288f3a2eb2a702c",
+        "inline_source_or_rawlog_fields": [],
+        "kind": "protocol",
+        "maximum_string_length": 82,
+        "multiline_string_fields": [],
+        "path": "records/protocols/bfs-author-reference-20260925.b4cbd3924b40e7df.yaml",
+        "role": "artifact",
+        "settings_sha256": "a2b5ba1101647802a393ab416837e736c5e6f2917056a2240576a0fb7aa46dc7",
+        "sha256": "a1e80b7b7d8e0e8ecc75934420a18266d136184ca41127da0c565eb0786c8c97",
+        "git_blob": "dbb2464fe1e37c1644098a3b7de257b4c2678a5b"
+      },
+      {
+        "bytes": 11066,
+        "canonical_sha256": "453fc651d8bdcc2e670eb7a086ea65eb3cbe222cbb2020aa4944cb8be7d80778",
+        "id": "bfs-author-matched-control-20260925.d02e719e2d375764",
+        "identity_sha256": "d02e719e2d37576481275756bef67a3a38f7b3ee49227aa66a3cc281661cd74a",
+        "inline_source_or_rawlog_fields": [],
+        "kind": "protocol",
+        "maximum_string_length": 115,
+        "multiline_string_fields": [],
+        "path": "records/protocols/bfs-author-matched-control-20260925.d02e719e2d375764.yaml",
+        "role": "control",
+        "settings_sha256": "19b7319d8c2775f5e9f44d0091c3bd29968465701b6105e3bb283b49e1a38a5b",
+        "sha256": "603c82f4ae48da45be93a6a1da1b6bb03609b5c3cebead8881812bf26c22edd7",
+        "git_blob": "92ae36d58a38b1a318948ed25dad08d52f138ca4"
+      }
+    ],
+    "receipt": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/protocol-export-commit.json",
+      "sha256": "9ff8ded5b20346511e665b2780d9c5b5d53719de393f4e43e3b660be8b091cf4",
+      "bytes": 2473
+    },
+    "external_push": true,
+    "remote_verified_commit": "5db2bec9735524b92d6ffd40dd10e76854584141"
+  },
+  "public_results": {
+    "artifact": {
+      "file": {
+        "bytes": 10990,
+        "path": "/data1/yanruj/EvolveSWDB_t16_freeze_20260926_a1/records/protocols/bfs-author-reference-20260925.b4cbd3924b40e7df.yaml",
+        "sha256": "a1e80b7b7d8e0e8ecc75934420a18266d136184ca41127da0c565eb0786c8c97"
+      },
+      "id": "bfs-author-reference-20260925.b4cbd3924b40e7df",
+      "identity_sha256": "b4cbd3924b40e7dfc2bdb7beff3c46a08fc723491aa0b8b86288f3a2eb2a702c",
+      "settings_sha256": "a2b5ba1101647802a393ab416837e736c5e6f2917056a2240576a0fb7aa46dc7",
+      "sha256": "2794aa124bcef6d923a43d5842872e5e5a6c6b338292634a4d860e4e16cc5524"
+    },
+    "control": {
+      "file": {
+        "bytes": 11066,
+        "path": "/data1/yanruj/EvolveSWDB_t16_freeze_20260926_a1/records/protocols/bfs-author-matched-control-20260925.d02e719e2d375764.yaml",
+        "sha256": "603c82f4ae48da45be93a6a1da1b6bb03609b5c3cebead8881812bf26c22edd7"
+      },
+      "id": "bfs-author-matched-control-20260925.d02e719e2d375764",
+      "identity_sha256": "d02e719e2d37576481275756bef67a3a38f7b3ee49227aa66a3cc281661cd74a",
+      "settings_sha256": "19b7319d8c2775f5e9f44d0091c3bd29968465701b6105e3bb283b49e1a38a5b",
+      "sha256": "453fc651d8bdcc2e670eb7a086ea65eb3cbe222cbb2020aa4944cb8be7d80778"
+    }
+  },
+  "public_stages": [
+    {
+      "name": "artifact.freeze",
+      "started": "2026-09-26T19:32:55.254796-04:00",
+      "finished": "2026-09-26T19:33:04.546341-04:00",
+      "returncode": 0,
+      "identity": {
+        "parent_pid": 3085095,
+        "pid": 3085102,
+        "rss_bytes": 0,
+        "start_ticks": 496750814,
+        "state": "R"
+      },
+      "stdout": {
+        "bytes": 13702,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/artifact.freeze.json",
+        "sha256": "0c72470daacff0623736c05a332c88f1da3ee62bf66babaebbd78b8778f6a825"
+      },
+      "stderr": {
+        "bytes": 0,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/artifact.freeze.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "control.freeze",
+      "started": "2026-09-26T19:33:04.573648-04:00",
+      "finished": "2026-09-26T19:33:13.664691-04:00",
+      "returncode": 0,
+      "identity": {
+        "parent_pid": 3085095,
+        "pid": 3085107,
+        "rss_bytes": 0,
+        "start_ticks": 496751746,
+        "state": "R"
+      },
+      "stdout": {
+        "bytes": 13772,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/control.freeze.json",
+        "sha256": "f40116ed1b8913eb8b9994a53de3b386155dbdcffb9028db992854274a55fc59"
+      },
+      "stderr": {
+        "bytes": 0,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/control.freeze.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "artifact.get-chain",
+      "started": "2026-09-26T19:33:13.692376-04:00",
+      "finished": "2026-09-26T19:33:17.568885-04:00",
+      "returncode": 0,
+      "identity": {
+        "parent_pid": 3085095,
+        "pid": 3085114,
+        "rss_bytes": 0,
+        "start_ticks": 496752658,
+        "state": "R"
+      },
+      "stdout": {
+        "bytes": 603036,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/artifact.get-chain.json",
+        "sha256": "48d8e8e50d0225a7dbd4e942a350a03ce1613678456d18370969e722fef0195e"
+      },
+      "stderr": {
+        "bytes": 0,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/artifact.get-chain.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "control.get-chain",
+      "started": "2026-09-26T19:33:17.581174-04:00",
+      "finished": "2026-09-26T19:33:21.458362-04:00",
+      "returncode": 0,
+      "identity": {
+        "parent_pid": 3085095,
+        "pid": 3085117,
+        "rss_bytes": 0,
+        "start_ticks": 496753047,
+        "state": "R"
+      },
+      "stdout": {
+        "bytes": 603118,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/control.get-chain.json",
+        "sha256": "2022b7e556f661acc898bfb5a1ef44eac0c9f409cac3bb3af29ff9d539601a72"
+      },
+      "stderr": {
+        "bytes": 0,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-freeze-20260926-a1/control.get-chain.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "original_wrapper_failure": "literal dollar instead of pane PID; before any public command",
+  "preflight_runtime_commit": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+  "future_guest_dispatch": false
+}

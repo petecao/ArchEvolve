@@ -1,0 +1,40 @@
+{
+  "created": "2026-09-26 ET",
+  "commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+  "sole_parent": "67313d9b2a45d9f0fb23d935b56e755a3a19fa7f",
+  "branch": "codex/bfs-dx100-coverage-20260926-a2",
+  "files": [
+    {
+      "path": "tests/test_dx100_interruption.py",
+      "bytes": 7467,
+      "sha256": "abfec3c0aa58f3c52506df4f463d1573cef118e8e14547a4298e064d4941aa46",
+      "blob": "93b0998a087ecffbcb5622e895c0f8fb7bdd1470"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-coverage-a2-20260926.json",
+      "bytes": 5778,
+      "sha256": "ffede85845f651322d1149fc04fb1d4d3cd604224d7b10e560b342ff23c4e08d",
+      "blob": "9a0d47f0c505889ea14394c454f89a7e9eb0104d"
+    },
+    {
+      "path": "scripts/bfs_dx100_coverage_a2.py",
+      "bytes": 46202,
+      "sha256": "e9bbbf81733c3b24afa03a516b4c81b18b8e192f214d7f0471ec2424013767f0",
+      "blob": "01e90a0c4bd1c8d73128217f1e8c096442064a02"
+    }
+  ],
+  "limits": "Same unused A2 experiment, 21:00 latest launch and 3600-second total; both new actual Linux proofs required. No canonical/source payload or raw logs.",
+  "validation": {
+    "date": "2026-09-26 ET",
+    "command": "python3 -m pytest -q -p no:cacheprovider tests/test_dx100_interruption.py tests/test_bfs_dx100_coverage_a2.py",
+    "result": "67 passed, 2 Linux skipped in16.67s",
+    "returncode": 0,
+    "log": {
+      "path": "/private/tmp/bfs-a2-exact-export-20260926.log",
+      "bytes": 111,
+      "sha256": "7d5d0f76526c569b1c045f1dd2b7b657672b58d35bf4a61495ab0df1bf0d2d5d"
+    },
+    "export_clean_unchanged": true,
+    "limits": "Actual fresh Linux proofs remain required."
+  }
+}

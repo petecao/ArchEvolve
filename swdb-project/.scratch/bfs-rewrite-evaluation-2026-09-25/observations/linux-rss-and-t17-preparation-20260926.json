@@ -1,0 +1,65 @@
+{
+  "created": "2026-09-26",
+  "id": "bfs-owned-rss-linux-20260926-a1",
+  "linux_lifecycle": {
+    "state": "passed",
+    "code_commit": "a8b89115c9650173d516a50e3ed659036e614428",
+    "host": "mbit10",
+    "lane": 0,
+    "lease_generation": 322,
+    "lease_released_at_et": "2026-09-26 14:35:20 ET",
+    "tests_passed": 1,
+    "seconds": 0.35,
+    "outer_exit": 0,
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "test_scope": "Four actual children observed live, zombie with explicit zero RSS, and reaped; no evaluation or performance claim.",
+    "independent_terminal_check_et": "2026-09-26 14:35:59 ET",
+    "four_children_and_pytest_leader_absent": true,
+    "terminal": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-owned-rss-linux-20260926-a1/terminal-validation.json",
+      "bytes": 2824,
+      "sha256": "f42f283f7e7faba90032dd7490795a3081bf00c0b0ed75dc2111c4a89f04e1e3"
+    }
+  },
+  "local_exact_export": {
+    "commit": "a53e619de11278e2763c7a22576308d1a23f19bf",
+    "branch": "codex/bfs-t17-build-client-20260926",
+    "ls_remote_verified": true,
+    "tests_passed": 59,
+    "linux_tests_skipped": 3,
+    "seconds": 1.45,
+    "log": {
+      "path": "/private/tmp/bfs-t17-rss-exact-export-20260926.log",
+      "bytes": 110,
+      "sha256": "eebdca06e350031709834b83e16e8e93afc4e5b0406047ad06ccbc16f543ca40"
+    }
+  },
+  "t17_linux_cleanup": {
+    "state": "passed",
+    "code_commit": "a53e619de11278e2763c7a22576308d1a23f19bf",
+    "host": "mbit10",
+    "lane": 0,
+    "lease_generation": 323,
+    "lease_released_at_et": "2026-09-26 14:37:39 ET",
+    "tests_passed": 2,
+    "seconds": 0.92,
+    "outer_exit": 0,
+    "success_and_failed_leader_variants": true,
+    "direct_and_detached_child_reaped_before_stage_boundary": true,
+    "independent_terminal_check_et": "2026-09-26 14:38:21 ET",
+    "all_seven_observed_process_identities_absent": true,
+    "terminal": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-cleanup-linux-20260926-a1/terminal-validation.json",
+      "bytes": 4988,
+      "sha256": "10c7585db1000388e3bd465d476fe00642cd9f5156966f208e2035d54c89ed17"
+    }
+  },
+  "t17_compilation": {
+    "state": "complete",
+    "observation": "t17-build-only-terminal-20260926.json",
+    "correctness": "unverified",
+    "timing_samples": 0
+  },
+  "gain_claim": false
+}

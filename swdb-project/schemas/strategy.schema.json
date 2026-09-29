@@ -1,0 +1,421 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "strategy",
+  "title": "Optimization strategy: a reusable technique identified by its target and effect (ADR 0004); it holds no code",
+  "description": "Numbers such as tile size or prefetch distance are parameters, never part of the identity.",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "strategy"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target": {
+      "type": "string",
+      "x-vocab": "strategy_targets"
+    },
+    "effect": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "x-vocab": "effect_kinds"
+          },
+          "step": {
+            "type": "integer",
+            "description": "Position of the step in the target pattern's chain: 0 is the first step; negative counts from the end (-1 is the target step)."
+          },
+          "shape_before": {
+            "type": "string",
+            "x-vocab": "address_shapes"
+          },
+          "shape_after": {
+            "type": "string",
+            "x-vocab": "address_shapes"
+          },
+          "address_shapes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "x-vocab": "address_shapes"
+            },
+            "description": "The added pattern's steps' address shapes, first to last."
+          },
+          "update_kind": {
+            "type": "string",
+            "x-vocab": "update_kinds"
+          },
+          "lanes": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 2
+              },
+              {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              }
+            ],
+            "x-reason": "lanes is a number of at least 2 or the name of a parameter",
+            "description": "Accesses per instruction: a number, or the name of one of the strategy's parameters."
+          },
+          "properties": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "x-vocab": "input_properties"
+            },
+            "description": "The input properties the reordering changes."
+          },
+          "index_locality": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "x-vocab": "index_localities",
+            "description": "The index locality after reordering, or null if not stated."
+          },
+          "restructure": {
+            "type": "string",
+            "x-vocab": "loop_restructures"
+          },
+          "note": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "reshape"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "step",
+                "shape_before",
+                "shape_after"
+              ],
+              "x-required-reasons": {
+                "step": "a reshape effect needs step, shape_before, shape_after",
+                "shape_before": "a reshape effect needs step, shape_before, shape_after",
+                "shape_after": "a reshape effect needs step, shape_before, shape_after"
+              },
+              "propertyNames": {
+                "enum": [
+                  "kind",
+                  "step",
+                  "shape_before",
+                  "shape_after",
+                  "note"
+                ],
+                "x-reason": "a reshape effect has only kind, step, shape_before, shape_after, and note"
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "add_pattern"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "address_shapes",
+                "update_kind"
+              ],
+              "x-required-reasons": {
+                "address_shapes": "an add_pattern effect needs address_shapes, update_kind",
+                "update_kind": "an add_pattern effect needs address_shapes, update_kind"
+              },
+              "propertyNames": {
+                "enum": [
+                  "kind",
+                  "address_shapes",
+                  "update_kind",
+                  "note"
+                ],
+                "x-reason": "an add_pattern effect has only kind, address_shapes, update_kind, and note"
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "hint"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "step"
+              ],
+              "x-required-reasons": {
+                "step": "a hint effect needs step"
+              },
+              "propertyNames": {
+                "enum": [
+                  "kind",
+                  "step",
+                  "note"
+                ],
+                "x-reason": "a hint effect has only kind, step, and note"
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "widen"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "lanes"
+              ],
+              "x-required-reasons": {
+                "lanes": "a widen effect needs lanes"
+              },
+              "propertyNames": {
+                "enum": [
+                  "kind",
+                  "lanes",
+                  "note"
+                ],
+                "x-reason": "a widen effect has only kind, lanes, and note"
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "reorder"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "properties"
+              ],
+              "x-required-reasons": {
+                "properties": "a reorder effect needs properties"
+              },
+              "propertyNames": {
+                "enum": [
+                  "kind",
+                  "properties",
+                  "index_locality",
+                  "note"
+                ],
+                "x-reason": "a reorder effect has only kind, properties, index_locality, and note"
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "restructure_loop"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "restructure"
+              ],
+              "x-required-reasons": {
+                "restructure": "a restructure_loop effect needs restructure"
+              },
+              "propertyNames": {
+                "enum": [
+                  "kind",
+                  "restructure",
+                  "note"
+                ],
+                "x-reason": "a restructure_loop effect has only kind, restructure, and note"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "meaning",
+          "unit"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "meaning": {
+            "type": "string",
+            "minLength": 1
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "preconditions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requires_shapes",
+        "requires_semantics",
+        "unchecked"
+      ],
+      "properties": {
+        "requires_shapes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "x-vocab": "address_shapes"
+          },
+          "description": "Address shapes some step of the target pattern must have."
+        },
+        "requires_update_kinds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "x-vocab": "update_kinds"
+          },
+          "description": "Optional: the update kinds the target pattern may have (absent or empty means any)."
+        },
+        "requires_semantics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "field",
+              "value"
+            ],
+            "properties": {
+              "field": {
+                "type": "string"
+              },
+              "value": {}
+            }
+          },
+          "description": "Semantic facts the target pattern must have, with a known basis."
+        },
+        "unchecked": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Conditions the tool cannot check, in words; always shown as check by hand."
+        }
+      }
+    },
+    "benefits_when": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "condition",
+          "terms",
+          "basis",
+          "source"
+        ],
+        "properties": {
+          "condition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "terms": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "The profile metrics, input properties, or machine cache sizes (l1d_bytes, l2_bytes, llc_bytes) the condition is written in."
+          },
+          "basis": {
+            "const": "reported",
+            "x-reason": "a strategy states only reported benefit (basis: reported); measured benefit comes from profiles"
+          },
+          "source": {
+            "type": "string",
+            "description": "ID of this record's provenance entry (a paper or a person) that reports it."
+          }
+        },
+        "x-required-reasons": {
+          "basis": "a reported benefit states basis: reported",
+          "source": "a reported benefit names its source: a provenance entry of this record",
+          "terms": "a reported benefit names the metrics, input properties, or cache sizes its condition uses",
+          "condition": "a reported benefit states its condition"
+        }
+      }
+    },
+    "common_intrinsics": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "x-ref": "intrinsic"
+      },
+      "description": "Intrinsics commonly used to apply the strategy (suggestions)."
+    }
+  },
+  "required": [
+    "name",
+    "target",
+    "effect",
+    "parameters",
+    "preconditions"
+  ]
+}
