@@ -40,7 +40,7 @@ from swdb.store import Store
 
 ET = ZoneInfo('America/New_York')
 GIB = 1024**3
-PLAN_HASHES = {'t16-reference-m': 'c01004198e4be94b6b5df834bf35a3f568bafaa9bb0713cf5df73d432319f50f', 't16-reference-s1': '9d2961f946ad7de62a241087bf1069f33e514cd57bcd5fa6f2dfbb6b1041b801', 't16-reference-s2': 'd132d249f53f0e60612ec401dc00d40506efb5aa6b0042558cb287492924f6a6', 't17-t20-routes-a2': '0782f3bff214cbaef20a0ef06710db98c8b0e0b9759a6860aac8ba0213b7cc77', 't17-t20-routes': '29d4adf356147e932a0c5654d0b447c7cfd4839b709c590c4313eb97fa1ca06f', 't15-pilot-b3': '85b0b76901b008b28fcce1da0245e98f4904ca8ee3a97edf4da1dc78397c4368', 't15-pilot-b2': '0545e3f47fa09feabd673fa1d4a69fb8326abe2691535e1b0dffab29ed3da3be', 't15-pilot': 'f515581f5ff0bc933a93eff3ad8e93b0dfcf58a960606c16f1505ca9fb878f8a', 't16-protocol-recovery': 'eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8', 't16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea', 't16-reference': 'a6749593b06e983f6c13bc11940a5e0da37f2551f0271ec1cb912a2a0f7785ca'}
+PLAN_HASHES = {'t17-t20-routes-a3': '04e99a1875516fe80936a23301f85dfff4a91db2a2ce68e8ffe6570f4744653b', 't17-t20-routes-a2': '0782f3bff214cbaef20a0ef06710db98c8b0e0b9759a6860aac8ba0213b7cc77', 't17-t20-routes': '29d4adf356147e932a0c5654d0b447c7cfd4839b709c590c4313eb97fa1ca06f', 't15-pilot-b3': '85b0b76901b008b28fcce1da0245e98f4904ca8ee3a97edf4da1dc78397c4368', 't15-pilot-b2': '0545e3f47fa09feabd673fa1d4a69fb8326abe2691535e1b0dffab29ed3da3be', 't15-pilot': 'f515581f5ff0bc933a93eff3ad8e93b0dfcf58a960606c16f1505ca9fb878f8a', 't16-protocol-recovery': 'eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8', 't16-seal-recovery': '5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db', 't15-lease-recovery': '6798cbc9396a26e178ac1dbb9c631a4fa2dac4b6705751424b301a9dedb93a01', 't16-lease-recovery': 'ea1ecabb42854562bbc243b84f6afaab234597e4475e8013c80f887c5c53832a', 't15-supervision-recovery': '5c3a7cbfd0498ff746ddd635bb4fc11f6e4cbf555ff957af1a56248a70bb6ea6', 't16-supervision-recovery': '1400c0572527e913c64e858d13ac0edbc7eda2f5925daa66f651a9ca49036825', 't15-setup-recovery': '8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e', 't15': 'bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833', 't16': '8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e', 't15-correction': '4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea', 't16-reference-m': 'c01004198e4be94b6b5df834bf35a3f568bafaa9bb0713cf5df73d432319f50f', 't16-reference-s1': '9d2961f946ad7de62a241087bf1069f33e514cd57bcd5fa6f2dfbb6b1041b801', 't16-reference-s2': 'd132d249f53f0e60612ec401dc00d40506efb5aa6b0042558cb287492924f6a6', 't16-reference': 'a6749593b06e983f6c13bc11940a5e0da37f2551f0271ec1cb912a2a0f7785ca'}
 PILOT_KIND = 't15-pilot'
 PILOT_ID = 'bfs-t15-pilot-simulator-batch-20260927-b1'
 # 2026-09-27: b1 failed its first-pair 120-s profile gate; b2 is the fresh relaunch.
@@ -67,6 +67,8 @@ INCREMENTAL = {PILOT_POLICY: (PILOT_KIND, PILOT_ID, 'bfs-t15-pilot-preparation-2
                # a2 (2026-09-28): v2 source-0 protocols after the approved scope change.
                'routes_incremental_allocation.a2': ('t17-t20-routes-a2', 'bfs-t17-t20-routes-simulator-batch-20260928-a2',
                                                     'bfs-t17-t20-routes-preparation-20260928-a2'),
+               'routes_incremental_allocation.a3': ('t17-t20-routes-a3', 'bfs-t17-t20-routes-simulator-batch-20260928-a3',
+                                                    'bfs-t17-t20-routes-preparation-20260928-a3'),
                T16_POLICY: (T16_KIND, T16_ID, 'bfs-t16-reference-preparation-20260927-b1')}
 PILOT_TEST_CASES = {
     'owned_cleanup': {
@@ -116,6 +118,26 @@ def read_reference(ref, maximum=2 * 1024**2):
 
 def validate_plan(plan, kind):
     require(artifacts.digest(plan) == PLAN_HASHES[kind], 'prospective plan differs from the reviewed fixed scope')
+
+
+REPARENT_RACE = 'no longer belongs to its discovering parent'
+
+
+def race_tolerant(sample, attempts=5, pause=.05):
+    """Retry the transient procfs reparenting race (routes a2 failure, 2026-09-28 19:42 ET).
+
+    A descendant discovered under one parent can exit or be adopted by its
+    subreaper before its own stat is read. That is not an ownership violation;
+    retrying a bounded number of times re-reads a consistent tree. Any other
+    telemetry error, or a persistent race, still fails closed.
+    """
+    for attempt in range(attempts):
+        try:
+            return sample()
+        except ValueError as exc:
+            if REPARENT_RACE not in str(exc) or attempt == attempts - 1:
+                raise
+            time.sleep(pause)
 
 
 def is_pilot(plan):
@@ -1243,11 +1265,11 @@ def main():
             require(stat.f_bavail * stat.f_frsize >= minimum * GIB, 'raw/build free-space reserve violated')
         sample = {**ledger.observation(raw), **(lease_observation(store.get('mbit10'), args.lane)
                   if store else {'lease_admission': 'record_store_loading'}),
-                  'owned_processes': owned.sample()}
+                  'owned_processes': race_tolerant(owned.sample) if pilot else owned.sample()}
         require(sample['owned_processes']['rss_bytes'] <= lifecycle.SAMPLED_RSS_BYTES,
                 'sampled whole-tree RSS exceeded 52 GiB')
         if pilot:
-            lane_tree = lane_sampler()
+            lane_tree = race_tolerant(lane_sampler)
             sample.update(aggregate_raw_bytes=total, lane_tree_rss_bytes=lane_tree['rss_bytes'],
                           lane_tree_processes=len(lane_tree['processes']))
             require(lane_tree['rss_bytes'] <= lifecycle.SAMPLED_RSS_BYTES,
