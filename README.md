@@ -7,8 +7,10 @@ memory access patterns, optimization strategies, and evaluation evidence.
 YAML in `records/` is authoritative; `swdb` validates it and builds a queryable
 SQLite index.
 
-**Start with the [30-minute guide](docs/README.md).** It covers querying, adding
-records, the BFS workflow, and profiling. Detailed contracts are in
+**Start with the [tutorial](docs/tutorial/README.md): a 10-minute overview and
+up to 30 more minutes on records, components, BFS, and contributing**, with diagrams
+and code examples. The [task guides](docs/README.md) cover querying, adding records,
+the BFS workflow, and profiling. Detailed contracts are in
 [reference](docs/reference/README.md); dated run history is in
 [archive](docs/archive/README.md).
 
