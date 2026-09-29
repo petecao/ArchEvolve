@@ -1,5 +1,7 @@
 """`swdb view`: the workload view the HW Ensemble Agent reads.
 
+2026-09-29: Josh retired SPARTA v0.1 Workload view; this historical format is retained.
+
 It joins implementation, kernel, application, input, machine, and (if there is one)
 profile into the HW side's workload format (archevolve/hw_ensemble/sparta-sort.input.yaml,
 schema_version 0.1). Every key of that format is present with the same nesting; unknown

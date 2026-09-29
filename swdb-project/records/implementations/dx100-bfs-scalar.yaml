@@ -2,10 +2,110 @@ kind: implementation
 schema_version: '0.4'
 status: draft
 deprecated_by: null
-extensions: {}
+extensions:
+  statements:
+    version: '1.0'
+    step_index_base: 0
+    function: TDStep
+    annotations:
+    - id: bfs-td-frontier
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [240, 240]
+      code: NodeID u = queue.shared[i];
+      access_pattern_steps:
+      - pattern: td-frontier-read
+        step: 0
+      depends_on: []
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    - id: bfs-td-row-bounds
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [241, 241]
+      code: for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+      access_pattern_steps:
+      - pattern: td-row-bounds-read
+        step: 1
+      depends_on: [bfs-td-frontier]
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    - id: bfs-td-neighbor
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [242, 242]
+      code: NodeID v = g.out_neighbors_[j];
+      access_pattern_steps:
+      - pattern: td-neighbor-read
+        step: 2
+      depends_on: [bfs-td-row-bounds]
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    - id: bfs-td-parent-read
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [243, 243]
+      code: NodeID curr_val = parent[v];
+      access_pattern_steps:
+      - pattern: td-parent-read
+        step: 3
+      depends_on: [bfs-td-neighbor]
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    - id: bfs-td-parent-cas
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [247, 247]
+      code: if (compare_and_swap(parent[v], curr_val, u)) {
+      access_pattern_steps:
+      - pattern: td-parent-cas
+        step: 3
+      depends_on: [bfs-td-frontier, bfs-td-neighbor, bfs-td-parent-read]
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    - id: bfs-td-parent-store
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [248, 248]
+      code: parent[v] = u;
+      access_pattern_steps:
+      - pattern: td-parent-store
+        step: 3
+      depends_on: [bfs-td-parent-cas]
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    - id: bfs-td-queue-append
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [249, 249]
+      code: lqueue.push_back(v);
+      access_pattern_steps:
+      - pattern: td-queue-append
+        step: 0
+      depends_on: [bfs-td-parent-cas]
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    access_chain: [queue.shared, VertexOffsets, g.out_neighbors_, 'parent (read, CAS, store)', lqueue.local_queue]
+    note: The final queue append is a conditional side effect, not an address indexed by parent. Its own
+      stream pattern and statement dependencies retain that distinction. IDs and pinned source lines come
+      from Josh's root examples/bfs.source-observations.yaml; source reading only, not Peter feature extraction.
 id: dx100-bfs-scalar
 created: '2026-09-25'
-updated: '2026-09-25'
+updated: '2026-09-29'
 provenance:
 - id: src-dx100-bfs
   kind: source_code
@@ -65,6 +165,19 @@ loops:
     construct: omp_for_in_parallel_region
     schedule: null
     reduction: null
+- id: td-neighbors
+  description: TDStep iterates the outgoing CSR range of each frontier vertex.
+  parent: td-frontier
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-dx100-bfs]
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
 access_patterns:
 - id: td-frontier-read
   expression: NodeID u = queue.shared[i]
@@ -73,7 +186,7 @@ access_patterns:
   - array:
       name: queue.shared
       role: target
-      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_type: NodeID (int32_t)
       element_bytes: 4
       element_count: num_nodes
       layout: contiguous
@@ -113,9 +226,413 @@ access_patterns:
       basis: code_reading
       evidence_refs: [src-dx100-bfs]
   evidence_refs: [src-dx100-bfs]
+- id: td-row-bounds-read
+  expression: VertexOffsets[u], VertexOffsets[u + 1]
+  loop: td-frontier
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsets
+      role: target
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads row start VertexOffsets[u] and row end VertexOffsets[u + 1]; +1 is affine index arithmetic.
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+- id: td-neighbor-read
+  expression: g.out_neighbors_[j]
+  loop: td-neighbors
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsets
+      role: offsets
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads row start VertexOffsets[u] and row end VertexOffsets[u + 1]; +1 is affine index arithmetic.
+  - array:
+      name: g.out_neighbors_
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: Iterates j from VertexOffsets[u] (inclusive) to VertexOffsets[u + 1] (exclusive).
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+- id: td-parent-read
+  expression: parent[v]
+  loop: td-neighbors
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsets
+      role: offsets
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads row start VertexOffsets[u] and row end VertexOffsets[u + 1]; +1 is affine index arithmetic.
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: Iterates j from VertexOffsets[u] (inclusive) to VertexOffsets[u + 1] (exclusive).
+  - array:
+      name: parent
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+- id: td-parent-cas
+  expression: compare_and_swap(parent[v], curr_val, u)
+  loop: td-neighbors
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsets
+      role: offsets
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads row start VertexOffsets[u] and row end VertexOffsets[u + 1]; +1 is affine index arithmetic.
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: Iterates j from VertexOffsets[u] (inclusive) to VertexOffsets[u + 1] (exclusive).
+  - array:
+      name: parent
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+  update_kind: compare_and_swap
+  update:
+    pseudocode: if parent[v] == curr_val, atomically set parent[v] = u
+    side_effects: On success, an explicit parent store and lqueue.push_back(v) follow.
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+  condition: curr_val < 0
+- id: td-parent-store
+  expression: parent[v] = u
+  loop: td-neighbors
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsets
+      role: offsets
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads row start VertexOffsets[u] and row end VertexOffsets[u + 1]; +1 is affine index arithmetic.
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: Iterates j from VertexOffsets[u] (inclusive) to VertexOffsets[u + 1] (exclusive).
+  - array:
+      name: parent
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+  update_kind: write
+  update:
+    pseudocode: parent[v] = u
+    side_effects: Explicit store retained from the authors' source inside the successful CAS branch.
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+  condition: compare_and_swap(parent[v], curr_val, u) succeeds
+- id: td-queue-append
+  expression: lqueue.push_back(v)
+  loop: td-neighbors
+  steps:
+  - array:
+      name: lqueue.local_queue
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: '16384'
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: One position per successful discovery within this thread-local QueueBuffer; resets on flush.
+      Append is controlled by CAS success, not indexed by parent values.
+  update_kind: write
+  update:
+    pseudocode: if local buffer is full, flush; local_queue[in++] = v
+    side_effects: QueueBuffer.flush reserves a shared queue range using fetch_and_add and copies the local
+      buffer; TDStep flushes at line 254 before the level finishes.
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+  condition: compare_and_swap(parent[v], curr_val, u) succeeds
 notes:
-- The imported access-pattern catalog records one frontier read, not complete discovery or dynamic profiling.
+- TDStep statement annotation covers the frontier, CSR row bounds and neighbors, parent read/CAS/store,
+  and local queue append; code reading only, not dynamic profiling.
 - Despite its retained direction-optimizing header, scalar DOBFS calls TDStep only.
 - The pinned graph representation uses int32_t SGOffset; upstream GAPBS serialization must not be assumed
   equivalent.
 - No -DMAA flag is passed; native functional API setup is not accelerated performance evidence.
+- Duplicate parent destinations may occur across frontier vertices; the three parent patterns record this
+  possibility, not a measured duplicate rate.

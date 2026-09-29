@@ -17,6 +17,8 @@ The Software Database describes kernels, implementations, source regions, access
 
 Peter's SW Ensemble needs to ask which regions are expensive, inspect the relevant application code, and select a strategy. Josh's HW Ensemble needs the same workload evidence together with executable hardware capabilities. Both need a result tied to the exact software, input, hardware configuration, and timing boundary. Source-level assumptions and aggregate kernel counters cannot establish where a particular BFS workload spends time or whether a proposed rewrite improves it.
 
+2026-09-29 role update: The 2026-09-24 team meeting replaced these ensemble roles with the linear pipeline Yan-Ru → Peter → Josh/Eric → Peter → Yan-Ru. The older role names below describe the original workflow requirements; SWDB supplies annotated source to Peter and evaluates the resulting software returned through this pipeline. Peter owns per-statement memory feature extraction. The handoff is specified in `../archevolve-handoff-2026-09-29/spec.md`.
+
 The current source and baseline relationships also assume one application origin for a kernel. Upstream GAPBS direction-optimizing BFS and DX100's top-down BFS compute the same kernel but have different source origins, build contexts, and evaluation conventions. Combining them without explicit provenance and comparison baselines would make rewrite targets and speedup claims ambiguous.
 
 Neither live ensemble agent is available yet. Their development schedules must not prevent us from establishing and demonstrating the complete workflow. The first deliverable must use real BFS execution and DX100 simulation, while remaining extensible to future customized hardware-software co-design.
