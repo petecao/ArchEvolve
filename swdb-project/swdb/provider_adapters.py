@@ -216,6 +216,7 @@ class CodexAdapter(Adapter):
                 "-c", "analytics.enabled=false", "-c", 'otel.exporter="none"',
                 "-c", 'otel.trace_exporter="none"', "-c", 'otel.metrics_exporter="none"',
                 "-c", "skills.bundled.enabled=false", "-c", "skills.include_instructions=false",
+                "-c", 'features.code_mode.direct_only_tool_namespaces=["functions"]',
                 "-c", "project_doc_max_bytes=0", "--ignore-user-config", "--ignore-rules",
                 "--ephemeral", "--skip-git-repo-check", "--dangerously-bypass-approvals-and-sandbox",
                 "--json", "--output-schema", str(schema_path), "--output-last-message",
