@@ -2,7 +2,7 @@
 
 Navigation updated: 2026-09-28 (Eastern Time).
 
-Updated: 2026-09-26 ET
+Updated: 2026-09-29 ET (baseline-not-invoked simulated region rule)
 
 This contract implements Ticket 11 using Ticket 03's durable evaluations.
 The public operations are `register-workload`, `freeze-protocol`,
@@ -158,6 +158,20 @@ divides each diagnostic duration by its own invocation count first. These are
 simulated elapsed intervals summed across executing threads, including waiting and
 overlap. They always retain `primary_bfs_roi: false` and `gain_claim: false` and
 cannot substitute for primary BFS ROI timing.
+
+Baseline-not-invoked rule (added 2026-09-29 ET). A frozen simulated pair may name
+a region that the baseline binary never executes (the T17 scalar baseline never
+calls `TDStepMAA`). When the baseline region's raw-verified invocation count is
+zero in every replay cell, and its inclusive and exclusive seconds are absent (as
+the collector records a never-entered region) or exactly zero, the comparison is
+not rejected. The pair is reported with `state:
+baseline_not_invoked`, `duration_ratio: null`, `baseline_invocations: 0`, the
+candidate's per-cell invocations and per-source median durations, and
+`gain_claim: false`. The primary BFS ROI decision and every other region pair are
+computed normally. These remain rejections: a zero-invocation candidate region,
+zero baseline invocations with nonzero time, a baseline that is zero in only some
+cells, and any other invalid count or duration. Native pairs keep strict rejection
+(see [native selected-region comparisons](bfs-native-region-comparison.md)).
 
 Native region pairs can select the versioned
 [`native_diagnostic_profile.v1` treatment](bfs-native-region-comparison.md).

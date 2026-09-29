@@ -1,4 +1,4 @@
-"""Public diagnostic comparison contracts; synthetic evidence only. Date 2026-09-26."""
+"""Public diagnostic comparison contracts; synthetic evidence only. Date 2026-09-26; updated 2026-09-29."""
 import copy
 import datetime
 import hashlib
@@ -29,13 +29,16 @@ def test_streamed_region_digest_identifies_exact_parsed_bytes(tmp_path):
     assert rows[0]['exclusive_ns'] == 5 and digest == hashlib.sha256(raw).hexdigest()
 
 
-def package_fixture(records, tmp, primary, collector, runtime, now, ns):
+def package_fixture(records, tmp, primary, collector, runtime, now, ns, zero_function=False):
+    # zero_function (2026-09-29): the fixture-function region records zero invocations and time,
+    # as the real T17 scalar baseline's never-called TDStepMAA function does.
     rid = primary['id']; candidate = records.read(f"candidates/{primary['candidate']}.yaml")
     raw = (Path(candidate['artifact']['path']) / 'src/bfs.cc').read_bytes()
     regions = []
-    for kind, bounds in (('function', [0, 128]), ('loop', [32, 96])):
-        fragment = raw[bounds[0]:bounds[1]]
-        regions.append(dict(id='fixture-' + kind, kind=kind, path='src/bfs.cc', lines=[1, 5], byte_range=bounds,
+    # A zero-function fixture keeps a second, timed function so the package stays complete.
+    for name, bounds in (('function', [0, 128]), ('loop', [32, 96])) + ((('function2', [0, 64]),) if zero_function else ()):
+        kind = name.rstrip('2'); fragment = raw[bounds[0]:bounds[1]]
+        regions.append(dict(id='fixture-' + name, kind=kind, path='src/bfs.cc', lines=[1, 5], byte_range=bounds,
             text=fragment.decode(), source_sha256=hashlib.sha256(fragment).hexdigest(),
             source_artifact_sha256=candidate['artifact']['sha256'], function='explicit_fixture'))
     instrumented = tmp / (rid + '.cc'); instrumented.write_bytes(raw)
@@ -59,7 +62,9 @@ def package_fixture(records, tmp, primary, collector, runtime, now, ns):
     records.write(f"evaluations/{compiled['id']}.yaml", compiled)
     log = tmp / (rid + '.log')
     log.write_text('SWDB_DX100_ROI_SEALED\nSWDB_DX100_REGIONS ' + json.dumps(dict(format='swdb.dx100.regions.v1',
-        clock='m5_rpns', errors=0, regions=[dict(index=i, inclusive_ns=ns*2, exclusive_ns=ns, invocations=2) for i in range(2)])) + '\n')
+        clock='m5_rpns', errors=0, regions=[dict(index=i, inclusive_ns=0 if zero_function and not i else ns*2,
+                      exclusive_ns=0 if zero_function and not i else ns, invocations=0 if zero_function and not i else 2)
+                      for i in range(len(regions))])) + '\n')
     diagnostic = copy.deepcopy(primary); diagnostic['id'] = rid + '.diagnostic'
     # Diagnostics have their own binary and no primary frozen-role binding,
     # but retain explicit actual coordinates in the full workload source list.
@@ -83,7 +88,10 @@ def package_fixture(records, tmp, primary, collector, runtime, now, ns):
         output_sha256=ref(log)['sha256'], region_output=str(log), region_output_sha256=ref(log)['sha256'],
         evidence_kind='contract_fixture', correctness=copy.deepcopy(diagnostic['correctness']))
     for row in regions:
-        row.update(metrics=dict(inclusive_simulated_seconds=ns*2/1e9, exclusive_simulated_seconds=ns/1e9, invocations=2),
+        zero = zero_function and row['id'] == 'fixture-function'
+        # A never-entered region carries only its zero count, as the real collector records it.
+        row.update(metrics=dict(invocations=0) if zero else dict(inclusive_simulated_seconds=ns*2/1e9,
+                                exclusive_simulated_seconds=ns/1e9, invocations=2),
             basis='simulated', scope='accumulated simulated elapsed per executing thread within ' + primary['context']['roi'],
             artifact_sha256=ref(binary)['sha256'], attribution=dict(inclusive=True,
             exclusive='nested guarded intervals subtracted on the same thread', whole_lexical_region=True,
@@ -107,8 +115,7 @@ def package_fixture(records, tmp, primary, collector, runtime, now, ns):
     return package['id']
 
 
-@pytest.fixture(scope='module')
-def region_seed(simulation_seed, tmp_path_factory):
+def _region_seed(simulation_seed, tmp_path_factory, zero_role=None):
     source, old, original = simulation_seed
     tmp = tmp_path_factory.mktemp('regional-contract'); records = records_fixture.__wrapped__(tmp)
     shutil.copytree(source.path, records.path, dirs_exist_ok=True)
@@ -123,7 +130,8 @@ def region_seed(simulation_seed, tmp_path_factory):
                                            'graph_verification': contract, 'candidate_driver': ref(wrapper)}
     collector = dict(backend='libclang-cindex', collector='dx100.m5_rpns.source_scopes.v1', library_sha256='a'*64,
                      pass_sha256='b'*64, runtime_sha256=ref(runtime)['sha256'])
-    settings['region_pairs'] = [dict(semantic_region='fixture traversal', baseline='fixture-loop', candidate='fixture-loop',
+    paired = 'fixture-function' if zero_role else 'fixture-loop'
+    settings['region_pairs'] = [dict(semantic_region='fixture traversal', baseline=paired, candidate=paired,
         scope='accumulated', attribution='exclusive', evidence='simulated_diagnostic_profile', collector=collector)]
     frozen = _command(records, 'freeze-protocol', _payload(tmp, 'region-policy', dict(message_version='1.0', id='region-policy', settings=settings)))
     now = datetime.datetime.now(datetime.timezone.utc).isoformat(); components = {}; packages = {}
@@ -142,12 +150,23 @@ def region_seed(simulation_seed, tmp_path_factory):
             primary['context']['protocol_binding'].update(protocol=frozen['id'], frozen_sha256=frozen['identity_sha256'],
                 settings_sha256=artifacts.digest(settings), frozen_at=frozen['frozen_at'], bound_at=now)
             primary['context']['source'] = primary['context']['sources'][0]; primary['stages'][0]['started'] = now
-            packages[primary['id']] = package_fixture(records, tmp, primary, collector, runtime, now, 200000000 if role == 'baseline' else 100000000)
+            packages[primary['id']] = package_fixture(records, tmp, primary, collector, runtime, now,
+                200000000 if role == 'baseline' else 100000000, zero_function=role == zero_role)
             components[role].append(primary)
     aggregate = {role: _aggregate(records, tmp, frozen, role, rows, name='regional-aggregate-' + role) for role, rows in components.items()}
     request = dict(message_version='1.0', id='regional-comparison', protocol=frozen['id'], comparison_baseline='gapbs-bfs-do',
         baseline_evaluation=aggregate['baseline']['id'], candidate_evaluation=aggregate['candidate']['id'], region_packages=packages)
     return records, request, components
+
+
+@pytest.fixture(scope='module')
+def region_seed(simulation_seed, tmp_path_factory):
+    return _region_seed(simulation_seed, tmp_path_factory)
+
+
+@pytest.fixture(scope='module', params=['baseline', 'candidate'])
+def zero_seed(simulation_seed, tmp_path_factory, request):
+    return request.param, _region_seed(simulation_seed, tmp_path_factory, zero_role=request.param)
 
 
 @pytest.fixture
@@ -215,3 +234,45 @@ def test_public_regional_comparison_rejects_incompatible_evidence(regional_setup
         'actual-check': 'correctness is not bound',
     }[fault]
     assert expected_reason in str(result['decision']['reasons'])
+
+
+def test_zero_invocation_region_is_baseline_not_invoked_only_for_the_baseline(records, zero_seed, tmp_path):
+    """2026-09-29: a baseline that never executes the paired region is reported, not rejected;
+    a zero-invocation candidate region is still rejected."""
+    zero_role, (original, request, _) = zero_seed
+    shutil.copytree(original.path, records.path, dirs_exist_ok=True)
+    request = copy.deepcopy(request)
+    if zero_role == 'candidate':
+        result = _command(records, 'compare-evaluations', _payload(tmp_path, 'zero-candidate', request), succeeds=False)
+        assert result['decision']['state'] == 'rejected' and not result['gain_claim']
+        assert 'invocation count must be an integer >= 1' in str(result['decision']['reasons'])
+        return
+    result = _command(records, 'compare-evaluations', _payload(tmp_path, 'zero-baseline', request))
+    assert result['decision']['state'] == 'fixture_comparison' and not result['gain_claim']
+    (region,) = result['region_comparisons']
+    assert region['state'] == 'baseline_not_invoked' and region['duration_ratio'] is None
+    assert region['baseline_invocations'] == 0 and set(region['candidate_invocations']) == {2}
+    assert not region['gain_claim'] and not region['primary_bfs_roi']
+    assert all(value == 100000000 / 1e9 for value in region['candidate_duration_s'].values())
+    assert all(row['duration_s'] is None and row['invocations'] == 0 for row in region['samples']['baseline'])
+    fresh = records.swdb('get', result['id'], '--chain', '--format', 'json')
+    assert fresh.returncode == 0, fresh.stderr
+    assert json.loads(fresh.stdout)['records'][result['id']]['region_comparisons'] == result['region_comparisons']
+
+
+def test_baseline_zero_invocations_with_nonzero_time_is_rejected(records, zero_seed, tmp_path):
+    zero_role, (original, request, components) = zero_seed
+    if zero_role != 'baseline':
+        pytest.skip('baseline-only fault')
+    shutil.copytree(original.path, records.path, dirs_exist_ok=True)
+    request = copy.deepcopy(request); primary = components['baseline'][-1]
+    profile = records.read(f"region_profiles/{primary['profiling']['region_profile']}.yaml")
+    profile['regions'][0]['metrics']['inclusive_simulated_seconds'] = 0.5
+    records.write(f"region_profiles/{profile['id']}.yaml", profile)
+    package = _command(records, 'profile-package', _payload(tmp_path, 'reassemble', dict(message_version='1.0',
+        id=primary['id'] + '.package', version=2, evaluation=primary['id'], region_profile=profile['id'],
+        implementation=primary['implementation'], context=profile_package._context(primary))))
+    request['region_packages'][primary['id']] = package['id']
+    result = _command(records, 'compare-evaluations', _payload(tmp_path, 'zero-time', request), succeeds=False)
+    assert result['decision']['state'] == 'rejected'
+    assert 'must record zero inclusive and exclusive seconds' in str(result['decision']['reasons'])

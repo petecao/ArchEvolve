@@ -7,6 +7,11 @@ kernels, implementations, memory access patterns, optimization strategies, and
 evaluation evidence. The `swdb` tool validates and queries these records and
 supports a source-to-evaluation BFS workflow.
 
+**New to the project? Follow the [tutorial](tutorial/README.md)** for a 10-minute
+overview, then up to 30 minutes on records, code components, BFS, and contributing.
+It includes diagrams, query examples, and an optional local exercise. The pages
+below remain short task-oriented guides.
+
 ## Read this in 30 minutes
 
 Read these five pages in order: about 2,800 words, roughly 19 minutes at 150

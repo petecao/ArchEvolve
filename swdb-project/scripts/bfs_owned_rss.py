@@ -108,9 +108,15 @@ class DescendantRSS:
             start = row['start_ticks']
             if discovered_parent is not None and self.known.get(pid) != start:
                 parent_pid, parent_start = discovered_parent
-                parent = self._stat(parent_pid)
-                _require(parent is not None and parent['start_ticks'] == parent_start
-                         and row['parent_pid'] == parent_pid,
+                adopter = row['parent_pid']
+                parent = self._stat(adopter)
+                # 2026-09-29: if the discovering parent exited between reads, the child
+                # may already be adopted by the owned subreaper root or another retained
+                # owned identity. Ownership is unchanged; adoption by anything else fails.
+                owned_start = self.known.get(adopter, parent['start_ticks'] if parent and adopter == self.pid else None)
+                _require(parent is not None and (
+                    (adopter == parent_pid and parent['start_ticks'] == parent_start)
+                    or (adopter != parent_pid and owned_start == parent['start_ticks'])),
                          f'child PID {pid}/{start} no longer belongs to its discovering parent')
             if (pid, start) in seen:
                 continue

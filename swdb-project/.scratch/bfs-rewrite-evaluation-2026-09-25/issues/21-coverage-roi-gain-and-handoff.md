@@ -3,9 +3,9 @@
 Navigation updated: 2026-09-28 (Eastern Time).
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-27 18:35 ET
+Updated: 2026-09-29 14:30 ET
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 16, 17, 18, 19, 20
 **Spec:** [BFS profiling, rewrite proposals, and hardware-aware evaluation](../spec.md)
 
@@ -383,3 +383,14 @@ external verification.
 **Tests.** The new report tests, 8 in total, passed. The focused
 coverage/pair/index/handoff set passed 68 tests. The full suite at `85f01b1`
 reported **2,672 passed, 21 skipped, 0 failed**, in 4,913 s.
+
+## Answer
+
+Closed 2026-09-29 14:30 ET by owner scope change: the requirements changed in other sessions, so all remaining evaluation for this ticket is dropped and every running job was stopped. Unchecked acceptance boxes above stay unchecked; they are not met, and this closure does not claim them. Retained host evidence under `/data/yanruj/EvolveSWDB_runs/` was not imported into Git unless a record ID is named below.
+
+- Delivered: `swdb bfs-coverage` report command, acceptance request e1, handoff contract
+  `docs/bfs-handoff-contract-v1.md` with linked examples (533553e).
+- Coverage at closure: T18 and T19 resolved (native, inconclusive); T17 has one simulated gain cell
+  (uniform18, 3.0806×); T20 regresses on both families; T16 has no reference result.
+- The report was not regenerated with the final comparison IDs (request e2 was dropped). AC01–AC20 acceptance
+  is incomplete and is recorded as such; this ticket is closed by the owner's scope change, not by meeting box 8.

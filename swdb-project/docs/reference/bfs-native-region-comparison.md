@@ -2,7 +2,7 @@
 
 Navigation updated: 2026-09-28 (Eastern Time).
 
-Updated: 2026-09-26 ET.
+Updated: 2026-09-29 ET (zero-invocation rule cross-reference).
 
 The additive `native_diagnostic_profile.v1` evidence treatment compares the
 separate CPU observations produced by `bfs-profile`. It never reads invented
@@ -74,3 +74,14 @@ The public regression uses all 24 compiler-discovered regions from the retained
 upstream scale-18 profile as its source/layout template, paired with explicitly
 synthetic per-trial counters and fixture evaluations. It tests the actual
 collected representation without treating fixture durations as empirical evidence.
+
+## Zero-invocation regions (2026-09-29 ET)
+
+Native pairs keep strict rejection. Every selected native diagnostic cell must
+record an integer invocation count of at least 1 and a positive selected duration.
+Simulated DX100 pairs have one exception, decided for T17 on 2026-09-29. A frozen
+baseline region that is never executed reports `state: baseline_not_invoked`. It
+has the candidate's invocations and durations, no ratio, and `gain_claim: false`.
+It applies only when raw-verified invocations and both durations are exactly zero
+in every baseline cell. A zero-invocation candidate is still rejected. See
+[BFS workloads and frozen comparisons](bfs-protocol.md) for the full rule.

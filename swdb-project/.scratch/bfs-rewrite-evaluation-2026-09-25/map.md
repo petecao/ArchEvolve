@@ -2754,3 +2754,21 @@ Resumed 2026-09-27 10:20 ET under [resume-plan-20260927.md](resume-plan-20260927
   [analysis](observations/t15-pilot-analysis-20260928.json) and [ticket 15](issues/15-baseline-pilot-and-protocol-freeze.md).
 - **T20.** Context6 candidate created (full_files); primary/diagnostic DX100 builds complete
   (`bfs-t20-context6-{primary,diagnostic}-build-20260927-c3`).
+
+## Closure — 2026-09-29 14:30 ET
+
+The owner closed the book: requirements changed in other sessions, so all remaining evaluation was
+dropped and every running job was stopped (T16 M/S1/S2, T20 AC10 companion, T17 c4 kronecker18
+comparison). Tickets 16, 17, 20 and 21 are resolved by scope change with their unmet boxes left
+unchecked; see each ticket's `## Answer`.
+
+- **T16:** M c2 verifier passed, but the execution was rejected by the 1-MiB witness END-line bound
+  (open defect, [ticket 16](issues/16-artifact-reference-and-controls.md)).
+- **T17:** uniform18 gain 3.0806× (degenerate CI, one deterministic replay); kronecker18 undecided
+  ([ticket 17](issues/17-dx100-instruction-route-acceptance.md)).
+- **T20:** regressions 0.5162× (uniform18) and 0.4122× (kronecker18)
+  ([ticket 20](issues/20-upstream-annotated-route-acceptance.md)).
+- **T21:** acceptance incomplete; the report was not regenerated
+  ([ticket 21](issues/21-coverage-roi-gain-and-handoff.md)).
+- Final code review 2026-09-29 (56bacd8..closeout): sampler adoption fix, RSS-cap derivation and
+  messages, comparator note wording.

@@ -1,6 +1,15 @@
-"""Package-backed diagnostic comparisons. Updated 2026-09-26.
+"""Package-backed diagnostic comparisons. Updated 2026-09-29.
 
 Native thread CPU and simulated thread elapsed quantities remain separate from BFS wall time.
+
+Baseline-not-invoked rule (2026-09-29, root decision for T17): a frozen simulated
+diagnostic pair whose baseline region has an exactly zero raw-verified invocation
+count and absent-or-zero inclusive/exclusive time in every replay cell does not reject the
+comparison. It is reported as ``state: baseline_not_invoked`` with the candidate's
+invocations and durations, no ``duration_ratio``, and ``gain_claim: false``; the
+primary BFS ROI decision is unaffected. Every other invalid count or duration is
+still rejected, including a zero-invocation candidate region and a baseline that
+is zero in only some cells. Native diagnostic pairs keep strict rejection.
 """
 import hashlib
 import math
@@ -129,11 +138,22 @@ def _sample(store, primary, package_id, pair, role):
                       {"path": binary["binary"], "sha256": binary["binary_sha256"]}):
         _raw(reference, host)
     metrics = row["metrics"]
-    invocations = _integer(metrics.get("invocations"), "diagnostic invocation count")
-    inclusive = _positive(metrics.get("inclusive_simulated_seconds"), "diagnostic inclusive seconds")
-    exclusive = metrics.get("exclusive_simulated_seconds")
-    _fail(type(exclusive) in (int, float) and math.isfinite(exclusive) and 0 <= exclusive <= inclusive,
-          "diagnostic exclusive duration is invalid or exceeds inclusive duration")
+    # Only a baseline region may record zero invocations (baseline_not_invoked);
+    # then both durations must be exactly zero. Candidates stay strictly >= 1.
+    invocations = _integer(metrics.get("invocations"), "diagnostic invocation count", 0 if role == "baseline" else 1)
+    not_invoked = invocations == 0
+    if not_invoked:
+        # The collector omits both seconds fields for a never-entered region; explicit
+        # zeros are also accepted. Any recorded nonzero time is rejected, and the raw
+        # report below must still show zero invocations and zero nanoseconds.
+        inclusive, exclusive = metrics.get("inclusive_simulated_seconds", 0), metrics.get("exclusive_simulated_seconds", 0)
+        _fail(type(inclusive) in (int, float) and type(exclusive) in (int, float) and inclusive == 0 and exclusive == 0,
+              "diagnostic region with zero invocations must record zero inclusive and exclusive seconds")
+    else:
+        inclusive = _positive(metrics.get("inclusive_simulated_seconds"), "diagnostic inclusive seconds")
+        exclusive = metrics.get("exclusive_simulated_seconds")
+        _fail(type(exclusive) in (int, float) and math.isfinite(exclusive) and 0 <= exclusive <= inclusive,
+              "diagnostic exclusive duration is invalid or exceeds inclusive duration")
     if raw:
         from swdb.dx100_diagnostic import counters
         observed, digest = counters(raw, len(definition["regions"]), return_sha256=True)
@@ -142,8 +162,11 @@ def _sample(store, primary, package_id, pair, role):
         _fail(values["invocations"] == invocations and values["inclusive_ns"] / 1e9 == inclusive
               and values["exclusive_ns"] / 1e9 == exclusive, "diagnostic region values differ from the raw report")
     duration = inclusive if pair["attribution"] == "inclusive" else exclusive
-    _positive(duration, "selected diagnostic duration")
-    if pair["scope"] == "per_invocation": duration /= invocations
+    if not_invoked:
+        duration = None
+    else:
+        _positive(duration, "selected diagnostic duration")
+        if pair["scope"] == "per_invocation": duration /= invocations
     return {**cell, "duration_s": duration, "invocations": invocations, "primary_evaluation": primary["id"],
             "primary_binary_sha256": primary["build"]["binary_sha256"], "diagnostic_evaluation": diagnostic["id"],
             "diagnostic_evaluation_sha256": artifacts.digest(diagnostic), "diagnostic_build": build["id"],
@@ -304,6 +327,20 @@ def compare(store, a, b, settings, packages):
         _fail(cells["baseline"] == cells["candidate"] and all(len(cells[role]) == len(samples[role]) for role in cells),
               "diagnostic comparison has missing, duplicate, or different replay cells")
         positions = sorted({cell[0] for cell in cells["baseline"]})
+        absent = [row["duration_s"] is None for row in samples["baseline"]]
+        if any(absent):
+            _fail(all(absent), "baseline diagnostic region is not invoked in only some replay cells")
+            candidate = {position: statistics.median(row["duration_s"] for row in samples["candidate"]
+                                                     if row["source_position"] == position) for position in positions}
+            results.append({**pair, "state": "baseline_not_invoked", "duration_ratio": None,
+                "baseline_invocations": 0,
+                "candidate_invocations": [row["invocations"] for row in samples["candidate"]],
+                "candidate_duration_s": {str(position): value for position, value in candidate.items()},
+                "samples": samples, "primary_bfs_roi": False, "gain_claim": False,
+                "note": ("The baseline never executes this region (zero invocations and time, checked against the raw "
+                         "report wherever it is reachable); "
+                         "no regional ratio exists. Candidate time is reported alone; the primary BFS result is separate.")})
+            continue
         ratios = {position: statistics.median(row["duration_s"] for row in samples["baseline"] if row["source_position"] == position)
                   / statistics.median(row["duration_s"] for row in samples["candidate"] if row["source_position"] == position)
                   for position in positions}
