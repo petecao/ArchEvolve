@@ -17,7 +17,23 @@ Current handoff sketches:
 - [Rewrite feedback template](examples/rewrite-feedback.template.yaml)
 - [Meeting decisions and outstanding dependencies](docs/meeting-2026-09-24.md)
 
-These YAML files are **unfilled templates**, not extracted BFS features or actual candidate selections. The [DX100 artifact BFS source is now available locally](sources/README.md) at a recorded revision. Peter's feature YAML, Yan-Ru's annotations/profiles, and Eric's current machine-readable catalog are still pending. No running hardware reasoning agent, accelerator, or evaluator is implemented.
+These YAML files are **unfilled templates** for the proposed handoff. The [DX100 artifact BFS source is available locally](sources/README.md) at a recorded revision. Peter's preliminary sparse/dense v1.1 reports are now preserved under [examples/received](examples/received); their exact profiled source and raw logs remain unbound. Yan-Ru's source annotations and Eric's reviewed machine-readable catalog are still pending.
+
+## Working offline forward path
+
+The [offline pipeline](docs/offline-pipeline.md) now normalizes Peter's reports, selects exploratory candidates from a [provisional catalog seed](catalog/README.md), and generates hardware-request YAML plus diagrams. It is rule-based and makes **no LLM/API calls**. No accelerator, software rewrite, or evaluator has been run.
+
+Open the [run overview](runs/bfs-offline/README.md), [sparse rendered diagrams](runs/bfs-offline/case-01/diagrams/preview.md), or [fully connected rendered diagrams](runs/bfs-offline/case-02/diagrams/preview.md).
+
+For the software handoff, use [the diagram and YAML guide for Peter](docs/peter-intrinsics-handoff.md). It identifies the declared-read candidates to discuss for intrinsic specifications, plus optional prefetch alternatives.
+
+```sh
+.venv/bin/python -m archevolve --input examples/received/bfs-sparse.features.v1.1.yaml --input examples/received/bfs-fully-connected.features.v1.1.yaml --methods examples/received/peter-measurement-methods.yaml --output-dir runs/bfs-offline --overwrite
+```
+
+Source/type conflicts, unverified locality claims, and unknown working sets remain explicit. These are conditional family sketches, not performance-ranked or implementation-ready hardware designs.
+
+Peter's subsequent [methodology explanation and interpretation](docs/measurement-methodology-review.md) now clarify adjacent-pair proximity and array-capacity calculations. The adapter records those meanings, derives canonical byte values, and flags the mixed decimal/binary unit table without changing either received report.
 
 Read [the BFS source review](docs/bfs-source-review.md) for the CPU/accelerated path distinction and the seven [source-linked statement observations](examples/bfs.source-observations.yaml). Those observations are a manual code review, not profiling or Peter's delivered features.
 

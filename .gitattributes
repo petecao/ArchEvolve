@@ -1,2 +1,7 @@
 # Unified diffs intentionally contain a single-space prefix on blank context lines.
 sources/*.diff -whitespace
+# Preserve exact received/reference bytes: their hashes are provenance records.
+catalog/sources/*.txt -text -whitespace
+examples/received/*.yaml -text -whitespace
+examples/received/*.txt -text -whitespace
+runs/**/input.received.yaml -text -whitespace

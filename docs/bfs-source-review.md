@@ -62,9 +62,9 @@ The artifact [`Makefile`](https://github.com/arkhadem/DX100/blob/e4fc4afdf894f29
 
 ## Still needed
 
-- Peter's statement-level feature YAML, tied to this revision and a confirmed function/build path.
+- Binding Peter's received v1.1 sparse/dense reports to their actual profiled revision, statements, and function/build path; the reports describe a different `DataLayoutAPI` source and 64-bit offsets, so they cannot automatically be attached to this 32-bit-offset reference.
 - Yan-Ru's annotations and the dataset/profiling setup.
 - Measured reuse, stride summaries, scoped working set, frequencies, and baseline evidence.
 - Eric's current machine-readable hardware catalog.
 
-The source dependency is now available. The other pipeline inputs should remain explicitly pending.
+The source dependency and preliminary reports are available. The exact source/profile binding and reviewed catalog remain pending; see [the offline intake assessment](offline-pipeline.md).

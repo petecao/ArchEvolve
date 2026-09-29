@@ -1,0 +1,113 @@
+Here is the step-by-step breakdown of how both the **working-set footprints** and the **locality percentages** were calculated.
+
+---
+
+### Part 1: Working-Set Calculations
+
+The working-set memory footprint is determined directly from the data types and array capacities defined in [src/graph.h](file:///home/petepc/MemAcc/DataLayoutAPI/benchmarks/gapbs/src/graph.h) and [src/bfs.cc](file:///home/petepc/MemAcc/DataLayoutAPI/benchmarks/gapbs/src/bfs.cc).
+
+#### 1. Data Type Sizes
+NodeID: int32_t = **4 bytes**
+SGOffset: int64_t = **8 bytes**
+
+#### 2. Footprint Formulas
+$$\text{Footprint}_{\text{parent}} = |V| \times 4\text{ bytes}$$
+$$\text{Footprint}_{\text{offsets}} = (|V| + 1) \times 8\text{ bytes}$$
+$$\text{Footprint}{\text{neighbors}} = |E{\text{directed}}| \times 4\text{ bytes}$$
+$$\text{Footprint}_{\text{queue}} = |V| \times 4\text{ bytes}$$
+
+#### 3. Concrete Values
+
+| Array | Fully Connected ($K_{25000}$) | Sparse Kronecker Scale 18 | Sparse Kronecker Scale 21 | Sparse Kronecker Scale 24 |
+| :--- | :--- | :--- | :--- | :--- |
+| **Vertices ($|V|$)** | $25,000$ | $262,143$ | $2,097,150$ | $16,777,212$ |
+| **Directed Edges ($|E|$)** | $25,000 \times 24,999 = \mathbf{624,975,000}$ | $\mathbf{7,610,898}$ | $\mathbf{63,537,182}$ | $\mathbf{520,753,420}$ |
+| **parent[]** | $25,000 \times 4\text{ B} = \mathbf{97.66\text{ KB}}$ | $262,143 \times 4\text{ B} = \mathbf{1.05\text{ MB}}$ | $2,097,150 \times 4\text{ B} = \mathbf{8.39\text{ MB}}$ | $16,777,212 \times 4\text{ B} = \mathbf{67.11\text{ MB}}$ |
+| **VertexOffsets[]** | $25,001 \times 8\text{ B} = \mathbf{195.31\text{ KB}}$ | $262,144 \times 8\text{ B} = \mathbf{2.10\text{ MB}}$ | $2,097,151 \times 8\text{ B} = \mathbf{16.78\text{ MB}}$ | $16,777,213 \times 8\text{ B} = \mathbf{134.22\text{ MB}}$ |
+| **out_neighbors_** | $624,975,000 \times 4\text{ B} = \mathbf{2,384.09\text{ MB}}$ ($\approx 2.38\text{ GB}$) | $7,610,898 \times 4\text{ B} = \mathbf{30.44\text{ MB}}$ | $63,537,182 \times 4\text{ B} = \mathbf{254.15\text{ MB}}$ | $520,753,420 \times 4\text{ B} = \mathbf{2,083.01\text{ MB}}$ ($\approx 2.08\text{ GB}$) |
+
+(All kilobyte/megabyte values use standard binary prefixes: $1\text{ KB} = 1,024\text{ B}$, $1\text{ MB} = 1,048,576\text{ B}$).
+
+---
+
+### Part 2: Locality & Stride Calculations
+
+For any indirect array access of the form:
+$$A[B[k]]$$
+we tracked the sequence of actual indices $b_k = B[k]$ requested by the CPU loop over time.
+
+#### 1. Definitions
+**Element distance**:
+  $$\Delta b = |b_{k+1} - b_k|$$
+**Byte stride**:
+  $$\Delta\text{bytes} = \Delta b \times \text{sizeof}(A[0])$$
+
+#### 2. Cache Line and Page Boundary Thresholds
+The host CPU (Intel Xeon Gold) has:
+**L1/L2/L3 Cache Line**: **64 bytes**
+**OS Virtual Memory Page**: **4096 bytes (4 KB)**
+
+From these hardware constants, the element distance thresholds were derived:
+
+| Target Array $A$ | Element Type | Element Size | Max $\Delta b$ within same 64B Cache Line | Max $\Delta b$ within same 4KB Page |
+| :--- | :--- | :--- | :--- | :--- |
+| **VertexOffsets** | SGOffset (int64_t) | 8 bytes | $64\text{ B} / 8\text{ B} = \mathbf{8\text{ elements}}$ | $4096\text{ B} / 8\text{ B} = \mathbf{512\text{ elements}}$ |
+| **parent** | NodeID (int32_t) | 4 bytes | $64\text{ B} / 4\text{ B} = \mathbf{16\text{ elements}}$ | $4096\text{ B} / 4\text{ B} = \mathbf{1024\text{ elements}}$ |
+
+---
+
+### Part 3: Measurement Instrumentation Code
+
+The numbers were collected during execution using the following measurement loops:
+
+#### 1. Measuring VertexOffsets[u] Locality (where $u = \text{queue.shared}[i]$)
+Traversing the frontier queue to measure consecutive index jumps:
+cpp
+for (size_t i = queue.shared_out_start; i + 1 < queue.shared_out_end; i++) {
+    NodeID u1 = queue.shared[i];
+    NodeID u2 = queue.shared[i + 1];
+    int64_t diff = std::abs((int64_t)u2 - (int64_t)u1);
+    
+    total_delta_u += diff;
+    total_pairs_u++;
+    
+    if (diff <= 8)    count_u_same_line++;  // <= 64 bytes
+    if (diff <= 512)  count_u_same_page++;  // <= 4096 bytes
+}
+**Mean Index Stride**: total_delta_u / total_pairs_u
+**Mean Byte Stride**: (total_delta_u / total_pairs_u) * 8
+**Cache Line %**: (count_u_same_line / total_pairs_u) * 100.0
+**Page %**: (count_u_same_page / total_pairs_u) * 100.0
+
+#### 2. Measuring parent[v] Locality (where $v = \text{out\neighbors\}[j]$)
+Traversing neighbor accesses dynamically in the order they are visited:
+cpp
+for (auto j = VertexOffsets[u]; j + 1 < VertexOffsets[u + 1]; j++) {
+    NodeID v1 = g.out_neighbors_[j];
+    NodeID v2 = g.out_neighbors_[j + 1];
+    int64_t diff = std::abs((int64_t)v2 - (int64_t)v1);
+
+    total_delta_v += diff;
+    total_pairs_v++;
+
+    if (diff <= 16)   count_v_same_line++;  // <= 64 bytes
+    if (diff <= 1024) count_v_same_page++;  // <= 4096 bytes
+}**Mean Index Stride**: total_delta_v / total_pairs_v
+**Mean Byte Stride**: (total_delta_v / total_pairs_v) * 4
+**Cache Line %**: (count_v_same_line / total_pairs_v) * 100.0
+**Page %**: (count_v_same_page / total_pairs_v) * 100.0
+
+---
+
+### Why the Resulting Percentages Differed So Radically
+
+1. **In the Sparse Graph**:
+   - The queue contains nodes like $\{14, 58203, 1192, 189201 \dots\}$.
+   - Consecutive $u$ jump by an average of **$19,279.5$ vertices ($\approx 150.6\text{ KB}$)**. Only **$3.52\%$** land within $\le 8$ elements ($\le 64\text{ B}$).
+   - Neighbors $v$ are scattered across the graph, jumping by an average of **$7,153.9$ vertices ($\approx 28.0\text{ KB}$)**. Only **$6.78\%$** land within $\le 16$ elements ($\le 64\text{ B}$).
+
+2. **In the Fully Connected Graph ($K_N$)**:
+   - The frontier queue contains nodes consecutively: $\{0, 1, 2, 3, \dots, N-1\}$.
+   - Therefore, $\Delta u = |(i+1) - i| = 1 \le 8$, so cache line hit rate is **$100.0\%$**.
+   - For every vertex $u$, its adjacency list stores consecutive numbers: $\{0, 1, 2, \dots, u-1, u+1, \dots, N-1\}$.
+   - Therefore, $\Delta v = |(j+1) - j| = 1$ (and $2$ when skipping $u$), so $\Delta v \le 16$ holds on **$100.0\%$** of edges.

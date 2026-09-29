@@ -1,0 +1,36 @@
+{
+  "received_on": "2026-09-28",
+  "records": [
+    {
+      "case": "sparse",
+      "file": "bfs-sparse.features.v1.1.yaml",
+      "original_filename": "ArchEvolve Work Features (1).yaml",
+      "sha256": "a60985b83b99b6c2a4d4886f835bf74313a7e2c1c99daa545ae88caeda459141",
+      "reported_schema_version": "1.1",
+      "reported_function": "TDStep",
+      "reported_source_file": "DataLayoutAPI/benchmarks/gapbs/src/bfs.cc",
+      "source_revision": null,
+      "verification_status": "received_report_not_reproduced"
+    },
+    {
+      "case": "fully_connected",
+      "file": "bfs-fully-connected.features.v1.1.yaml",
+      "original_filename": "Gapbs BFS Fully Connected Features.yaml",
+      "sha256": "447e8b7ca5d886b5edd10606b954c8e3009d6e4fbdb3d43876cf168d412fe75f",
+      "reported_schema_version": "1.1",
+      "reported_function": "TDStep",
+      "reported_source_file": "DataLayoutAPI/benchmarks/gapbs/src/bfs.cc",
+      "source_revision": null,
+      "verification_status": "received_report_not_reproduced"
+    }
+  ],
+  "handling_notes": [
+    "Keep sparse and fully connected cases separate; do not merge their measurements.",
+    "Neither file supplies the exact profiled source revision or raw profiler output.",
+    "Both report 64-bit VertexOffsets; the locally pinned DX100 source defines SGOffset as int32_t. Do not silently reconcile them.",
+    "Distance-threshold locality labels are not verified same-cacheline/page membership or cache-hit rates.",
+    "Footprints need explicit MB/MiB units and are not automatically tile-scoped working sets.",
+    "Hardware implications are hypotheses, not mandatory architecture constraints.",
+    "Dense-case CAS is described as active in the discovery phase and bypassed in the second phase; retain this distinction."
+  ]
+}

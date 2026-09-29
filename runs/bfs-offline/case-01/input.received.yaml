@@ -1,0 +1,186 @@
+schema_version: "1.1"
+kernel:
+  name: "gapbs_bfs_top_down_step"
+  benchmark: "gapbs"
+  algorithm: "Breadth-First Search (Top-Down Push Traversal)"
+  source_file: "DataLayoutAPI/benchmarks/gapbs/src/bfs.cc"
+  function: "TDStep"
+  archetype: "frontier_driven_indirect_sparse_push"
+
+# ==============================================================================
+# LOOP NEST & CONTROL STRUCTURE
+# ==============================================================================
+loop_structure:
+  outer_level:
+    loop_variable: "i"
+    domain: "queue.shared_out_start .. queue.shared_out_end"
+    trip_count_type: "dynamic_per_level"
+    trip_count_range: [1, "num_nodes"]
+    parallelism: "data_parallel"
+
+  inner_level:
+    loop_variable: "j"
+    domain: "VertexOffsets[u] .. VertexOffsets[u + 1]"
+    trip_count_type: "data_dependent (degree of vertex u)"
+    trip_count_distribution: "power_law / log-normal"
+    trip_count_typical_range: [0, 10000] # Mean ~16-32, max can exceed 10,000 for hub nodes
+
+# ==============================================================================
+# INDIRECT ACCESS DISTANCE & STRIDE PROFILES (|b[i+1] - b[i]|)
+# ==============================================================================
+# Measured on Kronecker scale 18 (262,143 vertices, 7.6M edges; scales proportionally with |V|)
+indirect_access_distances:
+
+  # ----------------------------------------------------------------------------
+  # Access 1: VertexOffsets[u] where u = queue.shared[i]
+  # Expression: a[b[i]] -> VertexOffsets[queue.shared[i]]
+  # ----------------------------------------------------------------------------
+  - array_name: "VertexOffsets"
+    index_stream: "queue.shared[i]"
+    element_type: "int64_t"
+    element_size_bytes: 8
+    distance_metric: "|queue.shared[i+1] - queue.shared[i]|"
+    statistics:
+      mean_index_distance: 19279.5           # Average element jump |u_{i+1} - u_i|
+      mean_byte_stride: 154236.0             # ~150.6 KB byte jump between consecutive lookups
+      spatial_locality_distribution:
+        within_same_64B_cacheline: 3.52%     # |u_{i+1} - u_i| <= 8 elements
+        within_same_4KB_page: 42.28%         # |u_{i+1} - u_i| <= 512 elements
+        cross_page_jump: 57.72%              # > 4 KB jump
+    hardware_implication: >-
+      Average stride (~150 KB) significantly exceeds L1 data cache capacity (32-48 KB).
+      Sequential frontier processing results in almost zero L1 hit rate (3.5%) without 
+      frontier sorting or a Decoupled Access-Execute (DAE) prefetch queue.
+
+  # ----------------------------------------------------------------------------
+  # Access 2: parent[v] where v = g.out_neighbors_[j]
+  # Expression: a[b[j]] -> parent[g.out_neighbors_[j]]
+  # ----------------------------------------------------------------------------
+  - array_name: "parent"
+    index_stream: "g.out_neighbors_[j]"
+    element_type: "int32_t"
+    element_size_bytes: 4
+    distance_metric: "|out_neighbors_[j+1] - out_neighbors_[j]|"
+    statistics:
+      mean_index_distance: 7153.9            # Average element jump |v_{j+1} - v_j|
+      mean_byte_stride: 28615.6              # ~28.0 KB byte jump between consecutive updates
+      spatial_locality_distribution:
+        within_same_64B_cacheline: 6.78%     # |v_{j+1} - v_j| <= 16 elements
+        within_same_4KB_page: 63.93%         # |v_{j+1} - v_j| <= 1024 elements
+        cross_page_jump: 36.07%              # > 4 KB jump
+    hardware_implication: >-
+      Average stride (~28 KB) causes severe L1 cache thrashing (only 6.8% hits the same
+      cache line). However, 63.9% of consecutive accesses fall within the same 4KB page,
+      indicating that TLB misses are moderate, but cache line fill buffers are overwhelmed.
+      A hardware coalescing/reordering buffer (MSHR/binning buffer) is mandatory.
+
+# ==============================================================================
+# DATA STRUCTURES, TYPES & SIZES
+# ==============================================================================
+data_structures:
+  - name: "queue.shared"
+    role: "input_frontier"
+    element_type: "int32_t (NodeID)"
+    element_size_bytes: 4
+    capacity: "num_nodes"
+    sign_convention: "non-negative vertex index"
+
+  - name: "VertexOffsets"
+    role: "csr_row_pointers"
+    element_type: "int64_t (SGOffset)"
+    element_size_bytes: 8
+    capacity: "num_nodes + 1"
+    monotonic: true
+
+  - name: "g.out_neighbors_"
+    role: "csr_column_indices (adjacency list)"
+    element_type: "int32_t (NodeID)"
+    element_size_bytes: 4
+    capacity: "num_directed_edges"
+    alignment: "sequential per vertex"
+
+  - name: "parent"
+    role: "state_and_output"
+    element_type: "int32_t (NodeID)"
+    element_size_bytes: 4
+    capacity: "num_nodes"
+    encoding:
+      unvisited: "parent[v] < 0 (stores negative degree -out_degree(v))"
+      visited: "parent[v] >= 0 (stores parent vertex index u)"
+
+  - name: "lqueue"
+    role: "output_frontier_buffer"
+    element_type: "int32_t (NodeID)"
+    element_size_bytes: 4
+    capacity: 16384  # Thread-local buffer size before flushing to global queue
+    allocation: "thread_local_scratchpad"
+
+# ==============================================================================
+# OPERATIONS & RMW (READ-MODIFY-WRITE) SUBTYPE
+# ==============================================================================
+operations:
+  arithmetic:
+    - "integer pointer arithmetic (j = offset[u]; j < offset[u+1]; j++)"
+    - "integer condition test (curr_val < 0)"
+
+  rmw_operation:
+    subtype: "conditional_atomic_compare_and_swap"
+    primitive: "CAS(addr=&parent[v], expected=curr_val, new_val=u)"
+    atomicity_granularity: "4_bytes"
+    conflict_frequency: "high_to_extreme on hub nodes"
+    coherence_effect: "cache line bouncing and pipeline stalls (LOCK prefix)"
+
+  next_frontier_append:
+    subtype: "thread_local_buffer_push_and_coalesced_flush"
+    primitive: "lqueue.push_back(v); on_overflow: atomic_fetch_and_add(&queue.shared_in, count)"
+
+# ==============================================================================
+# MEMORY STREAMS SUMMARY
+# ==============================================================================
+memory_streams:
+  - name: "queue.shared"
+    type: "streaming_read"
+    stride_bytes: 4
+    pattern: "sequential, unit_stride"
+
+  - name: "VertexOffsets"
+    type: "indirect_gather_read"
+    stride_bytes: 154236.0  # Mean jump: ~150 KB
+    pattern: "sparse_irregular, low_spatial_locality"
+
+  - name: "g.out_neighbors_"
+    type: "burst_streaming_read"
+    stride_bytes: 4
+    pattern: "segmented_sequential (unit stride within degree of u)"
+
+  - name: "parent"
+    type: "indirect_rmw (read + conditional CAS)"
+    stride_bytes: 28615.6   # Mean jump: ~28 KB
+    pattern: "highly_irregular_scatter_gather, low_spatial_locality, high_temporal_reuse"
+
+# ==============================================================================
+# WORKING-SET & REUSE PROFILES
+# ==============================================================================
+working_set:
+  scale_examples:
+    small_scale_g18:
+      num_nodes: 262143
+      num_directed_edges: 7610898
+      parent_footprint_mb: 1.05
+      offsets_footprint_mb: 2.10
+      neighbors_footprint_mb: 30.44
+      total_working_set_mb: 33.59
+    large_scale_g24:
+      num_nodes: 16777212
+      num_directed_edges: 520753420
+      parent_footprint_mb: 67.11
+      offsets_footprint_mb: 134.22
+      neighbors_footprint_mb: 2083.01
+      total_working_set_mb: 2284.34
+
+  cache_fit: "exceeds L1/L2 by 10x - 1000x; spans LLC to main DRAM"
+
+  reuse_characteristics:
+    intra_level_edge_reuse: 0.0 # Edges are traversed at most once
+    intra_level_vertex_reuse: "high for popular v (5x to 100x redundant visits in dense frontiers)"
+    cross_level_reuse: "parent array is mutated progressively; offsets and neighbors are static"

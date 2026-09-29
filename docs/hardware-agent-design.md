@@ -8,7 +8,7 @@ Push **DX100-modified GAP BFS** through the forward pipeline: annotated source â
 
 Use the modified for-loop version selected by the team. Do not silently substitute upstream BFS or assume every loop conversion preserves semantics. The meeting identified while-loop handling as a limitation for the intended DX100 path; confirm applicability against the actual modified code and catalog.
 
-SPARTA remains an interim format/diagram exercise, rather than the demonstration kernel. BC may be considered after BFS works. The modified source is now checked out at DX100 revision `e4fc4afdf894f295442cef3604667a469fab8e62`; Peter's feature YAML, Yan-Ru's annotations/profiles, and the current catalog remain pending. See [the source review](bfs-source-review.md).
+SPARTA remains an interim format/diagram exercise, rather than the demonstration kernel. BC may be considered after BFS works. The modified source is checked out at DX100 revision `e4fc4afdf894f295442cef3604667a469fab8e62`. Peter's preliminary v1.1 sparse/dense reports have been received; their profiled revision/raw logs, Yan-Ru's annotations, and Eric's reviewed catalog remain pending. See [the source review](bfs-source-review.md) and [the intake assessment](offline-pipeline.md).
 
 Source inspection clarifies the meeting shorthand: `TDStep` uses explicit index-based CPU loops, while `TDStepMAA` uses existing DX100 operations. Host `while` loops remain. Feature extraction from `TDStep`, with `TDStepMAA` as a reference, is proposed for confirmation with Peter/Yan-Ru.
 
@@ -48,6 +48,8 @@ Start with one reasoning agent and a small coordinator. This is a proposed imple
 The coordinator loads versioned input/catalog snapshots, tracks budgets and history, checks consistency, and renders the candidate block graph. The reasoning agent selects and explains candidate hardware compositions. Additional specialist agents can be introduced when a concrete workflow need appears.
 
 The local coordinator does not imply ownership of Scott's project-wide Controller or the other team's agents.
+
+Implementation update (September 28): the first [offline coordinator and selector](offline-pipeline.md) is implemented in `archevolve/`. It uses explicit rules, a provisional catalog seed, and per-run history manifests. It does not execute the LLM prompt, run an evaluator, or automatically grow the catalog. Peter's v1.1 reports are now accepted through an adapter, with conflicting/unverified fields preserved.
 
 ## Input from Peter: features per statement
 
@@ -135,7 +137,7 @@ The implemented converter (`tools/render_mermaid.py`) follows these requirements
 
 The converter now emits Mermaid source and a review report, with optional SVG/PNG export through Mermaid CLI. It performs narrow graph-integrity checks, not capability or correctness validation. See [the generator guide](mermaid-generator.md).
 
-Peter's SPARTA example is being used as an interim diagram demo at Josh's request. Its two prior conditional families were manually elaborated into illustrative block graphs; these sketches do not establish verified implementations or real performance. BFS remains the pipeline demonstration target, and no actual BFS architecture has been populated from the missing source/catalog. Peter should receive both YAML and its rendered view so detailed semantics survive diagram simplification.
+Peter's SPARTA example remains an interim diagram demo. The new BFS offline pipeline also generates provisional family sketches from the received profiles and the local catalog seed. Neither set establishes verified implementations or real performance. Peter should receive both YAML and its rendered view so detailed semantics survive diagram simplification.
 
 ## Software back path and feedback
 
@@ -157,7 +159,7 @@ Josh/Eric combine the rewritten code with matching hardware artifacts for evalua
 
 Steps 1â€“3 are the immediate forward demonstration. The diagram and back path can be designed alongside it. Broader tuning, the full evaluator loop, additional agents, and prompt evolution follow after the interfaces work.
 
-The repository contains design documents, prompts, templates, the YAML-to-Mermaid converter, tests, rendered SPARTA demo diagrams, and recorded DX100/upstream source checkouts. It has no running hardware reasoning agent, current machine-readable catalog, or connected evaluator. BFS source observations are manual and unprofiled.
+The repository contains the offline normalizer/selector, a provisional catalog seed, candidate YAML and BFS diagrams, design documents, prompts, templates, renderer, tests, SPARTA examples, and recorded source checkouts. It has no live LLM backend, reviewed implementation catalog, or connected evaluator. BFS source observations are manual; incoming profile claims have not been reproduced locally.
 
 ## Sources
 

@@ -1,0 +1,32 @@
+Data-Fetching Accelerator Taxonomy
+A tree of choices for any hardware structure whose primary job is moving data from main memory (or SSD) into a place where compute can act on it — more efficiently than a plain demand load.
+
+
+The root question is binary: does the hardware predict the access, or does the program declare it? That single question splits the design space into two near-independent lineages with different ancestors, different storage models, and different cost stories.
+
+
+* A. Speculative lineage: Jouppi stream buffers → IMP → Prodigy → DMP
+* B. Declared lineage: Smith DAE → Widx → SpZip → Terminus → DX100
+
+
+________________
+
+
+
+
+Mermaid Diagram Link
+
+
+  
+
+The Tree
+  
+
+
+
+________________
+
+
+Notes
+* Per-leaf attributes — placement, address translation, coherence model, synchrony, reorder-window depth, return granularity — cluster predictably per leaf and are tracked in the full v3 document rather than shown here.
+* A design can occupy more than one leaf (DX100 has both a Stream Unit at B.1.1 and an Indirect Unit at B.1.2).

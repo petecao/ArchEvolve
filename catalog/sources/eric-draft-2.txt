@@ -1,0 +1,184 @@
+Data-Fetching Accelerator: Design Axes
+1. Placement
+How close is the engine to the data?
+
+
+Tier
+	Examples
+	Implication
+	Core-side (in pipeline / next to L1)
+	IMP, stride prefetchers, runahead
+	Cheap VA, full coherence, tiny visibility window
+	LLC-side
+	DMP, some indirect prefetchers
+	Sees more traffic, still in coherence domain
+	NoC-attached (between cores and MC)
+	DX100
+	Shared by cores, large reorder window, own TLB
+	Memory controller
+	GSDRAM-style, MC-resident reorderers
+	Bank/row-aware but tiny window unless extended
+	Near-DRAM (HBM logic layer / buffer chip)
+	UPMEM, some PIM fetchers
+	Massive BW, hard programmability, PA-only typical
+	In-DIMM / processing-using-memory
+	Ambit, RowClone
+	Best BW, worst flexibility
+	Near-SSD / computational storage
+	Samsung SmartSSD, NGD, BlueField
+	Filter / project / scan before crossing PCIe
+	Compute-in-memory (analog/digital)
+	Mythic, ISAAC
+	Strictly compute, but the load-into-array step is a fetch decision
+	
+
+Trade-off: moving closer to data trades programmability and address translation for bandwidth and locality.
+2. Access pattern targeted
+2a. Stride family
+* Unit stride (+1, +1, +1)
+* Constant non-unit stride (+k)
+* Multi-dimensional strides (+k1 inner, +k2 outer; arrays-of-structs, tiled tensors)
+* Reverse / negative stride
+2b. Indirect family — shape of the address expression[a]
+Let i be the loop index and B, C be index arrays.
+
+
+Form
+	Example
+	Required hw support
+	Pure indirect
+	A[B[i]]
+	Single chained load
+	Linear Arithmetic on i[b]
+	A[B[2*i+1]]
+	Strided fetch of B, then load
+	Arithmetic on values from B
+	A[B[i] + c], A[B[i] * stride]
+	ALU on the value returned from B (DX100 supports this)
+	Function of i for index
+	A[B[f(i)]]
+	Needs f to be expressible (typically affine)
+	Compound indirection
+	A[B[C[i]]] (depth 3)
+	Two chained loads or hw with multi-level lookahead
+	Indirection depth (general)
+	depth 1, 2, 3, …, n
+	How deep can the accelerator chase before falling back to the core? DX100: arbitrary; IMP: typically 1–2
+	2c. Sparse / structured patterns
+* Sparse gather (A[idx[0..n]])
+* Sparse scatter (write side; cares about RMW atomicity)
+* Sparse RMW (e.g. A[idx[i]] += v[i], PageRank inner loop)
+* CSR/CSC row traversal (for j in row_ptr[i]..row_ptr[i+1]: ...)
+2d. Pointer-chasing
+* Linked list (while p: p = p->next)
+* Tree walk (B-tree, B+-tree, trie). Variable depth.
+* Hash-table chain walk (Widx)
+* Graph BFS/DFS (frontier expansion; depth ≈ diameter)
+2e. Functionality bundled with the address
+What computation can the accelerator perform on each address/value before returning?
+
+
+* Address arithmetic
+* Filtering / predicated load (if cond(v) emit v); fundamental for scan offload
+* Reduction (sum, min, max); collapses N loads into one return
+* Compare-and-emit (selection, top-k)
+* Atomic RMW
+* Format conversion (decompress, dequantize)
+3. Programming interface[c]
+3a. Discovery / control model
+* Fixed-function passive: hardware watches LSQ/L1 traffic, learns, fires (Jouppi stream buffers, commercial stride prefetchers)
+* ISA extension: new instructions in the core (see 3b)
+* Descriptor-based / memory-mapped command queue: software writes a descriptor, accelerator executes (DMA engines, NVIDIA TMA, DX100, Intel DSA)
+* Compiler-driven (auto): compiler analyzes loops and emits descriptors (DX100's MLIR pass, Milk)
+* Programmer annotations: pragmas, attributes, intrinsics (Ainsworth & Jones, CGO'17)
+* Event-triggered programmable engine: small in-engine instruction stream fires on cache events (Ainsworth & Jones, ASPLOS'18)
+3b. ISA-extension catalogue (most common first)
+
+
+1. NVIDIA cp.async / cp.async.bulk (TMA) — Hopper+. Async bulk tile copy from global → shared mem with multi-dim descriptors and barriers
+2. x86 AVX-512 gather/scatter (vpgatherdd, vpscatterdd) — single-instruction indirect vector load/store
+3. ARM SVE LD1/ST1 gather-scatter — scalable-vector indirect access with predication
+4. x86 prefetcht0/1/2/nta — software prefetch hints, oldest and most-used
+5. RISC-V Zicbop (cache block operations: cbo.zero/clean/inval/flush, plus prefetch.i/r/w)
+6. RISC-V vector extension (RVV) indexed loads vluxei, vloxei — indexed gather
+7. POWER dcbt/dcbtst and stream variants — IBM software stream prefetch
+8. Intel DSA descriptor submission (enqcmd) — user-mode submit to a device queue
+9. NVIDIA ldgsts / async copies (pre-Hopper) — earlier async copy primitive
+10. Cray vector gather/scatter — historical baseline
+3c. Embedded code / filter expressions
+Some accelerators ship a small program with the descriptor; the program executes inside the engine, not the core.
+
+
+* Inline assembly / microcode: smart-NIC NPL programs
+* Intrinsics that lower to engine descriptors: __builtin_tma_*, cuda::memcpy_async
+* Bytecode / DSL: BPF on smart NICs, computational-storage filter expressions, Ainsworth's event-triggered programs
+4. Speculation
+Who initiates the fetch.
+
+
+* Speculative: hardware predicts and fires (stride, IMP, DMP). Risk: wasted BW, cache pollution.
+* Speculative with confidence gating: most modern prefetchers.
+* Software-driven offload: software promises the work, accelerator executes (DX100, DMA, TMA). No misprediction cost; programmability cost instead.
+* Hybrid: software hint nudges hardware speculation (annotated prefetches).
+5. Synchrony
+Does the requester block on completion? Orthogonal to who initiates.
+
+
+* Synchronous: requester waits until data is back. Gather instructions (vpgatherdd), regular loads behind a core's LSQ.
+* Asynchronous: requester fires the fetch and continues, syncs later via barrier / fence / mbarrier. DMA, NVIDIA TMA, DX100 descriptors, hardware prefetchers (async by nature, data lands in cache).
+* Bulk-async with explicit completion barrier: TMA's mbarrier arrive/wait, DMA doorbell + IRQ.
+6. Reordering freedom
+* Window depth: how many in-flight requests the engine can see at once. Core LSQ ≈ 64. MC reorder window ≈ 32–128. DX100 = 16K. SmartSSD ≈ a full partition.
+* Coalescing: merging multiple word accesses that land in the same cache line / DRAM row.
+* DRAM-aware scheduling: row-buffer affinity, channel interleaving, bank-group tCCD_S vs tCCD_L alternation.
+* Out-of-order completion to consumer: does the engine preserve program order, or feed an unordered set into a scratchpad?
+7. Granularity returned
+* Sub-line (word, single value): vector gather lanes
+* Cache line (64B): classic prefetcher
+* Multiple cache lines / spatial region: spatial prefetchers (Bingo, SMS)
+* Tile / vector (e.g. 16K × 4B for DX100; MxN tile for TMA)
+* Full traversed substructure: a whole hash-bucket chain (Widx), a whole CSR row, a whole tree path (SQRL)
+
+
+Note: granularity returned can be smaller than what was read if the engine filtered in-flight (covered in 2e).
+8. Storage
+Does the accelerator have its own storage space, or does it use the existing memory system? Cascades into axes 9 and 10.
+
+
+* Borrows the cache hierarchy: stride prefetchers, IMP, DMP. No new SRAM; data lands in L1/L2/L3.
+* Dedicated scratchpad / register file: DX100 (scratchpad), TMA (shared memory), DMA (line buffer), SpZip.
+* Uses host DRAM as a working set: PIM controllers.
+* Private off-chip storage: SmartSSD (uses the SSD's own DRAM as the working buffer).
+
+
+Own-storage accelerators usually need an explicit coherence story (axis 10), more area, and a programming interface that names the storage (axis 3). Cache-borrowing accelerators are cheaper but inherit eviction policy and pollution problems.
+9. Address translation
+* PA-only: pinned pages, legacy DMA. Cheap, kernel friction.
+* IOMMU-translated: device sees VA, IOMMU translates. NVIDIA TMA, modern DMA, Intel DSA.
+* Engine has its own TLB: DX100 (256-entry, huge pages).
+* TLB participation (shoot-downs, ASID-tagged): matters if a process munmaps a region mid-fetch.
+* VA-aware via core's TLB (engine sits behind core's MMU): core-side prefetchers.
+10. Coherence story
+* Coherent participant: engine snoops / is snooped (DX100's region-based protocol, IMP).
+* Bypass: engine writes scratchpad / streams to a private buffer; software flushes before the core reads (NVIDIA TMA into shared memory, classic DMA).
+* Software-managed flush: explicit cbo.flush / cache-control instructions.
+* Region-locked coherence: a contiguous VA range is reserved while the engine works (DX100).
+* Scratchpad with weak / no coherence: GPU shared mem, on-chip SRAM tiles.
+
+
+Open prof note: if a design doesn't fit one of these, expand the categories. Keep adding sub-categories as we hit them.
+11. Hardware cost
+Qualitative tiers. Different papers use different modeling assumptions (RTL synth, CACTI, analytical), so cross-paper numbers aren't directly comparable.
+
+
+* Trivial: stride detector table, ≤1 KB state
+* Modest: indirect prefetcher pattern table + small CAM (IMP, DMP), few KB
+* Substantial: programmable engine + scratchpad + own ALU (DX100, SpZip, Terminus), tens-of-KB to MB
+* Heavy: full fetcher core (Decoupled Access-Execute) or near-mem PE
+
+
+
+
+[a]program determines what kind of access it supports - coverage (sparse or dense) - within a kind, multiple options (speculation, storage inside accelerator, etc)
+[b]reason that we care - accelerator needs to have the arithmetic units to do this
+[c]maybe orthogonal to indirect access and storage

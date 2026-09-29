@@ -1,0 +1,27 @@
+{
+  "source": {
+    "contract_version": "draft-0.2",
+    "record_kind": "illustrative",
+    "kernel_id": "gapbs_bfs_top_down_step",
+    "input_ref": "examples/received/bfs-sparse.features.v1.1.yaml",
+    "input_revision": null,
+    "catalog_ref": "catalog/seed.yaml",
+    "catalog_revision": "seed-0.1",
+    "source_file": "hardware-request.yaml",
+    "source_sha256": "7beea6c0fced221bc752d632f8211730fb4b3664f8893ac683f3896ff2d1f101"
+  },
+  "diagrams": [
+    {
+      "candidate_id": "gapbs_bfs_top_down_step--cpu-baseline",
+      "file": "candidate-01.mmd"
+    },
+    {
+      "candidate_id": "gapbs_bfs_top_down_step--indirect-prefetch-family",
+      "file": "candidate-02.mmd"
+    },
+    {
+      "candidate_id": "gapbs_bfs_top_down_step--declared-gather-family",
+      "file": "candidate-03.mmd"
+    }
+  ]
+}

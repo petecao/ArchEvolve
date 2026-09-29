@@ -9,7 +9,7 @@ The [request](../examples/sparta-sort.hardware-request.yaml) uses Peter's real S
 1. Indirect prefetching: a conceptual access observer sends predicted addresses to a request issuer; the CPU retains the increments.
 2. Declared fetching: a conceptual descriptor front end, fetch engine, and return storage; index stability, RMW data freshness, and the software interface remain unresolved.
 
-These partitions and port names do not come from verified accelerator implementations. Component references remain unknown, sizes remain open, and the output makes no speedup claim. This demo tests diagram generation while BFS features and the catalog are pending; the modified BFS source is now available and BFS remains the project demonstration target.
+These partitions and port names do not come from verified accelerator implementations. Component references remain unknown, sizes remain open, and the output makes no speedup claim. BFS remains the project demonstration target; its source and preliminary feature reports are now available, and the [offline pipeline](offline-pipeline.md) generates additional provisional BFS sketches while source/profiling verification and catalog review are pending.
 
 See [the generated review report](../diagrams/sparta/README.md) or [the report with rendered SVGs](../diagrams/sparta/preview.md).
 

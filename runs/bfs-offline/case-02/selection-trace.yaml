@@ -1,0 +1,57 @@
+- catalog_entry: cpu-baseline
+  signal_checks:
+    always: true
+  target_access_ids:
+  - access-01
+  - access-02
+  - access-03
+  - access-04
+  preference_signal: null
+  preference_value: null
+  decision: selected_for_exploration
+  exploration_priority_class: comparison
+- catalog_entry: indirect-prefetch-family
+  signal_checks:
+    has_indirect_access: true
+  target_access_ids:
+  - access-02
+  - access-04
+  preference_signal: reported_large_jumps
+  preference_value: false
+  decision: eligible_outside_candidate_budget
+  exploration_priority_class: other_eligible
+- catalog_entry: declared-gather-family
+  signal_checks:
+    has_indirect_access: true
+    has_read_stream: true
+  target_access_ids:
+  - access-01
+  - access-02
+  - access-03
+  preference_signal: reported_large_jumps
+  preference_value: false
+  decision: eligible_outside_candidate_budget
+  exploration_priority_class: other_eligible
+- catalog_entry: stride-prefetch-family
+  signal_checks:
+    has_regular_stream: true
+  target_access_ids:
+  - access-01
+  - access-02
+  - access-03
+  preference_signal: reported_near_unit_indices
+  preference_value: true
+  decision: selected_for_exploration
+  exploration_priority_class: preferred_by_reported_features
+- catalog_entry: declared-bulk-read-family
+  signal_checks:
+    has_regular_stream: true
+    has_read_stream: true
+  target_access_ids:
+  - access-01
+  - access-02
+  - access-03
+  preference_signal: reported_near_unit_indices
+  preference_value: true
+  decision: selected_for_exploration
+  exploration_priority_class: preferred_by_reported_features
