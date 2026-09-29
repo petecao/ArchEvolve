@@ -531,9 +531,12 @@ def _environment(folder, args, host, started):
 
 
 def _git_state():
+    # 2026-09-29 ET: scoped to this folder; in the ArchEvolve monorepo, other
+    # members' uncommitted files do not mark a profile's checkout dirty.
     try:
         head = subprocess.run(["git", "-C", str(paths.HOME), "rev-parse", "HEAD"], capture_output=True, text=True)
-        status = subprocess.run(["git", "-C", str(paths.HOME), "status", "--porcelain", "--untracked-files=no"],
+        status = subprocess.run(["git", "-C", str(paths.HOME), "status", "--porcelain", "--untracked-files=no",
+                                 "--", "."],
                                 capture_output=True, text=True)
         if head.returncode != 0:
             return None, None
