@@ -1,7 +1,7 @@
 normalizer_version: offline-0.1
 case_id: gapbs_bfs_top_down_step
 input_ref: examples/received/bfs-sparse.features.v1.2.yaml
-input_sha256: 36c6feac9116bfcec65820c3050e381cb576f9f8361d631ce6af5fcad1fa240f
+input_sha256: 379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
 kernel:
   name: gapbs_bfs_top_down_step
   benchmark: gapbs
@@ -37,7 +37,7 @@ accesses:
   reuse_frequency: null
   tile_working_set_bytes: null
   evidence_refs:
-  - input:36c6feac9116bfcec65820c3050e381cb576f9f8361d631ce6af5fcad1fa240f
+  - input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
   - field:memory_streams.queue.shared
 - id: access-02
   array: VertexOffsets
@@ -60,7 +60,7 @@ accesses:
   reuse_frequency: null
   tile_working_set_bytes: null
   evidence_refs:
-  - input:36c6feac9116bfcec65820c3050e381cb576f9f8361d631ce6af5fcad1fa240f
+  - input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
   - field:memory_streams.VertexOffsets
   - field:indirect_access_distances.VertexOffsets
   adjacent_pair_proximity:
@@ -109,7 +109,7 @@ accesses:
   reuse_frequency: null
   tile_working_set_bytes: null
   evidence_refs:
-  - input:36c6feac9116bfcec65820c3050e381cb576f9f8361d631ce6af5fcad1fa240f
+  - input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
   - field:memory_streams.g.out_neighbors_
 - id: access-04
   array: parent
@@ -132,7 +132,7 @@ accesses:
   reuse_frequency: null
   tile_working_set_bytes: null
   evidence_refs:
-  - input:36c6feac9116bfcec65820c3050e381cb576f9f8361d631ce6af5fcad1fa240f
+  - input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
   - field:memory_streams.parent
   - field:indirect_access_distances.parent
   adjacent_pair_proximity:
@@ -194,7 +194,16 @@ reported_footprints_and_reuse:
       frontiers)
     cross_level_reuse: parent array is mutated progressively; offsets and neighbors
       are static
-reported_counters: null
+reported_counters:
+  measurement_tool: Linux perf 5.15 (PMU hardware performance counters)
+  metrics:
+    instructions_per_cycle_ipc: 0.39
+    cycles_frequency_ghz: 3.5
+    branch_miss_rate: 11.07%
+    l1_dcache_load_miss_rate: 15.14%
+    llc_load_miss_rate: 24.71%
+    atomic_cas_overhead_cycles: 15.97% (lock cmpxchg stall)
+    average_trial_time_sec: 0.00733
 hardware_hypotheses:
 - field: indirect_access_distances.VertexOffsets.hardware_implication
   text: Average stride (~75 KB) significantly exceeds L1 data cache capacity (32-48
@@ -316,7 +325,7 @@ heuristic_policy:
   meaning: Exploration ordering only; not a bottleneck classifier or speedup estimate.
 methodology:
   status: reported_method_bound_to_input
-  record_sha256: fdf5b3b8e4486242d45873282061a9ff0fe37ccb05a754a88b791f06d2079e67
+  record_sha256: c1dc5b86c68c5bd0c16eab522b57690ba3131af70d3f5ed78c6f909fe0ac2d9a
   source_ref: examples/received/peter-measurement-methodology.v1.2.txt
   source_sha256: 0f8d421aed3aa68e85e258c8f7eb844a6d8f5c5f98d4a1d6f39f9e4e1e3ba385
   verification: instrumentation_not_reproduced

@@ -13,7 +13,7 @@ input_revision: e4fc4afdf894f295442cef3604667a469fab8e62
 catalog_ref: catalog/seed.yaml
 catalog_revision: seed-0.1
 source_file: hardware-request.yaml
-source_sha256: 3e4d7949e44ebd6283850dbe0fc981850c57ace80d6ce97ac051ad87d9bfa7e6
+source_sha256: 924913ac80270f80285d8b1ca2d529f8f453bec28a8c64b56fd57a684298c281
 ```
 
 ## Workload context
@@ -48,7 +48,7 @@ rmw:
     level_2: 0 executions (bypassed entirely by if (curr_val < 0) filter)
 methodology:
   status: reported_method_bound_to_input
-  record_sha256: fdf5b3b8e4486242d45873282061a9ff0fe37ccb05a754a88b791f06d2079e67
+  record_sha256: c1dc5b86c68c5bd0c16eab522b57690ba3131af70d3f5ed78c6f909fe0ac2d9a
   source_ref: examples/received/peter-measurement-methodology.v1.2.txt
   source_sha256: 0f8d421aed3aa68e85e258c8f7eb844a6d8f5c5f98d4a1d6f39f9e4e1e3ba385
   verification: instrumentation_not_reproduced

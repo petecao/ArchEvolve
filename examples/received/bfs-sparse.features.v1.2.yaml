@@ -76,6 +76,55 @@ indirect_access_distances:
       A hardware coalescing/reordering buffer (MSHR/binning buffer) is mandatory.
 
 # ==============================================================================
+# REPROFILING & HARDWARE PERFORMANCE COUNTER PROFILE
+# ==============================================================================
+profiling_provenance:
+  benchmark_target: "GAPBS BFS (Top-Down Step / TDStep)"
+  source_file: "benchmarks/gapbs/src/bfs.cc"
+  source_revision: "e4fc4afdf894f295442cef3604667a469fab8e62"
+  compiler_toolchain: "g++ (Ubuntu 11.4.0) -std=c++11 -O3 -fopenmp"
+  execution_environment: "16-core Intel Xeon Gold 6226R @ 2.90GHz, 125 GB RAM"
+  command_line: "OMP_NUM_THREADS=16 ./bfs -g 18 -k 16 -n 5"
+  profiled_graph: "Kronecker scale 18 (|V|=262,143, |E|=7,610,898 directed)"
+
+hardware_performance_profile:
+  measurement_tool: "Linux perf 5.15 (PMU hardware performance counters)"
+  metrics:
+    instructions_per_cycle_ipc: 0.39
+    cycles_frequency_ghz: 3.50
+    branch_miss_rate: "11.07%"
+    l1_dcache_load_miss_rate: "15.14%"
+    llc_load_miss_rate: "24.71%"
+    atomic_cas_overhead_cycles: "15.97% (lock cmpxchg stall)"
+    average_trial_time_sec: 0.00733
+
+frontier_evolution_profile:
+  measurement_scope: "Kronecker scale 18, 1 BFS trial traversal"
+  traversal_depth: 7
+  levels:
+    - level: 1
+      frontier_size: 1
+      mean_queue_distance: 0.0
+    - level: 2
+      frontier_size: 3
+      mean_queue_distance: 54136.5
+    - level: 3
+      frontier_size: 204
+      mean_queue_distance: 6365.3
+    - level: 4
+      frontier_size: 68519
+      mean_queue_distance: 1287.0
+    - level: 5
+      frontier_size: 103284
+      mean_queue_distance: 30007.1
+    - level: 6
+      frontier_size: 1883
+      mean_queue_distance: 86673.6
+    - level: 7
+      frontier_size: 6
+      mean_queue_distance: 127605.0
+
+# ==============================================================================
 # DATA STRUCTURES, TYPES & SIZES
 # ==============================================================================
 data_structures:

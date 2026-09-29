@@ -13,7 +13,7 @@ input_revision: e4fc4afdf894f295442cef3604667a469fab8e62
 catalog_ref: catalog/seed.yaml
 catalog_revision: seed-0.1
 source_file: hardware-request.yaml
-source_sha256: 8eec7ce88c8b9489b0eefd6f5ff7f9fe1955933807c1ded7da6fb8879f4e9687
+source_sha256: f258c58d9591b453075b1d163f7efd70ed45d22577a8effd5c37ed7a7f326ede
 ```
 
 ## Workload context
@@ -45,7 +45,7 @@ rmw:
   phase_execution: {}
 methodology:
   status: reported_method_bound_to_input
-  record_sha256: fdf5b3b8e4486242d45873282061a9ff0fe37ccb05a754a88b791f06d2079e67
+  record_sha256: c1dc5b86c68c5bd0c16eab522b57690ba3131af70d3f5ed78c6f909fe0ac2d9a
   source_ref: examples/received/peter-measurement-methodology.v1.2.txt
   source_sha256: 0f8d421aed3aa68e85e258c8f7eb844a6d8f5c5f98d4a1d6f39f9e4e1e3ba385
   verification: instrumentation_not_reproduced
@@ -132,7 +132,7 @@ selection_basis:
   decision: selected_for_exploration
   exploration_priority_class: comparison
 evidence_refs:
-- input:36c6feac9116bfcec65820c3050e381cb576f9f8361d631ce6af5fcad1fa240f
+- input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
 - catalog:74ec8d61a02171d6263434fd79669430ade440b4ad9fef735483f7cc17bc54ed
 taxonomy_refs: []
 applicability_conditions: []
@@ -238,7 +238,7 @@ selection_basis:
   decision: selected_for_exploration
   exploration_priority_class: preferred_by_reported_features
 evidence_refs:
-- input:36c6feac9116bfcec65820c3050e381cb576f9f8361d631ce6af5fcad1fa240f
+- input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
 - catalog:74ec8d61a02171d6263434fd79669430ade440b4ad9fef735483f7cc17bc54ed
 taxonomy_refs:
 - eric-draft-2:2b
@@ -389,7 +389,7 @@ selection_basis:
   decision: selected_for_exploration
   exploration_priority_class: preferred_by_reported_features
 evidence_refs:
-- input:36c6feac9116bfcec65820c3050e381cb576f9f8361d631ce6af5fcad1fa240f
+- input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
 - catalog:74ec8d61a02171d6263434fd79669430ade440b4ad9fef735483f7cc17bc54ed
 taxonomy_refs:
 - eric-draft-2:2b
