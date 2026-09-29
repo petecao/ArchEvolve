@@ -57,7 +57,8 @@ def restrict(policy, inner=False):
         # Resolve these inside this standalone process, never to the observer's
         # /proc entries, and never grant access to other processes or environ.
         self_roots = [f"/proc/{os.getpid()}/{name}" for name in policy.get("runtime_self_reads", [])]
-        for name, access in [(p, read) for p in policy["read_roots"] + self_roots] + [(p, fs_all) for p in policy["write_roots"]]:
+        sinks = [(p, read | (1 << 1) | (1 << 14)) for p in policy.get("device_write_roots", [])]
+        for name, access in [(p, read) for p in policy["read_roots"] + self_roots] + [(p, fs_all) for p in policy["write_roots"]] + sinks:
             root = Path(name)
             if not root.exists():
                 continue
@@ -161,7 +162,8 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
             roots += [str(Path(p).resolve()) for p in config["command"][1:] if Path(p).is_file()]
         policy = {"enforced": True, "landlock_abi": abi(), "lane": lane,
                   "read_roots": sorted(set(str(Path(p).resolve()) for p in roots if Path(p).exists())),
-                  "runtime_self_reads": ["maps", "cgroup", "statm", "status"],
+                  "runtime_self_reads": ["maps", "cgroup", "stat", "statm", "status"],
+                  "device_write_roots": ["/dev/null"],
                   "execution_cpus": sorted(os.sched_getaffinity(0))[:4],
                   "write_roots": [str(workspace), str(home)], "tcp_connect_ports": [443],
                   "inner_tcp_connect_ports": [], "tcp_bind_ports": [],

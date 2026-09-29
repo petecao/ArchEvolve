@@ -147,8 +147,8 @@ class CodexAdapter(Adapter):
             if wrapper.parts[-4:] != ("@openai", "codex", "bin", "codex.js"):
                 return command
             package = wrapper.parent.parent
-            metadata = json.loads((package / "package.json").read_text())
-            if not isinstance(metadata, dict) or metadata.get("name") != "@openai/codex":
+            parent_metadata = json.loads((package / "package.json").read_text())
+            if not isinstance(parent_metadata, dict) or parent_metadata.get("name") != "@openai/codex":
                 return command
             name, triple = target
             # The installed wrapper resolves the nearest platform package with
@@ -160,8 +160,23 @@ class CodexAdapter(Adapter):
                 manifest = root / "package.json"
                 if manifest.is_file():
                     metadata = json.loads(manifest.read_text())
-                    if not isinstance(metadata, dict) or metadata.get("name") != "@openai/" + name:
+                    if not isinstance(metadata, dict):
                         return command
+                    if metadata.get("name") != "@openai/" + name:
+                        # npm aliases retain the underlying @openai/codex name.
+                        # Bind that alias to the wrapper's exact dependency and
+                        # its declared Linux architecture before selecting it.
+                        cpu = "x64" if name.endswith("-x64") else "arm64"
+                        version = parent_metadata.get("version")
+                        expected = str(version) + "-linux-" + cpu
+                        dependencies = parent_metadata.get("optionalDependencies")
+                        if (not isinstance(version, str) or not version
+                                or not isinstance(dependencies, dict)
+                                or dependencies.get("@openai/" + name) != "npm:@openai/codex@" + expected
+                                or metadata.get("name") != "@openai/codex"
+                                or metadata.get("version") != expected
+                                or metadata.get("os") != ["linux"] or metadata.get("cpu") != [cpu]):
+                            return command
                     native = root / "vendor" / triple / "bin" / "codex"
                     break
             else:
