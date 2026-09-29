@@ -163,9 +163,15 @@ def main():
     args = parser.parse_args()
     folder = artifacts.external_directory(args.runs_dir) / ID
     data = materialize(folder, args.records)
+    receipt = check(data, folder, args.records, args.lane) if args.check else None
+    if receipt:
+        receipt_path = folder / "correctness.json"
+        data["context"]["verification"] = {
+            "status": "passed", "evidence": [{"path": str(receipt_path),
+                "sha256": artifacts.file_hash(receipt_path), "classification": receipt["classification"]}],
+            "scope": "Native FUNC smoke only: source 0, scale-10 Kronecker and uniform-random graphs, four threads; no performance or accelerator claim."}
     request = folder / "source-record.yaml"
     request.write_text(yamlio.dumps(data))
-    receipt = check(data, folder, args.records, args.lane) if args.check else None
     if args.register:
         subprocess.run([sys.executable, "-B", "-m", "swdb", "add", str(request),
                         "--records", str(args.records)], cwd=ROOT, check=True)

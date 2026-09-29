@@ -209,7 +209,17 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                     comm = Path(f"/proc/{pid}/comm").read_text().strip()
                 except OSError:
                     continue
-                if comm in {"bash", "sh", "dash", "zsh", "make", "cmake", "gcc", "g++", "clang", "clang++", "cc1", "cc1plus"}:
+                parent = int(table.get(pid, {}).get("PPid", 0))
+                # The tracer's direct child is the provider launcher. Native
+                # Codex also has a Node installation wrapper; everything else
+                # is a provider-created command, including Python/Node helpers.
+                provider_root = pid == child.pid or parent == child.pid
+                if comm == "codex" and parent in children:
+                    try:
+                        provider_root = Path(f"/proc/{pid}/exe").resolve().is_relative_to(install)
+                    except OSError:
+                        pass
+                if not provider_root:
                     started.setdefault(pid, time.monotonic())
                     if time.monotonic() - started[pid] > 120:
                         reasons.append("provider tool command exceeds the 120 s wall-time limit")
