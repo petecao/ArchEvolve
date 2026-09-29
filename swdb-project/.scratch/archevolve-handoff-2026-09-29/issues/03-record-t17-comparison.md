@@ -37,3 +37,11 @@ per graph family with explicit sealed diagnostic packages and claim scope.
 The root agent coordinates this work in an owned mbit10 lane, where the raw observations
 and binary/source artifacts are available. The ticket remains claimed until the two
 retained comparison results are verified and synced locally.
+
+2026-09-29 18:37 ET: The root agent reported that the dependency-closure import
+retained 25 actual metadata records on mbit10. The first raw public recheck exhausted
+its outer time budget while reading the compressed trace; no completed comparison
+has been synced and no qualified performance claim is made. The root agent is
+coordinating a longer retry after the shorter Linux/provider checks, with raw
+command output retained on the host. This is an execution-time limit, not a reason
+to substitute the a3 closure's recorded timings for public comparison evidence.

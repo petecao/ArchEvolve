@@ -3,7 +3,7 @@
 Created: 2026-09-29
 **Type:** slice
 **Status:** needs-info
-**Blocked by:** 02, and Peter's answer on the offset width
+**Blocked by:** Peter's confirmed report/source binding and offset-width answer
 **Spec:** `../spec.md`
 
 One row per `bfs-td-*` ID: file:line at `e4fc4af` → Peter's array name → Josh's `access-0N` →

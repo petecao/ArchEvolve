@@ -3,7 +3,7 @@
 Created: 2026-09-29
 **Type:** slice
 **Status:** needs-info
-**Blocked by:** Peter's spec format
+**Blocked by:** 05, Peter's request/intrinsic-spec format, and the confirmed hardware candidate
 **Spec:** `../spec.md`
 
 Turn Peter's intrinsic spec plus Josh's hardware candidate into an SWDB rewrite proposal,

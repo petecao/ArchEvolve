@@ -16,8 +16,15 @@ Record here, under `## Comments`, when it was sent and any replies from Peter, J
 
 ## Draft
 
-> @Joshveer Grewal TDStep binding: DX100 `e4fc4af`, `benchmarks/gapbs/src/bfs.cc` (sha256 `6835fc42…`), TDStep at lines 227–259. Build: `-std=c++11 -O3 -Wall -fopenmp -pthread -DFUNC`. Graph: DX100 GAPBS converter `-g 18 -k 16`, seed 27491095, symmetrized by the converter's default (262,143 vertices / 7,610,898 edges, the same size as Peter's sparse case). Raw logs (graph generation, region profile, Callgrind) are on our lab host; tell me which ones you need and I'll share them. I'll annotate TDStep with your 7 `bfs-td-*` statement IDs (bfs.cc:240–249) unless anyone objects.
+> @Joshveer Grewal TDStep binding: DX100 `e4fc4af`, `benchmarks/gapbs/src/bfs.cc` (sha256 `6835fc42…`), TDStep at lines 227–259. Build: `-std=c++11 -O3 -Wall -fopenmp -pthread -DFUNC`. Graph: DX100 GAPBS converter `-g 18 -k 16`, seed 27491095, symmetrized by the converter's default (262,143 vertices / 7,610,898 edges, the same size as Peter's sparse case). Raw logs (graph generation, region profile, Callgrind) are on our lab host; tell me which ones you need and I'll share them. TDStep is now annotated in SWDB with your 7 `bfs-td-*` statement IDs (bfs.cc:240–249), bound to that unchanged source revision.
 >
-> @Peter Cao `SGOffset` is `int32_t` at graph.h:90 in DX100 and in every MemAcc commit I have. Do you have a local edit, or should the VertexOffsets numbers use 4 bytes? Also, since your agent will be the one asking my side for info, what will it ask for, and in what format?
+> @Peter Cao `SGOffset` is `int32_t` at graph.h:90 in the pinned DX100 `e4fc4af` source. Your received v1.1 report uses 64-bit VertexOffsets and names a DataLayoutAPI source path. Does it bind to a different source/build, or should the VertexOffsets numbers for this DX100 revision use 4 bytes? Also, since your agent will be the one asking my side for info, what will it ask for, and in what format?
 >
 > @Eric Ni On gem5: I already have a gem5 DX100 evaluation path for BFS (correctness check plus timing). It could be where a hardware spec gets implemented and measured, at least for DX100-backed candidates.
+
+## Progress
+
+2026-09-29: The unsent draft reflects ticket 02's completed annotations and states
+the offset width only for the pinned source inspected here. No message has been
+sent by an agent, and no Peter/Josh/Eric reply is recorded. Ownership and
+`ready-for-human` status remain unchanged.
