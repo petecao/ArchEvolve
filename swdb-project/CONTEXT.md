@@ -1,6 +1,6 @@
 # ArchEvolve — Software Database
 
-Updated: 2026-09-25
+Updated: 2026-09-29
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -41,7 +41,13 @@ _Avoid_: extracted kernel, hot kernel
 **Candidate artifact**:
 A specific source snapshot, together with any build outputs, submitted for
 evaluation as a possible implementation of a kernel.
-_Avoid_: optimized implementation (before its correctness check passes)
+_Avoid_: optimized implementation (before its correctness check passes); candidate
+(alone), which the HW side uses for a hardware composition ("hardware candidate")
+
+**Statement**:
+A line range in one implementation's source, named by a team-wide ID (for example
+`bfs-td-parent-cas`), that performs one or more steps of access patterns.
+_Avoid_: access (alone), line, instruction
 
 **Access pattern**:
 One memory-access expression in one implementation: a chain of steps that ends at
@@ -88,6 +94,17 @@ A request to change identified source regions according to an optimization inten
 carrying instructions or supplied code and the requirements the change must preserve.
 _Avoid_: strategy (for a request tied to particular source)
 
+**Rewrite provider**:
+The external coding agent that interprets a rewrite proposal and produces the source
+edits for a candidate artifact; its kind (for example Codex or Claude) is part of the record.
+_Avoid_: coding agent, backend, LLM, worker (for the agent itself)
+
+**Provider workspace**:
+The files a rewrite provider may read, edit, build, and run during one attempt: only
+what its rewrite proposal needs. Everything else, including evaluator code, workload
+inputs, and other candidates, is hidden from it.
+_Avoid_: sandbox, context, allowlist
+
 **Intrinsic**:
 One ISA instruction wrapper that code can call (for example `_mm512_i32gather_ps`),
 with the ISA extension it needs and the memory access it performs.
@@ -120,8 +137,3 @@ _Avoid_: confidence, provenance (alone)
 How full the data fed to a kernel is (mostly zeros versus full; scattered versus
 clustered indices), independent of the storage format.
 _Avoid_: sparse format, dense format
-
-**Workload view**:
-The record the HW Ensemble Agent reads, generated from database records in the HW
-side's workload format.
-_Avoid_: workload file, input YAML

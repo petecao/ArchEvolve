@@ -1,6 +1,6 @@
 # EvolveSWDB weekly update
 
-Date: 2026-09-30 (Eastern Time). Created 2026-09-27.
+Date: 2026-09-30 (Eastern Time). Created 2026-09-27. Updated 2026-09-29.
 
 Ten-minute talk: slides 1–9. Slide 10 is backup.
 
@@ -71,11 +71,13 @@ Sources:
 
 ## 9. Plan for this week
 
-8:40–9:50 (70 s). This week: first, finish the remaining proposal forms on both BFS versions, including the whole-file candidate. Second, use profiling to drive a proposal: pick a hot loop from a profile package on a pilot-sized graph and submit a rewrite that targets it, rather than a small illustrative edit. Third, complete the DX100 prototype evaluation as one hardware target. Then hand the profiling and rewriting interface to Peter's SW ensemble and Josh's HW ensemble.
+8:40–9:50 (70 s). This week the handoff comes first. At the 2026-09-24 meeting the team fixed a linear pipeline: my side, then Peter, then Josh and Eric, then back through Peter to me. So my first deliverable is for Peter's agent: the DX100 BFS top-down step with its exact source revision, build and graph commands, and raw logs, annotated with Josh's seven statement IDs so that Peter's per-statement features and Josh's hardware requests refer to the same lines. One detail to settle with Peter: this source stores edge offsets as 32-bit integers, while his feature report assumes 64-bit. Second, Eric asked who builds and tests the proposed hardware, and the pipeline names no owner for that yet. I already have a gem5 path for the DX100 prototype that checks BFS correctness and times the run, so I will offer it as the evaluator, at least for DX100-based designs. Then I continue with a profile-driven rewrite that targets a measured hot loop on a pilot-sized graph. The remaining proposal forms move after the handoff.
 
 Sources:
+- `../docs/meeting-2026-09-24.md`
+- `../examples/bfs.source-observations.yaml`
+- `apps/dx100/benchmarks/gapbs/src/graph.h`
 - `.scratch/bfs-rewrite-evaluation-2026-09-25/spec.md`
-- `.scratch/bfs-rewrite-evaluation-2026-09-25/map.md`
 
 ## 10. Backup: native measurement protocol
 

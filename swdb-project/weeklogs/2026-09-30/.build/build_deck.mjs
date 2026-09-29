@@ -1,9 +1,9 @@
-// EvolveSWDB advisor update. Date: 2026-09-30 (Eastern Time). Created 2026-09-27.
+// EvolveSWDB advisor update. Date: 2026-09-30 (Eastern Time). Created 2026-09-27. Updated 2026-09-29 (slide 9: handoff first; monorepo paths; v4).
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {Presentation,PresentationFile} from '@oai/artifact-tool';
 import {resolvePresentationFont,finalizePresentation} from '/Users/yanrujhou/.codex/plugins/cache/openai-primary-runtime/presentations/26.909.12148/skills/presentations/container_tools/artifact_tool_utils.mjs';
-const root='/Users/yanrujhou/CLionProjects/EvolveSWDB';
+const root='/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project';
 const work=path.join(root,'weeklogs/2026-09-30');
 const build=path.join(work,'.build');
 const skill='/Users/yanrujhou/.codex/plugins/cache/openai-primary-runtime/presentations/26.909.12148/skills/presentations';
@@ -99,11 +99,11 @@ bottom(s,'Lesson: report what is not covered instead of hiding it.');
 
 // 9 Plan
 s=slide('Plan for this week',
-`8:40–9:50 (70 s). This week: first, finish the remaining proposal forms on both BFS versions, including the whole-file candidate. Second, use profiling to drive a proposal: pick a hot loop from a profile package on a pilot-sized graph and submit a rewrite that targets it, rather than a small illustrative edit. Third, complete the DX100 prototype evaluation as one hardware target. Then hand the profiling and rewriting interface to Peter's SW ensemble and Josh's HW ensemble.`,
-[DS+'spec.md',DS+'map.md']);
-const plan=[['1','Finish remaining proposal forms on both BFS versions','Including the new whole-file candidate'],['2','Profile-driven rewrite on a pilot-sized graph','Target a measured hot loop, not a toy edit'],['3','DX100 prototype evaluation + handoff to agents','One hardware target; SW/HW ensembles use the interface']];
+`8:40–9:50 (70 s). This week the handoff comes first. At the 2026-09-24 meeting the team fixed a linear pipeline: my side, then Peter, then Josh and Eric, then back through Peter to me. So my first deliverable is for Peter's agent: the DX100 BFS top-down step with its exact source revision, build and graph commands, and raw logs, annotated with Josh's seven statement IDs so that Peter's per-statement features and Josh's hardware requests refer to the same lines. One detail to settle with Peter: this source stores edge offsets as 32-bit integers, while his feature report assumes 64-bit. Second, Eric asked who builds and tests the proposed hardware, and the pipeline names no owner for that yet. I already have a gem5 path for the DX100 prototype that checks BFS correctness and times the run, so I will offer it as the evaluator, at least for DX100-based designs. Then I continue with a profile-driven rewrite that targets a measured hot loop on a pilot-sized graph. The remaining proposal forms move after the handoff.`,
+['../docs/meeting-2026-09-24.md','../examples/bfs.source-observations.yaml','apps/dx100/benchmarks/gapbs/src/graph.h',DS+'spec.md']);
+const plan=[['1','Hand off annotated BFS to Peter’s agent','Pinned source, build and graph commands, logs, Josh’s 7 statement IDs'],['2','Offer our gem5 DX100 path as the evaluator','Answers “who builds and tests the proposed hardware?”'],['3','Then: profile-driven rewrite on a pilot-sized graph','Target a measured hot loop, not a toy edit']];
 plan.forEach((r,i)=>{box(s,r[0],64,150+i*130,70,70,true,28);txt(s,r[1],160,152+i*130,1060,40,26,true,C.blue);txt(s,r[2],160,196+i*130,1060,36,22,false,C.muted);});
-bottom(s,'Next question: does a profile-guided rewrite give a measurable gain?');
+bottom(s,'Team pipeline (09-24): Yan-Ru → Peter → Josh/Eric → Peter → Yan-Ru');
 
 // 9 Backup
 s=slide('Backup: native measurement protocol',
@@ -111,10 +111,10 @@ s=slide('Backup: native measurement protocol',
 [DS+'issues/18-dx100-patch-route-acceptance.md','.claude/rules/remote_server.md'],true);
 table(s,[['Setting','Value'],['Host','mbit10, Intel Xeon Gold 6326, one socket lane'],['Threads','1'],['Repetitions','10 paired (baseline / candidate alternating)'],['Claim rule','Speedup ≥ 1.05 and spread ≤ 10%'],['Correctness','BFS tree checked on every timed trial'],['Profiling','Region timers + Callgrind (no HW counters)']],56,140,1168,420,[300,868],22);
 
-await fs.writeFile(path.join(work,'speaker-notes.md'),'# EvolveSWDB weekly update\n\nDate: 2026-09-30 (Eastern Time). Created 2026-09-27.\n\nTen-minute talk: slides 1–9. Slide 10 is backup.\n\n'+notes.map((n,i)=>`## ${i+1}. ${n.title}\n\n${n.narration}\n${n.sources.length?'\nSources:\n'+n.sources.map(x=>'- `'+x+'`').join('\n')+'\n':''}`).join('\n'));
+await fs.writeFile(path.join(work,'speaker-notes.md'),'# EvolveSWDB weekly update\n\nDate: 2026-09-30 (Eastern Time). Created 2026-09-27. Updated 2026-09-29.\n\nTen-minute talk: slides 1–9. Slide 10 is backup.\n\n'+notes.map((n,i)=>`## ${i+1}. ${n.title}\n\n${n.narration}\n${n.sources.length?'\nSources:\n'+n.sources.map(x=>'- `'+x+'`').join('\n')+'\n':''}`).join('\n'));
 const candidate=path.join(build,'candidate.pptx');
 await(await PresentationFile.exportPptx(p)).save(candidate);
 for(let i=0;i<p.slides.items.length;i++){const png=await p.export({slide:p.slides.items[i],format:'png',scale:1});await fs.writeFile(path.join(build,`slide-${String(i+1).padStart(2,'0')}.png`),new Uint8Array(await png.arrayBuffer()));}
-const final=path.join(work,'slides/evolveswdb-week-02-v3.pptx');
-await finalizePresentation({workspaceDir:work,candidatePath:candidate,finalPath:final,pythonExecutable:path.join(runtime,'python/bin/python3'),integrityValidatorPath:path.join(skill,'container_tools/inspect_presentation_package_integrity.py'),layoutValidatorPath:path.join(skill,'container_tools/inspect_presentation_layout_geometry.py'),layoutArgs:['--expected-slide-size-emu','12192000,6858000','--validate-heading-fit',...[3,5,6,7,8,10].flatMap(n=>['--require-native-table-slide',String(n)])],explicitTotalSlideCount:10,requiredNativeTableOwnerSlides:[3,5,6,7,8,10],requiredNativeChartOwnerSlides:[],fontPolicy:{basis:'design',families:[family]},verifyArtifactToolImport:true,receiptPath:path.join(build,'validation-v3.json')});
+const final=path.join(work,'slides/evolveswdb-week-02-v4.pptx');
+await finalizePresentation({workspaceDir:work,candidatePath:candidate,finalPath:final,pythonExecutable:path.join(runtime,'python/bin/python3'),integrityValidatorPath:path.join(skill,'container_tools/inspect_presentation_package_integrity.py'),layoutValidatorPath:path.join(skill,'container_tools/inspect_presentation_layout_geometry.py'),layoutArgs:['--expected-slide-size-emu','12192000,6858000','--validate-heading-fit',...[3,5,6,7,8,10].flatMap(n=>['--require-native-table-slide',String(n)])],explicitTotalSlideCount:10,requiredNativeTableOwnerSlides:[3,5,6,7,8,10],requiredNativeChartOwnerSlides:[],fontPolicy:{basis:'design',families:[family]},verifyArtifactToolImport:true,receiptPath:path.join(build,'validation-v4.json')});
 console.log('FINAL',final);
