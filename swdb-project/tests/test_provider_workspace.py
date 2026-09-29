@@ -333,6 +333,11 @@ def test_timeout_keeps_audit_and_deletes_login_copy(proposal_setup, workspace_pr
 
 def test_public_repair_uses_workspace_diff_and_audit(evaluation_setup, workspace_provider):
     records, runs, evaluation_request, base = evaluation_setup
+    machine = records.read("machines/native-testhost.yaml")
+    if machine["hostname"] == "mbit10":
+        # The public evaluator verifies the inherited socket lease itself.
+        machine["lane_required"] = True
+        records.write("machines/native-testhost.yaml", machine)
     compiler = Path(yaml.safe_load(evaluation_request().read_text())["build"]["compiler"])
     body = compiler.read_text()
     failure = "if os.environ.get('SWDB_NATIVE_FIXTURE') == 'build_fail': sys.exit(7)"
@@ -340,8 +345,12 @@ def test_public_repair_uses_workspace_diff_and_audit(evaluation_setup, workspace
     compiler.write_text(body.replace(failure,
         "if os.environ.get('SWDB_NATIVE_FIXTURE') == 'build_fail':\n"
         " print('fixture syntax error: ' + 'retained compiler diagnostic ' * 4000); sys.exit(7)"))
-    result, failed = evaluate(evaluation_setup, mode="build_fail")
-    assert result.returncode == 1
+    result, failed = evaluate(evaluation_setup, mode="build_fail",
+                              build_directory=str(runs / "repair-native-build"))
+    assert result.returncode == 1, result.stderr
+    assert failed["outcome"]["state"] == "failed" and failed["outcome"]["stage"] == "build", failed["outcome"]
+    if machine["hostname"] == "mbit10":
+        assert "verified: affinity" in failed["context"]["lane"]
     old = json.loads(records.swdb("get", base["candidate"], "--format", "json").stdout)
     config = workspace_provider(edits=[{"path": "src/bfs.cc", "old": "int alpha = 14", "new": "int alpha = 13"}],
                                 actions=[{"type": "file", "value": "src/bfs.cc"}], require_repair_context=True)

@@ -53,7 +53,11 @@ def restrict(policy, inner=False):
     if fd < 0:
         raise GuardError("Landlock create_ruleset failed: " + os.strerror(ctypes.get_errno()))
     try:
-        for name, access in [(p, read) for p in policy["read_roots"]] + [(p, fs_all) for p in policy["write_roots"]]:
+        # Bun's runtime inspects its own mapping/cgroup entries at startup.
+        # Resolve these inside this standalone process, never to the observer's
+        # /proc entries, and never grant access to other processes or environ.
+        self_roots = [f"/proc/{os.getpid()}/{name}" for name in policy.get("runtime_self_reads", [])]
+        for name, access in [(p, read) for p in policy["read_roots"] + self_roots] + [(p, fs_all) for p in policy["write_roots"]]:
             root = Path(name)
             if not root.exists():
                 continue
@@ -134,7 +138,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                 break
         roots = ["/usr", "/bin", "/lib", "/lib64", "/etc/ld.so.cache", "/etc/ssl/certs",
                  "/etc/ssl/openssl.cnf", "/etc/resolv.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/passwd", "/etc/localtime",
-                 "/dev/null", "/dev/urandom", "/dev/random", "/dev/zero", str(install)]
+                 "/proc/sys/vm/mmap_min_addr", "/dev/null", "/dev/urandom", "/dev/random", "/dev/zero", str(install)]
         # A venv's executable symlink resolves into /usr, but Python still reads
         # its adjacent configuration and libraries during interpreter startup.
         # This is the selected toolchain, not an application/evaluator root.
@@ -151,6 +155,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
             roots += [str(Path(p).resolve()) for p in config["command"][1:] if Path(p).is_file()]
         policy = {"enforced": True, "landlock_abi": abi(), "lane": lane,
                   "read_roots": sorted(set(str(Path(p).resolve()) for p in roots if Path(p).exists())),
+                  "runtime_self_reads": ["maps", "cgroup"],
                   "write_roots": [str(workspace), str(home)], "tcp_connect_ports": [443],
                   "inner_tcp_connect_ports": [], "tcp_bind_ports": [],
                   "model_api": _api_addresses(kind) if not fixture else {"hosts": [], "addresses": []},
@@ -266,7 +271,7 @@ def _environment(home, workspace, kind):
     env = {"PATH": "/usr/bin:/bin", "HOME": str(home), "TMPDIR": str(workspace / "build"),
            "LANG": "C.UTF-8", "OMP_NUM_THREADS": "4", "OPENBLAS_NUM_THREADS": "4",
            "MAKEFLAGS": "-j4", "UV_THREADPOOL_SIZE": "2", "TOKIO_WORKER_THREADS": "2",
-           "RAYON_NUM_THREADS": "2", "NODE_OPTIONS": "--max-old-space-size=4096",
+           "RAYON_NUM_THREADS": "2", "NODE_OPTIONS": "--max-old-space-size=4096 --v8-pool-size=2",
            "DISABLE_TELEMETRY": "1", "DISABLE_ERROR_REPORTING": "1",
            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1", "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
            "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1", "DISABLE_AUTOUPDATER": "1",
