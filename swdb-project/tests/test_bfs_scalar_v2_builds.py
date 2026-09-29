@@ -1,4 +1,4 @@
-"""Scalar build orchestration contracts, never empirical evidence. 2026-09-26 ET."""
+"""Scalar build orchestration contracts, never empirical evidence. Updated 2026-09-29 ET."""
 import copy
 from contextlib import nullcontext
 from datetime import datetime, timedelta
@@ -369,13 +369,23 @@ def test_prior_proof_substitutions_fail(proof,fault):
 @pytest.fixture
 def collection(worker,tmp_path,monkeypatch):
     """Synthetic compiler outputs, real retained byte/manifest and request checks."""
-    catalog=Store(Path(__file__).resolve().parents[1]/'records')
-    values={rid:catalog.get(rid) for rid in build.record_pins(worker.manifest)}
     source=tmp_path/'source';source.mkdir();(source/'bfs.cc').write_text('// contract fixture only\n')
     artifact=artifacts.identify(source)
     worker.manifest=copy.deepcopy(worker.manifest)
     operations=worker.manifest['operations'];calls=[];failure={'ordinal':None}
-    for op in operations:op['source_artifact']['sha256']=artifact['sha256']
+    # The live implementation catalog can evolve after the historical manifest
+    # was sealed. Bind this fixture's own input bodies once, before mutations,
+    # without changing any production manifest or input verification rule.
+    pins=[worker.manifest['model'][key] for key in ('build','target')]
+    pins += [op[key] for op in operations for key in ('candidate','source_snapshot','implementation')]
+    values={pin['id']:{'id':pin['id'],'kind':pin['kind'],
+                     'extensions':{'contract_fixture':True}} for pin in pins}
+    for op in operations:
+        op['source_artifact']['sha256']=artifact['sha256']
+        values[op['source_snapshot']['id']].update(implementation=op['implementation']['id'],artifact=artifact)
+        values[op['candidate']['id']].update(implementation=op['implementation']['id'],
+            source_snapshot=op['source_snapshot']['id'],artifact_role='source_baseline',artifact=artifact)
+    for pin in pins:pin['canonical_sha256']=artifacts.digest(values[pin['id']])
     def call(command,*,timeout=15,compile=False):
         calls.append((command[:],timeout,compile))
         if command[0]=='get':
@@ -416,6 +426,16 @@ def test_four_calls_and_fresh_chains_use_fixed_order_without_provider(collection
     assert [cmd[0][0] for cmd in calls]==['get']*8+['dx100-compile','get']*4
     assert all(row[1]==(240 if row[2] else 15) for row in calls)
     assert all('submit' not in row[0] and 'repair' not in row[0] and 'dx100-execute' not in row[0] for row in calls)
+
+
+@pytest.mark.parametrize('kind',['model','candidate','source_snapshot','implementation'])
+def test_retained_input_mutation_fails_before_any_compile(collection,kind):
+    worker,values,calls,failure=collection
+    pin=worker.manifest['model']['build'] if kind=='model' else worker.manifest['operations'][0][kind]
+    values[pin['id']]['extensions']['mutated']=True
+    with pytest.raises(ValueError,match='fresh public input differs'):worker.collect()
+    assert not worker.receipt['builds']
+    assert all(command[0]=='get' for command,timeout,compile in calls)
 
 
 @pytest.mark.parametrize('ordinal',[1,2,3,4])
