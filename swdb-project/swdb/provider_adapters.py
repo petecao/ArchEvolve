@@ -142,7 +142,7 @@ class CodexAdapter(Adapter):
         # Linux caps a single argv element at 128 KiB; fail clearly rather than
         # silently truncate a legacy prompt containing full source bodies.
         if len(prompt.encode()) > 96 * 1024:
-            raise Failure("Codex prompt-only input exceeds 96 KiB argv limit; use workspace mode")
+            raise Failure("Codex provider prompt exceeds the 96 KiB argv limit; use a compact workspace request")
         argv = [*config["command"], "exec", "--model", PINS[self.kind]["model"],
                 "-c", 'model_reasoning_effort="xhigh"', "-c", 'web_search="disabled"',
                 "-c", "project_doc_max_bytes=0", "--ignore-user-config", "--ignore-rules",

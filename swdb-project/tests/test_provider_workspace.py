@@ -63,8 +63,27 @@ plan = json.loads(Path(sys.argv[1]).read_text())
 kind = plan["kind"]
 root = Path.cwd()
 (root / "build").mkdir(exist_ok=True)
+(root / "build/received-stdin.txt").write_text(sys.stdin.read())
 (root / "build/received-argv.json").write_text(json.dumps(sys.argv[2:]))
 (root / "build/start-visible.json").write_text(json.dumps(sorted(str(p.relative_to(root)) for p in root.rglob("*") if p.is_file())))
+if plan.get("require_large_annotation"):
+    proposal = json.loads((root / ".swdb-context/proposal.json").read_text())
+    annotated = proposal["payload"]["content"]["files"]["src/bfs.cc"]
+    assert len(annotated.encode()) > 128*1024 and "Requested rewrite: alpha 14" in annotated
+    (root / "build/context-read.json").write_text(json.dumps({"annotation_bytes":len(annotated.encode())}))
+    if kind == "codex":
+        print(json.dumps({"type":"item.completed", "item":{"type":"command_execution", "command":"python local context read .swdb-context/proposal.json", "exit_code":0}}), flush=True)
+    else:
+        print(json.dumps({"type":"assistant", "message":{"content":[{"type":"tool_use", "name":"Read", "input":{"file_path":".swdb-context/proposal.json"}}]}}), flush=True)
+if plan.get("require_repair_context"):
+    repair = json.loads((root / ".swdb-context/repair.json").read_text())
+    diagnostic_bytes = sum(len(log["text"].encode()) for log in repair["logs"])
+    assert repair["outcome"]["stage"] == "build" and diagnostic_bytes >= 32000
+    (root / "build/repair-read.json").write_text(json.dumps({"diagnostic_bytes":diagnostic_bytes}))
+    if kind == "codex":
+        print(json.dumps({"type":"item.completed", "item":{"type":"command_execution", "command":"python local context read .swdb-context/repair.json", "exit_code":0}}), flush=True)
+    else:
+        print(json.dumps({"type":"assistant", "message":{"content":[{"type":"tool_use", "name":"Read", "input":{"file_path":".swdb-context/repair.json"}}]}}), flush=True)
 for edit in plan.get("edits", [{"path":"src/bfs.cc", "old":"int alpha = 15", "new":"int alpha = 14"}]):
     path = root / edit["path"]
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -252,6 +271,43 @@ def test_annotated_source_cannot_expose_an_altered_verifier(proposal_setup, work
     assert "annotated source changes a protected evaluator input" in proposal["outcome"]["reason"]
 
 
+def test_large_annotations_use_immutable_context_and_compact_prompt(proposal_setup, workspace_provider):
+    records, _, snapshot, _ = proposal_setup
+    original = (Path(snapshot["artifact"]["path"]) / "src/bfs.cc").read_text()
+    annotation = "/* Requested rewrite: alpha 14. Preserve all computation and ROI.\n" + (
+        "Instruction context: retain graph traversal, parent updates, and direction switching.\n" * 2200) + "*/\n"
+    annotated = annotation + original
+    assert len(annotated.encode()) > 128 * 1024
+    result, proposal = submit(proposal_setup, workspace_provider,
+        request_changes={"payload": {"kind": "annotated_source", "content": {"files": {"src/bfs.cc": annotated}}}},
+        require_large_annotation=True)
+    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    meta = proposal["attempts"][0]["provider"]
+    manifest = meta["workspace_manifest"]
+    root = Path(manifest["root"])
+    visible_proposal = json.loads((root / ".swdb-context/proposal.json").read_text())
+    contents = visible_proposal["payload"]["content"]["files"]["src/bfs.cc"]
+    assert contents.startswith(annotation) and len(contents.encode()) > 128*1024
+    assert json.loads((root / "build/context-read.json").read_text())["annotation_bytes"] == len(contents.encode())
+    assert "bool BFSVerifier" not in contents and "SWDB_PROTECTED_VERIFIER_" in contents
+    assert proposal["request"]["payload"]["content"]["files"]["src/bfs.cc"] == annotated
+    argv = json.loads((root / "build/received-argv.json").read_text())
+    stdin = (root / "build/received-stdin.txt").read_text()
+    provider_prompt = argv[-1] if workspace_provider.kind == "codex" else stdin
+    assert len(provider_prompt.encode()) < 8*1024 and annotation not in provider_prompt
+    assert ".swdb-context/proposal.json" in provider_prompt and ".swdb-context/workspace-map.json" in provider_prompt
+    if workspace_provider.kind == "codex":
+        assert stdin == ""
+    map_path = manifest["context_manifest"]["path"]
+    assert map_path in manifest["immutable_files"] and map_path in manifest["visible_files"]
+    visible_map = json.loads((root / map_path).read_text())
+    assert visible_map["editable_files"] == ["src/bfs.cc"]
+    candidate = json.loads(records.swdb("get", proposal["candidate"], "--format", "json").stdout)
+    edited = (Path(candidate["artifact"]["path"]) / "src/bfs.cc").read_text()
+    assert "int alpha = 14" in edited and "bool BFSVerifier" in edited and annotation not in edited
+    assert ".swdb-context" not in {Path(item["path"]).parts[0] for item in candidate["artifact"]["files"]}
+
+
 def test_structured_payload_field_names_are_preserved(proposal_setup, workspace_provider):
     content = {"evaluator": "Preserve the independent evaluator.", "parameter": {"alpha": 14}}
     result, proposal = submit(proposal_setup, workspace_provider,
@@ -276,17 +332,33 @@ def test_timeout_keeps_audit_and_deletes_login_copy(proposal_setup, workspace_pr
 
 
 def test_public_repair_uses_workspace_diff_and_audit(evaluation_setup, workspace_provider):
-    records, runs, _, base = evaluation_setup
+    records, runs, evaluation_request, base = evaluation_setup
+    compiler = Path(yaml.safe_load(evaluation_request().read_text())["build"]["compiler"])
+    body = compiler.read_text()
+    failure = "if os.environ.get('SWDB_NATIVE_FIXTURE') == 'build_fail': sys.exit(7)"
+    assert failure in body
+    compiler.write_text(body.replace(failure,
+        "if os.environ.get('SWDB_NATIVE_FIXTURE') == 'build_fail':\n"
+        " print('fixture syntax error: ' + 'retained compiler diagnostic ' * 4000); sys.exit(7)"))
     result, failed = evaluate(evaluation_setup, mode="build_fail")
     assert result.returncode == 1
     old = json.loads(records.swdb("get", base["candidate"], "--format", "json").stdout)
     config = workspace_provider(edits=[{"path": "src/bfs.cc", "old": "int alpha = 14", "new": "int alpha = 13"}],
-                                actions=[{"type": "file", "value": "src/bfs.cc"}])
+                                actions=[{"type": "file", "value": "src/bfs.cc"}], require_repair_context=True)
     result = records.swdb("repair", failed["id"], "--provider-config", config, "--runs-dir", runs, "--format", "json")
     proposal = json.loads(result.stdout)
     assert result.returncode == 0, (result.stderr, proposal["outcome"])
     attempt = proposal["attempts"][-1]
     assert attempt["provider"]["audit"]["passed"] and attempt["parent_candidate"] == old["id"]
+    manifest = attempt["provider"]["workspace_manifest"]
+    repair_path = manifest["repair_context"]["path"]
+    assert repair_path in manifest["immutable_files"] and repair_path in manifest["visible_files"]
+    repair_context = json.loads((Path(manifest["root"]) / repair_path).read_text())
+    assert repair_context["evaluation"] == failed["id"] and repair_context["outcome"]["stage"] == "build"
+    diagnostic_bytes = sum(len(log["text"].encode()) for log in repair_context["logs"])
+    assert diagnostic_bytes >= 32000
+    assert json.loads((Path(manifest["root"]) / "build/repair-read.json").read_text())["diagnostic_bytes"] == diagnostic_bytes
+    assert len((Path(manifest["root"]).parent / "prompt.txt").read_bytes()) < 8*1024
     candidate = json.loads(records.swdb("get", proposal["candidate"], "--format", "json").stdout)
     assert "int alpha = 13" in (Path(candidate["artifact"]["path"]) / "src/bfs.cc").read_text()
     assert "int alpha = 14" in (Path(old["artifact"]["path"]) / "src/bfs.cc").read_text()
