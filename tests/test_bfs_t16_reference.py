@@ -251,3 +251,46 @@ def test_split_jobs_keep_rows_and_drop_only_scalar_diagnostics(tmp_path, job, na
                                    b['series_seconds'], a['per_series_cap_gib'], None, tmp_path/'slots')
     assert ('--primary-only' in command) is primary_only
     assert ('--shared-protocol' in command) is (job == 'm')
+
+
+@pytest.mark.parametrize('job,names', [('m', ('maa',)), ('s1', ('artifact.scalar',)), ('s2', ('control.scalar',))])
+def test_c2_plans_use_o3_verification_bounds_and_a_56_gib_cap(tmp_path, job, names):
+    """2026-09-29: c2 drops the post-ROI CPU switch and raises only O3 bounds and the sampled cap."""
+    protocols = {key: {'path': f'.scratch/x/{key}.yaml', 'sha256': key[0]*64, 'frozen_id': key + '.v4'}
+                 for key in ('artifact', 'control')}
+    module = finalize()
+    c1, c2 = module.build_split(protocols, job, names), module.build_split(protocols, job, names, generation='c2')
+    assert c2['id'] == batch.T16_SPLIT[f't16-reference-{job}-c2'] and 'post_roi_cpu' not in c2
+    assert c2['series'][0]['id'][len(c2['id']):] == c1['series'][0]['id'][len(c1['id']):]
+    b = c2['bounds']
+    assert (b['run_seconds'], b['diagnostic_seconds'], b['sampled_tree_memory_gib'], b['memory_gib']) == (72000, 86400, 56, 54)
+    assert batch.rss_limit(c2) == 56 * batch.GIB and batch.rss_limit(c1) == batch.lifecycle.SAMPLED_RSS_BYTES
+    approval = admission(c2)
+    approval['protocols'] = {'artifact': {'id': 'artifact.v4', 'sha256': 'a'*64}, 'control': {'id': 'control.v4', 'sha256': 'c'*64}}
+    command = batch.series_command(c2, c2['series'][0], approval, tmp_path/'c', tmp_path/'raw', tmp_path/'r', 0,
+                                   b['series_seconds'], c2['allocation']['per_series_cap_gib'], None, tmp_path/'slots')
+    assert command[command.index('--sampled-rss-gib') + 1] == '56' and '--post-roi-cpu' not in command
+    assert command[command.index('--memory-gib') + 1] == '54'
+    too_high = copy.deepcopy(c2); too_high['bounds']['sampled_tree_memory_gib'] = 64
+    with pytest.raises(ValueError, match='52-56'):
+        batch.rss_limit(too_high)
+
+
+def test_resource_samples_honor_a_declared_cap(tmp_path):
+    """The stream validator enforces the plan's cap, not only the 52-GiB default."""
+    import json as _json
+    from datetime import datetime, timedelta, timezone
+    lifecycle = batch.lifecycle
+    start = datetime(2026, 9, 29, 3, 0, tzinfo=timezone.utc)
+    rows = []
+    for index, gib in enumerate((40, 53)):
+        rss = gib * batch.GIB
+        rows.append({'sampled_at': (start + timedelta(seconds=5 * (index + 1))).isoformat(), 'rss_source': lifecycle.RSS_SOURCE,
+                     'page_size_bytes': 4096, 'rss_bytes': rss,
+                     'processes': [{'pid': 10, 'parent_pid': 1, 'start_ticks': 5, 'rss_pages': rss // 4096, 'rss_bytes': rss}]})
+    path = tmp_path / 'samples.jsonl'
+    path.write_text(''.join(_json.dumps(row) + '\n' for row in rows))
+    end = (start + timedelta(seconds=15)).isoformat()
+    with pytest.raises(ValueError, match='exceeds its bound'):
+        lifecycle.validate_samples(path, start.isoformat(), end)
+    assert lifecycle.validate_samples(path, start.isoformat(), end, rss_limit=56 * batch.GIB)['peak_sampled_rss_bytes'] == 53 * batch.GIB

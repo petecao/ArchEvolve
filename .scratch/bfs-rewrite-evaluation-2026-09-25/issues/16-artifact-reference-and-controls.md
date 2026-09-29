@@ -3,7 +3,7 @@
 Navigation updated: 2026-09-28 (Eastern Time).
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-28 (Eastern Time)
+Updated: 2026-09-29 (Eastern Time)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 11, 13, 14
@@ -490,3 +490,96 @@ The runtime is `/data1/yanruj/EvolveSWDB_t16_reference_lowstorage_runtime_202609
 @ `f3b1988b`, clean and verified. The launch sequence is the one above, run in this
 runtime, with the same operator sha256 `6dd4c253…4eb4`. Not launched. No sample
 or acceptance is claimed.
+
+## b1 launch, user-approved stop and v3 split — 2026-09-28 19:05 ET
+
+**b1 ran and was stopped.** Root launched b1 at 15:52:45 ET on node1 (generation 476) from
+the low-storage runtime `f3b1988b`; Linux tests passed at generations 474/475. The first
+execution, the control.scalar s0.r0 primary, was running when the user approved a
+faster replan (options B+C). At 18:53:29 ET root sent the user-confirmed stop: one
+identity-checked SIGTERM to each of the three batch drivers. Outer exit was 1 at
+18:53:37 ET.
+
+[Closure](../observations/t16-b1-stop-closure-20260928.json):
+- All 102 retained PID/start identities were absent in two reads.
+- Storage was stable at 634,376,192 allocated bytes.
+- Generation 476 was released.
+- No sample completed.
+- The in-driver cleanup snapshots were taken inside open reservations and are not a
+  strict final-ledger readback.
+
+b1 is retained as interrupted and will not be resumed. Its time (10,852 s of outer time
+plus closure) and its bytes are charged.
+
+**Version 3.** The scalar roles now run primary executions only. The protocols were
+re-frozen as version 3 with `supersedes`. The only change is that `region_pairs` was
+removed: without scalar diagnostics there is no scalar region package, so a
+diagnostic region comparison cannot be formed.
+- `author-reference-t16-b1-20260927.0f066c355d8c00cd`
+- `author-matched-control-t16-b1-20260927.f96224c3ef85d07e`
+
+Scalar evidence is now primary timing, sealed simulated statistics (including memory
+system statistics), the verifier result and coverage. The MAA role keeps its primary
+and diagnostic execution, profile and package.
+
+**Three single-series lane jobs.** All use fresh c1 IDs and the low-storage settings;
+code `b5f6ff7`, runtime `/data1/yanruj/EvolveSWDB_t16_reference_split_runtime_20260928_c1`.
+- M: MAA primary + diagnostic, bound to both protocols.
+- S1: artifact.scalar primary.
+- S2: control.scalar primary.
+
+Planned lanes (root): M on node0 after the owner's MemAcc cell, S1 on node1 after the
+T17/T20 routes a2 job, S2 on node0 after M. Bounds: M 162,060 s, 12 GiB (needs /data
+at least 22 GiB free); S1 and S2 61,260 s, 8 GiB each (at least 18 GiB).
+
+No sample, comparison or acceptance is claimed yet.
+
+## M c1 stop, R12 findings and c2 plan — 2026-09-29 03:30 ET
+
+**M c1 ran and was stopped.** `bfs-t16-reference-m-simulator-batch-20260928-c1` started on
+node0 at 21:03:37 ET, lease generation 392, runtime `068f539`. The Linux tests passed at
+generations 390 and 391. The MAA primary ROI completed and was sealed at 01:50:34 ET: exit
+tick 235,227,694,027, about 16,986 s of host time. The ROI statistics are kept on mbit10.
+
+The opt-in post-ROI switch to AtomicSimpleCPU (R12) then called `m5.switchCpus`. Its gem5
+drain never completed. `post_roi_cpu_switch_begin` was logged at 01:50:34 and no end was
+ever logged. The post-ROI trace held only progress events from the switched-out O3 CPUs,
+each with 0 committed instructions, up to tick about 1.69e13. The verifier never ran, so
+no sample can be claimed.
+
+At 02:41:59 ET Stream D stopped M with a root- and user-approved, identity-checked SIGTERM.
+The [closure](../observations/t16-m-c1-stop-closure-20260929.json) found:
+- all 130 retained identities absent in two reads;
+- storage stable at 585,371,648 allocated bytes;
+- generation 392 released.
+
+M c1 is retained as interrupted and will not be resumed. It is charged about 20,310 s of
+outer time plus closure, and its bytes.
+
+**Findings.**
+1. R12 works on small graphs. The [kron14 probe](../observations/t16-r12-probe-20260928.json)
+   switched both the MAA and BASE runs after the ROI seal. Their modeled ROI statistics
+   were byte-identical to the unswitched runs, and all four verifiers passed.
+2. At uniform22 the pinned author model (DX100 e4fc4af) did not drain after the MAA
+   primary's ROI. Some object among the MAA device, Ramulator2 and the cache hierarchy never
+   reported drained. This is recorded as an observed drain limitation of the author
+   model's MAA/memory system; it was not diagnosed further (option C deferred).
+3. gem5 cannot fall back safely. `DrainManager::resume()` panics while objects remain in a
+   drain cycle, so a bounded drain cannot hand control back to O3 verification.
+
+**Plan c2 (root-approved option A).** The protocols were re-frozen as version 4, which
+supersedes version 3. The only change removes `post_roi_cpu`, so verification stays on
+the timed O3 CPUs. The determinism evidence is now bound as `{path, sha256}`:
+- `author-reference-t16-b1-20260927.72513339f7631a66`
+- `author-matched-control-t16-b1-20260927.b7d6c913a66820ef`
+
+The fresh c2 plans (M, S1, S2) keep the same rows and the low-storage settings, with these bounds:
+- primary run: 72,000 s;
+- diagnostic: 86,400 s;
+- sampled whole-tree RSS cap: 56 GiB. This is a new plan parameter; the default stays 52.
+  M c1 reached 39.1 GiB and grew about 1.2 GiB/h during the ROI, so an O3 verifier could
+  approach 52.
+- per-execution memory budget: 54 GiB.
+
+Planned lanes: M, then S2, on node0; S1 on node1 after the owner's MemAcc session, on
+root's go. No sample, comparison or acceptance is claimed yet.

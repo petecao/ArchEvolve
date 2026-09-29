@@ -66,6 +66,54 @@ def v3_requests():
 SPLIT = {'m': ('maa',), 's1': ('artifact.scalar',), 's2': ('control.scalar',)}
 
 
+def v4_requests():
+    """2026-09-29: version 4 drops only the post-ROI CPU switch (O3 verification).
+
+    At uniform22 the MAA primary's m5.switchCpus drain never completed (T16 M c1,
+    01:50 ET). gem5 cannot resume a partially drained system, so no safe fallback
+    exists; the verifier stays on the timed O3 CPUs. The determinism evidence is
+    rebound as {path, sha256}, as new freezes require. Nothing else changes.
+    """
+    store = Store(ROOT/'records')
+    for key in SOURCES:
+        original = yamlio.load(request_path(key, version=3))
+        frozen = [row.data for row in store.of_kind('protocol') if row.data.get('requested_id') == original['id']
+                  and row.data['settings'] == original['settings']]
+        assert len(frozen) == 1, 'the version-3 protocol must be frozen exactly once'
+        settings = copy.deepcopy(original['settings'])
+        for role in ('baseline', 'candidate'):
+            settings['instrumentation'][role].pop('post_roi_cpu')
+        evidence = settings['sampling']['determinism']['evidence']
+        path = evidence if isinstance(evidence, str) else evidence['path']
+        settings['sampling']['determinism']['evidence'] = {'path': path, 'sha256': artifacts.file_hash(ROOT/path)}
+        value = {'message_version': '1.0', 'id': original['id'], 'version': 4, 'supersedes': frozen[0]['id'],
+                 'settings': settings}
+        header = ('# Created 2026-09-29 (Eastern Time): T16 version 4. Only change: the opt-in post-ROI '
+                  'AtomicSimpleCPU switch is removed (verification stays on the timed O3 CPUs) because its gem5 '
+                  'drain never completed at uniform22 (M c1, 2026-09-29 01:50 ET) and gem5 cannot resume a '
+                  'partial drain; determinism evidence rebound as {path, sha256}. Supersedes ' + frozen[0]['id'] + '.\n')
+        request_path(key, version=4).write_text(header + yamlio.dumps(value))
+        print(request_path(key, version=4))
+
+
+def split_plans_c2():
+    """Fresh c2 single-series plans on version 4 with O3-verification bounds."""
+    store = Store(ROOT/'records')
+    protocols = {}
+    for key in SOURCES:
+        path = request_path(key, version=4); request = yamlio.load(path)
+        frozen = [row.data for row in store.of_kind('protocol') if row.data.get('requested_id') == request['id']
+                  and row.data['settings'] == request['settings']]
+        assert len(frozen) == 1, 'freeze the version-4 request exactly once first'
+        protocols[key] = {'path': str(path.relative_to(ROOT)), 'sha256': artifacts.file_hash(path),
+                          'frozen_id': frozen[0]['id']}
+    for job, names in SPLIT.items():
+        plan = build_split(protocols, job, names, generation='c2')
+        path = REQUESTS/f"{plan['id']}.json"
+        path.write_text(json.dumps(plan, indent=1) + '\n')
+        print(job, path.name, artifacts.digest(plan))
+
+
 def split_plans():
     """Three single-series plans on the version-3 protocols (fresh IDs, low storage)."""
     store = Store(ROOT/'records')
@@ -84,9 +132,24 @@ def split_plans():
         print(job, path.name, artifacts.digest(plan))
 
 
-def build_split(protocols, job, names):
-    base = build_plan(protocols, 1, True, low_storage=True)
-    plan_id = f'bfs-t16-reference-{job}-simulator-batch-20260928-c1'
+def build_split(protocols, job, names, generation='c1'):
+    atomic = generation == 'c1'
+    base = build_plan(protocols, 1, atomic, low_storage=True)
+    date = '20260928' if generation == 'c1' else '20260929'
+    plan_id = f'bfs-t16-reference-{job}-simulator-batch-{date}-{generation}'
+    if not atomic:
+        # 2026-09-29: O3 verification. MAA uniform18 O3 verification took 1,887 s
+        # (x16 about 30 ks); run 72,000 s and diagnostic 86,400 s (7,200 checkpoint
+        # + 79,170 simulation) are the public ceilings for author binaries.
+        base['bounds'].update(run_seconds=72000, diagnostic_seconds=86400, sampled_tree_memory_gib=56, memory_gib=54)
+        base['bound_changes'].update(
+            run_seconds='43,200 -> 72,000 (c2): O3 post-ROI verification, estimated about 30 ks at uniform22',
+            diagnostic_seconds='79,200 -> 86,400 (c2): O3 post-ROI verification after the diagnostic ROI',
+            sampled_tree_memory_gib=('52 -> 56 (c2, root 2026-09-29): M c1 MAA primary reached 39.1 GiB at its ROI seal '
+                                     '(+1.2 GiB/h during the ROI, +3.2 GiB at the statistics dump); an 8-h O3 verifier could '
+                                     'add about 10 GiB (about 49 GiB), too close to 52. One single-slot uniform22 gem5 plus the '
+                                     'driver fits one NUMA node (about 62 GB); 56 GiB keeps about 6 GB of headroom.'),
+            memory_gib='48 -> 54 (c2): per-execution process-group budget below the 56-GiB lane-tree cap')
     rows = []
     for row in base['series']:
         name = row['id'][len(PLAN_ID) + 1:]
@@ -105,7 +168,7 @@ def build_split(protocols, job, names):
         series_seconds = primary + 2 * bounds['aggregate_seconds']
         storage = 8
     total = 3600 + series_seconds + 3570 + 30
-    base.update(id=plan_id, series=rows, updated='2026-09-28',
+    base.update(id=plan_id, series=rows, updated='2026-09-28' if atomic else '2026-09-29',
         lane={'nodes': [0, 1], 'assigned_by': 'root 2026-09-28: M on node0 after the MemAcc cell; S1 on node1 after '
                                               'routes a2; S2 on node0 after M'},
         budget_authority=('User-approved B+C replan (root 2026-09-28): T16 v3 as three single-series lane jobs. The '
@@ -298,14 +361,18 @@ def build_plan(protocols, reps, atomic, low_storage=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=('requests', 'plan', 'v3-requests', 'split-plans'))
+    parser.add_argument('mode', choices=('requests', 'plan', 'v3-requests', 'split-plans', 'v4-requests', 'split-plans-c2'))
     parser.add_argument('--repetitions', type=int, choices=(1, 2))
     parser.add_argument('--atomic', action=argparse.BooleanOptionalAction)
     parser.add_argument('--evidence', help='R11: repository path of the retained T15 replay-determinism observation')
     parser.add_argument('--low-storage', action='store_true',
                         help='write version-2 requests superseding the frozen b1 protocols (MAATrace-only candidate)')
     args = parser.parse_args()
-    if args.mode == 'v3-requests':
+    if args.mode == 'v4-requests':
+        v4_requests()
+    elif args.mode == 'split-plans-c2':
+        split_plans_c2()
+    elif args.mode == 'v3-requests':
         v3_requests()
     elif args.mode == 'split-plans':
         split_plans()

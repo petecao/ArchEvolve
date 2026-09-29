@@ -223,7 +223,7 @@ def test_sequential_collection_stops_on_failure_and_keeps_first_logs(tmp_path, m
         destination = runs/row['id']/(row['id']+'.driver'); destination.mkdir(parents=True)
         ref(destination/'driver.json', child); out.write_text(json.dumps(child))
     monkeypatch.setattr(batch.lifecycle, 'run_stage', run)
-    monkeypatch.setattr(batch.lifecycle, 'validate_samples', lambda *args: {})
+    monkeypatch.setattr(batch.lifecycle, 'validate_samples', lambda *args, **kwargs: {})
     invoke = lambda: batch.collect_series(policy, approval, receipt, folder, runs, tmp_path/'records', 1,
                                           ledger, SimpleNamespace(finish=finish, budget=SimpleNamespace(path=tmp_path/'budget', binding='fixture')),
                                           lambda: len(calls)*batch.GIB)
@@ -916,3 +916,19 @@ def test_routes_a2_binds_v2_source0_protocols():
         assert request['version'] == 2 and request['supersedes'].startswith(f'bfs-{key}-controlled-simulator-20260928.')
         assert all(store.get(w, 'workload')['definition']['sources'] == [0] for w in request['settings']['workloads'])
     batch.validate_preparation_reservation(value, {})
+
+
+def test_race_tolerant_retries_only_the_transient_reparent_race(monkeypatch):
+    monkeypatch.setattr(batch.time, 'sleep', lambda _: None)
+    calls = []
+    def flaky():
+        calls.append(1)
+        if len(calls) < 3:
+            raise ValueError('child PID 1/2 no longer belongs to its discovering parent')
+        return {'rss_bytes': 1}
+    assert batch.race_tolerant(flaky) == {'rss_bytes': 1} and len(calls) == 3
+    with pytest.raises(ValueError, match='owned PID'):
+        batch.race_tolerant(lambda: (_ for _ in ()).throw(ValueError('owned PID 3 stat is malformed')))
+    persistent = lambda: (_ for _ in ()).throw(ValueError('x no longer belongs to its discovering parent'))
+    with pytest.raises(ValueError, match='discovering parent'):
+        batch.race_tolerant(persistent, attempts=3)
