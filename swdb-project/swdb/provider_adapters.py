@@ -22,6 +22,7 @@ CODEX_DISABLED_FEATURES = (
     "hooks", "image_generation", "view_image", "browser_use", "browser_use_external",
     "browser_use_full_cdp_access", "computer_use", "in_app_browser",
     "skill_search", "skill_mcp_dependency_install", "workspace_dependencies",
+    "shell_snapshot", "shell_snapshot_v2",
 )
 USAGE_LIMIT = re.compile(
     r"usage[_ -]?limit|quota[_ -]?(?:exceeded|exhausted)|"
