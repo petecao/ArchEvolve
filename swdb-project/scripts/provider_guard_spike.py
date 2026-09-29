@@ -74,7 +74,11 @@ print(json.dumps(results))
             command = adapter.command(config, prompt, folder, SCHEMA)
         receipt["command"] = command
         with (folder / "stdout.txt").open("w") as stdout, (folder / "stderr.txt").open("w") as stderr, (folder / "prompt.txt").open() if args.kind == "claude" else open(os.devnull) as stdin:
-            child = subprocess.Popen(context["wrap_command"](command), cwd=workspace, env=context["env"],
+            wrapped = context["wrap_command"](command)
+            # This diagnostic also records execs to verify Claude's actual
+            # shell-prefix launcher; environment values are omitted by strace.
+            wrapped[wrapped.index("trace=connect")] = "trace=connect,execve"
+            child = subprocess.Popen(wrapped, cwd=workspace, env=context["env"],
                                      stdin=stdin, stdout=stdout, stderr=stderr, start_new_session=True)
             while child.poll() is None:
                 context["monitor"](child)

@@ -78,6 +78,11 @@ def restrict(policy, inner=False):
     finally:
         os.close(fd)
     resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+    # The observer verifies the full socket before launching. Limiting the
+    # provider to four cores inside that socket keeps runtime worker pools
+    # within the separately enforced 16-thread session budget.
+    if policy.get("execution_cpus"):
+        os.sched_setaffinity(0, policy["execution_cpus"])
     # V8 and JavaScriptCore reserve large, mostly uncommitted address ranges.
     # The 32 GiB limit is aggregate resident memory, observed by the parent;
     # an address-space rlimit would abort these CLIs before they use that RAM.
@@ -156,6 +161,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
         policy = {"enforced": True, "landlock_abi": abi(), "lane": lane,
                   "read_roots": sorted(set(str(Path(p).resolve()) for p in roots if Path(p).exists())),
                   "runtime_self_reads": ["maps", "cgroup"],
+                  "execution_cpus": sorted(os.sched_getaffinity(0))[:4],
                   "write_roots": [str(workspace), str(home)], "tcp_connect_ports": [443],
                   "inner_tcp_connect_ports": [], "tcp_bind_ports": [],
                   "model_api": _api_addresses(kind) if not fixture else {"hosts": [], "addresses": []},
@@ -244,9 +250,9 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                     failures.append("provider outbound connection trace is missing")
                 else:
                     for line in trace.read_text(errors="replace").splitlines():
-                        if "AF_INET" not in line:
+                        if "AF_INET" not in line or not re.search(r"\bconnect\(", line):
                             continue
-                        if "<UDP:" in line:
+                        if re.search(r"<UDP(?:v6)?:", line):
                             # ABI 4 leaves UDP unrestricted; DNS connections
                             # are not TCP model-API connection violations.
                             continue
