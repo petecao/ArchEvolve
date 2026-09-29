@@ -124,7 +124,8 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
         if not tracer:
             raise GuardError("SWDB provider guard requires strace for outbound connection auditing")
         command = config["command"][0]
-        executable = Path(shutil.which(command) or command).resolve()
+        command_path = Path(shutil.which(command) or command).absolute()
+        executable = command_path.resolve()
         install = executable.parent
         for parent in executable.parents:
             if parent.name == "node_modules":
@@ -133,6 +134,12 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
         roots = ["/usr", "/bin", "/lib", "/lib64", "/etc/ld.so.cache", "/etc/ssl/certs",
                  "/etc/resolv.conf", "/etc/hosts", "/etc/nsswitch.conf", "/etc/passwd", "/etc/localtime",
                  "/dev/null", "/dev/urandom", "/dev/random", "/dev/zero", str(install)]
+        # A venv's executable symlink resolves into /usr, but Python still reads
+        # its adjacent configuration and libraries during interpreter startup.
+        # This is the selected toolchain, not an application/evaluator root.
+        environment_root = command_path.parent.parent
+        if (environment_root / "pyvenv.cfg").is_file():
+            roots.append(str(environment_root))
         guard_folder = folder / "guard"
         guard_folder.mkdir(exist_ok=True)
         launcher = guard_folder / "launch.py"
