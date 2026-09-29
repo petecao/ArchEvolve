@@ -78,7 +78,7 @@ print(json.dumps(results))
             command = adapter.command(config, prompt, folder, SCHEMA)
             if args.readonly_sqlite_home:
                 state = folder / "guard" / "ephemeral-state"
-                state.mkdir()
+                state.mkdir(exist_ok=True)
                 command[-1:-1] = ["-c", "sqlite_home=" + json.dumps(str(state))]
                 receipt["variant"] = {"sqlite_home": str(state), "writable": False}
         receipt["command"] = command

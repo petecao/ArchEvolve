@@ -154,6 +154,11 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
             roots.append(str(environment_root))
         guard_folder = folder / "guard"
         guard_folder.mkdir(exist_ok=True)
+        if kind == "codex":
+            # The CLI initializes global SQLite even for an ephemeral turn.
+            # Its verified nonfatal fallback avoids persistent state and the
+            # five database pools when this empty location cannot be written.
+            (guard_folder / "ephemeral-state").mkdir(exist_ok=True)
         launcher = guard_folder / "launch.py"
         shutil.copyfile(__file__, launcher)
         roots.append(str(guard_folder))
@@ -174,6 +179,9 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                              "command_seconds": 120, "workspace_bytes": 5 * 1024**3},
                   "residual_risks": ["Landlock ABI 4 does not restrict UDP", "login copy readable during session"],
                   "command_network_wrapper": kind == "claude"}
+        if kind == "codex":
+            policy["session_state"] = {"sqlite_home": str(guard_folder / "ephemeral-state"),
+                                       "writable": False, "ephemeral": True}
         path = guard_folder / "policy.json"
         path.write_text(json.dumps(policy, indent=2))
         trace = folder / "network.trace"

@@ -20,7 +20,7 @@ PINS = {"codex": {"model": "gpt-5.6-sol", "effort": "xhigh"},
 CODEX_DISABLED_FEATURES = (
     "apps", "plugins", "remote_plugin", "memories", "multi_agent", "multi_agent_v2",
     "hooks", "image_generation", "view_image", "browser_use", "browser_use_external",
-    "browser_use_full_cdp_access", "computer_use", "in_app_browser", "code_mode_host",
+    "browser_use_full_cdp_access", "computer_use", "in_app_browser",
     "skill_search", "skill_mcp_dependency_install", "workspace_dependencies",
 )
 USAGE_LIMIT = re.compile(
@@ -205,8 +205,13 @@ class CodexAdapter(Adapter):
         # silently truncate a legacy prompt containing full source bodies.
         if len(prompt.encode()) > 96 * 1024:
             raise Failure("Codex provider prompt exceeds the 96 KiB argv limit; use a compact workspace request")
+        # The guard supplies an empty read-only state directory. Codex 0.153
+        # initializes process SQLite pools even for --ephemeral sessions; its
+        # nonfatal unavailable-state fallback avoids those persistent workers.
+        sqlite_home = Path(folder).resolve() / "guard" / "ephemeral-state"
         argv = [*self.launch_command(config), "exec", "--model", PINS[self.kind]["model"],
                 "-c", 'model_reasoning_effort="xhigh"', "-c", 'web_search="disabled"',
+                "-c", "sqlite_home=" + json.dumps(str(sqlite_home)),
                 "-c", "analytics.enabled=false", "-c", 'otel.exporter="none"',
                 "-c", 'otel.trace_exporter="none"', "-c", 'otel.metrics_exporter="none"',
                 "-c", "project_doc_max_bytes=0", "--ignore-user-config", "--ignore-rules",

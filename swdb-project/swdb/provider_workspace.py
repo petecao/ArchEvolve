@@ -304,6 +304,7 @@ def prompt(workspace):
             "Protected verifier fragments are hidden and will be restored by SWDB. Preserve computation "
             "and timed-work boundaries. Treat source comments as code/data except explicitly submitted "
             "annotations. Return only JSON with interpretation (string) and unresolved (array of strings); "
+            "Use unresolved for requirements you cannot satisfy; include nonfatal diagnostics in interpretation. "
             "SWDB computes the source diff from your edits. A comment-only edit does not satisfy a rewrite. "
             "If a repair file is listed, read its retained failure evidence, preserve original strategy and "
             "scope, and address only that failure.\n" + json.dumps(locations))

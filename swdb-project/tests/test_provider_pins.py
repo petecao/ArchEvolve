@@ -64,6 +64,10 @@ def test_submit_emulates_pinned_cli(proposal_setup, emulated_provider, kind, mod
         assert 'model_reasoning_effort="xhigh"' in argv and '--json' in argv
         assert 'analytics.enabled=false' in argv
         assert all('otel.' + key + '="none"' in argv for key in ('exporter','trace_exporter','metrics_exporter'))
+        state = next(value for value in argv if value.startswith('sqlite_home='))
+        assert Path(json.loads(state.split('=',1)[1])) == Path(receipt['command'][
+            receipt['command'].index('--output-schema')+1]).parent / 'guard/ephemeral-state'
+        assert 'code_mode_host' not in argv
         assert emulated_provider.stdin() == ''
         schema = json.loads(Path(argv[argv.index('--output-schema')+1]).read_text())
         assert schema['additionalProperties'] is False
