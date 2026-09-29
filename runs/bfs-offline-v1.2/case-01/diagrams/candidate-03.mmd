@@ -1,0 +1,25 @@
+---
+title: "ILLUSTRATIVE | gapbs_bfs_top_down_step | gapbs_bfs_top_down_step--declared-gather-family | conditional"
+config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 320, "nodeSpacing": 24, "rankSpacing": 60, "padding": 12}}
+---
+flowchart LR
+  subgraph b0["descriptor-front-end"]
+    direction TB
+    b0_info["Component: declared-gather-family/descriptor-<br/>front-end<br/>Function: Accept software-declared read work and<br/>bounds."]:::annotation
+    b0_in0["IN: description<br/>Read-only source regions and index/range<br/>description<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+    b0_out0["OUT: work<br/>Declared read work<br/>unknown; unknown B/element<br/>internal"]:::internalPort
+  end
+  subgraph b1["read-engine"]
+    direction TB
+    b1_info["Component: declared-gather-family/read-engine<br/>Function: Form indirect requests for eligible<br/>read streams. CPU retains parent CAS.<br/>request_window_entries: OPEN #91;entries#93;<br/>storage_bytes: OPEN #91;bytes#93;"]:::annotation
+    b1_in0["IN: work<br/>Declared read work<br/>unknown; unknown B/element<br/>internal"]:::internalPort
+    b1_in1["IN: responses<br/>Memory read responses<br/>unknown; unknown B/element<br/>memory-facing"]:::memoryPort
+    b1_out0["OUT: requests<br/>Read requests<br/>unknown; unknown B/element<br/>memory-facing"]:::memoryPort
+    b1_out1["OUT: values<br/>Fetched read-only values<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+  end
+  b0_out0 -->|"declared work"| b1_in0
+  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3
+  classDef hostPort fill:#dbeafe,stroke:#2563eb,color:#172554
+  classDef memoryPort fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef internalPort fill:#f1f5f9,stroke:#64748b,color:#0f172a
+  classDef unknownPort fill:#fef3c7,stroke:#d97706,color:#78350f

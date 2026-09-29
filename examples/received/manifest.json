@@ -22,6 +22,28 @@
       "reported_source_file": "DataLayoutAPI/benchmarks/gapbs/src/bfs.cc",
       "source_revision": null,
       "verification_status": "received_report_not_reproduced"
+    },
+    {
+      "case": "sparse",
+      "file": "bfs-sparse.features.v1.2.yaml",
+      "sha256": "36c6feac9116bfcec65820c3050e381cb576f9f8361d631ce6af5fcad1fa240f",
+      "reported_schema_version": "1.1",
+      "reported_function": "TDStep",
+      "reported_source_file": "benchmarks/gapbs/src/bfs.cc",
+      "source_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+      "offset_width_bytes": 4,
+      "notes": "Reconciled to 32-bit SGOffset (int32_t) aligned to DX100 graph.h:90."
+    },
+    {
+      "case": "fully_connected",
+      "file": "bfs-fully-connected.features.v1.2.yaml",
+      "sha256": "1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750",
+      "reported_schema_version": "1.1",
+      "reported_function": "TDStep",
+      "reported_source_file": "benchmarks/gapbs/src/bfs.cc",
+      "source_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+      "offset_width_bytes": 4,
+      "notes": "Reconciled to 32-bit SGOffset (int32_t) aligned to DX100 graph.h:90; added explicit data_structures section."
     }
   ],
   "handling_notes": [

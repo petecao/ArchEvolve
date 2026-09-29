@@ -44,6 +44,17 @@ class OfflinePipelineTests(unittest.TestCase):
         self.assertEqual(case["source_binding"]["status"], "unverified")
         self.assertEqual(self.sparse, before)
 
+    def test_v12_resolves_width_conflict_and_binds_source(self):
+        v12_path = ROOT / "examples/received/bfs-sparse.features.v1.2.yaml"
+        sparse_v12, _ = load_request(v12_path)
+        case = self.case(sparse_v12)
+        offset = next(a for a in case["accesses"] if a["array"] == "VertexOffsets")
+        self.assertEqual(offset["reported_element_bytes"], 4)
+        self.assertEqual(offset["reference_element_bytes"], 4)
+        self.assertEqual(offset["diagram_element_bytes"], 4)
+        self.assertEqual(offset["reported_mean_byte_stride"], 77118.0)
+        self.assertEqual(case["source_binding"]["status"], "revision_reported_matching")
+
     def test_locality_claims_and_directives_cannot_force_candidates(self):
         original, _ = self.choose(self.sparse)
         altered = deepcopy(self.sparse)

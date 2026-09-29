@@ -1,0 +1,377 @@
+normalizer_version: offline-0.1
+case_id: gapbs_bfs_top_down_step_fully_connected
+input_ref: examples/received/bfs-fully-connected.features.v1.2.yaml
+input_sha256: 1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750
+kernel:
+  name: gapbs_bfs_top_down_step_fully_connected
+  benchmark: gapbs
+  algorithm: Breadth-First Search (Top-Down Push Traversal)
+  source_file: benchmarks/gapbs/src/bfs.cc
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  function: TDStep
+  graph_topology: fully_connected_graph (K_N, complete clique without self-loops)
+  archetype: dense_consecutive_streaming_read_heavy
+source_binding:
+  status: revision_reported_matching
+  reported_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  reference_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+evidence_status: reported_not_reproduced
+accesses:
+- id: access-01
+  array: queue.shared
+  statement_ids: []
+  source_location: null
+  reported_stream_kind: streaming_read
+  indexed_addressing: false
+  reported_index_expression: null
+  operation: read
+  rmw_subtype: null
+  reported_element_type: int32_t (NodeID)
+  reported_element_bytes: 4
+  reference_element_bytes: 4
+  diagram_element_bytes: 4
+  width_status: reported
+  reported_mean_index_distance: null
+  reported_mean_byte_stride: null
+  reported_stream_stride_bytes: 4
+  reuse_distance: null
+  reuse_frequency: null
+  tile_working_set_bytes: null
+  evidence_refs:
+  - input:1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750
+  - field:memory_streams.queue.shared
+- id: access-02
+  array: VertexOffsets
+  statement_ids: []
+  source_location: null
+  reported_stream_kind: streaming_read
+  indexed_addressing: true
+  reported_index_expression: queue.shared[i]
+  operation: read
+  rmw_subtype: null
+  reported_element_type: int32_t (SGOffset)
+  reported_element_bytes: 4
+  reference_element_bytes: 4
+  diagram_element_bytes: 4
+  width_status: reported
+  reported_mean_index_distance: 1.0
+  reported_mean_byte_stride: 4.0
+  reported_stream_stride_bytes: 4
+  reuse_distance: null
+  reuse_frequency: null
+  tile_working_set_bytes: null
+  evidence_refs:
+  - input:1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750
+  - field:memory_streams.VertexOffsets
+  - field:indirect_access_distances.VertexOffsets
+  adjacent_pair_proximity:
+  - metric: fraction_of_adjacent_pairs_with_absolute_byte_distance_at_most_threshold
+    threshold_bytes: 64
+    comparison: <=
+    fraction: 1.0
+    reported_value: 100.0%
+    original_label: within_same_64B_cacheline
+    status: reported_relabelled_by_method
+    scope: adjacent_positions_within_each_frontier
+    measures_cache_hits: false
+    measures_same_block_membership: false
+  - metric: fraction_of_adjacent_pairs_with_absolute_byte_distance_at_most_threshold
+    threshold_bytes: 4096
+    comparison: <=
+    fraction: 1.0
+    reported_value: 100.0%
+    original_label: within_same_4KB_page
+    status: reported_relabelled_by_method
+    scope: adjacent_positions_within_each_frontier
+    measures_cache_hits: false
+    measures_same_block_membership: false
+  reported_mean_distance_scope: adjacent_positions_within_each_frontier
+  distance_sequence: queue.shared[i], queue.shared[i+1]
+  cross_segment_pairs_included: false
+  runtime_thread_interleaving_observed: false
+- id: access-03
+  array: g.out_neighbors_
+  statement_ids: []
+  source_location: null
+  reported_stream_kind: bulk_streaming_read
+  indexed_addressing: false
+  reported_index_expression: null
+  operation: read
+  rmw_subtype: null
+  reported_element_type: int32_t (NodeID)
+  reported_element_bytes: 4
+  reference_element_bytes: 4
+  diagram_element_bytes: 4
+  width_status: reported
+  reported_mean_index_distance: null
+  reported_mean_byte_stride: null
+  reported_stream_stride_bytes: 4
+  reuse_distance: null
+  reuse_frequency: null
+  tile_working_set_bytes: null
+  evidence_refs:
+  - input:1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750
+  - field:memory_streams.g.out_neighbors_
+- id: access-04
+  array: parent
+  statement_ids: []
+  source_location: null
+  reported_stream_kind: cached_streaming_read
+  indexed_addressing: true
+  reported_index_expression: g.out_neighbors_[j]
+  operation: read_modify_write
+  rmw_subtype: conditional_compare_and_swap
+  reported_element_type: int32_t (NodeID)
+  reported_element_bytes: 4
+  reference_element_bytes: 4
+  diagram_element_bytes: 4
+  width_status: reported
+  reported_mean_index_distance: 1.00004
+  reported_mean_byte_stride: 4.00016
+  reported_stream_stride_bytes: 4
+  reuse_distance: null
+  reuse_frequency: null
+  tile_working_set_bytes: null
+  evidence_refs:
+  - input:1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750
+  - field:memory_streams.parent
+  - field:indirect_access_distances.parent
+  adjacent_pair_proximity:
+  - metric: fraction_of_adjacent_pairs_with_absolute_byte_distance_at_most_threshold
+    threshold_bytes: 64
+    comparison: <=
+    fraction: 1.0
+    reported_value: 100.0%
+    original_label: within_same_64B_cacheline
+    status: reported_relabelled_by_method
+    scope: adjacent_neighbors_within_each_vertex_row
+    measures_cache_hits: false
+    measures_same_block_membership: false
+  - metric: fraction_of_adjacent_pairs_with_absolute_byte_distance_at_most_threshold
+    threshold_bytes: 4096
+    comparison: <=
+    fraction: 1.0
+    reported_value: 100.0%
+    original_label: within_same_4KB_page
+    status: reported_relabelled_by_method
+    scope: adjacent_neighbors_within_each_vertex_row
+    measures_cache_hits: false
+    measures_same_block_membership: false
+  reported_mean_distance_scope: adjacent_neighbors_within_each_vertex_row
+  distance_sequence: out_neighbors_[j], out_neighbors_[j+1]
+  cross_segment_pairs_included: false
+  runtime_thread_interleaving_observed: false
+rmw:
+  kind: conditional_compare_and_swap
+  reported_details:
+    subtype: read_predominated_conditional_cas
+    primitive: CAS(addr=&parent[v], expected=curr_val, new_val=u)
+    execution_frequency:
+      level_1: N - 1 executions (100% commit rate)
+      level_2: 0 executions (bypassed entirely by if (curr_val < 0) filter)
+    contention: zero lock contention across Level 2
+  must_preserve: true
+  phase_execution:
+    level_1: N - 1 executions (100% commit rate)
+    level_2: 0 executions (bypassed entirely by if (curr_val < 0) filter)
+reported_topology:
+  graph_type: complete_graph_K_N
+  vertex_count_formula: N
+  edge_count_formula: N * (N - 1)
+  vertex_degree: N - 1 (uniform constant across all vertices)
+  traversal_depth: 2
+  frontier_evolution:
+    level_1:
+      frontier_size: 1
+      scout_edges: N - 1
+      new_discoveries: N - 1
+      cas_success_rate: 100%
+    level_2:
+      frontier_size: N - 1
+      scout_edges: (N - 1) * (N - 1) ≈ N^2
+      new_discoveries: 0
+      cas_success_rate: 0.0%
+      behavior: Pure read-streaming audit; all parent[v] >= 0, branch condition (curr_val
+        < 0) is uniformly FALSE
+reported_footprints_and_reuse:
+  scale_example_k25000:
+    num_nodes: 25000
+    num_directed_edges: 624975000
+    parent_footprint_kb: 97.66
+    offsets_footprint_kb: 97.66
+    neighbors_footprint_mb: 2384.09
+    total_footprint_mb: 2384.28
+  reuse_characteristics:
+    parent_array_reuse: extreme (each thread scans the entire 100 KB parent array
+      N/threads times)
+    neighbors_reuse: none (each edge read once in Level 2)
+reported_counters:
+  measurement_platform: Intel Xeon Gold 6226R (16 threads, 2.90 GHz)
+  comparison_vs_sparse_kronecker:
+    instructions_per_cycle_ipc:
+      sparse_kronecker: 0.39
+      fully_connected: 2.68
+    branch_miss_rate:
+      sparse_kronecker: 11.07%
+      fully_connected: 0.01%
+    l1_dcache_miss_rate:
+      sparse_kronecker: 15.14%
+      fully_connected: 2.14%
+    atomic_cas_overhead_cycles:
+      sparse_kronecker: 15.97% (lock cmpxchg)
+      fully_connected: 0.00% (lock cmpxchg)
+hardware_hypotheses:
+- field: indirect_access_distances.VertexOffsets.hardware_implication
+  text: Extremely high spatial locality. Standard L1 hardware stream prefetchers track
+    this unit-stride pattern trivially with zero cache misses.
+  use: hypothesis_not_constraint
+- field: indirect_access_distances.parent.hardware_implication
+  text: Transforms from a random gather (in sparse graphs) into a pure linear streaming
+    read. Because N is relatively small compared to sparse graphs for the same edge
+    count (e.g., N=25,000 -> parent array is only 100 KB), the entire parent array
+    fits comfortably in the on-chip L2/L3 cache (1 MB L2 per core).
+  use: hypothesis_not_constraint
+excluded_from_selection:
+- field: indirect_access_distances.VertexOffsets.statistics.spatial_locality_distribution
+  reported_value:
+    within_same_64B_cacheline: 100.0%
+    within_same_4KB_page: 100.0%
+    cross_page_jump: 0.0%
+  reason: A distance threshold does not establish same cache-line/page membership
+    or cache-hit rate. Excluded from selection rules.
+- field: indirect_access_distances.parent.statistics.spatial_locality_distribution
+  reported_value:
+    within_same_64B_cacheline: 100.0%
+    within_same_4KB_page: 100.0%
+    cross_page_jump: 0.0%
+  reason: A distance threshold does not establish same cache-line/page membership
+    or cache-hit rate. Excluded from selection rules.
+issues:
+- id: raw-profile-missing
+  severity: needs_clarification
+  message: Received values are reported; raw profiling logs, build flags, dataset
+    identity and per-run scope have not been bound/verified by this prototype.
+  fields:
+  - hardware_performance_profile
+  - indirect_access_distances
+  affects:
+  - performance_claims
+- id: phase-specific-cas
+  severity: needs_clarification
+  message: Retain conditional CAS for the kernel. A reported zero-execution second
+    phase does not remove the discovery-phase update.
+  fields:
+  - operations.rmw_operation.execution_frequency
+  affects:
+  - phase_specialization
+  - correctness
+- id: locality-not-hit-rate
+  severity: interpretation_resolved
+  message: Peter's instrumentation measures adjacent-index proximity, not same cache-line/page
+    membership or cache-hit rates. Values are relabeled descriptively and remain outside
+    selection rules.
+  fields:
+  - indirect_access_distances.VertexOffsets.statistics.spatial_locality_distribution
+  - indirect_access_distances.parent.statistics.spatial_locality_distribution
+  affects:
+  - performance_claims
+  - hardware_priority
+- id: footprint-not-working-set
+  severity: interpretation_resolved
+  message: Peter confirmed capacity-based array footprints. Exact bytes and decimal/binary
+    conversions are derived separately; active tile/phase working sets remain unknown
+    and do not fix storage parameters.
+  fields:
+  - working_set
+  affects:
+  - storage_sizing
+- id: statement-locations-missing
+  severity: needs_clarification
+  message: Array-level features are usable for exploratory retrieval; exact statement
+    IDs and profiled-source locations are still absent.
+  fields:
+  - memory_streams
+  - kernel.source_file
+  affects:
+  - intrinsic_placement
+- id: pair-sequence-scope
+  severity: interpretation_resolved
+  message: 'The snippets enumerate adjacent positions within frontiers/rows, excluding
+    segment transitions and thread interleaving; they do not establish a global hardware-access
+    trace. VertexOffsets: adjacent_positions_within_each_frontier; parent: adjacent_neighbors_within_each_vertex_row'
+  fields:
+  - indirect_access_distances
+  affects:
+  - stride_scope
+  - reuse_interpretation
+signals:
+  always: true
+  has_indirect_access: true
+  has_regular_stream: true
+  has_read_stream: true
+  has_conditional_cas: true
+  reported_large_jumps: false
+  reported_near_unit_indices: true
+heuristic_policy:
+  large_jump_threshold_elements: 16
+  near_unit_upper_bound_elements: 1.1
+  meaning: Exploration ordering only; not a bottleneck classifier or speedup estimate.
+methodology:
+  status: reported_method_bound_to_input
+  record_sha256: fdf5b3b8e4486242d45873282061a9ff0fe37ccb05a754a88b791f06d2079e67
+  source_ref: examples/received/peter-measurement-methodology.v1.2.txt
+  source_sha256: 0f8d421aed3aa68e85e258c8f7eb844a6d8f5c5f98d4a1d6f39f9e4e1e3ba385
+  verification: instrumentation_not_reproduced
+derived_array_capacities:
+- scope: scale_example_k25000
+  status: derived_from_reported_dimensions_and_widths_not_measured_residency
+  arrays:
+    parent:
+      element_count: 25000
+      reported_element_bytes: 4
+      capacity_bytes: 100000
+      KiB: 97.65625
+      MiB: 0.095367431640625
+      kB: 100.0
+      MB: 0.1
+      reported_unit_checks:
+      - field: parent_footprint_kb
+        reported_value: 97.66
+        matches_conversion: binary
+    VertexOffsets:
+      element_count: 25001
+      reported_element_bytes: 4
+      capacity_bytes: 100004
+      KiB: 97.66015625
+      MiB: 0.09537124633789062
+      kB: 100.004
+      MB: 0.100004
+      reported_unit_checks:
+      - field: offsets_footprint_kb
+        reported_value: 97.66
+        matches_conversion: binary
+    g.out_neighbors_:
+      element_count: 624975000
+      reported_element_bytes: 4
+      capacity_bytes: 2499900000
+      KiB: 2441308.59375
+      MiB: 2384.0904235839844
+      kB: 2499900.0
+      MB: 2499.9
+      reported_unit_checks:
+      - field: neighbors_footprint_mb
+        reported_value: 2384.09
+        matches_conversion: binary
+    queue.shared:
+      element_count: 25000
+      reported_element_bytes: 4
+      capacity_bytes: 100000
+      KiB: 97.65625
+      MiB: 0.095367431640625
+      kB: 100.0
+      MB: 0.1
+      reported_unit_checks: []
+  listed_array_capacity_bytes: 2500200004
+  excludes: allocator overhead, padding, per-thread queue buffers, and other program
+    state
+  active_working_set_bytes: null
