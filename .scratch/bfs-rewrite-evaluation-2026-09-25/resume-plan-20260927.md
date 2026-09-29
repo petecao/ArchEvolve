@@ -101,3 +101,14 @@ T16 b1 is stopped and retained as interrupted.
 R15. **T16 split across lanes.** Scalar primaries run on node1; the MAA job runs on node0 after
 routes a2. node0 then returns to the owner's MemAcc session (about 2026-09-29 18:00 ET).
 Target: all tickets and the final review done 2026-09-29 evening.
+
+## T16 drain hang — 2026-09-29 02:30 ET
+
+R16. **Guarded post-ROI CPU switch.** At uniform22 the R12 switch to AtomicSimpleCPU never
+completes gem5's drain (MAA/memory-system objects do not report drained; kron14 drained fine).
+T16 job M's primary sealed its ROI correctly but its verifier cannot run; M is stopped or allowed
+to fail at its run bound, and is retained. The switch becomes bounded: if the drain does not
+finish within a small budget, resume and verify on O3, recording which CPU verified. Correctness
+evidence is unchanged. T16 protocols are re-frozen as version 4 with O3-sized bounds. The drain
+hang is recorded as an observed limitation of the author model and is not diagnosed further.
+Consequence: T16 completion moves to about 2026-09-30/10-01; T17/T20 are unaffected.
