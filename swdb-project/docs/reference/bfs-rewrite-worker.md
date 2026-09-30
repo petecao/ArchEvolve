@@ -1,9 +1,9 @@
 # BFS rewrite worker contract
 
-Navigation updated: 2026-09-29 (Eastern Time).
+Navigation updated: 2026-09-30 (Eastern Time).
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-29 (Eastern Time)
+Updated: 2026-09-30 (Eastern Time)
 
 The proposal producer or labeled test client selects the intent. The rewrite
 provider interprets that intent using the identified
@@ -20,7 +20,12 @@ fixed in code; configurations that override them are rejected.
 
 Workspace mode is the default. SWDB derives the provider workspace from the
 source snapshot, selected regions, profile package, selected strategy, required
-operation headers, and explicitly named `visible_files`. It hides evaluator
+operation headers, and explicitly named `visible_files`. Required-operation headers
+are include paths, so `gem5/m5ops.h` matches a snapshot's `include/gem5/m5ops.h`; a
+header absent from the snapshot must be a hash-identified regular file inside the
+application tree. Named `visible_files` must already be snapshot files: they are
+recorded declarations and cannot add author code that a snapshot (such as the
+scalar-only DX100 snapshot) removed. It hides evaluator
 inputs, workload files, records, other candidates, and project instruction files.
 Exact protected verifier fragments mixed into source are replaced with immutable
 placeholders and restored before candidate construction. The provider-visible
@@ -29,7 +34,9 @@ profile package is a labeled projection; the original sealed package is retained
 The provider may read, search, edit, build, and run small synthetic tests. Temporary
 test sources must be removed before the session ends. The final response contains
 only `interpretation` and `unresolved`; SWDB computes the source diff, discards
-build outputs, and rejects unapproved new files or edits to immutable inputs.
+build outputs, and rejects unapproved new files or edits to immutable inputs. Build
+outputs are classified before the editable patterns, so a pattern such as `src/*`
+cannot admit a binary, and source helpers left under `build/` still fail.
 Existing protected-input and actual-code-change checks still apply.
 
 Real providers run only on mbit10 inside an owned socket lane, under SWDB's Linux
@@ -47,8 +54,17 @@ outer policy. An external connection trace rejects non-model-API TCP destination
 for either provider. Event audits also reject forbidden file access, login-file
 commands, network commands, and unknown tools. ABI 4 leaves UDP unrestricted, and
 the copied login file remains readable during the session; both residual risks
-are recorded in the guard policy. The login copy is deleted after every session.
-Real sessions fail closed when the guard or lane cannot be verified.
+are recorded in the guard policy. The login copy is deleted after every session,
+together with any hard link or byte copy of it left in the provider home or workspace
+(`login_copies_removed`). Real sessions fail closed when the guard or lane cannot be
+verified, before any login file is copied. A fixture command that resolves to an
+installed `codex` or `claude` CLI is refused.
+
+Because Codex tool commands keep outer port-443 access, Codex sessions also refuse
+`io_uring_setup` and `MSG_FASTOPEN` sends in the inherited seccomp filter: those
+calls could open a connection without the `connect()` call the trace observes. The
+model-API check matches IP addresses, so a shared CDN address cannot distinguish
+hosts; this residual risk is recorded in the guard policy.
 
 The tracer is a child subreaper outside Landlock, so it adopts detached descendants
 even when helpers double-fork or start a new session. The observer pins PID plus
@@ -58,8 +74,13 @@ and, for native Codex, the exact installed `codex-code-mode-host` sibling while
 directly parented by that original native process. Same-named copies and other
 helpers keep the timer. The original CLI and service both count toward the full
 16-thread and 32 GiB resident-memory caps; the overall provider-call budget still
-applies. The policy records the selected installation root, and cleanup receipts
-retain observed identities and any surviving descendants.
+applies. Only the first observed service instance is exempt; a tool shell that
+later execs the same binary keeps the timer. The thread, memory and size caps are
+polled every 0.1 s (`limit_enforcement` records how each is enforced); inner Claude
+tool commands also get a kernel address-space limit of 32 GiB. The 5 GiB size cap
+covers the workspace and the provider home together. The policy records the
+selected installation root, and cleanup receipts retain observed identities and any
+surviving descendants.
 
 A required inherited seccomp filter protects the recorded evaluator/observer and
 tracer identities against `kill`, `tkill`, `tgkill`, `rt_sigqueueinfo`,
@@ -70,7 +91,10 @@ protect supervisor continuity through the listed APIs; they do not provide gener
 hostile-process isolation.
 
 Event auditing checks direct shell inputs, explicit nested shell bodies, Glob
-search roots, executable paths and compiler file options. Unresolved substitutions,
+search roots, executable paths and compiler file options. Shell words and Glob
+patterns are brace-expanded first, and a wildcard word must have a static root inside
+the workspace with no parent traversal and no dot-leading part that can match `..`;
+a `cd` target must be one literal directory. Unresolved substitutions,
 delegated execution and opaque inline interpreter programs fail closed. Quiet SED
 with one literal decimal line/range print expression remains available for source
 previews. Compilers accept checked file operands and a bounded set of literal
@@ -84,16 +108,22 @@ output and DD input/output selectors are checked even for bare filenames, and
 mutable file-list inputs are refused. Echo/printf data, compiler data flags and
 known search-pattern positions retain their literal text semantics. Recognized
 network utilities are classified at executable positions; quoted names remain
-ordinary data. Named-remote Git queries and updates are refused, including
+ordinary data. Package and dependency managers (for example npm, npx, cargo, go, gem,
+uv, uvx, pipx) and versioned pip executables are refused on every subcommand. Named-remote Git queries and updates are refused, including
 `ls-remote` and `remote update/show/prune`, even when particular flags could avoid
 network access. The bounded remote-option grammar accounts for long-option
 abbreviations and bundled short flags; unsupported remote mutations and archive
 commands are refused. Python invocations use a bounded interpreter-prefix grammar
 before checking the script operand: supported flags and their values are consumed,
-known network modules are refused, and unknown prefix controls fail closed. Arguments
+network modules are refused, other modules outside a short offline list (such as
+`json.tool`, `py_compile`, `unittest`, `pytest`) fail closed, and unknown prefix
+controls fail closed. Arguments
 after a checked script retain their data role. Ordinary local Git status/diff operations remain available. Ordinary
 workspace scripts and synthetic programs may run under the guard; auditing their
-invocation does not prove the semantics of their source.
+invocation does not prove the semantics of their source. Claude content blocks
+other than text, thinking, tool use and tool results (for example server-side tool
+use) fail the audit. A completed session whose log is empty or lacks its terminal
+event (`turn.completed` or `result`) also fails.
 
 Both providers receive workspace guidance to use direct editing tools for source
 changes and literal shell operands for workspace reads, builds, and synthetic runs.
@@ -127,8 +157,10 @@ file mapping before diff construction. Prompt-only real sessions remain guarded;
 any emitted tool activity is rejected. Codex prompt-only input is limited to
 96 KiB because the prompt must be an argument with empty stdin.
 
-The proposal's `provider` field records the selected configuration, resolved kind,
-model, effort, CLI version, workspace mode, guard policy, and audit result. Each
+The proposal's `provider` field records the latest attempt's configuration,
+resolved kind, model, effort, CLI version, workspace mode, guard policy, and audit
+result; it is replaced as a whole by each attempt, never merged across attempts.
+A record without model or effort predates the pins: its model is unknown. Each
 `attempts[].provider.workspace_manifest` records that attempt's derived workspace.
 The proposal's `interpretation` retains the provider's explanation, generated patch, and unresolved
 requirements. Raw stdout/stderr, events, computed diff, and connection trace remain
@@ -167,8 +199,11 @@ executions have their own explicit budgets and remain independently retained.
 A public repair request names a failed build/correctness evaluation. A
 `provider_unavailable` outcome caused by a usage limit can also be retried using
 the proposal ID when no candidate exists. Unavailable calls consume elapsed time
-but do not consume a repair. Repairs retain the first attempt's kind, model, and
-effort; a mismatch is refused. Historical receipts without model settings remain
+but do not consume a repair. Only a failed session is read for usage-limit errors: a
+session that exits 0 with a valid result keeps its result even if it logged a
+retried limit error. A campaign can reuse a candidate created after such retries. Repairs retain the first attempt's kind, model, and
+effort, and its classification: a contract fixture that emulates a kind cannot
+repair that kind's real proposal, or the reverse. A mismatch is refused. Historical receipts without model settings remain
 valid and reusable, but a repair cannot assert a match to an unknown setting.
 The provider receives the prior candidate and
 failure evidence, preserves the original intent and edit scope, and creates a new

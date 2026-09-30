@@ -1,6 +1,7 @@
 # 06 — Workspace mode with the fixture provider
 
 Created: 2026-09-29
+Updated: 2026-09-30 (Eastern Time)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 03
@@ -35,3 +36,17 @@ Workspace edits become a real Git diff against the starting source. Immutable in
 Each run uses a fresh owner-only provider home. Real kinds receive only a copy of their login file; contract fixtures receive an explicit synthetic login copy. Cleanup deletes that copy on success, timeout, guard refusal, and provider failure, while retaining other CLI artifacts. Real modes use the SWDB guard and remain fail closed where it cannot run. Legacy prompt-only routes remain selected by `workspace: false`.
 
 Validation (2026-09-29): `tests/test_provider_workspace.py` completed **40 passed** in 89.27 s; eight added focused public-seam cases for annotated-source hiding, preservation of structured payload fields, and audit precedence completed **8 passed** in 17.97 s. Both Codex and Claude public repairs were also verified (**2 passed**). These are contract fixtures, not provider-performance evidence. Required operation headers without an exact local source identity fail closed rather than reading a model/evaluator repository.
+
+## Spec re-review repair (2026-09-30 ET)
+
+- Required-operation headers are include paths: `gem5/m5ops.h` now matches the DX100
+  snapshots' `include/gem5/m5ops.h`, so proposals requiring `dx100.mmio.v1.*` no longer
+  fail before the provider starts. The out-of-snapshot fallback must be a regular
+  header file inside the application tree, checked before resolving symlinks.
+- New files are classified as build outputs before editable patterns, so `src/*`
+  cannot admit a binary; source helpers left under `build/` still fail.
+- Hard links and byte copies of the login copy in the provider home or workspace are
+  deleted at cleanup and listed as `login_copies_removed`.
+- Real kinds refuse before copying a login file where the guard is unavailable.
+- Extra `visible_files` stay limited to snapshot files (a recorded declaration), so
+  they cannot bring back author code removed from a snapshot; the spec now says so.

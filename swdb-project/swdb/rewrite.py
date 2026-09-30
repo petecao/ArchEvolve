@@ -1,6 +1,7 @@
 """Bounded instruction interpretation through an operator-selected provider.
 
-Updated: 2026-09-29 (pinned adapters, workspace/guard seam and provider audit). Providers
+Updated: 2026-09-30 (repairs keep the provider classification; usage limits are read only
+from failed sessions). 2026-09-29: pinned adapters, workspace/guard seam and audit. Providers
 return proposed edits; SWDB applies protections. 2026-09-28: stream-json stdout cap
 sized for partial-message amplification; signal handlers only on the main thread.
 """
@@ -428,8 +429,16 @@ def interpret(config, prompt, folder, remaining_s=None, *, run_context=None):
     folder.mkdir(parents=True, exist_ok=run_context is not None)
     (folder / "prompt.txt").write_text(prompt)
     context = run_context or {}
-    if provider_adapters.classification(config) == "rewrite_provider" and not context.get("wrap_command"):
-        from swdb import provider_guard
+    from swdb import provider_guard
+    if provider_adapters.classification(config) == "contract_fixture":
+        # A fixture may run unguarded and skips the network trace; it must not
+        # become a route to running an installed real provider CLI (story 37).
+        real = provider_guard.real_cli(config["command"])
+        if real:
+            if context.get("cleanup"):
+                context["cleanup"]()
+            raise Failure("external_fixture command runs an installed rewrite provider CLI: " + real)
+    elif not context.get("wrap_command"):
         context = provider_guard.prompt_context(config, folder)
     adapter = provider_adapters.get(config)
     schema = adapter.schema(config, context.get("schema", output_schema(config)))
@@ -521,12 +530,17 @@ def interpret(config, prompt, folder, remaining_s=None, *, run_context=None):
             finally:
                 if context.get("cleanup"):
                     context["cleanup"]()
-    try:
-        provider_adapters.check_usage(folder)
-    except provider_adapters.ProviderUnavailable:
-        meta["state"] = "provider_unavailable"
-        (folder / "provider.json").write_text(json.dumps(meta, indent=2))
-        raise
+    def check_usage():
+        try:
+            provider_adapters.check_usage(folder)
+        except provider_adapters.ProviderUnavailable:
+            meta["state"] = "provider_unavailable"
+            (folder / "provider.json").write_text(json.dumps(meta, indent=2))
+            raise
+    # A completed session may log a retried rate-limit error and still return a
+    # valid result; only a failed session is reclassified as unavailable.
+    if child.returncode:
+        check_usage()
     guard_result = meta.get("guard_result") or {}
     if guard_result.get("reasons"):
         raise Failure("provider guard failed: " + "; ".join(guard_result["reasons"]))
@@ -537,7 +551,11 @@ def interpret(config, prompt, folder, remaining_s=None, *, run_context=None):
     if (folder / "stderr.txt").stat().st_size > JSON_OUTPUT_LIMIT:
         raise Failure("rewrite provider stderr exceeds the 10 MiB limit")
     try:
-        response = adapter.extract(config, folder)
+        try:
+            response = adapter.extract(config, folder)
+        except Failure:
+            check_usage()
+            raise
         from jsonschema import Draft202012Validator
         errors = list(Draft202012Validator(schema).iter_errors(response))
         if errors:
@@ -589,6 +607,11 @@ def require_same_provider(original, selected):
     """Refuse identity changes without inventing model settings for old receipts."""
     if not original:
         return
+    # A contract fixture emulating a kind shares its pins, but it is not that
+    # rewrite provider; a repair must not cross between the two.
+    if (original.get("kind") and provider_adapters.classification(original)
+            != provider_adapters.classification(selected)):
+        raise Failure("repair provider classification differs from the first attempt")
     old = provider_adapters.identity(original)
     new = provider_adapters.identity(selected)
     for key in ("resolved_kind", "model", "effort"):

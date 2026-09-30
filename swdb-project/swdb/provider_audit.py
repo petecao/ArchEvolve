@@ -1,7 +1,9 @@
-"""Audit tool activity from retained provider events. Updated: 2026-09-29.
+"""Audit tool activity from retained provider events. Updated: 2026-09-30.
 
 The audit complements confinement; a successful audit is not a correctness claim.
 Only tool inputs are treated as actions, never a provider's quoted command output.
+2026-09-30: shell words and Glob patterns are brace-expanded and wildcard words are
+confined to the workspace; network-capable package tools are refused outright.
 """
 
 import fnmatch
@@ -12,16 +14,73 @@ from pathlib import Path
 
 from swdb import artifacts
 
+WILDCARD = re.compile(r"[*?]|\[[^\]]+\]")
+# Complete provider sessions end with these stream events; an absent terminal
+# event means the retained log cannot establish that it lists every action.
+TERMINAL_EVENTS = {"codex": "turn.completed", "claude": "result"}
+CLAUDE_BLOCKS = {"text", "thinking", "redacted_thinking", "tool_use", "tool_result"}
+# Offline Python modules a provider may run with -m. Every other module is
+# opaque (it may open sockets or files outside the audited operands).
+PYTHON_MODULES = {"json.tool", "py_compile", "compileall", "unittest", "pytest", "doctest", "timeit",
+                  "cProfile", "profile", "trace", "tokenize", "dis", "ast", "sysconfig", "site",
+                  "platform", "venv"}
+NETWORK_MODULES = {"pip", "ensurepip", "http", "urllib", "ftplib", "smtplib", "poplib", "imaplib", "nntplib",
+                   "telnetlib", "xmlrpc", "webbrowser", "socketserver", "wsgiref", "asyncio", "requests", "httpx"}
+
+
+def _brace_group(word):
+    """First expandable {...} group as (start, end, alternatives), or None."""
+    for start, character in enumerate(word):
+        if character != "{":
+            continue
+        depth, last, parts = 0, start + 1, []
+        for index in range(start, len(word)):
+            character = word[index]
+            if character == "{":
+                depth += 1
+            elif character == "}":
+                depth -= 1
+                if depth == 0:
+                    parts.append(word[last:index])
+                    if len(parts) > 1:
+                        return start, index, parts
+                    # Sequences expand only to digits or letters, so their two
+                    # endpoints represent every path shape they can produce.
+                    sequence = re.fullmatch(r"(-?\d+|[A-Za-z])\.\.(-?\d+|[A-Za-z])(?:\.\.-?\d+)?", parts[0])
+                    if sequence:
+                        return start, index, [sequence[1], sequence[2]]
+                    break
+            elif character == "," and depth == 1:
+                parts.append(word[last:index])
+                last = index + 1
+    return None
+
+
+def brace_expansions(word, limit=256):
+    """Bash-style brace alternatives of one word; None when unbounded."""
+    words, done = [word], []
+    while words:
+        current = words.pop()
+        group = _brace_group(current)
+        if group is None:
+            done.append(current)
+        else:
+            start, end, alternatives = group
+            words.extend(current[:start] + item + current[end + 1:] for item in alternatives)
+        if len(words) + len(done) > limit:
+            return None
+    return done
+
 
 def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths=(),
-          editable_files=(), network_reasons=(), guard_reasons=()):
+          editable_files=(), network_reasons=(), guard_reasons=(), completed=False):
     """Return a JSON-compatible receipt, including failures and raw-log identity."""
     path, root = Path(path), Path(workspace_root).resolve()
     visible = set(visible_files)
     directories = {"."}
     for name in visible:
         directories.update(p.as_posix() for p in Path(name).parents)
-    violations, events, commands, accesses = [], 0, 0, 0
+    violations, events, commands, accesses, terminal = [], 0, 0, 0, False
     logins = {str(Path(p).resolve()) for p in login_paths if p}
     login_names = {Path(p).name for p in logins} | {"auth.json", ".credentials.json"}
 
@@ -32,6 +91,20 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
 
     def file_access(name, event, *, writing=False, cwd=None):
         nonlocal accesses
+        if isinstance(name, str) and ("{" in name or WILDCARD.search(name)):
+            # Operands from every grammar (compiler, rg, sed, redirections) may
+            # carry shell braces or wildcards; audit each possible expansion.
+            words = brace_expansions(name)
+            if words is None:
+                fail("unparsed_command", "provider shell word expansion cannot be bounded", event)
+                return
+            if words != [name] or WILDCARD.search(name):
+                for word in words:
+                    if WILDCARD.search(word):
+                        wildcard_access(word, event, cwd=cwd)
+                    else:
+                        file_access(word, event, writing=writing, cwd=cwd)
+                return
         accesses += 1
         if not isinstance(name, str) or not name.strip():
             fail("invalid_file_access", "provider tool has an invalid file path", event)
@@ -59,6 +132,35 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
         if target.exists() and generated_output(target, rel):
             return
         fail("external_file_access", f"provider file access outside the visible set: {name}", event)
+
+    def wildcard_access(pattern, event, cwd=None):
+        """A wildcard may match provider-made files, but only below a workspace root."""
+        nonlocal accesses
+        accesses += 1
+        parts = pattern.split("/")
+        prefix, matched = [], False
+        for part in parts:
+            if matched and part == "..":
+                fail("external_file_access", f"provider wildcard has unresolved traversal: {pattern}", event)
+                return
+            if WILDCARD.search(part):
+                # Shells and glob tools match a leading dot only literally, so
+                # '.*' or '..?*' (not '*' or '**') can name the parent directory.
+                if part.startswith(".") and fnmatch.fnmatchcase("..", part):
+                    fail("external_file_access", f"provider wildcard can match a parent directory: {pattern}", event)
+                    return
+                matched = True
+            elif not matched:
+                prefix.append(part)
+        static = "/".join(prefix) or "."
+        if pattern.startswith("/"):
+            static = "/" + static.lstrip("/")
+        if static.startswith("~") or "$" in static or "\\" in static:
+            fail("external_file_access", f"provider wildcard root is outside the workspace: {pattern}", event)
+            return
+        target = (Path(cwd or root) / static).resolve()
+        if not target.is_relative_to(root):
+            fail("external_file_access", f"provider wildcard root is outside the workspace: {pattern}", event)
 
     def command(value, event, cwd=None, *, depth=0):
         nonlocal commands
@@ -99,13 +201,24 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
         # recognized transfer/query tools are refused even with named endpoints
         # or local-only flags; proving each tool's option semantics is outside
         # this audit's supported build/read/status subset.
-        network_tools = {"curl", "wget", "pip", "pip3", "conda", "nc", "ncat", "netcat", "ssh", "scp", "sftp",
+        network_tools = {"curl", "wget", "pip", "pip3", "pipx", "conda", "mamba", "micromamba", "nc", "ncat",
+                         "netcat", "ssh", "scp", "sftp", "autossh", "sshpass", "mosh",
                          "rsync", "socat", "rsh", "rcp", "rlogin", "dig", "drill", "kdig", "mdig", "host",
                          "nslookup", "nsupdate", "delv", "ftp", "lftp",
                          "ncftp", "ncftpget", "ncftpput", "tftp", "atftp", "telnet", "ping", "ping6",
                          "traceroute", "traceroute6", "mtr", "whois", "aria2c", "http", "https",
-                         "git-remote-http", "git-remote-https", "git-remote-ftp", "git-remote-ftps", "git-remote-ext"}
-        package_managers = {"npm", "npx", "pnpm", "yarn", "cargo", "uv", "brew", "apt", "apt-get"}
+                         "git-remote-http", "git-remote-https", "git-remote-ftp", "git-remote-ftps", "git-remote-ext",
+                         "git-lfs", "hg", "svn", "bzr", "fossil", "gh", "glab", "rclone", "s3cmd", "gsutil", "aws",
+                         "gcloud", "az", "httpie", "xh", "websocat", "grpcurl", "smbclient", "yt-dlp", "youtube-dl",
+                         "axel", "docker", "podman"}
+        # Package and dependency managers may resolve and fetch on any
+        # subcommand (install aliases, run/exec, fetch, build). None belongs
+        # to the provider's build/read/status subset, so all are refused.
+        package_managers = {"npm", "npx", "pnpm", "pnpx", "yarn", "bun", "bunx", "cargo", "rustup", "uv", "uvx",
+                            "poetry", "pdm", "hatch", "gem", "bundle", "bundler", "go", "brew", "apt", "apt-get",
+                            "dnf", "yum", "apk", "pacman", "zypper", "snap", "flatpak", "composer", "mvn", "gradle",
+                            "sbt", "nuget", "dotnet", "vcpkg", "conan", "spack", "cabal", "stack", "opam", "cpan",
+                            "cpanm", "luarocks"}
         separators = {"&&", "||", ";", "|", "&", "\n"}
         def separator(token):
             return token in separators or bool(re.fullmatch(r"(?:&&|\|\||[;|&\n])+", token))
@@ -169,7 +282,8 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                 return False
             subcommand = arguments[i]
             if subcommand in {"clone", "fetch", "pull", "push", "submodule", "ls-remote", "fetch-pack", "send-pack",
-                              "http-fetch", "http-push", "daemon", "imap-send", "send-email", "svn"}:
+                              "http-fetch", "http-push", "daemon", "imap-send", "send-email", "svn", "lfs",
+                              "maintenance", "p4", "cvsimport", "annex", "remote-http", "remote-https"}:
                 return True
             if subcommand == "remote":
                 i += 1
@@ -315,7 +429,12 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                                 fail("unparsed_command", "provider Python option value is missing", event)
                                 return False
                             if character == "m":
-                                return value in {"pip", "pip._internal", "http.server", "urllib.request"}
+                                if value.split(".")[0] in NETWORK_MODULES:
+                                    return True
+                                if value not in PYTHON_MODULES:
+                                    fail("unparsed_command", "provider Python module cannot be audited", event)
+                                    return False
+                                return value == "venv" and "--upgrade-deps" in arguments[i + 1:]
                             harmless = (value in {"ignore", "default", "error", "always", "module", "once"}
                                 or re.fullmatch(r"(?:ignore|default|error|always|module|once)::(?:Warning|UserWarning|"
                                     r"DeprecationWarning|PendingDeprecationWarning|SyntaxWarning|RuntimeWarning|"
@@ -645,8 +764,9 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                 end = next((i for i in range(index + 1, len(tokens)) if separator(tokens[i])), len(tokens))
                 arguments = tokens[index + 1:end]
                 if (executable in network_tools or executable == "git" and git_network(arguments)
+                        or re.fullmatch(r"pip\d*(?:\.\d+)*(?:-\d+(?:\.\d+)*)?", executable)
                         or executable.startswith("git-") and git_network([executable[4:], *arguments])
-                        or executable in package_managers and any(a in {"install", "add", "update", "sync"} for a in arguments)
+                        or executable in package_managers
                         or executable == "getent" and getent_network(arguments)
                         or executable == "openssl" and arguments and arguments[0] == "s_client"):
                     fail("network_command", "provider ran a forbidden network command", event)
@@ -793,27 +913,45 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                         file_access(value, event, cwd=working)
                     fail("unparsed_command", "provider attached filesystem operand has unsupported semantics", event)
             candidate = token.lstrip("<>")
+            writing = bool(index and tokens[index - 1] in {">", ">>", "<>", "-o"})
+            expansions = [candidate]
+            if "{" in candidate or WILDCARD.search(candidate):
+                expansions = brace_expansions(candidate)
+                if expansions is None:
+                    fail("unparsed_command", "provider shell word expansion cannot be bounded", event)
+                    continue
             if index and tokens[index - 1] in {"<", ">", ">>", "<>"}:
-                if candidate not in {"/dev/null", "/dev/stdout", "/dev/stderr"}:
-                    file_access(candidate, event, writing=tokens[index - 1] != "<", cwd=working)
+                for word in expansions:
+                    if word in {"/dev/null", "/dev/stdout", "/dev/stderr"}:
+                        continue
+                    if WILDCARD.search(word):
+                        wildcard_access(word, event, cwd=working)
+                    else:
+                        file_access(word, event, writing=tokens[index - 1] != "<", cwd=working)
                 continue
             if index and tokens[index - 1] == "cd":
+                if expansions != [candidate] or WILDCARD.search(candidate):
+                    fail("unparsed_command", "provider cd target must be one literal directory", event)
+                    continue
                 file_access(candidate, event, cwd=working)
                 working = (working / candidate).resolve()
                 continue
             if not is_executable and (index in data_operands or executable in {"echo", "printf"}):
                 continue
-            if candidate.startswith("/"):
-                if is_executable and any(Path(candidate).resolve().is_relative_to(p) for p in system_bins):
-                    continue
-                if candidate in {"/dev/null", "/dev/stdout", "/dev/stderr"}:
-                    continue
-                file_access(candidate, event, cwd=working)
-            elif candidate == ".." or candidate.startswith(("../", "~/")) or "/../" in candidate:
-                file_access(candidate, event, cwd=working)
-            elif (not candidate.startswith("-") and re.fullmatch(r"[\w.+@/-]+", candidate)
-                  and ("/" in candidate or Path(candidate).suffix in {".c", ".cc", ".cpp", ".h", ".hpp", ".py", ".sh", ".json", ".yaml", ".el", ".graph"})):
-                file_access(candidate, event, writing=bool(index and tokens[index - 1] in {">", ">>", "-o"}), cwd=working)
+            for word in expansions:
+                if WILDCARD.search(word):
+                    wildcard_access(word, event, cwd=working)
+                elif word.startswith("/"):
+                    if is_executable and any(Path(word).resolve().is_relative_to(p) for p in system_bins):
+                        continue
+                    if word in {"/dev/null", "/dev/stdout", "/dev/stderr"}:
+                        continue
+                    file_access(word, event, cwd=working)
+                elif word == ".." or word.startswith(("../", "~")) or "/../" in word or word.endswith("/.."):
+                    file_access(word, event, cwd=working)
+                elif (not word.startswith("-") and re.fullmatch(r"[\w.+@/-]+", word)
+                      and ("/" in word or Path(word).suffix in {".c", ".cc", ".cpp", ".h", ".hpp", ".py", ".sh", ".json", ".yaml", ".el", ".graph"})):
+                    file_access(word, event, writing=writing and tokens[index - 1] == "-o", cwd=working)
 
     def glob_access(inputs, event):
         pattern = inputs.get("pattern")
@@ -824,6 +962,15 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
         if not isinstance(pattern, str) or not pattern.strip():
             fail("invalid_file_access", "provider Glob has an invalid pattern", event)
             return
+        # Glob tools expand braces before matching; audit every alternative.
+        alternatives = brace_expansions(pattern)
+        if alternatives is None:
+            fail("unparsed_command", "provider Glob brace expansion cannot be bounded", event)
+            return
+        if alternatives != [pattern]:
+            for alternative in alternatives:
+                glob_access({**inputs, "pattern": alternative or "."}, event)
+            return
         if pattern.startswith("~") or "$" in pattern or "\\" in pattern:
             fail("external_file_access", "provider Glob pattern cannot be resolved within the workspace", event)
             return
@@ -831,6 +978,9 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
         for part in Path(pattern).parts:
             if wildcard and part == "..":
                 fail("external_file_access", "provider Glob pattern has unresolved traversal", event)
+                return
+            if any(c in part for c in "*?[") and part.startswith(".") and fnmatch.fnmatchcase("..", part):
+                fail("external_file_access", "provider Glob pattern can match a parent directory", event)
                 return
             wildcard = wildcard or any(c in part for c in "*?[")
             if not wildcard:
@@ -897,12 +1047,22 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                 for block in content:
                     if isinstance(block, dict) and block.get("type") == "tool_use":
                         tool(block.get("name"), block.get("input"), number)
+                    elif isinstance(block, dict) and block.get("type") not in CLAUDE_BLOCKS:
+                        # Server-side, MCP and future block types are actions
+                        # this audit cannot inspect; they fail closed.
+                        fail("forbidden_tool", f"provider used a forbidden content block: {block.get('type')}", number)
             if row.get("type") in {"tool_use", "tool_call"}:
                 tool(row.get("name"), row.get("input", row.get("arguments")), number)
             # Provider assertions cannot authorize a tool's connection. Legitimate
             # API transport is identified by the guard's independent network trace.
             if row.get("type") in {"connection", "network_connection"}:
                 fail("outbound_connection", "provider made an outbound connection outside its model API", number)
+            terminal = terminal or row.get("type") == TERMINAL_EVENTS.get(kind)
+        # A completed session's result is used only when its log is complete.
+        if completed and not events:
+            fail("invalid_event_log", "provider event log contains no events", 0)
+        elif completed and kind in TERMINAL_EVENTS and not terminal:
+            fail("invalid_event_log", "provider event log ends without its terminal event", 0)
     for reason in network_reasons:
         fail("outbound_connection", str(reason), 0)
     for reason in guard_reasons:

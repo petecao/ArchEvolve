@@ -1,6 +1,7 @@
 """Public, durable proposal workflow. Source changes never imply correctness.
 
-Updated: 2026-09-29 (pinned repair identity and unavailable-provider retries); 2026-09-28 (patch headers
+Updated: 2026-09-30 (the proposal provider block describes one attempt); 2026-09-29
+(pinned repair identity and unavailable-provider retries); 2026-09-28 (patch headers
 parsed outside hunk bodies only). YAML records remain authoritative; raw artifacts are external.
 """
 
@@ -616,11 +617,16 @@ def _retry_initial_provider(args, store, proposal):
 
 
 def _provider_receipt(data, meta, folder):
-    """Bind the resolved record block to its retained per-attempt receipt."""
+    """Bind the resolved record block to its retained per-attempt receipt.
+
+    The proposal block describes one attempt, the latest: its configuration and
+    runtime identity, never a mix of an earlier configuration and later runtime.
+    Every attempt keeps its own receipt under attempts[].provider.
+    """
     runtime = {key: meta[key] for key in
         ("resolved_kind", "model", "effort", "cli_version", "workspace", "guard_policy", "audit") if key in meta}
     actual_config = copy.deepcopy(meta.get("provider", data["provider"]))
-    data["provider"].update(runtime)
     actual_config.update(runtime)
+    data["provider"] = copy.deepcopy(actual_config)
     meta["provider"] = actual_config
     (Path(folder) / "provider.json").write_text(json.dumps(meta, indent=2))

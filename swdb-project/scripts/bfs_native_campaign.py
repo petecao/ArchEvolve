@@ -3,7 +3,7 @@
 
 Created: 2026-09-25 (Eastern Time). This bounded driver does not select intent,
 workloads, profitability thresholds, or a new protocol. Unfavorable results stay.
-Updated: 2026-09-26 (Eastern Time).
+Updated: 2026-09-30 (Eastern Time): reuse admits usage-limit retries before the initial rewrite.
 
 The optional --existing-candidate ID route retains --proposal as the exact
 original JSON request. It reopens that proposal's first completed candidate
@@ -635,10 +635,14 @@ def validate_existing_candidate(request, submitted, candidate, source, package, 
     require(submitted.get('outcome') == {'state': 'candidate_created', 'stage': 'rewriting', 'reason': None},
             'proposal is not at its completed initial rewrite')
     attempts = submitted.get('attempts', [])
-    require(len(attempts) == 1 and attempts[0].get('number') == 1
-            and attempts[0].get('stage') == 'rewriting' and attempts[0].get('state') == 'completed'
-            and attempts[0].get('candidate') == candidate.get('id')
-            and not any(key in attempts[0] for key in ('parent_candidate', 'trigger_evaluation')),
+    # Usage-limit retries (2026-09-30) precede the one completed initial rewrite;
+    # they produced no candidate and consumed no repair.
+    require(attempts and all(row.get('number') == index for index, row in enumerate(attempts, 1))
+            and all(row.get('state') == 'provider_unavailable' and 'candidate' not in row
+                    for row in attempts[:-1])
+            and attempts[-1].get('stage') == 'rewriting' and attempts[-1].get('state') == 'completed'
+            and attempts[-1].get('candidate') == candidate.get('id')
+            and not any(key in row for row in attempts for key in ('parent_candidate', 'trigger_evaluation')),
             'prior or incomplete repair/rewrite history cannot be resumed')
     budget = submitted.get('repair_budget')
     require(budget is None or (isinstance(budget, dict) and type(budget.get('repairs')) is int and budget['repairs'] == 0),
@@ -674,7 +678,10 @@ def validate_existing_candidate(request, submitted, candidate, source, package, 
                 'initial supplied patch unexpectedly contains provider or repair state')
     else:
         provider = submitted.get('provider', {})
-        observed = attempts[0].get('provider', {})
+        observed = attempts[-1].get('provider', {})
+        spent = 0
+        for row in attempts:
+            spent += row.get('provider', {}).get('host_wall_s', 0)
         require(submitted.get('provider', {}).get('kind') in {'codex', 'claude'}
                 and observed.get('classification') == 'rewrite_provider'
                 and observed.get('state') == 'completed' and type(observed.get('returncode')) is int
@@ -686,7 +693,7 @@ def validate_existing_candidate(request, submitted, candidate, source, package, 
                 and type(budget.get('used_seconds')) in (int, float) and math.isfinite(budget['used_seconds'])
                 and 0 <= budget['used_seconds'] <= budget['total_seconds']
                 and all(budget[key] == provider.get(key) for key in ('max_repairs', 'total_seconds'))
-                and budget['used_seconds'] == observed.get('host_wall_s'),
+                and math.isclose(budget['used_seconds'], spent, rel_tol=1e-9, abs_tol=1e-9),
                 'retained provider time/repair allowance is missing or inconsistent')
         interpretation = submitted.get('interpretation', {})
         require(not interpretation.get('unresolved') and bool(interpretation.get('interpretation')), 'interpretation is unresolved')

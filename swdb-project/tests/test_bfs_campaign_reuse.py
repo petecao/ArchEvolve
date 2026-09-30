@@ -202,3 +202,37 @@ def test_interpreted_reuse_cannot_promote_fixture_provider_or_reset_consumed_tim
     else: submitted['attempts'][0]['provider']['provider']['total_seconds'] = 120
     with pytest.raises(ValueError):
         campaign.validate_existing_candidate(request, submitted, case.candidate, case.source, case.package, case.worker.replay_candidate)
+
+
+def retried_fixture(case):
+    """A usage-limit attempt, then the completed initial rewrite (2026-09-30)."""
+    request, submitted = interpreted_fixture(case)
+    completed = submitted['attempts'][0]
+    completed['number'] = 2
+    unavailable = {'number': 1, 'stage': 'interpretation', 'state': 'provider_unavailable',
+                   'reason': 'rewrite provider unavailable: usage limit reached; retry later',
+                   'provider': {'classification': 'rewrite_provider', 'state': 'provider_unavailable',
+                                'returncode': 1, 'host_wall_s': 1.5, 'provider': copy.deepcopy(submitted['provider'])}}
+    submitted['attempts'] = [unavailable, completed]
+    submitted['repair_budget']['used_seconds'] = 3.5
+    return request, submitted
+
+
+def test_interpreted_reuse_admits_usage_limit_retry_before_initial_rewrite(reuse_case):
+    request, submitted = retried_fixture(reuse_case)
+    result = campaign.validate_existing_candidate(request, submitted, reuse_case.candidate, reuse_case.source,
+                                                  reuse_case.package, reuse_case.worker.replay_candidate)
+    assert result['repair_budget']['used_seconds'] == 3.5
+
+
+@pytest.mark.parametrize('fault', ['failed-first', 'candidate-first', 'unspent', 'order'])
+def test_interpreted_reuse_refuses_other_histories(reuse_case, fault):
+    request, submitted = retried_fixture(reuse_case)
+    first = submitted['attempts'][0]
+    if fault == 'failed-first': first['state'] = 'failed'
+    elif fault == 'candidate-first': first['candidate'] = reuse_case.candidate['id']
+    elif fault == 'unspent': submitted['repair_budget']['used_seconds'] = 2.0
+    else: submitted['attempts'].reverse()
+    with pytest.raises(ValueError):
+        campaign.validate_existing_candidate(request, submitted, reuse_case.candidate, reuse_case.source,
+                                             reuse_case.package, reuse_case.worker.replay_candidate)

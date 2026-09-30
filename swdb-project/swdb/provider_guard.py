@@ -1,10 +1,12 @@
-"""Linux Landlock boundary and external resource observation. Updated: 2026-09-29 ET.
+"""Linux Landlock boundary and external resource observation. Updated: 2026-09-30 ET.
 
 The standalone entry point imports only the standard library. It fails closed if
 ABI 4 is unavailable; the evaluator stays outside the confined process tree.
 An outside-Landlock subreaper execs strace in place and adopts detached helpers.
 A native seccomp filter protects supervisor signal targets while preserving
 ordinary helper signals; this is not general hostile-process isolation.
+2026-09-30: Codex sessions, whose tool commands keep outer port-443 access, also
+refuse io_uring and TCP Fast Open sends, which the connect() trace cannot observe.
 """
 import ctypes
 import errno
@@ -47,9 +49,15 @@ def _supervisor_identity(pid):
 
 SIGNAL_SYSCALLS = {
     "x86_64": {"arch": 0xc000003e, "seccomp": 317, "kill": 62, "tkill": 200,
-               "tgkill": 234, "rt_sigqueueinfo": 129, "rt_tgsigqueueinfo": 297, "pidfd_open": 434},
+               "tgkill": 234, "rt_sigqueueinfo": 129, "rt_tgsigqueueinfo": 297, "pidfd_open": 434,
+               "io_uring_setup": 425, "sendto": 44, "sendmsg": 46, "sendmmsg": 307},
     "aarch64": {"arch": 0xc00000b7, "seccomp": 277, "kill": 129, "tkill": 130,
-                "tgkill": 131, "rt_sigqueueinfo": 138, "rt_tgsigqueueinfo": 240, "pidfd_open": 434}}
+                "tgkill": 131, "rt_sigqueueinfo": 138, "rt_tgsigqueueinfo": 240, "pidfd_open": 434,
+                "io_uring_setup": 425, "sendto": 206, "sendmsg": 211, "sendmmsg": 269}}
+MSG_FASTOPEN = 0x20000000
+# Flags argument index of each send call that can open a TCP Fast Open connection.
+FASTOPEN_FLAG_ARGUMENT = {"sendto": 3, "sendmsg": 2, "sendmmsg": 3}
+UNTRACED_NETWORK_SYSCALLS = ["io_uring_setup", "sendto+MSG_FASTOPEN", "sendmsg+MSG_FASTOPEN", "sendmmsg+MSG_FASTOPEN"]
 
 
 class _SockFilter(ctypes.Structure):
@@ -97,6 +105,15 @@ def _protect_supervisors(protection):
         block.append((ret, 0, 0, allow))
         program.extend([(load, 0, 0, 0), (equal, 1, 0, calls[name]),
                         (jump, 0, 0, len(block)), *block])
+    if protection.get("untraced_network_filter"):
+        # io_uring connects and Fast Open sends reach port 443 without a
+        # connect() syscall, so the outbound trace could not attribute them.
+        program.extend([(load, 0, 0, 0), (equal, 0, 1, calls["io_uring_setup"]), (ret, 0, 0, deny)])
+        for name, argument in FASTOPEN_FLAG_ARGUMENT.items():
+            block = [(load, 0, 0, 16 + 8 * argument), (bits, 0, 1, MSG_FASTOPEN),
+                     (ret, 0, 0, deny), (ret, 0, 0, allow)]
+            program.extend([(load, 0, 0, 0), (equal, 1, 0, calls[name]),
+                            (jump, 0, 0, len(block)), *block])
     program.append((ret, 0, 0, allow))
     if len(program) > 4096:
         raise GuardError("provider supervisor signal filter exceeds the kernel instruction limit")
@@ -355,9 +372,12 @@ def restrict(policy, inner=False):
     # V8 and JavaScriptCore reserve large, mostly uncommitted address ranges.
     # The 32 GiB limit is aggregate resident memory, observed by the parent;
     # an address-space rlimit would abort these CLIs before they use that RAM.
+    # Tool commands under the inner layer (compilers, synthetic tests) are not
+    # such runtimes, so each also gets a kernel-enforced 32 GiB address space.
     resource.setrlimit(resource.RLIMIT_FSIZE, (policy["limits"]["workspace_bytes"],) * 2)
     if inner:
         resource.setrlimit(resource.RLIMIT_CPU, (120, 120))
+        resource.setrlimit(resource.RLIMIT_AS, (policy["limits"]["memory_bytes"],) * 2)
 
 
 def _lane():
@@ -385,6 +405,31 @@ def _api_addresses(kind):
     if hosts and not addresses:
         raise GuardError("could not resolve provider model API endpoints for network auditing")
     return {"hosts": hosts, "addresses": sorted(addresses)}
+
+
+def real_cli(command):
+    """Name the installed real provider CLI (or a file of its package) a fixture argv would run."""
+    roots = set()
+    for found in map(shutil.which, ("codex", "claude")):
+        if not found:
+            continue
+        executable = Path(found).resolve()
+        roots.add(executable)
+        parts = executable.parts
+        for index in range(len(parts) - 1):
+            if (parts[index], parts[index + 1]) in {("@openai", "codex"), ("@anthropic-ai", "claude-code")}:
+                roots.add(Path(*parts[:index + 2]))
+    for argument in command:
+        path = Path(shutil.which(argument) or argument)
+        try:
+            if not path.is_file():
+                continue
+            resolved = path.resolve()
+        except OSError:
+            continue
+        if any(resolved == root or resolved.is_relative_to(root) for root in roots):
+            return str(resolved)
+    return None
 
 
 def context(config, workspace, home, folder, *, login_path=None, fixture=False):
@@ -461,9 +506,22 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                   "login_path": str(login_path) if login_path else None,
                   "limits": {"threads": 16, "memory_bytes": 32 * 1024**3,
                              "command_seconds": 120, "workspace_bytes": 5 * 1024**3},
+                  "limit_enforcement": {
+                      "threads": "observed: aggregate tree count polled every 0.1 s; attempt stopped on overrun",
+                      "memory_bytes": "observed: aggregate resident memory polled every 0.1 s; inner tool "
+                                      "commands also get a kernel RLIMIT_AS of the same size",
+                      "command_seconds": "observed wall-time watchdog for every tool process; inner tool "
+                                         "commands also get timeout(1) and RLIMIT_CPU",
+                      "workspace_bytes": "observed: workspace plus provider home polled every 0.1 s; kernel "
+                                         "RLIMIT_FSIZE per file"},
                   "residual_risks": ["Landlock ABI 4 does not restrict UDP", "login copy readable during session",
-                                     "supervisor filter covers listed native signal APIs, not general hostile-process isolation"],
-                  "command_network_wrapper": kind == "claude"}
+                                     "supervisor filter covers listed native signal APIs, not general hostile-process isolation",
+                                     "model API addresses are matched by IP; a shared CDN address cannot distinguish hosts",
+                                     "thread and memory caps are polled, so a burst can overshoot for one interval"],
+                  "command_network_wrapper": kind == "claude",
+                  # Codex tool commands keep outer port-443 access (no shell
+                  # prefix), so calls the connect() trace cannot see are refused.
+                  "untraced_network_filter": (UNTRACED_NETWORK_SYSCALLS if kind == "codex" else [])}
         policy["process_ownership"] = {
             "subreaper": True, "bootstrap": "outside Landlock; execs strace in the same PID",
             "original_cli_identity": "observer-owned read-only PID and kernel start-time handshake",
@@ -505,6 +563,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
             prefix.chmod(0o700)
             env["CLAUDE_CODE_SHELL_PREFIX"] = str(prefix)
         reasons = []
+        service = {}
         owned = _OwnedTree(policy)
 
         def wrap_command(argv):
@@ -559,6 +618,14 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
 
             native_roots = {pid for pid, row in table.items() if native_codex is not None
                 and _kernel_key(row) == owned.provider and process_executable(pid) == native_codex}
+            # Only the first observed service instance is exempt; a tool shell
+            # that later execs the same binary keeps the watchdog.
+            if "key" not in service:
+                first = min((row for pid, row in table.items() if row["parent"] in native_roots
+                             and process_executable(pid) == code_mode_host),
+                            key=lambda row: row["start_time_ticks"], default=None)
+                if first is not None:
+                    service["key"] = _kernel_key(first)
             for pid, row in table.items():
                 parent = row["parent"]
                 # The exact original child is the provider launcher. Native
@@ -567,7 +634,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                 # remains in the aggregate thread/RSS counts above. Model shells
                 # and helpers, including same-named binaries, keep the watchdog.
                 provider_root = _kernel_key(row) in {owned.tracer, owned.provider}
-                persistent_service = (parent in native_roots
+                persistent_service = (parent in native_roots and _kernel_key(row) == service.get("key")
                     and process_executable(pid) == code_mode_host)
                 if not provider_root and not persistent_service and row["state"] not in {"Z", "X"}:
                     lifetime = time.clock_gettime(time.CLOCK_BOOTTIME) - row["start_time_ticks"] / os.sysconf("SC_CLK_TCK")
@@ -575,7 +642,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                         reasons.append("provider tool command exceeds the 120 s wall-time limit")
                         raise Failure(reasons[-1])
             size = 0
-            for path in workspace.rglob("*"):
+            for path in [*workspace.rglob("*"), *home.rglob("*")]:
                 # Build commands legitimately remove temporary files while the
                 # external observer walks the workspace. A disappeared file
                 # contributes no live bytes; other errors still fail closed.
@@ -585,7 +652,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                 except FileNotFoundError:
                     continue
             if size > policy["limits"]["workspace_bytes"]:
-                reasons.append("provider workspace exceeds the 5 GB limit")
+                reasons.append("provider workspace exceeds the 5 GB limit (including the provider home)")
                 raise Failure(reasons[-1])
 
         def stop_owned(child):
@@ -668,10 +735,13 @@ def prompt_context(config, folder):
     workspace.mkdir(exist_ok=True)
     home.mkdir(mode=0o700, exist_ok=True)
     kind = config.get("resolved_kind", config.get("kind"))
+    if abi() < 4:
+        # Refuse before any credential is copied off its protected location.
+        raise Failure("SWDB provider guard requires Linux Landlock ABI >= 4; refusing unguarded session")
     original = Path(os.environ.get("CODEX_HOME", str(Path.home() / ".codex"))) / "auth.json" if kind == "codex" else Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude"))) / ".credentials.json"
     login = home / original.name
     try:
-        if not original.is_file():
+        if original.is_symlink() or not original.is_file():
             raise Failure("provider login file is unavailable")
         shutil.copyfile(original, login)
         login.chmod(0o600)
@@ -725,7 +795,8 @@ def main():
                           "provider_session": os.getsid(0),
                           "filtered_syscalls": ["kill", "tkill", "tgkill", "rt_sigqueueinfo",
                                                 "rt_tgsigqueueinfo", "pidfd_open"],
-                          "compat_abi_allowed": False, "kill_all_allowed": False}
+                          "compat_abi_allowed": False, "kill_all_allowed": False,
+                          "untraced_network_filter": bool(policy.get("untraced_network_filter"))}
             record["supervisor_protection"] = protection
             # Open a one-byte acknowledgement before Landlock, then write it
             # only after successful seccomp installation. No model code runs

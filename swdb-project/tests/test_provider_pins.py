@@ -1,4 +1,4 @@
-"""Pinned adapters through public submission/repair. Updated 2026-09-29 ET."""
+"""Pinned adapters through public submission/repair. Updated 2026-09-30 ET."""
 import json
 import sys
 from pathlib import Path
@@ -19,6 +19,7 @@ plan = json.loads(Path(sys.argv[1]).read_text())
 Path(sys.argv[1]).with_suffix('.argv.json').write_text(json.dumps(sys.argv[2:]))
 Path(sys.argv[1]).with_suffix('.stdin.txt').write_text(sys.stdin.read())
 for event in plan.get('events', []): print(json.dumps(event))
+sys.stderr.write(plan.get('stderr', ''))
 if plan.get('unavailable'):
     print(json.dumps({'type':'turn.failed', 'error':{'message':'You have hit your ChatGPT usage limit'}}))
     raise SystemExit(1)
@@ -29,10 +30,10 @@ if '--output-last-message' in sys.argv:
 else:
     print(json.dumps({'type':'result', 'is_error':False, 'structured_output':response}))
 ''')
-    def make(kind='codex', patch='', response=None, unavailable=False, events=None, **fields):
+    def make(kind='codex', patch='', response=None, unavailable=False, events=None, stderr='', **fields):
         plan = tmp_path / 'cli-plan.json'
         plan.write_text(json.dumps({'response':response or {'interpretation':'Apply alpha change.',
-            'patch':patch, 'unresolved':[]}, 'unavailable':unavailable, 'events':events or []}))
+            'patch':patch, 'unresolved':[]}, 'unavailable':unavailable, 'events':events or [], 'stderr':stderr}))
         config = tmp_path / 'provider.yaml'
         config.write_text(yaml.safe_dump({'kind':'external_fixture', 'emulates':kind,
             'workspace':False, 'command':[sys.executable,str(program),str(plan)], **fields}))
@@ -208,3 +209,33 @@ def test_prompt_only_rejects_tool_activity_even_if_usage_is_unavailable(proposal
     assert 'candidate' not in data
     assert data['attempts'][0]['provider']['audit']['passed'] is False
     assert 'prompt-only' in data['outcome']['reason']
+
+
+def test_completed_session_with_retried_rate_limit_event_is_not_unavailable(proposal_setup, emulated_provider):
+    """2026-09-30: a logged, retried limit error does not discard a valid result."""
+    patch = yaml.safe_load(proposal_setup[3]().read_text())['payload']['content']
+    result, proposal = submit(proposal_setup, emulated_provider(
+        patch=patch, stderr='stream error: rate_limit_exceeded; retrying in 2s\n'))
+    assert result.returncode == 0, (result.stderr, proposal['outcome'])
+    assert proposal['outcome']['state'] == 'candidate_created'
+
+
+def test_fixture_cannot_launch_an_installed_real_cli(proposal_setup, emulated_provider, tmp_path):
+    """Story 37: a fixture is unguarded off Linux, so it cannot run the installed provider CLI."""
+    import os
+    fake = tmp_path / 'bin/claude'
+    fake.parent.mkdir()
+    fake.write_text('#!/bin/sh\nexit 0\n')
+    fake.chmod(0o755)
+    config_path = emulated_provider('claude')
+    config = yaml.safe_load(config_path.read_text())
+    config['command'] = [str(fake)]
+    config_path.write_text(yaml.safe_dump(config))
+    records, runs, _, request = proposal_setup
+    # The fake is the CLI this environment would run as `claude`.
+    env = {**os.environ, 'PATH': str(fake.parent) + os.pathsep + os.environ['PATH']}
+    result = records.swdb('submit', request(payload={'kind':'natural_language','content':'Change alpha to 14.'}),
+        '--provider-config', config_path, '--runs-dir', runs, '--format', 'json', env=env)
+    proposal = json.loads(result.stdout)
+    assert result.returncode == 1 and 'installed rewrite provider CLI' in proposal['outcome']['reason']
+    assert 'candidate' not in proposal

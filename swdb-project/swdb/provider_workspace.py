@@ -1,4 +1,4 @@
-"""Derived provider workspaces and source diffs. Updated: 2026-09-29.
+"""Derived provider workspaces and source diffs. Updated: 2026-09-30.
 
 Trusted source and evaluator inputs are never writable provider inputs. Workspace
 edits are converted to a patch and pass the ordinary candidate protection path.
@@ -58,9 +58,32 @@ class Workspace:
     metadata: dict = field(default_factory=dict)
 
     def cleanup(self):
-        if self.login_path is not None:
-            self.login_path.unlink(missing_ok=True)
+        """Delete the login copy, including hard links and byte copies left by tools."""
+        if self.login_path is None or self.metadata.get("login_copy_deleted"):
+            self.metadata["login_copy_deleted"] = True
+            return
+        removed = []
+        try:
+            identity = self.login_path.stat()
+            content = self.login_path.read_bytes()
+        except FileNotFoundError:
+            identity, content = None, None
+        if identity is not None:
+            for base in (self.home, self.root):
+                for path in base.rglob("*"):
+                    try:
+                        if path == self.login_path or path.is_symlink() or not path.is_file():
+                            continue
+                        state = path.stat()
+                        same = (state.st_dev, state.st_ino) == (identity.st_dev, identity.st_ino)
+                        if same or state.st_size == len(content) and path.read_bytes() == content:
+                            path.unlink()
+                            removed.append(path.relative_to(self.folder).as_posix())
+                    except FileNotFoundError:
+                        continue
+        self.login_path.unlink(missing_ok=True)
         self.metadata["login_copy_deleted"] = True
+        self.metadata["login_copies_removed"] = sorted(removed)
 
 
 def _safe_name(name):
@@ -191,7 +214,9 @@ def prepare(request, source, package, store, output_dir, config):
         operations.append(operation)
         for name in operation.get("build", {}).get("headers", []):
             _safe_name(name)
-            if name in workspace.source_files:
+            # Operation records name headers as include paths (gem5/m5ops.h);
+            # a snapshot may keep them under an include root (include/gem5/...).
+            if name in workspace.source_files or any(f.endswith("/" + name) for f in workspace.source_files):
                 continue
             # Headers absent from the snapshot must be exact, hash-identified local
             # declaration evidence. No remote fetch or arbitrary parent traversal.
@@ -201,8 +226,13 @@ def prepare(request, source, package, store, output_dir, config):
             app = store.get(source.get("context", {}).get("application"), "application")
             local = (app or {}).get("source", {}).get("local_path")
             from swdb import paths
-            candidate = (paths.HOME / local / name).resolve() if local else None
-            if candidate is None or not candidate.is_file() or candidate.is_symlink() or artifacts.file_hash(candidate) != evidence["sha256"]:
+            tree = (paths.HOME / local).resolve() if local else None
+            unresolved = tree / name if tree else None
+            if (unresolved is None or unresolved.is_symlink() or not unresolved.resolve().is_relative_to(tree)
+                    or Path(name).suffix not in {".h", ".hh", ".hpp", ".hxx", ".inc"}):
+                raise Failure(f"required operation header has no matching local source identity: {name}")
+            candidate = unresolved.resolve()
+            if not candidate.is_file() or artifacts.file_hash(candidate) != evidence["sha256"]:
                 raise Failure(f"required operation header has no matching local source identity: {name}")
             if name in hidden:
                 raise Failure(f"required operation header is a hidden input: {name}")
@@ -221,6 +251,10 @@ def prepare(request, source, package, store, output_dir, config):
         if config["kind"] == "external_fixture":
             workspace.login_path.write_text('{"fixture":true}\n')
         else:
+            from swdb import provider_guard
+            if provider_guard.abi() < 4:
+                # Refuse before any credential is copied off its protected location.
+                raise Failure("SWDB provider guard requires Linux Landlock ABI >= 4; refusing unguarded session")
             original = (Path(os.environ.get("CODEX_HOME", str(Path.home() / ".codex"))) / login_name
                         if kind == "codex" else Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude"))) / login_name)
             if original.is_symlink() or not original.is_file():
@@ -330,15 +364,19 @@ def collect_diff(workspace, editable_files):
         editable = name in workspace.source_files and any(fnmatch.fnmatchcase(name, p) for p in editable_files)
         if not editable and (name not in current or artifacts.file_hash(current[name]) != digest):
             raise Failure(f"provider changed an immutable workspace input: {name}")
+    new_sources = set()
     for name in set(current) - set(workspace.visible):
-        if any(fnmatch.fnmatchcase(name, pattern) for pattern in editable_files) and Path(name).parts[0] != CONTEXT_DIR:
-            continue
+        # Build outputs are classified first: an editable pattern such as src/*
+        # or *.cc must not admit a binary, nor a source helper left in build/.
         if generated_output(current[name], name):
             workspace.metadata["dropped_build_outputs"].append(name)
             continue
+        if (any(fnmatch.fnmatchcase(name, pattern) for pattern in editable_files)
+                and Path(name).parts[0] != CONTEXT_DIR and not GENERATED_DIRS & set(Path(name).parts)):
+            new_sources.add(name)
+            continue
         raise Failure(f"provider created a new file outside the declared edit scope: {name}")
-    files = set(workspace.source_files) | {name for name in set(current) - set(workspace.visible)
-        if any(fnmatch.fnmatchcase(name, pattern) for pattern in editable_files)}
+    files = set(workspace.source_files) | new_sources
     diff_root = workspace.folder / "workspace-diff"
     diff_root.mkdir(exist_ok=False)
     pieces = []
@@ -426,12 +464,13 @@ def run(config, request, source, package, store, output_dir, repair=None, remain
         guard_reasons = metadata.get("network_audit", {}).get("reasons", [])
         audit = provider_audit.audit(workspace.folder / "stdout.txt", config.get("emulates", config["kind"]),
             workspace.root, workspace.visible, workspace.home, (workspace.login_path,),
-            request["constraints"]["editable_files"], guard_reasons=guard_reasons)
+            request["constraints"]["editable_files"], guard_reasons=guard_reasons, completed=error is None)
         metadata["audit"] = audit
         (workspace.folder / "audit.json").write_text(json.dumps(audit, indent=2))
         receipt.write_text(json.dumps(metadata, indent=2))
         (workspace.folder / "workspace.json").write_text(json.dumps(workspace.metadata, indent=2))
-    if not metadata["audit"]["passed"] and (workspace.folder / "stdout.txt").is_file():
+    # A missing log fails only a session whose result would otherwise be used.
+    if not metadata["audit"]["passed"] and ((workspace.folder / "stdout.txt").is_file() or error is None):
         raise Failure("provider audit failed: " + "; ".join(metadata["audit"]["reasons"]))
     if error is not None:
         raise error

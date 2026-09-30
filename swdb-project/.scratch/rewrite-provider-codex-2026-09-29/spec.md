@@ -1,7 +1,7 @@
 # Spec: Codex and Claude rewrite providers working in a guarded workspace
 
 Created: 2026-09-29 17:30 ET
-Updated: 2026-09-29 23:20 ET
+Updated: 2026-09-30 ET
 **Type:** spec
 **Status:** resolved
 **Blocked by:** None
@@ -124,7 +124,7 @@ recorded configurations can be re-run exactly.
 - The model and effort for each real kind are constants in the provider module. The configuration has no model or effort fields; supplying one is an error.
 - The fixture kind gains an `emulates` field (`codex` or `claude`). A fixture that emulates a kind receives that kind's full command line, including the pins, and must speak its output format. It stays classified as a contract fixture, never as a rewrite provider.
 - A new `workspace` field (default true) selects workspace mode; `workspace: false` keeps the current prompt-only path unchanged.
-- Existing fields keep their meaning. The per-call time cap rises from 900 s to 1800 s (default from 300 s to 1200 s); the total stays capped at 3600 s. `budget_usd` is passed to Claude and recorded as not enforced for Codex.
+- Existing fields keep their meaning. The per-call time cap rises from 900 s to 1800 s (default from 300 s to 1200 s); the total stays capped at 3600 s. The default total rises from 900 s to 3600 s so that it is not smaller than the default call (clarified 2026-09-30). `budget_usd` is passed to Claude and recorded as not enforced for Codex.
 - `output_format` applies only to Claude's prompt-only mode. In workspace mode, both kinds always capture a full event stream, because the audit needs it.
 
 ### Provider command lines
@@ -136,9 +136,9 @@ recorded configurations can be re-run exactly.
 
 ### Provider workspace
 
-- A workspace module derives the visible set from the rewrite proposal: source snapshot files, the proposal's regions' files, the profile package, the selected strategy entry, the headers of required operations, and any extra files the proposal names. Extra names are recorded in the proposal record.
+- A workspace module derives the visible set from the rewrite proposal: source snapshot files, the proposal's regions' files, the profile package, the selected strategy entry, the headers of required operations, and any extra files the proposal names. Extra names are recorded in the proposal record. Extra names must be files of the proposal's source snapshot, so they cannot bring back author code that a snapshot removed (clarified 2026-09-30). Required-operation headers are include paths and match a snapshot file under an include root.
 - It materializes a workspace copy under the run's raw output folder on the lab host, plus a fresh provider home containing only a copy of the provider's login file. The login copy is deleted when the session ends; the rest of the provider home is retained.
-- The prompt carries the proposal, the rules, and a map of the workspace instead of the full package contents.
+- The prompt carries the proposal, the rules, and a map of the workspace instead of the full package contents. The proposal and map travel as immutable files named in the prompt, so large annotated proposals fit the argument limit (clarified 2026-09-30).
 - After the session, the edit is the diff between the workspace and the starting snapshot. Only allowed source files count; build outputs are dropped; any new file outside the allowed list fails the attempt. The resulting candidate then goes through the existing protections and the correctness check unchanged.
 
 ### Guard
@@ -154,9 +154,9 @@ recorded configurations can be re-run exactly.
 
 ### Records
 
-- The proposal's provider block gains: resolved kind, model, effort, CLI version, workspace mode, guard policy, and audit result. The proposal schema already allows free-form provider objects, so no schema version change is needed.
+- The proposal's provider block gains: resolved kind, model, effort, CLI version, workspace mode, guard policy, and audit result. The proposal schema already allows free-form provider objects, so no schema version change is needed. The block describes the latest attempt as a whole; each attempt keeps its own receipt. A record without model or effort predates the pins, and its model is unknown; no value is invented for it (clarified 2026-09-30).
 - A new outcome, `provider_unavailable`, covers usage-limit errors; it does not consume a repair.
-- Repairs are refused unless their kind, model, and effort match the first attempt's.
+- Repairs are refused unless their kind, model, effort, and classification (real provider or contract fixture) match the first attempt's.
 - A scalar-only DX100 BFS source snapshot is registered, with a statement of what was removed and why. Proposals choose between it and the full snapshot through their existing source snapshot reference.
 
 ### Campaigns and host
@@ -206,6 +206,13 @@ recorded configurations can be re-run exactly.
   independent rechecks are clear. The final public workflow selection passed
   45 cases in 673.40 s; see the [review report](validation/code-review.md).
   The separate T17 recheck has completed.
+- **Spec re-review and repairs on 2026-09-30 ET:** an independent whole-diff review
+  against this spec found one P1 (brace and glob shell operands escaped the audit,
+  including a read of the login copy), four P2s (DX100 required-operation headers,
+  repairs crossing fixture/real classification, untraced io_uring/Fast Open
+  connections for Codex, and package tools passing the network check) and P3s.
+  All were repaired or clarified above; see the
+  [review report](validation/code-review.md) for each finding and its outcome.
 - **Host setup done on 2026-09-29:**
   - Codex CLI 0.153.0 is installed under the user's npm prefix on `/data1` and logged in with ChatGPT; its home is on `/data1`, mode 700.
   - The user's folders on mbit10 are owner-only, with the old permissions backed up.
@@ -213,5 +220,7 @@ recorded configurations can be re-run exactly.
 - **Accepted residual risks:**
   - Tool commands can read the per-run login copy while the session runs. The audit flags any command that touches it.
   - UDP is not blocked (DNS, HTTP/3). The audit flags network commands.
+  - The model-API check matches IP addresses; a shared CDN address cannot distinguish hosts.
+  - The thread and memory caps are polled every 0.1 s, so a burst can overshoot for one interval.
 - **T17 caveat:** T17's strategy reused the DX100 authors' accelerator function, so its roughly 2.8× simulated speedup reproduces the authors' path rather than an optimization the provider found. This spec's scalar-only snapshot keeps future from-scratch proposals from seeing that code.
 - **Recorded decisions:** ADR 0006 records the decision and the rejected options (prompt-only, the CLIs' own sandboxes, running on the Mac). The glossary gained Rewrite provider, Provider workspace, and Statement on 2026-09-29.

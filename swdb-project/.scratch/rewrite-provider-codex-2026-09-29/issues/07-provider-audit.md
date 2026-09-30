@@ -1,7 +1,7 @@
 # 07 — Audit of the provider event log
 
 Created: 2026-09-29 (Eastern Time)
-Updated: 2026-09-29 23:20 ET
+Updated: 2026-09-30 (Eastern Time)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** None
@@ -99,3 +99,15 @@ issue was found; Standards' one P3 duplication judgement was repaired at
 `8889e175`, and both independent rechecks are clear. The final public workflow
 selection passed 45 cases in 673.40 s, with no failures/skips. The audit blob is
 unchanged from Linux A11. See the [review report](../validation/code-review.md).
+
+## Spec re-review repair (2026-09-30 ET)
+
+- **P1 repaired:** brace and glob shell operands escaped the audit
+  (`cat {..,.}/provider-home/au?h.json` passed and read the login copy). Every file
+  operand is now brace-expanded; wildcard words must have a static root in the
+  workspace and no dot-leading part that can match `..`; `cd` targets must be one
+  literal directory; Claude Glob patterns are brace-expanded too.
+- Package and dependency managers and versioned pip executables are refused on every
+  subcommand; Python `-m` accepts only a short list of offline modules.
+- Unknown Claude content blocks (for example `server_tool_use`) fail the audit.
+- A completed session with an empty log, or without `turn.completed`/`result`, fails.

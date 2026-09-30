@@ -1,4 +1,4 @@
-"""Rewrite CLI adapters and immutable research settings. Updated 2026-09-29 ET.
+"""Rewrite CLI adapters and immutable research settings. Updated 2026-09-30 ET.
 
 The shared runner handles processes and retention; an adapter owns argv, transport,
 version discovery and final-response decoding. Fixtures can use the identical CLI
@@ -214,7 +214,7 @@ class CodexAdapter(Adapter):
         # nonfatal unavailable-state fallback avoids those persistent workers.
         sqlite_home = Path(folder).resolve() / "guard" / "ephemeral-state"
         argv = [*self.launch_command(config), "exec", "--model", PINS[self.kind]["model"],
-                "-c", 'model_reasoning_effort="xhigh"', "-c", 'web_search="disabled"',
+                "-c", "model_reasoning_effort=" + json.dumps(PINS[self.kind]["effort"]), "-c", 'web_search="disabled"',
                 "-c", "sqlite_home=" + json.dumps(str(sqlite_home)),
                 "-c", "analytics.enabled=false", "-c", 'otel.exporter="none"',
                 "-c", 'otel.trace_exporter="none"', "-c", 'otel.metrics_exporter="none"',

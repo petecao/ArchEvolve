@@ -1,4 +1,4 @@
-"""Workspace/audit contracts via public submit and repair. Updated: 2026-09-29.
+"""Workspace/audit contracts via public submit and repair. Updated: 2026-09-30.
 
 Fixtures emulate both real CLI event formats; no real model is invoked.
 """
@@ -117,7 +117,8 @@ result = {"interpretation":"Apply the requested direction-switch parameter chang
 if kind == "codex":
     final = Path(sys.argv[sys.argv.index("--output-last-message") + 1])
     final.write_text(json.dumps(result))
-    print(json.dumps({"type":"turn.completed", "usage":{"output_tokens":10}}), flush=True)
+    if not plan.get("omit_terminal"):
+        print(json.dumps({"type":"turn.completed", "usage":{"output_tokens":10}}), flush=True)
 else:
     print(json.dumps({"type":"assistant", "message":{"content":[{"type":"tool_use", "name":"StructuredOutput", "input":result}]}}), flush=True)
     print(json.dumps({"type":"result", "subtype":"success", "is_error":False, "structured_output":result}), flush=True)
@@ -928,3 +929,171 @@ def test_public_repair_uses_workspace_diff_and_audit(evaluation_setup, workspace
     candidate = json.loads(records.swdb("get", proposal["candidate"], "--format", "json").stdout)
     assert "int alpha = 13" in (Path(candidate["artifact"]["path"]) / "src/bfs.cc").read_text()
     assert "int alpha = 14" in (Path(old["artifact"]["path"]) / "src/bfs.cc").read_text()
+
+
+# 2026-09-30 whole-diff spec review repairs. Each case drives public submit.
+
+@pytest.mark.parametrize("value", [
+    "cat {..,.}/provider-home/au?h.json",
+    "cat build/{x,../..}/provider-home/auth.jso?",
+    "cat src/bfs.cc | tee {..,.}/out.txt",
+    "ls {..,.}",
+    "cat ..*/provider-home/auth.json",
+    "cat src/../../provider-home/*",
+    "/usr/bin/bash -lc " + shlex.quote("cat {..,.}/provider-home/au?h.json"),
+])
+def test_brace_and_wildcard_operands_cannot_leave_workspace(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider, actions=[{"type": "command", "value": value}])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and not audit["passed"] and "candidate" not in proposal
+    assert "external_file_access" in {v["code"] for v in audit["violations"]}
+
+
+@pytest.mark.parametrize("value", ["cd {..,}", "cd ../*"])
+def test_expanding_cd_target_fails_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider,
+        actions=[{"type": "command", "value": value + " && cat provider-home/au?h.json"}])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and not audit["passed"] and "candidate" not in proposal
+
+
+@pytest.mark.parametrize("pattern", ["build/{x,../..}/provider-home/*", "{..,src}/*", "..*/provider-home/*"])
+def test_claude_glob_braces_cannot_leave_workspace(proposal_setup, workspace_provider, pattern):
+    event = {"type": "assistant", "message": {"content": [{"type": "tool_use", "name": "Glob",
+                                                           "input": {"pattern": pattern}}]}}
+    result, proposal = submit(proposal_setup, workspace_provider, events=[event])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and "external_file_access" in {v["code"] for v in audit["violations"]}
+
+
+@pytest.mark.parametrize("value", ["cat src/*.cc", "ls src/{bfs.cc,platform_atomics.h}", "rg -n alpha src/*.h",
+                                   "c++ -c src/{bfs,bfs}.cc -o build/bfs.o"])
+def test_workspace_wildcards_and_braces_pass_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider, actions=[{"type": "command", "value": value}])
+    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    assert proposal["attempts"][0]["provider"]["audit"]["passed"] and proposal["candidate"]
+
+
+@pytest.mark.parametrize("value", [
+    "pip3.12 install numpy", "pip-3.12 install numpy", "python3 -m pip.__main__ install numpy",
+    "python3 -m venv --upgrade-deps build/venv", "python3 -m ftplib ftp.invalid", "npm i lodash", "npm ci",
+    "npx cowsay hi", "uvx ruff", "pipx run black", "cargo fetch", "go mod download", "gem install rake",
+    "git lfs pull", "git maintenance run --task=prefetch", "hg clone other", "svn checkout other",
+])
+def test_package_and_fetch_tools_fail_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider, actions=[{"type": "command", "value": value}])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and "network_command" in {v["code"] for v in audit["violations"]}
+    assert "candidate" not in proposal
+
+
+def test_unlisted_python_module_fails_public_submit(proposal_setup, workspace_provider):
+    result, proposal = submit(proposal_setup, workspace_provider,
+        actions=[{"type": "command", "value": "python3 -m zipfile -e build/a.zip build/out"}])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and "unparsed_command" in {v["code"] for v in audit["violations"]}
+
+
+def test_unknown_claude_content_block_fails_public_submit(proposal_setup, workspace_provider):
+    event = {"type": "assistant", "message": {"content": [{"type": "server_tool_use", "name": "web_search",
+                                                           "input": {"query": "bfs answer"}}]}}
+    result, proposal = submit(proposal_setup, workspace_provider, events=[event])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and "forbidden_tool" in {v["code"] for v in audit["violations"]}
+
+
+@pytest.mark.parametrize("workspace_provider", ["codex"], indirect=True)
+def test_completed_session_without_terminal_event_fails_public_submit(proposal_setup, workspace_provider):
+    # Codex's result is a separate file, so its log alone must prove completion.
+    result, proposal = submit(proposal_setup, workspace_provider, omit_terminal=True)
+    assert result.returncode == 1 and "candidate" not in proposal
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert "invalid_event_log" in {v["code"] for v in audit["violations"]}
+
+
+def test_tool_copies_and_links_of_login_are_removed(proposal_setup, workspace_provider):
+    records, runs, _, request = proposal_setup
+    login = "auth.json" if workspace_provider.kind == "codex" else ".credentials.json"
+    program = Path(yaml.safe_load(workspace_provider().read_text())["command"][1])
+    text = program.read_text().replace("for edit in plan.get(", "import shutil, os\n"
+        "home = root.parent / 'provider-home'\n"
+        "if plan.get('copy_login'):\n"
+        "    shutil.copyfile(home / plan['copy_login'], home / 'stash.json')\n"
+        "    os.link(home / plan['copy_login'], root / 'build' / 'linked.json')\n"
+        "for edit in plan.get(", 1)
+    program.write_text(text)
+    result, proposal = submit(proposal_setup, workspace_provider, copy_login=login)
+    manifest = proposal["attempts"][0]["provider"]["workspace_manifest"]
+    home, root = Path(manifest["home"]), Path(manifest["root"])
+    assert manifest["login_copy_deleted"] and not (home / login).exists()
+    assert not (home / "stash.json").exists() and not (root / "build/linked.json").exists()
+    assert set(manifest["login_copies_removed"]) >= {"provider-home/stash.json", "workspace/build/linked.json"}
+
+
+def test_editable_pattern_does_not_admit_build_outputs(proposal_setup, workspace_provider):
+    result, proposal = submit(proposal_setup, workspace_provider,
+        request_changes={"constraints": {"editable_files": ["src/*"], "preserve_correctness": True,
+                                         "preserve_roi": True}},
+        edits=[{"path": "src/bfs.cc", "old": "int alpha = 15", "new": "int alpha = 14"},
+               {"path": "src/bfs", "bytes": [127, 69, 76, 70, 0]}])
+    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    manifest = proposal["attempts"][0]["provider"]["workspace_manifest"]
+    assert "src/bfs" in manifest["dropped_build_outputs"]
+    candidate = json.loads(proposal_setup[0].swdb("get", proposal["candidate"], "--format", "json").stdout)
+    assert not (Path(candidate["artifact"]["path"]) / "src/bfs").exists()
+    assert "b/src/bfs\n" not in Path(candidate["diff"]).read_text()
+
+
+def test_build_directory_source_helper_still_fails(proposal_setup, workspace_provider):
+    result, proposal = submit(proposal_setup, workspace_provider,
+        request_changes={"constraints": {"editable_files": ["*.cc"], "preserve_correctness": True,
+                                         "preserve_roi": True}},
+        edits=[{"path": "src/bfs.cc", "old": "int alpha = 15", "new": "int alpha = 14"},
+               {"path": "build/helper.cc", "content": "int helper() { return 1; }\n"}])
+    assert result.returncode == 1 and "candidate" not in proposal
+    assert "build/helper.cc" in proposal["outcome"]["reason"]
+
+
+def test_repair_cannot_switch_from_fixture_to_real_classification(proposal_setup, workspace_provider, tmp_path):
+    records, runs, _, request = proposal_setup
+    result, proposal = submit(proposal_setup, workspace_provider)
+    assert result.returncode == 0, proposal["outcome"]
+    from swdb import rewrite
+    from swdb.cli import Failure
+    real = {"kind": workspace_provider.kind, "resolved_kind": workspace_provider.kind}
+    real.update(rewrite.provider_adapters.PINS[workspace_provider.kind])
+    with pytest.raises(Failure, match="classification"):
+        rewrite.require_same_provider(proposal["provider"], real)
+    with pytest.raises(Failure, match="classification"):
+        rewrite.require_same_provider(real, proposal["provider"])
+
+
+def test_required_dx100_operation_headers_resolve_in_snapshot(records, tmp_path, workspace_provider):
+    from test_capabilities import source_only_target, leaf
+    source_only_target(records)
+    runs = tmp_path / "runs"
+    result = records.swdb("source-snapshot", "dx100-bfs-scalar", "--id", "dx-source", "--runs-dir", runs,
+                          "--format", "json")
+    assert result.returncode == 0, result.stderr
+    snapshot = json.loads(result.stdout)
+    assert "include/gem5/m5ops.h" in {f["path"] for f in snapshot["artifact"]["files"]}
+    assert records.swdb("fixture-package", "dx-source", "--id", "dx-package").returncode == 0
+    request = {"message_version": "1.0", "id": "dx-proposal", "profile_package": "dx-package",
+               "implementation": "dx100-bfs-scalar", "source_snapshot": "dx-source",
+               "regions": [snapshot["regions"][0]["id"]], "source_sha256": snapshot["artifact"]["sha256"],
+               "intent": "Direction-switch parameter change; required-operation header contract only.",
+               "producer": {"name": "workspace-test", "role": "hw", "test_client": True},
+               "constraints": {"editable_files": ["benchmarks/gapbs/src/bfs.cc"], "preserve_correctness": True,
+                               "preserve_roi": True},
+               "payload": {"kind": "natural_language", "content": "Use beta 17."},
+               "hardware_target": "dx100-e4fc4af-4c", "required_operations": [leaf()]}
+    path = tmp_path / "dx-proposal.yaml"
+    path.write_text(yaml.safe_dump(request))
+    config = workspace_provider(edits=[{"path": "benchmarks/gapbs/src/bfs.cc", "old": "int beta = 18",
+                                        "new": "int beta = 17"}])
+    result = records.swdb("submit", path, "--provider-config", config, "--runs-dir", runs, "--format", "json")
+    proposal = json.loads(result.stdout)
+    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    manifest = proposal["attempts"][0]["provider"]["workspace_manifest"]
+    assert ".swdb-context/required-operations.json" in manifest["visible_files"]
+    assert "include/gem5/m5ops.h" in manifest["visible_files"]

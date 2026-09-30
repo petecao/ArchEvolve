@@ -1,6 +1,7 @@
 # 04 — Repairs keep their provider; usage limits don't consume repairs
 
 Created: 2026-09-29
+Updated: 2026-09-30 (Eastern Time)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 03
@@ -40,3 +41,13 @@ is refused without adding an attempt. Existing bounded rewrite/repair checks pas
 **73-test** legacy suite.
 
 Context: `swdb/workflow.py`, `swdb/cli.py`, `swdb/rewrite.py`, `tests/test_provider_pins.py`.
+
+## Spec re-review repair (2026-09-30 ET)
+
+- A repair or usage-limit retry now also requires the same classification: a
+  contract fixture emulating a kind cannot repair that kind's real proposal, or the
+  reverse (`rewrite.require_same_provider`).
+- Usage-limit errors are read only from failed sessions: a session that exits 0 with
+  a valid result keeps it even if it logged a retried limit error.
+- The proposal provider block is replaced by each attempt's block, never merged.
+- Campaign reuse admits usage-limit retries before the completed initial rewrite.

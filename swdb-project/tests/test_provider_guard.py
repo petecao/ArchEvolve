@@ -1,4 +1,4 @@
-"""Linux confinement through public submit. Updated: 2026-09-29 ET.
+"""Linux confinement through public submit. Updated: 2026-09-30 ET.
 
 Run on mbit10 inside socket_lane.sh. Probes report actual kernel results in
 retained fixture events; these are confinement checks, not provider evidence.
@@ -285,3 +285,48 @@ def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_pat
     later = records.swdb("get", proposal["id"], "--format", "json")
     assert later.returncode == 0
     assert json.loads(later.stdout)["attempts"][0]["provider"]["audit"] == meta["audit"]
+
+
+UNTRACED_PROGRAM = '''import ctypes, errno, json, platform, socket, sys
+from pathlib import Path
+if "--version" in sys.argv:
+ print("untraced-network-fixture-1"); raise SystemExit(0)
+probe = json.loads(Path(sys.argv[1]).read_text())["probe"]
+observed = "allowed"
+try:
+ if probe == "io_uring":
+  libc = ctypes.CDLL(None, use_errno=True)
+  params = ctypes.create_string_buffer(120)
+  if libc.syscall(425, 4, params) < 0:
+   raise OSError(ctypes.get_errno(), "io_uring_setup")
+ else:
+  sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  sock.sendto(b"x", 0x20000000, ("1.1.1.1", 443))
+except OSError as exc:
+ observed = "blocked:" + str(exc.errno)
+print(json.dumps({"type":"item.completed","item":{"type":"command_execution","command":"untraced network probe","exit_code":0,"aggregated_output":observed}}), flush=True)
+path = Path("src/bfs.cc")
+path.write_text(path.read_text().replace("int alpha = 15", "int alpha = 14"))
+Path(sys.argv[sys.argv.index("--output-last-message")+1]).write_text(json.dumps({"interpretation":"Probe.","unresolved":[]}))
+print(json.dumps({"type":"turn.completed"}), flush=True)
+'''
+
+
+@pytest.mark.parametrize("probe", ["io_uring", "tcp_fastopen"])
+def test_codex_guard_refuses_untraced_network_syscalls(proposal_setup, tmp_path, probe):
+    """Calls the connect() trace cannot see are refused for Codex-shaped sessions."""
+    records, runs, _, request = proposal_setup
+    program, plan = tmp_path / "untraced.py", tmp_path / "untraced-plan.json"
+    program.write_text(UNTRACED_PROGRAM)
+    plan.write_text(json.dumps({"probe": probe}))
+    config = tmp_path / "untraced.yaml"
+    config.write_text(yaml.safe_dump({"kind": "external_fixture", "emulates": "codex", "workspace": True,
+        "command": [sys.executable, str(program), str(plan)], "timeout_s": 30, "total_seconds": 60}))
+    result = records.swdb("submit", request(payload={"kind": "natural_language", "content": "Set alpha to 14."}),
+                          "--provider-config", config, "--runs-dir", runs, "--format", "json")
+    proposal = json.loads(result.stdout)
+    meta = proposal["attempts"][0]["provider"]
+    assert meta["guard_policy"]["untraced_network_filter"]
+    log = Path(meta["audit"]["raw_log"]["path"])
+    event = next(json.loads(line) for line in log.read_text().splitlines() if '"command_execution"' in line)
+    assert event["item"]["aggregated_output"] == "blocked:1", event

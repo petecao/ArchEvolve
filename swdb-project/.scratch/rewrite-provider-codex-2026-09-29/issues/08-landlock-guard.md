@@ -1,7 +1,7 @@
 # 08 — Landlock guard for real providers
 
 Created: 2026-09-29 (Eastern Time)
-Updated: 2026-09-29 (Eastern Time)
+Updated: 2026-09-30 (Eastern Time)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** None
@@ -63,3 +63,14 @@ rejection; the narrow data-position fix and A7 re-audit resolve that issue witho
 admitting the older Codex DX100 A1 opaque `sed` transformation. See
 [guarded provider evidence](../../../docs/evidence/guarded-rewrite-providers-20260929-a1.yaml)
 and [ticket 02](02-spike-providers-under-landlock.md) for commands and raw identities.
+
+## Spec re-review repair (2026-09-30 ET)
+
+- Codex sessions refuse `io_uring_setup` and `MSG_FASTOPEN` sends in the inherited
+  seccomp filter (`untraced_network_filter`), since those can connect on port 443
+  without the `connect()` call the trace records.
+- Inner Claude tool commands get a kernel `RLIMIT_AS` of 32 GiB; `limit_enforcement`
+  records how each limit is enforced. The 5 GiB size cap covers the provider home too.
+- Only the first observed `codex-code-mode-host` instance is exempt from the tool timer.
+- A fixture whose command resolves to an installed `codex` or `claude` is refused.
+- IP-based model-API matching and polled thread/memory caps are recorded residual risks.

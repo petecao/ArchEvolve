@@ -1,4 +1,4 @@
-"""Lane-confined provider guard feasibility receipts. Updated: 2026-09-29 ET.
+"""Lane-confined provider guard feasibility receipts. Updated: 2026-09-30 ET.
 
 Raw output stays under the supplied run folder on mbit10. This is a diagnostic
 spike, not evaluation evidence for the generated toy source.
@@ -41,13 +41,18 @@ def main():
         raise SystemExit("provider executable unavailable")
     config = {"kind": "external_fixture" if args.kind == "probe" else args.kind,
               "command": [cli], "workspace": True}
+    # Identify the checkout before any credential copy exists to leak.
+    receipt = {"kind": args.kind, "checkout": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()}
     login = None
     if args.kind != "probe":
         original = Path(os.environ.get("CODEX_HOME", "/data1/yanruj/.codex")) / "auth.json" if args.kind == "codex" else Path(os.environ.get("CLAUDE_CONFIG_DIR", "/data1/yanruj/.claude")) / ".credentials.json"
         login = home / original.name
-        shutil.copyfile(original, login)
-        login.chmod(0o600)
-    receipt = {"kind": args.kind, "checkout": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()}
+        try:
+            shutil.copyfile(original, login)
+            login.chmod(0o600)
+        except BaseException:
+            login.unlink(missing_ok=True)
+            raise
     started = time.monotonic()
     child = None
     context = None
