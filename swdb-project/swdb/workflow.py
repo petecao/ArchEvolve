@@ -296,6 +296,25 @@ def apply_patch(source, destination, patch, allowed, protections):
     return after
 
 
+def _persist_initial_candidate(args, data, source, source_path, patch, folder, *, require_code_change):
+    """Materialize and retain the first candidate for a submit or provider retry."""
+    candidate_source = _source_destination(args.runs_dir, data["id"])
+    artifact = apply_patch(source_path, candidate_source, patch,
+                           data["request"]["constraints"]["editable_files"], source["protections"])
+    if require_code_change:
+        from swdb import rewrite
+        rewrite.require_code_change(source_path, candidate_source)
+    artifacts.verify(source["artifact"])
+    diff = folder / "candidate.diff"
+    diff.write_text(patch)
+    candidate = record("candidate", f"{data['id']}.candidate-1", producer=data["producer"], proposal=data["id"],
+        implementation=source["implementation"], source_snapshot=source["id"], artifact=artifact,
+        diff=str(diff), diff_sha256=artifacts.file_hash(diff), state="unverified",
+        protections=source["protections"], context=source["context"])
+    persist(args.records, candidate, args.db, create=True)
+    return candidate
+
+
 def submit(args):
     store = _require_valid(args.records)
     raw = args.file.read_text()
@@ -374,19 +393,8 @@ def submit(args):
             # full_files: SWDB computes the diff; the patch route returns the provider's diff.
             patch = rewrite.response_patch(config, response, source_path, request["constraints"]["editable_files"],
                                            source["protections"], run_dir / "full-files")
-        candidate_source = _source_destination(args.runs_dir, rid)
-        candidate_artifact = apply_patch(source_path, candidate_source, patch,
-                                         request["constraints"]["editable_files"], source["protections"])
-        if config is not None:
-            rewrite.require_code_change(source_path, candidate_source)
-        artifacts.verify(source["artifact"])
-        (run_dir / "candidate.diff").write_text(patch)
-        candidate = record("candidate", f"{rid}.candidate-1", producer=request["producer"], proposal=rid,
-                           implementation=source["implementation"], source_snapshot=source["id"],
-                           artifact=candidate_artifact, diff=str(run_dir / "candidate.diff"),
-                           diff_sha256=artifacts.file_hash(run_dir / "candidate.diff"), state="unverified",
-                           protections=source["protections"], context=source["context"])
-        persist(args.records, candidate, args.db, create=True)
+        candidate = _persist_initial_candidate(args, data, source, source_path, patch, run_dir,
+                                                require_code_change=config is not None)
         data["candidate"] = candidate["id"]
         data["attempts"][-1]["state"] = "completed"
         data["attempts"][-1]["candidate"] = candidate["id"]
@@ -588,17 +596,8 @@ def _retry_initial_provider(args, store, proposal):
             data["interpretation"] = rewrite.response_record(config, response)
             patch = rewrite.response_patch(config, response, source_path,
                 data["request"]["constraints"]["editable_files"], source["protections"], folder / "full-files")
-            candidate_source = _source_destination(args.runs_dir, proposal_id)
-            artifact = apply_patch(source_path, candidate_source, patch,
-                data["request"]["constraints"]["editable_files"], source["protections"])
-            rewrite.require_code_change(source_path, candidate_source)
-            artifacts.verify(source["artifact"])
-            diff = folder / "candidate.diff"; diff.write_text(patch)
-            candidate = record("candidate", f"{proposal_id}.candidate-1", producer=data["producer"], proposal=proposal_id,
-                implementation=source["implementation"], source_snapshot=source["id"], artifact=artifact,
-                diff=str(diff), diff_sha256=artifacts.file_hash(diff), state="unverified",
-                protections=source["protections"], context=source["context"])
-            persist(args.records, candidate, args.db, create=True)
+            candidate = _persist_initial_candidate(args, data, source, source_path, patch, folder,
+                                                    require_code_change=True)
             data["candidate"] = candidate["id"]
             attempt.update(stage="rewriting", state="completed", candidate=candidate["id"])
             data["outcome"] = {"state": "candidate_created", "stage": "rewriting", "reason": None}
