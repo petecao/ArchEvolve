@@ -1,11 +1,11 @@
 {
   "format": "swdb.guarded-rewrite-provider-evidence.v1",
   "created": "2026-09-29",
-  "updated_et": "2026-09-29 20:34 ET",
-  "state": "validation_pending",
+  "updated_et": "2026-09-29 20:50 ET",
+  "state": "validated_pending_final_review",
   "host": "mbit10",
   "scope": "Guard feasibility and actual provider-native correctness; no performance gain claim.",
-  "implementation_checkout": "4f5d15209ea0f852ffd1ef111576526541070e8e",
+  "implementation_checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
   "toy_turns": [
     {
       "kind": "codex",
@@ -461,6 +461,1685 @@
     }
   ],
   "dx100_smoke": {
+    "lane": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-09-30T00:45:43Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "swdb-provider-dx100-a2",
+        "lease_generation": 426,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 2.61,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-09-30T00:42:19Z"
+      }
+    },
+    "smoke_runs": [
+      {
+        "kind": "codex",
+        "proposal": "provider-dx100-codex-20260929-a2.natural-language.proposal",
+        "checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
+        "pins": {
+          "resolved_kind": "codex",
+          "model": "gpt-5.6-sol",
+          "effort": "xhigh",
+          "cli_version": "codex-cli 0.153.0",
+          "workspace": true,
+          "budget_usd_enforced": false
+        },
+        "provider_wall_s": 50.61048630438745,
+        "returncode": 0,
+        "state": "completed",
+        "outcome": {
+          "state": "candidate_created",
+          "stage": "rewriting",
+          "reason": null
+        },
+        "audit": {
+          "format": "swdb.provider-audit.v1",
+          "state": "passed",
+          "passed": true,
+          "events": 19,
+          "commands": 10,
+          "file_accesses": 32,
+          "reasons": [],
+          "violations": [],
+          "raw_log": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/stdout.txt",
+            "sha256": "2560af5113e4db77e5c84ee28213a1cad931f704cce98c93568d7f4317c94adc",
+            "bytes": 29800
+          }
+        },
+        "guard_result": {
+          "passed": true,
+          "reasons": [],
+          "trace": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/network.trace",
+          "process_cleanup": {
+            "passed": true,
+            "tracer_pid": 1074184,
+            "processes_observed": [
+              {
+                "pid": 1074184,
+                "start_time_ticks": 523090706,
+                "pidfd": false
+              },
+              {
+                "pid": 1074187,
+                "start_time_ticks": 523090712,
+                "pidfd": false
+              },
+              {
+                "pid": 1074360,
+                "start_time_ticks": 523094317,
+                "pidfd": false
+              },
+              {
+                "pid": 1074361,
+                "start_time_ticks": 523094318,
+                "pidfd": false
+              }
+            ],
+            "survivors": [],
+            "errors": [],
+            "wall_s": 0.06839924864470959
+          },
+          "supervisor_protection": {
+            "architecture": "x86_64",
+            "supervisors": [
+              {
+                "pid": 1074174,
+                "start_time_ticks": 523089203,
+                "tids": [
+                  1074174
+                ],
+                "process_group": 1074110,
+                "session": 1074026
+              },
+              {
+                "pid": 1074184,
+                "start_time_ticks": 523090706,
+                "tids": [
+                  1074184
+                ],
+                "process_group": 1074184,
+                "session": 1074184
+              }
+            ],
+            "provider_session": 1074187,
+            "filtered_syscalls": [
+              "kill",
+              "tkill",
+              "tgkill",
+              "rt_sigqueueinfo",
+              "rt_tgsigqueueinfo",
+              "pidfd_open"
+            ],
+            "compat_abi_allowed": false,
+            "kill_all_allowed": false,
+            "enforced": true
+          },
+          "original_provider": {
+            "pid": 1074187,
+            "start_time_ticks": 523090712
+          }
+        },
+        "guard_policy": {
+          "enforced": true,
+          "landlock_abi": 4,
+          "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 426)",
+          "selected_install_root": "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64",
+          "read_roots": [
+            "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64",
+            "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/guard",
+            "/dev/null",
+            "/dev/random",
+            "/dev/urandom",
+            "/dev/zero",
+            "/etc/hosts",
+            "/etc/ld.so.cache",
+            "/etc/nsswitch.conf",
+            "/etc/passwd",
+            "/etc/ssl/certs",
+            "/etc/ssl/openssl.cnf",
+            "/proc/sys/vm/mmap_min_addr",
+            "/run/systemd/resolve/stub-resolv.conf",
+            "/usr",
+            "/usr/bin",
+            "/usr/lib",
+            "/usr/lib64",
+            "/usr/share/zoneinfo/America/Detroit"
+          ],
+          "runtime_self_reads": [
+            "maps",
+            "cgroup",
+            "stat",
+            "statm",
+            "status"
+          ],
+          "device_write_roots": [
+            "/dev/null"
+          ],
+          "execution_cpus": [
+            0
+          ],
+          "resource_scope": "provider process tree including its external strace launcher",
+          "write_roots": [
+            "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/workspace",
+            "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/provider-home"
+          ],
+          "tcp_connect_ports": [
+            443
+          ],
+          "inner_tcp_connect_ports": [],
+          "tcp_bind_ports": [],
+          "model_api": {
+            "hosts": [
+              "chatgpt.com",
+              "api.openai.com",
+              "auth.openai.com"
+            ],
+            "addresses": [
+              "104.18.32.47",
+              "104.18.41.241",
+              "162.159.140.245",
+              "172.64.146.15",
+              "172.64.155.209",
+              "172.66.0.243",
+              "2606:4700:4400::6812:29f1",
+              "2606:4700:4408::ac40:9bd1",
+              "2606:4700:7::f3",
+              "2a06:98c1:3101::6812:202f",
+              "2a06:98c1:310c::ac40:920f",
+              "2a06:98c1:58::f3"
+            ]
+          },
+          "login_path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/provider-home/auth.json",
+          "limits": {
+            "threads": 16,
+            "memory_bytes": 34359738368,
+            "command_seconds": 120,
+            "workspace_bytes": 5368709120
+          },
+          "residual_risks": [
+            "Landlock ABI 4 does not restrict UDP",
+            "login copy readable during session",
+            "supervisor filter covers listed native signal APIs, not general hostile-process isolation"
+          ],
+          "command_network_wrapper": false,
+          "process_ownership": {
+            "subreaper": true,
+            "bootstrap": "outside Landlock; execs strace in the same PID",
+            "original_cli_identity": "observer-owned read-only PID and kernel start-time handshake",
+            "cleanup": "pidfd or checked kernel start time; detached descendants before tracer",
+            "subreaper_record": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/guard/subreaper.json",
+            "provider_record": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/guard/provider-process.json",
+            "filter_marker": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/guard/supervisor-filter.ready",
+            "nonce": "d25f242f6f4b63fa82ec4e10da07f3db"
+          },
+          "supervisor_protection": {
+            "required": true,
+            "observer": {
+              "pid": 1074174,
+              "start_time_ticks": 523089203,
+              "tids": [
+                1074174
+              ],
+              "process_group": 1074110,
+              "session": 1074026
+            },
+            "architecture": "x86_64",
+            "compat_abi_allowed": false,
+            "scope": "listed native signal APIs and direct pidfd_open; not general hostile-process isolation",
+            "provider_session": "separate from both supervisor sessions; preserves ordinary kill(0)",
+            "pidfd_signals": "ordinary child pidfds allowed; supervisor pidfds not inherited or openable"
+          },
+          "session_state": {
+            "sqlite_home": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/guard/ephemeral-state",
+            "writable": false,
+            "ephemeral": true
+          },
+          "persistent_services": [
+            {
+              "executable": "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex-code-mode-host",
+              "parent_executable": "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+              "direct_parent_required": true,
+              "resource_accounting": "included"
+            }
+          ]
+        },
+        "summary": [
+          {
+            "route": "natural_language",
+            "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+            "provider_kind": "codex",
+            "proposal": "provider-dx100-codex-20260929-a2.natural-language.proposal",
+            "evaluation": "provider-dx100-codex-20260929-a2.natural-language.evaluation",
+            "correctness": "passed",
+            "accepted": true,
+            "trials": 3,
+            "gain_claim": false,
+            "records_retrieved": 10
+          }
+        ],
+        "usage": {
+          "input_tokens": 94987,
+          "cached_input_tokens": 77440,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2008,
+          "reasoning_output_tokens": 1059
+        },
+        "login_copy_deleted": true,
+        "raw_artifacts": {
+          "provider.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/provider.json",
+            "bytes": 31824,
+            "sha256": "bc9677e2b0eba521a822cfeda8dc07e507399423eed7a05075ae0ac27d5ba4a9"
+          },
+          "stdout.txt": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/stdout.txt",
+            "bytes": 29800,
+            "sha256": "2560af5113e4db77e5c84ee28213a1cad931f704cce98c93568d7f4317c94adc"
+          },
+          "stderr.txt": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/stderr.txt",
+            "bytes": 39,
+            "sha256": "1aa26269eb1cc57f86b235a03cda53c004edb5b1e9fc99d4da4f00843293d721"
+          },
+          "audit.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/audit.json",
+            "bytes": 459,
+            "sha256": "5b2dcd5c9bf6547f25e45abdf5b8797adac3d0e7a724f0c176be5791fafb3eba"
+          },
+          "guard-audit.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/guard-audit.json",
+            "bytes": 1617,
+            "sha256": "7b19d64935683f52545ee60342bdd1e23a028a64a33bbe1172c6d0c1dc00565e"
+          },
+          "process-cleanup.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/process-cleanup.json",
+            "bytes": 515,
+            "sha256": "69ca98eeb46b000d558370a321ed95d6c5e697ffc4459dcff8554f5f519493ee"
+          },
+          "workspace.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/workspace.json",
+            "bytes": 4403,
+            "sha256": "b46b955a60bbffb3eb066ec38f1344b516e0d95ff7654c5d656e8f6a67c715b6"
+          },
+          "network.trace": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/network.trace",
+            "bytes": 22930,
+            "sha256": "d7f8da6cb718e99a5893693d27640172e42f3a6784b759a2cfd42259fbe001d8"
+          }
+        },
+        "candidate": "provider-dx100-codex-20260929-a2.natural-language.proposal.candidate-1",
+        "candidate_artifact": {
+          "path": "/data1/yanruj/EvolveSWDB_sources/79bb480ef47d5707/provider-dx100-codex-20260929-a2.natural-language.proposal/source",
+          "sha256": "8917adf523b122154df153b24744485bb6dbcc9c6a35134f1eebb724792917de",
+          "files": [
+            {
+              "path": "LICENSE",
+              "sha256": "b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2",
+              "bytes": 1208,
+              "executable": false
+            },
+            {
+              "path": "PROVENANCE.md",
+              "sha256": "3009aa7f259294b67bfbbee311ead96d66050a86f1a7bfde715556f10174e6c6",
+              "bytes": 619,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/API/MAA.hpp",
+              "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+              "bytes": 1323,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/API/MAA_atomics.hpp",
+              "sha256": "896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a",
+              "bytes": 845,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/API/MAA_functional.hpp",
+              "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc",
+              "bytes": 25345,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/API/MAA_gem5.hpp",
+              "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+              "bytes": 27473,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/API/MAA_gem5_magic.hpp",
+              "sha256": "e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32",
+              "bytes": 9802,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/API/MAA_utility.hpp",
+              "sha256": "3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e",
+              "bytes": 786,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/LICENSE",
+              "sha256": "bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3",
+              "bytes": 1499,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/benchmark.h",
+              "sha256": "87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f",
+              "bytes": 3565,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/bfs.cc",
+              "sha256": "295ecc37b50cd98472376d6cfbff0299c57ecb729ac0cffaee6a3c1f83413956",
+              "bytes": 9287,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/bitmap.h",
+              "sha256": "6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465",
+              "bytes": 1706,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/builder.h",
+              "sha256": "2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01",
+              "bytes": 16778,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/command_line.h",
+              "sha256": "de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2",
+              "bytes": 8511,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/generator.h",
+              "sha256": "24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe",
+              "bytes": 6418,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/graph.h",
+              "sha256": "79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0",
+              "bytes": 8276,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/platform_atomics.h",
+              "sha256": "9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd",
+              "bytes": 4198,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/pvector.h",
+              "sha256": "b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d",
+              "bytes": 4265,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/reader.h",
+              "sha256": "951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1",
+              "bytes": 9268,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/sliding_queue.h",
+              "sha256": "3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c",
+              "bytes": 2502,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/timer.h",
+              "sha256": "3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb",
+              "bytes": 1161,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/util.h",
+              "sha256": "a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6",
+              "bytes": 1953,
+              "executable": false
+            },
+            {
+              "path": "benchmarks/gapbs/src/writer.h",
+              "sha256": "3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea",
+              "bytes": 2898,
+              "executable": false
+            },
+            {
+              "path": "include/gem5/asm/generic/m5ops.h",
+              "sha256": "28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d",
+              "bytes": 5479,
+              "executable": false
+            },
+            {
+              "path": "include/gem5/m5ops.h",
+              "sha256": "bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8",
+              "bytes": 3937,
+              "executable": false
+            }
+          ]
+        },
+        "evaluation_metadata": {
+          "id": "provider-dx100-codex-20260929-a2.natural-language.evaluation",
+          "outcome": {
+            "state": "complete",
+            "stage": "evaluation",
+            "reason": null
+          },
+          "correctness": {
+            "state": "passed",
+            "checks": [
+              {
+                "passed": true,
+                "reason": null,
+                "reachable_vertices": 6,
+                "source": 0,
+                "source_position": 0,
+                "repetition": 0,
+                "trial": 0,
+                "output_sha256": "e075233184ef3e419223782813dbf0049fbbb6c0c6486acc3369c07ae272c0fb",
+                "binary_sha256": "4b5185199da6a39813632df6cd6a597ec724cd74d06f6cabd494872159e93f9a",
+                "graph_sha256": "3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7",
+                "verifier": "swdb.bfs.structural.v1"
+              },
+              {
+                "passed": true,
+                "reason": null,
+                "reachable_vertices": 3,
+                "source": 3,
+                "source_position": 1,
+                "repetition": 0,
+                "trial": 1,
+                "output_sha256": "ef95f13c9200d0002e58e2a9e82e3475b0b36cc40b78cc55819a724c2f490670",
+                "binary_sha256": "4b5185199da6a39813632df6cd6a597ec724cd74d06f6cabd494872159e93f9a",
+                "graph_sha256": "3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7",
+                "verifier": "swdb.bfs.structural.v1"
+              },
+              {
+                "passed": true,
+                "reason": null,
+                "reachable_vertices": 1,
+                "source": 8,
+                "source_position": 2,
+                "repetition": 0,
+                "trial": 2,
+                "output_sha256": "12d21df2c721f4ff3a93adf27f44c8fdd66fae24595f6046e0c6a16127ae3d42",
+                "binary_sha256": "4b5185199da6a39813632df6cd6a597ec724cd74d06f6cabd494872159e93f9a",
+                "graph_sha256": "3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7",
+                "verifier": "swdb.bfs.structural.v1"
+              }
+            ]
+          },
+          "gain_claim": false,
+          "build": {
+            "directory": "/data1/yanruj/EvolveSWDB_builds/provider-dx100-codex-20260929-a2.natural-language.evaluation",
+            "compiler": "/usr/bin/g++",
+            "flags": [
+              "-std=c++11",
+              "-O3",
+              "-Wall",
+              "-fopenmp",
+              "-pthread",
+              "-DFUNC"
+            ],
+            "command": [
+              "/usr/bin/g++",
+              "-std=c++11",
+              "-O3",
+              "-Wall",
+              "-fopenmp",
+              "-pthread",
+              "-DFUNC",
+              "-I/data1/yanruj/EvolveSWDB_sources/79bb480ef47d5707/provider-dx100-codex-20260929-a2.natural-language.proposal/source/benchmarks/gapbs/src",
+              "-I/data1/yanruj/EvolveSWDB_sources/79bb480ef47d5707/provider-dx100-codex-20260929-a2.natural-language.proposal/source/benchmarks/API",
+              "/data1/yanruj/EvolveSWDB_builds/provider-dx100-codex-20260929-a2.natural-language.evaluation/native_driver.cc",
+              "-o",
+              "/data1/yanruj/EvolveSWDB_builds/provider-dx100-codex-20260929-a2.natural-language.evaluation/bfs-native"
+            ],
+            "wrapper_sha256": "da0d6260a8bfd66744f8b5e693955dae6ee4eb4aa8b5acf406c1267bfd1c7900",
+            "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95",
+            "compiler_version": [
+              "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+              "Copyright (C) 2023 Free Software Foundation, Inc."
+            ],
+            "binary": "/data1/yanruj/EvolveSWDB_builds/provider-dx100-codex-20260929-a2.natural-language.evaluation/bfs-native",
+            "binary_sha256": "4b5185199da6a39813632df6cd6a597ec724cd74d06f6cabd494872159e93f9a",
+            "execution_environment": {
+              "OMP_NUM_THREADS": "1",
+              "OMP_DYNAMIC": "FALSE",
+              "OMP_PROC_BIND": "close",
+              "OMP_PLACES": "cores"
+            },
+            "native_runtime": {
+              "version": 1,
+              "environment": {
+                "OMP_NUM_THREADS": "1",
+                "OMP_DYNAMIC": "FALSE",
+                "OMP_PROC_BIND": "close",
+                "OMP_PLACES": "cores",
+                "OMP_THREAD_LIMIT": null,
+                "OMP_WAIT_POLICY": null,
+                "GOMP_SPINCOUNT": null,
+                "GOMP_CPU_AFFINITY": null
+              }
+            }
+          },
+          "timing": [
+            {
+              "source": 0,
+              "source_position": 0,
+              "repetition": 0,
+              "duration_s": 0.000436277,
+              "roi": "bfs.complete_call.v1",
+              "basis": "measured",
+              "quantity": "native_roi_wall_seconds",
+              "binary_sha256": "4b5185199da6a39813632df6cd6a597ec724cd74d06f6cabd494872159e93f9a",
+              "output": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.evaluation/trial-0-0.json",
+              "output_sha256": "e075233184ef3e419223782813dbf0049fbbb6c0c6486acc3369c07ae272c0fb",
+              "verified": true,
+              "evidence_kind": "execution"
+            },
+            {
+              "source": 3,
+              "source_position": 1,
+              "repetition": 0,
+              "duration_s": 0.000373325,
+              "roi": "bfs.complete_call.v1",
+              "basis": "measured",
+              "quantity": "native_roi_wall_seconds",
+              "binary_sha256": "4b5185199da6a39813632df6cd6a597ec724cd74d06f6cabd494872159e93f9a",
+              "output": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.evaluation/trial-0-1.json",
+              "output_sha256": "ef95f13c9200d0002e58e2a9e82e3475b0b36cc40b78cc55819a724c2f490670",
+              "verified": true,
+              "evidence_kind": "execution"
+            },
+            {
+              "source": 8,
+              "source_position": 2,
+              "repetition": 0,
+              "duration_s": 0.000339307,
+              "roi": "bfs.complete_call.v1",
+              "basis": "measured",
+              "quantity": "native_roi_wall_seconds",
+              "binary_sha256": "4b5185199da6a39813632df6cd6a597ec724cd74d06f6cabd494872159e93f9a",
+              "output": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.evaluation/trial-0-2.json",
+              "output_sha256": "12d21df2c721f4ff3a93adf27f44c8fdd66fae24595f6046e0c6a16127ae3d42",
+              "verified": true,
+              "evidence_kind": "execution"
+            }
+          ],
+          "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 426)",
+          "host_observation": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.evaluation/host-observation.json",
+            "sha256": "cc10527c9589760e55c6af4df4fdc22a5818d3ba51ed6437bc34a261864e9964",
+            "host_wall_s": 0.08366535790264606,
+            "evidence_kind": "execution",
+            "unavailable_commands": 2
+          },
+          "workload": {
+            "id": null,
+            "family": "diagnostic",
+            "generator": null,
+            "representation": {
+              "kind": "inline_graph",
+              "sha256": "691eecc01480d05d8a9d9e5494522a3ff309989f34a2aa60d4fc9ee4abfff270"
+            },
+            "normalization": "simple graph: remove self loops and duplicates; symmetrize if undirected; sort neighbors",
+            "canonical_sha256": "3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7",
+            "adjacency_order_sha256": "3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7",
+            "num_vertices": 10,
+            "num_directed_edges": 8,
+            "directed": true,
+            "sources": [
+              0,
+              3,
+              8
+            ],
+            "canonical_path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.evaluation/graph.swdb",
+            "canonical_file_sha256": "f1d7afd5722fb22960c08c3c04439291feba97e38fa902b43754a75f9d5fcddf"
+          }
+        }
+      },
+      {
+        "kind": "claude",
+        "proposal": "provider-dx100-claude-20260929-a2.natural-language.proposal",
+        "checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
+        "pins": {
+          "resolved_kind": "claude",
+          "model": "claude-sonnet-5-5",
+          "effort": "high",
+          "cli_version": "2.1.278 (Claude Code)",
+          "workspace": true,
+          "budget_usd_enforced": true
+        },
+        "provider_wall_s": 0.877012494020164,
+        "returncode": 1,
+        "state": "failed",
+        "outcome": {
+          "state": "failed",
+          "stage": "rewriting",
+          "reason": "rewrite provider exited 1; retained /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1"
+        },
+        "audit": {
+          "format": "swdb.provider-audit.v1",
+          "state": "passed",
+          "passed": true,
+          "events": 4,
+          "commands": 0,
+          "file_accesses": 0,
+          "reasons": [],
+          "violations": [],
+          "raw_log": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/stdout.txt",
+            "sha256": "f699098ca543c28cb62e55620af9efc83b00f899fa9260fbd37e240ac316e0a2",
+            "bytes": 3165
+          }
+        },
+        "guard_result": {
+          "passed": true,
+          "reasons": [],
+          "trace": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/network.trace",
+          "process_cleanup": {
+            "passed": true,
+            "tracer_pid": 1074576,
+            "processes_observed": [
+              {
+                "pid": 1074576,
+                "start_time_ticks": 523107360,
+                "pidfd": false
+              },
+              {
+                "pid": 1074581,
+                "start_time_ticks": 523107366,
+                "pidfd": false
+              },
+              {
+                "pid": 1074591,
+                "start_time_ticks": 523107402,
+                "pidfd": false
+              }
+            ],
+            "survivors": [],
+            "errors": [],
+            "wall_s": 0.058956075459718704
+          },
+          "supervisor_protection": {
+            "architecture": "x86_64",
+            "supervisors": [
+              {
+                "pid": 1074514,
+                "start_time_ticks": 523105873,
+                "tids": [
+                  1074514
+                ],
+                "process_group": 1074498,
+                "session": 1074026
+              },
+              {
+                "pid": 1074576,
+                "start_time_ticks": 523107360,
+                "tids": [
+                  1074576
+                ],
+                "process_group": 1074576,
+                "session": 1074576
+              }
+            ],
+            "provider_session": 1074581,
+            "filtered_syscalls": [
+              "kill",
+              "tkill",
+              "tgkill",
+              "rt_sigqueueinfo",
+              "rt_tgsigqueueinfo",
+              "pidfd_open"
+            ],
+            "compat_abi_allowed": false,
+            "kill_all_allowed": false,
+            "enforced": true
+          },
+          "original_provider": {
+            "pid": 1074581,
+            "start_time_ticks": 523107366
+          }
+        },
+        "guard_policy": {
+          "enforced": true,
+          "landlock_abi": 4,
+          "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 426)",
+          "selected_install_root": "/data1/yanruj/.npm-global/lib/node_modules/@anthropic-ai/claude-code",
+          "read_roots": [
+            "/data1/yanruj/.npm-global/lib/node_modules/@anthropic-ai/claude-code",
+            "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/guard",
+            "/dev/null",
+            "/dev/random",
+            "/dev/urandom",
+            "/dev/zero",
+            "/etc/hosts",
+            "/etc/ld.so.cache",
+            "/etc/nsswitch.conf",
+            "/etc/passwd",
+            "/etc/ssl/certs",
+            "/etc/ssl/openssl.cnf",
+            "/proc/sys/vm/mmap_min_addr",
+            "/run/systemd/resolve/stub-resolv.conf",
+            "/usr",
+            "/usr/bin",
+            "/usr/lib",
+            "/usr/lib64",
+            "/usr/share/zoneinfo/America/Detroit"
+          ],
+          "runtime_self_reads": [
+            "maps",
+            "cgroup",
+            "stat",
+            "statm",
+            "status"
+          ],
+          "device_write_roots": [
+            "/dev/null"
+          ],
+          "execution_cpus": [
+            0
+          ],
+          "resource_scope": "provider process tree including its external strace launcher",
+          "write_roots": [
+            "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/workspace",
+            "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/provider-home"
+          ],
+          "tcp_connect_ports": [
+            443
+          ],
+          "inner_tcp_connect_ports": [],
+          "tcp_bind_ports": [],
+          "model_api": {
+            "hosts": [
+              "api.anthropic.com",
+              "claude.ai"
+            ],
+            "addresses": [
+              "160.79.104.10",
+              "2607:6bc0::10"
+            ]
+          },
+          "login_path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/provider-home/.credentials.json",
+          "limits": {
+            "threads": 16,
+            "memory_bytes": 34359738368,
+            "command_seconds": 120,
+            "workspace_bytes": 5368709120
+          },
+          "residual_risks": [
+            "Landlock ABI 4 does not restrict UDP",
+            "login copy readable during session",
+            "supervisor filter covers listed native signal APIs, not general hostile-process isolation"
+          ],
+          "command_network_wrapper": true,
+          "process_ownership": {
+            "subreaper": true,
+            "bootstrap": "outside Landlock; execs strace in the same PID",
+            "original_cli_identity": "observer-owned read-only PID and kernel start-time handshake",
+            "cleanup": "pidfd or checked kernel start time; detached descendants before tracer",
+            "subreaper_record": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/guard/subreaper.json",
+            "provider_record": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/guard/provider-process.json",
+            "filter_marker": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/guard/supervisor-filter.ready",
+            "nonce": "601e9be66b87cdbbddb21bf44b13f924"
+          },
+          "supervisor_protection": {
+            "required": true,
+            "observer": {
+              "pid": 1074514,
+              "start_time_ticks": 523105873,
+              "tids": [
+                1074514
+              ],
+              "process_group": 1074498,
+              "session": 1074026
+            },
+            "architecture": "x86_64",
+            "compat_abi_allowed": false,
+            "scope": "listed native signal APIs and direct pidfd_open; not general hostile-process isolation",
+            "provider_session": "separate from both supervisor sessions; preserves ordinary kill(0)",
+            "pidfd_signals": "ordinary child pidfds allowed; supervisor pidfds not inherited or openable"
+          },
+          "command_shell": "/bin/bash"
+        },
+        "summary": [
+          {
+            "route": "natural_language",
+            "stage": "interpretation",
+            "proposal": "provider-dx100-claude-20260929-a2.natural-language.proposal",
+            "outcome": {
+              "state": "failed",
+              "stage": "rewriting",
+              "reason": "rewrite provider exited 1; retained /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1"
+            }
+          }
+        ],
+        "usage": {
+          "output_tokens_details": {
+            "thinking_tokens": 0
+          },
+          "input_tokens": 0,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "output_tokens": 0,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "",
+          "iterations": [],
+          "speed": "standard"
+        },
+        "login_copy_deleted": true,
+        "raw_artifacts": {
+          "provider.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/provider.json",
+            "bytes": 21990,
+            "sha256": "1002f920257a0a962b56f821c3c4172c292c9ec2c149c5d1d5f4d0b5bd766220"
+          },
+          "stdout.txt": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/stdout.txt",
+            "bytes": 3165,
+            "sha256": "f699098ca543c28cb62e55620af9efc83b00f899fa9260fbd37e240ac316e0a2"
+          },
+          "stderr.txt": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/stderr.txt",
+            "bytes": 84,
+            "sha256": "9d964e38782224607fa42ba370ebe77b63de1422e2752bb13e70edf98112e629"
+          },
+          "audit.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/audit.json",
+            "bytes": 457,
+            "sha256": "59b53204a23ab0a9fc86b64fdf55c6c24aaceb697a75447de68335c8e4c1ef47"
+          },
+          "guard-audit.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/guard-audit.json",
+            "bytes": 1517,
+            "sha256": "49e751c962e8c548d037160499dea7a9b3b2e8ad07db874b6bf092ef4840dfce"
+          },
+          "process-cleanup.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/process-cleanup.json",
+            "bytes": 423,
+            "sha256": "cd6b1365e128dcf7ef51986824fb36cdb30e9f4defbc0ebf5e451c20df624589"
+          },
+          "workspace.json": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/workspace.json",
+            "bytes": 4408,
+            "sha256": "d02bffb6e0175705d3324452283e2904a7bfa45931c72356180463f0b1ae60c8"
+          },
+          "network.trace": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/network.trace",
+            "bytes": 1932,
+            "sha256": "f0384aa6b38ff1fab8158010c709a80975625f69c2390ea5f290adacf55d480f"
+          }
+        },
+        "failure_message": "Failed to authenticate: OAuth session expired and could not be refreshed"
+      }
+    ],
+    "reaudit": {
+      "checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
+      "cases": [
+        {
+          "case": "codex-dx100",
+          "kind": "codex",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 19,
+            "commands": 10,
+            "file_accesses": 32,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "2560af5113e4db77e5c84ee28213a1cad931f704cce98c93568d7f4317c94adc",
+              "bytes": 29800
+            }
+          },
+          "guard_passed": true,
+          "cleanup_passed": true,
+          "supervisor_protection_enforced": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-dx100",
+          "kind": "claude",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 4,
+            "commands": 0,
+            "file_accesses": 0,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "f699098ca543c28cb62e55620af9efc83b00f899fa9260fbd37e240ac316e0a2",
+              "bytes": 3165
+            }
+          },
+          "guard_passed": true,
+          "cleanup_passed": true,
+          "supervisor_protection_enforced": true,
+          "login_copy_deleted": true
+        }
+      ]
+    },
+    "raw_folder": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2",
+    "driver_exits": "codex=0 claude=1"
+  },
+  "linux_validation": {
+    "checkout": "4f5d15209ea0f852ffd1ef111576526541070e8e",
+    "lane": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-09-30T00:30:30Z",
+        "exit_code": 1,
+        "host": "mbit10",
+        "job": "swdb-provider-linux-a6",
+        "lease_generation": 424,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 1.02,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-09-30T00:06:41Z"
+      }
+    },
+    "tests": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "222",
+      "time": "1428.562",
+      "timestamp": "2026-09-29T20:06:42.074084-04:00",
+      "hostname": "mbit10"
+    },
+    "exit": "tests=0 audit=1",
+    "reaudit": {
+      "checkout": "4f5d15209ea0f852ffd1ef111576526541070e8e",
+      "cases": [
+        {
+          "case": "codex-toy",
+          "kind": "codex",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 11,
+            "commands": 4,
+            "file_accesses": 14,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/stdout.txt",
+              "sha256": "dcccb03a62d55b2881795b6307a515ee8e5ee7075953f8f16a8fe4116c628293",
+              "bytes": 2506
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-toy",
+          "kind": "claude",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "failed",
+            "passed": false,
+            "events": 144,
+            "commands": 1,
+            "file_accesses": 5,
+            "reasons": [
+              "provider shell argument cannot be resolved"
+            ],
+            "violations": [
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell argument cannot be resolved",
+                "event": 95
+              }
+            ],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/stdout.txt",
+              "sha256": "fe494b5af5cf4b3b5dde3160374389123eb140273dc46ec04a7dd630340b5170",
+              "bytes": 45624
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "codex-dx100",
+          "kind": "codex",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "failed",
+            "passed": false,
+            "events": 19,
+            "commands": 10,
+            "file_accesses": 52,
+            "reasons": [
+              "provider shell body has unsupported dynamic syntax",
+              "provider shell argument cannot be resolved",
+              "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d"
+            ],
+            "violations": [
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell argument cannot be resolved",
+                "event": 11
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 12
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell argument cannot be resolved",
+                "event": 12
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
+                "event": 12
+              }
+            ],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "18ffb5a54d5e36a022b0ac1a43c98c3e315d528455f5fa6728c84dac1b63492f",
+              "bytes": 32220
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-dx100",
+          "kind": "claude",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 4,
+            "commands": 0,
+            "file_accesses": 0,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa",
+              "bytes": 3165
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        }
+      ]
+    },
+    "artifacts": {
+      "pytest.log": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6/pytest.log",
+        "bytes": 353,
+        "sha256": "8835f2a770ac35a3038980b55cb00abced14f22b4a401164d8a2c43d929e17f2"
+      },
+      "pytest.xml": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6/pytest.xml",
+        "bytes": 35726,
+        "sha256": "52cfd3db0db6a5815a8a529fbc3e9fa3d733ab1dde411a6b70b8d5e784b5e4e6"
+      },
+      "retained-reaudit.json": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6/retained-reaudit.json",
+        "bytes": 4228,
+        "sha256": "dc698445bbf84cea10e36e7397646f4a9d71ae851c745b5e57f3e7b4d05ac402"
+      },
+      "environment.txt": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6/environment.txt",
+        "bytes": 4387,
+        "sha256": "eabaa60b928c6372b241acd07d81f79b6b4c1acf784afddfbf55404e9c0a7efc"
+      },
+      "lane.json": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6/lane.json",
+        "bytes": 4826,
+        "sha256": "169c7564bb035480c7942c170a4f7f3ab5111ca0da04251ad8d6a56cd925b4e0"
+      },
+      "exit.txt": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6/exit.txt",
+        "bytes": 16,
+        "sha256": "e3b9aa3f1e6c6991641f48ab228f0120fa7bfad2b443b0233a06a4759fa34425"
+      }
+    },
+    "state": "tests_passed_two_retained_reaudits_failed",
+    "raw_folder": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6",
+    "note": "A6 verifies the final guard. Claude toy A10 status printing exposed a narrow parser refusal; its fix receives separate public/Linux cases and a new retained-event audit. Codex DX100 A1 remains an intentional current-gate refusal."
+  },
+  "local_validation": {
+    "state": "passed",
+    "full_regression_started_et": "2026-09-29 19:14 ET",
+    "log": ".scratch/rewrite-provider-codex-2026-09-29/validation/full-regression-final.log",
+    "note": "The long run began before the final audit additions; separately recorded fresh targeted cases and final Linux collection cover those changes.",
+    "targeted_workspace": {
+      "passed": 195,
+      "seconds": 396.7,
+      "focused_direct_opaque_glob_passed": 29,
+      "focused_executable_compiler_paths_passed": 40,
+      "independent_original_repro": {
+        "passed": 8,
+        "skipped": 2,
+        "seconds": 18.23
+      }
+    },
+    "targeted_guard": {
+      "passed": 16,
+      "skipped_linux_only": 8,
+      "seconds": 262.32
+    },
+    "shared_prompt_guidance": {
+      "passed": 14,
+      "deselected": 181,
+      "seconds": 29.67
+    },
+    "supervisor_seams": {
+      "passed": 4,
+      "skipped_linux_only": 11,
+      "seconds": 12.7,
+      "note": "Mac submission/timeout seams and static fixture checks; native seccomp behavior belongs to Linux A6."
+    },
+    "full_regression": {
+      "passed": 2798,
+      "skipped": 31,
+      "failed": 0,
+      "errors": 0,
+      "seconds": 4176.73,
+      "started_et": "2026-09-29 19:14 ET",
+      "artifacts": {
+        "full-regression-final.log": {
+          "bytes": 3246,
+          "sha256": "5eff97cc06171eb350b3d54244f44b699a8bd5d8734ef768230d24da45fa3916"
+        },
+        "full-regression-final.xml": {
+          "bytes": 419849,
+          "sha256": "408b12263eab22a0220d1b13b4828aa2b1d011c441cd8dc1b6cc0fc9d8bb089e"
+        }
+      }
+    },
+    "literal_status_fix": {
+      "passed": 42,
+      "deselected": 187,
+      "seconds": 83.03,
+      "new_public_cases": 34,
+      "source_checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
+      "note": "Only printable literal fragments around numeric $? in echo/printf data; no path/glob/other-variable/command substitution or numeric-test concatenation allowance."
+    }
+  },
+  "primary_cli_reference": {
+    "repository": "https://github.com/openai/codex",
+    "tag": "rust-v0.153.0",
+    "commit": "41e22fee981a63b3698df7ed36bad393cda24715",
+    "paths": [
+      "codex-rs/core/src/tools/spec_plan.rs",
+      "codex-rs/exec/src/lib.rs"
+    ],
+    "findings": [
+      "CodeModeOnly can expose ordinary tools directly through code_mode.direct_only_tool_namespaces.",
+      "--ephemeral does not itself disable global SQLite initialization.",
+      "No verified Codex command-prefix override; explicit no-wrapper fallback is retained."
+    ]
+  },
+  "limits": {
+    "threads": 16,
+    "memory_bytes": 34359738368,
+    "command_seconds": 120,
+    "workspace_bytes": 5368709120,
+    "scope": "Entire provider tree including external tracer; exact installed persistent Codex service remains in aggregate accounting."
+  },
+  "limitations": [
+    "Codex DX100 A2 native correctness is on a 10-vertex graph, source0/3/8, one trial each; no performance claim.",
+    "Claude DX100 attempt failed before tools because the OAuth session expired; no Claude BFS candidate or correctness claim.",
+    "Earlier Claude toy edit/build/run completed under guard on the recorded two-CPU subset; current production uses one CPU.",
+    "Landlock ABI 4 leaves UDP unrestricted; login copy remains readable during the session and is deleted afterwards.",
+    "Codex commands inherit outer TCP443 permission; independent model-API connection audit plus event-command audit is the accepted fallback.",
+    "Codex JSON command_execution items omit cwd; audit uses workspace-root semantics and explicitly observable cd commands.",
+    "Resource excess and audit failure are retained, never omitted as noise.",
+    "Codex DX100 A1 remains refused by the current audit; its historical native result is not promoted to current provider admission."
+  ],
+  "linux_prior_validation": {
+    "checkout": "0cc5f9d712d148a0fa158c8e5f4452576317429d",
+    "lane": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-09-29T23:54:19Z",
+        "exit_code": 1,
+        "host": "mbit10",
+        "job": "swdb-provider-linux-a5",
+        "lease_generation": 423,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 4.36,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-09-29T23:34:48Z"
+      }
+    },
+    "tests": {
+      "passed": 146,
+      "seconds": 1170.5
+    },
+    "reaudit": {
+      "checkout": "0cc5f9d712d148a0fa158c8e5f4452576317429d",
+      "cases": [
+        {
+          "case": "codex-toy",
+          "kind": "codex",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 11,
+            "commands": 4,
+            "file_accesses": 14,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/stdout.txt",
+              "sha256": "dcccb03a62d55b2881795b6307a515ee8e5ee7075953f8f16a8fe4116c628293",
+              "bytes": 2506
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-toy",
+          "kind": "claude",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 144,
+            "commands": 1,
+            "file_accesses": 5,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/stdout.txt",
+              "sha256": "fe494b5af5cf4b3b5dde3160374389123eb140273dc46ec04a7dd630340b5170",
+              "bytes": 45624
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "codex-dx100",
+          "kind": "codex",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "failed",
+            "passed": false,
+            "events": 19,
+            "commands": 10,
+            "file_accesses": 40,
+            "reasons": [
+              "provider shell body has unsupported dynamic syntax",
+              "provider shell argument cannot be resolved",
+              "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d"
+            ],
+            "violations": [
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell argument cannot be resolved",
+                "event": 11
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 12
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell argument cannot be resolved",
+                "event": 12
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
+                "event": 12
+              }
+            ],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "18ffb5a54d5e36a022b0ac1a43c98c3e315d528455f5fa6728c84dac1b63492f",
+              "bytes": 32220
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-dx100",
+          "kind": "claude",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 4,
+            "commands": 0,
+            "file_accesses": 0,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa",
+              "bytes": 3165
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        }
+      ]
+    },
+    "artifacts": {
+      "pytest.log": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/pytest.log",
+        "bytes": 273,
+        "sha256": "666c00d0c900d9e9f71d79d03bd036c8f666d2ca8d0507c02fc0b3521fc9ec7e"
+      },
+      "pytest.xml": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/pytest.xml",
+        "bytes": 23392,
+        "sha256": "8c699d2d429a952fa83ac717616f8a2e5d15af56645ef9369f34295ef72d380f"
+      },
+      "retained-reaudit.json": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/retained-reaudit.json",
+        "bytes": 3998,
+        "sha256": "4e184f63ff9285c7fc3d1ae161d7bad16163e1bbe97bb5631314af26f91c48b9"
+      },
+      "environment.txt": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/environment.txt",
+        "bytes": 4446,
+        "sha256": "289cccb0acf12225fceb42a2e198bbbdf89717d024ffffa0773ee02092c1f64c"
+      },
+      "lane.json": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/lane.json",
+        "bytes": 4579,
+        "sha256": "0332a30aa8d681e4681fb12f757a339db62492bc6e3f3999043251043be7cc1f"
+      },
+      "exit.txt": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/exit.txt",
+        "bytes": 16,
+        "sha256": "e3b9aa3f1e6c6991641f48ab228f0120fa7bfad2b443b0233a06a4759fa34425"
+      }
+    },
+    "state": "tests_passed_one_retained_reaudit_failed"
+  },
+  "primary_linux_api_reference": {
+    "subreaper": "https://www.man7.org/linux/man-pages/man2/PR_SET_CHILD_SUBREAPER.2const.html",
+    "finding": "Subreaper flag survives execve; reparented descendants adopt the nearest live ancestor subreaper."
+  },
+  "supervisor_continuity": {
+    "state": "linux_public_fixture_verified",
+    "scope": "Narrow listed native signal APIs and direct pidfd_open protect evaluator/tracer kernel identities; separate provider session preserves ordinary helper signals. Not general hostile-process isolation.",
+    "fixture_observation": {
+      "protected_signal_checks_denied": 12,
+      "ordinary_signal_checks_succeeded": 5,
+      "overall_suite_pending": false
+    }
+  },
+  "final_audit_validation": {
+    "checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
+    "lane": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-09-30T00:41:11Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "swdb-provider-linux-a7",
+        "lease_generation": 425,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 2.55,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-09-30T00:38:58Z"
+      }
+    },
+    "tests": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "42",
+      "time": "132.560",
+      "timestamp": "2026-09-29T20:38:59.118057-04:00",
+      "hostname": "mbit10"
+    },
+    "exit": "tests=0 audit=0",
+    "reaudit": {
+      "checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
+      "cases": [
+        {
+          "case": "codex-toy",
+          "kind": "codex",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 11,
+            "commands": 4,
+            "file_accesses": 14,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/stdout.txt",
+              "sha256": "dcccb03a62d55b2881795b6307a515ee8e5ee7075953f8f16a8fe4116c628293",
+              "bytes": 2506
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-toy",
+          "kind": "claude",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 144,
+            "commands": 1,
+            "file_accesses": 5,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/stdout.txt",
+              "sha256": "fe494b5af5cf4b3b5dde3160374389123eb140273dc46ec04a7dd630340b5170",
+              "bytes": 45624
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "codex-dx100",
+          "kind": "codex",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "failed",
+            "passed": false,
+            "events": 19,
+            "commands": 10,
+            "file_accesses": 52,
+            "reasons": [
+              "provider shell body has unsupported dynamic syntax",
+              "provider shell argument cannot be resolved",
+              "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d"
+            ],
+            "violations": [
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell argument cannot be resolved",
+                "event": 11
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 12
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell argument cannot be resolved",
+                "event": 12
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
+                "event": 12
+              }
+            ],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "18ffb5a54d5e36a022b0ac1a43c98c3e315d528455f5fa6728c84dac1b63492f",
+              "bytes": 32220
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-dx100",
+          "kind": "claude",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 4,
+            "commands": 0,
+            "file_accesses": 0,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa",
+              "bytes": 3165
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        }
+      ]
+    },
+    "artifacts": {
+      "pytest.log": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/pytest.log",
+        "bytes": 127,
+        "sha256": "b94aa1a2bf36212dc81358bd7b2629f154d338cbecd454437e8a4f8b4bc85d09"
+      },
+      "pytest.xml": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/pytest.xml",
+        "bytes": 8016,
+        "sha256": "d5b2379a745941bf6fc118fb544e6ca29953e78927d7640eeac5424839794d96"
+      },
+      "retained-reaudit.json": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/retained-reaudit.json",
+        "bytes": 3998,
+        "sha256": "93b63195e9ac1224c7029e9be2bc5ed3a4e884a694d0eb1a9dc0c7c19e437c39"
+      },
+      "environment.txt": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/environment.txt",
+        "bytes": 4446,
+        "sha256": "6474c105559cdbc27edf803d90a811217d107225a3cd1060f43aec3641cfc583"
+      },
+      "lane.json": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/lane.json",
+        "bytes": 4898,
+        "sha256": "891a7db28333d07f92bbc24718b04e9142a7807866a52ce1daa237d67ddb1440"
+      },
+      "exit.txt": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/exit.txt",
+        "bytes": 16,
+        "sha256": "bc57eacb4daa4e80caf5b042e6796949e051739aa77dc1a5d0da12b98a94b73b"
+      }
+    },
+    "state": "passed_including_expected_historical_codex_dx100_refusal",
+    "raw_folder": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7"
+  },
+  "current_real_smoke": {
+    "state": "completed_with_retained_claude_authentication_failure",
+    "raw_folder": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2",
+    "checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
+    "admission": "Both event audits, guards, supervisor protections, cleanup, and login-copy deletion pass; Codex native source0/3/8 correctness passes, Claude has no candidate."
+  },
+  "prior_dx100_smoke": {
     "lane": {
       "socket_lane": {
         "aligned_cell_age_s": "",
@@ -1180,484 +2859,5 @@
         "failure_message": "Failed to authenticate: OAuth session expired and could not be refreshed"
       }
     ]
-  },
-  "linux_validation": {
-    "checkout": "4f5d15209ea0f852ffd1ef111576526541070e8e",
-    "lane": {
-      "socket_lane": {
-        "aligned_cell_age_s": "",
-        "aligned_to": "no_gapbs_batch_running",
-        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
-        "ended_utc": "2026-09-30T00:30:30Z",
-        "exit_code": 1,
-        "host": "mbit10",
-        "job": "swdb-provider-linux-a6",
-        "lease_generation": 424,
-        "lease_name": "mbit10-evaluation-node0",
-        "load1_at_start": 1.02,
-        "load1_max": 32,
-        "node": 0,
-        "numa_memory_policy": "bind:0",
-        "numactl": "--cpunodebind=0 --membind=0",
-        "preregistration_sha256": null,
-        "started_utc": "2026-09-30T00:06:41Z"
-      }
-    },
-    "tests": {
-      "name": "pytest",
-      "errors": "0",
-      "failures": "0",
-      "skipped": "0",
-      "tests": "222",
-      "time": "1428.562",
-      "timestamp": "2026-09-29T20:06:42.074084-04:00",
-      "hostname": "mbit10"
-    },
-    "exit": "tests=0 audit=1",
-    "reaudit": {
-      "checkout": "4f5d15209ea0f852ffd1ef111576526541070e8e",
-      "cases": [
-        {
-          "case": "codex-toy",
-          "kind": "codex",
-          "reaudit": {
-            "format": "swdb.provider-audit.v1",
-            "state": "passed",
-            "passed": true,
-            "events": 11,
-            "commands": 4,
-            "file_accesses": 14,
-            "reasons": [],
-            "violations": [],
-            "raw_log": {
-              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/stdout.txt",
-              "sha256": "dcccb03a62d55b2881795b6307a515ee8e5ee7075953f8f16a8fe4116c628293",
-              "bytes": 2506
-            }
-          },
-          "guard_passed": true,
-          "login_copy_deleted": true
-        },
-        {
-          "case": "claude-toy",
-          "kind": "claude",
-          "reaudit": {
-            "format": "swdb.provider-audit.v1",
-            "state": "failed",
-            "passed": false,
-            "events": 144,
-            "commands": 1,
-            "file_accesses": 5,
-            "reasons": [
-              "provider shell argument cannot be resolved"
-            ],
-            "violations": [
-              {
-                "code": "unparsed_command",
-                "reason": "provider shell argument cannot be resolved",
-                "event": 95
-              }
-            ],
-            "raw_log": {
-              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/stdout.txt",
-              "sha256": "fe494b5af5cf4b3b5dde3160374389123eb140273dc46ec04a7dd630340b5170",
-              "bytes": 45624
-            }
-          },
-          "guard_passed": true,
-          "login_copy_deleted": true
-        },
-        {
-          "case": "codex-dx100",
-          "kind": "codex",
-          "reaudit": {
-            "format": "swdb.provider-audit.v1",
-            "state": "failed",
-            "passed": false,
-            "events": 19,
-            "commands": 10,
-            "file_accesses": 52,
-            "reasons": [
-              "provider shell body has unsupported dynamic syntax",
-              "provider shell argument cannot be resolved",
-              "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d"
-            ],
-            "violations": [
-              {
-                "code": "unparsed_command",
-                "reason": "provider shell body has unsupported dynamic syntax",
-                "event": 11
-              },
-              {
-                "code": "unparsed_command",
-                "reason": "provider shell argument cannot be resolved",
-                "event": 11
-              },
-              {
-                "code": "external_file_access",
-                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
-                "event": 11
-              },
-              {
-                "code": "unparsed_command",
-                "reason": "provider shell body has unsupported dynamic syntax",
-                "event": 12
-              },
-              {
-                "code": "unparsed_command",
-                "reason": "provider shell argument cannot be resolved",
-                "event": 12
-              },
-              {
-                "code": "external_file_access",
-                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
-                "event": 12
-              }
-            ],
-            "raw_log": {
-              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
-              "sha256": "18ffb5a54d5e36a022b0ac1a43c98c3e315d528455f5fa6728c84dac1b63492f",
-              "bytes": 32220
-            }
-          },
-          "guard_passed": true,
-          "login_copy_deleted": true
-        },
-        {
-          "case": "claude-dx100",
-          "kind": "claude",
-          "reaudit": {
-            "format": "swdb.provider-audit.v1",
-            "state": "passed",
-            "passed": true,
-            "events": 4,
-            "commands": 0,
-            "file_accesses": 0,
-            "reasons": [],
-            "violations": [],
-            "raw_log": {
-              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
-              "sha256": "07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa",
-              "bytes": 3165
-            }
-          },
-          "guard_passed": true,
-          "login_copy_deleted": true
-        }
-      ]
-    },
-    "artifacts": {
-      "pytest.log": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6/pytest.log",
-        "bytes": 353,
-        "sha256": "8835f2a770ac35a3038980b55cb00abced14f22b4a401164d8a2c43d929e17f2"
-      },
-      "pytest.xml": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6/pytest.xml",
-        "bytes": 35726,
-        "sha256": "52cfd3db0db6a5815a8a529fbc3e9fa3d733ab1dde411a6b70b8d5e784b5e4e6"
-      },
-      "retained-reaudit.json": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6/retained-reaudit.json",
-        "bytes": 4228,
-        "sha256": "dc698445bbf84cea10e36e7397646f4a9d71ae851c745b5e57f3e7b4d05ac402"
-      },
-      "environment.txt": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6/environment.txt",
-        "bytes": 4387,
-        "sha256": "eabaa60b928c6372b241acd07d81f79b6b4c1acf784afddfbf55404e9c0a7efc"
-      },
-      "lane.json": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6/lane.json",
-        "bytes": 4826,
-        "sha256": "169c7564bb035480c7942c170a4f7f3ab5111ca0da04251ad8d6a56cd925b4e0"
-      },
-      "exit.txt": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6/exit.txt",
-        "bytes": 16,
-        "sha256": "e3b9aa3f1e6c6991641f48ab228f0120fa7bfad2b443b0233a06a4759fa34425"
-      }
-    },
-    "state": "tests_passed_two_retained_reaudits_failed",
-    "raw_folder": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a6",
-    "note": "A6 verifies the final guard. Claude toy A10 status printing exposed a narrow parser refusal; its fix receives separate public/Linux cases and a new retained-event audit. Codex DX100 A1 remains an intentional current-gate refusal."
-  },
-  "local_validation": {
-    "state": "passed",
-    "full_regression_started_et": "2026-09-29 19:14 ET",
-    "log": ".scratch/rewrite-provider-codex-2026-09-29/validation/full-regression-final.log",
-    "note": "The long run began before the final audit additions; separately recorded fresh targeted cases and final Linux collection cover those changes.",
-    "targeted_workspace": {
-      "passed": 195,
-      "seconds": 396.7,
-      "focused_direct_opaque_glob_passed": 29,
-      "focused_executable_compiler_paths_passed": 40,
-      "independent_original_repro": {
-        "passed": 8,
-        "skipped": 2,
-        "seconds": 18.23
-      }
-    },
-    "targeted_guard": {
-      "passed": 16,
-      "skipped_linux_only": 8,
-      "seconds": 262.32
-    },
-    "shared_prompt_guidance": {
-      "passed": 14,
-      "deselected": 181,
-      "seconds": 29.67
-    },
-    "supervisor_seams": {
-      "passed": 4,
-      "skipped_linux_only": 11,
-      "seconds": 12.7,
-      "note": "Mac submission/timeout seams and static fixture checks; native seccomp behavior belongs to Linux A6."
-    },
-    "full_regression": {
-      "passed": 2798,
-      "skipped": 31,
-      "failed": 0,
-      "errors": 0,
-      "seconds": 4176.73,
-      "started_et": "2026-09-29 19:14 ET",
-      "artifacts": {
-        "full-regression-final.log": {
-          "bytes": 3246,
-          "sha256": "5eff97cc06171eb350b3d54244f44b699a8bd5d8734ef768230d24da45fa3916"
-        },
-        "full-regression-final.xml": {
-          "bytes": 419849,
-          "sha256": "408b12263eab22a0220d1b13b4828aa2b1d011c441cd8dc1b6cc0fc9d8bb089e"
-        }
-      }
-    }
-  },
-  "primary_cli_reference": {
-    "repository": "https://github.com/openai/codex",
-    "tag": "rust-v0.153.0",
-    "commit": "41e22fee981a63b3698df7ed36bad393cda24715",
-    "paths": [
-      "codex-rs/core/src/tools/spec_plan.rs",
-      "codex-rs/exec/src/lib.rs"
-    ],
-    "findings": [
-      "CodeModeOnly can expose ordinary tools directly through code_mode.direct_only_tool_namespaces.",
-      "--ephemeral does not itself disable global SQLite initialization.",
-      "No verified Codex command-prefix override; explicit no-wrapper fallback is retained."
-    ]
-  },
-  "limits": {
-    "threads": 16,
-    "memory_bytes": 34359738368,
-    "command_seconds": 120,
-    "workspace_bytes": 5368709120,
-    "scope": "Entire provider tree including external tracer; exact installed persistent Codex service remains in aggregate accounting."
-  },
-  "limitations": [
-    "Codex DX100 native correctness is source-0/3/8 with one trial per source; no performance claim.",
-    "Claude DX100 attempt failed before tools because the OAuth session expired; no Claude BFS candidate or correctness claim.",
-    "Earlier Claude toy edit/build/run completed under guard on the recorded two-CPU subset; current production uses one CPU.",
-    "Landlock ABI 4 leaves UDP unrestricted; login copy remains readable during the session and is deleted afterwards.",
-    "Codex commands inherit outer TCP443 permission; independent model-API connection audit plus event-command audit is the accepted fallback.",
-    "Codex JSON command_execution items omit cwd; audit uses workspace-root semantics and explicitly observable cd commands.",
-    "Resource excess and audit failure are retained, never omitted as noise."
-  ],
-  "linux_prior_validation": {
-    "checkout": "0cc5f9d712d148a0fa158c8e5f4452576317429d",
-    "lane": {
-      "socket_lane": {
-        "aligned_cell_age_s": "",
-        "aligned_to": "no_gapbs_batch_running",
-        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
-        "ended_utc": "2026-09-29T23:54:19Z",
-        "exit_code": 1,
-        "host": "mbit10",
-        "job": "swdb-provider-linux-a5",
-        "lease_generation": 423,
-        "lease_name": "mbit10-evaluation-node0",
-        "load1_at_start": 4.36,
-        "load1_max": 32,
-        "node": 0,
-        "numa_memory_policy": "bind:0",
-        "numactl": "--cpunodebind=0 --membind=0",
-        "preregistration_sha256": null,
-        "started_utc": "2026-09-29T23:34:48Z"
-      }
-    },
-    "tests": {
-      "passed": 146,
-      "seconds": 1170.5
-    },
-    "reaudit": {
-      "checkout": "0cc5f9d712d148a0fa158c8e5f4452576317429d",
-      "cases": [
-        {
-          "case": "codex-toy",
-          "kind": "codex",
-          "reaudit": {
-            "format": "swdb.provider-audit.v1",
-            "state": "passed",
-            "passed": true,
-            "events": 11,
-            "commands": 4,
-            "file_accesses": 14,
-            "reasons": [],
-            "violations": [],
-            "raw_log": {
-              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/stdout.txt",
-              "sha256": "dcccb03a62d55b2881795b6307a515ee8e5ee7075953f8f16a8fe4116c628293",
-              "bytes": 2506
-            }
-          },
-          "guard_passed": true,
-          "login_copy_deleted": true
-        },
-        {
-          "case": "claude-toy",
-          "kind": "claude",
-          "reaudit": {
-            "format": "swdb.provider-audit.v1",
-            "state": "passed",
-            "passed": true,
-            "events": 144,
-            "commands": 1,
-            "file_accesses": 5,
-            "reasons": [],
-            "violations": [],
-            "raw_log": {
-              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/stdout.txt",
-              "sha256": "fe494b5af5cf4b3b5dde3160374389123eb140273dc46ec04a7dd630340b5170",
-              "bytes": 45624
-            }
-          },
-          "guard_passed": true,
-          "login_copy_deleted": true
-        },
-        {
-          "case": "codex-dx100",
-          "kind": "codex",
-          "reaudit": {
-            "format": "swdb.provider-audit.v1",
-            "state": "failed",
-            "passed": false,
-            "events": 19,
-            "commands": 10,
-            "file_accesses": 40,
-            "reasons": [
-              "provider shell body has unsupported dynamic syntax",
-              "provider shell argument cannot be resolved",
-              "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d"
-            ],
-            "violations": [
-              {
-                "code": "unparsed_command",
-                "reason": "provider shell body has unsupported dynamic syntax",
-                "event": 11
-              },
-              {
-                "code": "unparsed_command",
-                "reason": "provider shell argument cannot be resolved",
-                "event": 11
-              },
-              {
-                "code": "external_file_access",
-                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
-                "event": 11
-              },
-              {
-                "code": "unparsed_command",
-                "reason": "provider shell body has unsupported dynamic syntax",
-                "event": 12
-              },
-              {
-                "code": "unparsed_command",
-                "reason": "provider shell argument cannot be resolved",
-                "event": 12
-              },
-              {
-                "code": "external_file_access",
-                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
-                "event": 12
-              }
-            ],
-            "raw_log": {
-              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
-              "sha256": "18ffb5a54d5e36a022b0ac1a43c98c3e315d528455f5fa6728c84dac1b63492f",
-              "bytes": 32220
-            }
-          },
-          "guard_passed": true,
-          "login_copy_deleted": true
-        },
-        {
-          "case": "claude-dx100",
-          "kind": "claude",
-          "reaudit": {
-            "format": "swdb.provider-audit.v1",
-            "state": "passed",
-            "passed": true,
-            "events": 4,
-            "commands": 0,
-            "file_accesses": 0,
-            "reasons": [],
-            "violations": [],
-            "raw_log": {
-              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
-              "sha256": "07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa",
-              "bytes": 3165
-            }
-          },
-          "guard_passed": true,
-          "login_copy_deleted": true
-        }
-      ]
-    },
-    "artifacts": {
-      "pytest.log": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/pytest.log",
-        "bytes": 273,
-        "sha256": "666c00d0c900d9e9f71d79d03bd036c8f666d2ca8d0507c02fc0b3521fc9ec7e"
-      },
-      "pytest.xml": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/pytest.xml",
-        "bytes": 23392,
-        "sha256": "8c699d2d429a952fa83ac717616f8a2e5d15af56645ef9369f34295ef72d380f"
-      },
-      "retained-reaudit.json": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/retained-reaudit.json",
-        "bytes": 3998,
-        "sha256": "4e184f63ff9285c7fc3d1ae161d7bad16163e1bbe97bb5631314af26f91c48b9"
-      },
-      "environment.txt": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/environment.txt",
-        "bytes": 4446,
-        "sha256": "289cccb0acf12225fceb42a2e198bbbdf89717d024ffffa0773ee02092c1f64c"
-      },
-      "lane.json": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/lane.json",
-        "bytes": 4579,
-        "sha256": "0332a30aa8d681e4681fb12f757a339db62492bc6e3f3999043251043be7cc1f"
-      },
-      "exit.txt": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/exit.txt",
-        "bytes": 16,
-        "sha256": "e3b9aa3f1e6c6991641f48ab228f0120fa7bfad2b443b0233a06a4759fa34425"
-      }
-    },
-    "state": "tests_passed_one_retained_reaudit_failed"
-  },
-  "primary_linux_api_reference": {
-    "subreaper": "https://www.man7.org/linux/man-pages/man2/PR_SET_CHILD_SUBREAPER.2const.html",
-    "finding": "Subreaper flag survives execve; reparented descendants adopt the nearest live ancestor subreaper."
-  },
-  "supervisor_continuity": {
-    "state": "linux_public_fixture_verified",
-    "scope": "Narrow listed native signal APIs and direct pidfd_open protect evaluator/tracer kernel identities; separate provider session preserves ordinary helper signals. Not general hostile-process isolation.",
-    "fixture_observation": {
-      "protected_signal_checks_denied": 12,
-      "ordinary_signal_checks_succeeded": 5,
-      "overall_suite_pending": false
-    }
   }
 }

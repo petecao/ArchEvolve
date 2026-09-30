@@ -1,9 +1,10 @@
 # 02 — Spike: both providers under a Landlock launcher on mbit10
 
-Created: 2026-09-29
+Created: 2026-09-29 (Eastern Time)
+Updated: 2026-09-29 (Eastern Time)
 **Type:** prototype
-**Status:** claimed
-**Blocked by:** None — can start immediately (needs a free socket lane)
+**Status:** resolved
+**Blocked by:** None
 **Spec:** `../spec.md`
 
 **What to build:** Answer, on mbit10 and inside a socket lane, what tickets 07 and 08 need to know:
@@ -22,13 +23,13 @@ Created: 2026-09-29
 
 ## Acceptance
 
-- [ ] Each question has a recorded answer under `## Answer`, with the commands used.
-- [ ] Raw output stays on mbit10 under the EvolveSWDB runs folder; nothing is written under `$HOME`.
-- [ ] The run's lane, load, and checkout commit are recorded.
+- [x] Each question has a recorded answer under `## Answer`, with the commands used.
+- [x] Raw output stays on mbit10 under the EvolveSWDB runs folder; nothing is written under `$HOME`.
+- [x] The run's lane, load, and checkout commit are recorded.
 
 ## Answer
 
-Updated: 2026-09-29 20:26 ET.
+Updated: 2026-09-29 (Eastern Time).
 
 1. Both pinned CLIs completed guarded toy turns that read and changed `probe.cc`,
    compiled `build/probe`, and observed return code 1: Codex 0.153.0 at
@@ -44,8 +45,12 @@ Updated: 2026-09-29 20:26 ET.
 2. Public Linux fixture submissions exercise allowed workspace reads, denied
    outside reads/writes, permitted TCP443, forbidden TCP80 and inner denied TCP443.
    Tests also provoke aggregate threads, workspace size and a 120-s tool timeout.
-   Final Linux rerun and latest-code re-audit are in progress; no 32-GiB allocation
-   stress-test claim is made. The RSS observer and recorded policy enforce that cap.
+   Linux A6 passed **222 tests in 1428.56 s** at `4f5d152`, node0 generation 424,
+   starting load 1.02. A7 passed **42 focused tests in 132.56 s** at `c8a666f`,
+   generation 425, starting load 2.55. Its current-parser re-audit passes both toys
+   and the retained Claude DX100 failure, while intentionally refusing the older
+   Codex DX100 A1 log. No 32-GiB allocation stress-test claim is made; the RSS
+   observer and recorded policy enforce that cap.
 3. Claude's shell-prefix is one executable SWDB launcher that receives `--` and
    a shell command string, then applies the inner no-TCP Landlock layer and timeout.
    Actual exec trace receipts retain this launcher. No Codex shell-prefix override
@@ -71,22 +76,31 @@ Updated: 2026-09-29 20:26 ET.
    followed by a result/usage object. Only actionable tool inputs are audited;
    retained output is data. Explicit shell `-c/-lc` bodies are recursively audited;
    unresolved dynamic or delegated execution fails closed.
-6. The real scalar-only DX100 Codex proposal took **51.262610 s** of provider wall
-   time; usage was **100164 input, 82176 cached input, 2084 output, 895 reasoning
-   output tokens** (fields as emitted, not summed into a new billing quantity).
-   It created a candidate that independently passed native correctness for sources
-   0/3/8, one trial each; gain_claim=false. Claude's DX100 call took **0.575529 s**,
-   emitted zero tokens and failed before tools with “OAuth session expired and
-   could not be refreshed.” Its audit and guard passed; this is a retained failure,
-   not a Claude BFS rewrite or correctness result. Shared credentials were not changed.
-   The current stricter parser rejects the older Codex A1 event log because it
-   cannot safely resolve its `sed` regex transformation. That historical native
-   correctness result is preserved, but A1 does not satisfy the current audit gate.
-   Fresh A2 receipts will replace it as the current provider smoke evidence.
+6. Fresh public DX100 A2 ran at checkout
+   `c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53`, node0 generation 426, starting
+   load 2.61, from **20:42:19 to 20:45:43 ET on 2026-09-29**:
+
+   | Provider | CLI result | Provider wall time | Audit and guard | Native correctness |
+   |---|---|---|---|---|
+   | Codex 0.153.0, `gpt-5.6-sol/xhigh` | 0; candidate created | 50.610486 s | Original/current audits pass; guard passes | Sources 0/3/8 pass, one trial each |
+   | Claude Code 2.1.278, `claude-sonnet-5-5/high` | 1; authentication failure | 0.877012 s | Original/current audits pass; guard passes | No candidate or BFS result |
+
+   Codex emitted 94987 input, 77440 cached input, 0 cache-write, 2008 output,
+   and 1059 reasoning output tokens; these fields are retained as emitted,
+   without summing them into a new billing quantity. Independent g++ 13.3
+   structural checks used a 10-vertex, 8-directed-edge graph, with reachable
+   counts 6/3/1 for sources 0/3/8. `gain_claim=false`.
+   Claude emitted zero tokens and the exact reason
+   “Failed to authenticate: OAuth session expired and could not be refreshed”.
+   Both attempts enforced the supervisor filter, completed cleanup without
+   survivors, and deleted their mode-0600 login copies. Shared credentials were
+   not changed. The older Codex A1 receipt remains unchanged and refused by the
+   current audit because its `sed` regex transformation cannot be safely resolved;
+   fresh A2 supplies the current acceptance evidence.
 
 Commands: inside `socket_lane.sh 0`, `python3 -B -m scripts.provider_guard_spike
 codex|claude --runs-dir <raw>` and `python3 -B -m scripts.bfs_instruction_smoke
---id provider-dx100-<kind>-20260929-a1 --runs-dir <raw>/<kind>
+--id provider-dx100-<kind>-20260929-a2 --runs-dir <raw>/<kind>
 --lane mbit10-evaluation-node0 --routes natural_language --kind <kind>`.
 The complete launch argv, lane generation/load, checkout, raw paths/byte counts/SHA256,
 usage and policy are in [guarded provider evidence](../../../docs/evidence/guarded-rewrite-providers-20260929-a1.yaml).

@@ -1,11 +1,10 @@
 # Spec: Codex and Claude rewrite providers working in a guarded workspace
 
 Created: 2026-09-29 17:30 ET
-Updated: 2026-09-29 18:10 ET (rewritten in the to-spec template; test seam confirmed)
+Updated: 2026-09-29 (Eastern Time)
 **Type:** spec
-**Status:** ready-for-agent
-**Blocked by:** None. The user approved the design on 2026-09-29 after a grilling session;
-implementation starts with ticket 01.
+**Status:** resolved
+**Blocked by:** None. All ten provider tickets have implementation and acceptance answers.
 Owner: Yan-Ru Jhou
 Decision record: ADR 0006 (rewrite providers work as tool-using agents in a guarded workspace)
 
@@ -187,6 +186,19 @@ recorded configurations can be re-run exactly.
 
 ## Further Notes
 
+- **Implemented and validated on 2026-09-29 ET:** all ten tickets are resolved;
+  see [map.md](map.md) and
+  [guarded provider evidence](../../docs/evidence/guarded-rewrite-providers-20260929-a1.yaml).
+  Linux A6 passed 222 guard/pins/workspace cases at `4f5d152`; A7 passed 42
+  focused status cases and the retained-log re-audit at `c8a666f`, including the
+  expected historical Codex A1 refusal. Fresh public DX100 A2 at the latter
+  revision created a Codex candidate with passing original/current audits, guard,
+  cleanup and source-0/3/8 native structural checks; `gain_claim=false`.
+  Claude A2 retained an OAuth-expired failure with passing original/current
+  audits, guard and cleanup, as permitted by ticket 10; no Claude BFS result is
+  claimed. The older Codex A1 receipt remains unchanged and audit-refused.
+  Final independent code review remains pending until the separate T17 work
+  completes; this status covers provider-ticket acceptance.
 - **Host setup done on 2026-09-29:**
   - Codex CLI 0.153.0 is installed under the user's npm prefix on `/data1` and logged in with ChatGPT; its home is on `/data1`, mode 700.
   - The user's folders on mbit10 are owner-only, with the old permissions backed up.

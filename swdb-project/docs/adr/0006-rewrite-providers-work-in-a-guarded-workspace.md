@@ -1,7 +1,19 @@
 # Rewrite providers work as tool-using agents in a guarded workspace
 
-Date: 2026-09-29
-Status: accepted; implementation pending (`.scratch/rewrite-provider-codex-2026-09-29/`)
+Date: 2026-09-29 (Eastern Time)
+Updated: 2026-09-29 (Eastern Time)
+Status: implemented
+
+Implementation and acceptance are recorded in the
+[provider ticket map](../../.scratch/rewrite-provider-codex-2026-09-29/map.md) and
+[guarded provider evidence](../evidence/guarded-rewrite-providers-20260929-a1.yaml).
+Linux A6 passed 222 guard/pins/workspace tests; A7 passed 42 status-parser cases.
+Fresh public DX100 A2 at `c8a666f` passed both providers' original/current audits,
+guards and cleanup. Codex created a candidate that passed small-input native
+structural checks for sources 0/3/8; `gain_claim=false`. Claude retained an
+OAuth-expired failure with no candidate, permitted by ticket 10. The older Codex
+A1 log remains audit-refused and unchanged. Final independent code review is
+pending until the separate T17 work completes.
 
 A rewrite provider no longer receives everything in one prompt with no tools. It works as
 a coding agent inside a provider workspace that holds only what its rewrite proposal
@@ -27,9 +39,9 @@ code and recorded in every receipt.
 
 ## Consequences
 
-- Supersedes the provider boundary in
-  [bfs-rewrite-worker.md](../reference/bfs-rewrite-worker.md), which says the provider runs
-  without command or editing tools.
+- The implemented provider boundary is documented in
+  [bfs-rewrite-worker.md](../reference/bfs-rewrite-worker.md); the previous
+  no-tool route remains available through explicit prompt-only mode.
 - Real provider runs happen only on mbit10, inside a socket lane.
 - An application whose source mixes the baseline with the authors' optimized version needs
   a baseline-only source snapshot for proposals that must not see the optimized code. For
