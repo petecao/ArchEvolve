@@ -475,6 +475,53 @@ def test_compiler_forwarded_and_response_operands_fail_public_submit(proposal_se
 
 
 @pytest.mark.parametrize("value", [
+    "clang++ -fprofile-instr-use=/etc/passwd -c src/bfs.cc -o build/bfs.o",
+    "c++ -fprofile-use=profile -c src/bfs.cc -o build/bfs.o",
+    "clang++ -fprofile-instr-generate=build/profile -c src/bfs.cc -o build/bfs.o",
+    "clang++ -fprofile-remapping-file=/etc/passwd -c src/bfs.cc -o build/bfs.o",
+    "clang++ -mllvm -load=/etc/passwd -c src/bfs.cc -o build/bfs.o",
+    "printf '#include </etc/passwd>' | clang++ -x c++ - -fsyntax-only",
+    "tar --checkpoint=1 --checkpoint-action='exec=cat /etc/passwd' -cf build/probe.tar src/bfs.cc",
+    "tar --use-compress-program=/data1/other-repo/tool -cf build/probe.tar src/bfs.cc",
+    "rg --pre=/data1/other-repo/tool BFS src/bfs.cc",
+    "rg --pre=build/tool BFS src/bfs.cc",
+    "rg --ignore-file=/etc/passwd BFS src/bfs.cc",
+    "RIPGREP_CONFIG_PATH=/etc/passwd rg BFS src/bfs.cc",
+    "TAR_OPTIONS='--checkpoint-action=exec=cat /etc/passwd' tar -cf build/probe.tar src/bfs.cc",
+    "CXXFLAGS='-fprofile-use=/etc' c++ -c src/bfs.cc -o build/bfs.o",
+    "LLVM_PROFILE_FILE=/etc/profile build/probe",
+    "sed -n '1p' src/bfs.cc >/dev/null -e 'r /etc/passwd'",
+])
+def test_unknown_compiler_or_utility_options_fail_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider, actions=[{"type": "command", "value": value}])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and not audit["passed"] and "candidate" not in proposal
+    assert {v["code"] for v in audit["violations"]} & {"unparsed_command", "external_file_access"}
+    assert Path(audit["raw_log"]["path"]).is_file() and proposal["outcome"]["reason"].startswith("provider audit failed")
+    if value.startswith(("RIPGREP_CONFIG_PATH=", "TAR_OPTIONS=", "CXXFLAGS=", "LLVM_PROFILE_FILE=")):
+        assert any("environment override" in v["reason"] for v in audit["violations"])
+
+
+@pytest.mark.parametrize("value", [
+    "g++ -O3 -std=gnu++17 -march=native -mtune=native -mavx2 -fopenmp -Wall -Werror=return-type "
+    "-DTEST_VALUE=1 -UOLD_VALUE -I src -L build -c src/bfs.cc -o build/bfs.o",
+    "clang++ -O2 -g -std=c++17 -x c++ -D TEST_VALUE=1 -MMD -MF build/bfs.d -MJ build/bfs.json "
+    "-c src/bfs.cc --output=build/bfs.o",
+    "c++ -O3 -std=c++17 -fno-omit-frame-pointer src/bfs.cc -Lbuild -lpthread -lm -o build/probe >/dev/null",
+    "rg --no-config -nF -e BFS src/bfs.cc >/dev/null",
+    "rg --file=src/bfs.cc --count src/bfs.cc",
+    "sed -n '70,105p' >/dev/null src/bfs.cc",
+])
+def test_supported_compiler_and_search_options_pass_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider, actions=[{"type": "command", "value": value}])
+    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert audit["passed"] and not audit["violations"] and proposal["candidate"]
+    candidate = json.loads(proposal_setup[0].swdb("get", proposal["candidate"], "--format", "json").stdout)
+    assert "int alpha = 14" in (Path(candidate["artifact"]["path"]) / "src/bfs.cc").read_text()
+
+
+@pytest.mark.parametrize("value", [
     "/usr/bin/c++ -Isrc -obuild/probe src/bfs.cc && __WORKSPACE_ROOT__/build/probe",
     "cd src && /usr/bin/c++ -I . -o ../build/probe bfs.cc && ../build/probe",
 ])

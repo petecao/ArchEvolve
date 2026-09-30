@@ -73,8 +73,11 @@ Event auditing checks direct shell inputs, explicit nested shell bodies, Glob
 search roots, executable paths and compiler file options. Unresolved substitutions,
 delegated execution and opaque inline interpreter programs fail closed. Quiet SED
 with one literal decimal line/range print expression remains available for source
-previews. Compiler forwarding and response files, unresolved execution/configuration
-wrappers, and filesystem-controlling environment overrides are refused. Ordinary
+previews. Compilers accept checked file operands and a bounded set of literal
+build options; unfamiliar routing, profile and configuration options are refused.
+Compiler forwarding and response files, TAR commands, ripgrep preprocessing/configuration
+selectors, unresolved execution/configuration wrappers, and filesystem-controlling
+environment overrides are refused. Ordinary
 workspace scripts and synthetic programs may run under the guard; auditing their
 invocation does not prove the semantics of their source.
 

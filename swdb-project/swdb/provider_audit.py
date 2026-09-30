@@ -105,11 +105,14 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
 
         bodies = set()
         operands = set()
+        redirections = {"<", ">", ">>", "<>", ">&", "<&"}
         system_bins = tuple(Path(p).resolve() for p in ("/usr/bin", "/bin", "/usr/local/bin"))
         compiler_names = ("cc", "c++", "gcc", "g++", "clang", "clang++", "icc", "icpc", "icx", "icpx",
                           "gfortran", "flang", "flang-new", "nvcc", "hipcc", "mpicc", "mpicxx", "mpic++")
         compiler_pattern = r"(?:[\w.+-]+-)?(?:" + "|".join(re.escape(n) for n in compiler_names) + r")(?:-\d+(?:\.\d+)*)?"
-        compiler_flags = ("--sysroot", "-include", "-imacros", "-isystem", "-iquote", "-idirafter", "-isysroot", "-I", "-L", "-o")
+        compiler_flags = ("--sysroot", "--output", "-include", "-imacros", "-isystem", "-iquote", "-idirafter",
+                          "-isysroot", "-MF", "-MJ", "-I", "-L", "-B", "-F", "-o")
+        compiler_outputs = {"--output", "-o", "-MF", "-MJ"}
         delegated_tools = {"xargs", "busybox", "toybox", "sudo", "doas", "timeout", "time", "ccache", "sccache",
                            "distcc", "nice", "taskset", "numactl", "stdbuf", "nohup", "setsid", "ionice", "chrt",
                            "flock", "prlimit"}
@@ -122,7 +125,11 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                            "HOME", "XDG_CONFIG_HOME", "LD_PRELOAD", "LD_AUDIT", "LD_LIBRARY_PATH",
                            "DYLD_INSERT_LIBRARIES", "DYLD_LIBRARY_PATH",
                            "PYTHONPATH", "PYTHONHOME", "PYTHONSTARTUP", "NODE_OPTIONS", "NODE_PATH", "PERL5OPT",
-                           "PERL5LIB", "PERLLIB", "RUBYOPT", "RUBYLIB", "GIT_EXEC_PATH", "GIT_DIR", "GIT_WORK_TREE"}
+                           "PERL5LIB", "PERLLIB", "RUBYOPT", "RUBYLIB", "GIT_EXEC_PATH", "GIT_DIR", "GIT_WORK_TREE",
+                           "TAR_OPTIONS", "RIPGREP_CONFIG_PATH", "GREP_OPTIONS", "AWKPATH", "AWKLIBPATH", "CFLAGS",
+                           "CXXFLAGS", "CPPFLAGS", "LDFLAGS", "CC", "CXX", "FC", "AS", "LD", "AR",
+                           "MAKEFLAGS", "GNUMAKEFLAGS", "MAKEFILES", "MFLAGS", "TMPDIR", "TMP", "TEMP",
+                           "LLVM_PROFILE_FILE", "GCOV_PREFIX", "GCCDEPENDENCIES_OUTPUT", "SUNPRO_DEPENDENCIES"}
 
         def quiet_sed(begin, end):
             # Only this literal print-only subset has no embedded filesystem or
@@ -131,8 +138,12 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
             i = begin
             while i < end:
                 argument = tokens[i]
-                if argument in {"<", ">", ">>", "<>"}:
-                    break  # The shell parser checks these redirections below.
+                if argument.isdigit() and i + 1 < end and tokens[i + 1] in redirections:
+                    i += 1
+                    argument = tokens[i]
+                if argument in redirections:
+                    i += 2  # The shell parser checks these redirections below.
+                    continue
                 if not files and argument in {"-n", "--quiet", "--silent"}:
                     quiet = True
                 elif not files and argument in {"-e", "--expression"}:
@@ -182,6 +193,146 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                         else:
                             file_access(operand, event, cwd=working)
                         break
+                i += 1
+
+        def literal_compiler(begin, end):
+            # This is a bounded direct-build grammar, not a compiler-driver
+            # interpreter. Unknown options can consume files, start helpers, or
+            # route opaque arguments even when their values contain no slash.
+            switches = {"-c", "-S", "-E", "-pipe", "-pthread", "-fPIC", "-fpic", "-fPIE", "-fpie", "-pie",
+                        "-shared", "-static", "-static-libgcc", "-static-libstdc++", "-rdynamic", "-r", "-s", "-w",
+                        "-v", "-H", "-M", "-MM", "-MD", "-MMD", "-MP", "-MG", "-nostdinc", "-nostdinc++",
+                        "-nostdlib", "-nodefaultlibs", "-nostartfiles", "-ansi", "-pedantic", "-pedantic-errors",
+                        "--version", "--help", "--target-help", "-dumpversion", "-dumpfullversion", "-dumpmachine",
+                        "-fopenmp", "-fopenmp-simd", "-fsyntax-only", "-fexceptions", "-fno-exceptions", "-frtti",
+                        "-fno-rtti", "-ffast-math", "-fno-fast-math", "-fmath-errno", "-fno-math-errno",
+                        "-funroll-loops", "-fno-unroll-loops", "-fstrict-aliasing", "-fno-strict-aliasing",
+                        "-fomit-frame-pointer", "-fno-omit-frame-pointer", "-fstack-protector", "-fstack-protector-all",
+                        "-fstack-protector-strong", "-fno-stack-protector", "-ffreestanding", "-fhosted",
+                        "-fno-builtin", "-fsigned-char", "-funsigned-char", "-fwrapv", "-fno-wrapv"}
+            scalar = r"[A-Za-z0-9_+.-]+"
+            i, positional = begin, False
+            while i < end:
+                argument = tokens[i]
+                if argument.isdigit() and i + 1 < end and tokens[i + 1] in redirections:
+                    i += 1
+                    argument = tokens[i]
+                if argument in redirections:
+                    i += 2  # Shell redirection operands are audited separately.
+                    continue
+                if argument == "--":
+                    positional = True
+                    i += 1
+                    continue
+                if not positional:
+                    file_flag = next((f for f in compiler_flags if argument == f
+                        or f.startswith("--") and argument.startswith(f + "=")
+                        or not f.startswith("--") and argument.startswith(f)), None)
+                    if file_flag:
+                        i += 2 if argument == file_flag else 1
+                        continue
+                    data_flag = next((f for f in ("-D", "-U", "-x", "-l") if argument.startswith(f)), None)
+                    if data_flag:
+                        data = argument[len(data_flag):]
+                        if not data:
+                            i += 1
+                            if i >= end:
+                                fail("unparsed_command", "provider compiler data operand is missing", event)
+                                break
+                            data = tokens[i]
+                            operands.add(i)
+                        valid = not any(c in data for c in "$`\\\n")
+                        if data_flag == "-D":
+                            valid = valid and bool(re.fullmatch(r"[A-Za-z_]\w*(?:=.*)?", data, re.S))
+                        elif data_flag == "-U":
+                            valid = valid and bool(re.fullmatch(r"[A-Za-z_]\w*", data))
+                        elif data_flag == "-l":
+                            valid = valid and bool(re.fullmatch(scalar, data))
+                        else:
+                            valid = valid and data in {"c", "c++", "c-header", "c++-header", "cpp-output",
+                                "c++-cpp-output", "assembler", "assembler-with-cpp", "cuda", "hip", "none"}
+                        if not valid:
+                            fail("unparsed_command", "provider compiler data operand cannot be resolved", event)
+                        i += 1
+                        continue
+                    if argument.startswith("-") and argument != "-":
+                        allowed = (argument in switches
+                            or re.fullmatch(r"-O(?:[0-3gsz]|fast)?", argument)
+                            or re.fullmatch(r"-g(?:[0-3]|gdb[0-3]?|dwarf-[2-5]|line-tables-only)?", argument)
+                            or re.fullmatch(r"-W[A-Za-z0-9_+=.,-]+", argument)
+                            or re.fullmatch(r"-std=[A-Za-z0-9_+:.\-]+", argument)
+                            or re.fullmatch(r"(?:--target|-target|-march|-mtune|-mcpu|-mabi|-mfpu|-mfloat-abi|-masm)=" + scalar, argument)
+                            or re.fullmatch(r"-m(?:no-)?(?:avx(?:2|512[a-z0-9]*)?|sse[0-9.]*|aes|pclmul|bmi2?|fma|f16c|popcnt|lzcnt|neon|thumb|arm|32|64)", argument)
+                            or argument in {"-stdlib=libc++", "-stdlib=libstdc++", "-fopenmp=libomp", "-fopenmp=libgomp",
+                                "-fopenmp=libiomp5", "-fvisibility=hidden", "-fvisibility=default", "-ffp-contract=off",
+                                "-ffp-contract=on", "-ffp-contract=fast", "-fdiagnostics-color=always",
+                                "-fdiagnostics-color=never", "-fdiagnostics-color=auto"}
+                            or re.fullmatch(r"-fmax-errors=[0-9]+", argument))
+                        if not allowed:
+                            fail("unparsed_command", "provider compiler option is outside the literal build subset", event)
+                        i += 1
+                        continue
+                if argument == "-":
+                    fail("unparsed_command", "provider compiler stdin source cannot be audited", event)
+                elif not argument.startswith("@"):
+                    file_access(argument, event, cwd=working)
+                    operands.add(i)
+                i += 1
+
+        def literal_rg(begin, end):
+            # File-pattern inputs are checked separately. Every other accepted
+            # option is data-only; preprocessing, config, and unknown selectors
+            # cannot inherit approval merely because they begin with '-'.
+            switches = {"--line-number", "--no-line-number", "--files-with-matches", "--files-without-match",
+                        "--count", "--count-matches", "--ignore-case", "--case-sensitive", "--smart-case",
+                        "--fixed-strings", "--word-regexp", "--line-regexp", "--invert-match", "--quiet",
+                        "--no-messages", "--hidden", "--no-ignore", "--no-ignore-vcs", "--files", "--stats",
+                        "--json", "--text", "--multiline", "--multiline-dotall", "--pcre2", "--no-config"}
+            i, positional, has_pattern = begin, False, False
+            while i < end:
+                argument = tokens[i]
+                if argument.isdigit() and i + 1 < end and tokens[i + 1] in redirections:
+                    i += 1
+                    argument = tokens[i]
+                if argument in redirections:
+                    i += 2
+                    continue
+                if not positional and argument == "--":
+                    positional = True
+                    i += 1
+                    continue
+                if not positional and argument in {"-f", "--file"}:
+                    has_pattern = True
+                    i += 2
+                    continue
+                if not positional and argument.startswith(("-f", "--file=")):
+                    has_pattern = True
+                    i += 1
+                    continue
+                if not positional and argument in {"-e", "--regexp", "-g", "--glob", "--iglob", "-A", "-B", "-C", "-m", "-j",
+                                "--after-context", "--before-context", "--context", "--max-count", "--threads"}:
+                    has_pattern = has_pattern or argument in {"-e", "--regexp"}
+                    i += 1
+                    if i >= end or any(c in tokens[i] for c in "$`\\\n"):
+                        fail("unparsed_command", "provider rg data operand cannot be resolved", event)
+                    else:
+                        operands.add(i)
+                    i += 1
+                    continue
+                if not positional and argument == "--files":
+                    has_pattern = True
+                if not positional and argument.startswith("-") and not (argument in switches
+                        or re.fullmatch(r"-[nNiIsSFwxlcvqauUP]+", argument)
+                        or re.fullmatch(r"-(?:A|B|C|m|j)[0-9]+", argument)
+                        or re.fullmatch(r"--(?:after-context|before-context|context|max-count|threads)=[0-9]+", argument)
+                        or argument in {"--color=never", "--color=always", "--color=auto"}):
+                    fail("unparsed_command", "provider rg option is outside the literal search subset", event)
+                if positional or not argument.startswith("-"):
+                    if has_pattern:
+                        file_access(argument, event, cwd=working)
+                        operands.add(i)
+                    else:
+                        has_pattern = True
                 i += 1
 
         start, executable, command_index, prefix = True, None, 0, None
@@ -242,11 +393,14 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                     # contents cannot reconstruct the historical invocation.
                     if any(a.startswith("@") or a.startswith(compiler_forwarding) for a in arguments):
                         fail("unparsed_command", "provider compiler forwarded or response operands cannot be audited", event)
+                    literal_compiler(index + 1, end)
                 if executable in {"grep", "egrep", "fgrep", "rg"}:
-                    literal_file_option(index + 1, end, ("--file", "-f"))
+                    literal_file_option(index + 1, end, ("--file", "--exclude-from", "-f"))
                     if any(a.startswith("-") and not a.startswith(("--", "-f")) and "f" in a[1:]
                            for a in arguments[:arguments.index("--") if "--" in arguments else len(arguments)]):
                         fail("unparsed_command", "provider bundled pattern-file options cannot be audited", event)
+                if executable == "rg":
+                    literal_rg(index + 1, end)
                 if executable == "wc":
                     literal_file_option(index + 1, end, ("--files0-from",))
                     if any(a == "--files0-from" or a.startswith("--files0-from=") for a in arguments):
@@ -257,10 +411,8 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                     literal_file_option(index + 1, end, ("--git-dir", "--work-tree", "-C"))
                     if any(a.startswith(("--git-dir", "--work-tree", "-C")) for a in arguments):
                         fail("unparsed_command", "provider git filesystem selectors cannot be audited", event)
-                if executable == "tar" and any(a.startswith("--files-from") or "T" in a and (
-                        a.startswith("-") and not a.startswith("--") or position == 0 and re.fullmatch(r"[A-Za-z]+", a))
-                        for position, a in enumerate(arguments)):
-                    fail("unparsed_command", "provider tar file-list operands cannot be audited", event)
+                if executable == "tar":
+                    fail("unparsed_command", "provider tar invocation cannot be audited", event)
                 if executable in shells:
                     body_index = None
                     for option_index in range(index + 1, len(tokens)):
@@ -329,18 +481,18 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                             operands.add(index + 1)
                         else:
                             fail("unparsed_command", "provider compiler file operand is missing", event)
-                    elif flag == "--sysroot" and token.startswith(flag + "="):
+                    elif flag.startswith("--") and token.startswith(flag + "="):
                         operand = token[len(flag) + 1:]
                     elif not flag.startswith("--") and token.startswith(flag):
                         operand = token[len(flag):]
                     else:
                         continue
                     if operand is not None:
-                        if (not operand or operand.startswith(("-", "=", "~")) or "$" in operand
+                        if (not operand or operand.startswith(("-", "=", "~")) or "=" in operand or "$" in operand
                                 or "`" in operand or "\\" in operand):
                             fail("unparsed_command", "provider compiler file operand cannot be resolved", event)
-                        elif not (flag == "-o" and operand == "/dev/null"):
-                            file_access(operand, event, writing=flag == "-o", cwd=working)
+                        elif not (flag in compiler_outputs and operand == "/dev/null"):
+                            file_access(operand, event, writing=flag in compiler_outputs, cwd=working)
                     break
             candidate = token.lstrip("<>")
             if index and tokens[index - 1] in {"<", ">", ">>", "<>"}:
