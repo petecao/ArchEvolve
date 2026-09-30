@@ -116,8 +116,10 @@ The provider tree, including the external tracer, is limited to 16 aggregate
 threads and 32 GiB resident memory, with 120 seconds per tool command and a
 5 GiB workspace. Claude shell commands receive an inner no-TCP guard. Codex
 commands inherit the outer TCP-443 policy; connection and event audits enforce
-model-API-only use. The [worker contract](../reference/bfs-rewrite-worker.md)
-details Codex's verified native launch, read-only SQLite fallback, disabled
+model-API-only use. An outside-Landlock subreaper retains detached helpers for
+accounting and identity-checked cleanup; a narrow signal filter protects supervisor
+continuity. The [worker contract](../reference/bfs-rewrite-worker.md) details these
+limits, Codex's verified native launch, read-only SQLite fallback, disabled
 customizations, and the retained UDP/login-readability limitations. These controls
 and a completed provider turn do not establish correctness or a gain.
 

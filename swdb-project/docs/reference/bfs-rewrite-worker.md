@@ -50,19 +50,36 @@ the copied login file remains readable during the session; both residual risks
 are recorded in the guard policy. The login copy is deleted after every session.
 Real sessions fail closed when the guard or lane cannot be verified.
 
-The tracer is a child subreaper, so helpers that double-fork or start a new
-session remain in the observed tree. The observer pins PID plus kernel start time,
-uses pidfds where available, and stops owned descendants before the tracer.
-Only the original CLI and its exact installed, directly parented Codex service
-are exempt from the command timer; both remain in thread and memory accounting.
-The policy records the selected provider package installation root and cleanup
-receipts retain the observed identities and any surviving descendants.
+The tracer is a child subreaper outside Landlock, so it adopts detached descendants
+even when helpers double-fork or start a new session. The observer pins PID plus
+kernel start time, uses pidfds where available, and stops owned descendants before
+the tracer. The 120-second tool timer excludes the tracer, recorded original CLI,
+and, for native Codex, the exact installed `codex-code-mode-host` sibling while
+directly parented by that original native process. Same-named copies and other
+helpers keep the timer. The original CLI and service both count toward the full
+16-thread and 32 GiB resident-memory caps; the overall provider-call budget still
+applies. The policy records the selected installation root, and cleanup receipts
+retain observed identities and any surviving descendants.
+
+A required inherited seccomp filter protects the recorded evaluator/observer and
+tracer identities against `kill`, `tkill`, `tgkill`, `rt_sigqueueinfo`,
+`rt_tgsigqueueinfo`, and direct `pidfd_open`. The provider enters a separate session,
+preserving ordinary helper signals, including `kill(0)`, without reaching supervisor
+groups. Compatibility ABIs, including x32, are rejected. These narrow controls
+protect supervisor continuity through the listed APIs; they do not provide general
+hostile-process isolation.
 
 Event auditing checks direct shell inputs, explicit nested shell bodies, Glob
 search roots, executable paths and compiler file options. Unresolved substitutions,
 delegated execution and opaque inline interpreter programs fail closed. Ordinary
 workspace scripts and synthetic programs may run under the guard; auditing their
 invocation does not prove the semantics of their source.
+
+Both providers receive workspace guidance to use direct editing tools for source
+changes and literal shell operands for workspace reads, builds, and synthetic runs.
+It asks them to avoid inline interpreters, loops, heredocs, delegated execution,
+and regex-based code transformations that cannot be safely audited. Guidance does
+not guarantee compliance; the audit still fails closed.
 
 On Linux, the adapter can replace the official single-command Codex npm wrapper
 with its verified bundled native executable, including the pinned platform-package

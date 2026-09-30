@@ -28,7 +28,7 @@ Created: 2026-09-29
 
 ## Answer
 
-Updated: 2026-09-29 19:39 ET.
+Updated: 2026-09-29 20:26 ET.
 
 1. Both pinned CLIs completed guarded toy turns that read and changed `probe.cc`,
    compiled `build/probe`, and observed return code 1: Codex 0.153.0 at
@@ -79,6 +79,10 @@ Updated: 2026-09-29 19:39 ET.
    emitted zero tokens and failed before tools with “OAuth session expired and
    could not be refreshed.” Its audit and guard passed; this is a retained failure,
    not a Claude BFS rewrite or correctness result. Shared credentials were not changed.
+   The current stricter parser rejects the older Codex A1 event log because it
+   cannot safely resolve its `sed` regex transformation. That historical native
+   correctness result is preserved, but A1 does not satisfy the current audit gate.
+   Fresh A2 receipts will replace it as the current provider smoke evidence.
 
 Commands: inside `socket_lane.sh 0`, `python3 -B -m scripts.provider_guard_spike
 codex|claude --runs-dir <raw>` and `python3 -B -m scripts.bfs_instruction_smoke

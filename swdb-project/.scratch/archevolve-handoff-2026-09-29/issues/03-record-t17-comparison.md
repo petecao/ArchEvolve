@@ -38,10 +38,15 @@ The root agent coordinates this work in an owned mbit10 lane, where the raw obse
 and binary/source artifacts are available. The ticket remains claimed until the two
 retained comparison results are verified and synced locally.
 
-2026-09-29 18:37 ET: The root agent reported that the dependency-closure import
-retained 25 actual metadata records on mbit10. The first raw public recheck exhausted
-its outer time budget while reading the compressed trace; no completed comparison
-has been synced and no qualified performance claim is made. The root agent is
-coordinating a longer retry after the shorter Linux/provider checks, with raw
-command output retained on the host. This is an execution-time limit, not a reason
-to substitute the a3 closure's recorded timings for public comparison evidence.
+2026-09-29 20:10 ET: After the first recheck exhausted its outer time budget, the
+longer public retry is running in node1 from the isolated checkout
+`/data1/yanruj/ArchEvolve_t17_handoff_20260929_a1/swdb-project`.
+The 25 imported metadata records were validated there (338 records total) and
+committed/pushed as `c55614e1c8c64b2a04d812789e9e59805f4c8033`; local fast-forward
+waits for the running regression. The exact existing frozen v2 protocol
+`bfs-t17-controlled-simulator-20260928.952dead4468b86d7`, source/binary, and
+source-0/repetition-0 scope are unchanged. The companion passed and uniform18's
+public submission started. Both final decisions remain pending; the claim remains
+simulated joint hardware/software reuse of the authors' `TDStepMAA` plus
+`wait_ready(tile5)`, with one repetition under declared determinism. No performance
+qualification is inferred from the retained closure timings.

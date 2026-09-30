@@ -32,13 +32,17 @@ snapshot removes the authors' accelerator functions from proposals that start fr
 scalar code. Its derivation and native correctness receipt are recorded; the full
 DX100 source snapshot remains available for strategies that explicitly reuse it.
 
-T17 imports retained metadata with digest-checked dependency closure and uses the
-existing frozen v2 protocol through public `compare-evaluations`. Public qualification
-is **pending the raw-trace recheck**. Its claim scope is simulated source vertex 0,
-one repetition under declared determinism, and strategy
-`existing-dx100-top-down-offload`, which reuses the DX100 authors' `TDStepMAA` path
-with a `wait_ready(tile5)` fix. Hardware/software attribution is joint. The retained
-closure's timings alone are insufficient to claim a qualified performance result.
+2026-09-29 20:10 ET: T17's longer public recheck is running in node1 from isolated
+checkout `/data1/yanruj/ArchEvolve_t17_handoff_20260929_a1/swdb-project`.
+Its 25 imported metadata records were committed in `c55614e1c8c64b2a04d812789e9e59805f4c8033`
+after validation of 338 records there. The exact existing frozen v2 protocol
+`bfs-t17-controlled-simulator-20260928.952dead4468b86d7` is unchanged; the companion
+passed and uniform18's public submission started. Public qualification remains
+**pending both final comparison decisions**. The scope is simulated source vertex 0,
+repetition 0 (one repetition under declared determinism), and strategy
+`existing-dx100-top-down-offload`, which reuses the authors' `TDStepMAA` plus
+`wait_ready(tile5)`. Hardware/software attribution is joint; closure timings alone
+do not establish qualification.
 
 ## Evidence
 

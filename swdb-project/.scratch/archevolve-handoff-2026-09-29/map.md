@@ -1,7 +1,7 @@
 # Map: hand SWDB's BFS work to the ArchEvolve pipeline
 
 Created: 2026-09-29 17:40 ET
-Updated: 2026-09-29 18:02 ET
+Updated: 2026-09-29 20:10 ET
 **Type:** ticket map
 **Status:** in-progress
 **Spec:** [spec.md](spec.md)
@@ -25,3 +25,7 @@ Updated: 2026-09-29 18:02 ET
 - 2026-09-29: annotation binds seven statement IDs to eight terminal array accesses;
   T17's pre-existing frozen protocol is preserved while public comparison qualification
   rechecks its retained trace. Human and Peter-dependent tickets retain their ownership.
+- 2026-09-29 20:10 ET: T17's bounded longer retry runs in a separate Git checkout on
+  mbit10 node1; node0 verifies the final provider guard. The comparison reuses the
+  exact frozen request and retains raw diagnostics. No comparison result or gain
+  qualification is claimed before the public operation completes.
