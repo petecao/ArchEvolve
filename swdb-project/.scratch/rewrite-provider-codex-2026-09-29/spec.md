@@ -211,8 +211,9 @@ recorded configurations can be re-run exactly.
   including a read of the login copy), four P2s (DX100 required-operation headers,
   repairs crossing fixture/real classification, untraced io_uring/Fast Open
   connections for Codex, and package tools passing the network check) and P3s.
-  All were repaired or clarified above; see the
-  [review report](validation/code-review.md) for each finding and its outcome.
+  All were repaired or clarified above at `42526ad`; Linux A12 passed 238 cases,
+  six retained-log decisions and a real Codex toy session under the new filter. See
+  the [review report](validation/code-review.md) for each finding and its outcome.
 - **Host setup done on 2026-09-29:**
   - Codex CLI 0.153.0 is installed under the user's npm prefix on `/data1` and logged in with ChatGPT; its home is on `/data1`, mode 700.
   - The user's folders on mbit10 are owner-only, with the old permissions backed up.

@@ -1,7 +1,7 @@
 # Final code review — guarded rewrite providers and ArchEvolve handoff
 
-Updated: 2026-09-29 23:20 ET
-State: complete; both independent rechecks and final public CLI regression passed
+Updated: 2026-09-30 ET
+State: complete; the 2026-09-30 spec re-review findings are repaired and validated on Linux (A12)
 
 The two independent axes reviewed the owned changes under `swdb-project/`.
 The originating specs are [provider](../spec.md) and
@@ -85,3 +85,50 @@ Metadata, guard receipts, source identities and raw-artifact hashes are in
 [guarded provider evidence](../../../docs/evidence/guarded-rewrite-providers-20260929-a1.yaml).
 
 Standards: 0 remaining (1 resolved); Spec: 0. Worst remaining in each axis: None.
+
+## Spec re-review (2026-09-30 ET)
+
+A second, independent spec-axis review of `65c84fde..ec40b08`, split into four
+areas (pins/records, command lines/guard, workspace/diff, audit/tests), found
+issues the first review missed. The P1 and the P2 header and repair findings were
+confirmed by direct reproduction before repair. Repairs are in `42526ad`.
+
+| Sev | Finding | Outcome |
+|---|---|---|
+| P1 | Brace and glob shell operands skipped the audit: `cat {..,.}/provider-home/au?h.json` passed and read the login copy | Fixed: every operand is brace-expanded; wildcard roots stay in the workspace; `cd` targets are literal; Claude Glob braces expanded |
+| P2 | DX100 required-operation headers (`gem5/m5ops.h`) never matched the snapshot's `include/gem5/m5ops.h`, so those proposals failed | Fixed: include-root suffix match; DX100 public test |
+| P2 | A repair could cross between a real provider and a fixture emulating it | Fixed: classification must match |
+| P2 | Codex tool commands could connect on 443 through io_uring or TCP Fast Open without a traced `connect()` | Fixed for Codex by seccomp; IP-level API matching recorded as residual risk |
+| P2 | Network check was a short denylist (`pip3.12`, `npm i`, `npx`, `uvx`, `go mod download` passed) | Fixed: package managers refused outright; Python `-m` offline allowlist |
+| P3 | Thread/memory caps polled, not kernel-enforced | Recorded in `limit_enforcement`; inner tool commands get `RLIMIT_AS` |
+| P3 | Provider home had no size cap | Fixed: counted in the 5 GiB cap |
+| P3 | Tool copies or hard links of the login survived cleanup | Fixed: removed and listed |
+| P3 | Code-mode-host watchdog exemption could be spoofed by `exec` | Fixed: first observed instance only |
+| P3 | A fixture could run an installed real CLI unguarded | Fixed: refused |
+| P3 | Real login copied before the non-Linux refusal; spike copy ordering | Fixed |
+| P3 | Editable patterns admitted build outputs | Fixed: build outputs classified first |
+| P3 | Header fallback containment check was ineffective | Fixed |
+| P3 | Empty or terminal-less logs passed; unknown Claude blocks ignored; missing log path not fail-closed | Fixed |
+| P3 | Usage-limit scan could discard a successful session | Fixed: failed sessions only |
+| P3 | Provider block mixed attempts | Fixed: replaced per attempt |
+| P3 | Codex effort literal | Fixed: from the pin |
+| P3 | Campaign could not reuse a candidate made after a usage-limit retry | Fixed |
+| P3 | Extra files add nothing; prompt points to proposal file; "unknown" model shown by absence; default total 3600 s | Spec clarified (deliberate designs) |
+| P3 | Repair mismatch tested only on retry; guard test via spike script | Test added for classification; public-submit guard tests already exist |
+| P3 | Scope: SPARTA note in `view.py`, mbit10 per-run source hash, T17 scripts | No change: owned by other work and harmless |
+
+Validation:
+
+| Check | Source | Result |
+|---|---|---|
+| Mac workspace file | before final CLI-detection narrowing | 656 passed, 1502.68 s |
+| Mac pins + campaign reuse | same | 49 passed, 479.05 s |
+| Mac stream + pins after narrowing | `42526ad` tree | 27 passed, 453.63 s |
+| Linux A12 guard/pins/workspace selection | `42526ad`; node0 generation 430; load 1.11 | 238 passed, 1672.04 s |
+| Retained-log re-audit | same checkout | 6/6 decisions match; completed-mode passes for the three completed logs |
+| Real Codex toy under the new seccomp filter | same lane job | Passed in 32.2 s; guard, supervisor filter and login deletion pass |
+
+Hashes are in the `spec_rereview_validation` block of the
+[guarded provider evidence](../../../docs/evidence/guarded-rewrite-providers-20260929-a1.yaml).
+The real Claude CLI was not rerun (its OAuth login had expired at A2); the new
+Claude-side changes are covered by fixtures and the inner-layer Linux tests.

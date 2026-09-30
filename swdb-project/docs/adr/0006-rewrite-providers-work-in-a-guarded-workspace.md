@@ -1,7 +1,7 @@
 # Rewrite providers work as tool-using agents in a guarded workspace
 
 Date: 2026-09-29 (Eastern Time)
-Updated: 2026-09-29 23:20 ET
+Updated: 2026-09-30 ET
 Status: implemented
 
 Implementation and acceptance are recorded in the
@@ -52,3 +52,7 @@ code and recorded in every receipt.
 - An application whose source mixes the baseline with the authors' optimized version needs
   a baseline-only source snapshot for proposals that must not see the optimized code. For
   DX100 BFS this is a scalar-only snapshot without the `*MAA` functions.
+- 2026-09-30: a spec re-review tightened the boundary without changing this decision:
+  the audit expands shell braces and wildcards, refuses package managers, and fails
+  incomplete logs; Codex sessions also refuse io_uring and TCP Fast Open sends, which
+  the connection trace cannot see. Linux A12 validated these at `42526ad`.

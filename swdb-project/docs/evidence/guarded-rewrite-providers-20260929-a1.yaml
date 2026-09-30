@@ -1,7 +1,7 @@
 {
   "format": "swdb.guarded-rewrite-provider-evidence.v1",
   "created": "2026-09-29",
-  "updated_et": "2026-09-29 23:20 ET",
+  "updated_et": "2026-09-30 ET",
   "state": "validated",
   "host": "mbit10",
   "scope": "Guard feasibility and actual provider-native correctness; no performance gain claim.",
@@ -4264,5 +4264,96 @@
       "staged_and_unstaged_whitespace_checks": "passed",
       "scope": "Owned changed Markdown paths since the session base, including the staged new review report."
     }
+  },
+  "spec_rereview_validation": {
+    "date_et": "2026-09-30",
+    "checkout": "42526ad6d161523338d6a9d8930040f5e7ddf88d",
+    "lane": {
+      "lease": "mbit10-evaluation-node0",
+      "generation": 430,
+      "load1_at_start": 1.11,
+      "started_utc": "2026-09-30T05:04:59Z",
+      "ended_utc": "2026-09-30T05:33:24Z",
+      "io_uring_disabled": 0
+    },
+    "tests": {
+      "passed": 238,
+      "failed": 0,
+      "seconds": 1672.04,
+      "selection": "all of test_provider_guard.py and test_provider_pins.py, every 2026-09-30 workspace case, and prior audit/derivation/repair workspace cases"
+    },
+    "retained_reaudit": {
+      "cases": 6,
+      "decisions_match": true,
+      "completed_mode": "codex-toy, claude-toy and codex-dx100-a2 also pass with completed=True (terminal-event rule)",
+      "note": "First in-lane attempt failed to import swdb (script path); rerun outside the lane with PYTHONPATH, single-threaded log reading only."
+    },
+    "real_codex_toy": {
+      "cli_version": "codex-cli 0.153.0",
+      "returncode": 0,
+      "passed": true,
+      "wall_s": 32.21845731791109,
+      "untraced_network_filter": [
+        "io_uring_setup",
+        "sendto+MSG_FASTOPEN",
+        "sendmsg+MSG_FASTOPEN",
+        "sendmmsg+MSG_FASTOPEN"
+      ],
+      "supervisor_filter_enforced": true,
+      "login_copy_deleted": true,
+      "scope": "Toy guard feasibility under the new seccomp network filter; no rewrite or performance claim."
+    },
+    "local_validation": {
+      "workspace_file": "656 passed in 1502.68 s (Mac, before the final real-CLI detection narrowing)",
+      "pins_campaign_reuse": "49 passed in 479.05 s; after narrowing, rewrite_stream + pins 27 passed in 453.63 s",
+      "related_files": "rewrite/proposal/capabilities/projection files 69 passed, 13 Linux-only skipped"
+    },
+    "raw_artifacts": [
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260930-a12/lane.json",
+        "sha256": "0a56d77765385c9e47fdf13098cdebb8f6629159777b384059154d7c3a31eedd",
+        "bytes": 753
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260930-a12/pytest.xml",
+        "sha256": "654048c838c3a633b2c68fd4ce7bada391a883dae2248fca61fdc2a8baa821d7",
+        "bytes": 38310
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260930-a12/pytest.log",
+        "sha256": "47f37a327ea4c26da010863fd50c3aadacb9edc7c8699f703b14f8780f17339c",
+        "bytes": 369
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260930-a12/retained-reaudit.json",
+        "sha256": "41b696662d4ff6ff202fe0ca989f2c8f35570f100effea1e3de543f51df7a852",
+        "bytes": 8276
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260930-a12/reaudit.log",
+        "sha256": "d9beb681996bb1063890a033ce22077123a9927e39222275adbfb1a5c62f57af",
+        "bytes": 296
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260930-a12/environment.txt",
+        "sha256": "d8c86aad3e6ddd918ab94fca7dd66dd34dd3a2340d53a61b4fe648b0f17232fc",
+        "bytes": 4448
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260930-a12/codex-spike/receipt.json",
+        "sha256": "87e7cfe21cf23177f7a5bbee3f2a23cf6cc1b2e43c2fc6f80c9115a3c8c6fe40",
+        "bytes": 10132
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260930-a12/codex-spike/stdout.txt",
+        "sha256": "2db73571065c2dbe4766b5cc290fab2cb01f36811e2ebfb9883b8983cea43cf1",
+        "bytes": 2646
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260930-a12/exit.txt",
+        "sha256": "be2c22e29bf63c77feef3b66f4b97f5364fdb90dbc0d7a440bdd694fec272a48",
+        "bytes": 32
+      }
+    ]
   }
 }

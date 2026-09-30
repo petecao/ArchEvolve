@@ -1,7 +1,7 @@
 # Map: Codex and Claude rewrite providers in a guarded workspace
 
 Created: 2026-09-29 17:30 ET
-Updated: 2026-09-29 23:20 ET
+Updated: 2026-09-30 ET
 **Type:** ticket map
 **Status:** resolved
 **Spec:** [spec.md](spec.md)
@@ -38,6 +38,7 @@ rechecks found no remaining issue. The final public workflow selection passed
 | Linux A9 compiler/search repair validation | `de6dce1`; node0 generation 428; load 2.12 | 226 passed in 715.08 s; all six retained-log decisions match expectations |
 | Linux A10 complete workspace collection | `a7cca27`; node1 generation 490; load 1.06 | 443 passed in 1402.63 s; all six retained-log decisions match expectations |
 | Linux A11 final network/Git/Python repair | `3a73c6c`; node0 generation 429; load 1.11 | 216 passed in 695.71 s; all six retained-log decisions match expectations |
+| Linux A12 spec re-review repairs | `42526ad`; node0 generation 430; load 1.11 | 238 passed in 1672.04 s; six retained-log decisions match; real Codex toy passes under the new seccomp filter |
 | Fresh public Codex DX100 A2 | `c8a666f`; node0 generation 426; load 2.61 | Candidate created; original/current audits, guard and cleanup pass; native sources 0/3/8 pass |
 | Fresh public Claude DX100 A2 | Same A2 checkout/lane | Recorded OAuth-expired failure; original/current audits, guard and cleanup pass; no candidate or BFS result |
 
@@ -63,6 +64,11 @@ Linux A11 acceptance and the subsequent whole-diff code review passed.
 The final local network/Python/Git selection passed 154 cases in 321.82 s;
 independent current-blob checks passed 114 cases (76 expected refusals and
 38 expected admissions). All 132 additions are included in A11’s 216-case selection.
+
+A 2026-09-30 independent spec re-review found one P1 audit bypass (brace/glob
+operands reaching the login copy), four P2s and several P3s; all were repaired or
+clarified at `42526ad` and validated by Linux A12. See the
+[review report](validation/code-review.md#spec-re-review-2026-09-30-et).
 
 ## Context pointers
 
