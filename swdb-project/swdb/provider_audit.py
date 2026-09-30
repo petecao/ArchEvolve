@@ -199,7 +199,12 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                 numeric_test = executable in {"test", "["} and any(
                     t in {"-eq", "-ne", "-gt", "-ge", "-lt", "-le"} for t in arguments) and not any(
                     t in {"-e", "-f", "-d", "-r", "-w", "-x", "-s", "-L", "-h"} for t in arguments)
-                if not scalar or not (executable in {"printf", "echo"} or numeric_test):
+                # Exit status expands only to digits. Permit literal reporting
+                # fragments around it, solely as echo/printf data, not test args.
+                status_data = (executable in {"printf", "echo"} and "$?" in token
+                    and token.isascii() and token.isprintable()
+                    and not any(c in token.replace("$?", "") for c in "/\\~*?[]{}$`"))
+                if not (status_data or scalar and (executable in {"printf", "echo"} or numeric_test)):
                     fail("unparsed_command", "provider shell argument cannot be resolved", event)
             if not is_executable and executable and re.fullmatch(compiler_pattern, executable):
                 for flag in compiler_flags:

@@ -310,6 +310,44 @@ def test_direct_workspace_script_compile_and_status_pass(proposal_setup, workspa
 
 
 @pytest.mark.parametrize("wrapped", [False, True])
+@pytest.mark.parametrize("report", ['echo "exit=$?"', 'printf "%s\\n" "status=$?"'])
+def test_literal_exit_status_report_passes_public_submit(proposal_setup, workspace_provider, wrapped, report):
+    body = "mkdir -p build && g++ src/bfs.cc -o build/probe && ./build/probe; " + report
+    value = "/usr/bin/bash -lc " + shlex.quote(body) if wrapped else body
+    result, proposal = submit(proposal_setup, workspace_provider,
+        actions=[{"type": "command", "value": value}],
+        edits=[{"path": "src/bfs.cc", "old": "int alpha = 15", "new": "int alpha = 14"},
+               {"path": "build/probe", "bytes": [127, 69, 76, 70, 0]}])
+    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert audit["passed"] and not audit["violations"] and Path(audit["raw_log"]["path"]).is_file()
+    assert proposal["candidate"] and proposal["provider"]["audit"]["passed"]
+
+
+@pytest.mark.parametrize("value", [
+    'echo "exit=$(cat ../outside/secret.yaml)"',
+    'printf "%s\\n" "status=$(cat ../outside/secret.yaml)"',
+    'echo "$?/../secret"',
+    'printf "%s\\n" "status=$?/../secret"',
+    'echo "$?*"',
+    'printf "%s\\n" "status=$?*"',
+    'echo "exit=$UNKNOWN"',
+    'printf "%s\\n" "status=${UNKNOWN}"',
+    'echo "exit=$?~"',
+    'printf "%s\\n" "status=$?\\fragment"',
+    'echo "exit=$?`cat ../outside/secret.yaml`"',
+    'printf "%s\\n" "status=$?${UNKNOWN}"',
+    'test "exit=$?" -eq 1',
+])
+def test_unsafe_exit_status_report_fails_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider, actions=[{"type": "command", "value": value}])
+    assert result.returncode == 1 and proposal["outcome"]["state"] == "failed"
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert not audit["passed"] and "unparsed_command" in {v["code"] for v in audit["violations"]}
+    assert "candidate" not in proposal and Path(audit["raw_log"]["path"]).is_file()
+
+
+@pytest.mark.parametrize("wrapped", [False, True])
 def test_external_executable_fails_public_submit(proposal_setup, workspace_provider, wrapped):
     value = "/data1/other-repo/evaluator"
     if wrapped:
