@@ -94,7 +94,7 @@ print(json.dumps({"type":"turn.completed","usage":{"output_tokens":1}}),flush=Tr
     assert not (Path(meta["workspace_manifest"]["root"]).parent / "forbidden.txt").exists()
 
 
-RESOURCE_PROGRAM = '''import json, os, shutil, sys, threading, time
+RESOURCE_PROGRAM = '''import ctypes, json, os, platform, shutil, signal, sys, threading, time
 from pathlib import Path
 if "--version" in sys.argv:
  print("resource-guard-fixture-1"); raise SystemExit(0)
@@ -112,7 +112,7 @@ elif mode == "workspace":
  for name in ("resource-growth-a.bin", "resource-growth-b.bin"):
   with Path("build", name).open("wb") as handle:
    handle.truncate(3 * 1024**3)
-elif mode in {"orphan_threads", "command_timeout"}:
+elif mode in {"orphan_threads", "supervisor_signals", "command_timeout"}:
  # A model-selected helper named like Codex's persistent service must retain
  # the tool watchdog: its executable and parent are not the selected CLI.
  if mode == "command_timeout":
@@ -120,16 +120,63 @@ elif mode in {"orphan_threads", "command_timeout"}:
   shutil.copyfile("/usr/bin/sleep", helper)
   helper.chmod(0o700)
  provider, tracer, provider_session = os.getpid(), os.getppid(), os.getsid(0)
+ if mode == "supervisor_signals":
+  protection = json.loads((Path.cwd().parent / "guard/provider-process.json").read_text())["supervisor_protection"]
  first = os.fork()
  if first == 0:
   os.setsid()
   if os.fork() != 0: os._exit(0)
+  observations = {}
+  if mode == "supervisor_signals":
+   # Attack immediately after the double fork, before waiting for adoption or
+   # the observer's first sample. The inherited filter must protect continuity.
+   worker, trace = protection["supervisors"]
+   libc = ctypes.CDLL(None, use_errno=True)
+   libc.syscall.restype = ctypes.c_long
+   calls = ({"kill":62,"tkill":200,"tgkill":234,"queue":129,"thread_queue":297}
+    if platform.machine() == "x86_64" else {"kill":129,"tkill":130,"tgkill":131,"queue":138,"thread_queue":240})
+   def check(name, action):
+    try: action(); observations[name] = "allowed"
+    except OSError as error: observations[name] = "blocked:"+str(error.errno)
+   def syscall(number, *arguments):
+    result = libc.syscall(ctypes.c_long(number), *arguments)
+    if result < 0: raise OSError(ctypes.get_errno(), "signal syscall rejected")
+   def pidfd_probe(pid):
+    descriptor = os.pidfd_open(pid)
+    os.close(descriptor)
+   check("kill_tracer", lambda:os.kill(tracer, signal.SIGKILL))
+   check("kill_worker", lambda:os.kill(worker["pid"], signal.SIGKILL))
+   check("pidfd_tracer", lambda:pidfd_probe(tracer))
+   check("pidfd_worker", lambda:pidfd_probe(worker["pid"]))
+   check("kill_all", lambda:os.kill(-1, 0))
+   check("group_tracer", lambda:os.kill(-trace["process_group"], 0))
+   check("group_worker", lambda:os.kill(-worker["process_group"], 0))
+   check("tkill_tracer", lambda:syscall(calls["tkill"], ctypes.c_int(trace["tids"][0]), ctypes.c_int(0)))
+   check("tgkill_tracer", lambda:syscall(calls["tgkill"], ctypes.c_int(tracer), ctypes.c_int(trace["tids"][0]), ctypes.c_int(0)))
+   check("queue_tracer", lambda:syscall(calls["queue"], ctypes.c_int(tracer), ctypes.c_int(0), ctypes.c_void_p()))
+   check("thread_queue_tracer", lambda:syscall(calls["thread_queue"], ctypes.c_int(tracer), ctypes.c_int(trace["tids"][0]), ctypes.c_int(0), ctypes.c_void_p()))
+   check("high_word_tracer", lambda:syscall(calls["kill"], ctypes.c_ulonglong((1<<32)|tracer), ctypes.c_int(signal.SIGKILL)))
+   check("own_group", lambda:os.kill(0, 0))
+   check("own_tkill", lambda:syscall(calls["tkill"], ctypes.c_int(os.getpid()), ctypes.c_int(0)))
+   check("own_tgkill", lambda:syscall(calls["tgkill"], ctypes.c_int(os.getpid()), ctypes.c_int(os.getpid()), ctypes.c_int(0)))
+   for action in ("helper_sigterm", "helper_pidfd_signal"):
+    helper_pid = os.fork()
+    if helper_pid == 0:
+     time.sleep(5); os._exit(0)
+    if action == "helper_sigterm": os.kill(helper_pid, signal.SIGTERM)
+    else:
+     descriptor = os.pidfd_open(helper_pid)
+     try: signal.pidfd_send_signal(descriptor, signal.SIGTERM)
+     finally: os.close(descriptor)
+    _, status = os.waitpid(helper_pid, 0)
+    observations[action] = "terminated" if os.WIFSIGNALED(status) and os.WTERMSIG(status) == signal.SIGTERM else "unexpected"
   # Double-forking used to escape PPid closure and process-group cleanup.
   # Allocate only after adoption so the observer must find the orphan.
   deadline = time.monotonic() + 5
   while os.getppid() != tracer and time.monotonic() < deadline: time.sleep(.01)
   Path("build/detached-pid.json").write_text(json.dumps({"pid":os.getpid(),
-   "parent":os.getppid(), "session":os.getsid(0), "provider_session":provider_session}))
+   "parent":os.getppid(), "session":os.getsid(0), "provider_session":provider_session,
+   "signal_results":observations}))
   if mode == "command_timeout": os.execv(str(helper.resolve()), [str(helper), "130"])
   gate = threading.Event()
   for number in range(17): threading.Thread(target=gate.wait, daemon=True).start()
@@ -149,6 +196,7 @@ print(json.dumps({"type":"turn.completed"}), flush=True)
 @pytest.mark.parametrize("mode,reason", [
     ("threads", "provider resource limit exceeded"),
     ("orphan_threads", "provider resource limit exceeded"),
+    ("supervisor_signals", "provider resource limit exceeded"),
     ("workspace", "provider workspace exceeds"),
     ("command_timeout", "provider tool command exceeds the 120 s wall-time limit"),
 ])
@@ -193,7 +241,10 @@ def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_pat
     assert meta["guard_result"]["original_provider"]["pid"] == json.loads(
         (workspace / "build/resource-pid.json").read_text())["provider"]
     assert any(row["pid"] == cleanup["tracer_pid"] for row in cleanup["processes_observed"])
-    if mode in {"orphan_threads", "command_timeout"}:
+    protection = meta["guard_result"]["supervisor_protection"]
+    assert protection["enforced"] and protection["provider_session"] == meta["guard_result"]["original_provider"]["pid"]
+    assert all(row["session"] != protection["provider_session"] for row in protection["supervisors"])
+    if mode in {"orphan_threads", "supervisor_signals", "command_timeout"}:
         detached = json.loads((workspace / "build/detached-pid.json").read_text())
         assert detached["parent"] == cleanup["tracer_pid"]
         assert detached["session"] != detached["provider_session"]
@@ -206,7 +257,15 @@ def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_pat
             pass
         else:
             assert int(fields[19]) != identity["start_time_ticks"], "detached owned helper survived cleanup"
-        if mode == "orphan_threads":
+        if mode == "supervisor_signals":
+            observed = detached["signal_results"]
+            blocked = {"kill_tracer", "kill_worker", "pidfd_tracer", "pidfd_worker", "kill_all",
+                       "group_tracer", "group_worker", "tkill_tracer", "tgkill_tracer", "queue_tracer",
+                       "thread_queue_tracer", "high_word_tracer"}
+            assert {key: observed[key] for key in blocked} == dict.fromkeys(blocked, "blocked:1")
+            assert all(observed[key] == "allowed" for key in ("own_group", "own_tkill", "own_tgkill"))
+            assert observed["helper_sigterm"] == observed["helper_pidfd_signal"] == "terminated"
+        if mode in {"orphan_threads", "supervisor_signals"}:
             details = json.loads((Path(meta["audit"]["raw_log"]["path"]).parent / "resource-overrun.json").read_text())
             orphan = next(row for row in details if row["pid"] == detached["pid"])
             assert orphan["parent"] == cleanup["tracer_pid"] and orphan["threads"] > 1
@@ -214,7 +273,7 @@ def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_pat
             # threads start. Admission depends on the actual aggregate count.
             assert sum(row["threads"] for row in details) > policy["limits"]["threads"]
             assert any(row["pid"] == cleanup["tracer_pid"] for row in details)
-    if mode in {"threads", "orphan_threads"}:
+    if mode in {"threads", "orphan_threads", "supervisor_signals"}:
         measured = next(r for r in meta["guard_result"]["reasons"] if reason in r)
         assert int(re.search(r"threads=(\d+)", measured)[1]) > 16
     elif mode == "workspace":

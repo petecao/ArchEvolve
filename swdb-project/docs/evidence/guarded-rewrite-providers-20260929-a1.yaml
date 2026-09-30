@@ -1,7 +1,7 @@
 {
   "format": "swdb.guarded-rewrite-provider-evidence.v1",
   "created": "2026-09-29",
-  "updated_et": "2026-09-29 19:39 ET",
+  "updated_et": "2026-09-29 19:58 ET",
   "state": "validation_pending",
   "host": "mbit10",
   "scope": "Guard feasibility and actual provider-native correctness; no performance gain claim.",
@@ -978,6 +978,21 @@
           ],
           "lane": null,
           "environment": null
+        },
+        "current_audit_gate": {
+          "passed": false,
+          "reaudit_checkout": "0cc5f9d712d148a0fa158c8e5f4452576317429d",
+          "raw_receipt": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/retained-reaudit.json",
+            "bytes": 3998,
+            "sha256": "4e184f63ff9285c7fc3d1ae161d7bad16163e1bbe97bb5631314af26f91c48b9"
+          },
+          "reasons": [
+            "provider shell body has unsupported dynamic syntax",
+            "provider shell argument cannot be resolved",
+            "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d"
+          ],
+          "note": "Native correctness remains a recorded observation. The stricter parser cannot approve the shell regex edit, so this attempt does not satisfy the final current audit gate. A fresh attempt will use editing tools and literal shell commands."
         }
       },
       {
@@ -1178,11 +1193,15 @@
     "log": ".scratch/rewrite-provider-codex-2026-09-29/validation/full-regression-final.log",
     "note": "The long run began before the final audit additions; separately recorded fresh targeted cases and final Linux collection cover those changes.",
     "targeted_workspace": {
-      "passed": 114,
-      "seconds": 232.67,
-      "final_targeted_passed": 24,
-      "final_targeted_deselected": 98,
-      "final_targeted_seconds": 48.41
+      "passed": 195,
+      "seconds": 396.7,
+      "focused_direct_opaque_glob_passed": 29,
+      "focused_executable_compiler_paths_passed": 40,
+      "independent_original_repro": {
+        "passed": 8,
+        "skipped": 2,
+        "seconds": 18.23
+      }
     },
     "targeted_guard": {
       "passed": 16,
@@ -1219,5 +1238,193 @@
     "Codex commands inherit outer TCP443 permission; independent model-API connection audit plus event-command audit is the accepted fallback.",
     "Codex JSON command_execution items omit cwd; audit uses workspace-root semantics and explicitly observable cd commands.",
     "Resource excess and audit failure are retained, never omitted as noise."
-  ]
+  ],
+  "linux_prior_validation": {
+    "checkout": "0cc5f9d712d148a0fa158c8e5f4452576317429d",
+    "lane": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-09-29T23:54:19Z",
+        "exit_code": 1,
+        "host": "mbit10",
+        "job": "swdb-provider-linux-a5",
+        "lease_generation": 423,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 4.36,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-09-29T23:34:48Z"
+      }
+    },
+    "tests": {
+      "passed": 146,
+      "seconds": 1170.5
+    },
+    "reaudit": {
+      "checkout": "0cc5f9d712d148a0fa158c8e5f4452576317429d",
+      "cases": [
+        {
+          "case": "codex-toy",
+          "kind": "codex",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 11,
+            "commands": 4,
+            "file_accesses": 14,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/stdout.txt",
+              "sha256": "dcccb03a62d55b2881795b6307a515ee8e5ee7075953f8f16a8fe4116c628293",
+              "bytes": 2506
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-toy",
+          "kind": "claude",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 144,
+            "commands": 1,
+            "file_accesses": 5,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/stdout.txt",
+              "sha256": "fe494b5af5cf4b3b5dde3160374389123eb140273dc46ec04a7dd630340b5170",
+              "bytes": 45624
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "codex-dx100",
+          "kind": "codex",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "failed",
+            "passed": false,
+            "events": 19,
+            "commands": 10,
+            "file_accesses": 40,
+            "reasons": [
+              "provider shell body has unsupported dynamic syntax",
+              "provider shell argument cannot be resolved",
+              "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d"
+            ],
+            "violations": [
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell argument cannot be resolved",
+                "event": 11
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 12
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell argument cannot be resolved",
+                "event": 12
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
+                "event": 12
+              }
+            ],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "18ffb5a54d5e36a022b0ac1a43c98c3e315d528455f5fa6728c84dac1b63492f",
+              "bytes": 32220
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-dx100",
+          "kind": "claude",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 4,
+            "commands": 0,
+            "file_accesses": 0,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa",
+              "bytes": 3165
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        }
+      ]
+    },
+    "artifacts": {
+      "pytest.log": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/pytest.log",
+        "bytes": 273,
+        "sha256": "666c00d0c900d9e9f71d79d03bd036c8f666d2ca8d0507c02fc0b3521fc9ec7e"
+      },
+      "pytest.xml": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/pytest.xml",
+        "bytes": 23392,
+        "sha256": "8c699d2d429a952fa83ac717616f8a2e5d15af56645ef9369f34295ef72d380f"
+      },
+      "retained-reaudit.json": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/retained-reaudit.json",
+        "bytes": 3998,
+        "sha256": "4e184f63ff9285c7fc3d1ae161d7bad16163e1bbe97bb5631314af26f91c48b9"
+      },
+      "environment.txt": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/environment.txt",
+        "bytes": 4446,
+        "sha256": "289cccb0acf12225fceb42a2e198bbbdf89717d024ffffa0773ee02092c1f64c"
+      },
+      "lane.json": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/lane.json",
+        "bytes": 4579,
+        "sha256": "0332a30aa8d681e4681fb12f757a339db62492bc6e3f3999043251043be7cc1f"
+      },
+      "exit.txt": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a5/exit.txt",
+        "bytes": 16,
+        "sha256": "e3b9aa3f1e6c6991641f48ab228f0120fa7bfad2b443b0233a06a4759fa34425"
+      }
+    },
+    "state": "tests_passed_one_retained_reaudit_failed"
+  },
+  "primary_linux_api_reference": {
+    "subreaper": "https://www.man7.org/linux/man-pages/man2/PR_SET_CHILD_SUBREAPER.2const.html",
+    "finding": "Subreaper flag survives execve; reparented descendants adopt the nearest live ancestor subreaper."
+  }
 }

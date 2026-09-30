@@ -3,8 +3,11 @@
 The standalone entry point imports only the standard library. It fails closed if
 ABI 4 is unavailable; the evaluator stays outside the confined process tree.
 An outside-Landlock subreaper execs strace in place and adopts detached helpers.
+A native seccomp filter protects supervisor signal targets while preserving
+ordinary helper signals; this is not general hostile-process isolation.
 """
 import ctypes
+import errno
 import json
 import os
 import platform
@@ -35,6 +38,83 @@ def _kernel_key(row):
     return row["pid"], row["start_time_ticks"]
 
 
+def _supervisor_identity(pid):
+    identity = _process_identity(pid)
+    return {"pid": pid, "start_time_ticks": identity["start_time_ticks"],
+            "tids": sorted(int(entry.name) for entry in Path(f"/proc/{pid}/task").iterdir()),
+            "process_group": os.getpgid(pid), "session": os.getsid(pid)}
+
+
+SIGNAL_SYSCALLS = {
+    "x86_64": {"arch": 0xc000003e, "seccomp": 317, "kill": 62, "tkill": 200,
+               "tgkill": 234, "rt_sigqueueinfo": 129, "rt_tgsigqueueinfo": 297, "pidfd_open": 434},
+    "aarch64": {"arch": 0xc00000b7, "seccomp": 277, "kill": 129, "tkill": 130,
+                "tgkill": 131, "rt_sigqueueinfo": 138, "rt_tgsigqueueinfo": 240, "pidfd_open": 434}}
+
+
+class _SockFilter(ctypes.Structure):
+    _fields_ = [("code", ctypes.c_ushort), ("jt", ctypes.c_ubyte),
+               ("jf", ctypes.c_ubyte), ("k", ctypes.c_uint32)]
+
+
+class _SockFProg(ctypes.Structure):
+    _fields_ = [("len", ctypes.c_ushort), ("filter", ctypes.POINTER(_SockFilter))]
+
+
+def _protect_supervisors(protection):
+    """Narrow signal continuity protection; not general hostile-process isolation."""
+    machine = platform.machine()
+    if machine not in SIGNAL_SYSCALLS or sys.byteorder != "little":
+        raise GuardError("provider supervisor signal filter requires a supported native little-endian ABI")
+    calls = SIGNAL_SYSCALLS[machine]
+    supervisors = protection["supervisors"]
+    ids = sorted({value for row in supervisors for value in [row["pid"], *row["tids"]]})
+    groups = sorted({row["process_group"] for row in supervisors})
+    if not ids or any(value <= 0 for value in ids + groups):
+        raise GuardError("provider supervisor signal identities are invalid")
+    # Provider-root enters its own session before filtering. Descendants cannot
+    # join a supervisor's group across sessions, so kill(0) remains available for
+    # legitimate cleanup without reaching the tracer or evaluator.
+    if os.getsid(0) != os.getpid() or any(os.getsid(0) == row["session"] for row in supervisors):
+        raise GuardError("provider session is not separate from its protected supervisors")
+    allow, deny, kill = 0x7fff0000, 0x00050000 | errno.EPERM, 0x80000000
+    load, equal, jump, bits, ret = 0x20, 0x15, 0x05, 0x45, 0x06
+    # seccomp_data: nr at 0, arch at 4, uint64 args at 16. Native PID arguments
+    # are signed 32-bit values; compare their low word even if an attacker puts
+    # unrelated bits in the high word. Reject compat/x32 before syscall dispatch.
+    program = [(load, 0, 0, 4), (equal, 1, 0, calls["arch"]), (ret, 0, 0, kill),
+               (load, 0, 0, 0), (bits, 0, 1, 0x40000000), (ret, 0, 0, kill)]
+    checks = {"kill": [(0, [*ids, -1, *(-value for value in groups)])],
+              "tkill": [(0, ids)], "tgkill": [(0, ids), (1, ids)],
+              "rt_sigqueueinfo": [(0, ids)],
+              "rt_tgsigqueueinfo": [(0, ids), (1, ids)], "pidfd_open": [(0, ids)]}
+    for name, arguments in checks.items():
+        block = []
+        for argument, forbidden in arguments:
+            block.append((load, 0, 0, 16 + 8 * argument))
+            for value in forbidden:
+                block.extend([(equal, 0, 1, value & 0xffffffff), (ret, 0, 0, deny)])
+        block.append((ret, 0, 0, allow))
+        program.extend([(load, 0, 0, 0), (equal, 1, 0, calls[name]),
+                        (jump, 0, 0, len(block)), *block])
+    program.append((ret, 0, 0, allow))
+    if len(program) > 4096:
+        raise GuardError("provider supervisor signal filter exceeds the kernel instruction limit")
+    instructions = (_SockFilter * len(program))(*(_SockFilter(*entry) for entry in program))
+    descriptor = _SockFProg(len(program), instructions)
+    libc = ctypes.CDLL(None, use_errno=True)
+    if libc.prctl(39, 0, 0, 0, 0) != 1:
+        raise GuardError("provider supervisor signal filter requires no_new_privs")
+    # TSYNC is required, never silently retried with fewer flags. This trusted
+    # launcher has one thread; all later CLI threads and children inherit it.
+    installed = libc.syscall(calls["seccomp"], 1, 1, ctypes.byref(descriptor))
+    if installed != 0:
+        reason = os.strerror(ctypes.get_errno()) if installed < 0 else f"thread synchronization failed for TID {installed}"
+        raise GuardError("provider supervisor signal filter installation failed: " + reason)
+    if libc.prctl(21, 0, 0, 0, 0) != 2:
+        raise GuardError("provider supervisor signal filter was not enabled")
+
+
 class _OwnedTree:
     """Observer-owned identities survive reparenting, setsid and PID reuse."""
 
@@ -45,6 +125,7 @@ class _OwnedTree:
         self.records = {}
         self.cleanup_result = None
         self.first_observed = None
+        self.supervisor_protection = None
 
     def handshakes(self, child, *, required=False):
         ownership = self.policy["process_ownership"]
@@ -70,6 +151,18 @@ class _OwnedTree:
         original = _kernel_key(provider["identity"])
         if self.provider is not None and self.provider != original:
             raise GuardError("provider root kernel identity changed")
+        protection = provider.get("supervisor_protection")
+        if (not protection or protection.get("provider_session") != original[0]
+                or protection.get("architecture") != platform.machine()
+                or [_kernel_key(row) for row in protection.get("supervisors", [])]
+                    != [_kernel_key(self.policy["supervisor_protection"]["observer"]), tracer]):
+            raise GuardError("provider supervisor signal identities do not match this attempt")
+        marker = Path(ownership["filter_marker"])
+        if not marker.exists() or marker.read_bytes() != b"1":
+            if required:
+                raise GuardError("provider supervisor signal filter was not installed")
+            return
+        self.supervisor_protection = {**protection, "enforced": True}
         self.tracer, self.provider = tracer, original
 
     def snapshot(self, child):
@@ -368,7 +461,8 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                   "login_path": str(login_path) if login_path else None,
                   "limits": {"threads": 16, "memory_bytes": 32 * 1024**3,
                              "command_seconds": 120, "workspace_bytes": 5 * 1024**3},
-                  "residual_risks": ["Landlock ABI 4 does not restrict UDP", "login copy readable during session"],
+                  "residual_risks": ["Landlock ABI 4 does not restrict UDP", "login copy readable during session",
+                                     "supervisor filter covers listed native signal APIs, not general hostile-process isolation"],
                   "command_network_wrapper": kind == "claude"}
         policy["process_ownership"] = {
             "subreaper": True, "bootstrap": "outside Landlock; execs strace in the same PID",
@@ -376,7 +470,14 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
             "cleanup": "pidfd or checked kernel start time; detached descendants before tracer",
             "subreaper_record": str(guard_folder / "subreaper.json"),
             "provider_record": str(guard_folder / "provider-process.json"),
+            "filter_marker": str(guard_folder / "supervisor-filter.ready"),
             "nonce": os.urandom(16).hex()}
+        policy["supervisor_protection"] = {
+            "required": True, "observer": _supervisor_identity(os.getpid()),
+            "architecture": platform.machine(), "compat_abi_allowed": False,
+            "scope": "listed native signal APIs and direct pidfd_open; not general hostile-process isolation",
+            "provider_session": "separate from both supervisor sessions; preserves ordinary kill(0)",
+            "pidfd_signals": "ordinary child pidfds allowed; supervisor pidfds not inherited or openable"}
         if kind == "codex":
             policy["session_state"] = {"sqlite_home": str(guard_folder / "ephemeral-state"),
                                        "writable": False, "ephemeral": True}
@@ -529,6 +630,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                             failures.append("provider outbound connection is outside the model API")
             result = {"passed": not failures, "reasons": sorted(set(failures)), "trace": str(trace),
                       "process_cleanup": owned.cleanup_result,
+                      "supervisor_protection": owned.supervisor_protection,
                       "original_provider": ({"pid": owned.provider[0], "start_time_ticks": owned.provider[1]}
                                             if owned.provider else None)}
             try:
@@ -591,6 +693,7 @@ def main():
     options = args[1:split]
     if not command or options not in ([], ["--inner"], ["--subreaper"], ["--provider-root"]):
         raise GuardError("invalid provider guard launch mode")
+    filter_fd, protection = None, None
     if options in (["--subreaper"], ["--provider-root"]):
         ownership = policy["process_ownership"]
         identity = _process_identity(os.getpid())
@@ -603,10 +706,31 @@ def main():
                     or libc.prctl(37, ctypes.byref(enabled), 0, 0, 0) < 0 or enabled.value != 1):
                 raise GuardError("provider tracer subreaper could not be enabled")
             record["subreaper"] = True
+            record["supervisor"] = _supervisor_identity(os.getpid())
             target = Path(ownership["subreaper_record"])
         else:
             parent = _process_identity(os.getppid())
             record["parent_identity"] = {key: parent[key] for key in ("pid", "start_time_ticks")}
+            owner = json.loads(Path(ownership["subreaper_record"]).read_text())
+            observer = _supervisor_identity(policy["supervisor_protection"]["observer"]["pid"])
+            tracer = _supervisor_identity(parent["pid"])
+            if (owner.get("nonce") != ownership["nonce"] or not owner.get("subreaper")
+                    or _kernel_key(owner["identity"]) != _kernel_key(tracer)
+                    or _kernel_key(observer) != _kernel_key(policy["supervisor_protection"]["observer"])):
+                raise GuardError("provider supervisors do not match the trusted launch records")
+            # A separate session prevents kill(0) or setpgid from reaching a
+            # supervisor group while preserving ordinary helper group signals.
+            os.setsid()
+            protection = {"architecture": platform.machine(), "supervisors": [observer, tracer],
+                          "provider_session": os.getsid(0),
+                          "filtered_syscalls": ["kill", "tkill", "tgkill", "rt_sigqueueinfo",
+                                                "rt_tgsigqueueinfo", "pidfd_open"],
+                          "compat_abi_allowed": False, "kill_all_allowed": False}
+            record["supervisor_protection"] = protection
+            # Open a one-byte acknowledgement before Landlock, then write it
+            # only after successful seccomp installation. No model code runs
+            # before this descriptor is closed, and it is never inherited.
+            filter_fd = os.open(ownership["filter_marker"], os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_CLOEXEC, 0o600)
             target = Path(ownership["provider_record"])
         # Publish atomically outside Landlock. The final file is evaluator-owned
         # read-only context for every confined child, so model code cannot forge
@@ -622,7 +746,15 @@ def main():
             # evaluator itself is never a subreaper; no observer process is added.
             os.execvpe(command[0], command, os.environ)
     inner = options == ["--inner"]
-    restrict(policy, inner)
+    try:
+        restrict(policy, inner)
+        if protection is not None:
+            _protect_supervisors(protection)
+            if os.write(filter_fd, b"1") != 1:
+                raise GuardError("provider supervisor signal filter acknowledgement failed")
+    finally:
+        if filter_fd is not None:
+            os.close(filter_fd)
     if inner:
         command = ["/usr/bin/timeout", "--signal=TERM", "--kill-after=5", "120", *command]
     os.execvpe(command[0], command, os.environ)

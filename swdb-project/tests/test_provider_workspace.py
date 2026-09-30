@@ -184,6 +184,10 @@ def test_workspace_derivation_diff_and_login_cleanup(proposal_setup, workspace_p
     assert "BFSVerifier" not in diff
     argv = json.loads((root / "build/received-argv.json").read_text())
     assert "gpt-5.6-sol" in argv if workspace_provider.kind == "codex" else "claude-sonnet-5-5" in argv
+    provider_prompt = argv[-1] if workspace_provider.kind == "codex" else (root / "build/received-stdin.txt").read_text()
+    assert "Use direct editing tools for source changes" in provider_prompt
+    assert "literal command and file operands" in provider_prompt
+    assert "inline interpreters" in provider_prompt and "regex-based code transformations" in provider_prompt
 
 
 @pytest.mark.parametrize("action,code", [
