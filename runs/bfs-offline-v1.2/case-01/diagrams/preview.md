@@ -7,13 +7,13 @@ Generated deterministically from the request YAML. This is a structural view, no
 ```yaml
 contract_version: draft-0.2
 record_kind: illustrative
-kernel_id: gapbs_bfs_top_down_step_fully_connected
-input_ref: examples/received/bfs-fully-connected.features.v1.2.yaml
+kernel_id: gapbs_bfs_top_down_step
+input_ref: examples/received/bfs-sparse.features.v1.2.yaml
 input_revision: e4fc4afdf894f295442cef3604667a469fab8e62
 catalog_ref: catalog/seed.yaml
 catalog_revision: seed-0.1
 source_file: hardware-request.yaml
-source_sha256: 1019ddd5e649c4475e1aa680c3f7333f1a568597448459844d5b7ca817090d97
+source_sha256: 4ff0b4084afd75e7332f474b29ac43c30df409cecd5bedf5d4fe516f41456e0a
 ```
 
 ## Workload context
@@ -31,46 +31,104 @@ selection_signals:
   has_regular_stream: true
   has_read_stream: true
   has_conditional_cas: true
-  reported_large_jumps: false
-  reported_near_unit_indices: true
+  reported_large_jumps: true
+  reported_near_unit_indices: false
 rmw:
   kind: conditional_compare_and_swap
   reported_details:
-    subtype: read_predominated_conditional_cas
+    subtype: conditional_atomic_compare_and_swap
     primitive: CAS(addr=&parent[v], expected=curr_val, new_val=u)
-    execution_frequency:
-      level_1: N - 1 executions (100% commit rate)
-      level_2: 0 executions (bypassed entirely by if (curr_val < 0) filter)
-    contention: zero lock contention across Level 2
+    atomicity_granularity: 4_bytes
+    conflict_frequency: high_to_extreme on hub nodes
+    coherence_effect: cache line bouncing and pipeline stalls (LOCK prefix)
   must_preserve: true
-  phase_execution:
-    level_1: N - 1 executions (100% commit rate)
-    level_2: 0 executions (bypassed entirely by if (curr_val < 0) filter)
-profiling_provenance: null
-frontier_evolution_profile: null
+  phase_execution: {}
+profiling_provenance:
+  benchmark_target: GAPBS BFS (Top-Down Step / TDStep)
+  source_file: benchmarks/gapbs/src/bfs.cc
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  compiler_toolchain: g++ (Ubuntu 11.4.0) -std=c++11 -O3 -fopenmp
+  execution_environment: 16-core Intel Xeon Gold 6226R @ 2.90GHz, 125 GB RAM
+  command_line: OMP_NUM_THREADS=16 ./bfs -g 18 -k 16 -n 5
+  profiled_graph: Kronecker scale 18 (|V|=262,143, |E|=7,610,898 directed)
+frontier_evolution_profile:
+  measurement_scope: Kronecker scale 18, 1 BFS trial traversal
+  traversal_depth: 7
+  levels:
+  - level: 1
+    frontier_size: 1
+    mean_queue_distance: 0.0
+  - level: 2
+    frontier_size: 3
+    mean_queue_distance: 54136.5
+  - level: 3
+    frontier_size: 204
+    mean_queue_distance: 6365.3
+  - level: 4
+    frontier_size: 68519
+    mean_queue_distance: 1287.0
+  - level: 5
+    frontier_size: 103284
+    mean_queue_distance: 30007.1
+  - level: 6
+    frontier_size: 1883
+    mean_queue_distance: 86673.6
+  - level: 7
+    frontier_size: 6
+    mean_queue_distance: 127605.0
 profiling_context:
   evidence_status: reported_not_reproduced
-  reported_command_line: null
+  reported_command_line: OMP_NUM_THREADS=16 ./bfs -g 18 -k 16 -n 5
   counter_measurement_scope: null
-  frontier_measurement_scope: null
+  frontier_measurement_scope: Kronecker scale 18, 1 BFS trial traversal
   cross_section_trial_binding: not_established
   aggregation_policy: retain_sections_separately_no_level_weighting_or_counter_join
-  frontier_level_observations: []
+  frontier_level_observations:
+  - level: 1
+    frontier_size: 1
+    reported_mean_queue_distance: 0.0
+    usable_mean_queue_distance: null
+    distance_status: not_applicable_no_adjacent_pairs
+  - level: 2
+    frontier_size: 3
+    reported_mean_queue_distance: 54136.5
+    usable_mean_queue_distance: 54136.5
+    distance_status: reported
+  - level: 3
+    frontier_size: 204
+    reported_mean_queue_distance: 6365.3
+    usable_mean_queue_distance: 6365.3
+    distance_status: reported
+  - level: 4
+    frontier_size: 68519
+    reported_mean_queue_distance: 1287.0
+    usable_mean_queue_distance: 1287.0
+    distance_status: reported
+  - level: 5
+    frontier_size: 103284
+    reported_mean_queue_distance: 30007.1
+    usable_mean_queue_distance: 30007.1
+    distance_status: reported
+  - level: 6
+    frontier_size: 1883
+    reported_mean_queue_distance: 86673.6
+    usable_mean_queue_distance: 86673.6
+    distance_status: reported
+  - level: 7
+    frontier_size: 6
+    reported_mean_queue_distance: 127605.0
+    usable_mean_queue_distance: 127605.0
+    distance_status: reported
 reported_counters:
-  measurement_platform: Intel Xeon Gold 6226R (16 threads, 2.90 GHz)
-  comparison_vs_sparse_kronecker:
-    instructions_per_cycle_ipc:
-      sparse_kronecker: 0.39
-      fully_connected: 2.68
-    branch_miss_rate:
-      sparse_kronecker: 11.07%
-      fully_connected: 0.01%
-    l1_dcache_miss_rate:
-      sparse_kronecker: 15.14%
-      fully_connected: 2.14%
-    atomic_cas_overhead_cycles:
-      sparse_kronecker: 15.97% (lock cmpxchg)
-      fully_connected: 0.00% (lock cmpxchg)
+  measurement_tool: Linux perf 5.15 (PMU hardware performance counters)
+  metrics:
+    instructions_per_cycle_ipc: 0.39
+    cycles_frequency_ghz: 3.5
+    branch_miss_rate: 11.07%
+    l1_dcache_load_miss_rate: 15.14%
+    llc_load_miss_rate: 24.71%
+    atomic_cas_overhead_cycles: 15.97% (lock cmpxchg stall)
+    average_trial_time_sec: 0.00733
 methodology:
   status: reported_method_bound_to_input
   record_sha256: c1dc5b86c68c5bd0c16eab522b57690ba3131af70d3f5ed78c6f909fe0ac2d9a
@@ -92,6 +150,12 @@ reported_distance_scopes:
   directives are not commands.
 - Different graphs/runs are processed separately. All tuning values remain open; the
   CPU baseline is a comparison, not a measured result.
+- The reported per-level scope is preserved separately from the command/counter context.
+  No counter values are apportioned to levels, and no level means are aggregated across
+  trials.
+- A frontier with fewer than two entries has no adjacent pairs. The reported mean
+  remains in the raw section, but its analysis value is null rather than a measured
+  zero-distance observation.
 - Peter's instrumentation measures adjacent-index proximity, not same cache-line/page
   membership or cache-hit rates. Values are relabeled descriptively and remain outside
   selection rules.
@@ -111,29 +175,12 @@ Open values remain OPEN. Read the candidate details for constraints, behavior, a
 
 [Mermaid source](candidate-01.mmd)
 
-```mermaid
----
-title: "ILLUSTRATIVE | gapbs_bfs_top_down_step_fully_connected | gapbs_bfs_top_down_step_fully_connected--cpu-baseline | comparison_unmeasured"
-config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 320, "nodeSpacing": 24, "rankSpacing": 60, "padding": 12}}
----
-flowchart LR
-  subgraph b0["existing-cpu"]
-    direction TB
-    b0_info["Component: cpu-baseline/existing-cpu<br/>Function: Unmodified TDStep baseline, including<br/>conditional CAS, queue updates and normal cache<br/>behavior."]:::annotation
-    b0_in0["IN: workload<br/>Original buffers and code<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
-    b0_out0["OUT: memory-traffic<br/>Original demand reads and updates<br/>unknown; unknown B/element<br/>memory-facing"]:::memoryPort
-  end
-  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3
-  classDef hostPort fill:#dbeafe,stroke:#2563eb,color:#172554
-  classDef memoryPort fill:#dcfce7,stroke:#16a34a,color:#14532d
-  classDef internalPort fill:#f1f5f9,stroke:#64748b,color:#0f172a
-  classDef unknownPort fill:#fef3c7,stroke:#d97706,color:#78350f
-```
+![diagram](./preview-1.svg)
 
 ### Full candidate details
 
 ```yaml
-id: gapbs_bfs_top_down_step_fully_connected--cpu-baseline
+id: gapbs_bfs_top_down_step--cpu-baseline
 status: comparison_unmeasured
 catalog_entry: cpu-baseline
 catalog_entry_revision: seed-0.1
@@ -160,17 +207,20 @@ selection_basis:
   decision: selected_for_exploration
   exploration_priority_class: comparison
 evidence_refs:
-- input:1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750
+- input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
 - catalog:74ec8d61a02171d6263434fd79669430ade440b4ad9fef735483f7cc17bc54ed
 taxonomy_refs: []
 applicability_conditions: []
 unresolved_requirements:
-- Received values are reported; raw profiling logs, build flags, dataset identity
-  and per-run scope have not been bound/verified by this prototype.
-- Retain conditional CAS for the kernel. A reported zero-execution second phase does
-  not remove the discovery-phase update.
+- Profiling provenance is supplied and retained as reported context. Raw artifacts,
+  exact collection/ROI boundaries and cross-trial correspondence remain unverified;
+  no measurements were reproduced locally.
+- This report includes several graph scales without binding each statistic to a run.
+  Do not transfer values between scales.
 - Array-level features are usable for exploratory retrieval; exact statement IDs and
   profiled-source locations are still absent.
+- Some reported footprints do not use the claimed binary conversion. Original numbers
+  are preserved; exact byte-derived values are separate.
 hardware:
   blocks:
   - id: existing-cpu
@@ -212,64 +262,38 @@ parameter_tuning_owner: arch_evolve
 
 [Mermaid source](candidate-02.mmd)
 
-```mermaid
----
-title: "ILLUSTRATIVE | gapbs_bfs_top_down_step_fully_connected | gapbs_bfs_top_down_step_fully_connected--stride-prefetch-family | conditional"
-config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 320, "nodeSpacing": 24, "rankSpacing": 60, "padding": 12}}
----
-flowchart LR
-  subgraph b0["pattern-observer"]
-    direction TB
-    b0_info["Component: stride-prefetch-family/pattern-<br/>observer<br/>Function: Observe regular/strided access<br/>information; recognition support needs<br/>verification."]:::annotation
-    b0_in0["IN: observations<br/>Observed address/index stream; hardware tap is<br/>not a C intrinsic<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
-    b0_out0["OUT: addresses<br/>Speculative addresses<br/>unknown; unknown B/element<br/>internal"]:::internalPort
-  end
-  subgraph b1["prefetch-issuer"]
-    direction TB
-    b1_info["Component: stride-prefetch-family/prefetch-<br/>issuer<br/>Function: Request data into the existing cache<br/>hierarchy; CPU retains all updates.<br/>request_window_entries: OPEN #91;entries#93;"]:::annotation
-    b1_in0["IN: addresses<br/>Speculative addresses<br/>unknown; unknown B/element<br/>internal"]:::internalPort
-    b1_out0["OUT: requests<br/>Speculative cache requests<br/>unknown; unknown B/element<br/>memory-facing"]:::memoryPort
-  end
-  b0_out0 -->|"predicted addresses"| b1_in0
-  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3
-  classDef hostPort fill:#dbeafe,stroke:#2563eb,color:#172554
-  classDef memoryPort fill:#dcfce7,stroke:#16a34a,color:#14532d
-  classDef internalPort fill:#f1f5f9,stroke:#64748b,color:#0f172a
-  classDef unknownPort fill:#fef3c7,stroke:#d97706,color:#78350f
-```
+![diagram](./preview-2.svg)
 
 ### Full candidate details
 
 ```yaml
-id: gapbs_bfs_top_down_step_fully_connected--stride-prefetch-family
+id: gapbs_bfs_top_down_step--indirect-prefetch-family
 status: conditional
-catalog_entry: stride-prefetch-family
+catalog_entry: indirect-prefetch-family
 catalog_entry_revision: seed-0.1
 catalog_evidence_status: taxonomy_family_unverified_implementation
 target_statement_ids: []
 target_access_ids:
-- access-01
 - access-02
-- access-03
-rationale: Reported near-unit accesses motivate considering simple stream mechanisms
-  while retaining CPU semantics.
+- access-04
+rationale: Indirect addressing motivates investigating prediction/read-ahead; benefit
+  and recognition are unverified.
 selection_basis:
-  catalog_entry: stride-prefetch-family
+  catalog_entry: indirect-prefetch-family
   signal_checks:
-    has_regular_stream: true
+    has_indirect_access: true
   target_access_ids:
-  - access-01
   - access-02
-  - access-03
-  preference_signal: reported_near_unit_indices
+  - access-04
+  preference_signal: reported_large_jumps
   preference_value: true
   decision: selected_for_exploration
   exploration_priority_class: preferred_by_reported_features
 evidence_refs:
-- input:1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750
+- input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
 - catalog:74ec8d61a02171d6263434fd79669430ade440b4ad9fef735483f7cc17bc54ed
 taxonomy_refs:
-- eric-draft-2:2a
+- eric-draft-2:2b
 - eric-draft-2:3a
 - eric-draft-3:A
 applicability_conditions:
@@ -277,21 +301,23 @@ applicability_conditions:
 - Source bindings and read-only/coherence requirements must be established.
 - Performance and correctness require separate evaluation.
 unresolved_requirements:
-- Received values are reported; raw profiling logs, build flags, dataset identity
-  and per-run scope have not been bound/verified by this prototype.
-- Retain conditional CAS for the kernel. A reported zero-execution second phase does
-  not remove the discovery-phase update.
+- Profiling provenance is supplied and retained as reported context. Raw artifacts,
+  exact collection/ROI boundaries and cross-trial correspondence remain unverified;
+  no measurements were reproduced locally.
+- This report includes several graph scales without binding each statistic to a run.
+  Do not transfer values between scales.
 - Array-level features are usable for exploratory retrieval; exact statement IDs and
   profiled-source locations are still absent.
+- Some reported footprints do not use the claimed binary conversion. Original numbers
+  are preserved; exact byte-derived values are separate.
 - Concrete catalog implementation and I/O must be confirmed by Eric.
 - Source bindings and read-only/coherence requirements must be established.
 - Performance and correctness require separate evaluation.
 hardware:
   blocks:
   - id: pattern-observer
-    component_ref: stride-prefetch-family/pattern-observer
-    function: Observe regular/strided access information; recognition support needs
-      verification.
+    component_ref: indirect-prefetch-family/pattern-observer
+    function: Observe indirect access information; recognition support needs verification.
     inputs:
     - id: observations
       payload: Observed address/index stream; hardware tap is not a C intrinsic
@@ -311,7 +337,7 @@ hardware:
     parameters: []
     component_revision: seed-0.1
   - id: prefetch-issuer
-    component_ref: stride-prefetch-family/prefetch-issuer
+    component_ref: indirect-prefetch-family/prefetch-issuer
     function: Request data into the existing cache hierarchy; CPU retains all updates.
     inputs:
     - id: addresses
@@ -359,40 +385,14 @@ parameter_tuning_owner: arch_evolve
 
 [Mermaid source](candidate-03.mmd)
 
-```mermaid
----
-title: "ILLUSTRATIVE | gapbs_bfs_top_down_step_fully_connected | gapbs_bfs_top_down_step_fully_connected--declared-bulk-read-family | conditional"
-config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 320, "nodeSpacing": 24, "rankSpacing": 60, "padding": 12}}
----
-flowchart LR
-  subgraph b0["descriptor-front-end"]
-    direction TB
-    b0_info["Component: declared-bulk-read-family/descriptor-<br/>front-end<br/>Function: Accept software-declared read work and<br/>bounds."]:::annotation
-    b0_in0["IN: description<br/>Read-only source regions and index/range<br/>description<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
-    b0_out0["OUT: work<br/>Declared read work<br/>unknown; unknown B/element<br/>internal"]:::internalPort
-  end
-  subgraph b1["read-engine"]
-    direction TB
-    b1_info["Component: declared-bulk-read-family/read-engine<br/>Function: Form regular/bulk requests for<br/>eligible read streams. CPU retains parent CAS.<br/>request_window_entries: OPEN #91;entries#93;<br/>storage_bytes: OPEN #91;bytes#93;"]:::annotation
-    b1_in0["IN: work<br/>Declared read work<br/>unknown; unknown B/element<br/>internal"]:::internalPort
-    b1_in1["IN: responses<br/>Memory read responses<br/>unknown; unknown B/element<br/>memory-facing"]:::memoryPort
-    b1_out0["OUT: requests<br/>Read requests<br/>unknown; unknown B/element<br/>memory-facing"]:::memoryPort
-    b1_out1["OUT: values<br/>Fetched read-only values<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
-  end
-  b0_out0 -->|"declared work"| b1_in0
-  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3
-  classDef hostPort fill:#dbeafe,stroke:#2563eb,color:#172554
-  classDef memoryPort fill:#dcfce7,stroke:#16a34a,color:#14532d
-  classDef internalPort fill:#f1f5f9,stroke:#64748b,color:#0f172a
-  classDef unknownPort fill:#fef3c7,stroke:#d97706,color:#78350f
-```
+![diagram](./preview-3.svg)
 
 ### Full candidate details
 
 ```yaml
-id: gapbs_bfs_top_down_step_fully_connected--declared-bulk-read-family
+id: gapbs_bfs_top_down_step--declared-gather-family
 status: conditional
-catalog_entry: declared-bulk-read-family
+catalog_entry: declared-gather-family
 catalog_entry_revision: seed-0.1
 catalog_evidence_status: taxonomy_family_unverified_implementation
 target_statement_ids: []
@@ -400,46 +400,49 @@ target_access_ids:
 - access-01
 - access-02
 - access-03
-rationale: Explore bulk movement of eligible regular read streams only if transfer/setup
-  costs and visibility support it.
+rationale: Investigate explicitly declared reads of immutable index/neighbor streams;
+  do not offload mutable parent updates.
 selection_basis:
-  catalog_entry: declared-bulk-read-family
+  catalog_entry: declared-gather-family
   signal_checks:
-    has_regular_stream: true
+    has_indirect_access: true
     has_read_stream: true
   target_access_ids:
   - access-01
   - access-02
   - access-03
-  preference_signal: reported_near_unit_indices
+  preference_signal: reported_large_jumps
   preference_value: true
   decision: selected_for_exploration
   exploration_priority_class: preferred_by_reported_features
 evidence_refs:
-- input:1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750
+- input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
 - catalog:74ec8d61a02171d6263434fd79669430ade440b4ad9fef735483f7cc17bc54ed
 taxonomy_refs:
-- eric-draft-2:2a
+- eric-draft-2:2b
 - eric-draft-2:3a
-- eric-draft-3:B.1.1
+- eric-draft-3:B.1.2
 applicability_conditions:
 - Concrete catalog implementation and I/O must be confirmed by Eric.
 - Source bindings and read-only/coherence requirements must be established.
 - Performance and correctness require separate evaluation.
 unresolved_requirements:
-- Received values are reported; raw profiling logs, build flags, dataset identity
-  and per-run scope have not been bound/verified by this prototype.
-- Retain conditional CAS for the kernel. A reported zero-execution second phase does
-  not remove the discovery-phase update.
+- Profiling provenance is supplied and retained as reported context. Raw artifacts,
+  exact collection/ROI boundaries and cross-trial correspondence remain unverified;
+  no measurements were reproduced locally.
+- This report includes several graph scales without binding each statistic to a run.
+  Do not transfer values between scales.
 - Array-level features are usable for exploratory retrieval; exact statement IDs and
   profiled-source locations are still absent.
+- Some reported footprints do not use the claimed binary conversion. Original numbers
+  are preserved; exact byte-derived values are separate.
 - Concrete catalog implementation and I/O must be confirmed by Eric.
 - Source bindings and read-only/coherence requirements must be established.
 - Performance and correctness require separate evaluation.
 hardware:
   blocks:
   - id: descriptor-front-end
-    component_ref: declared-bulk-read-family/descriptor-front-end
+    component_ref: declared-gather-family/descriptor-front-end
     function: Accept software-declared read work and bounds.
     inputs:
     - id: description
@@ -460,8 +463,8 @@ hardware:
     parameters: []
     component_revision: seed-0.1
   - id: read-engine
-    component_ref: declared-bulk-read-family/read-engine
-    function: Form regular/bulk requests for eligible read streams. CPU retains parent
+    component_ref: declared-gather-family/read-engine
+    function: Form indirect requests for eligible read streams. CPU retains parent
       CAS.
     inputs:
     - id: work
@@ -531,17 +534,18 @@ parameter_tuning_owner: arch_evolve
   - hardware_performance_profile
   - indirect_access_distances
   id: raw-profile-missing
-  message: Received values are reported; raw profiling logs, build flags, dataset
-    identity and per-run scope have not been bound/verified by this prototype.
+  message: Profiling provenance is supplied and retained as reported context. Raw
+    artifacts, exact collection/ROI boundaries and cross-trial correspondence remain
+    unverified; no measurements were reproduced locally.
   severity: needs_clarification
 - affects:
-  - phase_specialization
-  - correctness
+  - measurement_scope
   fields:
-  - operations.rmw_operation.execution_frequency
-  id: phase-specific-cas
-  message: Retain conditional CAS for the kernel. A reported zero-execution second
-    phase does not remove the discovery-phase update.
+  - working_set.scale_examples
+  - indirect_access_distances
+  id: multiple-scales
+  message: This report includes several graph scales without binding each statistic
+    to a run. Do not transfer values between scales.
   severity: needs_clarification
 - affects:
   - intrinsic_placement
@@ -551,5 +555,26 @@ parameter_tuning_owner: arch_evolve
   id: statement-locations-missing
   message: Array-level features are usable for exploratory retrieval; exact statement
     IDs and profiled-source locations are still absent.
+  severity: needs_clarification
+- affects:
+  - footprint_units
+  details:
+  - small_scale_g18.parent_footprint_mb=1.05 matches decimal conversion; explanation
+    claims binary.
+  - small_scale_g18.offsets_footprint_mb=1.05 matches decimal conversion; explanation
+    claims binary.
+  - small_scale_g18.neighbors_footprint_mb=30.44 matches decimal conversion; explanation
+    claims binary.
+  - large_scale_g24.parent_footprint_mb=67.11 matches decimal conversion; explanation
+    claims binary.
+  - large_scale_g24.offsets_footprint_mb=67.11 matches decimal conversion; explanation
+    claims binary.
+  - large_scale_g24.neighbors_footprint_mb=2083.01 matches decimal conversion; explanation
+    claims binary.
+  fields:
+  - working_set
+  id: footprint-unit-inconsistency
+  message: Some reported footprints do not use the claimed binary conversion. Original
+    numbers are preserved; exact byte-derived values are separate.
   severity: needs_clarification
 ```

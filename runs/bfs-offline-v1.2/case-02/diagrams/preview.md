@@ -111,24 +111,7 @@ Open values remain OPEN. Read the candidate details for constraints, behavior, a
 
 [Mermaid source](candidate-01.mmd)
 
-```mermaid
----
-title: "ILLUSTRATIVE | gapbs_bfs_top_down_step_fully_connected | gapbs_bfs_top_down_step_fully_connected--cpu-baseline | comparison_unmeasured"
-config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 320, "nodeSpacing": 24, "rankSpacing": 60, "padding": 12}}
----
-flowchart LR
-  subgraph b0["existing-cpu"]
-    direction TB
-    b0_info["Component: cpu-baseline/existing-cpu<br/>Function: Unmodified TDStep baseline, including<br/>conditional CAS, queue updates and normal cache<br/>behavior."]:::annotation
-    b0_in0["IN: workload<br/>Original buffers and code<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
-    b0_out0["OUT: memory-traffic<br/>Original demand reads and updates<br/>unknown; unknown B/element<br/>memory-facing"]:::memoryPort
-  end
-  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3
-  classDef hostPort fill:#dbeafe,stroke:#2563eb,color:#172554
-  classDef memoryPort fill:#dcfce7,stroke:#16a34a,color:#14532d
-  classDef internalPort fill:#f1f5f9,stroke:#64748b,color:#0f172a
-  classDef unknownPort fill:#fef3c7,stroke:#d97706,color:#78350f
-```
+![diagram](./preview-1.svg)
 
 ### Full candidate details
 
@@ -212,31 +195,7 @@ parameter_tuning_owner: arch_evolve
 
 [Mermaid source](candidate-02.mmd)
 
-```mermaid
----
-title: "ILLUSTRATIVE | gapbs_bfs_top_down_step_fully_connected | gapbs_bfs_top_down_step_fully_connected--stride-prefetch-family | conditional"
-config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 320, "nodeSpacing": 24, "rankSpacing": 60, "padding": 12}}
----
-flowchart LR
-  subgraph b0["pattern-observer"]
-    direction TB
-    b0_info["Component: stride-prefetch-family/pattern-<br/>observer<br/>Function: Observe regular/strided access<br/>information; recognition support needs<br/>verification."]:::annotation
-    b0_in0["IN: observations<br/>Observed address/index stream; hardware tap is<br/>not a C intrinsic<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
-    b0_out0["OUT: addresses<br/>Speculative addresses<br/>unknown; unknown B/element<br/>internal"]:::internalPort
-  end
-  subgraph b1["prefetch-issuer"]
-    direction TB
-    b1_info["Component: stride-prefetch-family/prefetch-<br/>issuer<br/>Function: Request data into the existing cache<br/>hierarchy; CPU retains all updates.<br/>request_window_entries: OPEN #91;entries#93;"]:::annotation
-    b1_in0["IN: addresses<br/>Speculative addresses<br/>unknown; unknown B/element<br/>internal"]:::internalPort
-    b1_out0["OUT: requests<br/>Speculative cache requests<br/>unknown; unknown B/element<br/>memory-facing"]:::memoryPort
-  end
-  b0_out0 -->|"predicted addresses"| b1_in0
-  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3
-  classDef hostPort fill:#dbeafe,stroke:#2563eb,color:#172554
-  classDef memoryPort fill:#dcfce7,stroke:#16a34a,color:#14532d
-  classDef internalPort fill:#f1f5f9,stroke:#64748b,color:#0f172a
-  classDef unknownPort fill:#fef3c7,stroke:#d97706,color:#78350f
-```
+![diagram](./preview-2.svg)
 
 ### Full candidate details
 
@@ -359,33 +318,7 @@ parameter_tuning_owner: arch_evolve
 
 [Mermaid source](candidate-03.mmd)
 
-```mermaid
----
-title: "ILLUSTRATIVE | gapbs_bfs_top_down_step_fully_connected | gapbs_bfs_top_down_step_fully_connected--declared-bulk-read-family | conditional"
-config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 320, "nodeSpacing": 24, "rankSpacing": 60, "padding": 12}}
----
-flowchart LR
-  subgraph b0["descriptor-front-end"]
-    direction TB
-    b0_info["Component: declared-bulk-read-family/descriptor-<br/>front-end<br/>Function: Accept software-declared read work and<br/>bounds."]:::annotation
-    b0_in0["IN: description<br/>Read-only source regions and index/range<br/>description<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
-    b0_out0["OUT: work<br/>Declared read work<br/>unknown; unknown B/element<br/>internal"]:::internalPort
-  end
-  subgraph b1["read-engine"]
-    direction TB
-    b1_info["Component: declared-bulk-read-family/read-engine<br/>Function: Form regular/bulk requests for<br/>eligible read streams. CPU retains parent CAS.<br/>request_window_entries: OPEN #91;entries#93;<br/>storage_bytes: OPEN #91;bytes#93;"]:::annotation
-    b1_in0["IN: work<br/>Declared read work<br/>unknown; unknown B/element<br/>internal"]:::internalPort
-    b1_in1["IN: responses<br/>Memory read responses<br/>unknown; unknown B/element<br/>memory-facing"]:::memoryPort
-    b1_out0["OUT: requests<br/>Read requests<br/>unknown; unknown B/element<br/>memory-facing"]:::memoryPort
-    b1_out1["OUT: values<br/>Fetched read-only values<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
-  end
-  b0_out0 -->|"declared work"| b1_in0
-  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3
-  classDef hostPort fill:#dbeafe,stroke:#2563eb,color:#172554
-  classDef memoryPort fill:#dcfce7,stroke:#16a34a,color:#14532d
-  classDef internalPort fill:#f1f5f9,stroke:#64748b,color:#0f172a
-  classDef unknownPort fill:#fef3c7,stroke:#d97706,color:#78350f
-```
+![diagram](./preview-3.svg)
 
 ### Full candidate details
 

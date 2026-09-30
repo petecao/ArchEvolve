@@ -92,14 +92,14 @@ def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_
         report.append("")
         report.extend("- **" + table_text(issue["severity"]) + ":** " + table_text(issue["message"]) for issue in c["issues"])
         report.append("")
-    report += ["## Next handoff", "", "Confirm the profiled source revision/build, bind raw profile evidence to each dataset/run, and have Eric review the seed capabilities and hardware I/O. Peter derives intrinsic specifications after these candidate boundaries are agreed. Parameters remain open for tuning.", ""]
+    report += ["## Next handoff", "", "Use the reported source/build context where supplied, resolve any remaining identity conflicts, and bind raw profile evidence to the relevant dataset, trial, and ROI. Have Eric review the seed capabilities and hardware I/O; Peter can then derive intrinsic specifications. Parameters remain open for tuning.", ""]
     artifacts["README.md"] = "\n".join(report)
     return artifacts, manifest
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", action="append", type=Path, required=True, help="v1.1 TDStep feature YAML; repeat for separate cases")
+    parser.add_argument("--input", action="append", type=Path, required=True, help="Schema-1.1 TDStep YAML (report revisions v1.1/v1.2); repeat for separate cases")
     parser.add_argument("--catalog", type=Path, default=Path("catalog/seed.yaml"))
     parser.add_argument("--methods", type=Path, help="Optional reported methodology, bound to exact input hashes")
     parser.add_argument("--output-dir", type=Path, required=True)

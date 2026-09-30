@@ -13,7 +13,7 @@ input_revision: e4fc4afdf894f295442cef3604667a469fab8e62
 catalog_ref: catalog/seed.yaml
 catalog_revision: seed-0.1
 source_file: hardware-request.yaml
-source_sha256: f258c58d9591b453075b1d163f7efd70ed45d22577a8effd5c37ed7a7f326ede
+source_sha256: 4ff0b4084afd75e7332f474b29ac43c30df409cecd5bedf5d4fe516f41456e0a
 ```
 
 ## Workload context
@@ -43,6 +43,92 @@ rmw:
     coherence_effect: cache line bouncing and pipeline stalls (LOCK prefix)
   must_preserve: true
   phase_execution: {}
+profiling_provenance:
+  benchmark_target: GAPBS BFS (Top-Down Step / TDStep)
+  source_file: benchmarks/gapbs/src/bfs.cc
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  compiler_toolchain: g++ (Ubuntu 11.4.0) -std=c++11 -O3 -fopenmp
+  execution_environment: 16-core Intel Xeon Gold 6226R @ 2.90GHz, 125 GB RAM
+  command_line: OMP_NUM_THREADS=16 ./bfs -g 18 -k 16 -n 5
+  profiled_graph: Kronecker scale 18 (|V|=262,143, |E|=7,610,898 directed)
+frontier_evolution_profile:
+  measurement_scope: Kronecker scale 18, 1 BFS trial traversal
+  traversal_depth: 7
+  levels:
+  - level: 1
+    frontier_size: 1
+    mean_queue_distance: 0.0
+  - level: 2
+    frontier_size: 3
+    mean_queue_distance: 54136.5
+  - level: 3
+    frontier_size: 204
+    mean_queue_distance: 6365.3
+  - level: 4
+    frontier_size: 68519
+    mean_queue_distance: 1287.0
+  - level: 5
+    frontier_size: 103284
+    mean_queue_distance: 30007.1
+  - level: 6
+    frontier_size: 1883
+    mean_queue_distance: 86673.6
+  - level: 7
+    frontier_size: 6
+    mean_queue_distance: 127605.0
+profiling_context:
+  evidence_status: reported_not_reproduced
+  reported_command_line: OMP_NUM_THREADS=16 ./bfs -g 18 -k 16 -n 5
+  counter_measurement_scope: null
+  frontier_measurement_scope: Kronecker scale 18, 1 BFS trial traversal
+  cross_section_trial_binding: not_established
+  aggregation_policy: retain_sections_separately_no_level_weighting_or_counter_join
+  frontier_level_observations:
+  - level: 1
+    frontier_size: 1
+    reported_mean_queue_distance: 0.0
+    usable_mean_queue_distance: null
+    distance_status: not_applicable_no_adjacent_pairs
+  - level: 2
+    frontier_size: 3
+    reported_mean_queue_distance: 54136.5
+    usable_mean_queue_distance: 54136.5
+    distance_status: reported
+  - level: 3
+    frontier_size: 204
+    reported_mean_queue_distance: 6365.3
+    usable_mean_queue_distance: 6365.3
+    distance_status: reported
+  - level: 4
+    frontier_size: 68519
+    reported_mean_queue_distance: 1287.0
+    usable_mean_queue_distance: 1287.0
+    distance_status: reported
+  - level: 5
+    frontier_size: 103284
+    reported_mean_queue_distance: 30007.1
+    usable_mean_queue_distance: 30007.1
+    distance_status: reported
+  - level: 6
+    frontier_size: 1883
+    reported_mean_queue_distance: 86673.6
+    usable_mean_queue_distance: 86673.6
+    distance_status: reported
+  - level: 7
+    frontier_size: 6
+    reported_mean_queue_distance: 127605.0
+    usable_mean_queue_distance: 127605.0
+    distance_status: reported
+reported_counters:
+  measurement_tool: Linux perf 5.15 (PMU hardware performance counters)
+  metrics:
+    instructions_per_cycle_ipc: 0.39
+    cycles_frequency_ghz: 3.5
+    branch_miss_rate: 11.07%
+    l1_dcache_load_miss_rate: 15.14%
+    llc_load_miss_rate: 24.71%
+    atomic_cas_overhead_cycles: 15.97% (lock cmpxchg stall)
+    average_trial_time_sec: 0.00733
 methodology:
   status: reported_method_bound_to_input
   record_sha256: c1dc5b86c68c5bd0c16eab522b57690ba3131af70d3f5ed78c6f909fe0ac2d9a
@@ -64,6 +150,12 @@ reported_distance_scopes:
   directives are not commands.
 - Different graphs/runs are processed separately. All tuning values remain open; the
   CPU baseline is a comparison, not a measured result.
+- The reported per-level scope is preserved separately from the command/counter context.
+  No counter values are apportioned to levels, and no level means are aggregated across
+  trials.
+- A frontier with fewer than two entries has no adjacent pairs. The reported mean
+  remains in the raw section, but its analysis value is null rather than a measured
+  zero-distance observation.
 - Peter's instrumentation measures adjacent-index proximity, not same cache-line/page
   membership or cache-hit rates. Values are relabeled descriptively and remain outside
   selection rules.
@@ -137,8 +229,9 @@ evidence_refs:
 taxonomy_refs: []
 applicability_conditions: []
 unresolved_requirements:
-- Received values are reported; raw profiling logs, build flags, dataset identity
-  and per-run scope have not been bound/verified by this prototype.
+- Profiling provenance is supplied and retained as reported context. Raw artifacts,
+  exact collection/ROI boundaries and cross-trial correspondence remain unverified;
+  no measurements were reproduced locally.
 - This report includes several graph scales without binding each statistic to a run.
   Do not transfer values between scales.
 - Array-level features are usable for exploratory retrieval; exact statement IDs and
@@ -249,8 +342,9 @@ applicability_conditions:
 - Source bindings and read-only/coherence requirements must be established.
 - Performance and correctness require separate evaluation.
 unresolved_requirements:
-- Received values are reported; raw profiling logs, build flags, dataset identity
-  and per-run scope have not been bound/verified by this prototype.
+- Profiling provenance is supplied and retained as reported context. Raw artifacts,
+  exact collection/ROI boundaries and cross-trial correspondence remain unverified;
+  no measurements were reproduced locally.
 - This report includes several graph scales without binding each statistic to a run.
   Do not transfer values between scales.
 - Array-level features are usable for exploratory retrieval; exact statement IDs and
@@ -400,8 +494,9 @@ applicability_conditions:
 - Source bindings and read-only/coherence requirements must be established.
 - Performance and correctness require separate evaluation.
 unresolved_requirements:
-- Received values are reported; raw profiling logs, build flags, dataset identity
-  and per-run scope have not been bound/verified by this prototype.
+- Profiling provenance is supplied and retained as reported context. Raw artifacts,
+  exact collection/ROI boundaries and cross-trial correspondence remain unverified;
+  no measurements were reproduced locally.
 - This report includes several graph scales without binding each statistic to a run.
   Do not transfer values between scales.
 - Array-level features are usable for exploratory retrieval; exact statement IDs and
@@ -502,11 +597,13 @@ parameter_tuning_owner: arch_evolve
 - affects:
   - performance_claims
   fields:
+  - profiling_provenance
   - hardware_performance_profile
   - indirect_access_distances
   id: raw-profile-missing
-  message: Received values are reported; raw profiling logs, build flags, dataset
-    identity and per-run scope have not been bound/verified by this prototype.
+  message: Profiling provenance is supplied and retained as reported context. Raw
+    artifacts, exact collection/ROI boundaries and cross-trial correspondence remain
+    unverified; no measurements were reproduced locally.
   severity: needs_clarification
 - affects:
   - measurement_scope

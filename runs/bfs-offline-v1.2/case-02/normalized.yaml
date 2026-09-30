@@ -220,6 +220,16 @@ reported_counters:
     atomic_cas_overhead_cycles:
       sparse_kronecker: 15.97% (lock cmpxchg)
       fully_connected: 0.00% (lock cmpxchg)
+profiling_provenance: null
+frontier_evolution_profile: null
+profiling_context:
+  evidence_status: reported_not_reproduced
+  reported_command_line: null
+  counter_measurement_scope: null
+  frontier_measurement_scope: null
+  cross_section_trial_binding: not_established
+  aggregation_policy: retain_sections_separately_no_level_weighting_or_counter_join
+  frontier_level_observations: []
 hardware_hypotheses:
 - field: indirect_access_distances.VertexOffsets.hardware_implication
   text: Extremely high spatial locality. Standard L1 hardware stream prefetchers track
@@ -252,6 +262,7 @@ issues:
   message: Received values are reported; raw profiling logs, build flags, dataset
     identity and per-run scope have not been bound/verified by this prototype.
   fields:
+  - profiling_provenance
   - hardware_performance_profile
   - indirect_access_distances
   affects:

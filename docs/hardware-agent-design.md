@@ -8,7 +8,7 @@ Push **DX100-modified GAP BFS** through the forward pipeline: annotated source â
 
 Use the modified for-loop version selected by the team. Do not silently substitute upstream BFS or assume every loop conversion preserves semantics. The meeting identified while-loop handling as a limitation for the intended DX100 path; confirm applicability against the actual modified code and catalog.
 
-SPARTA remains an interim format/diagram exercise, rather than the demonstration kernel. BC may be considered after BFS works. The modified source is checked out at DX100 revision `e4fc4afdf894f295442cef3604667a469fab8e62`. Peter's preliminary v1.1 sparse/dense reports have been received; their profiled revision/raw logs, Yan-Ru's annotations, and Eric's reviewed catalog remain pending. See [the source review](bfs-source-review.md) and [the intake assessment](offline-pipeline.md).
+SPARTA remains an interim format/diagram exercise, rather than the demonstration kernel. BC may be considered after BFS works. The modified source is checked out at DX100 revision `e4fc4afdf894f295442cef3604667a469fab8e62`. Peter's current v1.2 reports declare this revision and matching 32-bit offsets; sparse profiling metadata and per-level observations are retained by the adapter. Raw runtime evidence, source annotations, and Eric's reviewed catalog remain pending. See [the source review](bfs-source-review.md) and [the intake assessment](offline-pipeline.md).
 
 Source inspection clarifies the meeting shorthand: `TDStep` uses explicit index-based CPU loops, while `TDStepMAA` uses existing DX100 operations. Host `while` loops remain. Feature extraction from `TDStep`, with `TDStepMAA` as a reference, is proposed for confirmation with Peter/Yan-Ru.
 

@@ -37,6 +37,31 @@ workload_summary:
     phase_execution:
       level_1: N - 1 executions (100% commit rate)
       level_2: 0 executions (bypassed entirely by if (curr_val < 0) filter)
+  profiling_provenance: null
+  frontier_evolution_profile: null
+  profiling_context:
+    evidence_status: reported_not_reproduced
+    reported_command_line: null
+    counter_measurement_scope: null
+    frontier_measurement_scope: null
+    cross_section_trial_binding: not_established
+    aggregation_policy: retain_sections_separately_no_level_weighting_or_counter_join
+    frontier_level_observations: []
+  reported_counters:
+    measurement_platform: Intel Xeon Gold 6226R (16 threads, 2.90 GHz)
+    comparison_vs_sparse_kronecker:
+      instructions_per_cycle_ipc:
+        sparse_kronecker: 0.39
+        fully_connected: 2.68
+      branch_miss_rate:
+        sparse_kronecker: 11.07%
+        fully_connected: 0.01%
+      l1_dcache_miss_rate:
+        sparse_kronecker: 15.14%
+        fully_connected: 2.14%
+      atomic_cas_overhead_cycles:
+        sparse_kronecker: 15.97% (lock cmpxchg)
+        fully_connected: 0.00% (lock cmpxchg)
   methodology:
     status: reported_method_bound_to_input
     record_sha256: c1dc5b86c68c5bd0c16eab522b57690ba3131af70d3f5ed78c6f909fe0ac2d9a
@@ -415,6 +440,7 @@ clarification_requests:
   message: Received values are reported; raw profiling logs, build flags, dataset
     identity and per-run scope have not been bound/verified by this prototype.
   fields:
+  - profiling_provenance
   - hardware_performance_profile
   - indirect_access_distances
   affects:

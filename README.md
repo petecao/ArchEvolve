@@ -17,21 +17,21 @@ Current handoff sketches:
 - [Rewrite feedback template](examples/rewrite-feedback.template.yaml)
 - [Meeting decisions and outstanding dependencies](docs/meeting-2026-09-24.md)
 
-These YAML files are **unfilled templates** for the proposed handoff. The [DX100 artifact BFS source is available locally](sources/README.md) at a recorded revision. Peter's preliminary sparse/dense v1.1 reports are now preserved under [examples/received](examples/received); their exact profiled source and raw logs remain unbound. Yan-Ru's source annotations and Eric's reviewed machine-readable catalog are still pending.
+These YAML files are **unfilled templates** for the proposed handoff. The [DX100 artifact BFS source is available locally](sources/README.md) at a recorded revision. The current inputs are Peter's **v1.2 report revisions** under [examples/received](examples/received): both declare the matching DX100 revision and 32-bit offsets. The sparse report additionally supplies compiler/platform/run metadata, counters, and a seven-level profile. Raw artifacts and trial/ROI linkage remain unverified; source annotations and Eric's reviewed component catalog are still pending. Historical v1.1 reports and runs are preserved.
 
 ## Working offline forward path
 
 The [offline pipeline](docs/offline-pipeline.md) now normalizes Peter's reports, selects exploratory candidates from a [provisional catalog seed](catalog/README.md), and generates hardware-request YAML plus diagrams. It is rule-based and makes **no LLM/API calls**. No accelerator, software rewrite, or evaluator has been run.
 
-Open the [run overview](runs/bfs-offline/README.md), [sparse rendered diagrams](runs/bfs-offline/case-01/diagrams/preview.md), or [fully connected rendered diagrams](runs/bfs-offline/case-02/diagrams/preview.md).
+Open the [run overview](runs/bfs-offline-v1.2/README.md), [sparse rendered diagrams](runs/bfs-offline-v1.2/case-01/diagrams/preview.md), or [fully connected rendered diagrams](runs/bfs-offline-v1.2/case-02/diagrams/preview.md).
 
 For the software handoff, use [the diagram and YAML guide for Peter](docs/peter-intrinsics-handoff.md). It identifies the declared-read candidates to discuss for intrinsic specifications, plus optional prefetch alternatives.
 
 ```sh
-.venv/bin/python -m archevolve --input examples/received/bfs-sparse.features.v1.1.yaml --input examples/received/bfs-fully-connected.features.v1.1.yaml --methods examples/received/peter-measurement-methods.yaml --output-dir runs/bfs-offline --overwrite
+.venv/bin/python -m archevolve --input examples/received/bfs-sparse.features.v1.2.yaml --input examples/received/bfs-fully-connected.features.v1.2.yaml --methods examples/received/peter-measurement-methods.v1.2.yaml --output-dir runs/bfs-offline-v1.2 --overwrite
 ```
 
-Source/type conflicts, unverified locality claims, and unknown working sets remain explicit. These are conditional family sketches, not performance-ranked or implementation-ready hardware designs.
+The v1.2 inputs resolve the earlier reported offset-width/source-reference mismatch. The adapter retains `profiling_provenance` and `frontier_evolution_profile` through normalized data, hardware-request YAML, and review reports. A command requesting five trials and a per-level table describing one traversal remain separate scopes; a one-vertex frontier has no usable adjacent-pair mean. The offline candidate priorities are unchanged. These are conditional family sketches, not performance-ranked or implementation-ready designs.
 
 Peter's subsequent [methodology explanation and interpretation](docs/measurement-methodology-review.md) now clarify adjacent-pair proximity and array-capacity calculations. The adapter records those meanings, derives canonical byte values, and flags the mixed decimal/binary unit table without changing either received report.
 

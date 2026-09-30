@@ -3,7 +3,7 @@
   "backend": "offline_rules",
   "llm_calls": 0,
   "evaluation_performed": false,
-  "run_id": "c5b5487526dbbd4bd00c66dce7d863327b6f6fe2cf0e224e514273e4dc51c397",
+  "run_id": "af443b3121b7f54e1d09cf12644eeb3e4798d3003741cf9540a175781305f131",
   "identity": {
     "inputs": [
       "379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3",
@@ -11,7 +11,7 @@
     ],
     "catalog_sha256": "74ec8d61a02171d6263434fd79669430ade440b4ad9fef735483f7cc17bc54ed",
     "max_candidates": 3,
-    "code_sha256": "eb01ffbea7bfbbfe1172b7768c7af1af6514e48e1cfe2c9fb3708a368a156bde",
+    "code_sha256": "8d244fe8ba40fcd88321a154f5fce1c62d4d7df6faf15446f448c988335972a2",
     "reference": {
       "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
       "element_bytes": {
@@ -42,13 +42,37 @@
         {
           "id": "raw-profile-missing",
           "severity": "needs_clarification",
-          "message": "Received values are reported; raw profiling logs, build flags, dataset identity and per-run scope have not been bound/verified by this prototype.",
+          "message": "Profiling provenance is supplied and retained as reported context. Raw artifacts, exact collection/ROI boundaries and cross-trial correspondence remain unverified; no measurements were reproduced locally.",
           "fields": [
+            "profiling_provenance",
             "hardware_performance_profile",
             "indirect_access_distances"
           ],
           "affects": [
             "performance_claims"
+          ]
+        },
+        {
+          "id": "frontier-profile-scope",
+          "severity": "interpretation_resolved",
+          "message": "The reported per-level scope is preserved separately from the command/counter context. No counter values are apportioned to levels, and no level means are aggregated across trials.",
+          "fields": [
+            "frontier_evolution_profile",
+            "hardware_performance_profile"
+          ],
+          "affects": [
+            "measurement_scope"
+          ]
+        },
+        {
+          "id": "frontier-distance-no-pairs",
+          "severity": "interpretation_resolved",
+          "message": "A frontier with fewer than two entries has no adjacent pairs. The reported mean remains in the raw section, but its analysis value is null rather than a measured zero-distance observation.",
+          "fields": [
+            "frontier_evolution_profile.levels"
+          ],
+          "affects": [
+            "distance_interpretation"
           ]
         },
         {
@@ -131,7 +155,7 @@
           ]
         }
       ],
-      "hardware_request_sha256": "f258c58d9591b453075b1d163f7efd70ed45d22577a8effd5c37ed7a7f326ede"
+      "hardware_request_sha256": "4ff0b4084afd75e7332f474b29ac43c30df409cecd5bedf5d4fe516f41456e0a"
     },
     {
       "case_id": "gapbs_bfs_top_down_step_fully_connected",
@@ -149,6 +173,7 @@
           "severity": "needs_clarification",
           "message": "Received values are reported; raw profiling logs, build flags, dataset identity and per-run scope have not been bound/verified by this prototype.",
           "fields": [
+            "profiling_provenance",
             "hardware_performance_profile",
             "indirect_access_distances"
           ],
@@ -217,7 +242,7 @@
           ]
         }
       ],
-      "hardware_request_sha256": "924913ac80270f80285d8b1ca2d529f8f453bec28a8c64b56fd57a684298c281"
+      "hardware_request_sha256": "1019ddd5e649c4475e1aa680c3f7333f1a568597448459844d5b7ca817090d97"
     }
   ]
 }
