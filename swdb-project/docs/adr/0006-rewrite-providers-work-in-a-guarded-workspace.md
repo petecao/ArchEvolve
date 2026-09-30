@@ -1,7 +1,7 @@
 # Rewrite providers work as tool-using agents in a guarded workspace
 
 Date: 2026-09-29 (Eastern Time)
-Updated: 2026-09-29 (Eastern Time)
+Updated: 2026-09-29 23:20 ET
 Status: implemented
 
 Implementation and acceptance are recorded in the
@@ -15,7 +15,11 @@ OAuth-expired failure with no candidate, permitted by ticket 10. The older Codex
 A1 log remains audit-refused and unchanged. Linux A10 passed all 443 workspace
 cases and six retained-log expectations. The final network/Git/Python grammar repair
 passed Linux A11: 216 selected cases in 695.71 s and six retained-log expectations
-at `3a73c6c`. Independent whole-diff code review is pending; T17 is complete.
+at `3a73c6c`. Independent whole-diff review found no Spec issue; one P3 Standards
+duplication judgement was repaired at `8889e175`, and both rechecks are clear.
+The final public workflow selection passed 45 cases in 673.40 s. See the
+[review report](../../.scratch/rewrite-provider-codex-2026-09-29/validation/code-review.md).
+T17 is complete.
 
 A rewrite provider no longer receives everything in one prompt with no tools. It works as
 a coding agent inside a provider workspace that holds only what its rewrite proposal

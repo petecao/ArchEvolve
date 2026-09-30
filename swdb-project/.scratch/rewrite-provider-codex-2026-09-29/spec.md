@@ -1,7 +1,7 @@
 # Spec: Codex and Claude rewrite providers working in a guarded workspace
 
 Created: 2026-09-29 17:30 ET
-Updated: 2026-09-29 (Eastern Time)
+Updated: 2026-09-29 23:20 ET
 **Type:** spec
 **Status:** resolved
 **Blocked by:** None
@@ -187,7 +187,7 @@ recorded configurations can be re-run exactly.
 ## Further Notes
 
 - **Implementation progress on 2026-09-29 ET:** all ten tickets are resolved;
-  ticket 07's audit repairs passed final Linux validation; whole-diff review is pending;
+  ticket 07's audit repairs passed final Linux validation; whole-diff review is complete;
   see [map.md](map.md) and
   [guarded provider evidence](../../docs/evidence/guarded-rewrite-providers-20260929-a1.yaml).
   Linux A6 passed 222 guard/pins/workspace cases at `4f5d152`; A7 passed 42
@@ -201,7 +201,10 @@ recorded configurations can be re-run exactly.
   Linux A10 passed all 443 workspace cases and six retained-log expectations at
   `a7cca27`. The final network-command repair passed 154 local and 114 independent
   cases at audit blob `62fe75f4`; Linux A11 passed 216 selected cases and six
-  retained-log expectations at `3a73c6c`. Whole-diff code review is pending.
+  retained-log expectations at `3a73c6c`. Whole-diff review found no Spec issue;
+  Standards' one P3 duplication judgement was repaired at `8889e175` and both
+  independent rechecks are clear. The final public workflow selection passed
+  45 cases in 673.40 s; see the [review report](validation/code-review.md).
   The separate T17 recheck has completed.
 - **Host setup done on 2026-09-29:**
   - Codex CLI 0.153.0 is installed under the user's npm prefix on `/data1` and logged in with ChatGPT; its home is on `/data1`, mode 700.

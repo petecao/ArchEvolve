@@ -1,7 +1,7 @@
 # Map: Codex and Claude rewrite providers in a guarded workspace
 
 Created: 2026-09-29 17:30 ET
-Updated: 2026-09-29 (Eastern Time)
+Updated: 2026-09-29 23:20 ET
 **Type:** ticket map
 **Status:** resolved
 **Spec:** [spec.md](spec.md)
@@ -25,7 +25,10 @@ attached-file and network-option audit gaps are repaired. Linux A10 passed all
 passed all 216 selected cases, including all 132 additions, and six retained-log
 expectations. Production uses one CPU within the verified socket while counting
 the full tree, including strace and any exact installed persistent Codex service,
-against the aggregate caps. The subsequent whole-diff code review remains pending.
+against the aggregate caps. Both independent whole-diff review axes are complete:
+Standards' one P3 duplication judgement was repaired at `8889e175`, and both
+rechecks found no remaining issue. The final public workflow selection passed
+45 cases in 673.40 s. See the [review report](validation/code-review.md).
 
 | Acceptance evidence | Checkout / lane | Result |
 |---|---|---|
@@ -56,7 +59,7 @@ continuity. The last attached-option repair adds 70 public cases; its focused
 126-case and 62-case selections pass and overlap. Independent short-option
 rechecks reject four unsafe submissions and admit 24 benign data/write cases at
 audit blob `a8df374e`. The separate T17 recheck and Linux A10 have completed;
-Linux A11 acceptance passed; the subsequent whole-diff code review remains pending.
+Linux A11 acceptance and the subsequent whole-diff code review passed.
 The final local network/Python/Git selection passed 154 cases in 321.82 s;
 independent current-blob checks passed 114 cases (76 expected refusals and
 38 expected admissions). All 132 additions are included in A11’s 216-case selection.

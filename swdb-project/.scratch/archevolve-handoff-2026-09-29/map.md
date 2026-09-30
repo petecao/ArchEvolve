@@ -1,7 +1,7 @@
 # Map: hand SWDB's BFS work to the ArchEvolve pipeline
 
 Created: 2026-09-29 17:40 ET
-Updated: 2026-09-29 21:46 ET
+Updated: 2026-09-29 23:20 ET
 **Type:** ticket map
 **Status:** in-progress
 **Spec:** [spec.md](spec.md)
@@ -14,7 +14,7 @@ Updated: 2026-09-29 21:46 ET
 | 04 | [Retire the Workload view](issues/04-retire-workload-view.md) | resolved | — |
 | 05 | [Statement crosswalk](issues/05-statement-crosswalk.md) | needs-info | Peter's report/source binding and offset-width answer |
 | 06 | [Adapter from Peter's spec](issues/06-peter-spec-adapter.md) | needs-info | 05, Peter's spec format, confirmed hardware candidate |
-| 07 | [PR to main](issues/07-pr-to-main.md) | ready-for-human | final review, including provider07 |
+| 07 | [PR to main](issues/07-pr-to-main.md) | ready-for-human | — |
 
 ## Context pointers
 
@@ -31,5 +31,8 @@ Updated: 2026-09-29 21:46 ET
   simulated author-path reuse has joint hardware/software attribution. The node1
   retry exited 0; both actual records were synced in `cadf16b2fe9a945ebfc066eeccd78357a9ad05a8`
   after validation of 352 records. See `records/comparison_results/bfs-t17-handoff-20260929-a1.{uniform18,kronecker18}.yaml`.
-  Provider07's final review remains ongoing; the root agent updates final provider QA
-  before human PR delivery.
+  All ten provider tickets and the independent whole-diff review are complete.
+  Standards' one P3 duplication judgement was repaired at `8889e175`; both
+  independent rechecks are clear. Final workflow QA passed 45 cases in 673.40 s.
+  The PR draft is ready for human delivery. See the
+  [review report](../rewrite-provider-codex-2026-09-29/validation/code-review.md).

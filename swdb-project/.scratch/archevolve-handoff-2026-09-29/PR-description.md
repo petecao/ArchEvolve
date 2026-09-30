@@ -1,6 +1,6 @@
 # Integrate SWDB BFS workflows and the annotated DX100 handoff into ArchEvolve
 
-Updated: 2026-09-29 21:46 ET
+Updated: 2026-09-29 23:20 ET
 
 ## Summary
 
@@ -81,8 +81,21 @@ independent repeated-run uncertainty.
   parent updates. Raw requests, stdout, stderr, and final summary remain under
   `/data1/yanruj/EvolveSWDB_runs/t17-handoff-20260929-a1/`; [ticket03](issues/03-record-t17-comparison.md#answer)
   links the actual records and receipt bindings.
-- Provider ticket07's final regression/code review remains in progress. The root
-  agent will update the final provider QA evidence before Yan-Ru opens the PR.
+- Provider implementation acceptance is complete: Linux A10 passed 443 workspace
+  cases at `a7cca27`; final A11 passed 216 selected cases at `3a73c6c`, with all six
+  retained-log audit decisions matching expectations. Local final audit checks
+  passed 154 cases, and independent checks passed 114. Actual Codex DX100 A2 passed
+  source0/3/8 native structural checks on a tiny graph; Claude's OAuth-expired
+  failure is recorded, as permitted by ticket10, with no candidate. These native
+  checks claim no performance gain.
+- The independent session review of `65c84fd...40c5011` found no Spec issue and
+  one P3 possible code-duplication judgement. The shared first-candidate helper
+  repair at `8889e175` passed both reviewers' rechecks with no remaining finding.
+  This review covers the ticket changes since the session base, rather than the
+  complete existing integration diff against `main`. The final public workflow
+  regression passed 45 cases in 673.40 s at `8889e175`, with no failures/skips.
+  All agent-owned tickets are complete; this draft is ready for human delivery.
+  [Review report](../rewrite-provider-codex-2026-09-29/validation/code-review.md).
 
 ## Merge Danger
 

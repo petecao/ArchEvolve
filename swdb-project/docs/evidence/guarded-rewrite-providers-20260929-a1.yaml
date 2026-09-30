@@ -1,11 +1,11 @@
 {
   "format": "swdb.guarded-rewrite-provider-evidence.v1",
   "created": "2026-09-29",
-  "updated_et": "2026-09-29 22:59 ET",
-  "state": "validated_pending_final_review",
+  "updated_et": "2026-09-29 23:20 ET",
+  "state": "validated",
   "host": "mbit10",
   "scope": "Guard feasibility and actual provider-native correctness; no performance gain claim.",
-  "implementation_checkout": "3a73c6c8f7cec253237a910d3d6580481419da8f",
+  "implementation_checkout": "8889e175d551b5270e8b2a59d1747eefe63c69e5",
   "toy_turns": [
     {
       "kind": "codex",
@@ -2919,7 +2919,7 @@
               "source": 8,
               "source_position": 2,
               "repetition": 0,
-              "duration_s": 0.000095026,
+              "duration_s": 9.5026e-05,
               "roi": "bfs.complete_call.v1",
               "basis": "measured",
               "quantity": "native_roi_wall_seconds",
@@ -4201,5 +4201,68 @@
     },
     "state": "passed_including_expected_historical_codex_dx100_refusal",
     "raw_folder": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7"
+  },
+  "final_code_review": {
+    "state": "complete",
+    "completed_et": "2026-09-29 23:20 ET",
+    "base": "65c84fde73b34935d515edfb43c3bc44d7a22153",
+    "whole_diff_head": "40c5011da06035593e209b10ff1e1a0710520ae0",
+    "repair_recheck_head": "8889e175d551b5270e8b2a59d1747eefe63c69e5",
+    "report": ".scratch/rewrite-provider-codex-2026-09-29/validation/code-review.md",
+    "standards": {
+      "documented_violations": 0,
+      "original_judgement_calls": 1,
+      "original_worst": "P3 possible Duplicated Code",
+      "resolved": 1,
+      "remaining": 0,
+      "new": 0,
+      "worst_remaining": null
+    },
+    "spec": {
+      "findings": 0,
+      "recheck_findings": 0,
+      "worst": null
+    },
+    "scope": "Owned ticket changes since the session base; not the complete existing integration against main.",
+    "post_review_workflow_validation": {
+      "suite": {
+        "name": "pytest",
+        "errors": "0",
+        "failures": "0",
+        "skipped": "0",
+        "tests": "45",
+        "time": "671.582",
+        "timestamp": "2026-09-29T23:07:38.167692-04:00",
+        "hostname": "YanRus-Mac-Studio.local"
+      },
+      "source_commit": "8889e175d551b5270e8b2a59d1747eefe63c69e5",
+      "workflow_blob": "4de3deb6703e6d5807fa4d7d58285ea6ad897671",
+      "artifacts": [
+        {
+          "path": ".scratch/rewrite-provider-codex-2026-09-29/validation/review-workflow-final.log",
+          "bytes": 127,
+          "sha256": "cbacec3f3cf37bbbd8f8a76dd94291b25800d152ab6556899705efa891e2b8b3"
+        },
+        {
+          "path": ".scratch/rewrite-provider-codex-2026-09-29/validation/review-workflow-final.xml",
+          "bytes": 6107,
+          "sha256": "57f61698dac6b9e8f10c8461daeff822c90c55cce9e0daf4e85e50d318b9835f"
+        }
+      ],
+      "pytest_summary_seconds": 673.4,
+      "deselected": 569,
+      "selection": "not provider_workspace or direct_workspace_script_compile or large_annotations_use_immutable_context or public_repair_uses_workspace_diff",
+      "state": "passed",
+      "note": "Existing public CLI seam cases for the shared first-candidate helper; no guard/audit code changes and no new tests. XML suite time differs from pytest summary wall time.",
+      "completion_observed_et": "2026-09-29 23:19:52 ET"
+    },
+    "closure_validation": {
+      "observed_et": "2026-09-29 23:22 ET",
+      "valid_records": 352,
+      "local_markdown_links_checked": 125,
+      "local_markdown_link_errors": 0,
+      "staged_and_unstaged_whitespace_checks": "passed",
+      "scope": "Owned changed Markdown paths since the session base, including the staged new review report."
+    }
   }
 }
