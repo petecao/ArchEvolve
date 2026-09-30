@@ -107,8 +107,9 @@ any emitted tool activity is rejected. Codex prompt-only input is limited to
 96 KiB because the prompt must be an argument with empty stdin.
 
 The proposal's `provider` field records the selected configuration, resolved kind,
-model, effort, CLI version, workspace manifest, guard policy, and audit result. Its
-`interpretation` retains the provider's explanation, generated patch, and unresolved
+model, effort, CLI version, workspace mode, guard policy, and audit result. Each
+`attempts[].provider.workspace_manifest` records that attempt's derived workspace.
+The proposal's `interpretation` retains the provider's explanation, generated patch, and unresolved
 requirements. Raw stdout/stderr, events, computed diff, and connection trace remain
 external artifacts linked by path and hash. `repair_budget` records the fixed repair limit, total provider-time
 allowance, consumed provider seconds, and repair attempts already used. Each repair
