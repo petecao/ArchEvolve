@@ -12,16 +12,17 @@ Fresh public DX100 A2 at `c8a666f` passed both providers' original/current audit
 guards and cleanup. Codex created a candidate that passed small-input native
 structural checks for sources 0/3/8; `gain_claim=false`. Claude retained an
 OAuth-expired failure with no candidate, permitted by ticket 10. The older Codex
-A1 log remains audit-refused and unchanged. Final independent code review is
-pending until the separate T17 work completes.
+A1 log remains audit-refused and unchanged. Linux A10 passed all 443 workspace
+cases and six retained-log expectations. The subsequent network-command repair's
+Linux A11 acceptance and independent code review are pending; the T17 recheck is complete.
 
 A rewrite provider no longer receives everything in one prompt with no tools. It works as
 a coding agent inside a provider workspace that holds only what its rewrite proposal
 needs, where it may read, edit, build, and run code. SWDB derives that workspace from the
 proposal, confines the provider with its own Landlock launcher, audits the provider's
 event log, and takes the edit as the diff of the workspace. We chose this because real
-applications do not fit in one prompt, and an agent that can explore the code writes
-better rewrites; the guard and audit keep it from reading the evaluator, workload inputs,
+applications do not fit in one prompt, and a provider can inspect source files and test
+local edits. The guard and audit restrict access to the evaluator, workload inputs,
 other candidates, or the DX100 authors' optimized code. Codex (`gpt-5.6-sol`, `xhigh`) is
 the default kind and Claude (`claude-sonnet-5-5`, `high`) the alternative, both pinned in
 code and recorded in every receipt.

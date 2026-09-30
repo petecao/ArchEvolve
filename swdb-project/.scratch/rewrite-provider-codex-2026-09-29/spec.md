@@ -3,8 +3,8 @@
 Created: 2026-09-29 17:30 ET
 Updated: 2026-09-29 (Eastern Time)
 **Type:** spec
-**Status:** resolved
-**Blocked by:** None. All ten provider tickets have implementation and acceptance answers.
+**Status:** claimed
+**Blocked by:** Ticket 07's final Linux validation and subsequent whole-diff review.
 Owner: Yan-Ru Jhou
 Decision record: ADR 0006 (rewrite providers work as tool-using agents in a guarded workspace)
 
@@ -198,8 +198,10 @@ recorded configurations can be re-run exactly.
   Claude A2 retained an OAuth-expired failure with passing original/current
   audits, guard and cleanup, as permitted by ticket 10; no Claude BFS result is
   claimed. The older Codex A1 receipt remains unchanged and audit-refused.
-  Final independent code review remains pending until the separate T17 work
-  completes; this status covers provider-ticket acceptance.
+  Linux A10 passed all 443 workspace cases and six retained-log expectations at
+  `a7cca27`. A later network-command repair is undergoing local checks and a
+  separate Linux A11 acceptance; the subsequent independent code review is pending.
+  The separate T17 recheck has completed.
 - **Host setup done on 2026-09-29:**
   - Codex CLI 0.153.0 is installed under the user's npm prefix on `/data1` and logged in with ChatGPT; its home is on `/data1`, mode 700.
   - The user's folders on mbit10 are owner-only, with the old permissions backed up.

@@ -73,7 +73,7 @@ if plan.get("require_large_annotation"):
     assert len(annotated.encode()) > 128*1024 and "Requested rewrite: alpha 14" in annotated
     (root / "build/context-read.json").write_text(json.dumps({"annotation_bytes":len(annotated.encode())}))
     if kind == "codex":
-        print(json.dumps({"type":"item.completed", "item":{"type":"command_execution", "command":"python local context read .swdb-context/proposal.json", "exit_code":0}}), flush=True)
+        print(json.dumps({"type":"item.completed", "item":{"type":"command_execution", "command":"cat .swdb-context/proposal.json", "exit_code":0}}), flush=True)
     else:
         print(json.dumps({"type":"assistant", "message":{"content":[{"type":"tool_use", "name":"Read", "input":{"file_path":".swdb-context/proposal.json"}}]}}), flush=True)
 if plan.get("require_repair_context"):
@@ -82,7 +82,7 @@ if plan.get("require_repair_context"):
     assert repair["outcome"]["stage"] == "build" and diagnostic_bytes >= 32000
     (root / "build/repair-read.json").write_text(json.dumps({"diagnostic_bytes":diagnostic_bytes}))
     if kind == "codex":
-        print(json.dumps({"type":"item.completed", "item":{"type":"command_execution", "command":"python local context read .swdb-context/repair.json", "exit_code":0}}), flush=True)
+        print(json.dumps({"type":"item.completed", "item":{"type":"command_execution", "command":"cat .swdb-context/repair.json", "exit_code":0}}), flush=True)
     else:
         print(json.dumps({"type":"assistant", "message":{"content":[{"type":"tool_use", "name":"Read", "input":{"file_path":".swdb-context/repair.json"}}]}}), flush=True)
 for edit in plan.get("edits", [{"path":"src/bfs.cc", "old":"int alpha = 15", "new":"int alpha = 14"}]):
@@ -208,6 +208,126 @@ def test_event_audit_fails_with_retained_reason(proposal_setup, workspace_provid
     assert proposal["outcome"]["reason"].startswith("provider audit failed")
     assert Path(audit["raw_log"]["path"]).is_file()
     assert "candidate" not in proposal
+
+
+@pytest.mark.parametrize("value", [
+    "git ls-remote origin",
+    "rsync other:src .",
+    "git remote update",
+    "git remote -- update origin",
+    "git-remote update origin",
+    "git-ls-remote origin",
+    "git remote add --fetch origin other:src",
+    "git remote add -ftmain origin other:src",
+    "git remote add --fe origin other:src",
+    "git remote add --mirror --fe origin other:src",
+    "git remote set-head origin --auto",
+    "git remote set-head origin --a",
+    "git --no-pager remote update origin",
+    "/usr/bin/env /usr/bin/git --no-pager ls-remote origin",
+    "git remote show origin",
+    "git remote prune origin",
+    "git archive --remote=origin HEAD",
+    "git archive --rem=origin HEAD",
+    "git fetch-pack origin",
+    "socat STDIO TCP:example.invalid:80",
+    "dig example.invalid",
+    "nslookup example.invalid",
+    "getent hosts example.invalid",
+    "getent --service=dns ahosts example.invalid",
+    "ftp example.invalid",
+    "lftp example.invalid",
+    "tftp example.invalid",
+    "/usr/bin/env python -m pip install requests",
+    "python -mpip install requests",
+    "python -Impip install requests",
+    "python -Im pip install requests",
+    "python --check-hash-based-pycs always -mpip install requests",
+    "python -IW ignore -mpip install requests",
+    "python -IX dev -mpip install requests",
+    "python -Wignore -m pip install requests",
+    "python -Xdev -m pip install requests",
+    "python -mhttp.server",
+    "/bin/bash -lc 'git ls-remote origin && git status --short'",
+    "/bin/sh -c 'rsync other:src .'",
+])
+def test_named_remote_network_commands_fail_public_submit(proposal_setup, workspace_provider, value):
+    # These events are scripted inputs: the fixture never opens a connection.
+    result, proposal = submit(proposal_setup, workspace_provider,
+        actions=[{"type": "command", "value": value}])
+    assert result.returncode == 1 and proposal["outcome"]["state"] == "failed"
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert not audit["passed"] and "network_command" in {v["code"] for v in audit["violations"]}
+    assert "candidate" not in proposal and Path(audit["raw_log"]["path"]).is_file()
+
+
+@pytest.mark.parametrize("value", [
+    "git diff -- src/bfs.cc",
+    "git --no-pager diff -- src/bfs.cc",
+    "git status --short",
+    "git remote get-url origin",
+    "git remote get-url update",
+    "git remote --verbose",
+    "git remote get-url --push --all origin",
+    "git grep -e 'git ls-remote origin' -- src/bfs.cc",
+    "grep -e 'rsync other:src .' src/bfs.cc",
+    "rg -e 'socat dig nslookup ftp' src/bfs.cc",
+    "echo 'git clone origin; git ls-remote origin; rsync other:src .; curl; socat; dig; ftp'",
+    "printf '%s' 'npm install; git remote update; pip; wget; nc'",
+    "echo 'git remote set-head origin --a; git remote add --fe origin other:src; git archive --rem=origin HEAD'",
+    "/bin/bash -lc " + shlex.quote("printf '%s' 'git ls-remote origin; rsync other:src .' && git status --short"),
+])
+def test_local_git_search_and_network_command_text_pass_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider,
+        actions=[{"type": "command", "value": value}])
+    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert audit["passed"] and proposal["candidate"]
+    assert Path(audit["raw_log"]["path"]).is_file()
+
+
+@pytest.mark.parametrize("value", [
+    "python3 -I build/synthetic.py -mpip -m pip",
+    "python3 -IW ignore -X dev --check-hash-based-pycs always build/synthetic.py -mpip -m pip",
+    "python3 --check-hash-based-pycs never -IXdev build/synthetic.py -mpip",
+    "python3 -- build/synthetic.py -mpip -m pip",
+    "python3 -Wignore::DeprecationWarning -IXdev build/synthetic.py -c harmless -mpip",
+])
+def test_workspace_script_module_argument_text_pass_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider,
+        actions=[{"type": "command", "value": value}])
+    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    assert proposal["attempts"][0]["provider"]["audit"]["passed"] and proposal["candidate"]
+
+
+@pytest.mark.parametrize("value", [
+    "git remote set-head origin --no-auto",
+    "git remote get-url --unknown origin",
+    "git archive HEAD",
+    "git archive --exec=build/archive-helper HEAD",
+])
+def test_unsupported_remote_or_archive_options_fail_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider,
+        actions=[{"type": "command", "value": value}])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and not audit["passed"] and "candidate" not in proposal
+    assert "unparsed_command" in {v["code"] for v in audit["violations"]}
+    assert Path(audit["raw_log"]["path"]).is_file()
+
+
+@pytest.mark.parametrize("value", [
+    "python --unknown setting -mpip install requests",
+    "python -Y harmless build/synthetic.py",
+    "python -Xpresite=pip build/synthetic.py",
+    "python -Wignore::other.Warning build/synthetic.py",
+])
+def test_unsupported_python_prefix_fails_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider,
+        actions=[{"type": "command", "value": value}])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and not audit["passed"] and "candidate" not in proposal
+    assert "unparsed_command" in {v["code"] for v in audit["violations"]}
+    assert Path(audit["raw_log"]["path"]).is_file()
 
 
 @pytest.mark.parametrize("shell,flags", [("sh", "-c"), ("bash", "-lc"), ("zsh", "-xec"),

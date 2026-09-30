@@ -21,7 +21,11 @@ Updated: 2026-09-29 (Eastern Time)
 
 Nine provider tickets are resolved. Ticket 07 is reopened for the final review's
 reproduced inline-utility, delegated-execution and compiler-forwarding audit gaps.
-The repairs and current-parser re-audit are pending. Production uses one CPU within the verified
+Those repairs and the attached-file-option repairs are implemented. Linux A10
+passed all 443 workspace cases and six retained-log audit expectations at `a7cca27`
+in node1 generation 490. A subsequent scripted-event check reproduced admissions
+of named-remote Git queries and rsync transfers; that repair is undergoing local
+checks and a separate Linux A11 acceptance pass. Production uses one CPU within the verified
 socket while counting the full tree, including strace and any exact installed
 persistent Codex service, against the aggregate caps.
 
@@ -29,6 +33,10 @@ persistent Codex service, against the aggregate caps.
 |---|---|---|
 | Linux A6 guard/pins/workspace | `4f5d152`; node0 generation 424; load 1.02 | 222 passed in 1428.56 s |
 | Linux A7 literal-status cases and current-parser re-audit | `c8a666f`; node0 generation 425; load 2.55 | 42 passed in 132.56 s; toys and Claude failure pass; old Codex A1 refusal retained |
+| Linux A8 utility/delegation repair validation | `d50a39f`; node0 generation 427; load 2.18 | 329 passed in 1059.23 s; all six retained-log decisions match expectations |
+| Linux A9 compiler/search repair validation | `de6dce1`; node0 generation 428; load 2.12 | 226 passed in 715.08 s; all six retained-log decisions match expectations |
+| Linux A10 complete workspace collection | `a7cca27`; node1 generation 490; load 1.06 | 443 passed in 1402.63 s; all six retained-log decisions match expectations |
+| Network utility/named-remote Git repair | Local; Linux A11 planned | 132 new public cases; frozen audit blob `62fe75f4`; 114 independent cases passed; broader local checks running |
 | Fresh public Codex DX100 A2 | `c8a666f`; node0 generation 426; load 2.61 | Candidate created; original/current audits, guard and cleanup pass; native sources 0/3/8 pass |
 | Fresh public Claude DX100 A2 | Same A2 checkout/lane | Recorded OAuth-expired failure; original/current audits, guard and cleanup pass; no candidate or BFS result |
 
@@ -46,8 +54,11 @@ final changes: workspace 195 passed (396.70 s), shared guidance 14 passed
 (29.67 s), and literal-status compatibility 42 passed (83.03 s).
 Standards/Spec findings were repaired, including probe-kind mapping, shell/Glob
 and file-operand audit gaps, detached-helper accounting/cleanup and supervisor
-continuity. Final independent code review remains pending until the separate
-T17 evidence recheck completes; this map does not close that separate work.
+continuity. The last attached-option repair adds 70 public cases; its focused
+126-case and 62-case selections pass and overlap. Independent short-option
+rechecks reject four unsafe submissions and admit 24 benign data/write cases at
+audit blob `a8df374e`. The separate T17 recheck and Linux A10 have completed;
+network-repair acceptance and the subsequent whole-diff code review remain pending.
 
 ## Context pointers
 

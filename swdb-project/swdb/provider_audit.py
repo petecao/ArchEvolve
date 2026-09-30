@@ -85,11 +85,7 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
         except ValueError:
             fail("unparsed_command", "provider command cannot be audited", event)
             return
-        executable_names = {Path(t).name for t in tokens}
-        if (executable_names & {"curl", "wget", "pip", "pip3", "conda", "nc", "ncat", "netcat", "ssh", "scp", "sftp"}
-                or re.search(r"\bgit\b[^;\n]*(?:\bclone\b|\bfetch\b|\bpull\b|\bpush\b|\bsubmodule\b)", value)
-                or re.search(r"\b(?:npm|npx|pnpm|yarn|cargo|uv|brew|apt|apt-get)\b[^;\n]*\b(?:install|add|update|sync)\b", value)
-                or re.search(r"\b(?:https?|ftp|ssh)://|\b(?:socket|urllib|requests|httpx)\s*[.(]|/dev/(?:tcp|udp)/", value)):
+        if re.search(r"\b(?:https?|ftp|ssh)://|\b(?:socket|urllib|requests|httpx)\s*[.(]|/dev/(?:tcp|udp)/", value):
             fail("network_command", "provider ran a forbidden network command", event)
         working = root
         if isinstance(cwd, str):
@@ -99,6 +95,17 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
         # quoted arguments or retained stdout. Recursively audit only that
         # operand, preserving the cwd established by preceding commands.
         shells = {"sh", "bash", "zsh", "dash", "ksh"}
+        # Classify executable positions, not quoted text naming a command. These
+        # recognized transfer/query tools are refused even with named endpoints
+        # or local-only flags; proving each tool's option semantics is outside
+        # this audit's supported build/read/status subset.
+        network_tools = {"curl", "wget", "pip", "pip3", "conda", "nc", "ncat", "netcat", "ssh", "scp", "sftp",
+                         "rsync", "socat", "rsh", "rcp", "rlogin", "dig", "drill", "kdig", "mdig", "host",
+                         "nslookup", "nsupdate", "delv", "ftp", "lftp",
+                         "ncftp", "ncftpget", "ncftpput", "tftp", "atftp", "telnet", "ping", "ping6",
+                         "traceroute", "traceroute6", "mtr", "whois", "aria2c", "http", "https",
+                         "git-remote-http", "git-remote-https", "git-remote-ftp", "git-remote-ftps", "git-remote-ext"}
+        package_managers = {"npm", "npx", "pnpm", "yarn", "cargo", "uv", "brew", "apt", "apt-get"}
         separators = {"&&", "||", ";", "|", "&", "\n"}
         def separator(token):
             return token in separators or bool(re.fullmatch(r"(?:&&|\|\||[;|&\n])+", token))
@@ -132,6 +139,200 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                            "CXXFLAGS", "CPPFLAGS", "LDFLAGS", "CC", "CXX", "FC", "AS", "LD", "AR",
                            "MAKEFLAGS", "GNUMAKEFLAGS", "MAKEFILES", "MFLAGS", "TMPDIR", "TMP", "TEMP",
                            "LLVM_PROFILE_FILE", "GCOV_PREFIX", "GCCDEPENDENCIES_OUTPUT", "SUNPRO_DEPENDENCIES"}
+
+        def git_network(arguments):
+            # Git can resolve a short name such as origin through configuration;
+            # absence of a URL does not establish that a query is local. Global
+            # options are parsed only far enough to locate the real subcommand.
+            switches = {"--no-pager", "--paginate", "-p", "-P", "--bare", "--no-replace-objects",
+                        "--literal-pathspecs", "--glob-pathspecs", "--noglob-pathspecs", "--icase-pathspecs",
+                        "--no-optional-locks", "--no-lazy-fetch", "--no-advice"}
+            selectors = {"-C", "-c", "--git-dir", "--work-tree", "--namespace", "--config-env", "--super-prefix"}
+            i = 0
+            while i < len(arguments) and arguments[i].startswith("-"):
+                option = arguments[i]
+                if option == "--":
+                    i += 1
+                    break
+                if option in selectors:
+                    i += 2
+                elif option in switches or any(option.startswith(s + "=") for s in selectors if s.startswith("--")):
+                    i += 1
+                elif option.startswith(("-C", "-c")):
+                    i += 1
+                elif option in {"--version", "-v", "--help", "-h"}:
+                    return False
+                else:
+                    fail("unparsed_command", "provider git global option cannot be audited", event)
+                    return False
+            if i >= len(arguments):
+                return False
+            subcommand = arguments[i]
+            if subcommand in {"clone", "fetch", "pull", "push", "submodule", "ls-remote", "fetch-pack", "send-pack",
+                              "http-fetch", "http-push", "daemon", "imap-send", "send-email", "svn"}:
+                return True
+            if subcommand == "remote":
+                i += 1
+                while i < len(arguments) and arguments[i].startswith("-"):
+                    if arguments[i] == "--":
+                        i += 1
+                        break
+                    if arguments[i] not in {"-v", "--verbose"}:
+                        fail("unparsed_command", "provider git remote option cannot be audited", event)
+                        return False
+                    i += 1
+                if i >= len(arguments):
+                    return False
+                operation = arguments[i]
+                if operation in {"update", "show", "prune"}:
+                    return True
+                if operation in {"set-head", "add", "get-url"}:
+                    options = ({"--auto": "network", "--delete": "local"} if operation == "set-head"
+                        else {"--fetch": "network", "--no-fetch": "local", "--tags": "local", "--no-tags": "local",
+                              "--track": "value", "--master": "value", "--mirror": "optional"} if operation == "add"
+                        else {"--push": "local", "--all": "local"})
+                    i += 1
+                    while i < len(arguments):
+                        option = arguments[i]
+                        if option == "--":
+                            break
+                        if option.startswith("--"):
+                            spelling, equals, value = option.partition("=")
+                            # Git parse-options accepts unambiguous long-option
+                            # abbreviations. Unknown/ambiguous options cannot
+                            # establish the absence of a remote operation.
+                            matches = [name for name in options if name.startswith(spelling)]
+                            if len(matches) != 1:
+                                fail("unparsed_command", "provider git remote option cannot be audited", event)
+                                return False
+                            role = options[matches[0]]
+                            if role == "network":
+                                return True
+                            if role == "value" and not equals:
+                                i += 1
+                                if i >= len(arguments):
+                                    fail("unparsed_command", "provider git remote value is missing", event)
+                                    return False
+                            elif equals and (role == "local" or not value):
+                                fail("unparsed_command", "provider git remote option value cannot be audited", event)
+                                return False
+                        elif option.startswith("-"):
+                            letters = option[1:]
+                            for offset, character in enumerate(letters):
+                                if (operation == "add" and character == "f"
+                                        or operation == "set-head" and character == "a"):
+                                    return True
+                                if operation == "add" and character in {"t", "m"}:
+                                    if offset == len(letters) - 1:
+                                        i += 1  # A separate branch operand is data.
+                                        if i >= len(arguments):
+                                            fail("unparsed_command", "provider git remote value is missing", event)
+                                    break
+                                if operation != "set-head" or character != "d":
+                                    fail("unparsed_command", "provider git remote short option cannot be audited", event)
+                                    return False
+                        i += 1
+                    if operation == "get-url":
+                        return False
+                # Only listing and URL inspection belong to the supported local
+                # remote-command subset. Configuration mutations stay opaque.
+                fail("unparsed_command", "provider git remote operation cannot be audited", event)
+                return False
+            if subcommand == "archive":
+                for option in arguments[i + 1:]:
+                    if option == "--":
+                        break
+                    spelling = option.partition("=")[0]
+                    if spelling.startswith("--") and len(spelling) > 2 and "--remote".startswith(spelling):
+                        return True
+                fail("unparsed_command", "provider git archive invocation cannot be audited", event)
+            return False
+
+        def getent_network(arguments):
+            # These NSS databases may invoke getaddrinfo/gethostbyname and DNS.
+            # The service override does not establish a safe historical lookup.
+            i = 0
+            while i < len(arguments) and arguments[i].startswith("-"):
+                option = arguments[i]
+                if option == "--":
+                    i += 1
+                    break
+                if option in {"-h", "--help", "--usage", "-V", "--version"}:
+                    return False
+                if option in {"-s", "--service"}:
+                    i += 2
+                elif option in {"-i", "--no-idn"} or option.startswith(("-s", "--service=")):
+                    i += 1
+                else:
+                    fail("unparsed_command", "provider getent option cannot be audited", event)
+                    return False
+            return i < len(arguments) and arguments[i] in {"hosts", "ahosts", "ahostsv4", "ahostsv6"}
+
+        def python_network_module(arguments):
+            # Consume the supported interpreter prefix, including bundles and
+            # option data, before deciding where a script's arguments begin.
+            i = 0
+            while i < len(arguments):
+                option = arguments[i]
+                if option == "--":
+                    if i + 1 < len(arguments):
+                        file_access(arguments[i + 1], event, cwd=working)
+                    break
+                if option == "-":
+                    fail("unparsed_command", "provider Python stdin body cannot be audited", event)
+                    break
+                if not option.startswith("-"):
+                    file_access(option, event, cwd=working)
+                    break
+                if option in {"--help", "--help-env", "--help-xoptions", "--help-all", "--version"}:
+                    return False
+                if option == "--check-hash-based-pycs" or option.startswith("--check-hash-based-pycs="):
+                    if "=" in option:
+                        mode = option.split("=", 1)[1]
+                    else:
+                        i += 1
+                        mode = arguments[i] if i < len(arguments) else None
+                    if mode not in {"default", "always", "never"}:
+                        fail("unparsed_command", "provider Python hash-pyc mode cannot be audited", event)
+                        return False
+                elif option.startswith("--"):
+                    fail("unparsed_command", "provider Python prefix option cannot be audited", event)
+                    return False
+                else:
+                    letters = option[1:]
+                    for offset, character in enumerate(letters):
+                        if character == "c":
+                            fail("unparsed_command", "provider interpreter inline body cannot be audited", event)
+                            return False
+                        if character in {"h", "V"}:
+                            return False
+                        if character in {"m", "W", "X"}:
+                            value = letters[offset + 1:]
+                            if not value:
+                                i += 1
+                                value = arguments[i] if i < len(arguments) else None
+                            if not value:
+                                fail("unparsed_command", "provider Python option value is missing", event)
+                                return False
+                            if character == "m":
+                                return value in {"pip", "pip._internal", "http.server", "urllib.request"}
+                            harmless = (value in {"ignore", "default", "error", "always", "module", "once"}
+                                or re.fullmatch(r"(?:ignore|default|error|always|module|once)::(?:Warning|UserWarning|"
+                                    r"DeprecationWarning|PendingDeprecationWarning|SyntaxWarning|RuntimeWarning|"
+                                    r"FutureWarning|ImportWarning|UnicodeWarning|BytesWarning|ResourceWarning)", value))
+                            if character == "X":
+                                harmless = (value in {"dev", "utf8", "utf8=0", "utf8=1", "faulthandler", "importtime",
+                                    "warn_default_encoding", "no_debug_ranges", "frozen_modules=on", "frozen_modules=off"}
+                                    or re.fullmatch(r"(?:tracemalloc|int_max_str_digits)=[0-9]+|tracemalloc", value))
+                            if not harmless:
+                                fail("unparsed_command", "provider Python prefix value cannot be audited", event)
+                                return False
+                            break  # Warning/runtime data consumes the remainder of the bundle.
+                        if character not in "bBdEiIOPqRsSuvx":
+                            fail("unparsed_command", "provider Python short prefix cannot be audited", event)
+                            return False
+                i += 1
+            return False
 
         def quiet_sed(begin, end):
             # Only this literal print-only subset has no embedded filesystem or
@@ -443,6 +644,12 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                 start = False
                 end = next((i for i in range(index + 1, len(tokens)) if separator(tokens[i])), len(tokens))
                 arguments = tokens[index + 1:end]
+                if (executable in network_tools or executable == "git" and git_network(arguments)
+                        or executable.startswith("git-") and git_network([executable[4:], *arguments])
+                        or executable in package_managers and any(a in {"install", "add", "update", "sync"} for a in arguments)
+                        or executable == "getent" and getent_network(arguments)
+                        or executable == "openssl" and arguments and arguments[0] == "s_client"):
+                    fail("network_command", "provider ran a forbidden network command", event)
                 if executable in delegated_tools or executable == "find" and any(
                         a in {"-exec", "-execdir", "-ok", "-okdir"} for a in arguments):
                     fail("unparsed_command", "provider utility uses unsupported delegated execution", event)
@@ -518,6 +725,8 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                     end = next((i for i in range(index + 1, len(tokens)) if separator(tokens[i])), len(tokens))
                     if executable.startswith(("python", "pypy")):
                         flags = "c"
+                        if python_network_module(arguments):
+                            fail("network_command", "provider ran a forbidden network module", event)
                     elif executable.startswith("php"):
                         flags = "rRBE"
                     elif executable.startswith("perl") or executable == "julia":
@@ -529,6 +738,8 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                         or executable in {"pwsh", "powershell"} and t.lower().startswith(("-command", "-encodedcommand", "-c", "-e"))
                         or t.startswith("-") and not t.startswith("--") and any(f in t[1:] for f in flags)
                         for t in tokens[index + 1:end])
+                    if executable.startswith(("python", "pypy")):
+                        inline = False  # The prefix parser distinguishes bodies from script data.
                     if inline:
                         # Encodings and language semantics are opaque here. A
                         # workspace script may run under the independent guard;

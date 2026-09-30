@@ -82,7 +82,16 @@ checked for known selectors; unfamiliar filesystem-bearing attachments, includin
 short forms without `=`, are refused. Git
 output and DD input/output selectors are checked even for bare filenames, and
 mutable file-list inputs are refused. Echo/printf data, compiler data flags and
-known search-pattern positions retain their literal text semantics. Ordinary
+known search-pattern positions retain their literal text semantics. Recognized
+network utilities are classified at executable positions; quoted names remain
+ordinary data. Named-remote Git queries and updates are refused, including
+`ls-remote` and `remote update/show/prune`, even when particular flags could avoid
+network access. The bounded remote-option grammar accounts for long-option
+abbreviations and bundled short flags; unsupported remote mutations and archive
+commands are refused. Python invocations use a bounded interpreter-prefix grammar
+before checking the script operand: supported flags and their values are consumed,
+known network modules are refused, and unknown prefix controls fail closed. Arguments
+after a checked script retain their data role. Ordinary local Git status/diff operations remain available. Ordinary
 workspace scripts and synthetic programs may run under the guard; auditing their
 invocation does not prove the semantics of their source.
 
