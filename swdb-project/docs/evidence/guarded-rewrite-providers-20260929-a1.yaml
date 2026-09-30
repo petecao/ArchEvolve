@@ -1,7 +1,7 @@
 {
   "format": "swdb.guarded-rewrite-provider-evidence.v1",
   "created": "2026-09-29",
-  "updated_et": "2026-09-29 20:50 ET",
+  "updated_et": "2026-09-29 21:59 ET",
   "state": "validated_pending_final_review",
   "host": "mbit10",
   "scope": "Guard feasibility and actual provider-native correctness; no performance gain claim.",
@@ -1711,6 +1711,86 @@
       "new_public_cases": 34,
       "source_checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
       "note": "Only printable literal fragments around numeric $? in echo/printf data; no path/glob/other-variable/command substitution or numeric-test concatenation allowance."
+    },
+    "final_review_utility_repairs": {
+      "source_checkout": "d50a39ff42c74cc35aaf6af9feb241d306726cf0",
+      "focused_runs": [
+        {
+          "passed": 94,
+          "seconds": 198.84
+        },
+        {
+          "passed": 40,
+          "seconds": 86.39
+        }
+      ],
+      "note": "Overlapping selections; do not add counts as unique cases."
+    },
+    "final_review_compiler_search_repairs": {
+      "source_checkout": "de6dce17a3bf376f075d93d3cb3919c698d207be",
+      "focused_runs": [
+        {
+          "passed": 132,
+          "seconds": 275.13
+        },
+        {
+          "passed": 2,
+          "seconds": 4
+        }
+      ],
+      "note": "Bounded literal compiler and ripgrep grammar, TAR refusal and controlling utility/build environment refusal. Remaining literal option-path review repair is in progress."
+    },
+    "attached_operand_repairs": {
+      "audit_blob": "a8df374e3060cb634ea7991653115acca819b56e",
+      "new_public_cases": 70,
+      "workspace_cases_collected": 443,
+      "focused_runs": [
+        {
+          "passed": 126,
+          "deselected": 297,
+          "seconds": 283.55,
+          "note": "First attached '=' and data-role repair stage, before the short-option follow-up."
+        },
+        {
+          "passed": 62,
+          "deselected": 381,
+          "seconds": 158.34,
+          "selection": "short_attached or attached_file_operations_and_data or literal_utility_read"
+        }
+      ],
+      "independent_current_blob": [
+        {
+          "passed": 4,
+          "seconds": 10.89,
+          "scope": "Retained unsafe sort/cp short-selector scripted submissions are rejected in both formats."
+        },
+        {
+          "passed": 24,
+          "seconds": 69,
+          "scope": "Data, search-pattern and workspace-write scripted submissions remain admitted."
+        }
+      ],
+      "independent_prior_blob": {
+        "audit_blob": "617b3e4ec3acdba3202c4967c3d71dfb9785f21d",
+        "runs": [
+          {
+            "passed": 40,
+            "seconds": 78.54,
+            "scope": "Prior unsafe submissions rejected."
+          },
+          {
+            "passed": 24,
+            "seconds": 61.79,
+            "scope": "Prior benign submissions admitted."
+          },
+          {
+            "passed": 24,
+            "seconds": 63.74,
+            "scope": "New data/pattern/workspace-write submissions admitted."
+          }
+        ]
+      },
+      "note": "Selections overlap; counts are not unique cases. Independent checks validate event admission, not actual outside filesystem access. Linux A10 final collection remains pending."
     }
   },
   "primary_cli_reference": {
@@ -2859,5 +2939,584 @@
         "failure_message": "Failed to authenticate: OAuth session expired and could not be refreshed"
       }
     ]
+  },
+  "audit_repair_validation": {
+    "checkout": "d50a39ff42c74cc35aaf6af9feb241d306726cf0",
+    "lane": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-09-30T01:35:33Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "swdb-provider-linux-a8",
+        "lease_generation": 427,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 2.18,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-09-30T01:17:53Z"
+      }
+    },
+    "tests": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "329",
+      "time": "1059.225",
+      "timestamp": "2026-09-29T21:17:54.052647-04:00",
+      "hostname": "mbit10"
+    },
+    "exit": "tests=0 audit=0",
+    "started": "Wed Sep 30 01:17:53 UTC 2026",
+    "ended": "Wed Sep 30 01:35:33 UTC 2026",
+    "reaudit": {
+      "checkout": "d50a39ff42c74cc35aaf6af9feb241d306726cf0",
+      "cases": [
+        {
+          "case": "codex-toy",
+          "kind": "codex",
+          "expected_audit_passed": true,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 11,
+            "commands": 4,
+            "file_accesses": 14,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/stdout.txt",
+              "sha256": "dcccb03a62d55b2881795b6307a515ee8e5ee7075953f8f16a8fe4116c628293",
+              "bytes": 2506
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": null,
+          "cleanup_passed": null,
+          "supervisor_protection_enforced": null,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-toy",
+          "kind": "claude",
+          "expected_audit_passed": true,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 144,
+            "commands": 1,
+            "file_accesses": 5,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/stdout.txt",
+              "sha256": "fe494b5af5cf4b3b5dde3160374389123eb140273dc46ec04a7dd630340b5170",
+              "bytes": 45624
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": null,
+          "cleanup_passed": null,
+          "supervisor_protection_enforced": null,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "codex-dx100-a1",
+          "kind": "codex",
+          "expected_audit_passed": false,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "failed",
+            "passed": false,
+            "events": 19,
+            "commands": 10,
+            "file_accesses": 52,
+            "reasons": [
+              "provider shell body has unsupported dynamic syntax",
+              "provider file access outside the visible set: )",
+              "provider sed requires a literal quiet range-print program"
+            ],
+            "violations": [
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 11
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: )",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider sed requires a literal quiet range-print program",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 12
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: )",
+                "event": 12
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider sed requires a literal quiet range-print program",
+                "event": 12
+              }
+            ],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "18ffb5a54d5e36a022b0ac1a43c98c3e315d528455f5fa6728c84dac1b63492f",
+              "bytes": 32220
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": true,
+          "cleanup_passed": null,
+          "supervisor_protection_enforced": null,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-dx100-a1",
+          "kind": "claude",
+          "expected_audit_passed": true,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 4,
+            "commands": 0,
+            "file_accesses": 0,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa",
+              "bytes": 3165
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": true,
+          "cleanup_passed": null,
+          "supervisor_protection_enforced": null,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "codex-dx100-a2",
+          "kind": "codex",
+          "expected_audit_passed": true,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 19,
+            "commands": 10,
+            "file_accesses": 32,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "2560af5113e4db77e5c84ee28213a1cad931f704cce98c93568d7f4317c94adc",
+              "bytes": 29800
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": true,
+          "cleanup_passed": true,
+          "supervisor_protection_enforced": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-dx100-a2",
+          "kind": "claude",
+          "expected_audit_passed": true,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 4,
+            "commands": 0,
+            "file_accesses": 0,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "f699098ca543c28cb62e55620af9efc83b00f899fa9260fbd37e240ac316e0a2",
+              "bytes": 3165
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": true,
+          "cleanup_passed": true,
+          "supervisor_protection_enforced": true,
+          "login_copy_deleted": true
+        }
+      ]
+    },
+    "artifacts": [
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a8/lane.json",
+        "bytes": 5581,
+        "sha256": "25494d651bee17ae8e77fccc599889e0e72933c4836e926d2780705bc93374ea"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a8/pytest.xml",
+        "bytes": 55863,
+        "sha256": "3b959eca75a39a80b41b7400ea648fe6ffc7d4c7ac047149ffde363d7806cc20"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a8/pytest.log",
+        "bytes": 433,
+        "sha256": "bdf1af4a00e67aca8e05b7a7360448f5f6e4a867c9fedcd53d24488d9dc292a6"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a8/retained-reaudit.json",
+        "bytes": 6194,
+        "sha256": "20690276a840583bb616ad25561df95e970338d9883d6003d10c2fcc3cc30c1d"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a8/reaudit.log",
+        "bytes": 4682,
+        "sha256": "4000dbc2d4b8b55060fa216995d05d0bb3f0381b1a16ad10ffd20448f5765fa0"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a8/environment.txt",
+        "bytes": 4446,
+        "sha256": "35e5ba1cef008194c958db27b4f952041d08cd05377bb7c2a37c22591eb1b152"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a8/started.txt",
+        "bytes": 29,
+        "sha256": "c306f3ffa9eba4a77fa44d42926bebc8cf66a0525319db0c5fab0e49ba198964"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a8/ended.txt",
+        "bytes": 29,
+        "sha256": "2c4c0e3dc5f3f94444ddc2fabb24b14a27f02eee7f7853251497a6d2dfad39da"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a8/checkout.txt",
+        "bytes": 41,
+        "sha256": "f1ce46802c6a53561394da1176cdc092ebe69f6f5bbf85fad341fb28a897c22d"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a8/exit.txt",
+        "bytes": 16,
+        "sha256": "bc57eacb4daa4e80caf5b042e6796949e051739aa77dc1a5d0da12b98a94b73b"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a8/driver.log",
+        "bytes": 11623,
+        "sha256": "af2a0a0c89844a3a003243d984f684d33583efd4993ef0449181560a5577c104"
+      }
+    ],
+    "note": "Linux A8 validates d50a39f utility/delegation/forwarding repairs and all six retained event logs. Historical Codex DX100 A1 remains refused; original receipts remain unchanged. Later de6dce1 compiler/ripgrep/TAR and literal option-path repairs have separate validation."
+  },
+  "compiler_search_validation": {
+    "checkout": "de6dce17a3bf376f075d93d3cb3919c698d207be",
+    "lane": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-09-30T01:50:08Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "swdb-provider-linux-a9",
+        "lease_generation": 428,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 2.12,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-09-30T01:38:13Z"
+      }
+    },
+    "tests": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "226",
+      "time": "715.081",
+      "timestamp": "2026-09-29T21:38:13.308437-04:00",
+      "hostname": "mbit10"
+    },
+    "exit": "tests=0 audit=0",
+    "started": "Wed Sep 30 01:38:13 UTC 2026",
+    "ended": "Wed Sep 30 01:50:08 UTC 2026",
+    "reaudit": {
+      "checkout": "de6dce17a3bf376f075d93d3cb3919c698d207be",
+      "cases": [
+        {
+          "case": "codex-toy",
+          "kind": "codex",
+          "expected_audit_passed": true,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 11,
+            "commands": 4,
+            "file_accesses": 14,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/stdout.txt",
+              "sha256": "dcccb03a62d55b2881795b6307a515ee8e5ee7075953f8f16a8fe4116c628293",
+              "bytes": 2506
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": null,
+          "cleanup_passed": null,
+          "supervisor_protection_enforced": null,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-toy",
+          "kind": "claude",
+          "expected_audit_passed": true,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 144,
+            "commands": 1,
+            "file_accesses": 5,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/stdout.txt",
+              "sha256": "fe494b5af5cf4b3b5dde3160374389123eb140273dc46ec04a7dd630340b5170",
+              "bytes": 45624
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": null,
+          "cleanup_passed": null,
+          "supervisor_protection_enforced": null,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "codex-dx100-a1",
+          "kind": "codex",
+          "expected_audit_passed": false,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "failed",
+            "passed": false,
+            "events": 19,
+            "commands": 10,
+            "file_accesses": 52,
+            "reasons": [
+              "provider shell body has unsupported dynamic syntax",
+              "provider file access outside the visible set: )",
+              "provider sed requires a literal quiet range-print program",
+              "provider compiler data operand cannot be resolved"
+            ],
+            "violations": [
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 11
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: )",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider sed requires a literal quiet range-print program",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 12
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: )",
+                "event": 12
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider sed requires a literal quiet range-print program",
+                "event": 12
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider compiler data operand cannot be resolved",
+                "event": 16
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider compiler data operand cannot be resolved",
+                "event": 17
+              }
+            ],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "18ffb5a54d5e36a022b0ac1a43c98c3e315d528455f5fa6728c84dac1b63492f",
+              "bytes": 32220
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": true,
+          "cleanup_passed": null,
+          "supervisor_protection_enforced": null,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-dx100-a1",
+          "kind": "claude",
+          "expected_audit_passed": true,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 4,
+            "commands": 0,
+            "file_accesses": 0,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa",
+              "bytes": 3165
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": true,
+          "cleanup_passed": null,
+          "supervisor_protection_enforced": null,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "codex-dx100-a2",
+          "kind": "codex",
+          "expected_audit_passed": true,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 19,
+            "commands": 10,
+            "file_accesses": 32,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "2560af5113e4db77e5c84ee28213a1cad931f704cce98c93568d7f4317c94adc",
+              "bytes": 29800
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": true,
+          "cleanup_passed": true,
+          "supervisor_protection_enforced": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-dx100-a2",
+          "kind": "claude",
+          "expected_audit_passed": true,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 4,
+            "commands": 0,
+            "file_accesses": 0,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "f699098ca543c28cb62e55620af9efc83b00f899fa9260fbd37e240ac316e0a2",
+              "bytes": 3165
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": true,
+          "cleanup_passed": true,
+          "supervisor_protection_enforced": true,
+          "login_copy_deleted": true
+        }
+      ]
+    },
+    "artifacts": [
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a9/lane.json",
+        "bytes": 5643,
+        "sha256": "989dc9588c2a2de9a15966bba6d08a7d92c282ceb6d50d4caddd0557c1469f76"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a9/pytest.xml",
+        "bytes": 41439,
+        "sha256": "7c1b86b338c4b9361b69474028eb80ccc193e3868a31ad4e3e1e0930765ce02b"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a9/pytest.log",
+        "bytes": 368,
+        "sha256": "a479bb44960aa1d85b56f567899a01c8e2d8aafc0541724456445d90ba4e6ff8"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a9/retained-reaudit.json",
+        "bytes": 6585,
+        "sha256": "cc22eb29805cdcdb3d358d0405fcce341f968db7db3c75c61f79e8e0e887bd4a"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a9/reaudit.log",
+        "bytes": 4947,
+        "sha256": "3e58136bac8b82504064633b94b5e0c83bcae5b57db7e1c61dc06e13957e7418"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a9/environment.txt",
+        "bytes": 4446,
+        "sha256": "900cde5aa61d69812ad325e357c6d458ace33b6afbf7448a35496b1a06961ee8"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a9/started.txt",
+        "bytes": 29,
+        "sha256": "459fc5961d054e684fdb929954aebfb73fb6fcf716162bae3e91afa7009eb34e"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a9/ended.txt",
+        "bytes": 29,
+        "sha256": "d0d27668d953b66ddf8523de95db58a0c9d41920b0df0674c6aee846153f8c14"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a9/checkout.txt",
+        "bytes": 41,
+        "sha256": "b38d83556f0724edd0f84d8b1f2fcf2e41b7b6591932204dcf5da1e16d45168b"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a9/exit.txt",
+        "bytes": 16,
+        "sha256": "bc57eacb4daa4e80caf5b042e6796949e051739aa77dc1a5d0da12b98a94b73b"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a9/driver.log",
+        "bytes": 11747,
+        "sha256": "13d2a7638c3846fb22e4403917dbf1950ce358df70dcfc241410c521a75942fc"
+      }
+    ],
+    "note": "Linux A9 focused compiler, utility and status cases at de6dce1. All six retained log decisions match expected; later literal attached-path repairs have separate final validation."
   }
 }

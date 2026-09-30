@@ -30,6 +30,14 @@ submissions passed the audit; they do not demonstrate a forbidden read under
 Landlock. Parser repairs, focused public tests and fresh Linux/current-log checks
 are required before closure.
 
+2026-09-29 21:59 ET: The utility, compiler/search and attached-option repairs are
+implemented. Linux A8 passed 329 cases at `d50a39f`; A9 passed 226 selected cases
+at `de6dce1`, with all six retained-log decisions matching expectations in both
+runs. The last attachment repair adds 70 public cases, with focused runs of
+126 passed (283.55 s) and 62 passed (158.34 s); selections overlap. Independent
+current-blob checks reject four short-selector repros and pass 24 data/pattern/
+scratch-write cases. Final Linux A10 and the whole-diff review remain pending.
+
 ## Answer
 
 2026-09-29 (Eastern Time)

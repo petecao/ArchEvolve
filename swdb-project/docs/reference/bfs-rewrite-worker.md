@@ -77,7 +77,12 @@ previews. Compilers accept checked file operands and a bounded set of literal
 build options; unfamiliar routing, profile and configuration options are refused.
 Compiler forwarding and response files, TAR commands, ripgrep preprocessing/configuration
 selectors, unresolved execution/configuration wrappers, and filesystem-controlling
-environment overrides are refused. Ordinary
+environment overrides are refused. Literal values in attached file options are
+checked for known selectors; unfamiliar filesystem-bearing attachments, including
+short forms without `=`, are refused. Git
+output and DD input/output selectors are checked even for bare filenames, and
+mutable file-list inputs are refused. Echo/printf data, compiler data flags and
+known search-pattern positions retain their literal text semantics. Ordinary
 workspace scripts and synthetic programs may run under the guard; auditing their
 invocation does not prove the semantics of their source.
 

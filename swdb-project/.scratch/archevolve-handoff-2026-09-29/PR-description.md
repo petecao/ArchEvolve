@@ -1,6 +1,6 @@
 # Integrate SWDB BFS workflows and the annotated DX100 handoff into ArchEvolve
 
-Updated: 2026-09-29 ET
+Updated: 2026-09-29 21:46 ET
 
 ## Summary
 
@@ -32,17 +32,24 @@ snapshot removes the authors' accelerator functions from proposals that start fr
 scalar code. Its derivation and native correctness receipt are recorded; the full
 DX100 source snapshot remains available for strategies that explicitly reuse it.
 
-2026-09-29 20:10 ET: T17's longer public recheck is running in node1 from isolated
-checkout `/data1/yanruj/ArchEvolve_t17_handoff_20260929_a1/swdb-project`.
-Its 25 imported metadata records were committed in `c55614e1c8c64b2a04d812789e9e59805f4c8033`
-after validation of 338 records there. The exact existing frozen v2 protocol
-`bfs-t17-controlled-simulator-20260928.952dead4468b86d7` is unchanged; the companion
-passed and uniform18's public submission started. Public qualification remains
-**pending both final comparison decisions**. The scope is simulated source vertex 0,
-repetition 0 (one repetition under declared determinism), and strategy
-`existing-dx100-top-down-offload`, which reuses the authors' `TDStepMAA` plus
-`wait_ready(tile5)`. Hardware/software attribution is joint; closure timings alone
-do not establish qualification.
+T17's public retained-evidence recheck completed under the unchanged frozen v2
+protocol `bfs-t17-controlled-simulator-20260928.952dead4468b86d7`. Both comparisons
+accepted gain claims against scalar TDStep:
+
+| Comparison | Primary BFS ROI speedup | Decision |
+|---|---:|---|
+| `bfs-t17-handoff-20260929-a1.uniform18` | 3.0805868937958523× | gain |
+| `bfs-t17-handoff-20260929-a1.kronecker18` | 2.7989783693430432× | gain |
+
+The scope is simulated source vertex 0/source position 0/repetition 0, with one
+repetition per family under declared deterministic replay. Strategy
+`existing-dx100-top-down-offload` reuses the authors' `TDStepMAA` plus
+`wait_ready(tile5)`. Attribution is joint hardware/software because MAA is enabled
+only for the candidate. These results establish neither a provider-discovered
+accelerator algorithm nor general-source coverage. Diagnostic per-thread elapsed
+ratios remain separate from primary ROI timing; the uninvoked scalar MAA region
+has no regional ratio. The singleton bootstrap interval does not establish
+independent repeated-run uncertainty.
 
 ## Evidence
 
@@ -61,11 +68,21 @@ do not establish qualification.
   The receipt is retained under `EvolveSWDB_runs/provider-scalar-20260929-a1/`;
   this finite correctness smoke establishes no performance claim.
 - **Before:** T17's positive a3 closure lacked locally retained public comparison
-  records. Provider workspace fixtures also lacked real-provider launch evidence.
-  **After:** Metadata-import and comparison helpers are implemented. T17's raw
-  recheck, the real-provider feasibility/smoke receipts, and the final combined
-  regression/code review are still pending; update this paragraph with their actual
-  outcomes before Yan-Ru opens the PR.
+  records. **After:** Both public comparisons rechecked the retained raw evidence
+  and accepted the bounded gain claims above. The node1 retry used evaluation
+  checkout `c55614e1c8c64b2a04d812789e9e59805f4c8033`, lease generation 489, and
+  exited 0 at 2026-09-29 21:41 ET. The two records were synced in
+  `cadf16b2fe9a945ebfc066eeccd78357a9ad05a8`; public validation passed with 352
+  records. Candidate source artifact SHA-256
+  `ca09d2f439a56f295c5ccdc5e18a5fd5a4c2c9726005365f8125cc1d8979740a`
+  and timed binary SHA-256
+  `852e62314b7114079975fe25d70da4e77596490bcfa89fb4f7c64af585485527`
+  remain pinned. The exact-binary companion passed and observed 14,546 competing
+  parent updates. Raw requests, stdout, stderr, and final summary remain under
+  `/data1/yanruj/EvolveSWDB_runs/t17-handoff-20260929-a1/`; [ticket03](issues/03-record-t17-comparison.md#answer)
+  links the actual records and receipt bindings.
+- Provider ticket07's final regression/code review remains in progress. The root
+  agent will update the final provider QA evidence before Yan-Ru opens the PR.
 
 ## Merge Danger
 

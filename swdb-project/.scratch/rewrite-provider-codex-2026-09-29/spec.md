@@ -186,7 +186,8 @@ recorded configurations can be re-run exactly.
 
 ## Further Notes
 
-- **Implemented and validated on 2026-09-29 ET:** all ten tickets are resolved;
+- **Implementation progress on 2026-09-29 ET:** nine tickets are resolved;
+  ticket 07's audit repairs are implemented and await final Linux validation and review;
   see [map.md](map.md) and
   [guarded provider evidence](../../docs/evidence/guarded-rewrite-providers-20260929-a1.yaml).
   Linux A6 passed 222 guard/pins/workspace cases at `4f5d152`; A7 passed 42

@@ -522,6 +522,81 @@ def test_supported_compiler_and_search_options_pass_public_submit(proposal_setup
 
 
 @pytest.mark.parametrize("value", [
+    "git diff --output=/etc/passwd -- src/bfs.cc",
+    "dd if=/etc/passwd of=build/probe",
+    "sort --files0-from=/etc/passwd",
+    "git diff --output=../outside/diff -- src/bfs.cc",
+    "dd if=../outside/secret of=build/copy",
+    "dd if=src/bfs.cc of=../outside/copy",
+    "diff --from-file=/etc/passwd src/bfs.cc",
+    "diff --to-file=../outside/secret src/bfs.cc",
+    "sort --temporary-directory=/etc src/bfs.cc",
+    "sort --files0-from=build/list",
+    "dd if=passwd of=build/copy",
+    "git diff --output=passwd -- src/bfs.cc",
+    "UNKNOWN_PATH=/etc dd if=src/bfs.cc of=build/copy",
+])
+def test_attached_filesystem_operands_fail_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider, actions=[{"type": "command", "value": value}])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and not audit["passed"] and "candidate" not in proposal
+    assert {v["code"] for v in audit["violations"]} & {"unparsed_command", "external_file_access"}
+    assert Path(audit["raw_log"]["path"]).is_file() and proposal["outcome"]["reason"].startswith("provider audit failed")
+
+
+@pytest.mark.parametrize("value", [
+    "echo 'input=/etc/passwd' && printf '%s\\n' 'name=../outside'",
+    "grep -F 'name=/etc/passwd' src/bfs.cc",
+    "grep -e 'output=../outside' src/bfs.cc",
+    "grep --regexp=filename=/etc/passwd src/bfs.cc",
+    "rg 'name=/etc/passwd' src/bfs.cc",
+    "rg --regexp=filename=/etc/passwd src/bfs.cc",
+    "c++ -DPATH_VALUE=/etc/passwd -D 'TEXT_VALUE=\"../outside\"' -O3 -std=c++17 -c src/bfs.cc -o build/bfs.o",
+    "dd if=src/bfs.cc of=build/copy bs=4096 count=1",
+    "git diff --output=build/diff -- src/bfs.cc",
+    "sort --output=build/sorted src/bfs.cc",
+    "sort -o build/sorted src/bfs.cc",
+    "OMP_NUM_THREADS=2 LC_ALL=C dd if=src/bfs.cc of=build/copy",
+])
+def test_attached_file_operations_and_data_pass_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider, actions=[{"type": "command", "value": value}])
+    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert audit["passed"] and not audit["violations"] and proposal["candidate"]
+    candidate = json.loads(proposal_setup[0].swdb("get", proposal["candidate"], "--format", "json").stdout)
+    assert "int alpha = 14" in (Path(candidate["artifact"]["path"]) / "src/bfs.cc").read_text()
+
+
+@pytest.mark.parametrize("value", [
+    "sort -T/etc -S1K -o build/sorted src/bfs.cc",
+    "cp -t/etc src/bfs.cc",
+    "sort -T../outside -S1K -o build/sorted src/bfs.cc",
+    "cp -t.. src/bfs.cc",
+    "cp -t~ src/bfs.cc",
+    "cp --target-directory=/etc src/bfs.cc",
+])
+def test_unknown_short_attached_paths_fail_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider, actions=[{"type": "command", "value": value}])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and not audit["passed"] and "candidate" not in proposal
+    assert "unparsed_command" in {v["code"] for v in audit["violations"]}
+    assert Path(audit["raw_log"]["path"]).is_file()
+
+
+@pytest.mark.parametrize("value", [
+    "grep -eDIRECTORY=/etc src/bfs.cc",
+    "rg -eINPUT=/etc src/bfs.cc",
+    "grep -F -fsrc/bfs.cc src/bfs.cc",
+    "echo --name=/etc && c++ -Isrc -c src/bfs.cc -obuild/bfs.o",
+])
+def test_short_attached_data_and_known_paths_pass_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider, actions=[{"type": "command", "value": value}])
+    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert audit["passed"] and not audit["violations"] and proposal["candidate"]
+
+
+@pytest.mark.parametrize("value", [
     "/usr/bin/c++ -Isrc -obuild/probe src/bfs.cc && __WORKSPACE_ROOT__/build/probe",
     "cd src && /usr/bin/c++ -I . -o ../build/probe bfs.cc && ../build/probe",
 ])

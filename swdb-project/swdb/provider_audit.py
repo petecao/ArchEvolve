@@ -105,6 +105,8 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
 
         bodies = set()
         operands = set()
+        data_operands = set()
+        checked_file_options = set()
         redirections = {"<", ">", ">>", "<>", ">&", "<&"}
         system_bins = tuple(Path(p).resolve() for p in ("/usr/bin", "/bin", "/usr/local/bin"))
         compiler_names = ("cc", "c++", "gcc", "g++", "clang", "clang++", "icc", "icpc", "icx", "icpx",
@@ -166,7 +168,15 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                 i += 1
             return quiet and program is not None and bool(re.fullmatch(r"[0-9]+(?:,[0-9]+)?p", program))
 
-        def literal_file_option(begin, end, flags):
+        def filesystem_value(value):
+            # Unknown attached options are not allowed to smuggle path syntax.
+            # This is deliberately conservative, not custom-program semantics.
+            return (value in {".", ".."} or value.startswith(("/", "./", "../", "~"))
+                    or "/" in value or "\\" in value
+                    or Path(value).suffix.lower() in {".c", ".cc", ".cpp", ".h", ".hpp", ".py", ".sh", ".json",
+                        ".yaml", ".yml", ".txt", ".conf", ".ini", ".toml", ".rsp", ".list", ".profdata", ".profraw"})
+
+        def literal_file_option(begin, end, flags, *, writing_flags=()):
             # Operand options must be checked before the generic token loop,
             # including attached forms such as --file=/outside or -f/outside.
             i = begin
@@ -176,6 +186,7 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                     break
                 for flag in flags:
                     operand = None
+                    option_index = i
                     if argument == flag:
                         i += 1
                         if i >= end:
@@ -188,11 +199,51 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                     elif not flag.startswith("--") and argument.startswith(flag) and len(argument) > len(flag):
                         operand = argument[len(flag):]
                     if operand is not None:
+                        checked_file_options.add(option_index)
                         if not operand or operand.startswith("-") or any(c in operand for c in "$`\\"):
                             fail("unparsed_command", "provider utility file operand cannot be resolved", event)
                         else:
-                            file_access(operand, event, cwd=working)
+                            file_access(operand, event, writing=flag in writing_flags, cwd=working)
                         break
+                i += 1
+
+        def grep_patterns(begin, end):
+            # Regex arguments are text, including strings such as name=/path.
+            # Only known pattern positions get this exemption, never file args.
+            i, positional, has_pattern = begin, False, False
+            while i < end:
+                argument = tokens[i]
+                if argument.isdigit() and i + 1 < end and tokens[i + 1] in redirections:
+                    i += 1
+                    argument = tokens[i]
+                if argument in redirections:
+                    i += 2
+                    continue
+                if not positional and argument == "--":
+                    positional = True
+                elif not positional and argument in {"-e", "--regexp"}:
+                    i += 1
+                    if i >= end:
+                        fail("unparsed_command", "provider grep pattern operand is missing", event)
+                        break
+                    data_operands.add(i)
+                    has_pattern = True
+                elif not positional and argument.startswith(("-e", "--regexp=")):
+                    data_operands.add(i)
+                    has_pattern = True
+                elif not positional and argument in {"-f", "--file", "--exclude-from"}:
+                    has_pattern = has_pattern or argument != "--exclude-from"
+                    i += 1
+                elif not positional and argument.startswith(("-f", "--file=")):
+                    has_pattern = True
+                elif not positional and argument in {"-A", "-B", "-C", "-m", "--after-context", "--before-context",
+                                                      "--context", "--max-count", "--include", "--exclude"}:
+                    i += 1
+                    if i < end:
+                        data_operands.add(i)
+                elif (positional or not argument.startswith("-")) and not has_pattern:
+                    data_operands.add(i)
+                    has_pattern = True
                 i += 1
 
         def literal_compiler(begin, end):
@@ -309,6 +360,14 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                     has_pattern = True
                     i += 1
                     continue
+                if not positional and argument.startswith(("-e", "--regexp=")) and argument not in {"-e", "--regexp"}:
+                    pattern = argument.split("=", 1)[1] if argument.startswith("--regexp=") else argument[2:]
+                    if not pattern or any(c in pattern for c in "$`\\\n"):
+                        fail("unparsed_command", "provider rg data operand cannot be resolved", event)
+                    data_operands.add(i)
+                    has_pattern = True
+                    i += 1
+                    continue
                 if not positional and argument in {"-e", "--regexp", "-g", "--glob", "--iglob", "-A", "-B", "-C", "-m", "-j",
                                 "--after-context", "--before-context", "--context", "--max-count", "--threads"}:
                     has_pattern = has_pattern or argument in {"-e", "--regexp"}
@@ -333,6 +392,7 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                         operands.add(i)
                     else:
                         has_pattern = True
+                        data_operands.add(i)
                 i += 1
 
         start, executable, command_index, prefix = True, None, 0, None
@@ -362,6 +422,9 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                     fail("unparsed_command", "provider shell assignment cannot be resolved", event)
                 if name in controlling_env or name.startswith("GIT_"):
                     fail("unparsed_command", "provider filesystem or execution environment override cannot be audited", event)
+                if filesystem_value(rhs):
+                    file_access(rhs, event, cwd=working)
+                    fail("unparsed_command", "provider filesystem-bearing assignment cannot be audited", event)
                 continue
             if start and Path(token).name in {"env", "exec", "command"}:
                 if "/" in token and not (token.startswith("/") and any(
@@ -396,11 +459,14 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                     literal_compiler(index + 1, end)
                 if executable in {"grep", "egrep", "fgrep", "rg"}:
                     literal_file_option(index + 1, end, ("--file", "--exclude-from", "-f"))
+                    if executable != "rg":
+                        grep_patterns(index + 1, end)
+                    else:
+                        literal_rg(index + 1, end)
                     if any(a.startswith("-") and not a.startswith(("--", "-f")) and "f" in a[1:]
-                           for a in arguments[:arguments.index("--") if "--" in arguments else len(arguments)]):
+                           and index + 1 + position not in data_operands
+                           for position, a in enumerate(arguments[:arguments.index("--") if "--" in arguments else len(arguments)])):
                         fail("unparsed_command", "provider bundled pattern-file options cannot be audited", event)
-                if executable == "rg":
-                    literal_rg(index + 1, end)
                 if executable == "wc":
                     literal_file_option(index + 1, end, ("--files0-from",))
                     if any(a == "--files0-from" or a.startswith("--files0-from=") for a in arguments):
@@ -408,11 +474,23 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                 if executable == "git" and any(a == "-c" or a.startswith(("-c", "--config-env")) for a in arguments):
                     fail("unparsed_command", "provider git command-line configuration cannot be audited", event)
                 if executable == "git":
-                    literal_file_option(index + 1, end, ("--git-dir", "--work-tree", "-C"))
+                    literal_file_option(index + 1, end, ("--git-dir", "--work-tree", "--output", "-C"),
+                                        writing_flags={"--output"})
                     if any(a.startswith(("--git-dir", "--work-tree", "-C")) for a in arguments):
                         fail("unparsed_command", "provider git filesystem selectors cannot be audited", event)
                 if executable == "tar":
                     fail("unparsed_command", "provider tar invocation cannot be audited", event)
+                if executable == "sort":
+                    literal_file_option(index + 1, end, ("--files0-from", "--output", "-o"),
+                                        writing_flags={"--output", "-o"})
+                    if any(a == "--files0-from" or a.startswith("--files0-from=") for a in arguments):
+                        fail("unparsed_command", "provider sort file-list operands cannot be audited", event)
+                if executable == "dd":
+                    for operand_index in range(index + 1, end):
+                        name, equals, operand = tokens[operand_index].partition("=")
+                        if equals and name in {"if", "of"}:
+                            checked_file_options.add(operand_index)
+                            file_access(operand, event, writing=name == "of", cwd=working)
                 if executable in shells:
                     body_index = None
                     for option_index in range(index + 1, len(tokens)):
@@ -494,6 +572,15 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                         elif not (flag in compiler_outputs and operand == "/dev/null"):
                             file_access(operand, event, writing=flag in compiler_outputs, cwd=working)
                     break
+            if (not is_executable and index not in data_operands
+                    and index not in checked_file_options and executable not in {"echo", "printf"}
+                    and not re.fullmatch(compiler_pattern, executable or "")):
+                value = token.split("=", 1)[1] if "=" in token else None
+                if (value is not None and filesystem_value(value) or token.startswith("-")
+                        and (filesystem_value(token) or re.search(r"^-[A-Za-z0-9_-]+(?:\.\.(?:$|/)|~)", token))):
+                    if value is not None:
+                        file_access(value, event, cwd=working)
+                    fail("unparsed_command", "provider attached filesystem operand has unsupported semantics", event)
             candidate = token.lstrip("<>")
             if index and tokens[index - 1] in {"<", ">", ">>", "<>"}:
                 if candidate not in {"/dev/null", "/dev/stdout", "/dev/stderr"}:
@@ -502,6 +589,8 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
             if index and tokens[index - 1] == "cd":
                 file_access(candidate, event, cwd=working)
                 working = (working / candidate).resolve()
+                continue
+            if not is_executable and (index in data_operands or executable in {"echo", "printf"}):
                 continue
             if candidate.startswith("/"):
                 if is_executable and any(Path(candidate).resolve().is_relative_to(p) for p in system_bins):
