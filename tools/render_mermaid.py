@@ -186,6 +186,20 @@ def render_candidate(request: dict, candidate: dict) -> str:
         header = label(block["id"]).replace("<br/>", " ")
         lines += [f'  subgraph {group}["{header}"]', "    direction TB"]
         details = ["Component: " + display(block.get("component_ref")), "Function: " + display(block.get("function"))]
+        contract = block.get("operation_contract")
+        if contract:
+            realization = contract.get("realization", {})
+            details.append("Realization: " + display(realization.get("kind")))
+            if block.get("requested_payload_types"):
+                details.append("Requested payload: " + ", ".join(block["requested_payload_types"]))
+            if block.get("requested_index_width_bits"):
+                details.append("Requested index bits: " + ", ".join(str(w) for w in block["requested_index_width_bits"]))
+            if block.get("missing_capability_evidence"):
+                details.append("Evidence missing: " + ", ".join(block["missing_capability_evidence"]))
+        if block.get("reference_parameters"):
+            details.append("Reference settings in YAML; none selected")
+        if block.get("unknown_parameters"):
+            details.append("Parameter domains unresolved: " + ", ".join(p["id"] for p in block["unknown_parameters"]))
         for parameter in block.get("parameters", []):
             value = "OPEN" if parameter["state"] == "open" else display(parameter["value"])
             details.append(f"{parameter['name']}: {value} [{display(parameter.get('unit'))}]")
@@ -239,6 +253,8 @@ def build_artifacts(request: dict, source_name: str, source_sha256: str,
     report += [
                "Blue ports face the host; green ports face memory; gray ports are internal; amber ports have an unknown role. Dashed boxes are explanatory annotations, not additional hardware components. Only connections explicitly present in the YAML are drawn. Unconnected ports remain visible.", "",
                "Open values remain OPEN. Read the candidate details for constraints, behavior, and unresolved conditions.", ""]
+    if request.get("representation") == "source_scoped_operation_interface_views":
+        report += ["**Operation-interface view:** boxes represent catalog operation contracts, including documented sequences. They are not physical components or a proof that the displayed operations compose. Reference settings are recorded separately from chosen values; unknown ABI details remain unknown.", ""]
     manifest = {"source": metadata, "diagrams": []}
     for index, candidate in enumerate(selected, start=1):
         filename = f"candidate-{index:02d}.mmd"

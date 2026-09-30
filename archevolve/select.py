@@ -50,6 +50,9 @@ def targets(case, policy):
 
 
 def select_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates=3):
+    if catalog.get("format") == "hardware-catalog-v0.1":
+        from archevolve.evidence_select import select_evidence_candidates
+        return select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates)
     validate_catalog(catalog)
     if type(max_candidates) is not int or max_candidates < 1:
         raise RequestError("max_candidates must be at least 1.")

@@ -1,6 +1,6 @@
 # Offline forward-path prototype
 
-The pipeline accepts the received TDStep reports, normalizes them, inspects a provisional catalog, emits candidate hardware-request YAML, and generates Mermaid diagrams. The current examples use **report revision v1.2**, whose `schema_version` remains `1.1`; older v1.1 reports still work. It uses **explicit rules with zero LLM/API calls**. It does not compile a kernel, run perf, rewrite code, evaluate hardware, or prove a speedup.
+The pipeline accepts the received TDStep reports, normalizes them, queries Eric's source-scoped hardware catalog, emits candidate hardware-request YAML, and generates Mermaid diagrams. The current examples use **report revision v1.2**, whose `schema_version` remains `1.1`; older v1.1 reports still work. It uses **explicit rules with zero LLM/API calls**. It does not compile a kernel, run perf, rewrite code, evaluate hardware, or prove a speedup.
 
 ## Run
 
@@ -11,7 +11,9 @@ From the project root, with the existing Python environment:
   --input examples/received/bfs-sparse.features.v1.2.yaml \
   --input examples/received/bfs-fully-connected.features.v1.2.yaml \
   --methods examples/received/peter-measurement-methods.v1.2.yaml \
-  --output-dir runs/bfs-offline-v1.2
+  --catalog catalog/hardware-v0.1.yaml \
+  --max-candidates 4 \
+  --output-dir runs/bfs-hardware-v0.1
 ```
 
 Use `--overwrite` to replace matching output files for a repeat run, `--max-candidates` to change the per-case budget, or `--catalog` for another compatible catalog. `--methods` applies Peter's explicit methodology only to reports whose hashes it names; omit it for a report without such a clarification. Use a fresh directory when changing the case/candidate set to avoid mistaking stale images for current output; the current manifest is authoritative.
@@ -25,18 +27,18 @@ Run checks with:
 Optional local image previews use the already installed Mermaid CLI:
 
 ```sh
-npm run mermaid -- -i runs/bfs-offline-v1.2/case-01/diagrams/README.md -o runs/bfs-offline-v1.2/case-01/diagrams/preview.md -p tools/puppeteer.example.json -b white
-npm run mermaid -- -i runs/bfs-offline-v1.2/case-02/diagrams/README.md -o runs/bfs-offline-v1.2/case-02/diagrams/preview.md -p tools/puppeteer.example.json -b white
+npm run mermaid -- -i runs/bfs-hardware-v0.1/case-01/diagrams/README.md -o runs/bfs-hardware-v0.1/case-01/diagrams/preview.md -p tools/puppeteer.example.json -b white
+npm run mermaid -- -i runs/bfs-hardware-v0.1/case-02/diagrams/README.md -o runs/bfs-hardware-v0.1/case-02/diagrams/preview.md -p tools/puppeteer.example.json -b white
 ```
 
 ## Artifacts
 
-The [run overview](../runs/bfs-offline-v1.2/README.md) links to each case. Each case has:
+The [run overview](../runs/bfs-hardware-v0.1/README.md) links to each case. Each case has:
 
 - `input.received.yaml`: the original report, unchanged.
 - `normalized.yaml`: reported accesses, preserved CAS semantics, source-binding status, method-scoped proximity statistics, byte-derived capacities, full profiling provenance/per-level sections, scope interpretation, and unresolved questions.
-- `hardware-request.yaml`: selected family sketches, rationale, target-access IDs, open parameters, and hardware graphs.
-- `selection-trace.yaml`: every catalog entry's matching signals, selected/deferred status, and targeted accesses.
+- `hardware-request.yaml`: source-scoped operation options, exact contracts/requirements, target-access IDs, reference/open/unknown parameters, and abstract interface views.
+- `selection-trace.yaml`: complete capability queries, matches, exclusions, conditions and selected/deferred design groups.
 - `diagrams/`: Mermaid files, report, request snapshot, and manifest.
 
 The run records hashes of inputs, catalog, methodology when supplied, generated request, and pipeline code. Repeated execution with unchanged inputs/configuration produces the same run ID and artifacts. Each workload is processed independently; there is no pooling of sparse/dense measurements.
@@ -45,10 +47,10 @@ The run records hashes of inputs, catalog, methodology when supplied, generated 
 
 | Report | Comparison and exploratory candidates |
 |---|---|
-| Sparse | CPU baseline; indirect prefetch family; declared gather/read family |
-| Fully connected | CPU baseline; stride prefetch family; declared bulk-read family |
+| Sparse | CPU baseline; DX100 artifact read operations; Terminus CAS option needing evidence; Prodigy assistance |
+| Fully connected | The same design groups, with separate workload evidence and a different displayed read-option order |
 
-This is an exploration shortlist. The CPU has not been measured here, and no selected accelerator has been established as better. The catalog is seeded from Eric's documents and needs his review for actual capabilities, composition, and interfaces.
+This is an exploration shortlist. The CPU has not been measured here, and no selected accelerator has been established as better. The catalog is Eric's source-backed operation representation. Its scoped requirements still need to be established for a concrete mapping, and it does not prove composition or performance. See [integration details](hardware-catalog-integration.md).
 
 ## Differences that remain unresolved
 
@@ -57,7 +59,7 @@ This is an exploration shortlist. The CPU has not been measured here, and no sel
 3. **Metric labels and conversions.** Peter has now supplied the instrumentation/formulas. The percentages measure adjacent-index proximity within frontiers/neighbor rows, and footprints are calculated array capacities. Their interpretation is resolved; exact cache-block membership and hit rates were not measured by these snippets. Several sparse-table values match decimal MB despite the stated binary convention. The prototype preserves the originals, derives canonical bytes with explicit units, and records that unit inconsistency. See [the methodology review](measurement-methodology-review.md).
 4. **Statement mapping.** The reports describe arrays/expressions but do not identify exact statements in the profiled source. The adapter emits stable access IDs within each case and leaves statement IDs empty. Our earlier source observations remain reference material, not a substitute for this binding.
 
-The dense report correctly distinguishes discovery-phase CAS from later reads. The adapter retains the kernel's conditional CAS even where a stream is described as `cached_streaming_read`. Declared-read mechanisms do not target the mutable parent update. No early-exit transformation is proposed from observing zero discoveries so far. Resolved methodology interpretations remain visible in outputs but are no longer emitted as unanswered clarification requests.
+The dense report correctly distinguishes discovery-phase CAS from later reads. The adapter retains the kernel's conditional CAS even where a stream is described as `cached_streaming_read`. The new evidence adapter distinguishes a read of mutable parent state from its CAS, querying each separately. A read match does not prove immutable memory. A Terminus CAS option is retained as conditional evidence, while DX100 artifact CAS is excluded. No early-exit transformation is proposed from observing zero discoveries so far. Resolved methodology interpretations remain visible in outputs but are no longer emitted as unanswered clarification requests.
 
 ## v1.2 profiling sections
 
@@ -74,7 +76,7 @@ The same reported sections and counters appear in the hardware request's `worklo
 ## What remains to implement later
 
 - Bind the reports to the actual profiled source and confirmed metrics.
-- Replace/review seed family sketches with Eric's real component records and constraints.
+- Establish concrete workload mappings and composition/interface proofs from the retrieved operation requirements.
 - Add a live model backend when requested; the existing system prompt is not executed by this offline backend.
 - Connect Peter's intrinsic-spec generation, Yan-Ru's rewriting, and the evaluator.
 - Add persistent evaluation feedback and reviewed catalog-extension proposals. Current manifests retain offline trial identity only.

@@ -1,53 +1,50 @@
-# Arch Evolve — hardware agent draft
+# ArchEvolve — hardware exploration prototype
 
-Current direction: **September 24, 2026 meeting; draft 0.2.** The first target is the **DX100-modified, for-loop version of GAP BFS**. BC is a possible second target. The initial milestone is the forward path from a real kernel to hardware-request YAML.
+The active target is the **DX100-modified GAP BFS**, using Peter's v1.2 sparse and fully connected reports. Eric's [hardware evidence catalog](docs/hardware-catalog-handoff.md) is merged and is now the default hardware knowledge input: six source/version/configuration records, 32 operations, and located claims.
 
-The working project directory is `/Users/jvgrewal/Desktop/ArchEvolve`.
+Local work for this task lives in `/Users/jvgrewal/Desktop/ArchEvolve`. Run commands from the repository root.
 
-Start with [the current design](docs/hardware-agent-design.md) and [the updated agent prompt](prompts/hardware-agent.md).
+## Current offline forward path
 
-The proposed exchange is:
+**Feature reports → normalized evidence → typed operation queries → conditional interface candidates → YAML and Mermaid.**
 
-**Yan-Ru profiles/annotates → Peter extracts statement features → Josh/Eric select hardware → Josh renders block diagrams → Peter derives intrinsic specs → Yan-Ru rewrites loops.**
-
-Current handoff sketches:
-
-- [BFS statement-feature template](examples/bfs.features.template.yaml)
-- [Hardware request / block-graph template](examples/hardware-request.template.yaml)
-- [Rewrite feedback template](examples/rewrite-feedback.template.yaml)
-- [Meeting decisions and outstanding dependencies](docs/meeting-2026-09-24.md)
-
-These YAML files are **unfilled templates** for the proposed handoff. The [DX100 artifact BFS source is available locally](sources/README.md) at a recorded revision. The current inputs are Peter's **v1.2 report revisions** under [examples/received](examples/received): both declare the matching DX100 revision and 32-bit offsets. The sparse report additionally supplies compiler/platform/run metadata, counters, and a seven-level profile. Raw artifacts and trial/ROI linkage remain unverified; source annotations and Eric's reviewed component catalog are still pending. Historical v1.1 reports and runs are preserved.
-
-## Working offline forward path
-
-The [offline pipeline](docs/offline-pipeline.md) now normalizes Peter's reports, selects exploratory candidates from a [provisional catalog seed](catalog/README.md), and generates hardware-request YAML plus diagrams. It is rule-based and makes **no LLM/API calls**. No accelerator, software rewrite, or evaluator has been run.
-
-Open the [run overview](runs/bfs-offline-v1.2/README.md), [sparse rendered diagrams](runs/bfs-offline-v1.2/case-01/diagrams/preview.md), or [fully connected rendered diagrams](runs/bfs-offline-v1.2/case-02/diagrams/preview.md).
-
-For the software handoff, use [the diagram and YAML guide for Peter](docs/peter-intrinsics-handoff.md). It identifies the declared-read candidates to discuss for intrinsic specifications, plus optional prefetch alternatives.
+The pipeline makes no LLM/API or evaluator calls. It preserves scope, source uncertainty, result validity, ordering/completion obligations and parameter states. It does not generate an executable rewrite or prove performance/composition.
 
 ```sh
-.venv/bin/python -m archevolve --input examples/received/bfs-sparse.features.v1.2.yaml --input examples/received/bfs-fully-connected.features.v1.2.yaml --methods examples/received/peter-measurement-methods.v1.2.yaml --output-dir runs/bfs-offline-v1.2 --overwrite
-```
-
-The v1.2 inputs resolve the earlier reported offset-width/source-reference mismatch. The adapter retains `profiling_provenance` and `frontier_evolution_profile` through normalized data, hardware-request YAML, and review reports. A command requesting five trials and a per-level table describing one traversal remain separate scopes; a one-vertex frontier has no usable adjacent-pair mean. The offline candidate priorities are unchanged. These are conditional family sketches, not performance-ranked or implementation-ready designs.
-
-Peter's subsequent [methodology explanation and interpretation](docs/measurement-methodology-review.md) now clarify adjacent-pair proximity and array-capacity calculations. The adapter records those meanings, derives canonical byte values, and flags the mixed decimal/binary unit table without changing either received report.
-
-Read [the BFS source review](docs/bfs-source-review.md) for the CPU/accelerated path distinction and the seven [source-linked statement observations](examples/bfs.source-observations.yaml). Those observations are a manual code review, not profiling or Peter's delivered features.
-
-## Working diagram generator
-
-The [YAML-to-Mermaid converter](tools/render_mermaid.py) is now implemented. See [usage and checks](docs/mermaid-generator.md).
-
-As an interim demo, it renders [illustrative hardware requests based on Peter's SPARTA example](examples/sparta-sort.hardware-request.yaml). Open the [rendered diagram report](diagrams/sparta/preview.md) to view both candidates. Peter's workload facts are real reports; the hardware partitions and ports are manually authored conditional sketches, not agent discoveries or validated designs.
-
-```sh
-.venv/bin/python tools/render_mermaid.py examples/sparta-sort.hardware-request.yaml --output-dir diagrams/sparta --overwrite
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m archevolve --input examples/received/bfs-sparse.features.v1.2.yaml --input examples/received/bfs-fully-connected.features.v1.2.yaml --methods examples/received/peter-measurement-methods.v1.2.yaml --catalog catalog/hardware-v0.1.yaml --max-candidates 4 --output-dir runs/bfs-hardware-v0.1 --overwrite
 .venv/bin/python -m unittest discover -s tests -v
 ```
 
-The formats are provisional. LANL's Sumati and Kyle are expected to define the official exchange format; avoid expanding formal schemas until that is aligned. Candidate storage/window parameters remain open for Arch Evolve to tune. Josh supplies block behavior and I/O semantics; Peter derives the concrete intrinsic specification.
+The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 0.1.2); `--catalog` may be omitted. The received feature files still use schema 1.1 despite being report revision v1.2.
 
-The older [SPARTA input](examples/sparta-sort.input.yaml), [illustrative output](examples/sparta-sort.output.yaml), and [v0.1 JSON schemas](schemas/README.md) are retained for history and as context for the interim diagram demo. They are not the current BFS pipeline contract. The older output placed intrinsic specifications with Josh and required fixed configurations for readiness; September 24 changes that division of work.
+## Results and handoff
+
+- **[Peter's intrinsic handoff](docs/peter-intrinsics-handoff.md)**: current images, operation contracts, and source requirements.
+- [Run overview](runs/bfs-hardware-v0.1/README.md).
+- [Sparse interface views](runs/bfs-hardware-v0.1/case-01/diagrams/preview.md).
+- [Fully connected interface views](runs/bfs-hardware-v0.1/case-02/diagrams/preview.md).
+- [Derived catalog navigation](runs/bfs-hardware-v0.1/catalog.navigation.yaml) and [decision questions](runs/bfs-hardware-v0.1/catalog.decision-questions.yaml).
+
+Both cases currently retrieve the CPU comparison, DX100 artifact read-interface options, a Terminus CAS configuration requiring more type/mapping evidence, and Prodigy read assistance. Similar capabilities are relevant to the same code even when workload behavior differs; this is not a speedup ranking.
+
+**Important distinctions:** DX100 artifact CAS is explicitly excluded. Prefetch assistance does not return the requested gather result. A range-generation/load sequence is not one invented instruction. Fixed reference settings are not chosen tuning values. Unknown parameter domains remain unknown.
+
+## Architecture and responsibilities
+
+Yan-Ru profiles/annotates → Peter extracts features → Josh/Eric explore hardware → Josh provides interface views → Peter derives intrinsic specs → Yan-Ru rewrites loops. Josh/Eric then assemble matching artifacts for evaluation. Failed mappings can feed back to hardware exploration.
+
+- [Current design](docs/hardware-agent-design.md)
+- [Evidence-catalog integration](docs/hardware-catalog-integration.md)
+- [Offline pipeline and input interpretation](docs/offline-pipeline.md)
+- [Future agent prompt](prompts/hardware-agent.md) — not executed by the offline backend
+- [Mermaid converter](docs/mermaid-generator.md)
+
+The catalog describes existing operations/configurations, not a ready-to-compose physical block library. The diagrams are source-scoped **operation-interface views**; their abstract ports do not invent ABI widths or physical wiring. Peter/Eric must establish a concrete mapping before a code rewrite.
+
+## Inputs and history
+
+The [source checkouts](sources/README.md), [source review](docs/bfs-source-review.md), [received reports](examples/received), and [measurement-method review](docs/measurement-methodology-review.md) remain available. The current reports reconcile 32-bit offsets with the recorded DX100 revision, but raw profiling and trial/ROI linkage are not independently verified.
+
+Historical [SPARTA diagrams](diagrams/sparta/preview.md), [family-seed BFS runs](runs/bfs-offline-v1.2/README.md), and [v0.1 schemas](schemas/README.md) are retained. The old selector can still be exercised explicitly with `--catalog catalog/seed.yaml --max-candidates 3`; it is no longer the default. Historical family partitions must not be mistaken for verified hardware interfaces.
