@@ -1,11 +1,11 @@
 {
   "format": "swdb.guarded-rewrite-provider-evidence.v1",
   "created": "2026-09-29",
-  "updated_et": "2026-09-29 22:45 ET",
-  "state": "pending_final_linux_validation_and_review",
+  "updated_et": "2026-09-29 22:59 ET",
+  "state": "validated_pending_final_review",
   "host": "mbit10",
   "scope": "Guard feasibility and actual provider-native correctness; no performance gain claim.",
-  "implementation_checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
+  "implementation_checkout": "3a73c6c8f7cec253237a910d3d6580481419da8f",
   "toy_turns": [
     {
       "kind": "codex",
@@ -1738,7 +1738,7 @@
           "seconds": 4
         }
       ],
-      "note": "Bounded literal compiler and ripgrep grammar, TAR refusal and controlling utility/build environment refusal. Remaining literal option-path review repair is in progress."
+      "note": "Bounded compiler/ripgrep grammar and opaque TAR/control-environment refusals; later attached-option and network grammar repairs are separately validated below."
     },
     "attached_operand_repairs": {
       "audit_blob": "a8df374e3060cb634ea7991653115acca819b56e",
@@ -1793,7 +1793,7 @@
       "note": "Selections overlap and counts are not unique. Linux A10 at a7cca27 passed all443 workspace cases and all six retained-log decisions. Independent checks validate event admission, not actual outside filesystem access."
     },
     "network_command_repairs": {
-      "state": "pending_linux_validation",
+      "state": "passed",
       "initial_reproductions": {
         "audit_blob": "a8df374e3060cb634ea7991653115acca819b56e",
         "unexpected_admissions": 4,
@@ -1872,6 +1872,13 @@
         "expected_admissions": 38,
         "unresolved_findings": 0,
         "note": "Start/end blob unchanged. No real network or outside-filesystem actions."
+      },
+      "final_focused_run": {
+        "audit_blob": "62fe75f4efc5e79b435fb5d5390fc1ae7b4dc31b",
+        "passed": 154,
+        "deselected": 421,
+        "seconds": 321.82,
+        "selection": "named_remote_network_commands or local_git_search_and_network_command_text or workspace_script_module_argument_text or unsupported_remote_or_archive_options or unsupported_python_prefix or direct_workspace_script_compile_and_status or direct_dynamic_or_inline_command or large_annotations_use_immutable_context or public_repair_uses_workspace_diff_and_audit"
       }
     }
   },
@@ -2104,25 +2111,25 @@
     }
   },
   "final_audit_validation": {
-    "checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
+    "checkout": "3a73c6c8f7cec253237a910d3d6580481419da8f",
     "lane": {
       "socket_lane": {
         "aligned_cell_age_s": "",
         "aligned_to": "no_gapbs_batch_running",
         "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
-        "ended_utc": "2026-09-30T00:41:11Z",
+        "ended_utc": "2026-09-30T02:58:53Z",
         "exit_code": 0,
         "host": "mbit10",
-        "job": "swdb-provider-linux-a7",
-        "lease_generation": 425,
+        "job": "swdb-provider-linux-a11",
+        "lease_generation": 429,
         "lease_name": "mbit10-evaluation-node0",
-        "load1_at_start": 2.55,
+        "load1_at_start": 1.11,
         "load1_max": 32,
         "node": 0,
         "numa_memory_policy": "bind:0",
         "numactl": "--cpunodebind=0 --membind=0",
         "preregistration_sha256": null,
-        "started_utc": "2026-09-30T00:38:58Z"
+        "started_utc": "2026-09-30T02:47:16Z"
       }
     },
     "tests": {
@@ -2130,18 +2137,21 @@
       "errors": "0",
       "failures": "0",
       "skipped": "0",
-      "tests": "42",
-      "time": "132.560",
-      "timestamp": "2026-09-29T20:38:59.118057-04:00",
+      "tests": "216",
+      "time": "695.709",
+      "timestamp": "2026-09-29T22:47:17.235330-04:00",
       "hostname": "mbit10"
     },
     "exit": "tests=0 audit=0",
+    "started": "Wed Sep 30 02:47:16 UTC 2026",
+    "ended": "Wed Sep 30 02:58:53 UTC 2026",
     "reaudit": {
-      "checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
+      "checkout": "3a73c6c8f7cec253237a910d3d6580481419da8f",
       "cases": [
         {
           "case": "codex-toy",
           "kind": "codex",
+          "expected_audit_passed": true,
           "reaudit": {
             "format": "swdb.provider-audit.v1",
             "state": "passed",
@@ -2158,11 +2168,15 @@
             }
           },
           "guard_passed": true,
+          "original_audit_passed": null,
+          "cleanup_passed": null,
+          "supervisor_protection_enforced": null,
           "login_copy_deleted": true
         },
         {
           "case": "claude-toy",
           "kind": "claude",
+          "expected_audit_passed": true,
           "reaudit": {
             "format": "swdb.provider-audit.v1",
             "state": "passed",
@@ -2179,11 +2193,15 @@
             }
           },
           "guard_passed": true,
+          "original_audit_passed": null,
+          "cleanup_passed": null,
+          "supervisor_protection_enforced": null,
           "login_copy_deleted": true
         },
         {
-          "case": "codex-dx100",
+          "case": "codex-dx100-a1",
           "kind": "codex",
+          "expected_audit_passed": false,
           "reaudit": {
             "format": "swdb.provider-audit.v1",
             "state": "failed",
@@ -2193,8 +2211,9 @@
             "file_accesses": 52,
             "reasons": [
               "provider shell body has unsupported dynamic syntax",
-              "provider shell argument cannot be resolved",
-              "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d"
+              "provider file access outside the visible set: )",
+              "provider sed requires a literal quiet range-print program",
+              "provider compiler data operand cannot be resolved"
             ],
             "violations": [
               {
@@ -2203,13 +2222,13 @@
                 "event": 11
               },
               {
-                "code": "unparsed_command",
-                "reason": "provider shell argument cannot be resolved",
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: )",
                 "event": 11
               },
               {
-                "code": "external_file_access",
-                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
+                "code": "unparsed_command",
+                "reason": "provider sed requires a literal quiet range-print program",
                 "event": 11
               },
               {
@@ -2218,14 +2237,24 @@
                 "event": 12
               },
               {
-                "code": "unparsed_command",
-                "reason": "provider shell argument cannot be resolved",
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: )",
                 "event": 12
               },
               {
-                "code": "external_file_access",
-                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
+                "code": "unparsed_command",
+                "reason": "provider sed requires a literal quiet range-print program",
                 "event": 12
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider compiler data operand cannot be resolved",
+                "event": 16
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider compiler data operand cannot be resolved",
+                "event": 17
               }
             ],
             "raw_log": {
@@ -2235,11 +2264,15 @@
             }
           },
           "guard_passed": true,
+          "original_audit_passed": true,
+          "cleanup_passed": null,
+          "supervisor_protection_enforced": null,
           "login_copy_deleted": true
         },
         {
-          "case": "claude-dx100",
+          "case": "claude-dx100-a1",
           "kind": "claude",
+          "expected_audit_passed": true,
           "reaudit": {
             "format": "swdb.provider-audit.v1",
             "state": "passed",
@@ -2256,44 +2289,124 @@
             }
           },
           "guard_passed": true,
+          "original_audit_passed": true,
+          "cleanup_passed": null,
+          "supervisor_protection_enforced": null,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "codex-dx100-a2",
+          "kind": "codex",
+          "expected_audit_passed": true,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 19,
+            "commands": 10,
+            "file_accesses": 32,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/codex/provider-dx100-codex-20260929-a2.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "2560af5113e4db77e5c84ee28213a1cad931f704cce98c93568d7f4317c94adc",
+              "bytes": 29800
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": true,
+          "cleanup_passed": true,
+          "supervisor_protection_enforced": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-dx100-a2",
+          "kind": "claude",
+          "expected_audit_passed": true,
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 4,
+            "commands": 0,
+            "file_accesses": 0,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a2/claude/provider-dx100-claude-20260929-a2.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "f699098ca543c28cb62e55620af9efc83b00f899fa9260fbd37e240ac316e0a2",
+              "bytes": 3165
+            }
+          },
+          "guard_passed": true,
+          "original_audit_passed": true,
+          "cleanup_passed": true,
+          "supervisor_protection_enforced": true,
           "login_copy_deleted": true
         }
       ]
     },
-    "artifacts": {
-      "pytest.log": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/pytest.log",
-        "bytes": 127,
-        "sha256": "b94aa1a2bf36212dc81358bd7b2629f154d338cbecd454437e8a4f8b4bc85d09"
+    "artifacts": [
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a11/lane.json",
+        "bytes": 6068,
+        "sha256": "55a6ead82143bf7b30ec968f1fec7877e7c653cd0631c2bf68b3a09c8fcf7349"
       },
-      "pytest.xml": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/pytest.xml",
-        "bytes": 8016,
-        "sha256": "d5b2379a745941bf6fc118fb544e6ca29953e78927d7640eeac5424839794d96"
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a11/pytest.xml",
+        "bytes": 38982,
+        "sha256": "daf85a3cfb4ea3ed72286bd2cec1ca9eb2ad341d9474a46c149655c4bac0c2e0"
       },
-      "retained-reaudit.json": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/retained-reaudit.json",
-        "bytes": 3998,
-        "sha256": "93b63195e9ac1224c7029e9be2bc5ed3a4e884a694d0eb1a9dc0c7c19e437c39"
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a11/pytest.log",
+        "bytes": 288,
+        "sha256": "bedfe5c8e2f9e044266bef306c646b13d40cdf9398a9b9789e7eca5c563829a8"
       },
-      "environment.txt": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/environment.txt",
-        "bytes": 4446,
-        "sha256": "6474c105559cdbc27edf803d90a811217d107225a3cd1060f43aec3641cfc583"
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a11/retained-reaudit.json",
+        "bytes": 6585,
+        "sha256": "14a9eadff415fd039ac53108e551911497406a07f475f05281a9f0576cb9fe4b"
       },
-      "lane.json": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/lane.json",
-        "bytes": 4898,
-        "sha256": "891a7db28333d07f92bbc24718b04e9142a7807866a52ce1daa237d67ddb1440"
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a11/reaudit.log",
+        "bytes": 4947,
+        "sha256": "0072facaac4a68ff5a64c6b29b0e4e9b66d16d3604cb3f8649cc2f5182dbd9b9"
       },
-      "exit.txt": {
-        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/exit.txt",
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a11/environment.txt",
+        "bytes": 4387,
+        "sha256": "b18b3b242fdfb8ca3613bdf9bbfa68963036ba24caed3d731aa51f20bb774fdd"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a11/started.txt",
+        "bytes": 29,
+        "sha256": "5646e33092eb0c4254f0aed222b2bd14c01188690e5b113a97a8abb126244546"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a11/ended.txt",
+        "bytes": 29,
+        "sha256": "ba17e00820ad1d1aed8490bf3189a2c7e8c5cc9dd75b86a1f32dce3fe03747a0"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a11/checkout.txt",
+        "bytes": 41,
+        "sha256": "01d1373a32d536c4192336aa140d1cf3d339aa3c3eae7411a75f967f7f2863cb"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a11/exit.txt",
         "bytes": 16,
         "sha256": "bc57eacb4daa4e80caf5b042e6796949e051739aa77dc1a5d0da12b98a94b73b"
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a11/driver.log",
+        "bytes": 12598,
+        "sha256": "cf950760fc893d543fd8394b78d326011c1595b23341405555f83c8fb0fadada"
       }
-    },
-    "state": "passed_including_expected_historical_codex_dx100_refusal",
-    "raw_folder": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7"
+    ],
+    "state": "passed",
+    "raw_folder": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a11",
+    "selection": "named_remote_network_commands or local_git_search_and_network_command_text or workspace_script_module_argument_text or event_audit_fails_with_retained_reason or shell_wrapped_actions_fail_public_submit or shell_wrapped_compile_and_status_pass or unsupported_remote_or_archive_options or unsupported_python_prefix or direct_dynamic_or_inline_command or direct_workspace_script_compile or large_annotations_use_immutable_context or public_repair_uses_workspace_diff",
+    "note": "Final frozen network/Git/Python parser.216selected cases cover all132 additions and84 older audit/nested/script/context/repair cases;575total collected. All6 retained-log audit decisions match expectations. Full A10 collection remains pinned separately."
   },
   "current_real_smoke": {
     "state": "completed_with_retained_claude_authentication_failure",
@@ -3895,5 +4008,198 @@
       }
     ],
     "note": "Full Linux workspace collection at a7cca27; later network utility/Git alias audit repair has separate focused validation."
+  },
+  "initial_provider_acceptance_checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
+  "prior_literal_status_audit_validation": {
+    "checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
+    "lane": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-09-30T00:41:11Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "swdb-provider-linux-a7",
+        "lease_generation": 425,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 2.55,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-09-30T00:38:58Z"
+      }
+    },
+    "tests": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "42",
+      "time": "132.560",
+      "timestamp": "2026-09-29T20:38:59.118057-04:00",
+      "hostname": "mbit10"
+    },
+    "exit": "tests=0 audit=0",
+    "reaudit": {
+      "checkout": "c8a666ff95b5e1c0cbd1a1c8f99197e7fa119e53",
+      "cases": [
+        {
+          "case": "codex-toy",
+          "kind": "codex",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 11,
+            "commands": 4,
+            "file_accesses": 14,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a16/codex/stdout.txt",
+              "sha256": "dcccb03a62d55b2881795b6307a515ee8e5ee7075953f8f16a8fe4116c628293",
+              "bytes": 2506
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-toy",
+          "kind": "claude",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 144,
+            "commands": 1,
+            "file_accesses": 5,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-real-spike-20260929-a10/claude/stdout.txt",
+              "sha256": "fe494b5af5cf4b3b5dde3160374389123eb140273dc46ec04a7dd630340b5170",
+              "bytes": 45624
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "codex-dx100",
+          "kind": "codex",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "failed",
+            "passed": false,
+            "events": 19,
+            "commands": 10,
+            "file_accesses": 52,
+            "reasons": [
+              "provider shell body has unsupported dynamic syntax",
+              "provider shell argument cannot be resolved",
+              "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d"
+            ],
+            "violations": [
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell argument cannot be resolved",
+                "event": 11
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
+                "event": 11
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell body has unsupported dynamic syntax",
+                "event": 12
+              },
+              {
+                "code": "unparsed_command",
+                "reason": "provider shell argument cannot be resolved",
+                "event": 12
+              },
+              {
+                "code": "external_file_access",
+                "reason": "provider file access outside the visible set: /^[[:space:]]*parent\\[v\\] = u;[[:space:]]*$/d",
+                "event": 12
+              }
+            ],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/codex/provider-dx100-codex-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "18ffb5a54d5e36a022b0ac1a43c98c3e315d528455f5fa6728c84dac1b63492f",
+              "bytes": 32220
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        },
+        {
+          "case": "claude-dx100",
+          "kind": "claude",
+          "reaudit": {
+            "format": "swdb.provider-audit.v1",
+            "state": "passed",
+            "passed": true,
+            "events": 4,
+            "commands": 0,
+            "file_accesses": 0,
+            "reasons": [],
+            "violations": [],
+            "raw_log": {
+              "path": "/data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt",
+              "sha256": "07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa",
+              "bytes": 3165
+            }
+          },
+          "guard_passed": true,
+          "login_copy_deleted": true
+        }
+      ]
+    },
+    "artifacts": {
+      "pytest.log": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/pytest.log",
+        "bytes": 127,
+        "sha256": "b94aa1a2bf36212dc81358bd7b2629f154d338cbecd454437e8a4f8b4bc85d09"
+      },
+      "pytest.xml": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/pytest.xml",
+        "bytes": 8016,
+        "sha256": "d5b2379a745941bf6fc118fb544e6ca29953e78927d7640eeac5424839794d96"
+      },
+      "retained-reaudit.json": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/retained-reaudit.json",
+        "bytes": 3998,
+        "sha256": "93b63195e9ac1224c7029e9be2bc5ed3a4e884a694d0eb1a9dc0c7c19e437c39"
+      },
+      "environment.txt": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/environment.txt",
+        "bytes": 4446,
+        "sha256": "6474c105559cdbc27edf803d90a811217d107225a3cd1060f43aec3641cfc583"
+      },
+      "lane.json": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/lane.json",
+        "bytes": 4898,
+        "sha256": "891a7db28333d07f92bbc24718b04e9142a7807866a52ce1daa237d67ddb1440"
+      },
+      "exit.txt": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7/exit.txt",
+        "bytes": 16,
+        "sha256": "bc57eacb4daa4e80caf5b042e6796949e051739aa77dc1a5d0da12b98a94b73b"
+      }
+    },
+    "state": "passed_including_expected_historical_codex_dx100_refusal",
+    "raw_folder": "/data1/yanruj/EvolveSWDB_runs/provider-linux-20260929-a7"
   }
 }

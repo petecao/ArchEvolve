@@ -3,8 +3,8 @@
 Created: 2026-09-29 17:30 ET
 Updated: 2026-09-29 (Eastern Time)
 **Type:** spec
-**Status:** claimed
-**Blocked by:** Ticket 07's final Linux validation and subsequent whole-diff review.
+**Status:** resolved
+**Blocked by:** None
 Owner: Yan-Ru Jhou
 Decision record: ADR 0006 (rewrite providers work as tool-using agents in a guarded workspace)
 
@@ -186,8 +186,8 @@ recorded configurations can be re-run exactly.
 
 ## Further Notes
 
-- **Implementation progress on 2026-09-29 ET:** nine tickets are resolved;
-  ticket 07's audit repairs are implemented and await final Linux validation and review;
+- **Implementation progress on 2026-09-29 ET:** all ten tickets are resolved;
+  ticket 07's audit repairs passed final Linux validation; whole-diff review is pending;
   see [map.md](map.md) and
   [guarded provider evidence](../../docs/evidence/guarded-rewrite-providers-20260929-a1.yaml).
   Linux A6 passed 222 guard/pins/workspace cases at `4f5d152`; A7 passed 42
@@ -199,8 +199,9 @@ recorded configurations can be re-run exactly.
   audits, guard and cleanup, as permitted by ticket 10; no Claude BFS result is
   claimed. The older Codex A1 receipt remains unchanged and audit-refused.
   Linux A10 passed all 443 workspace cases and six retained-log expectations at
-  `a7cca27`. A later network-command repair is undergoing local checks and a
-  separate Linux A11 acceptance; the subsequent independent code review is pending.
+  `a7cca27`. The final network-command repair passed 154 local and 114 independent
+  cases at audit blob `62fe75f4`; Linux A11 passed 216 selected cases and six
+  retained-log expectations at `3a73c6c`. Whole-diff code review is pending.
   The separate T17 recheck has completed.
 - **Host setup done on 2026-09-29:**
   - Codex CLI 0.153.0 is installed under the user's npm prefix on `/data1` and logged in with ChatGPT; its home is on `/data1`, mode 700.

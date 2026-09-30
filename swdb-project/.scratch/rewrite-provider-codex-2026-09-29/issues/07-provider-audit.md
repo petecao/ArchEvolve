@@ -3,7 +3,7 @@
 Created: 2026-09-29 (Eastern Time)
 Updated: 2026-09-29 (Eastern Time)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** None
 **Spec:** `../spec.md`
 
@@ -84,4 +84,12 @@ Both real providers receive shared guidance to use direct editing tools for sour
 
 Validation (2026-09-29 ET): the fresh local public workspace module passed **195 tests** in **396.70 seconds** after the parser fixes. A subsequent narrow run verifying guidance delivery through Codex arguments and Claude stdin, plus protected-input rejection, passed **14 tests** in **29.67 seconds**. The literal exit-status fix passed **42 focused public cases** in **83.03 seconds** on the Mac and **132.56 seconds** on Linux A7 at `c8a666f`. It permits printable literal fragments around numeric `$?` solely in echo/printf data, preserving refusals of path/glob fragments, other variables, substitutions and concatenated numeric-test arguments. Both event formats cover clean actions, forbidden file reads, login touches, network commands, forbidden tools, malformed logs, forged network authorization, timeout retention, and repair. Assertions use public proposal/candidate/raw artifacts rather than workspace or audit internals.
 
-Linux A6 passed **222 guard/pins/workspace tests in 1428.56 seconds** at `4f5d152`. Its retained-log subprocess exposed a harmless Claude exit-status label refusal, corrected by the narrow fix and confirmed by A7. The official current-parser re-audit passes both historical toy logs and the Claude DX100 failure. The original Codex DX100 A1 attempt remains **failed** because its in-place `sed` regex transformation cannot be safely resolved; its historical receipt is unchanged and is not the current acceptance attempt. Fresh public DX100 A2 at `c8a666f` passes both original/current event audits and guards: Codex creates a candidate with independently passed source-0/3/8 native structural checks; Claude retains an OAuth-expired failure, with no candidate or BFS result. Details and raw identities are in [guarded provider evidence](../../../docs/evidence/guarded-rewrite-providers-20260929-a1.yaml) and tickets 02, 08 and 10. T17 is complete. Linux A10 passed all 443 workspace cases and six retained-log expectations; the subsequent network-command repair and final whole-diff review remain pending.
+Linux A6 passed **222 guard/pins/workspace tests in 1428.56 seconds** at `4f5d152`. Its retained-log subprocess exposed a harmless Claude exit-status label refusal, corrected by the narrow fix and confirmed by A7. The official current-parser re-audit passes both historical toy logs and the Claude DX100 failure. The original Codex DX100 A1 attempt remains **failed** because its in-place `sed` regex transformation cannot be safely resolved; its historical receipt is unchanged and is not the current acceptance attempt. Fresh public DX100 A2 at `c8a666f` passes both original/current event audits and guards: Codex creates a candidate with independently passed source-0/3/8 native structural checks; Claude retains an OAuth-expired failure, with no candidate or BFS result. Details and raw identities are in [guarded provider evidence](../../../docs/evidence/guarded-rewrite-providers-20260929-a1.yaml) and tickets 02, 08 and 10. T17 is complete. Linux A10 passed all 443 workspace cases and six retained-log expectations. Final Linux A11 passed 216 selected cases in 695.71 s at `3a73c6c`, including all 132 additions, and all six retained-log expectations. The subsequent whole-diff review is pending.
+
+2026-09-29 22:59 ET: Implementation acceptance closed. At frozen audit blob
+`62fe75f4`, the final local selection passed 154 cases (321.82 s); independent
+checks passed 114 cases (76 expected refusals, 38 admissions). Linux A11 at
+`3a73c6c` passed 216 cases with no failures/skips in 695.71 s, followed by all
+six expected retained-log audit decisions. Node0 generation 429 recorded load
+1.11 and released with exit0 at 22:58:53 ET. Raw receipts/hashes are in the
+linked evidence. Final whole-diff Standards/Spec review follows this closure.

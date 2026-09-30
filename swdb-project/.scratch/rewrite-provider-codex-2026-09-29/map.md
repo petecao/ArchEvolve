@@ -3,7 +3,7 @@
 Created: 2026-09-29 17:30 ET
 Updated: 2026-09-29 (Eastern Time)
 **Type:** ticket map
-**Status:** in-progress
+**Status:** resolved
 **Spec:** [spec.md](spec.md)
 
 | # | Ticket | Status | Blocked by |
@@ -14,20 +14,18 @@ Updated: 2026-09-29 (Eastern Time)
 | 04 | [Repairs keep their provider; usage limits don't consume repairs](issues/04-repairs-keep-provider.md) | resolved | — |
 | 05 | [Campaigns and the smoke script accept Codex](issues/05-campaigns-accept-codex.md) | resolved | — |
 | 06 | [Workspace mode with the fixture provider](issues/06-workspace-mode-fixture.md) | resolved | — |
-| 07 | [Audit of the provider event log](issues/07-provider-audit.md) | claimed | final-review audit repairs |
+| 07 | [Audit of the provider event log](issues/07-provider-audit.md) | resolved | — |
 | 08 | [Landlock guard for real providers](issues/08-landlock-guard.md) | resolved | — |
 | 09 | [DX100 scalar-only source snapshot](issues/09-dx100-scalar-only-snapshot.md) | resolved | — |
 | 10 | [Real smoke runs on mbit10, plus docs](issues/10-real-smoke-runs-and-docs.md) | resolved | — |
 
-Nine provider tickets are resolved. Ticket 07 is reopened for the final review's
-reproduced inline-utility, delegated-execution and compiler-forwarding audit gaps.
-Those repairs and the attached-file-option repairs are implemented. Linux A10
-passed all 443 workspace cases and six retained-log audit expectations at `a7cca27`
-in node1 generation 490. A subsequent scripted-event check reproduced admissions
-of named-remote Git queries and rsync transfers; that repair is undergoing local
-checks and a separate Linux A11 acceptance pass. Production uses one CPU within the verified
-socket while counting the full tree, including strace and any exact installed
-persistent Codex service, against the aggregate caps.
+All ten provider tickets have implementation acceptance. The utility, compiler,
+attached-file and network-option audit gaps are repaired. Linux A10 passed all
+443 then-current workspace cases at `a7cca27`; final Linux A11 at `3a73c6c`
+passed all 216 selected cases, including all 132 additions, and six retained-log
+expectations. Production uses one CPU within the verified socket while counting
+the full tree, including strace and any exact installed persistent Codex service,
+against the aggregate caps. The subsequent whole-diff code review remains pending.
 
 | Acceptance evidence | Checkout / lane | Result |
 |---|---|---|
@@ -36,7 +34,7 @@ persistent Codex service, against the aggregate caps.
 | Linux A8 utility/delegation repair validation | `d50a39f`; node0 generation 427; load 2.18 | 329 passed in 1059.23 s; all six retained-log decisions match expectations |
 | Linux A9 compiler/search repair validation | `de6dce1`; node0 generation 428; load 2.12 | 226 passed in 715.08 s; all six retained-log decisions match expectations |
 | Linux A10 complete workspace collection | `a7cca27`; node1 generation 490; load 1.06 | 443 passed in 1402.63 s; all six retained-log decisions match expectations |
-| Network utility/named-remote Git repair | Local; Linux A11 planned | 132 new public cases; frozen audit blob `62fe75f4`; 114 independent cases passed; broader local checks running |
+| Linux A11 final network/Git/Python repair | `3a73c6c`; node0 generation 429; load 1.11 | 216 passed in 695.71 s; all six retained-log decisions match expectations |
 | Fresh public Codex DX100 A2 | `c8a666f`; node0 generation 426; load 2.61 | Candidate created; original/current audits, guard and cleanup pass; native sources 0/3/8 pass |
 | Fresh public Claude DX100 A2 | Same A2 checkout/lane | Recorded OAuth-expired failure; original/current audits, guard and cleanup pass; no candidate or BFS result |
 
@@ -58,7 +56,10 @@ continuity. The last attached-option repair adds 70 public cases; its focused
 126-case and 62-case selections pass and overlap. Independent short-option
 rechecks reject four unsafe submissions and admit 24 benign data/write cases at
 audit blob `a8df374e`. The separate T17 recheck and Linux A10 have completed;
-network-repair acceptance and the subsequent whole-diff code review remain pending.
+Linux A11 acceptance passed; the subsequent whole-diff code review remains pending.
+The final local network/Python/Git selection passed 154 cases in 321.82 s;
+independent current-blob checks passed 114 cases (76 expected refusals and
+38 expected admissions). All 132 additions are included in A11’s 216-case selection.
 
 ## Context pointers
 

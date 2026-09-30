@@ -13,8 +13,9 @@ guards and cleanup. Codex created a candidate that passed small-input native
 structural checks for sources 0/3/8; `gain_claim=false`. Claude retained an
 OAuth-expired failure with no candidate, permitted by ticket 10. The older Codex
 A1 log remains audit-refused and unchanged. Linux A10 passed all 443 workspace
-cases and six retained-log expectations. The subsequent network-command repair's
-Linux A11 acceptance and independent code review are pending; the T17 recheck is complete.
+cases and six retained-log expectations. The final network/Git/Python grammar repair
+passed Linux A11: 216 selected cases in 695.71 s and six retained-log expectations
+at `3a73c6c`. Independent whole-diff code review is pending; T17 is complete.
 
 A rewrite provider no longer receives everything in one prompt with no tools. It works as
 a coding agent inside a provider workspace that holds only what its rewrite proposal
