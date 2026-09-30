@@ -3,8 +3,8 @@
 Created: 2026-09-29 (Eastern Time)
 Updated: 2026-09-29 (Eastern Time)
 **Type:** slice
-**Status:** resolved
-**Blocked by:** 02, 06
+**Status:** claimed
+**Blocked by:** None
 **Spec:** `../spec.md`
 
 **What to build:** After every workspace session, SWDB audits the provider's event log (Codex JSON events,
@@ -22,6 +22,13 @@ also fails the attempt.
 ## Comments
 
 2026-09-29: Claimed by provider_workspace agent for workspace derivation, diff, audit, and public fixture coverage.
+
+2026-09-29 21:02 ET: Reopened after the independent review reproduced outside
+file operands hidden in inline AWK/SED programs, `find -exec`, an absolute `env`
+wrapper, and compiler forwarding/time/ccache wrappers. These scripted-event
+submissions passed the audit; they do not demonstrate a forbidden read under
+Landlock. Parser repairs, focused public tests and fresh Linux/current-log checks
+are required before closure.
 
 ## Answer
 

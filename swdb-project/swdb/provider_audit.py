@@ -110,6 +110,80 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                           "gfortran", "flang", "flang-new", "nvcc", "hipcc", "mpicc", "mpicxx", "mpic++")
         compiler_pattern = r"(?:[\w.+-]+-)?(?:" + "|".join(re.escape(n) for n in compiler_names) + r")(?:-\d+(?:\.\d+)*)?"
         compiler_flags = ("--sysroot", "-include", "-imacros", "-isystem", "-iquote", "-idirafter", "-isysroot", "-I", "-L", "-o")
+        delegated_tools = {"xargs", "busybox", "toybox", "sudo", "doas", "timeout", "time", "ccache", "sccache",
+                           "distcc", "nice", "taskset", "numactl", "stdbuf", "nohup", "setsid", "ionice", "chrt",
+                           "flock", "prlimit"}
+        compiler_forwarding = ("-Wp,", "-Wa,", "-Wl,", "-Xpreprocessor", "-Xclang", "-Xassembler", "-Xlinker",
+                               "-Xcompiler", "-Xptxas", "-Xnvlink", "-Xcudafe", "-Xarch_", "--config", "-specs",
+                               "--specs", "-wrapper", "--options-file", "-optf", "--compiler-options", "--linker-options",
+                               "--ptxas-options", "-fplugin", "-fmodule-file", "-fmodule-map-file", "-ivfsoverlay")
+        controlling_env = {"PATH", "BASH_ENV", "ENV", "ZDOTDIR", "FPATH", "CDPATH", "CPATH", "C_INCLUDE_PATH",
+                           "CPLUS_INCLUDE_PATH", "OBJC_INCLUDE_PATH", "LIBRARY_PATH", "COMPILER_PATH", "GCC_EXEC_PREFIX",
+                           "HOME", "XDG_CONFIG_HOME", "LD_PRELOAD", "LD_AUDIT", "LD_LIBRARY_PATH",
+                           "DYLD_INSERT_LIBRARIES", "DYLD_LIBRARY_PATH",
+                           "PYTHONPATH", "PYTHONHOME", "PYTHONSTARTUP", "NODE_OPTIONS", "NODE_PATH", "PERL5OPT",
+                           "PERL5LIB", "PERLLIB", "RUBYOPT", "RUBYLIB", "GIT_EXEC_PATH", "GIT_DIR", "GIT_WORK_TREE"}
+
+        def quiet_sed(begin, end):
+            # Only this literal print-only subset has no embedded filesystem or
+            # execution operation. Do not infer safety from arbitrary sed code.
+            quiet, program, files = False, None, False
+            i = begin
+            while i < end:
+                argument = tokens[i]
+                if argument in {"<", ">", ">>", "<>"}:
+                    break  # The shell parser checks these redirections below.
+                if not files and argument in {"-n", "--quiet", "--silent"}:
+                    quiet = True
+                elif not files and argument in {"-e", "--expression"}:
+                    i += 1
+                    if i >= end or program is not None:
+                        return False
+                    program = tokens[i]
+                    bodies.add(i)
+                elif not files and argument == "--":
+                    files = True
+                elif not files and argument.startswith("-"):
+                    return False
+                elif program is None:
+                    program = argument
+                    bodies.add(i)
+                else:
+                    files = True
+                    file_access(argument, event, cwd=working)
+                    operands.add(i)
+                i += 1
+            return quiet and program is not None and bool(re.fullmatch(r"[0-9]+(?:,[0-9]+)?p", program))
+
+        def literal_file_option(begin, end, flags):
+            # Operand options must be checked before the generic token loop,
+            # including attached forms such as --file=/outside or -f/outside.
+            i = begin
+            while i < end:
+                argument = tokens[i]
+                if argument == "--":
+                    break
+                for flag in flags:
+                    operand = None
+                    if argument == flag:
+                        i += 1
+                        if i >= end:
+                            fail("unparsed_command", "provider utility file operand is missing", event)
+                            break
+                        operand = tokens[i]
+                        operands.add(i)
+                    elif flag.startswith("--") and argument.startswith(flag + "="):
+                        operand = argument[len(flag) + 1:]
+                    elif not flag.startswith("--") and argument.startswith(flag) and len(argument) > len(flag):
+                        operand = argument[len(flag):]
+                    if operand is not None:
+                        if not operand or operand.startswith("-") or any(c in operand for c in "$`\\"):
+                            fail("unparsed_command", "provider utility file operand cannot be resolved", event)
+                        else:
+                            file_access(operand, event, cwd=working)
+                        break
+                i += 1
+
         start, executable, command_index, prefix = True, None, 0, None
         # Command paths are checked as well as file-tool paths. Shell redirections
         # and relative traversal count as accesses; system executable paths do not.
@@ -127,16 +201,22 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                           or token.isdigit() and index + 1 < len(tokens)
                           and tokens[index + 1] in {"<", ">", ">>", "<>"}):
                 fail("unparsed_command", "provider shell body has an unsupported leading redirection", event)
-            assignment = start and re.fullmatch(r"[A-Za-z_]\w*=.*", token, re.S)
+            assignment = (start or executable in {"export", "readonly", "declare", "typeset"}) and re.fullmatch(
+                r"[A-Za-z_]\w*=.*", token, re.S)
             if assignment:
                 # Literal assignments and exit-status capture do not execute a
                 # command. Their later use as a target still fails closed below.
-                rhs = token.split("=", 1)[1]
+                name, rhs = token.split("=", 1)
                 if ("$" in rhs and rhs != "$?") or "`" in rhs:
                     fail("unparsed_command", "provider shell assignment cannot be resolved", event)
+                if name in controlling_env or name.startswith("GIT_"):
+                    fail("unparsed_command", "provider filesystem or execution environment override cannot be audited", event)
                 continue
-            if start and token in {"env", "exec", "command"}:
-                prefix = token
+            if start and Path(token).name in {"env", "exec", "command"}:
+                if "/" in token and not (token.startswith("/") and any(
+                        Path(token).resolve().is_relative_to(p) for p in system_bins)):
+                    file_access(token, event, cwd=working)
+                prefix = Path(token).name
                 continue
             if start and prefix and token.startswith("-"):
                 if token != "--" and not (prefix == "env" and token == "-i"):
@@ -147,6 +227,40 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                 executable = Path(token).name
                 command_index = index
                 start = False
+                end = next((i for i in range(index + 1, len(tokens)) if separator(tokens[i])), len(tokens))
+                arguments = tokens[index + 1:end]
+                if executable in delegated_tools or executable == "find" and any(
+                        a in {"-exec", "-execdir", "-ok", "-okdir"} for a in arguments):
+                    fail("unparsed_command", "provider utility uses unsupported delegated execution", event)
+                if executable in {"awk", "gawk", "mawk", "nawk"}:
+                    fail("unparsed_command", "provider awk program cannot be audited", event)
+                if executable == "sed" and not quiet_sed(index + 1, end):
+                    fail("unparsed_command", "provider sed requires a literal quiet range-print program", event)
+                if re.fullmatch(compiler_pattern, executable):
+                    # Response files and driver forwarding can introduce further
+                    # arguments, including file accesses. Mutable response-file
+                    # contents cannot reconstruct the historical invocation.
+                    if any(a.startswith("@") or a.startswith(compiler_forwarding) for a in arguments):
+                        fail("unparsed_command", "provider compiler forwarded or response operands cannot be audited", event)
+                if executable in {"grep", "egrep", "fgrep", "rg"}:
+                    literal_file_option(index + 1, end, ("--file", "-f"))
+                    if any(a.startswith("-") and not a.startswith(("--", "-f")) and "f" in a[1:]
+                           for a in arguments[:arguments.index("--") if "--" in arguments else len(arguments)]):
+                        fail("unparsed_command", "provider bundled pattern-file options cannot be audited", event)
+                if executable == "wc":
+                    literal_file_option(index + 1, end, ("--files0-from",))
+                    if any(a == "--files0-from" or a.startswith("--files0-from=") for a in arguments):
+                        fail("unparsed_command", "provider wc file-list operands cannot be audited", event)
+                if executable == "git" and any(a == "-c" or a.startswith(("-c", "--config-env")) for a in arguments):
+                    fail("unparsed_command", "provider git command-line configuration cannot be audited", event)
+                if executable == "git":
+                    literal_file_option(index + 1, end, ("--git-dir", "--work-tree", "-C"))
+                    if any(a.startswith(("--git-dir", "--work-tree", "-C")) for a in arguments):
+                        fail("unparsed_command", "provider git filesystem selectors cannot be audited", event)
+                if executable == "tar" and any(a.startswith("--files-from") or "T" in a and (
+                        a.startswith("-") and not a.startswith("--") or position == 0 and re.fullmatch(r"[A-Za-z]+", a))
+                        for position, a in enumerate(arguments)):
+                    fail("unparsed_command", "provider tar file-list operands cannot be audited", event)
                 if executable in shells:
                     body_index = None
                     for option_index in range(index + 1, len(tokens)):
@@ -164,7 +278,7 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
                     else:
                         bodies.add(body_index)
                         command(tokens[body_index], event, str(working), depth=depth + 1)
-                elif executable in {"fish", "csh", "tcsh", "eval", "source", ".", "if", "for", "while", "until", "case",
+                elif executable in {"fish", "csh", "tcsh", "eval", "source", ".", "alias", "if", "for", "while", "until", "case",
                                     "select", "function", "coproc"}:
                     fail("unparsed_command", "provider shell body uses unsupported delegated execution", event)
                 elif "$" in token or "`" in token:

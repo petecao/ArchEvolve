@@ -71,14 +71,18 @@ hostile-process isolation.
 
 Event auditing checks direct shell inputs, explicit nested shell bodies, Glob
 search roots, executable paths and compiler file options. Unresolved substitutions,
-delegated execution and opaque inline interpreter programs fail closed. Ordinary
+delegated execution and opaque inline interpreter programs fail closed. Quiet SED
+with one literal decimal line/range print expression remains available for source
+previews. Compiler forwarding and response files, unresolved execution/configuration
+wrappers, and filesystem-controlling environment overrides are refused. Ordinary
 workspace scripts and synthetic programs may run under the guard; auditing their
 invocation does not prove the semantics of their source.
 
 Both providers receive workspace guidance to use direct editing tools for source
 changes and literal shell operands for workspace reads, builds, and synthetic runs.
 It asks them to avoid inline interpreters, loops, heredocs, delegated execution,
-and regex-based code transformations that cannot be safely audited. Guidance does
+and regex-based code transformations that cannot be safely audited. Compilers run
+directly, with literal file options. Guidance does
 not guarantee compliance; the audit still fails closed.
 
 On Linux, the adapter can replace the official single-command Codex npm wrapper

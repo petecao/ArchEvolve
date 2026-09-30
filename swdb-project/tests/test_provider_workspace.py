@@ -299,6 +299,81 @@ def test_direct_dynamic_or_inline_command_fails_closed(proposal_setup, workspace
     assert "candidate" not in proposal and Path(audit["raw_log"]["path"]).is_file()
 
 
+@pytest.mark.parametrize("value", [
+    "awk 'BEGIN {getline line < \"/etc/passwd\"; print line}'",
+    "gawk 'BEGIN {getline line < \"/etc/passwd\"; print line}'",
+    "sed -e 'r /etc/passwd' src/bfs.cc",
+    "sed -n '1p; r /etc/passwd' src/bfs.cc",
+    "sed -n '1p\nr /etc/passwd' src/bfs.cc",
+    "sed -ni '1p' src/bfs.cc",
+    "find src -exec sh -c 'cat /etc/passwd' sh {} +",
+    "find src -execdir sh -c 'cat /etc/passwd' sh {} +",
+    "find src -ok sh -c 'cat /etc/passwd' sh {} +",
+    "find src -okdir sh -c 'cat /etc/passwd' sh {} +",
+    "printf src/bfs.cc | xargs sh -c 'cat /etc/passwd'",
+    "/usr/bin/time c++ -I/etc -c src/bfs.cc -o build/bfs.o",
+    "ccache c++ -I/etc -c src/bfs.cc -o build/bfs.o",
+    "busybox sh -c 'cat /etc/passwd'",
+    "git -c include.path=/etc/passwd diff -- src/bfs.cc",
+    "tar -T/etc/passwd -cf build/probe.tar",
+    "CPATH=/etc c++ -c src/bfs.cc -o build/bfs.o",
+    "BASH_ENV=/etc/passwd bash -c 'true'",
+    "env PATH=/data1/other-repo c++ -c src/bfs.cc -o build/bfs.o",
+    "export CPATH=/etc; c++ -c src/bfs.cc -o build/bfs.o",
+    "wc --files0-from=src/bfs.cc",
+    "grep -vf/etc/passwd src/bfs.cc",
+    "GIT_EXTERNAL_DIFF='cat /etc/passwd' git diff -- src/bfs.cc",
+    "tar -cTf /etc/passwd build/probe.tar src/bfs.cc",
+    "tar cTf /etc/passwd build/probe.tar src/bfs.cc",
+])
+def test_opaque_utility_or_delegation_fails_public_submit(proposal_setup, workspace_provider, value):
+    # Scripted actions exercise the admission contract, not actual outside reads.
+    result, proposal = submit(proposal_setup, workspace_provider, actions=[{"type": "command", "value": value}])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and proposal["outcome"]["state"] == "failed" and not audit["passed"]
+    assert "unparsed_command" in {v["code"] for v in audit["violations"]}
+    assert "candidate" not in proposal and Path(audit["raw_log"]["path"]).is_file()
+    assert proposal["outcome"]["reason"].startswith("provider audit failed")
+
+
+@pytest.mark.parametrize("value", [
+    "grep --file=/etc/passwd src/bfs.cc",
+    "rg --file=/etc/passwd src/bfs.cc",
+    "grep -f/etc/passwd src/bfs.cc",
+    "wc --files0-from=/etc/passwd",
+    "/usr/bin/env sh -c 'cat /etc/passwd'",
+    "/data1/other-repo/env sh -c 'true'",
+    "git -C/etc diff -- src/bfs.cc",
+    "git --git-dir=/etc diff -- src/bfs.cc",
+])
+def test_literal_utility_file_operands_fail_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider, actions=[{"type": "command", "value": value}])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and not audit["passed"] and "candidate" not in proposal
+    assert "external_file_access" in {v["code"] for v in audit["violations"]}
+    assert Path(audit["raw_log"]["path"]).is_file()
+
+
+@pytest.mark.parametrize("value", [
+    "sed -n '70,105p' src/bfs.cc",
+    "sed -n -e '80,96p' src/bfs.cc",
+    "/usr/bin/bash -lc " + shlex.quote("sed -n '70,105p' src/bfs.cc"),
+    "find src -type f -name '*.cc' -print",
+    "grep -F --file=src/bfs.cc src/bfs.cc",
+    "rg -F -f src/bfs.cc src/bfs.cc",
+    "/usr/bin/env -i OMP_NUM_THREADS=2 /usr/bin/c++ -Isrc -c src/bfs.cc -o build/bfs.o",
+    "/usr/bin/env bash -c 'cat src/bfs.cc'",
+    "git diff -- src/bfs.cc",
+])
+def test_literal_utility_read_and_build_pass_public_submit(proposal_setup, workspace_provider, value):
+    result, proposal = submit(proposal_setup, workspace_provider, actions=[{"type": "command", "value": value}])
+    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert audit["passed"] and not audit["violations"] and proposal["candidate"]
+    candidate = json.loads(proposal_setup[0].swdb("get", proposal["candidate"], "--format", "json").stdout)
+    assert "int alpha = 14" in (Path(candidate["artifact"]["path"]) / "src/bfs.cc").read_text()
+
+
 def test_direct_workspace_script_compile_and_status_pass(proposal_setup, workspace_provider):
     value = "c++ -c src/bfs.cc -o build/bfs.o\npython3 -I -E build/synthetic.py\nbuild/probe\n"
     value += 'probe_status=$?\nprintf "status: %s\\n" "$probe_status"\ntest "$probe_status" -eq 1'
@@ -376,6 +451,27 @@ def test_compiler_dynamic_operand_fails_closed(proposal_setup, workspace_provide
         actions=[{"type": "command", "value": "c++ " + operand + " src/bfs.cc"}])
     assert result.returncode == 1 and "candidate" not in proposal
     assert "unparsed_command" in {v["code"] for v in proposal["attempts"][0]["provider"]["audit"]["violations"]}
+
+
+@pytest.mark.parametrize("operand", [
+    "-Wp,-include,/etc/passwd",
+    "-Xpreprocessor -include -Xpreprocessor /etc/passwd",
+    "-Xclang -include -Xclang /etc/passwd",
+    "-Wl,@/etc/passwd",
+    "@/etc/passwd",
+    "@build/compiler.rsp",
+    "-I @build/compiler.rsp",
+    "-fplugin=/etc/passwd",
+])
+def test_compiler_forwarded_and_response_operands_fail_public_submit(proposal_setup, workspace_provider, operand):
+    # A workspace response file can still introduce outside arguments; its final
+    # contents do not prove the inputs at the time of the recorded invocation.
+    result, proposal = submit(proposal_setup, workspace_provider,
+        actions=[{"type": "command", "value": "c++ " + operand + " -c src/bfs.cc -o build/bfs.o"}])
+    audit = proposal["attempts"][0]["provider"]["audit"]
+    assert result.returncode == 1 and not audit["passed"] and "candidate" not in proposal
+    assert "unparsed_command" in {v["code"] for v in audit["violations"]}
+    assert Path(audit["raw_log"]["path"]).is_file()
 
 
 @pytest.mark.parametrize("value", [

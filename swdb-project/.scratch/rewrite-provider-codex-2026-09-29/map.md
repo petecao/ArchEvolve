@@ -3,7 +3,7 @@
 Created: 2026-09-29 17:30 ET
 Updated: 2026-09-29 (Eastern Time)
 **Type:** ticket map
-**Status:** resolved
+**Status:** in-progress
 **Spec:** [spec.md](spec.md)
 
 | # | Ticket | Status | Blocked by |
@@ -14,12 +14,14 @@ Updated: 2026-09-29 (Eastern Time)
 | 04 | [Repairs keep their provider; usage limits don't consume repairs](issues/04-repairs-keep-provider.md) | resolved | — |
 | 05 | [Campaigns and the smoke script accept Codex](issues/05-campaigns-accept-codex.md) | resolved | — |
 | 06 | [Workspace mode with the fixture provider](issues/06-workspace-mode-fixture.md) | resolved | — |
-| 07 | [Audit of the provider event log](issues/07-provider-audit.md) | resolved | — |
+| 07 | [Audit of the provider event log](issues/07-provider-audit.md) | claimed | final-review audit repairs |
 | 08 | [Landlock guard for real providers](issues/08-landlock-guard.md) | resolved | — |
 | 09 | [DX100 scalar-only source snapshot](issues/09-dx100-scalar-only-snapshot.md) | resolved | — |
 | 10 | [Real smoke runs on mbit10, plus docs](issues/10-real-smoke-runs-and-docs.md) | resolved | — |
 
-All ten provider tickets are resolved. Production uses one CPU within the verified
+Nine provider tickets are resolved. Ticket 07 is reopened for the final review's
+reproduced inline-utility, delegated-execution and compiler-forwarding audit gaps.
+The repairs and current-parser re-audit are pending. Production uses one CPU within the verified
 socket while counting the full tree, including strace and any exact installed
 persistent Codex service, against the aggregate caps.
 
