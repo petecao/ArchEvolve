@@ -2,7 +2,7 @@
 
 Navigation updated: 2026-09-28 (Eastern Time).
 
-Updated: 2026-09-22; clone paths updated 2026-09-29 for the ArchEvolve monorepo.
+Updated: 2026-09-30 (Eastern Time). Clone paths refer to the ArchEvolve monorepo.
 
 How `swdb profile` runs on the lab host. The always-on rules are in
 `.claude/rules/remote_server.md`; the host facts and the lane mechanism are in the
@@ -12,7 +12,8 @@ How `swdb profile` runs on the lab host. The always-on rules are in
 
 ```
 ssh mbit10
-cd /data1/yanruj && git clone git@github.com:petecao/ArchEvolve.git   # EvolveSWDB is swdb-project/
+cd /data1/yanruj
+git clone --branch yanrujhou_main git@github.com:petecao/ArchEvolve.git
 # the lane script: a small sparse clone of MemAcc on the owner's main branch
 git clone --depth 1 --branch yanrujhou_main --filter=blob:none --sparse \
     git@github.com:MaizeHPC/MemAcc.git Memacc-evolveswdb-lane
@@ -26,16 +27,17 @@ them. `profile_in_lane.sh` refuses to run if this clone's `socket_lane.sh` or
 ## Every session
 
 1. Sync code by git only: push from the Mac, then on mbit10
-   `cd /data1/yanruj/ArchEvolve && git fetch && git checkout <commit>`, then work in
-   `swdb-project/`, and note
-   `git rev-parse --abbrev-ref HEAD` and `git rev-parse HEAD`. Never pull while a profile
-   from this checkout is running.
+   fetch ArchEvolve and update `yanrujhou_main` to the reviewed source commit.
+   Verify `git branch --show-current` is `yanrujhou_main` and record `git rev-parse HEAD`.
+   Work in `/data1/yanruj/ArchEvolve/swdb-project/`. Never update this checkout while
+   a profile from it is running; reconcile local changes before syncing.
 2. Check the lanes: `grep -H '"state"' /data1/yanruj/lact-host-lease/mbit10-evaluation*.meta.json`.
    A held `mbit10-evaluation-node<N>` means socket N is busy. Tell other sessions which
    lane you take (session board or a direct message) before you start.
 3. Check the disks: `df -h /data1 /data`.
 4. Start a named tmux session and run one profile, or a batch:
    ```
+   cd /data1/yanruj/ArchEvolve/swdb-project
    tmux new -s evolveswdb-pilot
    bash scripts/mbit10/profile_in_lane.sh 1 gapbs-pr-gs kron-g16-k16 --cachegrind yes
    bash scripts/mbit10/profile_batch.sh 1 scripts/mbit10/pilot.list
@@ -92,8 +94,11 @@ and is never copied to the Mac.
 - Trials: `--trials 5` per thread count by default; each thread count is its own process
   (the graph is built once per process, outside the timed region).
 - Threads: 1, 2, 4, 8, 16 inside one socket.
-- Correctness: the kernel's correctness check runs once at the largest thread count
-  before timing; a failure or a timeout stops the profile and writes no record. With
+- Correctness: [the profiler](../../swdb/profile.py) uses the implementation's
+  resolved evaluator, with legacy defaults from its kernel. It runs once at the
+  largest thread count before timing. A failed check stops the profile. A timeout
+  also stops it unless the pass regex already matched or `--allow-unverified` was
+  supplied; a timed-out part always leaves the profile incomplete. With
   `--allow-unverified`, a check that does not finish within `--correctness-timeout` (and
   printed no FAIL) is recorded as `timed_out` and the profile is marked incomplete and
   unverified. Used once: gapbs's serial tc verifier did not finish within 30 min on
@@ -113,5 +118,6 @@ and is never copied to the Mac.
   outlives the lane that admitted it.
 - The host is shared and there is no sudo: the profile records the load, the logged-in
   users, the governor, and turbo state instead of controlling them.
-- No hardware counters (`perf_event_paranoid` = 4): the bottleneck is inferred from
-  footprints, thread scaling, and simulated misses, never measured.
+- The [stored mbit10 record](../../records/machines/mbit10.yaml) reports unavailable
+  hardware counters. Recheck live availability before execution. The ordinary
+  profiler infers bottlenecks from footprints, thread scaling, and simulated misses.

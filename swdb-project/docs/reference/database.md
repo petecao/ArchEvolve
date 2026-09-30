@@ -2,12 +2,13 @@
 
 Navigation updated: 2026-09-28 (Eastern Time).
 
-Updated: 2026-09-27
+Updated: 2026-09-30 (Eastern Time).
 
-`swdb build` writes `build/swdb.sqlite` next to the repo's `records/` folder (another
-records folder `X` gets `build/swdb-X.sqlite`; `build/` is ignored by git). It deletes and
-recreates every table from the YAML records each time, so the file never drifts from them
-(ADR 0002). The `meta` table names the records folder and a fingerprint of its files (path,
+Run commands inside `ArchEvolve/swdb-project/`. [The database builder](../../swdb/db.py)
+writes `build/swdb.sqlite` beside `records/` by default (another records folder
+`X` gets `build/swdb-X.sqlite`). It recreates every table in a temporary file,
+then replaces the selected index. YAML remains authoritative (ADR 0002).
+The `meta` table names the records folder and a fingerprint of its files (path,
 size, and modification time of each); `swdb find`, `swdb implementations`, `swdb strategies`, and `swdb sql`
 rebuild the file first unless the folder and the fingerprint match the folder being queried
 and the file was built by the same `swdb` code (so a newer `swdb` never queries a file that
@@ -25,8 +26,12 @@ valid.
 Record loading uses PyYAML's safe LibYAML parser when that optional extension is
 installed, with the Python safe parser as a fallback. Both preserve dates as text
 and reject repeated mapping keys; neither constructs Python objects from YAML.
-This reduces metadata parsing overhead without caching authoritative records or
-changing validation, write locking, or index freshness checks.
+[The store](../../swdb/store.py) caches unchanged files' JSON text within one
+process, keyed by inode, size, modification time, and change time. Each load
+returns fresh objects; records that change during parsing or cannot round-trip
+through JSON are not cached. [Cache tests](../../tests/test_store_parse_cache.py)
+check rereads and mutation isolation. Validation, write locks, and index
+freshness checks still apply.
 
 Run your own SQL with `swdb sql "<query>" [--format json]`, or open the file with the
 `sqlite3` shell. Values that are JSON in the records (semantic values, property values)
@@ -50,7 +55,7 @@ One row per record, whatever its kind.
 | Column | Meaning |
 |---|---|
 | `id` | record ID |
-| `kind` | record kind (application, kernel, implementation, input, machine, profile, strategy, intrinsic) |
+| `kind` | any supported [record kind](../../vocab/record_kinds.yaml), including workflow records |
 | `status` | draft, reviewed, or deprecated |
 | `path` | file path relative to the records folder |
 | `json` | the whole record as JSON (query it with `json_extract`) |

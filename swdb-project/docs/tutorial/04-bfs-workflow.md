@@ -1,6 +1,6 @@
 # 4. Follow BFS from source to comparison
 
-Updated: 2026-09-29 (Eastern Time). Reading budget: 9 minutes.
+Updated: 2026-09-30 (Eastern Time). Reading budget: 9 minutes.
 
 [Tutorial](README.md) · [Previous](03-components.md) · [Next](05-contributing.md)
 
@@ -17,11 +17,9 @@ application source, build, and evaluator contexts differ. Format `0.4`
 implementations name those contexts explicitly; older catalog records resolve
 historical defaults through their kernel.
 
-Three links answer three questions: `source_ancestor` identifies code ancestry,
-`source_baseline` identifies the application's baseline implementation, and
-`comparison_baseline` identifies the selected performance comparator. Keeping
-them separate allows a candidate derived from one source to be assessed against
-an independently selected implementation of the same computation.
+`source_ancestor` identifies ancestry; `source_baseline` identifies the application's
+baseline; `comparison_baseline` selects the performance comparator. A candidate
+can be compared against a different implementation of the same kernel.
 
 ## The evidence chain
 
@@ -69,10 +67,9 @@ inform protocol selection; subsequent comparison evidence must match the freeze.
 
 ## Who controls a rewrite?
 
-The proposal can carry natural language, structured instructions, annotated
-source, or a supplied patch. Structured instructions still require interpretation;
-they are not a deterministic rewrite language. A proposal names the snapshot,
-package, selected regions, intent, permitted files, and required operations.
+Proposals carry natural language, structured instructions, annotated source, or
+a patch, plus source/package identity, regions, intent, editable files, and
+required operations. Instructions still require provider interpretation.
 
 ```mermaid
 sequenceDiagram
@@ -102,46 +99,36 @@ Workspace mode is the default, with two pinned real providers:
 | Codex (default) | `gpt-5.6-sol` | `xhigh` |
 | Claude | `claude-sonnet-5-5` | `high` |
 
-A minimal provider configuration is `kind: codex`; `kind: claude` selects the
-alternative. Model and effort overrides are rejected. Real sessions run on
-mbit10 under SWDB's Landlock guard, using one CPU within a verified owned socket
-lane. The provider
-can explore and edit the derived source workspace, while evaluator inputs,
-real workloads, records, and other candidates remain hidden. Its structured final
-response contains only `interpretation` and `unresolved`. SWDB audits the events
-and computes the source diff; it drops build outputs and rejects out-of-scope
-files. The login copy is deleted after the attempt.
+Use `kind: codex` or `kind: claude`; model/effort overrides are rejected. Real
+sessions run on mbit10 under SWDB's Linux Landlock guard, using one CPU in an
+owned socket lane. Evaluator inputs, workloads, records, and other candidates
+are hidden. The final response contains `interpretation` and `unresolved`;
+SWDB audits events, computes permitted source edits, discards build outputs,
+and deletes the login copy.
 
-The provider tree, including the external tracer, is limited to 16 aggregate
-threads and 32 GiB resident memory, with 120 seconds per tool command and a
-5 GiB workspace. Claude shell commands receive an inner no-TCP guard. Codex
-commands inherit the outer TCP-443 policy; connection and event audits enforce
-model-API-only use. An outside-Landlock subreaper retains detached helpers for
-accounting and identity-checked cleanup; a narrow signal filter protects supervisor
-continuity. The [worker contract](../reference/bfs-rewrite-worker.md) details these
-limits, Codex's verified native launch, read-only SQLite fallback, disabled
-customizations, and the retained UDP/login-readability limitations. These controls
-and a completed provider turn do not establish correctness or a gain.
+The [guard](../../swdb/provider_guard.py) bounds the process tree and audits
+connections. The [event audit](../../swdb/provider_audit.py) rejects forbidden
+file access, package managers, network commands, and incomplete logs. Guards have
+recorded limitations, including unrestricted UDP and a readable login copy during
+the session. The optional [worker contract](../reference/bfs-rewrite-worker.md)
+explains limits and enforcement. A completed provider turn still needs evaluation.
 
-DX100 from-scratch proposals use
-`bfs-dx100-scalar-only-20260929-a1.source`, which omits the authors' accelerator
-BFS functions. The full source remains available for declared author-code reuse.
-Set `workspace: false` for the retained prompt-only patch or complete-file route.
-Deterministic providers are labeled fixtures and establish contract behavior.
-Generation/repair limits, actual model settings, guard policy, event audit, and
-raw-log identity are retained with the proposal. Evaluator-owned verifier,
-input, driver, and ROI protections remain enforced.
+DX100 from-scratch proposals use the scalar-only snapshot
+`bfs-dx100-scalar-only-20260929-a1.source`; full source supports declared author-code
+reuse. `workspace: false` selects the retained prompt-only route. Deterministic
+providers are fixtures. Proposals retain settings, budgets, guard/audit receipts,
+and log identity; verifier, input, driver, and ROI protections still apply.
 
-A valid regression does not trigger tuning. A bounded repair addresses eligible
-build/correctness failures while preserving the submitted intent and first
-attempt's provider settings. Usage limits become `provider_unavailable`, consume
-elapsed time, and leave the repair count unchanged. Unsupported
-requirements and exhausted budgets remain visible outcomes.
+[Repair](../../swdb/workflow.py) addresses eligible build/correctness failures,
+keeping the intent, provider kind/model/effort, and fixture-versus-real
+classification. Missing historical model settings cannot be invented. A valid
+regression does not trigger tuning. A failed provider session with usage-limit
+evidence becomes `provider_unavailable`; it consumes elapsed time without using a
+repair attempt. Unsupported requirements and exhausted budgets remain visible.
 
 ## Inspect a retained example locally
 
-This example retrieves a real retained proposal record; it does not resubmit it
-or invoke a provider:
+From `ArchEvolve/swdb-project/`, retrieve a retained test-client proposal:
 
 ```sh
 python3 -B -m swdb get \
@@ -152,16 +139,13 @@ python3 -B -m swdb handoff-message rewrite_proposal \
 ```
 
 The [rendered example](../bfs-handoff-examples/rewrite-proposal.sw-patch.json)
-records selected changes including dynamic scheduling with chunks of 64 vertices
-and removal of a redundant parent store after successful compare-and-swap. Read
-the original intent, `payload`, editable files, handling attempts, and candidate
-link together. It is labeled a representative SW test-client submission.
+requests dynamic scheduling and removal of a redundant parent store. Read its
+intent, payload, editable files, attempts, and candidate link together.
 
 Compare the [completed evaluation message](../bfs-handoff-examples/evaluation-result.dx100-patch-kronecker.json)
 with the [interrupted evaluation message](../bfs-handoff-examples/evaluation-result.dx100-patch-uniform-interrupted.json).
-An interrupted measurement is distinct from an incorrect candidate. The example
-manifest describes the completed case's frozen comparison as inconclusive; a
-completed run is not automatically a qualified gain.
+Interruption differs from incorrectness. The completed example's comparison is
+inconclusive; completion alone does not establish a gain.
 
 ## Native and simulated execution answer different questions
 
@@ -176,11 +160,10 @@ call. The pinned DX100 author's internal ROI has different boundaries. Compare
 only evidence admitted by the relevant protocol; do not divide durations from
 different scopes or mix host execution cost with simulated target time.
 
-DX100's pipeline includes model build, candidate compilation, compatible
-checkpoint selection, bounded execution, and profile collection. A `.sg` suffix
-alone does not make graph files interchangeable: the pinned sources use
-different offset widths. A simulator exit also does not by itself establish that
-the timed result passed its correctness check.
+DX100 needs model build, compilation, compatible checkpoints, execution, and
+profiling. Its pinned sources use different serialized-graph offset widths;
+a `.sg` suffix does not establish compatibility. Simulator exit alone does not
+establish correctness.
 
 Accelerator assessment needs observed instructions and completed unit traces.
 Full-tile, tail-tile, and competing-parent cases are separate coverage questions.
@@ -205,8 +188,13 @@ that cannot be checked locally remains `remote_unverified`.
 For a dated report regeneration command, use the
 [BFS task guide](../bfs-handoff.md#final-report-regeneration--2026-09-27).
 Its exit code reports whether the query succeeded; read `gain_gate`, per-cell
-states, and reasons to assess the result. The campaign's dated
+states, and reasons to assess the result. Later T17 comparison records report
+`gain` for [Kronecker](../../records/comparison_results/bfs-t17-handoff-20260929-a1.kronecker18.yaml)
+and [uniform-random](../../records/comparison_results/bfs-t17-handoff-20260929-a1.uniform18.yaml)
+workloads. Their attribution is `joint_hardware_software`: the candidate changes
+both source and accelerator presence. These retained decisions have that scope;
+this local documentation review does not reverify remote raw files. The dated
 [resume checkpoint](../../.scratch/bfs-rewrite-evaluation-2026-09-25/resume.md)
-is the place to review execution state before any continuation.
+describes the older campaign; consult newer requests before continuing execution.
 
 **[Next: contribute records and understand profiling →](05-contributing.md)**

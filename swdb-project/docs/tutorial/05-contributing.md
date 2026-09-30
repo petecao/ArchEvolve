@@ -1,6 +1,6 @@
 # 5. Contribute records and understand profiling
 
-Updated: 2026-09-29 (Eastern Time). Reading budget: 7 minutes.
+Updated: 2026-09-30 (Eastern Time). Reading budget: 7 minutes.
 
 [Tutorial](README.md) · [Previous](04-bfs-workflow.md)
 
@@ -8,7 +8,7 @@ Updated: 2026-09-29 (Eastern Time). Reading budget: 7 minutes.
 
 This optional exercise uses the repository's tiny graph input fixture. It shows
 the full write path without changing the project's records or running a
-benchmark. Run from the repository root with the dependencies from chapter 1.
+benchmark. Run inside `ArchEvolve/swdb-project/` with chapter 1's dependencies.
 
 ```sh
 python3 -B - <<'PY'
@@ -126,8 +126,9 @@ toolchain and host prerequisites. Read the [profiling guide](../mbit10-profiling
 | Remote artifacts are unverified | Verify on their producing host when needed; metadata alone cannot refresh them |
 | Build passes but comparison is rejected | Inspect exact protocol, source, workload, ROI, target, and repetition bindings |
 
-For code changes, follow [`AGENTS.md`](../../AGENTS.md), the
-[local ticket workflow](../agents/issue-tracker.md), and existing ADRs. Claim a
+For code changes, follow the [ArchEvolve rules](../../../AGENTS.md),
+[SWDB rules](../../AGENTS.md), [local ticket workflow](../agents/issue-tracker.md),
+and relevant ADRs. Work on `yanrujhou_main` within `swdb-project/`. Claim a
 ticket before its work; resolve it with an answer and a context pointer in its
 map. Use focused tests for the component you changed and record validation for
 catalog changes. The general test command is `python3 -B -m pytest`; development

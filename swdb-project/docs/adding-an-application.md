@@ -1,9 +1,12 @@
 # Adding records
 
-Updated: 2026-09-28 (Eastern Time).
+Updated: 2026-09-30 (Eastern Time).
 
 [Guide](README.md) · [Application field checklist](reference/adding-an-application.md)
 · [Strategy field checklist](reference/adding-a-strategy.md)
+
+Run commands inside `ArchEvolve/swdb-project/`; from the monorepo root,
+run `cd swdb-project` first.
 
 Start from a similar record in `records/`. Use the [0.3 field reference](reference/format-v0.3.md)
 for catalog records and the [0.4 additions](reference/format-v0.4.md) for explicit
@@ -29,14 +32,14 @@ accepted fields and values; older 0.2/0.3 records retain their original meaning.
 4. **Describe the input.** Choose a generator or a file with a hash. Supply every
    input-property symbol used by array-size and trip-count formulas. An unknown
    value is `{value: null, basis: unknown}`.
-5. **Validate and inspect.** Run the commands below, then collect measurements
-   through the [profiling procedure](mbit10-profiling.md). Profile records are
-   produced by the tool. Keep additions draft until human review.
+5. **Write, validate, and inspect.** Add the record, then validate and query it.
+   When measurements are needed, use the [profiling procedure](mbit10-profiling.md).
+   Profile records are produced by the tool. Keep additions draft until human review.
 
 ```sh
+python3 -m swdb add new-record.yaml --agent
 python3 -m swdb validate
 python3 -m swdb view IMPLEMENTATION INPUT MACHINE
-python3 -m swdb add new-record.yaml --agent
 ```
 
 Use `--agent` for agent-authored additions; it records agent provenance and draft

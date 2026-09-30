@@ -1,47 +1,32 @@
 # EvolveSWDB tutorial
 
-Updated: 2026-09-28 (Eastern Time).
+Updated: 2026-09-30 (Eastern Time).
 
-Learn what this project does in **10 minutes**, then spend **up to 30 more
-minutes** understanding its records, components, execution workflow, and extension
-points. Start with basic familiarity with code, command-line tools, and graphs;
-no prior ArchEvolve or simulator knowledge is assumed.
+Start with the overview. Then read chapters 2–5 in order. Basic familiarity
+with code and command-line tools is enough; no ArchEvolve or simulator knowledge
+is required.
 
-## Choose your reading path
-
-| Order | Chapter | Time | You should be able to… |
+| Order | Chapter | Budget | Purpose |
 |---|---|---:|---|
-| 1 | [Overview](01-overview.md) | 10 min | Explain the project and follow a real query |
-| 2 | [Records and queries](02-records-and-queries.md) | 7 min | Read the data model and interpret evidence |
-| 3 | [Components](03-components.md) | 7 min | Find the code responsible for each operation |
-| 4 | [BFS from source to comparison](04-bfs-workflow.md) | 9 min | Trace a rewrite, its evaluation, and its result |
-| 5 | [Contributing and profiling](05-contributing.md) | 7 min | Add a record and choose the right next procedure |
+| 1 | [Overview](01-overview.md) | 10 min | Explain SWDB and follow a PageRank query |
+| 2 | [Records and queries](02-records-and-queries.md) | 7 min | Read records and interpret evidence |
+| 3 | [Components](03-components.md) | 7 min | Find the code for each operation |
+| 4 | [BFS workflow](04-bfs-workflow.md) | 9 min | Trace source, rewrite, evaluation, and comparison |
+| 5 | [Contributing and profiling](05-contributing.md) | 7 min | Extend the catalog and choose a procedure |
 
-The overview plus this index contain about 1,200 prose words. Chapters 2–5
-contain about 3,400: roughly 23 minutes at 150 words per minute, leaving about
-7 minutes for their diagrams and code examples. These are reading estimates.
-Installation and actual profiling/simulation are outside the reading budget.
-The final local exercise is
-optional; reading its code is sufficient. References are for later lookup.
+The overview and both navigation pages stay below 1,200 words. Chapters 2–5
+stay below 3,500 words. At 150 words per minute, these budgets also reserve time
+for tables, diagrams, and code. Installation, the optional exercise, and execution
+are outside the reading budget. References are for later lookup.
 
-All shell examples start at the repository root. Chapters 1–4 inspect existing
-metadata and may create a disposable SQLite index. Chapter 5's exercise writes
-only to a temporary records folder. Execution command names in tables explain
-interfaces; they are not a campaign launch sequence.
+From the ArchEvolve root, run `cd swdb-project` before shell examples.
+Query examples inspect stored metadata; their generated SQLite index is disposable.
+The chapter 5 exercise writes only to a temporary records folder. Command tables
+describe interfaces, not a campaign launch sequence. Mermaid diagrams have
+accompanying explanations.
 
-Diagrams use Mermaid. Read these pages in a Markdown viewer with Mermaid support;
-the surrounding prose also explains each diagram.
+Code and local examples were checked against `yanrujhou_main` source commit
+`d985216d921cbd5a0685175445e35618ca7b3e7b` on 2026-09-30. Remote paths and dated
+results remain retained metadata; this review ran no measurements on mbit10.
 
-## Keep nearby
-
-- [Glossary](../../CONTEXT.md): the project's exact terminology.
-- [Reference index](../reference/README.md): field definitions and detailed procedures.
-- [Architecture decisions](../adr/): why identity, storage, and comparisons work this way.
-- [Existing task guides](../README.md): short operational checklists.
-- [Archive](../archive/README.md): dated results and investigation history.
-
-The tutorial describes the local source inspected at commit `fb14a9b` on
-2026-09-28. Example results describe those records, not fresh measurements on
-mbit10. Source links are repository-relative so the tutorial travels with a clone.
-
-**[Begin the 10-minute overview →](01-overview.md)**
+**[Begin the overview →](01-overview.md)**

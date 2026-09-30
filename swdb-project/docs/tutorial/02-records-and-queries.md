@@ -1,6 +1,6 @@
 # 2. Read records and ask useful questions
 
-Updated: 2026-09-28 (Eastern Time). Reading budget: 7 minutes.
+Updated: 2026-09-30 (Eastern Time). Reading budget: 7 minutes.
 
 [Tutorial](README.md) · [Previous](01-overview.md) · [Next](03-components.md)
 
@@ -30,21 +30,23 @@ The complete set of record kinds is small enough to learn by purpose:
 |---|---|---|
 | Identify computation and code | `application`, `kernel`, `implementation` | What computes what, from which source? |
 | Describe ordinary runs | `input`, `machine`, `profile` | What data, host, build, observations, and correctness? |
-| Describe reusable changes | `strategy`, `intrinsic` | What could change, and which ISA wrapper could implement it? |
+| Describe reusable changes | `strategy`, `intrinsic` | What could change, and which instruction set architecture (ISA) wrapper could implement it? |
 | Bind proposed source | `source_snapshot`, `proposal`, `candidate` | What exact code was seen, requested, and produced? |
 | Bind execution | `workload`, `protocol`, `evaluation`, `evaluation_pair` | Which graph/sources, policy, stage outcomes, and paired trial order? |
 | Explain and assess execution | `region_profile`, `profile_package`, `comparison_result` | Where was work observed, what was handed off, and what comparison passed? |
 | Describe a target interface | `hardware_target`, `operation` | Which model/backend and source-backed accelerator operations? |
 
 A BFS `workload` binds graph representations and ordered traversal sources. A
-**workload view** is generated HW-facing output. They serve different purposes.
+**workload view** exports the retained historical SPARTA 0.1 format.
+They serve different purposes.
 Likewise, a `machine` identifies the physical host; a `hardware_target` can
 identify the simulated system running on it.
 
 ## Read the envelope, then the evidence
 
-Every record has `kind`, `schema_version`, `id`, `status`, creation/update dates,
-and `provenance`. The envelope accepts versions `0.2`, `0.3`, and `0.4`; individual
+The [envelope schema](../../schemas/envelope.schema.json) requires `kind`,
+`schema_version`, `id`, `status`, creation/update dates, and `provenance`.
+The envelope accepts versions `0.2`, `0.3`, and `0.4`; individual
 kinds have additional restrictions. Version `0.3` adds strategy/intrinsic support,
 and `0.4` adds explicit implementation source context and workflow records.
 Historical records retain their version's interpretation.
@@ -80,7 +82,7 @@ does not replace its correctness and per-part outcomes.
 
 ## Query from broad to specific
 
-All examples below are runnable at the repository root:
+Run inside `ArchEvolve/swdb-project/` (`cd swdb-project` from the monorepo root):
 
 ```sh
 # Every access pattern in a returned implementation must meet this requirement.

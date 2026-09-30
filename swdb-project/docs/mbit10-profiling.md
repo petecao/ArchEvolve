@@ -1,6 +1,6 @@
 # Profiling on mbit10
 
-Updated: 2026-09-29 (Eastern Time).
+Updated: 2026-09-30 (Eastern Time).
 
 [Guide](README.md) · [Setup and profiler details](reference/mbit10-profiling.md)
 
@@ -16,9 +16,11 @@ measurements are not comparable. Before remote work, read the
 2. Inspect both socket leases and the legacy lease, current load, and
    `df -h /data1 /data`. At most two measurement jobs may run: one per socket.
    A held legacy lease blocks admission. Use the current MemAcc lane scripts.
-3. From the remote checkout, launch through the lane wrapper:
+3. From `/data1/yanruj/ArchEvolve/swdb-project/` on `yanrujhou_main`,
+   launch through the [lane wrapper](../scripts/mbit10/profile_in_lane.sh):
 
    ```sh
+   cd /data1/yanruj/ArchEvolve/swdb-project
    bash scripts/mbit10/profile_in_lane.sh 1 gapbs-pr-gs kron-g16-k16 --cachegrind yes
    ```
 

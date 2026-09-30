@@ -1,9 +1,12 @@
 # BFS workflow
 
-Updated: 2026-09-28 (Eastern Time).
+Updated: 2026-09-30 (Eastern Time).
 
 [Guide](README.md) · [Workflow reference](reference/README.md#bfs-contracts)
 · [Dated handoff and results](archive/bfs-handoff-20260927.md)
+
+Run shell examples inside `ArchEvolve/swdb-project/` (`cd swdb-project` from
+the monorepo root).
 
 The BFS workflow connects selected optimization intent to exact source,
 independent evaluation, and a comparison under a frozen policy. The SW/HW
@@ -79,7 +82,7 @@ python3 scripts/bfs_handoff_examples.py --check
 ## Final report regeneration — 2026-09-27
 
 The retained request selects explicit protocols and reference comparisons.
-Regenerate its assessment from the repository root:
+Regenerate its assessment from `ArchEvolve/swdb-project/`:
 
 ```sh
 query_dir=$(mktemp -d "${TMPDIR:-/tmp}/bfs-acceptance.XXXXXX")
@@ -96,6 +99,15 @@ original request and its contract hash.
 
 The [2026-09-27 handoff](archive/bfs-handoff-20260927.md#final-report-regeneration--2026-09-27)
 reported incomplete acceptance and no qualified gain. Treat dated counts and
-ratios there as a snapshot; the command above produces a fresh assessment from
-the current records. Review the [resume checkpoint](../.scratch/bfs-rewrite-evaluation-2026-09-25/resume.md)
-before any new execution: the retained campaign was paused at the user's request.
+ratios there as a snapshot; the command above produces a fresh assessment for
+that request's selections. Its [resume checkpoint](../.scratch/bfs-rewrite-evaluation-2026-09-25/resume.md)
+records the older campaign's pause, not the latest status of all BFS work.
+
+Later retained T17 comparisons report `gain` for
+[Kronecker](../records/comparison_results/bfs-t17-handoff-20260929-a1.kronecker18.yaml)
+and [uniform-random](../records/comparison_results/bfs-t17-handoff-20260929-a1.uniform18.yaml)
+workloads. Both declare `joint_hardware_software` attribution: source changes
+and accelerator presence differ. These records do not establish a software-only
+gain or change the older request's selections. Remote raw files were not
+reverified by this local documentation review. Consult newer requests before
+continuing execution.

@@ -1,6 +1,6 @@
 # Records and queries
 
-Updated: 2026-09-28 (Eastern Time).
+Updated: 2026-09-30 (Eastern Time).
 
 [Guide](README.md) · [Complete table and query reference](reference/database.md)
 
@@ -38,7 +38,7 @@ not a measured speedup for your implementation.
 
 ## Common queries
 
-Run from the repository root:
+Run inside `ArchEvolve/swdb-project/` (`cd swdb-project` from the monorepo root):
 
 ```sh
 # Find patterns and the strategies that could apply.

@@ -1,23 +1,16 @@
 # 1. Understand EvolveSWDB in 10 minutes
 
-Updated: 2026-09-28 (Eastern Time).
+Updated: 2026-09-30 (Eastern Time).
 
 [Tutorial](README.md) · Next: [Records and queries](02-records-and-queries.md)
 
-## The problem it solves
+EvolveSWDB is ArchEvolve's Software Database: its `swdb` command validates and
+queries records connecting code, memory behavior, optimization strategies, and
+evaluation evidence. It exists so a proposed change can be traced to its source,
+requirements, and results. Follow the PageRank example below, then continue to
+[records and queries](02-records-and-queries.md).
 
-Suppose you want to improve PageRank's memory behavior. Before changing code,
-you need to know which implementation you have, which arrays it touches, whether
-iterations depend on one another, which input was measured, and whether a
-proposed change still computes the right result. A timing number alone cannot
-answer those questions.
-
-**EvolveSWDB is ArchEvolve's Software Database.** It connects application source,
-computations, implementations, memory behavior, reusable optimization strategies,
-and evaluation evidence. Its Python command-line tool, `swdb`, validates and
-queries that information. For breadth-first search (BFS), it also supports a
-workflow that retains rewrite requests, exact candidate source, evaluations, and
-comparisons.
+## Follow the information flow
 
 ```mermaid
 flowchart TD
@@ -32,11 +25,10 @@ flowchart TD
     E --> D
 ```
 
-The arrows show information flow. SWDB provides records and interfaces for SW/HW
-participants; the checked-in handoff examples use representative test clients.
-They do not demonstrate a live, integrated ensemble. An operator or producer
-selects optimization intent; the rewrite worker applies that intent within its
-declared scope.
+SW means software; HW means hardware. A producer selects the change; a rewrite
+provider edits source; an evaluator checks the result. Breadth-first search
+(BFS) has this workflow. Checked-in handoffs use labeled test clients; live
+collaborator integration is not established by those examples.
 
 ## Five ideas to learn first
 
@@ -48,11 +40,9 @@ declared scope.
 | **Access pattern** | A chain of array-access steps, ending at the array read or updated | Reading neighbors' PageRank contributions |
 | **Optimization strategy** | A reusable change described by its target and effect | Packing indirect reads into a contiguous array |
 
-A kernel can have several implementations with different memory behavior. The
-correctness check defines what results are acceptable; implementations need not
-produce bitwise-identical outputs. A strategy holds no executable code. A
-**candidate artifact** is proposed source that still needs evaluation before it
-can be treated as a correct implementation in that evaluation's scope.
+Implementations of one kernel can have different memory behavior and still
+pass its correctness check. A strategy holds no executable code. A **candidate
+artifact** is proposed source whose correctness still needs evaluation.
 
 ## Follow one access through real code
 
@@ -78,16 +68,15 @@ This is one access pattern with three **steps**. Its pattern class is
 `stream > ranged_indirect > single_valued_indirect : read`. The final array is
 read; the local sum does not turn that array access into an add-update.
 
-Why record all this? Packing may replace the final indirect read with a stream,
-but it also introduces a pass that gathers and stores the packed values. The
-change needs both suitable semantics and enough reuse to repay that work. The
-database can check recorded preconditions and expose remaining questions; an
-evaluation must establish the outcome on a particular workload.
+Packing can replace the final indirect read with a stream. It also adds a pass
+to gather and store values. The query below checks recorded preconditions;
+evaluation must establish whether the change works and repays that extra work.
 
 ## Try the first queries
 
-Use Python 3.12+ with PyYAML 6+ and jsonschema 4.10+. If dependencies are already
-available, use the commands below directly. For a fresh local environment:
+Run commands inside `ArchEvolve/swdb-project/`. From the ArchEvolve root,
+start with `cd swdb-project`. Python 3.12+, PyYAML 6+, and jsonschema 4.10+ are
+required by [pyproject.toml](../../pyproject.toml). Optional setup:
 
 ```sh
 python3 -m venv .venv
@@ -95,7 +84,7 @@ source .venv/bin/activate
 python3 -m pip install -e .
 ```
 
-Then inspect the current repository:
+Inspect stored records:
 
 ```sh
 # Check record structure, references, source excerpts, and domain rules.
@@ -107,7 +96,7 @@ python3 -B -m swdb find --kernel gapbs-pr --shape ranged_indirect --update read
 # Ask which strategies fit the Jacobi gather.
 python3 -B -m swdb strategies --pattern gapbs-pr-jacobi/gather-contrib
 
-# Assemble the HW-facing view of a stored implementation/input/machine triple.
+# Export the retained historical workload view from stored records.
 python3 -B -m swdb view gapbs-pr-gs kron-g16-k16 mbit10
 ```
 
@@ -117,10 +106,10 @@ unchanged while the packed copy is used, and reuse must justify the extra work.
 Here, `legal` means the encoded checks passed. It is not a speed prediction or
 a completed correctness check of newly written code.
 
-The workload view joins source, access patterns, input sizes, machine details,
-and an available profile. It retains the basis of observations and explicit
-unknowns. Running `view` on your Mac reads stored mbit10 metadata; it does not run
-PageRank on either machine.
+`view` joins source, patterns, input sizes, machine details, and a stored profile.
+It preserves basis and unknowns. It exports the historical SPARTA 0.1 format
+retained by [view.py](../../swdb/view.py); it does not establish a current HW
+consumer contract or run PageRank.
 
 ## Where the information lives
 
@@ -139,11 +128,9 @@ validates and reads YAML directly. Large build outputs, graphs, and raw run data
 stay outside git on their producing host; records retain their identities and
 locations.
 
-Use [`records/`](../../records/) to inspect facts,
-[`swdb/`](../../swdb/) to inspect behavior, and
-[`schemas/`](../../schemas/) plus [`vocab/`](../../vocab/) to see accepted fields
-and terms. [`apps/`](../../apps/) holds pinned application sources;
-[`tools/`](../../tools/) holds C++ analysis and instrumentation support.
+[`records/`](../../records/) holds facts; [`swdb/`](../../swdb/) implements
+behavior. [`schemas/`](../../schemas/) and [`vocab/`](../../vocab/) define accepted
+fields and terms. Chapter 3 maps the remaining components.
 
 ## Read results without losing their meaning
 
@@ -158,8 +145,7 @@ you rewrote does not automatically select the baseline you compare against.
 Compiling successfully and collecting a complete package are intermediate
 outcomes, each with a narrower meaning than a qualified gain.
 
-**Checkpoint:** You should now be able to explain why two implementations can
-share a kernel, why an access pattern is a chain, and why `packing: legal` does
-not mean “packing made this program faster.” Continue for the internal details.
+**Checkpoint:** A legal strategy satisfies recorded checks. A successful
+implementation and a qualified gain need their own evaluation evidence.
 
 **[Next: records, evidence, and queries →](02-records-and-queries.md)**

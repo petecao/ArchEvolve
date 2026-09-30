@@ -1,11 +1,15 @@
 # Reference
 
-Updated: 2026-09-28 (Eastern Time).
+Updated: 2026-09-30 (Eastern Time).
 
-Use the [five-page guide](../README.md) first. Open these documents when you need
+Use the [tutorial](../tutorial/README.md) first. Open these documents when you need
 exact fields, invariants, or a target-specific procedure. Navigation was updated
 during consolidation; each document's content date still identifies its scope.
 Dated measurements and host snapshots are historical, not live state.
+
+Current commands and plain paths are relative to `ArchEvolve/swdb-project/`;
+run `cd swdb-project` from the monorepo root. Archived procedures retain their
+original paths and context.
 
 ## Catalog and storage
 

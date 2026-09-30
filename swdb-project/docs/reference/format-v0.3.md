@@ -3,7 +3,7 @@
 Navigation updated: 2026-09-28 (Eastern Time).
 
 - Version: 0.3, 2026-09-23 (0.2 of 2026-09-22 plus the additions in "Changes from 0.2")
-- Updated: 2026-09-25
+- Updated: 2026-09-30 (Eastern Time).
 - Author: Yan-Ru Jhou
 - Status: enforced. `swdb validate` checks every rule on this page; the schemas in
   `schemas/` and the vocabularies in `vocab/` are the machine-readable form. Supersedes
@@ -32,9 +32,11 @@ membership establishes no correctness beyond those named observations.
    each other by ID only, so files can move.
 2. IDs match `^[a-z0-9][a-z0-9._-]*$`, are unique across all records, and are never
    reused or renamed.
-3. Unknown keys are errors, except under `extensions`, which takes anything; nothing under
-   it is checked (not even `evidence_refs`). A new field starts there and moves into the
-   schema once it is agreed.
+3. Unknown keys are errors, except under `extensions`, which accepts experimental
+   fields. General schema and provenance-reference checks skip its contents.
+   A command can still interpret and check a named extension, such as
+   [`compare`'s `comparison_context`](../../swdb/comparison.py). A field moves into
+   the schema once agreed.
 4. Term lists live in `vocab/<name>.yaml`, one file per list, each value with a one-line
    `meaning` (and, for `metrics`, a `unit`). A field marked *vocab X* accepts exactly the
    values in that file; adding a value is a one-file change.
@@ -71,7 +73,8 @@ kernel is defined by its correctness check.
 
 ## 2. Versioning
 
-`schema_version` is `"MAJOR.MINOR"`; the tool accepts `"0.2"` and `"0.3"`. 0.3 is a
+`schema_version` is `"MAJOR.MINOR"`; the envelope accepts `"0.2"`, `"0.3"`, and
+`"0.4"`, with kind-specific restrictions. 0.3 is a
 minor release of 0.2: a 0.2 record needs no edit, and a record says `"0.3"` when it
 starts using a 0.3 addition (a rule may require an addition only of records that say
 `"0.3"`, never of 0.2 records).
@@ -326,13 +329,19 @@ the basis cannot be `measured` or `simulated`: it is `inferred` (or `unknown`).
 
 ## 10. The workload view
 
-`swdb view <implementation> <input> <machine>` prints the HW side's workload format
-(`archevolve/hw_ensemble/sparta-sort.input.yaml`): `workload_id` is
+`swdb view <implementation> <input> <machine>` exports the historical SPARTA 0.1
+workload format retained in [view.py](../../swdb/view.py). SPARTA's 0.1 view was
+retired on 2026-09-29; this export does not define a current HW consumer contract.
+`workload_id` is
 `<implementation>@<input>@<machine>`; every key of that format is present with the same
 nesting; element counts are the formulas evaluated on the input (null when unknown);
 semantic values appear as values, with their basis and evidence under the added key
-`semantics_evidence`; counts, metrics, and bottleneck come from the newest complete
-profile and are explicitly unknown when there is none. Added keys (`address_chain`,
+`semantics_evidence`; by default it prefers a complete profile, then the newest
+profile start time. If only incomplete profiles exist, it uses the newest and
+adds incompleteness notes; `--profile` selects an exact matching profile. With
+no profile, counts, metrics, and bottleneck are explicitly unknown.
+The command accepts `--format json` and `--records`, reads YAML directly, and
+has no `--db` option. Added keys (`address_chain`,
 `pattern_class`, `element_count_formula`, `semantics_evidence`, and the filled `code` and
 `environment`) extend the format without renaming anything. An access pattern's `memory_operation` is
 `read` for update kinds `read` and `prefetch` (a prefetch reads a line and stores nothing),
