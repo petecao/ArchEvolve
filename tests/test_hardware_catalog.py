@@ -160,5 +160,3 @@ class HardwareCatalogTests(unittest.TestCase):
             loaded, digest = load_catalog(p)
             self.assertEqual(loaded, fixture())
             self.assertEqual(len(digest), 64)
-
-
