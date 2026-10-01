@@ -45,7 +45,7 @@ The [run overview](../runs/bfs-hardware-v0.1/README.md) links to each case. Each
 
 The run records hashes of inputs, catalog, methodology when supplied, generated request, and pipeline code. Repeated execution with unchanged inputs/configuration produces the same run ID and artifacts. Each workload is processed independently; there is no pooling of sparse/dense measurements.
 
-## Current results
+## Earlier v0.1.2 snapshot results
 
 | Report | Comparison and exploratory candidates |
 |---|---|
@@ -53,6 +53,8 @@ The run records hashes of inputs, catalog, methodology when supplied, generated 
 | Fully connected | The same design groups, with separate workload evidence and a different displayed read-option order |
 
 This is an exploration shortlist. The CPU has not been measured here, and no selected accelerator has been established as better. The catalog is Eric's source-backed operation representation. Its scoped requirements still need to be established for a concrete mapping, and it does not prove composition or performance. See [integration details](hardware-catalog-integration.md).
+
+Current data revision 0.1.3 adds MAPLE. The [focused MAPLE/DX100 run](maple-dx100-handoff.md) emits the CPU comparison, DX100 reads, MAPLE queue fetching and MAPLE LLC assistance for each workload. Repeated `--focus-design` controls package scope without dropping full-query evidence; repeated `--compare-design` controls the separate comparison.
 
 ## Differences that remain unresolved
 

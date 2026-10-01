@@ -1,0 +1,718 @@
+format: intrinsic-handoff-v0.1
+status: draft_requires_review
+backend: offline_contract_projection
+llm_calls: 0
+kernel_id: gapbs_bfs_top_down_step_fully_connected
+candidate_id: gapbs_bfs_top_down_step_fully_connected--dx100-artifact-e4fc4af--read_execute
+catalog_design_id: dx100-artifact-e4fc4af
+catalog_design_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+provenance:
+  input_sha256: 1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750
+  catalog_sha256: adf17f3e114878ed0edbe55abb8ea219445fa2aef3c97e6c369230b796872fb0
+  source_context_sha256: 4abf18a26cb638f5243887cefcdf54fac45492ea9eeb4db5e2cbc5695560abac
+  evidence_ref: candidate.yaml#source_evidence
+operations:
+- id: dxc-stream_load
+  intent: Propose stream_load for the matched accesses to queue.shared, subject to
+    the catalog's mapping requirements.
+  execution_role: execute
+  operation: read
+  subtype: stream_load
+  support: code_observed
+  realization:
+    kind: native_primitive
+    description: STREAM_LD implementation consumes min/max/stride registers and optional
+      mask.
+    claim_refs:
+    - dxc-stream
+    - dxc-mask
+  logical_inputs:
+  - request_id: access-01-read
+    target_array: queue.shared
+    address_pattern: sequential
+    requested_payload_type: int32
+    requested_index_width_bits: null
+    mutable_target: false
+    index_width_status: not_applicable_to_loaded_index_request
+    statement_ids:
+    - bfs-td-frontier
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 240
+      end_line: 240
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Reported sequential stream; actual bounds/stride and source binding
+      remain requirements.
+  input_scope: workload_intent_and_design_contract_not_a_concrete_operand_list
+  design_interface:
+    software_supplies: Memory-mapped instruction stream, bases, typed scalar/vector
+      tiles, optional mask and old-value destination. Range continuation registers
+      and lower/upper bound tiles for range composition.
+    invocation: Pinned MAA_gem5.hpp calls encode instructions and issue fences; wait_ready
+      is a held mapped status read followed by mfence in the inspected core-0 interface.
+    outputs: Input-associated fetched/old values in scratchpad tiles; range indices;
+      memory writes.
+    claim_refs:
+    - dxc-gather
+    - dxc-stream
+    - dxc-range
+    - dxc-old
+    - dxc-completion
+    - dxc-ready-response
+  supported_type_constraints:
+    payload_types:
+    - uint32
+    - int32
+    - float32
+    - uint64
+    - int64
+    - float64
+    index_width_bits: []
+    claim_refs:
+    - dxc-payload-types
+    - dxc-stream
+    notes: Observed API and execution type domain only. Index width is 32 for indirect
+      operations, independent of payload width. Conditions read uint32; stream min/max/stride
+      use int. Numerical equivalence, layout, signedness/range safety and tile allocation
+      still need proof. Empty index_width_bits means not applicable to this direct
+      stream primitive, not arbitrary-width indirect indexing.
+  datatype_notes: 32/64-bit payload paths; indirect indices are uint32; stream min/max/stride
+    use int.
+  preconditions:
+    design_requirements_ref: candidate.yaml#requirements
+    status: not_discharged
+    mutable_target_review_required: false
+  postconditions:
+    catalog_result:
+      form: scratchpad_tile
+      old_value: not_applicable
+      validity: Only active lanes below produced tile size have fresh payloads; masked
+        finished slots retain prior storage.
+      claim_refs:
+      - dxc-stream
+      - dxc-mask
+    satisfies_program_result: conditional_on_mapping_proof
+    program_equivalence_status: not_established
+  ordering:
+    scope: stream instruction and result-slot association
+    description: Page/line requests may overlap; response words are placed in iteration-indexed
+      destination slots. Indirect duplicate-list behavior is not claimed for this
+      read operation.
+    claim_refs:
+    - dxc-stream
+    - dxc-region
+  completion:
+    event: Stream Response/Finish path calls finishInstructionCompute after its own
+      request and latency checks; ready read responds when counter clears.
+    visibility: Scratchpad payload is written before tile ready; end-to-end CPU read
+      visibility still requires integration proof.
+    claim_refs:
+    - dxc-stream
+    - dxc-ready-response
+  limitations: []
+  claim_refs:
+  - dxc-stream
+  - dxc-mask
+  missing_capability_evidence: []
+  missing_workload_evidence: []
+  concrete_signature: null
+  implementation_ref: null
+- id: dxc-gather
+  intent: Propose gather for the matched accesses to VertexOffsets, parent, subject
+    to the catalog's mapping requirements.
+  execution_role: execute
+  operation: read
+  subtype: gather
+  support: code_observed
+  realization:
+    kind: native_primitive
+    description: INDIR_LD with a supplied index tile; offset multiplication uses the
+      payload word size and uint32 index.
+    claim_refs:
+    - dxc-gather
+    - dxc-mask
+  logical_inputs:
+  - request_id: access-02-read
+    target_array: VertexOffsets
+    address_pattern: indirect
+    requested_payload_type: int32
+    requested_index_width_bits: 32
+    mutable_target: false
+    index_width_status: requested
+    statement_ids:
+    - bfs-td-row-bounds
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 241
+      end_line: 241
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Reported loaded-index expression; near-unit measured distance does
+      not turn this into a proven stream.
+  - request_id: access-04-read
+    target_array: parent
+    address_pattern: indirect
+    requested_payload_type: int32
+    requested_index_width_bits: 32
+    mutable_target: true
+    index_width_status: requested
+    statement_ids:
+    - bfs-td-parent-read
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 243
+      end_line: 243
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Reported loaded-index expression; near-unit measured distance does
+      not turn this into a proven stream.
+  input_scope: workload_intent_and_design_contract_not_a_concrete_operand_list
+  design_interface:
+    software_supplies: Memory-mapped instruction stream, bases, typed scalar/vector
+      tiles, optional mask and old-value destination. Range continuation registers
+      and lower/upper bound tiles for range composition.
+    invocation: Pinned MAA_gem5.hpp calls encode instructions and issue fences; wait_ready
+      is a held mapped status read followed by mfence in the inspected core-0 interface.
+    outputs: Input-associated fetched/old values in scratchpad tiles; range indices;
+      memory writes.
+    claim_refs:
+    - dxc-gather
+    - dxc-stream
+    - dxc-range
+    - dxc-old
+    - dxc-completion
+    - dxc-ready-response
+  supported_type_constraints:
+    payload_types:
+    - uint32
+    - int32
+    - float32
+    - uint64
+    - int64
+    - float64
+    index_width_bits:
+    - 32
+    claim_refs:
+    - dxc-payload-types
+    - dxc-gather
+    - dxc-byte-offset-domain
+    notes: Observed API and execution type domain only. Index width is 32 for indirect
+      operations, independent of payload width. Conditions read uint32; stream min/max/stride
+      use int. Numerical equivalence, layout, signedness/range safety and tile allocation
+      still need proof. For indirect addressing on the examined ABI, word_size * index
+      is a 32-bit unsigned product; prove it does not wrap before wider base addition.
+  datatype_notes: 32/64-bit payload paths; indirect indices are uint32; stream min/max/stride
+    use int.
+  preconditions:
+    design_requirements_ref: candidate.yaml#requirements
+    status: not_discharged
+    mutable_target_review_required: true
+  postconditions:
+    catalog_result:
+      form: scratchpad_tile
+      old_value: not_applicable
+      validity: Only active lanes below produced tile size have fresh payloads; masked
+        finished slots retain prior storage.
+      claim_refs:
+      - dxc-gather
+      - dxc-mask
+    satisfies_program_result: conditional_on_mapping_proof
+    program_equivalence_status: not_established
+  ordering:
+    scope: inspected instruction path
+    description: Iteration slots retain result association. Local duplicate-list processing
+      and pending-line forwarding are observed; full inter-instruction/alias/global
+      order remains unproved.
+    claim_refs:
+    - dxc-local-order
+    - dxc-region
+  completion:
+    event: Instruction finish after pending-count/accounting and modeled latency checks;
+      destination tiles become ready.
+    visibility: Scratchpad payload is written before tile ready; end-to-end CPU read
+      visibility still requires integration proof.
+    claim_refs:
+    - dxc-completion
+    - dxc-ready-response
+  limitations:
+  - Byte-offset product representability is required (dxc-byte-offset-domain); index_width_bits
+    does not promise the entire unsigned index domain.
+  claim_refs:
+  - dxc-gather
+  - dxc-mask
+  missing_capability_evidence: []
+  missing_workload_evidence: []
+  concrete_signature: null
+  implementation_ref: null
+- id: dxc-ranged-gather
+  intent: Propose gather for the matched accesses to g.out_neighbors_, subject to
+    the catalog's mapping requirements.
+  execution_role: execute
+  operation: read
+  subtype: gather
+  support: code_observed
+  realization:
+    kind: documented_sequence
+    description: RangeFuser emits bounded outer/inner index tiles and continuation
+      state; a dependent indirect-load instruction consumes indices.
+    claim_refs:
+    - dxc-range
+    - dxc-gather
+  logical_inputs:
+  - request_id: access-03-read
+    target_array: g.out_neighbors_
+    address_pattern: ranged_indirect
+    requested_payload_type: int32
+    requested_index_width_bits: 32
+    mutable_target: false
+    index_width_status: requested
+    statement_ids:
+    - bfs-td-neighbor
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 242
+      end_line: 242
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Reported CSR row bounds plus segmented neighbor traversal; range
+      realization/continuation still needs mapping proof.
+  input_scope: workload_intent_and_design_contract_not_a_concrete_operand_list
+  design_interface:
+    software_supplies: Memory-mapped instruction stream, bases, typed scalar/vector
+      tiles, optional mask and old-value destination. Range continuation registers
+      and lower/upper bound tiles for range composition.
+    invocation: Pinned MAA_gem5.hpp calls encode instructions and issue fences; wait_ready
+      is a held mapped status read followed by mfence in the inspected core-0 interface.
+    outputs: Input-associated fetched/old values in scratchpad tiles; range indices;
+      memory writes.
+    claim_refs:
+    - dxc-gather
+    - dxc-stream
+    - dxc-range
+    - dxc-old
+    - dxc-completion
+    - dxc-ready-response
+  supported_type_constraints:
+    payload_types:
+    - int32
+    index_width_bits:
+    - 32
+    claim_refs:
+    - dxc-payload-types
+    - dxc-bfs-composition
+    - dxc-gather
+    - dxc-range
+    - dxc-byte-offset-domain
+    notes: Only the inspected TDStepMAA sequence payload is listed. Primitive payload
+      domains do not certify arbitrary composed sequences. Indices/masks and range
+      bounds read as uint32; range continuation and stride use int. Positive representable
+      stride/ranges and correct tile sizes required. For indirect addressing on the
+      examined ABI, word_size * index is a 32-bit unsigned product; prove it does
+      not wrap before wider base addition.
+  datatype_notes: Range bounds uint32, continuation and stride int; payload datatype
+    does not widen this path.
+  preconditions:
+    design_requirements_ref: candidate.yaml#requirements
+    status: not_discharged
+    mutable_target_review_required: false
+  postconditions:
+    catalog_result:
+      form: index_tiles_then_gathered_tile
+      old_value: not_applicable
+      validity: Range output is densely emitted only for active outer ranges; consume
+        produced size and preserve continuation.
+      claim_refs:
+      - dxc-range
+      - dxc-gather
+    satisfies_program_result: conditional_on_mapping_proof
+    program_equivalence_status: not_established
+  ordering:
+    scope: range instruction followed by dependent gather
+    description: Range loop emits outer/inner index pairs; subsequent gather uses
+      result-slot association.
+    claim_refs:
+    - dxc-range
+    - dxc-gather
+  completion:
+    event: Range Finish records continuation registers and both output sizes; the
+      dependent gather completes separately; wait on the actual producer/consumer
+      tile.
+    visibility: 'unknown: CPU-visible completion needs integration proof.'
+    claim_refs:
+    - dxc-range
+    - dxc-completion
+    - dxc-ready-response
+  limitations:
+  - Composed operation, not a native gather-range opcode.
+  - Negative or overflowing range/stride values not established as legal.
+  - Byte-offset product representability is required (dxc-byte-offset-domain); index_width_bits
+    does not promise the entire unsigned index domain.
+  claim_refs:
+  - dxc-range
+  - dxc-gather
+  missing_capability_evidence: []
+  missing_workload_evidence: []
+  concrete_signature: null
+  implementation_ref: null
+request_groups:
+- id: bfs-td-traversal-and-discovery
+  description: Source dependency chain from frontier load through row bounds and neighbor
+    traversal to parent read and conditional CAS. The successful CAS also controls
+    an explicit parent store and queue append. This context group is a manual proposal,
+    not a proved single-accelerator mapping.
+  request_ids:
+  - access-01-read
+  - access-02-read
+  - access-03-read
+  - access-04-read
+  - access-04-update
+  statement_ids:
+  - bfs-td-frontier
+  - bfs-td-row-bounds
+  - bfs-td-neighbor
+  - bfs-td-parent-read
+  - bfs-td-parent-cas
+  - bfs-td-parent-store
+  - bfs-td-queue-append
+  dependencies:
+  - from_statement: bfs-td-frontier
+    to_statement: bfs-td-row-bounds
+  - from_statement: bfs-td-row-bounds
+    to_statement: bfs-td-neighbor
+  - from_statement: bfs-td-neighbor
+    to_statement: bfs-td-parent-read
+  - from_statement: bfs-td-frontier
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-neighbor
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-parent-read
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-parent-cas
+    to_statement: bfs-td-parent-store
+  - from_statement: bfs-td-parent-cas
+    to_statement: bfs-td-queue-append
+  context_statements:
+  - id: bfs-td-frontier
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 240
+      end_line: 240
+    code: NodeID u = queue.shared[i];
+    operation: read
+    access_expression: queue.shared[i]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids: []
+    interpretation: Sequential frontier read in logical i order; thread interleaving
+      depends on execution.
+  - id: bfs-td-row-bounds
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 241
+      end_line: 241
+    code: for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+    operation: read
+    access_expression: VertexOffsets[u] and VertexOffsets[u + 1]
+    data_type: SGOffset = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-frontier
+    interpretation: Two offset accesses indexed by a loaded vertex ID; the +1 is index
+      arithmetic.
+  - id: bfs-td-neighbor
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 242
+      end_line: 242
+    code: NodeID v = g.out_neighbors_[j];
+    operation: read
+    access_expression: g.out_neighbors_[j]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-row-bounds
+    interpretation: Sequential within each adjacency segment; transitions between
+      segments are data-dependent.
+  - id: bfs-td-parent-read
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 243
+      end_line: 243
+    code: NodeID curr_val = parent[v];
+    operation: read
+    access_expression: parent[v]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-neighbor
+    interpretation: Indirect read indexed by the loaded neighbor ID.
+  - id: bfs-td-parent-cas
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 247
+      end_line: 247
+    code: if (compare_and_swap(parent[v], curr_val, u)) {
+    operation: read_modify_write
+    access_expression: compare_and_swap(parent[v], curr_val, u)
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-frontier
+    - bfs-td-neighbor
+    - bfs-td-parent-read
+    interpretation: Subtype is compare-and-swap, guarded by curr_val < 0; successful
+      discovery controls queue insertion.
+  - id: bfs-td-parent-store
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 248
+      end_line: 248
+    code: parent[v] = u;
+    operation: write
+    access_expression: parent[v] = u
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-parent-cas
+    interpretation: Explicit store inside the successful CAS branch; preserve in any
+      analysis of side effects.
+  - id: bfs-td-queue-append
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 249
+      end_line: 249
+    code: lqueue.push_back(v);
+    operation: call_with_side_effects
+    access_expression: lqueue.push_back(v)
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-parent-cas
+    interpretation: Thread-local queue buffering followed by lqueue.flush(); not a
+      plain target-array access.
+  basis: explicit_manual_source_group
+  hardware_composition_status: not_established
+  covered_request_ids:
+  - access-01-read
+  - access-02-read
+  - access-03-read
+  - access-04-read
+  uncovered_request_ids:
+  - access-04-update
+  joint_execution_status: requires_mapping_and_composition_review
+workload_semantics:
+  reported_rmw:
+    kind: conditional_compare_and_swap
+    reported_details:
+      subtype: read_predominated_conditional_cas
+      primitive: CAS(addr=&parent[v], expected=curr_val, new_val=u)
+      execution_frequency:
+        level_1: N - 1 executions (100% commit rate)
+        level_2: 0 executions (bypassed entirely by if (curr_val < 0) filter)
+      contention: zero lock contention across Level 2
+    must_preserve: true
+    phase_execution:
+      level_1: N - 1 executions (100% commit rate)
+      level_2: 0 executions (bypassed entirely by if (curr_val < 0) filter)
+  source_binding:
+    status: revision_reported_matching
+    reported_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    reference_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  evidence_status: reported_not_reproduced
+requirements:
+- id: dxc-region-binding
+  description: Bind actual bases, registered regions, aliases and permitted writers
+    before mapping.
+  scope: Addresses touched by selected operations; not all CPU memory
+  claim_refs:
+  - dxc-gather
+  - dxc-region
+  - dxc-completion
+  verification: required
+- id: dxc-widths
+  description: Prove payload, uint32 index and range bounds, signed continuation/stride
+    and sizes fit without truncation.
+  scope: Each mapped input tile and range composition
+  claim_refs:
+  - dxc-gather
+  - dxc-range
+  - dxc-stream
+  verification: required
+- id: dxc-validity
+  description: Propagate masks and produced sizes; never consume inactive old-value
+    slots as fresh values.
+  scope: Output lanes of masked reads/stores/RMW
+  claim_refs:
+  - dxc-mask
+  - dxc-old
+  verification: required
+- id: dxc-observer
+  description: Establish required observer visibility and safe tile/region reuse separately
+    from instruction finish.
+  scope: CPU consumption, memory updates and storage reuse
+  claim_refs:
+  - dxc-completion
+  verification: required
+- id: dxc-numerical
+  description: Check duplicates and numerical equivalence for the requested result
+    contract.
+  scope: RMW operator, datatype and returned old values
+  claim_refs:
+  - dxc-old
+  - dxc-local-order
+  - dxc-float-order
+  verification: required
+- id: dxc-reuse
+  description: Before host overwrites tiles, establish which live operands consume
+    them and a completion barrier covering those consumers; condition-only ready state
+    is insufficient evidence.
+  scope: Tile reuse, especially masks and aliased/wide tile storage
+  claim_refs:
+  - dxc-reuse-scope
+  - dxc-ready-response
+  verification: required
+- id: dxc-old-destination
+  description: When old values are required, allocate and supply the optional destination
+    tile and preserve it until all active results are consumed.
+  scope: Scalar/vector stores and RMW operations requesting old values
+  claim_refs:
+  - dxc-old
+  - dxc-mask
+  verification: required
+- id: dxc-byte-offset
+  description: Prove byte-offset product and base-address addition representability
+    for every active indirect index. On the examined 32-bit int/uint32 ABI require
+    word_size * index < 2^32 before adding the base; 32-bit index encoding alone is
+    insufficient.
+  scope: All selected indirect loads, scalar/vector stores and RMW, including generated
+    indices in ranged/chained sequences
+  claim_refs:
+  - dxc-byte-offset-domain
+  - dxc-gather
+  verification: required
+- id: dxc-capacity
+  description: Bind effective simulator/API tile configuration and prove every produced
+    tile size fits its bookkeeping, alongside index/offset arithmetic and storage
+    allocation. Do not infer a broad legal capacity range from Unsigned knobs.
+  scope: Configured tile capacity, produced lengths, uint16 size bookkeeping and callers
+    consuming those lengths
+  claim_refs:
+  - dxc-config
+  - dxc-range
+  verification: required
+requirement_status: not_discharged
+parameter_contract:
+- id: tile_elements
+  unit: elements
+  state: fixed_reference
+  value: 16384
+  domain: null
+  claim_refs:
+  - dxc-config
+  notes: Pinned SimObject default only; effective run settings can override. Size
+    bookkeeping is uint16; legal effective capacity must be established separately,
+    not inferred from the Unsigned parameter type.
+- id: row_table_rows_per_slice
+  unit: rows
+  state: fixed_reference
+  value: 64
+  domain: null
+  claim_refs:
+  - dxc-config
+  notes: Pinned default, not a calibrated recommendation.
+- id: row_table_entries_per_subslice_row
+  unit: entries
+  state: fixed_reference
+  value: 8
+  domain: null
+  claim_refs:
+  - dxc-config
+  notes: Pinned default; geometry legality not independently established.
+- id: effective_tile_elements
+  unit: elements
+  state: unknown
+  value: null
+  domain: null
+  claim_refs:
+  - dxc-config
+  notes: Must bind a concrete run/configuration before execution; source default is
+    a separate field. Size bookkeeping is uint16; legal effective capacity must be
+    established separately, not inferred from the Unsigned parameter type.
+selected_configuration: {}
+mechanism_context:
+  annotations:
+  - id: unrecorded-buffering
+    kind: buffering
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-reordering
+    kind: reordering
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-issue_policy
+    kind: issue_policy
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-dependency_tracking
+    kind: dependency_tracking
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-completion
+    kind: completion
+    status: unknown
+    description: null
+    claim_refs: []
+  missing_kinds:
+  - buffering
+  - coalescing
+  - reordering
+  - issue_policy
+  - dependency_tracking
+  - completion
+  performance_hypotheses: []
+  hardware_structure: null
+  scope: Curated descriptions and explicit unknowns; no cycle model or inferred physical
+    topology.
+execution_plan:
+  rmw: retain_original_CPU_update
+  source_unchanged: true
+  queue_updates: Retain discovery and append semantics; no rewrite has been generated.
+review_questions:
+- id: placement
+  owner: Peter
+  question: Confirm the matching source statements, region, phase and allowable replacement
+    scope. Manual bindings are proposals; profiling placement is not confirmed.
+- id: abi
+  owner: Peter/Eric
+  question: Specify exact operands, index arithmetic, masks/produced lengths, concrete
+    types, invocation and completion API for each chosen operation or sequence.
+- id: legality
+  owner: Peter/Eric
+  question: Discharge ownership, numeric domains, mutable-load freshness, ordering,
+    repeated-target/concurrency and result validity requirements. Preserve CAS success
+    and queue side effects.
+- id: mechanisms
+  owner: Eric
+  question: Add located internal buffering/coalescing/reordering/issue/dependency/completion
+    details and conditions limiting performance.
+- id: composition
+  owner: Josh/Eric
+  question: Establish whether related requests can share one legal mapping; the workload
+    group and interface view do not prove combined execution.
+- id: implementation
+  owner: Yan-Ru
+  question: After Peter's spec is agreed, choose or synthesize an implementation and
+    verify the rewritten kernel against the frozen correctness oracle.
+readiness:
+  description_generated: true
+  concrete_abi_agreed: false
+  mapping_requirements_discharged: false
+  implementation_generated: false
+  correctness_verified: false
+  performance_evaluated: false

@@ -12,6 +12,7 @@ Each `case-NN/handoffs/candidate-NN/` package contains:
 - `interface.mmd`: catalog operation interfaces with inputs/outputs and optional mechanism annotations.
 - `context.mmd`: explicitly recorded source-statement relations, distinguishing matched requests, uncovered requests and retained side effects. These edges are workload relations, not hardware wiring.
 - `mechanisms.mmd`: described/unknown internal mechanisms as annotations, without invented wiring.
+- Optional `structure.mmd`: explicitly cataloged paper logical block paths; source-backed edges do not infer physical port widths or prove the BFS composition.
 - `manifest.json`: candidate identity, originating hardware-request hash and generated-text hashes.
 
 The draft is generated even when source placement or hardware types are incomplete. Unresolved fields remain explicit and the overall status stays `draft_requires_review`. PNG/SVG previews can be rendered locally; they are presentation assets outside the text manifest.
@@ -77,7 +78,11 @@ Every evidence-catalog run includes `hardware-comparison.yaml` and a readable `.
 --compare-design prodigy-hpca2021
 ```
 
-The included example contrasts existing DX100 execution, SpZip's scoped Push mapping, and Prodigy assistance. SpZip has missing typed evidence; Prodigy remains assistance. This is preparation for Eric's selected second fetcher, not a claim that his new selection has arrived. Replace/add its catalog ID when the entry is available. Mechanism and model gaps remain explicit; no performance winner is chosen.
+The earlier example contrasts DX100 execution, SpZip's scoped Push mapping and Prodigy assistance. The latest [focused run](maple-dx100-handoff.md) compares DX100 with Eric's selected `maple-isca2022`, including queue fetching and LLC assistance. Mechanism and model gaps remain explicit; no performance winner is chosen.
+
+Use repeated `--focus-design` IDs to restrict generated candidate packages while retaining the complete catalog query trace. The focus is a requested review scope, independent of source support or performance; invalid/duplicate IDs fail. A catalog `project_selections.second_indirect_fetcher` record tracks the human selection separately from operation evidence. The comparison reports whether that entry is included, and keeps typed/mapping requirements open.
+
+Optional `hardware_structure` contains `view_kind: paper_logical_paths_not_port_netlist`, identified blocks/descriptions with claim references, and explicit connections (`from_block`, `to_block`, `label`, `claim_refs`). Validation checks endpoints and located references. This supplies a paper architecture schematic only when curated; absent structures are not inferred from operation labels.
 
 ## Review responsibilities
 

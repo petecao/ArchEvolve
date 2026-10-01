@@ -1,5 +1,13 @@
 # Hardware catalog v0.1: what the evidence permits
 
+## October 1 MAPLE supplement
+
+Current data revision **0.1.3** adds Eric's selected [MAPLE paper](https://jbalkind.github.io/docs/isca2022_maple.pdf), ISCA 2022, as one parameterized `maple-isca2022` design. The catalog now has seven records, 39 operations, 46 claims and 24 source records. Source metadata records conference/year, PDF hash and exact page/section/figure locators. The original six records and claims are unchanged; their September 29 audit below remains historical.
+
+MAPLE queue loads and LLC hints have distinct execution roles. Paper-specified FIFO slot association, pipeline buffering, LIMA index chunks, acknowledgement versus consume completion, and stable-array requirements are recorded. Arbitrary target coalescing, general typed domains and current engine CAS are not established. [The MAPLE handoff](maple-dx100-handoff.md) explains these boundaries, the BFS comparison and the source-backed logical-path diagram. The raw PDF stays outside Git; no RTL/API execution or numerical speedup was performed here.
+
+## September 29 audit of revision 0.1.2
+
 This catalog is a small, source-reviewed research prototype for asking concrete hardware questions. It contains six records: two DX100 editions, two Terminus configurations, Prodigy, and one SpZip mapping. It is not a hardware correctness certificate, performance ranking, or ready-made BFS accelerator. Every capability belongs to a named record and operation; families provide an index, never inherited capabilities. The [YAML](../catalog/hardware-v0.1.yaml) carries stable claims, exact locators, public URLs, source hashes, unresolved requirements and reference parameters.
 
 The current data revision is `0.1.2`, deepening the first integration draft `0.1.0`. Its evidence is static paper/code inspection on September 29, 2026. No simulator, benchmark, architecture implementation or live virtualization work was performed. The original taxonomy and provisional seed were discovery leads; assertions below were checked against the primary documents or pinned source paths.

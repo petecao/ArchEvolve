@@ -1,5 +1,11 @@
 # BFS intrinsic handoff — Eric's hardware evidence catalog
 
+## Latest: MAPLE is the second fetcher
+
+Eric's selected [MAPLE ISCA 2022 paper](https://jbalkind.github.io/docs/isca2022_maple.pdf) is now cataloged as `maple-isca2022` (data revision 0.1.3). The latest [DX100/MAPLE handoff guide](maple-dx100-handoff.md) links both BFS comparisons, intrinsic drafts, operation diagrams, workload context and paper logical block paths.
+
+Start with the [sparse MAPLE queue-fetch package](../runs/bfs-maple-comparison-v0.1/case-01/handoffs/candidate-04/README.md) and [diagram preview](../runs/bfs-maple-comparison-v0.1/case-01/handoffs/candidate-04/previews.md). MAPLE's LLC assistance is a separate package. Producing a pointer is not fetched-data completion; FIFO data is not kept coherent after fetch. Confirm typed API/packing/counts, source-to-mode mapping and stable-target conditions before Yan-Ru implements a replacement. Current BFS CAS/store/queue side effects stay on the CPU.
+
 ## October 1: candidate packages
 
 The new handoff adds **high-level intrinsic descriptions and structured draft contracts** to the diagrams, one option per package:
@@ -17,7 +23,7 @@ The new handoff adds **high-level intrinsic descriptions and structured draft co
 
 Start with the DX100 read package. Confirm the manual source statements and exact operands, masks/lengths, result/completion behavior and legality; then produce the concrete software spec for Yan-Ru. The related-access bundle keeps the parent CAS, successful-branch store and queue append visible. It does not prove they can all execute on one accelerator.
 
-The existing comparison includes DX100, SpZip's scoped Push reference and Prodigy assistance. It retains their role/type differences and missing internal scheduling information. Eric's newly selected second-fetcher entry is still pending. The proposed [shared format](intrinsic-handoff-format.md) needs team review; no ABI or intrinsic implementation has been generated.
+This earlier comparison includes DX100, SpZip's scoped Push reference and Prodigy assistance. It retains their role/type differences and missing internal scheduling information. The MAPLE follow-up above resolves second-fetcher selection. The proposed [shared format](intrinsic-handoff-format.md) needs team review; no ABI or intrinsic implementation has been generated.
 
 ## Earlier operation-interface run
 

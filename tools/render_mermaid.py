@@ -219,8 +219,10 @@ def render_candidate(request: dict, candidate: dict) -> str:
         from textwrap import shorten
         context = candidate["mechanism_context"]
         details = ["Internal mechanism annotations (no wiring implied)"]
-        details += [m["kind"] + ": " + shorten(m["description"], width=200, placeholder=" ... [full description in YAML]")
+        details += [m["kind"] + ": " + shorten(m["description"], width=110, placeholder=" ...")
                     for m in context["annotations"] if m["status"] == "described"]
+        if any(m["status"] == "described" for m in context["annotations"]):
+            details.append("Full mechanism descriptions in YAML")
         if context["missing_kinds"]:
             details.append("Internal detail unrecorded: " + ", ".join(context["missing_kinds"]))
         lines.append(f'  mechanism_info["{label(*details)}"]:::annotation')

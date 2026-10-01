@@ -92,6 +92,7 @@ def claim_closure(catalog, design, options):
     collect(design["parameters"])
     collect(design.get("internal_mechanisms", []))
     collect(design.get("performance_hypotheses", []))
+    collect(design.get("hardware_structure"))
     for option in options: collect(option["operation"])
     sources = set(design["source_refs"])
     for ref in refs: sources.update(catalog["claims"][ref]["source_refs"])
@@ -131,13 +132,16 @@ def interface_view(design, options):
             "view_notice":"Independent catalog operation interfaces. No physical port widths, component composition or unlisted connections are established by this drawing."}
 
 
-def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates=4):
+def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates=4, focus_design_ids=None):
     validate_catalog(catalog)
     if type(max_candidates) is not int or max_candidates < 1:
         raise RequestError("max_candidates must be at least 1, including the CPU comparison.")
     requests, gaps = capability_requests(case)
     workload_groups = request_groups(case, requests)
     designs = {d["id"]:d for d in catalog["designs"]}
+    if focus_design_ids is not None:
+        if not focus_design_ids or len(focus_design_ids) != len(set(focus_design_ids)) or not set(focus_design_ids) <= set(designs):
+            raise RequestError("Focus design IDs must be nonempty, unique, and present in the catalog.")
     groups, trace = {}, []
     for request in requests:
         result = query_catalog(catalog, operation=request["operation"], subtype=request["subtype"],
@@ -175,12 +179,14 @@ def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_c
     while any(lanes.values()):
         for bucket in buckets:
             if lanes[bucket]: ordered.append(lanes[bucket].pop(0))
-    selected = ordered[:max_candidates-1]
+    eligible = [g for g in ordered if focus_design_ids is None or g["design"]["id"] in focus_design_ids]
+    selected = eligible[:max_candidates-1]
     selection = []
     for group in ordered:
         selection.append({"design_id":group["design"]["id"], "scope":group["bucket"],
                           "operation_ids":sorted(group["options"]),
-                          "decision":"selected_for_exploration" if any(group is g for g in selected) else "eligible_outside_candidate_budget"})
+                          "decision":"selected_for_exploration" if any(group is g for g in selected) else
+                                     "outside_requested_design_focus" if focus_design_ids is not None and group["design"]["id"] not in focus_design_ids else "eligible_outside_candidate_budget"})
 
     baseline = {"id":case["case_id"]+"--cpu-baseline", "catalog_entry":"cpu-baseline", "status":"comparison_unmeasured",
                 "rationale":"Keep unchanged TDStep as the comparison. This does not assert that an accelerator is better.",
@@ -233,7 +239,8 @@ def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_c
                                 "Mutable read targets are not assumed immutable. CAS support is queried separately; assistance and fetch-old behavior do not establish CAS execution.",
                                 "One slot each for reads, update execution and read assistance is considered before remaining alternatives, subject to budget. Within scopes, evidence completeness/code support precede stable IDs; none is a performance rank."],
         "candidates":candidates, "clarification_requests":questions,
-        "selection_policy":{"preferred_read_shape_for_display":preferred_pattern, "category_order":buckets, "max_candidates_including_baseline":max_candidates},
+        "selection_policy":{"preferred_read_shape_for_display":preferred_pattern, "category_order":buckets, "max_candidates_including_baseline":max_candidates,
+                            "focus_design_ids":deepcopy(focus_design_ids)},
     }
     validate_request(request)
     return request, {"capability_queries":trace, "candidate_selection":selection,

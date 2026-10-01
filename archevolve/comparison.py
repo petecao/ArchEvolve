@@ -45,11 +45,17 @@ def compare_designs(request, catalog, design_ids=None):
             "requirements": deepcopy(design["requirements"]), "limitations": deepcopy(design["limitations"]),
             "source_evidence": claim_closure(catalog, design, list(options.values()))})
     fetchers = [d["design_id"] for d in designs if d["conditionally_matched_read_requests"]]
+    second = catalog.get("project_selections", {}).get("second_indirect_fetcher", {})
+    second_id = second.get("design_id")
+    second_status = ("cataloged_paper_evidence_mapping_and_types_pending" if second_id in ids else
+                     "cataloged_not_in_this_comparison" if second_id else "pending_Eric_selection_and_mechanism_annotations")
     return {"format": "hardware-comparison-v0.1", "kernel_id": request["kernel_id"],
             "input_sha256": request["input_sha256"], "catalog_sha256": request["catalog_sha256"],
             "scope": "Same typed requests, source contracts and mechanism gaps. No performance ranking or legal combined mapping.",
             "designs": designs, "conditional_read_executor_designs": fetchers,
-            "selected_second_fetcher_status": "pending_Eric_selection_and_mechanism_annotations",
+            "selected_second_fetcher_design_id": second_id,
+            "selected_second_fetcher_status": second_status,
+            "second_fetcher_selection_provenance": second.get("selection_provenance"),
             "performance_evaluated": False, "speedup": None,
             "workload_evidence_ref": "hardware-request.yaml#workload_summary",
             "model_inputs_needed": ["Per-region/phase active working set and access distribution",
@@ -61,8 +67,11 @@ def compare_designs(request, catalog, design_ids=None):
 
 def build_comparison_artifacts(request, catalog, design_ids=None):
     comparison = compare_designs(request, catalog, design_ids)
+    second_id = comparison["selected_second_fetcher_design_id"]
+    selection_note = (f"Eric's selected second fetcher is {md(second_id)}. Status: {md(comparison['selected_second_fetcher_status'])}."
+                      if second_id else "Eric's newly selected second fetcher is pending.")
     lines = ["# Hardware interface comparison", "", comparison["scope"], "",
-             "Eric's newly selected second fetcher is pending. Existing designs can be inspected here; assistance is a different role from returned-load execution. Missing mechanism data prevents a scheduling/performance comparison.", "",
+             selection_note + " Assistance is a different role from returned-load execution. Internal annotations explain available mechanisms; missing mechanism/model data remains explicit.", "",
              "| Design | Conditional read matches | Assistance matches | Reads needing evidence | Internal details missing |", "|---|---|---|---|---|"]
     for d in comparison["designs"]:
         lines.append(f"| {md(d['design_id'])} | {md(', '.join(d['conditionally_matched_read_requests']) or 'none')} | {md(', '.join(d['assisted_read_requests']) or 'none')} | {md(', '.join(d['read_requests_needing_evidence']) or 'none')} | {md(', '.join(d['mechanism_context']['missing_kinds']) or 'none in checklist; model still needed')} |")
@@ -71,9 +80,17 @@ def build_comparison_artifacts(request, catalog, design_ids=None):
                   "Inputs: " + md(d["interface"]["software_supplies"]), "",
                   "Invocation: " + md(d["interface"]["invocation"]), "",
                   "Outputs: " + md(d["interface"]["outputs"]), "",
-                  "| Request | Matching operation / status / role | Exclusions |", "|---|---|---|"]
+                  "### Internal mechanism evidence", ""]
+        for mechanism in d["mechanism_context"]["annotations"]:
+            lines.append(f"- **{md(mechanism['kind'])}**: {md(mechanism['description'] if mechanism['status'] == 'described' else 'unknown; not recorded')}")
+        if d["mechanism_context"]["performance_hypotheses"]:
+            lines += ["", "### Conditional performance hypotheses", ""]
+            for h in d["mechanism_context"]["performance_hypotheses"]:
+                lines += ["- " + md(h["description"]), "  Conditions: " + md("; ".join(h["workload_conditions"])) + ".",
+                          "  Limits: " + md("; ".join(h["limiting_factors"])) + "."]
+        lines += ["", "### Exact request matches", "", "| Request | Matching operation / status / role / support | Exclusions |", "|---|---|---|"]
         for q in d["queries"]:
-            matches = "; ".join(f"{m['operation_id']} / {m['status']} / {m['operation']['execution_role']}" for m in q["matches"]) or "no match"
+            matches = "; ".join(f"{m['operation_id']} / {m['status']} / {m['operation']['execution_role']} / {m['operation']['support']}" for m in q["matches"]) or "no match"
             excluded = "; ".join(f"{m['operation_id']}: {m['reason']}" for m in q["excluded"]) or "none"
             lines.append(f"| {md(q['request_id'])} | {md(matches)} | {md(excluded)} |")
     lines += ["", "[Full comparison YAML](hardware-comparison.yaml) retains operation/type constraints, located evidence, parameters and mapping requirements.", "",

@@ -38,7 +38,7 @@ def table_text(value):
 
 
 def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_path=None,
-                source_context_path=None, compare_design_ids=None):
+                source_context_path=None, compare_design_ids=None, focus_design_ids=None):
     """Prepare all artifacts in memory; malformed later inputs cannot leave half a run."""
     catalog, catalog_digest = load_request(catalog_path)
     evidence_catalog = catalog.get("format") == "hardware-catalog-v0.1"
@@ -66,7 +66,7 @@ def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_
         if case["case_id"] in case_ids:
             raise RequestError(f"Duplicate case_id {case['case_id']!r}; keep independent runs distinct.")
         case_ids.add(case["case_id"])
-        request, trace = select_candidates(case, catalog, str(catalog_path), catalog_digest, max_candidates)
+        request, trace = select_candidates(case, catalog, str(catalog_path), catalog_digest, max_candidates, focus_design_ids)
         folder = f"case-{index:02d}"
         request_text = yaml.safe_dump(request, sort_keys=False, allow_unicode=True)
         request_digest = hashlib.sha256(request_text.encode()).hexdigest()
@@ -91,7 +91,7 @@ def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_
         "archevolve/normalize.py", "archevolve/measurement_methods.py", "archevolve/select.py", "archevolve/evidence_select.py", "archevolve/hardware_catalog.py", "archevolve/mechanisms.py", "archevolve/workload_context.py", "archevolve/intrinsic_handoff.py", "archevolve/comparison.py", "archevolve/__main__.py", "tools/render_mermaid.py"))).hexdigest()
     run_key = {"inputs":[c["input_sha256"] for c in cases], "catalog_sha256":catalog_digest,
                "max_candidates":max_candidates, "code_sha256":code_hash, "reference":reference, "methodology_sha256":methods_digest,
-               "source_context_sha256":context_digest, "comparison_design_ids":compare_design_ids}
+               "source_context_sha256":context_digest, "comparison_design_ids":compare_design_ids, "focus_design_ids":focus_design_ids}
     manifest = {"pipeline_version":"offline-0.3" if evidence_catalog else "offline-0.1", "backend":"offline_evidence_lookup" if evidence_catalog else "offline_rules", "llm_calls":0, "evaluation_performed":False,
                 "run_id":hashlib.sha256(json.dumps(run_key,sort_keys=True).encode()).hexdigest(),
                 "identity":run_key, "catalog_ref":str(catalog_path), "catalog_revision":catalog["revision"], "cases":cases}
@@ -133,13 +133,14 @@ def main(argv=None):
     parser.add_argument("--methods", type=Path, help="Optional reported methodology, bound to exact input hashes")
     parser.add_argument("--source-context", type=Path, help="Explicit source observations/bindings; only matched file/function/revision context is used")
     parser.add_argument("--compare-design", action="append", help="Catalog design ID for same-request comparison; repeat, independent of candidate budget")
+    parser.add_argument("--focus-design", action="append", help="Restrict candidate packages to these catalog design IDs; repeat. Full query evidence is retained")
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--max-candidates", type=int, default=4, help="Includes CPU comparison plus operation-interface exploration candidates")
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args(argv)
     try:
         artifacts, manifest = prepare_run(args.input, args.catalog, max_candidates=args.max_candidates, methods_path=args.methods,
-                                          source_context_path=args.source_context, compare_design_ids=args.compare_design)
+                                          source_context_path=args.source_context, compare_design_ids=args.compare_design, focus_design_ids=args.focus_design)
         protected = {p.resolve() for p in [*args.input, args.catalog, *([args.methods] if args.methods else []),
                                           *([args.source_context] if args.source_context else [])]}
         targets = [args.output_dir / name for name in artifacts]

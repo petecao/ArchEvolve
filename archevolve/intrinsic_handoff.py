@@ -6,7 +6,7 @@ import json
 
 import yaml
 
-from archevolve.mechanisms import render_mechanisms
+from archevolve.mechanisms import render_mechanisms, render_structure
 from tools.render_mermaid import RequestError, label, render_candidate
 
 FORMAT = "intrinsic-handoff-v0.1"
@@ -194,6 +194,10 @@ def build_handoff_artifacts(request, request_digest):
             "context.mmd": render_workload_context(request, candidate),
             "mechanisms.mmd": render_mechanisms(candidate),
         }
+        structure = render_structure(candidate)
+        if structure is not None:
+            files["structure.mmd"] = structure
+            files["README.md"] += "\n[Source-backed logical block paths](structure.mmd) describe the paper's architecture, not a port netlist or a proved mapping of all BFS operations.\n"
         manifest = {"format": FORMAT, "candidate_id": candidate["id"], "hardware_request_sha256": request_digest,
                     "files": {name: hashlib.sha256(content.encode()).hexdigest() for name, content in files.items()}}
         files["manifest.json"] = json.dumps(manifest, indent=2) + "\n"
