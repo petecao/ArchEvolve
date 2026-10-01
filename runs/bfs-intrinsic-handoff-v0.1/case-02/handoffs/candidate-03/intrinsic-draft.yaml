@@ -1,0 +1,414 @@
+format: intrinsic-handoff-v0.1
+status: draft_requires_review
+backend: offline_contract_projection
+llm_calls: 0
+kernel_id: gapbs_bfs_top_down_step_fully_connected
+candidate_id: gapbs_bfs_top_down_step_fully_connected--terminus-micro2024-cas--update_execute
+catalog_design_id: terminus-micro2024-cas
+catalog_design_revision: MICRO2024-default
+provenance:
+  input_sha256: 1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750
+  catalog_sha256: 8c36b19acdd1a1dd9755826672f2c1a4eb9a368fc26e148334f1e2ed4ead54fe
+  source_context_sha256: 4abf18a26cb638f5243887cefcdf54fac45492ea9eeb4db5e2cbc5695560abac
+  evidence_ref: candidate.yaml#source_evidence
+operations:
+- id: term-cas
+  intent: Propose cas for the matched accesses to parent, subject to the catalog's
+    mapping requirements.
+  execution_role: execute
+  operation: read_modify_write
+  subtype: cas
+  support: paper_specified
+  realization:
+    kind: native_primitive
+    description: Fig.4 CAS primitive implemented by optional atomic-capable memory
+      unit/L2, with success output.
+    claim_refs:
+    - term-write
+  logical_inputs:
+  - request_id: access-04-update
+    target_array: parent
+    address_pattern: indirect
+    requested_payload_type: int32
+    requested_index_width_bits: 32
+    mutable_target: true
+    index_width_status: requested
+    statement_ids:
+    - bfs-td-parent-cas
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 247
+      end_line: 247
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Original conditional CAS requires comparison/update semantics and
+      success handling; returned old values are not a substitute.
+  input_scope: workload_intent_and_design_contract_not_a_concrete_operand_list
+  design_interface:
+    software_supplies: Task dataflow graph and PE/operator configuration; task arguments,
+      partition mapping and deferred handlers.
+    invocation: Core instructions enqueue/dequeue tasks, acquire/release partitions
+      and respond to deferred operations.
+    outputs: Task values/streams or success flags; deferred requests to the CPU.
+    claim_refs:
+    - term-read
+    - term-write
+    - term-host
+    - term-config
+  supported_type_constraints: null
+  datatype_notes: No universal datatype contract asserted.
+  preconditions:
+    design_requirements_ref: candidate.yaml#requirements
+    status: not_discharged
+    mutable_target_review_required: true
+  postconditions:
+    catalog_result:
+      form: success_flag
+      old_value: unknown
+      validity: Active inputs only.
+      claim_refs:
+      - term-write
+    satisfies_program_result: conditional_on_mapping_proof
+    program_equivalence_status: not_established
+  ordering:
+    scope: CAS primitive; shared lock protocol in concurrent CLHT
+    description: Local partition SWMR and partition queues protect conflicts; ROB
+      preserves task enqueue result order. Shared-memory locks are additionally required
+      across engines.
+    claim_refs:
+    - term-order
+    - term-host
+  completion:
+    event: Task completion releases its partition; finished task waits for ROB turn
+      before result dequeue.
+    visibility: Task-level paper promise; precise CPU/cache write-visibility event
+      beyond synchronization is unknown.
+    claim_refs:
+    - term-host
+    - term-order
+  limitations:
+  - Requires memory-unit/L2 atomic support. Not fetch-old.
+  claim_refs:
+  - term-write
+  missing_capability_evidence:
+  - index_width_bits
+  - payload_types
+  missing_workload_evidence: []
+  concrete_signature: null
+  implementation_ref: null
+request_groups:
+- id: bfs-td-traversal-and-discovery
+  description: Source dependency chain from frontier load through row bounds and neighbor
+    traversal to parent read and conditional CAS. The successful CAS also controls
+    an explicit parent store and queue append. This context group is a manual proposal,
+    not a proved single-accelerator mapping.
+  request_ids:
+  - access-01-read
+  - access-02-read
+  - access-03-read
+  - access-04-read
+  - access-04-update
+  statement_ids:
+  - bfs-td-frontier
+  - bfs-td-row-bounds
+  - bfs-td-neighbor
+  - bfs-td-parent-read
+  - bfs-td-parent-cas
+  - bfs-td-parent-store
+  - bfs-td-queue-append
+  dependencies:
+  - from_statement: bfs-td-frontier
+    to_statement: bfs-td-row-bounds
+  - from_statement: bfs-td-row-bounds
+    to_statement: bfs-td-neighbor
+  - from_statement: bfs-td-neighbor
+    to_statement: bfs-td-parent-read
+  - from_statement: bfs-td-frontier
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-neighbor
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-parent-read
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-parent-cas
+    to_statement: bfs-td-parent-store
+  - from_statement: bfs-td-parent-cas
+    to_statement: bfs-td-queue-append
+  context_statements:
+  - id: bfs-td-frontier
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 240
+      end_line: 240
+    code: NodeID u = queue.shared[i];
+    operation: read
+    access_expression: queue.shared[i]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids: []
+    interpretation: Sequential frontier read in logical i order; thread interleaving
+      depends on execution.
+  - id: bfs-td-row-bounds
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 241
+      end_line: 241
+    code: for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+    operation: read
+    access_expression: VertexOffsets[u] and VertexOffsets[u + 1]
+    data_type: SGOffset = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-frontier
+    interpretation: Two offset accesses indexed by a loaded vertex ID; the +1 is index
+      arithmetic.
+  - id: bfs-td-neighbor
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 242
+      end_line: 242
+    code: NodeID v = g.out_neighbors_[j];
+    operation: read
+    access_expression: g.out_neighbors_[j]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-row-bounds
+    interpretation: Sequential within each adjacency segment; transitions between
+      segments are data-dependent.
+  - id: bfs-td-parent-read
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 243
+      end_line: 243
+    code: NodeID curr_val = parent[v];
+    operation: read
+    access_expression: parent[v]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-neighbor
+    interpretation: Indirect read indexed by the loaded neighbor ID.
+  - id: bfs-td-parent-cas
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 247
+      end_line: 247
+    code: if (compare_and_swap(parent[v], curr_val, u)) {
+    operation: read_modify_write
+    access_expression: compare_and_swap(parent[v], curr_val, u)
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-frontier
+    - bfs-td-neighbor
+    - bfs-td-parent-read
+    interpretation: Subtype is compare-and-swap, guarded by curr_val < 0; successful
+      discovery controls queue insertion.
+  - id: bfs-td-parent-store
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 248
+      end_line: 248
+    code: parent[v] = u;
+    operation: write
+    access_expression: parent[v] = u
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-parent-cas
+    interpretation: Explicit store inside the successful CAS branch; preserve in any
+      analysis of side effects.
+  - id: bfs-td-queue-append
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 249
+      end_line: 249
+    code: lqueue.push_back(v);
+    operation: call_with_side_effects
+    access_expression: lqueue.push_back(v)
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-parent-cas
+    interpretation: Thread-local queue buffering followed by lqueue.flush(); not a
+      plain target-array access.
+  basis: explicit_manual_source_group
+  hardware_composition_status: not_established
+  covered_request_ids:
+  - access-04-update
+  uncovered_request_ids:
+  - access-01-read
+  - access-02-read
+  - access-03-read
+  - access-04-read
+  joint_execution_status: requires_mapping_and_composition_review
+workload_semantics:
+  reported_rmw:
+    kind: conditional_compare_and_swap
+    reported_details:
+      subtype: read_predominated_conditional_cas
+      primitive: CAS(addr=&parent[v], expected=curr_val, new_val=u)
+      execution_frequency:
+        level_1: N - 1 executions (100% commit rate)
+        level_2: 0 executions (bypassed entirely by if (curr_val < 0) filter)
+      contention: zero lock contention across Level 2
+    must_preserve: true
+    phase_execution:
+      level_1: N - 1 executions (100% commit rate)
+      level_2: 0 executions (bypassed entirely by if (curr_val < 0) filter)
+  source_binding:
+    status: revision_reported_matching
+    reported_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    reference_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  evidence_status: reported_not_reproduced
+requirements:
+- id: term-graph
+  description: Supply and map an actual task graph with return wiring and data-dependent
+    traversal.
+  scope: Specific task and sparse data structure
+  claim_refs:
+  - term-read
+  - term-write
+  verification: required
+- id: term-partitions
+  description: Ensure every conflicting task/host access obeys partition acquisition
+    and release; wait for acquire notification.
+  scope: Local engine and participating core
+  claim_refs:
+  - term-order
+  - term-host
+  verification: required
+- id: term-global
+  description: Use shared-memory synchronization for conflicts across cores/engines.
+  scope: Shared writable data structures
+  claim_refs:
+  - term-host
+  verification: required
+- id: term-atomics
+  description: Establish memory-unit and L2 CAS support.
+  scope: CAS primitive in this configuration
+  claim_refs:
+  - term-write
+  - term-deferred
+  verification: required
+requirement_status: not_discharged
+parameter_contract:
+- id: task_rob_entries
+  unit: entries
+  state: fixed_reference
+  value: 256
+  domain: null
+  claim_refs:
+  - term-config
+  notes: Table II reference.
+- id: partitions
+  unit: partitions
+  state: fixed_reference
+  value: 32
+  domain: null
+  claim_refs:
+  - term-config
+  notes: Table II reference.
+- id: partition_buffer_entries
+  unit: entries
+  state: fixed_reference
+  value: 16
+  domain: null
+  claim_refs:
+  - term-config
+  notes: Per-partition reference capacity.
+- id: fabric_rows
+  unit: PE rows
+  state: fixed_reference
+  value: 4
+  domain: null
+  claim_refs:
+  - term-config
+  notes: Reference spatial fabric.
+- id: fabric_columns
+  unit: PE columns
+  state: fixed_reference
+  value: 8
+  domain: null
+  claim_refs:
+  - term-config
+  notes: Reference spatial fabric.
+selected_configuration: {}
+mechanism_context:
+  annotations:
+  - id: unrecorded-buffering
+    kind: buffering
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-reordering
+    kind: reordering
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-issue_policy
+    kind: issue_policy
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-dependency_tracking
+    kind: dependency_tracking
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-completion
+    kind: completion
+    status: unknown
+    description: null
+    claim_refs: []
+  missing_kinds:
+  - buffering
+  - coalescing
+  - reordering
+  - issue_policy
+  - dependency_tracking
+  - completion
+  performance_hypotheses: []
+  scope: Curated descriptions and explicit unknowns; no cycle model or inferred physical
+    topology.
+execution_plan:
+  rmw: potential_offload_only_after_CAS_mapping_proof
+  source_unchanged: true
+  queue_updates: Retain discovery and append semantics; no rewrite has been generated.
+review_questions:
+- id: placement
+  owner: Peter
+  question: Confirm the matching source statements, region, phase and allowable replacement
+    scope. Manual bindings are proposals; profiling placement is not confirmed.
+- id: abi
+  owner: Peter/Eric
+  question: Specify exact operands, index arithmetic, masks/produced lengths, concrete
+    types, invocation and completion API for each chosen operation or sequence.
+- id: legality
+  owner: Peter/Eric
+  question: Discharge ownership, numeric domains, mutable-load freshness, ordering,
+    repeated-target/concurrency and result validity requirements. Preserve CAS success
+    and queue side effects.
+- id: mechanisms
+  owner: Eric
+  question: Add located internal buffering/coalescing/reordering/issue/dependency/completion
+    details and conditions limiting performance.
+- id: composition
+  owner: Josh/Eric
+  question: Establish whether related requests can share one legal mapping; the workload
+    group and interface view do not prove combined execution.
+- id: implementation
+  owner: Yan-Ru
+  question: After Peter's spec is agreed, choose or synthesize an implementation and
+    verify the rewritten kernel against the frozen correctness oracle.
+readiness:
+  description_generated: true
+  concrete_abi_agreed: false
+  mapping_requirements_discharged: false
+  implementation_generated: false
+  correctness_verified: false
+  performance_evaluated: false

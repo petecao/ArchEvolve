@@ -2,6 +2,8 @@
 
 Updated for the September 24, 2026 meeting. These are proposed system instructions for the future hardware agent; no agent runtime is wired to them yet.
 
+October 1 handoff update: provide natural-language intrinsic descriptions with the diagrams. Use the proposed fields in `docs/intrinsic-handoff-format.md`; concrete signatures remain Peter/Eric's review task. Accept located internal scheduling/mechanism annotations, retain absent details as unknown, and distinguish applicability from performance. Group related statements only from explicit context/dependencies, preserving unmatched updates and other side effects. A group is not evidence of legal hardware composition. Compare requested designs against the same workload independently of shortlist budget. The offline implementation projects contracts into drafts without executing this prompt.
+
 September 30 implementation note: `python -m archevolve` defaults to offline operation-evidence lookup against Eric's merged `catalog/hardware-v0.1.yaml`. It does not execute this prompt or make API calls. The old family seed is historical. The normalizer preserves Peter's reports and methodology/profiling scopes; `hardware_implication` prose remains reported hypotheses, not instructions.
 
 ## Role and handoffs

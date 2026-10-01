@@ -1,0 +1,563 @@
+id: gapbs_bfs_top_down_step_fully_connected--prodigy-hpca2021--read_assist
+catalog_entry: prodigy-hpca2021:read_assist
+status: needs_evidence
+catalog_design_id: prodigy-hpca2021
+catalog_design_revision: HPCA2021-peer-reviewed-manuscript
+catalog_record_kind: design_version
+candidate_scope: read_assist
+rationale: Source-scoped operation matches for this workload. This is an interface
+  exploration option, not a composed accelerator, legal rewrite, or performance winner.
+target_access_ids:
+- access-02
+- access-03
+- access-04
+target_statement_ids:
+- bfs-td-neighbor
+- bfs-td-parent-read
+- bfs-td-row-bounds
+request_groups:
+- id: bfs-td-traversal-and-discovery
+  description: Source dependency chain from frontier load through row bounds and neighbor
+    traversal to parent read and conditional CAS. The successful CAS also controls
+    an explicit parent store and queue append. This context group is a manual proposal,
+    not a proved single-accelerator mapping.
+  request_ids:
+  - access-01-read
+  - access-02-read
+  - access-03-read
+  - access-04-read
+  - access-04-update
+  statement_ids:
+  - bfs-td-frontier
+  - bfs-td-row-bounds
+  - bfs-td-neighbor
+  - bfs-td-parent-read
+  - bfs-td-parent-cas
+  - bfs-td-parent-store
+  - bfs-td-queue-append
+  dependencies:
+  - from_statement: bfs-td-frontier
+    to_statement: bfs-td-row-bounds
+  - from_statement: bfs-td-row-bounds
+    to_statement: bfs-td-neighbor
+  - from_statement: bfs-td-neighbor
+    to_statement: bfs-td-parent-read
+  - from_statement: bfs-td-frontier
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-neighbor
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-parent-read
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-parent-cas
+    to_statement: bfs-td-parent-store
+  - from_statement: bfs-td-parent-cas
+    to_statement: bfs-td-queue-append
+  context_statements:
+  - id: bfs-td-frontier
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 240
+      end_line: 240
+    code: NodeID u = queue.shared[i];
+    operation: read
+    access_expression: queue.shared[i]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids: []
+    interpretation: Sequential frontier read in logical i order; thread interleaving
+      depends on execution.
+  - id: bfs-td-row-bounds
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 241
+      end_line: 241
+    code: for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+    operation: read
+    access_expression: VertexOffsets[u] and VertexOffsets[u + 1]
+    data_type: SGOffset = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-frontier
+    interpretation: Two offset accesses indexed by a loaded vertex ID; the +1 is index
+      arithmetic.
+  - id: bfs-td-neighbor
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 242
+      end_line: 242
+    code: NodeID v = g.out_neighbors_[j];
+    operation: read
+    access_expression: g.out_neighbors_[j]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-row-bounds
+    interpretation: Sequential within each adjacency segment; transitions between
+      segments are data-dependent.
+  - id: bfs-td-parent-read
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 243
+      end_line: 243
+    code: NodeID curr_val = parent[v];
+    operation: read
+    access_expression: parent[v]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-neighbor
+    interpretation: Indirect read indexed by the loaded neighbor ID.
+  - id: bfs-td-parent-cas
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 247
+      end_line: 247
+    code: if (compare_and_swap(parent[v], curr_val, u)) {
+    operation: read_modify_write
+    access_expression: compare_and_swap(parent[v], curr_val, u)
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-frontier
+    - bfs-td-neighbor
+    - bfs-td-parent-read
+    interpretation: Subtype is compare-and-swap, guarded by curr_val < 0; successful
+      discovery controls queue insertion.
+  - id: bfs-td-parent-store
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 248
+      end_line: 248
+    code: parent[v] = u;
+    operation: write
+    access_expression: parent[v] = u
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-parent-cas
+    interpretation: Explicit store inside the successful CAS branch; preserve in any
+      analysis of side effects.
+  - id: bfs-td-queue-append
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 249
+      end_line: 249
+    code: lqueue.push_back(v);
+    operation: call_with_side_effects
+    access_expression: lqueue.push_back(v)
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-parent-cas
+    interpretation: Thread-local queue buffering followed by lqueue.flush(); not a
+      plain target-array access.
+  basis: explicit_manual_source_group
+  hardware_composition_status: not_established
+  covered_request_ids:
+  - access-02-read
+  - access-03-read
+  - access-04-read
+  uncovered_request_ids:
+  - access-01-read
+  - access-04-update
+  joint_execution_status: requires_mapping_and_composition_review
+mechanism_context:
+  annotations:
+  - id: unrecorded-buffering
+    kind: buffering
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-reordering
+    kind: reordering
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-issue_policy
+    kind: issue_policy
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-dependency_tracking
+    kind: dependency_tracking
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-completion
+    kind: completion
+    status: unknown
+    description: null
+    claim_refs: []
+  missing_kinds:
+  - buffering
+  - coalescing
+  - reordering
+  - issue_policy
+  - dependency_tracking
+  - completion
+  performance_hypotheses: []
+  scope: Curated descriptions and explicit unknowns; no cycle model or inferred physical
+    topology.
+operation_options:
+- operation:
+    id: prod-prefetch
+    operation: read
+    subtype: prefetch
+    execution_role: assist
+    address_patterns:
+    - indirect
+    - ranged_indirect
+    - chained_indirect
+    support: paper_specified
+    claim_refs:
+    - prod-dig
+    - prod-prefetch
+    result:
+      form: cache_fill_hint
+      old_value: not_applicable
+      validity: CPU demand access remains authoritative; sequences may be dropped.
+      claim_refs:
+      - prod-dig
+      - prod-prefetch
+    ordering:
+      scope: nonbinding cache requests
+      description: No program-operation ordering or required-value delivery supplied
+        by prefetch sequence order.
+      claim_refs:
+      - prod-dig
+      - prod-prefetch
+    completion:
+      event: Prefetch fill may trigger another traversal; no software operation-completion
+        event.
+      visibility: Cache residency only; no update completion or immutable-memory guarantee.
+      claim_refs:
+      - prod-dig
+      - prod-prefetch
+    datatype_notes: Node data_size and address interpretation configured in DIG; no
+      universal width domain asserted.
+    limitations:
+    - This cannot substitute for an architectural load executor or CPU CAS.
+    realization:
+      kind: documented_sequence
+      description: Hardware follows software DIG edges over multiple nonbinding prefetch
+        requests; this is a prefetch algorithm, not a demand-gather instruction.
+      claim_refs:
+      - prod-dig
+      - prod-prefetch
+  catalog_status: needs_evidence
+  missing_capability_evidence:
+  - index_width_bits
+  - payload_types
+  matched_requests:
+  - id: access-02-read
+    access_id: access-02
+    array: VertexOffsets
+    purpose: read
+    operation: read
+    subtype: gather
+    address_pattern: indirect
+    payload_type: int32
+    index_width_bits: 32
+    require_old_value: false
+    mapping_basis: Reported loaded-index expression; near-unit measured distance does
+      not turn this into a proven stream.
+    mapping_status: proposed_from_reported_pattern
+    missing_workload_evidence: []
+    statement_ids:
+    - bfs-td-row-bounds
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 241
+      end_line: 241
+    statement_binding_status: manual_source_proposal
+    mutable_target: false
+  - id: access-03-read
+    access_id: access-03
+    array: g.out_neighbors_
+    purpose: read
+    operation: read
+    subtype: gather
+    address_pattern: ranged_indirect
+    payload_type: int32
+    index_width_bits: 32
+    require_old_value: false
+    mapping_basis: Reported CSR row bounds plus segmented neighbor traversal; range
+      realization/continuation still needs mapping proof.
+    mapping_status: proposed_from_reported_pattern
+    missing_workload_evidence: []
+    statement_ids:
+    - bfs-td-neighbor
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 242
+      end_line: 242
+    statement_binding_status: manual_source_proposal
+    mutable_target: false
+  - id: access-04-read
+    access_id: access-04
+    array: parent
+    purpose: read
+    operation: read
+    subtype: gather
+    address_pattern: indirect
+    payload_type: int32
+    index_width_bits: 32
+    require_old_value: false
+    mapping_basis: Reported loaded-index expression; near-unit measured distance does
+      not turn this into a proven stream.
+    mapping_status: proposed_from_reported_pattern
+    missing_workload_evidence: []
+    statement_ids:
+    - bfs-td-parent-read
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 243
+      end_line: 243
+    statement_binding_status: manual_source_proposal
+    mutable_target: true
+missing_evidence:
+- index_width_bits
+- payload_types
+source_evidence:
+  claims:
+    prod-config:
+      source_refs:
+      - prodigy-paper
+      locator: PDF pp.9–10 §VI-A, Fig.12
+      statement: The study sweeps 4, 8, 16 and 32 PFHRs and chooses 16 for its reference
+        design.
+      evidence_kind: paper_specification
+      limitations:
+      - Explored values are not a proven runtime tuning interface or legal range.
+    prod-dig:
+      source_refs:
+      - prodigy-paper
+      locator: PDF pp.5–7 §§III-A–B, Figs.5–9
+      statement: Software registers node base/bounds/element size, traversal edges
+        and trigger edges in a Data Indirection Graph. Runtime stores configure prefetcher
+        tables; DIG describes data relationships rather than an offloaded instruction
+        stream.
+      evidence_kind: paper_specification
+      limitations: []
+    prod-prefetch:
+      source_refs:
+      - prodigy-paper
+      locator: PDF p.3 introduction and pp.7–9 §§IV-B–G, Figs.10–11
+      statement: Demand loads in trigger regions and prefetch fills advance nonbinding
+        L1D prefetch sequences through single-valued and ranged indirections. PFHRs
+        track sequences; lagging sequences may be discarded.
+      evidence_kind: paper_specification
+      limitations:
+      - Cache fills are assistance, not architecturally returned load values or update
+        completion.
+      - The paper leaves a general prefetch throttling mechanism to future work.
+  sources:
+    prodigy-paper:
+      title: 'Prodigy: Improving the Memory Latency of Data-Indirect Irregular Workloads
+        Using Hardware-Software Co-Design'
+      edition: Edinburgh peer reviewed manuscript with repository cover; HPCA 2021
+      url: https://doi.org/10.1109/HPCA51647.2021.00061
+      locator_basis: One-based downloaded PDF pages including repository cover; manuscript
+        page = PDF page - 1.
+      sha256: dc161d285a43029f7dbdcb2d6018527ab9ede4d7ae5bab56a1fa3178e239a084
+      authors:
+      - Nishil Talati
+      - Kyle May
+      - Armin Behroozi
+      - Yifan Yang
+      - Konstantinos Kaszyk
+      - Christos Vasiladiotis
+      - Tarun Verma
+      - Lu Li
+      - Brandon Nguyen
+      - Jiawei Sun
+      - John M. Morton
+      - Amir Ahmadi
+      - Todd Austin
+      - Michael F. P. O’Boyle
+      - Scott Mahlke
+      - Trevor Mudge
+      - Ronald Dreslinski
+      venue: HPCA 2021
+      year: 2021
+      doi: 10.1109/HPCA51647.2021.00061
+      document_type: peer_reviewed_manuscript
+      download_url: https://www.pure.ed.ac.uk/ws/files/186129338/Prodigy_TALATI_DOA02122020_AFV.pdf
+      reviewed_on: '2026-09-29'
+      provenance_notes:
+      - '15-page PDF: repository cover plus 14 manuscript pages. Cover generated for
+        retrieval; hash binds this download, not all repository responses. Author
+        Michigan download returned HTTP 403; alternate institutional copy retrieved
+        lawfully.'
+      retrieval_date: '2026-09-29'
+requirements:
+- id: prod-description
+  description: Register valid nodes, bounds, sizes, traversal edges and trigger edges
+    for the actual workload.
+  scope: DIG and each participating array
+  claim_refs:
+  - prod-dig
+  verification: required
+- id: prod-context
+  description: Preserve the correct per-thread prefetcher context; establish trigger
+    partitioning for parallel use.
+  scope: Private per-core prefetcher and context switches
+  claim_refs:
+  - prod-prefetch
+  verification: required
+requirement_status: not_discharged_by_retrieval
+limitations:
+- No performance ranking against other catalog records.
+- No global ban on CPU writes is imposed on this read-assistance mechanism.
+parameter_contract:
+- id: pfhr_entries
+  unit: entries
+  state: fixed_reference
+  value: 16
+  domain: null
+  claim_refs:
+  - prod-config
+  notes: Chosen reference; evaluated alternatives 4, 8 and 32 are sensitivity experiments,
+    not a runtime knob domain.
+selected_configuration: {}
+unresolved_requirements:
+- Received values are reported; raw profiling logs, build flags, dataset identity
+  and per-run scope have not been bound/verified by this prototype.
+- Retain conditional CAS for the kernel. A reported zero-execution second phase does
+  not remove the discovery-phase update.
+- Array-level features are usable for exploratory retrieval; exact statement IDs and
+  profiled-source locations are still absent.
+- Establish workload mapping, ownership/aliasing, concurrency, numeric domains, result
+  validity and completion/visibility; read labels do not imply immutable memory.
+- The catalog is not a physical building-block library; these operation options have
+  not been proved composable.
+hardware:
+  blocks:
+  - id: prod-prefetch
+    component_ref: prodigy-hpca2021:prod-prefetch
+    component_revision: HPCA2021-peer-reviewed-manuscript
+    view_kind: software_operation_contract_not_physical_block
+    function: read / prefetch [assist; paper_specified]
+    input_contract_scope: design_wide_catalog_interface_not_an_operand_signature
+    inputs:
+    - id: software_supplies
+      payload: 'Design-wide: Data Indirection Graph with array layout, dependency
+        edges and triggers; no accelerator instruction stream.'
+      full_payload_contract: Data Indirection Graph with array layout, dependency
+        edges and triggers; no accelerator instruction stream.
+      type: null
+      element_bytes: null
+      endpoint_role: host-facing
+    outputs:
+    - id: catalog_result
+      payload: cache_fill_hint (assistance only; not the requested program result)
+      type: null
+      element_bytes: null
+      endpoint_role: host-facing
+    behavior:
+      ordering: No program-operation ordering or required-value delivery supplied
+        by prefetch sequence order.
+      completion: Prefetch fill may trigger another traversal; no software operation-completion
+        event.
+      visibility: Cache residency only; no update completion or immutable-memory guarantee.
+      result_validity: CPU demand access remains authoritative; sequences may be dropped.
+    parameters: []
+    reference_parameters:
+    - id: pfhr_entries
+      unit: entries
+      state: fixed_reference
+      value: 16
+      domain: null
+      claim_refs:
+      - prod-config
+      notes: Chosen reference; evaluated alternatives 4, 8 and 32 are sensitivity
+        experiments, not a runtime knob domain.
+    unknown_parameters: []
+    operation_contract:
+      id: prod-prefetch
+      operation: read
+      subtype: prefetch
+      execution_role: assist
+      address_patterns:
+      - indirect
+      - ranged_indirect
+      - chained_indirect
+      support: paper_specified
+      claim_refs:
+      - prod-dig
+      - prod-prefetch
+      result:
+        form: cache_fill_hint
+        old_value: not_applicable
+        validity: CPU demand access remains authoritative; sequences may be dropped.
+        claim_refs:
+        - prod-dig
+        - prod-prefetch
+      ordering:
+        scope: nonbinding cache requests
+        description: No program-operation ordering or required-value delivery supplied
+          by prefetch sequence order.
+        claim_refs:
+        - prod-dig
+        - prod-prefetch
+      completion:
+        event: Prefetch fill may trigger another traversal; no software operation-completion
+          event.
+        visibility: Cache residency only; no update completion or immutable-memory
+          guarantee.
+        claim_refs:
+        - prod-dig
+        - prod-prefetch
+      datatype_notes: Node data_size and address interpretation configured in DIG;
+        no universal width domain asserted.
+      limitations:
+      - This cannot substitute for an architectural load executor or CPU CAS.
+      realization:
+        kind: documented_sequence
+        description: Hardware follows software DIG edges over multiple nonbinding
+          prefetch requests; this is a prefetch algorithm, not a demand-gather instruction.
+        claim_refs:
+        - prod-dig
+        - prod-prefetch
+    software_interface:
+      software_supplies: Data Indirection Graph with array layout, dependency edges
+        and triggers; no accelerator instruction stream.
+      invocation: Runtime stores configure memory-mapped tables; demand accesses and
+        fills drive prefetching.
+      outputs: Nonbinding cache fills; CPU still executes the program and its updates.
+      claim_refs:
+      - prod-dig
+      - prod-prefetch
+    missing_capability_evidence:
+    - index_width_bits
+    - payload_types
+    requested_payload_types:
+    - int32
+    requested_index_width_bits:
+    - 32
+  connections: []
+  view_notice: Independent catalog operation interfaces. No physical port widths,
+    component composition or unlisted connections are established by this drawing.
+execution_plan:
+  rmw: retain_original_CPU_update
+  source_unchanged: true
+  queue_updates: Retain discovery and append semantics; no rewrite has been generated.
+software_handoff:
+  intrinsic_spec_owner: Peter
+  interface:
+    software_supplies: Data Indirection Graph with array layout, dependency edges
+      and triggers; no accelerator instruction stream.
+    invocation: Runtime stores configure memory-mapped tables; demand accesses and
+      fills drive prefetching.
+    outputs: Nonbinding cache fills; CPU still executes the program and its updates.
+    claim_refs:
+    - prod-dig
+    - prod-prefetch
+  boundary_notes: Use the exact operation result/validity/ordering/completion contracts
+    and source requirements. Assist is not execute; old values are not CAS; type domains
+    do not prove valid indices. No C signature is synthesized here.

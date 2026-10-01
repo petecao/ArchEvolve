@@ -214,6 +214,16 @@ def render_candidate(request: dict, candidate: dict) -> str:
                              f"{display(port.get('type'))}; {display(port.get('element_bytes'))} B/element", role)
                 lines.append(f'    {node}["{body}"]:::{style}')
         lines.append("  end")
+    if candidate.get("mechanism_context"):
+        # Descriptions are evidence annotations, not fabricated blocks or edges.
+        from textwrap import shorten
+        context = candidate["mechanism_context"]
+        details = ["Internal mechanism annotations (no wiring implied)"]
+        details += [m["kind"] + ": " + shorten(m["description"], width=200, placeholder=" ... [full description in YAML]")
+                    for m in context["annotations"] if m["status"] == "described"]
+        if context["missing_kinds"]:
+            details.append("Internal detail unrecorded: " + ", ".join(context["missing_kinds"]))
+        lines.append(f'  mechanism_info["{label(*details)}"]:::annotation')
     for edge in candidate["hardware"].get("connections", []):
         source = ports[(edge["from_block"], edge["from_port"])]
         target = ports[(edge["to_block"], edge["to_port"])]

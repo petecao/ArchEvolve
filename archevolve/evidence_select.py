@@ -9,6 +9,8 @@ import re
 from textwrap import shorten
 
 from archevolve.hardware_catalog import query_catalog, validate_catalog
+from archevolve.mechanisms import mechanism_context
+from archevolve.workload_context import candidate_groups, request_groups, request_statement_context
 from tools.render_mermaid import RequestError, validate_request
 
 
@@ -38,6 +40,7 @@ def capability_requests(case):
                          "payload_type":dtype, "index_width_bits":index_bits, "require_old_value":False,
                          "mapping_basis":basis, "mapping_status":"proposed_from_reported_pattern",
                          "missing_workload_evidence":missing,
+                         **request_statement_context(case, access["array"], purpose),
                          "mutable_target":access["operation"] == "read_modify_write"})
 
     for access in case["accesses"]:
@@ -87,6 +90,8 @@ def claim_closure(catalog, design, options):
     collect(design["interface"])
     collect(design["requirements"])
     collect(design["parameters"])
+    collect(design.get("internal_mechanisms", []))
+    collect(design.get("performance_hypotheses", []))
     for option in options: collect(option["operation"])
     sources = set(design["source_refs"])
     for ref in refs: sources.update(catalog["claims"][ref]["source_refs"])
@@ -131,6 +136,7 @@ def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_c
     if type(max_candidates) is not int or max_candidates < 1:
         raise RequestError("max_candidates must be at least 1, including the CPU comparison.")
     requests, gaps = capability_requests(case)
+    workload_groups = request_groups(case, requests)
     designs = {d["id"]:d for d in catalog["designs"]}
     groups, trace = {}, []
     for request in requests:
@@ -196,7 +202,10 @@ def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_c
             "id":case["case_id"]+"--"+design["id"]+"--"+bucket, "catalog_entry":design["id"]+":"+bucket,
             "status":status, "catalog_design_id":design["id"], "catalog_design_revision":design["revision"], "catalog_record_kind":design["record_kind"],
             "candidate_scope":bucket, "rationale":"Source-scoped operation matches for this workload. This is an interface exploration option, not a composed accelerator, legal rewrite, or performance winner.",
-            "target_access_ids":sorted({r["access_id"] for o in options for r in o["matched_requests"]}), "target_statement_ids":[],
+            "target_access_ids":sorted({r["access_id"] for o in options for r in o["matched_requests"]}),
+            "target_statement_ids":sorted({sid for o in options for r in o["matched_requests"] for sid in r["statement_ids"]}),
+            "request_groups":candidate_groups(workload_groups, options),
+            "mechanism_context":mechanism_context(design),
             "operation_options":deepcopy(options), "missing_evidence":missing,
             "source_evidence":claim_closure(catalog, design, options),
             "requirements":deepcopy(design["requirements"]), "requirement_status":"not_discharged_by_retrieval",
@@ -216,7 +225,8 @@ def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_c
         "representation":"source_scoped_operation_interface_views", "input_ref":case["input_ref"], "input_sha256":case["input_sha256"],
         "input_revision":case["source_binding"]["reported_revision"], "catalog_ref":catalog_ref, "catalog_revision":catalog["revision"], "catalog_sha256":catalog_digest,
         "kernel_id":case["case_id"], "capability_requests":requests,
-        "workload_summary":{key:deepcopy(case.get(key)) for key in ("kernel", "source_binding", "evidence_status", "rmw", "profiling_provenance", "frontier_evolution_profile", "profiling_context", "reported_counters", "methodology")},
+        "request_groups":workload_groups,
+        "workload_summary":{key:deepcopy(case.get(key)) for key in ("kernel", "source_binding", "source_context", "evidence_status", "rmw", "profiling_provenance", "frontier_evolution_profile", "profiling_context", "reported_counters", "methodology")},
         "interpretation_notes":["Offline evidence retrieval and explicit exploration ordering; no LLM or evaluator calls.",
                                 "Each box is a catalog operation interface, not an inferred physical component. Unconnected operation options are not a proved composition.",
                                 "Reference sizes are preserved as references, not chosen tuning values. Unknown domains stay unknown.",

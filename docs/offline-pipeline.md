@@ -1,6 +1,6 @@
 # Offline forward-path prototype
 
-The pipeline accepts the received TDStep reports, normalizes them, queries Eric's source-scoped hardware catalog, emits candidate hardware-request YAML, and generates Mermaid diagrams. The current examples use **report revision v1.2**, whose `schema_version` remains `1.1`; older v1.1 reports still work. It uses **explicit rules with zero LLM/API calls**. It does not compile a kernel, run perf, rewrite code, evaluate hardware, or prove a speedup.
+The pipeline accepts the received TDStep reports, normalizes them, queries Eric's source-scoped hardware catalog, emits candidate hardware-request YAML, and generates Mermaid diagrams. Since October 1 it also generates per-candidate draft intrinsic-description packages and same-request comparisons; see [the handoff format](intrinsic-handoff-format.md). The current examples use **report revision v1.2**, whose `schema_version` remains `1.1`; older v1.1 reports still work. It uses **explicit rules with zero LLM/API calls**. It does not compile a kernel, run perf, rewrite code, evaluate hardware, or prove a speedup.
 
 ## Run
 
@@ -40,6 +40,8 @@ The [run overview](../runs/bfs-hardware-v0.1/README.md) links to each case. Each
 - `hardware-request.yaml`: source-scoped operation options, exact contracts/requirements, target-access IDs, reference/open/unknown parameters, and abstract interface views.
 - `selection-trace.yaml`: complete capability queries, matches, exclusions, conditions and selected/deferred design groups.
 - `diagrams/`: Mermaid files, report, request snapshot, and manifest.
+- `handoffs/`: one candidate package with a readable intrinsic description, draft YAML, full candidate evidence and interface/mechanism Mermaid views.
+- `hardware-comparison.yaml` and `.md`: same-request comparison of selected designs or explicit `--compare-design` entries, independent of selection budget.
 
 The run records hashes of inputs, catalog, methodology when supplied, generated request, and pipeline code. Repeated execution with unchanged inputs/configuration produces the same run ID and artifacts. Each workload is processed independently; there is no pooling of sparse/dense measurements.
 
@@ -57,7 +59,7 @@ This is an exploration shortlist. The CPU has not been measured here, and no sel
 1. **Source identity and widths are reconciled in v1.2.** Both current inputs declare revision `e4fc4afdf894f295442cef3604667a469fab8e62` and 4-byte `SGOffset`, matching our reference. This is a reported revision match, not proof that a binary/run used those bytes. The older v1.1 mismatch remains historical.
 2. **Profile evidence still needs runtime binding.** Sparse v1.2 now supplies compiler flags, machine details, graph identity, and a command. These are retained rather than described as absent. Raw logs, collection/ROI boundaries, source vertex/trial IDs, and linkage between the per-level traversal and the command's five trials remain unverified. The dense report has no corresponding `profiling_provenance` or `frontier_evolution_profile` section, and those fields stay null.
 3. **Metric labels and conversions.** Peter has now supplied the instrumentation/formulas. The percentages measure adjacent-index proximity within frontiers/neighbor rows, and footprints are calculated array capacities. Their interpretation is resolved; exact cache-block membership and hit rates were not measured by these snippets. Several sparse-table values match decimal MB despite the stated binary convention. The prototype preserves the originals, derives canonical bytes with explicit units, and records that unit inconsistency. See [the methodology review](measurement-methodology-review.md).
-4. **Statement mapping.** The reports describe arrays/expressions but do not identify exact statements in the profiled source. The adapter emits stable access IDs within each case and leaves statement IDs empty. Our earlier source observations remain reference material, not a substitute for this binding.
+4. **Statement mapping.** The reports describe arrays/expressions but do not identify exact statements in the profiled source. By default statement IDs remain empty. Optional `--source-context` binds matching manual source proposals and dependencies, with explicit provenance; Peter/Yan-Ru's confirmation of profiled placement remains pending.
 
 The dense report correctly distinguishes discovery-phase CAS from later reads. The adapter retains the kernel's conditional CAS even where a stream is described as `cached_streaming_read`. The new evidence adapter distinguishes a read of mutable parent state from its CAS, querying each separately. A read match does not prove immutable memory. A Terminus CAS option is retained as conditional evidence, while DX100 artifact CAS is excluded. No early-exit transformation is proposed from observing zero discoveries so far. Resolved methodology interpretations remain visible in outputs but are no longer emitted as unanswered clarification requests.
 

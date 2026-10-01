@@ -123,6 +123,25 @@ def validate_catalog(catalog):
         references(design.get("mechanism_refs"), families, f"{where}.mechanism_refs", nonempty=True)
         references(design.get("source_refs"), sources, f"{where}.source_refs", nonempty=True)
         strings(design.get("limitations"), f"{where}.limitations")
+        # Optional meeting follow-up: explicit annotations, never capabilities
+        # inherited from a family or a promise of measured performance.
+        for mid, mechanism in indexed(design.get("internal_mechanisms", []), f"{where}.internal_mechanisms").items():
+            mw = f"{where}.internal_mechanisms.{mid}"
+            vocabulary(mechanism.get("kind"), {"buffering", "coalescing", "reordering", "issue_policy", "dependency_tracking", "completion", "other"}, f"{mw}.kind")
+            state = vocabulary(mechanism.get("status"), {"described", "unknown"}, f"{mw}.status")
+            refs = references(mechanism.get("claim_refs"), claims, f"{mw}.claim_refs", nonempty=state == "described")
+            if state == "described":
+                text(mechanism.get("description"), f"{mw}.description")
+                require(any(claims[c]["evidence_kind"] in {"paper_specification", "code_inspection"} for c in refs),
+                        f"{mw}: a described mechanism needs located paper/code evidence, not inference alone.")
+            else:
+                require(mechanism.get("description") is None and not refs, f"{mw}: unknown mechanisms must have null description and empty claims.")
+        for hid, hypothesis in indexed(design.get("performance_hypotheses", []), f"{where}.performance_hypotheses").items():
+            hw = f"{where}.performance_hypotheses.{hid}"
+            text(hypothesis.get("description"), f"{hw}.description")
+            strings(hypothesis.get("workload_conditions"), f"{hw}.workload_conditions", nonempty=True)
+            strings(hypothesis.get("limiting_factors"), f"{hw}.limiting_factors", nonempty=True)
+            references(hypothesis.get("claim_refs"), claims, f"{hw}.claim_refs", nonempty=True)
         interface = mapping(design.get("interface"), f"{where}.interface")
         for field in ("software_supplies", "invocation", "outputs"):
             text(interface.get(field), f"{where}.interface.{field}")
