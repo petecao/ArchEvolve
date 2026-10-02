@@ -1,10 +1,11 @@
 # Intrinsic Specification & Rewrite Contract: GAPBS BFS Top-Down Step
-**Document Version:** 1.0 (Draft 0.2 aligned)  
+**Document Version:** 1.1 (Draft 0.2 aligned, Catalog Rev 0.1.3)  
 **Author:** Peter (Pete Cao)  
 **Target Consumer:** Yan-Ru Jhou (Loop Rewrite & Profiling Agent)  
-**Upstream Sources:** Joshveer Grewal (`docs/peter-intrinsics-handoff.md`, `runs/bfs-hardware-v0.1/case-01/hardware-request.yaml`), Eric's Hardware Catalog (`catalog/hardware-v0.1.yaml`, revision 0.1.2)  
+**Upstream Sources:** Joshveer Grewal (`docs/peter-intrinsics-handoff.md`, `docs/maple-dx100-handoff.md`, `runs/bfs-maple-comparison-v0.1/`), Eric's Hardware Catalog (`catalog/hardware-v0.1.yaml`, revision 0.1.3)  
 **Target Kernel:** `gapbs_bfs_top_down_step` (`TDStep` in `benchmarks/gapbs/src/bfs.cc` @ revision `e4fc4afdf894f295442cef3604667a469fab8e62`)  
-**Associated Hardware Candidate:** Candidate 2 (`dx100-artifact-e4fc4af:read_execute`)
+**Primary Hardware Candidate:** Candidate 2 (`dx100-artifact-e4fc4af:read_execute`)  
+**Secondary Exploration Candidate:** Candidate 4 (`maple-isca2022:read_execute`, needs_evidence)
 
 ---
 
@@ -24,6 +25,12 @@ In the inspected DX100 benchmark artifact (`bfs.cc` lines 170–187), the parent
 
 ### 1.3 Active Acceleration Target: Candidate 2 (`dx100-artifact-e4fc4af:read_execute`)
 The loop rewrite will accelerate **read/gather traversal operations** using DX100 scratchpad tiles and the `RangeFuser` hardware engine, feeding pre-screened candidate vertices to the host CPU for atomic arbitration.
+
+### 1.4 Second Fetcher Comparison: MAPLE ISCA 2022 (`maple-isca2022`)
+Following Eric's catalog revision 0.1.3, MAPLE has been introduced as an alternative queue-backed indirect fetcher:
+* **DX100:** Uses scratchpad tiles (`tile0..7`) + hardware `RangeFuser`. Fully validated by code artifact `e4fc4af`. **Target for immediate rewrite.**
+* **MAPLE:** Uses circular FIFO queues + LIMA address generators (`LIMA_PRODUCE` / `CONSUME`). Does not have native multi-level CSR nested traversal (host must submit $[VertexOffsets[u], VertexOffsets[u+1])$ intervals). Its C-level MMIO driver ABI is currently marked `needs_evidence`.
+* **Guidance for Yan-Ru:** Proceed with DX100 implementation first. The intrinsic abstraction layer (Section 3) is structured so a MAPLE queue-consume backend can be plugged in once Eric confirms the MMIO register interface.
 
 ---
 
@@ -295,3 +302,5 @@ void TDStep_Accelerated(
 2. **Loop structure:** Preserve CPU atomic `compare_and_swap`. Do not attempt to offload CAS to hardware.
 3. **Guards:** Check `|V| < 1.07B`, `|E| < 1.07B`, and $|F| \ge 64$.
 4. **Verification:** Validate against `BFSVerifier` to guarantee identical BFS tree depth and edge reachability.
+5. **Future MAPLE Adapter:** If evaluating Candidate 4 (MAPLE queue fetcher), replace the tile loop with an MMIO queue producer/consumer loop (`maple_lima_produce` / `maple_consume`), keeping the identical CPU CAS arbitration block.
+
