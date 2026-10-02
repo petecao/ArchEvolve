@@ -45,9 +45,10 @@ sources:
     - Static inspection only; no RTL simulation, synthesis or runtime validation performed.
   dx100-paper:
     title: 'DX100: A Programmable Data Access Accelerator for Indirection'
-    edition: arXiv:2505.23073v2
+    edition: ISCA 2025 author version, arXiv:2505.23073v2 (2 June 2025)
     url: https://arxiv.org/abs/2505.23073v2
-    locator_basis: One-based PDF pages; Terminus printed page = PDF page + 1232.
+    locator_basis: Printed paper pages (18-page PDF), sections and figures; author edition of ISCA 2025
+      work.
     sha256: ec18bdc585f32e3da5c0fd467e686dd2137b3db88d4c327d510509213e7c44a3
     authors:
     - Alireza Khadem
@@ -66,10 +67,12 @@ sources:
     doi: 10.1145/3695053.3731015
     document_type: versioned_preprint
     download_url: https://arxiv.org/pdf/2505.23073v2
-    reviewed_on: '2026-09-29'
+    reviewed_on: '2026-10-02'
     provenance_notes:
     - Published title omits A after the colon. Reused local PDF; initial acquisition date unknown. Current
       arXiv landing rechecked; v2 is still latest in retrieved page.
+    - Mechanism sections independently inspected from hash-matched cached PDF. Publisher fulltext was not
+      independently matched; arXiv is an edition, not a separate eligible conference publication.
     retrieval_date: 2026-09-29 review/reuse; original acquisition unknown unless noted
   terminus-paper:
     title: 'Terminus: A Programmable Accelerator for Read and Update Operations on Sparse Data Structures'
@@ -320,6 +323,54 @@ sources:
     document_type: source_code
     reviewed_on: '2026-09-29'
     retrieval_date: 2026-09-29 review/reuse; original acquisition unknown unless noted
+  dx100-tables-header:
+    title: src/mem/MAA/Tables.hh
+    edition: e4fc4afdf894f295442cef3604667a469fab8e62
+    url: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/Tables.hh
+    locator_basis: One-based lines and named functions at pinned public commit; supplemental model evidence.
+    sha256: 5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43
+    document_type: source_code
+    reviewed_on: '2026-10-02'
+    retrieval_date: Preexisting corpus reused; original acquisition unknown
+    provenance_notes:
+    - Cached bytes independently hash-checked and exact mechanism locators inspected on 2026-10-02. Not
+      authenticated to the paper evaluation or private/current virtualization.
+  dx100-maa-header:
+    title: src/mem/MAA/MAA.hh
+    edition: e4fc4afdf894f295442cef3604667a469fab8e62
+    url: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/MAA.hh
+    locator_basis: One-based lines and named functions at pinned public commit; supplemental model evidence.
+    sha256: fbf6a8bf8d9bc47b218afca6ea64d5ea1728bdac6754814aa83d4b7465366419
+    document_type: source_code
+    reviewed_on: '2026-10-02'
+    retrieval_date: Preexisting corpus reused; original acquisition unknown
+    provenance_notes:
+    - Cached bytes independently hash-checked and exact mechanism locators inspected on 2026-10-02. Not
+      authenticated to the paper evaluation or private/current virtualization.
+  dx100-cache-port:
+    title: src/mem/MAA/CacheSidePort.cc
+    edition: e4fc4afdf894f295442cef3604667a469fab8e62
+    url: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/CacheSidePort.cc
+    locator_basis: One-based lines and named functions at pinned public commit; supplemental model evidence.
+    sha256: 09d9df038ffde8b919b6ee3e0bfe7123f6d63e7ef38f058f4f22c2a4e1f92362
+    document_type: source_code
+    reviewed_on: '2026-10-02'
+    retrieval_date: Preexisting corpus reused; original acquisition unknown
+    provenance_notes:
+    - Cached bytes independently hash-checked and exact mechanism locators inspected on 2026-10-02. Not
+      authenticated to the paper evaluation or private/current virtualization.
+  dx100-memory-port:
+    title: src/mem/MAA/MemSidePort.cc
+    edition: e4fc4afdf894f295442cef3604667a469fab8e62
+    url: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/MemSidePort.cc
+    locator_basis: One-based lines and named functions at pinned public commit; supplemental model evidence.
+    sha256: cb944fd310e4139fb94103810d1c46b13623b9cb08cdafb867d187d5c8b9efc3
+    document_type: source_code
+    reviewed_on: '2026-10-02'
+    retrieval_date: Preexisting corpus reused; original acquisition unknown
+    provenance_notes:
+    - Cached bytes independently hash-checked and exact mechanism locators inspected on 2026-10-02. Not
+      authenticated to the paper evaluation or private/current virtualization.
 claims:
   maple-api:
     source_refs:
@@ -888,6 +939,267 @@ claims:
       fix.
     - The range check applies after address computation; it does not by itself prove that a wrapped product
       still denotes the intended element.
+  dx-internal-p2:
+    source_refs:
+    - dx100-paper
+    locator: 'dx100-paper: §3.2 pp.4–5; Fig.4'
+    statement: Fill translates virtual addresses, decodes CH/RA/BG/BA/RO/CO and WO, groups rows by bank
+      slice, and links all target words in a column to their original iteration.
+    evidence_kind: paper_specification
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - ISCA 2025 author edition; publisher fulltext not independently matched.
+  dx-internal-p3:
+    source_refs:
+    - dx100-paper
+    locator: 'dx100-paper: §3.2 p.4; Fig.4 p.5'
+    statement: Figure 4 has one slice per CH×RA×BG×BA; 64 associative row slots with V/S/RO; up to 8 column
+      slots per row with V/S/H/CO/Tail i; Word Table has TILE entries with V/WO/Previous i. Capacities are
+      depicted design choices, not a universal ISA constraint. Column is the response cache-line/burst access
+      unit here, not an individual word.
+    evidence_kind: paper_specification
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - ISCA 2025 author edition; publisher fulltext not independently matched.
+  dx-internal-p4:
+    source_refs:
+    - dx100-paper
+    locator: 'dx100-paper: §3.2 Request stage p.5'
+    statement: Request stage starts after all words for a row have been inserted or Row Table reaches capacity.
+      Slice scans valid unsent row/column entries; predetermined arbitration interleaves channels and bank
+      groups. No named sorting algorithm, adaptive prediction, or precise row-complete detector is specified.
+    evidence_kind: paper_specification
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - ISCA 2025 author edition; publisher fulltext not independently matched.
+  dx-internal-p5:
+    source_refs:
+    - dx100-paper
+    locator: 'dx100-paper: §3.2 Response stage p.5; Fig.4'
+    statement: Response address selects row/column and word linked list; each word offset and iteration
+      writes destination TD[i]. All consumers of the same word remain represented. Request order need not
+      match original element order.
+    evidence_kind: paper_specification
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - ISCA 2025 author edition; publisher fulltext not independently matched.
+  dx-internal-p7:
+    source_refs:
+    - dx100-paper
+    locator: 'dx100-paper: §3 overview p.3; §3.5 p.6; Introduction p.2'
+    statement: Tile size/ready bits coordinate host; per-element finish bits permit a downstream unit to
+      begin before the entire producer tile is finished. Example tile is 16K 4-byte elements. Large potential
+      visibility is bounded by producer readiness and finite tables.
+    evidence_kind: paper_specification
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - ISCA 2025 author edition; publisher fulltext not independently matched.
+  dx-internal-p8:
+    source_refs:
+    - dx100-paper
+    locator: 'dx100-paper: §3.2 p.5 Fill; §3.6 pp.6–7'
+    statement: Paper caches a directory-snoop H bit during fill, routes H hits to LLC and misses to memory
+      controllers; assumes huge pages and provisions a 256-entry TLB. These are paper choices, not a statement
+      about current private virtualization.
+    evidence_kind: paper_specification
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - ISCA 2025 author edition; publisher fulltext not independently matched.
+  dx-internal-c1:
+    source_refs:
+    - dx100-indirect
+    locator: 'dx100-indirect: 399–528 checkTileReady/checkElementReady/fillRowTable'
+    statement: Fill advances my_i in original order only after success or a masked element; waits for condition/index
+      element finish (4-byte accesses), reads uint32 index, forms base+word_size*idx, checks declared virtual
+      range, aligns to block_size, translates aligned address, and stores word-index offset (vaddr-block_vaddr)/word_size.
+      Masked ILD uses setFakeData, not an actual memory request; its exact value semantics are not established
+      here.
+    evidence_kind: code_inspection
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - Public e4fc4af model only; static inspection is not simulator execution or hardware validation.
+  dx-internal-c3:
+    source_refs:
+    - dx100-maa
+    - dx100-indirect
+    locator: 'dx100-maa: 257–337 addRamulator/map_addr; dx100-indirect: 113–241 allocate/getRowTableIdx/getGrowAddr'
+    statement: MAA obtains mapping geometry from Ramulator2; map_addr discards transaction offset bits,
+      extracts channel bits, then column bits, then levels 1 through row (rank, bank-group, bank, row in
+      this organization). Slice index is mixed-radix modulo CH/RA/BG/BA slice organization; grow key retains
+      quotient BG/BA plus row for merged-bank configurations. Physical mapping is configuration-dependent;
+      no fixed bit positions asserted.
+    evidence_kind: code_inspection
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - Public e4fc4af model only; static inspection is not simulator execution or hardware validation.
+  dx-internal-c4:
+    source_refs:
+    - dx100-tables-header
+    - dx100-tables
+    - dx100-port
+    locator: 'dx100-tables-header: 44–169 OffsetTable/RowTableEntry/RowTableSlice; dx100-tables: 142–194
+      OffsetTable; 253–281 RowTableEntry::insert; dx100-port: 102–147 sendPacket'
+    statement: RowTableSlice has valid/sent row records; each RowTableEntry stores physical aligned line
+      addr and first_itr/last_itr plus valid bits and send cursor. OffsetTable is tile-sized indexed by
+      original iteration, with wid and next_itr. Code appends a forward list, whereas paper describes a
+      backward Previous i list with a tail pointer. Code has no per-column H field; cache decision is in
+      Port.cc.
+    evidence_kind: code_inspection
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - Public e4fc4af model only; static inspection is not simulator execution or hardware validation.
+  dx-internal-c5:
+    source_refs:
+    - dx100-tables
+    locator: 'dx100-tables: 347–399 RowTableSlice::insert; 253–281 RowTableEntry::insert'
+    statement: Insertion first matches an unsent row+line, then tries another unsent record with same grow
+      key, then allocates first free row record. When one row record exhausts its line slots another record
+      may represent the same DRAM row. Only absence of a usable/free row record causes insert=false. Matching
+      line appends another original-element association without another line slot.
+    evidence_kind: code_inspection
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - Public e4fc4af model only; static inspection is not simulator execution or hardware validation.
+  dx-internal-c6:
+    source_refs:
+    - dx100-indirect
+    - dx100-tables
+    locator: 'dx100-indirect: 188–210 slice order; 621–724 Fill/Build; dx100-tables: 433–470 find_next_grow_addr/get_send_grow_rowid/get_entry_send'
+    statement: With reorder enabled, Fill enters Build on final fill or insertion failure; waits for producer
+      element/tile readiness do not by themselves trigger Build. Build walks unique slice order constructed
+      by bank outermost, bank-group, rank, channel innermost; repeatedly selects at most one line per active
+      slice per pass until every slice exhausted. Slice selects first valid unsent record from cursor, emits
+      line slots in allocated-slot order, then scans other records of same grow before another grow. No
+      address sort or DRAM-open-row feedback drives selection. get_entry_send drain argument is unused.
+    evidence_kind: code_inspection
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - Public e4fc4af model only; static inspection is not simulator execution or hardware validation.
+  dx-internal-c7:
+    source_refs:
+    - dx100-indirect
+    - dx100-tables
+    locator: 'dx100-indirect: 506–514 failed insert; 725–764 Request; 1166–1173 recvData; dx100-tables:
+      347–399 insert; 472–500 recv/is_full'
+    statement: On failure my_i stays at failed element. Build generates currently admitted batch, marks
+      exhausted row records sent; Request can continue fill as responses free records, but sent records
+      cannot absorb additions. Request waits for all per-unit packets sent and cumulative received==expected,
+      then returns Fill if fill not final, otherwise Response. Opportunistic fill flags in Request are local
+      outputs not promoted to my_fill_finished; finalization is re-evaluated via Fill. Full-to-nonfull change
+      of failed slice schedules execution. This is partial-batch progress, not proof of starvation freedom.
+    evidence_kind: code_inspection
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - Public e4fc4af model only; static inspection is not simulator execution or hardware validation.
+  dx-internal-c8:
+    source_refs:
+    - dx100-indirect
+    - dx100-tables
+    locator: 'dx100-indirect: 868–927 recvData; dx100-tables: 170–194 OffsetTable::get_entry_recv; 313–336
+      RowTableEntry::recv; 472–498 RowTableSlice::recv'
+    statement: Receive decodes physical line back to slice/grow, matches valid row and (when reorder enabled)
+      sent row, consumes line association list, sorts returned entries by itr, copies response bytes and
+      writes each ILD destination itr using wid. Duplicate words fan out to all recorded itr values. This
+      sort restores within-response association order; it does not sort outgoing requests or impose global
+      response order.
+    evidence_kind: code_inspection
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - Public e4fc4af model only; static inspection is not simulator execution or hardware validation.
+  dx-internal-c9:
+    source_refs:
+    - dx100-port
+    - dx100-maa-header
+    - dx100-cache-port
+    - dx100-memory-port
+    locator: 'dx100-port: 180–279 schedules; 301–560 send loops; dx100-maa-header: 655–695 OutstandingPacket/CompareByTick;
+      dx100-cache-port: 84–133 retry/send/capacity; dx100-memory-port: 80–92 retry/send'
+    statement: Port queues are multisets compared only by eligibility tick, grouped by memory channel or
+      cache bus. Memory sends eligible writes before reads per channel; cache does indirect writes, indirect
+      reads, stream writes, stream reads, then stream misses only if indirect memory queues empty. A failed
+      send blocks that channel/bus until retry/capacity release; unsent requests remain queued. Generated
+      slice order is not a proof of final DRAM command order or fairness.
+    evidence_kind: code_inspection
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - Public e4fc4af model only; static inspection is not simulator execution or hardware validation.
+  dx-internal-c10:
+    source_refs:
+    - dx100-port
+    locator: 'dx100-port: 31–178 sendPacket; 562–581 recvTimingResp'
+    statement: New Port packet snoops synchronously at packet creation unless global or per-instruction
+      force-cache is set; isBlockCached selects LLC versus direct memory. Address-keyed outstanding packet
+      map coalesces compatible reads across units with waiter unit IDs and response fanout; same-unit duplicate
+      outstanding reads are rejected. This is separate from within-unit word-list coalescing. Write forwarding/replacement
+      exists under same-unit assertions and is outside required-gather scope.
+    evidence_kind: code_inspection
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - Public e4fc4af model only; static inspection is not simulator execution or hardware validation.
+  dx-internal-c11:
+    source_refs:
+    - dx100-indirect
+    - dx100-tables
+    - dx100-maa
+    - dx100-if
+    locator: 'dx100-indirect: 330–398 checks/latency; 725–809 Request/Response; 1158–1165 ILD receive; dx100-tables:
+      170–217 OffsetTable; 330–336 row all received; 472–495 slice recv; dx100-maa: 605–621 finishInstructionCompute;
+      dx100-if: 303–336 finishInstructionCompute'
+    statement: ILD completion needs all queued per-unit packets sent, all expected line responses received
+      and modeled scratchpad/table latencies elapsed, with source tiles ready and histories empty. Responses
+      invalidate OffsetTable entries and line slots; a row record becomes reusable only after all its lines
+      return, resetting cursor/sent/valid. Final check_reset verifies table state; Decode resets for next
+      instruction. MAA publishes destination Finished/Ready and IF clears instruction valid and updates
+      dependent source status. Local completion is not proof of systemwide coherence, fences or liveness.
+    evidence_kind: code_inspection
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - Public e4fc4af model only; static inspection is not simulator execution or hardware validation.
+  dx-internal-c12:
+    source_refs:
+    - dx100-config
+    - dx100-indirect
+    locator: 'dx100-config: 13–39 parameters; dx100-indirect: 113–186 allocate; 243–329 config selection'
+    statement: 'Public defaults: tile 16384 elements; 64 row records/slice; 8 line slots/subslice-row; 32
+      initial slices; row-table latency 1 cycle; reorder enabled (no_reorder false); reconfigure false;
+      force-cache false. Merged-bank configurations trade row-record totals against line slots per record.
+      Optional enabled reconfiguration caches choice by base address and selects using previously observed
+      unique row count; it is disabled by default and not invented adaptive intelligence. Config-cache replacement
+      implementation is not assumed to be correct LRU.'
+    evidence_kind: code_inspection
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - Public e4fc4af model only; static inspection is not simulator execution or hardware validation.
+  dx-internal-c13:
+    source_refs:
+    - dx100-if
+    locator: 'dx100-if: 185–231 pushInstruction; 250–300 getReady'
+    statement: IF rejects admission on instruction-file full, destination tile conflicts with existing sources/destinations,
+      and specified same-range read/write conflicts within maa_id; getReady begins scan at rand() offset,
+      permits source Service/Finished with element-level checks downstream and optional region permit for
+      multiple units. These local tests do not establish all writers/aliases or global ordering.
+    evidence_kind: code_inspection
+    limitations:
+    - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
+      interfaces, or establish fairness, global coherence or performance.
+    - Public e4fc4af model only; static inspection is not simulator execution or hardware validation.
 mechanism_families:
 - id: queue-latency-tolerance
   name: Queue-backed asynchronous access
@@ -1409,6 +1721,57 @@ designs:
   limitations:
   - Paper specification only; no device or simulator validation.
   - Conventional random-base pointer chasing unsupported in §4.1; array-based chained indices are distinct.
+  internal_mechanisms:
+  - id: dx100-paper-ready-window
+    kind: dependency_tracking
+    status: described
+    description: 'ISCA2025 author edition: tile size/ready bits coordinate host synchronization; per-element
+      finish bits allow index producers and consumers to pipeline. A potential tile window is bounded by
+      producer readiness and finite tables.'
+    claim_refs:
+    - dx-internal-p7
+  - id: dx100-paper-physical-tables
+    kind: buffering
+    status: described
+    description: 'ISCA2025 author edition: translated physical CH/RA/BG/BA select a row slice. Fig.4 depicts
+      64 associative row slots and up to 8 column slots per row, with validity/sent and cache-status H bits;
+      the Word Table has one offset and backward Previous i link per original element. These are depicted
+      choices, not universal capacities.'
+    claim_refs:
+    - dx-internal-p2
+    - dx-internal-p3
+  - id: dx100-paper-line-consumers
+    kind: coalescing
+    status: described
+    description: 'ISCA2025 author edition: one column/line fetch serves a linked list of original word consumers,
+      retaining word offsets and iteration identities, including duplicate words.'
+    claim_refs:
+    - dx-internal-p2
+    - dx-internal-p3
+    - dx-internal-p5
+  - id: dx100-paper-slice-cycle
+    kind: issue_policy
+    status: described
+    description: 'ISCA2025 author edition: row completion or table capacity starts Request; sequential slice
+      scans feed predetermined channel/bank-group interleaving. The precise row-complete detector and fairness
+      bounds are unspecified.'
+    claim_refs:
+    - dx-internal-p4
+  - id: dx100-paper-result-placement
+    kind: reordering
+    status: described
+    description: 'ISCA2025 author edition: response address selects row/column and word list; offsets select
+      payload words placed into TD at original iteration positions despite changed request order.'
+    claim_refs:
+    - dx-internal-p5
+  - id: dx100-paper-cache-route
+    kind: other
+    status: described
+    description: 'ISCA2025 author edition: first insertion of a column queries cache status during Fill
+      and retains H for LLC versus memory routing. Public e4fc4af packet-creation snooping is a different
+      implementation observation.'
+    claim_refs:
+    - dx-internal-p8
 - id: dx100-artifact-e4fc4af
   name: DX100 public artifact
   revision: e4fc4afdf894f295442cef3604667a469fab8e62
@@ -1434,6 +1797,10 @@ designs:
   - dx100-reference-script
   - dx100-bfs
   - dx100-indirect-header
+  - dx100-tables-header
+  - dx100-maa-header
+  - dx100-cache-port
+  - dx100-memory-port
   summary: Pinned gem5/API implementation with observed reads, masks, range continuation and optional
     pre-update result tiles.
   operations:
@@ -2129,6 +2496,88 @@ designs:
   - Static code observation, not a runtime test.
   - Do not inherit paper guarantees or private/virtualized extensions into this pinned public artifact.
   - Array range width is narrower than a generic 64-bit payload capability.
+  internal_mechanisms:
+  - id: dx100-model-admission
+    kind: dependency_tracking
+    status: described
+    description: 'Public e4fc4af ILD: IF rejects full instruction storage, destination-tile conflicts and
+      specified same-range read/write conflicts within maa_id. Ready selection scans from a random offset
+      and accepts Service/Finished source status; Fill still waits at unfinished condition/index elements
+      in original iteration order. These checks do not establish all aliases or fairness.'
+    claim_refs:
+    - dx-internal-c13
+    - dx-internal-c1
+  - id: dx100-model-physical-grouping
+    kind: buffering
+    status: described
+    description: 'Public e4fc4af ILD: form base + word_size * uint32 index, check virtual bounds, translate
+      aligned blocks and decode configured Ramulator2 physical geometry into slice/grow keys. Unsent row
+      records contain aligned physical lines; same-row overflow can use another record. Finite capacity
+      failure retains the failed iteration. Geometry and merged-bank organization are configuration-dependent.'
+    claim_refs:
+    - dx-internal-c1
+    - dx-internal-c3
+    - dx-internal-c4
+    - dx-internal-c5
+  - id: dx100-model-duplicate-consumers
+    kind: coalescing
+    status: described
+    description: 'Public e4fc4af ILD: a matching unsent line appends another (original iteration, word offset)
+      in a forward next_itr list using first/last pointers without consuming another line slot. Duplicate
+      words retain separate consumers. Compatible reads across units may also share a Port packet and waiter
+      list; same-unit duplicate outstanding reads are rejected.'
+    claim_refs:
+    - dx-internal-c4
+    - dx-internal-c5
+    - dx-internal-c10
+  - id: dx100-model-fixed-slice-cycle
+    kind: issue_policy
+    status: described
+    description: 'Public e4fc4af with reorder enabled: final Fill or insertion failure enters Build; a producer
+      wait alone does not. Each pass emits at most one line per active slice, channel fastest then rank,
+      bank group, bank. Within a slice, scan row/line slots and other records of the same grow before another
+      grow. Selection neither sorts addresses nor consults DRAM open-row state.'
+    claim_refs:
+    - dx-internal-c6
+  - id: dx100-model-downstream-backpressure
+    kind: issue_policy
+    status: described
+    description: 'Public e4fc4af: new packets snoop at creation unless forced to cache. Eligibility-tick
+      queues are grouped by channel/cache bus; writes precede reads, and cache indirect classes precede
+      stream classes. Failed sends retain queued work and block that channel/bus until retry or capacity
+      release. Generator order does not guarantee downstream DRAM command order or fairness.'
+    claim_refs:
+    - dx-internal-c9
+    - dx-internal-c10
+  - id: dx100-model-result-placement
+    kind: reordering
+    status: described
+    description: 'Public e4fc4af ILD: decode response physical line to slice/grow, consume its associations
+      and sort those by itr, then write each returned word[wid] to TD[itr], including duplicate-word fanout.
+      Sorting is within one response, not outgoing address sorting or global response ordering.'
+    claim_refs:
+    - dx-internal-c8
+  - id: dx100-model-state-reuse
+    kind: completion
+    status: described
+    description: 'Public e4fc4af ILD: consume and invalidate offset entries and line slots; only after all
+      lines return is a row record reset/reusable. Sent records cannot accept additions. Request may fill
+      released space, but batch transition waits for queued packets sent and received == expected; final
+      Fill status is re-evaluated. Completion also checks producer readiness, modeled scratchpad/table latency
+      and empty histories/tables before destination Finished/Ready and dependent-source publication. Host
+      synchronization remains required.'
+    claim_refs:
+    - dx-internal-c7
+    - dx-internal-c11
+  - id: dx100-model-reference-choices
+    kind: buffering
+    status: described
+    description: Public e4fc4af defaults include 16384 tile elements, 64 row records per slice, 8 line slots
+      per subslice-row, 32 initial slices and 1-cycle row-table latency. Reorder is enabled; optional base-address/observed-row-count
+      reconfiguration is disabled by default and is separate from fixed request selection. These are model
+      defaults, not selected workload parameters or hardware timing evidence.
+    claim_refs:
+    - dx-internal-c12
 - id: terminus-micro2024-cas
   name: Terminus with CAS and multiplication
   revision: MICRO2024-default
