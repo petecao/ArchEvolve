@@ -1,5 +1,5 @@
 catalog_id: archevolve-hardware
-revision: 0.1.3
+revision: 0.1.4
 format: hardware-catalog-v0.1
 status: research_reviewed_prototype
 project_selections:
@@ -21,8 +21,28 @@ sources:
     retrieval_date: '2026-10-01'
     reviewed_on: '2026-10-01'
     provenance_notes:
-    - Selected by Eric, relayed by Joshveer on October 1. Paper inspection only; no MAPLE RTL or API implementation
-      was inspected or executed.
+    - Selected by Eric, relayed by Joshveer on October 1. Initial paper inspection is separate from the
+      supplemental pinned RTL observations below; no MAPLE hardware was executed.
+  maple-fifo-rtl:
+    title: MAPLE circular FIFO control
+    edition: Public artifact 742a22d2ed336880f6c15fa6cda72fdcec54a717
+    url: https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/dcp_fifo_ctrl.v
+    locator_basis: One-based lines in pinned public RTL; supplemental implementation evidence.
+    sha256: 74dac3f406d18b7a0feefc1db54e074b28d669dbe87da0dc236025c8b0dbe289
+    document_type: source_code
+    reviewed_on: '2026-10-01'
+    provenance_notes:
+    - This revision is not authenticated to the paper's evaluated FPGA or tapeout configuration.
+  maple-consume-rtl:
+    title: MAPLE consume pipeline and response staging
+    edition: Public artifact 742a22d2ed336880f6c15fa6cda72fdcec54a717
+    url: https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/maple.sv
+    locator_basis: One-based lines in pinned public RTL; supplemental implementation evidence.
+    sha256: 3239aece6066fe6083e05d952fd36ce2f8d28134b3a858098bd85074f25fc594
+    document_type: source_code
+    reviewed_on: '2026-10-01'
+    provenance_notes:
+    - Static inspection only; no RTL simulation, synthesis or runtime validation performed.
   dx100-paper:
     title: 'DX100: A Programmable Data Access Accelerator for Indirection'
     edition: arXiv:2505.23073v2
@@ -420,6 +440,30 @@ claims:
     limitations:
     - The catalog schematic records described logical paths, not per-port RTL wiring, bus widths or a proved
       composed BFS accelerator.
+  maple-code-head-readiness:
+    source_refs:
+    - maple-fifo-rtl
+    locator: dcp_fifo_ctrl.v L191–196, L284–325 and L354–374
+    statement: In the pinned RTL's ordinary consume path outside reset/invalidation, occupied/reserved
+      state is separate from valid-data state. Consume eligibility requires a valid head and, when the
+      consume-length flag requires it, a valid adjacent piece. Reservation alone does not make a value
+      consumable; an unready head cannot be bypassed on this path.
+    evidence_kind: code_inspection
+    limitations:
+    - Configuration widths and complete API packing remain unbound; these state predicates do not establish
+      a general typed payload/index domain or end-to-end fairness.
+  maple-code-dequeue-custody:
+    source_refs:
+    - maple-fifo-rtl
+    - maple-consume-rtl
+    locator: dcp_fifo_ctrl.v L191–196, L303–325 and L364–374; maple.sv L290–351
+    statement: In the pinned RTL's ordinary consume path, the successful FIFO-decrement handshake advances
+      the head and invalidates consumed storage while the consume path captures the data into pipeline registers. NoC response
+      delivery and CPU use can occur later. Queue-credit release and CPU consumption are distinct events.
+    evidence_kind: code_inspection
+    limitations:
+    - This describes local ownership transfer in the inspected pipeline, not application completion,
+      a universal CLOSE/drain barrier, fault recovery or global visibility.
   dxp-read:
     source_refs:
     - dx100-paper
@@ -2909,12 +2953,14 @@ designs:
   - No fabricated internal ports or whole-design CPU-only rule.
 - id: maple-isca2022
   name: MAPLE queue-fetch and LIMA engine
-  revision: ISCA2022-author-PDF
+  revision: ISCA2022-paper+public-742a22d-inspection
   record_kind: design_version
   mechanism_refs:
   - queue-latency-tolerance
   source_refs:
   - maple-paper
+  - maple-fifo-rtl
+  - maple-consume-rtl
   summary: NoC-connected MMIO engine provides asynchronous pointer/loop fetches into ordered queues, or
     speculative LLC hints. Pipelining and runahead hide latency; CPU performs computation and updates.
   operations:
@@ -3415,6 +3461,23 @@ designs:
       receives its data only on the queue-consume load response.
     claim_refs:
     - maple-acknowledgement
+  - id: maple-pinned-head-readiness
+    kind: buffering
+    status: described
+    description: In public RTL 742a22d's ordinary non-invalidation consume path, reservation/occupancy and
+      valid payload are separate. The head and any additional piece required by the consume length must
+      be valid before dequeue; ready later values do not bypass an unready head. Paper-evaluation
+      configuration binding remains unknown.
+    claim_refs:
+    - maple-code-head-readiness
+  - id: maple-pinned-credit-transfer
+    kind: completion
+    status: described
+    description: In public RTL 742a22d's ordinary consume path, successful dequeue returns queue storage
+      capacity with payload capture in the consume pipeline, before possible later NoC response delivery and CPU arithmetic.
+      Admission, payload readiness, pipeline custody and CPU final use have distinct resource lifetimes.
+    claim_refs:
+    - maple-code-dequeue-custody
   - id: maple-target-coalescing
     kind: coalescing
     status: unknown
@@ -3619,7 +3682,8 @@ designs:
       - maple-queue-order
       - maple-acknowledgement
   limitations:
-  - 'Paper-only evidence: RTL/API code and implementation type domains have not been inspected.'
+  - Operation capabilities remain paper-scoped. Supplemental pinned RTL clarifies head readiness and
+    dequeue custody; its evaluated-configuration binding and full typed API domains remain unknown.
   - No universal numeric speedup, legal queue range or memory-service model is inferred.
   - No native CAS or arbitrary nested gather support inferred from extensibility.
   - Queue scratchpad is not kept coherent after fetching mutable data.
