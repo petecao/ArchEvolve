@@ -64,8 +64,8 @@ class EvidencePipelineTests(unittest.TestCase):
         self.assertEqual(c["execution_plan"]["rmw"], "potential_offload_only_after_CAS_mapping_proof")
 
     def test_prefetch_is_not_presented_as_returning_the_gather_result(self):
-        request, _ = self.choose()
-        c = next(c for c in request["candidates"] if c.get("candidate_scope") == "read_assist")
+        request, _ = self.choose(max_candidates=16)
+        c = next(c for c in request["candidates"] if c.get("catalog_design_id") == "prodigy-hpca2021")
         self.assertEqual(c["catalog_design_id"], "prodigy-hpca2021")
         self.assertTrue(all(o["operation"]["execution_role"] == "assist" for o in c["operation_options"]))
         self.assertIn("assistance only", c["hardware"]["blocks"][0]["outputs"][0]["payload"])

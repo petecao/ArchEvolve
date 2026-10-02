@@ -1,0 +1,613 @@
+id: gapbs_bfs_top_down_step_fully_connected--terminus-micro2024-cas--update_execute
+catalog_entry: terminus-micro2024-cas:update_execute
+status: needs_evidence
+catalog_design_id: terminus-micro2024-cas
+catalog_design_revision: MICRO2024-default
+catalog_record_kind: configuration
+candidate_scope: update_execute
+rationale: Source-scoped operation matches for this workload. This is an interface
+  exploration option, not a composed accelerator, legal rewrite, or performance winner.
+target_access_ids:
+- access-04
+target_statement_ids:
+- bfs-td-parent-cas
+request_groups:
+- id: bfs-td-traversal-and-discovery
+  description: Source dependency chain from frontier load through row bounds and neighbor
+    traversal to parent read and conditional CAS. The successful CAS also controls
+    an explicit parent store and queue append. This context group is a manual proposal,
+    not a proved single-accelerator mapping.
+  request_ids:
+  - access-01-read
+  - access-02-read
+  - access-03-read
+  - access-04-read
+  - access-04-update
+  statement_ids:
+  - bfs-td-frontier
+  - bfs-td-row-bounds
+  - bfs-td-neighbor
+  - bfs-td-parent-read
+  - bfs-td-parent-cas
+  - bfs-td-parent-store
+  - bfs-td-queue-append
+  dependencies:
+  - from_statement: bfs-td-frontier
+    to_statement: bfs-td-row-bounds
+  - from_statement: bfs-td-row-bounds
+    to_statement: bfs-td-neighbor
+  - from_statement: bfs-td-neighbor
+    to_statement: bfs-td-parent-read
+  - from_statement: bfs-td-frontier
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-neighbor
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-parent-read
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-parent-cas
+    to_statement: bfs-td-parent-store
+  - from_statement: bfs-td-parent-cas
+    to_statement: bfs-td-queue-append
+  context_statements:
+  - id: bfs-td-frontier
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 240
+      end_line: 240
+    code: NodeID u = queue.shared[i];
+    operation: read
+    access_expression: queue.shared[i]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids: []
+    interpretation: Sequential frontier read in logical i order; thread interleaving
+      depends on execution.
+  - id: bfs-td-row-bounds
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 241
+      end_line: 241
+    code: for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+    operation: read
+    access_expression: VertexOffsets[u] and VertexOffsets[u + 1]
+    data_type: SGOffset = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-frontier
+    interpretation: Two offset accesses indexed by a loaded vertex ID; the +1 is index
+      arithmetic.
+  - id: bfs-td-neighbor
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 242
+      end_line: 242
+    code: NodeID v = g.out_neighbors_[j];
+    operation: read
+    access_expression: g.out_neighbors_[j]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-row-bounds
+    interpretation: Sequential within each adjacency segment; transitions between
+      segments are data-dependent.
+  - id: bfs-td-parent-read
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 243
+      end_line: 243
+    code: NodeID curr_val = parent[v];
+    operation: read
+    access_expression: parent[v]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-neighbor
+    interpretation: Indirect read indexed by the loaded neighbor ID.
+  - id: bfs-td-parent-cas
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 247
+      end_line: 247
+    code: if (compare_and_swap(parent[v], curr_val, u)) {
+    operation: read_modify_write
+    access_expression: compare_and_swap(parent[v], curr_val, u)
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-frontier
+    - bfs-td-neighbor
+    - bfs-td-parent-read
+    interpretation: Subtype is compare-and-swap, guarded by curr_val < 0; successful
+      discovery controls queue insertion.
+  - id: bfs-td-parent-store
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 248
+      end_line: 248
+    code: parent[v] = u;
+    operation: write
+    access_expression: parent[v] = u
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-parent-cas
+    interpretation: Explicit store inside the successful CAS branch; preserve in any
+      analysis of side effects.
+  - id: bfs-td-queue-append
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 249
+      end_line: 249
+    code: lqueue.push_back(v);
+    operation: call_with_side_effects
+    access_expression: lqueue.push_back(v)
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-parent-cas
+    interpretation: Thread-local queue buffering followed by lqueue.flush(); not a
+      plain target-array access.
+  basis: explicit_manual_source_group
+  hardware_composition_status: not_established
+  covered_request_ids:
+  - access-04-update
+  uncovered_request_ids:
+  - access-01-read
+  - access-02-read
+  - access-03-read
+  - access-04-read
+  joint_execution_status: requires_mapping_and_composition_review
+mechanism_context:
+  annotations:
+  - id: unrecorded-buffering
+    kind: buffering
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-reordering
+    kind: reordering
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-issue_policy
+    kind: issue_policy
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-dependency_tracking
+    kind: dependency_tracking
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-completion
+    kind: completion
+    status: unknown
+    description: null
+    claim_refs: []
+  missing_kinds:
+  - buffering
+  - coalescing
+  - reordering
+  - issue_policy
+  - dependency_tracking
+  - completion
+  performance_hypotheses: []
+  scope: Curated descriptions and explicit unknowns; no cycle model or inferred physical
+    topology.
+operation_options:
+- operation:
+    id: term-cas
+    operation: read_modify_write
+    subtype: cas
+    execution_role: execute
+    address_patterns:
+    - indirect
+    support: paper_specified
+    claim_refs:
+    - term-write
+    result:
+      form: success_flag
+      old_value: unknown
+      validity: Active inputs only.
+      claim_refs:
+      - term-write
+    ordering:
+      scope: CAS primitive; shared lock protocol in concurrent CLHT
+      description: Local partition SWMR and partition queues protect conflicts; ROB
+        preserves task enqueue result order. Shared-memory locks are additionally
+        required across engines.
+      claim_refs:
+      - term-order
+      - term-host
+    completion:
+      event: Task completion releases its partition; finished task waits for ROB turn
+        before result dequeue.
+      visibility: Task-level paper promise; precise CPU/cache write-visibility event
+        beyond synchronization is unknown.
+      claim_refs:
+      - term-host
+      - term-order
+    datatype_notes: No universal datatype contract asserted.
+    limitations:
+    - Requires memory-unit/L2 atomic support. Not fetch-old.
+    realization:
+      kind: native_primitive
+      description: Fig.4 CAS primitive implemented by optional atomic-capable memory
+        unit/L2, with success output.
+      claim_refs:
+      - term-write
+  catalog_status: needs_evidence
+  missing_capability_evidence:
+  - index_width_bits
+  - payload_types
+  matched_requests:
+  - id: access-04-update
+    access_id: access-04
+    array: parent
+    purpose: update
+    operation: read_modify_write
+    subtype: cas
+    address_pattern: indirect
+    payload_type: int32
+    index_width_bits: 32
+    require_old_value: false
+    mapping_basis: Original conditional CAS requires comparison/update semantics and
+      success handling; returned old values are not a substitute.
+    mapping_status: proposed_from_reported_pattern
+    missing_workload_evidence: []
+    statement_ids:
+    - bfs-td-parent-cas
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 247
+      end_line: 247
+    statement_binding_status: manual_source_proposal
+    mutable_target: true
+missing_evidence:
+- index_width_bits
+- payload_types
+source_evidence:
+  claims:
+    term-config:
+      source_refs:
+      - terminus-paper
+      locator: PDF p.10 Table II; p.9 §V-C
+      statement: Reference Terminus has 4 by 8 PEs, 256 task ROB entries, 32 partitions
+        and 16 entries per partition buffer. PEs use 64-bit datapaths.
+      evidence_kind: paper_specification
+      limitations:
+      - Reference configuration does not establish general legality or performance
+        for other sizes.
+      - 64-bit PE datapath alone does not establish every memory datatype.
+    term-deferred:
+      source_refs:
+      - terminus-paper
+      locator: PDF p.12 §VII-E and Fig.22; p.9 §V-E
+      statement: An evaluated variant removes atomics and multiplication primitives,
+        deferring atomic and hash operations to the CPU.
+      evidence_kind: paper_specification
+      limitations:
+      - This record cannot execute CAS in the engine.
+      - The evaluated distinction is not a separate published version or an invented
+        microarchitecture.
+    term-host:
+      source_refs:
+      - terminus-paper
+      locator: PDF pp.6–9 §§IV-D, V-C, V-E
+      statement: Core enqueue/dequeue instructions exchange tasks/results. Acquire
+        is asynchronous and notifies after running partition users drain. Deferred
+        tasks retain partitions; handlers respond or complete/release. Concurrent
+        CLHT uses shared node locks in addition to local serialization.
+      evidence_kind: paper_specification
+      limitations:
+      - Issuing acquire is not immediate permission to modify data.
+      - Exact cross-observer write visibility is not proved from task-result delivery
+        alone.
+    term-order:
+      source_refs:
+      - terminus-paper
+      locator: PDF pp.6–9 §§IV-C–E, V-B–D; Figs.8,12,15
+      statement: Partitions enforce single-writer/multiple-reader exclusion. Tasks
+        may hold at most one partition and re-enqueue on partition changes. The ROB
+        delivers task results in enqueue order even when tasks finish out of order.
+      evidence_kind: paper_specification
+      limitations:
+      - Partition protection and result order are distinct. Local locks do not synchronize
+        other cores without shared-memory synchronization.
+    term-read:
+      source_refs:
+      - terminus-paper
+      locator: PDF pp.4–7 §§IV-A–E; Figs.4–7, Listing 1
+      statement: Read accepts an address, datatype, stride and count; ReadRange consumes
+        start/end addresses. Composed tasks implement dependent hash-table lookup
+        including linked-list traversal and B-tree traversal.
+      evidence_kind: paper_specification
+      limitations:
+      - A verified general gather lowering for the received BFS source is not supplied
+        by this paper.
+    term-write:
+      source_refs:
+      - terminus-paper
+      locator: PDF pp.5–6 Fig.4, Fig.7, Listing 2, §§IV-A–B
+      statement: Write consumes addresses and values. The hash-table update task replaces
+        the matching value and returns a success indication. CAS has address, expected
+        and new inputs and a success output.
+      evidence_kind: paper_specification
+      limitations:
+      - CAS is an engine primitive only in configurations with memory-unit/L2 atomic
+        support.
+      - Success output is not a returned old value. Generic fetch-add/min/max tasks
+        are not verified here.
+  sources:
+    terminus-paper:
+      title: 'Terminus: A Programmable Accelerator for Read and Update Operations
+        on Sparse Data Structures'
+      edition: Published IEEE PDF, pp.1233-1246
+      url: https://doi.org/10.1109/MICRO61859.2024.00092
+      locator_basis: One-based PDF pages; Terminus printed page = PDF page + 1232.
+      sha256: ae7aeca3c4d4d03de54363036128f2852bd20828520051a4d51b7ac842996fad
+      authors:
+      - Hyun Ryong Lee
+      - Daniel Sanchez
+      venue: MICRO 2024
+      year: 2024
+      doi: 10.1109/MICRO61859.2024.00092
+      document_type: conference_manuscript
+      download_url: https://doi.org/10.1109/MICRO61859.2024.00092
+      reviewed_on: '2026-09-29'
+      provenance_notes:
+      - Crossref published date 2024-11-02; author page still says October 2024 to
+        appear, so author page is stale. Exact manuscript revision date unavailable.
+        Licensed pre-existing institutional copy read locally; PDF not redistributed
+        or copied into output. Guessed author-PDF path returned 404.
+      retrieval_date: 2026-09-29 review/reuse; original acquisition unknown unless
+        noted
+requirements:
+- id: term-graph
+  description: Supply and map an actual task graph with return wiring and data-dependent
+    traversal.
+  scope: Specific task and sparse data structure
+  claim_refs:
+  - term-read
+  - term-write
+  verification: required
+- id: term-partitions
+  description: Ensure every conflicting task/host access obeys partition acquisition
+    and release; wait for acquire notification.
+  scope: Local engine and participating core
+  claim_refs:
+  - term-order
+  - term-host
+  verification: required
+- id: term-global
+  description: Use shared-memory synchronization for conflicts across cores/engines.
+  scope: Shared writable data structures
+  claim_refs:
+  - term-host
+  verification: required
+- id: term-atomics
+  description: Establish memory-unit and L2 CAS support.
+  scope: CAS primitive in this configuration
+  claim_refs:
+  - term-write
+  - term-deferred
+  verification: required
+requirement_status: not_discharged_by_retrieval
+limitations:
+- No generic fetch-add/min/max task promoted solely from ALU primitives.
+- No inspected official source implementation or runtime validation.
+parameter_contract:
+- id: task_rob_entries
+  unit: entries
+  state: fixed_reference
+  value: 256
+  domain: null
+  claim_refs:
+  - term-config
+  notes: Table II reference.
+- id: partitions
+  unit: partitions
+  state: fixed_reference
+  value: 32
+  domain: null
+  claim_refs:
+  - term-config
+  notes: Table II reference.
+- id: partition_buffer_entries
+  unit: entries
+  state: fixed_reference
+  value: 16
+  domain: null
+  claim_refs:
+  - term-config
+  notes: Per-partition reference capacity.
+- id: fabric_rows
+  unit: PE rows
+  state: fixed_reference
+  value: 4
+  domain: null
+  claim_refs:
+  - term-config
+  notes: Reference spatial fabric.
+- id: fabric_columns
+  unit: PE columns
+  state: fixed_reference
+  value: 8
+  domain: null
+  claim_refs:
+  - term-config
+  notes: Reference spatial fabric.
+selected_configuration: {}
+unresolved_requirements:
+- Received values are reported; raw profiling logs, build flags, dataset identity
+  and per-run scope have not been bound/verified by this prototype.
+- Retain conditional CAS for the kernel. A reported zero-execution second phase does
+  not remove the discovery-phase update.
+- Array-level features are usable for exploratory retrieval; exact statement IDs and
+  profiled-source locations are still absent.
+- Establish workload mapping, ownership/aliasing, concurrency, numeric domains, result
+  validity and completion/visibility; read labels do not imply immutable memory.
+- The catalog is not a physical building-block library; these operation options have
+  not been proved composable.
+hardware:
+  blocks:
+  - id: term-cas
+    component_ref: terminus-micro2024-cas:term-cas
+    component_revision: MICRO2024-default
+    view_kind: software_operation_contract_not_physical_block
+    function: read_modify_write / cas [execute; paper_specified]
+    input_contract_scope: design_wide_catalog_interface_not_an_operand_signature
+    inputs:
+    - id: software_supplies
+      payload: 'Design-wide: Task dataflow graph and PE/operator configuration; task
+        arguments, partition mapping and deferred handlers.'
+      full_payload_contract: Task dataflow graph and PE/operator configuration; task
+        arguments, partition mapping and deferred handlers.
+      type: null
+      element_bytes: null
+      endpoint_role: host-facing
+    outputs:
+    - id: catalog_result
+      payload: success_flag
+      type: null
+      element_bytes: null
+      endpoint_role: host-facing
+    behavior:
+      ordering: Local partition SWMR and partition queues protect conflicts; ROB preserves
+        task enqueue result order. Shared-memory locks are additionally required across
+        engines.
+      completion: Task completion releases its partition; finished task waits for
+        ROB turn before result dequeue.
+      visibility: Task-level paper promise; precise CPU/cache write-visibility event
+        beyond synchronization is unknown.
+      result_validity: Active inputs only.
+    parameters: []
+    reference_parameters:
+    - id: task_rob_entries
+      unit: entries
+      state: fixed_reference
+      value: 256
+      domain: null
+      claim_refs:
+      - term-config
+      notes: Table II reference.
+    - id: partitions
+      unit: partitions
+      state: fixed_reference
+      value: 32
+      domain: null
+      claim_refs:
+      - term-config
+      notes: Table II reference.
+    - id: partition_buffer_entries
+      unit: entries
+      state: fixed_reference
+      value: 16
+      domain: null
+      claim_refs:
+      - term-config
+      notes: Per-partition reference capacity.
+    - id: fabric_rows
+      unit: PE rows
+      state: fixed_reference
+      value: 4
+      domain: null
+      claim_refs:
+      - term-config
+      notes: Reference spatial fabric.
+    - id: fabric_columns
+      unit: PE columns
+      state: fixed_reference
+      value: 8
+      domain: null
+      claim_refs:
+      - term-config
+      notes: Reference spatial fabric.
+    unknown_parameters: []
+    operation_contract:
+      id: term-cas
+      operation: read_modify_write
+      subtype: cas
+      execution_role: execute
+      address_patterns:
+      - indirect
+      support: paper_specified
+      claim_refs:
+      - term-write
+      result:
+        form: success_flag
+        old_value: unknown
+        validity: Active inputs only.
+        claim_refs:
+        - term-write
+      ordering:
+        scope: CAS primitive; shared lock protocol in concurrent CLHT
+        description: Local partition SWMR and partition queues protect conflicts;
+          ROB preserves task enqueue result order. Shared-memory locks are additionally
+          required across engines.
+        claim_refs:
+        - term-order
+        - term-host
+      completion:
+        event: Task completion releases its partition; finished task waits for ROB
+          turn before result dequeue.
+        visibility: Task-level paper promise; precise CPU/cache write-visibility event
+          beyond synchronization is unknown.
+        claim_refs:
+        - term-host
+        - term-order
+      datatype_notes: No universal datatype contract asserted.
+      limitations:
+      - Requires memory-unit/L2 atomic support. Not fetch-old.
+      realization:
+        kind: native_primitive
+        description: Fig.4 CAS primitive implemented by optional atomic-capable memory
+          unit/L2, with success output.
+        claim_refs:
+        - term-write
+    software_interface:
+      software_supplies: Task dataflow graph and PE/operator configuration; task arguments,
+        partition mapping and deferred handlers.
+      invocation: Core instructions enqueue/dequeue tasks, acquire/release partitions
+        and respond to deferred operations.
+      outputs: Task values/streams or success flags; deferred requests to the CPU.
+      claim_refs:
+      - term-read
+      - term-write
+      - term-host
+      - term-config
+    missing_capability_evidence:
+    - index_width_bits
+    - payload_types
+    requested_payload_types:
+    - int32
+    requested_index_width_bits:
+    - 32
+  connections: []
+  view_notice: Independent catalog operation interfaces. No physical port widths,
+    component composition or unlisted connections are established by this drawing.
+execution_plan:
+  rmw: potential_offload_only_after_CAS_mapping_proof
+  source_unchanged: true
+  queue_updates: Retain discovery and append semantics; no rewrite has been generated.
+software_handoff:
+  intrinsic_spec_owner: Peter
+  interface:
+    software_supplies: Task dataflow graph and PE/operator configuration; task arguments,
+      partition mapping and deferred handlers.
+    invocation: Core instructions enqueue/dequeue tasks, acquire/release partitions
+      and respond to deferred operations.
+    outputs: Task values/streams or success flags; deferred requests to the CPU.
+    claim_refs:
+    - term-read
+    - term-write
+    - term-host
+    - term-config
+  boundary_notes: Use the exact operation result/validity/ordering/completion contracts
+    and source requirements. Assist is not execute; old values are not CAS; type domains
+    do not prove valid indices. No C signature is synthesized here.

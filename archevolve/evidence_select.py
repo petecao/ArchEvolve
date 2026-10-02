@@ -9,6 +9,8 @@ import re
 from textwrap import shorten
 
 from archevolve.hardware_catalog import query_catalog, validate_catalog
+from archevolve.mechanisms import mechanism_context
+from archevolve.workload_context import candidate_groups, request_groups, request_statement_context
 from tools.render_mermaid import RequestError, validate_request
 
 
@@ -38,6 +40,7 @@ def capability_requests(case):
                          "payload_type":dtype, "index_width_bits":index_bits, "require_old_value":False,
                          "mapping_basis":basis, "mapping_status":"proposed_from_reported_pattern",
                          "missing_workload_evidence":missing,
+                         **request_statement_context(case, access["array"], purpose),
                          "mutable_target":access["operation"] == "read_modify_write"})
 
     for access in case["accesses"]:
@@ -87,6 +90,9 @@ def claim_closure(catalog, design, options):
     collect(design["interface"])
     collect(design["requirements"])
     collect(design["parameters"])
+    collect(design.get("internal_mechanisms", []))
+    collect(design.get("performance_hypotheses", []))
+    collect(design.get("hardware_structure"))
     for option in options: collect(option["operation"])
     sources = set(design["source_refs"])
     for ref in refs: sources.update(catalog["claims"][ref]["source_refs"])
@@ -126,12 +132,16 @@ def interface_view(design, options):
             "view_notice":"Independent catalog operation interfaces. No physical port widths, component composition or unlisted connections are established by this drawing."}
 
 
-def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates=4):
+def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates=4, focus_design_ids=None):
     validate_catalog(catalog)
     if type(max_candidates) is not int or max_candidates < 1:
         raise RequestError("max_candidates must be at least 1, including the CPU comparison.")
     requests, gaps = capability_requests(case)
+    workload_groups = request_groups(case, requests)
     designs = {d["id"]:d for d in catalog["designs"]}
+    if focus_design_ids is not None:
+        if not focus_design_ids or len(focus_design_ids) != len(set(focus_design_ids)) or not set(focus_design_ids) <= set(designs):
+            raise RequestError("Focus design IDs must be nonempty, unique, and present in the catalog.")
     groups, trace = {}, []
     for request in requests:
         result = query_catalog(catalog, operation=request["operation"], subtype=request["subtype"],
@@ -169,12 +179,14 @@ def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_c
     while any(lanes.values()):
         for bucket in buckets:
             if lanes[bucket]: ordered.append(lanes[bucket].pop(0))
-    selected = ordered[:max_candidates-1]
+    eligible = [g for g in ordered if focus_design_ids is None or g["design"]["id"] in focus_design_ids]
+    selected = eligible[:max_candidates-1]
     selection = []
     for group in ordered:
         selection.append({"design_id":group["design"]["id"], "scope":group["bucket"],
                           "operation_ids":sorted(group["options"]),
-                          "decision":"selected_for_exploration" if any(group is g for g in selected) else "eligible_outside_candidate_budget"})
+                          "decision":"selected_for_exploration" if any(group is g for g in selected) else
+                                     "outside_requested_design_focus" if focus_design_ids is not None and group["design"]["id"] not in focus_design_ids else "eligible_outside_candidate_budget"})
 
     baseline = {"id":case["case_id"]+"--cpu-baseline", "catalog_entry":"cpu-baseline", "status":"comparison_unmeasured",
                 "rationale":"Keep unchanged TDStep as the comparison. This does not assert that an accelerator is better.",
@@ -196,7 +208,10 @@ def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_c
             "id":case["case_id"]+"--"+design["id"]+"--"+bucket, "catalog_entry":design["id"]+":"+bucket,
             "status":status, "catalog_design_id":design["id"], "catalog_design_revision":design["revision"], "catalog_record_kind":design["record_kind"],
             "candidate_scope":bucket, "rationale":"Source-scoped operation matches for this workload. This is an interface exploration option, not a composed accelerator, legal rewrite, or performance winner.",
-            "target_access_ids":sorted({r["access_id"] for o in options for r in o["matched_requests"]}), "target_statement_ids":[],
+            "target_access_ids":sorted({r["access_id"] for o in options for r in o["matched_requests"]}),
+            "target_statement_ids":sorted({sid for o in options for r in o["matched_requests"] for sid in r["statement_ids"]}),
+            "request_groups":candidate_groups(workload_groups, options),
+            "mechanism_context":mechanism_context(design),
             "operation_options":deepcopy(options), "missing_evidence":missing,
             "source_evidence":claim_closure(catalog, design, options),
             "requirements":deepcopy(design["requirements"]), "requirement_status":"not_discharged_by_retrieval",
@@ -216,14 +231,16 @@ def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_c
         "representation":"source_scoped_operation_interface_views", "input_ref":case["input_ref"], "input_sha256":case["input_sha256"],
         "input_revision":case["source_binding"]["reported_revision"], "catalog_ref":catalog_ref, "catalog_revision":catalog["revision"], "catalog_sha256":catalog_digest,
         "kernel_id":case["case_id"], "capability_requests":requests,
-        "workload_summary":{key:deepcopy(case.get(key)) for key in ("kernel", "source_binding", "evidence_status", "rmw", "profiling_provenance", "frontier_evolution_profile", "profiling_context", "reported_counters", "methodology")},
+        "request_groups":workload_groups,
+        "workload_summary":{key:deepcopy(case.get(key)) for key in ("kernel", "source_binding", "source_context", "evidence_status", "rmw", "profiling_provenance", "frontier_evolution_profile", "profiling_context", "reported_counters", "methodology")},
         "interpretation_notes":["Offline evidence retrieval and explicit exploration ordering; no LLM or evaluator calls.",
                                 "Each box is a catalog operation interface, not an inferred physical component. Unconnected operation options are not a proved composition.",
                                 "Reference sizes are preserved as references, not chosen tuning values. Unknown domains stay unknown.",
                                 "Mutable read targets are not assumed immutable. CAS support is queried separately; assistance and fetch-old behavior do not establish CAS execution.",
                                 "One slot each for reads, update execution and read assistance is considered before remaining alternatives, subject to budget. Within scopes, evidence completeness/code support precede stable IDs; none is a performance rank."],
         "candidates":candidates, "clarification_requests":questions,
-        "selection_policy":{"preferred_read_shape_for_display":preferred_pattern, "category_order":buckets, "max_candidates_including_baseline":max_candidates},
+        "selection_policy":{"preferred_read_shape_for_display":preferred_pattern, "category_order":buckets, "max_candidates_including_baseline":max_candidates,
+                            "focus_design_ids":deepcopy(focus_design_ids)},
     }
     validate_request(request)
     return request, {"capability_queries":trace, "candidate_selection":selection,

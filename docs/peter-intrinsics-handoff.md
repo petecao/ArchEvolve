@@ -1,5 +1,32 @@
 # BFS intrinsic handoff — Eric's hardware evidence catalog
 
+## Latest: MAPLE is the second fetcher
+
+Eric's selected [MAPLE ISCA 2022 paper](https://jbalkind.github.io/docs/isca2022_maple.pdf) is now cataloged as `maple-isca2022` (data revision 0.1.3). The latest [DX100/MAPLE handoff guide](maple-dx100-handoff.md) links both BFS comparisons, intrinsic drafts, operation diagrams, workload context and paper logical block paths.
+
+Start with the [sparse MAPLE queue-fetch package](../runs/bfs-maple-comparison-v0.1/case-01/handoffs/candidate-04/README.md) and [diagram preview](../runs/bfs-maple-comparison-v0.1/case-01/handoffs/candidate-04/previews.md). MAPLE's LLC assistance is a separate package. Producing a pointer is not fetched-data completion; FIFO data is not kept coherent after fetch. Confirm typed API/packing/counts, source-to-mode mapping and stable-target conditions before Yan-Ru implements a replacement. Current BFS CAS/store/queue side effects stay on the CPU.
+
+## October 1: candidate packages
+
+The new handoff adds **high-level intrinsic descriptions and structured draft contracts** to the diagrams, one option per package:
+
+- [Sparse BFS packages](../runs/bfs-intrinsic-handoff-v0.1/case-01/handoffs/README.md).
+- [Fully connected BFS packages](../runs/bfs-intrinsic-handoff-v0.1/case-02/handoffs/README.md).
+- [Sparse DX100 description](../runs/bfs-intrinsic-handoff-v0.1/case-01/handoffs/candidate-02/README.md), [draft YAML](../runs/bfs-intrinsic-handoff-v0.1/case-01/handoffs/candidate-02/intrinsic-draft.yaml), [diagram](../runs/bfs-intrinsic-handoff-v0.1/case-01/handoffs/candidate-02/interface.png).
+- [Dense DX100 description](../runs/bfs-intrinsic-handoff-v0.1/case-02/handoffs/candidate-02/README.md), [draft YAML](../runs/bfs-intrinsic-handoff-v0.1/case-02/handoffs/candidate-02/intrinsic-draft.yaml), [diagram](../runs/bfs-intrinsic-handoff-v0.1/case-02/handoffs/candidate-02/interface.png).
+- [Sparse comparison](../runs/bfs-intrinsic-handoff-v0.1/case-01/hardware-comparison.md) and [dense comparison](../runs/bfs-intrinsic-handoff-v0.1/case-02/hardware-comparison.md).
+
+| Workload | DX100 preview | Terminus CAS preview | Prodigy assistance preview |
+|---|---|---|---|
+| Sparse | [Package diagrams](../runs/bfs-intrinsic-handoff-v0.1/case-01/handoffs/candidate-02/previews.md) | [Package diagrams](../runs/bfs-intrinsic-handoff-v0.1/case-01/handoffs/candidate-03/previews.md) | [Package diagrams](../runs/bfs-intrinsic-handoff-v0.1/case-01/handoffs/candidate-04/previews.md) |
+| Fully connected | [Package diagrams](../runs/bfs-intrinsic-handoff-v0.1/case-02/handoffs/candidate-02/previews.md) | [Package diagrams](../runs/bfs-intrinsic-handoff-v0.1/case-02/handoffs/candidate-03/previews.md) | [Package diagrams](../runs/bfs-intrinsic-handoff-v0.1/case-02/handoffs/candidate-04/previews.md) |
+
+Start with the DX100 read package. Confirm the manual source statements and exact operands, masks/lengths, result/completion behavior and legality; then produce the concrete software spec for Yan-Ru. The related-access bundle keeps the parent CAS, successful-branch store and queue append visible. It does not prove they can all execute on one accelerator.
+
+This earlier comparison includes DX100, SpZip's scoped Push reference and Prodigy assistance. It retains their role/type differences and missing internal scheduling information. The MAPLE follow-up above resolves second-fetcher selection. The proposed [shared format](intrinsic-handoff-format.md) needs team review; no ABI or intrinsic implementation has been generated.
+
+## Earlier operation-interface run
+
 Current inputs: Peter's v1.2 reports. Current catalog: `hardware-catalog-v0.1`, data revision `0.1.2`, merged from Eric's PR #2. The offline adapter now queries **source-scoped operation contracts**, replacing the provisional family sketches as the primary handoff.
 
 These are **operation-interface views**, not synthesized physical block diagrams, proofs of composition, final C signatures, or performance winners. All requirements remain to be discharged for the actual mapping. The original source has not been rewritten.

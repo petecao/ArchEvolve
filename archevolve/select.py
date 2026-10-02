@@ -49,10 +49,12 @@ def targets(case, policy):
     return [a for a in accesses if a["operation"] == "read" and "streaming" in a["reported_stream_kind"]]
 
 
-def select_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates=3):
+def select_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates=3, focus_design_ids=None):
     if catalog.get("format") == "hardware-catalog-v0.1":
         from archevolve.evidence_select import select_evidence_candidates
-        return select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates)
+        return select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates, focus_design_ids)
+    if focus_design_ids is not None:
+        raise RequestError("Design focus requires the evidence catalog.")
     validate_catalog(catalog)
     if type(max_candidates) is not int or max_candidates < 1:
         raise RequestError("max_candidates must be at least 1.")

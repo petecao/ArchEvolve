@@ -1,0 +1,20 @@
+flowchart TB
+  notice["Workload statement relations — manual source proposal; no hardware wiring implied"]:::notice
+  s0["bfs-td-frontier<br/>NodeID u = queue.shared#91;i#93;;<br/>uncovered request"]:::retained
+  s1["bfs-td-row-bounds<br/>for (int j = VertexOffsets#91;u#93;; j #60;<br/>VertexOffsets#91;u + 1#93;; j++) #123;<br/>uncovered request"]:::retained
+  s2["bfs-td-neighbor<br/>NodeID v = g.out_neighbors_#91;j#93;;<br/>uncovered request"]:::retained
+  s3["bfs-td-parent-read<br/>NodeID curr_val = parent#91;v#93;;<br/>uncovered request"]:::retained
+  s4["bfs-td-parent-cas<br/>if (compare_and_swap(parent#91;v#93;, curr_val, u)) #123;<br/>matched request; legality pending"]:::matched
+  s5["bfs-td-parent-store<br/>parent#91;v#93; = u;<br/>context side effect; preserve"]:::retained
+  s6["bfs-td-queue-append<br/>lqueue.push_back(v);<br/>context side effect; preserve"]:::retained
+  s0 -->|"recorded statement relation"| s4
+  s0 -->|"recorded statement relation"| s1
+  s2 -->|"recorded statement relation"| s4
+  s2 -->|"recorded statement relation"| s3
+  s4 -->|"recorded statement relation"| s5
+  s4 -->|"recorded statement relation"| s6
+  s3 -->|"recorded statement relation"| s4
+  s1 -->|"recorded statement relation"| s2
+  classDef notice fill:#dbeafe,stroke:#2563eb,color:#172554
+  classDef matched fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef retained fill:#fef3c7,stroke:#d97706,color:#78350f

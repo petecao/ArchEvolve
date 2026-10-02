@@ -115,6 +115,12 @@ def validate_catalog(catalog):
         references(question.get("claim_refs"), claims, f"decision_questions.{key}.claim_refs")
     designs = indexed(catalog.get("designs"), "designs")
     require(bool(designs), "At least one concrete design/version is required.")
+    if "project_selections" in catalog:
+        selected = mapping(catalog["project_selections"], "project_selections")
+        if "second_indirect_fetcher" in selected:
+            entry = mapping(selected["second_indirect_fetcher"], "project_selections.second_indirect_fetcher")
+            require(entry.get("design_id") in designs, "Selected second fetcher must reference a catalog design.")
+            text(entry.get("selection_provenance"), "second fetcher.selection_provenance")
     for key, design in designs.items():
         where = f"designs.{key}"
         for field in ("name", "revision", "summary"):
@@ -123,6 +129,37 @@ def validate_catalog(catalog):
         references(design.get("mechanism_refs"), families, f"{where}.mechanism_refs", nonempty=True)
         references(design.get("source_refs"), sources, f"{where}.source_refs", nonempty=True)
         strings(design.get("limitations"), f"{where}.limitations")
+        if "hardware_structure" in design:
+            structure = mapping(design["hardware_structure"], f"{where}.hardware_structure")
+            require(structure.get("view_kind") == "paper_logical_paths_not_port_netlist", "Hardware structure must retain its paper logical-path scope.")
+            blocks = indexed(structure.get("blocks"), f"{where}.hardware_structure.blocks")
+            for bid, block in blocks.items():
+                text(block.get("description"), f"hardware_structure.{bid}.description")
+                references(block.get("claim_refs"), claims, f"hardware_structure.{bid}.claim_refs", nonempty=True)
+            for connection in sequence(structure.get("connections"), "hardware_structure.connections"):
+                mapping(connection, "hardware_structure.connection")
+                require(connection.get("from_block") in blocks and connection.get("to_block") in blocks, "Hardware structure connection has unknown endpoint.")
+                text(connection.get("label"), "hardware_structure.connection.label")
+                references(connection.get("claim_refs"), claims, "hardware_structure.connection.claim_refs", nonempty=True)
+        # Optional meeting follow-up: explicit annotations, never capabilities
+        # inherited from a family or a promise of measured performance.
+        for mid, mechanism in indexed(design.get("internal_mechanisms", []), f"{where}.internal_mechanisms").items():
+            mw = f"{where}.internal_mechanisms.{mid}"
+            vocabulary(mechanism.get("kind"), {"buffering", "coalescing", "reordering", "issue_policy", "dependency_tracking", "completion", "other"}, f"{mw}.kind")
+            state = vocabulary(mechanism.get("status"), {"described", "unknown"}, f"{mw}.status")
+            refs = references(mechanism.get("claim_refs"), claims, f"{mw}.claim_refs", nonempty=state == "described")
+            if state == "described":
+                text(mechanism.get("description"), f"{mw}.description")
+                require(any(claims[c]["evidence_kind"] in {"paper_specification", "code_inspection"} for c in refs),
+                        f"{mw}: a described mechanism needs located paper/code evidence, not inference alone.")
+            else:
+                require(mechanism.get("description") is None and not refs, f"{mw}: unknown mechanisms must have null description and empty claims.")
+        for hid, hypothesis in indexed(design.get("performance_hypotheses", []), f"{where}.performance_hypotheses").items():
+            hw = f"{where}.performance_hypotheses.{hid}"
+            text(hypothesis.get("description"), f"{hw}.description")
+            strings(hypothesis.get("workload_conditions"), f"{hw}.workload_conditions", nonempty=True)
+            strings(hypothesis.get("limiting_factors"), f"{hw}.limiting_factors", nonempty=True)
+            references(hypothesis.get("claim_refs"), claims, f"{hw}.claim_refs", nonempty=True)
         interface = mapping(design.get("interface"), f"{where}.interface")
         for field in ("software_supplies", "invocation", "outputs"):
             text(interface.get(field), f"{where}.interface.{field}")

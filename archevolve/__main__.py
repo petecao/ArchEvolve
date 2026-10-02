@@ -37,12 +37,20 @@ def table_text(value):
     return str(value).replace("\n", " ").replace("|", "\\|").replace("<", "&lt;").replace(">", "&gt;").replace("`", "\\`")
 
 
-def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_path=None):
+def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_path=None,
+                source_context_path=None, compare_design_ids=None, focus_design_ids=None):
     """Prepare all artifacts in memory; malformed later inputs cannot leave half a run."""
     catalog, catalog_digest = load_request(catalog_path)
     evidence_catalog = catalog.get("format") == "hardware-catalog-v0.1"
+    if not evidence_catalog and (source_context_path is not None or compare_design_ids is not None):
+        raise RequestError("Source-context handoffs and design comparisons require the evidence catalog.")
     reference = reference_context(root)
     methods, methods_digest = None, None
+    source_context, context_digest = None, None
+    if source_context_path is not None:
+        from archevolve.workload_context import validate_context
+        source_context, context_digest = load_request(source_context_path)
+        validate_context(source_context)
     if methods_path is not None:
         methods, methods_digest = load_request(methods_path)
         methods["record_sha256"] = methods_digest
@@ -52,10 +60,13 @@ def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_
     artifacts, cases, case_ids = {}, [], set()
     for index, input_path in enumerate(input_paths, start=1):
         case = load_normalized(input_path, reference, threshold, methods)
+        if source_context is not None:
+            from archevolve.workload_context import bind_context
+            case = bind_context(case, source_context, context_digest, str(source_context_path))
         if case["case_id"] in case_ids:
             raise RequestError(f"Duplicate case_id {case['case_id']!r}; keep independent runs distinct.")
         case_ids.add(case["case_id"])
-        request, trace = select_candidates(case, catalog, str(catalog_path), catalog_digest, max_candidates)
+        request, trace = select_candidates(case, catalog, str(catalog_path), catalog_digest, max_candidates, focus_design_ids)
         folder = f"case-{index:02d}"
         request_text = yaml.safe_dump(request, sort_keys=False, allow_unicode=True)
         request_digest = hashlib.sha256(request_text.encode()).hexdigest()
@@ -66,14 +77,22 @@ def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_
         artifacts[f"{folder}/selection-trace.yaml"] = yaml.safe_dump(trace, sort_keys=False, allow_unicode=True)
         for name, content in diagrams.items():
             artifacts[f"{folder}/diagrams/{name}"] = content
+        if evidence_catalog:
+            from archevolve.intrinsic_handoff import build_handoff_artifacts
+            from archevolve.comparison import build_comparison_artifacts
+            for name, content in build_handoff_artifacts(request, request_digest).items():
+                artifacts[f"{folder}/handoffs/{name}"] = content
+            for name, content in build_comparison_artifacts(request, catalog, compare_design_ids).items():
+                artifacts[f"{folder}/{name}"] = content
         cases.append({"case_id":case["case_id"], "folder":folder, "input_ref":str(input_path),
                       "input_sha256":case["input_sha256"], "selected_entries":[c["catalog_entry"] for c in request["candidates"]],
                       "issues":case["issues"], "hardware_request_sha256":request_digest})
     code_hash = hashlib.sha256(b"".join((root / name).read_bytes() for name in (
-        "archevolve/normalize.py", "archevolve/measurement_methods.py", "archevolve/select.py", "archevolve/evidence_select.py", "archevolve/hardware_catalog.py", "archevolve/__main__.py", "tools/render_mermaid.py"))).hexdigest()
+        "archevolve/normalize.py", "archevolve/measurement_methods.py", "archevolve/select.py", "archevolve/evidence_select.py", "archevolve/hardware_catalog.py", "archevolve/mechanisms.py", "archevolve/workload_context.py", "archevolve/intrinsic_handoff.py", "archevolve/comparison.py", "archevolve/__main__.py", "tools/render_mermaid.py"))).hexdigest()
     run_key = {"inputs":[c["input_sha256"] for c in cases], "catalog_sha256":catalog_digest,
-               "max_candidates":max_candidates, "code_sha256":code_hash, "reference":reference, "methodology_sha256":methods_digest}
-    manifest = {"pipeline_version":"offline-0.2" if evidence_catalog else "offline-0.1", "backend":"offline_evidence_lookup" if evidence_catalog else "offline_rules", "llm_calls":0, "evaluation_performed":False,
+               "max_candidates":max_candidates, "code_sha256":code_hash, "reference":reference, "methodology_sha256":methods_digest,
+               "source_context_sha256":context_digest, "comparison_design_ids":compare_design_ids, "focus_design_ids":focus_design_ids}
+    manifest = {"pipeline_version":"offline-0.3" if evidence_catalog else "offline-0.1", "backend":"offline_evidence_lookup" if evidence_catalog else "offline_rules", "llm_calls":0, "evaluation_performed":False,
                 "run_id":hashlib.sha256(json.dumps(run_key,sort_keys=True).encode()).hexdigest(),
                 "identity":run_key, "catalog_ref":str(catalog_path), "catalog_revision":catalog["revision"], "cases":cases}
     artifacts["catalog.snapshot.yaml"] = catalog_path.read_text()
@@ -83,6 +102,8 @@ def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_
         artifacts["catalog.decision-questions.yaml"] = yaml.safe_dump(catalog["decision_questions"], sort_keys=False, allow_unicode=True)
     if methods_path is not None:
         artifacts["methodology.snapshot.yaml"] = methods_path.read_text()
+    if source_context_path is not None:
+        artifacts["source-context.snapshot.yaml"] = source_context_path.read_text()
     artifacts["manifest.json"] = json.dumps(manifest, indent=2, ensure_ascii=False) + "\n"
     catalog_note = ("Eric's source/version/configuration catalog is queried per operation. Interfaces and requirements remain scoped to the cited evidence; the diagrams do not establish physical partitioning, legal composition, or performance."
                     if evidence_catalog else "The catalog is the historical provisional family seed; its hardware partitions/ports have not been reviewed as implementations.")
@@ -92,7 +113,8 @@ def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_
     for c in cases:
         f = c["folder"]
         selected = ", ".join(c["selected_entries"]) or "none"
-        report.append(f"| {table_text(c['case_id'])} | {table_text(selected)} | [Diagrams]({f}/diagrams/README.md), [normalized input]({f}/normalized.yaml), [request YAML]({f}/hardware-request.yaml), [selection trace]({f}/selection-trace.yaml) |")
+        handoff_links = f", [intrinsic drafts]({f}/handoffs/README.md), [comparison]({f}/hardware-comparison.md)" if evidence_catalog else ""
+        report.append(f"| {table_text(c['case_id'])} | {table_text(selected)} | [Diagrams]({f}/diagrams/README.md), [normalized input]({f}/normalized.yaml), [request YAML]({f}/hardware-request.yaml), [selection trace]({f}/selection-trace.yaml){handoff_links} |")
     report += ["", "## Input findings", ""]
     for i, c in enumerate(cases, 1):
         report.append(f"### Case {i}")
@@ -109,13 +131,18 @@ def main(argv=None):
     parser.add_argument("--input", action="append", type=Path, required=True, help="Schema-1.1 TDStep YAML (report revisions v1.1/v1.2); repeat for separate cases")
     parser.add_argument("--catalog", type=Path, default=Path("catalog/hardware-v0.1.yaml"))
     parser.add_argument("--methods", type=Path, help="Optional reported methodology, bound to exact input hashes")
+    parser.add_argument("--source-context", type=Path, help="Explicit source observations/bindings; only matched file/function/revision context is used")
+    parser.add_argument("--compare-design", action="append", help="Catalog design ID for same-request comparison; repeat, independent of candidate budget")
+    parser.add_argument("--focus-design", action="append", help="Restrict candidate packages to these catalog design IDs; repeat. Full query evidence is retained")
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--max-candidates", type=int, default=4, help="Includes CPU comparison plus operation-interface exploration candidates")
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args(argv)
     try:
-        artifacts, manifest = prepare_run(args.input, args.catalog, max_candidates=args.max_candidates, methods_path=args.methods)
-        protected = {p.resolve() for p in [*args.input, args.catalog, *([args.methods] if args.methods else [])]}
+        artifacts, manifest = prepare_run(args.input, args.catalog, max_candidates=args.max_candidates, methods_path=args.methods,
+                                          source_context_path=args.source_context, compare_design_ids=args.compare_design, focus_design_ids=args.focus_design)
+        protected = {p.resolve() for p in [*args.input, args.catalog, *([args.methods] if args.methods else []),
+                                          *([args.source_context] if args.source_context else [])]}
         targets = [args.output_dir / name for name in artifacts]
         if any(p.resolve() in protected for p in targets):
             raise RequestError("Output would overwrite an input or catalog; use a separate directory.")
