@@ -1,0 +1,11 @@
+flowchart TB
+  title["Internal mechanism evidence — annotations, not physical wiring"]:::notice
+  m0["buffering<br/>described<br/>Circular FIFOs share scratchpad. Full-queue<br/>produces and empty-queue consumes wait in<br/>buffered pipelines; configuration remains<br/>available.<br/>Claims: maple-backpressure, maple-reference-<br/>config"]:::annotation
+  m1["buffering<br/>described<br/>LIMA fetches adjacent B-index data in 64-byte<br/>chunks and iterates through those words to<br/>generate A addresses.<br/>Claims: maple-lima"]:::annotation
+  m2["reordering<br/>described<br/>Reserved queue slot indices are used as<br/>transaction IDs. Replies may arrive out of order<br/>but are placed into their associated FIFO slots<br/>for ordered consumption; this is response<br/>association, not a demonstrated DRAM-locality<br/>sort.<br/>Claims: maple-queue-order"]:::annotation
+  m3["issue_policy<br/>described<br/>Separate produce/consume/configuration pipelines<br/>permit concurrent operations. LIMA feeds<br/>generated requests into the produce path; a<br/>blocked queue need not stall other queues. No<br/>locality-aware A-address sorting policy is<br/>specified.<br/>Claims: maple-backpressure, maple-lima"]:::annotation
+  m4["dependency_tracking<br/>described<br/>Software produces pointers or configures one-<br/>level LIMA intervals; queued replies retain slot<br/>identity. Dependencies needed to compute<br/>pointers/bounds stay in software unless the<br/>described LIMA operation covers them.<br/>Claims: maple-api, maple-lima, maple-queue-order"]:::annotation
+  m5["completion<br/>described<br/>The issue store acknowledgement occurs before<br/>the fetched memory data arrives; a consumer<br/>receives its data only on the queue-consume load<br/>response.<br/>Claims: maple-acknowledgement"]:::annotation
+  m6["coalescing<br/>unknown<br/>UNKNOWN — Eric's mechanism annotation needed<br/>Claims:"]:::annotation
+  classDef notice fill:#dbeafe,stroke:#2563eb,color:#172554
+  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3

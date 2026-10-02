@@ -1,0 +1,28 @@
+---
+title: "ILLUSTRATIVE | gapbs_bfs_top_down_step_fully_connected | gapbs_bfs_top_down_step_fully_connected--dx100-artifact-e4fc4af--read_execute | conditional"
+config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 320, "nodeSpacing": 24, "rankSpacing": 60, "padding": 12}}
+---
+flowchart LR
+  subgraph b0["dxc-stream_load"]
+    direction TB
+    b0_info["Component: dx100-artifact-e4fc4af:dxc-<br/>stream_load<br/>Function: read / stream_load #91;execute;<br/>code_observed#93;<br/>Realization: native_primitive<br/>Requested payload: int32<br/>Reference settings in YAML; none selected<br/>Parameter domains unresolved:<br/>effective_tile_elements"]:::annotation
+    b0_in0["IN: software_supplies<br/>Design-wide: Memory-mapped instruction stream,<br/>bases, typed scalar/vector tiles, optional mask<br/>and old-value destination. Range ... #91;full<br/>contract in YAML#93;<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+    b0_out0["OUT: catalog_result<br/>scratchpad_tile<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+  end
+  subgraph b1["dxc-gather"]
+    direction TB
+    b1_info["Component: dx100-artifact-e4fc4af:dxc-gather<br/>Function: read / gather #91;execute; code_observed#93;<br/>Realization: native_primitive<br/>Requested payload: int32<br/>Requested index bits: 32<br/>Reference settings in YAML; none selected<br/>Parameter domains unresolved:<br/>effective_tile_elements"]:::annotation
+    b1_in0["IN: software_supplies<br/>Design-wide: Memory-mapped instruction stream,<br/>bases, typed scalar/vector tiles, optional mask<br/>and old-value destination. Range ... #91;full<br/>contract in YAML#93;<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+    b1_out0["OUT: catalog_result<br/>scratchpad_tile<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+  end
+  subgraph b2["dxc-ranged-gather"]
+    direction TB
+    b2_info["Component: dx100-artifact-e4fc4af:dxc-ranged-<br/>gather<br/>Function: read / gather #91;execute; code_observed#93;<br/>Realization: documented_sequence<br/>Requested payload: int32<br/>Requested index bits: 32<br/>Reference settings in YAML; none selected<br/>Parameter domains unresolved:<br/>effective_tile_elements"]:::annotation
+    b2_in0["IN: software_supplies<br/>Design-wide: Memory-mapped instruction stream,<br/>bases, typed scalar/vector tiles, optional mask<br/>and old-value destination. Range ... #91;full<br/>contract in YAML#93;<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+    b2_out0["OUT: catalog_result<br/>index_tiles_then_gathered_tile<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+  end
+  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3
+  classDef hostPort fill:#dbeafe,stroke:#2563eb,color:#172554
+  classDef memoryPort fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef internalPort fill:#f1f5f9,stroke:#64748b,color:#0f172a
+  classDef unknownPort fill:#fef3c7,stroke:#d97706,color:#78350f

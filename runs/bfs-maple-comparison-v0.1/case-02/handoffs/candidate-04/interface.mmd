@@ -1,0 +1,35 @@
+---
+title: "ILLUSTRATIVE | gapbs_bfs_top_down_step_fully_connected | gapbs_bfs_top_down_step_fully_connected--maple-isca2022--read_execute | needs_evidence"
+config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 320, "nodeSpacing": 24, "rankSpacing": 60, "padding": 12}}
+---
+flowchart LR
+  subgraph b0["maple-lima-stream"]
+    direction TB
+    b0_info["Component: maple-isca2022:maple-lima-stream<br/>Function: read / stream_load #91;execute;<br/>paper_specified#93;<br/>Realization: documented_sequence<br/>Requested payload: int32<br/>Evidence missing: payload_types<br/>Reference settings in YAML; none selected<br/>runtime_queue_allocation: OPEN<br/>#91;entries_per_queue#93;<br/>prefetch_distance: OPEN #91;iterations#93;"]:::annotation
+    b0_in0["IN: software_supplies<br/>Design-wide: Queue identities and<br/>lifecycle/binding, virtual pointers for<br/>individual fetches, or configured A/B bases plus<br/>... #91;full contract in YAML#93;<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+    b0_out0["OUT: catalog_result<br/>queue_value_stream<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+  end
+  subgraph b1["maple-lima-produce"]
+    direction TB
+    b1_info["Component: maple-isca2022:maple-lima-produce<br/>Function: read / gather #91;execute;<br/>paper_specified#93;<br/>Realization: documented_sequence<br/>Requested payload: int32<br/>Requested index bits: 32<br/>Evidence missing: index_width_bits,<br/>payload_types<br/>Reference settings in YAML; none selected<br/>runtime_queue_allocation: OPEN<br/>#91;entries_per_queue#93;<br/>prefetch_distance: OPEN #91;iterations#93;"]:::annotation
+    b1_in0["IN: software_supplies<br/>Design-wide: Queue identities and<br/>lifecycle/binding, virtual pointers for<br/>individual fetches, or configured A/B bases plus<br/>... #91;full contract in YAML#93;<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+    b1_out0["OUT: catalog_result<br/>queue_value_stream<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+  end
+  subgraph b2["maple-lima-range"]
+    direction TB
+    b2_info["Component: maple-isca2022:maple-lima-range<br/>Function: read / gather #91;execute;<br/>paper_specified#93;<br/>Realization: documented_sequence<br/>Requested payload: int32<br/>Requested index bits: 32<br/>Evidence missing: index_width_bits,<br/>payload_types<br/>Reference settings in YAML; none selected<br/>runtime_queue_allocation: OPEN<br/>#91;entries_per_queue#93;<br/>prefetch_distance: OPEN #91;iterations#93;"]:::annotation
+    b2_in0["IN: software_supplies<br/>Design-wide: Queue identities and<br/>lifecycle/binding, virtual pointers for<br/>individual fetches, or configured A/B bases plus<br/>... #91;full contract in YAML#93;<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+    b2_out0["OUT: catalog_result<br/>queue_value_stream<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+  end
+  subgraph b3["maple-pointer-fetch"]
+    direction TB
+    b3_info["Component: maple-isca2022:maple-pointer-fetch<br/>Function: read / gather #91;execute;<br/>paper_specified#93;<br/>Realization: documented_sequence<br/>Requested payload: int32<br/>Requested index bits: 32<br/>Evidence missing: index_width_bits,<br/>payload_types<br/>Reference settings in YAML; none selected<br/>runtime_queue_allocation: OPEN<br/>#91;entries_per_queue#93;<br/>prefetch_distance: OPEN #91;iterations#93;"]:::annotation
+    b3_in0["IN: software_supplies<br/>Design-wide: Queue identities and<br/>lifecycle/binding, virtual pointers for<br/>individual fetches, or configured A/B bases plus<br/>... #91;full contract in YAML#93;<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+    b3_out0["OUT: catalog_result<br/>queue_value_stream<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+  end
+  mechanism_info["Internal mechanism annotations (no wiring<br/>implied)<br/>buffering: Circular FIFOs share scratchpad.<br/>Full-queue produces and empty-queue consumes<br/>wait in buffered pipelines; ...<br/>buffering: LIMA fetches adjacent B-index data in<br/>64-byte chunks and iterates through those words<br/>to generate A addresses.<br/>reordering: Reserved queue slot indices are used<br/>as transaction IDs. Replies may arrive out of<br/>order but are placed ...<br/>issue_policy: Separate<br/>produce/consume/configuration pipelines permit<br/>concurrent operations. LIMA feeds generated ...<br/>dependency_tracking: Software produces pointers<br/>or configures one-level LIMA intervals; queued<br/>replies retain slot identity. ...<br/>completion: The issue store acknowledgement<br/>occurs before the fetched memory data arrives; a<br/>consumer receives its ...<br/>Full mechanism descriptions in YAML<br/>Internal detail unrecorded: coalescing"]:::annotation
+  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3
+  classDef hostPort fill:#dbeafe,stroke:#2563eb,color:#172554
+  classDef memoryPort fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef internalPort fill:#f1f5f9,stroke:#64748b,color:#0f172a
+  classDef unknownPort fill:#fef3c7,stroke:#d97706,color:#78350f

@@ -4,11 +4,11 @@ Updated for the September 24, 2026 meeting. The responsibilities and BFS target 
 
 ## Immediate objective
 
-Push **DX100-modified GAP BFS** through the forward pipeline: annotated source → statement-level memory features → hardware-request YAML with candidates, rationale, and evidence. The next artifact is a block diagram of each candidate's components and I/O, which Peter can use to derive intrinsic specifications.
+Push **DX100-modified GAP BFS** through the forward pipeline: source/features → source-scoped hardware operation queries → candidate interface YAML with rationale/evidence → operation-interface views for Peter's specification work. Eric's catalog is not a physical component library, so these views must not invent a circuit partition or legal composition.
 
 Use the modified for-loop version selected by the team. Do not silently substitute upstream BFS or assume every loop conversion preserves semantics. The meeting identified while-loop handling as a limitation for the intended DX100 path; confirm applicability against the actual modified code and catalog.
 
-SPARTA remains an interim format/diagram exercise, rather than the demonstration kernel. BC may be considered after BFS works. The modified source is checked out at DX100 revision `e4fc4afdf894f295442cef3604667a469fab8e62`. Peter's preliminary v1.1 sparse/dense reports have been received; their profiled revision/raw logs, Yan-Ru's annotations, and Eric's reviewed catalog remain pending. See [the source review](bfs-source-review.md) and [the intake assessment](offline-pipeline.md).
+SPARTA remains a historical format/diagram exercise. BC may follow BFS. The modified source is pinned at `e4fc4afdf894f295442cef3604667a469fab8e62`, matching Peter's v1.2 reported revision and 32-bit offsets. Sparse profiling metadata and per-level observations are retained. Eric's PR #2 is now merged, providing six source-scoped design/configuration records and 32 operations. Raw runtime binding and mapping proofs remain open.
 
 Source inspection clarifies the meeting shorthand: `TDStep` uses explicit index-based CPU loops, while `TDStepMAA` uses existing DX100 operations. Host `while` loops remain. Feature extraction from `TDStep`, with `TDStepMAA` as a reference, is proposed for confirmation with Peter/Yan-Ru.
 
@@ -49,7 +49,7 @@ The coordinator loads versioned input/catalog snapshots, tracks budgets and hist
 
 The local coordinator does not imply ownership of Scott's project-wide Controller or the other team's agents.
 
-Implementation update (September 28): the first [offline coordinator and selector](offline-pipeline.md) is implemented in `archevolve/`. It uses explicit rules, a provisional catalog seed, and per-run history manifests. It does not execute the LLM prompt, run an evaluator, or automatically grow the catalog. Peter's v1.1 reports are now accepted through an adapter, with conflicting/unverified fields preserved.
+Implementation update (September 30): the [offline coordinator](offline-pipeline.md) now defaults to Eric's catalog via [the evidence adapter](hardware-catalog-integration.md). It retains full operation queries, exclusions, source contracts and requirements. The old family seed remains an explicit historical backend. Neither backend executes the LLM prompt, runs an evaluator, or automatically promotes new catalog claims.
 
 ## Input from Peter: features per statement
 
@@ -88,38 +88,38 @@ First align meanings and identifiers with Peter, then map them to the official f
 
 ## Eric's catalog and candidate search
 
-The earlier taxonomy drafts explain useful design dimensions. Runtime search must use Eric's current machine-readable catalog once supplied, with component IDs/revisions and supporting references.
+The earlier taxonomy drafts are background. Runtime search now uses `catalog/hardware-v0.1.yaml`, format v0.1/data revision 0.1.2, through Eric's validator and query API. The derived navigation tree classifies operation → execution role/mapping reference → address pattern; it is non-exclusive and retains unknown/unsupported leaves.
 
-For each relevant component, obtain its purpose, supported access/update patterns, I/O, ordering/completion/coherence behavior, composition constraints, tunable parameters with units/ranges, and available implementation/model references. A taxonomy leaf alone is not a complete architecture.
+Records distinguish actual design editions, configurations, and published mappings. Each operation carries support, execution versus assistance, result/old-value behavior, validity, ordering, completion/visibility, types, requirements, and located claims. Family membership grants no inherited capability. A match alone is not an architecture, legal rewrite, or measured improvement.
 
 Search procedure:
 
 1. Validate source/statement identities and the feature meanings supplied.
-2. Retrieve compatible components and architecture families.
-3. Explain the mapping from specific accesses to candidate blocks using cited evidence.
-4. Reject documented incompatibilities; retain plausible choices with explicit unresolved conditions.
-5. Assemble candidate block graphs where the catalog supports composition.
-6. Keep tunable values open and output the hardware request for review/diagram generation.
+2. Query exact workload operation/subtype/address/type requirements.
+3. Retain conditional matches and exclusions with their evidence and requirements.
+4. Keep unknown operation support as an evidence gap; never promote assistance into execution or returned-old behavior into CAS.
+5. Group source-scoped operation interface options; do not infer physical composition or internal wiring.
+6. Keep fixed reference values distinct from open choices/unknown domains and emit the interface handoff.
 
 Indirect access does not automatically imply DX100, nor does a reported DX100 benefit establish a speedup for the current dataset. RMW requires appropriate behavior; address-generation capability does not establish that an engine executes arbitrary updates.
 
 ## Output: hardware request with a block graph
 
-See [the output template](../examples/hardware-request.template.yaml). Proposed per-candidate contents:
+See [the current integration contract](hardware-catalog-integration.md). The earlier [output template](../examples/hardware-request.template.yaml) is retained as a format sketch, not an implementation-ready component graph. Current per-candidate contents include:
 
 - Target statement/access IDs and feature input revision.
 - Catalog component references, rationale, evidence, applicability conditions, and missing-information requests.
-- Hardware blocks with unique IDs, function, and input/output ports.
-- Port payload meanings, types/widths where known, and direction.
-- Connections identifying producer block/port and consumer block/port.
+- Abstract operation-view blocks using real operation IDs and source interface/result descriptions.
+- Software input/result semantics; these are not inferred physical port widths or C signatures.
+- No unlisted connections: the retrieved operation options have not been proved composable.
 - Boundary behavior: address interpretation, memory effects, ordering, completion, synchronization, and visibility as applicable.
-- Parameter names, units, constraints, and **open values** for later tuning.
+- Exact `fixed_reference`, `open`, and `unknown` parameter records, separate from an empty selected configuration.
 
 A box labeled only “DX100” is insufficient for Peter to derive the interface. Josh's selector need not invent a C intrinsic name/signature; Peter derives that from the block behavior and I/O.
 
 ### Parameters remain open
 
-Storage size, request-window size, and similar choices belong to the architecture search/tuning process. Identify supported parameters and catalog-derived restrictions, leaving `value: null` with `state: open` where tuning is deferred.
+Storage size, request-window size, and similar choices belong to a later architecture search/tuning process with adequate capability/model evidence. Preserve Eric's parameter states: a fixed reference value is not a chosen configuration or proof of a tunable range; unknown domains are not silently converted to unrestricted open choices.
 
 Only fix a value when an actual component or supplied constraint requires it, citing the reason. Open parameters do not prevent a structurally complete diagram from going to Peter. The older v0.1 gate requiring a fixed configuration and full software API is not the forward-path gate anymore.
 
@@ -137,7 +137,7 @@ The implemented converter (`tools/render_mermaid.py`) follows these requirements
 
 The converter now emits Mermaid source and a review report, with optional SVG/PNG export through Mermaid CLI. It performs narrow graph-integrity checks, not capability or correctness validation. See [the generator guide](mermaid-generator.md).
 
-Peter's SPARTA example remains an interim diagram demo. The new BFS offline pipeline also generates provisional family sketches from the received profiles and the local catalog seed. Neither set establishes verified implementations or real performance. Peter should receive both YAML and its rendered view so detailed semantics survive diagram simplification.
+The SPARTA and previous family-seed BFS diagrams remain historical. Current BFS results are source-scoped operation-interface views from Eric's catalog. Neither the view nor a capability match establishes an implemented rewrite or performance win. Peter should receive the YAML's full source/operation requirements alongside the view.
 
 ## Software back path and feedback
 
@@ -153,13 +153,13 @@ Josh/Eric combine the rewritten code with matching hardware artifacts for evalua
 
 1. Use the recorded DX100-modified BFS revision; obtain Yan-Ru's annotations and confirm the target function/build path.
 2. Obtain Peter's features for real statements, including split access chains.
-3. Load Eric's current catalog and construct at least one evidence-backed hardware request.
+3. Use the merged catalog to query operations and inspect the new conditional hardware requests; the first evidence-backed offline pass is implemented.
 4. Generate and review its block diagram with Peter, checking whether the I/O behavior supports intrinsic derivation.
 5. Sketch the back path using feedback from a real attempted rewrite.
 
 Steps 1–3 are the immediate forward demonstration. The diagram and back path can be designed alongside it. Broader tuning, the full evaluator loop, additional agents, and prompt evolution follow after the interfaces work.
 
-The repository contains the offline normalizer/selector, a provisional catalog seed, candidate YAML and BFS diagrams, design documents, prompts, templates, renderer, tests, SPARTA examples, and recorded source checkouts. It has no live LLM backend, reviewed implementation catalog, or connected evaluator. BFS source observations are manual; incoming profile claims have not been reproduced locally.
+The repository contains the offline normalizer, operation-evidence selector, Eric's source-reviewed research catalog, interface views/traces, historical seed examples, prompts, tests and reference sources. It has no live LLM backend, validated physical composition library, or connected evaluator. Incoming profiling and catalog hardware claims have not been reproduced locally.
 
 ## Sources
 

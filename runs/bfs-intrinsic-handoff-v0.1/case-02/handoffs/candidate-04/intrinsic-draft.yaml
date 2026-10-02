@@ -1,0 +1,401 @@
+format: intrinsic-handoff-v0.1
+status: draft_requires_review
+backend: offline_contract_projection
+llm_calls: 0
+kernel_id: gapbs_bfs_top_down_step_fully_connected
+candidate_id: gapbs_bfs_top_down_step_fully_connected--prodigy-hpca2021--read_assist
+catalog_design_id: prodigy-hpca2021
+catalog_design_revision: HPCA2021-peer-reviewed-manuscript
+provenance:
+  input_sha256: 1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750
+  catalog_sha256: 8c36b19acdd1a1dd9755826672f2c1a4eb9a368fc26e148334f1e2ed4ead54fe
+  source_context_sha256: 4abf18a26cb638f5243887cefcdf54fac45492ea9eeb4db5e2cbc5695560abac
+  evidence_ref: candidate.yaml#source_evidence
+operations:
+- id: prod-prefetch
+  intent: Configure prefetch assistance for accesses to VertexOffsets, g.out_neighbors_,
+    parent; the program still obtains its required values/updates through its original
+    execution path.
+  execution_role: assist
+  operation: read
+  subtype: prefetch
+  support: paper_specified
+  realization:
+    kind: documented_sequence
+    description: Hardware follows software DIG edges over multiple nonbinding prefetch
+      requests; this is a prefetch algorithm, not a demand-gather instruction.
+    claim_refs:
+    - prod-dig
+    - prod-prefetch
+  logical_inputs:
+  - request_id: access-02-read
+    target_array: VertexOffsets
+    address_pattern: indirect
+    requested_payload_type: int32
+    requested_index_width_bits: 32
+    mutable_target: false
+    index_width_status: requested
+    statement_ids:
+    - bfs-td-row-bounds
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 241
+      end_line: 241
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Reported loaded-index expression; near-unit measured distance does
+      not turn this into a proven stream.
+  - request_id: access-03-read
+    target_array: g.out_neighbors_
+    address_pattern: ranged_indirect
+    requested_payload_type: int32
+    requested_index_width_bits: 32
+    mutable_target: false
+    index_width_status: requested
+    statement_ids:
+    - bfs-td-neighbor
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 242
+      end_line: 242
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Reported CSR row bounds plus segmented neighbor traversal; range
+      realization/continuation still needs mapping proof.
+  - request_id: access-04-read
+    target_array: parent
+    address_pattern: indirect
+    requested_payload_type: int32
+    requested_index_width_bits: 32
+    mutable_target: true
+    index_width_status: requested
+    statement_ids:
+    - bfs-td-parent-read
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 243
+      end_line: 243
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Reported loaded-index expression; near-unit measured distance does
+      not turn this into a proven stream.
+  input_scope: workload_intent_and_design_contract_not_a_concrete_operand_list
+  design_interface:
+    software_supplies: Data Indirection Graph with array layout, dependency edges
+      and triggers; no accelerator instruction stream.
+    invocation: Runtime stores configure memory-mapped tables; demand accesses and
+      fills drive prefetching.
+    outputs: Nonbinding cache fills; CPU still executes the program and its updates.
+    claim_refs:
+    - prod-dig
+    - prod-prefetch
+  supported_type_constraints: null
+  datatype_notes: Node data_size and address interpretation configured in DIG; no
+    universal width domain asserted.
+  preconditions:
+    design_requirements_ref: candidate.yaml#requirements
+    status: not_discharged
+    mutable_target_review_required: true
+  postconditions:
+    catalog_result:
+      form: cache_fill_hint
+      old_value: not_applicable
+      validity: CPU demand access remains authoritative; sequences may be dropped.
+      claim_refs:
+      - prod-dig
+      - prod-prefetch
+    satisfies_program_result: no_assistance_only
+    program_equivalence_status: not_established
+  ordering:
+    scope: nonbinding cache requests
+    description: No program-operation ordering or required-value delivery supplied
+      by prefetch sequence order.
+    claim_refs:
+    - prod-dig
+    - prod-prefetch
+  completion:
+    event: Prefetch fill may trigger another traversal; no software operation-completion
+      event.
+    visibility: Cache residency only; no update completion or immutable-memory guarantee.
+    claim_refs:
+    - prod-dig
+    - prod-prefetch
+  limitations:
+  - This cannot substitute for an architectural load executor or CPU CAS.
+  claim_refs:
+  - prod-dig
+  - prod-prefetch
+  missing_capability_evidence:
+  - index_width_bits
+  - payload_types
+  missing_workload_evidence: []
+  concrete_signature: null
+  implementation_ref: null
+request_groups:
+- id: bfs-td-traversal-and-discovery
+  description: Source dependency chain from frontier load through row bounds and neighbor
+    traversal to parent read and conditional CAS. The successful CAS also controls
+    an explicit parent store and queue append. This context group is a manual proposal,
+    not a proved single-accelerator mapping.
+  request_ids:
+  - access-01-read
+  - access-02-read
+  - access-03-read
+  - access-04-read
+  - access-04-update
+  statement_ids:
+  - bfs-td-frontier
+  - bfs-td-row-bounds
+  - bfs-td-neighbor
+  - bfs-td-parent-read
+  - bfs-td-parent-cas
+  - bfs-td-parent-store
+  - bfs-td-queue-append
+  dependencies:
+  - from_statement: bfs-td-frontier
+    to_statement: bfs-td-row-bounds
+  - from_statement: bfs-td-row-bounds
+    to_statement: bfs-td-neighbor
+  - from_statement: bfs-td-neighbor
+    to_statement: bfs-td-parent-read
+  - from_statement: bfs-td-frontier
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-neighbor
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-parent-read
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-parent-cas
+    to_statement: bfs-td-parent-store
+  - from_statement: bfs-td-parent-cas
+    to_statement: bfs-td-queue-append
+  context_statements:
+  - id: bfs-td-frontier
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 240
+      end_line: 240
+    code: NodeID u = queue.shared[i];
+    operation: read
+    access_expression: queue.shared[i]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids: []
+    interpretation: Sequential frontier read in logical i order; thread interleaving
+      depends on execution.
+  - id: bfs-td-row-bounds
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 241
+      end_line: 241
+    code: for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+    operation: read
+    access_expression: VertexOffsets[u] and VertexOffsets[u + 1]
+    data_type: SGOffset = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-frontier
+    interpretation: Two offset accesses indexed by a loaded vertex ID; the +1 is index
+      arithmetic.
+  - id: bfs-td-neighbor
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 242
+      end_line: 242
+    code: NodeID v = g.out_neighbors_[j];
+    operation: read
+    access_expression: g.out_neighbors_[j]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-row-bounds
+    interpretation: Sequential within each adjacency segment; transitions between
+      segments are data-dependent.
+  - id: bfs-td-parent-read
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 243
+      end_line: 243
+    code: NodeID curr_val = parent[v];
+    operation: read
+    access_expression: parent[v]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-neighbor
+    interpretation: Indirect read indexed by the loaded neighbor ID.
+  - id: bfs-td-parent-cas
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 247
+      end_line: 247
+    code: if (compare_and_swap(parent[v], curr_val, u)) {
+    operation: read_modify_write
+    access_expression: compare_and_swap(parent[v], curr_val, u)
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-frontier
+    - bfs-td-neighbor
+    - bfs-td-parent-read
+    interpretation: Subtype is compare-and-swap, guarded by curr_val < 0; successful
+      discovery controls queue insertion.
+  - id: bfs-td-parent-store
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 248
+      end_line: 248
+    code: parent[v] = u;
+    operation: write
+    access_expression: parent[v] = u
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-parent-cas
+    interpretation: Explicit store inside the successful CAS branch; preserve in any
+      analysis of side effects.
+  - id: bfs-td-queue-append
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 249
+      end_line: 249
+    code: lqueue.push_back(v);
+    operation: call_with_side_effects
+    access_expression: lqueue.push_back(v)
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-parent-cas
+    interpretation: Thread-local queue buffering followed by lqueue.flush(); not a
+      plain target-array access.
+  basis: explicit_manual_source_group
+  hardware_composition_status: not_established
+  covered_request_ids:
+  - access-02-read
+  - access-03-read
+  - access-04-read
+  uncovered_request_ids:
+  - access-01-read
+  - access-04-update
+  joint_execution_status: requires_mapping_and_composition_review
+workload_semantics:
+  reported_rmw:
+    kind: conditional_compare_and_swap
+    reported_details:
+      subtype: read_predominated_conditional_cas
+      primitive: CAS(addr=&parent[v], expected=curr_val, new_val=u)
+      execution_frequency:
+        level_1: N - 1 executions (100% commit rate)
+        level_2: 0 executions (bypassed entirely by if (curr_val < 0) filter)
+      contention: zero lock contention across Level 2
+    must_preserve: true
+    phase_execution:
+      level_1: N - 1 executions (100% commit rate)
+      level_2: 0 executions (bypassed entirely by if (curr_val < 0) filter)
+  source_binding:
+    status: revision_reported_matching
+    reported_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    reference_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  evidence_status: reported_not_reproduced
+requirements:
+- id: prod-description
+  description: Register valid nodes, bounds, sizes, traversal edges and trigger edges
+    for the actual workload.
+  scope: DIG and each participating array
+  claim_refs:
+  - prod-dig
+  verification: required
+- id: prod-context
+  description: Preserve the correct per-thread prefetcher context; establish trigger
+    partitioning for parallel use.
+  scope: Private per-core prefetcher and context switches
+  claim_refs:
+  - prod-prefetch
+  verification: required
+requirement_status: not_discharged
+parameter_contract:
+- id: pfhr_entries
+  unit: entries
+  state: fixed_reference
+  value: 16
+  domain: null
+  claim_refs:
+  - prod-config
+  notes: Chosen reference; evaluated alternatives 4, 8 and 32 are sensitivity experiments,
+    not a runtime knob domain.
+selected_configuration: {}
+mechanism_context:
+  annotations:
+  - id: unrecorded-buffering
+    kind: buffering
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-reordering
+    kind: reordering
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-issue_policy
+    kind: issue_policy
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-dependency_tracking
+    kind: dependency_tracking
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: unrecorded-completion
+    kind: completion
+    status: unknown
+    description: null
+    claim_refs: []
+  missing_kinds:
+  - buffering
+  - coalescing
+  - reordering
+  - issue_policy
+  - dependency_tracking
+  - completion
+  performance_hypotheses: []
+  scope: Curated descriptions and explicit unknowns; no cycle model or inferred physical
+    topology.
+execution_plan:
+  rmw: retain_original_CPU_update
+  source_unchanged: true
+  queue_updates: Retain discovery and append semantics; no rewrite has been generated.
+review_questions:
+- id: placement
+  owner: Peter
+  question: Confirm the matching source statements, region, phase and allowable replacement
+    scope. Manual bindings are proposals; profiling placement is not confirmed.
+- id: abi
+  owner: Peter/Eric
+  question: Specify exact operands, index arithmetic, masks/produced lengths, concrete
+    types, invocation and completion API for each chosen operation or sequence.
+- id: legality
+  owner: Peter/Eric
+  question: Discharge ownership, numeric domains, mutable-load freshness, ordering,
+    repeated-target/concurrency and result validity requirements. Preserve CAS success
+    and queue side effects.
+- id: mechanisms
+  owner: Eric
+  question: Add located internal buffering/coalescing/reordering/issue/dependency/completion
+    details and conditions limiting performance.
+- id: composition
+  owner: Josh/Eric
+  question: Establish whether related requests can share one legal mapping; the workload
+    group and interface view do not prove combined execution.
+- id: implementation
+  owner: Yan-Ru
+  question: After Peter's spec is agreed, choose or synthesize an implementation and
+    verify the rewritten kernel against the frozen correctness oracle.
+readiness:
+  description_generated: true
+  concrete_abi_agreed: false
+  mapping_requirements_discharged: false
+  implementation_generated: false
+  correctness_verified: false
+  performance_evaluated: false

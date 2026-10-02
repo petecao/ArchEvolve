@@ -1,4 +1,6 @@
-# Provisional hardware catalog seed
+# Historical provisional hardware catalog seed
+
+The CLI now defaults to [Eric's hardware-v0.1 catalog](../docs/hardware-catalog-handoff.md). This seed is retained for historical replay with `--catalog catalog/seed.yaml`; it is not the current hardware evidence source.
 
 `seed.yaml` is a small local catalog constructed from Eric's taxonomy documents. **It is not Eric's delivered machine-readable catalog and has not been reviewed as an implementation specification.**
 

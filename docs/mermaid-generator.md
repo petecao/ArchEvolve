@@ -1,6 +1,6 @@
 # Hardware-request YAML → Mermaid
 
-The converter in `tools/render_mermaid.py` is implemented. It requires Python 3.10+ and PyYAML. It makes no LLM calls and does not select or validate hardware capabilities.
+The converter in `tools/render_mermaid.py` is implemented. Current results use [Eric's operation-interface representation](hardware-catalog-integration.md); the SPARTA example below is historical. It requires Python 3.10+ and PyYAML. It makes no LLM calls and does not select or validate hardware capabilities.
 
 ## SPARTA demo
 
@@ -46,12 +46,13 @@ Adjust `executablePath` for another platform/browser installation. The Python co
 
 ## What gets drawn
 
-- One subgraph per supplied hardware block.
+- One subgraph per supplied block/view record. For the current evidence catalog these are abstract operation contracts, not physical components.
 - Separate input/output port nodes with payload, type, element width, and boundary role.
 - Blue host-facing ports, green memory-facing ports, gray internal ports, and amber unknown-role ports.
 - Dashed explanatory annotations for functions/components and parameter values. These are not additional hardware.
 - Exactly the connections present in `hardware.connections`; no inferred internal signal wiring.
-- Open values as `OPEN`, and missing widths/types as `unknown`.
+- Open values as `OPEN`, and missing ABI/port widths/types as `unknown`. Source-reference settings are annotated separately and never become chosen values.
+- For operation views: execution/assistance role, native/sequence realization, requested payload/index types, and missing capability evidence.
 
 Behavior, ordering, completion, constraints, evidence, and unresolved questions remain in the report's candidate YAML. Diagram shape and color do not prove semantic compatibility. An unconnected boundary port remains visible without inventing an external component.
 

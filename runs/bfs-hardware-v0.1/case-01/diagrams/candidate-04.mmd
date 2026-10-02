@@ -1,0 +1,16 @@
+---
+title: "ILLUSTRATIVE | gapbs_bfs_top_down_step | gapbs_bfs_top_down_step--prodigy-hpca2021--read_assist | needs_evidence"
+config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 320, "nodeSpacing": 24, "rankSpacing": 60, "padding": 12}}
+---
+flowchart LR
+  subgraph b0["prod-prefetch"]
+    direction TB
+    b0_info["Component: prodigy-hpca2021:prod-prefetch<br/>Function: read / prefetch #91;assist;<br/>paper_specified#93;<br/>Realization: documented_sequence<br/>Requested payload: int32<br/>Requested index bits: 32<br/>Evidence missing: index_width_bits,<br/>payload_types<br/>Reference settings in YAML; none selected"]:::annotation
+    b0_in0["IN: software_supplies<br/>Design-wide: Data Indirection Graph with array<br/>layout, dependency edges and triggers; no<br/>accelerator instruction stream.<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+    b0_out0["OUT: catalog_result<br/>cache_fill_hint (assistance only; not the<br/>requested program result)<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+  end
+  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3
+  classDef hostPort fill:#dbeafe,stroke:#2563eb,color:#172554
+  classDef memoryPort fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef internalPort fill:#f1f5f9,stroke:#64748b,color:#0f172a
+  classDef unknownPort fill:#fef3c7,stroke:#d97706,color:#78350f

@@ -1,0 +1,16 @@
+---
+title: "ILLUSTRATIVE | gapbs_bfs_top_down_step_fully_connected | gapbs_bfs_top_down_step_fully_connected--cpu-baseline | comparison_unmeasured"
+config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 320, "nodeSpacing": 24, "rankSpacing": 60, "padding": 12}}
+---
+flowchart LR
+  subgraph b0["existing-cpu"]
+    direction TB
+    b0_info["Component: cpu-baseline/existing-cpu<br/>Function: Unmodified TDStep baseline, including<br/>conditional CAS, queue updates and normal cache<br/>behavior."]:::annotation
+    b0_in0["IN: workload<br/>Original buffers and code<br/>unknown; unknown B/element<br/>host-facing"]:::hostPort
+    b0_out0["OUT: memory-traffic<br/>Original demand reads and updates<br/>unknown; unknown B/element<br/>memory-facing"]:::memoryPort
+  end
+  classDef annotation fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-dasharray:3 3
+  classDef hostPort fill:#dbeafe,stroke:#2563eb,color:#172554
+  classDef memoryPort fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef internalPort fill:#f1f5f9,stroke:#64748b,color:#0f172a
+  classDef unknownPort fill:#fef3c7,stroke:#d97706,color:#78350f

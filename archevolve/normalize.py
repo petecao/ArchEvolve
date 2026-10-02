@@ -1,9 +1,10 @@
-"""Adapt the received v1.1 TDStep reports without upgrading their evidence."""
+"""Adapt schema-1.1 TDStep reports, including report revisions v1.1 and v1.2."""
 
 from __future__ import annotations
 
 from copy import deepcopy
 from pathlib import Path
+import math
 import re
 
 from tools.render_mermaid import RequestError, load_request, mapping, sequence
@@ -11,6 +12,43 @@ from tools.render_mermaid import RequestError, load_request, mapping, sequence
 
 def number(value):
     return value if type(value) in (int, float) else None
+
+
+def profile_context(data):
+    """Preserve reported sections and describe their scopes without joining trials."""
+    provenance = data.get("profiling_provenance")
+    frontier = data.get("frontier_evolution_profile")
+    counters = data.get("hardware_performance_profile")
+    for name, value in (("profiling_provenance", provenance), ("frontier_evolution_profile", frontier),
+                        ("hardware_performance_profile", counters)):
+        if value is not None:
+            mapping(value, name)
+    levels, seen = [], set()
+    if frontier is not None:
+        for row in sequence(frontier.get("levels", []), "frontier_evolution_profile.levels"):
+            mapping(row, "frontier level")
+            level, size, mean = row.get("level"), row.get("frontier_size"), row.get("mean_queue_distance")
+            if type(level) is not int or level < 1 or level in seen:
+                raise RequestError("Frontier level IDs must be positive, unique integers.")
+            seen.add(level)
+            if size is not None and (type(size) is not int or size < 0):
+                raise RequestError("frontier_size must be a nonnegative integer or null.")
+            if mean is not None and (type(mean) not in (int, float) or not math.isfinite(mean) or mean < 0):
+                raise RequestError("mean_queue_distance must be a nonnegative finite number or null.")
+            no_pairs = size is not None and size < 2
+            levels.append({"level":level, "frontier_size":size, "reported_mean_queue_distance":mean,
+                           "usable_mean_queue_distance":None if no_pairs else mean,
+                           "distance_status":"not_applicable_no_adjacent_pairs" if no_pairs else "reported" if mean is not None else "unknown"})
+    return {"profiling_provenance":deepcopy(provenance), "frontier_evolution_profile":deepcopy(frontier),
+            "profiling_context":{
+                "evidence_status":"reported_not_reproduced",
+                "reported_command_line":provenance.get("command_line") if provenance else None,
+                "counter_measurement_scope":counters.get("measurement_scope") if counters else None,
+                "frontier_measurement_scope":frontier.get("measurement_scope") if frontier else None,
+                "cross_section_trial_binding":"not_established",
+                "aggregation_policy":"retain_sections_separately_no_level_weighting_or_counter_join",
+                "frontier_level_observations":levels,
+            }}
 
 
 def normalize(data: dict, digest: str, source_name: str, reference: dict,
@@ -24,10 +62,12 @@ def normalize(data: dict, digest: str, source_name: str, reference: dict,
         raise RequestError("kernel.name must identify the workload case.")
     issues = []
 
-    def issue(code, message, fields, affects):
-        issues.append({"id": code, "severity": "needs_clarification", "message": message,
+    def issue(code, message, fields, affects, severity="needs_clarification"):
+        issues.append({"id": code, "severity": severity, "message": message,
                        "fields": fields, "affects": affects})
 
+    profiles = profile_context(data)
+    provenance = profiles["profiling_provenance"]
     revision = kernel.get("source_revision", kernel.get("revision"))
     binding = "unverified"
     if revision is None:
@@ -40,8 +80,23 @@ def normalize(data: dict, digest: str, source_name: str, reference: dict,
     else:
         binding = "revision_reported_matching" # Still not a reproduced measurement.
 
-    issue("raw-profile-missing", "Received values are reported; raw profiling logs, build flags, dataset identity and per-run scope have not been bound/verified by this prototype.",
-          ["hardware_performance_profile", "indirect_access_distances"], ["performance_claims"])
+    if provenance and provenance.get("source_revision") and revision and provenance["source_revision"] != revision:
+        binding = "conflicting_reported_revisions"
+        issue("profile-source-conflict", "Kernel identity and profiling provenance report different source revisions; both are retained and the source binding is unresolved.",
+              ["kernel.source_revision", "profiling_provenance.source_revision"], ["source_binding", "performance_claims"])
+    profile_message = (
+        "Profiling provenance is supplied and retained as reported context. Raw artifacts, exact collection/ROI boundaries and cross-trial correspondence remain unverified; no measurements were reproduced locally."
+        if provenance else
+        "Received values are reported; raw profiling logs, build flags, dataset identity and per-run scope have not been bound/verified by this prototype."
+    )
+    issue("raw-profile-missing", profile_message,
+          ["profiling_provenance", "hardware_performance_profile", "indirect_access_distances"], ["performance_claims"])
+    if profiles["frontier_evolution_profile"] is not None:
+        issue("frontier-profile-scope", "The reported per-level scope is preserved separately from the command/counter context. No counter values are apportioned to levels, and no level means are aggregated across trials.",
+              ["frontier_evolution_profile", "hardware_performance_profile"], ["measurement_scope"], severity="interpretation_resolved")
+    if any(row["distance_status"] == "not_applicable_no_adjacent_pairs" for row in profiles["profiling_context"]["frontier_level_observations"]):
+        issue("frontier-distance-no-pairs", "A frontier with fewer than two entries has no adjacent pairs. The reported mean remains in the raw section, but its analysis value is null rather than a measured zero-distance observation.",
+              ["frontier_evolution_profile.levels"], ["distance_interpretation"], severity="interpretation_resolved")
     raw_streams = sequence(data.get("memory_streams", []), "memory_streams")
     distances = sequence(data.get("indirect_access_distances", []), "indirect_access_distances")
     structures = sequence(data.get("data_structures", []), "data_structures")
@@ -148,11 +203,13 @@ def normalize(data: dict, digest: str, source_name: str, reference: dict,
         "normalizer_version": "offline-0.1", "case_id": kernel["name"],
         "input_ref": source_name, "input_sha256": digest,
         "kernel": deepcopy(kernel), "source_binding": {"status": binding, "reported_revision": revision, "reference_revision": reference.get("revision")},
+        "reported_loop_structure": deepcopy(data.get("loop_structure")),
         "evidence_status": "reported_not_reproduced", "accesses": accesses,
         "rmw": {"kind": "conditional_compare_and_swap" if cas else "unknown", "reported_details": deepcopy(rmw), "must_preserve": True, "phase_execution": phases},
         "reported_topology": deepcopy(data.get("topology_characteristics")),
         "reported_footprints_and_reuse": deepcopy(data.get("working_set")),
         "reported_counters": deepcopy(data.get("hardware_performance_profile")),
+        **profiles,
         "hardware_hypotheses": hypotheses, "excluded_from_selection": excluded,
         "issues": issues, "signals": signals,
         "heuristic_policy": {"large_jump_threshold_elements": large_jump_threshold, "near_unit_upper_bound_elements": 1.1, "meaning": "Exploration ordering only; not a bottleneck classifier or speedup estimate."},

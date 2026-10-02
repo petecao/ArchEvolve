@@ -1,0 +1,68 @@
+- id: operation-result
+  question: Is the requested result a fetched value, update success, old value, reduction,
+    or only a cache hint?
+  why_it_matters: A cache hint, successful update and returned old word cannot substitute
+    for one another.
+  claim_refs:
+  - dxp-update
+  - dxc-old
+  - term-write
+  - prod-prefetch
+- id: mapping-scope
+  question: Which exact arrays, address ranges, aliases, writers and ROI participate?
+  why_it_matters: A writer restriction applies to participating arrays and their aliases
+    during a defined phase.
+  claim_refs:
+  - dxp-legality
+  - dxc-region
+  - spzip-cpu-update
+  - bfs-mapping-boundary
+- id: order
+  question: Which conflicting operations must serialize, and which result order is
+    observable?
+  why_it_matters: Input-order result delivery does not establish conflict execution
+    order or global atomicity.
+  claim_refs:
+  - term-order
+  - term-host
+  - dxc-local-order
+- id: completion
+  question: Which event permits which observer to consume results or reuse storage?
+  why_it_matters: Ready state, accepted write, visibility and storage reuse name different
+    obligations.
+  claim_refs:
+  - dxc-completion
+  - term-host
+  - dxc-ready-response
+  - dxc-direct-backing
+- id: representation
+  question: Does software supply an instruction sequence, dependency graph, task graph,
+    or compressed stream layout?
+  why_it_matters: A DIG, a DCL pipeline and an ISA sequence require different software
+    preparation.
+  claim_refs:
+  - prod-dig
+  - spzip-fetch
+  - dxp-interface
+  - term-read
+- id: types
+  question: Are payload, index, range-bound and continuation widths independently
+    compatible?
+  why_it_matters: A supported payload width can coexist with narrower indices or range
+    bounds. Address arithmetic can have a narrower intermediate product than the final
+    address.
+  claim_refs:
+  - dxc-gather
+  - dxc-range
+  - bfs-types
+  - dxc-byte-offset-domain
+- id: finite-state
+  question: What bounds concurrent work, and when may queues, tiles, descriptors or
+    translations be reused?
+  why_it_matters: Finite contexts may be full or still owned after values become available.
+  claim_refs:
+  - dxc-range
+  - term-config
+  - prod-config
+  - spzip-config
+  - dxc-reuse-scope
