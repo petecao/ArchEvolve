@@ -38,7 +38,7 @@ def _report(records, tmp_path, **updates):
 
 
 def test_empty_public_report_keeps_every_required_cell_and_criterion(records, tmp_path):
-    records.copy_repo("applications", "kernels", "implementations", "intrinsics", "strategies", "profiles", "inputs", "machines")
+    records.copy_repo("applications", "kernels", "implementations", "intrinsics", "strategies", "profiles", "inputs", "machines", "operations")
     report = _report(records, tmp_path)
     assert report["acceptance"] == "incomplete" and report["gain_claim"] is False
     assert len(report["matrix"]) == 8

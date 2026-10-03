@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "retention",
+  "title": "retention",
+  "description": "Introduced 2026-10-03 ET. Immutable custody metadata; evaluations are never rewritten.",
+  "properties": {
+    "schema_version": {
+      "const": "0.4"
+    },
+    "message_version": {
+      "const": "1.0"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "sw",
+            "hw",
+            "operator",
+            "worker"
+          ]
+        },
+        "test_client": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "role",
+        "test_client"
+      ]
+    },
+    "kind": {
+      "const": "retention"
+    },
+    "event": {
+      "enum": [
+        "prune",
+        "approval",
+        "prune_intent"
+      ]
+    },
+    "evaluation": {
+      "type": "string",
+      "x-ref": "evaluation"
+    },
+    "deleted": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256",
+          "bytes"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "occurred_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "host": {
+      "type": "string",
+      "minLength": 1
+    },
+    "approval": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "listing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "approved_by": {
+      "const": "yanrujhou"
+    },
+    "planned": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256",
+          "bytes"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "intent": {
+      "type": "string",
+      "x-ref": "retention"
+    }
+  },
+  "required": [
+    "kind",
+    "schema_version",
+    "message_version",
+    "producer",
+    "event",
+    "deleted",
+    "reason",
+    "occurred_at",
+    "host"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "event": {
+            "const": "prune"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "evaluation"
+        ],
+        "properties": {
+          "deleted": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event": {
+            "const": "approval"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "listing",
+          "approved_by"
+        ],
+        "properties": {
+          "deleted": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event": {
+            "const": "prune_intent"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "evaluation",
+          "planned"
+        ],
+        "properties": {
+          "planned": {
+            "minItems": 1
+          },
+          "deleted": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
+}

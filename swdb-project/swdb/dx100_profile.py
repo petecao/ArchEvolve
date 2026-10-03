@@ -10,6 +10,7 @@ import json
 import math
 from pathlib import Path
 import re
+import socket
 import time
 
 from swdb import artifacts, workflow
@@ -89,7 +90,7 @@ def diagnostic_regions(store, request, evaluation, candidate, root, deadline):
             or artifacts.digest(_context(diagnostic)) != artifacts.digest(_context(evaluation))):
         raise Failure('diagnostic execution differs from the exact primary source/workload/configuration/ROI')
     from swdb.dx100_coverage import validate_trace
-    validate_trace(diagnostic, deadline)
+    validate_trace(diagnostic, deadline, store=store)
     trial = _trial(diagnostic, require_explicit=True)
     if trial != _trial(evaluation, require_explicit=True):
         raise Failure('diagnostic execution trial differs from the actual primary source/position/repetition')
@@ -282,8 +283,17 @@ def collect(args):
         if not evaluation or evaluation.get("context", {}).get("backend") != "dx100-gem5-se":
             raise Failure("evaluation does not identify DX100 execution")
         context = evaluation["context"]
+        preflight = None
+        if socket.gethostname().split('.')[0] == 'mbit10':
+            from swdb import profile
+            from swdb.dispatch_preflight import check
+            machine = store.get(evaluation['machine'], 'machine')
+            if not machine:
+                raise Failure('DX100 profile machine is unavailable')
+            lane = profile._verified_lane(machine, getattr(args, 'lane', None))
+            preflight = check(args.runs_dir, lane)
         from swdb.dx100_coverage import validate_trace
-        validate_trace(evaluation, deadline)
+        validate_trace(evaluation, deadline, store=store)
         trial = _trial(evaluation, require_explicit=bool(request.get('diagnostic_evaluation')))
         candidate = store.get(evaluation.get("candidate"), "candidate")
         discovery = store.get(request.get("discovery_profile"), "region_profile")
@@ -299,6 +309,8 @@ def collect(args):
                     implementation=candidate["implementation"], machine=evaluation["machine"], context=copy.deepcopy(context),
                     discovery=copy.deepcopy(discovery["discovery"]) if discovery else {})
         data["context"]["primary_binary_sha256"] = evaluation["build"]["binary_sha256"]
+        if preflight is not None:
+            data['context']['dispatch_preflight'] = preflight
         stats_reference = context["statistics"]
         stats = _file(stats_reference, "recorded statistics")
         config = _file(context["actual_configuration"], "actual simulator configuration")

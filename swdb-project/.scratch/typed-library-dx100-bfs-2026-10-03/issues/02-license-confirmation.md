@@ -14,3 +14,5 @@ Created: 2026-10-03
 - [ ] The answer and its date are recorded under Comments.
 
 ## Comments
+
+- 2026-10-03: Yan-Ru authorized working as if Peter approves Apache-2.0 WITH LLVM-exception. The grammar port records that authorization; no Peter confirmation is claimed.

@@ -413,7 +413,7 @@ def _simulation_build(settings, store, role, candidate, build, classification, *
               "actual reference source/binary differs from frozen reference_artifacts")
 
 
-ACCELERATOR_CASES = {"executed", "full_tiles", "tail_tiles", "competing_parent_updates"}
+ACCELERATOR_CASES = {"executed", "read_only_executed", "full_tiles", "tail_tiles", "competing_parent_updates"}
 
 
 def accelerator_cases(check):
@@ -428,10 +428,16 @@ def accelerator_cases(check):
     executed = (coverage.get("accelerator_executed") is True
                 and any(isinstance(key, str) and key.endswith(".numInst") and positive(value) for key, value in counters.items())
                 and all(positive(units.get(unit)) for unit in ("S", "I", "R", "A")))
-    if not executed:
+    readonly = coverage.get('read_only_executed', {})
+    read_only = (isinstance(readonly, dict) and readonly.get('state') == 'observed'
+        and all(type(readonly.get(key)) is int for key in ('stream', 'indirect', 'range', 'alu', 'indirect_stores'))
+        and readonly['stream'] >= 1 and readonly['indirect'] >= 1 and readonly['range'] >= 1
+        and readonly['alu'] == readonly['indirect_stores'] == 0
+        and readonly['indirect'] == 3 * readonly['range'] - readonly['stream'])
+    if not executed and not read_only:
         return set()
-    observed = {"executed"}
-    for name in ACCELERATOR_CASES - {"executed"}:
+    observed = ({"executed"} if executed else set()) | ({'read_only_executed'} if read_only else set())
+    for name in ACCELERATOR_CASES - {"executed", 'read_only_executed'}:
         item = coverage.get(name)
         if isinstance(item, dict) and item.get("state") == "observed" and type(item.get("count")) is int and item["count"] > 0:
             observed.add(name)
@@ -537,6 +543,10 @@ def _validate_settings(settings, store, *, require_simulation_identity=False):
               and all(isinstance(values, list) and all(isinstance(value, str) for value in values)
                       and len(values) == len(set(values)) and set(values) <= ACCELERATOR_CASES for values in accelerator.values()),
               "required_accelerator_cases needs unique supported per-role typed observations")
+        if 'read_only_executed' in accelerator['candidate']:
+            _fail(accelerator['baseline'] == [], 'read-only protocol baseline must have no accelerator cases')
+            from swdb.read_only_checks import validate_companion_settings
+            validate_companion_settings(correctness, store)
     fixed_reference = mode == "artifact_reference" or (mode != "native" and all(
         value.get("adapter") == "dx100.author_artifact.v1" for value in settings["builds"].values()))
     if require_simulation_identity and fixed_reference:
@@ -623,6 +633,9 @@ def freeze_protocol(args):
     except (KeyError, TypeError, ValueError) as exc:
         raise Failure(f"invalid protocol settings: {exc}") from None
     identities = {wid: verify_immutable(_get(store, wid, "workload")) for wid in settings["workloads"]}
+    companion = settings.get('correctness', {}).get('companion_cases', {}).get('parent_gather_race')
+    if companion:
+        identities[companion['workload']] = verify_immutable(_get(store, companion['workload'], 'workload'))
     return _save_immutable(args, request, "protocol", settings=settings, workload_identities=identities,
                            frozen_at=_now(), state="frozen")
 
@@ -779,6 +792,14 @@ def validate_protocol_for_simulation(store, request, candidate, *, actual_target
     workload_request = request.get("workload", {})
     wid = workload_request.get("id")
     _fail(wid in frozen["workload_identities"], "simulation workload is outside frozen settings")
+    companion = request.get('protocol_companion')
+    if companion is not None:
+        case = settings.get('correctness', {}).get('companion_cases', {}).get(companion)
+        _fail(companion == 'parent_gather_race' and isinstance(case, dict) and role == 'candidate'
+              and wid == case['workload'] and workload_request.get('source') == case['source'],
+              'simulation companion differs from its frozen candidate case')
+    else:
+        _fail(wid in settings['workloads'], 'timed simulation workload is outside frozen timing grid')
     workload = _get(store, wid, "workload")
     _fail(verify_immutable(workload) == frozen["workload_identities"][wid], "registered simulation workload changed")
     definition = workload["definition"]
@@ -801,7 +822,10 @@ def validate_protocol_for_simulation(store, request, candidate, *, actual_target
     _fail(actual_threads == settings["threads"] and actual_roi == settings["roi"] and actual_verifier == settings["correctness"]["verifier"],
           "actual simulator threads/ROI/verifier differs from frozen settings")
     expected_build = settings["builds"][role]
-    _fail(all(artifacts.digest(actual_build.get(key)) == artifacts.digest(expected_build[key])
+    checked_build = copy.deepcopy(actual_build)
+    if companion and '-DSWDB_DXC_DIAGNOSTIC' in checked_build.get('flags', []):
+        checked_build['flags'] = [flag for flag in checked_build['flags'] if flag != '-DSWDB_DXC_DIAGNOSTIC']
+    _fail(all(artifacts.digest(checked_build.get(key)) == artifacts.digest(expected_build[key])
               for key in ("compiler", "compiler_version", "flags", "adapter")), "actual simulator guest build differs from frozen settings")
     _simulation_build(settings, store, role, candidate, actual_build,
                       "contract_fixture" if request.get("fixture") else "execution", check_files=True)
@@ -813,6 +837,8 @@ def validate_protocol_for_simulation(store, request, candidate, *, actual_target
     binding = {"protocol": frozen["id"], "frozen_sha256": fingerprint, "workload_id": wid,
                "workload_sha256": workload["identity_sha256"], "role": role, "frozen_at": frozen["frozen_at"],
                "bound_at": _now(), "settings_sha256": artifacts.digest(settings)}
+    if companion:
+        binding['companion_case'] = companion
     return {"binding": binding, "build": copy.deepcopy(actual_build), "context": {
         "protocol": frozen["id"], "protocol_binding": binding, "protocol_trial": copy.deepcopy(trial),
         "target": actual_target, "backend_configuration": copy.deepcopy(actual_configuration),
@@ -961,10 +987,10 @@ def _check_verifier_identity(evaluation, store=None):
     if not components:
         if verifier.startswith('dx100.'):
             from swdb.dx100_coverage import validate_trace
-            validate_trace(evaluation)
+            validate_trace(evaluation, store=store)
         if verifier == "dx100.bfs.verifier.v2":
             from swdb.dx100_witness import validate_record_witness
-            validate_record_witness(evaluation)
+            validate_record_witness(evaluation, store=store)
         return
     _fail(store is not None, "aggregate correctness requires its actual component records")
     retained = []
@@ -1043,7 +1069,8 @@ def _evaluation_samples(store, evaluation, protocol, role):
         validate_baseline_source(store, candidate)
     workload = context.get("workload", {})
     wid = workload.get("id")
-    _fail(wid in protocol["workload_identities"] and binding.get("workload_id") == wid, "evaluation workload is outside protocol")
+    _fail(wid in settings['workloads'] and wid in protocol["workload_identities"] and binding.get("workload_id") == wid,
+          "evaluation workload is outside the frozen timed protocol grid")
     registered = _get(store, wid, "workload")
     _fail(verify_immutable(registered) == protocol["workload_identities"][wid]
           and binding.get("workload_sha256") == registered["identity_sha256"], "evaluation workload registration changed")
@@ -1118,6 +1145,9 @@ def _evaluation_samples(store, evaluation, protocol, role):
         required_accelerator = settings["correctness"].get("required_accelerator_cases", {}).get(role, [])
         _fail(set(required_accelerator) <= accelerator_cases(matching[0]),
               "timed replay lacks required typed accelerator coverage")
+        if 'read_only_executed' in required_accelerator:
+            from swdb.read_only_checks import validate_frontier
+            validate_frontier(evaluation, matching[0], store)
         observations[cell] = _positive(observation.get("duration_s"), "ROI duration")
     _fail(set(observations) == expected_cells, "missing timed source/repetition coverage")
     return {position: [observations[position, repetition] for repetition in range(settings["sampling"]["repetitions"])]
@@ -1229,7 +1259,11 @@ def compare_evaluations(args):
         data["evidence_kind"] = evidence_kind
         data["evaluation_identities"] = {baseline["id"]: artifacts.digest(baseline), candidate["id"]: artifacts.digest(candidate)}
         data["region_comparisons"] = _region_comparisons(baseline, candidate, protocol["settings"], store, request.get("region_packages"))
+        from swdb.read_only_checks import companion_acceptance
+        accepted_companion = companion_acceptance(store, protocol, request, candidate)
         data["metrics"] = _statistics(a, b, protocol["settings"]["profitability"], sampling)
+        if accepted_companion is not None:
+            data['metrics']['companion_acceptance'] = accepted_companion
         if pair_identity is not None:
             data["metrics"]["paired_collection"] = pair_identity
         data["metrics"]["workload"] = wid
@@ -1254,4 +1288,12 @@ def compare_evaluations(args):
         data["metrics"] = {}
         data["region_comparisons"] = []
     data["finished_at"] = _now()
-    return workflow.persist(args.records, data, getattr(args, "db", None), create=True)
+    result = workflow.persist(args.records, data, getattr(args, "db", None), create=True)
+    if data['decision']['state'] != 'rejected':
+        from swdb.retention import automatic
+        ids = []
+        for row in (baseline, candidate):
+            ids.extend(item['evaluation'] for item in row.get('component_evaluations', []))
+            ids.append(row['id'])
+        automatic(args.records, ids, 'comparison', db=getattr(args, 'db', None))
+    return result

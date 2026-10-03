@@ -20,10 +20,15 @@ class Result:
     vocabs: dict = None
 
 
-def validate_records(records_dir, extra=None, replace=None):
+def validate_records(records_dir, extra=None, replace=None, library_root=None):
     """Validate the records folder as it would be after writing `extra` (new store.Record
     objects) and `replace` ({relative path: new data} for records already on disk)."""
-    return _validate_store(Store(records_dir), extra=extra, replace=replace)
+    result = _validate_store(Store(records_dir), extra=extra, replace=replace)
+    from swdb.library import Library, default_root
+    root = library_root or default_root(records_dir)
+    if root.exists():
+        result.problems.extend(Library(root, result.store).validate())
+    return result
 
 
 def _validate_store(store, extra=None, replace=None):

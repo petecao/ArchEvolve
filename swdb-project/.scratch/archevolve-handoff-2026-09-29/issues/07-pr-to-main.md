@@ -4,7 +4,7 @@ Created: 2026-09-29
 Updated: 2026-09-29 23:20 ET
 **Type:** task
 **Status:** ready-for-human
-**Blocked by:** None
+**Blocked by:** typed-library-dx100-bfs-2026-10-03 tickets 45, 56, 57, 58
 **Spec:** `../spec.md`
 
 An agent drafts the PR description; Yan-Ru opens the PR for Peter and Josh to review.
@@ -36,3 +36,5 @@ synchronization remain in progress; the draft links the precise review scope.
 evaluation and review tasks are complete. The updated draft is ready for Yan-Ru;
 the final closure is being published to the authorized `yanrujhou_main` branch.
 Opening the PR into `main` remains the human task above.
+
+2026-10-03: The expanded typed-library feature blocks this PR until its gem5/Extensa branches finish.

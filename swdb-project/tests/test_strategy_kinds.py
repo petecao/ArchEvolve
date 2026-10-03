@@ -1,4 +1,4 @@
-"""The remaining effect kinds and target types, the five seeds, common intrinsics, the
+"""The remaining effect kinds and target types, the seed strategies, common intrinsics, the
 prefetch update kind, and the loop and input strategy queries. Created 2026-09-23."""
 
 import json
@@ -7,7 +7,7 @@ import pytest
 
 from test_strategies import edit, other_strategy, passes, pattern, query, rejected
 
-SEEDS = ["loop_tiling", "packing", "simd_gather", "software_prefetch", "vertex_reordering"]
+SEEDS = ["dx100_read_offload", "loop_tiling", "packing", "simd_gather", "software_prefetch", "vertex_reordering"]
 GATHER = "strategies/simd_gather.yaml"
 TILING = "strategies/loop_tiling.yaml"
 REORDER = "strategies/vertex_reordering.yaml"
@@ -138,7 +138,7 @@ def by_id(found):
 
 def test_pattern_query_lists_every_access_pattern_strategy(repo):
     found = by_id(query(repo, "strategies", "--pattern", "gapbs-pr-jacobi/gather-contrib"))
-    assert sorted(found) == ["packing", "simd_gather", "software_prefetch"]
+    assert sorted(found) == ["dx100_read_offload", "packing", "simd_gather", "software_prefetch"]
     assert all(e["outcome"] == "legal" for e in found.values())
 
 

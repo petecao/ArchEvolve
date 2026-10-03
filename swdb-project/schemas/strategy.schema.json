@@ -92,6 +92,23 @@
               "string",
               "null"
             ]
+          },
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "integer"
+            }
+          },
+          "hardware_operations": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "x-ref": "operation"
+            }
           }
         },
         "required": [
@@ -273,6 +290,32 @@
                   "note"
                 ],
                 "x-reason": "a restructure_loop effect has only kind, restructure, and note"
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "offload"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "steps",
+                "hardware_operations"
+              ],
+              "propertyNames": {
+                "enum": [
+                  "kind",
+                  "steps",
+                  "hardware_operations",
+                  "note"
+                ]
               }
             }
           }

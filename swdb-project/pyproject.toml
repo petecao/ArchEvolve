@@ -17,8 +17,12 @@ test = ["pytest"]
 [project.scripts]
 swdb = "swdb.cli:main"
 
-[tool.setuptools]
-packages = ["swdb"]
+[tool.setuptools.packages.find]
+include = ["swdb*"]
+
+[tool.setuptools.package-data]
+"swdb._vendor.lark" = ["grammars/*.lark", "*.lark"]
+"swdb._vendor" = ["licenses/*", "PROVENANCE.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

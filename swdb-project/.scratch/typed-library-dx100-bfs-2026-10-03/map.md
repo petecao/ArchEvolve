@@ -20,8 +20,8 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 
 | # | Ticket | Status | Blocked by | Go-ahead |
 |---|---|---|---|---|
-| 05 | [Prefactor: intrinsic records accept a hardware interface](issues/05-intrinsic-records-accelerator-interface.md) | ready-for-agent | 03 |  |
-| 06 | [Prefactor: offload strategy effect and the DX100 read-offload strategy](issues/06-offload-strategy-effect.md) | ready-for-agent | 03 |  |
+| 05 | [Prefactor: intrinsic records accept a hardware interface](issues/05-intrinsic-records-accelerator-interface.md) | resolved | 03 |  |
+| 06 | [Prefactor: offload strategy effect and the DX100 read-offload strategy](issues/06-offload-strategy-effect.md) | resolved | 03 |  |
 | 07 | [Prefactor: provider launcher runs every agent role](issues/07-role-based-provider-launcher.md) | ready-for-agent | 03 |  |
 | 08 | [Dispatch preflight: disk and memory](issues/08-dispatch-preflight.md) | ready-for-agent | — |  |
 
@@ -29,18 +29,18 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 
 | # | Ticket | Status | Blocked by | Go-ahead |
 |---|---|---|---|---|
-| 09 | [Library entry shapes and IDs, checked by swdb validate](issues/09-library-entry-shapes.md) | ready-for-agent | 03 |  |
-| 10 | [Port Extensa's predicate grammar into the library validator](issues/10-port-extensa-grammar.md) | ready-for-agent | 02, 09 |  |
-| 11 | [Tracer: certify the gather lowering and its setup intrinsics end to end](issues/11-tracer-certify-gather.md) | ready-for-agent | 05, 09 |  |
-| 12 | [Strict layer: byte-offset, truncation and memory-region assertions](issues/12-strict-layer-assertions.md) | ready-for-agent | 11 |  |
-| 13 | [Range loop with continuation and register operands](issues/13-range-loop-and-register-operands.md) | ready-for-agent | 12 |  |
-| 14 | [Stream load, tile size and pointer, ALU-scalar, and the strict store](issues/14-stream-load-tile-access-alu.md) | ready-for-agent | 12 |  |
-| 15 | [Derived tier and status, and swdb promote for library entries](issues/15-library-tiers-and-entry-promotion.md) | ready-for-agent | 11 |  |
-| 16 | [Calibration on the T17-fixed authors' BFS, with the BFS matrix](issues/16-calibration-and-bfs-matrix.md) | ready-for-agent | 13, 14 |  |
-| 17 | [BFS read-offload rewrite contract and the YAML draft for Peter](issues/17-bfs-read-offload-contract.md) | ready-for-agent | 06, 10 |  |
-| 18 | [BFS candidate-artifact certification](issues/18-bfs-candidate-certification.md) | ready-for-agent | 16, 17 |  |
+| 09 | [Library entry shapes and IDs, checked by swdb validate](issues/09-library-entry-shapes.md) | resolved | 03 |  |
+| 10 | [Port Extensa's predicate grammar into the library validator](issues/10-port-extensa-grammar.md) | resolved | 02, 09 |  |
+| 11 | [Tracer: certify the gather lowering and its setup intrinsics end to end](issues/11-tracer-certify-gather.md) | resolved | 05, 09 |  |
+| 12 | [Strict layer: byte-offset, truncation and memory-region assertions](issues/12-strict-layer-assertions.md) | resolved | 11 |  |
+| 13 | [Range loop with continuation and register operands](issues/13-range-loop-and-register-operands.md) | resolved | 12 |  |
+| 14 | [Stream load, tile size and pointer, ALU-scalar, and the strict store](issues/14-stream-load-tile-access-alu.md) | resolved | 12 |  |
+| 15 | [Derived tier and status, and swdb promote for library entries](issues/15-library-tiers-and-entry-promotion.md) | resolved | 11 |  |
+| 16 | [Calibration on the T17-fixed authors' BFS, with the BFS matrix](issues/16-calibration-and-bfs-matrix.md) | resolved | 13, 14 |  |
+| 17 | [BFS read-offload rewrite contract and the YAML draft for Peter](issues/17-bfs-read-offload-contract.md) | resolved | 06, 10 |  |
+| 18 | [BFS candidate-artifact certification](issues/18-bfs-candidate-certification.md) | resolved | 16, 17 |  |
 | 19 | [Submit a patch that ships the lowering header](issues/19-submit-patch-with-library-header.md) | ready-for-agent | 11, 15 |  |
-| 20 | [Peter's §5 patch with fixes E1–E5, certified](issues/20-peter-section5-patch.md) | ready-for-agent | 13, 14, 18, 19, 17 |  |
+| 20 | [Peter's §5 patch with fixes E1–E5, certified](issues/20-peter-section5-patch.md) | resolved | 13, 14, 18, 19, 17 |  |
 | 21 | [Send Peter the contract YAML](issues/21-send-peter-contract-yaml.md) | ready-for-human | 17 |  |
 | 22 | [Yan-Ru promotes the DX100 entries and the BFS contract](issues/22-promote-dx100-entries.md) | ready-for-human | 15, 20 |  |
 
@@ -106,3 +106,19 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 - Q61 native selection uses the rewritten baseline: spec, Extensa mode > Speed rule — [spec.md](spec.md)
 - Q62 approvals per dispatch or Extensa campaign launch: spec, Further Notes > Approvals — [spec.md](spec.md)
 - Q63–Q66 (gem5 point ratios, no region pairs, parent-gather race case, license): spec, Further Notes > "Confirmed 2026-10-03" — [spec.md](spec.md)
+
+- Ticket 11, completed 2026-10-03: Strict C++11 lowerings, independent reference semantics and executable certification receipts are implemented. [11-tracer-certify-gather](issues/11-tracer-certify-gather.md).
+
+- Ticket 12, completed 2026-10-03: Per-thread strict checks reject byte-offset overflow, tile truncation and unregistered memory access. [12-strict-layer-assertions](issues/12-strict-layer-assertions.md).
+
+- Ticket 13, completed 2026-10-03: The register-operand range loop passes cross-tile continuation tests and rejects dropped continuation/wrap. [13-range-loop-and-register-operands](issues/13-range-loop-and-register-operands.md).
+
+- Ticket 14, completed 2026-10-03: Stream, tile access and ALU lowerings certify; the strict store requires a result-tile covering wait. [14-stream-load-tile-access-alu](issues/14-stream-load-tile-access-alu.md).
+
+- Ticket 16, completed 2026-10-03: T17 calibration passes all ten functional matrix cells and rejects all seven applicable control cells. [16-calibration-and-bfs-matrix](issues/16-calibration-and-bfs-matrix.md).
+
+- Ticket 18, completed 2026-10-03: The final exact BFS candidate passes ten matrix cells and sixteen controls, including forged frontier prints. [18-bfs-candidate-certification](issues/18-bfs-candidate-certification.md).
+
+- Ticket 20, completed 2026-10-03: The delivered Peter section 5 patch implements E1-E5 and ships the exact lowering header; tree 586b6c3e4edc1f040cc2c50e74fd88f1906b551b28fc0d065b6912e5cb94976c. [20-peter-section5-patch](issues/20-peter-section5-patch.md).
+
+- 2026-10-03: Tickets05,06,09,10,15,17 implementation complete with hash-bound evidence and explicit target assumptions; see each Answer. General autonomous implementation/sync instruction authorizes this batch commit; ADRs remain proposed. Human sends/reviews retain their own receipts.

@@ -164,6 +164,10 @@ def _run(args, records_dir):
         raise Failure(f"this host is {host!r}, but machine record {machine['id']!r} is for {machine['hostname']!r}")
 
     lane = _verified_lane(machine, args.lane)
+    preflight = None
+    if host == 'mbit10':
+        from swdb.dispatch_preflight import check
+        preflight = check(args.runs_dir, lane)
 
     started = _now()
     run_id = f"{impl['id']}.{inp['id']}.{machine['id']}.{started.strftime('%Y%m%dt%H%M%Sz')}"
@@ -176,6 +180,8 @@ def _run(args, records_dir):
     r = Run(folder)
     env_info = _environment(folder, args, host, started)
     env_info["lane"] = lane
+    if preflight is not None:
+        env_info['dispatch_preflight'] = preflight
 
     input_args = _input_args(inp)
     cxx = args.cxx or impl["build"]["compiler"]

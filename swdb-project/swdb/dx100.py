@@ -104,9 +104,9 @@ def _prepare(args, action, store, request, data):
     if action == "build":
         fields |= {"fixture_command"}
     elif action == "compile":
-        fields |= {"candidate", "build_evaluation", "function", "accelerated", "roi", "fixture_compiler", "diagnostic_regions", "discovery"}
+        fields |= {"candidate", "build_evaluation", "function", "accelerated", "roi", "fixture_compiler", "diagnostic_regions", "discovery", "parent_gather_diagnostic"}
     else:
-        fields |= {"simulator", "binary", "workload", "configuration", "checkpoint_manifest", "checkpoint_evaluation", "build_evaluation", "verification", "candidate", "candidate_build", "protocol", "protocol_role", "protocol_trial", "shared_protocols"}
+        fields |= {"simulator", "binary", "workload", "configuration", "checkpoint_manifest", "checkpoint_evaluation", "build_evaluation", "verification", "candidate", "candidate_build", "protocol", "protocol_role", "protocol_trial", "shared_protocols", "protocol_companion"}
     if request.keys() - fields:
         raise Failure(f"unknown DX100 request fields: {sorted(request.keys() - fields)}")
     if not isinstance(request.get("fixture", False), bool):
@@ -159,6 +159,10 @@ def _prepare(args, action, store, request, data):
     if host == "mbit10" and not any(destination.is_relative_to(base) for base in (
             "/data1/yanruj/EvolveSWDB_runs", "/data/yanruj/EvolveSWDB_runs")):
         raise Failure("mbit10 raw evidence must use EvolveSWDB_runs storage")
+    preflight = None
+    if host == 'mbit10':
+        from swdb.dispatch_preflight import check, GIB
+        preflight = check(destination, lane, storage_bytes=storage * GIB, memory_bytes=memory * GIB)
     folder = artifacts.external_directory(destination) / data["id"]
     if folder.is_relative_to(Path(args.records).resolve()):
         raise Failure("DX100 raw evidence must not be inside records")
@@ -167,6 +171,8 @@ def _prepare(args, action, store, request, data):
         "target_sha256": artifacts.digest(target), "model": target["model"], "interface": target["interface"],
         "model_root": str(model_root), "host": host, "lane": lane, "budget": budget,
         "load_average": list(os.getloadavg()), "roi": ROI, "basis": "simulated"})
+    if preflight is not None:
+        data['context']['dispatch_preflight'] = preflight
     data["raw_artifacts"].append({"host": host, "path": str(folder), "kind": f"dx100_{action}"})
     observation_seconds = 0
     if not request.get('fixture'):
@@ -478,7 +484,8 @@ def _correctness(session, request, result_folder, log, completed):
     from swdb.dx100_coverage import TRACE_NAME, TRANSPORT
     trace = result_folder / TRACE_NAME if request['verification'].get('trace_transport') == TRANSPORT else None
     coverage = observe(log, interval_values, request["configuration"]["tile_elements"],
-                       trace=trace, deadline=session.deadline)
+                       trace=trace, deadline=session.deadline,
+                       read_only=request['verification'].get('read_only', False))
     if trace is not None:
         data['context']['debug_trace'] = coverage['debug_trace']
     trace_ends = coverage["completed_trace_units"]
@@ -505,6 +512,24 @@ def _correctness(session, request, result_folder, log, completed):
     data['correctness']['checks'][0].update(passed=state == 'passed', source=data['context']['source'], **trial,
         binary_sha256=data['build']['binary_sha256'],
         graph_sha256=data['context'].get('workload', {}).get('canonical_sha256'), output_sha256=artifacts.file_hash(log))
+    if request['verification'].get('read_only'):
+        from swdb.read_only_checks import observe_output
+        store = _require_valid(session.args.records)
+        check = data['correctness']['checks'][0]
+        check.update(observe_output(log, store, request['workload']['id'], data['context']['source']))
+        from swdb.read_only_checks import validate_frontier
+        try:
+            validate_frontier(data, check, store)
+        except Failure as exc:
+            valid = False
+            data['correctness']['state'] = 'failed'
+            check.update(state='failed', passed=False, reason=str(exc))
+        report = result_folder / 'read-only-coverage.json'
+        report.write_text(json.dumps({'format': 'swdb.dx100.read-only-coverage.v1', 'evaluation': data['id'],
+            'binary_sha256': data['build']['binary_sha256'], 'graph_sha256': check['graph_sha256'],
+            'coverage': check['coverage'], 'frontier_sizes': check['frontier_sizes'],
+            'parent_gather_race': check['parent_gather_race']}, sort_keys=True, indent=2) + '\n')
+        data['context']['coverage_report'] = {'path': str(report), 'sha256': artifacts.file_hash(report)}
     if witnessed and valid and not explicit_failure:
         from swdb.dx100_witness import validate_completed_witness
         try:
@@ -692,11 +717,15 @@ def execute(args):
         verify = request.get("verification")
         driver = paths.HOME / "scripts/dx100_verify.py"
         if verify is not None:
-            if (not isinstance(verify, dict) or set(verify) - {"checker", "max_ticks", "coverage", "post_roi_trace", "trace_transport", "post_roi_cpu"}
+            if (not isinstance(verify, dict) or set(verify) - {"checker", "max_ticks", "coverage", "post_roi_trace", "trace_transport", "post_roi_cpu", "read_only"}
                     or verify.get("checker") not in {"dx100.bfs.verifier.v1", "dx100.bfs.verifier.v2"} or "max_ticks" not in verify):
                 raise Failure("verification requires checker dx100.bfs.verifier.v1 or v2 and max_ticks")
             if type(verify.get("coverage", False)) is not bool:
                 raise Failure("verification.coverage must be boolean")
+            if type(verify.get('read_only', False)) is not bool:
+                raise Failure('verification.read_only must be boolean')
+            if verify.get('read_only') and (verify['checker'] != 'dx100.bfs.verifier.v2' or not verify.get('coverage')):
+                raise Failure('read-only qualification requires v2 correctness and coverage tracing')
             if 'post_roi_trace' in verify and (type(verify['post_roi_trace']) is not str
                     or verify['post_roi_trace'] != 'SyscallBase'):
                 raise Failure('verification.post_roi_trace must be SyscallBase when present')
@@ -901,4 +930,8 @@ def execute(args):
             "Unverified smoke execution: explicit timed-binary correctness and complete profiling remain required.")}
     except (Failure, StageFailure, Stopped, OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as exc:
         error = exc
-    return _finish(args, data, session, error)
+    result = _finish(args, data, session, error)
+    if error is None:
+        from swdb.retention import automatic
+        automatic(args.records, [result['id']], 'execute', db=getattr(args, 'db', None))
+    return result

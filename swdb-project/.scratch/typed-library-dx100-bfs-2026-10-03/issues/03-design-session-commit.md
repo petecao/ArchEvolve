@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** task
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 01
 **Spec:** `../spec.md`
 
@@ -18,3 +18,5 @@ Created: 2026-10-03
 - [ ] One commit, created only after Yan-Ru approves.
 
 ## Comments
+
+- 2026-10-03: Claimed by root for the authorized implementation batch. ADRs remain proposed; human send/review receipts are not inferred.

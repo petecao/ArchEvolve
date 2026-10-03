@@ -20,7 +20,8 @@ PLURAL = {"application": "applications", "kernel": "kernels", "implementation": 
           "proposal": "proposals", "candidate": "candidates", "evaluation": "evaluations",
           "operation": "operations", "hardware_target": "hardware_targets",
           "workload": "workloads", "protocol": "protocols", "comparison_result": "comparison_results",
-          "region_profile": "region_profiles", "evaluation_pair": "evaluation_pairs"}
+          "region_profile": "region_profiles", "evaluation_pair": "evaluation_pairs",
+          "retention": "retentions", "team_claim": "team_claims", "certification": "certifications", "review": "reviews"}
 
 
 @dataclass

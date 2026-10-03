@@ -34,7 +34,13 @@ def main(argv=None):
             sub.add_argument("--format", choices=["yaml", "json"], default="yaml", help="output format (default yaml)")
         return sub
 
-    command("validate", "check every record against its schema, the vocabularies, and the cross-record rules")
+    sub = command("validate", "check records and typed library shapes, pins and clauses")
+    sub.add_argument("--library", type=Path)
+
+    sub = command("promote", "record a review of one certified library entry", fmt=True)
+    sub.add_argument("id")
+    sub.add_argument("--reviewer", default="Yan-Ru Jhou")
+    sub.add_argument("--library", type=Path)
 
     command("build", "regenerate the SQLite database from the records, from scratch", db=True)
 
@@ -216,6 +222,11 @@ def main(argv=None):
     sub.add_argument("id")
     sub.add_argument("--chain", action="store_true", help="include linked proposal, candidate, source, and package records")
 
+    from swdb import annotation, certification, retention
+    annotation.register_cli(commands)
+    certification.register_cli(commands)
+    retention.register_cli(commands)
+
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -231,8 +242,21 @@ def _dispatch(args):
     records = getattr(args, "records", None)
     if records is not None and not records.is_dir():
         raise UsageError(f"records folder not found: {records}")
+    if hasattr(args, "_annotation_handler"):
+        _emit(args._annotation_handler(args), args.format)
+        return 0
+    if hasattr(args, "retention_handler"):
+        _emit(args.retention_handler(args), args.format)
+        return 0
+    if args.command == "certify":
+        from swdb.certification import run_cli
+        return run_cli(args)
     if args.command == "validate":
-        return _validate(records)
+        return _validate(records, args.library)
+    if args.command == "promote":
+        from swdb.library import promote
+        _emit(promote(args), args.format)
+        return 0
     if args.command == "capture-machine":
         return _capture(args)
 
@@ -386,10 +410,10 @@ def _dispatch(args):
     raise UsageError(f"unknown command {args.command}")
 
 
-def _validate(records_dir):
+def _validate(records_dir, library_root=None):
     from swdb.validate import validate_records
 
-    result = validate_records(records_dir)
+    result = validate_records(records_dir, library_root=library_root)
     for problem in result.problems:
         print(problem, file=sys.stderr)
     if result.problems:

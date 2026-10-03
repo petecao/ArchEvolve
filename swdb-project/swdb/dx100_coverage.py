@@ -99,9 +99,16 @@ def trace_reference(evaluation):
     return reference
 
 
-def validate_trace(evaluation, deadline=None):
+def validate_trace(evaluation, deadline=None, store=None):
     reference = trace_reference(evaluation)
     if reference is not None:
+        if not Path(reference['path']).exists():
+            from swdb.retention import retained
+            receipt = retained(store, reference, evaluation['id'])
+            if receipt:
+                # Coverage counters were decoded and frozen before pruning.
+                # Return the exact original identity; callers compare it by digest.
+                return reference
         from swdb.dx100 import _file
         from swdb.dx100_profile import statistics
         context = evaluation['context']
@@ -112,7 +119,8 @@ def validate_trace(evaluation, deadline=None):
         stage = next(stage for stage in evaluation['stages'] if stage['stage'] == 'simulation')
         log = _file({'path': stage['log'], 'sha256': stage['log_sha256']}, 'compressed-trace stdout')
         actual = observe(log, intervals[0]['values'], context['configuration']['tile_elements'],
-                         trace=reference, deadline=deadline)
+                         trace=reference, deadline=deadline,
+                         read_only=evaluation.get('request', {}).get('verification', {}).get('read_only', False))
         checks = evaluation.get('correctness', {}).get('checks', [])
         if len(checks) != 1 or any(artifacts.digest(value) != artifacts.digest(checks[0].get('coverage', {}).get(key))
                                    for key, value in actual.items()):
@@ -120,7 +128,7 @@ def validate_trace(evaluation, deadline=None):
     return reference
 
 
-def observe(log, values, tile_elements, *, trace=None, deadline=None):
+def observe(log, values, tile_elements, *, trace=None, deadline=None, read_only=False):
     try:
         end = int(values["finalTick"])
         start = end - int(values["simTicks"])
@@ -134,6 +142,7 @@ def observe(log, values, tile_elements, *, trace=None, deadline=None):
     parent_storage = None
     truncated = False
     trace_identity = {}
+    opcode_counts, pending_opcodes = {}, {}
     def lines():
         with log.open(errors="replace") as stream:
             for number, line in enumerate(stream, 1):
@@ -155,6 +164,15 @@ def observe(log, values, tile_elements, *, trace=None, deadline=None):
         if not match or not start <= int(match[1]) <= end:
             continue
         tick = int(match[1])
+        if read_only:
+            started = re.search(r'\b([SIAR])\[(\d+)\] Start \[.*\bopcode\(([A-Z0-9_]+)\)', line)
+            ended = re.search(r'\b([SIAR])\[(\d+)\] End \[', line)
+            if started:
+                pending_opcodes[(started[1], started[2])] = started[3]
+            if ended:
+                opcode = pending_opcodes.pop((ended[1], ended[2]), None)
+                if opcode is not None:
+                    opcode_counts[opcode] = opcode_counts.get(opcode, 0) + 1
         # Necessary literal prefixes avoid five full regex scans on unrelated
         # debug messages. Patterns remain the authority; lines are never skipped
         # from decoding, hashing, numbering, deadline checks, or other matches.
@@ -215,4 +233,22 @@ def observe(log, values, tile_elements, *, trace=None, deadline=None):
         "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded."}
     if trace is not None:
         result['debug_trace'] = trace_identity
+    if read_only:
+        result['completed_trace_opcodes'] = opcode_counts
+        result['unmatched_trace_opcodes'] = len(pending_opcodes)
+        # Count completion opcodes rather than graph topology or unit activity.
+        stream = sum(value for key, value in opcode_counts.items() if key.startswith('STREAM_LD'))
+        indirect = sum(value for key, value in opcode_counts.items() if key.startswith('INDIR_LD'))
+        ranges = sum(value for key, value in opcode_counts.items() if key.startswith('RANGE'))
+        alu = sum(value for key, value in opcode_counts.items() if key.startswith('ALU'))
+        stores = sum(value for key, value in opcode_counts.items() if key.startswith('INDIR_ST'))
+        observed = (stream >= 1 and indirect >= 1 and ranges >= 1 and alu == stores == 0
+            and indirect == 3 * ranges - stream and not pending_opcodes
+            and sum(opcode_counts.values()) == sum(units.values())
+            and units.get('S', 0) == stream and units.get('I', 0) == indirect
+            and units.get('R', 0) == ranges and units.get('A', 0) == 0)
+        result['read_only_executed'] = {'state': 'observed' if observed else 'unobserved',
+            'count': int(observed), 'stream': stream, 'indirect': indirect, 'range': ranges,
+            'alu': alu, 'indirect_stores': stores,
+            'rule': 'S>=1,I>=1,R>=1,A=0,indirect_stores=0,I=3*R-S'}
     return result

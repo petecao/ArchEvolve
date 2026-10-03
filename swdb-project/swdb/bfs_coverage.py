@@ -59,7 +59,18 @@ def _artifact_refs(data):
             yield from _artifact_refs(value)
 
 
-def _availability(records, host):
+def _directory_refs(value):
+    if isinstance(value, dict):
+        if isinstance(value.get("files"), list) and isinstance(value.get("path"), str):
+            yield value
+        for item in value.values():
+            yield from _directory_refs(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from _directory_refs(item)
+
+
+def _availability(records, host, store=None):
     result = []
     local = socket.gethostname().split(".")[0]
     for name, expected, kind in sorted(set(ref for record in records for ref in _artifact_refs(record))):
@@ -67,10 +78,19 @@ def _availability(records, host):
         if not path.is_absolute():
             continue
         state = "remote_unverified" if host and host != local else "missing"
+        from swdb.retention import retained, retained_directory
+        receipt = retained(store, {"path": name, "sha256": expected}) if not path.exists() else None
+        if receipt:
+            state = receipt["state"]
         if path.exists():
             try:
                 actual = artifacts.identify(path)["sha256"] if kind == "directory" else artifacts.file_hash(path)
                 state = "verified" if actual == expected else "changed"
+                if state == "changed" and kind == "directory":
+                    candidates = [ref for record in records for ref in _directory_refs(record)
+                                  if ref.get("path") == name and ref.get("sha256") == expected]
+                    if any(retained_directory(store, item) for item in candidates):
+                        state = "pruned, sha256 retained"
             except (Failure, OSError):
                 state = "unreadable"
         result.append({"path": name, "sha256": expected, "kind": kind, "state": state, "host": host})
@@ -125,13 +145,15 @@ def _acceleration(evaluation, store=None):
         return {"executed": False, "cases": {}, "reason": "requires the real simulated DX100 target"}
     observed_checks = []
     for check in evaluation.get("correctness", {}).get("checks", []):
-        observed = "executed" in protocol.accelerator_cases(check)
+        observed = bool({'executed', 'read_only_executed'} & protocol.accelerator_cases(check))
         if observed:
             observed_checks.append(check)
     if observed_checks and not _correctness(evaluation, store):
         cases = {}
         for name in ("full_tiles", "tail_tiles", "competing_parent_updates"):
             cases[name] = any(name in protocol.accelerator_cases(check) for check in observed_checks)
+        if any('read_only_executed' in protocol.accelerator_cases(check) for check in observed_checks):
+            cases['read_only_executed'] = True
         return {"executed": True, "cases": cases, "executions": [check["execution"] for check in observed_checks], "reason": None}
     return {"executed": False, "cases": {}, "reason": "no matching positive instruction and completed-unit trace evidence"}
 
@@ -335,6 +357,10 @@ def _comparison(store, comparison, allowed, mode=None):
             reasons.append("comparison is not a compatible pair of real executions")
         if comparison.get("comparison_baseline") != a.get("implementation"):
             reasons.append("comparison does not name its actual explicit baseline")
+        from swdb.read_only_checks import companion_acceptance
+        companion = companion_acceptance(store, p, comparison.get('request', {}), b)
+        if companion is not None and artifacts.digest(companion) != artifacts.digest(comparison.get('metrics', {}).get('companion_acceptance')):
+            reasons.append('comparison companion acceptance differs from exact retained evaluations')
         if comparison.get("decision", {}).get("state") not in {"gain", "regression", "no_gain", "inconclusive"}:
             reasons.append("comparison has no valid empirical policy decision")
         raw_verification = _collection_identity(store, comparison, a, b, p['settings'])
@@ -403,7 +429,7 @@ def _evaluation(store, evaluation, comparisons, current):
         reasons.append("functional accelerator host runtime cannot satisfy native or simulated accelerator acceptance")
     diagnostics = [store.get(package.get("region_profile"), "region_profile") for package in packages]
     inputs = [evaluation, *packages, *(item for item in diagnostics if item), *([candidate] if candidate else [])]
-    availability = _availability(inputs, context.get("host"))
+    availability = _availability(inputs, context.get("host"), store)
     if any(ref["state"] in {"changed", "missing", "unreadable"} for ref in availability):
         reasons.append("required local raw/source artifacts are missing, unreadable, or changed")
     return {"evaluation": evaluation["id"], "proposal": (proposal or {}).get("id"), "candidate": (candidate or {}).get("id"),
@@ -590,7 +616,7 @@ def report(args):
                 reference_packages = [package for evaluation in record_set for package in _packages(store, evaluation)[0]]
                 record_set.extend(reference_packages)
                 record_set.extend(store.get(package["region_profile"], "region_profile") for package in reference_packages)
-                row["artifacts"] = _availability(record_set, accelerated.get("context", {}).get("host"))
+                row["artifacts"] = _availability(record_set, accelerated.get("context", {}).get("host"), store)
                 if any(ref["state"] in {"missing", "changed", "unreadable"} for ref in row["artifacts"]):
                     row["reasons"].append("reference raw evidence is unavailable or changed")
                 row["qualified"] = not row["reasons"]
@@ -632,7 +658,7 @@ def report(args):
             candidate = protocol._get(store, evaluation.get("candidate"), "candidate")
             inputs = [evaluation, candidate, *packages,
                       *(store.get(package["region_profile"], "region_profile") for package in packages)]
-            availability = _availability(inputs, evaluation.get("context", {}).get("host"))
+            availability = _availability(inputs, evaluation.get("context", {}).get("host"), store)
             if any(item["state"] in {"changed", "missing", "unreadable"} for item in availability):
                 continue
             demonstrations.append({"evaluation": evaluation["id"], "profile_packages": [package["id"] for package in packages],

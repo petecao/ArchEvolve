@@ -1,15 +1,23 @@
 name: effect_kinds
-description: The typed changes an optimization strategy makes to its target (its strategy effect).
+description: The typed changes an optimization strategy makes to its target (its strategy
+  effect).
 values:
-  - value: reshape
-    meaning: Changes the address shape of one step of the target access pattern (field step, shape_before, shape_after).
-  - value: add_pattern
-    meaning: Adds an access pattern, such as a packing pass, whose pattern class it states (fields address_shapes, update_kind).
-  - value: hint
-    meaning: Accesses one step of the target access pattern early, without changing what the code computes (field step).
-  - value: widen
-    meaning: Performs several accesses of the target pattern in one instruction (field lanes, a number or a parameter name).
-  - value: reorder
-    meaning: Changes the order of the input's elements or indices (fields properties, the input properties it changes, and optionally index_locality, the locality after).
-  - value: restructure_loop
-    meaning: Restructures the target loop (field restructure, from vocabulary loop_restructures).
+- value: reshape
+  meaning: Changes the address shape of one step of the target access pattern (field
+    step, shape_before, shape_after).
+- value: add_pattern
+  meaning: Adds an access pattern, such as a packing pass, whose pattern class it
+    states (fields address_shapes, update_kind).
+- value: hint
+  meaning: Accesses one step of the target access pattern early, without changing
+    what the code computes (field step).
+- value: widen
+  meaning: Performs several accesses of the target pattern in one instruction (field
+    lanes, a number or a parameter name).
+- value: reorder
+  meaning: Changes the order of the input's elements or indices (fields properties,
+    the input properties it changes, and optionally index_locality, the locality after).
+- value: restructure_loop
+  meaning: Restructures the target loop (field restructure, from vocabulary loop_restructures).
+- value: offload
+  meaning: Move identified access-pattern steps off the core to named hardware operations.

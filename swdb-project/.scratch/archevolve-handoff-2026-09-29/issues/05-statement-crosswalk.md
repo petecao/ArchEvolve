@@ -34,3 +34,5 @@ the received v1.1 report names `DataLayoutAPI/benchmarks/gapbs/src/bfs.cc` and
 and Josh `access-0N` assignment apply to this exact source before completing every
 crosswalk row. Ticket 01 remains human-owned and has no recorded reply. This ticket
 stays `needs-info`; source similarity and matching graph size do not settle the binding.
+
+2026-10-03: The current intrinsic specification pins the e4fc4af TDStep and statement mapping. Mapping delivery belongs to [typed-library ticket 01](../../typed-library-dx100-bfs-2026-10-03/issues/01-send-decision-note-and-mapping.md). The crosswalk remains pending until that human send receipt exists; no message is invented.

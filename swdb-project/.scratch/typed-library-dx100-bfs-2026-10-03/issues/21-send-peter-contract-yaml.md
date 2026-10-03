@@ -14,3 +14,5 @@ Created: 2026-10-03
 - [ ] The send date is recorded under Comments.
 
 ## Comments
+
+- 2026-10-03: The contract YAML draft is at ../../../library/rewrite_contracts/bfs_read_offload.yaml; send/review receipt remains pending.

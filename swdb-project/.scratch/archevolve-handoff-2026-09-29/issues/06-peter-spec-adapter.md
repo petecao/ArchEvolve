@@ -2,7 +2,7 @@
 
 Created: 2026-09-29
 **Type:** slice
-**Status:** needs-info
+**Status:** wontfix
 **Blocked by:** 05, Peter's request/intrinsic-spec format, and the confirmed hardware candidate
 **Spec:** `../spec.md`
 
@@ -31,3 +31,7 @@ The team must bind that feedback shape to the actual accepted request format.
 These are known prerequisites from the current source and handoff drafts, not an
 invented reply from Peter. The ticket stays `needs-info`; no adapter or failed-proposal
 feedback instance has been fabricated.
+
+## Answer
+
+2026-10-03: Superseded by [the typed-library specification](../../typed-library-dx100-bfs-2026-10-03/spec.md); markdown specifications feed reviewed contract YAML and supplied patches. No separate format adapter is required.

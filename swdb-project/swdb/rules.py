@@ -80,9 +80,18 @@ def check(record, ctx):
         yield from _intrinsic(record)
     elif kind == "strategy":
         yield from _strategy(record, ctx)
+    elif kind in {"certification", "review"}:
+        from swdb.library import validate_record
+        yield from validate_record(record, ctx)
     elif kind in {"workload", "protocol"}:
         from swdb.bfs_protocol import validate_record
 
+        yield from validate_record(record, ctx)
+    elif kind in {'retention', 'team_claim'}:
+        from swdb.retention import validate_record
+        yield from validate_record(record, ctx)
+    elif kind == "region_profile":
+        from swdb.callgrind_lines import validate_record
         yield from validate_record(record, ctx)
     elif kind == "profile_package":
         from swdb.cli import Failure
@@ -433,8 +442,10 @@ def _intrinsic(record):
     expected = data["name"].lstrip("_")
     if data["id"] != expected:
         yield Problem(rel, "id", f"an intrinsic's ID is its C name without leading underscores: {expected!r}")
-    if not any(p["kind"] == "vendor_reference" and p.get("uri") for p in data["provenance"]):
+    if "interface" not in data and not any(p["kind"] == "vendor_reference" and p.get("uri") for p in data["provenance"]):
         yield Problem(rel, "provenance", "an intrinsic cites a vendor reference: a provenance entry of kind "
                                          "vendor_reference with a uri")
+    if "interface" in data and not any(p["kind"] == "source_code" for p in data["provenance"]):
+        yield Problem(rel, "provenance", "accelerator intrinsic requires source_code provenance")
     if data["memory_kind"] == "none" and data["address_shape"] is not None:
         yield Problem(rel, "address_shape", "an intrinsic that touches no memory has address_shape null")

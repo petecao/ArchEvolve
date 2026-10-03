@@ -567,6 +567,10 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
         if host == "mbit10" and threads > 16:
             raise Failure("mbit10 evaluations permit at most 16 threads per socket job")
         lane = profile._verified_lane(machine, getattr(args, "lane", None))
+        preflight = None
+        if host == 'mbit10':
+            from swdb.dispatch_preflight import check
+            preflight = check(args.runs_dir, lane)
         available_cpus = len(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else os.cpu_count()
         if available_cpus is not None and threads > available_cpus:
             raise Failure("requested threads exceed this process's available CPUs")
@@ -615,6 +619,8 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
                            "instrumentation": {"template_sha256": artifacts.file_hash(DRIVER), "treatment": "included"},
                            "host": host, "architecture": platform.machine(), "lane": lane,
                            "load_average": list(os.getloadavg()), "budget": budget}
+        if preflight is not None:
+            data['context']['dispatch_preflight'] = preflight
         if pairing is not None:
             data["context"]["pairing"] = copy.deepcopy(pairing)
         if host == 'mbit10' and not request.get('fixture'):

@@ -1,0 +1,26 @@
+kind: intrinsic
+schema_version: '0.4'
+id: dxc_stream_load
+name: __dxc_stream_load
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+interface:
+  id: dx100-mmio
+  version: 1.0-e4fc4af
+hardware_operations:
+- dx100.mmio.v1.stream-load.i32
+memory_kind: load
+address_shape: stream
+element_bits: 32
+lanes: null
+library_entry:
+  id: intrinsic.dxc_stream_load
+  path: library/intrinsics/dxc_stream_load.yaml
+  content_sha256: 2deb4038416c9950ab524497a10071c69b5b295f87659d43d0ec24a8313fe79c
+provenance:
+- id: dx100-source
+  kind: source_code
+  description: Pinned DX100 e4fc4af interface and independent reference semantics;
+    no performance claim.
+  uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/API/MAA_gem5.hpp

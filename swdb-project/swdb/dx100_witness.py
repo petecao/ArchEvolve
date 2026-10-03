@@ -543,7 +543,7 @@ def validate_completed_witness(evaluation, *, verify_artifacts=True, require_com
         raise Failure(f'invalid completed DX100 v2 witness: {exc}') from None
 
 
-def validate_record_witness(evaluation):
+def validate_record_witness(evaluation, store=None):
     """Qualify retained v2 metadata and report which raw evidence was rechecked.
 
     Only absent artifacts on another named host under /data or /data1 may be
@@ -570,10 +570,16 @@ def validate_record_witness(evaluation):
                 _verify_artifact(evaluation, kind, reference)
                 state = 'verified'
             else:
-                _need(remote and str(path).startswith(('/data/', '/data1/')), f'{kind} raw artifact is unavailable locally')
-                state = 'remote_unverified'
+                from swdb.retention import retained
+                receipt = retained(store, reference, evaluation['id'])
+                if receipt:
+                    state = receipt['state']
+                else:
+                    _need(remote and str(path).startswith(('/data/', '/data1/')), f'{kind} raw artifact is unavailable locally')
+                    state = 'remote_unverified'
             rows.append({'kind': kind, **reference, 'state': state})
-        state = 'remote_unverified' if any(row['state'] == 'remote_unverified' for row in rows) else 'verified'
+        state = ('remote_unverified' if any(row['state'] == 'remote_unverified' for row in rows) else
+                 'pruned, sha256 retained' if any(row['state'] == 'pruned, sha256 retained' for row in rows) else 'verified')
         return {'witness': witness, 'availability': {'state': state, 'host': host, 'artifacts': rows}}
     except (WitnessError, KeyError, TypeError, ValueError, OverflowError) as exc:
         raise Failure(f'invalid retained DX100 v2 witness: {exc}') from None

@@ -21,9 +21,12 @@ from swdb import artifacts
 from swdb.bfs_protocol import _fail, _get, _positive, _integer, _geomean, _timestamp, _check_verifier_identity
 
 
-def _raw(reference, host, *, verify_hash=True):
+def _raw(reference, host, *, verify_hash=True, store=None):
     path = Path(reference["path"])
     if not path.exists():
+        from swdb.retention import retained
+        if retained(store, reference):
+            return None
         remote = host and host != socket.gethostname().split(".")[0] and str(path).startswith(("/data/", "/data1/"))
         _fail(remote, "diagnostic raw artifact is unavailable locally")
         return None  # Metadata retrieval never pretends to recheck remote raw bytes.
@@ -133,10 +136,10 @@ def _sample(store, primary, package_id, pair, role):
           and checks[0].get("graph_sha256") == primary["context"]["workload"]["canonical_sha256"]
           and checks[0].get("output_sha256") == log["sha256"], "diagnostic correctness is not bound to the reported graph/source/binary")
     host = diagnostic.get("context", {}).get("host")
-    raw = _raw(log, host, verify_hash=False)
+    raw = _raw(log, host, verify_hash=False, store=store)
     for reference in (definition["runtime"], definition["instrumented_source"],
                       {"path": binary["binary"], "sha256": binary["binary_sha256"]}):
-        _raw(reference, host)
+        _raw(reference, host, store=store)
     metrics = row["metrics"]
     # Only a baseline region may record zero invocations (baseline_not_invoked);
     # then both durations must be exactly zero. Candidates stay strictly >= 1.
@@ -167,6 +170,8 @@ def _sample(store, primary, package_id, pair, role):
     else:
         _positive(duration, "selected diagnostic duration")
         if pair["scope"] == "per_invocation": duration /= invocations
+    from swdb.retention import retained
+    pruned = not raw and retained(store, log)
     return {**cell, "duration_s": duration, "invocations": invocations, "primary_evaluation": primary["id"],
             "primary_binary_sha256": primary["build"]["binary_sha256"], "diagnostic_evaluation": diagnostic["id"],
             "diagnostic_evaluation_sha256": artifacts.digest(diagnostic), "diagnostic_build": build["id"],
@@ -174,7 +179,8 @@ def _sample(store, primary, package_id, pair, role):
             "profile_package": package["id"], "package_sha256": package["identity_sha256"],
             "region_profile": profile["id"], "region_profile_sha256": artifacts.digest(profile), "raw_report": log,
             "source_sha256": row["source_sha256"], "source_artifact_sha256": candidate["artifact"]["sha256"],
-            "quantity": definition["quantity"], "timing_scope": row["scope"], "attribution": attribution}
+            "quantity": definition["quantity"], "timing_scope": row["scope"], "attribution": attribution,
+            **({'raw_availability': 'pruned, sha256 retained'} if pruned else {})}
 
 
 def _native_samples(store, primary, package_id, pair, role):
@@ -209,7 +215,7 @@ def _native_samples(store, primary, package_id, pair, role):
           'native diagnostic CPU timing scope differs')
 
     def local(reference):
-        path = _raw(reference, context.get('host'))
+        path = _raw(reference, context.get('host'), store=store)
         _fail(path is not None, 'native region comparison requires locally available raw per-trial evidence')
         return path
 

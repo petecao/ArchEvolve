@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 11, 15
 **Spec:** `../spec.md`
 
@@ -17,3 +17,5 @@ Created: 2026-10-03
 - [ ] Tests go through submit with contract fixtures (prior art: the proposal-submission tests).
 
 ## Comments
+
+- 2026-10-03: Claimed by root for the authorized implementation batch. ADRs remain proposed; human send/review receipts are not inferred.

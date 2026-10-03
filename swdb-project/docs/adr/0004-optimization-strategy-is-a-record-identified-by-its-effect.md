@@ -1,7 +1,7 @@
 # An optimization strategy is its own record, identified by its target and effect
 
 Date: 2026-09-23
-Updated: 2026-09-25
+Updated: 2026-10-03 ET; [ADR 0007](0007-typed-library.md) proposes accelerator intrinsics and offload effects.
 
 Optimization strategies (packing, software prefetch, SIMD gather, vertex reordering,
 tiling) and intrinsics are their own record kinds, not implementations: a strategy holds

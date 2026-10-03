@@ -15,3 +15,5 @@ Created: 2026-10-03
 - [ ] Every file named carries its repository path, lines and commit; send dates are recorded under Comments.
 
 ## Comments
+
+- 2026-10-03: Per-person draft updates are in ../drafts/team-update-{peter,josh,eric}.md; they require final commit/line references before human sending.

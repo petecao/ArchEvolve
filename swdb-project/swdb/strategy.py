@@ -21,7 +21,7 @@ MACHINE_TERMS = {"l1d_bytes", "l2_bytes", "llc_bytes"}           # machine cache
 
 # which effect kinds make sense on which target
 TARGET_EFFECTS = {
-    "access_pattern": {"reshape", "add_pattern", "hint", "widen"},
+    "access_pattern": {"reshape", "add_pattern", "hint", "widen", "offload"},
     "loop": {"restructure_loop", "add_pattern"},
     "input": {"reorder"},
 }
@@ -66,6 +66,10 @@ def pattern_outcome(strategy, pattern):
     if kinds and pattern["update_kind"] not in kinds:
         reasons.append(f"update kind is {pattern['update_kind']}, needs {' or '.join(kinds)}")
     for effect in strategy["effect"]:
+        if effect["kind"] == "offload":
+            for step in effect["steps"]:
+                if _position(step, len(shapes)) is None:
+                    reasons.append(f"offload names step {step}, but the chain has {len(shapes)} step(s)")
         if effect["kind"] not in STEP_EFFECTS:
             continue
         where = _position(effect["step"], len(shapes))

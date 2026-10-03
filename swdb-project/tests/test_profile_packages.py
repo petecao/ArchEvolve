@@ -29,7 +29,7 @@ def package_seed(tmp_path_factory):
     records = records_fixture.__wrapped__(tmp)
     proposal = proposal_setup.__wrapped__(records, tmp)
     records, runs, evaluate, base = evaluation_setup.__wrapped__(proposal, tmp)
-    records.copy_repo("strategies", "intrinsics")
+    records.copy_repo("strategies", "intrinsics", "operations")
     evaluated = records.swdb("evaluate", evaluate(id="package-evaluation"), "--runs-dir", runs, "--format", "json")
     assert evaluated.returncode == 0, evaluated.stderr
     evaluation = json.loads(evaluated.stdout)

@@ -14,3 +14,5 @@ Created: 2026-10-03
 - [ ] Josh's mapping message is sent; its date is recorded under Comments.
 
 ## Comments
+
+- 2026-10-03: Phase 0 decision and mapping draft: ../drafts/phase0-decision-note.md; send receipts remain pending.

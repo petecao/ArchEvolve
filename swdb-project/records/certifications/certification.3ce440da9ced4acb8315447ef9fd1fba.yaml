@@ -1,0 +1,263 @@
+kind: certification
+schema_version: '0.4'
+id: certification.3ce440da9ced4acb8315447ef9fd1fba
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+entry:
+  id: lowering.dxc_const_i32.dx100-mmio.1.0-e4fc4af
+  content_sha256: dabed65442efa3adc53b64711216da7852cdca9c0adaae64ed5fc0f404b449ee
+command:
+  version: '1.0'
+  sources_sha256: 8b36bf787813456d10fea33924a38da1ca4a82830d7f8bc29ffa12be8260a0b1
+host:
+  hostname: YanRus-Mac-Studio.local
+  system: Darwin
+  architecture: arm64
+  compiler: /opt/homebrew/bin/g++-16
+matrix:
+- operation: const_i32
+  tile_size: 16384
+  threads: 4
+  status: passed
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-16384
+    - const_i32
+    returncode: 0
+    stdout: |
+      SWDB_DIFFERENTIAL_PASS:const_i32
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-16384.positive.json
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-16384
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-16384.build.json
+- operation: const_i32
+  tile_size: 1024
+  threads: 4
+  status: passed
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-1024
+    - const_i32
+    returncode: 0
+    stdout: |
+      SWDB_DIFFERENTIAL_PASS:const_i32
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-1024.positive.json
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-1024
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-1024.build.json
+negative_controls:
+- id: other_thread_register
+  tile_size: 16384
+  status: rejected
+  reason: thread_ownership_register
+  expected_check: thread_ownership_register
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-16384-other_thread_register
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-16384-other_thread_register.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-16384-other_thread_register
+    - const_i32
+    - other_thread_register
+    returncode: 86
+    stdout: ''
+    stderr: |
+      SWDB_STRICT_ASSERT:thread_ownership_register
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-16384-other_thread_register.run.json
+- id: constant_uncovered
+  tile_size: 16384
+  status: rejected
+  reason: constant_uncovered_register
+  expected_check: constant_uncovered_register
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-16384-constant_uncovered
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-16384-constant_uncovered.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-16384-constant_uncovered
+    - const_i32
+    - constant_uncovered
+    returncode: 86
+    stdout: ''
+    stderr: |
+      SWDB_STRICT_ASSERT:constant_uncovered_register
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-16384-constant_uncovered.run.json
+- id: other_thread_register
+  tile_size: 1024
+  status: rejected
+  reason: thread_ownership_register
+  expected_check: thread_ownership_register
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-1024-other_thread_register
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-1024-other_thread_register.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-1024-other_thread_register
+    - const_i32
+    - other_thread_register
+    returncode: 86
+    stdout: ''
+    stderr: |
+      SWDB_STRICT_ASSERT:thread_ownership_register
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-1024-other_thread_register.run.json
+- id: constant_uncovered
+  tile_size: 1024
+  status: rejected
+  reason: constant_uncovered_register
+  expected_check: constant_uncovered_register
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-1024-constant_uncovered
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-1024-constant_uncovered.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-1024-constant_uncovered
+    - const_i32
+    - constant_uncovered
+    returncode: 86
+    stdout: ''
+    stderr: |
+      SWDB_STRICT_ASSERT:constant_uncovered_register
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-e636a3880caf4b5faf410f2cc3a38b41/const_i32-1024-constant_uncovered.run.json
+verdict: certified
+evidence_basis: simulated
+evidence_kind: execution
+created_at: '2026-10-03T06:46:39.510888+00:00'

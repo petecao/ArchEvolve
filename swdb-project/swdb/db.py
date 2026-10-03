@@ -208,9 +208,9 @@ class _Insert:
     @staticmethod
     def intrinsic(con, d, *_):
         con.execute("INSERT INTO intrinsics VALUES (?,?,?,?,?,?,?,?,?,?)",
-                    (d["id"], d["name"], d["isa_family"], json.dumps(d["isa_extensions"]), d["header"],
+                    (d["id"], d["name"], d.get("isa_family"), json.dumps(d.get("isa_extensions", [])), d.get("header"),
                      d["memory_kind"], d["address_shape"], d["element_bits"], d["lanes"], json.dumps(d)))
-        con.executemany("INSERT INTO intrinsic_extensions VALUES (?,?)", [(d["id"], e) for e in d["isa_extensions"]])
+        con.executemany("INSERT INTO intrinsic_extensions VALUES (?,?)", [(d["id"], e) for e in d.get("isa_extensions", [])])
 
     @staticmethod
     def profile(con, d, *_):

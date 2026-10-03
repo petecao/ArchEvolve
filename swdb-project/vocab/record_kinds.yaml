@@ -1,13 +1,13 @@
 name: record_kinds
 description: The kinds of record the database holds; each has its own schema.
-# Updated: 2026-09-26 (Eastern Time).
+# Updated: 2026-10-03 (Eastern Time).
 values:
   - value: application
     meaning: A program that contains kernels, from one source at one version.
   - value: kernel
     meaning: A computation defined by what it computes and by its correctness check.
   - value: implementation
-    meaning: Code that realizes a kernel and passes its correctness check.
+    meaning: Code that realizes a kernel and passes its correctness check on the hardware target it is written for.
   - value: input
     meaning: The data fed to a kernel, generated or from a file, with its properties.
   - value: machine
@@ -17,7 +17,7 @@ values:
   - value: strategy
     meaning: An optimization strategy, a reusable technique identified by its target and effect; it holds no code.
   - value: intrinsic
-    meaning: One ISA instruction wrapper that code can call, with the ISA extensions it needs and the memory access it performs.
+    meaning: A callable ISA instruction or accelerator command, with its interface and memory effects.
   - value: source_snapshot
     meaning: An identified buildable source copy with evaluator-owned protections.
   - value: profile_package
@@ -42,3 +42,13 @@ values:
     meaning: A retained compatibility and profitability decision for explicit evaluation evidence.
   - value: region_profile
     meaning: Execution-linked automatic function, loop, and dynamic memory observations.
+  - value: retention
+    meaning: Immutable per-event approval or raw-output deletion receipt with retained sha256.
+  - value: team_claim
+    meaning: Approved evidence citation to a teammate, or explicit evaluation release from future claims.
+
+  - value: certification
+    meaning: Content-bound differential and candidate pre-check evidence with named negative controls.
+
+  - value: review
+    meaning: A named reviewer admits one certified entry content hash to the shared tier.

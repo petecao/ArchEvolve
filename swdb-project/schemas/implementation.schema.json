@@ -506,6 +506,18 @@
               "null"
             ],
             "description": "When this runs only under a condition (e.g. only on directed inputs, only if relabeling is worth it), the condition in words; null or absent means always."
+          },
+          "agent_claims": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/agent_claim"
+            }
+          },
+          "annotation_facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/annotation_fact"
+            }
           }
         },
         "required": [
@@ -667,6 +679,36 @@
           }
         }
       ]
+    },
+    "extensions": {
+      "type": "object",
+      "properties": {
+        "statements": {
+          "type": "object",
+          "properties": {
+            "annotations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "agent_claims": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/agent_claim"
+                    }
+                  },
+                  "annotation_facts": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/annotation_fact"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "required": [
@@ -732,5 +774,153 @@
         }
       }
     }
-  ]
+  ],
+  "$defs": {
+    "agent_claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "field",
+        "value",
+        "basis",
+        "model",
+        "effort",
+        "prompt_sha256",
+        "input_sha256s",
+        "contradicted_by"
+      ],
+      "properties": {
+        "field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {},
+        "basis": {
+          "enum": [
+            "code_reading",
+            "inferred"
+          ]
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "effort": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "prompt_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "input_sha256s": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "contradicted_by": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "evidence",
+              "basis",
+              "rule"
+            ],
+            "properties": {
+              "evidence": {
+                "type": "string",
+                "minLength": 1
+              },
+              "basis": {
+                "enum": [
+                  "measured",
+                  "simulated",
+                  "reported"
+                ]
+              },
+              "rule": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "classification": {
+          "enum": [
+            "contract_fixture",
+            "rewrite_provider"
+          ]
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "field": {
+                "const": "expected_cost_rank"
+              }
+            },
+            "required": [
+              "field"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "basis": {
+                "const": "inferred"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "annotation_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "field",
+        "value",
+        "basis",
+        "evidence"
+      ],
+      "properties": {
+        "field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {},
+        "basis": {
+          "enum": [
+            "measured",
+            "simulated",
+            "reported",
+            "code_reading",
+            "inferred"
+          ]
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
 }

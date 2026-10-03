@@ -1,0 +1,1103 @@
+kind: certification
+schema_version: '0.4'
+id: certification.ffaa999f6ad143aa80a32fda8a3f5ada
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+entry:
+  id: calibration.dx100_authors_t17
+  content_sha256: c1379c7db84c6734ea3ca50ff61ded8afbdc97b5794a04398d768002cdebf38c
+command:
+  version: '1.0'
+  sources_sha256: 8b36bf787813456d10fea33924a38da1ca4a82830d7f8bc29ffa12be8260a0b1
+host:
+  hostname: YanRus-Mac-Studio.local
+  system: Darwin
+  architecture: arm64
+  compiler: /opt/homebrew/bin/g++-16
+matrix:
+- graph: kronecker-10
+  graph_sha256: c60f4d2efc4f70de4d54955cb0609a09197d17af0ef60c70e477747d5ba18e4b
+  source: 0
+  oracle_frontier_counts: [1, 3, 207, 661, 24]
+  tile_size: 16384
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/kronecker-10.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00032
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 1024 nodes and 10496 undirected edges for degree: 10
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=3
+      Starting TDStepMAA: 3 elements
+      SWDB trusted_frontier=207
+      Starting TDStepMAA: 207 elements
+      SWDB trusted_frontier=661
+      Starting TDStepMAA: 661 elements
+      SWDB trusted_frontier=24
+      Starting TDStepMAA: 24 elements
+      ROI End!!!
+      SWDB strict_operations=0
+      Trial Time:          0.00129
+      Verification:           PASS
+      Verification Time:   0.00006
+      Average Time:        0.00129
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/kronecker-10-16384-0.json
+- graph: kronecker-14
+  graph_sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+  source: 0
+  oracle_frontier_counts: [1, 6, 2269, 9757, 509, 1]
+  tile_size: 16384
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/kronecker-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00023
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 16381 nodes and 212930 undirected edges for degree: 12
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=6
+      Starting TDStepMAA: 6 elements
+      SWDB trusted_frontier=2269
+      Starting TDStepMAA: 2269 elements
+      SWDB trusted_frontier=9757
+      Starting TDStepMAA: 9757 elements
+      SWDB trusted_frontier=509
+      Starting TDStepMAA: 509 elements
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      ROI End!!!
+      SWDB strict_operations=72
+      Trial Time:          0.01031
+      Verification:           PASS
+      Verification Time:   0.00057
+      Average Time:        0.01031
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/kronecker-14-16384-0.json
+- graph: kronecker-16
+  graph_sha256: 9f813f1c549f4affbd7e8108265c27d4d0c4c1fad73140dae97a5b99271e05f9
+  source: 0
+  oracle_frontier_counts: [1, 28, 10673, 34666, 1314, 6]
+  tile_size: 16384
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/kronecker-16.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00077
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 65536 nodes and 909646 undirected edges for degree: 13
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=28
+      Starting TDStepMAA: 28 elements
+      SWDB trusted_frontier=10673
+      Starting TDStepMAA: 10673 elements
+      SWDB trusted_frontier=34666
+      Starting TDStepMAA: 34666 elements
+      SWDB trusted_frontier=1314
+      Starting TDStepMAA: 1314 elements
+      SWDB trusted_frontier=6
+      Starting TDStepMAA: 6 elements
+      ROI End!!!
+      SWDB strict_operations=684
+      Trial Time:          0.11415
+      Verification:           PASS
+      Verification Time:   0.00254
+      Average Time:        0.11415
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/kronecker-16-16384-0.json
+- graph: uniform-14
+  graph_sha256: f7021efd75859ee97a7b26275fd0fd90b3dcd0cc270c8cf81b8cdb6f2cb4d06d
+  source: 0
+  oracle_frontier_counts: [1, 30, 930, 12971, 2452]
+  tile_size: 16384
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/uniform-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00029
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 16384 nodes and 261860 undirected edges for degree: 15
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=30
+      Starting TDStepMAA: 30 elements
+      SWDB trusted_frontier=930
+      Starting TDStepMAA: 930 elements
+      SWDB trusted_frontier=12971
+      Starting TDStepMAA: 12971 elements
+      SWDB trusted_frontier=2452
+      Starting TDStepMAA: 2452 elements
+      ROI End!!!
+      SWDB strict_operations=222
+      Trial Time:          0.02940
+      Verification:           PASS
+      Verification Time:   0.00097
+      Average Time:        0.02940
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/uniform-14-16384-0.json
+- graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  source: 0
+  oracle_frontier_counts: [1, 4200, 17000]
+  tile_size: 16384
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00014
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=4200
+      Starting TDStepMAA: 4200 elements
+      SWDB trusted_frontier=17000
+      Starting TDStepMAA: 17000 elements
+      ROI End!!!
+      SWDB strict_operations=60
+      Trial Time:          0.00410
+      Verification:           PASS
+      Verification Time:   0.00010
+      Average Time:        0.00410
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/two-level-degree-17000-16384-0.json
+- graph: kronecker-10
+  graph_sha256: c60f4d2efc4f70de4d54955cb0609a09197d17af0ef60c70e477747d5ba18e4b
+  source: 0
+  oracle_frontier_counts: [1, 3, 207, 661, 24]
+  tile_size: 1024
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/kronecker-10.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00007
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 1024 nodes and 10496 undirected edges for degree: 10
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=3
+      Starting TDStepMAA: 3 elements
+      SWDB trusted_frontier=207
+      Starting TDStepMAA: 207 elements
+      SWDB trusted_frontier=661
+      Starting TDStepMAA: 661 elements
+      SWDB trusted_frontier=24
+      Starting TDStepMAA: 24 elements
+      ROI End!!!
+      SWDB strict_operations=0
+      Trial Time:          0.00056
+      Verification:           PASS
+      Verification Time:   0.00005
+      Average Time:        0.00056
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/kronecker-10-1024-0.json
+- graph: kronecker-14
+  graph_sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+  source: 0
+  oracle_frontier_counts: [1, 6, 2269, 9757, 509, 1]
+  tile_size: 1024
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/kronecker-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00027
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 16381 nodes and 212930 undirected edges for degree: 12
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=6
+      Starting TDStepMAA: 6 elements
+      SWDB trusted_frontier=2269
+      Starting TDStepMAA: 2269 elements
+      SWDB trusted_frontier=9757
+      Starting TDStepMAA: 9757 elements
+      SWDB trusted_frontier=509
+      Starting TDStepMAA: 509 elements
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      ROI End!!!
+      SWDB strict_operations=732
+      Trial Time:          0.01091
+      Verification:           PASS
+      Verification Time:   0.00057
+      Average Time:        0.01091
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/kronecker-14-1024-0.json
+- graph: kronecker-16
+  graph_sha256: 9f813f1c549f4affbd7e8108265c27d4d0c4c1fad73140dae97a5b99271e05f9
+  source: 0
+  oracle_frontier_counts: [1, 28, 10673, 34666, 1314, 6]
+  tile_size: 1024
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/kronecker-16.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00078
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 65536 nodes and 909646 undirected edges for degree: 13
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=28
+      Starting TDStepMAA: 28 elements
+      SWDB trusted_frontier=10673
+      Starting TDStepMAA: 10673 elements
+      SWDB trusted_frontier=34666
+      Starting TDStepMAA: 34666 elements
+      SWDB trusted_frontier=1314
+      Starting TDStepMAA: 1314 elements
+      SWDB trusted_frontier=6
+      Starting TDStepMAA: 6 elements
+      ROI End!!!
+      SWDB strict_operations=10230
+      Trial Time:          0.12807
+      Verification:           PASS
+      Verification Time:   0.00251
+      Average Time:        0.12807
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/kronecker-16-1024-0.json
+- graph: uniform-14
+  graph_sha256: f7021efd75859ee97a7b26275fd0fd90b3dcd0cc270c8cf81b8cdb6f2cb4d06d
+  source: 0
+  oracle_frontier_counts: [1, 30, 930, 12971, 2452]
+  tile_size: 1024
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/uniform-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00035
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 16384 nodes and 261860 undirected edges for degree: 15
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=30
+      Starting TDStepMAA: 30 elements
+      SWDB trusted_frontier=930
+      Starting TDStepMAA: 930 elements
+      SWDB trusted_frontier=12971
+      Starting TDStepMAA: 12971 elements
+      SWDB trusted_frontier=2452
+      Starting TDStepMAA: 2452 elements
+      ROI End!!!
+      SWDB strict_operations=2430
+      Trial Time:          0.03294
+      Verification:           PASS
+      Verification Time:   0.00080
+      Average Time:        0.03294
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/uniform-14-1024-0.json
+- graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  source: 0
+  oracle_frontier_counts: [1, 4200, 17000]
+  tile_size: 1024
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00014
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=4200
+      Starting TDStepMAA: 4200 elements
+      SWDB trusted_frontier=17000
+      Starting TDStepMAA: 17000 elements
+      ROI End!!!
+      SWDB strict_operations=228
+      Trial Time:          0.00358
+      Verification:           PASS
+      Verification Time:   0.00007
+      Average Time:        0.00358
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/two-level-degree-17000-1024-0.json
+negative_controls:
+- id: shared_context
+  tile_size: 16384
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [thread_ownership_register]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384-shared_context
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384-shared_context.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384-shared_context
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00016
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:thread_ownership_register
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/control-16384-shared_context.json
+- id: dropped_continuation
+  tile_size: 16384
+  status: rejected
+  reason: verifier
+  named_checks: []
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384-dropped_continuation
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384-dropped_continuation.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384-dropped_continuation
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00014
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=4200
+      Starting TDStepMAA: 4200 elements
+      SWDB trusted_frontier=16384
+      Starting TDStepMAA: 16384 elements
+      ROI End!!!
+      SWDB strict_operations=75
+      Trial Time:          0.00401
+      Reachability mismatch
+      Verification:           FAIL
+      Verification Time:   0.00010
+      Average Time:        0.00401
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/control-16384-dropped_continuation.json
+- id: wrong_store_wait
+  tile_size: 16384
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [read_before_wait]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384-wrong_store_wait
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384-wrong_store_wait.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-16384-wrong_store_wait
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00020
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=4200
+      Starting TDStepMAA: 4200 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:read_before_wait
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/control-16384-wrong_store_wait.json
+- id: shared_context
+  tile_size: 1024
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [thread_ownership_register]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024-shared_context
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024-shared_context.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024-shared_context
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00018
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:thread_ownership_register
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/control-1024-shared_context.json
+- id: dropped_continuation
+  tile_size: 1024
+  status: rejected
+  reason: verifier
+  named_checks: []
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024-dropped_continuation
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024-dropped_continuation.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024-dropped_continuation
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00014
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=4200
+      Starting TDStepMAA: 4200 elements
+      SWDB trusted_frontier=1024
+      Starting TDStepMAA: 1024 elements
+      ROI End!!!
+      SWDB strict_operations=27
+      Trial Time:          0.00082
+      Reachability mismatch
+      Verification:           FAIL
+      Verification Time:   0.00007
+      Average Time:        0.00082
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/control-1024-dropped_continuation.json
+- id: oversized_chunk
+  tile_size: 1024
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [tile_truncation]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024-oversized_chunk
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024-oversized_chunk.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024-oversized_chunk
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00017
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=4200
+      Starting TDStepMAA: 4200 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:tile_truncation
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/control-1024-oversized_chunk.json
+- id: wrong_store_wait
+  tile_size: 1024
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [read_before_wait]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/API
+    - -I/private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/include
+    - -DMAA
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024-wrong_store_wait
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024-wrong_store_wait.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/bfs-1024-wrong_store_wait
+    - -f
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00015
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 1 threads
+      SWDB trusted_frontier=1
+      Starting TDStepMAA: 1 elements
+      SWDB trusted_frontier=4200
+      Starting TDStepMAA: 4200 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:read_before_wait
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-5fded1da0590403981699b737117b8a9/control-1024-wrong_store_wait.json
+verdict: certified
+evidence_basis: simulated
+evidence_kind: execution
+created_at: '2026-10-03T06:47:50.907465+00:00'

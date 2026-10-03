@@ -265,6 +265,10 @@ def compile_candidate(args):
             raise Failure("accelerated must be explicit boolean; it does not establish observed path coverage")
         if type(request.get("diagnostic_regions", False)) is not bool:
             raise Failure("diagnostic_regions must be a boolean")
+        if type(request.get('parent_gather_diagnostic', False)) is not bool:
+            raise Failure('parent_gather_diagnostic must be a boolean')
+        if request.get('parent_gather_diagnostic') and (request.get('diagnostic_regions') or not request['accelerated']):
+            raise Failure('parent-gather diagnostic requires an accelerated primary build without region instrumentation')
         if "discovery" in request and not request.get("diagnostic_regions"):
             raise Failure("discovery settings require diagnostic_regions")
         candidate = store.get(request.get("candidate"), "candidate")
@@ -335,6 +339,8 @@ def compile_candidate(args):
                 flags += ['-DNUM_CORES=4', f"-DTILE_SIZE={target['configuration']['tile_elements']}"]
         if request["accelerated"]:
             flags += ["-DMAA"]
+        if request.get('parent_gather_diagnostic'):
+            flags += ['-DSWDB_DXC_DIAGNOSTIC']
         includes = [model / "include", model / "util/m5/src", model / "benchmarks/API", source.parent]
         if request.get('diagnostic_regions'):
             from swdb.dx100_diagnostic import prepare
@@ -362,6 +368,10 @@ def compile_candidate(args):
             verifier_source={"path": str(source), "sha256": artifacts.file_hash(source),
                 "symbol": "BFSVerifier", "protected_text_sha256": artifacts.digest(verifier["text"]),
                 "bounds_check": "trusted driver validates parent length and values before BFSVerifier"})
+        if request.get('parent_gather_diagnostic'):
+            data['context']['parent_gather_diagnostic'] = {'label': 'parent-gather race probes',
+                'define': 'SWDB_DXC_DIAGNOSTIC', 'source_artifact_sha256': candidate['artifact']['sha256'],
+                'performance_evidence': False}
         if not author_diagnostic:
             data['context']['graph_verification'] = graph_verification_contract(original['application'])
             data['context']['protected_bfs_verifier'] = data['context']['verifier_source']

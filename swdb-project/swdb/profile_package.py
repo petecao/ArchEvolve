@@ -336,7 +336,7 @@ def _trace_evidence(store, evaluation, profile):
     from swdb.dx100_coverage import validate_trace
     checked = {}
     if evaluation.get('context', {}).get('backend') == 'dx100-gem5-se':
-        checked[evaluation['id']] = validate_trace(evaluation)
+        checked[evaluation['id']] = validate_trace(evaluation, store=store)
     for run in (profile or {}).get('executions', []):
         observed = store.get(run.get('evaluation'), 'evaluation')
         if run.get('debug_trace') is not None:
@@ -344,7 +344,7 @@ def _trace_evidence(store, evaluation, profile):
                   'profile debug trace lacks its actual DX100 execution')
         if observed and observed.get('context', {}).get('backend') == 'dx100-gem5-se':
             if observed['id'] not in checked:
-                checked[observed['id']] = validate_trace(observed)
+                checked[observed['id']] = validate_trace(observed, store=store)
             _fail(_same(run.get('debug_trace'), checked[observed['id']]),
                   'profile debug trace differs from its actual execution')
 
@@ -466,10 +466,11 @@ def assemble(args):
     for intrinsic in store.of_kind("intrinsic"):
         value = intrinsic.data
         supported = "unknown"
-        if value["isa_family"] == "x86" and cpu.get("architecture") == "x86_64" and isinstance(cpu.get("flags"), list):
+        if value.get("isa_family") == "x86" and cpu.get("architecture") == "x86_64" and isinstance(cpu.get("flags"), list):
             supported = "supported" if set(value["isa_extensions"]) <= set(cpu["flags"]) else "unsupported"
-        hardware["intrinsic_interfaces"].append({"id": intrinsic.id, "header": value["header"],
-            "isa_family": value["isa_family"], "isa_extensions": value["isa_extensions"], "machine_support": supported,
+        hardware["intrinsic_interfaces"].append({"id": intrinsic.id, "header": value.get("header"),
+            "isa_family": value.get("isa_family"), "isa_extensions": value.get("isa_extensions", []),
+            "interface": value.get("interface"), "machine_support": "not_applicable" if "interface" in value else supported,
             "build_support": "unknown", "basis": "recorded machine flags; no compilation of this proposed intrinsic"})
     package = workflow.record("profile_package", request["id"], requested_id=request["id"], package_version=version,
         implementation=impl["id"], source_snapshot=source_id, candidate=candidate["id"], evaluation=evaluation["id"],

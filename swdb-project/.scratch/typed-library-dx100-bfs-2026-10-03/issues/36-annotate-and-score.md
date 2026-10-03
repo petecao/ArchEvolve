@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 07, 34, 35
 **Spec:** `../spec.md`
 **Needs go-ahead:** Yes: Yan-Ru approves the mbit10 dispatch before it starts (Q62).

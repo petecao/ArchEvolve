@@ -1,6 +1,6 @@
 """Execution-bound automatic BFS source attribution and modeled memory events.
 
-Updated: 2026-09-27. Diagnostic artifacts never replace primary native ROI timing.
+Updated: 2026-10-03. Diagnostic artifacts never replace primary native ROI timing.
 """
 import copy
 import itertools
@@ -15,6 +15,7 @@ import uuid
 from pathlib import Path
 
 from swdb import artifacts, bfs_discovery, bfs_native as native, db, paths, profile, workflow
+from swdb import callgrind_lines
 from swdb.cli import Failure, _require_valid
 
 RUNTIME = paths.HOME / "tools/bfs_profile/runtime.hpp"
@@ -65,6 +66,19 @@ def parse_callgrind(path, *, require_totals=False, raw=None):
         if miss in result and reference in result and result[miss] > result[reference]:
             raise Failure(f"Callgrind {miss} exceeds {reference}")
     return result
+
+
+def parse_callgrind_lines(path, *, raw=None):
+    """Source self costs have their own parser and validator, separate from totals."""
+    if raw is None:
+        try:
+            raw, _ = native.observation_bytes(path, 64*1024*1024, "Callgrind per-line output")
+        except native.StageFailure as error:
+            raise Failure(str(error)) from None
+    try:
+        return callgrind_lines.parse(raw)
+    except UnicodeDecodeError:
+        raise Failure("Callgrind per-line output is not UTF-8") from None
 
 
 def _discovery_settings(request, compiler, flags, includes, macro_log):
@@ -222,6 +236,10 @@ def run(args):
         if host == "mbit10" and not profile.lane_required(machine):
             raise Failure("mbit10 profiles require a socket lane")
         lane = profile._verified_lane(machine, getattr(args, "lane", None))
+        preflight = None
+        if host == 'mbit10':
+            from swdb.dispatch_preflight import check
+            preflight = check(args.runs_dir, lane)
         if lane and evaluation["context"].get("lane") and lane.split(" ", 1)[0] != evaluation["context"]["lane"].split(" ", 1)[0]:
             raise Failure("profile lane differs from the primary evaluation")
         budget = request.get("budget", {})
@@ -230,6 +248,10 @@ def run(args):
         repetitions = native._integer(request.get("repetitions", 1), "repetitions", maximum=100)
         if "memory" in request and not isinstance(request["memory"], bool):
             raise Failure("memory must be boolean")
+        if "per_line" in request and not isinstance(request["per_line"], bool):
+            raise Failure("per_line must be boolean")
+        if request.get("per_line") and request.get("memory") is False:
+            raise Failure("per_line requires memory collection")
         folder = artifacts.external_directory(args.runs_dir) / rid
         if host == "mbit10" and not any(base in folder.parents for base in (Path("/data1/yanruj"), Path("/data/yanruj"))):
             raise Failure("mbit10 raw artifacts require /data1/yanruj or /data/yanruj")
@@ -245,6 +267,8 @@ def run(args):
             primary_load_average=evaluation["context"].get("load_average"), load_average=list(os.getloadavg()),
             timing_basis="diagnostic accumulated thread CPU seconds; primary ROI wall timing remains in evaluation",
             overhead_treatment="scope instrumentation overhead is included; no synthetic subtraction or gain claim")
+        if preflight is not None:
+            data['context']['dispatch_preflight'] = preflight
         if host == 'mbit10' and not request.get('fixture'):
             from swdb.host_observation import attach
             attach(data, folder, paths.HOME, total_seconds=min(15, session.remaining()))
@@ -339,6 +363,12 @@ def run(args):
         if request.get("memory", True):
             try:
                 _memory(session, data, request, source, includes, compiler, flags, graph_path, graph, env, budget)
+                if data.get("per_line_memory"):
+                    from swdb.annotation import statement_costs
+                    implementation = store.get(data["implementation"], "implementation")
+                    snapshot = store.get(data["source_snapshot"], "source_snapshot")
+                    if implementation and snapshot and implementation.get("extensions", {}).get("statements"):
+                        data["statement_memory"] = statement_costs(implementation, snapshot, data, verify_raw=False)
             except (Failure, native.StageFailure, OSError, ValueError) as error:
                 data["reasons"].append("dynamic memory collection: " + str(error))
         else:
@@ -426,6 +456,112 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
                 "execution": {"source": source_id, "source_position": position, "repetition": repetition},
                 "raw_artifact": str(file), "raw_sha256": raw_hash,
                 "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof"})
+        session.save()
+
+    if request.get("per_line", False):
+        _per_line_memory(session, data, source, includes, compiler, memory_flags,
+                         graph_path, graph, env, budget, valgrind, collector)
+
+
+def _tdstep_source(source, regions):
+    """Insert an RAII instrumentation scope while retaining original debug lines."""
+    functions = [r for r in regions if r.get("kind") == "function" and r.get("name") == "TDStep"]
+    if len(functions) != 1:
+        raise Failure("per-line profiling needs exactly one compiler-discovered scalar TDStep")
+    region = functions[0]
+    raw = source.read_bytes()
+    begin = region["insertion_range"][0]
+    declaration = region["byte_range"][0]
+    if not 0 <= declaration < begin <= len(raw) or raw[begin-1:begin] != b"{":
+        raise Failure("TDStep source scope does not identify its opening brace")
+    line = raw[:begin].count(b"\n") + 1
+    name = json.dumps(str(source))
+    scope = ("\n::swdb_statement::Scope swdb_statement_scope;\n#line " + str(line) + " " + name + "\n").encode()
+    # Keep this diagnostic function out of DOBFS's inlined body, so its function
+    # identity survives -O3. All other original compilation settings remain.
+    raw = raw[:begin] + scope + raw[begin:]
+    raw = raw[:declaration] + b"__attribute__((noinline)) " + raw[declaration:]
+    return ("#line 1 " + name + "\n").encode() + raw
+
+
+def _per_line_memory(session, data, source, includes, compiler, flags,
+                     graph_path, graph, env, budget, valgrind, collector):
+    """A second execution collects only scalar TDStep, including its worker threads.
+
+    START/STOP instrumentation is global; thread-local toggle-collect would omit
+    workers or toggle the master thread twice at an OpenMP outlined call.
+    Each invocation dumps before STOP and starts with empty model caches. These
+    costs are simulated diagnostics and carry that cold-start limitation.
+    """
+    folder, build = session.folder, Path(data["build"]["directory"])
+    source_file = build / "statement_bfs.cc"
+    source_file.write_bytes(_tdstep_source(source, data["regions"]))
+    prefix = '''#include <valgrind/callgrind.h>
+namespace swdb_statement {
+struct Scope {
+  Scope() { CALLGRIND_START_INSTRUMENTATION; CALLGRIND_ZERO_STATS; }
+  ~Scope() { CALLGRIND_DUMP_STATS; CALLGRIND_STOP_INSTRUMENTATION; }
+};
+}
+'''
+    driver = build / "statement_driver.cc"
+    driver.write_text(_wrapper(source_file, prefix, "", "", ""))
+    binary = build / "bfs-statements"
+    command = [compiler, *flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary)]
+    session.execute("statement_memory_build", command, budget["build_seconds"])
+    binary_hash = artifacts.file_hash(binary)
+    data["artifacts"]["statement_binary"] = {"path": str(binary), "sha256": binary_hash,
+        "flags": flags, "wrapper_sha256": artifacts.file_hash(driver),
+        "instrumented_source_sha256": artifacts.file_hash(source_file),
+        "difference": "debug info; original debug line map; TDStep noinline and global instrumentation scope"}
+    line_collector = {**collector, "initial_state": "empty model caches at each TDStep invocation",
+        "scope": "TDStep and its callees; every thread; self costs only for source attribution",
+        "model_limits": collector["model_limits"] + "; diagnostic TDStep is not inlined; each TDStep starts cold"}
+    data.setdefault("per_line_memory", [])
+    source_path = next(r["path"] for r in data["regions"] if r.get("kind") == "function" and r.get("name") == "TDStep")
+    source_file_hash = artifacts.file_hash(source)
+    for repetition, (position, source_id) in itertools.product(
+            range(data["context"]["repetitions"]), enumerate(data["context"]["sources"])):
+        output = folder / f"statement-memory-{repetition}-{position}.json"
+        raw = folder / f"statement-callgrind-{repetition}-{position}.out"
+        command = [valgrind, "--tool=callgrind", "--cache-sim=yes", "--collect-atstart=yes",
+            "--instr-atstart=no", "--separate-threads=no", "--demangle=yes",
+            *(f"--{key}={value}" for key, value in collector["cache_model"].items()),
+            f"--callgrind-out-file={raw}", str(binary), str(graph_path), str(source_id), str(output)]
+        session.execute("statement_memory_execution", command, budget["run_seconds"], env,
+                        repetition=repetition, source_position=position, source=source_id)
+        check = _trial_output(output, graph, source_id, data["context"]["threads"])
+        dumps = 0
+        for file in sorted(folder.glob(raw.name+"*")):
+            content, raw_hash = native.observation_bytes(file, 64*1024*1024, "Callgrind statement output")
+            if b"desc: Trigger: Client Request" not in content:
+                continue
+            totals = parse_callgrind(file, require_totals=True, raw=content)
+            if not totals.get("Ir", 0):
+                continue
+            parsed = parse_callgrind_lines(file, raw=content)
+            if any(sum(row["events"].get(metric, 0) for row in parsed) > total for metric, total in totals.items()):
+                raise native.StageFailure("missing_observation", "TDStep line self costs exceed the dump summary")
+            selected = [r for r in parsed if callgrind_lines.in_function(r["function"])]
+            if not selected:
+                raise native.StageFailure("missing_observation", "TDStep dump lacks debug source self costs")
+            execution = {"source": source_id, "source_position": position,
+                         "repetition": repetition, "tdstep_position": dumps}
+            for row in selected:
+                row.update(execution=execution, collector=line_collector, scope="TDStep",
+                    artifact_sha256=binary_hash, source_artifact_sha256=data["context"]["candidate_sha256"],
+                    raw_artifact=str(file), raw_sha256=raw_hash,
+                    counter_validation={"state": "valid", "method": callgrind_lines.METHOD})
+                if Path(row["path"]).resolve() == source.resolve():
+                    row.update(source_path=source_path, source_file_sha256=source_file_hash)
+            data["per_line_memory"].extend(selected)
+            data["executions"].append({"kind": "statement_memory", **execution,
+                "binary_sha256": binary_hash, "output": str(output), "raw_artifact": str(file),
+                "raw_sha256": raw_hash, "collector": line_collector, **check})
+            dumps += 1
+        if not dumps:
+            raise native.StageFailure("missing_observation", "no nonempty TDStep client dump")
+        callgrind_lines.validate(data["per_line_memory"])
         session.save()
 
 

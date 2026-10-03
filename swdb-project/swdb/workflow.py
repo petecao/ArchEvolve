@@ -149,6 +149,12 @@ def get_record(args):
     store = db.query_store(args.records, getattr(args, "db", None))
     data = store.get(args.id)
     if data is None:
+        from swdb.library import Library
+        from swdb.library import default_root
+        library = Library(default_root(args.records),store=store)
+        entry = library.get(args.id)
+        if entry is not None:
+            return {**entry, "content_sha256": library.content_sha256(args.id), **library.state(args.id)}
         raise Failure(f"record {args.id!r} does not exist")
     if getattr(args, "chain", False):
         seen = {}
@@ -302,6 +308,8 @@ def _persist_initial_candidate(args, data, source, source_path, patch, folder, *
     candidate_source = _source_destination(args.runs_dir, data["id"])
     artifact = apply_patch(source_path, candidate_source, patch,
                            data["request"]["constraints"]["editable_files"], source["protections"])
+    from swdb.library import check_shipped_files
+    check_shipped_files(data["request"], Store(args.records), source["artifact"], artifact)
     if require_code_change:
         from swdb import rewrite
         rewrite.require_code_change(source_path, candidate_source)
@@ -337,6 +345,8 @@ def submit(args):
             raise Failure(reason)
         data["producer"] = request["producer"]
         data["payload_sha256"] = artifacts.digest(request["payload"])
+        from swdb.library import proposal_gate
+        proposal_gate(request, store)
         source = store.get(request["source_snapshot"], "source_snapshot")
         package = store.get(request["profile_package"], "profile_package")
         if not source or not package:
@@ -378,7 +388,8 @@ def submit(args):
                                      "used_seconds": 0, "repairs": 0}
             data["attempts"][-1]["stage"] = "interpretation"
             persist(args.records, data, args.db)
-            response, meta = rewrite.call(config, request, source, package, store, run_dir / "provider-1")
+            from swdb import provider_roles
+            response, meta = provider_roles.rewriting(config, request, source, package, store, run_dir / "provider-1")
             data["interpretation"] = rewrite.response_record(config, response)
             data["repair_budget"]["used_seconds"] = meta["host_wall_s"]
             data["attempts"][-1]["provider"] = meta
@@ -501,7 +512,8 @@ def repair(args):
                     if stage.get("log_sha256") and artifacts.file_hash(log) != stage["log_sha256"]:
                         raise Failure("repair diagnostic log differs from its retained identity")
                     evidence["logs"].append({"stage": stage["stage"], "text": log.read_text(errors="replace")[-32000:]})
-            response, meta = rewrite.call(config, data["request"], current_source, package, store,
+            from swdb import provider_roles
+            response, meta = provider_roles.rewriting(config, data["request"], current_source, package, store,
                                           folder / "provider", repair=evidence, remaining_s=seconds)
             budget["used_seconds"] += meta["host_wall_s"]
             _provider_receipt(data, meta, folder / "provider")
@@ -583,7 +595,8 @@ def _retry_initial_provider(args, store, proposal):
             source = store.get(data["source_snapshot"], "source_snapshot")
             package = store.get(data["profile_package"], "profile_package")
             source_path = artifacts.verify(source["artifact"])
-            response, meta = rewrite.call(config, data["request"], source, package, store,
+            from swdb import provider_roles
+            response, meta = provider_roles.rewriting(config, data["request"], source, package, store,
                                           folder / "provider", remaining_s=seconds)
             budget["used_seconds"] += meta["host_wall_s"]
             attempt["provider"] = meta
