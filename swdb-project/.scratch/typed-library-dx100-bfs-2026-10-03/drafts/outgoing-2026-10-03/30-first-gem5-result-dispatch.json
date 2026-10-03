@@ -1,7 +1,7 @@
 {
-  "updated": "2026-10-03 18:00 ET",
+  "updated": "2026-10-03 18:58 ET",
   "ticket": "30",
-  "state": "prepared_unsent_pending_audit_and_publication",
+  "state": "blocked_by_automatic_approval_review",
   "from": "yanruj@umich.edu",
   "to": [
     "petepc@umich.edu"
@@ -11,12 +11,74 @@
   "approval_reference": "typed-library-related-approval-20261003",
   "recipient_basis": "Peter is the rewrite author and primary recipient; exact institutional address is retained in verified ticket21 Sent receipt",
   "pending": [
-    "successful independent raw/public audit",
-    "exact compact Git publication and readback",
-    "replace all publication/link placeholders with verified commit/path/line links",
-    "independent body review",
-    "search only exact ticket30 Sent subject before send",
-    "actual Sent verification and team claim"
+    "direct trusted approval of exact reviewed payload and destination",
+    "actual Sent verification before any approved retry",
+    "actual send/Sent verification",
+    "actual team claim after delivery"
   ],
-  "human_owned_ticket37": "no send, retry, mailbox search or approval question"
+  "human_owned_ticket37": "no send, retry, mailbox search or approval question",
+  "publication_commit": "0a495f4a972fe4a1eaa60fb5a1c148663ada9224",
+  "links": {
+    "summary": {
+      "path": "swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/timed-a2-r1-result-summary.json",
+      "line": 162,
+      "url": "https://github.com/petecao/ArchEvolve/blob/0a495f4a972fe4a1eaa60fb5a1c148663ada9224/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/timed-a2-r1-result-summary.json#L162",
+      "supporting_line": "  \"limitations\": ["
+    },
+    "uniform_comparison": {
+      "path": "swdb-project/records/comparison_results/typed-library-bfs-gem5-20261003-a2.recovery.r1.w0.comparison.yaml",
+      "line": 33,
+      "url": "https://github.com/petecao/ArchEvolve/blob/0a495f4a972fe4a1eaa60fb5a1c148663ada9224/swdb-project/records/comparison_results/typed-library-bfs-gem5-20261003-a2.recovery.r1.w0.comparison.yaml#L33",
+      "supporting_line": "  roi_speedup: 1.6000498932475729"
+    },
+    "kronecker_comparison": {
+      "path": "swdb-project/records/comparison_results/typed-library-bfs-gem5-20261003-a2.recovery.r1.w1.comparison.yaml",
+      "line": 33,
+      "url": "https://github.com/petecao/ArchEvolve/blob/0a495f4a972fe4a1eaa60fb5a1c148663ada9224/swdb-project/records/comparison_results/typed-library-bfs-gem5-20261003-a2.recovery.r1.w1.comparison.yaml#L33",
+      "supporting_line": "  roi_speedup: 1.4027646957261597"
+    },
+    "protocol": {
+      "path": "swdb-project/records/protocols/typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0.yaml",
+      "line": 21,
+      "url": "https://github.com/petecao/ArchEvolve/blob/0a495f4a972fe4a1eaa60fb5a1c148663ada9224/swdb-project/records/protocols/typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0.yaml#L21",
+      "supporting_line": "settings:"
+    },
+    "audit": {
+      "path": "swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/timed-a2-r1-independent-audit.json",
+      "line": 5,
+      "url": "https://github.com/petecao/ArchEvolve/blob/0a495f4a972fe4a1eaa60fb5a1c148663ada9224/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/timed-a2-r1-independent-audit.json#L5",
+      "supporting_line": "  \"conclusion\": \"Both complete raw/sample/frontier/companion/official-metric requalifications finished under failedr1; reviewed fresh custody/library r2 completed and reverified exact current witness/trace/record identities. r1 remains failed. No physical, fulltrace, aggregation or comparison repetition.\","
+    },
+    "t17_uniform": {
+      "path": "swdb-project/records/comparison_results/bfs-t17-handoff-20260929-a1.uniform18.yaml",
+      "line": 43,
+      "url": "https://github.com/petecao/ArchEvolve/blob/0a495f4a972fe4a1eaa60fb5a1c148663ada9224/swdb-project/records/comparison_results/bfs-t17-handoff-20260929-a1.uniform18.yaml#L43",
+      "supporting_line": "  roi_speedup: 3.0805868937958523"
+    },
+    "t17_kronecker": {
+      "path": "swdb-project/records/comparison_results/bfs-t17-handoff-20260929-a1.kronecker18.yaml",
+      "line": 43,
+      "url": "https://github.com/petecao/ArchEvolve/blob/0a495f4a972fe4a1eaa60fb5a1c148663ada9224/swdb-project/records/comparison_results/bfs-t17-handoff-20260929-a1.kronecker18.yaml#L43",
+      "supporting_line": "  roi_speedup: 2.7989783693430432"
+    }
+  },
+  "html_path": "30-first-gem5-result.html",
+  "payload_path": "30-first-gem5-result-payload.json",
+  "prepared_hashes": {
+    "plain_sha256": "fc44da3d68962be6ab29a6cafb4198d174027c0179097d6602006cdff5fd37b2",
+    "html_sha256": "718f5fddd16c196f8f4c3789ff1f386f264e4f31e14e2ba05ad9d53e73002eb4",
+    "payload_file_sha256": "f5410466317f1f9f08fbeedd7590786d78ad61bd41b6677138f8ef485fd59718"
+  },
+  "independent_reviews": {
+    "standards": "PASS; seven exact Git links, all MIME bodies/hashes and scope/custody checked; zero findings",
+    "spec": "PASS; exact official ratios/timings, identities/provenance/limits and envelope checked; zero findings",
+    "root": "PASS; exact payload, seven Git lines/URLs and HTML table validated",
+    "reviewed_hashes": {
+      "plain_sha256": "fc44da3d68962be6ab29a6cafb4198d174027c0179097d6602006cdff5fd37b2",
+      "html_sha256": "718f5fddd16c196f8f4c3789ff1f386f264e4f31e14e2ba05ad9d53e73002eb4",
+      "payload_file_sha256": "f5410466317f1f9f08fbeedd7590786d78ad61bd41b6677138f8ef485fd59718"
+    }
+  },
+  "blocked_receipt": "send-receipt-30-blocked.json",
+  "verified_sent": false
 }

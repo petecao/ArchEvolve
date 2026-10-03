@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** task
-**Status:** claimed
+**Status:** needs-info
 **Blocked by:** 29
 **Spec:** `../spec.md`
 
@@ -17,3 +17,5 @@ Created: 2026-10-03
 
 
 - 2026-10-03 18:00 ET: claimed by root under Yan-Ru's standing approval and explicit heartbeat instruction to complete ticket30 delivery/team claim. Recipient is Peter, the rewrite author, at the previously verified petepc@umich.edu, from yanruj@umich.edu. Josh's separate ticket37 remains human-owned and untouched. A concrete first-result body is prepared with both official simulated point ratios, candidate-only MAA/joint attribution, finite correctness/L3 scope, source/recovery provenance and T17 context only. It remains unsent while the root raw audit runs; exact publication commit, repository links/lines and final audit evidence will replace all placeholders before independent review and any send. Actual Sent headers/body/date and a real team-claim receipt are required for closure. [Prepared body](../drafts/outgoing-2026-10-03/30-first-gem5-result.md).
+
+- 2026-10-03 19:00 ET: exact final plain/HTML multipart payload passes independent Standards and Spec reviews with zero findings; seven links bind pushed publication0a495f4 and exact Git lines. Exact-subject Sent precheck found zero matches. Automatic approval review rejected the send of non-public evaluation results/repository evidence to Peter because it requires direct trusted approval specific to this exact payload and petepc@umich.edu. No message is confirmed sent and no team claim is recorded; both acceptance boxes remain open. Preserve the exact rejection and payload hashes; do not retry or switch transport. Ticket37 remains human-owned. [Reviewed summary](../drafts/outgoing-2026-10-03/30-first-gem5-result.md); [exact blocked receipt](../drafts/outgoing-2026-10-03/send-receipt-30-blocked.json).
