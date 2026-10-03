@@ -1,0 +1,1796 @@
+{
+  "format": "swdb.typed-library-gem5-aggregation-failure-summary.v1",
+  "generated_at": "2026-10-03T18:37:54.152427+00:00",
+  "id": "typed-library-bfs-gem5-20261003-a2",
+  "runtime_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+  "basis": "simulated",
+  "evidence_kind": "execution",
+  "gain_claim": false,
+  "timed_state": "failed_postprocessing",
+  "failure": "timed.w0.candidate-aggregate exceeded 300 seconds",
+  "approval_reference": "typed-library-related-approval-20261003",
+  "authoring_session": "codex-typed-library-dx100-bfs-20261003",
+  "public_records": [
+    {
+      "repository_path": "records/candidates/typed-library-bfs-gem5-20261003-a2.baseline.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/candidates/typed-library-bfs-gem5-20261003-a2.baseline.yaml",
+      "sha256": "2f568da8a4d8a484b9f65619178c38619b8aa75babd9b4da48bc7504ac2499ed",
+      "bytes": 22563,
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.baseline",
+        "sha256": "fde1e81baa8ead0579982c9cb164d65583fc300fb5cec42a4448c30408a4f1bc"
+      },
+      "kind": "candidate",
+      "outcome": null,
+      "correctness_state": null
+    },
+    {
+      "repository_path": "records/candidates/typed-library-bfs-gem5-20261003-a2.proposal.candidate-1.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/candidates/typed-library-bfs-gem5-20261003-a2.proposal.candidate-1.yaml",
+      "sha256": "7129a55682c9d782d22292518d2257667a60556d586b7c2f0b1d0202d2b5ee07",
+      "bytes": 28290,
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.proposal.candidate-1",
+        "sha256": "f03a82b17a24feb8c43b2c80e97f35782ee21ce3ed4a4173ec947531c71f129d"
+      },
+      "kind": "candidate",
+      "outcome": null,
+      "correctness_state": null
+    },
+    {
+      "repository_path": "records/evaluations/typed-library-bfs-gem5-20261003-a2.baseline.primary.build.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/evaluations/typed-library-bfs-gem5-20261003-a2.baseline.primary.build.yaml",
+      "sha256": "5fc4ea1f3e445a9ca69faf2df7f8214f6b7632144063b202db286fc6ef0bcae0",
+      "bytes": 18302,
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.baseline.primary.build",
+        "sha256": "40d1bd3743e914aca4f1029f2d0bd41d8d57b244f69fbda67486b2949eb55e1a"
+      },
+      "kind": "evaluation",
+      "outcome": {
+        "state": "complete",
+        "stage": "candidate_build",
+        "reason": "Identified candidate compiled; no simulated correctness or timing inferred."
+      },
+      "correctness_state": "unverified"
+    },
+    {
+      "repository_path": "records/evaluations/typed-library-bfs-gem5-20261003-a2.candidate.diagnostic.build.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/evaluations/typed-library-bfs-gem5-20261003-a2.candidate.diagnostic.build.yaml",
+      "sha256": "4fb7f47c4c887711d7b6d7fa5cad37d7be10f4cb6719e2863af4050c82ce311b",
+      "bytes": 14369,
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.candidate.diagnostic.build",
+        "sha256": "4566df93204f3e6b674c590514e3acc6a71b3bc8ad2238a510c3118c76e87563"
+      },
+      "kind": "evaluation",
+      "outcome": {
+        "state": "complete",
+        "stage": "candidate_build",
+        "reason": "Identified candidate compiled; no simulated correctness or timing inferred."
+      },
+      "correctness_state": "unverified"
+    },
+    {
+      "repository_path": "records/evaluations/typed-library-bfs-gem5-20261003-a2.candidate.primary.build.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/evaluations/typed-library-bfs-gem5-20261003-a2.candidate.primary.build.yaml",
+      "sha256": "d68c2f2f7b066d988b29c7dfc7a64d947ed5cea013bb22d8b77dfc6be0c46f83",
+      "bytes": 14046,
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.candidate.primary.build",
+        "sha256": "b09c775df32aff4e51e3076b9a8fdccc6919181aa9bbbb210dfb04564677d3b3"
+      },
+      "kind": "evaluation",
+      "outcome": {
+        "state": "complete",
+        "stage": "candidate_build",
+        "reason": "Identified candidate compiled; no simulated correctness or timing inferred."
+      },
+      "correctness_state": "unverified"
+    },
+    {
+      "repository_path": "records/evaluations/typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/evaluations/typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation.yaml",
+      "sha256": "3854539b31ff1cd0979d630fd7cce4d8c3304bb5608399088cd6037673227cd3",
+      "bytes": 47752,
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation",
+        "sha256": "c6e696d7fae07bc9ed1b8a573eca7bc83d80f9447d4b233f0c20d52daf9cbab9"
+      },
+      "kind": "evaluation",
+      "outcome": {
+        "state": "complete",
+        "stage": "execution",
+        "reason": "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+      },
+      "correctness_state": "passed"
+    },
+    {
+      "repository_path": "records/evaluations/typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/evaluations/typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation.yaml",
+      "sha256": "efa195636a55d3b93cf2366a579ab0e2018883ec7a2a75e3b2a0d1a22fcb12d1",
+      "bytes": 47399,
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation",
+        "sha256": "75f17237a61bb17d1a6e4e0a546e56a90228ae648f8f6c225ff03a9985f096ae"
+      },
+      "kind": "evaluation",
+      "outcome": {
+        "state": "complete",
+        "stage": "execution",
+        "reason": "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+      },
+      "correctness_state": "passed"
+    },
+    {
+      "repository_path": "records/evaluations/typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.aggregate.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/evaluations/typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.aggregate.yaml",
+      "sha256": "4b216307a6b8d5c07fb14d3f10a91d4985e25c2088b88d7e0ed3faabfeaea91c",
+      "bytes": 281799,
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.aggregate",
+        "sha256": "9b821fd4c8bbc207c64a4aa18ddb99f67a7f8b9b706c04d91d7d5e057ec49366"
+      },
+      "kind": "evaluation",
+      "outcome": {
+        "state": "complete",
+        "stage": "aggregation",
+        "reason": "Exact completed simulator executions; no synthetic repetitions."
+      },
+      "correctness_state": "passed"
+    },
+    {
+      "repository_path": "records/evaluations/typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/evaluations/typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation.yaml",
+      "sha256": "81a7cb3f8e1ee3a0397214be961d5f53d6f118aa069bed5d5060580ffe452b23",
+      "bytes": 178527,
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation",
+        "sha256": "fd42274d782eb737bf0e3f6c7c766d6b4c382bb1debc3de6009ba3af05de9cb8"
+      },
+      "kind": "evaluation",
+      "outcome": {
+        "state": "complete",
+        "stage": "execution",
+        "reason": "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+      },
+      "correctness_state": "passed"
+    },
+    {
+      "repository_path": "records/evaluations/typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/evaluations/typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation.yaml",
+      "sha256": "7ea1d56c2a55bae2bc9ea8c711e07e736b0e00dabf9cc72f97f464247148577c",
+      "bytes": 185608,
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation",
+        "sha256": "38a7e690f14c228b118031dec1f89b16b521c8af204eacb32bc15a8732d2d7eb"
+      },
+      "kind": "evaluation",
+      "outcome": {
+        "state": "complete",
+        "stage": "execution",
+        "reason": "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+      },
+      "correctness_state": "passed"
+    },
+    {
+      "repository_path": "records/proposals/typed-library-bfs-gem5-20261003-a2.proposal.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/proposals/typed-library-bfs-gem5-20261003-a2.proposal.yaml",
+      "sha256": "c16b3975261e777a42e4155d798582cdf2b605eede3b672afac554d836af42ef",
+      "bytes": 14851,
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.proposal",
+        "sha256": "081f76d0321419850c85f059f0ec7320bcb8315110e1026569cec74a8eb9c2c8"
+      },
+      "kind": "proposal",
+      "outcome": {
+        "state": "candidate_created",
+        "stage": "rewriting",
+        "reason": null
+      },
+      "correctness_state": null
+    },
+    {
+      "repository_path": "records/protocols/typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/protocols/typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0.yaml",
+      "sha256": "fd91b10f7d9400eb862c8148475996e6265ad14243413c80d5a9a84454d40444",
+      "bytes": 13077,
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0",
+        "sha256": "acd297ea9eaf36f5d4fda79c42030c3fd792d2757c9f7c635a498bb4fbbb73e6"
+      },
+      "kind": "protocol",
+      "outcome": null,
+      "correctness_state": null
+    },
+    {
+      "repository_path": "records/retentions/prune-intent-058ece4576dc4b9c98762d3927a4c60c.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/retentions/prune-intent-058ece4576dc4b9c98762d3927a4c60c.yaml",
+      "sha256": "2133a213f7946b21c9ab3cabaa578fcd393280f881e10e7cf7aa992187d3ac41",
+      "bytes": 1054,
+      "record": {
+        "id": "prune-intent-058ece4576dc4b9c98762d3927a4c60c",
+        "sha256": "0cffd32a213023f2d18c161ff5e3fc242d6c22a13633c549730bfa4097de9263"
+      },
+      "kind": "retention",
+      "outcome": null,
+      "correctness_state": null
+    },
+    {
+      "repository_path": "records/retentions/prune-intent-a9382a268ec84c729f5d6c3e74e1863b.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/retentions/prune-intent-a9382a268ec84c729f5d6c3e74e1863b.yaml",
+      "sha256": "34abee6a30874fa491c2b6230d1796db658e6fd89d4104ac5d49b70424142df2",
+      "bytes": 1050,
+      "record": {
+        "id": "prune-intent-a9382a268ec84c729f5d6c3e74e1863b",
+        "sha256": "b0040374d8ce859ce8d5d2f50c6e6b922984284f71e01209f88732e660dd633b"
+      },
+      "kind": "retention",
+      "outcome": null,
+      "correctness_state": null
+    },
+    {
+      "repository_path": "records/retentions/prune-intent-b1d65c7e05d341c0becba91a39ebaed6.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/retentions/prune-intent-b1d65c7e05d341c0becba91a39ebaed6.yaml",
+      "sha256": "6873f1daabdee30b41df31ac12d511632691ad8630b06ac2d3b768f06c5934b7",
+      "bytes": 1039,
+      "record": {
+        "id": "prune-intent-b1d65c7e05d341c0becba91a39ebaed6",
+        "sha256": "018ac4b3845fefcf3da243779fd6d2eba639ad4f0cfaa5d6c0d6126d2404acbe"
+      },
+      "kind": "retention",
+      "outcome": null,
+      "correctness_state": null
+    },
+    {
+      "repository_path": "records/retentions/prune-intent-ced41c82c82b49208ee78faf28d85620.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/retentions/prune-intent-ced41c82c82b49208ee78faf28d85620.yaml",
+      "sha256": "7835d9ca402d391f7c3adba4cefaff4355d6c6048678b570c1ca2b54fefe1a95",
+      "bytes": 1053,
+      "record": {
+        "id": "prune-intent-ced41c82c82b49208ee78faf28d85620",
+        "sha256": "4924bec5c1af1d41ebc2e0b02e6e10d716f18cd9cdf715d34cea28d052e5d45c"
+      },
+      "kind": "retention",
+      "outcome": null,
+      "correctness_state": null
+    },
+    {
+      "repository_path": "records/retentions/retention-1d26509272124ee69022b01b84d8f592.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/retentions/retention-1d26509272124ee69022b01b84d8f592.yaml",
+      "sha256": "e457c052435bdc74fccb8553e8e1ca8790340914af6d9ce134c744adbbad18ff",
+      "bytes": 1071,
+      "record": {
+        "id": "retention-1d26509272124ee69022b01b84d8f592",
+        "sha256": "4da0a41c475f637d5e54cb2ca015a8356838f88b8997229b4ae97886d7999f1e"
+      },
+      "kind": "retention",
+      "outcome": null,
+      "correctness_state": null
+    },
+    {
+      "repository_path": "records/retentions/retention-8357c157407341c08f476f98c44abe50.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/retentions/retention-8357c157407341c08f476f98c44abe50.yaml",
+      "sha256": "6ef7460f33103872f6e6c273838050dbe022d61f374d60b2e6e4b68398f04911",
+      "bytes": 1082,
+      "record": {
+        "id": "retention-8357c157407341c08f476f98c44abe50",
+        "sha256": "128084f5fc60488dd8b0b8033b9211860e1dbec48d553f0c2cfd7917e1cba0d5"
+      },
+      "kind": "retention",
+      "outcome": null,
+      "correctness_state": null
+    },
+    {
+      "repository_path": "records/retentions/retention-9b80cfaebc6840ff9b539ec4b5f4d8af.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/retentions/retention-9b80cfaebc6840ff9b539ec4b5f4d8af.yaml",
+      "sha256": "421c167d689b59dbbc36a65761db040fbf5d199816580c0823971ec8e0c4de83",
+      "bytes": 1086,
+      "record": {
+        "id": "retention-9b80cfaebc6840ff9b539ec4b5f4d8af",
+        "sha256": "7c24d59b65c7d8b9343bcfd6c86b7f3f83633a9fcb6645dea9a7b3b8a66e14de"
+      },
+      "kind": "retention",
+      "outcome": null,
+      "correctness_state": null
+    },
+    {
+      "repository_path": "records/retentions/retention-c3bf11adc63f4042850989340209783a.yaml",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/records/retentions/retention-c3bf11adc63f4042850989340209783a.yaml",
+      "sha256": "815ec2a8a8440879039b3ecfa2ea651ca1b78b9f23e8e2bbc483679a5cfa11bf",
+      "bytes": 1085,
+      "record": {
+        "id": "retention-c3bf11adc63f4042850989340209783a",
+        "sha256": "3da407f134b85a35c8e86fc98e159a312e14f6e6f858f7d0b7e9dc9e78c66655"
+      },
+      "kind": "retention",
+      "outcome": null,
+      "correctness_state": null
+    }
+  ],
+  "prepare": {
+    "artifact": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-prepare/driver.json",
+      "sha256": "11fdd029e43b666167af8883cd9d8894501a0015dbf392d5b7187cc82b09cb49",
+      "bytes": 6818
+    },
+    "content": {
+      "format": "swdb.typed-library-gem5-driver.v1",
+      "id": "typed-library-bfs-gem5-20261003-a2",
+      "stage": "prepare",
+      "state": "complete",
+      "started": "2026-10-03T16:20:12.366728+00:00",
+      "approval_reference": "typed-library-related-approval-20261003",
+      "authoring_session": "codex-typed-library-dx100-bfs-20261003",
+      "host": "mbit10",
+      "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 442)",
+      "basis": "simulated",
+      "gain_claim": false,
+      "memory_gib": 36,
+      "storage_gib": 8,
+      "driver_sha256": "22d0a845472c218fb738669af8822d8449b4afe6422783a6f20b9c20e110aa91",
+      "leases": [
+        {
+          "name": "mbit10-evaluation-node0",
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.lease",
+          "held": true,
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-10-03T16:20:12Z",
+            "lease": {
+              "acquired_at": "2026-10-03T16:20:12Z",
+              "daemon_pid": 1589310,
+              "daemon_start_token": "sh1589310-1791044412",
+              "generation": 442,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation-node0",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": null,
+            "session_note": null,
+            "session_state": "none",
+            "state": "held",
+            "writer": "hostlock.sh"
+          },
+          "metadata_sha256": "76ba152d8e3e054143d63904864e596a37bf9768aaf9d3040f6c915fd9759db3"
+        },
+        {
+          "name": "mbit10-evaluation-node1",
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.lease",
+          "held": false,
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-10-03T12:51:22Z",
+            "lease": {
+              "acquired_at": "2026-10-03T12:48:39Z",
+              "daemon_pid": 1568990,
+              "daemon_start_token": "sh1568990-1791031719",
+              "generation": 506,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation-node1",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": "2026-10-03T12:51:22Z",
+            "session_note": null,
+            "session_state": "none",
+            "state": "released",
+            "writer": "hostlock.sh"
+          },
+          "metadata_sha256": "a3ad728335024e59369d7560dc5996b2fd43442230350081bc242b44d1569ec2"
+        },
+        {
+          "name": "mbit10-evaluation",
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.lease",
+          "held": false,
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-09-12T04:49:11Z",
+            "lease": {
+              "acquired_at": "2026-09-12T01:35:42Z",
+              "daemon_pid": 209457,
+              "daemon_start_token": "sh209457-1789176942",
+              "generation": 77,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": "2026-09-12T04:49:11Z",
+            "session_note": null,
+            "session_state": "none",
+            "state": "released",
+            "writer": "hostlock.sh"
+          },
+          "metadata_sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0"
+        }
+      ],
+      "host_observation": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-prepare/host-observation.json",
+        "sha256": "35ddc590795b1502e13a7560a5bc2f45e4aefb17c8914c4a9bdf434c658281e6",
+        "host_wall_s": 0.08634490706026554,
+        "evidence_kind": "execution",
+        "unavailable_commands": 2
+      },
+      "runtime_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+      "runtime_branch": "yanrujhou_main",
+      "tracked_changes": [],
+      "preflight": {
+        "disk": "/data1",
+        "runs_folder": "/data1/yanruj/EvolveSWDB_runs",
+        "free_bytes": 46124802048,
+        "memory_node": 0,
+        "free_memory_bytes": 35514503168,
+        "secondary_free_bytes": 78837571584,
+        "node_memory_stats_bytes": {
+          "MemTotal": 66951016448,
+          "MemFree": 35514503168,
+          "Inactive(file)": 21478150144,
+          "Mapped": 972124160,
+          "Shmem": 6594560,
+          "Dirty": 438272,
+          "Writeback": 0,
+          "Unevictable": 40005632
+        },
+        "node_zone_reserve_bytes": 450916352,
+        "node_managed_memory_bytes": 66951016448,
+        "estimated_memory_capacity_bytes": 41449029632,
+        "memory_capacity_basis": "node_memfree_plus_conservative_inactive_file.v1",
+        "inactive_file_credit_bytes": 10229493760,
+        "node_memory_reserve_bytes": 4294967296,
+        "format": "swdb.dispatch-preflight.v1",
+        "observed_at": "2026-10-03T16:20:12.489299+00:00",
+        "planned_raw_bytes": 4294967296,
+        "reserve_bytes": 21474836480,
+        "memory_budget_bytes": 4294967296,
+        "state": "admitted"
+      },
+      "result": {
+        "protocol": {
+          "id": "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0",
+          "sha256": "acd297ea9eaf36f5d4fda79c42030c3fd792d2757c9f7c635a498bb4fbbb73e6"
+        },
+        "candidate": {
+          "id": "typed-library-bfs-gem5-20261003-a2.proposal.candidate-1",
+          "sha256": "f03a82b17a24feb8c43b2c80e97f35782ee21ce3ed4a4173ec947531c71f129d"
+        },
+        "baseline": {
+          "id": "typed-library-bfs-gem5-20261003-a2.baseline",
+          "sha256": "fde1e81baa8ead0579982c9cb164d65583fc300fb5cec42a4448c30408a4f1bc"
+        },
+        "certification": {
+          "id": "certification.1e4397e31d594245bc10bd80ff2107f5",
+          "sha256": "911bb67e623bb3eaee29754a5f6a979b426be2c13dc77c812ecbf44fd95b5c53"
+        },
+        "profile_package": {
+          "id": "typed-library-bfs-scalar-profile-20261003-a2.package.v1.619546ae9c6f60fe",
+          "sha256": "860c8d9e89f7a4cb593b4cdbd48c1eb96c1cf52d29dd834843f49f6abeca33b8"
+        },
+        "builds": {
+          "baseline.primary": {
+            "id": "typed-library-bfs-gem5-20261003-a2.baseline.primary.build",
+            "sha256": "40d1bd3743e914aca4f1029f2d0bd41d8d57b244f69fbda67486b2949eb55e1a"
+          },
+          "candidate.primary": {
+            "id": "typed-library-bfs-gem5-20261003-a2.candidate.primary.build",
+            "sha256": "b09c775df32aff4e51e3076b9a8fdccc6919181aa9bbbb210dfb04564677d3b3"
+          },
+          "candidate.diagnostic": {
+            "id": "typed-library-bfs-gem5-20261003-a2.candidate.diagnostic.build",
+            "sha256": "4566df93204f3e6b674c590514e3acc6a71b3bc8ad2238a510c3118c76e87563"
+          }
+        },
+        "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+        "patch_sha256": "cc99ca4d024983ab02c17f5db74db5210a7450968787ccad25562da4d9873cff",
+        "next_stage": "companion",
+        "l3_outcome": "not_run"
+      },
+      "finished": "2026-10-03T16:22:57.301253+00:00"
+    }
+  },
+  "companion": {
+    "artifact": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-companion/driver.json",
+      "sha256": "914e276404a97c8f49bb4223c345f8dcaa609dfb9c24f316b4c12a0dd3b61163",
+      "bytes": 8767
+    },
+    "content": {
+      "format": "swdb.typed-library-gem5-driver.v1",
+      "id": "typed-library-bfs-gem5-20261003-a2",
+      "stage": "companion",
+      "state": "complete",
+      "started": "2026-10-03T16:24:56.828856+00:00",
+      "approval_reference": "typed-library-related-approval-20261003",
+      "authoring_session": "codex-typed-library-dx100-bfs-20261003",
+      "host": "mbit10",
+      "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 443)",
+      "basis": "simulated",
+      "gain_claim": false,
+      "memory_gib": 36,
+      "storage_gib": 8,
+      "driver_sha256": "22d0a845472c218fb738669af8822d8449b4afe6422783a6f20b9c20e110aa91",
+      "leases": [
+        {
+          "name": "mbit10-evaluation-node0",
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.lease",
+          "held": true,
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-10-03T16:24:56Z",
+            "lease": {
+              "acquired_at": "2026-10-03T16:24:56Z",
+              "daemon_pid": 1590332,
+              "daemon_start_token": "sh1590332-1791044696",
+              "generation": 443,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation-node0",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": null,
+            "session_note": null,
+            "session_state": "none",
+            "state": "held",
+            "writer": "hostlock.sh"
+          },
+          "metadata_sha256": "6b2bbeb702068651b6d28ee2155908a62e9373c56e747d0094b6692536b815e5"
+        },
+        {
+          "name": "mbit10-evaluation-node1",
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.lease",
+          "held": false,
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-10-03T12:51:22Z",
+            "lease": {
+              "acquired_at": "2026-10-03T12:48:39Z",
+              "daemon_pid": 1568990,
+              "daemon_start_token": "sh1568990-1791031719",
+              "generation": 506,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation-node1",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": "2026-10-03T12:51:22Z",
+            "session_note": null,
+            "session_state": "none",
+            "state": "released",
+            "writer": "hostlock.sh"
+          },
+          "metadata_sha256": "a3ad728335024e59369d7560dc5996b2fd43442230350081bc242b44d1569ec2"
+        },
+        {
+          "name": "mbit10-evaluation",
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.lease",
+          "held": false,
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-09-12T04:49:11Z",
+            "lease": {
+              "acquired_at": "2026-09-12T01:35:42Z",
+              "daemon_pid": 209457,
+              "daemon_start_token": "sh209457-1789176942",
+              "generation": 77,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": "2026-09-12T04:49:11Z",
+            "session_note": null,
+            "session_state": "none",
+            "state": "released",
+            "writer": "hostlock.sh"
+          },
+          "metadata_sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0"
+        }
+      ],
+      "host_observation": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-companion/host-observation.json",
+        "sha256": "607e28177e78b6579f9c0d9cf26ece6c499df23dd6d4355975cd41cf3e09815d",
+        "host_wall_s": 0.08164660912007093,
+        "evidence_kind": "execution",
+        "unavailable_commands": 2
+      },
+      "runtime_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+      "runtime_branch": "yanrujhou_main",
+      "tracked_changes": [],
+      "preflight": {
+        "disk": "/data1",
+        "runs_folder": "/data1/yanruj/EvolveSWDB_runs",
+        "free_bytes": 46084681728,
+        "memory_node": 0,
+        "free_memory_bytes": 35468795904,
+        "secondary_free_bytes": 78837571584,
+        "node_memory_stats_bytes": {
+          "MemTotal": 66951016448,
+          "MemFree": 35468795904,
+          "Inactive(file)": 21518278656,
+          "Mapped": 972201984,
+          "Shmem": 6610944,
+          "Dirty": 446464,
+          "Writeback": 0,
+          "Unevictable": 40005632
+        },
+        "node_zone_reserve_bytes": 450916352,
+        "node_managed_memory_bytes": 66951016448,
+        "estimated_memory_capacity_bytes": 41423335424,
+        "memory_capacity_basis": "node_memfree_plus_conservative_inactive_file.v1",
+        "inactive_file_credit_bytes": 10249506816,
+        "node_memory_reserve_bytes": 4294967296,
+        "format": "swdb.dispatch-preflight.v1",
+        "observed_at": "2026-10-03T16:24:56.939248+00:00",
+        "planned_raw_bytes": 8589934592,
+        "reserve_bytes": 21474836480,
+        "memory_budget_bytes": 38654705664,
+        "state": "admitted"
+      },
+      "result": {
+        "protocol": {
+          "id": "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0",
+          "sha256": "acd297ea9eaf36f5d4fda79c42030c3fd792d2757c9f7c635a498bb4fbbb73e6"
+        },
+        "companion_evaluations": {
+          "timed": {
+            "id": "typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation",
+            "sha256": "75f17237a61bb17d1a6e4e0a546e56a90228ae648f8f6c225ff03a9985f096ae"
+          },
+          "diagnostic": {
+            "id": "typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation",
+            "sha256": "c6e696d7fae07bc9ed1b8a573eca7bc83d80f9447d4b233f0c20d52daf9cbab9"
+          }
+        },
+        "l3_outcome": "observed",
+        "acceptance": {
+          "case": "parent_gather_race",
+          "outcome": "observed",
+          "evaluations": {
+            "timed": {
+              "evaluation": "typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation",
+              "sha256": "75f17237a61bb17d1a6e4e0a546e56a90228ae648f8f6c225ff03a9985f096ae",
+              "frontier_sizes": {
+                "state": "passed",
+                "observed": [
+                  1,
+                  4097,
+                  4113
+                ],
+                "oracle": [
+                  1,
+                  4097,
+                  4113
+                ],
+                "lines": [
+                  {
+                    "count": 1,
+                    "line": 75
+                  },
+                  {
+                    "count": 4097,
+                    "line": 88
+                  },
+                  {
+                    "count": 4113,
+                    "line": 90
+                  }
+                ],
+                "output": {
+                  "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation/002-simulation.log",
+                  "sha256": "4eaf735e6fcd1094de96afe4ac45f26294a63806532005d858080ea66213e826"
+                },
+                "basis": "trusted original-adjacency BFS per-depth counts"
+              }
+            },
+            "diagnostic": {
+              "evaluation": "typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation",
+              "sha256": "c6e696d7fae07bc9ed1b8a573eca7bc83d80f9447d4b233f0c20d52daf9cbab9",
+              "frontier_sizes": {
+                "state": "passed",
+                "observed": [
+                  1,
+                  4097,
+                  4113
+                ],
+                "oracle": [
+                  1,
+                  4097,
+                  4113
+                ],
+                "lines": [
+                  {
+                    "count": 1,
+                    "line": 75
+                  },
+                  {
+                    "count": 4097,
+                    "line": 88
+                  },
+                  {
+                    "count": 4113,
+                    "line": 90
+                  }
+                ],
+                "output": {
+                  "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation/002-simulation.log",
+                  "sha256": "370146111e83bb7bf4f7067cf1220bae0895120d73f7124a670b1764b35ee2d8"
+                },
+                "basis": "trusted original-adjacency BFS per-depth counts"
+              },
+              "parent_gather_race": {
+                "outcome": "observed",
+                "probes": [
+                  {
+                    "cas_negative_hint_failures": 14546,
+                    "l3_violations": 0,
+                    "line": 94
+                  }
+                ],
+                "output": {
+                  "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation/002-simulation.log",
+                  "sha256": "370146111e83bb7bf4f7067cf1220bae0895120d73f7124a670b1764b35ee2d8"
+                },
+                "scope": "finite diagnostic execution; observed means race exercised without an L3 violation"
+              }
+            }
+          }
+        },
+        "timed_admitted": true,
+        "next_stage": "timed"
+      },
+      "finished": "2026-10-03T16:37:37.464540+00:00"
+    }
+  },
+  "timed_driver": {
+    "artifact": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/driver.json",
+      "sha256": "6b69c4796c97ff1b443b1bb10e14493435ecb7dadf2e7415fdb59320d82552d6",
+      "bytes": 5093
+    },
+    "content": {
+      "format": "swdb.typed-library-gem5-driver.v1",
+      "id": "typed-library-bfs-gem5-20261003-a2",
+      "stage": "timed",
+      "state": "failed",
+      "started": "2026-10-03T16:39:05.646211+00:00",
+      "approval_reference": "typed-library-related-approval-20261003",
+      "authoring_session": "codex-typed-library-dx100-bfs-20261003",
+      "host": "mbit10",
+      "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 444)",
+      "basis": "simulated",
+      "gain_claim": false,
+      "memory_gib": 36,
+      "storage_gib": 8,
+      "driver_sha256": "22d0a845472c218fb738669af8822d8449b4afe6422783a6f20b9c20e110aa91",
+      "leases": [
+        {
+          "name": "mbit10-evaluation-node0",
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.lease",
+          "held": true,
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-10-03T16:39:05Z",
+            "lease": {
+              "acquired_at": "2026-10-03T16:39:05Z",
+              "daemon_pid": 1592297,
+              "daemon_start_token": "sh1592297-1791045545",
+              "generation": 444,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation-node0",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": null,
+            "session_note": null,
+            "session_state": "none",
+            "state": "held",
+            "writer": "hostlock.sh"
+          },
+          "metadata_sha256": "b569b5d6d56db14437ccb63377b545d75ff58ac13b50f3e903e0e28bc846c269"
+        },
+        {
+          "name": "mbit10-evaluation-node1",
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.lease",
+          "held": false,
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-10-03T12:51:22Z",
+            "lease": {
+              "acquired_at": "2026-10-03T12:48:39Z",
+              "daemon_pid": 1568990,
+              "daemon_start_token": "sh1568990-1791031719",
+              "generation": 506,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation-node1",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": "2026-10-03T12:51:22Z",
+            "session_note": null,
+            "session_state": "none",
+            "state": "released",
+            "writer": "hostlock.sh"
+          },
+          "metadata_sha256": "a3ad728335024e59369d7560dc5996b2fd43442230350081bc242b44d1569ec2"
+        },
+        {
+          "name": "mbit10-evaluation",
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.lease",
+          "held": false,
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-09-12T04:49:11Z",
+            "lease": {
+              "acquired_at": "2026-09-12T01:35:42Z",
+              "daemon_pid": 209457,
+              "daemon_start_token": "sh209457-1789176942",
+              "generation": 77,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": "2026-09-12T04:49:11Z",
+            "session_note": null,
+            "session_state": "none",
+            "state": "released",
+            "writer": "hostlock.sh"
+          },
+          "metadata_sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0"
+        }
+      ],
+      "host_observation": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/host-observation.json",
+        "sha256": "d794ad4a5a549a5d6cfda7e78b355fb12b55318062ee90a3e43e9663796bcce2",
+        "host_wall_s": 0.08571128826588392,
+        "evidence_kind": "execution",
+        "unavailable_commands": 2
+      },
+      "runtime_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+      "runtime_branch": "yanrujhou_main",
+      "tracked_changes": [],
+      "preflight": {
+        "disk": "/data1",
+        "runs_folder": "/data1/yanruj/EvolveSWDB_runs",
+        "free_bytes": 46054862848,
+        "memory_node": 0,
+        "free_memory_bytes": 35657191424,
+        "secondary_free_bytes": 78837571584,
+        "node_memory_stats_bytes": {
+          "MemTotal": 66951016448,
+          "MemFree": 35657191424,
+          "Inactive(file)": 21326483456,
+          "Mapped": 972075008,
+          "Shmem": 6594560,
+          "Dirty": 389120,
+          "Writeback": 0,
+          "Unevictable": 40005632
+        },
+        "node_zone_reserve_bytes": 450916352,
+        "node_managed_memory_bytes": 66951016448,
+        "estimated_memory_capacity_bytes": 41515933696,
+        "memory_capacity_basis": "node_memfree_plus_conservative_inactive_file.v1",
+        "inactive_file_credit_bytes": 10153709568,
+        "node_memory_reserve_bytes": 4294967296,
+        "format": "swdb.dispatch-preflight.v1",
+        "observed_at": "2026-10-03T16:39:05.765930+00:00",
+        "planned_raw_bytes": 8589934592,
+        "reserve_bytes": 21474836480,
+        "memory_budget_bytes": 38654705664,
+        "state": "admitted"
+      },
+      "finished": "2026-10-03T18:30:25.733944+00:00",
+      "reason": "timed.w0.candidate-aggregate exceeded 300 seconds"
+    }
+  },
+  "completed_uniform_commands": [
+    {
+      "artifact": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline.command.json",
+        "sha256": "f3970ac47cdec9b5b5ec2580a013ebb1ef6dc1089dc19bf52a038a56e6b1fef6",
+        "bytes": 1110
+      },
+      "content": {
+        "stage": "timed.w0.baseline",
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "swdb",
+          "dx100-execute",
+          "--records",
+          "/data1/yanruj/ArchEvolve/swdb-project/records",
+          "--format",
+          "json",
+          "--db",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline.request.json",
+          "--runs-dir",
+          "/data1/yanruj/EvolveSWDB_runs",
+          "--lane",
+          "0"
+        ],
+        "started": "2026-10-03T16:39:44.851241+00:00",
+        "timeout_seconds": 9060,
+        "finished": "2026-10-03T17:21:33.377853+00:00",
+        "returncode": 0,
+        "state": "complete",
+        "output": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline.json",
+          "sha256": "d1d24b509404835cd34ec88fa3769525cd1c5efc107bc2ccd03e0ae4f3f4b9a3"
+        },
+        "stderr": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "artifact": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline.request.json",
+          "sha256": "b1ba1dd3009bcecc5e57511226492daec0017f5b1465ba3fc1702e938d3343b7",
+          "bytes": 1769
+        },
+        "content": {
+          "message_version": "1.0",
+          "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation",
+          "machine": "mbit10",
+          "hardware_target": "dx100-e4fc4af-4c",
+          "model_root": "/data1/yanruj/DX100-bfs-e4fc4af",
+          "build_evaluation": "bfs-dx100-build-20260925-a2",
+          "simulator": {
+            "path": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+            "sha256": "f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b"
+          },
+          "candidate": "typed-library-bfs-gem5-20261003-a2.baseline",
+          "candidate_build": "typed-library-bfs-gem5-20261003-a2.baseline.primary.build",
+          "binary": {
+            "path": "/data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a2.baseline.primary.build/bfs",
+            "sha256": "f4e7d5a3a138a48aa9edde6760391fec0bcf5bf98e81390f7a650286e55c776c"
+          },
+          "workload": {
+            "id": "bfs-20260928-uniform18-s0.8c7e69dfa516e53c",
+            "source": 0,
+            "representation": {
+              "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/graph.sg32",
+              "sha256": "c6a430be5cf64a1b144d01f9bcbaeab2fcb45e0fac2359da36de8087b1b4790d"
+            }
+          },
+          "protocol": "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0",
+          "protocol_role": "baseline",
+          "protocol_trial": {
+            "source_position": 0,
+            "repetition": 0
+          },
+          "configuration": {
+            "mode": "BASE",
+            "l3_size_mb": 8,
+            "l3_assoc": 16,
+            "tile_elements": 16384
+          },
+          "verification": {
+            "checker": "dx100.bfs.verifier.v2",
+            "max_ticks": 100000000000000,
+            "coverage": false,
+            "post_roi_trace": "SyscallBase",
+            "trace_transport": "gem5-gzip.v1",
+            "read_only": false
+          },
+          "budget": {
+            "total_seconds": 9000,
+            "checkpoint_seconds": 1800,
+            "run_seconds": 7140,
+            "memory_gib": 36,
+            "storage_gib": 8
+          }
+        }
+      },
+      "output": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline.json",
+        "sha256": "d1d24b509404835cd34ec88fa3769525cd1c5efc107bc2ccd03e0ae4f3f4b9a3",
+        "bytes": 248130
+      },
+      "stderr": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation",
+        "sha256": "fd42274d782eb737bf0e3f6c7c766d6b4c382bb1debc3de6009ba3af05de9cb8"
+      }
+    },
+    {
+      "artifact": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate.command.json",
+        "sha256": "252a33e2568211107c0d881e74bc5cac73bbc423a8a257d3121f481916ecb28a",
+        "bytes": 1114
+      },
+      "content": {
+        "stage": "timed.w0.candidate",
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "swdb",
+          "dx100-execute",
+          "--records",
+          "/data1/yanruj/ArchEvolve/swdb-project/records",
+          "--format",
+          "json",
+          "--db",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate.request.json",
+          "--runs-dir",
+          "/data1/yanruj/EvolveSWDB_runs",
+          "--lane",
+          "0"
+        ],
+        "started": "2026-10-03T17:21:45.904684+00:00",
+        "timeout_seconds": 9060,
+        "finished": "2026-10-03T18:25:25.698595+00:00",
+        "returncode": 0,
+        "state": "complete",
+        "output": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate.json",
+          "sha256": "e22e4cb6b41a7108c37950a24817dab5bc57f89ba37d1e7b8e6e19eb851ba68a"
+        },
+        "stderr": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "artifact": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate.request.json",
+          "sha256": "caf4c0fd11aa3d3fbc3de0ce0fbbb15d1c3eecfab4d9d898c3144109ef8a54b1",
+          "bytes": 1782
+        },
+        "content": {
+          "message_version": "1.0",
+          "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation",
+          "machine": "mbit10",
+          "hardware_target": "dx100-e4fc4af-4c",
+          "model_root": "/data1/yanruj/DX100-bfs-e4fc4af",
+          "build_evaluation": "bfs-dx100-build-20260925-a2",
+          "simulator": {
+            "path": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+            "sha256": "f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b"
+          },
+          "candidate": "typed-library-bfs-gem5-20261003-a2.proposal.candidate-1",
+          "candidate_build": "typed-library-bfs-gem5-20261003-a2.candidate.primary.build",
+          "binary": {
+            "path": "/data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a2.candidate.primary.build/bfs",
+            "sha256": "ba6a857f1f22790f0d9ec546374b25f6f3e3b9b91c740c893c89baaf6aacf77e"
+          },
+          "workload": {
+            "id": "bfs-20260928-uniform18-s0.8c7e69dfa516e53c",
+            "source": 0,
+            "representation": {
+              "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/graph.sg32",
+              "sha256": "c6a430be5cf64a1b144d01f9bcbaeab2fcb45e0fac2359da36de8087b1b4790d"
+            }
+          },
+          "protocol": "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0",
+          "protocol_role": "candidate",
+          "protocol_trial": {
+            "source_position": 0,
+            "repetition": 0
+          },
+          "configuration": {
+            "mode": "MAA",
+            "l3_size_mb": 8,
+            "l3_assoc": 16,
+            "tile_elements": 16384
+          },
+          "verification": {
+            "checker": "dx100.bfs.verifier.v2",
+            "max_ticks": 100000000000000,
+            "coverage": true,
+            "post_roi_trace": "SyscallBase",
+            "trace_transport": "gem5-gzip.v1",
+            "read_only": true
+          },
+          "budget": {
+            "total_seconds": 9000,
+            "checkpoint_seconds": 1800,
+            "run_seconds": 7140,
+            "memory_gib": 36,
+            "storage_gib": 8
+          }
+        }
+      },
+      "output": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate.json",
+        "sha256": "e22e4cb6b41a7108c37950a24817dab5bc57f89ba37d1e7b8e6e19eb851ba68a",
+        "bytes": 257965
+      },
+      "stderr": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation",
+        "sha256": "38a7e690f14c228b118031dec1f89b16b521c8af204eacb32bc15a8732d2d7eb"
+      }
+    },
+    {
+      "artifact": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline-aggregate.command.json",
+        "sha256": "203749fb9448fe13c317c402f7c4a50b968b0142e91ea45f413d1aecc723bbfb",
+        "bytes": 1079
+      },
+      "content": {
+        "stage": "timed.w0.baseline-aggregate",
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "swdb",
+          "aggregate-evaluations",
+          "--records",
+          "/data1/yanruj/ArchEvolve/swdb-project/records",
+          "--format",
+          "json",
+          "--db",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline-aggregate.request.json"
+        ],
+        "started": "2026-10-03T17:21:33.394437+00:00",
+        "timeout_seconds": 300,
+        "finished": "2026-10-03T17:21:45.843427+00:00",
+        "returncode": 0,
+        "state": "complete",
+        "output": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline-aggregate.json",
+          "sha256": "06a67357cdf5261153fa62fb7f37b13dba05f23ede0b228a2108883a8f0645ab"
+        },
+        "stderr": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline-aggregate.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "artifact": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline-aggregate.request.json",
+          "sha256": "8538feef3229e50cf7ccb5b82839c2fca7543e9236719bea8ac23155508b6c1b",
+          "bytes": 308
+        },
+        "content": {
+          "message_version": "1.0",
+          "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.aggregate",
+          "protocol": "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0",
+          "protocol_role": "baseline",
+          "evaluations": [
+            "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation"
+          ]
+        }
+      },
+      "output": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline-aggregate.json",
+        "sha256": "06a67357cdf5261153fa62fb7f37b13dba05f23ede0b228a2108883a8f0645ab",
+        "bytes": 385941
+      },
+      "stderr": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline-aggregate.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.aggregate",
+        "sha256": "9b821fd4c8bbc207c64a4aa18ddb99f67a7f8b9b706c04d91d7d5e057ec49366"
+      }
+    }
+  ],
+  "failed_aggregation_command": {
+    "artifact": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate-aggregate.command.json",
+      "sha256": "d6eb159e730f6863154535bcedde7c114457c4e5c8544842a915d07f5af1ee38",
+      "bytes": 605
+    },
+    "content": {
+      "stage": "timed.w0.candidate-aggregate",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "swdb",
+        "aggregate-evaluations",
+        "--records",
+        "/data1/yanruj/ArchEvolve/swdb-project/records",
+        "--format",
+        "json",
+        "--db",
+        "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite",
+        "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate-aggregate.request.json"
+      ],
+      "started": "2026-10-03T18:25:25.715628+00:00",
+      "timeout_seconds": 300,
+      "finished": "2026-10-03T18:30:25.716854+00:00",
+      "state": "timed_out"
+    },
+    "request": {
+      "artifact": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate-aggregate.request.json",
+        "sha256": "3443cc23c96a2e8f5333fdcb1f9ed2f9e1f9312a94a68bc3c537d2d346534519",
+        "bytes": 311
+      },
+      "content": {
+        "message_version": "1.0",
+        "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.aggregate",
+        "protocol": "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0",
+        "protocol_role": "candidate",
+        "evaluations": [
+          "typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation"
+        ]
+      }
+    },
+    "output": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate-aggregate.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "stderr": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate-aggregate.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "protocol": {
+    "id": "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0",
+    "sha256": "acd297ea9eaf36f5d4fda79c42030c3fd792d2757c9f7c635a498bb4fbbb73e6"
+  },
+  "completed_uniform_samples": {
+    "baseline": {
+      "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation",
+      "sha256": "fd42274d782eb737bf0e3f6c7c766d6b4c382bb1debc3de6009ba3af05de9cb8"
+    },
+    "candidate": {
+      "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation",
+      "sha256": "38a7e690f14c228b118031dec1f89b16b521c8af204eacb32bc15a8732d2d7eb"
+    }
+  },
+  "completed_baseline_aggregate": {
+    "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.aggregate",
+    "sha256": "9b821fd4c8bbc207c64a4aa18ddb99f67a7f8b9b706c04d91d7d5e057ec49366"
+  },
+  "candidate_aggregate": {
+    "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.aggregate",
+    "record_exists": false
+  },
+  "candidate_trace": {
+    "format": "swdb.dx100.debug-trace.v1",
+    "transport": "gem5-gzip.v1",
+    "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation/simulation/roi-debug.trace.gz",
+    "sha256": "24cd155921ceb7cb02899338d395338c002acc6ea30fd59797640e9c93644695",
+    "bytes": 1268319894,
+    "uncompressed_sha256": "ce4fa7c8d3cde0ca6613727e20667a53c3d4653fa0b0dcc240cef5a698c658da",
+    "uncompressed_bytes": 17616258696,
+    "lines": 177412847
+  },
+  "baseline_trace": {
+    "format": "swdb.dx100.debug-trace.v1",
+    "transport": "gem5-gzip.v1",
+    "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation/simulation/roi-debug.trace.gz",
+    "sha256": "7def5b6d6d820cf3dcc3f38a8c490b5eec7a89d49551311519a0bcb42e19c8a6",
+    "bytes": 1536,
+    "uncompressed_sha256": "f6f6558ea10888252e8b10b267f0a885f76ad0b4a6508708259bcf21e3db59b0",
+    "uncompressed_bytes": 10316,
+    "lines": 76
+  },
+  "validation_latency": {
+    "simulation_finished": "2026-10-03T18:06:57.265309+00:00",
+    "execution_observations_started": "2026-10-03T18:24:59.395680+00:00",
+    "elapsed_seconds": 1082.130371,
+    "classification": "observed interval before execution_observations; includes initial trace parsing/qualification, not a sampled call stack"
+  },
+  "aggregation_health": {
+    "monitor": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-timed/status-monitor.jsonl",
+      "sha256": "729d1c97c0e3b9b60dce3ffaa7463d37c09711c554c1fea4d41b11865d64fbe6",
+      "bytes": 574556
+    },
+    "clock_ticks_per_second": 100,
+    "samples": [
+      {
+        "observed_at": "2026-10-03T18:25:43.014621+00:00",
+        "processes": [
+          {
+            "pid": 1602509,
+            "ppid": 1592364,
+            "stat": "Rs",
+            "rss_kib": 209676,
+            "elapsed_s": 17,
+            "command": "/usr/bin/python3 -m swdb aggregate-evaluations --records /data1/yanruj/ArchEvolve/swdb-project/records --format json --db /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate-aggregate.request.json",
+            "cpu_ticks": 1730
+          }
+        ],
+        "pressure": {
+          "cpu": "some avg10=0.00 avg60=0.00 avg300=0.00 total=58162488995\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "memory": "some avg10=0.00 avg60=0.01 avg300=0.00 total=1174150086\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=1146957888",
+          "io": "some avg10=0.00 avg60=0.01 avg300=0.00 total=1875161481\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=1837318161"
+        },
+        "load": [
+          2.08740234375,
+          2.072265625,
+          2.08447265625
+        ],
+        "disk_free_bytes": 44773928960
+      },
+      {
+        "observed_at": "2026-10-03T18:26:43.052463+00:00",
+        "processes": [
+          {
+            "pid": 1602509,
+            "ppid": 1592364,
+            "stat": "Rs",
+            "rss_kib": 209676,
+            "elapsed_s": 77,
+            "command": "/usr/bin/python3 -m swdb aggregate-evaluations --records /data1/yanruj/ArchEvolve/swdb-project/records --format json --db /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate-aggregate.request.json",
+            "cpu_ticks": 7734
+          }
+        ],
+        "pressure": {
+          "cpu": "some avg10=0.14 avg60=0.03 avg300=0.00 total=58162517835\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "memory": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1174150086\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1146957888",
+          "io": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1875161484\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1837318163"
+        },
+        "load": [
+          2.08740234375,
+          2.07177734375,
+          2.08447265625
+        ],
+        "disk_free_bytes": 44773920768
+      },
+      {
+        "observed_at": "2026-10-03T18:27:43.091439+00:00",
+        "processes": [
+          {
+            "pid": 1602509,
+            "ppid": 1592364,
+            "stat": "Rs",
+            "rss_kib": 209676,
+            "elapsed_s": 137,
+            "command": "/usr/bin/python3 -m swdb aggregate-evaluations --records /data1/yanruj/ArchEvolve/swdb-project/records --format json --db /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate-aggregate.request.json",
+            "cpu_ticks": 13738
+          }
+        ],
+        "pressure": {
+          "cpu": "some avg10=0.15 avg60=0.05 avg300=0.00 total=58162571904\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "memory": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1174150086\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1146957888",
+          "io": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1875161484\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1837318163"
+        },
+        "load": [
+          2.14501953125,
+          2.08642578125,
+          2.08935546875
+        ],
+        "disk_free_bytes": 44773916672
+      },
+      {
+        "observed_at": "2026-10-03T18:28:43.130503+00:00",
+        "processes": [
+          {
+            "pid": 1602509,
+            "ppid": 1592364,
+            "stat": "Rs",
+            "rss_kib": 209676,
+            "elapsed_s": 197,
+            "command": "/usr/bin/python3 -m swdb aggregate-evaluations --records /data1/yanruj/ArchEvolve/swdb-project/records --format json --db /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate-aggregate.request.json",
+            "cpu_ticks": 19741
+          }
+        ],
+        "pressure": {
+          "cpu": "some avg10=0.15 avg60=0.06 avg300=0.00 total=58162622410\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "memory": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1174150086\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1146957888",
+          "io": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1875161666\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1837318344"
+        },
+        "load": [
+          2.1083984375,
+          2.0849609375,
+          2.0888671875
+        ],
+        "disk_free_bytes": 44773912576
+      },
+      {
+        "observed_at": "2026-10-03T18:29:43.170126+00:00",
+        "processes": [
+          {
+            "pid": 1602509,
+            "ppid": 1592364,
+            "stat": "Rs",
+            "rss_kib": 209676,
+            "elapsed_s": 257,
+            "command": "/usr/bin/python3 -m swdb aggregate-evaluations --records /data1/yanruj/ArchEvolve/swdb-project/records --format json --db /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate-aggregate.request.json",
+            "cpu_ticks": 25745
+          }
+        ],
+        "pressure": {
+          "cpu": "some avg10=0.00 avg60=0.04 avg300=0.00 total=58162651155\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "memory": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1174150086\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1146957888",
+          "io": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1875161666\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1837318344"
+        },
+        "load": [
+          2.03857421875,
+          2.0673828125,
+          2.0830078125
+        ],
+        "disk_free_bytes": 44773908480
+      }
+    ],
+    "diagnosis": "CPU-bound full compressed trace replay is inferred from retained CPU progression, trace size and source call path; no live stack capture survived timeout",
+    "source_path": [
+      "aggregate_evaluations",
+      "_evaluation_samples",
+      "_check_verifier_identity(component)",
+      "dx100_coverage.validate_trace",
+      "dx100_coverage.observe",
+      "dx100_coverage.trace_lines"
+    ],
+    "persistence": "_evaluation_samples executes before aggregate workflow.persist; timeout left no candidate aggregate YAML"
+  },
+  "stop_audit": {
+    "observed_at": "2026-10-03T18:37:54.157719+00:00",
+    "measurement_processes": [],
+    "leases": [
+      {
+        "name": "mbit10-evaluation-node0",
+        "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.lease",
+        "kernel_held": false,
+        "metadata": {
+          "artifact": {
+            "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.meta.json",
+            "sha256": "f02080519e60f16e4c771c0de468058311ee57acf4971c995b08ca86b9aa85bd",
+            "bytes": 482
+          },
+          "content": {
+            "active_session": null,
+            "heartbeat_at": "2026-10-03T18:30:25Z",
+            "lease": {
+              "acquired_at": "2026-10-03T16:39:05Z",
+              "daemon_pid": 1592297,
+              "daemon_start_token": "sh1592297-1791045545",
+              "generation": 444,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation-node0",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": "2026-10-03T18:30:25Z",
+            "session_note": null,
+            "session_state": "none",
+            "state": "released",
+            "writer": "hostlock.sh"
+          }
+        }
+      },
+      {
+        "name": "mbit10-evaluation-node1",
+        "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.lease",
+        "kernel_held": false,
+        "metadata": {
+          "artifact": {
+            "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.meta.json",
+            "sha256": "a3ad728335024e59369d7560dc5996b2fd43442230350081bc242b44d1569ec2",
+            "bytes": 482
+          },
+          "content": {
+            "active_session": null,
+            "heartbeat_at": "2026-10-03T12:51:22Z",
+            "lease": {
+              "acquired_at": "2026-10-03T12:48:39Z",
+              "daemon_pid": 1568990,
+              "daemon_start_token": "sh1568990-1791031719",
+              "generation": 506,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation-node1",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": "2026-10-03T12:51:22Z",
+            "session_note": null,
+            "session_state": "none",
+            "state": "released",
+            "writer": "hostlock.sh"
+          }
+        }
+      },
+      {
+        "name": "mbit10-evaluation",
+        "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.lease",
+        "kernel_held": false,
+        "metadata": {
+          "artifact": {
+            "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.meta.json",
+            "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+            "bytes": 473
+          },
+          "content": {
+            "active_session": null,
+            "heartbeat_at": "2026-09-12T04:49:11Z",
+            "lease": {
+              "acquired_at": "2026-09-12T01:35:42Z",
+              "daemon_pid": 209457,
+              "daemon_start_token": "sh209457-1789176942",
+              "generation": 77,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": "2026-09-12T04:49:11Z",
+            "session_note": null,
+            "session_state": "none",
+            "state": "released",
+            "writer": "hostlock.sh"
+          }
+        }
+      }
+    ],
+    "all_processes_stopped": true,
+    "all_actual_leases_released": true
+  },
+  "automatic_checkpoint_custody": [
+    {
+      "repository_path": "records/retentions/prune-intent-058ece4576dc4b9c98762d3927a4c60c.yaml",
+      "record": {
+        "id": "prune-intent-058ece4576dc4b9c98762d3927a4c60c",
+        "sha256": "0cffd32a213023f2d18c161ff5e3fc242d6c22a13633c549730bfa4097de9263"
+      },
+      "evaluation": {
+        "id": "typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation",
+        "sha256": "c6e696d7fae07bc9ed1b8a573eca7bc83d80f9447d4b233f0c20d52daf9cbab9"
+      },
+      "event": "prune_intent",
+      "planned": [
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation/checkpoint/cpt.5604867500/system.physmem.store0.pmem",
+          "sha256": "32c52abde6cb48cb1fe2c1cd4cc9aac48bb26807edc63ae9a7b7ea2e35d1f12f",
+          "bytes": 17785713
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation/checkpoint/cpt.5604867500/m5.cpt",
+          "sha256": "e5400b2cb85dd709942890d3f071e6983babecc87b0a64525c85baefbcbccf71",
+          "bytes": 459488
+        }
+      ],
+      "deleted": [],
+      "intent": null
+    },
+    {
+      "repository_path": "records/retentions/prune-intent-a9382a268ec84c729f5d6c3e74e1863b.yaml",
+      "record": {
+        "id": "prune-intent-a9382a268ec84c729f5d6c3e74e1863b",
+        "sha256": "b0040374d8ce859ce8d5d2f50c6e6b922984284f71e01209f88732e660dd633b"
+      },
+      "evaluation": {
+        "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation",
+        "sha256": "fd42274d782eb737bf0e3f6c7c766d6b4c382bb1debc3de6009ba3af05de9cb8"
+      },
+      "event": "prune_intent",
+      "planned": [
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation/checkpoint/cpt.158779844500/system.physmem.store0.pmem",
+          "sha256": "a3ee1be06e347522378b804aa8610123143200ce3113541b55c37a2c9bed323f",
+          "bytes": 67595142
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation/checkpoint/cpt.158779844500/m5.cpt",
+          "sha256": "a71d54e1c7cb622377f3071538dc4b897cb0df75866c5e153ddd348b593660b3",
+          "bytes": 5468115
+        }
+      ],
+      "deleted": [],
+      "intent": null
+    },
+    {
+      "repository_path": "records/retentions/prune-intent-b1d65c7e05d341c0becba91a39ebaed6.yaml",
+      "record": {
+        "id": "prune-intent-b1d65c7e05d341c0becba91a39ebaed6",
+        "sha256": "018ac4b3845fefcf3da243779fd6d2eba639ad4f0cfaa5d6c0d6126d2404acbe"
+      },
+      "evaluation": {
+        "id": "typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation",
+        "sha256": "75f17237a61bb17d1a6e4e0a546e56a90228ae648f8f6c225ff03a9985f096ae"
+      },
+      "event": "prune_intent",
+      "planned": [
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation/checkpoint/cpt.5604615000/system.physmem.store0.pmem",
+          "sha256": "c74328ba2de7e9c93d7bc23dd3c90e8ece3cbf769e337ff88703ed95548a2838",
+          "bytes": 17785251
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation/checkpoint/cpt.5604615000/m5.cpt",
+          "sha256": "13bf848a3f6c6328eaac5d025895c14901bb6894035f1bbc85ffd3037aa3ae07",
+          "bytes": 459250
+        }
+      ],
+      "deleted": [],
+      "intent": null
+    },
+    {
+      "repository_path": "records/retentions/prune-intent-ced41c82c82b49208ee78faf28d85620.yaml",
+      "record": {
+        "id": "prune-intent-ced41c82c82b49208ee78faf28d85620",
+        "sha256": "4924bec5c1af1d41ebc2e0b02e6e10d716f18cd9cdf715d34cea28d052e5d45c"
+      },
+      "evaluation": {
+        "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation",
+        "sha256": "38a7e690f14c228b118031dec1f89b16b521c8af204eacb32bc15a8732d2d7eb"
+      },
+      "event": "prune_intent",
+      "planned": [
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation/checkpoint/cpt.158778129500/system.physmem.store0.pmem",
+          "sha256": "de57f0a41744ab0c0a19eb7c4326cf2db982f2597b02d29e1e45ef85bcb4b82e",
+          "bytes": 67592773
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation/checkpoint/cpt.158778129500/m5.cpt",
+          "sha256": "d7822ecec0b4684c33ab69b4d39762e59557a41dcd73a375cbc1a3b30ed24a18",
+          "bytes": 5467456
+        }
+      ],
+      "deleted": [],
+      "intent": null
+    },
+    {
+      "repository_path": "records/retentions/retention-1d26509272124ee69022b01b84d8f592.yaml",
+      "record": {
+        "id": "retention-1d26509272124ee69022b01b84d8f592",
+        "sha256": "4da0a41c475f637d5e54cb2ca015a8356838f88b8997229b4ae97886d7999f1e"
+      },
+      "evaluation": {
+        "id": "typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation",
+        "sha256": "75f17237a61bb17d1a6e4e0a546e56a90228ae648f8f6c225ff03a9985f096ae"
+      },
+      "event": "prune",
+      "planned": null,
+      "deleted": [
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation/checkpoint/cpt.5604615000/system.physmem.store0.pmem",
+          "sha256": "c74328ba2de7e9c93d7bc23dd3c90e8ece3cbf769e337ff88703ed95548a2838",
+          "bytes": 17785251
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation/checkpoint/cpt.5604615000/m5.cpt",
+          "sha256": "13bf848a3f6c6328eaac5d025895c14901bb6894035f1bbc85ffd3037aa3ae07",
+          "bytes": 459250
+        }
+      ],
+      "intent": "prune-intent-b1d65c7e05d341c0becba91a39ebaed6",
+      "exact_intent_list_matches": true,
+      "deleted_leaf_paths_absent": true
+    },
+    {
+      "repository_path": "records/retentions/retention-8357c157407341c08f476f98c44abe50.yaml",
+      "record": {
+        "id": "retention-8357c157407341c08f476f98c44abe50",
+        "sha256": "128084f5fc60488dd8b0b8033b9211860e1dbec48d553f0c2cfd7917e1cba0d5"
+      },
+      "evaluation": {
+        "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation",
+        "sha256": "fd42274d782eb737bf0e3f6c7c766d6b4c382bb1debc3de6009ba3af05de9cb8"
+      },
+      "event": "prune",
+      "planned": null,
+      "deleted": [
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation/checkpoint/cpt.158779844500/system.physmem.store0.pmem",
+          "sha256": "a3ee1be06e347522378b804aa8610123143200ce3113541b55c37a2c9bed323f",
+          "bytes": 67595142
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation/checkpoint/cpt.158779844500/m5.cpt",
+          "sha256": "a71d54e1c7cb622377f3071538dc4b897cb0df75866c5e153ddd348b593660b3",
+          "bytes": 5468115
+        }
+      ],
+      "intent": "prune-intent-a9382a268ec84c729f5d6c3e74e1863b",
+      "exact_intent_list_matches": true,
+      "deleted_leaf_paths_absent": true
+    },
+    {
+      "repository_path": "records/retentions/retention-9b80cfaebc6840ff9b539ec4b5f4d8af.yaml",
+      "record": {
+        "id": "retention-9b80cfaebc6840ff9b539ec4b5f4d8af",
+        "sha256": "7c24d59b65c7d8b9343bcfd6c86b7f3f83633a9fcb6645dea9a7b3b8a66e14de"
+      },
+      "evaluation": {
+        "id": "typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation",
+        "sha256": "c6e696d7fae07bc9ed1b8a573eca7bc83d80f9447d4b233f0c20d52daf9cbab9"
+      },
+      "event": "prune",
+      "planned": null,
+      "deleted": [
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation/checkpoint/cpt.5604867500/system.physmem.store0.pmem",
+          "sha256": "32c52abde6cb48cb1fe2c1cd4cc9aac48bb26807edc63ae9a7b7ea2e35d1f12f",
+          "bytes": 17785713
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation/checkpoint/cpt.5604867500/m5.cpt",
+          "sha256": "e5400b2cb85dd709942890d3f071e6983babecc87b0a64525c85baefbcbccf71",
+          "bytes": 459488
+        }
+      ],
+      "intent": "prune-intent-058ece4576dc4b9c98762d3927a4c60c",
+      "exact_intent_list_matches": true,
+      "deleted_leaf_paths_absent": true
+    },
+    {
+      "repository_path": "records/retentions/retention-c3bf11adc63f4042850989340209783a.yaml",
+      "record": {
+        "id": "retention-c3bf11adc63f4042850989340209783a",
+        "sha256": "3da407f134b85a35c8e86fc98e159a312e14f6e6f858f7d0b7e9dc9e78c66655"
+      },
+      "evaluation": {
+        "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation",
+        "sha256": "38a7e690f14c228b118031dec1f89b16b521c8af204eacb32bc15a8732d2d7eb"
+      },
+      "event": "prune",
+      "planned": null,
+      "deleted": [
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation/checkpoint/cpt.158778129500/system.physmem.store0.pmem",
+          "sha256": "de57f0a41744ab0c0a19eb7c4326cf2db982f2597b02d29e1e45ef85bcb4b82e",
+          "bytes": 67592773
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation/checkpoint/cpt.158778129500/m5.cpt",
+          "sha256": "d7822ecec0b4684c33ab69b4d39762e59557a41dcd73a375cbc1a3b30ed24a18",
+          "bytes": 5467456
+        }
+      ],
+      "intent": "prune-intent-ced41c82c82b49208ee78faf28d85620",
+      "exact_intent_list_matches": true,
+      "deleted_leaf_paths_absent": true
+    }
+  ],
+  "remaining": {
+    "uniform_comparison": "absent",
+    "kronecker_samples": "not_started",
+    "ratios": "none"
+  },
+  "limitations": [
+    "One frozen uniform18 graph, source0, one deterministic replay per role; no statistical or native gain claim.",
+    "The complete timed driver remains failed; no complete two-workload result is asserted.",
+    "Raw traces/logs and original command/request/output receipts remain remote and unchanged.",
+    "Automatic pruning affected newly successful checkpoint files only, with exact intent/prune custody; no historical cleanup occurred.",
+    "This summary does not rerun full candidate coverage parsing; strict public aggregate/comparison qualification remains required."
+  ]
+}
