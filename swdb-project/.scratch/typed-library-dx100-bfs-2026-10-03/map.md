@@ -54,8 +54,8 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 26 | [Automatic pruning of bulky raw output (ArchEvolve mode)](issues/26-automatic-pruning.md) | resolved | 24 |  |
 | 27 | [Real profile package for the scalar-only snapshot on mbit10](issues/27-profile-package-scalar-only.md) | resolved | 05, 08 | yes |
 | 28 | [Freeze the new protocol, submit the patch, run the companion case](issues/28-freeze-protocol-and-companion-runs.md) | resolved | 08, 20, 22, 23, 26, 27 | yes |
-| 29 | [Timed gem5 runs, comparison and team summary](issues/29-timed-runs-comparison-summary.md) | claimed | 28 | yes |
-| 30 | [Send the first gem5 result and record the team claim](issues/30-send-first-result.md) | ready-for-human | 29 |  |
+| 29 | [Timed gem5 runs, comparison and team summary](issues/29-timed-runs-comparison-summary.md) | resolved | 28 | yes |
+| 30 | [Send the first gem5 result and record the team claim](issues/30-send-first-result.md) | claimed | 29 |  |
 | 31 | [Fallback contract: the CPU loads the parent value itself](issues/31-fallback-contract.md) | wontfix | 28 | yes |
 | 32 | [Clean up existing run output on mbit10](issues/32-retroactive-cleanup.md) | resolved | 25 | yes |
 
@@ -158,3 +158,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 - 2026-10-03 11:10 ET: ticket28 resolved after both actual companions passed and exact metadata publication/readback `5d74de87bfe45023ab7193f36659c0f3f9999bfb`. Diagnostic L3 observed: 14,546 negative-hint CAS failures, zero violations. Ticket31 is wontfix because its refutation condition did not trigger;29 is claimed for fresh timed runs. Valid bounded v2 guest completion now qualifies through the authoritative witness validator, independently reviewed on both axes; 200 affected tests pass and 3,752 current identities reconcile to 3,716 pass/36 skip. Current local actual-record replay derives 19 shared/evaluated-on-target and two shared/certified entries. [Companion summary](evaluation/companion-a1-summary.json); [review](code-review.md).
 
 - 2026-10-03 12:13 ET: ticket29 a1 first **uniform18** baseline stopped at the10**10 post-seal verifier cap, with no qualified verdict or ratio; failure metadata published8b68b2f, raw failed checkpoint retained. Restore prior common10**14 ceiling without changing ROI/checker/resource/wall/model constraints. Both final review axes pass,168 affected tests pass, full3,756case ledger reconciles3,720pass/36skip. Fresh a2 actual prepare/protocol/binary/companion/timed execution remains required. [Budget decision](evaluation/post-roi-budget-decision.md).
+
+- 2026-10-03 18:20 ET: ticket30 is claimed under standing related-action approval for reviewed first-result delivery to Peter and actual team-claim recording. Its prepared body passes content review and remains unsent until the independent raw audit, exact compact publication, verified repository links and final review finish. Ticket37 remains personally human-owned and excluded from all mail actions. Both new official simulated point comparisons pass; final Kronecker raw audit remains active at frozen6cf. [Current progress](progress.md).
+
+- 2026-10-03 18:47 ET:29resolved from allfouractualtimed passes, two publicsimulated point comparisons, independentfullraw/retention-aware custody, exactGitpublication/readback and bothfinalreviews.30remainsclaimed forreviewed delegated delivery/teamclaim;02/37human-owned and31wontfix. [Result and limits](evaluation/timed-a2-r1-result-summary.json).

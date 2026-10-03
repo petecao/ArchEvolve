@@ -382,7 +382,7 @@
       "sha256": "af8b9dff53010f4c6a900a3753aac4a5ec93a979c28e779fbb2000838c4b4169"
     }
   ],
-  "validated_records": 470,
+  "validated_records": 481,
   "runtime_profile_fix": {
     "receipt": "/private/tmp/swdb-typed-library-verification-20261003/runtime-profile-fix.xml",
     "passed": 58,
@@ -416,7 +416,7 @@
     "review_base": "f6972ebbf9c842c1a7091716505577d06c637231",
     "actual_annotation": "Actualattempt3 completed and independently audited; metadata published/read back6c65bdf."
   },
-  "updated_at": "2026-10-03 15:05 ET",
+  "updated_at": "2026-10-03 18:47 ET",
   "library_target_state_fix": {
     "review_base": "f642a94ba41e79f79b28a540cb8d758e15bec633",
     "cause": "Completed actual candidate_build records were mistaken for completed target execution, falsely refuting19cited entries.",
@@ -602,5 +602,47 @@
       "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/postprocess-recovery-exact-binding-junit-20261003.xml",
       "sha256": "01b62361e63d300df79bfd094187ea6e7f2f688055c5fe7cdfd30fc2eb82eb9e"
     }
+  },
+  "final_full_code_review": {
+    "updated": "2026-10-03 17:56 ET",
+    "review_base": "9ef348fdaa5b26ff5e37a66d1781084b1b2eea40",
+    "review_source": "6cfcd245ba34c8df5947307aad2cf2353400b281",
+    "scoped_commits": 21,
+    "standards_review": "passed; no actionable documented-standard violation or baseline smell",
+    "spec_review": "passed; no new consequential defect, missing implementation requirement or scope creep",
+    "tests_rerun": false,
+    "remote_actions_by_reviewers": false,
+    "closeout_artifact_reconciliation": "PASS Standards/Spec including exact13path publication and narrow custody wording correction; zero unresolved"
+  },
+  "final_independent_evaluation_audit": {
+    "observed_et": "2026-10-03 18:34 ET",
+    "physical_samples_passed": 4,
+    "aggregates_passed": 4,
+    "official_comparisons_requalified": 2,
+    "retained_witness_artifacts": 54,
+    "r1_overall_state": "failed at naive custody walker; successful fullraw sections retained explicitly",
+    "r2_state": "complete",
+    "r2_actual_wrapper_returncode": 0,
+    "records_validated_remote": 481,
+    "used_shared_evaluated_entries": 19,
+    "owned_processes": 0,
+    "actual_kernel_metadata_leases": "all3free/released",
+    "scope": "simulated joint hardware-software point ratios; one graph/source0/replay perworkload",
+    "receipt": "evaluation/timed-a2-r1-independent-audit.json",
+    "publication": "3e9061b2aa9e6ea81c95cd1e9a5145b3c3e7e5d6 exact13path readback; final custody wording corrected after Spec finding"
+  },
+  "final_publication_audit": {
+    "receipt": "evaluation/timed-a2-r1-publication-audit.json",
+    "files": 13,
+    "valid_records": 481,
+    "file_gitblob_canonical_pins": "all match",
+    "code_review": "Standards/SpecPASS; reporting finding closed",
+    "actual_target_raw_scope": "remote independent audit, not local schema replay"
+  },
+  "last_receipt_hash_recheck": {
+    "observed_et": "2026-10-03 18:47 ET",
+    "receipts": 35,
+    "all_match": true,
+    "tests_rerun": false
   }
 }

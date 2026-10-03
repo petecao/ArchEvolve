@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** task
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 28
 **Spec:** `../spec.md`
 **Needs go-ahead:** Yes: Yan-Ru approves the mbit10 dispatch before it starts (Q62).
@@ -11,11 +11,11 @@ Created: 2026-10-03
 
 ## Acceptance
 
-- [ ] The pre-dispatch checks are recorded.
-- [ ] Baseline and candidate-artifact timed runs finish on Kronecker 18 and uniform 18; all four pass the verifier, and the two candidate-artifact runs also pass the frontier check and the read-only execution case.
-- [ ] A comparison is recorded whatever the speedup; gem5 results are reported as point ratios; the authors' T17 result is cited as context only.
-- [ ] The contract and lowering entries' derived status becomes evaluated on target, or refuted.
-- [ ] A one-page summary with basis labels is drafted for Yan-Ru to send.
+- [x] The pre-dispatch checks are recorded.
+- [x] Baseline and candidate-artifact timed runs finish on Kronecker 18 and uniform 18; all four pass the verifier, and the two candidate-artifact runs also pass the frontier check and the read-only execution case.
+- [x] A comparison is recorded whatever the speedup; gem5 results are reported as point ratios; the authors' T17 result is cited as context only.
+- [x] The contract and lowering entries' derived status becomes evaluated on target, or refuted.
+- [x] A one-page summary with basis labels is drafted for Yan-Ru to send.
 
 ## Comments
 
@@ -47,3 +47,25 @@ Implementation/dispatch checkpoint, 2026-10-03 ET. Timed drivers/comparison supp
 
 
 - 2026-10-03 15:05 ET: both actual a2 uniform18 samples passed; baseline aggregate passed. Candidate aggregation timed out at300s and the driver failed14:30:25 ET; no candidate aggregate/comparison/ratio or Kronecker sample exists. All actual leases released and owned processes stopped before metadata5827f3f publication; root verifies all20records and exact failure manifest. A separate3600s public aggregation/comparison bound covers the observed1082s candidate trace validation while all physical/frozen constraints stay fixed. Reviewed exact r1 recovery reuses completed uniform evidence, publicly requalifies it before two missing Kronecker samples, and refuses extra history or hash/type/request/pin drift. Final35focused and138broader passes cover142distinct cases; both review axes pass. Fresh source sync and per-node admission precede dispatch; actual ticket acceptance remains pending. [Decision](../evaluation/postprocess-recovery-decision.md); [preserved failure](../evaluation/a2-aggregation-failure-summary.json).
+
+
+- 2026-10-03 15:07 ET: reviewed source6cf is pushed/synchronized and fresh r1 recovery ACTUALLY started15:04:26 ET on node0 generation445; fresh capacity38.89GiB admits36GiB and8GiB storage. Exact original manifest/receipt/request/output/currentrecord/fullplan eligibility passes; prepared binaries/freeze and companion authority reopen unchanged. New public candidate aggregate began15:05:06 ET under3600s. Root15:06:49 ET confirms driver1605727 and aggregate1605834 live with advancingCPU; sourcefrozen/cleantracked, other actual leasesfree. No uniformrerun or newratio. Strict public uniformrequalification precedes remaining Kroneckerpair. Local metadata publishes only after measurementsstop. [Actual recovery](../evaluation/a2-recovery-start-1504-summary.json).
+
+
+- 2026-10-03 15:10 ET: root15:09:48 ET confirms exact r1 candidate aggregation remains active with advancingCPU00:04:41/RSS209608KiB under3600s bound; no completed new aggregate/comparison/ratio or Kronecker sample. Source6cf cleantracked/frozen, node0g445 actual .lease held, other actual leasesfree, memory/I/O pressure averages zero. All35localreceipt hashes match and final reviews pass. Continue public uniform qualification before remainingpair; no duplicate dispatch or sync. [Periodic readback](../evaluation/heartbeat-1508-summary.json).
+
+
+- 2026-10-03 15:42 ET: public uniform candidate aggregatebd5e492d completed/passed after1050.634899s, and comparisonce26c345 completed0 at15:40:44.350215 ET. Officialsimulated complete-call ROI point1.6000498932475729, decisiongain; one graph/source0/deterministic replay, joint hardware/software treatment, no native/population/regional conclusion. Root reopens exact public hashes/metrics/identities and command ordering. Kroneckerbaseline request started15:40:44.402841 ET only after qualification; root15:42 ET confirms actual checkpoint gem5PID1608035, source6cf/node0g445, fresh38.38GiBcapacity versus36GiB. Candidate and complete two-workload result remainpending; independent final rawaudit awaits stopped measurements. All35receipt hashes/3781caseledger/reviews unchanged. [Evidence](../evaluation/heartbeat-1538-summary.json).
+
+
+- 2026-10-03 16:10 ET: root16:10:08 ET verifies Kroneckerbaseline simulation1608412 active/advancingCPU00:25:37/RSS30.60GiB within36GiB; checkpoint0, verifierunverified. No Kroneckeraggregate/candidate/comparison. Officialuniformce26c345/point1.6000498932475729 unchanged. Source6cf/node0g445frozen/held; otheractualleasesfree, pressureaverageszero. All35testreceipt hashes/3781caseledger/reviewsPASS unchanged; no deadworker/duplicate/sync. [Readback](../evaluation/heartbeat-1608-summary.json).
+
+- 2026-10-03 16:40 ET: root independently verifies Kronecker18 baseline327f3242 and aggregateb010bd6f complete/passed, with actual successful command order before candidate dispatch16:15:30.109683 ET. Candidate1611728 is running/unverified in post-ROI verification; advancingCPU00:21:20, RSS32.62GiB within36GiB. Candidate aggregate/comparison remain absent. Official uniform18 simulated point1.6000498932475729 is unchanged. Source6cf frozen/cleantracked; node0generation445 held, other actual leases free, pressure averages zero. All35receipt hashes/3781case ledger/reviewsPASS unchanged; no dead worker or duplicate/sync. Continue candidate -> authoritative aggregate -> comparison; final independent raw audit follows stopped measurements. [Readback](../evaluation/heartbeat-1638-summary.json).
+
+
+- 2026-10-03 17:11 ET: root independently verifies Kcandidate ad0ef15a complete/passed and physical public command0 at17:10:28.115968 ET; all4physical samples pass. Candidate aggregate began17:10:28.130841 ET under3,600s, PID1616873 CPU advancing. Its record and final comparison are absent; no Kronecker ratio is inferred. Source6cf/node0g445 frozen/held; other actual leases free/released, driver healthy. All35receipt hashes/3781case ledger/source reviewsPASS unchanged. Continue authoritative aggregate -> comparison; final root raw audit, final review and export follow all owned processes stopped/released. [Readback](../evaluation/heartbeat-1708-summary.json).
+
+
+- 2026-10-03 17:54 ET: both authoritative comparisons passed: uniformce26c345 point1.6000498932475729 and Kronecker025d9294 point1.4027646957261597, simulated complete-call/joint hardware-software/one graph-source0-replay per workload. All4physical samples/all4aggregates pass. Recoverydriver completed17:41:36 ET; root17:43 ET confirms stopped processes and released actualleases. Fresh root independent audit began17:49 ET on node0g446; all6v2 witnesses/all54 retained artifacts verified, complete debug-stream/sample/metric audit still active. Final full-source Standards/Spec reviewsPASS, no new findings. Ticket remainsclaimed until successful final audit, exact compact Git export/readback and final summary reconciliation. [Readback](../evaluation/heartbeat-1738-summary.json).
+
+- 2026-10-03 18:47 ET: resolved after actual allfourtimed verifier passes, bothcandidate frontier/read-only/full-tail acceptance, both official simulated point comparisons1.6000498932475729/1.4027646957261597,19used shared/evaluated states and unchanged generated onepage draft. Exact13path metadata commit3e9061b is pushed/readback; all481records validate locally and remotely and every file/Gitblob/canonicalpin matches. Root independently completed both fullraw/metric checks and reviewed retention-aware custodyr2 with54artifacts, wrapper0 and releasedleases; failedr1 remainsfailed. Both final Standards and Spec reviews pass; the one overbroad custody sentence was corrected and independentlyclosed. T17 is contextonly, attribution joint hardware/software/candidate-onlyMAA, no population/native/regional claim. Ticket30 handles final reviewed delivery and actual claim. [Result](../evaluation/timed-a2-r1-result-summary.json); [independent audit](../evaluation/timed-a2-r1-independent-audit.json); [publication readback](../evaluation/timed-a2-r1-publication-audit.json).
