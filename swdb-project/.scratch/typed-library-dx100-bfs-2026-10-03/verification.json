@@ -10,9 +10,9 @@
       "test_tdstep_global_scope_keeps_debug_line_map_and_excludes_other_functions"
     ]
   ],
-  "current_collected_cases": 3752,
-  "unique_verified_cases": 3752,
-  "passed": 3716,
+  "current_collected_cases": 3756,
+  "unique_verified_cases": 3756,
+  "passed": 3720,
   "skipped": 36,
   "unresolved": [],
   "corrected_initial_failures": [
@@ -197,7 +197,7 @@
       "error"
     ]
   ],
-  "affected_file_rerun_cases": 668,
+  "affected_file_rerun_cases": 714,
   "fresh_receipts": [
     "affected-fixtures.xml",
     "affected-isa.xml",
@@ -209,7 +209,8 @@
     "library-state-fix.xml",
     "library-state-checkpoint-fix.xml",
     "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/memory-admission-final-a5-junit-20261003.xml",
-    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/bounded-completion-a1-junit-20261003.xml"
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/bounded-completion-a1-junit-20261003.xml",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/post-roi-budget-final-junit-20261003.xml"
   ],
   "partitions": [
     {
@@ -341,9 +342,21 @@
     {
       "path": "/private/tmp/swdb-typed-library-verification-20261003/collection-bounded-completion.txt",
       "sha256": "389f198cbdd4ac04dca28a8633e27331796c3bbb0970e68b0e897b090b764284"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/post-roi-budget-red-junit-20261003.xml",
+      "sha256": "0acd5585b356918c6e31f04b68d80aadec6e45d68ddb6ff8801c1785a1566250"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/post-roi-budget-final-junit-20261003.xml",
+      "sha256": "d65d3974726478f0a633824b89cc145407168c79a5817ae32a488b57c3111128"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/collection-post-roi-budget.txt",
+      "sha256": "60fcb5f8a4ffc8fe35595980218ae2c58cf535c49070574c3ffbe8297f9e2574"
     }
   ],
-  "validated_records": 449,
+  "validated_records": 450,
   "runtime_profile_fix": {
     "receipt": "/private/tmp/swdb-typed-library-verification-20261003/runtime-profile-fix.xml",
     "passed": 58,
@@ -377,7 +390,7 @@
     "review_base": "f6972ebbf9c842c1a7091716505577d06c637231",
     "actual_annotation": "Actualattempt3 completed and independently audited; metadata published/read back6c65bdf."
   },
-  "updated_at": "2026-10-03 ET",
+  "updated_at": "2026-10-03 12:13 ET",
   "library_target_state_fix": {
     "review_base": "f642a94ba41e79f79b28a540cb8d758e15bec633",
     "cause": "Completed actual candidate_build records were mistaken for completed target execution, falsely refuting19cited entries.",
@@ -449,6 +462,66 @@
       "shared_certified": 2,
       "entries": 21
     },
-    "custody_publication": "fb6cde03e48120ba6d2ba0471d8440853473a369"
+    "custody_publication": "fb6cde03e48120ba6d2ba0471d8440853473a369",
+    "publication": "Published and synchronized982d19b23eb0303ecacc938c5334e6479b861197",
+    "remote_readback": {
+      "format": "swdb.bounded-completion-sync-readback.v1",
+      "observed_utc": "2026-10-03T15:16:45.808452+00:00",
+      "observed_et": "2026-10-03 11:16 ET",
+      "branch": "yanrujhou_main",
+      "source_commit": "982d19b23eb0303ecacc938c5334e6479b861197",
+      "source_sync": "Git fast-forward after independent kernel/meta lease-free and no owned measurement checks",
+      "validated_records": 449,
+      "library_states": {
+        "shared_evaluated_on_target": 19,
+        "shared_certified": 2,
+        "entries": 21
+      },
+      "witnesses": {
+        "timed": {
+          "state": "verified",
+          "retained_artifacts": 9
+        },
+        "diagnostic": {
+          "state": "verified",
+          "retained_artifacts": 9
+        }
+      },
+      "companion_acceptance": "observed and exactly equal to retained outcome",
+      "timed_launch": "authorized afterward; not proven by this receipt",
+      "evidence_origin": "Live operator SSH tool output; no raw file copied or invented raw receipt/hash"
+    }
+  },
+  "post_roi_budget_fix": {
+    "review_base": "982d19b23eb0303ecacc938c5334e6479b861197",
+    "cause": "Actual first uniform18 baseline exhausted 10**10 post-seal ticks before protected verdict, parent result and exit witness.",
+    "old_max_ticks": 10000000000,
+    "new_max_ticks": 100000000000000,
+    "passed": 168,
+    "added_cases": 4,
+    "seconds": 6.39,
+    "red_loop": {
+      "failed": 4,
+      "passed": 6,
+      "receipt": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/post-roi-budget-red-junit-20261003.xml",
+      "sha256": "0acd5585b356918c6e31f04b68d80aadec6e45d68ddb6ff8801c1785a1566250"
+    },
+    "receipt": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/post-roi-budget-final-junit-20261003.xml",
+    "sha256": "d65d3974726478f0a633824b89cc145407168c79a5817ae32a488b57c3111128",
+    "standards_review": "passed",
+    "spec_review": "passed",
+    "preserved_constraints": [
+      "sealed ROI",
+      "strict v2 checker and witness",
+      "9000s total/7140s run/1800s checkpoint timed bounds",
+      "3600s total/2940s run/600s checkpoint companion bounds",
+      "36GiB memory/8GiB storage",
+      "16GB guest/MMIO",
+      "source/model/compiler/flags",
+      "no post-ROI CPU change"
+    ],
+    "fresh_attempt": "typed-library-bfs-gem5-20261003-a2; new prepare/protocol/binary pins required; not yet dispatched",
+    "failed_attempt_publication": "8b68b2f0c8a7419dddb22d78989e11c826f21d66",
+    "scope": "Local planner regression and historical validated public metadata; fresh actual successful execution is still required."
   }
 }

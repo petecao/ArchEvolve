@@ -32,6 +32,10 @@ COVERAGE = 'bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e'
 HEADER = 'benchmarks/gapbs/src/swdb_dxc_lowering.hpp'
 FORMAT = 'swdb.typed-library-gem5-driver.v1'
 PREPARE_MEMORY_GIB = 4
+# Match the retained T17 v2 post-seal ceiling for every execution role.
+# Scale-18 baseline checks required 57/84 billion ticks; wall-time and
+# memory budgets still bound this continuation independently of ROI timing.
+VERIFICATION_MAX_TICKS = 10**14
 
 
 def stage_budgets(args):
@@ -354,7 +358,7 @@ def execution_request(args, store, rows, role, workload_id, label, *, companion=
         'protocol': protocol['id'], 'protocol_role': role,
         'protocol_trial': {'source_position': 0, 'repetition': 0},
         'configuration': {key: configuration[key] for key in ('mode', 'l3_size_mb', 'l3_assoc', 'tile_elements')},
-        'verification': {'checker': 'dx100.bfs.verifier.v2', 'max_ticks': 10**10,
+        'verification': {'checker': 'dx100.bfs.verifier.v2', 'max_ticks': VERIFICATION_MAX_TICKS,
                          'coverage': role == 'candidate', 'post_roi_trace': 'SyscallBase',
                          'trace_transport': 'gem5-gzip.v1', 'read_only': role == 'candidate'},
         'budget': {'total_seconds': 3600 if companion else 9000,

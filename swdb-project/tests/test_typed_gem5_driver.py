@@ -118,3 +118,73 @@ def test_prepare_ignores_a_newer_receipt_without_current_dependencies(monkeypatc
     monkeypatch.setattr(Library, 'state', lambda self, entry_id: {'tier': 'shared', 'status': 'certified'})
     _, selected = driver.current_library(isolated)
     assert selected['id'] == original.id
+
+
+@pytest.fixture
+def published_first_attempt(source_store):
+    """Immutable public plans; no remote build, simulation or performance claim."""
+    run = 'typed-library-bfs-gem5-20261003-a1'
+    rows = {
+        'protocol': source_store.get(run + '.protocol.8de9b516796360dc', 'protocol'),
+        'baseline': source_store.get(run + '.baseline', 'candidate'),
+        'candidate': source_store.get(run + '.proposal.candidate-1', 'candidate')}
+    for role in ('baseline.primary', 'candidate.primary', 'candidate.diagnostic'):
+        rows[role] = source_store.get(run + '.' + role + '.build', 'evaluation')
+    assert all(rows.values())
+    return SimpleNamespace(id=run, memory_gib=36, storage_gib=8), rows
+
+
+def test_post_roi_budget_covers_retained_scale18_completion_for_every_role(source_store, published_first_attempt):
+    """Catch a short planner cap before spending another real simulator run."""
+    from swdb.dx100_witness import validate_record_witness
+    args, rows = published_first_attempt
+    historical = []
+    for role in ('baseline', 'candidate'):
+        for workload in ('uniform18', 'kronecker18'):
+            for mode in ('primary', 'diagnostic'):
+                rid = f'bfs-t17-routes-20260928-a3.{role}.{workload}.s0.r0.{mode}.evaluation'
+                record = source_store.get(rid, 'evaluation')
+                assert record['outcome']['state'] == 'complete'
+                assert record['build']['adapter'] == 'dx100.complete_call.v2'
+                validate_record_witness(record, source_store)
+                historical.append(record)
+    ceiling = {record['request']['verification']['max_ticks'] for record in historical}
+    assert ceiling == {10**14}
+    observed = max(record['correctness']['checks'][0]['continuation']['simulated_ticks']
+                   for record in historical)
+    assert observed == 86 * 10**9
+    # Baseline receipts alone already require 57/84 billion ticks; selecting
+    # the established common ceiling does not depend on candidate gain.
+    assert max(record['correctness']['checks'][0]['continuation']['simulated_ticks']
+               for record in historical if '.baseline.' in record['id']) == 84 * 10**9
+    plans = [driver.execution_request(args, source_store, rows, role, wid,
+                                      f'timed.w{index}.{role}')
+             for index, wid in enumerate(rows['protocol']['settings']['workloads'])
+             for role in ('baseline', 'candidate')]
+    plans += [driver.execution_request(args, source_store, rows, 'candidate', driver.COVERAGE,
+                                       'companion.' + role, companion=True, diagnostic=role == 'diagnostic')
+              for role in ('timed', 'diagnostic')]
+    assert len(plans) == 6
+    for request in plans:
+        assert request['verification']['max_ticks'] == next(iter(ceiling)) > observed
+        assert 'post_roi_cpu' not in request['verification']
+        assert request['verification']['checker'] == 'dx100.bfs.verifier.v2'
+        assert request['budget'] == {
+            'total_seconds': 3600 if 'protocol_companion' in request else 9000,
+            'checkpoint_seconds': 600 if 'protocol_companion' in request else 1800,
+            'run_seconds': 2940 if 'protocol_companion' in request else 7140,
+            'memory_gib': 36, 'storage_gib': 8}
+
+
+@pytest.mark.parametrize('label', ['timed.w0.baseline', 'companion.timed', 'companion.diagnostic'])
+def test_post_roi_budget_fix_preserves_every_other_actual_request_field(source_store, published_first_attempt, label):
+    args, rows = published_first_attempt
+    companion = label.startswith('companion.')
+    role = 'candidate' if companion else 'baseline'
+    wid = driver.COVERAGE if companion else rows['protocol']['settings']['workloads'][0]
+    planned = driver.execution_request(args, source_store, rows, role, wid, label,
+                                        companion=companion, diagnostic=label == 'companion.diagnostic')
+    original = copy.deepcopy(source_store.get(args.id + '.' + label + '.evaluation', 'evaluation')['request'])
+    assert planned['verification'].pop('max_ticks') == 10**14
+    assert original['verification'].pop('max_ticks') == 10**10
+    assert planned == original
