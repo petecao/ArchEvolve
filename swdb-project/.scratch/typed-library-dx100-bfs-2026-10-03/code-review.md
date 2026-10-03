@@ -3,7 +3,8 @@
 Created: 2026-10-03 ET
 
 Review base: `9ef348fdaa5b26ff5e37a66d1781084b1b2eea40` on `yanrujhou_main`.
-Independent Standards and Spec agents reviewed the implementation through `ed8c233`.
+Initial Standards and Spec review covered `ed8c233`; final independent review covered
+the corrections committed in `349cf1e`.
 The final fixes and evidence are committed in the local correction batch. Both final independent reviews pass.
 
 | Axis | Priority | Finding | Correction and evidence |
@@ -12,7 +13,7 @@ The final fixes and evidence are committed in the local correction batch. Both f
 | Standards | P2 | An arbitrary reviewer could grant the shared tier | Promotion and current-review checks require Yan-Ru Jhou or the `yanrujhou` alias; persisted promotion uses the canonical name. Independent replay refuses unrelated reviewers. |
 | Spec | P1 | Differential certification compiled the canonical driver/header instead of the selected lowering's declared inputs | Compile the pinned lowering, driver and intrinsic reference through explicit include seams; validate the supported input set; honor build definitions; reject matrix overrides; recheck input hashes after execution. 109 focused regressions pass, including broken repinned headers, changed macros, drivers and source stability. All ten durable lowerings pass recertification. Fresh candidate receipt `certification.1e4397e31d594245bc10bd80ff2107f5` passes ten matrix cells and rejects sixteen controls. |
 | Spec | P2 | A completed missing witness became inconclusive and a positive run could hide it | Completed required-witness failure derives refuted and fails evaluator correctness/gain eligibility. Incomplete continuation/frontier output remains unverified. Six public evaluator regressions plus existing v2/read-only checks pass: 33 total. Library-state regressions pass: 31 total. |
-| Standards | P1 | Repinning intrinsic semantics could promote an unchanged lowering using an old receipt | Certification captures the complete dependency closure before execution, persists every normative hash, and checks those hashes after execution. State, review and promotion require current bindings. Ten new producer/schema regressions pass, including actual compiled changed-reference failure and mid-run mutation abort. All twelve fresh durable receipts pass; final admission checks are running. |
+| Standards | P1 | Repinning intrinsic semantics could promote an unchanged lowering using an old receipt | Certification captures the complete dependency closure before execution, persists every normative hash, and checks those hashes after execution. State, review and promotion require current bindings. Ten new producer/schema regressions pass, including actual compiled changed-reference failure and mid-run mutation abort. All twelve fresh durable receipts and 22 final public submission checks pass; all 3,679 current cases have verified coverage. |
 | Standards | P2 | A stale target proposal could reinterpret its result using a changed contract witness | Target state requires the current contract hash and complete contract dependency closure before interpreting its checks. Both changed-witness and changed-dependency regressions pass. Independent replay confirms stale evidence derives draft, while a valid current proposal still grants evaluated_on_target. |
 
 The Standards agent independently rechecked the two admission fixes with the actual
