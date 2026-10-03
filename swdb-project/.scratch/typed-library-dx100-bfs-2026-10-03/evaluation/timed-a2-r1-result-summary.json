@@ -1,0 +1,388 @@
+{
+  "attribution": "joint_hardware_software",
+  "basis": "simulated",
+  "companion": {
+    "acceptance": "observed",
+    "design_assumptions": [
+      "L3",
+      "L5"
+    ],
+    "diagnostic": {
+      "id": "typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation",
+      "sha256": "c6e696d7fae07bc9ed1b8a573eca7bc83d80f9447d4b233f0c20d52daf9cbab9"
+    },
+    "l3_violations": 0,
+    "negative_hint_cas_failures": 14546,
+    "primary": {
+      "id": "typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation",
+      "sha256": "75f17237a61bb17d1a6e4e0a546e56a90228ae648f8f6c225ff03a9985f096ae"
+    },
+    "timed_uses_exact_primary_binary": true
+  },
+  "custody": {
+    "checkpoint_policy": "Normative automatic pruning of newly successful checkpoints; failed and historical evidence preserved",
+    "historical_cleanup_performed": false,
+    "historical_lease_snapshots": "Three exact historical lease references remain manifest-pinned snapshots; mutable current lease bytes are not claimed identical. Actual current kernel and metadata states are checked separately.",
+    "new_retention_records": [
+      "prune-intent-3d8d7cfc65f84e44ab9f4d893eed951b.yaml",
+      "prune-intent-e53753f906724419a929a535f7808ec3.yaml",
+      "retention-cf0a7f49f26b4cd3bcb534a11d86d7bd.yaml",
+      "retention-d17c7eba0d50473ea47e122cdf020a9d.yaml"
+    ],
+    "qualified_absences": "Eight exact checkpoint members from diagnostic/primary companions and original uniform pair are absent with matching intent/retention/execution pins and retained leaf sha256; absence does not claim bytes physically retained",
+    "raw_bulk_copied": false
+  },
+  "export": {
+    "exclusions": [
+      "records/.retention.lock",
+      "sqlite",
+      "operator/audit scripts",
+      "raw traces and logs",
+      "production source",
+      "root-owned tickets/progress/ledger"
+    ],
+    "metadata_only": true,
+    "new_yaml_bytes": 1023694,
+    "new_yaml_count": 11
+  },
+  "first_result": {
+    "email_owner": "agent delegated under Yan-Ru standing approval; ticket30 prepared unsent pending final review/publication",
+    "email_sent": false,
+    "remote": {
+      "bytes": 1278,
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/first-result.md",
+      "sha256": "22b00db1cb9485f0c103ccf562256671a4b9e8594bbbdc43c3fc9b8b2f753882"
+    },
+    "repository_path": "swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/first-result-a2-r1.md",
+    "unchanged_generated_operator_draft": true
+  },
+  "format": "swdb.typed-library-gem5-result-summary.v1",
+  "id": "typed-library-bfs-gem5-20261003-a2",
+  "independent_audit": {
+    "custody_closeout": {
+      "all_compressed_trace_hashes_freshly_reverified": true,
+      "exact_completed_raw_sample_metric_subresults_carried_from_failed_r1": [
+        {
+          "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.w0.comparison",
+          "sha256": "ce26c3453508a6a2b86b5676127477706a31878d6aec516447e77ab546f178c5"
+        },
+        {
+          "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.w1.comparison",
+          "sha256": "025d9294857b76ebfc2829b60ec5c909251d3b98d6281be9529765d8b82f0c5e"
+        }
+      ],
+      "finished": "2026-10-03T22:33:54.141055+00:00",
+      "full_trace_repetition": false,
+      "historical_mutable_lease_snapshots": 3,
+      "new_public_records": false,
+      "physical_execution": false,
+      "pruned_checkpoint_files_qualified": 8,
+      "receipt": {
+        "bytes": 47477,
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.final-audit-custody-r2/audit.json",
+        "sha256": "49a345080a92b04cbc2396f7bf0ccb58319676f458859e7e276c5f5a6314bcaa"
+      },
+      "records_count": 481,
+      "retained_witness_artifacts": 54,
+      "retained_witnesses": 6,
+      "script_sha256": "d94731368e9a05e65e2d15bea98f3e95463ebe06fddf948078672a1d02c363b8",
+      "source": "6cfcd245ba34c8df5947307aad2cf2353400b281",
+      "started": "2026-10-03T22:33:35.780910+00:00",
+      "state": "complete",
+      "wrapper": {
+        "bytes": 757,
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.final-audit-custody-r2/wrapper.json",
+        "sha256": "ef81ba297c9f3569e0764668c8b7bbe00355c0e9e355509a62652421750cce5a"
+      },
+      "wrapper_finished": "2026-10-03T22:33:54.460802+00:00",
+      "wrapper_returncode": 0
+    },
+    "failed_full_audit": {
+      "audit_script_sha256": "0226a9367d3ffa8cf80c5560fb67fb31e77649317847df7a76e5bbb6f3dc03a3",
+      "finished": "2026-10-03T22:23:07.753299+00:00",
+      "new_public_records": false,
+      "physical_execution": false,
+      "preserved": true,
+      "reason": "[Errno 2] No such file or directory: '/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation/checkpoint/cpt.5604867500/m5.cpt'",
+      "receipt": {
+        "bytes": 348905,
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.final-audit-r1/audit.json",
+        "sha256": "c4c50908563b39631818353e1ea3ab0812f14c5a53c0c1369fdc8e2b0f6eb670"
+      },
+      "source": "6cfcd245ba34c8df5947307aad2cf2353400b281",
+      "started": "2026-10-03T21:49:09.863359+00:00",
+      "state": "failed",
+      "wrapper": {
+        "bytes": 732,
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.final-audit-r1/wrapper.json",
+        "sha256": "3e196f1927b98c1aacb9e26d97d88217ea1cd749c0a8f9a18dfb01394fd313b4"
+      },
+      "wrapper_returncode": 1
+    },
+    "interpretation": "r1 overall remains failed. Only its exact completed full-trace/sample/companion/metric sections are carried; r2 freshly verifies witnesses, trace identities, current pins, remaining custody and library states.",
+    "stop_observation": {
+      "leases": [
+        {
+          "generation": 447,
+          "kernel_held": false,
+          "metadata_state": "released",
+          "name": "mbit10-evaluation-node0",
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.lease",
+          "released_at": "2026-10-03T22:33:54Z"
+        },
+        {
+          "generation": 506,
+          "kernel_held": false,
+          "metadata_state": "released",
+          "name": "mbit10-evaluation-node1",
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.lease",
+          "released_at": "2026-10-03T12:51:22Z"
+        },
+        {
+          "generation": 77,
+          "kernel_held": false,
+          "metadata_state": "released",
+          "name": "mbit10-evaluation",
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.lease",
+          "released_at": "2026-09-12T04:49:11Z"
+        }
+      ],
+      "observed_at": "2026-10-03T22:35:09.865776+00:00",
+      "owned_processes": [],
+      "source": "6cfcd245ba34c8df5947307aad2cf2353400b281"
+    }
+  },
+  "library": {
+    "all_used_entries_status": "evaluated_on_target",
+    "all_used_entries_tier": "shared",
+    "records_validated": 481,
+    "source_of_state": "completed custody-r2 current library audit",
+    "used_entries": 19
+  },
+  "limitations": [
+    "Each row is one registered graph, source0, one deterministic replay per role; simulated point ratios only, no graph-population confidence",
+    "Candidate-only MAA makes these joint hardware/software results; no pure software or native gain claim",
+    "Complete-call ROI includes setup; no region attribution",
+    "Finite diagnostic L3 evidence is observed; design assumptions L3 and L5 remain",
+    "Authors accelerated T17 numbers are context only and are not mixed into these ratios",
+    "All bulk raw output and both failed original300s aggregation and failed full-audit-r1 receipts remain on mbit10"
+  ],
+  "measurement_completion": {
+    "driver": {
+      "bytes": 15774,
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/driver.json",
+      "sha256": "4e245c8c10885dbcbe659b403c977bdf474aa080463dbd541a097587a0e65a8d"
+    },
+    "driver_source_sha256": "1a30daf4904641c55c121d06e9b45a0c2a372448f82e44a0fc6e8510dea730ad",
+    "finished": "2026-10-03T21:41:36.230183+00:00",
+    "lease_generation": 445,
+    "lease_released_at": "2026-10-03T21:41:36Z",
+    "measurement_stop_observed_at": "2026-10-03T21:42:23Z",
+    "started": "2026-10-03T19:04:26.697413+00:00",
+    "wrapper": {
+      "bytes": 1418,
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-timed-r1/wrapper.json",
+      "sha256": "23b9e015d41ac6a57d54a38ec2bd27db9488c79c7683908d147e6b64943b7429"
+    },
+    "wrapper_finished": "2026-10-03T21:41:36.335692+00:00",
+    "wrapper_returncode": 0
+  },
+  "prepared": {
+    "baseline": {
+      "id": "typed-library-bfs-gem5-20261003-a2.baseline",
+      "sha256": "fde1e81baa8ead0579982c9cb164d65583fc300fb5cec42a4448c30408a4f1bc"
+    },
+    "binary_sha256": {
+      "baseline.primary": "f4e7d5a3a138a48aa9edde6760391fec0bcf5bf98e81390f7a650286e55c776c",
+      "candidate.diagnostic": "a30dd5d0024fa56ff4e904317a2e323bda5013b5a6749064c24eadcf0477d59b",
+      "candidate.primary": "ba6a857f1f22790f0d9ec546374b25f6f3e3b9b91c740c893c89baaf6aacf77e"
+    },
+    "builds": {
+      "baseline.primary": {
+        "id": "typed-library-bfs-gem5-20261003-a2.baseline.primary.build",
+        "sha256": "40d1bd3743e914aca4f1029f2d0bd41d8d57b244f69fbda67486b2949eb55e1a"
+      },
+      "candidate.diagnostic": {
+        "id": "typed-library-bfs-gem5-20261003-a2.candidate.diagnostic.build",
+        "sha256": "4566df93204f3e6b674c590514e3acc6a71b3bc8ad2238a510c3118c76e87563"
+      },
+      "candidate.primary": {
+        "id": "typed-library-bfs-gem5-20261003-a2.candidate.primary.build",
+        "sha256": "b09c775df32aff4e51e3076b9a8fdccc6919181aa9bbbb210dfb04564677d3b3"
+      }
+    },
+    "candidate": {
+      "id": "typed-library-bfs-gem5-20261003-a2.proposal.candidate-1",
+      "sha256": "f03a82b17a24feb8c43b2c80e97f35782ee21ce3ed4a4173ec947531c71f129d"
+    },
+    "certification": {
+      "id": "certification.1e4397e31d594245bc10bd80ff2107f5",
+      "sha256": "911bb67e623bb3eaee29754a5f6a979b426be2c13dc77c812ecbf44fd95b5c53"
+    },
+    "certified_tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+    "patch_sha256": "cc99ca4d024983ab02c17f5db74db5210a7450968787ccad25562da4d9873cff",
+    "profile_package": {
+      "id": "typed-library-bfs-scalar-profile-20261003-a2.package.v1.619546ae9c6f60fe",
+      "sha256": "860c8d9e89f7a4cb593b4cdbd48c1eb96c1cf52d29dd834843f49f6abeca33b8"
+    },
+    "protocol": {
+      "id": "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0",
+      "sha256": "acd297ea9eaf36f5d4fda79c42030c3fd792d2757c9f7c635a498bb4fbbb73e6"
+    },
+    "protocol_version": 1,
+    "region_pairs": [],
+    "submitted_tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+    "supersedes": null
+  },
+  "recovery": {
+    "manifest": {
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/a2-aggregation-failure-summary.json",
+      "sha256": "c61cb65b657f4cc343de2662e2cfdc48433675ea83b5662efd1c816a276200a0"
+    },
+    "original_driver": {
+      "bytes": 5093,
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/driver.json",
+      "sha256": "6b69c4796c97ff1b443b1bb10e14493435ecb7dadf2e7415fdb59320d82552d6"
+    },
+    "original_failed_command": {
+      "bytes": 605,
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate-aggregate.command.json",
+      "sha256": "d6eb159e730f6863154535bcedde7c114457c4e5c8544842a915d07f5af1ee38"
+    },
+    "original_failure": "300s candidate aggregation timeout; original failed command/output and passed physical samples preserved",
+    "postprocessing_timeout_seconds": 3600,
+    "reused_commands": [
+      {
+        "sha256": "f3970ac47cdec9b5b5ec2580a013ebb1ef6dc1089dc19bf52a038a56e6b1fef6",
+        "stage": "timed.w0.baseline"
+      },
+      {
+        "sha256": "252a33e2568211107c0d881e74bc5cac73bbc423a8a257d3121f481916ecb28a",
+        "stage": "timed.w0.candidate"
+      },
+      {
+        "sha256": "203749fb9448fe13c317c402f7c4a50b968b0142e91ea45f413d1aecc723bbfb",
+        "stage": "timed.w0.baseline-aggregate"
+      }
+    ],
+    "uniform_physical_runs_repeated": false
+  },
+  "recovery_id": "r1",
+  "resource_policy": {
+    "dispatcher_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+    "memory_gib": 36,
+    "node": 0,
+    "numa_policy": "strict bind:0",
+    "other_socket_and_legacy_leases_released": true,
+    "prepare_memory_gib": 4,
+    "recovery_admission": {
+      "capacity_basis": "node_memfree_plus_conservative_inactive_file.v1",
+      "disk_free_bytes": 44773130240,
+      "estimated_memory_capacity_bytes": 41760395264,
+      "evidence": "pinned driver receipt measurement_completion.driver",
+      "memory_budget_bytes": 38654705664,
+      "observed_at": "2026-10-03T19:04:26.808098+00:00",
+      "state": "admitted"
+    },
+    "storage_gib": 8
+  },
+  "source": {
+    "branch": "yanrujhou_main",
+    "prepared_binaries_and_original_uniform_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+    "recovery_orchestration_commit": "6cfcd245ba34c8df5947307aad2cf2353400b281",
+    "tracked_source_changes": []
+  },
+  "state": "complete",
+  "successful_commands": {
+    "all_returncodes": 0,
+    "receipts": {
+      "recovery.r1.timed.w0.candidate-aggregate.command.json": "edbe737a4211797c8a0ecf2add622fb7fefa1b9847b3983383b292ca55a5a051",
+      "recovery.r1.timed.w1.baseline-aggregate.command.json": "ee2b85a677a665e09f0490c5190eb94b5fd213a6bae00a918712da115e968374",
+      "recovery.r1.timed.w1.baseline.command.json": "2276038252df6fbd9888c27db061469792c73fb57c63b823a5c034206a354df2",
+      "recovery.r1.timed.w1.candidate-aggregate.command.json": "584dd3efcd0efcaaadf7a387f196f561f96bdc886f9b630fef149bbfcc26c660",
+      "recovery.r1.timed.w1.candidate.command.json": "c3e557162ad6de82433dea0e0740f58c86c317467a091c184dd0c4d0319f0ee4",
+      "recovery.r1.w0-comparison.command.json": "abd5f07215bd46b7e149675bb63fc55ba73caacdba62f4c826e70a85161f17d2",
+      "recovery.r1.w1-comparison.command.json": "d7c98d92b8c7e0c9c9ce2edc1faa4a32d6623b25a8c11b77077c5936af812286"
+    },
+    "remote_directory": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1"
+  },
+  "treatment": {
+    "all_six_plan_max_ticks": 100000000000000,
+    "baseline_maa": false,
+    "candidate_maa": true,
+    "guest_cores": 4,
+    "guest_memory": "16GB",
+    "llc_associativity": 16,
+    "llc_bytes": 8388608,
+    "model": "original authors T17 MMIO",
+    "model_revision": "e4fc4af",
+    "other_cpu_cache_memory_clock_controls_unchanged": true,
+    "region_attribution_collected": false,
+    "roi": "complete BFS call, setup included"
+  },
+  "updated": "2026-10-03 ET",
+  "workloads": [
+    {
+      "aggregates": {
+        "baseline": {
+          "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.aggregate",
+          "sha256": "9b821fd4c8bbc207c64a4aa18ddb99f67a7f8b9b706c04d91d7d5e057ec49366"
+        },
+        "candidate": {
+          "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w0.candidate.aggregate",
+          "sha256": "bd5e492dfab837a02c37f0da0e46e9e30218dd7ee58ea9e84bcdb64f82d7b306"
+        }
+      },
+      "basis": "simulated",
+      "comparison": {
+        "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.w0.comparison",
+        "sha256": "ce26c3453508a6a2b86b5676127477706a31878d6aec516447e77ab546f178c5"
+      },
+      "decision": "gain",
+      "executions": {
+        "baseline": {
+          "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation",
+          "sha256": "fd42274d782eb737bf0e3f6c7c766d6b4c382bb1debc3de6009ba3af05de9cb8"
+        },
+        "candidate": {
+          "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation",
+          "sha256": "38a7e690f14c228b118031dec1f89b16b521c8af204eacb32bc15a8732d2d7eb"
+        }
+      },
+      "point_ratio": 1.6000498932475729,
+      "scope": "single graph per class, one source, deterministic one-replay point ratio",
+      "workload": "bfs-20260928-uniform18-s0.8c7e69dfa516e53c"
+    },
+    {
+      "aggregates": {
+        "baseline": {
+          "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.aggregate",
+          "sha256": "b010bd6fe018a42099cf62b3481fa6f8bcc2edc1a5a0ed89fd39aa0b376470a3"
+        },
+        "candidate": {
+          "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.aggregate",
+          "sha256": "170eda1b522cf46b1fbcbe7e21485ef0f55954ebd6d87e38988751e994a7ba5d"
+        }
+      },
+      "basis": "simulated",
+      "comparison": {
+        "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.w1.comparison",
+        "sha256": "025d9294857b76ebfc2829b60ec5c909251d3b98d6281be9529765d8b82f0c5e"
+      },
+      "decision": "gain",
+      "executions": {
+        "baseline": {
+          "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.evaluation",
+          "sha256": "327f32429b4df884dcf58bab2a0d31000b88f78b88a297742d0cb19044110f17"
+        },
+        "candidate": {
+          "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.evaluation",
+          "sha256": "ad0ef15a35137836149c44c4ac65d9e6750d92eeef81cb94482b01e0ba506c87"
+        }
+      },
+      "point_ratio": 1.4027646957261597,
+      "scope": "single graph per class, one source, deterministic one-replay point ratio",
+      "workload": "bfs-20260928-kronecker18-s0.cf4283236c5cb50c"
+    }
+  ]
+}
