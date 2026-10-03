@@ -10,9 +10,9 @@
       "test_tdstep_global_scope_keeps_debug_line_map_and_excludes_other_functions"
     ]
   ],
-  "current_collected_cases": 3687,
-  "unique_verified_cases": 3687,
-  "passed": 3651,
+  "current_collected_cases": 3690,
+  "unique_verified_cases": 3690,
+  "passed": 3654,
   "skipped": 36,
   "unresolved": [],
   "corrected_initial_failures": [
@@ -197,7 +197,7 @@
       "error"
     ]
   ],
-  "affected_file_rerun_cases": 449,
+  "affected_file_rerun_cases": 470,
   "fresh_receipts": [
     "affected-fixtures.xml",
     "affected-isa.xml",
@@ -273,9 +273,25 @@
     {
       "path": "/private/tmp/swdb-typed-library-verification-20261003/runtime-profile-fix.xml",
       "sha256": "839f9bf484a7a8e961f358d033d6adb98a854dca770f709f91ba188b27cc73a4"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/codex-transport-affected.receipt.json",
+      "sha256": "fea8fc5cd567f5c372860da8ede11b0913431107e50b52abee61738f337ce008"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/codex-transport-affected.stdout.txt",
+      "sha256": "d4339a56d738d91798376f4a9f14e94f2ce5aebec1365d97a56e53dc94a7f623"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/codex-transport-affected.cases.txt",
+      "sha256": "544698704567dfd2a59f38981e426f6929e11e9e94b772c3651d2c70fc38da77"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/collection-transport.txt",
+      "sha256": "9a36686a341a62801d0fa44e6c4f6410204520b606e766be254b126bf850151e"
     }
   ],
-  "validated_records": 431,
+  "validated_records": 443,
   "runtime_profile_fix": {
     "receipt": "/private/tmp/swdb-typed-library-verification-20261003/runtime-profile-fix.xml",
     "passed": 58,
@@ -286,5 +302,28 @@
     "spec_review": "passed",
     "review_base": "8959b4dfd149273e89884be87bee9c0adb60e0fc",
     "metadata_audit": "Independent audit passed; 12 compact metadata files exported in010bec7. Cache a1 unobserved totals corrected to null."
-  }
+  },
+  "fresh_text_receipts": [
+    "codex-transport-affected.receipt.json"
+  ],
+  "provider_transport_fix": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/test_provider_pins.py",
+      "tests/test_statement_annotation.py",
+      "-q"
+    ],
+    "passed": 45,
+    "skipped": 0,
+    "seconds": 344.07,
+    "added_cases": 3,
+    "receipt_format": "Preserved complete pytest output plus exact affected-file collection; no JUnit requested and no test rerun for receipt.",
+    "standards_review": "passed",
+    "spec_review": "passed",
+    "review_base": "f6972ebbf9c842c1a7091716505577d06c637231",
+    "actual_annotation": "pending fresh attempt3 after publication"
+  },
+  "updated_at": "2026-10-03 09:03 ET"
 }

@@ -1,28 +1,31 @@
 # Implementation and evaluation progress
 
-Updated: 2026-10-03 08:40 ET.
+Updated: 2026-10-03 09:03 ET.
 
-The user explicitly approved all current and future related project actions, including pushes and remote evaluations. The former export approval block is cleared. Source through `8959b4dfd149273e89884be87bee9c0adb60e0fc` is published on `yanrujhou_main` and synchronized on mbit10. See [standing approval](approval-2026-10-03.md).
+Standing approval covers related pushes, remote evaluations, necessary fixes and delegated sends. Source and compact actual metadata through `8506be73d9e44cbd783e50c977b111f171588a1d` are published on `yanrujhou_main` and read back locally and on mbit10. Raw evidence stays remote. See [standing approval](approval-2026-10-03.md).
 
-All21 entries derive certified/shared from current dependency-bound execution receipts and the21 delegated promotion records. Ticket22 is resolved. Six actual institutional Gmail sends now have exact Sent readback receipts:01 decision/mapping,21 contract YAML, and04 Peter/Josh/Eric updates. Tickets01/03/04/21 are resolved; ADR0007–0011 remain proposed. The user will obtain Peter's actual license answer separately; ticket02 remains open while implementation proceeds under the authorized license assumption.
+Thirty of the37 assigned tickets are resolved. Tickets28/36 are claimed;29 needs actual target evidence;02/30/37 remain ready-for-human, with related delegated sends already authorized;31 remains conditional on an actual L3 refutation. Tickets38+ are outside this implementation scope. Peter's actual license answer is still external; implementation proceeds under the user's explicit license assumption. ADR0007–0011 remain proposed.
 
-Twenty-eight tickets are resolved; three need real evidence (28/29/36); three remain ready-for-human (02/30/37); two are claimed (27/34);31 is conditional. Ticket32's actual bounded deletion finished at08:35 ET; its retention metadata is published in010bec7 and read back locally. Ticket32 is resolved. Tickets38+ remain outside scope. The30-minute heartbeat remains active.
+All21 current entries are certified/shared from dependency-bound execution receipts and actual approved promotion records. Six institutional sends have verified Sent readback receipts. Ticket32's reviewed two-file cleanup and compact custody records are published. [Promotion receipts](promotion-receipts.json); [cleanup receipt](evaluation/ticket32-cleanup-receipt.json).
 
-Current local regression coverage is3,687 unique collected cases:3,651 pass,36 skip, zero unresolved failure/error. The ledger reconciles retained partition receipts with449 unique fresh affected-file cases, preserving the two retired test names and original fixture failures. The runtime correction passes58 affected tests twice, and both independent Standards/Spec axes pass from fixed baseline8959b4d. [Verification](verification.json); [review](code-review.md).
+Current reconciled local coverage is3,690 unique cases:3,654 pass and36 skip, with zero unresolved failure/error. The narrow Codex transport correction adds three regressions; all45 cases in the two complete affected files pass in344.07s. Both independent Standards/Spec reviews pass. The ledger preserves the complete test output and exact case list, reconciled with470 unique fresh affected-file cases; no tests were repeated merely to obtain JUnit. All443 published records validate. [Verification](verification.json); [review](code-review.md).
 
-Native a1 completed with correctness passed. Its per-line profile is honestly partial because repeated Callgrind START/STOP intervals generated inconsistent summary/self costs. Real tiny probes isolated one continuous complete-BFS interval as valid at1/4threads. The reviewed fix retains only TDStep/outlined-worker self rows, discloses whole-call cache history, requires one final dump, and preserves strict counter/raw checks. Fresh a2 is required; no complete profile or statement score is inferred from a1.
+Actual scalar a2 completed at08:47 ET: native correctness passed, the sealed profile package is complete, and strict raw reparse verifies31 retained TDStep/worker rows and seven mapped statement costs. Region attribution remains bounded/partial, and these are simulated cache costs. Queue append has no attributable debug row. No target performance gain is inferred. Failed scalar a1 is preserved. [Profile summary](evaluation/profile-a2-success-summary.json).
+
+Actual annotation attempts1/2 are retained failures. Attempt1 lacked the standard Codex-home setting in tmux. Attempt2 reached the pinned provider with guard/audit pass and login-copy cleanup, but the API rejected the wire schema's unsupported `uniqueItems`. The reviewed correction removes that keyword only from schema nodes in a copied Codex wire schema; full local validation still rejects duplicate provenance. Actual annotation attempt3 awaits exact publication and source synchronization of the passing reviewed fix. [Failure summary](evaluation/annotation-a1-a2-failure-summary.json).
 
 | Ticket | Lane | State | Evidence | Next action |
 |---|---|---|---|---|
-|22|Local/remote|Resolved|21 current certified/shared entries; promotion-receipts.json|Use existing approved submission gate|
-|27,34|node0|a1 native passed; profile partial|Actual native/profile YAML and preserved raw failure|Publish/sync reviewed fix; fresh a2|
-|36|node0 after profile|Real scoring pending|Guarded annotation implementation; no complete package yet|Actual annotation and independent scoring|
-|28|node1 prepare|Preparation pending; simulator memory blocked|Prepare needs4GiB; prior actual peaks32.18–32.64GiB|Complete package, prepare; investigate legitimate memory-config remediation|
-|29|Admitted socket(s)|No timing or gain|No target comparison records|Observed L3 plus four fresh target executions|
-|31|Conditional|Untriggered|No actual L3 refutation|Follow derived companion outcome|
-|32|Historical cleanup|Resolved; metadata published010bec7|Exact2files18,039,198bytes;9compact preserved; three retention records|Complete|
+|22|Local/remote|Resolved|21 current certified/shared entries and actual promotions|Complete|
+|27,34|node0|Resolved; actual package published|Complete sealed a2 package,31 validated retained rows, seven simulated mapped costs|Use immutable package for annotation|
+|36|node0|Transport fix reviewed and tests passed|45 affected cases pass; two preserved provider failures|Publish passing fix, then fresh guarded attempt3 and scoring|
+|37|Delegated send|Awaiting actual table|Standing send approval; no actual score/table yet|Review actual result, send Josh once and verify Sent receipt|
+|28|node1 preparation|Actual builds passed; companion memory blocked|Frozen version-one protocol; exact certified tree; three completed builds|Admit companion only with36GiB node-local MemFree|
+|29,30|Admitted socket(s)/delegated send|Awaiting L3 and timing|No target timing, comparison or gain exists|Observed L3, four target executions, reviewed result delivery|
+|31|Conditional|Untriggered|L3 remains not_run|Follow actual companion outcome|
+|32|Historical cleanup|Resolved and published|Exact two-file apply,18,039,198bytes; nine compact artifacts preserved|Complete|
 
-Socket and legacy leases were released at08:33 ET. Best node MemFree was about30.18GiB after an exact12-file clean-cache release; that operation preserved every raw byte and did not lower admission thresholds. Existing gem5 needs36GiB node-local admission based on measured peak plus headroom. The unrelated old CPU job remains untouched. Raw stays remote; compact metadata returns through Git. All delegated workers are healthy or completed; no owned stalled job remains.
+Fresh09:01 ET observation has both socket and legacy leases released, node MemFree30.006/22.885GiB, and load1 1.08. Prior actual gem5 RSS32.178–32.642GiB supports the36GiB admission budget. The prescribed16GB guest fixes MMIO at16GiB; shrinking it would change the pinned target and is unsupported by measured resource evidence. Additional bounded cache diagnosis found only0.567GiB observed clean cache, with1.327GiB absolute upper bound across the selected additional roots; NUMA placement and protected process use remain unavailable. This cannot safely prove the missing5.994GiB node0 headroom. No further cache action, process termination or admission change was performed. Review workers are healthy or completed; no owned stalled remote job remains. The30-minute progress heartbeat remains active.
 
 Earlier checkpoints below retain their historical observations and approval blocks.
 
@@ -66,3 +69,13 @@ continuous single-dump collection as valid at1/4threads. Source correction,
 meaningful regressions and updated cache-scope documentation are in progress.
 The exact historical clean-cache release is separately guarded; no trace data
 has been deleted and no admission threshold is weakened.
+
+2026-10-03 08:43 ET: f6972eb is published and synchronized;431 remote records validate. Review-spec owns the node0 fresh a2 profile/annotation sequence. The library worker owns node1 preparation after actual package validation. Review-standards completed the guest-memory audit and now records bounded remediation evidence; no extra cache action is allowed without exact root review.
+
+30-minute progress check, 2026-10-03 08:46 ET:28/37 resolved. Fresh a2 node0 started08:43 ET at f6972eb; its actual native evaluation completed correctness passed08:45 ET. Per-line collection remains active, so no complete package yet. Node1 prepare is assigned and waits that package. Annotation workspace hides per-line/statement ground truth, preserving independent rank scoring. Both reviews passed; all431 records validate; current regression coverage3,651 pass/36 skip. Node0 lease held generation436; node1 and legacy released. Load1 1.67, disks43.23GiB/73.42GiB; no stalled owned worker. The prescribed16GB guest places MMIO at16GiB; changing capacity alone breaks the pinned interface. Actual companion heap28.306GiB at instantiation and RSS32.178–32.642GiB justify retaining36GiB admission. Best node free remains about30GiB; companion/timed remain genuinely gated. No other user's process or raw evidence was changed.
+
+2026-10-03 08:51 ET: a2 completed at08:47 ET;27/34 actual execution passed; required record publication still pending for complete package `typed-library-bfs-scalar-profile-20261003-a2.package.v1.619546ae9c6f60fe`,23 regions,31 per-line rows and7 simulated mapped-line costs. Region outcome remains partial for bounded attribution; no native performance conclusion is inferred. Node1 prepare started08:48 ET with4GiB preparation admission and36GiB future simulator budget. Annotation attempt1 stopped before launch because tmux lacked the existing standard Codex-home setting; its failed receipt is retained. Fresh attempt2 uses the authorized regular login file through supported configuration, preserving source and guards.
+
+2026-10-03 08:57 ET: successful a2 profile, sealed package, exact preparation builds and both failed annotation attempts are now published8506be7 and read back locally;443 records validate remotely.27/34 are resolved only after their publication acceptance.28 prepare passes, while36 needs the transport-only Codex schema correction and fresh real scoring. All remote jobs ended and both socket/legacy leases released before metadata export.
+
+2026-10-03 09:03 ET: all45 provider/annotation affected cases pass; full current identity reconciliation is3,690 =3,654 pass +36 skip, zero unresolved. Both transport review axes pass, and exact publication precedes fresh actual attempt3. Additional cache inventory does not establish sufficient safe node-local capacity.

@@ -52,8 +52,8 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 24 | [Retention and team-claim records; readers accept pruned files](issues/24-retention-and-team-claim-records.md) | resolved | 03 |  |
 | 25 | [swdb prune: dry run, approval and apply](issues/25-prune-listing-and-apply.md) | resolved | 24 |  |
 | 26 | [Automatic pruning of bulky raw output (ArchEvolve mode)](issues/26-automatic-pruning.md) | resolved | 24 |  |
-| 27 | [Real profile package for the scalar-only snapshot on mbit10](issues/27-profile-package-scalar-only.md) | claimed | 05, 08 | yes |
-| 28 | [Freeze the new protocol, submit the patch, run the companion case](issues/28-freeze-protocol-and-companion-runs.md) | needs-info | 08, 20, 22, 23, 26, 27 | yes |
+| 27 | [Real profile package for the scalar-only snapshot on mbit10](issues/27-profile-package-scalar-only.md) | resolved | 05, 08 | yes |
+| 28 | [Freeze the new protocol, submit the patch, run the companion case](issues/28-freeze-protocol-and-companion-runs.md) | claimed | 08, 20, 22, 23, 26, 27 | yes |
 | 29 | [Timed gem5 runs, comparison and team summary](issues/29-timed-runs-comparison-summary.md) | needs-info | 28 | yes |
 | 30 | [Send the first gem5 result and record the team claim](issues/30-send-first-result.md) | ready-for-human | 29 |  |
 | 31 | [Fallback contract: the CPU loads the parent value itself](issues/31-fallback-contract.md) | needs-triage | 28 | yes |
@@ -64,9 +64,9 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | # | Ticket | Status | Blocked by | Go-ahead |
 |---|---|---|---|---|
 | 33 | [Per-line callgrind collection inside TDStep](issues/33-per-line-callgrind-collection.md) | resolved | — |  |
-| 34 | [Per-line callgrind run on mbit10](issues/34-per-line-callgrind-run.md) | claimed | 08, 33 | yes |
+| 34 | [Per-line callgrind run on mbit10](issues/34-per-line-callgrind-run.md) | resolved | 08, 33 | yes |
 | 35 | [Agent-claim storage on statement annotations and access patterns](issues/35-statement-claims-storage.md) | resolved | 03 |  |
-| 36 | [swdb annotate, scoring and the statement table for Josh](issues/36-annotate-and-score.md) | needs-info | 07, 34, 35 | yes |
+| 36 | [swdb annotate, scoring and the statement table for Josh](issues/36-annotate-and-score.md) | claimed | 07, 34, 35 | yes |
 | 37 | [Send Josh the statement table](issues/37-send-josh-statement-table.md) | ready-for-human | 36 |  |
 
 ## Phase 4b: BC
@@ -127,7 +127,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 
 - 2026-10-03: Ticket19 resolved after50 public library/submit regressions and exact tree reproduction; all four two-axis review findings were corrected and independently rechecked. [Code review](code-review.md) and [promotion packet](drafts/promotion-review.md) bind the fresh receipts.
 
-- Final local checkpoint, 2026-10-03 ET:22 tickets resolved, six needs-info (03/27/28/29/34/36), eight ready-for-human, one conditional 31. Ticket07 role launcher resolved after complete regression coverage. All 3,679 current cases reconcile to3,643 pass / 36 skip with zero unresolved failure; [verification](verification.json). Six Standards/Spec findings are corrected with final independent passes. The source push approval, actual sends/promotion and real target runs remain open; [progress](progress.md).
+- Historical local checkpoint, 2026-10-03 ET:22 tickets resolved, six needs-info (03/27/28/29/34/36), eight ready-for-human, one conditional 31. Ticket07 role launcher resolved after complete regression coverage. All 3,679 current cases reconcile to3,643 pass / 36 skip with zero unresolved failure; [verification](verification.json). Six Standards/Spec findings are corrected with final independent passes. The source push approval, actual sends/promotion and real target runs remain open; [progress](progress.md).
 
 - 2026-10-03 08:14 ET: ticket22 resolved after21 actual user-approved promotions, publication8959b4d and remote readback425 valid records/21 certified-shared entries. [Promotion receipts](promotion-receipts.json). Source export block cleared; node0 native/profile sequence assigned under standing related-action approval.
 
@@ -138,3 +138,11 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 - 2026-10-03 08:37 ET: both supplemental runtime review axes pass;3,687 current cases reconcile to3,651 pass/36 skip. Six actual sends are recorded. Exact failed-smoke cleanup deleted2files18,039,198bytes and preserved9compact artifacts; metadata export is pending. Current operational state supersedes historical checkpoint wording above; [progress](progress.md).
 
 - 2026-10-03 08:40 ET: ticket32 resolved after the exact two-file apply, preserved compact artifacts,431 valid records, published metadata010bec7, and local Git readback. [Cleanup receipt](evaluation/ticket32-cleanup-receipt.json).
+
+- 2026-10-03 08:51 ET:27/34 actual execution passed from the a2 complete package; final closure waits required Git publication of these records and31 validated TDStep/worker line rows. Source attribution remains explicitly bounded; modeled costs are not gain evidence. [Execution summary](evaluation/profile-a2-success-summary.json).
+
+- 2026-10-03 08:57 ET:27/34 resolved after8506be7 publication and Git readback. Actual28 preparation passed; companion memory remains blocked.36 retains two real failed attempts and is receiving the narrow transport correction.
+
+- 2026-10-03 09:01 ET:30/37 resolved;27/34 actual package and28 builds are published8506be7. Both supplemental provider transport review axes pass; affected tests continue before actual36 attempt3. Companion/timed memory remains gated on actual36GiB node-local MemFree. [Current progress](progress.md).
+
+- 2026-10-03 09:03 ET: provider transport fix passes both review axes and all45 affected cases; current complete local regression coverage is3,654 pass/36 skip across3,690 identities. Publication and fresh actual36 attempt3 follow.

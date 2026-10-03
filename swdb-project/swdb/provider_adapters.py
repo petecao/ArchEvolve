@@ -1,4 +1,4 @@
-"""Rewrite CLI adapters and immutable research settings. Updated 2026-09-30 ET.
+"""Rewrite CLI adapters and immutable research settings. Updated 2026-10-03 ET.
 
 The shared runner handles processes and retention; an adapter owns argv, transport,
 version discovery and final-response decoding. Fixtures can use the identical CLI
@@ -28,6 +28,30 @@ USAGE_LIMIT = re.compile(
     r"usage[_ -]?limit|quota[_ -]?(?:exceeded|exhausted)|"
     r"(?:hit|reached|exceeded).*?(?:usage|chatgpt).*?limit|"
     r"(?:insufficient_quota|rate_limit_exceeded)|out of (?:usage|credits)", re.I)
+
+
+def _codex_transport_schema(schema):
+    """Omit only unsupported array uniqueness on the wire, retaining local checks."""
+    result = json.loads(json.dumps(schema))
+    def visit(node):
+        if not isinstance(node, dict):
+            return
+        node.pop("uniqueItems", None)
+        # Map keys are property/definition names, not schema keywords. Constant,
+        # enum and example data likewise must not be interpreted as schemas.
+        for key in ("properties", "patternProperties", "$defs", "definitions", "dependentSchemas"):
+            for child in node.get(key, {}).values():
+                visit(child)
+        for key in ("items", "additionalItems", "contains", "additionalProperties", "propertyNames",
+                    "unevaluatedItems", "unevaluatedProperties", "not", "if", "then", "else", "contentSchema"):
+            child = node.get(key)
+            for item in child if isinstance(child, list) else [child]:
+                visit(item)
+        for key in ("allOf", "anyOf", "oneOf", "prefixItems"):
+            for child in node.get(key, []):
+                visit(child)
+    visit(result)
+    return result
 
 
 class ProviderUnavailable(Failure):
@@ -201,7 +225,7 @@ class CodexAdapter(Adapter):
         if not io_dir.is_dir():
             io_dir = Path(folder).resolve()
         schema_path = io_dir / "output-schema.json"
-        schema_path.write_text(json.dumps(schema))
+        schema_path.write_text(json.dumps(_codex_transport_schema(schema)))
         # Linux caps a single argv element at 128 KiB; fail clearly rather than
         # silently truncate a legacy prompt containing full source bodies.
         if len(prompt.encode()) > 96 * 1024:

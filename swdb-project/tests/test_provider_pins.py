@@ -1,4 +1,5 @@
-"""Pinned adapters through public submission/repair. Updated 2026-09-30 ET."""
+"""Pinned adapters through public submission/repair. Updated 2026-10-03 ET."""
+import copy
 import json
 import sys
 from pathlib import Path
@@ -130,6 +131,58 @@ def test_codex_full_files_is_strict_array_contract(proposal_setup, emulated_prov
     assert receipt['role']=='rewriting' and receipt['output_schema_sha256']==artifacts.digest(schema)
     candidate = json.loads(proposal_setup[0].swdb('get',data['candidate'],'--format','json').stdout)
     assert 'int alpha = 14' in (Path(candidate['artifact']['path'])/'src/bfs.cc').read_text()
+
+
+def test_codex_transport_schema_preserves_property_names_data_and_local_constraints(tmp_path):
+    from swdb.provider_adapters import CodexAdapter
+    schema = {'type':'object','additionalProperties':False,'required':['uniqueItems','choice'],
+        'properties':{'uniqueItems':{'type':'array','uniqueItems':True,'minItems':1,
+            'items':{'type':'array','uniqueItems':True,'items':{'type':'integer','minimum':0}}},
+            'choice':{'anyOf':[{'type':'array','uniqueItems':True,'items':{'type':'string'}},
+                              {'const':{'uniqueItems':True},'enum':[{'uniqueItems':True}],
+                               'default':{'uniqueItems':True}}]}},
+        '$defs':{'uniqueItems':{'type':'array','uniqueItems':True,'items':{'type':'string'}}},
+        'examples':[{'uniqueItems':[[1,2]],'choice':{'uniqueItems':True}}]}
+    original = copy.deepcopy(schema)
+    config = {'kind':'external_fixture','emulates':'codex','workspace':False,'command':[sys.executable]}
+    adapter = CodexAdapter()
+    semantic = adapter.schema(config,schema)
+    argv = adapter.command(config,'Return the requested JSON.',tmp_path,semantic)
+    emitted = json.loads(Path(argv[argv.index('--output-schema')+1]).read_text())
+    assert schema==semantic==original
+    expected = copy.deepcopy(original)
+    expected['properties']['uniqueItems'].pop('uniqueItems')
+    expected['properties']['uniqueItems']['items'].pop('uniqueItems')
+    expected['properties']['choice']['anyOf'][0].pop('uniqueItems')
+    expected['$defs']['uniqueItems'].pop('uniqueItems')
+    assert emitted==expected
+
+
+@pytest.mark.parametrize('duplicate', [False, True])
+def test_codex_transport_omission_keeps_real_local_provenance_validation(tmp_path, emulated_provider, duplicate):
+    from swdb import annotation, rewrite
+    from swdb.cli import Failure
+    schema = annotation.PROFILING.output_schema
+    original = copy.deepcopy(schema)
+    response = {'statements':[{'statement':'statement-0',
+        'pattern_class':[{'pattern':'read-a','address_shapes':['stream'],'update_kind':'read'}],
+        'index_provenance':['statement-1']*(2 if duplicate else 1),
+        'expected_cost_rank':1,'basis':'code_reading'}], 'unresolved':[]}
+    config = rewrite.configuration(emulated_provider(response=response))
+    def interpret():
+        return rewrite.interpret(config,'Return independent statement claims.',tmp_path/'attempt',
+                                 run_context={'schema':schema})
+    if duplicate:
+        with pytest.raises(Failure,match='non-unique elements'): interpret()
+    else:
+        result, metadata = interpret()
+        assert result==response and metadata['classification']=='contract_fixture'
+    argv = emulated_provider.argv()
+    emitted = json.loads(Path(argv[argv.index('--output-schema')+1]).read_text())
+    assert 'uniqueItems' not in emitted['properties']['statements']['items']['properties']['index_provenance']
+    assert schema==original
+    assert schema['properties']['statements']['items']['properties']['index_provenance']['uniqueItems'] is True
+
 
 def test_initial_usage_limit_can_retry_without_repair(proposal_setup, emulated_provider):
     result, unavailable = submit(proposal_setup, emulated_provider(unavailable=True))
