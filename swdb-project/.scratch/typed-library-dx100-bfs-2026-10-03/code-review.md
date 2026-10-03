@@ -76,3 +76,7 @@ passing case-matched receipts; original logs are preserved. The full ISA file
 passes 25 cases; final submit file passes 22; library 35, producer/delivery 120,
 gem5 driver 6. All 404 records validate and git diff --check passes. See
 [verification.json](verification.json) for hashes, partitions and corrections.
+
+Supplemental runtime review, 2026-10-03 08:37 ET: fixed baseline `8959b4dfd149273e89884be87bee9c0adb60e0fc`, working diff of the collector, region-profile schema, two complete affected test files, and format documentation. Independent Standards and Spec reviewers both report no actionable discrepancy. Collector uses one continuous complete-BFS interval and exactly one final client dump, with only TDStep/outlined-worker self costs retained and whole-call cache history disclosed. Strict summary/self-cost checks, counter hierarchy, raw reparse, source and binary pins remain unchanged. Historical `tdstep_position` and new aggregate `dump_position` require exactly one valid coordinate.
+
+Fresh affected-file verification passed all58 cases twice; durable JUnit records58 passed in32.34s. Current collection reconciles3,687 cases to3,651 pass and36 skip with zero unresolved failure/error, preserving the two retired historical test names and all original failed receipts. Eight new cases cover the runtime correction. All425 current local records validate. Real a1 is partial/failed and preserved; fresh remote a2 is still required before tickets27/34 can close.

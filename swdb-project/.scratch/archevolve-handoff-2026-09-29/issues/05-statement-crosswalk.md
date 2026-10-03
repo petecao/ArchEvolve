@@ -2,8 +2,8 @@
 
 Created: 2026-09-29
 **Type:** slice
-**Status:** needs-info
-**Blocked by:** Peter's confirmed report/source binding and offset-width answer
+**Status:** resolved
+**Blocked by:** None — superseded binding recorded by typed-library ticket01
 **Spec:** `../spec.md`
 
 One row per `bfs-td-*` ID: file:line at `e4fc4af` → Peter's array name → Josh's `access-0N` →
@@ -36,3 +36,15 @@ crosswalk row. Ticket 01 remains human-owned and has no recorded reply. This tic
 stays `needs-info`; source similarity and matching graph size do not settle the binding.
 
 2026-10-03: The current intrinsic specification pins the e4fc4af TDStep and statement mapping. Mapping delivery belongs to [typed-library ticket 01](../../typed-library-dx100-bfs-2026-10-03/issues/01-send-decision-note-and-mapping.md). The crosswalk remains pending until that human send receipt exists; no message is invented.
+
+## Answer
+
+Resolved 2026-10-03 08:21 ET under the superseding typed-library specification.
+The current intrinsic specification supplies the explicit e4fc4af source binding,
+statement IDs and strict32-bit source/count constraints; this replaces the earlier
+provisional report/source interpretation, not a claimed new reply from Peter.
+The seven statement/eight access mapping and its format review were actually sent
+to Joshveer Grewal through Gmail at08:21:08ET, message `1a101b602c1698c2`.
+The containing source region IDs/ranges are retained in Progress above.
+See [typed-library ticket01](../../typed-library-dx100-bfs-2026-10-03/issues/01-send-decision-note-and-mapping.md)
+and its exact draft/channel receipt. Original handoff files remain unchanged.

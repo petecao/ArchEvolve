@@ -464,7 +464,7 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
 
 
 def _tdstep_source(source, regions):
-    """Insert an RAII instrumentation scope while retaining original debug lines."""
+    """Retain TDStep's function identity and its exact original debug lines."""
     functions = [r for r in regions if r.get("kind") == "function" and r.get("name") == "TDStep"]
     if len(functions) != 1:
         raise Failure("per-line profiling needs exactly one compiler-discovered scalar TDStep")
@@ -474,38 +474,27 @@ def _tdstep_source(source, regions):
     declaration = region["byte_range"][0]
     if not 0 <= declaration < begin <= len(raw) or raw[begin-1:begin] != b"{":
         raise Failure("TDStep source scope does not identify its opening brace")
-    line = raw[:begin].count(b"\n") + 1
     name = json.dumps(str(source))
-    scope = ("\n::swdb_statement::Scope swdb_statement_scope;\n#line " + str(line) + " " + name + "\n").encode()
     # Keep this diagnostic function out of DOBFS's inlined body, so its function
     # identity survives -O3. All other original compilation settings remain.
-    raw = raw[:begin] + scope + raw[begin:]
     raw = raw[:declaration] + b"__attribute__((noinline)) " + raw[declaration:]
     return ("#line 1 " + name + "\n").encode() + raw
 
 
 def _per_line_memory(session, data, source, includes, compiler, flags,
                      graph_path, graph, env, budget, valgrind, collector):
-    """A second execution collects only scalar TDStep, including its worker threads.
+    """Collect one complete-call dump and retain only TDStep self-cost rows.
 
-    START/STOP instrumentation is global; thread-local toggle-collect would omit
-    workers or toggle the master thread twice at an OpenMP outlined call.
-    Each invocation dumps before STOP and starts with empty model caches. These
-    costs are simulated diagnostics and carry that cold-start limitation.
+    Repeated START/ZERO/DUMP/STOP scopes produce inconsistent Callgrind summaries.
+    One global instrumentation interval includes every worker and preserves cache
+    history from intervening BFS work; attribution remains limited to TDStep.
     """
     folder, build = session.folder, Path(data["build"]["directory"])
     source_file = build / "statement_bfs.cc"
     source_file.write_bytes(_tdstep_source(source, data["regions"]))
-    prefix = '''#include <valgrind/callgrind.h>
-namespace swdb_statement {
-struct Scope {
-  Scope() { CALLGRIND_START_INSTRUMENTATION; CALLGRIND_ZERO_STATS; }
-  ~Scope() { CALLGRIND_DUMP_STATS; CALLGRIND_STOP_INSTRUMENTATION; }
-};
-}
-'''
     driver = build / "statement_driver.cc"
-    driver.write_text(_wrapper(source_file, prefix, "", "", ""))
+    driver.write_text(_wrapper(source_file, "#include <valgrind/callgrind.h>",
+        "CALLGRIND_START_INSTRUMENTATION;", "CALLGRIND_DUMP_STATS; CALLGRIND_STOP_INSTRUMENTATION;", ""))
     binary = build / "bfs-statements"
     command = [compiler, *flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary)]
     session.execute("statement_memory_build", command, budget["build_seconds"])
@@ -513,10 +502,10 @@ struct Scope {
     data["artifacts"]["statement_binary"] = {"path": str(binary), "sha256": binary_hash,
         "flags": flags, "wrapper_sha256": artifacts.file_hash(driver),
         "instrumented_source_sha256": artifacts.file_hash(source_file),
-        "difference": "debug info; original debug line map; TDStep noinline and global instrumentation scope"}
-    line_collector = {**collector, "initial_state": "empty model caches at each TDStep invocation",
-        "scope": "TDStep and its callees; every thread; self costs only for source attribution",
-        "model_limits": collector["model_limits"] + "; diagnostic TDStep is not inlined; each TDStep starts cold"}
+        "difference": "debug info; original debug line map; TDStep noinline; one complete-call instrumentation interval"}
+    line_collector = {**collector, "initial_state": "empty model caches at the complete BFS call boundary",
+        "scope": "raw collection covers the complete BFS call on every thread; retained self costs cover all TDStep invocations and outlined workers",
+        "model_limits": collector["model_limits"] + "; diagnostic TDStep is not inlined; whole-call cache history includes intervening BFS work; no per-invocation isolation"}
     data.setdefault("per_line_memory", [])
     source_path = next(r["path"] for r in data["regions"] if r.get("kind") == "function" and r.get("name") == "TDStep")
     source_file_hash = artifacts.file_hash(source)
@@ -531,7 +520,7 @@ struct Scope {
         session.execute("statement_memory_execution", command, budget["run_seconds"], env,
                         repetition=repetition, source_position=position, source=source_id)
         check = _trial_output(output, graph, source_id, data["context"]["threads"])
-        dumps = 0
+        dumps = []
         def dump_order(path):
             suffix = path.name[len(raw.name):]
             return int(suffix[1:]) if re.fullmatch(r"\.[0-9]+", suffix) else -1
@@ -539,31 +528,32 @@ struct Scope {
             content, raw_hash = native.observation_bytes(file, 64*1024*1024, "Callgrind statement output")
             if b"desc: Trigger: Client Request" not in content:
                 continue
-            totals = parse_callgrind(file, require_totals=True, raw=content)
-            if not totals.get("Ir", 0):
-                continue
-            parsed = parse_callgrind_lines(file, raw=content)
-            if any(sum(row["events"].get(metric, 0) for row in parsed) > total for metric, total in totals.items()):
-                raise native.StageFailure("missing_observation", "TDStep line self costs exceed the dump summary")
-            selected = [r for r in parsed if callgrind_lines.in_function(r["function"])]
-            if not selected:
-                raise native.StageFailure("missing_observation", "TDStep dump lacks debug source self costs")
-            execution = {"source": source_id, "source_position": position,
-                         "repetition": repetition, "tdstep_position": dumps}
-            for row in selected:
-                row.update(execution=execution, collector=line_collector, scope="TDStep",
-                    artifact_sha256=binary_hash, source_artifact_sha256=data["context"]["candidate_sha256"],
-                    raw_artifact=str(file), raw_sha256=raw_hash,
-                    counter_validation={"state": "valid", "method": callgrind_lines.METHOD})
-                if Path(row["path"]).resolve() == source.resolve():
-                    row.update(source_path=source_path, source_file_sha256=source_file_hash)
-            data["per_line_memory"].extend(selected)
-            data["executions"].append({"kind": "statement_memory", **execution,
-                "binary_sha256": binary_hash, "output": str(output), "raw_artifact": str(file),
-                "raw_sha256": raw_hash, "collector": line_collector, **check})
-            dumps += 1
-        if not dumps:
-            raise native.StageFailure("missing_observation", "no nonempty TDStep client dump")
+            dumps.append((file, content, raw_hash))
+        if len(dumps) != 1:
+            raise native.StageFailure("missing_observation", "statement collection requires exactly one complete-call client dump")
+        file, content, raw_hash = dumps[0]
+        totals = parse_callgrind(file, require_totals=True, raw=content)
+        if not totals.get("Ir", 0):
+            raise native.StageFailure("missing_observation", "no nonempty complete-call client dump")
+        parsed = parse_callgrind_lines(file, raw=content)
+        if any(sum(row["events"].get(metric, 0) for row in parsed) > total for metric, total in totals.items()):
+            raise native.StageFailure("missing_observation", "TDStep line self costs exceed the dump summary")
+        selected = [r for r in parsed if callgrind_lines.in_function(r["function"])]
+        if not selected:
+            raise native.StageFailure("missing_observation", "TDStep dump lacks debug source self costs")
+        execution = {"source": source_id, "source_position": position,
+                     "repetition": repetition, "dump_position": 0}
+        for row in selected:
+            row.update(execution=execution, collector=line_collector, scope="TDStep",
+                artifact_sha256=binary_hash, source_artifact_sha256=data["context"]["candidate_sha256"],
+                raw_artifact=str(file), raw_sha256=raw_hash,
+                counter_validation={"state": "valid", "method": callgrind_lines.METHOD})
+            if Path(row["path"]).resolve() == source.resolve():
+                row.update(source_path=source_path, source_file_sha256=source_file_hash)
+        data["per_line_memory"].extend(selected)
+        data["executions"].append({"kind": "statement_memory", **execution,
+            "binary_sha256": binary_hash, "output": str(output), "raw_artifact": str(file),
+            "raw_sha256": raw_hash, "collector": line_collector, **check})
         callgrind_lines.validate(data["per_line_memory"])
         session.save()
 

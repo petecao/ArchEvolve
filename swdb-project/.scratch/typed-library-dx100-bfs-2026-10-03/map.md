@@ -5,16 +5,16 @@ Created: 2026-10-03 02:28 ET
 **Status:** ready-for-agent
 **Spec:** [spec.md](spec.md)
 
-Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied by the Extensa-mode design session, or triggered by an L3 refutation). Tickets marked go-ahead run on mbit10 and need Yan-Ru's approval per dispatch (Q62). The pull request to `main` stays as the archevolve-handoff pull-request ticket, blocked by this feature's last tickets.
+Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied by the Extensa-mode design session, or triggered by an L3 refutation). Tickets marked go-ahead run on mbit10. The user's explicit standing approval on2026-10-03 supersedes repeated approval requests for related dispatches (Q62); actual admission and receipts remain required. The pull request to `main` stays as the archevolve-handoff pull-request ticket, blocked by this feature's last tickets.
 
 ## Phase 0–1: tell the team, record the design
 
 | # | Ticket | Status | Blocked by | Go-ahead |
 |---|---|---|---|---|
-| 01 | [Send the Phase 0 decision note and Josh's statement-name mapping](issues/01-send-decision-note-and-mapping.md) | ready-for-human | — |  |
+| 01 | [Send the Phase 0 decision note and Josh's statement-name mapping](issues/01-send-decision-note-and-mapping.md) | resolved | — |  |
 | 02 | [Peter confirms the license for files ported from Extensa](issues/02-license-confirmation.md) | ready-for-human | — |  |
-| 03 | [Decision records ADR 0007–0011 and the archevolve-handoff tracker updates](issues/03-design-session-commit.md) | needs-info | 01 |  |
-| 04 | [Per-person team update after the decision-record commit](issues/04-team-update.md) | ready-for-human | 03 |  |
+| 03 | [Decision records ADR 0007–0011 and the archevolve-handoff tracker updates](issues/03-design-session-commit.md) | resolved | 01 |  |
+| 04 | [Per-person team update after the decision-record commit](issues/04-team-update.md) | resolved | 03 |  |
 
 ## Phase 2a: prefactors
 
@@ -41,8 +41,8 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 18 | [BFS candidate-artifact certification](issues/18-bfs-candidate-certification.md) | resolved | 16, 17 |  |
 | 19 | [Submit a patch that ships the lowering header](issues/19-submit-patch-with-library-header.md) | resolved | 11, 15 |  |
 | 20 | [Peter's §5 patch with fixes E1–E5, certified](issues/20-peter-section5-patch.md) | resolved | 13, 14, 18, 19, 17 |  |
-| 21 | [Send Peter the contract YAML](issues/21-send-peter-contract-yaml.md) | ready-for-human | 17 |  |
-| 22 | [Yan-Ru promotes the DX100 entries and the BFS contract](issues/22-promote-dx100-entries.md) | claimed | 15, 20 |  |
+| 21 | [Send Peter the contract YAML](issues/21-send-peter-contract-yaml.md) | resolved | 17 |  |
+| 22 | [Yan-Ru promotes the DX100 entries and the BFS contract](issues/22-promote-dx100-entries.md) | resolved | 15, 20 |  |
 
 ## Phase 3: first gem5 result (ArchEvolve mode)
 
@@ -57,7 +57,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 29 | [Timed gem5 runs, comparison and team summary](issues/29-timed-runs-comparison-summary.md) | needs-info | 28 | yes |
 | 30 | [Send the first gem5 result and record the team claim](issues/30-send-first-result.md) | ready-for-human | 29 |  |
 | 31 | [Fallback contract: the CPU loads the parent value itself](issues/31-fallback-contract.md) | needs-triage | 28 | yes |
-| 32 | [Clean up existing run output on mbit10](issues/32-retroactive-cleanup.md) | ready-for-human | 25 | yes |
+| 32 | [Clean up existing run output on mbit10](issues/32-retroactive-cleanup.md) | resolved | 25 | yes |
 
 ## Phase 4a: profiling agent
 
@@ -128,3 +128,13 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 - 2026-10-03: Ticket19 resolved after50 public library/submit regressions and exact tree reproduction; all four two-axis review findings were corrected and independently rechecked. [Code review](code-review.md) and [promotion packet](drafts/promotion-review.md) bind the fresh receipts.
 
 - Final local checkpoint, 2026-10-03 ET:22 tickets resolved, six needs-info (03/27/28/29/34/36), eight ready-for-human, one conditional 31. Ticket07 role launcher resolved after complete regression coverage. All 3,679 current cases reconcile to3,643 pass / 36 skip with zero unresolved failure; [verification](verification.json). Six Standards/Spec findings are corrected with final independent passes. The source push approval, actual sends/promotion and real target runs remain open; [progress](progress.md).
+
+- 2026-10-03 08:14 ET: ticket22 resolved after21 actual user-approved promotions, publication8959b4d and remote readback425 valid records/21 certified-shared entries. [Promotion receipts](promotion-receipts.json). Source export block cleared; node0 native/profile sequence assigned under standing related-action approval.
+
+- 2026-10-03 08:21 ET:01 and21 resolved with three real Gmail Sent receipts;03 reconciles the handoff tracker and closes from the actual mapping delivery.04 personal sends released. [Send receipts](drafts/outgoing-2026-10-03/send-receipts-01-21.json).
+
+- 2026-10-03 08:35 ET: ticket04 resolved with three actual personal Gmail Sent receipts. Ticket32 claimed after root reviewed the exact failed-smoke two-file cleanup listing under standing approval.
+
+- 2026-10-03 08:37 ET: both supplemental runtime review axes pass;3,687 current cases reconcile to3,651 pass/36 skip. Six actual sends are recorded. Exact failed-smoke cleanup deleted2files18,039,198bytes and preserved9compact artifacts; metadata export is pending. Current operational state supersedes historical checkpoint wording above; [progress](progress.md).
+
+- 2026-10-03 08:40 ET: ticket32 resolved after the exact two-file apply, preserved compact artifacts,431 valid records, published metadata010bec7, and local Git readback. [Cleanup receipt](evaluation/ticket32-cleanup-receipt.json).

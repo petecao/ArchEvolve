@@ -1,51 +1,28 @@
 # Implementation and evaluation progress
 
-Updated: 2026-10-03 08:11 ET.
+Updated: 2026-10-03 08:40 ET.
 
-Yan-Ru's explicit related-action approval cleared the earlier source export block.
-The five verified commits through `7561d88` are published to
-`git@github.com:petecao/ArchEvolve.git` on `yanrujhou_main`. Fixed review base:
-`9ef348fdaa5b26ff5e37a66d1781084b1b2eea40`.
-See [approval](approval-2026-10-03.md).
+The user explicitly approved all current and future related project actions, including pushes and remote evaluations. The former export approval block is cleared. Source through `8959b4dfd149273e89884be87bee9c0adb60e0fc` is published on `yanrujhou_main` and synchronized on mbit10. See [standing approval](approval-2026-10-03.md).
 
-All21 entries now derive certified/shared. Root invoked `swdb promote` on Yan-Ru's
-behalf under that explicit approval; the21 hash-bound review records cite the
-current dependency-bound certification receipts. [Promotion receipts](promotion-receipts.json)
-index every entry/review. Publishing and remote synchronization of these records
-is in progress; ticket22 remains claimed until both are verified.
+All21 entries derive certified/shared from current dependency-bound execution receipts and the21 delegated promotion records. Ticket22 is resolved. Six actual institutional Gmail sends now have exact Sent readback receipts:01 decision/mapping,21 contract YAML, and04 Peter/Josh/Eric updates. Tickets01/03/04/21 are resolved; ADR0007–0011 remain proposed. The user will obtain Peter's actual license answer separately; ticket02 remains open while implementation proceeds under the authorized license assumption.
 
-Twenty-two tickets resolved; four needs-info (03/28/29/36), seven ready-for-human,
-three claimed (22/27/34), and one conditional31. Review-spec owns node0 profiling
-and annotation after synchronization. Review-standards checks gem5 admission and
-preparation. The library agent audits remaining human/cleanup dependencies.
-Tickets38+ remain untouched. The30-minute heartbeat remains active.
+Twenty-eight tickets are resolved; three need real evidence (28/29/36); three remain ready-for-human (02/30/37); two are claimed (27/34);31 is conditional. Ticket32's actual bounded deletion finished at08:35 ET; its retention metadata is published in010bec7 and read back locally. Ticket32 is resolved. Tickets38+ remain outside scope. The30-minute heartbeat remains active.
 
-All3,679 current test cases have exact receipt coverage:3,643 pass,36 skip and no
-unresolved failure. Retained hashes still match. All six Standards/Spec findings
-are corrected; both final reviews pass. Promotion writes validated the425 current
-records. See [verification](verification.json) for the original404-record snapshot
-and [code review](code-review.md). No product code changed during promotion.
+Current local regression coverage is3,687 unique collected cases:3,651 pass,36 skip, zero unresolved failure/error. The ledger reconciles retained partition receipts with449 unique fresh affected-file cases, preserving the two retired test names and original fixture failures. The runtime correction passes58 affected tests twice, and both independent Standards/Spec axes pass from fixed baseline8959b4d. [Verification](verification.json); [review](code-review.md).
 
-The candidate passes ten positive cells and rejects16 controls; exact tree
-`991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1`.
-Certification remains strict functional-model pre-check evidence with simulated
-basis. No target timing or hardware gain is established.
+Native a1 completed with correctness passed. Its per-line profile is honestly partial because repeated Callgrind START/STOP intervals generated inconsistent summary/self costs. Real tiny probes isolated one continuous complete-BFS interval as valid at1/4threads. The reviewed fix retains only TDStep/outlined-worker self rows, discloses whole-call cache history, requires one final dump, and preserves strict counter/raw checks. Fresh a2 is required; no complete profile or statement score is inferred from a1.
 
-| Ticket | Lane | State | Next action |
-|---|---|---|---|
-|22|Local/remote|21 approved promotions written|Publish and verify remote shared gate|
-|27,34|node0 planned|Inputs and8GiB admission checked; no run yet|Synchronize, fresh lease/preflight, native/profile|
-|36|node0 after profile|Implementation ready|Guarded real annotation and independent scoring|
-|28|Either admitted socket|Prepare requires only4GiB; companion about32GiB measured|Real package, synchronized promotions, prepare; memory admission|
-|29|Two admitted sockets|No timing or gain|Observed L3 and four fresh target executions|
-|31|Conditional|Untriggered|An actual L3 refutation|
-|32|Historical cleanup|No deletion|Inspect exact eligible listing and custody before action|
+| Ticket | Lane | State | Evidence | Next action |
+|---|---|---|---|---|
+|22|Local/remote|Resolved|21 current certified/shared entries; promotion-receipts.json|Use existing approved submission gate|
+|27,34|node0|a1 native passed; profile partial|Actual native/profile YAML and preserved raw failure|Publish/sync reviewed fix; fresh a2|
+|36|node0 after profile|Real scoring pending|Guarded annotation implementation; no complete package yet|Actual annotation and independent scoring|
+|28|node1 prepare|Preparation pending; simulator memory blocked|Prepare needs4GiB; prior actual peaks32.18–32.64GiB|Complete package, prepare; investigate legitimate memory-config remediation|
+|29|Admitted socket(s)|No timing or gain|No target comparison records|Observed L3 plus four fresh target executions|
+|31|Conditional|Untriggered|No actual L3 refutation|Follow derived companion outcome|
+|32|Historical cleanup|Resolved; metadata published010bec7|Exact2files18,039,198bytes;9compact preserved; three retention records|Complete|
 
-Both socket and legacy leases were released at the last read; node MemFree about
-26.4/15.7GiB. This admits native profiling, not the simulator. Review-standards is
-checking retained simulator peak-memory evidence; graph shrinking alone does not
-remove its guest-memory requirement. Raw output stays on mbit10 and metadata
-returns through Git. Actual Peter response and actual team sends remain unrecorded.
+Socket and legacy leases were released at08:33 ET. Best node MemFree was about30.18GiB after an exact12-file clean-cache release; that operation preserved every raw byte and did not lower admission thresholds. Existing gem5 needs36GiB node-local admission based on measured peak plus headroom. The unrelated old CPU job remains untouched. Raw stays remote; compact metadata returns through Git. All delegated workers are healthy or completed; no owned stalled job remains.
 
 Earlier checkpoints below retain their historical observations and approval blocks.
 
@@ -80,3 +57,12 @@ entries derive certified/experimental. Final 119 producer regressions plus publi
 delivery reproduction pass 120 cases. Final 35 library-state regressions and six
 gem5-driver checks pass. Public submission admission and the last full partition
 remain active. Six review findings are independently closed.
+
+2026-10-03 08:21 ET: actual scalar native a1 completed with correctness passed.
+The region profile is partial because strict summary/self-cost consistency checks
+refused the repeated TDStep Callgrind dumps; no complete package or annotation
+result is inferred. Tiny real collector probes reproduce the defect and isolate
+continuous single-dump collection as valid at1/4threads. Source correction,
+meaningful regressions and updated cache-scope documentation are in progress.
+The exact historical clean-cache release is separately guarded; no trace data
+has been deleted and no admission threshold is weakened.

@@ -12,9 +12,9 @@ Updated: 2026-09-29 23:20 ET
 | 02 | [Annotate DX100 TDStep](issues/02-annotate-dx100-tdstep.md) | resolved | — |
 | 03 | [Record the T17 comparison](issues/03-record-t17-comparison.md) | resolved | — |
 | 04 | [Retire the Workload view](issues/04-retire-workload-view.md) | resolved | — |
-| 05 | [Statement crosswalk](issues/05-statement-crosswalk.md) | needs-info | Peter's report/source binding and offset-width answer |
-| 06 | [Adapter from Peter's spec](issues/06-peter-spec-adapter.md) | needs-info | 05, Peter's spec format, confirmed hardware candidate |
-| 07 | [PR to main](issues/07-pr-to-main.md) | ready-for-human | — |
+| 05 | [Statement crosswalk](issues/05-statement-crosswalk.md) | resolved | typed-library-dx100-bfs-2026-10-03 ticket01 sent mapping |
+| 06 | [Adapter from Peter's spec](issues/06-peter-spec-adapter.md) | wontfix | superseded by typed-library-dx100-bfs-2026-10-03 |
+| 07 | [PR to main](issues/07-pr-to-main.md) | ready-for-human | typed-library-dx100-bfs-2026-10-03 tickets45,56,57,58 |
 
 ## Context pointers
 
@@ -36,3 +36,5 @@ Updated: 2026-09-29 23:20 ET
   independent rechecks are clear. Final workflow QA passed 45 cases in 673.40 s.
   The PR draft is ready for human delivery. See the
   [review report](../rewrite-provider-codex-2026-09-29/validation/code-review.md).
+
+- 2026-10-03: typed-library ticket03 reconciles superseded adapter, delivered statement crosswalk (actual Gmail message1a101b602c1698c2), and explicit later-feature PR blockers. No PR or merge is inferred.

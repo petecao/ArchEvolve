@@ -306,6 +306,100 @@ def test_memory_collector_repeats_each_ordered_source_without_reusing_outputs(tm
     assert len({x['raw_artifact'] for x in data['executions']})==4
 
 
+@pytest.mark.parametrize('extra_client_dump', [False, True])
+def test_statement_collection_has_one_complete_call_dump_and_only_tdstep_self_costs(tmp_path, extra_client_dump):
+    from swdb.bfs_profiling import _per_line_memory
+    from swdb.bfs_native import StageFailure
+    source = tmp_path/'bfs.cc'
+    code = 'void TDStep() {\n int value = 1;\n}\nvoid DOBFS() {}\n'
+    source.write_text(code)
+    build = tmp_path/'build'; build.mkdir()
+    folder = tmp_path/'run'; folder.mkdir()
+    data = {'build':{'directory':str(build)}, 'artifacts':{}, 'executions':[],
+        'context':{'sources':[0,1], 'repetitions':2, 'threads':4, 'candidate_sha256':'a'*64},
+        'regions':[{'kind':'function', 'name':'TDStep', 'path':'bfs.cc',
+            'byte_range':[0,code.index('}')+1], 'insertion_range':[code.index('{')+1,code.index('}')+1]}]}
+    collector = {'cache_model':{'I1':'32768,8,64','D1':'49152,12,64','LL':'25165824,12,64'},
+                 'model_limits':'simulated cache events'}
+    class Session:
+        def __init__(self): self.folder=folder; self.commands=[]
+        def execute(self, stage, command, budget, env=None, **details):
+            self.commands.append(stage)
+            if stage == 'statement_memory_build':
+                driver = Path(command[-3]).read_text()
+                changed = (build/'statement_bfs.cc').read_text()
+                # Exercise the generated collector boundary used by the real
+                # failing run: repeated instrumentation changes corrupt dumps.
+                assert driver.count('CALLGRIND_START_INSTRUMENTATION') == 1
+                assert driver.count('CALLGRIND_DUMP_STATS') == 1
+                assert driver.count('CALLGRIND_STOP_INSTRUMENTATION') == 1
+                assert 'CALLGRIND_ZERO_STATS' not in driver
+                assert 'swdb_statement::Scope' not in changed
+                assert driver.index('CALLGRIND_START_INSTRUMENTATION') < driver.index('auto parent =')
+                assert driver.index('auto parent =') < driver.index('CALLGRIND_DUMP_STATS') < driver.index('CALLGRIND_STOP_INSTRUMENTATION')
+                Path(command[-1]).write_text('fixture statement binary')
+            else:
+                source_id = details['source']
+                Path(command[-1]).write_text(json.dumps({'format':'swdb.bfs.native.trial.v1',
+                    'source':source_id, 'roi':'bfs.complete_call.v1', 'configured_threads':4,
+                    'duration_s':0.1, 'parents':[source_id,source_id]}))
+                raw = Path(next(c.split('=',1)[1] for c in command if c.startswith('--callgrind-out-file=')))
+                header = 'desc: Trigger: Client Request\nevents: Ir Dr Dw D1mr D1mw DLmr DLmw\nsummary: 60 30 15 12 6 6 3\ntotals: 60 30 15 12 6 6 3\n'
+                content = header + f'fl={source}\nfn=TDStep()\n2 10 5 2 2 1 1 1\n' + \
+                    'fn=TDStep() [clone ._omp_fn.0]\n3 20 10 5 4 2 2 1\nfn=DOBFS()\n4 30 15 8 6 3 3 1\n'
+                Path(str(raw)+'.1').write_text(content)
+                if extra_client_dump: Path(str(raw)+'.2').write_text(content)
+                raw.write_text('desc: Trigger: Program termination\nevents: Ir Dr\nsummary: 0 0\ntotals: 0 0\n')
+        def save(self): pass
+    session = Session()
+    def collect():
+        _per_line_memory(session, data, source, [], 'fixture-cxx', ['-g'], tmp_path/'graph',
+            {'num_vertices':2,'adjacency':[[1],[0]]}, {}, {'build_seconds':1,'run_seconds':1},
+            'fixture-valgrind', collector)
+    if extra_client_dump:
+        with pytest.raises(StageFailure, match='exactly one.*dump'): collect()
+        return
+    collect()
+    rows = data['per_line_memory']
+    assert len(rows)==8 and {row['line'] for row in rows}=={2,3}
+    assert all('TDStep' in row['function'] and row['scope']=='TDStep' for row in rows)
+    assert all('tdstep_position' not in row['execution'] and row['execution']['dump_position']==0 for row in rows)
+    assert all(row['collector']['initial_state']=='empty model caches at the complete BFS call boundary' for row in rows)
+    assert all('whole-call cache history' in row['collector']['model_limits'] for row in rows)
+    assert {(row['execution']['repetition'],row['execution']['source_position']) for row in rows}=={(0,0),(0,1),(1,0),(1,1)}
+    assert len(data['executions'])==4 and all(row['correctness']['passed'] for row in data['executions'])
+    assert sum(row['events']['DLmr']+row['events']['DLmw'] for row in rows)==20
+    assert session.commands.count('statement_memory_execution')==4
+
+
+@pytest.mark.parametrize('coordinate,valid', [
+    ({'dump_position':0}, True), ({'tdstep_position':0}, True),
+    ({'dump_position':0,'tdstep_position':0}, False), ({}, False),
+    ({'dump_position':-1}, False), ({'tdstep_position':-1}, False),
+])
+def test_public_writer_requires_one_truthful_statement_dump_coordinate(records, tmp_path, coordinate, valid):
+    from swdb.workflow import record
+    row = {'path':'bfs.cc','function':'TDStep()','line':2,'events':{'Ir':10,'Dr':2},
+        'basis':'simulated','source_artifact_sha256':'a'*64,'artifact_sha256':'b'*64,
+        'raw_artifact':'/retained/callgrind.out.1','raw_sha256':'c'*64,
+        'execution':{'source':0,'source_position':0,'repetition':0,**coordinate},
+        'counter_validation':{'state':'valid','method':'swdb.callgrind.lines.v1'}}
+    profile = record('region_profile','statement-coordinate',request={},
+        outcome={'state':'partial','stage':'fixture','reason':'synthetic schema fixture'},
+        stages=[],regions=[],dynamic_memory=[],executions=[],raw_artifacts=[],
+        reasons=['synthetic schema fixture'],gain_claim=False,per_line_memory=[row])
+    file = tmp_path/'coordinate.yaml'; file.write_text(yaml.safe_dump(profile))
+    result = records.swdb('add',file)
+    assert (result.returncode==0) is valid, result.stderr
+    target = records.path/'region_profiles/statement-coordinate.yaml'
+    assert target.exists() is valid
+    if valid:
+        assert records.read('region_profiles/statement-coordinate.yaml')['per_line_memory'][0]['execution']==row['execution']
+        assert records.validate().returncode==0
+    else:
+        assert 'validation failed; nothing written' in result.stderr
+
+
 def test_public_profile_rejects_fixture_execution_and_retains_reason(evaluation_setup,tmp_path):
     records,runs,_,_=evaluation_setup
     _,evaluation=evaluate(evaluation_setup,sources=[0])

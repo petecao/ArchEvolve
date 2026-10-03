@@ -244,7 +244,7 @@ def test_role_refuses_input_modifications(tmp_path):
                            rewrite.configuration(configfile),tmp_path/'role')
 
 
-def test_tdstep_global_scope_keeps_debug_line_map_and_excludes_other_functions(tmp_path):
+def test_tdstep_function_identity_keeps_exact_debug_lines_and_other_functions(tmp_path):
     source=tmp_path/'source.cc'
     code='void Helper() {}\nvoid TDStep() {\n  Helper();\n}\nvoid DOBFS() {}\n'
     source.write_text(code)
@@ -253,8 +253,9 @@ def test_tdstep_global_scope_keeps_debug_line_map_and_excludes_other_functions(t
     rewritten=_tdstep_source(source,[{'kind':'function','name':'TDStep','byte_range':[start,code.index('}',brace)+1],
                                     'insertion_range':[brace,code.index('}',brace)+1]}]).decode()
     assert '__attribute__((noinline)) void TDStep' in rewritten
-    assert '::swdb_statement::Scope' in rewritten and '#line 2' in rewritten
-    assert rewritten.count('swdb_statement_scope')==1
+    assert rewritten.startswith('#line 1 ')
+    assert 'swdb_statement::Scope' not in rewritten
+    assert rewritten.split('\n',1)[1].replace('__attribute__((noinline)) ','')==code
     assert 'void Helper() {}' in rewritten and 'void DOBFS() {}' in rewritten
 
 
@@ -366,7 +367,7 @@ fn=TDStep()
     assert records.read('implementations/gapbs-bfs-do.yaml')==saved_claims
 
 
-def test_second_tdstep_collection_preserves_roi_rows_and_reads_multiple_dumps(tmp_path):
+def test_second_tdstep_collection_preserves_roi_rows_and_retains_all_workers_from_one_dump(tmp_path):
     from swdb.bfs_profiling import _memory, METRICS
     source=tmp_path/'bfs.cc'
     code='void TDStep() {\n int v = 1;\n}\n'
@@ -395,8 +396,9 @@ def test_second_tdstep_collection_preserves_roi_rows_and_reads_multiple_dumps(tm
                 if stage=='memory_execution':
                     Path(str(raw)+'.1').write_text(header)
                 else:
-                    for i in range(12):
-                        Path(str(raw)+f'.{i+1}').write_text(header+f'fl={source}\nfn=TDStep()\n2 10 5 2 3 1 2 1\n')
+                    header='desc: Trigger: Client Request\nevents: Ir Dr Dw D1mr D1mw DLmr DLmw\nsummary: 30 15 6 9 3 6 3\ntotals: 30 15 6 9 3 6 3\n'
+                    Path(str(raw)+'.1').write_text(header+f'fl={source}\nfn=TDStep()\n2 10 5 2 3 1 2 1\n'
+                        'fn=TDStep() [clone ._omp_fn.0]\n2 10 5 2 3 1 2 1\nfn=DOBFS()\n4 10 5 2 3 1 2 1\n')
             return log
         def save(self):
             pass
@@ -406,11 +408,12 @@ def test_second_tdstep_collection_preserves_roi_rows_and_reads_multiple_dumps(tm
         {'build_seconds':10,'run_seconds':10})
     assert {r['metric'] for r in data['dynamic_memory']}==set(METRICS)
     assert all(r['scope']=='ROI' and r['attribution_granularity']=='whole BFS call' for r in data['dynamic_memory'])
-    assert len(data['per_line_memory'])==12
-    assert sum(r['events']['DLmr']+r['events']['DLmw'] for r in data['per_line_memory'])==36
-    assert {r['execution']['tdstep_position'] for r in data['per_line_memory']}==set(range(12))
-    assert all(r['raw_artifact'].endswith(f".{r['execution']['tdstep_position']+1}")
-               for r in data['per_line_memory'])
+    assert len(data['per_line_memory'])==2
+    assert sum(r['events']['DLmr']+r['events']['DLmw'] for r in data['per_line_memory'])==6
+    assert all(r['execution']['dump_position']==0 and 'tdstep_position' not in r['execution']
+               and r['raw_artifact'].endswith('.1') for r in data['per_line_memory'])
+    assert {r['function'] for r in data['per_line_memory']}=={'TDStep()','TDStep() [clone ._omp_fn.0]'}
+    assert all('whole-call cache history' in r['collector']['model_limits'] for r in data['per_line_memory'])
     assert all(r['basis']=='simulated' for r in data['per_line_memory'])
     assert '-g' in data['artifacts']['statement_binary']['flags']
     assert [stage for stage,_ in session.commands].count('statement_memory_execution')==1

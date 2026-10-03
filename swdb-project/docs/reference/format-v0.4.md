@@ -211,9 +211,13 @@ The `bfs-profile` request's Boolean `per_line` enables a second Callgrind execut
 beside the existing whole-ROI run; it requires `memory: true`. `dynamic_memory`
 keeps its whole-ROI meaning. The separate `per_line_memory` array contains TDStep
 and its compiler-generated OpenMP function's self costs. The second binary adds
-debug information and prevents TDStep inlining. Instrumentation starts and dumps
-at TDStep's boundary for all threads. Each invocation starts fresh modeled
-caches; the observations diagnose this specific instrumented execution.
+debug information and prevents TDStep inlining. One continuous, all-thread
+collection spans the enclosing BFS ROI and emits one client dump before stopping.
+Only TDStep and its outlined workers' self-cost rows are retained for statement
+attribution. The simulated cache history includes intervening BFS work; these
+are aggregate TDStep costs in that history, not independently cold invocations.
+This interpretation keeps retained attribution limited to TDStep while avoiding
+invalid counter summaries produced by repeated instrumentation starts/stops.
 
 A per-line row contains `path`, `function`, `line`, `events`, `basis`,
 `source_artifact_sha256`, `artifact_sha256`, `raw_artifact`, `raw_sha256`,
@@ -223,7 +227,10 @@ integer self counts below 2^63. `basis` is always `simulated`.
 `source_artifact_sha256` binds the evaluated source; `artifact_sha256` binds the
 debug binary. `raw_artifact` and `raw_sha256` identify the exact Callgrind dump.
 `execution` retains integer `source`, `source_position`, `repetition` and
-`tdstep_position` coordinates, so separate dumps remain distinguishable.
+`dump_position` coordinates. The continuous collector uses one aggregate dump
+per source/repetition; `dump_position` does not name a TDStep invocation.
+Historical per-invocation rows retain `tdstep_position` instead. Exactly one of
+these two coordinates is required, preserving truthful historical identities.
 Source-file rows also retain relative `source_path` and `source_file_sha256`,
 allowing attribution across identical baseline copies while checking the actual
 debug source bytes.
@@ -240,7 +247,7 @@ See the [Callgrind file format](https://valgrind.org/docs/manual/cl-format.html)
 `statement_memory` holds derived facts with `statement`, `path`, `lines`,
 `metric` equal to `last_level_misses`, integer `value`, `basis: simulated`, `unit: misses`,
 the `profile` reference and `source_artifact_sha256`. The value sums `DLmr + DLmw`
-over the mapped line range across all collected source, repetition and TDStep
+over the mapped line range across all collected source, repetition and dump
 coordinates. A line without attributable self cost has value zero. Compiler
 line coalescing and inlined-header work limit attribution; scoring refuses data
 with no attributable statement costs. Scoring reopens raw bytes, checks hashes

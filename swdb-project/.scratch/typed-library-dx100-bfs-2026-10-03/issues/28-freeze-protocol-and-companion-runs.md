@@ -28,3 +28,5 @@ Run `python tools/typed_library_gem5_driver.py --help` for the exact interface. 
 ## Answer
 
 Implementation/dispatch checkpoint, 2026-10-03 ET. Preparation/companion drivers and exact current certification are ready. Real acceptance requires approved source synchronization, ticket 27 complete real package, ticket 22 human promotion, and admitted lane-node simulator memory. Latest node MemFree 26.4/15.7GiB does not meet the default 48GiB budget or the measured 32–34GiB simulator need plus headroom. No companion or L3 outcome has been produced. Monitoring continues every 30 minutes; a fresh lease/capacity/source read is required before dispatch.
+
+- Current checkpoint, 2026-10-03 08:37 ET: source-sync/dispatch authorization and actual ticket22 promotion are complete. The remaining dependencies are a complete fresh real profile package and node-local simulator memory. Actual prior peaks32.18–32.64GiB support36GiB admission with headroom; best current node is30.18GiB. A legitimate new frozen memory configuration is being investigated; no threshold is weakened and no L3 outcome exists.

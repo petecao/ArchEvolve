@@ -1,8 +1,18 @@
 {
   "frozen_collected_cases": 3661,
-  "current_collected_cases": 3679,
-  "unique_verified_cases": 3679,
-  "passed": 3643,
+  "retired_original_testcases": [
+    [
+      "tests.test_statement_annotation",
+      "test_second_tdstep_collection_preserves_roi_rows_and_reads_multiple_dumps"
+    ],
+    [
+      "tests.test_statement_annotation",
+      "test_tdstep_global_scope_keeps_debug_line_map_and_excludes_other_functions"
+    ]
+  ],
+  "current_collected_cases": 3687,
+  "unique_verified_cases": 3687,
+  "passed": 3651,
   "skipped": 36,
   "unresolved": [],
   "corrected_initial_failures": [
@@ -187,14 +197,15 @@
       "error"
     ]
   ],
-  "affected_file_rerun_cases": 391,
+  "affected_file_rerun_cases": 449,
   "fresh_receipts": [
     "affected-fixtures.xml",
     "affected-isa.xml",
     "dependency-library-final.xml",
     "dependency-producer-delivery-final.xml",
     "dependency-gem5-driver.xml",
-    "dependency-submit-final.xml"
+    "dependency-submit-final.xml",
+    "runtime-profile-fix.xml"
   ],
   "partitions": [
     {
@@ -219,9 +230,9 @@
       "failed_or_error": 30
     }
   ],
-  "created_at": "2026-10-03T08:15:14.708383+00:00",
+  "created_at": "2026-10-03T12:35:26.648127+00:00",
   "scope": "Local Mac regression coverage only; no mbit10 evaluation or gain evidence.",
-  "method": "Disjoint frozen full-suite partitions plus fresh complete affected-file reruns, reconciled by exact testcase identity against final collection.",
+  "method": "Disjoint frozen full-suite partitions plus fresh complete affected-file reruns reconciled by exact testcase identity against current collection; two retired historical test names excluded and retained in this ledger.",
   "receipts": [
     {
       "path": "/private/tmp/swdb-typed-library-verification-20261003/partition-1.xml",
@@ -258,7 +269,22 @@
     {
       "path": "/private/tmp/swdb-typed-library-verification-20261003/dependency-submit-final.xml",
       "sha256": "99387126ff5118c14113ebf78144e7ef25d8fb6bad9c68a61e1b17385761bb79"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/runtime-profile-fix.xml",
+      "sha256": "839f9bf484a7a8e961f358d033d6adb98a854dca770f709f91ba188b27cc73a4"
     }
   ],
-  "validated_records": 404
+  "validated_records": 431,
+  "runtime_profile_fix": {
+    "receipt": "/private/tmp/swdb-typed-library-verification-20261003/runtime-profile-fix.xml",
+    "passed": 58,
+    "seconds": 32.34,
+    "added_cases": 8,
+    "renamed_historical_cases": 2,
+    "standards_review": "passed",
+    "spec_review": "passed",
+    "review_base": "8959b4dfd149273e89884be87bee9c0adb60e0fc",
+    "metadata_audit": "Independent audit passed; 12 compact metadata files exported in010bec7. Cache a1 unobserved totals corrected to null."
+  }
 }

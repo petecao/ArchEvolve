@@ -268,8 +268,11 @@
           "required": [
             "source",
             "source_position",
-            "repetition",
-            "tdstep_position"
+            "repetition"
+          ],
+          "oneOf": [
+            {"required": ["tdstep_position"]},
+            {"required": ["dump_position"]}
           ],
           "additionalProperties": {
             "type": "integer",
