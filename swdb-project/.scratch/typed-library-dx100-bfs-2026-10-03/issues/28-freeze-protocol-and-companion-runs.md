@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** task
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 08, 20, 22, 23, 26, 27
 **Spec:** `../spec.md`
 **Needs go-ahead:** Yes: Yan-Ru approves the mbit10 dispatch before it starts (Q62).
@@ -14,8 +14,8 @@ Created: 2026-10-03
 - [x] The pre-dispatch checks are recorded: socket leases, disk and memory preflight, host load, branch and commit (no rewrite provider runs, so provider logins are not checked).
 - [x] The protocol has its own requested ID, version 1, no supersedes and no region pairs; copied fields (including builds and instrumentation) and changed fields follow the spec; the baseline is the full-source scalar implementation.
 - [x] The patch is submitted against ticket 27's profile package; the candidate artifact's sha256 equals the certified tree's.
-- [ ] The primary and the labeled diagnostic builds compile, and both companion runs finish on the T17 coverage workload.
-- [ ] The L3 outcome is derived from the diagnostic run's evaluation record and written under Answer: observed on target (proceed); refuted (stop, set ticket 29 to needs-triage, triage ticket 31); or inconclusive (stop for diagnosis).
+- [x] The primary and the labeled diagnostic builds compile, and both companion runs finish on the T17 coverage workload.
+- [x] The L3 outcome is derived from the diagnostic run's evaluation record and written under Answer: observed on target (proceed); refuted (stop, set ticket 29 to needs-triage, triage ticket 31); or inconclusive (stop for diagnosis).
 
 ## Comments
 
@@ -38,3 +38,7 @@ Implementation/dispatch checkpoint, 2026-10-03 ET. Preparation/companion drivers
 - Companion and timed execution remain unrun; L3 is `not_run`, not refuted or observed. Actual prior RSS32.178–32.642GiB supports the explicit36GiB future budget; final free nodes30.075/22.646GiB do not admit it. No target gain is inferred from builds. [Memory audit](../evaluation/memory-admission-remediation-audit.json).
 
 - 2026-10-03 ET: user questioned the MemFree-only block. Fresh selected-node inactive file counters show reclaimable capacity that the prior own-file inventory did not address. Corrected conservative local admission passes both reviews and39 affected tests, retaining36 GiB budget and16GB/MMIO target. Publication and fresh node0 lease/capacity read precede companion dispatch; no actual L3 or timing is inferred yet. [Clarification](../evaluation/memory-admission-clarification.md).
+
+- 2026-10-03 10:55 ET: actual companion driver started10:53:59 ET on node0 at publishede6dee10. Fresh under-lease conservative capacity36.916 GiB admits the unchanged36 GiB budget; literal free remains separately recorded. Leasegeneration440, node1/legacy idle. Primary guest checkpoint entered with exact certified binary; diagnostic and L3 remain pending. No timed stage launched and source stays frozen. [Root actual start readback](../evaluation/companion-start-1053-summary.json).
+
+- Completed 2026-10-03 11:06 ET; Git publication/readback at 11:10 ET: both actual companions passed at frozen runtime `e6dee10dd74dc475eaf783016d1f3ddbf102e7ee`. Diagnostic L3 is **observed on target**: 14,546 negative-hint CAS failures, zero L3 violations. Both original-CSR frontier checks equal `[1,4097,4113]`; finite read-only coverage observed STREAM_LD=2, INDIR_LD=34, RANGE_LOOP=12, ALU=0 and indirect stores=0. Strict v2 validators independently rechecked all nine retained witness artifacts for each execution on mbit10; public companion acceptance exactly reproduces the stored outcome. Mac metadata validation correctly reports remote-unverified raw availability. Actual records and compact summary are published in `5d74de87bfe45023ab7193f36659c0f3f9999bfb`; all owned processes ended and both socket plus legacy leases released before publication. Proceed to ticket29; no timed result is inferred. [Companion summary](../evaluation/companion-a1-summary.json).

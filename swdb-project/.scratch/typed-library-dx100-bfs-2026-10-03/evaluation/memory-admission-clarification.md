@@ -55,3 +55,10 @@ SHA256 `e07a8c4395e1e9658d401df1376728ee5916e080682b7d7588bb49f6f182786a`.
 
 This correction does not establish L3, target timing or gain. Those still require
 the actual companion and timed evaluations.
+
+Actual follow-up, 2026-10-03 11:06 ET: both fresh companion executions completed
+and passed after node 0 admission estimated 36.916 GiB against the unchanged
+36 GiB budget. The primary simulator sampled 32.18 GiB RSS and progressed to
+completion through ordinary kernel reclaim. The diagnostic independently observed
+14,546 negative-hint CAS failures and zero L3 violations. These are finite companion
+observations; the two-class timed ratios remain separate, pending measurements.

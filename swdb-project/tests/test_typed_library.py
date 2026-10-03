@@ -313,11 +313,14 @@ def test_public_execution_stage_retains_witness_and_completion_rules(public_prep
     execution['candidate'] = candidate['id']
     execution['context']['candidate_sha256'] = candidate['artifact']['sha256']
     check = execution['correctness']['checks'][0]
+    check['execution'] = execution['id']
     assert execution['outcome']['state'] == 'complete' and execution['correctness']['state'] == 'passed'
     assert check['passed']
-    # Exercise the existing normal-exit rule with explicit isolated metadata;
-    # the historical companion itself did not observe a normal guest exit.
-    check['continuation']['normal_exit_observed'] = case != 'no-normal-exit'
+    # This public companion has a valid bounded v2 exit witness. Its unchanged
+    # normal-exit flag is false; a missing witness cannot replace that proof.
+    assert check['continuation']['normal_exit_observed'] is False
+    if case == 'no-normal-exit':
+        check['continuation'].pop('exit_witness')
     check['coverage']['read_only_executed'] = {'state': 'observed'}
     if case == 'missing-witness':
         del check['coverage']['read_only_executed']
@@ -373,3 +376,132 @@ def test_public_checkpoint_guest_attempt_remains_inconclusive(public_preparation
     cited = [section['contract']] + section['entries']
     assert {pin['id']: lib.state(pin['id']) for pin in cited} == {
         pin['id']: {'tier': 'shared', 'status': 'inconclusive'} for pin in cited}
+
+
+@pytest.fixture
+def bounded_v2_target(library, tmp_path):
+    """Real parser/seal artifacts in an isolated fixture, not measured evidence."""
+    from test_dx100_witness import evaluation
+    from swdb.library import Library
+    records, root, path = library
+    contract = entry()
+    contract['execution_witness'] = {'gem5': {'case': 'read_only_executed'}}
+    path.write_text(yaml.safe_dump(contract))
+    lib = Library(root)
+    pin = {'id': contract['id'], 'content_sha256': lib.content_sha256(contract['id'])}
+    data = evaluation(tmp_path)
+    data.update(kind='evaluation', candidate='candidate.fixture', evidence_kind='execution',
+                provenance=[{'id': 'test-double', 'kind': 'agent_run', 'uri': None,
+                             'description': 'Isolated v2 parser/seal target-state test double.'}])
+    data['context'].update(target='target.fixture', backend='dx100-gem5-se',
+                           candidate_sha256='a' * 64)
+    data['build']['adapter'] = 'dx100.complete_call.v2'
+    data['correctness']['checks'][0]['coverage'] = {'read_only_executed': {'state': 'observed'}}
+    rows = [
+        {'kind': 'hardware_target', 'id': 'target.fixture', 'backend': {'id': 'dx100-gem5-se'}},
+        {'kind': 'candidate', 'id': 'candidate.fixture', 'proposal': 'proposal.fixture',
+         'artifact': {'sha256': 'a' * 64}},
+        {'kind': 'proposal', 'id': 'proposal.fixture', 'request': {
+            'library': {'contract': pin, 'entries': []}}}]
+    return records, lib, data, rows
+
+
+def bounded_v2_state(fixture, evaluations):
+    from swdb.store import Store, Record
+    records, lib, _, rows = fixture
+    store = Store(records.path, indexed_records=[Record(str(i), row)
+                  for i, row in enumerate(rows + evaluations)])
+    return lib.state('contract.fixture', store)['status']
+
+
+@pytest.mark.parametrize('normal', [False, True])
+def test_v2_target_completion_uses_exact_sealed_exit_evidence(bounded_v2_target, normal):
+    from pathlib import Path
+    from swdb.artifacts import file_hash
+    fixture = bounded_v2_target
+    data = fixture[2]
+    check = data['correctness']['checks'][0]
+    if normal:
+        continuation = check['continuation']
+        continuation.update(normal_exit_observed=True, stop_reason='normal_exit',
+                            exit_cause='exiting with last active thread context')
+        seal = data['context']['sealed_roi']
+        Path(seal['path']).write_text(json.dumps({key: value for key, value in seal.items()
+                                               if key not in {'path', 'sha256'}}))
+        seal['sha256'] = check['sealed_roi']['sha256'] = file_hash(seal['path'])
+    assert bounded_v2_state(fixture, [data]) == 'evaluated_on_target'
+
+
+@pytest.mark.parametrize('case', [
+    'missing-witness', 'incomplete-witness', 'nonzero-exit', 'wrong-execution',
+    'wrong-source', 'wrong-parser', 'wrong-binding', 'failed-process',
+    'missing-coverage', 'refuted-l3', 'request-checker', 'context-checker',
+    'check-checker', 'continuation-checker', 'contradictory-normal',
+    'changed-trace', 'changed-output', 'changed-seal', 'naked-completed-flag'])
+def test_invalid_v2_completion_cannot_fall_back_to_normal_exit_flags(bounded_v2_target, case):
+    from pathlib import Path
+    fixture = bounded_v2_target
+    data = fixture[2]
+    check = data['correctness']['checks'][0]
+    continuation = check['continuation']
+    if case == 'missing-witness':
+        continuation.pop('exit_witness')
+    elif case == 'incomplete-witness':
+        continuation['exit_witness']['completed'] = False
+    elif case == 'nonzero-exit':
+        continuation['exit_witness']['exit_request']['status'] = 1
+    elif case == 'wrong-execution':
+        check['execution'] = 'another-execution'
+    elif case == 'wrong-source':
+        check['source'] = 1
+    elif case == 'wrong-parser':
+        data['context']['verification_parser']['sha256'] = '0' * 64
+    elif case == 'wrong-binding':
+        data['context']['execution_binding_sha256'] = '0' * 64
+    elif case == 'failed-process':
+        data['stages'][0].update(state='failed', returncode=1)
+    elif case == 'missing-coverage':
+        check['coverage'] = {}
+    elif case == 'refuted-l3':
+        check['parent_gather_race'] = {'outcome': 'refuted'}
+    elif case == 'request-checker':
+        data['request']['verification']['checker'] = 'dx100.bfs.verifier.v1'
+    elif case == 'context-checker':
+        data['context']['verifier'] = 'dx100.bfs.verifier.v1'
+    elif case == 'check-checker':
+        check['checker'] = 'dx100.bfs.verifier.v1'
+    elif case == 'continuation-checker':
+        continuation['checker'] = 'dx100.bfs.verifier.v1'
+    elif case == 'contradictory-normal':
+        continuation['normal_exit_observed'] = True
+    elif case.startswith('changed-'):
+        reference = {'changed-trace': data['context']['post_roi_trace'],
+                     'changed-output': check['output'],
+                     'changed-seal': data['context']['sealed_roi']}[case]
+        with Path(reference['path']).open('a') as stream:
+            stream.write('Changed retained bytes.\n')
+    else:
+        check['continuation'] = {'normal_exit_observed': True,
+                                 'exit_witness': {'completed': True}}
+    assert bounded_v2_state(fixture, [data]) == 'refuted'
+
+
+@pytest.mark.parametrize('case,expected', [
+    ('wrapper-only', 'draft'), ('actual-component', 'evaluated_on_target'),
+    ('malformed-wrapper', 'evaluated_on_target'), ('refuted-component', 'refuted')])
+def test_aggregation_wrapper_cannot_invent_another_target_execution(bounded_v2_target, case, expected):
+    from swdb.artifacts import digest
+    fixture = bounded_v2_target
+    component = fixture[2]
+    wrapper = copy.deepcopy(component)
+    wrapper['id'] = 'aggregate.fixture'
+    wrapper['component_evaluations'] = [{'evaluation': component['id'], 'sha256': digest(component)}]
+    wrapper['outcome']['stage'] = 'aggregation'
+    wrapper['stages'][0]['component_evaluation'] = component['id']
+    if case == 'malformed-wrapper':
+        wrapper['component_evaluations'][0]['sha256'] = '0' * 64
+        wrapper['correctness']['checks'][0]['continuation']['exit_witness']['completed'] = False
+    elif case == 'refuted-component':
+        component['correctness']['checks'][0]['coverage'] = {}
+    evaluations = [wrapper] if case == 'wrapper-only' else [component, wrapper]
+    assert bounded_v2_state(fixture, evaluations) == expected

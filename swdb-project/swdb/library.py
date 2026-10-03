@@ -370,7 +370,10 @@ class Library:
 
     def _target_state(self, evaluation, candidate, contract, store):
         """Only an entered target run can derive state. Updated: 2026-10-03 ET."""
-        if contract is None:
+        if contract is None or evaluation.get('component_evaluations'):
+            # Aggregation copies its components' stages and checks; it does not
+            # execute another guest. state() considers the actual component
+            # records individually, using their own identities and custody.
             return None
         # Execution evidence also labels real compiler and collector processes.
         # A checkpoint starts a guest before its timed simulation; its history
@@ -401,6 +404,24 @@ class Library:
             return 'inconclusive'
         witness = (contract or {}).get('execution_witness',{}).get('gem5',{}).get('case')
         completed = checks and all(c.get('passed') is True and c.get('continuation',{}).get('normal_exit_observed') is True for c in checks)
+        from swdb.dx100_witness import CHECKER, validate_record_witness
+        v2 = (context.get('verifier') == CHECKER
+              or context.get('adapter') == 'dx100.complete_call.v2'
+              or evaluation.get('request', {}).get('verification', {}).get('checker') == CHECKER
+              or evaluation.get('build', {}).get('adapter') == 'dx100.complete_call.v2'
+              or any(c.get('checker') == CHECKER or c.get('verifier') == CHECKER
+                     or c.get('continuation', {}).get('checker') == CHECKER
+                     or 'exit_witness' in c.get('continuation', {}) for c in checks))
+        if v2:
+            from swdb.cli import Failure
+            # A bounded simulator continuation can prove guest exit. Require
+            # its authoritative v2 validation, never an unbound completion flag
+            # or a fallback to legacy normal-exit metadata after rejection.
+            try:
+                validate_record_witness(evaluation, store=store)
+                completed = True
+            except Failure:
+                completed = False
         witnessed = witness and all(c.get('coverage',{}).get(witness,{}).get('state') == 'observed' for c in checks)
         if correctness.get('state') == 'passed' and completed and witnessed:
             return 'evaluated_on_target'

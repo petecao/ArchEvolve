@@ -10,9 +10,9 @@
       "test_tdstep_global_scope_keeps_debug_line_map_and_excludes_other_functions"
     ]
   ],
-  "current_collected_cases": 3727,
-  "unique_verified_cases": 3727,
-  "passed": 3691,
+  "current_collected_cases": 3752,
+  "unique_verified_cases": 3752,
+  "passed": 3716,
   "skipped": 36,
   "unresolved": [],
   "corrected_initial_failures": [
@@ -197,7 +197,7 @@
       "error"
     ]
   ],
-  "affected_file_rerun_cases": 518,
+  "affected_file_rerun_cases": 668,
   "fresh_receipts": [
     "affected-fixtures.xml",
     "affected-isa.xml",
@@ -208,7 +208,8 @@
     "runtime-profile-fix.xml",
     "library-state-fix.xml",
     "library-state-checkpoint-fix.xml",
-    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/memory-admission-final-a5-junit-20261003.xml"
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/memory-admission-final-a5-junit-20261003.xml",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/bounded-completion-a1-junit-20261003.xml"
   ],
   "partitions": [
     {
@@ -332,9 +333,17 @@
     {
       "path": "/private/tmp/swdb-typed-library-verification-20261003/collection-memory-admission-final.txt",
       "sha256": "bc76009590cf4feb28f5b1135720a2a32728df8298ee870efa02a898f51a2b57"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/bounded-completion-a1-junit-20261003.xml",
+      "sha256": "56b823c1a9061ec39b089afa14f55f16c0b8ecc3f64d825c204d0c92b6696be8"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/collection-bounded-completion.txt",
+      "sha256": "389f198cbdd4ac04dca28a8633e27331796c3bbb0970e68b0e897b090b764284"
     }
   ],
-  "validated_records": 443,
+  "validated_records": 449,
   "runtime_profile_fix": {
     "receipt": "/private/tmp/swdb-typed-library-verification-20261003/runtime-profile-fix.xml",
     "passed": 58,
@@ -420,6 +429,26 @@
     "preserved_budget_gib": 36,
     "preserved_guest_memory": "16GB with existing16GiB MMIO interface",
     "basis": "conservative selected-node estimate, not literal free memory, kernel MemAvailable, reserved memory or guaranteed execution success",
-    "scope": "Local Mac regression coverage; actual companion execution is still pending."
+    "scope": "Local Mac regression coverage plus actual primary/diagnostic companion execution; normal kernel reclaim allowed completion within the unchanged36GiB budget."
+  },
+  "bounded_completion_fix": {
+    "review_base": "e6dee10dd74dc475eaf783016d1f3ddbf102e7ee",
+    "cause": "Valid actual bounded v2 guest completion was falsely refuted by a normal-simulator-exit-only condition.",
+    "passed": 200,
+    "skipped": 0,
+    "seconds": 8.57,
+    "added_cases": 25,
+    "standards_review": "passed",
+    "spec_review": "passed",
+    "receipt": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/bounded-completion-a1-junit-20261003.xml",
+    "sha256": "56b823c1a9061ec39b089afa14f55f16c0b8ecc3f64d825c204d0c92b6696be8",
+    "qualification": "Individual validate_record_witness; no flags-only bypass; actual aggregate components derive state independently.",
+    "actual_companion": "Published5d74de87bfe45023ab7193f36659c0f3f9999bfb and read back locally; both complete/passed, exact record digests and summary hash match. Mac witness availability remote_unverified; independently rechecked raw on mbit10.",
+    "corrected_local_library_states": {
+      "shared_evaluated_on_target": 19,
+      "shared_certified": 2,
+      "entries": 21
+    },
+    "custody_publication": "fb6cde03e48120ba6d2ba0471d8440853473a369"
   }
 }

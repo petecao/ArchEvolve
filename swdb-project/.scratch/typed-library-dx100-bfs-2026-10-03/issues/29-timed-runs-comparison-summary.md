@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** task
-**Status:** needs-info
+**Status:** claimed
 **Blocked by:** 28
 **Spec:** `../spec.md`
 **Needs go-ahead:** Yes: Yan-Ru approves the mbit10 dispatch before it starts (Q62).
@@ -28,3 +28,5 @@ The command refuses inconclusive/refuted companion outcomes before any timed dis
 ## Answer
 
 Implementation/dispatch checkpoint, 2026-10-03 ET. Timed drivers/comparison support are ready. Real executions require ticket 28 completed observed L3 companion, current promotion/source pins and sufficient lane memory. No timing or gain result exists; ticket 31 remains conditional and untriggered. Monitoring continues every 30 minutes; a fresh lease/capacity/source read is required before dispatch.
+
+- Claimed 2026-10-03 11:10 ET: ticket28 is complete with actual observed L3 and published companion records. Root reviewed the bounded-completion classification fix on both axes; 200 affected tests pass. Current local replay yields 19 shared/evaluated-on-target entries and two unused ALU entries shared/certified. Publish/synchronize that source correction, revalidate actual remote states, exact binaries/protocol/companion acceptance and fresh socket capacity, then launch the four bounded timed executions. No actual timed result exists yet.

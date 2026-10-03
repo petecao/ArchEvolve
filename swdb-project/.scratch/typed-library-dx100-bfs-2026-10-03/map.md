@@ -53,10 +53,10 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 25 | [swdb prune: dry run, approval and apply](issues/25-prune-listing-and-apply.md) | resolved | 24 |  |
 | 26 | [Automatic pruning of bulky raw output (ArchEvolve mode)](issues/26-automatic-pruning.md) | resolved | 24 |  |
 | 27 | [Real profile package for the scalar-only snapshot on mbit10](issues/27-profile-package-scalar-only.md) | resolved | 05, 08 | yes |
-| 28 | [Freeze the new protocol, submit the patch, run the companion case](issues/28-freeze-protocol-and-companion-runs.md) | claimed | 08, 20, 22, 23, 26, 27 | yes |
-| 29 | [Timed gem5 runs, comparison and team summary](issues/29-timed-runs-comparison-summary.md) | needs-info | 28 | yes |
+| 28 | [Freeze the new protocol, submit the patch, run the companion case](issues/28-freeze-protocol-and-companion-runs.md) | resolved | 08, 20, 22, 23, 26, 27 | yes |
+| 29 | [Timed gem5 runs, comparison and team summary](issues/29-timed-runs-comparison-summary.md) | claimed | 28 | yes |
 | 30 | [Send the first gem5 result and record the team claim](issues/30-send-first-result.md) | ready-for-human | 29 |  |
-| 31 | [Fallback contract: the CPU loads the parent value itself](issues/31-fallback-contract.md) | needs-triage | 28 | yes |
+| 31 | [Fallback contract: the CPU loads the parent value itself](issues/31-fallback-contract.md) | wontfix | 28 | yes |
 | 32 | [Clean up existing run output on mbit10](issues/32-retroactive-cleanup.md) | resolved | 25 | yes |
 
 ## Phase 4a: profiling agent
@@ -154,3 +154,5 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 - 2026-10-03 09:29 ET:37 is needs-info after automatic approval review rejected the exact send to Josh, requiring specific human payload/destination approval. Zero Sent matches, no confirmed delivery and no retry. The reviewed draft and blocked-action receipt are preserved; 31 of 37 tickets are resolved. [Ticket37](issues/37-send-josh-statement-table.md).
 
 - 2026-10-03 10:40 ET: Yan-Ru took ownership of ticket37 delivery and instructed the agent to ignore sending for now. Ticket37 is ready-for-human; the agent will not retry or ask for send approval. The user's memory-admission question triggered a fresh read-only selected-node audit: plentiful inactive file cache shows that MemFree-only refusal is not proof of insufficient allocatable RAM. Budget and target treatment are unchanged while the admission method is reviewed.
+
+- 2026-10-03 11:10 ET: ticket28 resolved after both actual companions passed and exact metadata publication/readback `5d74de87bfe45023ab7193f36659c0f3f9999bfb`. Diagnostic L3 observed: 14,546 negative-hint CAS failures, zero violations. Ticket31 is wontfix because its refutation condition did not trigger;29 is claimed for fresh timed runs. Valid bounded v2 guest completion now qualifies through the authoritative witness validator, independently reviewed on both axes; 200 affected tests pass and 3,752 current identities reconcile to 3,716 pass/36 skip. Current local actual-record replay derives 19 shared/evaluated-on-target and two shared/certified entries. [Companion summary](evaluation/companion-a1-summary.json); [review](code-review.md).
