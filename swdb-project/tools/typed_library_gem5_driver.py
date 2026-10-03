@@ -36,6 +36,10 @@ PREPARE_MEMORY_GIB = 4
 # Scale-18 baseline checks required 57/84 billion ticks; wall-time and
 # memory budgets still bound this continuation independently of ROI timing.
 VERIFICATION_MAX_TICKS = 10**14
+# Actual scale-18 candidate trace revalidation took 1,082 seconds. These
+# public evidence checks need a separate bound; simulator budgets stay fixed.
+POSTPROCESS_TIMEOUT_SECONDS = 3600
+RECOVERY_FORMAT = 'swdb.typed-library-gem5-aggregation-failure-summary.v1'
 
 
 def stage_budgets(args):
@@ -403,6 +407,120 @@ def companion_stage(args, folder, lane, environment):
     return result
 
 
+def recovery_json(path, pin=None, *, limit=64*1024**2):
+    need(path.is_file() and not path.is_symlink() and path.stat().st_size <= limit,
+         f'recovery artifact is unavailable or unsafe: {path}')
+    if pin is not None:
+        need(pin.get('path') == str(path) and artifacts.file_hash(path) == pin.get('sha256'),
+             f'recovery artifact changed: {path}')
+    return json.loads(path.read_text())
+
+
+def recovery_file(path, pin):
+    need(path.is_file() and not path.is_symlink() and pin.get('path') == str(path)
+         and path.stat().st_size == pin.get('bytes') and artifacts.file_hash(path) == pin.get('sha256'),
+         f'recovery artifact changed: {path}')
+
+
+def timed_recovery(args, store, rows, folder):
+    """Reuse the exact first pair after its candidate aggregation timed out.
+
+    This deliberately handles only postprocessing of completed physical
+    samples. Public aggregation/comparison must revalidate raw evidence before
+    the remaining workload can run. Failed executions are never resumed.
+    """
+    if not getattr(args, 'recovery_id', None):
+        return None
+    manifest_path = args.recovery_manifest
+    manifest = recovery_json(manifest_path, {'path': str(manifest_path), 'sha256': args.recovery_sha256})
+    need(manifest.get('format') == RECOVERY_FORMAT and manifest.get('id') == args.id,
+         'recovery manifest belongs to another run or format')
+    original = args.runs_dir/(args.id+'.driver-timed')
+    need(original.is_dir() and not original.is_symlink(), 'original timed folder is unsafe')
+    receipt = recovery_json(original/'driver.json', manifest['timed_driver']['artifact'])
+    need(receipt == manifest['timed_driver']['content'] and receipt.get('format') == FORMAT
+         and receipt.get('id') == args.id and receipt.get('stage') == 'timed'
+         and receipt.get('state') == 'failed' and receipt.get('tracked_changes') == []
+         and receipt.get('runtime_commit') == manifest.get('runtime_commit')
+         and receipt.get('memory_gib') == args.memory_gib and receipt.get('storage_gib') == args.storage_gib,
+         'recovery requires the exact failed timed driver and unchanged budgets')
+    failed = manifest['failed_aggregation_command']
+    stage = 'timed.w0.candidate-aggregate'
+    command = recovery_json(original/(stage+'.command.json'), failed['artifact'])
+    request = recovery_json(original/(stage+'.request.json'), failed['request']['artifact'])
+    planned = {'message_version': '1.0', 'id': args.id+'.timed.w0.candidate.aggregate',
+               'protocol': rows['protocol']['id'], 'protocol_role': 'candidate',
+               'evaluations': [args.id+'.timed.w0.candidate.evaluation']}
+    need(command == failed['content'] and request == failed['request']['content'] == planned
+         and command.get('stage') == stage and command.get('state') == 'timed_out'
+         and command.get('timeout_seconds') == 300
+         and command.get('command') == _cli(args, 'aggregate-evaluations') + [str(original/(stage+'.request.json'))]
+         and receipt.get('reason') == manifest.get('failure') == stage+' exceeded 300 seconds',
+         'only the retained candidate aggregation timeout can be recovered')
+    need(store.get(planned['id'], 'evaluation') is None,
+         'timed-out aggregate has a public record; recovery is refused')
+    for extension, key in (('.json', 'output'), ('.stderr.txt', 'stderr')):
+        recovery_file(original/(stage+extension), failed[key])
+    first_pair = {args.id+'.timed.w0.'+role+'.evaluation' for role in ('baseline', 'candidate')}
+    for entry in store.of_kind('evaluation'):
+        request = entry.data.get('request', {})
+        if request.get('protocol') == rows['protocol']['id'] and 'workload' in request and 'protocol_companion' not in request:
+            need(entry.id in first_pair,
+                 'additional timed sample history requires a separately reviewed continuation manifest')
+    reused, pins = {}, []
+    commands = manifest['completed_uniform_commands']
+    expected_stages = {'timed.w0.baseline', 'timed.w0.candidate', 'timed.w0.baseline-aggregate'}
+    need(len(commands) == 3 and {entry['content']['stage'] for entry in commands} == expected_stages,
+         'recovery requires both completed first-workload samples and its baseline aggregate')
+    for entry in commands:
+        stage = entry['content']['stage']
+        aggregate = stage.endswith('-aggregate')
+        role = 'baseline' if aggregate else stage.rsplit('.', 1)[-1]
+        planned = ({'message_version': '1.0', 'id': args.id+'.timed.w0.baseline.aggregate',
+                    'protocol': rows['protocol']['id'], 'protocol_role': 'baseline',
+                    'evaluations': [args.id+'.timed.w0.baseline.evaluation']} if aggregate else
+                   execution_request(args, store, rows, role, rows['protocol']['settings']['workloads'][0], stage))
+        request = recovery_json(original/(stage+'.request.json'), entry['request']['artifact'])
+        command = recovery_json(original/(stage+'.command.json'), entry['artifact'])
+        output = recovery_json(original/(stage+'.json'), entry['output'])
+        cli = 'aggregate-evaluations' if aggregate else 'dx100-execute'
+        argv = _cli(args, cli) + [str(original/(stage+'.request.json'))]
+        if not aggregate:
+            argv += ['--runs-dir', str(args.runs_dir), '--lane', receipt['lane'].split(' ', 1)[0][-1]]
+        observed = get(store, planned['id'], 'evaluation')
+        need(artifacts.digest(request) == artifacts.digest(entry['request']['content']) == artifacts.digest(planned)
+             and command == entry['content']
+             and command.get('command') == argv and command.get('state') == 'complete'
+             and command.get('returncode') == 0 and command.get('output') == {
+                 'path': str(original/(stage+'.json')), 'sha256': entry['output']['sha256']}
+             and command.get('timeout_seconds') == (300 if aggregate else planned['budget']['total_seconds']+60)
+             and reference(output) == reference(observed) == entry['record']
+             and artifacts.digest(observed.get('request')) == artifacts.digest(planned)
+             and observed.get('evidence_kind') == 'execution'
+             and observed.get('outcome', {}).get('state') == 'complete'
+             and observed.get('correctness', {}).get('state') == 'passed'
+             and observed.get('outcome', {}).get('stage') == ('aggregation' if aggregate else 'execution')
+             and (aggregate or not observed.get('component_evaluations')),
+             f'recovery evidence differs from its exact completed command: {stage}')
+        reused[stage] = observed
+        pins.append({'stage': stage, 'record': reference(observed), 'command': entry['artifact'],
+                     'request': entry['request']['artifact'], 'output': entry['output']})
+    prefix = 'recovery.'+args.recovery_id+'.'
+    fresh_ids = [args.id+'.'+prefix+f'timed.w{i}.{role}.evaluation'
+                 for i in (1,) for role in ('baseline', 'candidate')]
+    fresh_ids += [args.id+'.'+prefix+f'timed.w{i}.{role}.aggregate'
+                  for i, role in ((0, 'candidate'), (1, 'baseline'), (1, 'candidate'))]
+    fresh_ids += [args.id+'.'+prefix+f'w{i}.comparison' for i in (0, 1)]
+    need(all(store.get(rid) is None for rid in fresh_ids), 'recovery record namespace already exists')
+    custody = {'manifest': {'path': str(manifest_path), 'sha256': args.recovery_sha256},
+               'original_driver': manifest['timed_driver']['artifact'],
+               'original_runtime_commit': receipt['runtime_commit'], 'failed_command': failed['artifact'],
+               'reused': pins, 'fresh_ids': fresh_ids,
+               'postprocessing_timeout_seconds': POSTPROCESS_TIMEOUT_SECONDS}
+    save(folder/'recovery.json', custody)
+    return {'prefix': prefix, 'reused': reused, 'custody': custody}
+
+
 def timed_stage(args, folder, lane, environment):
     store, rows = prepared_records(args)
     previous = load_stage(args, 'companion')
@@ -416,15 +534,19 @@ def timed_stage(args, folder, lane, environment):
     accepted = read_only_checks.companion_acceptance(store, rows['protocol'],
         {'companion_evaluations': companions}, get(store, companions['timed'], 'evaluation'))
     need(accepted == previous['acceptance'], 'companion acceptance changed after its stage')
+    recovery = timed_recovery(args, store, rows, folder)
+    prefix = recovery['prefix'] if recovery else ''
     results = []
     for index, wid in enumerate(rows['protocol']['settings']['workloads']):
         aggregates, samples = {}, {}
         for role in ('baseline', 'candidate'):
-            label = f'timed.w{index}.{role}'
+            original_label = f'timed.w{index}.{role}'
+            label = prefix+original_label
             request = execution_request(args, store, rows, role, wid, label)
-            observed = public(args, folder, 'dx100-execute', label, request, lane=lane,
+            observed = (recovery['reused'][original_label] if recovery and index == 0 else
+                        public(args, folder, 'dx100-execute', label, request, lane=lane,
                               timeout=request['budget']['total_seconds']+60, environment=environment,
-                              allow_failed_evaluation=True)
+                              allow_failed_evaluation=True))
             need(observed['outcome']['state'] == 'complete' and observed['correctness']['state'] == 'passed',
                  f'{label} failed its verifier; retained evaluation {observed["id"]}')
             if role == 'candidate':
@@ -435,16 +557,17 @@ def timed_stage(args, folder, lane, environment):
             samples[role] = reference(observed)
             aggregate_request = {'message_version': '1.0', 'id': args.id+'.'+label+'.aggregate',
                 'protocol': rows['protocol']['id'], 'protocol_role': role, 'evaluations': [observed['id']]}
-            aggregate = public(args, folder, 'aggregate-evaluations', label+'-aggregate', aggregate_request,
-                               lane=lane, environment=environment)
+            aggregate = (recovery['reused'][original_label+'-aggregate'] if recovery and index == 0 and role == 'baseline' else
+                         public(args, folder, 'aggregate-evaluations', label+'-aggregate', aggregate_request,
+                                lane=lane, timeout=POSTPROCESS_TIMEOUT_SECONDS, environment=environment))
             need(aggregate['outcome']['state'] == 'complete', 'exact one-replay aggregate failed')
             aggregates[role] = aggregate
-        compare_request = {'message_version': '1.0', 'id': args.id+f'.w{index}.comparison',
+        compare_request = {'message_version': '1.0', 'id': args.id+'.'+prefix+f'w{index}.comparison',
             'protocol': rows['protocol']['id'], 'comparison_baseline': 'dx100-bfs-scalar',
             'baseline_evaluation': aggregates['baseline']['id'], 'candidate_evaluation': aggregates['candidate']['id'],
             'companion_evaluations': companions}
-        compared = public(args, folder, 'compare-evaluations', f'w{index}-comparison', compare_request,
-                          lane=lane, environment=environment)
+        compared = public(args, folder, 'compare-evaluations', prefix+f'w{index}-comparison', compare_request,
+                          lane=lane, timeout=POSTPROCESS_TIMEOUT_SECONDS, environment=environment)
         need(compared['decision']['state'] != 'rejected', 'comparison rejected the retained evidence')
         results.append({'workload': wid, 'executions': samples,
             'aggregates': {role: reference(value) for role, value in aggregates.items()},
@@ -473,13 +596,17 @@ def timed_stage(args, folder, lane, environment):
         'evaluations, aggregates, comparisons and custody records are authoritative.']
     summary.write_text('\n'.join(lines)+'\n')
     return {'protocol': reference(rows['protocol']), 'l3_outcome': 'observed', 'workloads': results,
-            'library_states': states, 'summary': {'path': str(summary), 'sha256': artifacts.file_hash(summary)}}
+            'library_states': states, 'recovery': recovery['custody'] if recovery else None,
+            'summary': {'path': str(summary), 'sha256': artifacts.file_hash(summary)}}
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--stage', choices=('prepare', 'companion', 'timed'), required=True)
     parser.add_argument('--id', required=True)
+    parser.add_argument('--recovery-id', help='fresh timed-only namespace after a first-pair aggregation timeout')
+    parser.add_argument('--recovery-manifest', type=Path, help='published exact failure summary')
+    parser.add_argument('--recovery-sha256', help='SHA-256 of the reviewed recovery manifest')
     parser.add_argument('--runs-dir', type=Path, required=True)
     parser.add_argument('--records', type=Path, default=PROJECT/'records')
     parser.add_argument('--profile-package', help='real complete ticket 27 package; required by prepare')
@@ -490,6 +617,11 @@ def main(argv=None):
     args = parser.parse_args(argv)
     need(socket.gethostname().split('.')[0] == 'mbit10', 'real gem5 driver requires mbit10')
     need(re.fullmatch(r'[a-z0-9][a-z0-9._-]*', args.id), 'driver ID must use record identifier syntax')
+    recovery_options = (args.recovery_id, args.recovery_manifest, args.recovery_sha256)
+    need(not any(recovery_options) or (all(recovery_options) and args.stage == 'timed'
+         and re.fullmatch(r'[a-z0-9][a-z0-9._-]*', args.recovery_id)
+         and re.fullmatch(r'[0-9a-f]{64}', args.recovery_sha256)),
+         'timed recovery requires a fresh ID, manifest and exact SHA-256 together')
     need(args.approval_reference.strip(), 'an explicit operator approval reference is required')
     need(args.stage != 'prepare' or args.profile_package, 'prepare requires --profile-package from ticket 27')
     lane = provider_guard._lane()
@@ -499,11 +631,13 @@ def main(argv=None):
     need(any(args.runs_dir.is_relative_to(base) for base in (dispatch_preflight.PRIMARY, dispatch_preflight.SECONDARY)),
          'raw output requires one of the two approved EvolveSWDB run roots')
     need(not args.runs_dir.is_relative_to(PROJECT), 'raw output cannot be inside the checkout')
-    folder = artifacts.external_directory(args.runs_dir)/(args.id+'.driver-'+args.stage)
+    suffix = '-'+args.recovery_id if args.recovery_id else ''
+    folder = artifacts.external_directory(args.runs_dir)/(args.id+'.driver-'+args.stage+suffix)
     folder.mkdir(exist_ok=False)
     receipt = {'format': FORMAT, 'id': args.id, 'stage': args.stage, 'state': 'running', 'started': now(),
         'approval_reference': args.approval_reference, 'authoring_session': args.authoring_session,
         'host': socket.gethostname(), 'lane': lane, 'basis': 'simulated', 'gain_claim': False,
+        'recovery_id': args.recovery_id, 'recovery_manifest_sha256': args.recovery_sha256,
         'memory_gib': args.memory_gib, 'storage_gib': args.storage_gib, 'driver_sha256': artifacts.file_hash(__file__)}
     receipt_path = folder/'driver.json'
     save(receipt_path, receipt)

@@ -10,9 +10,9 @@
       "test_tdstep_global_scope_keeps_debug_line_map_and_excludes_other_functions"
     ]
   ],
-  "current_collected_cases": 3756,
-  "unique_verified_cases": 3756,
-  "passed": 3720,
+  "current_collected_cases": 3781,
+  "unique_verified_cases": 3781,
+  "passed": 3745,
   "skipped": 36,
   "unresolved": [],
   "corrected_initial_failures": [
@@ -197,7 +197,7 @@
       "error"
     ]
   ],
-  "affected_file_rerun_cases": 714,
+  "affected_file_rerun_cases": 826,
   "fresh_receipts": [
     "affected-fixtures.xml",
     "affected-isa.xml",
@@ -210,7 +210,9 @@
     "library-state-checkpoint-fix.xml",
     "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/memory-admission-final-a5-junit-20261003.xml",
     "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/bounded-completion-a1-junit-20261003.xml",
-    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/post-roi-budget-final-junit-20261003.xml"
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/post-roi-budget-final-junit-20261003.xml",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/postprocess-recovery-final-junit-20261003.xml",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/postprocess-recovery-exact-binding-junit-20261003.xml"
   ],
   "partitions": [
     {
@@ -354,9 +356,33 @@
     {
       "path": "/private/tmp/swdb-typed-library-verification-20261003/collection-post-roi-budget.txt",
       "sha256": "60fcb5f8a4ffc8fe35595980218ae2c58cf535c49070574c3ffbe8297f9e2574"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/postprocess-timeout-red-junit-20261003.xml",
+      "sha256": "e10f5af7fdd66d81f61690f6260c878c38257dd6fdb52658a3ba324f4726eae7"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/postprocess-recovery-initial-junit-20261003.xml",
+      "sha256": "2e36837a6087f07ea9a6bb30ea85b9e6a91a69fa6962371bc7ba88327de9d5b4"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/postprocess-recovery-final-junit-20261003.xml",
+      "sha256": "0d1060e369ea0c7a34bcbfe86f04581978bc16defc80c15c2651b8ed5039aecf"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/postprocess-recovery-binding-junit-20261003.xml",
+      "sha256": "cc8b255afa9ebd7bf3019a5b4830b5fe1ca3e3c543d38696f9d4ffa51c7a6145"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/postprocess-recovery-exact-binding-junit-20261003.xml",
+      "sha256": "01b62361e63d300df79bfd094187ea6e7f2f688055c5fe7cdfd30fc2eb82eb9e"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/collection-postprocess-recovery-final.txt",
+      "sha256": "af8b9dff53010f4c6a900a3753aac4a5ec93a979c28e779fbb2000838c4b4169"
     }
   ],
-  "validated_records": 450,
+  "validated_records": 470,
   "runtime_profile_fix": {
     "receipt": "/private/tmp/swdb-typed-library-verification-20261003/runtime-profile-fix.xml",
     "passed": 58,
@@ -390,7 +416,7 @@
     "review_base": "f6972ebbf9c842c1a7091716505577d06c637231",
     "actual_annotation": "Actualattempt3 completed and independently audited; metadata published/read back6c65bdf."
   },
-  "updated_at": "2026-10-03 12:17 ET",
+  "updated_at": "2026-10-03 15:05 ET",
   "library_target_state_fix": {
     "review_base": "f642a94ba41e79f79b28a540cb8d758e15bec633",
     "cause": "Completed actual candidate_build records were mistaken for completed target execution, falsely refuting19cited entries.",
@@ -557,6 +583,24 @@
         "basis": "New empty files created by this turn; not historical raw/checkpoints or dispatcher leases"
       },
       "evidence_origin": "Live root SSH tool outputs; no raw copied, no source execution claimed from tests"
+    }
+  },
+  "postprocess_recovery_fix": {
+    "updated": "2026-10-03 15:05 ET",
+    "diagnosis": "Actual candidate trace initial validation took1082.130371s; later public aggregation timed out at300s while CPU advanced.",
+    "physical_runtime_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+    "red_regressions": 1,
+    "red_receipt": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/postprocess-timeout-red-junit-20261003.xml",
+    "final_focused_passed": 35,
+    "broader_passed_before_scalar_type_hardening": 138,
+    "unique_current_affected_passed": 142,
+    "standards_review": "passed; JSON scalar type binding finding closed",
+    "spec_review": "passed; repeat-run and JSON scalar type binding findings closed",
+    "scope": "Separate3600s public aggregation/comparison bound and exact pinned first-pair postprocessing recovery; no physical/protocol/binary/ROI/checker/model/memory treatment change.",
+    "driver_sha256": "1a30daf4904641c55c121d06e9b45a0c2a372448f82e44a0fc6e8510dea730ad",
+    "exact_binding_receipt": {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/postprocess-recovery-exact-binding-junit-20261003.xml",
+      "sha256": "01b62361e63d300df79bfd094187ea6e7f2f688055c5fe7cdfd30fc2eb82eb9e"
     }
   }
 }

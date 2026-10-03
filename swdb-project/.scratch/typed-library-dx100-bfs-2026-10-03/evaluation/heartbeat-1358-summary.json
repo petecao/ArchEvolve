@@ -1,0 +1,153 @@
+{
+  "format": "swdb.heartbeat-progress.v1",
+  "observed_et": "2026-10-03 14:00 ET",
+  "observed_utc": "2026-10-03T18:00:33.198484+00:00",
+  "source_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+  "branch": "yanrujhou_main",
+  "tracked_changes": [],
+  "driver": {
+    "state": "running",
+    "started": "2026-10-03T16:39:05.646211+00:00",
+    "runtime_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+    "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 444)"
+  },
+  "progress": {
+    "stage": "timed.w0.candidate",
+    "command": "dx100-execute",
+    "started": "2026-10-03T17:21:45.904444+00:00",
+    "state": "running",
+    "request_id": "typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation",
+    "timeout_seconds": 9060,
+    "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 444)"
+  },
+  "leases": {
+    "mbit10-evaluation-node0": {
+      "kernel_held": true,
+      "metadata_state": "held",
+      "generation": 444
+    },
+    "mbit10-evaluation-node1": {
+      "kernel_held": false,
+      "metadata_state": "released",
+      "generation": 506
+    },
+    "mbit10-evaluation": {
+      "kernel_held": false,
+      "metadata_state": "released",
+      "generation": 77
+    }
+  },
+  "samples": {
+    "timed.w0.baseline": {
+      "sha256": "fd42274d782eb737bf0e3f6c7c766d6b4c382bb1debc3de6009ba3af05de9cb8",
+      "outcome": {
+        "state": "complete",
+        "stage": "execution",
+        "reason": "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+      },
+      "correctness_state": "passed",
+      "verification_max_ticks": 100000000000000,
+      "binary_sha256": "f4e7d5a3a138a48aa9edde6760391fec0bcf5bf98e81390f7a650286e55c776c",
+      "continuation": {
+        "state": "finished",
+        "stop_reason": "exit_witness",
+        "simulated_ticks": 84000000000,
+        "max_ticks": 100000000000000,
+        "exit_tick": 262336722944,
+        "normal_exit_observed": false
+      },
+      "exit_witness": {
+        "completed": true,
+        "pending_calls": [],
+        "events_after_exit": 0,
+        "exit_request": {
+          "call_line": 363,
+          "return_line": 364,
+          "return_value": 0,
+          "status": 0,
+          "tick": 262175275970
+        },
+        "enabled_tick": 178336722944,
+        "end_tick": 262336722944
+      }
+    },
+    "timed.w0.candidate": {
+      "sha256": "b863eb28fd797a925927a1133e851eb3cdf50880903f18a7e780ca3fdea6f351",
+      "outcome": {
+        "state": "running",
+        "stage": "simulation",
+        "reason": null
+      },
+      "correctness_state": "unverified",
+      "verification_max_ticks": 100000000000000,
+      "binary_sha256": "ba6a857f1f22790f0d9ec546374b25f6f3e3b9b91c740c893c89baaf6aacf77e"
+    },
+    "timed.w1.baseline": {
+      "state": "not-run"
+    },
+    "timed.w1.candidate": {
+      "state": "not-run"
+    }
+  },
+  "aggregates": {
+    "timed.w0.baseline": {
+      "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.aggregate",
+      "sha256": "9b821fd4c8bbc207c64a4aa18ddb99f67a7f8b9b706c04d91d7d5e057ec49366",
+      "outcome": {
+        "state": "complete",
+        "stage": "aggregation",
+        "reason": "Exact completed simulator executions; no synthetic repetitions."
+      }
+    }
+  },
+  "comparisons": {},
+  "load1": 2.337890625,
+  "disk_free_bytes": {
+    "/data1": 44702990336,
+    "/data": 78837571584
+  },
+  "owned_processes": [
+    "1592296 1592294    4888 S     2092 00:00:00 timeout         timeout --signal=TERM --kill-after=90s 39000s bash /data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh 0 typed-library-bfs-gem5-20261003-a2-timed --record /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-timed/lane.json --no-align --load1-max 8 --lease-timeout-s 30 -- python3 tools/typed_library_gem5_driver.py --stage timed --id typed-library-bfs-gem5-20261003-a2 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003",
+    "1592297 1592296    4888 S     3888 00:00:00 bash            bash /data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh 0 typed-library-bfs-gem5-20261003-a2-timed --record /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-timed/lane.json --no-align --max-cell-age-s 900 --load1-max 8 --lease-timeout-s 30 -- python3 tools/typed_library_gem5_driver.py --stage timed --id typed-library-bfs-gem5-20261003-a2 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003",
+    "1592364 1592297    4888 S    208060 00:00:45 python3        python3 tools/typed_library_gem5_driver.py --stage timed --id typed-library-bfs-gem5-20261003-a2 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003",
+    "1596982 1592364    2328 Ss   293456 00:00:33 python3        /usr/bin/python3 -m swdb dx100-execute --records /data1/yanruj/ArchEvolve/swdb-project/records --format json --db /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate.request.json --runs-dir /data1/yanruj/EvolveSWDB_runs --lane 0",
+    "1597474 1596982    2089 Rs   34212328 00:34:49 gem5.opt     /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt --debug-flags=MAATrace,MAARangeFuser,MAAIndirect --debug-file=/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation/simulation/roi-debug.trace.gz --outdir=/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation/simulation /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation/verification-runtime/scripts/dx100_verify.py --cpu-type X86O3CPU -n 4 --mem-size 16GB --sys-clock 3.2GHz --cpu-clock 3.2GHz --caches --l1d_size=32kB --l1d_assoc=8 --l1d-hwp-type=StridePrefetcher --l1d_mshrs=16 --l1d_write_buffers=8 --l1i_size=32kB --l1i_assoc=8 --l1i-hwp-type=StridePrefetcher --l1i_mshrs=16 --l1i_write_buffers=8 --l2cache --l2_size=256kB --l2_assoc=4 --l2-hwp-type=StridePrefetcher --l2_mshrs=32 --l2_write_buffers=16 --l3cache --l3_size=8MB --l3_assoc=16 --l3_mshrs=256 --l3_write_buffers=128 --l3_ports 4 --cacheline_size=64 --mem-type Ramulator2 --ramulator-config /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml --mem-channels 2 --maa_ncbus_width 32 --prog-interval=1000 --maa --maa_num_maas 1 --maa_num_tile_elements 16384 --maa_l2_uncacheable --maa_l3_uncacheable --maa_num_initial_row_table_slices 32 --cmd /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a2.candidate.primary.build/bfs --options -f /data1/yanruj/EvolveSWDB_runs/dx100-loader-inputs/dx100-gapbs-c6a430be5cf64a1b144d01f9bcbaeab2fcb45e0fac2359da36de8087b1b4790d.sg -l -n 1 -v -r 0 --checkpoint-dir /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation/checkpoint -r 1"
+  ],
+  "memory_pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1174118648\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1146926450\n",
+  "latest_memory_samples": {
+    "timed.w0.candidate": {
+      "elapsed_s": 2088.1813702909276,
+      "evidence_kind": "execution",
+      "host_cost_is_bfs_performance": false,
+      "host_time_ns": 1791050432851871200,
+      "last_simulator_phase": "verification_begin",
+      "log_bytes": 19355,
+      "process_group": 1597474,
+      "processes": [
+        {
+          "pid": 1597474,
+          "rss_kib": 34212328
+        }
+      ],
+      "rss_kib": 34212328
+    }
+  },
+  "test_review": {
+    "cases": 3756,
+    "passed": 3720,
+    "skipped": 36,
+    "unresolved": [],
+    "receipt_hashes_verified": 29,
+    "tickets": {
+      "resolved": 32,
+      "ready-for-human": 3,
+      "wontfix": 1,
+      "claimed": 1
+    }
+  },
+  "worker_health": "Cpp evaluator running and advancing; both review agents completed normally with passes; no dead agent.",
+  "performance_scope": "One of four timed samples passed. Uniform18 candidate remains running/unverified in post-ROI verification; Kronecker18 pair and comparisons pending. No ratio.",
+  "mutable_metadata_scope": "Digests for running records identify this observation only; they are not final evaluation pins.",
+  "raw_validation_scope": "Root phase/process observation only; full independent artifact/public validation deferred until all measurements stop.",
+  "publication": "Compact local checkpoint pending; no Git synchronization while source4c9 is measuring."
+}

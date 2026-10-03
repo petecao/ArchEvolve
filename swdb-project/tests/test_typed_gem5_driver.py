@@ -188,3 +188,43 @@ def test_post_roi_budget_fix_preserves_every_other_actual_request_field(source_s
     assert planned['verification'].pop('max_ticks') == 10**14
     assert original['verification'].pop('max_ticks') == 10**10
     assert planned == original
+
+
+def test_timed_postprocessing_has_a_separate_bound_for_real_trace_revalidation(
+        source_store, published_first_attempt, tmp_path, monkeypatch):
+    """Reach the observed candidate-aggregate timeout without replaying 177M lines."""
+    import json
+    args, rows = published_first_attempt
+    args.records, args.runs_dir = source_store.dir, tmp_path
+    lane = 'mbit10-evaluation-node0 fixture'
+    companions = {name: driver.reference(source_store.get(
+        args.id + '.companion.' + name + '.evaluation', 'evaluation'))
+        for name in ('timed', 'diagnostic')}
+    acceptance = {'outcome': 'observed'}
+    monkeypatch.setattr(driver, 'prepared_records', lambda args: (source_store, rows))
+    monkeypatch.setattr(driver, 'load_stage', lambda args, stage: {
+        'l3_outcome': 'observed', 'timed_admitted': True,
+        'companion_evaluations': companions, 'acceptance': acceptance})
+    monkeypatch.setattr(driver.read_only_checks, 'companion_acceptance', lambda *args: acceptance)
+    monkeypatch.setattr(driver.provider_guard, '_lane', lambda: lane)
+    monkeypatch.setattr(driver, 'lease_snapshot', lambda lane: [])
+    monkeypatch.setattr(driver, '_require_valid', lambda path: source_store)
+    monkeypatch.setattr(driver.library.Library, 'state', lambda *args: {'tier': 'shared', 'status': 'certified'})
+    calls = []
+    def command(argv, folder, stage, *, timeout, environment=None):
+        request = json.loads(Path(next(value for value in argv if str(value).endswith('.request.json'))).read_text())
+        calls.append((argv[3], stage, timeout))
+        if stage == 'timed.w0.candidate-aggregate' and timeout < 1082:
+            raise Failure(f'{stage} exceeded {timeout} seconds')
+        if argv[3] == 'dx100-execute':
+            return {'id': request['id'], 'outcome': {'state': 'complete'},
+                    'correctness': {'state': 'passed', 'checks': [{'coverage': {
+                        key: {'state': 'observed'} for key in ('read_only_executed', 'full_tiles', 'tail_tiles')}}]}}
+        if argv[3] == 'aggregate-evaluations':
+            return {'id': request['id'], 'outcome': {'state': 'complete'}}
+        return {'id': request['id'], 'decision': {'state': 'accepted'}, 'metrics': {'roi_speedup': 1.0}}
+    monkeypatch.setattr(driver, 'checked_command', command)
+    result = driver.timed_stage(args, tmp_path, lane, {})
+    assert len(result['workloads']) == 2
+    assert [timeout for command, _, timeout in calls if command == 'dx100-execute'] == [9060] * 4
+    assert [timeout for command, _, timeout in calls if command in {'aggregate-evaluations', 'compare-evaluations'}] == [3600] * 6
