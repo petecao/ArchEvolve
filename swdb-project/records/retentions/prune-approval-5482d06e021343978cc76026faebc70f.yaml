@@ -1,0 +1,27 @@
+kind: retention
+schema_version: '0.4'
+id: prune-approval-5482d06e021343978cc76026faebc70f
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+event: approval
+deleted: []
+reason: Codex root reviewed this exact two-file failed-smoke listing on Yan-Ru Jhou's behalf under her
+  explicit approval of all current and future related project actions on 2026-10-03; no assertion of personal
+  human list inspection.
+occurred_at: '2026-10-03T12:35:19.520364+00:00'
+host: mbit10
+listing:
+  path: /data1/yanruj/EvolveSWDB_runs/typed-library-t32-failed-smoke-dry-run-20261003-3399d76720944650bca75ef2074c9703.json
+  sha256: feb871b74833f8a88822af1321baeeaa762ac37e79dacdd2537521d46661c636
+approved_by: yanrujhou
