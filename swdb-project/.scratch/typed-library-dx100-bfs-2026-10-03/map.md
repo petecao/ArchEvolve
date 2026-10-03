@@ -1,0 +1,108 @@
+# Map: Typed library and DX100 BFS rewrites in ArchEvolve and Extensa modes
+
+Created: 2026-10-03 02:28 ET
+**Type:** ticket map
+**Status:** ready-for-agent
+**Spec:** [spec.md](spec.md)
+
+Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied by the Extensa-mode design session, or triggered by an L3 refutation). Tickets marked go-ahead run on mbit10 and need Yan-Ru's approval per dispatch (Q62). The pull request to `main` stays as the archevolve-handoff pull-request ticket, blocked by this feature's last tickets.
+
+## Phase 0–1: tell the team, record the design
+
+| # | Ticket | Status | Blocked by | Go-ahead |
+|---|---|---|---|---|
+| 01 | [Send the Phase 0 decision note and Josh's statement-name mapping](issues/01-send-decision-note-and-mapping.md) | ready-for-human | — |  |
+| 02 | [Peter confirms the license for files ported from Extensa](issues/02-license-confirmation.md) | ready-for-human | — |  |
+| 03 | [Decision records ADR 0007–0011 and the archevolve-handoff tracker updates](issues/03-design-session-commit.md) | ready-for-agent | 01 |  |
+| 04 | [Per-person team update after the decision-record commit](issues/04-team-update.md) | ready-for-human | 03 |  |
+
+## Phase 2a: prefactors
+
+| # | Ticket | Status | Blocked by | Go-ahead |
+|---|---|---|---|---|
+| 05 | [Prefactor: intrinsic records accept a hardware interface](issues/05-intrinsic-records-accelerator-interface.md) | ready-for-agent | 03 |  |
+| 06 | [Prefactor: offload strategy effect and the DX100 read-offload strategy](issues/06-offload-strategy-effect.md) | ready-for-agent | 03 |  |
+| 07 | [Prefactor: provider launcher runs every agent role](issues/07-role-based-provider-launcher.md) | ready-for-agent | 03 |  |
+| 08 | [Dispatch preflight: disk and memory](issues/08-dispatch-preflight.md) | ready-for-agent | — |  |
+
+## Phase 2b: library and certification on the Mac
+
+| # | Ticket | Status | Blocked by | Go-ahead |
+|---|---|---|---|---|
+| 09 | [Library entry shapes and IDs, checked by swdb validate](issues/09-library-entry-shapes.md) | ready-for-agent | 03 |  |
+| 10 | [Port Extensa's predicate grammar into the library validator](issues/10-port-extensa-grammar.md) | ready-for-agent | 02, 09 |  |
+| 11 | [Tracer: certify the gather lowering and its setup intrinsics end to end](issues/11-tracer-certify-gather.md) | ready-for-agent | 05, 09 |  |
+| 12 | [Strict layer: byte-offset, truncation and memory-region assertions](issues/12-strict-layer-assertions.md) | ready-for-agent | 11 |  |
+| 13 | [Range loop with continuation and register operands](issues/13-range-loop-and-register-operands.md) | ready-for-agent | 12 |  |
+| 14 | [Stream load, tile size and pointer, ALU-scalar, and the strict store](issues/14-stream-load-tile-access-alu.md) | ready-for-agent | 12 |  |
+| 15 | [Derived tier and status, and swdb promote for library entries](issues/15-library-tiers-and-entry-promotion.md) | ready-for-agent | 11 |  |
+| 16 | [Calibration on the T17-fixed authors' BFS, with the BFS matrix](issues/16-calibration-and-bfs-matrix.md) | ready-for-agent | 13, 14 |  |
+| 17 | [BFS read-offload rewrite contract and the YAML draft for Peter](issues/17-bfs-read-offload-contract.md) | ready-for-agent | 06, 10 |  |
+| 18 | [BFS candidate-artifact certification](issues/18-bfs-candidate-certification.md) | ready-for-agent | 16, 17 |  |
+| 19 | [Submit a patch that ships the lowering header](issues/19-submit-patch-with-library-header.md) | ready-for-agent | 11, 15 |  |
+| 20 | [Peter's §5 patch with fixes E1–E5, certified](issues/20-peter-section5-patch.md) | ready-for-agent | 13, 14, 18, 19, 17 |  |
+| 21 | [Send Peter the contract YAML](issues/21-send-peter-contract-yaml.md) | ready-for-human | 17 |  |
+| 22 | [Yan-Ru promotes the DX100 entries and the BFS contract](issues/22-promote-dx100-entries.md) | ready-for-human | 15, 20 |  |
+
+## Phase 3: first gem5 result (ArchEvolve mode)
+
+| # | Ticket | Status | Blocked by | Go-ahead |
+|---|---|---|---|---|
+| 23 | [Read-only gem5 checks: execution case, frontier sizes, parent-gather race](issues/23-read-only-gem5-checks.md) | ready-for-agent | 03 |  |
+| 24 | [Retention and team-claim records; readers accept pruned files](issues/24-retention-and-team-claim-records.md) | ready-for-agent | 03 |  |
+| 25 | [swdb prune: dry run, approval and apply](issues/25-prune-listing-and-apply.md) | ready-for-agent | 24 |  |
+| 26 | [Automatic pruning of bulky raw output (ArchEvolve mode)](issues/26-automatic-pruning.md) | ready-for-agent | 24 |  |
+| 27 | [Real profile package for the scalar-only snapshot on mbit10](issues/27-profile-package-scalar-only.md) | ready-for-agent | 05, 08 | yes |
+| 28 | [Freeze the new protocol, submit the patch, run the companion case](issues/28-freeze-protocol-and-companion-runs.md) | ready-for-agent | 08, 20, 22, 23, 26, 27 | yes |
+| 29 | [Timed gem5 runs, comparison and team summary](issues/29-timed-runs-comparison-summary.md) | ready-for-agent | 28 | yes |
+| 30 | [Send the first gem5 result and record the team claim](issues/30-send-first-result.md) | ready-for-human | 29 |  |
+| 31 | [Fallback contract: the CPU loads the parent value itself](issues/31-fallback-contract.md) | needs-triage | 28 | yes |
+| 32 | [Clean up existing run output on mbit10](issues/32-retroactive-cleanup.md) | ready-for-human | 25 | yes |
+
+## Phase 4a: profiling agent
+
+| # | Ticket | Status | Blocked by | Go-ahead |
+|---|---|---|---|---|
+| 33 | [Per-line callgrind collection inside TDStep](issues/33-per-line-callgrind-collection.md) | ready-for-agent | — |  |
+| 34 | [Per-line callgrind run on mbit10](issues/34-per-line-callgrind-run.md) | ready-for-agent | 08, 33 | yes |
+| 35 | [Agent-claim storage on statement annotations and access patterns](issues/35-statement-claims-storage.md) | ready-for-agent | 03 |  |
+| 36 | [swdb annotate, scoring and the statement table for Josh](issues/36-annotate-and-score.md) | ready-for-agent | 07, 34, 35 | yes |
+| 37 | [Send Josh the statement table](issues/37-send-josh-statement-table.md) | ready-for-human | 36 |  |
+
+## Phase 4b: BC
+
+| # | Ticket | Status | Blocked by | Go-ahead |
+|---|---|---|---|---|
+| 38 | [Prefactor: kernel plug-in seam, native side](issues/38-kernel-seam-native.md) | ready-for-agent | — |  |
+| 39 | [Prefactor: kernel plug-in seam, gem5 side](issues/39-kernel-seam-gem5.md) | ready-for-agent | 23 |  |
+| 40 | [BC on the native evaluator (code)](issues/40-bc-native-code.md) | ready-for-agent | 38 |  |
+| 41 | [BC native evaluation on mbit10](issues/41-bc-native-run.md) | ready-for-agent | 08, 40 | yes |
+| 42 | [BC certification and the derived BC contract](issues/42-bc-certification-and-derived-contract.md) | ready-for-agent | 18, 17, 28, 40 |  |
+| 43 | [Yan-Ru promotes the derived BC contract](issues/43-promote-bc-contract.md) | ready-for-human | 42 |  |
+| 44 | [BC gem5 completion witness and execution case](issues/44-bc-gem5-completion-witness.md) | ready-for-agent | 39, 40 |  |
+| 45 | [BC gem5 evaluation](issues/45-bc-gem5-evaluation.md) | ready-for-agent | 26, 29, 41, 43, 44 | yes |
+| 46 | [Library JSON schema and SQLite index](issues/46-library-schema-and-index.md) | ready-for-agent | 42 |  |
+
+## Phase 5: Extensa mode
+
+| # | Ticket | Status | Blocked by | Go-ahead |
+|---|---|---|---|---|
+| 47 | [Extensa-mode design session](issues/47-extensa-design-session.md) | ready-for-human | 03 |  |
+| 48 | [Mode tags, team-boundary refusals and candidate-artifact promotion](issues/48-mode-tags-and-team-boundary.md) | needs-triage | 11, 15, 47 |  |
+| 49 | [Port Extensa's machinery](issues/49-port-extensa-machinery.md) | needs-triage | 07, 10, 11, 47 |  |
+| 50 | [Tracer: certify one library operation (packing)](issues/50-library-operation-tracer.md) | needs-triage | 02, 11, 47 |  |
+| 51 | [Seed the experimental tier from Extensa](issues/51-seed-extensa-families.md) | needs-triage | 50 |  |
+| 52 | [Extensa campaign skeleton](issues/52-campaign-skeleton.md) | needs-triage | 07, 48, 49, 24 |  |
+| 53 | [Speed rule, per-class verdicts, selection and knob tuning](issues/53-speed-rule-and-selection.md) | needs-triage | 52 |  |
+| 54 | [Extensa campaign budgets and pruning](issues/54-campaign-budgets.md) | needs-triage | 08, 26, 52 |  |
+| 55 | [Query site finder](issues/55-query-site-finder.md) | needs-triage | 46, 52 |  |
+| 56 | [Native-CPU Extensa campaign target for BFS](issues/56-native-campaign-target.md) | needs-triage | 51, 53, 54, 55 | yes |
+| 57 | [gem5 Extensa campaign target](issues/57-gem5-campaign-target.md) | needs-triage | 29, 53, 54, 55 | yes |
+| 58 | ["Is the specification enough?" experiment](issues/58-spec-enough-experiment.md) | needs-triage | 08, 07, 20, 48 | yes |
+
+## Context pointers
+
+- Q60 intrinsic records widen to accelerator commands: spec, Implementation Decisions > Typed library — [spec.md](spec.md)
+- Q61 native selection uses the rewritten baseline: spec, Extensa mode > Speed rule — [spec.md](spec.md)
+- Q62 approvals per dispatch or Extensa campaign launch: spec, Further Notes > Approvals — [spec.md](spec.md)
+- Q63–Q66 (gem5 point ratios, no region pairs, parent-gather race case, license): spec, Further Notes > "Confirmed 2026-10-03" — [spec.md](spec.md)
