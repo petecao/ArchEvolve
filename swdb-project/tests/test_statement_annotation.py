@@ -84,6 +84,10 @@ def test_independent_line_validator_checks_hierarchy_and_duplicate_identity():
         callgrind_lines.validate([row,row])
     with pytest.raises(Failure,match='invalid'):
         callgrind_lines.validate([{**row,'basis':'measured'}])
+    with pytest.raises(Failure,match='invalid'):
+        callgrind_lines.validate([{**row,'execution':'bad'}])
+    with pytest.raises(Failure,match='invalid'):
+        callgrind_lines.validate([{**row,'execution':{'source':-1}}])
 
 
 def test_scalar_source_derivation_claims_do_not_overwrite_facts(tmp_path):
@@ -108,6 +112,25 @@ def test_scalar_derivation_refuses_deleted_and_ambiguous_statements(tmp_path):
     impl['extensions']['statements']['annotations'][0]['code']='not a statement'
     with pytest.raises(Failure,match='uniquely'):
         annotation.mapped_statements(impl,source)
+
+
+def test_later_source_annotations_preserve_earlier_snapshot_mappings(tmp_path):
+    impl,source,annotated=small_source(tmp_path)
+    previous=copy.deepcopy(annotated)
+    next_source={**source,'id':'next-source'}
+    response={'statements':[{'statement':r['id'],
+        'pattern_class':annotation._last_claim(r,'pattern_class')['value'],
+        'index_provenance':annotation._last_claim(r,'index_provenance')['value'],
+        'expected_cost_rank':annotation._last_claim(r,'expected_cost_rank')['value'],
+        'basis':'code_reading'} for r in annotation.statements(annotated)],'unresolved':[]}
+    metadata={'model':'fixture','effort':'high','prompt_sha256':'b'*64,
+        'classification':'contract_fixture','workspace_manifest':{'input_sha256s':{'source':'a'*64}}}
+    later=annotation.append_claims(annotated,response,metadata,annotation.mapped_statements(impl,next_source))
+    mappings=later['extensions']['statements']['source_mappings']
+    assert len(mappings)==14
+    assert mappings[:7]==previous['extensions']['statements']['source_mappings']
+    assert {r['source_snapshot'] for r in mappings}=={source['id'],next_source['id']}
+    assert annotated==previous
 
 
 def test_statement_costs_use_verified_source_identity_across_baseline_copies(tmp_path):
@@ -300,6 +323,47 @@ else:
     assert claims[0]['classification']=='contract_fixture'
     assert persisted['access_patterns'][0]['steps']==pattern['steps']
     assert records.validate().returncode==0
+    # Public scoring reparses real fixture bytes, preserves a sealed profile's
+    # digest when its derived costs already match, and refuses later tampering.
+    from swdb.workflow import record
+    raw=tmp_path/f'statement-{kind}.callgrind'
+    raw.write_text(f'''events: Ir Dr Dw D1mr D1mw DLmr DLmw
+summary: 10 3 1 2 1 1 1
+totals: 10 3 1 2 1 1 1
+fl={file}
+fn=TDStep()
+{position} 10 3 1 2 1 1 1
+''')
+    rows=parse_callgrind_lines(raw)
+    rows[0].update(source_artifact_sha256=source['artifact']['sha256'],artifact_sha256='a'*64,
+        raw_artifact=str(raw),raw_sha256=artifacts.file_hash(raw),
+        execution={'source':0,'source_position':0,'repetition':0,'tdstep_position':0},
+        counter_validation={'state':'valid','method':callgrind_lines.METHOD},
+        source_path='src/bfs.cc',source_file_sha256=artifacts.file_hash(file))
+    profile=record('region_profile',f'annotation-costs-{kind}',message_version='1.0',
+        producer={'name':'annotation-fixture','role':'operator','test_client':True},request={},
+        implementation=impl['id'],source_snapshot=source['id'],
+        outcome={'state':'partial','stage':'fixture','reason':'synthetic Callgrind counts'},
+        stages=[],regions=[],dynamic_memory=[],executions=[],raw_artifacts=[],
+        reasons=['contract fixture'],gain_claim=False,per_line_memory=rows)
+    profile['statement_memory']=annotation.statement_costs(persisted,source,profile)
+    rel=f"region_profiles/{profile['id']}.yaml"
+    records.write(rel,profile)
+    sealed_digest=artifacts.digest(profile)
+    table=tmp_path/f'josh-table-{kind}.md'
+    scored=records.swdb('annotate-score',impl['id'],'--source-snapshot',source['id'],
+        '--region-profile',profile['id'],'--table',table,'--format','json')
+    assert scored.returncode==0,scored.stderr
+    report=json.loads(scored.stdout)
+    assert report['spearman_rank_correlation'] is None and report['top_3_overlap']==1
+    assert report['statements'][0]['value']==2 and table.is_file()
+    assert artifacts.digest(records.read(rel))==sealed_digest==report['region_profile_sha256']
+    saved_claims=records.read('implementations/gapbs-bfs-do.yaml')
+    raw.write_text(raw.read_text()+'# changed after scoring\n')
+    refused=records.swdb('annotate-score',impl['id'],'--source-snapshot',source['id'],
+        '--region-profile',profile['id'],'--format','json')
+    assert refused.returncode==1 and 'raw hash changed' in refused.stderr
+    assert records.read('implementations/gapbs-bfs-do.yaml')==saved_claims
 
 
 def test_second_tdstep_collection_preserves_roi_rows_and_reads_multiple_dumps(tmp_path):
@@ -331,7 +395,7 @@ def test_second_tdstep_collection_preserves_roi_rows_and_reads_multiple_dumps(tm
                 if stage=='memory_execution':
                     Path(str(raw)+'.1').write_text(header)
                 else:
-                    for i in range(2):
+                    for i in range(12):
                         Path(str(raw)+f'.{i+1}').write_text(header+f'fl={source}\nfn=TDStep()\n2 10 5 2 3 1 2 1\n')
             return log
         def save(self):
@@ -342,9 +406,11 @@ def test_second_tdstep_collection_preserves_roi_rows_and_reads_multiple_dumps(tm
         {'build_seconds':10,'run_seconds':10})
     assert {r['metric'] for r in data['dynamic_memory']}==set(METRICS)
     assert all(r['scope']=='ROI' and r['attribution_granularity']=='whole BFS call' for r in data['dynamic_memory'])
-    assert len(data['per_line_memory'])==2
-    assert sum(r['events']['DLmr']+r['events']['DLmw'] for r in data['per_line_memory'])==6
-    assert {r['execution']['tdstep_position'] for r in data['per_line_memory']}=={0,1}
+    assert len(data['per_line_memory'])==12
+    assert sum(r['events']['DLmr']+r['events']['DLmw'] for r in data['per_line_memory'])==36
+    assert {r['execution']['tdstep_position'] for r in data['per_line_memory']}==set(range(12))
+    assert all(r['raw_artifact'].endswith(f".{r['execution']['tdstep_position']+1}")
+               for r in data['per_line_memory'])
     assert all(r['basis']=='simulated' for r in data['per_line_memory'])
     assert '-g' in data['artifacts']['statement_binary']['flags']
     assert [stage for stage,_ in session.commands].count('statement_memory_execution')==1

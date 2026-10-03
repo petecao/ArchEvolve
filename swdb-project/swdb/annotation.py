@@ -200,7 +200,12 @@ def append_claims(implementation, response, metadata, mapped):
                 patterns[p["pattern"]].setdefault("agent_claims", []).append({**copy.deepcopy(common),
                     "field": field, "value": copy.deepcopy(value), "basis": row["basis"],
                     "statement": row["statement"]})
-    result["extensions"]["statements"]["source_mappings"] = copy.deepcopy(mapped)
+    mappings = result["extensions"]["statements"].setdefault("source_mappings", [])
+    if not isinstance(mappings, list):
+        raise Failure("stored source mappings must be a list; existing mappings cannot be replaced")
+    for mapping in mapped:
+        if mapping not in mappings:
+            mappings.append(copy.deepcopy(mapping))
     result["updated"] = writer.today()
     return result
 

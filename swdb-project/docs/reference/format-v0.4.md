@@ -166,7 +166,7 @@ the authors' accelerated code. Read-only roles preserve every input file.
 
 Provider receipts retain `role`, `model`, `effort`, `prompt_sha256`,
 `output_schema_sha256`, `lane`, `classification` and the shared process/event
-`audit`. The `workspace_manifest` retains `format`, `root`, `home`, `read_only`,
+`audit`. For read-only roles, `workspace_manifest` retains `format`, `root`, `home`, `read_only`,
 `visible_files`, `immutable_files`, `input_sha256s`, `output_schema_sha256`,
 `source_files`, `dropped_build_outputs` and `login_copy_deleted`.
 `input_sha256s` maps each visible relative path to its exact byte SHA-256.
@@ -200,6 +200,7 @@ fact to contradict them. Another source-reading prediction is insufficient.
 `source_derivation_sha256`, `source_sha256`, `source_artifact_sha256` and
 `source_snapshot`. Mapping projects through `removed_pinned_line_ranges`; an
 additional source derivation requires a unique exact statement-text match.
+Distinct mappings append without replacing earlier snapshot mappings.
 Removed or ambiguous statements are refused. The provider sees the scalar
 TDStep fragment, declared statements and safe semantic context. Per-line ground
 truth is withheld from its prediction.

@@ -112,7 +112,7 @@ def listing(store, roots):
 
 def retained(store, reference, evaluation_id=None):
     """Only a matching path AND digest AND evaluation may excuse absent bytes."""
-    if store is None or not isinstance(reference, dict):
+    if store is None or not callable(getattr(store, 'of_kind', None)) or not isinstance(reference, dict):
         return None
     matches = []
     for record in store.of_kind('retention'):

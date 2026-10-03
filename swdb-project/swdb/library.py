@@ -280,7 +280,15 @@ class Library:
                 status = 'certified'
             elif 'refuted' in lower_states:
                 status = 'refuted'
-        tier = 'shared' if any(r.get('kind') == 'review' and r.get('target') == {'id':entry_id,'content_sha256':sha} for r in records) else 'experimental'
+        dependencies = data.get('lowerings',[]) if data['kind'] == 'intrinsic' else [entry_id]
+        def current_review(review):
+            if review.get('kind') != 'review' or review.get('target') != {'id':entry_id,'content_sha256':sha}:
+                return False
+            evidence = [store.get(rid,'certification') for rid in review.get('evidence',[])] if store else []
+            covered = {c['entry']['id'] for c in evidence if c and c.get('verdict') == 'certified'
+                       and c['entry']['id'] in dependencies and c['entry']['content_sha256'] == self.content_sha256(c['entry']['id'])}
+            return set(dependencies) <= covered
+        tier = 'shared' if any(current_review(r) for r in records) else 'experimental'
         target_states = []
         for evaluation in records:
             if evaluation.get('kind') != 'evaluation' or not store:
@@ -455,6 +463,9 @@ def validate_record(record, ctx):
                 return
             candidates = [ctx.store.get(rid,'certification') for rid in data['evidence']]
             dependencies = target.get('lowerings',[]) if target['kind'] == 'intrinsic' else [target['id']]
-            covered = {c['entry']['id'] for c in candidates if c and c['entry']['id'] in dependencies and c['entry']['content_sha256'] == library.content_sha256(c['entry']['id'])}
+            # A lowering may change while its intrinsic's normative content stays
+            # unchanged. Keep that old review valid as history; state checks its
+            # dependency hashes before granting the current shared tier.
+            covered = {c['entry']['id'] for c in candidates if c and c['entry']['id'] in dependencies}
             if not set(dependencies) <= covered:
-                yield Problem(record.rel,'evidence','review does not cover current entry certification dependencies')
+                yield Problem(record.rel,'evidence','review does not identify entry certification dependencies')

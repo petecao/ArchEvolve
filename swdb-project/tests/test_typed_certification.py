@@ -142,3 +142,71 @@ def test_candidate_scope_cannot_certify_uncontracted_header_edits(tmp_path):
     (tree / 'benchmarks/gapbs/src/pvector.h').write_text('// uncontracted rewrite\n')
     with pytest.raises(UsageError, match='permits only'):
         c.check_candidate_scope(tree, snapshot)
+
+
+def candidate_claim_body():
+    source = (LIBRARY / 'dx100/bfs_read_offload.inc').read_text()
+    return source.split('for(unsigned k=0;k<count;++k){\n', 1)[1].split('\n     }\n', 1)[0]
+
+
+def test_primary_claim_has_no_diagnostic_parent_read_or_degree_probe(tmp_path):
+    """Check the compiled branch, including argument evaluation of a no-op probe."""
+    source = tmp_path / 'claim.cc'
+    source.write_text(candidate_claim_body())
+    process = subprocess.run([c.compiler(), '-E', '-P', '-x', 'c++', source],
+                             capture_output=True, text=True)
+    assert process.returncode == 0, process.stderr
+    assert '__atomic_load_n' not in process.stdout
+    assert 'g.out_degree' not in process.stdout
+    assert '__dxc_cas_probe' not in process.stdout
+    assert 'hint<0&&compare_and_swap(parent[v],hint,u)' in process.stdout
+    assert 'if(claimed){parent[v]=u;lqueue.push_back(v);}' in process.stdout
+
+
+@pytest.fixture(scope='module')
+def diagnostic_claim_driver(tmp_path_factory):
+    folder = tmp_path_factory.mktemp('diagnostic-claim')
+    source = folder / 'claim.cc'
+    source.write_text('''#include <cstdlib>
+#include <dxc_lowering.hpp>
+using NodeID = int;
+int cas_attempts=0;
+bool compare_and_swap(int &slot,int expected,int desired){
+ ++cas_attempts;return __atomic_compare_exchange_n(&slot,&expected,desired,false,__ATOMIC_RELAXED,__ATOMIC_RELAXED);
+}
+int main(int argc,char**argv){
+ if(argc!=3)return 2;
+ struct Graph{int calls=0;int out_degree(int){++calls;return 4;}}g;
+ struct Queue{int pushes=0;void push_back(int){++pushes;}}lqueue;
+ const int num_nodes=8,k=0;
+ int vertices[]={0},frontier[]={2},hints[]={std::atoi(argv[1])};
+ int parent[8]={std::atoi(argv[2])};
+''' + candidate_claim_body() + '''
+ std::printf("attempts=%d pushes=%d degree_calls=%d parent=%d races=%llu violations=%llu\\n",
+  cas_attempts,lqueue.pushes,g.calls,parent[0],
+  (unsigned long long)swdb_dxc::races().load(),(unsigned long long)swdb_dxc::violations().load());
+}
+''')
+    executable = folder / 'claim'
+    build = c.compile_cpp(source, executable, LIBRARY, tile_size=1024, threads=4,
+                          defines=['-DSWDB_DXC_DIAGNOSTIC'])
+    assert build['returncode'] == 0, build['stderr']
+    return executable
+
+
+@pytest.mark.parametrize('hint,fresh,attempts,pushes,races,violations', [
+    (8, 0, 0, 0, 0, 1),       # Nonnegative hint outside the vertex-ID range.
+    (1, -1, 0, 0, 0, 1),      # Nonnegative tile hint while the CPU still sees unvisited.
+    (1, 1, 0, 0, 0, 0),
+    (-4, -4, 1, 1, 0, 0),     # -outdegree initialization.
+    (-1, -1, 1, 1, 0, 0),     # Permitted alternative -1 initialization.
+    (-1, 2, 1, 0, 1, 0),      # A stale negative hint loses a race, with no enqueue.
+    (-3, -3, 1, 1, 0, 1),     # Unexpected negative initialization.
+])
+def test_diagnostic_claim_checks_all_hints_without_changing_cpu_enqueue(
+        diagnostic_claim_driver, hint, fresh, attempts, pushes, races, violations):
+    process = subprocess.run([diagnostic_claim_driver, str(hint), str(fresh)],
+                             capture_output=True, text=True)
+    assert process.returncode == 0, process.stderr
+    assert f'attempts={attempts} pushes={pushes} degree_calls=1 ' in process.stdout
+    assert f'races={races} violations={violations}' in process.stdout

@@ -35,8 +35,8 @@ def new_file_patch(path, content):
                                       fromfile='/dev/null', tofile='b/' + path))
 
 
-def receipt(records, entry_id, content_sha256):
-    suffix = entry_id.replace('.', '-')
+def receipt(records, entry_id, content_sha256, generation=''):
+    suffix = entry_id.replace('.', '-') + generation
     certificate_id = 'fixture-cert-' + suffix
     certification = {
         'schema_version': '0.4', 'kind': 'certification', 'id': certificate_id,
@@ -80,7 +80,7 @@ def library_submit(proposal_setup):
     contract['uses_intrinsics'] = [INTRINSIC]
     contract['uses_library_operations'] = [OPERATION]
     intrinsic = {
-        'kind': 'intrinsic', 'id': INTRINSIC, 'intrinsic_record': 'dxc_gather',
+        'kind': 'intrinsic', 'id': INTRINSIC, 'intrinsic_record': 'fixture_load',
         'provenance': {'origin': {'intrinsic_specification': 'workflow-fixture'}},
         'clauses': [], 'signature': 'int fixture_load(int)', 'intent': 'Contract fixture only.',
         'reference_semantics': reference, 'hardware_operations': [],
@@ -104,6 +104,16 @@ def library_submit(proposal_setup):
     entries = {CONTRACT: contract, INTRINSIC: intrinsic, LOWERING: lowering, OPERATION: operation}
     relative = {CONTRACT: 'rewrite_contracts/fixture.yaml', INTRINSIC: 'intrinsics/fixture.yaml',
                 LOWERING: 'lowerings/fixture/1/fixture.yaml', OPERATION: 'library_operations/fixture.yaml'}
+    records.write('intrinsics/fixture_load.yaml', {
+        'kind': 'intrinsic', 'schema_version': '0.4', 'id': 'fixture_load', 'name': 'fixture_load',
+        'status': 'draft', 'created': '2026-10-03', 'updated': '2026-10-03',
+        'interface': {'id': 'fixture', 'version': '1'}, 'hardware_operations': [],
+        'memory_kind': 'none', 'address_shape': None, 'element_bits': 32, 'lanes': 1,
+        'library_entry': {'id': INTRINSIC, 'path': 'library/' + relative[INTRINSIC],
+                          'content_sha256': artifacts.digest(intrinsic)},
+        'provenance': [{'id': 'fixture', 'kind': 'source_code',
+                        'description': 'Temporary workflow fixture; no accelerator implementation claim.', 'uri': None}],
+    })
     reviews = {}
     for entry_id, data in entries.items():
         target = root / relative[entry_id]
@@ -204,6 +214,25 @@ def test_submit_does_not_reuse_review_after_normative_content_changes(library_su
     assert_retained_rejection(library_submit, update_request_pin, 'requires shared certified library entry')
 
 
+def test_fresh_lowering_certificate_does_not_resurrect_old_intrinsic_review(library_submit):
+    records, _, _, _, root, entries, _ = library_submit
+    entries[LOWERING]['build_defines']['fixture_changed'] = True
+    (root / 'lowerings/fixture/1/fixture.yaml').write_text(yaml.safe_dump(entries[LOWERING]))
+    current_hash = artifacts.digest(entries[LOWERING])
+    receipt(records, LOWERING, current_hash, generation='-recertified')
+    library = Library(root, Store(records.path))
+    assert not library.validate()
+    assert library.state(LOWERING) == {'tier': 'shared', 'status': 'certified'}
+    assert library.state(INTRINSIC) == {'tier': 'experimental', 'status': 'certified'}
+
+    def update_request_pin(data):
+        for pin in data['library']['entries']:
+            if pin['id'] == LOWERING:
+                pin['content_sha256'] = current_hash
+
+    assert_retained_rejection(library_submit, update_request_pin, 'requires shared certified library entry')
+
+
 def test_submit_requires_message_1_1_for_library_section(library_submit):
     assert_retained_rejection(library_submit, lambda data: data.update(message_version='1.0'), '1.1')
 
@@ -237,6 +266,7 @@ def test_submit_rejects_an_extra_new_file_even_if_editable(library_submit):
 def test_shipped_lowering_path_must_be_new(library_submit):
     def existing(data):
         data['library']['shipped_files'][0]['path'] = 'src/bfs.cc'
+        data['payload']['content'] = data['payload']['content'].split('--- /dev/null\n+++ b/' + SHIPPED + '\n', 1)[0]
     assert_retained_rejection(library_submit, existing, 'may add only its declared lowering files')
 
 

@@ -532,7 +532,10 @@ struct Scope {
                         repetition=repetition, source_position=position, source=source_id)
         check = _trial_output(output, graph, source_id, data["context"]["threads"])
         dumps = 0
-        for file in sorted(folder.glob(raw.name+"*")):
+        def dump_order(path):
+            suffix = path.name[len(raw.name):]
+            return int(suffix[1:]) if re.fullmatch(r"\.[0-9]+", suffix) else -1
+        for file in sorted(folder.glob(raw.name+"*"), key=dump_order):
             content, raw_hash = native.observation_bytes(file, 64*1024*1024, "Callgrind statement output")
             if b"desc: Trigger: Client Request" not in content:
                 continue

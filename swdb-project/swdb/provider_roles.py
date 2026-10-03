@@ -197,6 +197,7 @@ def rewriting(config, request, source, package, store, folder, **kwargs):
             raise Failure(str(error)) from None
     metadata = {}
     schema = provider_workspace.FINAL_SCHEMA if config.get("workspace", True) else rewrite.output_schema(config)
+    schema = provider_adapters.get(config).schema(config, schema)
     receipt = Path(folder)/"provider.json"
     try:
         response, metadata = rewrite.call(config, request, source, package, store, folder, **kwargs)

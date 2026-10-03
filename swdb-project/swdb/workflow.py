@@ -154,6 +154,9 @@ def get_record(args):
         library = Library(default_root(args.records),store=store)
         entry = library.get(args.id)
         if entry is not None:
+            problems = library.validate()
+            if problems:
+                raise Failure('library validation failed: ' + '; '.join(str(p) for p in problems[:5]))
             return {**entry, "content_sha256": library.content_sha256(args.id), **library.state(args.id)}
         raise Failure(f"record {args.id!r} does not exist")
     if getattr(args, "chain", False):

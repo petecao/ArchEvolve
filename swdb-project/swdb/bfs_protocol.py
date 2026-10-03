@@ -633,7 +633,8 @@ def freeze_protocol(args):
     except (KeyError, TypeError, ValueError) as exc:
         raise Failure(f"invalid protocol settings: {exc}") from None
     identities = {wid: verify_immutable(_get(store, wid, "workload")) for wid in settings["workloads"]}
-    companion = settings.get('correctness', {}).get('companion_cases', {}).get('parent_gather_race')
+    companion_cases = settings.get('correctness', {}).get('companion_cases', {})
+    companion = companion_cases.get('parent_gather_race') if isinstance(companion_cases, dict) else None
     if companion:
         identities[companion['workload']] = verify_immutable(_get(store, companion['workload'], 'workload'))
     return _save_immutable(args, request, "protocol", settings=settings, workload_identities=identities,

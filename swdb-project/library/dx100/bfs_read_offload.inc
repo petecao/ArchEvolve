@@ -44,12 +44,13 @@ void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &p
      int*hints=__dxc_tile_pointer<int>(c.tile[5]);
      for(unsigned k=0;k<count;++k){
       const NodeID v=vertices[k],u=frontier[k];const NodeID hint=hints[k];
-      if(hint<0){
-       const bool claimed=compare_and_swap(parent[v],hint,u);
+      const bool claimed=hint<0&&compare_and_swap(parent[v],hint,u);
+#ifdef SWDB_DXC_DIAGNOSTIC
        const int fresh=__atomic_load_n(&parent[v],__ATOMIC_RELAXED);
-       __dxc_cas_probe(v,hint,claimed,g.out_degree(v)?-g.out_degree(v):-1,fresh,num_nodes);
-       if(claimed){parent[v]=u;lqueue.push_back(v);}
-      }
+       const int degree=g.out_degree(v);
+       __dxc_cas_probe(v,hint,claimed,degree?-degree:-1,fresh,num_nodes);
+#endif
+      if(claimed){parent[v]=u;lqueue.push_back(v);}
      }
     }
    }

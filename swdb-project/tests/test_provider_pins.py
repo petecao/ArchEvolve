@@ -125,6 +125,9 @@ def test_codex_full_files_is_strict_array_contract(proposal_setup, emulated_prov
     schema = json.loads(Path(argv[argv.index('--output-schema')+1]).read_text())
     assert schema['properties']['files']['type'] == 'array'
     assert schema['properties']['files']['items']['additionalProperties'] is False
+    from swdb import artifacts
+    receipt=data['attempts'][0]['provider']
+    assert receipt['role']=='rewriting' and receipt['output_schema_sha256']==artifacts.digest(schema)
     candidate = json.loads(proposal_setup[0].swdb('get',data['candidate'],'--format','json').stdout)
     assert 'int alpha = 14' in (Path(candidate['artifact']['path'])/'src/bfs.cc').read_text()
 

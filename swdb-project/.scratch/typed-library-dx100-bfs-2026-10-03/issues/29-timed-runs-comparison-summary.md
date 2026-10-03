@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** task
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 28
 **Spec:** `../spec.md`
 **Needs go-ahead:** Yes: Yan-Ru approves the mbit10 dispatch before it starts (Q62).
@@ -18,3 +18,9 @@ Created: 2026-10-03
 - [ ] A one-page summary with basis labels is drafted for Yan-Ru to send.
 
 ## Comments
+
+Implementation support added 2026-10-03 ET: `tools/typed_library_gem5_driver.py --stage timed` requires the completed prepare/companion receipts for the same `--id`, mandatory `--approval-reference`, an actually verified mbit10 socket lane and fresh stage resource admission. It reopens both companion identities and acceptance before dispatch, runs the fresh full-source scalar and certified candidate on each of the two frozen workloads, forms exact one-replay aggregates, records both comparisons whatever the qualified point ratio, and writes a one-page `first-result.md` operator draft with basis labels and a status table. Candidate samples require verifier/frontier and read-only/full/tail acceptance. Derived library states are included, with no self-promotion.
+
+The command refuses inconclusive/refuted companion outcomes before any timed dispatch. Default gem5 memory remains 48 GiB and is never replaced by global free memory or a smaller prepare budget. The local driver tests pass; they are request/admission checks, not timing or target evidence. No timed gem5 run or summary of actual results has been produced yet; this ticket's actual acceptance remains pending.
+
+- 2026-10-03: Claimed by root for the authorized two-lane evaluation. Bounded public drivers are prepared; actual dispatch awaits source-sync approval, and gem5 additionally requires current promotion and sufficient lane-node memory. No result is inferred from preparation.

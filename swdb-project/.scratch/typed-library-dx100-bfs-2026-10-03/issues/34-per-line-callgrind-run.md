@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** task
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 08, 33
 **Spec:** `../spec.md`
 **Needs go-ahead:** Yes: Yan-Ru approves the mbit10 dispatch before it starts (Q62).
@@ -15,3 +15,5 @@ Created: 2026-10-03
 - [ ] The region profile with per-line data is committed after Yan-Ru approves.
 
 ## Comments
+
+- 2026-10-03: Claimed by root for the authorized two-lane evaluation. Bounded public drivers are prepared; actual dispatch awaits source-sync approval, and gem5 additionally requires current promotion and sufficient lane-node memory. No result is inferred from preparation.

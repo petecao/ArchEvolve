@@ -144,7 +144,10 @@ def validate(rows):
                 or type(row.get("line")) is not int or not 0 <= row["line"] < 2**64
                 or not isinstance(row.get("events"), dict) or not row["events"]
                 or any(not isinstance(k, str) or not k or type(v) is not int or not 0 <= v < BOUND
-                       for k, v in row["events"].items())):
+                       for k, v in row["events"].items())
+                or not isinstance(row.get("execution", {}), dict)
+                or any(not isinstance(k, str) or type(v) is not int or v < 0
+                       for k, v in row.get("execution", {}).items())):
             raise Failure("invalid Callgrind per-line row")
         identity = (row["path"], row["function"], row["line"],
                     tuple(sorted(row.get("execution", {}).items())))

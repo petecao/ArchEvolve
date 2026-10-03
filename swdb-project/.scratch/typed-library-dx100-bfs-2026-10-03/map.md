@@ -13,7 +13,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 |---|---|---|---|---|
 | 01 | [Send the Phase 0 decision note and Josh's statement-name mapping](issues/01-send-decision-note-and-mapping.md) | ready-for-human | — |  |
 | 02 | [Peter confirms the license for files ported from Extensa](issues/02-license-confirmation.md) | ready-for-human | — |  |
-| 03 | [Decision records ADR 0007–0011 and the archevolve-handoff tracker updates](issues/03-design-session-commit.md) | ready-for-agent | 01 |  |
+| 03 | [Decision records ADR 0007–0011 and the archevolve-handoff tracker updates](issues/03-design-session-commit.md) | claimed | 01 |  |
 | 04 | [Per-person team update after the decision-record commit](issues/04-team-update.md) | ready-for-human | 03 |  |
 
 ## Phase 2a: prefactors
@@ -22,8 +22,8 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 |---|---|---|---|---|
 | 05 | [Prefactor: intrinsic records accept a hardware interface](issues/05-intrinsic-records-accelerator-interface.md) | resolved | 03 |  |
 | 06 | [Prefactor: offload strategy effect and the DX100 read-offload strategy](issues/06-offload-strategy-effect.md) | resolved | 03 |  |
-| 07 | [Prefactor: provider launcher runs every agent role](issues/07-role-based-provider-launcher.md) | ready-for-agent | 03 |  |
-| 08 | [Dispatch preflight: disk and memory](issues/08-dispatch-preflight.md) | ready-for-agent | — |  |
+| 07 | [Prefactor: provider launcher runs every agent role](issues/07-role-based-provider-launcher.md) | claimed | 03 |  |
+| 08 | [Dispatch preflight: disk and memory](issues/08-dispatch-preflight.md) | resolved | — |  |
 
 ## Phase 2b: library and certification on the Mac
 
@@ -39,7 +39,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 16 | [Calibration on the T17-fixed authors' BFS, with the BFS matrix](issues/16-calibration-and-bfs-matrix.md) | resolved | 13, 14 |  |
 | 17 | [BFS read-offload rewrite contract and the YAML draft for Peter](issues/17-bfs-read-offload-contract.md) | resolved | 06, 10 |  |
 | 18 | [BFS candidate-artifact certification](issues/18-bfs-candidate-certification.md) | resolved | 16, 17 |  |
-| 19 | [Submit a patch that ships the lowering header](issues/19-submit-patch-with-library-header.md) | ready-for-agent | 11, 15 |  |
+| 19 | [Submit a patch that ships the lowering header](issues/19-submit-patch-with-library-header.md) | claimed | 11, 15 |  |
 | 20 | [Peter's §5 patch with fixes E1–E5, certified](issues/20-peter-section5-patch.md) | resolved | 13, 14, 18, 19, 17 |  |
 | 21 | [Send Peter the contract YAML](issues/21-send-peter-contract-yaml.md) | ready-for-human | 17 |  |
 | 22 | [Yan-Ru promotes the DX100 entries and the BFS contract](issues/22-promote-dx100-entries.md) | ready-for-human | 15, 20 |  |
@@ -48,13 +48,13 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 
 | # | Ticket | Status | Blocked by | Go-ahead |
 |---|---|---|---|---|
-| 23 | [Read-only gem5 checks: execution case, frontier sizes, parent-gather race](issues/23-read-only-gem5-checks.md) | ready-for-agent | 03 |  |
-| 24 | [Retention and team-claim records; readers accept pruned files](issues/24-retention-and-team-claim-records.md) | ready-for-agent | 03 |  |
-| 25 | [swdb prune: dry run, approval and apply](issues/25-prune-listing-and-apply.md) | ready-for-agent | 24 |  |
-| 26 | [Automatic pruning of bulky raw output (ArchEvolve mode)](issues/26-automatic-pruning.md) | ready-for-agent | 24 |  |
-| 27 | [Real profile package for the scalar-only snapshot on mbit10](issues/27-profile-package-scalar-only.md) | ready-for-agent | 05, 08 | yes |
-| 28 | [Freeze the new protocol, submit the patch, run the companion case](issues/28-freeze-protocol-and-companion-runs.md) | ready-for-agent | 08, 20, 22, 23, 26, 27 | yes |
-| 29 | [Timed gem5 runs, comparison and team summary](issues/29-timed-runs-comparison-summary.md) | ready-for-agent | 28 | yes |
+| 23 | [Read-only gem5 checks: execution case, frontier sizes, parent-gather race](issues/23-read-only-gem5-checks.md) | resolved | 03 |  |
+| 24 | [Retention and team-claim records; readers accept pruned files](issues/24-retention-and-team-claim-records.md) | resolved | 03 |  |
+| 25 | [swdb prune: dry run, approval and apply](issues/25-prune-listing-and-apply.md) | resolved | 24 |  |
+| 26 | [Automatic pruning of bulky raw output (ArchEvolve mode)](issues/26-automatic-pruning.md) | resolved | 24 |  |
+| 27 | [Real profile package for the scalar-only snapshot on mbit10](issues/27-profile-package-scalar-only.md) | claimed | 05, 08 | yes |
+| 28 | [Freeze the new protocol, submit the patch, run the companion case](issues/28-freeze-protocol-and-companion-runs.md) | claimed | 08, 20, 22, 23, 26, 27 | yes |
+| 29 | [Timed gem5 runs, comparison and team summary](issues/29-timed-runs-comparison-summary.md) | claimed | 28 | yes |
 | 30 | [Send the first gem5 result and record the team claim](issues/30-send-first-result.md) | ready-for-human | 29 |  |
 | 31 | [Fallback contract: the CPU loads the parent value itself](issues/31-fallback-contract.md) | needs-triage | 28 | yes |
 | 32 | [Clean up existing run output on mbit10](issues/32-retroactive-cleanup.md) | ready-for-human | 25 | yes |
@@ -63,10 +63,10 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 
 | # | Ticket | Status | Blocked by | Go-ahead |
 |---|---|---|---|---|
-| 33 | [Per-line callgrind collection inside TDStep](issues/33-per-line-callgrind-collection.md) | ready-for-agent | — |  |
-| 34 | [Per-line callgrind run on mbit10](issues/34-per-line-callgrind-run.md) | ready-for-agent | 08, 33 | yes |
-| 35 | [Agent-claim storage on statement annotations and access patterns](issues/35-statement-claims-storage.md) | ready-for-agent | 03 |  |
-| 36 | [swdb annotate, scoring and the statement table for Josh](issues/36-annotate-and-score.md) | ready-for-agent | 07, 34, 35 | yes |
+| 33 | [Per-line callgrind collection inside TDStep](issues/33-per-line-callgrind-collection.md) | resolved | — |  |
+| 34 | [Per-line callgrind run on mbit10](issues/34-per-line-callgrind-run.md) | claimed | 08, 33 | yes |
+| 35 | [Agent-claim storage on statement annotations and access patterns](issues/35-statement-claims-storage.md) | resolved | 03 |  |
+| 36 | [swdb annotate, scoring and the statement table for Josh](issues/36-annotate-and-score.md) | claimed | 07, 34, 35 | yes |
 | 37 | [Send Josh the statement table](issues/37-send-josh-statement-table.md) | ready-for-human | 36 |  |
 
 ## Phase 4b: BC
@@ -119,6 +119,8 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 
 - Ticket 18, completed 2026-10-03: The final exact BFS candidate passes ten matrix cells and sixteen controls, including forged frontier prints. [18-bfs-candidate-certification](issues/18-bfs-candidate-certification.md).
 
-- Ticket 20, completed 2026-10-03: The delivered Peter section 5 patch implements E1-E5 and ships the exact lowering header; tree 586b6c3e4edc1f040cc2c50e74fd88f1906b551b28fc0d065b6912e5cb94976c. [20-peter-section5-patch](issues/20-peter-section5-patch.md).
+- Ticket 20, completed 2026-10-03: The delivered Peter section 5 patch implements E1-E5 and ships the exact lowering header; tree 991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1. [20-peter-section5-patch](issues/20-peter-section5-patch.md).
 
 - 2026-10-03: Tickets05,06,09,10,15,17 implementation complete with hash-bound evidence and explicit target assumptions; see each Answer. General autonomous implementation/sync instruction authorizes this batch commit; ADRs remain proposed. Human sends/reviews retain their own receipts.
+
+- 2026-10-03: Tickets08,23–26,33,35 implementation gates pass; their Answers preserve fixture-versus-execution boundaries. Tickets27–29,34,36 have bounded real drivers and await actual admitted runs; see [progress](progress.md).
