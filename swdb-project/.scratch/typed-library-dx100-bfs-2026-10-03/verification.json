@@ -343,7 +343,7 @@
     "review_base": "f6972ebbf9c842c1a7091716505577d06c637231",
     "actual_annotation": "Actualattempt3 completed and independently audited; metadata published/read back6c65bdf."
   },
-  "updated_at": "2026-10-03 09:23 ET",
+  "updated_at": "2026-10-03 09:26 ET",
   "library_target_state_fix": {
     "review_base": "f642a94ba41e79f79b28a540cb8d758e15bec633",
     "cause": "Completed actual candidate_build records were mistaken for completed target execution, falsely refuting19cited entries.",
@@ -361,6 +361,24 @@
       "shared_certified": 21,
       "entries": 21
     },
-    "publication": "pending this reviewed batch"
+    "publication": "Published and synchronized 5943c9a3aa3a74fc55d1693b1e59bc4fe8a06f9a; live mbit10 state readback at2026-10-03 09:25 ET.",
+    "remote_readback": {
+      "observed_utc": "2026-10-03T13:25:56.419229+00:00",
+      "observed_et": "2026-10-03 09:25 ET",
+      "head": "5943c9a3aa3a74fc55d1693b1e59bc4fe8a06f9a",
+      "entries": 21,
+      "shared_certified": 21,
+      "validated_records": 443,
+      "socket_and_legacy_leases": "released",
+      "node_memfree_gib": [
+        30.026004791259766,
+        22.84363555908203
+      ],
+      "disk_free_gib": [
+        43.09092330932617,
+        73.42321014404297
+      ],
+      "evidence_origin": "live operator tool output; no raw file copied"
+    }
   }
 }
