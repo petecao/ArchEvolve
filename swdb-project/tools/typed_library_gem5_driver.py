@@ -65,6 +65,7 @@ def current_library(store):
     sha = lib.content_sha256(CONTRACT)
     receipts = [row.data for row in store.of_kind('certification')
         if row.data.get('entry') == {'id': CONTRACT, 'content_sha256': sha}
+        and lib.current_certification(row.data)
         and row.data.get('verdict') == 'certified'
         and row.data.get('evidence_kind') == 'execution'
         and row.data.get('candidate', {}).get('contract') == CONTRACT
@@ -74,12 +75,7 @@ def current_library(store):
         and row.data.get('matrix') and all(cell.get('status') == 'passed' for cell in row.data['matrix'])
         and row.data.get('negative_controls') and all(cell.get('status') == 'rejected' for cell in row.data['negative_controls'])]
     need(receipts, 'requires a current passing certification of the exact scalar-only patched tree')
-    ids = set(contract['uses_intrinsics']) | set(contract['uses_library_operations'])
-    for rid in contract['uses_intrinsics']:
-        intrinsic = lib.get(rid)
-        need(intrinsic is not None, f'missing intrinsic {rid}')
-        ids.update(intrinsic['lowerings'])
-    pins = [{'id': rid, 'content_sha256': lib.content_sha256(rid)} for rid in sorted(ids)]
+    pins = lib.dependency_pins(CONTRACT)
     for pin in [{'id': CONTRACT, 'content_sha256': sha}] + pins:
         state = lib.state(pin['id'])
         need(state['tier'] == 'shared' and state['status'] in {'certified', 'evaluated_on_target'},

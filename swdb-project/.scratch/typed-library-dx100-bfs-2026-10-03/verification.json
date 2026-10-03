@@ -1,0 +1,264 @@
+{
+  "frozen_collected_cases": 3661,
+  "current_collected_cases": 3679,
+  "unique_verified_cases": 3679,
+  "passed": 3643,
+  "skipped": 36,
+  "unresolved": [],
+  "corrected_initial_failures": [
+    [
+      "tests.test_intrinsics",
+      "test_add_writes_intrinsics_to_their_folder_and_the_database_lists_them",
+      "failed"
+    ],
+    [
+      "tests.test_required_isa",
+      "test_profile_refuses_a_machine_without_the_extension",
+      "failed"
+    ],
+    [
+      "tests.test_required_isa",
+      "test_profile_refuses_a_machine_that_lists_no_flags",
+      "failed"
+    ],
+    [
+      "tests.test_required_isa",
+      "test_profile_with_the_extension_reaches_the_host_check",
+      "failed"
+    ],
+    [
+      "tests.test_required_isa",
+      "test_profile_refuses_a_march_the_machine_cannot_run_even_without_intrinsics",
+      "failed"
+    ],
+    [
+      "tests.test_required_isa",
+      "test_profile_accepts_march_native_built_on_the_machine",
+      "failed"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_public_aggregate_function_result_reopens_complete_ordered_grid",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_aggregate_declaration_and_current_public_record_cannot_diverge[missing]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_aggregate_declaration_and_current_public_record_cannot_diverge[wrong-id]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_aggregate_declaration_and_current_public_record_cannot_diverge[unavailable]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_aggregate_declaration_and_current_public_record_cannot_diverge[wrong-request-role]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_aggregate_declaration_and_current_public_record_cannot_diverge[wrong-request-order]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_aggregate_declaration_and_current_public_record_cannot_diverge[wrong-component-order]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_aggregate_declaration_and_current_public_record_cannot_diverge[component-hash]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_aggregate_declaration_and_current_public_record_cannot_diverge[current-protocol]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_aggregate_declaration_and_current_public_record_cannot_diverge[incomplete]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_aggregate_declaration_and_current_public_record_cannot_diverge[candidate]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_aggregate_declaration_and_current_public_record_cannot_diverge[gain]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[request-role]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[request-protocol]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[trial]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[bool-trial]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[source]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[binding-role]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[binding-protocol]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[settings-hash]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[duration]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[duplicate-timing]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[configuration]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[correctness]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[classification]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_consistently_rehashed_components_still_require_frozen_semantics[promoted-fixture]",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_batch_admission",
+      "test_fixture_cannot_be_promoted_to_actual_series_completion",
+      "error"
+    ],
+    [
+      "tests.test_bfs_simulator_recovery",
+      "test_gzip_transport_keeps_frozen_configuration_and_instrumentation",
+      "error"
+    ],
+    [
+      "tests.test_bfs_t16_reference",
+      "test_one_primary_grid_is_admitted_under_both_protocols",
+      "error"
+    ],
+    [
+      "tests.test_bfs_t16_reference",
+      "test_shared_series_without_the_shared_binding_is_refused",
+      "error"
+    ]
+  ],
+  "affected_file_rerun_cases": 391,
+  "fresh_receipts": [
+    "affected-fixtures.xml",
+    "affected-isa.xml",
+    "dependency-library-final.xml",
+    "dependency-producer-delivery-final.xml",
+    "dependency-gem5-driver.xml",
+    "dependency-submit-final.xml"
+  ],
+  "partitions": [
+    {
+      "partition": 1,
+      "cases": 1221,
+      "passed": 1212,
+      "skipped": 3,
+      "failed_or_error": 6
+    },
+    {
+      "partition": 2,
+      "cases": 1220,
+      "passed": 1197,
+      "skipped": 23,
+      "failed_or_error": 0
+    },
+    {
+      "partition": 3,
+      "cases": 1220,
+      "passed": 1180,
+      "skipped": 10,
+      "failed_or_error": 30
+    }
+  ],
+  "created_at": "2026-10-03T08:15:14.708383+00:00",
+  "scope": "Local Mac regression coverage only; no mbit10 evaluation or gain evidence.",
+  "method": "Disjoint frozen full-suite partitions plus fresh complete affected-file reruns, reconciled by exact testcase identity against final collection.",
+  "receipts": [
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/partition-1.xml",
+      "sha256": "0c9264905d646fd762d0291fa24812cafa87cdf69b0d59b1870b6c40a56f654c"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/partition-2.xml",
+      "sha256": "389ac157c3f650084d2337ae6d7b2d96f1add6bd69233e283019632045dd9a64"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/partition-3.xml",
+      "sha256": "6d287159c714430be0f0543073dd3854e20080c1335acf1d357f0dd9ec1314c2"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/affected-fixtures.xml",
+      "sha256": "a86312b3ef0134a3df7ecf2319a5e93828d396652b17a2733e7b8f953f307616"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/affected-isa.xml",
+      "sha256": "abfb0b782f79e6e33211d4d4070faabb8985496d267ab0cf0ab90697b81ee6dc"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/dependency-library-final.xml",
+      "sha256": "1146e9591bdaa5ea7245358297ca1465a83f23c6b30187ad5370d0a00f1efbde"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/dependency-producer-delivery-final.xml",
+      "sha256": "cc5914912a2b2e338fbbcc28725b5518023e20308c6a62ccd5ab3460f41c150c"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/dependency-gem5-driver.xml",
+      "sha256": "879956920cd32744f3db1ad257abc3254bd479611386f061e850614c4cdac6ba"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/dependency-submit-final.xml",
+      "sha256": "99387126ff5118c14113ebf78144e7ef25d8fb6bad9c68a61e1b17385761bb79"
+    }
+  ],
+  "validated_records": 404
+}

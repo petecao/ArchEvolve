@@ -19,6 +19,12 @@ PREFIXES = {'intrinsic': 'intrinsic.', 'lowering': 'lowering.',
 TEST_MODES = {'runtime_guard', 'static_assertion', 'structural', 'differential_test'}
 DISCHARGE_MODES = TEST_MODES | {'observed_on_target', 'assumed', 'not_applicable', 'open'}
 ROLES = {'precondition', 'postcondition', 'frame', 'legality', 'preservation'}
+PROMOTION_REVIEWER = 'Yan-Ru Jhou'
+
+
+def authorized_reviewer(name):
+    """ADR 0007 assigns shared-library review to the project maintainer."""
+    return isinstance(name, str) and name.strip().casefold() in {'yan-ru jhou', 'yanrujhou'}
 
 
 def default_root(records=None):
@@ -55,6 +61,46 @@ class Library:
         if data is None:
             raise ValueError(f'unknown library entry {entry_id}')
         return artifacts.digest(data)
+
+    def dependency_pins(self, entry_id):
+        """Bind every referenced normative entry, including nested dependencies.
+
+        Intrinsic/lowering links form intentional cycles. Visit each entry once
+        and omit the subject itself, whose hash is already in the receipt.
+        """
+        if self.get(entry_id) is None:
+            raise ValueError(f'unknown library entry {entry_id}')
+        seen = {entry_id}
+        pending = [entry_id]
+        while pending:
+            data = self.get(pending.pop())
+            kind = data['kind']
+            if kind == 'lowering':
+                references = [data['intrinsic']]
+            elif kind == 'intrinsic':
+                references = data.get('lowerings', [])
+            else:
+                references = data.get('uses_intrinsics', []) + data.get('uses_library_operations', [])
+            for dependency in references:
+                if self.get(dependency) is None:
+                    raise ValueError(f'unknown library dependency {dependency}')
+                if dependency not in seen:
+                    seen.add(dependency)
+                    pending.append(dependency)
+        return [{'id': dependency, 'content_sha256': self.content_sha256(dependency)}
+                for dependency in sorted(seen - {entry_id})]
+
+    def current_certification(self, receipt):
+        """Historical evidence cannot certify changed semantics or dependencies."""
+        if not receipt or receipt.get('evidence_kind') != 'execution':
+            return False
+        try:
+            entry_id = receipt['entry']['id']
+            return (receipt['entry'] == {'id': entry_id, 'content_sha256': self.content_sha256(entry_id)}
+                    and sorted(receipt.get('dependencies', []), key=lambda pin: pin['id'])
+                    == self.dependency_pins(entry_id))
+        except (KeyError, TypeError, ValueError):
+            return False
 
     def resolve(self, location):
         """No symlinks or parent traversal may escape a declared reference root."""
@@ -264,7 +310,9 @@ class Library:
             raise ValueError(f'unknown library entry {entry_id}')
         sha = self.content_sha256(entry_id)
         records = [r.data for r in store.records] if store else []
-        relevant = [r for r in records if r.get('kind') == 'certification' and r.get('entry') == {'id':entry_id,'content_sha256':sha}]
+        relevant = [r for r in records if r.get('kind') == 'certification'
+                    and r.get('entry', {}).get('id') == entry_id
+                    and self.current_certification(r)]
         status = 'draft'
         if any(r.get('verdict') == 'failed' and any(c.get('status') == 'failed' for c in r.get('matrix',[])) for r in relevant):
             status = 'refuted'
@@ -282,11 +330,12 @@ class Library:
                 status = 'refuted'
         dependencies = data.get('lowerings',[]) if data['kind'] == 'intrinsic' else [entry_id]
         def current_review(review):
-            if review.get('kind') != 'review' or review.get('target') != {'id':entry_id,'content_sha256':sha}:
+            if (review.get('kind') != 'review' or not authorized_reviewer(review.get('reviewer'))
+                    or review.get('target') != {'id':entry_id,'content_sha256':sha}):
                 return False
             evidence = [store.get(rid,'certification') for rid in review.get('evidence',[])] if store else []
             covered = {c['entry']['id'] for c in evidence if c and c.get('verdict') == 'certified'
-                       and c['entry']['id'] in dependencies and c['entry']['content_sha256'] == self.content_sha256(c['entry']['id'])}
+                       and c['entry']['id'] in dependencies and self.current_certification(c)}
             return set(dependencies) <= covered
         tier = 'shared' if any(current_review(r) for r in records) else 'experimental'
         target_states = []
@@ -299,7 +348,15 @@ class Library:
             cited = [library.get('contract',{})] + library.get('entries',[])
             if {'id':entry_id,'content_sha256':sha} not in cited:
                 continue
+            # Target executions also describe a fixed dependency closure. An
+            # old proposal cannot establish target status for revised semantics.
+            if any(pin not in cited for pin in self.dependency_pins(entry_id)):
+                continue
             contract = self.get(library.get('contract',{}).get('id'))
+            if (not contract or library.get('contract') != {
+                    'id': contract['id'], 'content_sha256': self.content_sha256(contract['id'])}
+                    or any(pin not in cited for pin in self.dependency_pins(contract['id']))):
+                continue
             target_state = self._target_state(evaluation, candidate, contract, store)
             if target_state:
                 target_states.append(target_state)
@@ -336,7 +393,11 @@ class Library:
         witnessed = witness and all(c.get('coverage',{}).get(witness,{}).get('state') == 'observed' for c in checks)
         if correctness.get('state') == 'passed' and completed and witnessed:
             return 'evaluated_on_target'
-        return 'inconclusive'
+        # A completed run has had its opportunity to satisfy the required
+        # witness. Missing or failed checks refute that execution; only an
+        # unfinished run remains inconclusive. state() preserves this result
+        # even when another execution supplies a positive witness.
+        return 'refuted'
 
 
 def promote(args):
@@ -346,6 +407,8 @@ def promote(args):
     from swdb import writer
     from swdb.store import Store
     from swdb.cli import Failure
+    if not authorized_reviewer(args.reviewer):
+        raise Failure(f'promotion requires the designated reviewer {PROMOTION_REVIEWER}')
     store = Store(args.records)
     library = Library(args.library or paths.HOME / 'library', store)
     issues = library.validate()
@@ -360,14 +423,17 @@ def promote(args):
     entry_ids = [args.id]
     if library.get(args.id)['kind'] == 'intrinsic':
         entry_ids = library.get(args.id)['lowerings']
-    evidence = [r.id for r in store.of_kind('certification') if r.data.get('entry',{}).get('id') in entry_ids and r.data.get('verdict') == 'certified' and r.data.get('entry',{}).get('content_sha256') == library.content_sha256(r.data['entry']['id'])]
+    evidence = [r.id for r in store.of_kind('certification')
+                if r.data.get('entry',{}).get('id') in entry_ids
+                and r.data.get('verdict') == 'certified'
+                and library.current_certification(r.data)]
     if not evidence:
         raise Failure('no current passing certification receipt')
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()
     record = {'kind':'review','schema_version':'0.4','id':f'review.{args.id}.{uuid.uuid4().hex[:12]}',
               'status':'reviewed','created':writer.today(),'updated':writer.today(),
               'provenance':[{'id':'review','kind':'human_report','description':f'Review recorded by {args.reviewer} through swdb promote.','uri':None}],
-              'target':{'id':args.id,'content_sha256':sha},'reviewer':args.reviewer,'reviewed_at':now,'evidence':evidence}
+              'target':{'id':args.id,'content_sha256':sha},'reviewer':PROMOTION_REVIEWER,'reviewed_at':now,'evidence':evidence}
     writer.commit(args.records,new=[record])
     return record
 
@@ -396,12 +462,7 @@ def proposal_gate(request, store):
     contract = library.get(section['contract']['id'])
     if contract['kind'] != 'rewrite_contract':
         raise Failure('library contract pin must identify a rewrite contract')
-    required = set(contract['uses_intrinsics']) | set(contract['uses_library_operations'])
-    for intrinsic_id in contract['uses_intrinsics']:
-        intrinsic = library.get(intrinsic_id)
-        if intrinsic is None or intrinsic['kind'] != 'intrinsic':
-            raise Failure('contract intrinsic does not resolve')
-        required.update(intrinsic['lowerings'])
+    required = {pin['id'] for pin in library.dependency_pins(contract['id'])}
     if not required <= set(ids):
         raise Failure('library section omits a contract dependency: '+', '.join(sorted(required-set(ids))))
     editable = set(request['constraints']['editable_files'])
@@ -453,11 +514,13 @@ def validate_record(record, ctx):
     elif record.kind == 'review':
         for index, rid in enumerate(data['evidence']):
             certification = ctx.store.get(rid, 'certification')
-            if not certification or certification.get('verdict') != 'certified':
-                yield Problem(record.rel,f'evidence[{index}]','review evidence requires passing certification')
+            if not certification or certification.get('verdict') != 'certified' or certification.get('evidence_kind') != 'execution':
+                yield Problem(record.rel,f'evidence[{index}]','review evidence requires passing execution certification')
         library = Library(default_root(ctx.store.dir), ctx.store)
         target = library.get(data['target']['id'])
         if target:
+            if not authorized_reviewer(data.get('reviewer')):
+                yield Problem(record.rel,'reviewer',f'shared library review requires {PROMOTION_REVIEWER}')
             if library.content_sha256(target['id']) != data['target']['content_sha256']:
                 # Historical review records remain valid when normative content changes.
                 return

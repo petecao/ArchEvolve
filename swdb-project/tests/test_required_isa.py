@@ -1,6 +1,6 @@
 """Required ISA: implementations name the intrinsics they call, their build flags must enable
 the extensions those need, and `swdb profile` refuses a machine that cannot run them.
-Created 2026-09-23."""
+Created 2026-09-23. Updated 2026-10-03 ET."""
 
 import pytest
 
@@ -103,6 +103,7 @@ def test_required_isa_is_the_union_of_the_intrinsics(repo):
 def stub(records):
     records.add_stub()
     records.copy_repo("intrinsics")
+    records.copy_repo("operations")
     impl = records.read("implementations/stub-impl.yaml")
     impl["uses_intrinsics"] = ["mm512_i32gather_ps"]
     impl["build"]["flags"] = "-mavx512f"

@@ -97,3 +97,24 @@ def test_prepare_budget_admits_serial_gcc_without_weakening_gem5_budget():
     assert driver.stage_budgets(args) == (48, 8)
     args.stage = 'timed'
     assert driver.stage_budgets(args) == (48, 8)
+
+
+def test_prepare_ignores_a_newer_receipt_without_current_dependencies(monkeypatch):
+    """Test-only shared state; no review or dispatch is recorded."""
+    from swdb.library import Library
+    from swdb.store import Record
+    store = Store(driver.PROJECT / 'records')
+    lib = Library(driver.PROJECT / 'library')
+    receipts = [row for row in store.of_kind('certification')
+                if row.data.get('entry', {}).get('id') == driver.CONTRACT
+                and row.data.get('candidate') and lib.current_certification(row.data)]
+    assert receipts, 'requires the durable dependency-bound candidate receipt'
+    original = sorted(receipts, key=lambda row: (row.data.get('created_at', ''), row.id))[-1]
+    stale = copy.deepcopy(original.data)
+    stale.update(id='certification.newer-unbound-selection-fixture', created_at='9999-01-01T00:00:00Z')
+    stale.pop('dependencies')
+    rows = [*store.records, Record('fixture-newer-unbound.yaml', stale)]
+    isolated = Store(store.dir, indexed_records=rows)
+    monkeypatch.setattr(Library, 'state', lambda self, entry_id: {'tier': 'shared', 'status': 'certified'})
+    _, selected = driver.current_library(isolated)
+    assert selected['id'] == original.id

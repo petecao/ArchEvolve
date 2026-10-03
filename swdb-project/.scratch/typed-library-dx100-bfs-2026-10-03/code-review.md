@@ -1,0 +1,77 @@
+# Implementation code review
+
+Created: 2026-10-03 ET
+
+Review base: `9ef348fdaa5b26ff5e37a66d1781084b1b2eea40` on `yanrujhou_main`.
+Independent Standards and Spec agents reviewed the implementation through `ed8c233`.
+The final fixes and evidence are committed in the local correction batch. Both final independent reviews pass.
+
+| Axis | Priority | Finding | Correction and evidence |
+|---|---|---|---|
+| Standards | P1 | Fixture certification could grant real certification, sharing and submission | State, promotion and review validation require `evidence_kind: execution`. Temporary execution-envelope test doubles are explicitly labeled and isolated. Independent gate replay refuses fixture-only admission. |
+| Standards | P2 | An arbitrary reviewer could grant the shared tier | Promotion and current-review checks require Yan-Ru Jhou or the `yanrujhou` alias; persisted promotion uses the canonical name. Independent replay refuses unrelated reviewers. |
+| Spec | P1 | Differential certification compiled the canonical driver/header instead of the selected lowering's declared inputs | Compile the pinned lowering, driver and intrinsic reference through explicit include seams; validate the supported input set; honor build definitions; reject matrix overrides; recheck input hashes after execution. 109 focused regressions pass, including broken repinned headers, changed macros, drivers and source stability. All ten durable lowerings pass recertification. Fresh candidate receipt `certification.1e4397e31d594245bc10bd80ff2107f5` passes ten matrix cells and rejects sixteen controls. |
+| Spec | P2 | A completed missing witness became inconclusive and a positive run could hide it | Completed required-witness failure derives refuted and fails evaluator correctness/gain eligibility. Incomplete continuation/frontier output remains unverified. Six public evaluator regressions plus existing v2/read-only checks pass: 33 total. Library-state regressions pass: 31 total. |
+| Standards | P1 | Repinning intrinsic semantics could promote an unchanged lowering using an old receipt | Certification captures the complete dependency closure before execution, persists every normative hash, and checks those hashes after execution. State, review and promotion require current bindings. Ten new producer/schema regressions pass, including actual compiled changed-reference failure and mid-run mutation abort. All twelve fresh durable receipts pass; final admission checks are running. |
+| Standards | P2 | A stale target proposal could reinterpret its result using a changed contract witness | Target state requires the current contract hash and complete contract dependency closure before interpreting its checks. Both changed-witness and changed-dependency regressions pass. Independent replay confirms stale evidence derives draft, while a valid current proposal still grants evaluated_on_target. |
+
+The Standards agent independently rechecked the two admission fixes with the actual
+normative library and an isolated in-memory store. The Spec agent independently
+reproduced rejection of a broken repinned lowering and altered reference, and found
+no further actionable producer/witness issue. Human review, send, cleanup and
+real target-run tasks remain separate; fixture checks do not resolve those tasks.
+
+The earlier serial full-suite run was superseded after review fixes: 1,111 passed,
+15 skipped, one previously fixed failure, then an intentional interrupt. It is not a
+passing full-suite result. The fresh frozen suite contains 3,661 cases in 133 files,
+split into three disjoint file partitions with separate temporary directories,
+logs and JUnit receipts under `/private/tmp/swdb-typed-library-verification-20261003`.
+
+Full-suite follow-up, 03:37 ET: simulator batch-admission/recovery/T16 setup
+errors exposed a synthetic fixture missing `settings.workloads`. The fixture now
+explicitly declares its timed workload. All 174 tests in the three affected files
+pass in a fresh process; no product-code gate was weakened. Original test groups
+continue and their final results will be combined with the complete affected-file
+rerun, keeping the superseded setup errors visible in the verification ledger.
+
+Fixture audit, 03:40 ET: the intrinsic SQL test also assumed only three legacy
+rows. Its added-scatter assertions are preserved and inventory completeness now
+uses the authoritative YAML IDs. The complete affected-file rerun passes 184 cases
+in 48.77s. JUnit: `/private/tmp/swdb-typed-library-verification-20261003/affected-fixtures.xml`.
+No further stale accelerator inventories or production inventory defect were found.
+
+03:50 ET: partition3 finished with 1,180 passed,10 skipped and 30 setup errors.
+JUnit identity matching confirms every error is covered by the fresh passing
+affected-file receipt. Two other partitions remain active; no final full-suite
+pass is asserted until complete unique-case coverage is checked.
+
+Final Standards closeout, 04:08 ET: no new actionable documented-standard
+violation or baseline smell. All 21 current hashes/states and packet receipt
+references were independently checked. Human and real-target tasks remain open.
+
+Final Spec closeout, 04:09 ET: no new actionable issue in the local
+implementation. The BFS contract binds 18 dependency pins (nine intrinsic/lowering
+pairs; ALU is unused). All 21 current entries validate and remain experimental.
+Remote tickets 27/28/29/34/36 are unexecuted, ticket 31 is conditional and untriggered,
+and the eight human tickets remain open.
+
+Standards: four admission/custody findings corrected and independently confirmed.
+Spec: two producer/witness findings corrected and independently confirmed.
+No remaining actionable finding on either axis.
+
+Full partition closeout, 04:12 ET: partition1 finished 1,212 passed, three
+skipped and six failed; partition2 finished 1,197 passed and 23 skipped; partition3
+finished 1,180 passed, ten skipped and30 setup errors. One failure is the already
+corrected intrinsic inventory assertion. Five ISA-profile failures come from a
+fixture that copies intrinsic records without their operation dependencies; it
+now copies the operation folder too. Complete ISA-file rerun is active. Product
+validation and ISA rejection semantics remain unchanged.
+
+Final verification, 04:15 ET: all 3,679 current collected cases have exact
+receipt coverage: 3,643 pass, 36 skip, zero unresolved failure/error. The frozen
+3,661-case suite is combined with 391 unique fresh affected-file cases, including
+18 added review regressions. All 36 original fixture failures/errors have fresh
+passing case-matched receipts; original logs are preserved. The full ISA file
+passes 25 cases; final submit file passes 22; library 35, producer/delivery 120,
+gem5 driver 6. All 404 records validate and git diff --check passes. See
+[verification.json](verification.json) for hashes, partitions and corrections.

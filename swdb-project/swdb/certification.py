@@ -122,24 +122,105 @@ def operation_of(entry_id):
     raise Failure('entry has no supported DX100 differential-test operation: ' + entry_id)
 
 
+def lowering_build(entry_id, library, tile_sizes, threads):
+    """Bind a supported driver invocation to this lowering's normative pins."""
+    from swdb.library import Library
+    catalog = Library(library)
+    entry = catalog.get(entry_id)
+    if not entry or entry.get('kind') != 'lowering':
+        raise UsageError('DX100 differential certification requires a lowering entry; certify each intrinsic lowering')
+    try:
+        operation = operation_of(entry['intrinsic'])
+        intrinsic = catalog.get(entry['intrinsic'])
+        header = catalog.resolve(entry['location'])
+        driver = catalog.resolve(entry['differential_test'])
+        reference = catalog.resolve(intrinsic['reference_semantics'])
+    except (ValueError, KeyError, TypeError, Failure) as exc:
+        raise UsageError('unsupported or unresolved DX100 lowering inputs: ' + str(exc)) from None
+    if entry['location'].get('symbol') != '__dxc_' + operation:
+        raise UsageError('lowering symbol does not match the supported differential operation')
+    if intrinsic['reference_semantics'].get('symbol') != operation:
+        raise UsageError('reference symbol does not match the supported differential operation')
+    for path, digest in ((header, entry['code_sha256']), (driver, entry['differential_test']['sha256']),
+                         (reference, intrinsic['reference_semantics']['sha256'])):
+        if artifacts.file_hash(path) != digest:
+            raise UsageError('lowering certification source pin differs from bytes: ' + str(path))
+    driver_text = driver.read_text()
+    if any(driver_text.count('#include ' + seam) != 1
+           for seam in ('SWDB_DXC_LOWERING_HEADER', 'SWDB_DXC_REFERENCE_HEADER')):
+        raise UsageError('unsupported differential driver: requires the pinned lowering/reference include seams')
+    expected_inputs = {'operation': operation, 'seeds': [0], 'tile_sizes': list(tile_sizes),
+                       'threads': threads, 'indices': ['repeated', 'zero', 'tail'],
+                       'long_rows': operation == 'range_loop'}
+    declared_inputs = entry['differential_test'].get('input_set')
+    if not isinstance(declared_inputs, dict):
+        raise UsageError('unsupported differential input_set')
+    normalized_inputs = dict(declared_inputs)
+    declared_sizes = normalized_inputs.get('tile_sizes')
+    if not isinstance(declared_sizes, list) or any(type(s) is not int for s in declared_sizes):
+        raise UsageError('unsupported differential input_set tile_sizes')
+    normalized_inputs['tile_sizes'] = sorted(declared_sizes)
+    expected_inputs['tile_sizes'] = sorted(expected_inputs['tile_sizes'])
+    if (normalized_inputs != expected_inputs or
+            type(normalized_inputs.get('threads')) is not int or
+            type(normalized_inputs.get('long_rows')) is not bool or
+            any(type(seed) is not int for seed in normalized_inputs.get('seeds', []))):
+        raise UsageError('unsupported differential input_set; the driver supports only its declared deterministic DX100 cases')
+    definitions = entry['build_defines']
+    if not isinstance(definitions, dict) or set(definitions) - {'strict', 'tile_sizes', 'core_count', 'defines'}:
+        raise UsageError('unsupported lowering build_defines')
+    strict = definitions.get('strict')
+    if (not isinstance(strict, list) or
+            any(not isinstance(flag, str) or not re.fullmatch('[A-Za-z_][A-Za-z_0-9]*', flag) for flag in strict) or
+            not {'FUNC', 'GEM5', 'SWDB_STRICT'} <= set(strict) or
+            {'NUM_CORES', 'TILE_SIZE', 'SWDB_DXC_LOWERING_HEADER', 'SWDB_DXC_REFERENCE_HEADER'} & set(strict)):
+        raise UsageError('lowering build_defines must enable FUNC, GEM5 and SWDB_STRICT')
+    build_sizes = definitions.get('tile_sizes')
+    if (type(definitions.get('core_count')) is not int or definitions.get('core_count') != threads or
+            not isinstance(build_sizes, list) or any(type(s) is not int for s in build_sizes) or
+            sorted(build_sizes) != sorted(tile_sizes)):
+        raise UsageError('lowering build_defines matrix differs from the requested full tile/core matrix')
+    extra = definitions.get('defines', {})
+    reserved = {'FUNC', 'GEM5', 'SWDB_STRICT', 'NUM_CORES', 'TILE_SIZE',
+                'SWDB_DXC_LOWERING_HEADER', 'SWDB_DXC_REFERENCE_HEADER'}
+    if not isinstance(extra, dict):
+        raise UsageError('lowering build_defines.defines must be a macro mapping')
+    flags = ['-D' + name for name in strict]
+    for name, value in sorted(extra.items(), key=lambda item: str(item[0])):
+        if (not isinstance(name, str) or not re.fullmatch('[A-Za-z_][A-Za-z_0-9]*', name) or
+                name in reserved or type(value) not in (int, str, bool) or
+                isinstance(value, str) and any(ch in value for ch in ('\n', '\r', '\0'))):
+            raise UsageError('unsupported or reserved lowering macro definition: ' + str(name))
+        flags.append('-D' + name + '=' + (str(int(value)) if isinstance(value, bool) else str(value)))
+    flags.extend(['-DSWDB_DXC_LOWERING_HEADER=' + json.dumps(str(header)),
+                  '-DSWDB_DXC_REFERENCE_HEADER=' + json.dumps(str(reference))])
+    return operation, driver, flags, {'lowering': str(header), 'driver': str(driver),
+                                     'reference': str(reference), 'input_set': declared_inputs,
+                                     'build_defines': definitions,
+                                     'source_pins': [{'path': str(header), 'sha256': entry['code_sha256']},
+                                                     {'path': str(driver), 'sha256': entry['differential_test']['sha256']},
+                                                     {'path': str(reference), 'sha256': intrinsic['reference_semantics']['sha256']}]}
+
+
 def certify_lowering(entry_id, library, folder, tile_sizes, threads):
-    operation = operation_of(entry_id)
+    operation, driver, defines, inputs = lowering_build(entry_id, library, tile_sizes, threads)
     matrix, controls = [], []
-    driver = library / 'dx100/drivers/differential.cc'
     for size in tile_sizes:
         output = folder / f'{operation}-{size}'
-        build = compile_cpp(driver, output, library, tile_size=size, threads=threads)
+        build = compile_cpp(driver, output, library, tile_size=size, threads=threads, defines=defines)
         if build['returncode'] != 0:
-            matrix.append({'operation': operation, 'tile_size': size, 'status': 'failed', 'reason': 'build failed', 'build': build})
+            matrix.append({'operation': operation, 'tile_size': size, 'status': 'failed', 'reason': 'build failed',
+                           'build': build, 'certification_inputs': inputs})
             continue
         positive = execute([output, operation], output.with_suffix('.positive.json'), threads=threads)
         passed = positive['returncode'] == 0 and f'SWDB_DIFFERENTIAL_PASS:{operation}' in positive['stdout']
         matrix.append({'operation': operation, 'tile_size': size, 'threads': threads,
-                       'status': 'passed' if passed else 'failed', 'run': positive, 'build': build})
+                       'status': 'passed' if passed else 'failed', 'run': positive, 'build': build,
+                       'certification_inputs': inputs})
         for name, expected in CONTROLS[operation].items():
             # Each control gets its own built executable. A build failure can never reject a control.
             mutant = folder / f'{operation}-{size}-{name}'
-            control_build = compile_cpp(driver, mutant, library, tile_size=size, threads=threads)
+            control_build = compile_cpp(driver, mutant, library, tile_size=size, threads=threads, defines=defines)
             if control_build['returncode'] != 0:
                 controls.append({'id': name, 'tile_size': size, 'status': 'invalid', 'reason': 'build failed', 'build': control_build})
                 continue
@@ -151,15 +232,20 @@ def certify_lowering(entry_id, library, folder, tile_sizes, threads):
     if operation == 'wait':
         for size in tile_sizes:
             output = folder / f'store-{size}'
-            build = compile_cpp(driver, output, library, tile_size=size, threads=threads)
+            build = compile_cpp(driver, output, library, tile_size=size, threads=threads, defines=defines)
             if build['returncode'] != 0:
                 controls.append({'id': 'wrong_store_wait', 'tile_size': size, 'status': 'invalid', 'reason': 'build failed', 'build': build})
                 continue
             positive = execute([output, 'store'], output.with_suffix('.positive.json'), threads=threads)
-            matrix.append({'operation': 'store', 'tile_size': size, 'status': 'passed' if positive['returncode'] == 0 else 'failed', 'run': positive})
+            passed = positive['returncode'] == 0 and 'SWDB_DIFFERENTIAL_PASS:store' in positive['stdout']
+            matrix.append({'operation': 'store', 'tile_size': size, 'status': 'passed' if passed else 'failed',
+                           'run': positive, 'build': build, 'certification_inputs': inputs})
             run = execute([output, 'store', 'wrong_store_wait'], output.with_suffix('.negative.json'), threads=threads)
             status, reason = rejection(run, 'read_before_wait')
             controls.append({'id': 'wrong_store_wait', 'tile_size': size, 'status': status, 'reason': reason, 'run': run, 'build': build})
+    for source in inputs['source_pins']:
+        if artifacts.file_hash(Path(source['path'])) != source['sha256']:
+            raise Failure('pinned source changed during lowering certification: ' + source['path'])
     return matrix, controls
 
 
@@ -500,11 +586,13 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
     if calibrate:
         entry_id = entry_id or 'calibration.dx100_authors_t17'
         content_sha256 = artifacts.digest({'source_tree': artifacts.identify(ROOT / 'apps/dx100')['sha256'], 'fix': 'wait_ready(tile3) -> wait_ready(tile5)', 'strict_layer': artifacts.identify(library_root / 'dx100/strict')['sha256']})
+        dependencies = []
     else:
         entry = catalog.get(entry_id)
         if not entry:
             raise UsageError('unknown library entry: ' + entry_id)
         content_sha256 = catalog.content_sha256(entry_id)
+        dependencies = catalog.dependency_pins(entry_id)
     base = artifacts.external_directory(runs_dir or '/private/tmp/swdb-certification')
     folder = base / ('certify-' + uuid.uuid4().hex)
     folder.mkdir()
@@ -555,10 +643,20 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
     verdict = 'certified' if matrix and all(c['status'] == 'passed' for c in matrix) and controls and all(c['status'] == 'rejected' for c in controls) else 'failed'
     if source_digest(library_root) != command_hash:
         raise Failure('certification source files changed during execution; results are not bound to one source identity')
-    if not calibrate and catalog.content_sha256(entry_id) != Library(library_root, store=store).content_sha256(entry_id):
-        raise Failure('normative library entry changed during execution; results are not bound to one content identity')
+    if not calibrate:
+        current_catalog = Library(library_root, store=store)
+        try:
+            current_content_sha256 = current_catalog.content_sha256(entry_id)
+            current_dependencies = current_catalog.dependency_pins(entry_id)
+        except ValueError as exc:
+            raise Failure('normative library dependency identity disappeared during execution: ' + str(exc)) from None
+        if content_sha256 != current_content_sha256:
+            raise Failure('normative library entry changed during execution; results are not bound to one content identity')
+        if dependencies != current_dependencies:
+            raise Failure('normative library dependencies changed during execution; results are not bound to one dependency identity')
     record = workflow.record('certification', 'certification.' + uuid.uuid4().hex,
         entry={'id': entry_id, 'content_sha256': content_sha256},
+        dependencies=dependencies,
         command={'version': VERSION, 'sources_sha256': command_hash},
         host={'hostname': socket.gethostname(), 'system': platform.system(), 'architecture': platform.machine(), 'compiler': compiler()},
         matrix=matrix, negative_controls=controls, verdict=verdict, evidence_basis='simulated',

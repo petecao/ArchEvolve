@@ -1,7 +1,7 @@
 """Public proposal 1.1 library gates and actual tree reproduction, 2026-10-03 ET.
 
-Temporary certification/review receipts below are explicit contract fixtures.
-They test submit behavior and do not represent execution or real promotion.
+Temporary execution-envelope receipts below are clearly marked synthetic test
+doubles. They test gate branches, and never represent execution or real promotion.
 """
 import copy
 import difflib
@@ -35,18 +35,20 @@ def new_file_patch(path, content):
                                       fromfile='/dev/null', tofile='b/' + path))
 
 
-def receipt(records, entry_id, content_sha256, generation=''):
+def receipt(records, entry_id, content_sha256, generation='', evidence_kind='execution'):
     suffix = entry_id.replace('.', '-') + generation
     certificate_id = 'fixture-cert-' + suffix
     certification = {
         'schema_version': '0.4', 'kind': 'certification', 'id': certificate_id,
         'status': 'draft', 'created': '2026-10-03', 'updated': '2026-10-03',
         'provenance': [{'id': 'fixture', 'kind': 'agent_run',
-                        'description': 'Submit contract fixture only; no executed certification.', 'uri': None}],
+                        'description': 'Synthetic execution-envelope test double only; no executed certification.', 'uri': None}],
+        'producer': {'name': 'library-submit-execution-envelope-test-double', 'role': 'sw', 'test_client': True},
         'entry': {'id': entry_id, 'content_sha256': content_sha256},
+        'dependencies': Library(records.path.parent / 'library').dependency_pins(entry_id),
         'command': {'version': 'fixture', 'sources_sha256': '0' * 64}, 'host': {},
         'matrix': [{'status': 'passed'}], 'negative_controls': [{'status': 'rejected'}],
-        'verdict': 'certified', 'evidence_basis': 'simulated', 'evidence_kind': 'contract_fixture',
+        'verdict': 'certified', 'evidence_basis': 'simulated', 'evidence_kind': evidence_kind,
     }
     records.write('certifications/' + certificate_id + '.yaml', certification)
     library_entry = Library(records.path.parent / 'library').get(entry_id)
@@ -59,7 +61,7 @@ def receipt(records, entry_id, content_sha256, generation=''):
         'provenance': [{'id': 'fixture', 'kind': 'human_report',
                         'description': 'Temporary test review fixture; no real promotion.', 'uri': None}],
         'target': {'id': entry_id, 'content_sha256': content_sha256},
-        'reviewer': 'Contract fixture', 'reviewed_at': '2026-10-03T00:00:00Z',
+        'reviewer': 'Yan-Ru Jhou', 'reviewed_at': '2026-10-03T00:00:00Z',
         'evidence': evidence_ids,
     }
     return records.write('reviews/' + review['id'] + '.yaml', review)
@@ -119,6 +121,7 @@ def library_submit(proposal_setup):
         target = root / relative[entry_id]
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(yaml.safe_dump(data))
+    for entry_id, data in entries.items():
         reviews[entry_id] = receipt(records, entry_id, artifacts.digest(data))
     pins = [{'id': entry_id, 'content_sha256': artifacts.digest(data)} for entry_id, data in entries.items()]
     section = {'contract': pins[0], 'entries': pins[1:],
@@ -191,6 +194,19 @@ def test_submit_refuses_an_omitted_dependency(library_submit, dependency):
     assert_retained_rejection(library_submit, omit, 'omits a contract dependency')
 
 
+@pytest.mark.parametrize('dependency', [INTRINSIC, LOWERING])
+def test_submit_requires_dependencies_reached_only_through_an_operation(library_submit, dependency):
+    records, _, _, _, root, entries, _ = library_submit
+    entries[CONTRACT]['uses_intrinsics'] = []
+    (root / 'rewrite_contracts/fixture.yaml').write_text(yaml.safe_dump(entries[CONTRACT]))
+    contract_hash = artifacts.digest(entries[CONTRACT])
+    receipt(records, CONTRACT, contract_hash)
+    def omit_nested(data):
+        data['library']['contract']['content_sha256'] = contract_hash
+        data['library']['entries'] = [pin for pin in data['library']['entries'] if pin['id'] != dependency]
+    assert_retained_rejection(library_submit, omit_nested, 'omits a contract dependency')
+
+
 @pytest.mark.parametrize('entry_id', [CONTRACT, INTRINSIC, LOWERING, OPERATION])
 def test_submit_refuses_an_unreviewed_contract_or_dependency(library_submit, entry_id):
     library_submit[-1][entry_id].unlink()
@@ -231,6 +247,45 @@ def test_fresh_lowering_certificate_does_not_resurrect_old_intrinsic_review(libr
                 pin['content_sha256'] = current_hash
 
     assert_retained_rejection(library_submit, update_request_pin, 'requires shared certified library entry')
+
+
+def test_fixture_certification_cannot_grant_real_promotion_or_submission(library_submit):
+    records, _, _, _, root, entries, reviews = library_submit
+    certificate = records.path / ('certifications/fixture-cert-' + LOWERING.replace('.', '-') + '.yaml')
+    data = yaml.safe_load(certificate.read_text())
+    data['evidence_kind'] = 'contract_fixture'
+    certificate.write_text(yaml.safe_dump(data))
+    # Remove reviews citing this fixture so preflight validates an honest corpus.
+    reviews[LOWERING].unlink()
+    reviews[INTRINSIC].unlink()
+    library = Library(root, Store(records.path))
+    assert library.state(LOWERING) == {'tier': 'experimental', 'status': 'draft'}
+    result = records.swdb('promote', LOWERING, '--reviewer', 'Yan-Ru Jhou', '--library', root)
+    assert result.returncode == 1 and 'certification' in result.stderr
+    assert_retained_rejection(library_submit, None, 'requires shared certified library entry')
+
+
+def test_reference_repin_invalidates_lowering_promotion_and_contract_submission(library_submit):
+    records, _, _, _, root, entries, _ = library_submit
+    original_lowering_hash = artifacts.digest(entries[LOWERING])
+    reference = root / 'reference-repinned.hpp'
+    reference.write_text('inline int fixture_reference(int value) { return value + 1; }\n')
+    entries[INTRINSIC]['reference_semantics'] = {
+        'path': reference.name, 'sha256': artifacts.file_hash(reference), 'symbol': 'fixture_reference'}
+    (root / 'intrinsics/fixture.yaml').write_text(yaml.safe_dump(entries[INTRINSIC]))
+    library = Library(root, Store(records.path))
+    assert not library.validate()
+    assert library.content_sha256(LOWERING) == original_lowering_hash
+    for entry_id in (INTRINSIC, LOWERING, OPERATION, CONTRACT):
+        assert library.state(entry_id) == {'tier': 'experimental', 'status': 'draft'}
+    for entry_id in (INTRINSIC, LOWERING):
+        result = records.swdb('promote', entry_id, '--reviewer', 'Yan-Ru Jhou', '--library', root)
+        assert result.returncode == 1 and 'certification' in result.stderr
+    def refresh_request_pin(data):
+        for pin in data['library']['entries']:
+            if pin['id'] == INTRINSIC:
+                pin['content_sha256'] = library.content_sha256(INTRINSIC)
+    assert_retained_rejection(library_submit, refresh_request_pin, 'requires shared certified library entry')
 
 
 def test_submit_requires_message_1_1_for_library_section(library_submit):

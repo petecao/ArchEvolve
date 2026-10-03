@@ -4,8 +4,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "dxc_lowering.hpp"
-#include "reference.hpp"
+#ifndef SWDB_DXC_LOWERING_HEADER
+#define SWDB_DXC_LOWERING_HEADER "dxc_lowering.hpp"
+#endif
+#ifndef SWDB_DXC_REFERENCE_HEADER
+#define SWDB_DXC_REFERENCE_HEADER "reference.hpp"
+#endif
+#include SWDB_DXC_LOWERING_HEADER
+#include SWDB_DXC_REFERENCE_HEADER
 static std::string control;
 static bool broken(const char*name){return control==name;}
 static void equal(const std::vector<int32_t>&actual,const std::vector<int32_t>&expected){
@@ -45,7 +51,7 @@ int main(int argc,char**argv){
   }
   if(actual!=swdb_reference::range_loop(lo,hi)){std::cerr<<"SWDB_DIFFERENTIAL_MISMATCH:range_continuation\n";return 87;}
  }else{
-  std::vector<int32_t>indices={12,0,5,3,5,1};if(broken("index_wrap"))indices[0]=INT32_MAX;
+  std::vector<int32_t>indices={int32_t(base.size()-1),0,5,3,5,1};if(broken("index_wrap"))indices[0]=INT32_MAX;
   put(c.tile[0],indices);std::vector<int32_t>expected;int result=c.tile[1];
   if(operation=="stream_load"||operation=="const_i32"||operation=="wait"||operation=="session_begin"||operation=="thread_context"){
    __dxc_stream_load(base.data(),c.reg[0],c.reg[1],c.reg[2],result);

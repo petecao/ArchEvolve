@@ -1,4 +1,5 @@
 """Simulator batch result admission, 2026-09-26 ET.
+Updated: 2026-10-03 ET.
 
 All records below are synthetic contract data in memory. The public aggregation
 function and its semantic readback run; no evaluator, simulator, provider, raw
@@ -41,7 +42,7 @@ def completed(monkeypatch):
     row['workload'] = workload['id']
     build = {'compiler': 'synthetic-c++', 'compiler_version': ['synthetic'], 'flags': ['-O2'],
              'adapter': 'synthetic.simulator', 'binary': '/synthetic/bfs', 'binary_sha256': 'b'*64}
-    settings = {'mode': 'controlled_simulator', 'kernel': 'synthetic.bfs',
+    settings = {'mode': 'controlled_simulator', 'kernel': 'synthetic.bfs', 'workloads': [workload['id']],
         'threads': policy['threads'], 'roi': policy['roi'], 'sampling': {'repetitions': 2, 'warmups': 0},
         'targets': {role: {'id': policy['target'], 'configuration': row['configuration']}
                     for role in ('baseline', 'candidate')},

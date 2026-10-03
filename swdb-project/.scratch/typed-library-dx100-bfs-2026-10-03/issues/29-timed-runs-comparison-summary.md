@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** task
-**Status:** claimed
+**Status:** needs-info
 **Blocked by:** 28
 **Spec:** `../spec.md`
 **Needs go-ahead:** Yes: Yan-Ru approves the mbit10 dispatch before it starts (Q62).
@@ -24,3 +24,7 @@ Implementation support added 2026-10-03 ET: `tools/typed_library_gem5_driver.py 
 The command refuses inconclusive/refuted companion outcomes before any timed dispatch. Default gem5 memory remains 48 GiB and is never replaced by global free memory or a smaller prepare budget. The local driver tests pass; they are request/admission checks, not timing or target evidence. No timed gem5 run or summary of actual results has been produced yet; this ticket's actual acceptance remains pending.
 
 - 2026-10-03: Claimed by root for the authorized two-lane evaluation. Bounded public drivers are prepared; actual dispatch awaits source-sync approval, and gem5 additionally requires current promotion and sufficient lane-node memory. No result is inferred from preparation.
+
+## Answer
+
+Implementation/dispatch checkpoint, 2026-10-03 ET. Timed drivers/comparison support are ready. Real executions require ticket 28 completed observed L3 companion, current promotion/source pins and sufficient lane memory. No timing or gain result exists; ticket 31 remains conditional and untriggered. Monitoring continues every 30 minutes; a fresh lease/capacity/source read is required before dispatch.

@@ -1,8 +1,12 @@
 """Real strict-interface checks and fail-closed verdicts. Updated: 2026-10-03 ET."""
 from pathlib import Path
+import json
+import shutil
 import subprocess
 
 import pytest
+import yaml
+from jsonschema import Draft202012Validator
 
 from swdb import certification as c
 from swdb.cli import Failure, UsageError
@@ -210,3 +214,179 @@ def test_diagnostic_claim_checks_all_hints_without_changing_cpu_enqueue(
     assert process.returncode == 0, process.stderr
     assert f'attempts={attempts} pushes={pushes} degree_calls=1 ' in process.stdout
     assert f'races={races} violations={violations}' in process.stdout
+
+
+@pytest.fixture
+def pinned_lowering(tmp_path):
+    library = tmp_path / 'library'
+    shutil.copytree(LIBRARY, library)
+    entry_id = 'lowering.dxc_gather.dx100-mmio.1.0-e4fc4af'
+    path = library / 'lowerings/dx100-mmio/1.0-e4fc4af/dxc_gather.yaml'
+    entry = yaml.safe_load(path.read_text())
+    entry['differential_test']['sha256'] = c.artifacts.file_hash(library / entry['differential_test']['path'])
+    path.write_text(yaml.safe_dump(entry))
+    return library, entry_id, path, entry
+
+
+@pytest.mark.parametrize('use_override', [False, True])
+def test_certification_compiles_the_pinned_header_and_current_build_defines(pinned_lowering, tmp_path, use_override):
+    library, entry_id, path, entry = pinned_lowering
+    canonical = library / 'dx100/dxc_lowering.hpp'
+    original = canonical.read_text()
+    pinned = library / 'dx100/other_lowering.hpp'
+    old = 'maa_indirect_load<T>(base,index,dst);'
+    # The canonical implementation remains good. The alternate pinned header
+    # either always breaks gather, or breaks it only under its declared macro.
+    mutation = ('\n#ifdef SWDB_TEST_BROKEN_GATHER\n return;\n#else\n' + old + '\n#endif\n'
+                if use_override else 'return;')
+    pinned.write_text(original.replace(old, mutation, 1))
+    entry['location']['path'] = 'dx100/other_lowering.hpp'
+    entry['code_sha256'] = c.artifacts.file_hash(pinned)
+    if use_override:
+        entry['build_defines']['defines'] = {'SWDB_TEST_BROKEN_GATHER': 1}
+    path.write_text(yaml.safe_dump(entry))
+    folder = tmp_path / 'runs'; folder.mkdir()
+    matrix, _ = c.certify_lowering(entry_id, library, folder, (16384, 1024), 4)
+    assert canonical.read_text() == original
+    assert matrix and all(cell['status'] == 'failed' for cell in matrix)
+    for cell in matrix:
+        assert 'SWDB_DIFFERENTIAL_MISMATCH:reference_semantics' in cell['run']['stderr']
+        assert '-DSWDB_DXC_LOWERING_HEADER="' + str(pinned) + '"' in cell['build']['command']
+        if use_override:
+            assert '-DSWDB_TEST_BROKEN_GATHER=1' in cell['build']['command']
+
+
+def test_certification_compiles_the_actual_pinned_driver(pinned_lowering, tmp_path):
+    library, entry_id, path, entry = pinned_lowering
+    canonical = library / 'dx100/drivers/differential.cc'
+    pinned = library / 'dx100/drivers/other.cc'
+    pinned.write_text(canonical.read_text().replace('int main(int argc,char**argv){',
+                      'int main(int argc,char**argv){std::cerr<<"SWDB_TEST_PINNED_DRIVER\\n";return 93;', 1))
+    entry['differential_test']['path'] = 'dx100/drivers/other.cc'
+    entry['differential_test']['sha256'] = c.artifacts.file_hash(pinned)
+    path.write_text(yaml.safe_dump(entry))
+    folder = tmp_path / 'runs'; folder.mkdir()
+    matrix, controls = c.certify_lowering(entry_id, library, folder, (16384, 1024), 4)
+    assert all(cell['status'] == 'failed' and cell['run']['returncode'] == 93 for cell in matrix)
+    assert all(cell['status'] == 'invalid' for cell in controls)
+    assert all(str(pinned) in cell['build']['command'] for cell in matrix)
+
+
+@pytest.mark.parametrize('field,value', [('seeds', [19]), ('indices', ['tail']), ('long_rows', True),
+                                         ('threads', 2), ('tile_sizes', [1024])])
+def test_unsupported_pinned_input_sets_fail_usage_before_build(pinned_lowering, field, value):
+    library, entry_id, path, entry = pinned_lowering
+    entry['differential_test']['input_set'][field] = value
+    path.write_text(yaml.safe_dump(entry))
+    with pytest.raises(UsageError, match='input_set'):
+        c.lowering_build(entry_id, library, (16384, 1024), 4)
+
+
+@pytest.mark.parametrize('definitions', [
+    {'strict': ['FUNC', 'GEM5'], 'tile_sizes': [16384, 1024], 'core_count': 4},
+    {'strict': ['FUNC', 'GEM5', 'SWDB_STRICT', 'TILE_SIZE'], 'tile_sizes': [16384, 1024], 'core_count': 4},
+    {'strict': ['FUNC', 'GEM5', 'SWDB_STRICT'], 'tile_sizes': [1024], 'core_count': 4},
+    {'strict': ['FUNC', 'GEM5', 'SWDB_STRICT'], 'tile_sizes': [16384, 1024], 'core_count': 2},
+    {'strict': ['FUNC', 'GEM5', 'SWDB_STRICT'], 'tile_sizes': [16384, 1024], 'core_count': 4, 'defines': {'SWDB_STRICT': 0}},
+])
+def test_unsupported_or_matrix_overriding_build_definitions_fail_usage(pinned_lowering, definitions):
+    library, entry_id, path, entry = pinned_lowering
+    entry['build_defines'] = definitions
+    path.write_text(yaml.safe_dump(entry))
+    with pytest.raises(UsageError):
+        c.lowering_build(entry_id, library, (16384, 1024), 4)
+
+
+def test_driver_cannot_ignore_the_pinned_lowering_include(pinned_lowering):
+    library, entry_id, path, entry = pinned_lowering
+    driver = library / entry['differential_test']['path']
+    driver.write_text(driver.read_text().replace('#include SWDB_DXC_LOWERING_HEADER', '#include "dxc_lowering.hpp"', 1))
+    entry['differential_test']['sha256'] = c.artifacts.file_hash(driver)
+    path.write_text(yaml.safe_dump(entry))
+    with pytest.raises(UsageError, match='include seams'):
+        c.lowering_build(entry_id, library, (16384, 1024), 4)
+
+
+def test_lowering_source_pins_must_stay_unchanged_during_build(pinned_lowering, tmp_path, monkeypatch):
+    library, entry_id, _, entry = pinned_lowering
+    header = library / entry['location']['path']
+    def changed_source(*args, **kwargs):
+        header.write_text(header.read_text() + '\n// Concurrent source change.\n')
+        return {'returncode': 1, 'stderr': 'build failed', 'stdout': ''}
+    monkeypatch.setattr(c, 'compile_cpp', changed_source)
+    with pytest.raises(c.Failure, match='pinned source changed'):
+        c.certify_lowering(entry_id, library, tmp_path, (16384, 1024), 4)
+
+
+@pytest.mark.parametrize('wrong_reference', [False, True], ids=['equivalent_reference', 'changed_semantics'])
+def test_real_lowering_receipt_binds_the_current_intrinsic_reference_identity(
+        pinned_lowering, tmp_path, monkeypatch, wrong_reference):
+    from swdb.library import Library
+    library, entry_id, _, entry = pinned_lowering
+    before = Library(library)
+    lower_hash = before.content_sha256(entry_id)
+    old_intrinsic_hash = before.content_sha256(entry['intrinsic'])
+    path = library / 'intrinsics/dxc_gather.yaml'
+    intrinsic = yaml.safe_load(path.read_text())
+    alternate = library / 'dx100/alternate_reference.hpp'
+    shutil.copyfile(library / intrinsic['reference_semantics']['path'], alternate)
+    if wrong_reference:
+        alternate.write_text(alternate.read_text().replace('out.push_back(base.at(i));', 'out.push_back(base.at(i)+1);', 1))
+    intrinsic['reference_semantics']['path'] = 'dx100/alternate_reference.hpp'
+    intrinsic['reference_semantics']['sha256'] = c.artifacts.file_hash(alternate)
+    path.write_text(yaml.safe_dump(intrinsic))
+    current = Library(library)
+    intrinsic_hash = current.content_sha256(entry['intrinsic'])
+    assert current.content_sha256(entry_id) == lower_hash
+    assert intrinsic_hash != old_intrinsic_hash
+    persisted = []
+    monkeypatch.setattr(c.workflow, 'persist', lambda records, record, **kwargs: persisted.append(record))
+    receipt = c.certify(Store(ROOT / 'records'), entry_id, library=library, runs_dir=tmp_path / 'runs')
+    assert receipt['verdict'] == ('failed' if wrong_reference else 'certified')
+    assert receipt['dependencies'] == [{'id': entry['intrinsic'], 'content_sha256': intrinsic_hash}]
+    assert persisted == [receipt]
+    assert all(cell['certification_inputs']['reference'] == str(alternate) for cell in receipt['matrix'])
+    if wrong_reference:
+        assert all(cell['status'] == 'failed' for cell in receipt['matrix'])
+        assert all('SWDB_DIFFERENTIAL_MISMATCH:reference_semantics' in cell['run']['stderr'] for cell in receipt['matrix'])
+
+
+def test_intrinsic_dependency_change_during_real_execution_aborts_receipt(pinned_lowering, tmp_path, monkeypatch):
+    library, entry_id, _, _ = pinned_lowering
+    path = library / 'intrinsics/dxc_gather.yaml'
+    original_execute = c.execute
+    changed = False
+    def mutate_after_first_positive(command, log, **kwargs):
+        nonlocal changed
+        result = original_execute(command, log, **kwargs)
+        if not changed and str(log).endswith('.positive.json'):
+            intrinsic = yaml.safe_load(path.read_text())
+            intrinsic['intent'] += ' Concurrent normative change during certification.'
+            path.write_text(yaml.safe_dump(intrinsic))
+            changed = True
+        return result
+    monkeypatch.setattr(c, 'execute', mutate_after_first_positive)
+    persisted = []
+    monkeypatch.setattr(c.workflow, 'persist', lambda records, record, **kwargs: persisted.append(record))
+    with pytest.raises(c.Failure, match='dependencies changed during execution'):
+        c.certify(Store(ROOT / 'records'), entry_id, library=library, runs_dir=tmp_path / 'runs')
+    assert changed
+    assert persisted == []
+    assert not list((tmp_path / 'runs').rglob('certification.json'))
+
+
+@pytest.mark.parametrize('dependencies,valid', [
+    (None, True), ([], True), ([{'id': 'intrinsic.test', 'content_sha256': 'a' * 64}], True),
+    ([{'id': 'intrinsic.test'}], False),
+    ([{'id': 'intrinsic.test', 'content_sha256': 'stale'}], False),
+    ([{'id': 'intrinsic.test', 'content_sha256': 'a' * 64, 'extra': True}], False),
+    ([{'id': 'intrinsic.test', 'content_sha256': 'a' * 64}] * 2, False),
+])
+def test_dependency_receipt_schema_preserves_history_and_checks_pins(dependencies, valid):
+    schema = json.loads((ROOT / 'schemas/certification.schema.json').read_text())
+    record = {'kind': 'certification', 'entry': {'id': 'lowering.test', 'content_sha256': 'b' * 64},
+              'command': {}, 'host': {}, 'matrix': [{'status': 'passed'}],
+              'negative_controls': [{'status': 'rejected'}], 'verdict': 'certified', 'evidence_basis': 'simulated'}
+    if dependencies is not None:
+        record['dependencies'] = dependencies
+    assert Draft202012Validator(schema).is_valid(record) == valid

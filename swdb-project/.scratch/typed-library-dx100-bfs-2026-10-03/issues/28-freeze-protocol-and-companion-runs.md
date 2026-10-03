@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** task
-**Status:** claimed
+**Status:** needs-info
 **Blocked by:** 08, 20, 22, 23, 26, 27
 **Spec:** `../spec.md`
 **Needs go-ahead:** Yes: Yan-Ru approves the mbit10 dispatch before it starts (Q62).
@@ -24,3 +24,7 @@ Implementation support added 2026-10-03 ET: `tools/typed_library_gem5_driver.py`
 Run `python tools/typed_library_gem5_driver.py --help` for the exact interface. Reuse the same fresh `--id` and explicit run root for each stage; a completed prepare receipt is required by companion. Both socket locks and the legacy lock, branch/commit, host observation, disk and node-local memory are recorded/checked. `progress.json` identifies the current bounded public command. Companion records its L3 outcome and admits timed work only after revalidation says observed. Five local request/admission tests pass; no target companion execution has happened. Actual acceptance remains pending.
 
 - 2026-10-03: Claimed by root for the authorized two-lane evaluation. Bounded public drivers are prepared; actual dispatch awaits source-sync approval, and gem5 additionally requires current promotion and sufficient lane-node memory. No result is inferred from preparation.
+
+## Answer
+
+Implementation/dispatch checkpoint, 2026-10-03 ET. Preparation/companion drivers and exact current certification are ready. Real acceptance requires approved source synchronization, ticket 27 complete real package, ticket 22 human promotion, and admitted lane-node simulator memory. Latest node MemFree 26.4/15.7GiB does not meet the default 48GiB budget or the measured 32–34GiB simulator need plus headroom. No companion or L3 outcome has been produced. Monitoring continues every 30 minutes; a fresh lease/capacity/source read is required before dispatch.

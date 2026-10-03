@@ -1,4 +1,5 @@
 """Intrinsic records: schema, rules, `swdb add`, and the database. Created 2026-09-23.
+Updated: 2026-10-03 ET.
 Each rule has a passing case (the seed records) and a failing case."""
 
 import json
@@ -89,9 +90,16 @@ def test_add_writes_intrinsics_to_their_folder_and_the_database_lists_them(repo,
     assert result.returncode == 0, result.stderr
     assert (repo.path / "intrinsics" / "mm512_i32scatter_ps.yaml").is_file()
     rows = json.loads(repo.swdb("sql", "select id, memory_kind, lanes from intrinsics order by id", "--format", "json").stdout)
-    assert rows == [{"id": "mm512_i32gather_ps", "memory_kind": "gather", "lanes": 16},
-                    {"id": "mm512_i32scatter_ps", "memory_kind": "scatter", "lanes": 16},
-                    {"id": "mm_prefetch", "memory_kind": "prefetch", "lanes": None}]
+    legacy = [{"id": "mm512_i32gather_ps", "memory_kind": "gather", "lanes": 16},
+              {"id": "mm512_i32scatter_ps", "memory_kind": "scatter", "lanes": 16},
+              {"id": "mm_prefetch", "memory_kind": "prefetch", "lanes": None}]
+    by_id = {row['id']: row for row in rows}
+    assert [by_id[row['id']] for row in legacy] == legacy
+    # The catalog also contains accelerator intrinsics; the index must include
+    # every authoritative YAML record without fixing the seed inventory size.
+    expected_ids = {repo.read('intrinsics/' + path.name)['id']
+                    for path in (repo.path / 'intrinsics').glob('*.yaml')}
+    assert set(by_id) == expected_ids
 
 
 def test_add_agent_marks_an_intrinsic_draft_with_an_agent_run(repo, tmp_path):

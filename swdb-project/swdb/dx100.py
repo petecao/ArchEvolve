@@ -521,9 +521,13 @@ def _correctness(session, request, result_folder, log, completed):
         try:
             validate_frontier(data, check, store)
         except Failure as exc:
+            # Missing output after an incomplete verifier continuation does not
+            # establish a preservation failure on the target.
+            if valid:
+                data['correctness']['state'] = 'failed'
+                check.update(state='failed', passed=False)
             valid = False
-            data['correctness']['state'] = 'failed'
-            check.update(state='failed', passed=False, reason=str(exc))
+            check['reason'] = str(exc)
         report = result_folder / 'read-only-coverage.json'
         report.write_text(json.dumps({'format': 'swdb.dx100.read-only-coverage.v1', 'evaluation': data['id'],
             'binary_sha256': data['build']['binary_sha256'], 'graph_sha256': check['graph_sha256'],
@@ -538,9 +542,19 @@ def _correctness(session, request, result_folder, log, completed):
             valid = False
             data['correctness']['state'] = 'unverified'
             data['correctness']['checks'][0].update(state='unverified', passed=False, reason=str(exc))
+    read_only_failure = None
+    if valid and not explicit_failure and request['verification'].get('read_only'):
+        case = coverage.get('read_only_executed')
+        if not isinstance(case, dict) or case.get('state') != 'observed':
+            read_only_failure = 'Completed target run failed its requested read-only execution witness.'
+            valid = False
+            data['correctness']['state'] = 'failed'
+            data['correctness']['checks'][0].update(state='failed', passed=False, reason=read_only_failure)
     session.save()
     if explicit_failure:
         raise StageFailure("incorrect", "BFS structural verifier printed FAIL, independently of process exit status")
+    if read_only_failure:
+        raise StageFailure('incorrect', read_only_failure)
     if not valid and completed:
         raise StageFailure("missing_observation", "missing, ambiguous, interrupted, or incomplete post-ROI verifier outcome")
 

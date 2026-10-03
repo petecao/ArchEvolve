@@ -24,3 +24,7 @@ Created: 2026-10-03
 Library status/tier derives from immutable certification, target execution and review records. Promotion pins current content without editing normative entries; changed content loses shared status. Native/fixture checks cannot establish accelerator-target execution.
 
 Validation: current library/record validation passes379 records; focused library/strategy tests49passed; full suite and final two-axis review remain batch closeout gates.
+
+Review correction, 2026-10-03 ET: Fixture receipts cannot derive certification or shared admission. Shared reviews require Yan-Ru Jhou (yanrujhou alias accepted). Completed missing target witnesses refute and cannot be masked by a successful run. State regressions: 31 passed; independent Standards replay confirms both original admission exploits are closed. See [code review](../code-review.md).
+
+Dependency review correction, 2026-10-03 ET: receipts now bind the complete referenced normative entry closure before/after execution. Old unbound receipts remain history and grant no current dependency-bearing certification. All ten lowerings, the candidate and calibration have fresh passing bound receipts; see [promotion packet](../drafts/promotion-review.md). The 119 producer regressions plus exact public delivery reproduction pass (120 total); 35 library-state regressions and independent changed-reference/stale-contract custody rechecks also pass.

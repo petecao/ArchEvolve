@@ -29,6 +29,19 @@
         }
       }
     },
+    "dependencies": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "content_sha256"],
+        "properties": {
+          "id": {"type": "string"},
+          "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
     "candidate": {
       "type": [
         "object",

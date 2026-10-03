@@ -44,3 +44,11 @@ Ported files:
 - swdb/_vendor/lark/tree_templates.py
 - swdb/_vendor/lark/utils.py
 - swdb/_vendor/lark/visitors.py
+
+- swdb/_vendor/lark/grammars/common.lark
+- swdb/_vendor/lark/grammars/lark.lark
+- swdb/_vendor/lark/grammars/python.lark
+- swdb/_vendor/lark/grammars/unicode.lark
+- swdb/_vendor/lark/py.typed
+
+All vendored Python and grammar data files carry MIT SPDX and Lark-version provenance headers. The full-package typing marker retains its marker role and carries the same attribution; [PEP 561](https://peps.python.org/pep-0561/#packaging-type-information) specifies the marker by its presence. The MemAcc grammar alone carries Apache-2.0 WITH LLVM-exception.
