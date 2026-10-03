@@ -10,9 +10,9 @@
       "test_tdstep_global_scope_keeps_debug_line_map_and_excludes_other_functions"
     ]
   ],
-  "current_collected_cases": 3690,
-  "unique_verified_cases": 3690,
-  "passed": 3654,
+  "current_collected_cases": 3705,
+  "unique_verified_cases": 3705,
+  "passed": 3669,
   "skipped": 36,
   "unresolved": [],
   "corrected_initial_failures": [
@@ -197,7 +197,7 @@
       "error"
     ]
   ],
-  "affected_file_rerun_cases": 470,
+  "affected_file_rerun_cases": 485,
   "fresh_receipts": [
     "affected-fixtures.xml",
     "affected-isa.xml",
@@ -205,7 +205,9 @@
     "dependency-producer-delivery-final.xml",
     "dependency-gem5-driver.xml",
     "dependency-submit-final.xml",
-    "runtime-profile-fix.xml"
+    "runtime-profile-fix.xml",
+    "library-state-fix.xml",
+    "library-state-checkpoint-fix.xml"
   ],
   "partitions": [
     {
@@ -232,7 +234,7 @@
   ],
   "created_at": "2026-10-03T12:35:26.648127+00:00",
   "scope": "Local Mac regression coverage only; no mbit10 evaluation or gain evidence.",
-  "method": "Disjoint frozen full-suite partitions plus fresh complete affected-file reruns reconciled by exact testcase identity against current collection; two retired historical test names excluded and retained in this ledger.",
+  "method": "Disjoint frozen full-suite partitions plus fresh complete affected-file reruns, reconciled by exact testcase identity against current collection. Includes preserved complete pytest output with exact collection for the provider fix; no JUnit rerun. Retired historical test names and original failures remain explicit.",
   "receipts": [
     {
       "path": "/private/tmp/swdb-typed-library-verification-20261003/partition-1.xml",
@@ -289,6 +291,22 @@
     {
       "path": "/private/tmp/swdb-typed-library-verification-20261003/collection-transport.txt",
       "sha256": "9a36686a341a62801d0fa44e6c4f6410204520b606e766be254b126bf850151e"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/library-state-junit-20261003.xml",
+      "sha256": "2ca01ed47fb377fd09b01fcb011584202418f88a4ede13d041551ac4a6d32d40"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/collection-library-state.txt",
+      "sha256": "633887f1211ad58097c09e1a980061f84055ac38b8beb7d203a7558bd620632b"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/library-state-checkpoint-junit-20261003.xml",
+      "sha256": "828c5028cd24d9ad7d55f6f4151be68429548b63d78473f7219c1d55087f16fd"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/collection-library-state-final.txt",
+      "sha256": "ce8160eab2ddff83486151b1a70e77d480b54f3da1446bf0e143c3b8d00b317d"
     }
   ],
   "validated_records": 443,
@@ -323,7 +341,26 @@
     "standards_review": "passed",
     "spec_review": "passed",
     "review_base": "f6972ebbf9c842c1a7091716505577d06c637231",
-    "actual_annotation": "pending fresh attempt3 after publication"
+    "actual_annotation": "Actualattempt3 completed and independently audited; metadata published/read back6c65bdf."
   },
-  "updated_at": "2026-10-03 09:03 ET"
+  "updated_at": "2026-10-03 09:23 ET",
+  "library_target_state_fix": {
+    "review_base": "f642a94ba41e79f79b28a540cb8d758e15bec633",
+    "cause": "Completed actual candidate_build records were mistaken for completed target execution, falsely refuting19cited entries.",
+    "passed": 50,
+    "skipped": 0,
+    "seconds": 7.95,
+    "added_cases": 15,
+    "standards_review": "passed",
+    "spec_review": "passed",
+    "receipt": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/library-state-checkpoint-junit-20261003.xml",
+    "actual_target_execution": "none; compile evidence must not alter target status",
+    "previous_receipt_preserved": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/library-state-junit-20261003.xml",
+    "checkpoint_rule": "Checkpoint guest startup precedes ROI/BFS; checkpoint-only history is inconclusive after identity checks and cannot qualify or refute timed witness.",
+    "corrected_local_library_states": {
+      "shared_certified": 21,
+      "entries": 21
+    },
+    "publication": "pending this reviewed batch"
+  }
 }

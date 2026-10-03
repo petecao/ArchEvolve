@@ -1,4 +1,5 @@
-"""Public typed-library shape, evidence and promotion behavior. Created: 2026-10-03."""
+"""Public typed-library shape, evidence and promotion behavior. Updated: 2026-10-03 ET."""
+import copy
 import json
 import pytest
 import yaml
@@ -188,19 +189,20 @@ def test_target_status_requires_real_target_completion_and_witness(library,case,
            'coverage':{'read_only_executed':{'state':'observed'}}}
     evaluation={'kind':'evaluation','id':'evaluation.fixture','candidate':'candidate.fixture',
         'evidence_kind':'execution','context':{'target':'target.fixture','backend':'dx100-gem5-se','candidate_sha256':'a'*64},
-        'correctness':{'state':'passed','checks':[check]},'outcome':{'state':'complete'}}
+        'correctness':{'state':'passed','checks':[check]},'outcome':{'state':'complete','stage':'execution'},
+        'stages':[{'stage':'simulation','state':'complete'}]}
     if case=='native': evaluation['context']['backend']='bfs-native'
     elif case=='fixture': evaluation['evidence_kind']='contract_fixture'
     elif case=='no-exit': check['continuation']['normal_exit_observed']=False
     elif case=='no-witness': check['coverage']={}
     elif case=='incomplete':
-        evaluation['outcome']['state']='incomplete';check['coverage']={}
+        evaluation['outcome']={'state':'timed_out','stage':'simulation'}
+        evaluation['stages'][0]['state']='timed_out';check['coverage']={}
     elif case=='l3-violation': check['parent_gather_race']={'outcome':'refuted'}
     rows=[{'kind':'hardware_target','id':'target.fixture','backend':{'id':'dx100-gem5-se'}},
           {'kind':'candidate','id':'candidate.fixture','proposal':'proposal.fixture','artifact':{'sha256':'a'*64}},
           {'kind':'proposal','id':'proposal.fixture','request':{'library':{'contract':pin,'entries':[]}}},evaluation]
     if case == 'positive-and-refuted':
-        import copy
         refuted = copy.deepcopy(evaluation)
         refuted['id'] = 'evaluation.refuted'
         refuted['correctness']['checks'][0]['coverage'] = {'read_only_executed': {'state': 'unobserved'}}
@@ -230,7 +232,9 @@ def test_target_status_cannot_reinterpret_a_stale_contract(library, changed):
             'contract': contract_pin, 'entries': lib.dependency_pins(contract['id'])}}},
         {'kind': 'evaluation', 'id': 'evaluation.fixture', 'candidate': 'candidate.fixture',
          'evidence_kind': 'execution', 'context': {'target': 'target.fixture', 'backend': 'dx100-gem5-se', 'candidate_sha256': 'a' * 64},
-         'outcome': {'state': 'complete'}, 'correctness': {'state': 'passed', 'checks': [
+         'outcome': {'state': 'complete', 'stage': 'execution'},
+         'stages': [{'stage': 'simulation', 'state': 'complete'}],
+         'correctness': {'state': 'passed', 'checks': [
              {'passed': True, 'continuation': {'normal_exit_observed': True},
               'coverage': {'isolation_probe_witness': {'state': 'observed'}}}]}}]
     store = Store(records.path, indexed_records=[Record(str(i), row) for i, row in enumerate(rows)])
@@ -241,3 +245,131 @@ def test_target_status_cannot_reinterpret_a_stale_contract(library, changed):
         # The lowering subject remains fixed while its intrinsic dependency changes.
         lib.entries['intrinsic.fixture']['intent'] = 'changed semantics'
     assert lib.state('lowering.fixture', store) == {'tier': 'experimental', 'status': 'draft'}
+
+
+@pytest.fixture(scope='module')
+def public_preparation_state_records():
+    """Published prepare/build receipts; no remote execution. Updated: 2026-10-03 ET."""
+    from swdb import paths
+    from swdb.store import Store
+    store = Store(paths.RECORDS)
+    run = 'typed-library-bfs-gem5-20261003-a1'
+    builds = [store.get(run + '.' + name + '.build', 'evaluation') for name in
+              ('baseline.primary', 'candidate.primary', 'candidate.diagnostic')]
+    assert all(builds)
+    proposal = store.get(run + '.proposal', 'proposal')
+    candidate = store.get(run + '.proposal.candidate-1', 'candidate')
+    execution = store.get('bfs-t17-ac10-companion-20260928-a3.execute', 'evaluation')
+    checkpoint = store.get('bfs-dx100-smoke-20260925-a3', 'evaluation')
+    assert proposal and candidate and execution and checkpoint
+    # Keep the actual certification/review/proposal identities, and isolate
+    # target-state derivation from unrelated historical evaluations.
+    records = [row.data for row in store.records if row.data['kind'] != 'evaluation']
+    return records, builds, proposal['request']['library'], candidate, execution, checkpoint
+
+
+@pytest.mark.parametrize('case', ['prepare', 'failed-compile', 'discovery', 'collection', 'package'])
+def test_public_preparation_processes_do_not_establish_target_state(public_preparation_state_records, case):
+    from swdb import paths
+    from swdb.library import Library
+    from swdb.store import Store, Record
+    records, published_builds, section, _, _, _ = public_preparation_state_records
+    builds = copy.deepcopy(published_builds)
+    if case != 'prepare':
+        build = builds[1]
+        build['provenance'] = [{'id': 'test-double', 'kind': 'agent_run', 'uri': None,
+                               'description': 'Isolated non-execution state test double copied from a public build.'}]
+        stage = 'candidate_compile' if case == 'failed-compile' else case
+        state = 'failed' if case == 'failed-compile' else 'complete'
+        build['outcome'] = {'state': state, 'stage': stage, 'reason': 'Isolated process-stage regression.'}
+        build['stages'] = [{'stage': stage, 'state': state}]
+        # Even apparent correctness cannot confer target status without a run.
+        build['correctness'] = {'state': 'failed' if case == 'discovery' else 'passed', 'checks': [
+            {'passed': True, 'continuation': {'normal_exit_observed': True},
+             'coverage': {'read_only_executed': {'state': 'observed'}}}]}
+    store = Store(paths.RECORDS, indexed_records=[Record(str(i), row)
+                  for i, row in enumerate(records + builds)])
+    lib = Library(paths.HOME / 'library', store)
+    cited = [section['contract']] + section['entries']
+    assert cited
+    assert {pin['id']: lib.state(pin['id']) for pin in cited} == {
+        pin['id']: {'tier': 'shared', 'status': 'certified'} for pin in cited}
+
+
+@pytest.mark.parametrize('case,expected', [('observed', 'evaluated_on_target'),
+    ('missing-witness', 'refuted'), ('failed-witness', 'refuted'),
+    ('no-normal-exit', 'refuted'), ('no-correctness', 'refuted'),
+    ('timed-out', 'inconclusive'), ('running', 'inconclusive')])
+def test_public_execution_stage_retains_witness_and_completion_rules(public_preparation_state_records, case, expected):
+    from swdb import paths
+    from swdb.library import Library
+    from swdb.store import Store, Record
+    records, builds, section, candidate, published_execution, _ = public_preparation_state_records
+    execution = copy.deepcopy(published_execution)
+    assert any(stage['stage'] == 'simulation' for stage in execution['stages'])
+    execution['provenance'] = [{'id': 'test-double', 'kind': 'agent_run', 'uri': None,
+                              'description': 'Isolated target-state test double copied from a public companion execution.'}]
+    execution['id'] = 'evaluation.target-state-test-double'
+    execution['candidate'] = candidate['id']
+    execution['context']['candidate_sha256'] = candidate['artifact']['sha256']
+    check = execution['correctness']['checks'][0]
+    assert execution['outcome']['state'] == 'complete' and execution['correctness']['state'] == 'passed'
+    assert check['passed']
+    # Exercise the existing normal-exit rule with explicit isolated metadata;
+    # the historical companion itself did not observe a normal guest exit.
+    check['continuation']['normal_exit_observed'] = case != 'no-normal-exit'
+    check['coverage']['read_only_executed'] = {'state': 'observed'}
+    if case == 'missing-witness':
+        del check['coverage']['read_only_executed']
+    elif case == 'failed-witness':
+        check['coverage']['read_only_executed']['state'] = 'unobserved'
+    elif case == 'no-correctness':
+        execution['correctness'] = {'state': 'unverified', 'checks': []}
+    elif case in {'timed-out', 'running'}:
+        state = 'timed_out' if case == 'timed-out' else 'running'
+        execution['outcome'] = {'state': state, 'stage': 'simulation', 'reason': 'Isolated incomplete execution.'}
+        execution['correctness'] = {'state': 'unverified', 'checks': []}
+        simulation = next(stage for stage in execution['stages'] if stage['stage'] == 'simulation')
+        simulation['state'] = state
+    store = Store(paths.RECORDS, indexed_records=[Record(str(i), row)
+                  for i, row in enumerate(records + builds + [execution])])
+    lib = Library(paths.HOME / 'library', store)
+    cited = [section['contract']] + section['entries']
+    assert {pin['id']: lib.state(pin['id'])['status'] for pin in cited} == {
+        pin['id']: expected for pin in cited}
+
+
+@pytest.mark.parametrize('case', ['retained-failure', 'running', 'checkpoint-complete'])
+def test_public_checkpoint_guest_attempt_remains_inconclusive(public_preparation_state_records, case):
+    """A real guest starts before timed simulation. Updated: 2026-10-03 ET."""
+    from swdb import paths
+    from swdb.library import Library
+    from swdb.store import Store, Record
+    records, builds, section, candidate, _, published_checkpoint = public_preparation_state_records
+    assert published_checkpoint['outcome']['stage'] == 'checkpoint'
+    assert published_checkpoint['outcome']['state'] == 'missing_observation'
+    assert 'checkpoint' in {stage['stage'] for stage in published_checkpoint['stages']}
+    assert not {'simulation', 'execution'} & {stage['stage'] for stage in published_checkpoint['stages']}
+    execution = copy.deepcopy(published_checkpoint)
+    execution['provenance'] = [{'id': 'test-double', 'kind': 'agent_run', 'uri': None,
+                              'description': 'Isolated target-state test double copied from a public failed checkpoint guest attempt.'}]
+    execution['id'] = 'evaluation.checkpoint-state-test-double'
+    execution['candidate'] = candidate['id']
+    execution['context']['candidate_sha256'] = candidate['artifact']['sha256']
+    if case != 'retained-failure':
+        state = 'running' if case == 'running' else 'complete'
+        execution['outcome'] = {'state': state, 'stage': 'checkpoint', 'reason': None}
+        checkpoint = next(stage for stage in execution['stages'] if stage['stage'] == 'checkpoint')
+        checkpoint['state'] = state
+        # Apparent positive checks still cannot qualify a checkpoint as the
+        # required timed execution or establish its accelerator witness.
+        if case == 'checkpoint-complete':
+            execution['correctness'] = {'state': 'passed', 'checks': [
+                {'passed': True, 'continuation': {'normal_exit_observed': True},
+                 'coverage': {'read_only_executed': {'state': 'observed'}}}]}
+    store = Store(paths.RECORDS, indexed_records=[Record(str(i), row)
+                  for i, row in enumerate(records + builds + [execution])])
+    lib = Library(paths.HOME / 'library', store)
+    cited = [section['contract']] + section['entries']
+    assert {pin['id']: lib.state(pin['id']) for pin in cited} == {
+        pin['id']: {'tier': 'shared', 'status': 'inconclusive'} for pin in cited}

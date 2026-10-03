@@ -1,4 +1,4 @@
-"""Typed library validation and evidence-derived state. Created: 2026-10-03 ET.
+"""Typed library validation and evidence-derived state. Updated: 2026-10-03 ET.
 
 Normative YAML and code pins never carry review or certification state. Library
 entries are deliberately outside SQLite until the BC reuse/indexing ticket.
@@ -369,8 +369,15 @@ class Library:
         return {'tier':tier,'status':status}
 
     def _target_state(self, evaluation, candidate, contract, store):
-        """Native functional checks cannot establish accelerator-target execution."""
+        """Only an entered target run can derive state. Updated: 2026-10-03 ET."""
         if contract is None:
+            return None
+        # Execution evidence also labels real compiler and collector processes.
+        # A checkpoint starts a guest before its timed simulation; its history
+        # must distinguish an incomplete attempt from compilation or collection.
+        stages = {stage.get('stage') for stage in evaluation.get('stages', [])}
+        entered_run = bool(stages & {'simulation', 'execution'})
+        if not entered_run and 'checkpoint' not in stages:
             return None
         context = evaluation.get('context',{})
         target = store.get(context.get('target'), 'hardware_target')
@@ -382,6 +389,10 @@ class Library:
             intrinsic = self.get(intrinsic_id)
             if not intrinsic or not any(self.get(lower_id).get('interface') == target.get('interface') for lower_id in intrinsic.get('lowerings',[]) if self.get(lower_id)):
                 return None
+        if not entered_run:
+            # A checkpoint alone cannot satisfy or refute the timed witness,
+            # even when guest startup finishes; the target run is still pending.
+            return 'inconclusive'
         correctness = evaluation.get('correctness',{})
         checks = correctness.get('checks',[])
         if correctness.get('state') == 'failed' or any(c.get('parent_gather_race',{}).get('outcome') == 'refuted' for c in checks):
