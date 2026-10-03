@@ -1,49 +1,53 @@
 # Implementation and evaluation progress
 
-Updated: 2026-10-03 04:15 ET.
+Updated: 2026-10-03 08:11 ET.
 
-Local implementation and final correction commits are on yanrujhou_main; source
-export is pending. Fixed review base:9ef348fdaa5b26ff5e37a66d1781084b1b2eea40.
-All implementation/review agents and all owned test processes have completed.
-The requested 30-minute heartbeat remains active: typed-library-tickets-1-37-progress.
+Yan-Ru's explicit related-action approval cleared the earlier source export block.
+The five verified commits through `7561d88` are published to
+`git@github.com:petecao/ArchEvolve.git` on `yanrujhou_main`. Fixed review base:
+`9ef348fdaa5b26ff5e37a66d1781084b1b2eea40`.
+See [approval](approval-2026-10-03.md).
 
-Twenty-two tickets resolved; six needs-info (03/27/28/29/34/36), eight human tasks,
-and one conditional 31. Tickets 38+ are outside this request and remain untouched.
-All six Standards/Spec findings are corrected; both final reviews pass.
+All21 entries now derive certified/shared. Root invoked `swdb promote` on Yan-Ru's
+behalf under that explicit approval; the21 hash-bound review records cite the
+current dependency-bound certification receipts. [Promotion receipts](promotion-receipts.json)
+index every entry/review. Publishing and remote synchronization of these records
+is in progress; ticket22 remains claimed until both are verified.
 
-All 3,679 current test cases have exact receipt coverage: 3,643 pass, 36 skip and no
-unresolved failure. Disjoint full-suite groups plus 391 unique fresh affected-file
-cases preserve and correct every initial fixture failure/error. All 404 records
-validate. See [verification](verification.json) and [code review](code-review.md).
+Twenty-two tickets resolved; four needs-info (03/28/29/36), seven ready-for-human,
+three claimed (22/27/34), and one conditional31. Review-spec owns node0 profiling
+and annotation after synchronization. Review-standards checks gem5 admission and
+preparation. The library agent audits remaining human/cleanup dependencies.
+Tickets38+ remain untouched. The30-minute heartbeat remains active.
 
-All 21 typed entries are certified/experimental with fresh dependency-bound
-receipts; no human promotion was recorded. Candidate receipt:
-certification.1e4397e31d594245bc10bd80ff2107f5; ten positive cells and 16 rejected
-controls; tree 991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1.
-Calibration passes ten cells and seven controls. This is strict functional-model
-pre-check evidence on the Mac, with simulated basis; no hardware gain is established.
-The [promotion packet](drafts/promotion-review.md) contains all 21 current hashes/receipts.
+All3,679 current test cases have exact receipt coverage:3,643 pass,36 skip and no
+unresolved failure. Retained hashes still match. All six Standards/Spec findings
+are corrected; both final reviews pass. Promotion writes validated the425 current
+records. See [verification](verification.json) for the original404-record snapshot
+and [code review](code-review.md). No product code changed during promotion.
 
-| Ticket | Lane | State | Requirement |
+The candidate passes ten positive cells and rejects16 controls; exact tree
+`991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1`.
+Certification remains strict functional-model pre-check evidence with simulated
+basis. No target timing or hardware gain is established.
+
+| Ticket | Lane | State | Next action |
 |---|---|---|---|
-| 27,34 | node0 preferred | Driver ready; no actual run | Approved Git source sync, fresh lane preflight |
-| 36 | either free lane | Fixture/CLI checks pass; no real provider result | Real profile then guarded annotation and scoring |
-| 28 | either admitted lane | Prepare/companion driver ready; no L3 result | Real profile, human promotion, source sync, node memory |
-| 29 | two admitted lanes allowed | No timing or gain | Observed L3 and four fresh target executions |
-| 31 | conditional | Untriggered | An actual L3 refutation |
-| 32 | human | No historical deletion | Exact listing and cleanup approval |
+|22|Local/remote|21 approved promotions written|Publish and verify remote shared gate|
+|27,34|node0 planned|Inputs and8GiB admission checked; no run yet|Synchronize, fresh lease/preflight, native/profile|
+|36|node0 after profile|Implementation ready|Guarded real annotation and independent scoring|
+|28|Either admitted socket|Prepare requires only4GiB; companion about32GiB measured|Real package, synchronized promotions, prepare; memory admission|
+|29|Two admitted sockets|No timing or gain|Observed L3 and four fresh target executions|
+|31|Conditional|Untriggered|An actual L3 refutation|
+|32|Historical cleanup|No deletion|Inspect exact eligible listing and custody before action|
 
-Latest read-only host observation 04:00 ET: both socket leases and the legacy lease
-released; node MemFree 26.4/15.7GiB, below required simulator memory. Load 1.06, GPU
-idle; unrelated process untouched. Dispatcher/source revisions are retained in
-[evaluation plan](evaluation-plan.md). Observations are not lane reservations.
+Both socket and legacy leases were released at the last read; node MemFree about
+26.4/15.7GiB. This admits native profiling, not the simulator. Review-standards is
+checking retained simulator peak-memory evidence; graph shrinking alone does not
+remove its guest-memory requirement. Raw output stays on mbit10 and metadata
+returns through Git. Actual Peter response and actual team sends remain unrecorded.
 
-Automatic approval review rejected the configured-origin push because export
-authorization for git@github.com:petecao/ArchEvolve.git was not established.
-The existing repository/branch approval question is pending; no export workaround.
-Human promotion, actual team sends and historical deletion remain unperformed.
-Peter license confirmation remains pending; implementation proceeded under Yan-Ru
-instruction to assume approval. Monitoring continues until assigned tasks finish.
+Earlier checkpoints below retain their historical observations and approval blocks.
 
 30-minute checkpoint, 03:33 ET: 21 resolved, seven claimed, eight human tasks,
 one conditional ticket. All implementation/review agents completed with no owned

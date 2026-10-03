@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** task
-**Status:** ready-for-human
+**Status:** claimed
 **Blocked by:** 15, 20
 **Spec:** `../spec.md`
 
@@ -14,3 +14,5 @@ Created: 2026-10-03
 - [ ] The certification records from the library and patch tickets and the review records are committed and pushed after Yan-Ru approves, so mbit10's submit gate sees them.
 
 ## Comments
+
+- 2026-10-03: Yan-Ru explicitly approved all pending and future related actions in this chat, following the named repository/branch push and prepared promotion packet. Root records the approved promotions on Yan-Ru's behalf; this is actual delegated approval, not an inferred Peter license confirmation or team-send receipt.

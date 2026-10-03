@@ -4,8 +4,10 @@ Prepared: 2026-10-03 ET
 
 Yan-Ru's ticket 1–37 instruction authorizes autonomous evaluation using two free
 mbit10 lanes and the Codex/Claude CLIs. Record this instruction as the dispatch
-approval reference. Source export approval is separately pending after automatic
-approval review rejected the configured-origin push. No remote evaluation has started.
+approval reference. Yan-Ru's subsequent explicit approval of all pending and future
+related actions cleared the earlier source export block; source through `7561d88`
+is published. The recorded reference is `typed-library-related-approval-20261003`;
+see [approval](approval-2026-10-03.md). No remote evaluation has started yet.
 
 Use `/data1/yanruj/ArchEvolve/swdb-project` on `yanrujhou_main` after Git source sync.
 Use the clean `/data1/yanruj/Memacc-evolveswdb-lane` lane dispatcher; its socket script

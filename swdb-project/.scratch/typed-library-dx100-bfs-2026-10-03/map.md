@@ -42,7 +42,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 19 | [Submit a patch that ships the lowering header](issues/19-submit-patch-with-library-header.md) | resolved | 11, 15 |  |
 | 20 | [Peter's §5 patch with fixes E1–E5, certified](issues/20-peter-section5-patch.md) | resolved | 13, 14, 18, 19, 17 |  |
 | 21 | [Send Peter the contract YAML](issues/21-send-peter-contract-yaml.md) | ready-for-human | 17 |  |
-| 22 | [Yan-Ru promotes the DX100 entries and the BFS contract](issues/22-promote-dx100-entries.md) | ready-for-human | 15, 20 |  |
+| 22 | [Yan-Ru promotes the DX100 entries and the BFS contract](issues/22-promote-dx100-entries.md) | claimed | 15, 20 |  |
 
 ## Phase 3: first gem5 result (ArchEvolve mode)
 
@@ -52,7 +52,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 24 | [Retention and team-claim records; readers accept pruned files](issues/24-retention-and-team-claim-records.md) | resolved | 03 |  |
 | 25 | [swdb prune: dry run, approval and apply](issues/25-prune-listing-and-apply.md) | resolved | 24 |  |
 | 26 | [Automatic pruning of bulky raw output (ArchEvolve mode)](issues/26-automatic-pruning.md) | resolved | 24 |  |
-| 27 | [Real profile package for the scalar-only snapshot on mbit10](issues/27-profile-package-scalar-only.md) | needs-info | 05, 08 | yes |
+| 27 | [Real profile package for the scalar-only snapshot on mbit10](issues/27-profile-package-scalar-only.md) | claimed | 05, 08 | yes |
 | 28 | [Freeze the new protocol, submit the patch, run the companion case](issues/28-freeze-protocol-and-companion-runs.md) | needs-info | 08, 20, 22, 23, 26, 27 | yes |
 | 29 | [Timed gem5 runs, comparison and team summary](issues/29-timed-runs-comparison-summary.md) | needs-info | 28 | yes |
 | 30 | [Send the first gem5 result and record the team claim](issues/30-send-first-result.md) | ready-for-human | 29 |  |
@@ -64,7 +64,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | # | Ticket | Status | Blocked by | Go-ahead |
 |---|---|---|---|---|
 | 33 | [Per-line callgrind collection inside TDStep](issues/33-per-line-callgrind-collection.md) | resolved | — |  |
-| 34 | [Per-line callgrind run on mbit10](issues/34-per-line-callgrind-run.md) | needs-info | 08, 33 | yes |
+| 34 | [Per-line callgrind run on mbit10](issues/34-per-line-callgrind-run.md) | claimed | 08, 33 | yes |
 | 35 | [Agent-claim storage on statement annotations and access patterns](issues/35-statement-claims-storage.md) | resolved | 03 |  |
 | 36 | [swdb annotate, scoring and the statement table for Josh](issues/36-annotate-and-score.md) | needs-info | 07, 34, 35 | yes |
 | 37 | [Send Josh the statement table](issues/37-send-josh-statement-table.md) | ready-for-human | 36 |  |

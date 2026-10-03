@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** task
-**Status:** needs-info
+**Status:** claimed
 **Blocked by:** 05, 08
 **Spec:** `../spec.md`
 **Needs go-ahead:** Yes: Yan-Ru approves the mbit10 dispatch before it starts (Q62).
@@ -22,3 +22,5 @@ Created: 2026-10-03
 ## Answer
 
 Implementation/dispatch checkpoint, 2026-10-03 ET. The bounded scalar native/profile driver is ready and dispatch is authorized by Yan-Ru ticket 1–37 request. Real execution is blocked by source export approval: automatic approval review rejected git push origin yanrujhou_main to git@github.com:petecao/ArchEvolve.git because destination authorization was not established. The existing repository/branch approval question is pending. No source export workaround or real profile exists. Monitoring continues every 30 minutes; a fresh lease/capacity/source read is required before dispatch.
+
+2026-10-03 08:09 ET update: explicit related-action approval clears the source export block; the five commits through `7561d88` are now published. Review-spec agent owns the admitted node0 profile/per-line/annotation sequence after synchronized promotion metadata. The registered scalar snapshot and Kronecker18 graph verify on mbit10; no result is claimed before execution. Approval reference: `typed-library-related-approval-20261003`.

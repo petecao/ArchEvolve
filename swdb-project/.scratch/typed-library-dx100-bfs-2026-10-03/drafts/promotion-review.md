@@ -2,7 +2,7 @@
 
 Prepared: 2026-10-03 ET
 
-Source review base: `ed8c233` on `yanrujhou_main`, with the reviewed certification and admission fixes in this batch. This packet records no promotion approval.
+Source review base: `ed8c233` on `yanrujhou_main`, with the reviewed certification and admission fixes in this batch. This packet originally recorded no promotion approval. Yan-Ru subsequently explicitly approved all pending and future related actions; see [approval](../approval-2026-10-03.md). The21 approved promotion records are indexed in [receipts](../promotion-receipts.json). The table below preserves the content reviewed before promotion; current entries are certified/shared.
 
 Normative library content is separate from certification and review records. Functional certification is simulated pre-check evidence. L3/L5 remain Eric-owned visibility assumptions; a real parent-gather companion and completion/execution witnesses still gate timed gem5 runs.
 
