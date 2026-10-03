@@ -692,9 +692,17 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   free plus the run's planned raw bytes (the stage's storage budget for DX100 stages, 2 GiB for
   native evaluations, pairs and profiles). It never switches folders itself; when the folder is on
   the primary run disk and the check fails, the refusal names the secondary run folder if that disk
-  would pass. The lane's memory node must have the run's memory budget free (the stage's memory budget
-  for DX100 stages; 4 GiB for native and profile dispatches). Disk, free
-  bytes, memory node and free memory are recorded with the run.
+  would pass. The lane's memory node must have the run's memory budget available (the stage's memory budget
+  for DX100 stages; 4 GiB for native and profile dispatches). Literal node-local MemFree remains recorded.
+  Admission may conservatively count half of that node's inactive file cache after subtracting mapped,
+  shared, dirty, writeback and unevictable pages, then subtracting a reserve of at least4 GiB,1/16 of
+  node RAM and the observed zone reserve. Active cache, slab and other-node/global memory supply no credit.
+  Missing accounting falls back to MemFree-only admission; contradictory accounting refuses. The receipt
+  distinguishes estimated admission capacity from literal free memory and records counters, reserve,
+  formula version and time. This is an estimate, not reserved memory or guaranteed allocation.
+  The measured36 GiB simulator budget and16GB guest/MMIO treatment remain unchanged. Ordinary kernel
+  reclaim occurs under the existing strict socket memory binding. Disk, free bytes and memory node are
+  recorded with the run. Clarification added2026-10-03 ET after the user's memory-admission question.
 
 ### Evaluator support for more kernels
 

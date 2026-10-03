@@ -67,7 +67,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 34 | [Per-line callgrind run on mbit10](issues/34-per-line-callgrind-run.md) | resolved | 08, 33 | yes |
 | 35 | [Agent-claim storage on statement annotations and access patterns](issues/35-statement-claims-storage.md) | resolved | 03 |  |
 | 36 | [swdb annotate, scoring and the statement table for Josh](issues/36-annotate-and-score.md) | resolved | 07, 34, 35 | yes |
-| 37 | [Send Josh the statement table](issues/37-send-josh-statement-table.md) | needs-info | 36 |  |
+| 37 | [Send Josh the statement table](issues/37-send-josh-statement-table.md) | ready-for-human | 36 |  |
 
 ## Phase 4b: BC
 
@@ -152,3 +152,5 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 - 2026-10-03 09:23 ET: both final library-state review axes pass; all50 affected cases pass and current identity coverage is3,705 (3,669 pass/36 skip). Corrected local state is21 shared/certified with unchanged normative/review pins.37 is claimed for the exact reviewed institutional send after source publication.
 
 - 2026-10-03 09:29 ET:37 is needs-info after automatic approval review rejected the exact send to Josh, requiring specific human payload/destination approval. Zero Sent matches, no confirmed delivery and no retry. The reviewed draft and blocked-action receipt are preserved; 31 of 37 tickets are resolved. [Ticket37](issues/37-send-josh-statement-table.md).
+
+- 2026-10-03 10:40 ET: Yan-Ru took ownership of ticket37 delivery and instructed the agent to ignore sending for now. Ticket37 is ready-for-human; the agent will not retry or ask for send approval. The user's memory-admission question triggered a fresh read-only selected-node audit: plentiful inactive file cache shows that MemFree-only refusal is not proof of insufficient allocatable RAM. Budget and target treatment are unchanged while the admission method is reviewed.

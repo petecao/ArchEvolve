@@ -10,9 +10,9 @@
       "test_tdstep_global_scope_keeps_debug_line_map_and_excludes_other_functions"
     ]
   ],
-  "current_collected_cases": 3705,
-  "unique_verified_cases": 3705,
-  "passed": 3669,
+  "current_collected_cases": 3727,
+  "unique_verified_cases": 3727,
+  "passed": 3691,
   "skipped": 36,
   "unresolved": [],
   "corrected_initial_failures": [
@@ -197,7 +197,7 @@
       "error"
     ]
   ],
-  "affected_file_rerun_cases": 485,
+  "affected_file_rerun_cases": 518,
   "fresh_receipts": [
     "affected-fixtures.xml",
     "affected-isa.xml",
@@ -207,7 +207,8 @@
     "dependency-submit-final.xml",
     "runtime-profile-fix.xml",
     "library-state-fix.xml",
-    "library-state-checkpoint-fix.xml"
+    "library-state-checkpoint-fix.xml",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/memory-admission-final-a5-junit-20261003.xml"
   ],
   "partitions": [
     {
@@ -307,6 +308,30 @@
     {
       "path": "/private/tmp/swdb-typed-library-verification-20261003/collection-library-state-final.txt",
       "sha256": "ce8160eab2ddff83486151b1a70e77d480b54f3da1446bf0e143c3b8d00b317d"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/memory-admission-final-a4-junit-20261003.xml",
+      "sha256": "4aa76cb7c04f19f209ac485467fd9f61679a93cc632101a6d6ca91824f9e738f"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/memory-admission-junit-20261003.xml",
+      "sha256": "1d6a912c696a58f40764fec61a3e6c2a3a4b9dfd659b2989f5e936326f514e4d"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/memory-admission-final-junit-20261003.xml",
+      "sha256": "b598eaa43087d2d3cab4474654e3428ec812ac6e4c7e82471b3b1ab6c666393d"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/memory-admission-final-a3-junit-20261003.xml",
+      "sha256": "ad63240bab6416c7938e958a75b9e0c5fb738cfb4fcee9facf87c094a3f6e701"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/memory-admission-final-a5-junit-20261003.xml",
+      "sha256": "e07a8c4395e1e9658d401df1376728ee5916e080682b7d7588bb49f6f182786a"
+    },
+    {
+      "path": "/private/tmp/swdb-typed-library-verification-20261003/collection-memory-admission-final.txt",
+      "sha256": "bc76009590cf4feb28f5b1135720a2a32728df8298ee870efa02a898f51a2b57"
     }
   ],
   "validated_records": 443,
@@ -343,7 +368,7 @@
     "review_base": "f6972ebbf9c842c1a7091716505577d06c637231",
     "actual_annotation": "Actualattempt3 completed and independently audited; metadata published/read back6c65bdf."
   },
-  "updated_at": "2026-10-03 09:26 ET",
+  "updated_at": "2026-10-03 ET",
   "library_target_state_fix": {
     "review_base": "f642a94ba41e79f79b28a540cb8d758e15bec633",
     "cause": "Completed actual candidate_build records were mistaken for completed target execution, falsely refuting19cited entries.",
@@ -380,5 +405,21 @@
       ],
       "evidence_origin": "live operator tool output; no raw file copied"
     }
+  },
+  "memory_admission_fix": {
+    "review_base": "e74c85b2c86e613ca7d6662c1f0267111a9e9c68",
+    "passed": 39,
+    "skipped": 0,
+    "seconds": 7.47,
+    "added_cases": 22,
+    "standards_review": "passed",
+    "spec_review": "passed",
+    "receipt": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/memory-admission-final-a5-junit-20261003.xml",
+    "sha256": "e07a8c4395e1e9658d401df1376728ee5916e080682b7d7588bb49f6f182786a",
+    "cause": "MemFree-only refusal excluded reclaimable selected-node inactive file cache and did not prove an actual allocation capacity block.",
+    "preserved_budget_gib": 36,
+    "preserved_guest_memory": "16GB with existing16GiB MMIO interface",
+    "basis": "conservative selected-node estimate, not literal free memory, kernel MemAvailable, reserved memory or guaranteed execution success",
+    "scope": "Local Mac regression coverage; actual companion execution is still pending."
   }
 }
