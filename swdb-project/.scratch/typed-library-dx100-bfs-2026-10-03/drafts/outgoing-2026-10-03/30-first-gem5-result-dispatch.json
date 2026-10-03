@@ -1,7 +1,7 @@
 {
-  "updated": "2026-10-03 18:58 ET",
+  "updated": "2026-10-03 19:36 ET",
   "ticket": "30",
-  "state": "blocked_by_automatic_approval_review",
+  "state": "human_owned_draft_only",
   "from": "yanruj@umich.edu",
   "to": [
     "petepc@umich.edu"
@@ -11,10 +11,8 @@
   "approval_reference": "typed-library-related-approval-20261003",
   "recipient_basis": "Peter is the rewrite author and primary recipient; exact institutional address is retained in verified ticket21 Sent receipt",
   "pending": [
-    "direct trusted approval of exact reviewed payload and destination",
-    "actual Sent verification before any approved retry",
-    "actual send/Sent verification",
-    "actual team claim after delivery"
+    "Yan-Ru sends manually if desired",
+    "Human delivery/team-claim evidence; no agent action pending"
   ],
   "human_owned_ticket37": "no send, retry, mailbox search or approval question",
   "publication_commit": "0a495f4a972fe4a1eaa60fb5a1c148663ada9224",
@@ -80,5 +78,9 @@
     }
   },
   "blocked_receipt": "send-receipt-30-blocked.json",
-  "verified_sent": false
+  "verified_sent": false,
+  "communication_owner": "Yan-Ru Jhou",
+  "agent_scope": "Prepare drafts only for Josh, Peter and Eric; no sends, delivery searches or approval questions",
+  "agent_send_authorized": false,
+  "approval_question_state": "superseded by direct human instruction: do not send; manual communication"
 }

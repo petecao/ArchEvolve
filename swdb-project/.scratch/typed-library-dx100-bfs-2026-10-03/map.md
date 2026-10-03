@@ -55,7 +55,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 27 | [Real profile package for the scalar-only snapshot on mbit10](issues/27-profile-package-scalar-only.md) | resolved | 05, 08 | yes |
 | 28 | [Freeze the new protocol, submit the patch, run the companion case](issues/28-freeze-protocol-and-companion-runs.md) | resolved | 08, 20, 22, 23, 26, 27 | yes |
 | 29 | [Timed gem5 runs, comparison and team summary](issues/29-timed-runs-comparison-summary.md) | resolved | 28 | yes |
-| 30 | [Send the first gem5 result and record the team claim](issues/30-send-first-result.md) | needs-info | 29 |  |
+| 30 | [Send the first gem5 result and record the team claim](issues/30-send-first-result.md) | ready-for-human | 29 |  |
 | 31 | [Fallback contract: the CPU loads the parent value itself](issues/31-fallback-contract.md) | wontfix | 28 | yes |
 | 32 | [Clean up existing run output on mbit10](issues/32-retroactive-cleanup.md) | resolved | 25 | yes |
 
@@ -164,3 +164,5 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 - 2026-10-03 18:47 ET:29resolved from allfouractualtimed passes, two publicsimulated point comparisons, independentfullraw/retention-aware custody, exactGitpublication/readback and bothfinalreviews.30remainsclaimed forreviewed delegated delivery/teamclaim;02/37human-owned and31wontfix. [Result and limits](evaluation/timed-a2-r1-result-summary.json).
 
 - 2026-10-03 19:00 ET:30needs-info after automatic approval review rejected the exact reviewed first-result payload/destination; no delivery/claim asserted.33resolved,02/37ready-for-human,31wontfix. All implementation/evaluation/review findings are closed; final authorized metadata/source synchronization continues. [Blocked receipt](drafts/outgoing-2026-10-03/send-receipt-30-blocked.json).
+
+- 2026-10-03 19:36 ET: all Josh/Peter/Eric communications are draft-only for the agent; Yan-Ru sends manually.30ready-for-human,02/37ready-for-human,31wontfix,33resolved. All assigned agent implementation/evaluation/review/draft tasks are complete. Send/team-claim acceptance stays unchecked; no delivery inferred. Final ownership metadata sync precedes pausing the progress heartbeat.
