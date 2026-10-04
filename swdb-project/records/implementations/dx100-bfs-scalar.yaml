@@ -58,6 +58,36 @@ extensions:
         field: expected_cost_rank
         value: 4
         basis: inferred
+      annotation_facts:
+      - field: legality:contract.bfs_read_offload:L5
+        value: true
+        basis: reported
+        evidence: 'contract.bfs_read_offload (ticket 17; review.contract.bfs_read_offload.9d24483b85b4):
+          clause L5 discharge assumed, owner Eric, from pinned Peter v1.1 L5; no target coherence guarantee
+          is asserted; consistent with typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation (ticket
+          28) passing'
+      - field: legality:contract.bfs_read_offload:frontier_threshold
+        value: true
+        basis: reported
+        evidence: 'contract.bfs_read_offload (ticket 17; review.contract.bfs_read_offload.9d24483b85b4):
+          knob frontier_threshold declares range min 1 (runtime_guard); swdb campaign refuses out-of-range
+          knob values (ticket 53); certification.1e4397e31d594245bc10bd80ff2107f5 (ticket 18): verdict
+          certified for contract content 867fac18c282 on tree 991de65287fe, all 10 matrix cells passed
+          at tile sizes 16384 and 1024 at the default threshold 64'
+      - field: legality:contract.bfs_read_offload:chunk_size
+        value: true
+        basis: simulated
+        evidence: 'certification.1e4397e31d594245bc10bd80ff2107f5 (ticket 18): verdict certified for contract
+          content 867fac18c282 on tree 991de65287fe, all 10 matrix cells passed at tile sizes 16384 and
+          1024; negative control chunk_off_by_one rejected at both tile sizes (strict-layer tile_truncation);
+          clause chunk_size discharge static_assertion'
+      - field: legality:contract.bfs_read_offload:schedule
+        value: true
+        basis: simulated
+        evidence: 'certification.1e4397e31d594245bc10bd80ff2107f5 (ticket 18): verdict certified for contract
+          content 867fac18c282 on tree 991de65287fe, all 10 matrix cells passed at tile sizes 16384 and
+          1024; negative control shared_context rejected at both tile sizes (strict-layer thread_ownership_register);
+          clause schedule discharge structural'
     - id: bfs-td-row-bounds
       source:
         root: application
@@ -113,6 +143,14 @@ extensions:
         field: expected_cost_rank
         value: 3
         basis: inferred
+      annotation_facts:
+      - field: legality:contract.bfs_read_offload:L1
+        value: true
+        basis: simulated
+        evidence: 'certification.1e4397e31d594245bc10bd80ff2107f5 (ticket 18): verdict certified for contract
+          content 867fac18c282 on tree 991de65287fe, all 10 matrix cells passed at tile sizes 16384 and
+          1024; negative control dropped_continuation rejected at both tile sizes (verifier); clause L1
+          discharge differential_test'
     - id: bfs-td-neighbor
       source:
         root: application
@@ -218,6 +256,28 @@ extensions:
         field: expected_cost_rank
         value: 1
         basis: inferred
+      annotation_facts:
+      - field: legality:contract.bfs_read_offload:L2
+        value: true
+        basis: simulated
+        evidence: 'certification.1e4397e31d594245bc10bd80ff2107f5 (ticket 18): verdict certified for contract
+          content 867fac18c282 on tree 991de65287fe, all 10 matrix cells passed at tile sizes 16384 and
+          1024; negative control skipped_cas_recheck rejected at both tile sizes (frontier_size_equality,
+          duplicate_frontier); clause L2 discharge differential_test'
+      - field: legality:contract.bfs_read_offload:L3
+        value: true
+        basis: simulated
+        evidence: 'typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation (ticket 28): parent_gather_race
+          outcome observed, cas_negative_hint_failures 14546, l3_violations 0; its timed companion typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation
+          passed the v2 verifier; clause L3 discharge assumed (owner Eric); the observed companion keeps
+          the design assumption, it does not prove L3 for other graphs'
+      - field: legality:contract.bfs_read_offload:L4
+        value: true
+        basis: simulated
+        evidence: 'certification.1e4397e31d594245bc10bd80ff2107f5 (ticket 18): verdict certified for contract
+          content 867fac18c282 on tree 991de65287fe, all 10 matrix cells passed at tile sizes 16384 and
+          1024; negative controls skipped_cas_recheck and forged_frontier rejected at both tile sizes
+          (duplicate_frontier); clause L4 discharge structural in {CONTRACT}'
     - id: bfs-td-parent-cas
       source:
         root: application

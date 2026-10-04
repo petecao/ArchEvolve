@@ -10,6 +10,7 @@ import fcntl
 import fnmatch
 import hashlib
 import json
+import os
 import re
 import socket
 import subprocess
@@ -57,6 +58,11 @@ def _source_destination(runs_dir, rid):
 #: Extensa mode (ticket 52, 2026-10-03 ET): while an Extensa campaign runs a workflow
 #: step, every record it creates carries these tags from creation. Empty otherwise.
 CREATION_TAGS = {}
+#: Tickets 56/57 (2026-10-04 ET): a public command that a real campaign target adapter runs
+#: as a child process inherits the campaign's tags through this variable (the campaign ID).
+EXTENSA_CAMPAIGN_ENV = "SWDB_EXTENSA_CAMPAIGN"
+if re.fullmatch(r"extensa-[a-z0-9][a-z0-9._-]*", os.environ.get(EXTENSA_CAMPAIGN_ENV, "")):
+    CREATION_TAGS.update(mode="extensa", campaign=os.environ[EXTENSA_CAMPAIGN_ENV])
 
 
 def record(kind, rid, **fields):

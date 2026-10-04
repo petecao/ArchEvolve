@@ -188,10 +188,16 @@ def test_validate_accepts_named_approvals(team):
     assert result.returncode == 0, result.stderr
 
 
-def test_campaign_refuses_without_a_target_adapter(team):
+def test_campaign_without_fixture_uses_the_real_target_adapter(team):
+    """Updated 2026-10-04 ET (tickets 56/57): without --fixture the target's real adapter runs;
+    off mbit10 it stops before any provider call (its inputs or socket lane are unavailable)."""
     path = campaign_file(team)
-    result = run_swdb("campaign", path, "--records", team["records"], "--provider-config", provider(team, {}))
-    assert result.returncode == 2 and "tickets 56 and 57" in result.stderr
+    result = run_swdb("campaign", path, "--records", team["records"], "--provider-config", provider(team, {}),
+                      "--format", "json")
+    summary = json.loads(result.stdout)
+    assert summary["stop_reason"] == "infrastructure_failure" and summary["evidence_kind"] == "execution"
+    assert summary["budgets"]["used"]["provider_calls_counted"] == 0
+    assert not (team["root"] / "provider-log.jsonl").exists()
 
 
 def test_one_fixture_iteration_end_to_end(team):
