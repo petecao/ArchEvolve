@@ -35,14 +35,43 @@ def implementation_path(records):
     return records / "implementations" / f"{IMPL}.yaml"
 
 
+def copy_without_facts(records):
+    """The scalar TDStep implementation without its recorded facts (each test records its own).
+
+    Updated 2026-10-04 ET: ticket 57 recorded the real legality facts in the repository."""
+    data = yaml.safe_load((REPO / "records" / "implementations" / f"{IMPL}.yaml").read_text())
+    for row in data["extensions"]["statements"]["annotations"]:
+        row.pop("annotation_facts", None)
+    implementation_path(records).write_text(yaml.safe_dump(data, sort_keys=False))
+
+
 def bfs_records(root):
     """A records folder with the BFS application, kernel and the scalar TDStep implementation."""
     records = root / "records"
     for folder in ("applications", "kernels"):
         shutil.copytree(REPO / "records" / folder, records / folder, dirs_exist_ok=True)
     (records / "implementations").mkdir(parents=True, exist_ok=True)
-    shutil.copy(REPO / "records" / "implementations" / f"{IMPL}.yaml", implementation_path(records))
+    copy_without_facts(records)
     return records
+
+
+def test_recorded_repository_facts_apply_the_read_offload_contract(tmp_path):
+    """Ticket 57: the repository's evidence-cited legality facts select the gem5 region."""
+    records = tmp_path / "records"
+    for folder in ("applications", "kernels"):
+        shutil.copytree(REPO / "records" / folder, records / folder, dirs_exist_ok=True)
+    (records / "implementations").mkdir(parents=True, exist_ok=True)
+    shutil.copy(REPO / "records" / "implementations" / f"{IMPL}.yaml", implementation_path(records))
+    result = find(tmp_path, records, campaign("dx100_gem5"))
+    assert [r["id"] for r in result["regions"]] == [READ_REGION]
+    data = yaml.safe_load(implementation_path(records).read_text())
+    facts = [f for r in data["extensions"]["statements"]["annotations"] for f in r.get("annotation_facts", [])
+             if f["field"].startswith(f"legality:{READ}:")]
+    assert sorted(f["field"].rsplit(":", 1)[1] for f in facts) == sorted(LEGALITY)
+    assert all(f["value"] is True and f["basis"] in {"simulated", "reported"} for f in facts)
+    cited = ("certification.1e4397e31d594245bc10bd80ff2107f5",
+             "typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation", "contract.bfs_read_offload")
+    assert all(any(c in f["evidence"] for c in cited) for f in facts)
 
 
 def record_facts(records, facts, entry=READ):
@@ -227,7 +256,7 @@ def test_pattern_keys_must_be_chains():
 # --- `swdb campaign` with `regions: query` --------------------------------------------------
 
 def add_bfs_implementation(team, facts):
-    shutil.copy(REPO / "records" / "implementations" / f"{IMPL}.yaml", implementation_path(team["records"]))
+    copy_without_facts(team["records"])
     if facts:
         record_facts(team["records"], facts)
 

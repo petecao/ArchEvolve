@@ -77,8 +77,9 @@ def main():
         raise SystemExit('requested source is outside the generated vertex range')
     if socket.gethostname().split('.')[0]!='mbit10':
         raise SystemExit('this measurement driver requires mbit10')
-    if a.scale==22 and a.family!='uniform_random':
-        raise SystemExit('scale22 is reserved for the prescribed uniform artifact reference')
+    # Ticket 56 (2026-10-04 ET): the native Extensa campaign's Kronecker class is scale 22 (D4).
+    if a.scale==22 and a.family!='uniform_random' and a.sources!=[0,1234,7777]:
+        raise SystemExit('scale22 Kronecker is registered only for the native Extensa campaign sources 0,1234,7777')
     store=Store(a.records)
     profile._verified_lane(store.get('mbit10','machine'),a.lane)
     runs=artifacts.external_directory(a.runs_dir)/a.id

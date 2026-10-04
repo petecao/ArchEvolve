@@ -13,8 +13,9 @@ then the evaluator's lower bound against the base-source baseline); outcome-free
 feedback. The campaign stops on its budgets (D6 stop reasons) and writes one
 `campaign_summary` record to its own store and to the team store.
 
-Only the contract-fixture target adapter exists here. The native-CPU and DX100 gem5
-adapters are tickets 56 and 57; without `--fixture` the command refuses to run.
+`--fixture` selects the contract-fixture target adapter. Without it, the campaign's
+target selects a real adapter from `swdb.campaign_targets`: native CPU (ticket 56) or DX100
+gem5 (ticket 57), updated 2026-10-04 ET.
 """
 from __future__ import annotations
 
@@ -55,6 +56,14 @@ class Paused(Exception):
     def __init__(self, reason):
         super().__init__(reason)
         self.reason = reason
+
+
+class Refused(Exception):
+    """A target refuses one class's candidate artifact (tickets 56/57); never a campaign stop."""
+
+    def __init__(self, reason, explanation, failed_checks=()):
+        super().__init__(explanation)
+        self.reason, self.explanation, self.failed_checks = reason, explanation, list(failed_checks)
 
 
 class Stop(Exception):
@@ -220,7 +229,12 @@ def _roles():
         "required": ["patch", "contracts", "knobs", "unresolved"],
         "properties": {"patch": {"type": "string"},
                        "contracts": {"type": "array", "items": {"type": "string"}},
-                       "knobs": {"type": "object", "additionalProperties": {"type": "object"}},
+                       # 2026-10-04 ET (ticket 57, campaign a1): strict structured output needs a fixed
+                       # object shape, so knob assignments are a list of {class, name, value} rows.
+                       "knobs": {"type": "array", "items": {
+                           "type": "object", "additionalProperties": False, "required": ["class", "name", "value"],
+                           "properties": {"class": {"type": "string"}, "name": {"type": "string"},
+                                          "value": {"type": ["number", "string"]}}}},
                        "unresolved": {"type": "array", "items": {"type": "string"}}}})
     profiling = provider_roles.Role("extensa_profiling", {
         "type": "object", "additionalProperties": False, "required": ["notes"],
@@ -229,15 +243,54 @@ def _roles():
             "independent_test_generation": provider_roles.ROLES["independent_test_generation"]}
 
 
+def knobs_by_class(response):
+    """{class: {knob: value}} from the rewrite role's knob rows (a mapping is accepted as is)."""
+    knobs = response.get("knobs") or {}
+    if isinstance(knobs, dict):
+        return knobs
+    out = {}
+    for row in knobs:
+        value = row["value"]
+        if isinstance(value, float) and value.is_integer():
+            value = int(value)
+        out.setdefault(row["class"], {})[row["name"]] = value
+    return out
+
+
 REWRITE_PROMPT = """\
 Extensa-mode rewrite, campaign {campaign}, iteration {iteration}.
 Rewrite the base source under `source/` within the regions in REGIONS.json. You may use
 the rewrite contracts under `contracts/` (name the ones you use in `contracts`) and give at
-most one knob assignment per workload class in `knobs` (classes: {classes}); knob values
-must stay inside the contract's declared ranges. `best/` holds this campaign's current
-per-class best patches and FEEDBACK.json the previous iteration's feedback. Return ONE
+most one knob assignment per workload class in `knobs`, one row {{class, name, value}} per knob
+(classes: {classes}); knob values
+must stay inside the contract's declared ranges; the evaluator defines each assigned value
+as the macro `SWDB_KNOB_<KNOB NAME IN UPPER CASE>` at the top of `bfs.cc` (give each knob a
+default with `#ifndef`). When you name a contract, the evaluator adds its canonical lowering
+header `swdb_dxc_lowering.hpp`; patch `bfs.cc` only.{history} Return ONE
 unified diff against `source/` in `patch`. Do not state performance outcomes.
+Work only by reading the files listed here and writing your answer: read no other path, do not
+use shell heredocs, `git apply`, `patch` or any command that runs or applies generated text; put
+the diff only in `patch`. To read, use only `cat FILE`, `nl -ba FILE`, `sed -n 'A,Bp' FILE` with
+literal line numbers, `grep -n 'TEXT' FILE`, `ls DIR` and `wc -l FILE`, one command at a time,
+with no pipes, awk, command substitution or redirection. Workspace files: {files}.
 """
+
+
+def rewrite_prompt(campaign_id, iteration, classes, files):
+    """The rewrite prompt names only the files the workspace holds (2026-10-04 ET, campaign a2:
+    the provider audit refused a read of an absent `best/` and FEEDBACK.json)."""
+    history = []
+    if "library/swdb_dxc_lowering.hpp" in files:
+        history.append(" `library/swdb_dxc_lowering.hpp` is that header (read it for the intrinsic calls; "
+                       "`#include \"swdb_dxc_lowering.hpp\"` from `bfs.cc`) and `library/intrinsics/` describes "
+                       "each intrinsic.")
+    best = sorted(f for f in files if f.startswith("best/"))
+    if best:
+        history.append(" " + ", ".join(f"`{f}`" for f in best) + " hold this campaign's current per-class best patches.")
+    if "FEEDBACK.json" in files:
+        history.append(" `FEEDBACK.json` holds the previous iteration's feedback.")
+    return REWRITE_PROMPT.format(campaign=campaign_id, iteration=iteration, classes=", ".join(classes),
+                                 history="".join(history), files=", ".join(f"`{f}`" for f in sorted(files)))
 
 
 # --- the contract-fixture target adapter ---------------------------------------------------
@@ -314,7 +367,7 @@ class FixtureAdapter:
         return {"spread": float(self.fx["pilot"][cls][role])}
 
     # artifacts -----------------------------------------------------------------------
-    def materialize(self, iteration, cls, patch, knobs, attempt):
+    def materialize(self, iteration, cls, patch, knobs, attempt, contracts=()):
         from swdb.store import Store
         template = Store(self.store_dir).get(self.fx["templates"]["candidate"], "candidate")
         data = copy.deepcopy(template)
@@ -423,7 +476,7 @@ class FixtureAdapter:
     def other_socket_lease(self):
         return self.fx.get("other_socket_lease")
 
-    def preflight(self, planned_bytes):
+    def preflight(self, planned_bytes, step=None):
         from swdb import dispatch_preflight
         observation = self.fx.get("preflight")
         if observation is None:
@@ -465,12 +518,16 @@ class Campaign:
         self.roles = [b["role"] for b in self.data["baselines"]]
         from swdb import rewrite
         self.provider_config = rewrite.configuration(Path(args.provider_config))
-        if not args.fixture:
-            raise UsageError("only the contract-fixture target adapter exists (--fixture); the native-CPU and "
-                             "DX100 gem5 adapters are tickets 56 and 57")
         self.query = self.data["regions"] == "query"
         self.applied_contracts = None     # query mode: contracts the site finder applied this iteration
-        self.adapter = FixtureAdapter(args.fixture, self.data, self.team, self.store_dir, self.folder)
+        if args.fixture:
+            self.adapter = FixtureAdapter(args.fixture, self.data, self.team, self.store_dir, self.folder)
+        else:
+            # Tickets 56/57 (2026-10-04 ET): the campaign's target selects its real adapter.
+            from swdb import campaign_targets
+            data = {**self.data, "runs_root": str(runs_root)}
+            self.adapter = campaign_targets.adapter_for(data, self.team, self.store_dir, self.folder,
+                                                        self.library_root, **getattr(args, "adapter_options", {}))
 
     # state ------------------------------------------------------------------------------
     def _load_state(self):
@@ -511,7 +568,7 @@ class Campaign:
             if used + planned > self.budget.disk_gb * 1e9:
                 raise Stop("disk", f"campaign folder holds {used} bytes; the next job would exceed {self.budget.disk_gb} GB")
             try:
-                receipt = self.adapter.preflight(planned)
+                receipt = self.adapter.preflight(planned, step=step)
             except Failure as exc:
                 raise Stop("disk" if "run disk" in str(exc) else "infrastructure_failure",
                            f"dispatch preflight refused: {exc}") from None
@@ -580,11 +637,19 @@ class Campaign:
         self.adapter.protocol_id = frozen["id"]
         self.state["protocol"] = {"id": frozen["id"], "identity_sha256": frozen["identity_sha256"],
                                   "settings": frozen["settings"]}
+        if frozen.get("by_role"):          # ticket 56: one frozen native protocol per baseline role
+            self.state["protocol"]["by_role"] = frozen["by_role"]
         self.state["setup_done"] = True
 
     def _pilot(self):
         """Native A/A pilot (D3): any spread above 0.1 stops before any provider call."""
-        spreads = {cls: {role: self.adapter.pilot(cls, role)["spread"] for role in self.roles} for cls in self.classes}
+        spreads = {}
+        for cls in self.classes:
+            for role in self.roles:
+                self._step("evaluation", job=True)
+                started = time.monotonic()
+                spreads.setdefault(cls, {})[role] = self.adapter.pilot(cls, role)["spread"]
+                self._spent("evaluation", started)
         passed = all(s <= SPREAD_LIMIT for row in spreads.values() for s in row.values())
         self.state["pilot"] = {"spreads_by_class_and_role": spreads, "passed": passed}
         if not passed:
@@ -646,6 +711,16 @@ class Campaign:
             if path is None:
                 raise Failure(f"campaign contract {cid} is not in the library")
             files[f"contracts/{cid}.yaml"] = path.read_text()
+            # 2026-10-04 ET (attempt a4): a contract edit needs the intrinsics' C++ interface. The
+            # workspace holds each used intrinsic's entry and the target's canonical lowering
+            # header as read-only references (as ticket 58's arms did); no evaluator input.
+            for iid in (library.get(cid) or {}).get("uses_intrinsics", []):
+                ipath = library.files.get(iid)
+                if ipath is not None:
+                    files[f"library/intrinsics/{ipath.name}"] = ipath.read_text()
+        references = getattr(self.adapter, "reference_files", None)
+        if references and self.data["library"]["contracts"]:
+            files.update({f"library/{name}": text for name, text in references().items()})
         regions = self.current_regions if self.query else self.data["regions"]
         files["REGIONS.json"] = json.dumps({"regions": regions}, indent=2)
         for cls, best in self.state["bests"].items():
@@ -690,8 +765,8 @@ class Campaign:
         return None
 
     def _iteration(self, iteration, row):
-        response = self._call("rewriting", self._workspace(iteration), REWRITE_PROMPT.format(
-            campaign=self.cid, iteration=iteration, classes=", ".join(self.classes)), row)
+        files = self._workspace(iteration)
+        response = self._call("rewriting", files, rewrite_prompt(self.cid, iteration, self.classes, files), row)
         if response is None:
             row["feedback_reasons"].append("provider_output_invalid")
             self.state["feedback"] = [S.Feedback("provider_output_invalid",
@@ -720,7 +795,7 @@ class Campaign:
 
     def _artifact(self, iteration, cls, response, row, feedback):
         patch, contracts = response["patch"], list(response.get("contracts") or [])
-        knobs = (response.get("knobs") or {}).get(cls, {})
+        knobs = knobs_by_class(response).get(cls, {})
         entry = {"id": None, "class": cls, "patch_sha256": artifacts.digest(patch), "knobs": knobs,
                  "contracts": contracts, "certification": None, "comparisons": [], "level": None,
                  "selection": None, "_patch": patch}
@@ -740,9 +815,18 @@ class Campaign:
         problem = self._knob_problem(contracts, knobs)
         if problem:     # D7: rejected before certification, never a repair call
             return reject("knob_out_of_range", problem)
+        try:
+            return self._certified_and_evaluated(iteration, cls, entry, patch, knobs, contracts, row, feedback, reject)
+        except Refused as refused:       # tickets 56/57: a target refusal rejects this class's artifact
+            return reject(refused.reason, refused.explanation, failed_checks=refused.failed_checks)
+
+    def _certified_and_evaluated(self, iteration, cls, entry, patch, knobs, contracts, row, feedback, reject):
         attempt = 0
-        candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt)
+        candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts)
         entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
+        admit = getattr(self.adapter, "admit", None)
+        if admit:
+            admit(candidate, contracts)
         if not contracts:
             entry["level"] = "uncertified"
             feedback.append(S.Feedback("uncertified_edit", "The edit used no rewrite contract.",
@@ -756,6 +840,8 @@ class Campaign:
                 self._spent("certification", started)
                 entry["certification"] = {"record": outcome["record"], "outcome": outcome["outcome"],
                                           "level_at_summary": outcome["outcome"]}
+                if outcome.get("failed_checks"):
+                    entry["certification"]["failed_checks"] = list(outcome["failed_checks"])
                 if outcome["outcome"] == "certified":
                     entry["level"] = "certified"
                     feedback.append(S.Feedback("certified", "Certification passed.", {"class": cls}).to_dict())
@@ -763,21 +849,27 @@ class Campaign:
                 if attempt >= self.max_repairs:
                     return reject("certification_failed", "Certification failed a named check.",
                                   failed_checks=outcome["failed_checks"])
-                repaired = self._call("repair", {**self._workspace(iteration), "CERTIFICATION.json": json.dumps(
-                    {"class": cls, "failed_checks": outcome["failed_checks"]})},
-                    "Repair the patch so the named certification checks pass.", row)
+                # 2026-10-04 ET: the repair workspace holds the failing patch, and the prompt names
+                # only the files present (the provider audit refuses reads outside them).
+                files = {**self._workspace(iteration), "CANDIDATE.patch": patch,
+                         "CERTIFICATION.json": json.dumps({"class": cls, "failed_checks": outcome["failed_checks"]})}
+                repaired = self._call("repair", files, "Repair: `CANDIDATE.patch` failed the certification checks "
+                                      "named in `CERTIFICATION.json`; return a repaired patch.\n"
+                                      + rewrite_prompt(self.cid, iteration, self.classes, files), row)
                 if repaired is None:
                     return reject("certification_failed", "Certification failed a named check.",
                                   failed_checks=outcome["failed_checks"])
                 attempt += 1
                 patch = repaired["patch"]
-                knobs = (repaired.get("knobs") or {}).get(cls, knobs)
+                knobs = knobs_by_class(repaired).get(cls, knobs)
                 entry.update(_patch=patch, patch_sha256=artifacts.digest(patch), knobs=knobs)
                 problem = self._knob_problem(contracts, knobs)
                 if problem:
                     return reject("knob_out_of_range", problem)
-                candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt)
+                candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts)
                 entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
+                if admit:
+                    admit(candidate, contracts)
         self._evaluate(iteration, cls, candidate, attempt, entry)
         selection = next((c for c in entry["comparisons"] if c["baseline_role"] == self.data["base_source"]), None)
         if selection:
@@ -900,6 +992,10 @@ class Campaign:
             self.ledger = S.SearchLedger.from_state(self.budget, resumed["ledger"])
             for pause in self.state["pauses"]:
                 pause["resumed_at"] = pause.get("resumed_at") or _now()
+            # Tickets 56/57 (2026-10-04 ET): a resume after an interrupted process also gets
+            # fresh record IDs for the retried iteration.
+            if not self.state.pop("clean_exit", False):
+                self.state["resumes"] = self.state.get("resumes", 0) + 1
         else:
             self.state = {"campaign": self.cid, "campaign_sha256": self.sha256, "started": _now(),
                           "lane_hours": 0.0, "iterations": [], "bests": {}, "feedback": [], "pauses": [],
@@ -913,14 +1009,18 @@ class Campaign:
                 if not self.state["setup_done"]:
                     self._setup()
                 self.adapter.protocol_id = self.state["protocol"]["id"]
+                if hasattr(self.adapter, "restore"):
+                    self.adapter.restore(self.state)
                 if self.data["target"] == "native_cpu" and self.state["pilot"] is None:
                     self._pilot()
+                if getattr(self.args, "baselines_only", False) and self.ledger.stop()[0] is None:
+                    return self._baselines_only()
                 if self.ledger.stop()[0] is None:
                     self._setup_call()
                 while self.ledger.may_open_iteration():
                     if (self.folder / "STOP").exists():
                         raise Stop("stopped_by_yanru", (self.folder / "STOP").read_text().strip()[:200])
-                    self.adapter.round = len(self.state["pauses"])
+                    self.adapter.round = len(self.state["pauses"]) + self.state.get("resumes", 0)
                     index = self.ledger.begin_iteration()
                     row = {"index": index, "started": _now(), "ended": None, "regions": [],
                            "provider_calls": [], "candidates": [], "feedback_reasons": [], "improved_classes": []}
@@ -944,6 +1044,9 @@ class Campaign:
             except Stop as stop:
                 self.ledger.terminate(stop.reason)
                 self.state["stop_detail"] = stop.detail
+            except (Failure, OSError) as exc:      # a real target's command or host failure
+                self.ledger.terminate(S.StopReason.INFRASTRUCTURE_FAILURE)
+                self.state["stop_detail"] = f"{type(exc).__name__}: {exc}"[:2000]
             except Paused as pause:            # setup call
                 self.state["pauses"].append({"at": _now(), "reason": pause.reason, "resumed_at": None,
                                              "iteration": 0})
@@ -952,8 +1055,33 @@ class Campaign:
                 return {"state": "paused", "reason": pause.reason, "campaign": self.cid}
             return self._finish()
 
+    def _baselines_only(self):
+        """Run the provider-free setup steps, then pause (2026-10-04 ET, ticket 57).
+
+        On gem5 this evaluates the one baseline per class that serves every candidate, so a
+        campaign can do its baseline work while the provider login is in use elsewhere. A
+        later `--resume` continues with the setup provider call and iteration 1."""
+        if self.data["target"] == "dx100_gem5":
+            for cls in self.classes:
+                for role in self.roles:
+                    key = f"{cls}/{role}"
+                    if key in self.state["baselines"]:
+                        continue
+                    self._step("evaluation", job=True)
+                    started = time.monotonic()
+                    self.state["baselines"][key] = self.adapter.baseline_evaluation(cls, role)
+                    self._spent("evaluation", started)
+                    self._save()
+        self.state.setdefault("prepared", []).append(_now())
+        self.state["clean_exit"] = True
+        self.adapter.release_lane()
+        self._save()
+        return {"state": "prepared", "campaign": self.cid, "baselines": self.state["baselines"],
+                "lane_hours": self.state["lane_hours"], "resume": f"swdb campaign {self.file} --resume"}
+
     def _finish(self):
         from swdb import writer
+        self.adapter.release_lane()
         reason = self.ledger.stop()[0] or S.StopReason.MAX_ITERATIONS
         summary = self.summary(reason)
         workflow.persist(self.store_dir, copy.deepcopy(summary), create=True)
@@ -1043,5 +1171,7 @@ def register_cli(commands, paths_module):
                      help="override the campaign file's runs_root (tests use a temporary folder)")
     sub.add_argument("--fixture", type=Path, default=None, help="contract-fixture target adapter file")
     sub.add_argument("--resume", action="store_true", help="resume a paused campaign")
+    sub.add_argument("--baselines-only", action="store_true",
+                     help="run setup and the per-class gem5 baselines (no provider call), then pause")
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
     sub.set_defaults(extensa_handler=run_cli)

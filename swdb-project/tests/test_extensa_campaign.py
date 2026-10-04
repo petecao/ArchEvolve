@@ -107,8 +107,14 @@ def fixture_file(team, *, iterations=None, **changes):
     return path
 
 
+def knob_rows(knobs):
+    """The rewrite role's knob rows (2026-10-04 ET) from {class: {name: value}}."""
+    return [{"class": cls, "name": name, "value": value}
+            for cls, values in (knobs or {}).items() for name, value in values.items()]
+
+
 def rewrite(contracts=(CONTRACT,), knobs=None, patch=PATCH):
-    return {"patch": patch, "contracts": list(contracts), "knobs": knobs or {}, "unresolved": []}
+    return {"patch": patch, "contracts": list(contracts), "knobs": knob_rows(knobs), "unresolved": []}
 
 
 def provider(team, plan):
@@ -188,10 +194,16 @@ def test_validate_accepts_named_approvals(team):
     assert result.returncode == 0, result.stderr
 
 
-def test_campaign_refuses_without_a_target_adapter(team):
+def test_campaign_without_fixture_uses_the_real_target_adapter(team):
+    """Updated 2026-10-04 ET (tickets 56/57): without --fixture the target's real adapter runs;
+    off mbit10 it stops before any provider call (its inputs or socket lane are unavailable)."""
     path = campaign_file(team)
-    result = run_swdb("campaign", path, "--records", team["records"], "--provider-config", provider(team, {}))
-    assert result.returncode == 2 and "tickets 56 and 57" in result.stderr
+    result = run_swdb("campaign", path, "--records", team["records"], "--provider-config", provider(team, {}),
+                      "--format", "json")
+    summary = json.loads(result.stdout)
+    assert summary["stop_reason"] == "infrastructure_failure" and summary["evidence_kind"] == "execution"
+    assert summary["budgets"]["used"]["provider_calls_counted"] == 0
+    assert not (team["root"] / "provider-log.jsonl").exists()
 
 
 def test_one_fixture_iteration_end_to_end(team):

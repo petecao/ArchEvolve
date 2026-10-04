@@ -1,0 +1,93 @@
+kind: campaign_summary
+schema_version: '0.4'
+id: extensa-native-bfs-20261004-a1.summary
+status: draft
+created: '2026-10-04'
+updated: '2026-10-04'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+mode: extensa
+campaign: extensa-native-bfs-20261004-a1
+campaign_file:
+  path: campaigns/extensa/extensa-native-bfs-20261004-a1.yaml
+  sha256: 2cda35133e1ff792fa48e1017f9b30cfc4fbab0bcc939c9cb41df685320c28d5
+swdb_commit: 618673dea52a40369772868f59c4748f600c28db
+extensa_source:
+  repository: MaizeHPC/MemAcc
+  commit: af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+target: native_cpu
+evidence_basis: measured
+evidence_kind: execution
+protocol: null
+baselines:
+- role: fork_scalar_tdstep
+  candidate: bfs-native-pilot-20260925-dx10018-a1.baseline
+  evaluation_ids_by_class: {}
+- role: upstream_do_bfs
+  candidate: bfs-native-pilot-20260925-upstream18-a2.baseline
+  evaluation_ids_by_class: {}
+workload_classes:
+- class: kronecker
+  workload: bfs-20261004-kronecker22.3dc69be403db57e9
+  sources: [0, 1234, 7777]
+- class: uniform_random
+  workload: bfs-20261004-uniform22.facb16e6260c3a82
+  sources: [0, 1234, 7777]
+label: single graph per class
+provider:
+  name: codex
+  model: gpt-5.6-sol
+  effort: xhigh
+pilot: null
+setup:
+  provider_calls: []
+iterations: []
+per_class:
+- class: kronecker
+  verdict: no_gain
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+- class: uniform_random
+  verdict: no_gain
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+budgets:
+  limits:
+    max_iterations: 8
+    plateau_iterations: 4
+    lane_hours: 24
+    provider_calls_per_iteration: 3
+    provider_calls_setup: 1
+    disk_gb: 20
+    lanes: 1
+  used:
+    iterations: 0
+    lane_hours: 0.0
+    provider_calls_counted: 0
+    provider_calls_uncounted: 0
+    disk_gb_peak: 0.052347
+pauses: []
+stop_reason: infrastructure_failure
+stop_detail: class kronecker workload bfs-20261004-kronecker22.3dc69be403db57e9 (4194302 vertices, 128311450
+  directed edges) exceeds the native evaluator's materialization limits (2000000 vertices, 32000000 directed
+  edges); the native protocol cannot time it
+artifacts: []
+retentions: []
+library_entries: []
+site_finder: null
