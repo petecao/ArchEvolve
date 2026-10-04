@@ -40,7 +40,7 @@ import sys
 import time
 from pathlib import Path
 
-from swdb import artifacts, paths, workflow
+from swdb import artifacts, certification_feedback, paths, workflow
 from swdb.cli import Failure, UsageError
 
 SNAPSHOT = "bfs-dx100-scalar-only-20260929-a1.source"
@@ -433,8 +433,10 @@ class TargetAdapter:
                 continue
             records.append(record["id"])
             if record["verdict"] != "certified":
-                failed_checks += sorted({c.get("reason") or "matrix" for c in record.get("matrix", [])
-                                         if c.get("status") != "passed"}
+                # Ticket 64: a strict-layer failure names the strict check it hit
+                # (`strict_layer_assertion:range_bounds`), read from the run's own assertion line.
+                names, _counts, _cells = certification_feedback.matrix_checks(record)
+                failed_checks += sorted(set(names)
                                         | {f"control:{c['id']}" for c in record.get("negative_controls", [])
                                            if c.get("status") != "rejected"})
         passed = not failed_checks

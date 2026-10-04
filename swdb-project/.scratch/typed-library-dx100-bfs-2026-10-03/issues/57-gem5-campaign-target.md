@@ -1,7 +1,7 @@
 # 57 — gem5 Extensa campaign target
 
 Created: 2026-10-03
-Updated: 2026-10-04 ET (a6 rerun with the ticket 62 certifier); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D2, D4, D7)
+Updated: 2026-10-04 ET (a7 rerun with ticket 65); 2026-10-04 ET (a6 rerun with the ticket 62 certifier); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D2, D4, D7)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 53, 54, 55 (29 resolved)
@@ -92,3 +92,42 @@ login before the coordinator's hold; no login failure was observed.
   range-loop entry's caveats, and name the failing strict-layer check in campaign feedback.
 - Summary: `records/campaign_summaries/extensa-gem5-bfs-20261004-a6.summary.yaml` (team store;
   host commit `d5eabbb`).
+- Follow-up done in [64](65-range-loop-convention-and-named-check-feedback.md).
+
+**Rerun a7 (2026-10-04 ET, agent-decided under Yan-Ru's 2026-10-04 delegation; revisable).**
+
+- Changes since a6 (ticket 65):
+  - The rewrite workspace holds non-normative intrinsic usage notes. They say that a range loop
+    starts with `last_i_reg = 0` and `last_j_reg = -1`, and that `*_reg` operands are register
+    handles set by `__dxc_const_i32`.
+  - Certification feedback names the failing strict-layer check and states its precondition.
+- Run: campaign `extensa-gem5-bfs-20261004-a7`
+  (`campaigns/extensa/extensa-gem5-bfs-20261004-a7.yaml`, the a6 file with the new ID).
+  - mbit10 node 0, lease generation 457, 09:56–17:59 ET, load1 2.27 at start. Ticket 56's native
+    campaign held node 1 for part of the run.
+  - Commit `af8581c` in `/data1/yanruj/ArchEvolve-extensa` (branch `t64-a7`, git bundle, not
+    pushed).
+  - Lane entered with `socket_lane.sh` from `/data1/yanruj/Memacc-evolveswdb-lane` (`76cca35`,
+    equal to its upstream).
+  - Raw output in `/data/yanruj/EvolveSWDB_runs/extensa/`. `/data1` had 40 GB free, and the
+    20 GB disk cap could have brought it down to the 20 GB line.
+- Result: 8 iterations, stop `max_iterations`, 20 counted calls (setup 1, 8 rewrites, 1 test
+  generation refused by the guard, 10 repairs), 6.70 lane-hours, peak disk 1.01 GB. No
+  candidate set `last_i` to -1, and no `range_bounds` failure occurred.
+
+| Class | Iterations | Best | Certified | Point ratio | Verdict |
+|---|---:|---|---|---:|---|
+| kronecker | 8 | `extensa-gem5-bfs-20261004-a7.it4.kronecker.a2` | yes (`certification.f409bc09dbf041be88aac1eeb822a825`) | 1.411 | `gain`, single graph per class, simulated |
+| uniform_random | 8 | `extensa-gem5-bfs-20261004-a7.it8.uniform_random.a1` | yes (`certification.e2b68511f2254e6fb845cd51cc11d821`) | 1.553 | `gain`, single graph per class, simulated |
+
+- Rejections on the way:
+  - Two patches did not apply (iterations 1 and 6).
+  - Controls survived: `forged_frontier`, `skipped_cas_recheck`, `chunk_off_by_one` and
+    `dropped_wait`.
+  - On uniform: frontier or verifier mismatches, and once `strict_layer_assertion:memory_region`.
+  - The guard refused iteration 7's rewrite.
+- Gap found and fixed on the Mac after dispatch (`4d94e47`, not in a7's checkout): when only
+  controls survived, the feedback gave their count but not their names. It now names them.
+- Caveats: each class used one graph and one source. The ratios are simulated gem5 point
+  ratios (spread 0), not hardware evidence and not a general speedup claim.
+- Summary: `records/campaign_summaries/extensa-gem5-bfs-20261004-a7.summary.yaml` (team store).
