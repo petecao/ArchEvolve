@@ -6,6 +6,13 @@
     "kind": {
       "const": "review"
     },
+    "target_kind": {
+      "enum": [
+        "library_entry",
+        "candidate"
+      ],
+      "description": "Absent means library_entry. candidate reviews promote an Extensa candidate artifact (ticket 48, 2026-10-03 ET)."
+    },
     "target": {
       "type": "object",
       "additionalProperties": false,
@@ -34,8 +41,78 @@
       "type": "array",
       "minItems": 1,
       "items": {
-        "type": "string",
-        "x-ref": "certification"
+        "type": "string"
+      }
+    },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "campaign"
+      ],
+      "properties": {
+        "mode": {
+          "const": "extensa"
+        },
+        "campaign": {
+          "type": "string",
+          "pattern": "^extensa-(native|gem5)-bfs-[0-9]{8}-[a-z][0-9]+$"
+        }
+      }
+    },
+    "reevaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "team_protocol",
+        "protocol",
+        "workload_class",
+        "workloads",
+        "requests"
+      ],
+      "properties": {
+        "team_protocol": {
+          "type": "string",
+          "x-ref": "protocol"
+        },
+        "protocol": {
+          "type": "string",
+          "x-ref": "protocol"
+        },
+        "workload_class": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workloads": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "x-ref": "workload"
+          }
+        },
+        "requests": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "sha256"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -44,5 +121,34 @@
     "reviewer",
     "reviewed_at",
     "evidence"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "target_kind"
+        ],
+        "properties": {
+          "target_kind": {
+            "const": "candidate"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "origin",
+          "reevaluation"
+        ]
+      },
+      "else": {
+        "properties": {
+          "evidence": {
+            "items": {
+              "x-ref": "certification"
+            }
+          }
+        }
+      }
+    }
   ]
 }

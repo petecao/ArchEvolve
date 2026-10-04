@@ -254,6 +254,10 @@ class Library:
                         self._pin(data[key])
                     except (KeyError, TypeError, ValueError, OSError) as exc:
                         error(key, str(exc))
+            if kind == 'library_operation':
+                from swdb.library_operations import body_problems
+                for field, reason in body_problems(self, data):
+                    error(field, reason)
             if kind in {'lowering','library_operation'}:
                 try:
                     self._pin({**data['location'], 'sha256': data['code_sha256']})

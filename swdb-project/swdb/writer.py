@@ -101,6 +101,12 @@ def _commit(records_dir, new, replace, upsert=()):
         rel = store.path_of(data["id"])
         if rel is None:
             raise Failure(f"cannot replace {data['id']!r}: no such record")
+        # Extensa mode tags are set only at creation (ticket 48, 2026-10-03 ET).
+        old = store.get(data["id"]) or {}
+        for tag in ("mode", "campaign"):
+            if old.get(tag) != data.get(tag):
+                raise Failure(f"{data['id']}: {tag} is set only when a record is created; "
+                              "rewriting it is refused; nothing written")
         replaced[rel] = data
         targets.append((rel, data))
     result = _validate_store(store, extra=extra, replace=replaced)

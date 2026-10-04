@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// Ported 2026-10-03 from MaizeHPC/MemAcc af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+// Source: AgenticRefiner/refiner/synthesis/drivers/gather_stream_cand.cpp.tmpl
+// SWDB changes: the candidate TU drives the library body (GatherStagingExecutor) instead of a SynthBackend hook (2026-10-03 ET, ticket 51).
+#include "{{BACKEND_HEADER}}"
+#include <cstddef>
+#include <cstdint>
+extern "C" void swdb_cand_gather_stream(double* dst, const double* src, const std::int32_t* idx, std::size_t rows,
+                                        std::size_t row_len, std::size_t dst_stride, std::size_t src_stride) {
+  GatherStagingExecutor<double, std::int32_t> ex;
+  ex.build(row_len);
+  for (std::size_t r = 0; r < rows; ++r) ex.gather_stream_row(dst + r * dst_stride, src + r * src_stride, idx);
+  GatherStagingExecutor<double, std::int32_t>::flush();
+}

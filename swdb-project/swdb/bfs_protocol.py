@@ -1290,7 +1290,10 @@ def compare_evaluations(args):
         baseline = _get(store, request.get("baseline_evaluation"), "evaluation")
         candidate = _get(store, request.get("candidate_evaluation"), "evaluation")
         data.update(baseline_evaluation=baseline["id"], candidate_evaluation=candidate["id"])
-        selected = _get(store, request.get("comparison_baseline"), "implementation")
+        from swdb.extensa_boundary import require_team_inputs
+        require_team_inputs(store, [baseline["id"], candidate["id"]], protocol=protocol["id"],
+                            command="compare-evaluations")
+        selected =_get(store, request.get("comparison_baseline"), "implementation")
         data["comparison_baseline"] = selected["id"]
         _fail(baseline.get("implementation") == selected["id"], "baseline evaluation does not belong to the explicitly selected implementation")
         _fail(candidate.get("comparison_baseline") in {None, selected["id"]}, "comparison conflicts with the evaluation's selected baseline")

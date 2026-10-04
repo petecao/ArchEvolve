@@ -198,3 +198,16 @@ Periodic follow-up, 2026-10-03 18:14 ET: root independently read back source6cf 
 2026-10-03 23:15 ET: ticket 41 resolved (BC track): on mbit10 (ec50f78, lane node 1, generation 507, 23:03-23:09 ET, load1 1.00) the scalar BC snapshot and the Kronecker and uniform scale-18 BC workloads registered, and native evaluation bc-native-20261003-a1.kronecker18 passed BCVerifier in 9/9 trials; lease released, no owned process left.
 
 2026-10-03 23:31 ET: ticket 43 resolved (BC track). contract.bc_read_offload was agent-reviewed and promoted under Yan-Ru's 2026-10-03 delegation and is revisable by Yan-Ru. An independent review found no blocker (two minor control-coverage follow-ups). A Mac re-run of the certification reproduced 10/10 cells and 18/18 rejected controls on the same patched tree. `swdb promote` wrote review.contract.bc_read_offload.30a3747420b3, the contract is now shared/certified, and 489 records are valid. The Codex second opinion is unavailable inside the agent sandbox. The commit is local; the main session pushes. [Review](bc-contract-review-2026-10-03.md).
+2026-10-03 20:42 ET: ticket 48 resolved on the Extensa worktree branch. Mode tags, team-boundary refusals and candidate promotion implemented; 16 new tests and 192 regression cases pass.
+
+2026-10-03 21:03 ET: ticket 49 resolved on the Extensa worktree branch. Port of D1 machinery with SPDX/provenance headers; 28 new tests pass; affected regression 217 pass (3 sandbox-only tempfile failures).
+
+2026-10-03 21:08 ET: ticket 50 resolved on the Extensa worktree branch. Packing tracer certifies; 8 new tests pass.
+
+2026-10-03 21:12 ET: ticket 51 resolved on the Extensa worktree branch. Four seeded entries certify; library-operation tests 21 pass.
+
+2026-10-03 21:49 ET: ticket 52 resolved on the Extensa worktree branch. Campaign skeleton with the contract-fixture adapter; 12 campaign tests pass.
+
+2026-10-03 21:50 ET: ticket 53 resolved on the Extensa worktree branch. 12 selection/speed-rule tests pass.
+
+2026-10-03 21:51 ET: ticket 54 resolved on the Extensa worktree branch. 9 budget/pruning tests pass; 33 campaign tests in total.

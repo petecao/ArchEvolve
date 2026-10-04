@@ -28,6 +28,8 @@ def validate_records(records_dir, extra=None, replace=None, library_root=None):
     root = library_root or default_root(records_dir)
     if root.exists():
         result.problems.extend(Library(root, result.store).validate())
+    from swdb.campaign import validate_campaign_dir   # ticket 52: campaigns/extensa/*.yaml
+    result.problems.extend(validate_campaign_dir(records_dir))
     return result
 
 

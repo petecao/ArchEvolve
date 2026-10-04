@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// Ported 2026-10-03 from MaizeHPC/MemAcc af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+// Source: AgenticRefiner/refiner/synthesis/drivers/gather_{ref,cand,run}.cpp.tmpl
+// SWDB changes: SWDB addition (ticket 51): the gather templates adapted to vertex relabeling (out[perm[v]] = in[v]); no timing; input frame check (2026-10-03 ET)
+// Two-binary certification REFERENCE TU for family relabel: compiled from SWDB's
+// plain C++ reference semantics only; the candidate header is never included.
+#include "{{REFERENCE_HEADER}}"
+#include <cstddef>
+#include <cstdint>
+extern "C" void swdb_ref_relabel(double* out, const double* in, const std::int32_t* perm, std::size_t n) {
+  swdb_ref::relabel_apply<double, std::int32_t>(out, in, perm, n);
+}

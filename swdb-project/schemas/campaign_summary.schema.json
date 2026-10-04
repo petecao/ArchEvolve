@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "campaign_summary",
+  "title": "Extensa campaign summary",
+  "description": "Created 2026-10-03 ET (ticket 52, decision D6). Written once when an Extensa campaign stops; the only campaign record always copied to the team store.",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "campaign_summary"
+    },
+    "message_version": {
+      "type": "string"
+    },
+    "producer": {
+      "type": "object"
+    },
+    "campaign_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "swdb_commit": {
+      "type": "string"
+    },
+    "extensa_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "commit"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string"
+        }
+      }
+    },
+    "target": {
+      "enum": [
+        "native_cpu",
+        "dx100_gem5"
+      ]
+    },
+    "evidence_basis": {
+      "enum": [
+        "measured",
+        "simulated"
+      ]
+    },
+    "evidence_kind": {
+      "enum": [
+        "execution",
+        "contract_fixture"
+      ]
+    },
+    "protocol": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "baselines": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "workload_classes": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "label": {
+      "const": "single graph per class"
+    },
+    "provider": {
+      "type": "object"
+    },
+    "pilot": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "iterations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "index",
+          "started",
+          "ended",
+          "regions",
+          "provider_calls",
+          "candidates",
+          "feedback_reasons",
+          "improved_classes"
+        ]
+      }
+    },
+    "per_class": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "class",
+          "verdict",
+          "best",
+          "best_level"
+        ],
+        "properties": {
+          "class": {
+            "type": "string"
+          },
+          "verdict": {
+            "enum": [
+              "gain",
+              "no_gain",
+              "inconclusive"
+            ]
+          },
+          "best": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "best_level": {
+            "enum": [
+              "certified",
+              "uncertified",
+              null
+            ]
+          },
+          "best_selection_baseline": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "best_other_baseline": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "faster_uncertified": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "label": {
+            "const": "single graph per class"
+          }
+        }
+      }
+    },
+    "budgets": {
+      "type": "object",
+      "required": [
+        "limits",
+        "used"
+      ],
+      "properties": {
+        "limits": {
+          "type": "object"
+        },
+        "used": {
+          "type": "object"
+        }
+      }
+    },
+    "pauses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "at",
+          "reason"
+        ],
+        "properties": {
+          "at": {
+            "type": "string"
+          },
+          "reason": {
+            "enum": [
+              "usage_limit",
+              "login"
+            ]
+          },
+          "resumed_at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "stop_reason": {
+      "enum": [
+        "max_iterations",
+        "plateau",
+        "lane_hours",
+        "provider_calls",
+        "disk",
+        "baseline_unstable",
+        "infrastructure_failure",
+        "stopped_by_yanru"
+      ]
+    },
+    "stop_detail": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "retentions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "library_entries": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "setup": {
+      "type": "object",
+      "description": "The setup allowance's provider calls (the profiling agent), before iteration 1."
+    }
+  },
+  "required": [
+    "mode",
+    "campaign",
+    "campaign_file",
+    "swdb_commit",
+    "extensa_source",
+    "target",
+    "evidence_basis",
+    "evidence_kind",
+    "protocol",
+    "baselines",
+    "workload_classes",
+    "label",
+    "provider",
+    "iterations",
+    "per_class",
+    "budgets",
+    "pauses",
+    "stop_reason",
+    "artifacts",
+    "retentions"
+  ]
+}

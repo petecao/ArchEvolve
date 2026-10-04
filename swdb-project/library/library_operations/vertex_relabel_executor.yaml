@@ -1,0 +1,101 @@
+# Library operation seeded from Extensa (ticket 51). Created 2026-10-03 ET.
+id: operation.vertex_relabel_executor
+kind: library_operation
+provenance:
+  origin:
+    kind: extensa_source
+    repository: MaizeHPC/MemAcc
+    commit: af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+    paths:
+    - DataLayoutAPI/vertex_relabel.hh
+    - AgenticRefiner/transformations/relabel/vertex_relabel_executor.yaml
+  license: Apache-2.0 WITH LLVM-exception (Q66 assumption, pending Peter)
+  semantics:
+    source: AgenticRefiner/transformations/relabel/vertex_relabel_executor.yaml
+    output_equivalence: bitwise_identical
+signature: template <typename IndexT> class VertexRelabelExecutor { bool adopt_permutation(const IndexT* perm, size_t
+  n); template <typename ValueT> void permute_values(const ValueT* in, ValueT* out) const; }
+intent: 'Vertex relabeling: adopt a bijection perm on [0, n) (refused otherwise) and move per-vertex data to the
+  new labels, out[perm[v]] = in[v]; CSR rows are relabeled the same way.'
+location:
+  root: library
+  path: library_operations/relabel.hh
+  symbol: VertexRelabelExecutor
+code_sha256: d4aaa5fca8c011924104a4044bdb5a69579eda8fdf20c97e1e467a1ba4d7f6cb
+reference_semantics:
+  root: library
+  path: library_operations/reference/movement_reference.hh
+  sha256: 465470e4b50f4446801f005fc0bb787f4e4b064d8585044ca710c91d28cbcc8c
+  symbol: relabel_apply
+uses_intrinsics: []
+uses_library_operations: []
+pattern_key:
+- roles:
+  - offsets
+  address_shapes:
+  - stream
+  update_kind: read
+- roles:
+  - index
+  - target
+  address_shapes:
+  - ranged_indirect
+  update_kind: read
+differential_test:
+  root: library
+  path: library_operations/drivers/relabel_run.cpp.tmpl
+  sha256: eae04dbdd1a1cc560171d428d7ee4a8b2bb33f190f8b1207e686221972815b06
+  family: relabel
+  files:
+    reference_template:
+      root: library
+      path: library_operations/drivers/relabel_ref.cpp.tmpl
+      sha256: a9f5dd6c68afb6bb8cbc4544165f8eee42b8a3609840d4ac9a6061b30fe49212
+    candidate_template:
+      root: library
+      path: library_operations/drivers/vertex_relabel_executor_cand.cpp.tmpl
+      sha256: 6c61faded9bda3192db705e2802a3e5c269fe636aaf55a4f39422e6a796c2127
+  input_set:
+    seeds: post_hoc
+    sizes:
+      n: 1031
+clauses:
+- id: values_follow_permutation
+  role: postcondition
+  statement: out[perm[v]] = in[v] for every vertex v.
+  natural_language_only: checked by bitwise equality with the plain C++ reference and the input frame check
+  discharge_mode: differential_test
+  negative_control:
+    id: inverse_direction
+    kind: ordering
+    check: differential_mismatch
+    mutation:
+      root: library
+      path: library_operations/controls/vertex_relabel_executor.inverse_direction.hh
+      sha256: 214f76e1ba9141d950a027e36a8de2f53dbb4514ffe6f66d46cf4f9690cfec61
+- id: every_vertex_moved
+  role: postcondition
+  statement: Every vertex in [0, n) is moved exactly once.
+  natural_language_only: checked by bitwise equality with the plain C++ reference and the input frame check
+  discharge_mode: differential_test
+  negative_control:
+    id: skip_last_vertex
+    kind: dropped_operand
+    check: differential_mismatch
+    mutation:
+      root: library
+      path: library_operations/controls/vertex_relabel_executor.skip_last_vertex.hh
+      sha256: de2f1369a231c0b1ba171fb6a8c81bc27f00a42167430c004c2aacc3ef33afb0
+- id: input_read_only
+  role: frame
+  statement: The input values and the permutation are not written.
+  natural_language_only: checked by bitwise equality with the plain C++ reference and the input frame check
+  discharge_mode: differential_test
+  negative_control:
+    id: aliasing_write
+    kind: aliasing
+    check: frame_violation
+    mutation:
+      root: library
+      path: library_operations/controls/vertex_relabel_executor.aliasing_write.hh
+      sha256: 67eab79f396379e1bb91af39b3a820e231f448ba2d8d523c9387bcb625c69f28

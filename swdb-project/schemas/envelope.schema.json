@@ -85,6 +85,19 @@
     },
     "extensions": {
       "type": "object"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "extensa"
+      ],
+      "description": "Extensa-mode tag set when the record is created (2026-10-03 ET); absent means ArchEvolve mode.",
+      "x-reason": "mode is extensa or absent (ArchEvolve mode)"
+    },
+    "campaign": {
+      "type": "string",
+      "pattern": "^extensa-(native|gem5)-bfs-[0-9]{8}-[a-z][0-9]+$",
+      "x-reason": "campaign must be an Extensa campaign ID extensa-(native|gem5)-bfs-YYYYMMDD-<letter><n>"
     }
   },
   "required": [
@@ -118,6 +131,36 @@
             "type": "string",
             "x-reason": "a deprecated record must name its replacement in deprecated_by"
           }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "mode"
+        ]
+      },
+      "then": {
+        "required": [
+          "campaign"
+        ],
+        "x-required-reasons": {
+          "campaign": "an Extensa-mode record names its campaign"
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "campaign"
+        ]
+      },
+      "then": {
+        "required": [
+          "mode"
+        ],
+        "x-required-reasons": {
+          "mode": "campaign is allowed only on mode: extensa records"
         }
       }
     }

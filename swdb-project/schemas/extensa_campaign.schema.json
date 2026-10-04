@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "extensa_campaign",
+  "title": "Extensa campaign file (swdb.extensa-campaign.v1)",
+  "description": "Created 2026-10-03 ET (ticket 52, decision D5). An input file under campaigns/extensa/, not a record; checked by swdb validate and swdb campaign.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "id", "created", "mode", "kernel", "target", "machine", "base_source", "baselines",
+               "protocol", "workload_classes", "label", "library", "regions", "provider", "budgets", "runs_root"],
+  "properties": {
+    "format": {"const": "swdb.extensa-campaign.v1"},
+    "id": {"type": "string", "pattern": "^extensa-(native|gem5)-bfs-[0-9]{8}-[a-z][0-9]+$"},
+    "created": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}( [0-9]{2}:[0-9]{2} ET)?$"},
+    "mode": {"const": "extensa"},
+    "kernel": {"const": "gapbs-bfs"},
+    "target": {"enum": ["native_cpu", "dx100_gem5"]},
+    "machine": {"type": "string", "minLength": 1},
+    "base_source": {"enum": ["fork_scalar_tdstep", "upstream_do_bfs"]},
+    "baselines": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "object", "additionalProperties": false, "required": ["role", "candidate"],
+                "properties": {"role": {"enum": ["fork_scalar_tdstep", "upstream_do_bfs"]},
+                               "candidate": {"type": "string", "minLength": 1}}}
+    },
+    "protocol": {
+      "type": "object", "additionalProperties": false,
+      "required": ["roi", "threads", "repetitions", "sources", "region_pairs", "differences"],
+      "properties": {
+        "roi": {"const": "bfs.complete_call.v1"},
+        "threads": {"type": "integer", "minimum": 1},
+        "repetitions": {"type": "integer", "minimum": 1},
+        "sources": {"type": "array", "minItems": 1, "items": {"type": "integer", "minimum": 0}},
+        "region_pairs": {"type": "boolean"},
+        "differences": {"type": "string", "minLength": 1}
+      }
+    },
+    "workload_classes": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "object", "additionalProperties": false, "required": ["class", "workload"],
+                "properties": {"class": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+                               "workload": {"type": "string", "minLength": 1}}}
+    },
+    "label": {"type": "string"},
+    "library": {
+      "type": "object", "additionalProperties": false, "required": ["allowed_tiers", "contracts"],
+      "properties": {
+        "allowed_tiers": {"type": "array", "minItems": 1, "items": {"enum": ["shared", "experimental"]}},
+        "contracts": {"type": "array", "items": {"type": "string"}},
+        "synthesize": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "regions": {"oneOf": [{"const": "query"},
+                          {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}]},
+    "provider": {
+      "type": "object", "additionalProperties": false, "required": ["name", "model", "effort"],
+      "properties": {"name": {"enum": ["codex", "claude"]}, "model": {"type": "string"}, "effort": {"type": "string"}}
+    },
+    "budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["max_iterations", "plateau_iterations", "lane_hours", "provider_calls_per_iteration",
+                   "provider_calls_setup", "disk_gb", "lanes"],
+      "properties": {
+        "max_iterations": {"type": "integer", "minimum": 1},
+        "plateau_iterations": {"type": "integer", "minimum": 1},
+        "lane_hours": {"type": "number", "exclusiveMinimum": 0},
+        "provider_calls_per_iteration": {"type": "integer", "minimum": 1},
+        "provider_calls_setup": {"type": "integer", "minimum": 0},
+        "disk_gb": {"type": "number", "exclusiveMinimum": 0},
+        "lanes": {"enum": [1, 2]},
+        "max_repairs": {"type": "integer", "minimum": 0, "maximum": 5}
+      }
+    },
+    "runs_root": {"type": "string", "minLength": 1},
+    "approval": {
+      "type": "object", "additionalProperties": false, "required": ["by", "date", "scope"],
+      "properties": {
+        "by": {"type": "string", "minLength": 1},
+        "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "scope": {"type": "string", "minLength": 1},
+        "raised_budgets": {"type": "array", "items": {"type": "string"}},
+        "two_lanes": {"type": "boolean"}
+      }
+    }
+  }
+}

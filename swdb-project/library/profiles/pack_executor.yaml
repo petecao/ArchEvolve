@@ -1,0 +1,28 @@
+# Certification profile (ticket 50). Created 2026-10-03 ET.
+format: swdb.certification-profile.v1
+id: profile.pack_executor
+entry: operation.pack_executor
+date: '2026-10-03'
+matrix:
+  builds:
+  - sanitized
+  - openmp
+  threads: 4
+  n_cases: 12
+  sizes:
+    n: 257
+    n_src: 1031
+controls:
+- id: off_by_one_index
+  category: index_bounds
+  expected_check: differential_mismatch
+- id: dropped_chain_level
+  category: dropped_operand
+  expected_check: differential_mismatch
+- id: aliasing_write
+  category: aliasing
+  expected_check: frame_violation
+required_categories:
+- index_bounds
+- dropped_operand
+- aliasing

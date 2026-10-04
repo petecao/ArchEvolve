@@ -1,0 +1,105 @@
+# Library operation seeded from Extensa (ticket 51). Created 2026-10-03 ET.
+id: operation.regroup_executor
+kind: library_operation
+provenance:
+  origin:
+    kind: extensa_source
+    repository: MaizeHPC/MemAcc
+    commit: af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+    paths:
+    - DataLayoutAPI/data_layout.hh
+    - DataLayoutAPI/data_layout_impl.hh
+    - AgenticRefiner/transformations/regroup/regroup_executor.yaml
+  license: Apache-2.0 WITH LLVM-exception (Q66 assumption, pending Peter)
+  semantics:
+    source: AgenticRefiner/transformations/regroup/regroup_executor.yaml
+    output_equivalence: bitwise_identical
+signature: template <typename ValueT> class RegroupExecutor { void regroup(const std::vector<int64_t>& periods,
+  const std::vector<int64_t>& array_sizes, const std::vector<ValueT*>& input_arrays); ValueT getRegroupedValue(int64_t
+  arr_index, int64_t i); }
+intent: Regroup K arrays accessed together into one interleaved buffer, regrouped[K * j + i] = input_arrays[i][j],
+  so co-accessed fields share cache lines.
+location:
+  root: library
+  path: library_operations/regroup.hh
+  symbol: RegroupExecutor
+code_sha256: 8a0d3d19b2ebce66792ffee168c18d361dfbec3f7b50b5c5f93a4c688c834797
+reference_semantics:
+  root: library
+  path: library_operations/reference/movement_reference.hh
+  sha256: 465470e4b50f4446801f005fc0bb787f4e4b064d8585044ca710c91d28cbcc8c
+  symbol: interleave
+uses_intrinsics: []
+uses_library_operations: []
+pattern_key:
+- roles:
+  - index
+  - target
+  address_shapes:
+  - single_valued_indirect
+  update_kind: read
+- roles:
+  - index
+  - target
+  address_shapes:
+  - single_valued_indirect
+  update_kind: read
+differential_test:
+  root: library
+  path: library_operations/drivers/regroup_run.cpp.tmpl
+  sha256: fd4ba50c3983347b0d5ab3469407a2cbab9b9398c08b4cff1d79f438645908e1
+  family: regroup
+  files:
+    reference_template:
+      root: library
+      path: library_operations/drivers/regroup_ref.cpp.tmpl
+      sha256: 3aa938b1388d727bc30fcfcb67a76fc540054227013166d22c246e501ac04a76
+    candidate_template:
+      root: library
+      path: library_operations/drivers/regroup_executor_cand.cpp.tmpl
+      sha256: 3543243699a451b7847c8c7b64756f1a7010003888d83794e70d3b7f53f703a0
+  input_set:
+    seeds: post_hoc
+    sizes:
+      n: 509
+      k: 3
+clauses:
+- id: interleaved_layout
+  role: postcondition
+  statement: regrouped[K * j + i] = input_arrays[i][j].
+  natural_language_only: checked by bitwise equality with the plain C++ reference and the input frame check
+  discharge_mode: differential_test
+  negative_control:
+    id: transposed_layout
+    kind: ordering
+    check: differential_mismatch
+    mutation:
+      root: library
+      path: library_operations/controls/regroup_executor.transposed_layout.hh
+      sha256: 377e39271914e7301f4806646e8571a4a5407c917932d0db7fcbbf60d26257d9
+- id: every_array_regrouped
+  role: postcondition
+  statement: Every input array is copied into its own slot.
+  natural_language_only: checked by bitwise equality with the plain C++ reference and the input frame check
+  discharge_mode: differential_test
+  negative_control:
+    id: dropped_last_array
+    kind: dropped_operand
+    check: differential_mismatch
+    mutation:
+      root: library
+      path: library_operations/controls/regroup_executor.dropped_last_array.hh
+      sha256: 05c65454fee778bd4a67af06dc97e239356667d50df0fc1e93658505d5ceb8a6
+- id: inputs_read_only
+  role: frame
+  statement: The input arrays are not written.
+  natural_language_only: checked by bitwise equality with the plain C++ reference and the input frame check
+  discharge_mode: differential_test
+  negative_control:
+    id: aliasing_write
+    kind: aliasing
+    check: frame_violation
+    mutation:
+      root: library
+      path: library_operations/controls/regroup_executor.aliasing_write.hh
+      sha256: 80ad763ae2a76f783a398ca8f7514a726d2e703fceddd37c8e79aa49341fad01

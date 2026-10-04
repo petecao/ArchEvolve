@@ -54,12 +54,18 @@ def _source_destination(runs_dir, rid):
     return artifacts.external_directory(base) / rid / 'source'
 
 
+#: Extensa mode (ticket 52, 2026-10-03 ET): while an Extensa campaign runs a workflow
+#: step, every record it creates carries these tags from creation. Empty otherwise.
+CREATION_TAGS = {}
+
+
 def record(kind, rid, **fields):
     return {"kind": kind, "schema_version": "0.4", "id": rid, "status": "draft",
             "created": writer.today(), "updated": writer.today(), "message_version": VERSION,
             "producer": copy.deepcopy(OPERATOR),
             "provenance": [{"id": "workflow", "kind": "agent_run",
-                            "description": "Created through the public SWDB workflow.", "uri": None}], **fields}
+                            "description": "Created through the public SWDB workflow.", "uri": None}],
+            **CREATION_TAGS, **fields}
 
 
 def persist(records, data, db_path=None, *, create=False):

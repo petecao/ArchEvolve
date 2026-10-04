@@ -526,6 +526,11 @@ def report(args):
     for name, values in {"candidate_protocols": current, **references}.items():
         protocol._fail(isinstance(values, list) and all(isinstance(v, str) for v in values) and len(values) == len(set(values)), f"{name} must contain unique record IDs")
     missing = [rid for rid in current if store.get(rid, "protocol") is None]
+    from swdb.extensa_boundary import TeamFilter, require_team_inputs
+    # Ticket 48: named Extensa inputs are refused; unpromoted ones are skipped in scans.
+    require_team_inputs(store, [rid for rid in current + sum(references.values(), []) if store.get(rid)],
+                        command="bfs-coverage")
+    store = TeamFilter(store, "bfs-coverage").team_store()
     results = [_comparison(store, r.data, current) for r in store.of_kind("comparison_result")]
     evaluations = {}
     for record in store.of_kind("evaluation"):
