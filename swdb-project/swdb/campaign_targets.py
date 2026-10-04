@@ -40,7 +40,7 @@ import time
 from pathlib import Path
 
 from swdb import artifacts, paths, workflow
-from swdb.cli import Failure
+from swdb.cli import Failure, UsageError
 
 SNAPSHOT = "bfs-dx100-scalar-only-20260929-a1.source"
 BFS = "benchmarks/gapbs/src/bfs.cc"
@@ -422,7 +422,7 @@ class TargetAdapter:
             try:
                 record = certify(Store(self.store_dir), contract, runs_dir=self.folder / "certification",
                                  library=self.library_root, candidate=candidate["id"])
-            except Failure as exc:
+            except (Failure, UsageError) as exc:   # an aborted certification (e.g. scope, control site)
                 text = str(exc)
                 site = re.search(r"negative-control mutation site: (\w+)", text)
                 failed_checks.append(f"negative_control_site:{site[1]}" if site else "certification_aborted")
