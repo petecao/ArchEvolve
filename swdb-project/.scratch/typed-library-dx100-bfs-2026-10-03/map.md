@@ -100,7 +100,7 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 | 55 | [Query site finder](issues/55-query-site-finder.md) | ready-for-agent | 46, 52 |  |
 | 56 | [Native-CPU Extensa campaign target for BFS](issues/56-native-campaign-target.md) | ready-for-agent | 51, 53, 54, 55 | yes (granted) |
 | 57 | [gem5 Extensa campaign target](issues/57-gem5-campaign-target.md) | ready-for-agent | 29, 53, 54, 55 | yes (granted) |
-| 58 | ["Is the specification enough?" experiment](issues/58-spec-enough-experiment.md) | ready-for-agent | 07, 08, 20, 48 | yes (granted) |
+| 58 | ["Is the specification enough?" experiment](issues/58-spec-enough-experiment.md) | needs-info | Codex login on mbit10 (Yan-Ru); 07, 08, 20, 48 | yes (granted) |
 | 59 | [Send Peter the Extensa-mode design note](issues/59-send-peter-extensa-design.md) | ready-for-human | 47 |  |
 | 60 | [Send Peter the "is the specification enough?" finding](issues/60-send-peter-spec-enough-finding.md) | ready-for-human | 58 |  |
 

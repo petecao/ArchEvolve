@@ -35,6 +35,7 @@ import datetime
 import hashlib
 import json
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -59,6 +60,8 @@ DRAFT_REDACTION = ("inspected TDStepMAA sequence", "inspected accelerated-TDStep
 CONTRACT_FILE = "swdb-project/library/rewrite_contracts/bfs_read_offload.yaml"
 LOWERING = PROJECT / "library/dx100/dxc_lowering.hpp"
 REFERENCE_PATCH = PROJECT / "library/dx100/peter-section5.patch"
+LOGIN = re.compile(r"login|not logged in|unauthori[sz]ed|authentication|credentials|token_invalidated|"
+                   r"refresh_token_reused", re.I)
 ARMS = ("spec", "spec_draft", "spec_draft_contract")
 SAMPLES = 3
 COUNTED_CALL_BUDGET = len(ARMS) * SAMPLES        # D7-style cap for this experiment: 9
@@ -170,8 +173,14 @@ def arm_files(arm, base):
 
 
 def folders(args):
+    """Attempt a1 (2026-10-04) used runs/ and provider-ledger.json; later attempts get their own."""
     root = artifacts.external_directory(args.runs_root) / "extensa" / args.campaign
-    return root, root / "records", root / "runs"
+    runs = root / "runs" if args.attempt == "a1" else root / f"runs-{args.attempt}"
+    return root, root / "records", runs
+
+
+def ledger_file(args, root):
+    return root / ("provider-ledger.json" if args.attempt == "a1" else f"provider-ledger-{args.attempt}.json")
 
 
 def sample_ids():
@@ -181,7 +190,7 @@ def sample_ids():
 def provider_stage(args):
     root, _records, runs = folders(args)
     runs.mkdir(parents=True, exist_ok=True)
-    ledger_path = root / "provider-ledger.json"
+    ledger_path = ledger_file(args, root)
     ledger = json.loads(ledger_path.read_text()) if ledger_path.is_file() else {"calls": []}
     pins = provider_adapters.PINS["codex"]
     if pins != {"model": "gpt-5.6-sol", "effort": "xhigh"}:
@@ -200,6 +209,12 @@ def provider_stage(args):
     started = time.monotonic()
     for arm, n in sample_ids():
         folder = runs / f"{arm}-s{n}"
+        if (folder / "failure.json").is_file() and \
+                json.loads((folder / "failure.json").read_text())["outcome"] in ("login", "usage_limit"):
+            k = 1
+            while folder.with_name(f"{folder.name}.paused{k}").exists():
+                k += 1
+            folder.rename(folder.with_name(f"{folder.name}.paused{k}"))     # kept; retried after resume
         if (folder / "response.json").is_file() or (folder / "failure.json").is_file():
             continue
         counted = sum(1 for c in ledger["calls"] if c["counted"])
@@ -220,8 +235,12 @@ def provider_stage(args):
         except provider_adapters.ProviderUnavailable as exc:
             row.update(outcome="usage_limit", counted=False, error=str(exc))
         except Failure as exc:
+            # D7: a login failure is uncounted and pauses the run. Codex reports it only on
+            # stderr (attempt a1, 2026-10-04: 401 token_invalidated / refresh_token_reused).
             text = str(exc)
-            login = any(w in text.lower() for w in ("login", "not logged in", "unauthorized", "credentials"))
+            stderr = folder / "provider" / "stderr.txt"
+            detail = text + (stderr.read_text(errors="replace") if stderr.is_file() else "")
+            login = bool(LOGIN.search(detail))
             row.update(outcome="login" if login else "failed", counted=not login, error=text)
         receipt = folder / "provider" / "provider.json"
         meta = json.loads(receipt.read_text()) if receipt.is_file() else {}
@@ -373,7 +392,7 @@ def reference_stage(args):
 
 def summary_stage(args):
     root, _records, runs = folders(args)
-    ledger_path = root / "provider-ledger.json"
+    ledger_path = ledger_file(args, root)
     ledger = json.loads(ledger_path.read_text()) if ledger_path.is_file() else {"calls": []}
     rows = []
     for arm, n in sample_ids():
@@ -394,6 +413,7 @@ def summary_stage(args):
                          "provider_patch_files")}})
     reference = runs / "reference-ticket20" / "score" / "score.json"
     result = {"format": "swdb.spec-enough-experiment-summary.v1", "campaign": args.campaign, "mode": "extensa",
+              "attempt": args.attempt,
               "ticket": 58, "created": now(), "swdb_commit": subprocess.run(
                   ["git", "rev-parse", "HEAD"], cwd=REPOSITORY, capture_output=True, text=True).stdout.strip(),
               "inputs": {"spec": SPEC, "draft": DRAFT, "contract": {"path": CONTRACT_FILE,
@@ -407,8 +427,9 @@ def summary_stage(args):
                          "uncounted_calls": sum(1 for c in ledger["calls"] if not c["counted"])},
               "reference_positive_control": json.loads(reference.read_text()) if reference.is_file() else None,
               "samples": rows, "gain_claim": False, "evidence_basis": "simulated"}
-    save(root / "summary.json", result)
-    return {"summary": str(root / "summary.json"), "sha256": artifacts.file_hash(root / "summary.json")}
+    target = root / ("summary.json" if args.attempt == "a1" else f"summary-{args.attempt}.json")
+    save(target, result)
+    return {"summary": str(target), "sha256": artifacts.file_hash(target)}
 
 
 def main(argv=None):
@@ -419,9 +440,11 @@ def main(argv=None):
     parser.add_argument("--codex-command", default="codex")
     parser.add_argument("--provider-config", type=Path, help="external_fixture provider (smoke tests only)")
     parser.add_argument("--lane-seconds", type=int, default=LANE_SECONDS)
+    parser.add_argument("--attempt", default="a1", help="attempt label; each attempt keeps its own runs and ledger")
     parser.add_argument("--provider-done", type=Path, help="file whose presence ends the score stage's wait")
     args = parser.parse_args(argv)
-    import re
+    if not re.fullmatch(r"a[0-9]+", args.attempt):
+        raise SystemExit("attempt must look like a2")
     if not re.fullmatch(r"extensa-gem5-bfs-[0-9]{8}-s[0-9]+", args.campaign):
         raise SystemExit("campaign ID must look like " + CAMPAIGN_PATTERN)
     stage = {"provider": provider_stage, "score": score_stage, "reference": reference_stage,
