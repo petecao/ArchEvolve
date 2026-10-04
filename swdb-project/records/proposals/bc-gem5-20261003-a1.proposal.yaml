@@ -1,0 +1,219 @@
+kind: proposal
+schema_version: '0.4'
+id: bc-gem5-20261003-a1.proposal
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: claude-bc-track-20261003
+  role: worker
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.1'
+  id: bc-gem5-20261003-a1.proposal
+  producer:
+    name: claude-bc-track-20261003
+    role: worker
+    test_client: false
+  profile_package: bc-gem5-20261003-a1.contract-fixture-package
+  source_snapshot: bc-dx100-scalar-only-20261003-a1.source
+  implementation: dx100-bc-scalar
+  source_sha256: 946d5398e3354c014ebe3309c2627951a5cf43d166bbb7c726adefb330a2d123
+  regions:
+  - benchmarks/gapbs/src/bc.cc:1-324:d5999e06ba88d279
+  intent: 'Apply the certified derived BC forward-pass read offload (contract.bc_read_offload, BC-L1 included);
+    the package is an explicit contract fixture: no profile drove this choice.'
+  constraints:
+    editable_files:
+    - benchmarks/gapbs/src/bc.cc
+    - benchmarks/gapbs/src/swdb_dxc_lowering.hpp
+    preserve_correctness: true
+    preserve_roi: true
+  payload:
+    kind: patch
+    content: "--- a/benchmarks/gapbs/src/bc.cc\n+++ b/benchmarks/gapbs/src/bc.cc\n@@ -33,6 +33,7 @@\n\
+      \ #include \"MAA_gem5_magic.hpp\"\n #endif\n #include <MAA_utility.hpp>\n+#include \"swdb_dxc_lowering.hpp\"\
+      \n \n /*\n GAP Benchmark Suite\n@@ -64,65 +65,100 @@\n typedef float CountT;\n \n \n+// BC forward-pass\
+      \ read offload, derived from Peter section 5 (E1-E5) plus BC-L1.\n+// Created: 2026-10-03 ET (ticket\
+      \ 42). Replaces the scalar PBFS of the\n+// scalar-only DX100 BC snapshot. DX100 performs the reads\
+      \ (frontier chunk,\n+// row bounds, range loop with continuation, neighbors, frontier vertex and\
+      \ the\n+// depth hint); the CPU keeps the compare-and-swap, the queue push, the\n+// successor bit\
+      \ and the path-count update. BC-L1: the path-count test reads\n+// the depth on the CPU after the\
+      \ compare-and-swap, never the DX100 hint.\n+// Memory regions: Brandes already registers queue,\
+      \ offsets, neighbors and\n+// depths (E3 reuse); this function registers nothing.\n+static dxc_context\
+      \ swdb_contexts[NUM_CORES];\n+static bool swdb_acceleration_enabled = false;\n+#ifndef SWDB_FRONTIER_THRESHOLD\n\
+      +#define SWDB_FRONTIER_THRESHOLD 64\n+#endif\n+#ifndef SWDB_CHUNK_SIZE\n+#define SWDB_CHUNK_SIZE\
+      \ TILE_SIZE\n+#endif\n+static_assert(SWDB_CHUNK_SIZE > 0 && SWDB_CHUNK_SIZE <= TILE_SIZE, \"chunk\
+      \ capacity\");\n void PBFS(const Graph &g, SGOffset *VertexOffsetsData, NodeID source, pvector<CountT>\
+      \ &path_counts,\n           Bitmap &succ, vector<SlidingQueue<NodeID>::iterator> &depth_index,\n\
+      \           SlidingQueue<NodeID> &queue, pvector<NodeID> &depths) {\n-    depths.fill(-1);\n-  \
+      \  depths[source] = 0;\n-    path_counts[source] = 1;\n-    queue.push_back(source);\n-    depth_index.push_back(queue.begin());\n\
+      -    queue.slide_window();\n-    const NodeID *g_out_start = g.out_neigh(0).begin();\n-\n+ depths.fill(-1);\n\
+      + depths[source] = 0;\n+ path_counts[source] = 1;\n+ queue.push_back(source);\n+ depth_index.push_back(queue.begin());\n\
+      + queue.slide_window();\n+ const NodeID *g_out_start = g.out_neigh(0).begin();\n+ NodeID depth =\
+      \ 0;\n+ while (!queue.empty()) {\n+            std::cout << \"Starting PBFS: \" << queue.size()\
+      \ << \" elements\" << std::endl;\n+  depth++;\n+  const bool accelerate=swdb_acceleration_enabled&&queue.size()>=SWDB_FRONTIER_THRESHOLD;\n\
+      \ #pragma omp parallel\n-    {\n-        NodeID depth = 0;\n-        QueueBuffer<NodeID> lqueue(queue);\n\
+      -        while (!queue.empty()) {\n-#pragma omp master\n-            std::cout << \"Starting PBFS:\
+      \ \" << queue.size() << \" elements\" << std::endl;\n-            depth++;\n-// #pragma omp single\n\
+      -//             {\n-//                 std::vector<int32_t> qv;\n-//                 for (auto q_iter\
+      \ = queue.begin(); q_iter < queue.end(); q_iter++) {\n-//                     qv.push_back(*q_iter);\n\
+      -//                 }\n-//                 // sort qv\n-//                 std::sort(qv.begin(),\
+      \ qv.end());\n-//                 printf(\"depth %d: %zu elements\\n\", depth, queue.size());\n\
+      -//                 for (int i = 0; i < queue.size(); i++) {\n-//                     printf(\"\
+      [%d] %d\\n\", i, qv[i]);\n-//                 }\n-//             }\n+  {\n+   QueueBuffer<NodeID>\
+      \ lqueue(queue);\n+   if(accelerate){\n+    dxc_context c=swdb_contexts[omp_get_thread_num()];\n\
+      +    __dxc_const_i32(1,c.reg[2]);__dxc_const_i32(0,c.reg[3]);\n+#pragma omp for schedule(dynamic,1)\n\
+      +    for(size_t begin=queue.shared_out_start;begin<queue.shared_out_end;begin+=SWDB_CHUNK_SIZE){\n\
+      +     const size_t end=std::min(begin+size_t(SWDB_CHUNK_SIZE),size_t(queue.shared_out_end));\n+\
+      \     __dxc_const_i32(begin,c.reg[0]);__dxc_const_i32(end,c.reg[1]);\n+     __dxc_stream_load(queue.shared,c.reg[0],c.reg[1],c.reg[2],c.tile[0]);\n\
+      +     __dxc_gather(VertexOffsetsData,c.tile[0],c.tile[1]);\n+     __dxc_gather(VertexOffsetsData+1,c.tile[0],c.tile[2]);\n\
+      +     __dxc_const_i32(0,c.reg[4]);__dxc_const_i32(-1,c.reg[5]);\n+     __dxc_accelerated_chunk();\n\
+      +     for(;;){\n+      __dxc_range_loop(c.reg[4],c.reg[5],c.tile[1],c.tile[2],c.reg[2],c.tile[6],c.tile[7]);\n\
+      +      __dxc_wait(c.tile[7]);\n+      const unsigned count=__dxc_tile_size(c.tile[7]);if(count==0)break;\n\
+      +      __dxc_gather(g.out_neighbors_,c.tile[7],c.tile[0]);\n+      __dxc_gather(queue.shared+begin,c.tile[6],c.tile[3]);\n\
+      +      __dxc_gather(depths.data(),c.tile[0],c.tile[5]);\n+      __dxc_wait(c.tile[3]);__dxc_wait(c.tile[5]);\n\
+      +      int*vertices=__dxc_tile_pointer<int>(c.tile[0]);int*frontier=__dxc_tile_pointer<int>(c.tile[3]);\n\
+      +      int*hints=__dxc_tile_pointer<int>(c.tile[5]);int*edges=__dxc_tile_pointer<int>(c.tile[7]);\n\
+      +      for(unsigned k=0;k<count;++k){\n+       const NodeID v=vertices[k],u=frontier[k];const NodeID\
+      \ hint=hints[k];\n+       const bool claimed=hint==-1&&compare_and_swap(depths[v],static_cast<NodeID>(-1),depth);\n\
+      +       if(claimed){lqueue.push_back(v);}\n+       const NodeID fresh=__atomic_load_n(&depths[v],__ATOMIC_RELAXED);\n\
+      +       if(fresh==depth){\n+        succ.set_bit_atomic(edges[k]);\n+#pragma omp atomic\n+     \
+      \   path_counts[v] += path_counts[u];\n+       }\n+      }\n+     }\n+    }\n+   }else{\n #pragma\
+      \ omp for schedule(dynamic, 64) nowait\n-            for (auto q_iter = queue.begin(); q_iter <\
+      \ queue.end(); q_iter++) {\n-                NodeID u = *q_iter;\n-                for (SGOffset\
+      \ vidx = VertexOffsetsData[u]; vidx < VertexOffsetsData[u + 1]; vidx++) {\n-                   \
+      \ NodeID &v = g.out_neighbors_[vidx];\n-                    if ((depths[v] == -1) &&\n-        \
+      \                (compare_and_swap(depths[v], static_cast<NodeID>(-1), depth))) {\n-           \
+      \             lqueue.push_back(v);\n-                    }\n-                    if (depths[v] ==\
+      \ depth) {\n-                        succ.set_bit_atomic(&v - g_out_start);\n+    for (auto q_iter\
+      \ = queue.begin(); q_iter < queue.end(); q_iter++) {\n+     NodeID u = *q_iter;\n+     for (SGOffset\
+      \ vidx = VertexOffsetsData[u]; vidx < VertexOffsetsData[u + 1]; vidx++) {\n+      NodeID &v = g.out_neighbors_[vidx];\n\
+      +      if ((depths[v] == -1) && (compare_and_swap(depths[v], static_cast<NodeID>(-1), depth))) {\n\
+      +       lqueue.push_back(v);\n+      }\n+      if (depths[v] == depth) {\n+       succ.set_bit_atomic(&v\
+      \ - g_out_start);\n #pragma omp atomic\n-                        path_counts[v] += path_counts[u];\n\
+      -                    }\n-                }\n-            }\n-            // std::cout << lqueue.in\
+      \ << std::endl;\n-            lqueue.flush();\n-#pragma omp barrier\n-#pragma omp single\n-    \
+      \        {\n-                depth_index.push_back(queue.begin());\n-                queue.slide_window();\n\
+      -            }\n-        }\n-    }\n-    depth_index.push_back(queue.begin());\n+       path_counts[v]\
+      \ += path_counts[u];\n+      }\n+     }\n+    }\n+   }\n+   lqueue.flush();\n+  }\n+  depth_index.push_back(queue.begin());\n\
+      +  queue.slide_window();\n+ }\n+ depth_index.push_back(queue.begin());\n }\n \n pvector<ScoreT>\
+      \ Brandes(const Graph &g, SourcePicker<Graph> &sp, NodeID num_iters, bool logging_enabled = false)\
+      \ {\n@@ -130,6 +166,15 @@\n     t.Start();\n     alloc_MAA();\n     init_MAA();\n+    // E3: guards\
+      \ and setup run once per BC call after the existing allocation.\n+    swdb_dxc::chunks() = 0; swdb_dxc::races()\
+      \ = 0; swdb_dxc::violations() = 0;\n+    swdb_acceleration_enabled = uint64_t(g.num_nodes()) <=\
+      \ UINT64_C(1073741823) &&\n+        uint64_t(g.num_edges_directed()) <= UINT64_C(1073741823) &&\
+      \ omp_get_max_threads() <= NUM_CORES;\n+    if (swdb_acceleration_enabled) {\n+        __dxc_session_begin();\n\
+      +#pragma omp parallel\n+        { swdb_contexts[omp_get_thread_num()] = __dxc_thread_context();\
+      \ }\n+    }\n     pvector<ScoreT> scores(g.num_nodes(), 0);\n     pvector<CountT> path_counts(g.num_nodes());\n\
+      \     Bitmap succ(g.num_edges_directed());\n@@ -216,6 +261,7 @@\n     m5_exit(0);\n #endif\n \n\
+      +    __dxc_report();\n     return scores;\n }\n \n--- /dev/null\n+++ b/benchmarks/gapbs/src/swdb_dxc_lowering.hpp\n\
+      @@ -0,0 +1,65 @@\n+// DX100 intrinsic lowerings, hardware interface 1.0-e4fc4af. Updated: 2026-10-03\
+      \ ET.\n+#pragma once\n+#include <atomic>\n+#include <cassert>\n+#include <cstdint>\n+#include <cstdio>\n\
+      +#include <omp.h>\n+#if defined(FUNC)\n+#include <MAA_functional.hpp>\n+#else\n+#include <MAA_gem5.hpp>\n\
+      +#endif\n+static_assert(TILE_SIZE > 0 && TILE_SIZE <= 65535, \"DX100 uint16 tile-size field\");\n\
+      +struct dxc_context { int tile[8], reg[8]; };\n+namespace swdb_dxc {\n+inline bool &session(){static\
+      \ bool value=false;return value;}\n+inline std::atomic<uint64_t>&chunks(){static std::atomic<uint64_t>v(0);return\
+      \ v;}\n+inline std::atomic<uint64_t>&races(){static std::atomic<uint64_t>v(0);return v;}\n+inline\
+      \ std::atomic<uint64_t>&violations(){static std::atomic<uint64_t>v(0);return v;}\n+}\n+inline void\
+      \ __dxc_session_begin(){\n+#ifdef SWDB_STRICT\n+ swdb_strict::session_begin();\n+#endif\n+ swdb_dxc::session()=true;swdb_dxc::chunks()=0;swdb_dxc::races()=0;swdb_dxc::violations()=0;\n\
+      +}\n+inline dxc_context __dxc_thread_context(){\n+#ifdef SWDB_STRICT\n+ swdb_strict::check(swdb_dxc::session(),\"\
+      session_required\");\n+ swdb_strict::check(omp_get_num_threads()<=NUM_CORES,\"thread_count\");\n\
+      +#else\n+ assert(swdb_dxc::session()&&omp_get_num_threads()<=NUM_CORES);\n+#endif\n+ dxc_context\
+      \ c;\n+#pragma omp critical(swdb_dxc_allocate)\n+ {for(int i=0;i<8;++i)c.tile[i]=get_new_tile<int>();for(int\
+      \ i=0;i<8;++i)c.reg[i]=get_new_reg<int>();}\n+ return c;\n+}\n+inline void __dxc_const_i32(int32_t\
+      \ value,int reg){maa_const<int>(value,reg);}\n+inline void __dxc_wait(int tile){wait_ready(tile);std::atomic_thread_fence(std::memory_order_seq_cst);asm\
+      \ volatile(\"\" ::: \"memory\");}\n+template<class T>inline void __dxc_gather(T*base,int index,int\
+      \ dst){maa_indirect_load<T>(base,index,dst);}\n+template<class T>inline void __dxc_stream_load(T*base,int\
+      \ minimum,int maximum,int stride,int dst){maa_stream_load<T>(base,minimum,maximum,stride,dst);}\n\
+      +inline void __dxc_range_loop(int last_i,int last_j,int lower,int upper,int stride,int rows,int\
+      \ columns){maa_range_loop<int>(last_i,last_j,lower,upper,stride,rows,columns);}\n+inline uint16_t\
+      \ __dxc_tile_size(int tile){return get_tile_size(tile);}\n+template<class T>inline T*__dxc_tile_pointer(int\
+      \ tile){\n+#ifdef SWDB_STRICT\n+ swdb_strict::check(get_tile_ready(tile)!=0,\"read_before_wait\"\
+      );\n+#endif\n+ return get_cacheable_tile_pointer<T>(tile);\n+}\n+inline void __dxc_alu_scalar(int\
+      \ src,int reg,int dst,Operation_t op){maa_alu_scalar<int>(src,reg,dst,op);}\n+inline void __dxc_accelerated_chunk(){++swdb_dxc::chunks();}\n\
+      +inline void __dxc_cas_probe(int vertex,int hint,bool success,int initial,int fresh,int vertex_count=INT32_MAX){\n\
+      +#ifdef SWDB_DXC_DIAGNOSTIC\n+ if(!success&&hint<0)++swdb_dxc::races();\n+ if((hint<0&&hint!=initial&&hint!=-1)||(hint>=0&&(hint>=vertex_count||fresh<0)))++swdb_dxc::violations();\n\
+      +#else\n+ (void)vertex;(void)hint;(void)success;(void)initial;(void)fresh;(void)vertex_count;\n\
+      +#endif\n+}\n+inline void __dxc_report(){std::printf(\"SWDB accelerated_chunks=%llu\\n\",(unsigned\
+      \ long long)swdb_dxc::chunks().load());\n+#ifdef SWDB_DXC_DIAGNOSTIC\n+ std::printf(\"SWDB cas_fail_negative_hint=%llu\
+      \ l3_violations=%llu\\n\",(unsigned long long)swdb_dxc::races().load(),(unsigned long long)swdb_dxc::violations().load());\n\
+      +#endif\n+}\n"
+  library:
+    contract:
+      id: contract.bc_read_offload
+      content_sha256: 969276431d9169701a5ff5862fc422e7578e54bf27419fb1d1d1ece63f90dc9a
+    entries:
+    - id: contract.bfs_read_offload
+      content_sha256: 867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51
+    - id: intrinsic.dxc_const_i32
+      content_sha256: d321f3c5d234afa7a41121f923a6e0a0edef51015c4f7ebe3cbe463c0a92950f
+    - id: intrinsic.dxc_gather
+      content_sha256: f1a54734b19e5223a1b2b11b91d177913ecda7296ce45592acb91412b4c6609d
+    - id: intrinsic.dxc_range_loop
+      content_sha256: dd2abc9caac3f39254ffa28d254b8308b95f73b496b1fb9a40bb8f570da54f57
+    - id: intrinsic.dxc_session_begin
+      content_sha256: 69f444bf9d4800ebb4b1b29d45496b3cc2f0f49ea404bba4a65ec5343439de91
+    - id: intrinsic.dxc_stream_load
+      content_sha256: 2deb4038416c9950ab524497a10071c69b5b295f87659d43d0ec24a8313fe79c
+    - id: intrinsic.dxc_thread_context
+      content_sha256: 9a25951c2ee114ff9e1c5265c2da5452bf3f8c5f850c36afeb157b00be0e8e88
+    - id: intrinsic.dxc_tile_pointer
+      content_sha256: c276531e321c1fdfd12f6730d91e1351e5a864a0214931452e29bae78b10d20e
+    - id: intrinsic.dxc_tile_size
+      content_sha256: 8072dc02828ab0b865a11bd063b96b7412de71f435a450c1cb156e793f957c06
+    - id: intrinsic.dxc_wait
+      content_sha256: e349a9c69489091c35d5cb3654cae16b0b5361f8706fd4c4f21052756cc815de
+    - id: lowering.dxc_const_i32.dx100-mmio.1.0-e4fc4af
+      content_sha256: e4916a2ec1bbb672ce27b6c4ef52a10a38e19458c914d09bb9e0c0969eea5bcf
+    - id: lowering.dxc_gather.dx100-mmio.1.0-e4fc4af
+      content_sha256: 3ad324abd6d51613450786e617deafad181831cb82be867ae479968374a2a8f9
+    - id: lowering.dxc_range_loop.dx100-mmio.1.0-e4fc4af
+      content_sha256: 683c4ecb61a61ea24de68930b11b40bc8a987465d3ec39cf6e1330af6b2a3831
+    - id: lowering.dxc_session_begin.dx100-mmio.1.0-e4fc4af
+      content_sha256: 8584f0c4b2358692e6f76be3d653ee461baa8addaab8a9fd15788a3382984569
+    - id: lowering.dxc_stream_load.dx100-mmio.1.0-e4fc4af
+      content_sha256: bfd124d6ce44b13ab96c3f4bb1d8b640aca4ade018ef007138004abc9b5f5f53
+    - id: lowering.dxc_thread_context.dx100-mmio.1.0-e4fc4af
+      content_sha256: 3dd51312fd5d6bc55939b475163bb881ccfc0b68335b060d24a16d12b48dff3e
+    - id: lowering.dxc_tile_pointer.dx100-mmio.1.0-e4fc4af
+      content_sha256: 842531eb06ab38e5c79eecceaf36b536d690d2c2be580f94949b727429c8b7dc
+    - id: lowering.dxc_tile_size.dx100-mmio.1.0-e4fc4af
+      content_sha256: 91a183168d5adb02cf9ee7eefbbeb396615dec36d4b8ec0ebce88c0c42c5b323
+    - id: lowering.dxc_wait.dx100-mmio.1.0-e4fc4af
+      content_sha256: d0cda6d52b5a86f3d53f8c4af12be8a8eac3c64fdcd37244ed35d70735acaae2
+    shipped_files:
+    - path: benchmarks/gapbs/src/swdb_dxc_lowering.hpp
+      sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+      lowerings:
+      - lowering.dxc_const_i32.dx100-mmio.1.0-e4fc4af
+      - lowering.dxc_gather.dx100-mmio.1.0-e4fc4af
+      - lowering.dxc_range_loop.dx100-mmio.1.0-e4fc4af
+      - lowering.dxc_session_begin.dx100-mmio.1.0-e4fc4af
+      - lowering.dxc_stream_load.dx100-mmio.1.0-e4fc4af
+      - lowering.dxc_thread_context.dx100-mmio.1.0-e4fc4af
+      - lowering.dxc_tile_pointer.dx100-mmio.1.0-e4fc4af
+      - lowering.dxc_tile_size.dx100-mmio.1.0-e4fc4af
+      - lowering.dxc_wait.dx100-mmio.1.0-e4fc4af
+payload_sha256: 253ad97aed169f21d35ed9b86572ff197edb0dd2fe2bb39f26632a42c7710943
+outcome:
+  state: candidate_created
+  stage: rewriting
+  reason: null
+attempts:
+- number: 1
+  stage: rewriting
+  state: completed
+  candidate: bc-gem5-20261003-a1.proposal.candidate-1
+raw_artifacts:
+- path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.proposal
+  stage: rewriting
+source_snapshot: bc-dx100-scalar-only-20261003-a1.source
+profile_package: bc-gem5-20261003-a1.contract-fixture-package
+candidate: bc-gem5-20261003-a1.proposal.candidate-1

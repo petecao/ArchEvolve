@@ -101,7 +101,8 @@ def _bc_rules(evaluation):
     w._need(request["verification"]["checker"] == context["verifier"] == check["checker"]
             == continuation["checker"] == context["sealed_roi"]["verification"]["checker"] == CHECKER,
             "BC v2 request/context/checker identity differs")
-    w._need(context.get("candidate_build") is True and context.get("roi") == ROI,
+    # Real records hold the compile record ID (ticket 45, 2026-10-04 ET); BFS v2 uses bool() too.
+    w._need(bool(context.get("candidate_build")) and context.get("roi") == ROI,
             "BC v2 applies to protected complete-call BC candidates only")
     contract = graph_verification_contract(context.get("application"))
     w._need(build.get("adapter") == "dx100.complete_call.v2"

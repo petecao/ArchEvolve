@@ -211,3 +211,5 @@ Periodic follow-up, 2026-10-03 18:14 ET: root independently read back source6cf 
 2026-10-03 21:50 ET: ticket 53 resolved on the Extensa worktree branch. 12 selection/speed-rule tests pass.
 
 2026-10-03 21:51 ET: ticket 54 resolved on the Extensa worktree branch. 9 budget/pruning tests pass; 33 campaign tests in total.
+
+2026-10-04 00:10 ET: ticket 45 (BC track) claimed, partly run. On mbit10 (23128aa, node 0, generation 448, 23:46-23:59 ET, load1 1.05) prepare passed: BC Kronecker-14 workload, frozen BC protocol e731422f, certified BC patch submitted with tree d6f86eb6 equal to its certification, both guest builds. The baseline gem5 run printed BCVerifier PASS with a complete exit witness, but the record is missing_observation because of a ticket-44 witness bug (`candidate_build is True` vs. the real build ID). Fixed and tested locally; a fresh timed attempt (r1) needs the fix pushed and synced. Lease released, no owned process left.

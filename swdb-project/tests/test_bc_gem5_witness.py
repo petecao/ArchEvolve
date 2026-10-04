@@ -43,7 +43,8 @@ def bc_evaluation(tmp_path, score_line='SWDB_BC_RESULT source=0 vertices=6 score
     wrapper = tmp_path / 'complete_call.cc'
     wrapper.write_text('// Explicit BC wrapper fixture.\n')
     driver = _ref(wrapper)
-    context.update(candidate_build=True, roi=bc_witness.ROI, application='dx100-gapbs', graph_verification=contract,
+    # Real records hold the compile record ID here (ticket 45 found the old `is True` check).
+    context.update(candidate_build='fixture.candidate.primary.build', roi=bc_witness.ROI, application='dx100-gapbs', graph_verification=contract,
                    candidate_driver=driver, verifier_source=dict(driver))
     context['instrumentation']['graph_verification'] = contract
     data['build']['adapter'] = 'dx100.complete_call.v2'
