@@ -1,0 +1,276 @@
+{
+  "format": "drt-proposal-validation-v1",
+  "base_commit": "c44ca66b5b1a121ed258d0d972172cda2de307b6",
+  "research_validation": {
+    "valid": true,
+    "records": 1,
+    "claims": 15,
+    "required_unknowns": [
+      "coherent-cpu-binding",
+      "dirty-output-visibility",
+      "evaluated-revision",
+      "numeric-correctness",
+      "response-association",
+      "tile-pointer-reuse",
+      "zero-admission-fallback"
+    ]
+  },
+  "catalog_validation": {
+    "valid": true,
+    "format": "hardware-catalog-v0.1",
+    "designs": 8,
+    "claims": 96,
+    "scope": "Structure and evidence-reference checks only; no hardware correctness, composition legality or performance certification."
+  },
+  "non_catalog_rejection": "Unsupported hardware catalog format.",
+  "operation_gap_rejection": "designs.dx100-paper-v2.operations.dxp-stream_load.operation: expected one of ['read', 'read_modify_write', 'reduce', 'write'].",
+  "in_memory_source_claim_references": true,
+  "dangling_reference_rejected": true,
+  "source_checks": [
+    {
+      "id": "tactile-paper",
+      "sha256": "e3df45525aeafcfffd7e8b79696f2b6ff844a9a9480cef1f0723284d3eff1dd8",
+      "bytes": 1657169
+    },
+    {
+      "id": "drt-readme",
+      "sha256": "acdf007740c819784f9e10bb048d26377d51de73884fbf89a251ee95e4f3b517",
+      "bytes": 4998
+    },
+    {
+      "id": "drt-scheduler",
+      "sha256": "291e7e9e7623e20d1404792113b5503998893ae48ce381ce11725dec162989e1",
+      "bytes": 81186
+    }
+  ],
+  "new_download_bytes": 0,
+  "free_bytes": {
+    "/data1/nier/worktrees/codex-sessions/drt-record-proposal-20261003-214147-e0683f2f/ArchEvolve": 26609741824,
+    "/tmp": 19046608896
+  },
+  "production_catalog_sha256": "c17f7dc4463949035e66333e8e524055ca15a4cc36cc7641fb936f30c8df94d5",
+  "loader_digest": "c17f7dc4463949035e66333e8e524055ca15a4cc36cc7641fb936f30c8df94d5",
+  "query_exclusion": [
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "gather"
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 16
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "gather",
+        "payload_type": "float32",
+        "index_width_bits": 32
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 14
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "gather",
+        "payload_type": "float64",
+        "index_width_bits": 64
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 13
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "stream_load"
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 9
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "stream_load",
+        "payload_type": "float32",
+        "index_width_bits": 32
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 9
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "stream_load",
+        "payload_type": "float64",
+        "index_width_bits": 64
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 9
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "prefetch"
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 4
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "prefetch",
+        "payload_type": "float32",
+        "index_width_bits": 32
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 4
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "prefetch",
+        "payload_type": "float64",
+        "index_width_bits": 64
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 4
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "scatter"
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 0
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "scatter",
+        "payload_type": "float32",
+        "index_width_bits": 32
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 0
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "scatter",
+        "payload_type": "float64",
+        "index_width_bits": 64
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 0
+    },
+    {
+      "query": {
+        "operation": "reduce",
+        "subtype": "add"
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 0
+    },
+    {
+      "query": {
+        "operation": "reduce",
+        "subtype": "add",
+        "payload_type": "float32",
+        "index_width_bits": 32
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 0
+    },
+    {
+      "query": {
+        "operation": "reduce",
+        "subtype": "add",
+        "payload_type": "float64",
+        "index_width_bits": 64
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 0
+    },
+    {
+      "query": {
+        "operation": "read_modify_write",
+        "subtype": "cas"
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 4
+    },
+    {
+      "query": {
+        "operation": "read_modify_write",
+        "subtype": "cas",
+        "payload_type": "float32",
+        "index_width_bits": 32
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 4
+    },
+    {
+      "query": {
+        "operation": "read_modify_write",
+        "subtype": "cas",
+        "payload_type": "float64",
+        "index_width_bits": 64
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 4
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "drt_fixed_partition_tile_supply"
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 0
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "drt_fixed_partition_tile_supply",
+        "payload_type": "float32",
+        "index_width_bits": 32
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 0
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "drt_fixed_partition_tile_supply",
+        "payload_type": "float64",
+        "index_width_bits": 64
+      },
+      "unchanged": true,
+      "proposal_matches": 0,
+      "existing_matches": 0
+    }
+  ],
+  "unchanged_existing_designs": 8,
+  "unchanged_existing_query_trials": 88,
+  "all_existing_records_unchanged": true,
+  "scope": "Research typing, byte provenance, references and deliberate non-admission only; no DRT build/run, numeric correctness or mapping legality certification."
+}
