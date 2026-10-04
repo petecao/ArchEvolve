@@ -1,6 +1,6 @@
 # Integrating Eric's operation evidence
 
-Eric's PR #2 is merged. `catalog/hardware-v0.1.yaml` (data revision `0.1.2`) is now the CLI default. The earlier `catalog/seed.yaml` remains supported explicitly for historical comparisons. No LLM/API or evaluator calls are made.
+Eric's PR #2 is merged. `catalog/hardware-v0.1.yaml` is the CLI default. Data revision `0.1.5` retains the selectable MAPLE addition from `0.1.3` and its `0.1.4` pinned-RTL supplement, and adds source-scoped internal mechanism details for DX100, Terminus, Prodigy and SpZip. See [the mechanism handoff](hardware-internals-v015.md). The earlier `catalog/seed.yaml` remains supported explicitly for historical comparisons. No LLM/API or evaluator calls are made.
 
 ## Run the new path
 
