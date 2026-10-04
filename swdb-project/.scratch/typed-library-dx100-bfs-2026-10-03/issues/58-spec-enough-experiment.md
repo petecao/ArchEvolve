@@ -90,7 +90,7 @@ Updated: 2026-10-04 ET (resolved after attempt a3); 2026-10-04 ET (login write-b
 
 ## Answer
 
-Resolved 2026-10-04 08:15 ET by the agent under Yan-Ru's 2026-10-04 delegation (agent-decided;
+Resolved 2026-10-04 08:03 ET by the agent under Yan-Ru's 2026-10-04 delegation (agent-decided;
 revisable). A3 used 9 more counted calls than the original 9-call budget, because the
 experiment needs 3 samples per input.
 
