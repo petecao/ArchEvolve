@@ -122,7 +122,10 @@ def test_calibration_witness_threshold_is_from_scalar_oracle():
 def test_forged_frontier_control_prints_oracle_counts_but_trusted_queue_is_checked():
     scalar = c.peter_source(Store(ROOT / 'records').get(c.DEFAULT_SNAPSHOT)['regions'][0]['text'])
     instrumented = c.instrument_source(scalar)
-    mutant = c._rewrite_control(instrumented, 'forged_frontier')
+    control = c._rewrite_control(instrumented, 'forged_frontier')
+    # Ticket 62: the double enqueue is a library fault; only the protected print is edited.
+    assert control['fault'] == 'SWDB_DXC_FAULT_FORGED_FRONTIER'
+    mutant = control['source']
     assert 'swdb_forged_counts[]={1,4200,17000}' in mutant
     assert '<< swdb_forged_counts[swdb_forged_level++]' in mutant
     assert 'swdb_certification_frontier(queue);' in mutant

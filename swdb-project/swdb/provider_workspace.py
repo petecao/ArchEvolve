@@ -63,6 +63,8 @@ class Workspace:
         links and byte copies left by tools."""
         if self.login_path is None or self.metadata.get("login_copy_deleted"):
             self.metadata["login_copy_deleted"] = True
+            if self.login_copy is not None:
+                self.login_copy.release()  # ticket 62: the session lock never outlives cleanup
             return
         if self.login_copy is not None and "login_writeback" not in self.metadata:
             try:
@@ -92,6 +94,8 @@ class Workspace:
         self.login_path.unlink(missing_ok=True)
         self.metadata["login_copy_deleted"] = True
         self.metadata["login_copies_removed"] = sorted(removed)
+        if self.login_copy is not None:
+            self.login_copy.release()
 
 
 def _safe_name(name):

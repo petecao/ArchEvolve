@@ -742,9 +742,14 @@ def prompt_context(config, folder):
     login = home / provider_login.login_name(kind)
     try:
         handle = provider_login.copy(kind, login)
+    except BaseException:
+        login.unlink(missing_ok=True)
+        raise
+    try:
         result = context(config, workspace, home, folder, login_path=login)
     except BaseException:
         login.unlink(missing_ok=True)
+        handle.release()  # ticket 62: never keep the session lock after a failed start
         raise
     state = {}
 

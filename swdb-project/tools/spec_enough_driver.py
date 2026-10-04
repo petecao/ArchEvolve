@@ -17,12 +17,17 @@ which file may change, build macros, the protected logging line and the executio
 witness hooks). The working rewrite (ticket 20's patch) and the authors' accelerated
 code are never inputs; the role's input check and a driver check refuse them.
 
-Each sample is scored by the unchanged `swdb certify` (contract.bfs_read_offload,
-scalar-only snapshot, full matrix) with records created under the Extensa tags. If
-certification aborts (for example a negative control has no mutation site in the
-candidate), the sample is not certified and a labeled diagnostic (functional matrix
-without controls, control-site presence) is kept; the diagnostic is never a
-certification.
+Each sample is scored by `swdb certify` (contract.bfs_read_offload, scalar-only snapshot,
+full matrix) with records created under the Extensa tags. Since ticket 62 (2026-10-04 ET)
+the negative controls are library-side faults, so a sample's spelling no longer decides
+whether a control exists. If certification aborts for another reason, the sample is not
+certified and a labeled diagnostic is kept; the diagnostic is never a certification.
+
+Attempt a3 (2026-10-04 ET): the prompt names the only commands the strict audit can
+follow (plain reads) and forbids heredocs, awk, git apply, patch and file writes; a
+`STOP-<attempt>` file in the campaign folder stops the provider stage before its next
+session; and the stage stops itself (writing that file) when the attempt's first
+`--stop-after-failures` sessions all fail.
 
 Stages: `provider` (all samples, sequential, at most the budgeted counted calls),
 `score` (scores samples as their responses appear), `reference` (scores ticket 20's
@@ -85,6 +90,15 @@ the only file you may change and the execution-witness hooks. The lowering heade
 Return ONE unified diff against `source/` in `patch` (paths `a/benchmarks/gapbs/src/bfs.cc`
 and `b/benchmarks/gapbs/src/bfs.cc`), and list in `unresolved` every point the documents
 left open that you had to decide. Do not state performance outcomes.
+
+Tool rules (a strict audit checks every command; one violation discards the sample):
+- Inspect files only with plain reads: `cat FILE`, `sed -n 'A,Bp' FILE`, `grep`/`rg` with a
+  literal pattern, `ls`, `wc`, `head`, `tail`. Use workspace-relative paths.
+- Do not use shell heredocs, `awk`, `perl`, `python`, `git` (including `git apply` or
+  `git diff`), `patch`, `diff`, redirections, pipes into editors, or any command that
+  writes, copies or transforms a file. Do not create files. You cannot build or run code.
+- Write the unified diff yourself, by hand, from what you read, and return it only in
+  `patch`. Hunk headers must count lines exactly.
 """
 
 HARNESS = """\
@@ -225,7 +239,10 @@ def provider_stage(args):
         shutil.rmtree(root / "base-source")     # the driver's own reconstruction scratch
     base = base_source(root / "base-source")
     started = time.monotonic()
+    stop = root / f"STOP-{args.attempt}"
     for arm, n in sample_ids():
+        if stop.exists():
+            raise Failure(f"provider stage stopped by {stop.name}: {stop.read_text().strip()[:300]}")
         folder = runs / f"{arm}-s{n}"
         if (folder / "failure.json").is_file() and \
                 json.loads((folder / "failure.json").read_text())["outcome"] in ("login", "usage_limit"):
@@ -277,6 +294,13 @@ def provider_stage(args):
             save(folder / "failure.json", row)
         if row["outcome"] in ("usage_limit", "login"):
             raise Failure(f"provider paused ({row['outcome']}); uncounted; resume later")
+        counted_rows = [c for c in ledger["calls"] if c["counted"]]
+        limit = args.stop_after_failures
+        if limit and len(counted_rows) == limit and all(c["outcome"] != "completed" for c in counted_rows):
+            reasons = "; ".join(str(c.get("error"))[:200] for c in counted_rows)
+            stop.write_text(f"{now()} systematic failure: the first {limit} sessions failed; diagnose before "
+                            f"continuing. {reasons}\n")
+            raise Failure(f"provider stage stopped: the first {limit} sessions failed (see {stop.name})")
     return {"calls": len(ledger["calls"]), "counted": sum(1 for c in ledger["calls"] if c["counted"])}
 
 
@@ -463,6 +487,8 @@ def main(argv=None):
     parser.add_argument("--lane-seconds", type=int, default=LANE_SECONDS)
     parser.add_argument("--attempt", default="a1", help="attempt label; each attempt keeps its own runs and ledger")
     parser.add_argument("--provider-done", type=Path, help="file whose presence ends the score stage's wait")
+    parser.add_argument("--stop-after-failures", type=int, default=2,
+                        help="stop when the attempt's first N counted sessions all fail (0 disables)")
     args = parser.parse_args(argv)
     if not re.fullmatch(r"a[0-9]+", args.attempt):
         raise SystemExit("attempt must look like a2")
