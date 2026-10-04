@@ -277,5 +277,7 @@ def message(args):
     data = store.get(args.id, KINDS[kind])
     if data is None:
         raise Failure(f"{KINDS[kind]} record {args.id!r} does not exist")
+    from swdb.extensa_boundary import require_team_inputs
+    require_team_inputs(store, [args.id], command="handoff-message")
     return {"profile_package": profile_package, "rewrite_proposal": rewrite_proposal,
             "evaluation_result": evaluation_result}[kind](store, data)

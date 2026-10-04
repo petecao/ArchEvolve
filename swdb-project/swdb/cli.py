@@ -37,10 +37,14 @@ def main(argv=None):
     sub = command("validate", "check records and typed library shapes, pins and clauses")
     sub.add_argument("--library", type=Path)
 
-    sub = command("promote", "record a review of one certified library entry", fmt=True)
+    sub = command("promote", "record a review of one certified library entry or Extensa candidate artifact",
+                  db=True, fmt=True)
     sub.add_argument("id")
     sub.add_argument("--reviewer", default="Yan-Ru Jhou")
     sub.add_argument("--library", type=Path)
+    sub.add_argument("--protocol", help="Extensa candidate: the current team protocol to derive the re-evaluation from")
+    sub.add_argument("--workload-class", help="Extensa candidate: the artifact's workload class (workload family)")
+    sub.add_argument("--output", type=Path, help="Extensa candidate: folder for the re-evaluation requests")
 
     command("build", "regenerate the SQLite database from the records, from scratch", db=True)
 
@@ -222,7 +226,8 @@ def main(argv=None):
     sub.add_argument("id")
     sub.add_argument("--chain", action="store_true", help="include linked proposal, candidate, source, and package records")
 
-    from swdb import annotation, certification, retention
+    from swdb import annotation, certification, extensa_boundary, retention
+    extensa_boundary.register_cli(commands, paths)
     annotation.register_cli(commands)
     certification.register_cli(commands)
     retention.register_cli(commands)
@@ -248,6 +253,9 @@ def _dispatch(args):
     if hasattr(args, "retention_handler"):
         _emit(args.retention_handler(args), args.format)
         return 0
+    if hasattr(args, "extensa_handler"):
+        _emit(args.extensa_handler(args), args.format)
+        return 0
     if args.command == "certify":
         from swdb.certification import run_cli
         return run_cli(args)
@@ -255,6 +263,11 @@ def _dispatch(args):
         return _validate(records, args.library)
     if args.command == "promote":
         from swdb.library import promote
+        from swdb.store import Store
+        if args.protocol or args.workload_class or args.output or Store(records).get(args.id, "candidate"):
+            from swdb.extensa_boundary import promote_candidate
+            _emit(promote_candidate(args), args.format)
+            return 0
         _emit(promote(args), args.format)
         return 0
     if args.command == "capture-machine":

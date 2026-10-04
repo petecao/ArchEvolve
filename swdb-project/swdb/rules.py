@@ -80,6 +80,9 @@ def check(record, ctx):
         yield from _intrinsic(record)
     elif kind == "strategy":
         yield from _strategy(record, ctx)
+    elif kind == "review" and data.get("target_kind") == "candidate":
+        from swdb.extensa_boundary import validate_review
+        yield from validate_review(record, ctx)
     elif kind in {"certification", "review"}:
         from swdb.library import validate_record
         yield from validate_record(record, ctx)

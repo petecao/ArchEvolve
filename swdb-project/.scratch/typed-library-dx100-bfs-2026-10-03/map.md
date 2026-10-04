@@ -90,7 +90,7 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 | # | Ticket | Status | Blocked by | Go-ahead |
 |---|---|---|---|---|
 | 47 | [Extensa-mode design session](issues/47-extensa-design-session.md) | resolved | 03 |  |
-| 48 | [Mode tags, team-boundary refusals and candidate-artifact promotion](issues/48-mode-tags-and-team-boundary.md) | ready-for-agent | 11, 15, 47 |  |
+| 48 | [Mode tags, team-boundary refusals and candidate-artifact promotion](issues/48-mode-tags-and-team-boundary.md) | resolved | 11, 15, 47 |  |
 | 49 | [Port Extensa's machinery](issues/49-port-extensa-machinery.md) | ready-for-agent | 07, 10, 11, 47 |  |
 | 50 | [Tracer: certify one library operation (packing)](issues/50-library-operation-tracer.md) | ready-for-agent | 11, 47 |  |
 | 51 | [Seed the experimental tier from Extensa](issues/51-seed-extensa-families.md) | ready-for-agent | 50 |  |
@@ -172,3 +172,5 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - 2026-10-03 19:36 ET: all Josh/Peter/Eric communications are draft-only for the agent; Yan-Ru sends manually.30ready-for-human,02/37ready-for-human,31wontfix,33resolved. All assigned agent implementation/evaluation/review/draft tasks are complete. Send/team-claim acceptance stays unchecked; no delivery inferred. Final ownership metadata sync precedes pausing the progress heartbeat.
 
 - 2026-10-03 ET: ticket 47 resolved. Extensa-mode decisions D1–D12 are agent-decided under Yan-Ru's 2026-10-03 delegation and revisable. 48–58 are ready-for-agent; 02 no longer blocks any ticket under the Q66 assumption; 59 and 60 are new ready-for-human send tickets with drafts. [Decisions](extensa-design-2026-10-03.md); [ticket 47](issues/47-extensa-design-session.md).
+
+- 2026-10-03 20:42 ET: ticket 48 resolved. Extensa mode/campaign tags, writer immutability, derived candidate level, team-boundary refusals and candidate promotion with a derived team re-evaluation protocol. [48-mode-tags-and-team-boundary](issues/48-mode-tags-and-team-boundary.md).
