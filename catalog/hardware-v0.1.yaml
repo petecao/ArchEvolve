@@ -1,5 +1,5 @@
 catalog_id: archevolve-hardware
-revision: 0.1.6
+revision: 0.1.7
 format: hardware-catalog-v0.1
 status: research_reviewed_prototype
 project_selections:
@@ -379,6 +379,19 @@ sources:
     locator_basis: 1-based PDF pages (15-page institutional copy); figures/tables/sections verified locally;
       not handoff page approximations
     sha256: d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2
+  cobra-hpca2022-paper:
+    title: Improving Locality of Irregular Updates with Hardware Assisted Propagation Blocking
+    edition: HPCA 2022 author-hosted 15-page paper; publisher-byte identity not established
+    url: https://bvignesh.github.io/papers/COBRA-HPCA22.pdf
+    doi: 10.1109/HPCA53966.2022.00047
+    authors:
+    - Vignesh Balaji
+    - Brandon Lucia
+    conference: HPCA
+    publication_year: 2022
+    document_type: conference_paper
+    locator_basis: One-based PDF pages; sections, figures, tables and algorithms. Proceedings pp. 543–557.
+    sha256: 4028d0f2742286ae436e15a9536a0181091563b4e0a7d69b41fe197eb85683e5
 claims:
   maple-api:
     source_refs:
@@ -1566,6 +1579,154 @@ claims:
     evidence_kind: research_inference
     limitations:
     - Evidence limit only; unknown is not unsupported.
+  cobra-phase-boundary:
+    source_refs:
+    - cobra-hpca2022-paper
+    locator: PDF pp. 3–4, §III.A–B, Fig. 3, Algorithms 1–2
+    statement: PB materializes index/value tuples during Binning, then software Accumulate reads bins and
+      applies destination updates. Neighbor-Populate bins (e.src,e.dst); Algorithm 2 partitions bins across
+      Accumulate workers and uses ordinary Add on offsets, whereas Algorithm 1 uses AtomicAdd. Unordered
+      neighbor lists permit the changed order.
+    evidence_kind: paper_specification
+    limitations:
+    - No general permission to reorder noncommutative operations or floating-point arithmetic; no hardware
+      destination update/atomic executor.
+  cobra-hierarchy:
+    source_refs:
+    - cobra-hpca2022-paper
+    locator: PDF p. 5, §IV, Fig. 6
+    statement: Hardware-managed per-level cacheline C-Buffers collect tuples over progressively narrower
+      index ranges; full L1/L2 buffers are unpacked and repartitioned into next-level C-Buffers; full LLC
+      buffers go to per-thread memory bins. This combines inexpensive small-buffer-set Binning with many
+      bins for Accumulate.
+    evidence_kind: paper_specification
+    limitations:
+    - Coalescing here means tuple collection, not same-index arithmetic reduction.
+  cobra-init:
+    source_refs:
+    - cobra-hpca2022-paper
+    locator: PDF p. 6, §V.A, Fig. 7
+    statement: bininit operands are cache-level identifier, number of reserved ways, number of unique indices,
+      and tuple size in bytes. It reserves ways, computes the smallest power-of-two bin range whose C-Buffers
+      fit, stores the range, and records actually used ways so unused reserved capacity can be reclaimed.
+    evidence_kind: paper_specification
+    limitations:
+    - No encoding, header, C prototype, error convention or complete legal configuration interval is specified.
+  cobra-insert:
+    source_refs:
+    - cobra-hpca2022-paper
+    locator: PDF pp. 6–7, §V.B–C, Fig. 7
+    statement: binupdate takes an index and update value and appends that pair to the selected L1 C-Buffer.
+      Index high bits select buffer/set/way after removing log2(bin range) low bits. Per-buffer counters
+      select the next tuple slot and wrap when full. C-Buffers are not byte addressable and exist outside
+      shared-memory address space.
+    evidence_kind: paper_specification
+    limitations:
+    - The supplied index selects a partition, not a direct store to the application destination address.
+      No old destination value is returned by this collection contract.
+  cobra-private-metadata:
+    source_refs:
+    - cobra-hpca2022-paper
+    locator: PDF p. 7, §V.C–E; PDF p. 8, Fig. 9
+    statement: C-Buffers and bins are duplicated per thread; cache C-Buffers are core-private. Replacement/dirty/coherence
+      bits can be repurposed for tuple counters. LLC banks are divided among cores; per-core LLC buffer
+      count is bounded by the assigned bank capacity. LLC tags store per-bin offsets.
+    evidence_kind: paper_specification
+    limitations:
+    - Private buffer metadata reuse does not establish coherent observer visibility of final application
+      updates.
+  cobra-drain:
+    source_refs:
+    - cobra-hpca2022-paper
+    locator: PDF p. 7, §V.D, Fig. 8; PDF p. 11, §VII.B, Fig. 13a
+    statement: A full C-Buffer transfers as a cacheline to a FIFO eviction buffer; the binning engine later
+      sequentially extracts and serially inserts tuples into next-level buffers using that level’s range.
+      Buffer sizing uses Little’s Law then a burst-aware DES model; full eviction buffers can stall Binning.
+    evidence_kind: paper_specification
+    limitations:
+    - No complete queue-credit reservation, cross-level arbitration, deadlock/progress proof, or packet
+      acknowledgment protocol is provided.
+  cobra-memory-bins:
+    source_refs:
+    - cobra-hpca2022-paper
+    locator: PDF pp. 7–8, §V.E, Fig. 9
+    statement: Each thread has contiguous tuples per bin with precomputed counts and starting BinOffset
+      entries. An unnamed ISA instruction initializes LLC tag offsets from buffer ID and starting offset.
+      A full LLC buffer writes to BinBasePtr + BinOffset[binID], advances the offset by its tuple count,
+      and resets its counter.
+    evidence_kind: paper_specification
+    limitations:
+    - The text alternates pointer/offset and tuple-count descriptions; physical byte scaling and register
+      binding are not a specified ABI. Bin base initialization and the unnamed instruction’s encoding remain
+      unknown.
+  cobra-flush:
+    source_refs:
+    - cobra-hpca2022-paper
+    locator: PDF p. 8, §V.E, Flushing the Cache After Binning
+    statement: binflush marks end of Binning. Each core walks nonempty C-Buffers serially, L1 then L2 then
+      its LLC bank, writing residual tuples to memory; eviction buffers, binning engines and offset logic
+      must handle partial lines using tuple counters. All remaining tuples must reach bins before Accumulate.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper states the phase requirement, but does not specify a software-visible done/ack event, inter-core
+      join, memory ordering/fence semantics, cancellation, or global write completion. binupdate retirement
+      alone cannot release Accumulate.
+  cobra-os:
+    source_refs:
+    - cobra-hpca2022-paper
+    locator: PDF p. 8, §V.E, Evicting from LLC / Handling virtualization / Need for Static Cache Partitioning
+    statement: The no-translation path assumes system support for matching virtual and physical addresses
+      of important structures such as bins. Per-process way partitioning pins C-Buffers during Binning;
+      other processes can evict partial buffers on preemption. Swapping a bin page invokes binflush; locking
+      critical pages with mlock can avoid premature flush. A non-partitioned replacement-policy variant
+      is evaluated separately.
+    evidence_kind: paper_specification
+    limitations:
+    - mlock does not by itself establish matching VA/PA. No implemented kernel support, process isolation,
+      migration/state-save protocol, translation-fault retry, or portable OS integration is verified.
+  cobra-issue:
+    source_refs:
+    - cobra-hpca2022-paper
+    locator: PDF p. 9, §VI, Simulator
+    statement: The modified Sniper model makes binupdate retire only at the ROB head because it writes data
+      caches like a store; operand-selected C-Buffers avoid the usual address-generation port. CACTI supplies
+      cache timings; a custom Pin cache simulator models selected studies.
+    evidence_kind: paper_specification
+    limitations:
+    - Reported modeling is not inspected runnable source or a guarantee of global visibility on retirement.
+  cobra-parameters:
+    source_refs:
+    - cobra-hpca2022-paper
+    locator: PDF p. 6, §V.A; p. 7, §V.C–D; p. 9, §VI/Table II; p. 11, §VII.B/Fig. 13
+    statement: 'Reference hierarchy: 16 OoO cores, 2.66 GHz, 4-wide issue, 128 ROB, 48 load and 32 store
+      queue entries; 32 KB 8-way L1, 256 KB 8-way L2, 2 MB/core 16-way LLC. Default reserves all but one
+      L1/LLC way and one L2 way with stream prefetching. 64 B line and 8 B tuple illustrate eight tuple
+      slots. DES motivates 32-entry L1→L2 eviction buffering, while the L2→LLC Little’s Law estimate is
+      one entry.'
+    evidence_kind: paper_specification
+    limitations:
+    - These are paper settings/examples, not portable legal ranges. The paper’s 4/8/16 B workload tuples
+      do not establish arbitrary payload types or index-width support.
+  cobra-bottleneck:
+    source_refs:
+    - cobra-hpca2022-paper
+    locator: PDF pp. 4–5, §III.C/IV, Figs. 4–6; p. 11, §VII.B, Figs. 12–13
+    statement: Software PB trades fewer bins for cheap Binning against more bins for cache-local Accumulate.
+      Many software C-Buffers and their management instructions/branches limit Binning. Hierarchical hardware
+      buffering removes this compromise; eviction bursts and capacity retained for prefetched non-buffer
+      data remain limiting factors.
+    evidence_kind: paper_specification
+    limitations:
+    - No DX100 speedup, workload suitability or measured producer/consumer balance follows from the paper.
+  cobra-comm-exclusion:
+    source_refs:
+    - cobra-hpca2022-paper
+    locator: PDF pp. 11–12, §VII.C
+    statement: COBRA-COMM is a separate commutativity-specialized design with LLC same-index tuple reduction
+      and an atomic LLC reduction unit enabling shared LLC buffers.
+    evidence_kind: paper_specification
+    limitations:
+    - Excluded from this base COBRA mapping; its reduction unit cannot be inherited by base COBRA.
 mechanism_families:
 - id: queue-latency-tolerance
   name: Queue-backed asynchronous access
@@ -1586,6 +1747,9 @@ mechanism_families:
 - id: tmu-fiber-operand-event-marshaling
   description: Dependent fiber traversal and ordered callback/operand supply; family confers no inherited
     capabilities.
+- id: cobra-hierarchical-tuple-binning
+  description: Cacheline tuple collection and hierarchical repartitioning for software propagation blocking;
+    no inherited atomics.
 decision_questions:
 - id: operation-result
   question: Is the requested result a fetched value, update success, old value, reduction, or only a cache
@@ -5185,3 +5349,441 @@ designs:
     requirements and evidence limits.
   - read/execute applies only to required operand supply. General gather, pointer chase, TMU arithmetic
     and stores gain no support.
+- id: cobra-hpca2022-tuple-binning
+  name: COBRA HPCA 2022 required tuple-binning mapping
+  revision: paper-2022-base-cobra-proposal-1
+  record_kind: mapping
+  summary: Hardware collects and repartitions supplied tuples into per-thread bins for software PB Accumulate.
+  mechanism_refs:
+  - cobra-hierarchical-tuple-binning
+  source_refs:
+  - cobra-hpca2022-paper
+  operations:
+  - id: required-tuple-binning
+    operation: write
+    subtype: tuple_bin
+    execution_role: execute
+    address_patterns: []
+    support: paper_specified
+    claim_refs:
+    - cobra-hierarchy
+    - cobra-insert
+    - cobra-memory-bins
+    - cobra-flush
+    result:
+      form: Partitioned per-thread index/value tuple sequences in memory bins; no destination-array update.
+      old_value: not_applicable
+      validity: All submitted tuples must reach their assigned bins before CPU Accumulate; requires counts/capacity,
+        ownership and phase-release obligations.
+      claim_refs:
+      - cobra-phase-boundary
+      - cobra-memory-bins
+      - cobra-flush
+    ordering:
+      scope: Thread-private collection and later bin traversal
+      description: Append slots preserve index/value association and tuple multiplicity. Hierarchical
+        repartitioning and cross-thread/bin traversal do not establish original global update order or
+        stable sorting.
+      claim_refs:
+      - cobra-insert
+      - cobra-drain
+      - cobra-phase-boundary
+    completion:
+      event: binflush initiates per-core L1→L2→LLC residual drain at the Binning boundary; physical done/ack
+        binding unspecified.
+      visibility: Paper requires all tuples in memory bins before Accumulate; ROB retirement is not bin
+        drain, destination update completion, or a global write barrier.
+      claim_refs:
+      - cobra-flush
+      - cobra-issue
+    datatype_notes: Neighbor-Populate evaluation uses 8 B tuples; no supported catalog payload type or
+      index-width domain inferred from this size. Index/value pair is data to collect.
+    limitations:
+    - Required program write is tuple materialization, not arbitrary scatter or atomic destination update.
+    - No byte-address pattern coverage established for C-Buffers.
+    - No observed executable model or ISA implementation.
+    realization:
+      kind: documented_sequence
+      description: bininit per level; initialize per-bin LLC offsets with unnamed instruction; binupdate(index,value)
+        per tuple; binflush then externally bound phase release. Paper interface description only.
+      claim_refs:
+      - cobra-init
+      - cobra-insert
+      - cobra-memory-bins
+      - cobra-flush
+  requirements:
+  - id: application-legality
+    description: Prove reordered bin processing preserves the application’s required outputs; Neighbor-Populate
+      permits neighbor order variation. Preserve every tuple, including multiplicity.
+    scope: Software transformation
+    claim_refs:
+    - cobra-phase-boundary
+    verification: required
+  - id: numeric-order
+    description: Establish allowable floating-point order, integer overflow and any exact reproducibility
+      obligations for the chosen application; commutativity is insufficient for bit-identical FP output.
+    scope: Workload-specific obligation
+    claim_refs:
+    - cobra-phase-boundary
+    verification: required
+  - id: thread-private-storage
+    description: Provide disjoint per-thread bin allocations and C-Buffer ownership; partition Accumulate
+      destinations by bin or establish equivalent safe synchronization.
+    scope: Binning and CPU Accumulate
+    claim_refs:
+    - cobra-phase-boundary
+    - cobra-private-metadata
+    verification: required
+  - id: counts-capacity
+    description: Compute per-thread/per-bin tuple counts and starting offsets before Binning; allocate
+      sufficient contiguous capacity, keep namespace membership and offset arithmetic within allocations,
+      and preserve pointer lifetime through drain/Accumulate.
+    scope: Memory bins
+    claim_refs:
+    - cobra-memory-bins
+    verification: required
+  - id: cache-reservation
+    description: Configure each cache level and its actually used ways; verify C-Buffers fit and per-core
+      LLC bank assignments. This mapping selects the partitioned base design, not the unpinned variant.
+    scope: Cache ownership
+    claim_refs:
+    - cobra-init
+    - cobra-private-metadata
+    - cobra-os
+    verification: required
+  - id: va-pa
+    description: Supply the assumed matching VA/PA support for bins and coordinate paging; page locking
+      alone is not this mapping.
+    scope: OS/address translation
+    claim_refs:
+    - cobra-os
+    verification: required
+  - id: phase-release
+    description: Establish all producers have stopped, all levels/eviction queues and outstanding bin
+      writes have drained, and required consumer visibility before starting CPU Accumulate. The paper
+      does not give the physical completion/ack/fence binding.
+    scope: Consumer release
+    claim_refs:
+    - cobra-flush
+    - cobra-issue
+    verification: required
+  - id: preemption
+    description: Bind process/thread/core ownership across preemption, page eviction and migration; retain
+      offsets and partial tuple counts safely.
+    scope: OS lifecycle
+    claim_refs:
+    - cobra-os
+    - cobra-private-metadata
+    verification: required
+  - id: resource-progress
+    description: Bind queue-full backpressure, downstream service and partial-flush admission so buffered
+      tuples cannot be overwritten or lost; no credit or deadlock protocol is claimed.
+    scope: Future implementation
+    claim_refs:
+    - cobra-drain
+    - cobra-flush
+    verification: unknown
+  - id: abi
+    description: Recover bin-base setup, unnamed offset-init instruction and exact operand units/types/encoding
+      before writing an executable wrapper.
+    scope: Future implementation
+    claim_refs:
+    - cobra-init
+    - cobra-memory-bins
+    verification: unknown
+  parameters:
+  - id: cores
+    unit: cores
+    state: fixed_reference
+    value: 16
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: core-frequency
+    unit: GHz
+    state: fixed_reference
+    value: 2.66
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: issue-width
+    unit: instructions/cycle
+    state: fixed_reference
+    value: 4
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: rob
+    unit: entries
+    state: fixed_reference
+    value: 128
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: load-queue
+    unit: entries
+    state: fixed_reference
+    value: 48
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: store-queue
+    unit: entries
+    state: fixed_reference
+    value: 32
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: l1-size
+    unit: KB
+    state: fixed_reference
+    value: 32
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: l1-associativity
+    unit: ways
+    state: fixed_reference
+    value: 8
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: l2-size
+    unit: KB
+    state: fixed_reference
+    value: 256
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: l2-associativity
+    unit: ways
+    state: fixed_reference
+    value: 8
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: llc-per-core
+    unit: MB/core
+    state: fixed_reference
+    value: 2
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: llc-associativity
+    unit: ways
+    state: fixed_reference
+    value: 16
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: l1-load-to-use
+    unit: cycles
+    state: fixed_reference
+    value: 3
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: l2-load-to-use
+    unit: cycles
+    state: fixed_reference
+    value: 8
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: llc-local-load-to-use
+    unit: cycles
+    state: fixed_reference
+    value: 21
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: dram-latency
+    unit: ns
+    state: fixed_reference
+    value: 80
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Table II evaluated architecture; not a legal range or selected target configuration.
+  - id: l1-reserved-ways
+    unit: ways
+    state: fixed_reference
+    value: 7
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Derived from all-but-one and 8-way L1.
+  - id: l2-reserved-ways
+    unit: ways
+    state: fixed_reference
+    value: 1
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Default with L2 stream prefetcher; not universal.
+  - id: llc-reserved-ways
+    unit: ways
+    state: fixed_reference
+    value: 15
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: Derived from all-but-one and 16-way LLC.
+  - id: line-size-example
+    unit: bytes
+    state: fixed_reference
+    value: 64
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: §V.C example cacheline.
+  - id: neighbor-populate-tuple
+    unit: bytes
+    state: fixed_reference
+    value: 8
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: §VI evaluated Neighbor-Populate tuple; §V.C illustrates 4 B index and 4 B value.
+  - id: l1-l2-eviction-buffer
+    unit: cacheline entries
+    state: fixed_reference
+    value: 32
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: §V.D/§VII.B DES burst-aware setting; Little’s Law 14 is an estimate, not this setting.
+  - id: l2-llc-eviction-buffer-estimate
+    unit: cacheline entries
+    state: fixed_reference
+    value: 1
+    domain: null
+    claim_refs:
+    - cobra-parameters
+    notes: §V.D/§VII.B Little’s Law estimate only; no general burst guarantee.
+  - id: namespace-size
+    unit: unique indices
+    state: unknown
+    value: null
+    domain: null
+    claim_refs:
+    - cobra-init
+    - cobra-memory-bins
+    - cobra-flush
+    notes: Application supplied; no chosen value or legal interval.
+  - id: per-level-bin-range
+    unit: indices/bin
+    state: unknown
+    value: null
+    domain: null
+    claim_refs:
+    - cobra-init
+    - cobra-memory-bins
+    - cobra-flush
+    notes: Computed smallest power-of-two range fitting reserved ways; capacity coupled, no invented interval.
+  - id: bin-base-and-offsets
+    unit: implementation-defined
+    state: unknown
+    value: null
+    domain: null
+    claim_refs:
+    - cobra-init
+    - cobra-memory-bins
+    - cobra-flush
+    notes: Precomputed software storage and offsets; ABI unit binding unresolved.
+  - id: consumer-release-event
+    unit: event
+    state: unknown
+    value: null
+    domain: null
+    claim_refs:
+    - cobra-init
+    - cobra-memory-bins
+    - cobra-flush
+    notes: Software-visible done/ack/fence binding not specified.
+  interface:
+    software_supplies: Index/value tuples, per-level configuration, precomputed per-thread bin capacities/base/offsets,
+      ownership and assumed OS address support.
+    invocation: Paper instructions bininit, binupdate, binflush plus unnamed LLC offset initializer. No
+      C ABI or encoded ISA specification is proposed.
+    outputs: Materialized tuple bins for software Accumulate. Software applies destination updates and
+      supplies application-specific synchronization and numeric legality.
+    claim_refs:
+    - cobra-init
+    - cobra-insert
+    - cobra-memory-bins
+    - cobra-flush
+    - cobra-phase-boundary
+  limitations:
+  - Production admission is pending parent review; this file is only an in-memory proposal.
+  - C-Buffers are outside shared-memory address space; final bin-write acknowledgment and consumer fence
+    are unresolved.
+  - Base COBRA only; COBRA-COMM and non-partitioned variant excluded.
+  - Paper specifications and model reports do not certify runnable hardware, mapping legality, numeric
+    correctness or performance.
+  internal_mechanisms:
+  - id: hierarchical-repartition
+    kind: reordering
+    status: described
+    description: Hardware-managed per-level cacheline C-Buffers collect tuples over progressively narrower
+      index ranges; full L1/L2 buffers are unpacked and repartitioned into next-level C-Buffers; full
+      LLC buffers go to per-thread memory bins. This combines inexpensive small-buffer-set Binning with
+      many bins for Accumulate.
+    claim_refs:
+    - cobra-hierarchy
+  - id: fifo-eviction
+    kind: buffering
+    status: described
+    description: A full C-Buffer transfers as a cacheline to a FIFO eviction buffer; the binning engine
+      later sequentially extracts and serially inserts tuples into next-level buffers using that level’s
+      range. Buffer sizing uses Little’s Law then a burst-aware DES model; full eviction buffers can stall
+      Binning.
+    claim_refs:
+    - cobra-drain
+  - id: rob-retirement
+    kind: issue_policy
+    status: described
+    description: The modified Sniper model makes binupdate retire only at the ROB head because it writes
+      data caches like a store; operand-selected C-Buffers avoid the usual address-generation port. CACTI
+      supplies cache timings; a custom Pin cache simulator models selected studies.
+    claim_refs:
+    - cobra-issue
+  - id: residual-drain
+    kind: completion
+    status: described
+    description: binflush marks end of Binning. Each core walks nonempty C-Buffers serially, L1 then L2
+      then its LLC bank, writing residual tuples to memory; eviction buffers, binning engines and offset
+      logic must handle partial lines using tuple counters. All remaining tuples must reach bins before
+      Accumulate.
+    claim_refs:
+    - cobra-flush
+  performance_hypotheses:
+  - id: software-binning-bottleneck
+    description: Hardware buffering may lower tuple-materialization latency when software buffer locality
+      and management instructions dominate.
+    workload_conditions:
+    - Reordering is legal and tuple materialization is required.
+    - Accumulate locality benefits from enough bins.
+    limiting_factors:
+    - Eviction-buffer bursts/backpressure
+    - Preprocessing counts/offsets and bin memory traffic
+    - Prefetched-data capacity and CPU Accumulate time
+    - OS and consumer-release costs
+    claim_refs:
+    - cobra-bottleneck
+    - cobra-drain
