@@ -345,7 +345,9 @@ def test_actual_dx100_submit_reproduces_the_certified_tree(records, tmp_path):
     for intrinsic in contract['uses_intrinsics']:
         dependencies.update(library.get(intrinsic)['lowerings'])
     for entry_id in dependencies | {contract['id']}:
-        assert library.state(entry_id)['status'] == 'certified'
+        # 2026-10-04 ET: a later target evaluation moved the contract from `certified` to
+        # `evaluated_on_target` (certified, then evaluated on the target); submit admits both.
+        assert library.state(entry_id)['status'] in {'certified', 'evaluated_on_target'}
         receipt(records, entry_id, library.content_sha256(entry_id))
     lowerings = sorted(entry_id for entry_id in dependencies if library.get(entry_id)['kind'] == 'lowering')
     patch = (REPO / 'library/dx100/peter-section5.patch').read_text()
