@@ -351,11 +351,13 @@ class TargetAdapter:
         patch_path = tree.parent / "provider.patch"
         patch_path.write_text(patch if patch.endswith("\n") else patch + "\n")
         applied = None
+        # --recount (2026-10-04 ET, attempt a3): provider diffs often carry wrong hunk line
+        # counts; git recomputes them from the hunk text, which must still match exactly.
         for strip in ("-p1", "-p2", "-p0"):
-            check = subprocess.run(["git", "apply", "--check", strip, str(patch_path)], cwd=tree,
+            check = subprocess.run(["git", "apply", "--check", "--recount", strip, str(patch_path)], cwd=tree,
                                    capture_output=True, text=True)
             if check.returncode == 0:
-                applied = subprocess.run(["git", "apply", strip, str(patch_path)], cwd=tree,
+                applied = subprocess.run(["git", "apply", "--recount", strip, str(patch_path)], cwd=tree,
                                          capture_output=True, text=True)
                 break
         if applied is None or applied.returncode:
