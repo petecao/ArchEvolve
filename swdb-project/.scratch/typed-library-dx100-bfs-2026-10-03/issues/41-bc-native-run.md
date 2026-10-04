@@ -16,3 +16,10 @@ Created: 2026-10-03
 - [ ] Records are committed after Yan-Ru approves.
 
 ## Comments
+
+- 2026-10-03 ET (BC-track agent, ticket 40): code is ready. On mbit10 inside an owned lane:
+  `scripts/prepare_dx100_bc_scalar_snapshot.py --runs-dir <runs> --register --check --lane <lane>`
+  registers `bc-dx100-scalar-only-20261003-a1.source` (not yet in repository records; ticket 42's
+  certification cites this ID and its deterministic tree sha256), then
+  `scripts/register_bc_workloads.py --from-workload <registered BFS kronecker/uniform workload> --id <bc id> --work-dir <dir> --request-out <file>`
+  registers BC workloads on the same graph files (sources need an outgoing edge; pass `--sources` if a BFS source has none).

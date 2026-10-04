@@ -86,7 +86,7 @@ class BFSPlugin(KernelPlugin):
         from swdb import bfs_native
         return artifacts.file_hash(bfs_native.__file__)
 
-    def check_native_trial(self, adjacency, source, observed):
+    def check_native_trial(self, adjacency, source, observed, application=None):
         from swdb.bfs_native import verify_parents
         return verify_parents(adjacency, source, observed.get("parents"))
 

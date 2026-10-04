@@ -75,7 +75,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 |---|---|---|---|---|
 | 38 | [Prefactor: kernel plug-in seam, native side](issues/38-kernel-seam-native.md) | resolved | — |  |
 | 39 | [Prefactor: kernel plug-in seam, gem5 side](issues/39-kernel-seam-gem5.md) | resolved | 23 |  |
-| 40 | [BC on the native evaluator (code)](issues/40-bc-native-code.md) | ready-for-agent | 38 |  |
+| 40 | [BC on the native evaluator (code)](issues/40-bc-native-code.md) | resolved | 38 |  |
 | 41 | [BC native evaluation on mbit10](issues/41-bc-native-run.md) | ready-for-agent | 08, 40 | yes |
 | 42 | [BC certification and the derived BC contract](issues/42-bc-certification-and-derived-contract.md) | ready-for-agent | 18, 17, 28, 40 |  |
 | 43 | [Yan-Ru promotes the derived BC contract](issues/43-promote-bc-contract.md) | ready-for-human | 42 |  |
@@ -176,3 +176,5 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - Ticket 38, completed 2026-10-03 21:00 ET: native kernel plug-in seam (`swdb/kernels/`), BFS the only plug-in with its exact former identities; 350 BFS regression cases pass. [38-kernel-seam-native](issues/38-kernel-seam-native.md).
 
 - Ticket 39, completed 2026-10-03 22:40 ET: gem5 kernel plug-in seam (driver/oracle, verifier binding, v2 witness, accelerator cases); BFS unchanged; 34 listed failures are pre-existing on 8ad6e8a. [39-kernel-seam-gem5](issues/39-kernel-seam-gem5.md).
+
+- Ticket 40, completed 2026-10-03 23:05 ET: BC plug-in on the native evaluator (BCVerifier reproduction, NaN-closed; vacuous sources refused), DX100 BC record and scalar snapshot derivation, BC workloads on BFS graph files, BC protocol freeze. [40-bc-native-code](issues/40-bc-native-code.md).

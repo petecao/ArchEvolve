@@ -135,7 +135,7 @@ def _discovery_settings(request, compiler, flags, includes, macro_log):
     return library, arguments
 
 
-def _trial_output(output, graph, source, threads, plugin=None):
+def _trial_output(output, graph, source, threads, plugin=None, application=None):
     plugin = plugin or kernels.BFS
     value, digest = native.json_observation(output, plugin.native_output_limit(graph["num_vertices"]),
                                             "diagnostic parent output" if plugin is kernels.BFS else "diagnostic result output")
@@ -143,7 +143,7 @@ def _trial_output(output, graph, source, threads, plugin=None):
             or value["source"] != source or value.get("roi") != plugin.native_roi
             or type(value.get("configured_threads")) is not int or value["configured_threads"] != threads):
         raise native.StageFailure("incompatible", "diagnostic source, ROI, or threads differ")
-    check = plugin.check_native_trial(graph["adjacency"], source, value)
+    check = plugin.check_native_trial(graph["adjacency"], source, value, application=application)
     if not check["passed"]: raise native.StageFailure("incorrect", check["reason"])
     duration = value.get("duration_s")
     if isinstance(duration, bool) or not isinstance(duration, (float, int)) or not math.isfinite(duration) or duration <= 0:
@@ -348,7 +348,7 @@ def run(args):
                 if artifacts.file_hash(binary) != binary_hash or artifacts.file_hash(graph_path) != evaluation["context"]["workload"]["canonical_file_sha256"]:
                     raise Failure("diagnostic binary or graph changed")
                 session.execute("region_execution", [str(binary), str(graph_path), str(source_id), str(output)], budget["run_seconds"], env)
-                check = _trial_output(output, graph, source_id, threads, plugin)
+                check = _trial_output(output, graph, source_id, threads, plugin, data["context"].get("application"))
                 counters, counter_hash = _region_observations(Path(str(output)+".regions.json"), rows)
                 for row, observed in zip(rows, counters):
                     row["metrics"]["inclusive_thread_cpu_seconds"] += observed["inclusive_ns"] / 1e9
@@ -437,7 +437,8 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
                    str(binary), str(graph_path), str(source_id), str(output)]
         session.execute("memory_execution", command, budget["run_seconds"], env,
                         repetition=repetition, source_position=position, source=source_id)
-        check = _trial_output(output, graph, source_id, data["context"]["threads"], plugin)
+        check = _trial_output(output, graph, source_id, data["context"]["threads"], plugin,
+                              data["context"].get("application"))
         nonzero = []
         for file in sorted(folder.glob(raw.name+"*")):
             # Only the explicit client dump defines the ROI. Stopping
@@ -531,7 +532,8 @@ def _per_line_memory(session, data, source, includes, compiler, flags,
             f"--callgrind-out-file={raw}", str(binary), str(graph_path), str(source_id), str(output)]
         session.execute("statement_memory_execution", command, budget["run_seconds"], env,
                         repetition=repetition, source_position=position, source=source_id)
-        check = _trial_output(output, graph, source_id, data["context"]["threads"], plugin)
+        check = _trial_output(output, graph, source_id, data["context"]["threads"], plugin,
+                              data["context"].get("application"))
         dumps = []
         def dump_order(path):
             suffix = path.name[len(raw.name):]

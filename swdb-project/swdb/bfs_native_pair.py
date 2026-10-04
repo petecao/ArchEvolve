@@ -274,7 +274,8 @@ def validate_receipt(store, baseline, candidate, settings, *, verify_raw=True):
                 and raw.get("roi") == observation["roi"]
                 and type(raw.get("duration_s")) in (int, float) and raw["duration_s"] == observation["duration_s"],
                 "paired timing/context differs from its hash-bound raw output")
-        checked = plugin.check_native_trial(canonical["adjacency"], slot["source"], raw)
+        checked = plugin.check_native_trial(canonical["adjacency"], slot["source"], raw,
+                                            application=evaluation["context"].get("application"))
         require(checked["passed"], f"paired raw {'parent vector' if plugin is kernels.BFS else 'result'} failed independent "
                 f"{'structural ' if plugin is kernels.BFS else ''}verification: " + str(checked["reason"]))
         require(check.get("graph_sha256") == actual_workload["canonical_sha256"]

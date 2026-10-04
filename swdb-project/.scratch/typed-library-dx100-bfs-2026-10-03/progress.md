@@ -186,3 +186,5 @@ Periodic follow-up, 2026-10-03 18:14 ET: root independently read back source6cf 
 2026-10-03 21:00 ET: ticket 38 resolved (BC track): native kernel plug-in seam in `swdb/kernels/`, BFS the only plug-in with its exact former identities; 350 BFS regression cases pass.
 
 2026-10-03 22:40 ET: ticket 39 resolved (BC track): gem5 side of the kernel plug-in seam; frozen BFS gem5 helpers byte-identical; full suite 3,672 passed/35 skipped, remaining 34 failures identical on clean 8ad6e8a.
+
+2026-10-03 23:05 ET: ticket 40 resolved (BC track): BC native plug-in, scalar-only BC snapshot script, BC workload registration; 17 BC cases and 218 regression cases pass. Ticket 41 can run on mbit10 (see its comment).

@@ -1,0 +1,105 @@
+// Evaluator-owned BC driver. Created: 2026-10-03 (Eastern Time), ticket 40.
+// The graph reader is the BFS driver's; the timed call is one Brandes source.
+// SWDB_SOURCE_INCLUDE is replaced with the exact candidate path at build time.
+#include <chrono>
+#include <cmath>
+#include <cstdint>
+#include <fstream>
+#include <iomanip>
+#include <limits>
+#include <stdexcept>
+#include <string>
+#include <vector>
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
+#define main swdb_unused_application_main
+#include SWDB_SOURCE_INCLUDE
+#undef main
+
+namespace swdb_native {
+Graph read_graph(const char *path) {
+    std::ifstream input(path);
+    std::string magic;
+    int64_t n, m, directed;
+    if (!(input >> magic >> n >> m >> directed) || magic != "SWDBGRAPH1" ||
+        n < 1 || n > std::numeric_limits<int32_t>::max() || m < 0 ||
+        m > std::numeric_limits<int32_t>::max() || (directed != 0 && directed != 1))
+        throw std::runtime_error("invalid canonical graph header");
+    std::vector<std::vector<NodeID>> out(n), in(n);
+    for (int64_t e = 0; e < m; ++e) {
+        int64_t u, v;
+        if (!(input >> u >> v) || u < 0 || v < 0 || u >= n || v >= n)
+            throw std::runtime_error("invalid canonical graph edge");
+        out[u].push_back(static_cast<NodeID>(v));
+        in[v].push_back(static_cast<NodeID>(u));
+    }
+    std::string extra;
+    if (input >> extra) throw std::runtime_error("trailing canonical graph content");
+    NodeID *neighbors = new NodeID[m];
+    NodeID **index = new NodeID*[n + 1];
+    int64_t offset = 0;
+    for (int64_t u = 0; u < n; ++u) {
+        index[u] = neighbors + offset;
+        for (NodeID v : out[u]) neighbors[offset++] = v;
+    }
+    index[n] = neighbors + offset;
+    if (!directed) return Graph(n, index, neighbors);
+    NodeID *inverse_neighbors = new NodeID[m];
+    NodeID **inverse_index = new NodeID*[n + 1];
+    offset = 0;
+    for (int64_t u = 0; u < n; ++u) {
+        inverse_index[u] = inverse_neighbors + offset;
+        for (NodeID v : in[u]) inverse_neighbors[offset++] = v;
+    }
+    inverse_index[n] = inverse_neighbors + offset;
+    return Graph(n, index, neighbors, inverse_index, inverse_neighbors);
+}
+}
+
+int main(int argc, char **argv) {
+    try {
+        if (argc != 4) throw std::runtime_error("expected graph, source, output");
+        size_t parsed = 0;
+        long long requested_source = std::stoll(argv[2], &parsed);
+        if (parsed != std::string(argv[2]).size()) throw std::runtime_error("invalid source");
+        Graph graph = swdb_native::read_graph(argv[1]);
+        if (requested_source < 0 || requested_source >= graph.num_nodes())
+            throw std::runtime_error("source outside graph");
+        NodeID source = static_cast<NodeID>(requested_source);
+        int configured_threads = 1;
+#ifdef _OPENMP
+        omp_set_dynamic(0);
+        configured_threads = omp_get_max_threads();
+#endif
+        // One fixed source: SourcePicker returns the given source on every pick.
+        SourcePicker<Graph> picker(graph, source);
+        // This boundary includes all initialization, both passes and the score
+        // normalization inside Brandes. The returned scores stay alive at stop.
+        const auto begin = std::chrono::steady_clock::now();
+        auto scores = Brandes(graph, picker, 1, false);
+        const auto end = std::chrono::steady_clock::now();
+        if (scores.size() != static_cast<size_t>(graph.num_nodes()))
+            throw std::runtime_error("returned score length differs from graph");
+        std::ofstream output(argv[3]);
+        output << std::setprecision(17)
+               << "{\"format\":\"swdb.bc.native.trial.v1\",\"source\":" << source
+               << ",\"configured_threads\":" << configured_threads
+               << ",\"roi\":\"bc.complete_call.v1\",\"duration_s\":"
+               << std::chrono::duration<double>(end - begin).count()
+               << ",\"scores\":[" << std::setprecision(9);
+        for (size_t i = 0; i < scores.size(); ++i) {
+            if (i) output << ',';
+            const double value = scores[i];
+            if (std::isfinite(value)) output << value; else output << "null";
+        }
+        output << "]}\n";
+        output.close();
+        if (!output) throw std::runtime_error("cannot persist score result");
+        return 0;
+    } catch (const std::exception &error) {
+        std::cerr << "SWDB driver failure: " << error.what() << '\n';
+        return 2;
+    }
+}

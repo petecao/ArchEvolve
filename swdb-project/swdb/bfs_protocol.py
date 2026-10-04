@@ -250,6 +250,25 @@ def _save_immutable(args, request, kind, **fields):
     return workflow.persist(args.records, data, getattr(args, "db", None), create=True)
 
 
+def _sg_out_degrees(row, sources):
+    """Out-degrees of the requested sources read from a verified SG file's CSR offsets."""
+    width = 4 if row["format"] == "gapbs_sg32le" else 8
+    offset_format = "<" + ("i" if width == 4 else "q")
+    degrees = {}
+    with Path(row["path"]).open("rb") as handle:
+        header = handle.read(1 + 2 * width)
+        _fail(len(header) == 1 + 2 * width, "invalid SG header")
+        _, n = struct.unpack_from(offset_format[0] + offset_format[1] * 2, header, 1)
+        for source in sources:
+            _fail(0 <= source < n, "source vertex is outside the graph")
+            handle.seek(1 + 2 * width + source * width)
+            pair = handle.read(2 * width)
+            _fail(len(pair) == 2 * width, "truncated SG offsets")
+            first, last = struct.unpack(offset_format[0] + offset_format[1] * 2, pair)
+            degrees[source] = last - first
+    return degrees
+
+
 def register_workload(args):
     request = _request(args)
     store = _require_valid(args.records)
@@ -281,6 +300,14 @@ def register_workload(args):
         rows.append(row)
     for source in sources:
         _fail(_integer(source, "source", 0) < reference["num_vertices"], "source vertex is outside the graph")
+    # Ticket 40 (2026-10-03 ET): the kernel plug-in may refuse sources by
+    # out-degree (BC: BCVerifier is vacuous for a source without an outgoing edge).
+    if reference.get("_streaming"):
+        degrees = _sg_out_degrees(rows[0], sources)
+    else:
+        degrees = {source: len(reference["adjacency"][source]) for source in sources}
+    refusal = plugin.check_workload_sources(degrees)
+    _fail(refusal is None, refusal)
     if reference.get("_streaming"):
         realized = reference["realized"]
     else:
@@ -643,6 +670,9 @@ def freeze_protocol(args):
     verifier = settings["correctness"]["verifier"]
     _fail(verifier == plugin.native_verifier or verifier in plugin.gem5_checkers,
           f"correctness verifier {verifier!r} does not belong to the {plugin.name} kernel plug-in")
+    # Ticket 40 (2026-10-03 ET): a native freeze names its kernel's protected ROI.
+    _fail(settings["mode"] != "native" or settings["roi"] == plugin.native_roi,
+          f"native {plugin.name} protocols freeze the {plugin.native_roi} ROI")
     identities = {wid: verify_immutable(_get(store, wid, "workload")) for wid in settings["workloads"]}
     companion_cases = settings.get('correctness', {}).get('companion_cases', {})
     companion = companion_cases.get('parent_gather_race') if isinstance(companion_cases, dict) else None

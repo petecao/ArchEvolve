@@ -115,9 +115,13 @@ class KernelPlugin:
     def native_verifier_sha256(self):
         raise NotImplementedError
 
-    def check_native_trial(self, adjacency, source, observed):
+    def check_native_trial(self, adjacency, source, observed, application=None):
         """Independent result check of one parsed trial output mapping."""
         raise NotImplementedError
+
+    def check_workload_sources(self, out_degrees):
+        """Refusal reason for registered sources ({source: out-degree}), or None."""
+        return None
 
     def __repr__(self):
         return f"<kernel plug-in {self.kernel}>"
@@ -192,5 +196,7 @@ def native_rois():
 
 
 from swdb.kernels import bfs as _bfs  # noqa: E402  (registers the BFS plug-in)
+from swdb.kernels import bc as _bc  # noqa: E402  (registers the BC plug-in, ticket 40)
 
 BFS = _bfs.PLUGIN
+BC = _bc.PLUGIN

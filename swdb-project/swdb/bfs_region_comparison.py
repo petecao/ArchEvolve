@@ -286,7 +286,8 @@ def _native_samples(store, primary, package_id, pair, role):
               and _timestamp(matching[0].get('started')) >= _timestamp(primary['context']['protocol_binding']['frozen_at']),
               'native diagnostic execution receipt is missing, failed, or predates freeze')
         try:
-            checked = bfs_profiling._trial_output(local(output), graph, cell['source'], context['threads'], plugin)
+            checked = bfs_profiling._trial_output(local(output), graph, cell['source'], context['threads'], plugin,
+                                                  primary['context'].get('application'))
             observed, digest = bfs_profiling._region_observations(local(report), regions)
         except bfs_native.StageFailure as exc:
             raise Failure('native diagnostic raw observation is invalid: ' + str(exc)) from None

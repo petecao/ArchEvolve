@@ -741,7 +741,8 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
                         "started": executed["started"], "finished": executed["finished"],
                         "execution_log": executed["log"], "execution_log_sha256": executed["log_sha256"]}
                 data["timing"].append(observation)
-                check = plugin.check_native_trial(canonical["adjacency"], source, observed)
+                check = plugin.check_native_trial(canonical["adjacency"], source, observed,
+                                                  application=data["context"]["application"])
                 session.remaining()
                 check.update(source=source, source_position=position, repetition=repetition, trial=trial,
                              output_sha256=observation["output_sha256"], binary_sha256=observation["binary_sha256"],
