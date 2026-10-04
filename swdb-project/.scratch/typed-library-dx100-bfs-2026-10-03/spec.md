@@ -2,11 +2,13 @@
 
 Created: 2026-10-03 00:50 ET
 Updated: 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66)
+Updated: 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's
+2026-10-03 delegation and revisable; see [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md))
 **Type:** spec
 **Status:** ready-for-agent
 **Blocked by:** ticket 03 (ADRs 0007–0011 and the archevolve-handoff tracker updates), which
 needs Yan-Ru's approval. The glossary, this spec, its map and its tickets were committed on
-2026-10-03. Extensa-mode work also waits for its own design session (ticket 47 in the map).
+2026-10-03. The Extensa-mode design session (ticket 47) was resolved on 2026-10-03.
 Owner: Yan-Ru Jhou
 Decision records: ADR 0001–0006 (existing); ADR 0007–0011 (written by ticket 03, see "Decision
 records" under Implementation Decisions)
@@ -763,18 +765,26 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   The grammar's parser library is vendored with its MIT license, so SWDB keeps its PyYAML and
   jsonschema install rule on mbit10. Each ported file gets an SPDX header with the license Peter
   confirms (Q66) and a provenance header (MemAcc commit and original path), and a provenance
-  list names every ported file.
+  list names every ported file. Until Peter confirms, ported files carry Apache-2.0 WITH
+  LLVM-exception under the accepted Q66 assumption, and ticket 02 blocks no ticket (D11).
+  The exact module list, ported and not ported, is decision D1 of
+  [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md). Agent-decided under Yan-Ru's
+  2026-10-03 delegation; revisable.
 - **Not ported:** Extensa's agent runtime (its Codex support may be stale), its timing and launcher
-  measurement, and its speed rule. Its benchmark adapters serve only as references.
+  measurement, and its speed rule. Its benchmark adapters serve only as references. Also not
+  ported: Extensa's A5 study gates, Z3/SMT and its K3/L4 evaluators, the clang `dyncheck` tool and
+  non-CPU synthesis targets (D1).
 - **Agent roles:** rewriting; independent test generation (an agent that sees the contract and the
   reference semantics, never the candidate artifact, and adds differential-test inputs); synthesis;
   profiling. Site finding is a query first; a coding-agent site finder comes with a second kernel.
   Every role runs on mbit10 in a lane with Codex `gpt-5.6-sol` at effort `xhigh` by default, or
   Claude `claude-sonnet-5-5` at effort `high`, and each invocation records its settings.
-- **Extensa campaign** (`swdb campaign CAMPAIGN_FILE`). The file names the targets, the workload
-  classes with their graph per target, the allowed tier and contracts, and the budgets. Each
-  iteration makes one candidate artifact per workload class per target (ticket 47 confirms how
-  this counts against the provider-call budget):
+- **Extensa campaign** (`swdb campaign CAMPAIGN_FILE`). The file names one hardware target
+  (D2), the workload classes with their graph, the allowed tier and contracts, and the budgets.
+  Its format is `swdb.extensa-campaign.v1` YAML under `campaigns/extensa/` (D5). Each iteration
+  makes one candidate artifact per workload class. One rewrite call returns one patch with
+  per-class knob values, so per-class artifacts cost no extra provider call. Repairs, test
+  generation and synthesis are each charged (D7). Each iteration runs these steps:
   1. the site finder chooses regions;
   2. a rewrite provider rewrites;
   3. certification runs (on mbit10);
@@ -784,7 +794,7 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
 
   The Extensa campaign writes a summary record: inputs, candidate artifacts per
   iteration, verdicts, certification levels, sha256s, lane-hours, provider calls and disk used,
-  and the stop reason.
+  and the stop reason. The record kind is `campaign_summary`; its shape is D6.
 - **Speed rule.**
   - The region of interest is the whole BFS call (`bfs.complete_call.v1`), including DX100 setup.
   - One frozen protocol per hardware target per Extensa campaign, with no region pairs and an
@@ -800,13 +810,18 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   - gem5 uses one run per source and one source per class graph (Q63). Its
     interval then equals the point ratio, so gem5 verdicts are reported as deterministic point
     ratios, not confidence bounds.
-  - Native CPU uses paired repetition blocks; the repetition count is fixed in the Extensa-mode
-    design session.
+  - Native CPU uses paired repetition blocks of 10 repetitions, sources `[0, 1234, 7777]`, 1
+    thread. An A/A baseline pilot first stops the campaign (`baseline_unstable`) if any spread
+    exceeds 0.1 (D3).
 - **Workload classes.** A class is a graph generator family: Kronecker and uniform for now, with a
   high-input-density family later, native only. Each class gets its own verdict and its own best
   candidate artifact; there is no cross-class average and no held-out graph. Results are labeled
   "single graph per class". Per-class bests stay separate; run-time selection among them is added
-  only if needed.
+  only if needed. The graphs are:
+  - native CPU: Kronecker scale 22 and `bfs-20260925-uniform22.f23b09bb0c0601b5`, both with edge
+    factor 16;
+  - gem5: `bfs-20260928-kronecker18-s0.cf4283236c5cb50c` and
+    `bfs-20260928-uniform18-s0.8c7e69dfa516e53c`, source 0 (D4).
 - **Selection.** Certification level first (certified, then uncertified), then the evaluator's
   lower bound. A proven level is added only after the formal-verification question is settled. An
   uncertified candidate artifact becomes best only if no certified one in its class passes the
@@ -826,7 +841,9 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
     iteration;
   - a disk cap, default 20 GB, plus the dispatch preflight;
   - one lane at a time unless Yan-Ru approves two; native timed repetitions never overlap a gem5
-    job of the same Extensa campaign.
+    job of any Extensa campaign (D2).
+  - The provider-call cap is 3 per iteration plus 1 setup call (the profiling agent), so a
+    campaign makes at most 25 counted calls (D7).
 - **Targets.** BFS only for now: native CPU against both baselines, and DX100 in gem5 against the
   fork's scalar TDStep.
 - **Site finder.** A query over the SQLite access-pattern and step tables, a new statements index,
@@ -996,7 +1013,7 @@ fixes only build or correctness failures, and a valid regression never triggers 
   | Pruning and retroactive cleanup | ~8 h |
   | Profiling-agent pilot | ~6 h |
   | Evaluator for more kernels, with BC | ~30–40 h |
-  | Extensa mode | 40–60 h, re-estimated in its own design session |
+  | Extensa mode | ~59 h of work plus ~25 lane-hours (re-estimated by ticket 47, D12) |
 
 - **Dated facts** (re-check before relying on them): one gem5 timed run takes about 35–41 minutes
   of simulation and 32–34 GB of peak memory; a companion run takes about 5 minutes; mbit10 has

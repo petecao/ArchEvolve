@@ -85,20 +85,24 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 
 ## Phase 5: Extensa mode
 
+Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-decided under Yan-Ru's 2026-10-03 delegation; revisable). Go-ahead for 56–58 granted 2026-10-03.
+
 | # | Ticket | Status | Blocked by | Go-ahead |
 |---|---|---|---|---|
-| 47 | [Extensa-mode design session](issues/47-extensa-design-session.md) | ready-for-human | 03 |  |
-| 48 | [Mode tags, team-boundary refusals and candidate-artifact promotion](issues/48-mode-tags-and-team-boundary.md) | needs-triage | 11, 15, 47 |  |
-| 49 | [Port Extensa's machinery](issues/49-port-extensa-machinery.md) | needs-triage | 07, 10, 11, 47 |  |
-| 50 | [Tracer: certify one library operation (packing)](issues/50-library-operation-tracer.md) | needs-triage | 02, 11, 47 |  |
-| 51 | [Seed the experimental tier from Extensa](issues/51-seed-extensa-families.md) | needs-triage | 50 |  |
-| 52 | [Extensa campaign skeleton](issues/52-campaign-skeleton.md) | needs-triage | 07, 48, 49, 24 |  |
-| 53 | [Speed rule, per-class verdicts, selection and knob tuning](issues/53-speed-rule-and-selection.md) | needs-triage | 52 |  |
-| 54 | [Extensa campaign budgets and pruning](issues/54-campaign-budgets.md) | needs-triage | 08, 26, 52 |  |
-| 55 | [Query site finder](issues/55-query-site-finder.md) | needs-triage | 46, 52 |  |
-| 56 | [Native-CPU Extensa campaign target for BFS](issues/56-native-campaign-target.md) | needs-triage | 51, 53, 54, 55 | yes |
-| 57 | [gem5 Extensa campaign target](issues/57-gem5-campaign-target.md) | needs-triage | 29, 53, 54, 55 | yes |
-| 58 | ["Is the specification enough?" experiment](issues/58-spec-enough-experiment.md) | needs-triage | 08, 07, 20, 48 | yes |
+| 47 | [Extensa-mode design session](issues/47-extensa-design-session.md) | resolved | 03 |  |
+| 48 | [Mode tags, team-boundary refusals and candidate-artifact promotion](issues/48-mode-tags-and-team-boundary.md) | ready-for-agent | 11, 15, 47 |  |
+| 49 | [Port Extensa's machinery](issues/49-port-extensa-machinery.md) | ready-for-agent | 07, 10, 11, 47 |  |
+| 50 | [Tracer: certify one library operation (packing)](issues/50-library-operation-tracer.md) | ready-for-agent | 11, 47 |  |
+| 51 | [Seed the experimental tier from Extensa](issues/51-seed-extensa-families.md) | ready-for-agent | 50 |  |
+| 52 | [Extensa campaign skeleton](issues/52-campaign-skeleton.md) | ready-for-agent | 07, 24, 48, 49 |  |
+| 53 | [Speed rule, per-class verdicts, selection and knob tuning](issues/53-speed-rule-and-selection.md) | ready-for-agent | 52 |  |
+| 54 | [Extensa campaign budgets and pruning](issues/54-campaign-budgets.md) | ready-for-agent | 08, 26, 52 |  |
+| 55 | [Query site finder](issues/55-query-site-finder.md) | ready-for-agent | 46, 52 |  |
+| 56 | [Native-CPU Extensa campaign target for BFS](issues/56-native-campaign-target.md) | ready-for-agent | 51, 53, 54, 55 | yes (granted) |
+| 57 | [gem5 Extensa campaign target](issues/57-gem5-campaign-target.md) | ready-for-agent | 29, 53, 54, 55 | yes (granted) |
+| 58 | ["Is the specification enough?" experiment](issues/58-spec-enough-experiment.md) | ready-for-agent | 07, 08, 20, 48 | yes (granted) |
+| 59 | [Send Peter the Extensa-mode design note](issues/59-send-peter-extensa-design.md) | ready-for-human | 47 |  |
+| 60 | [Send Peter the "is the specification enough?" finding](issues/60-send-peter-spec-enough-finding.md) | ready-for-human | 58 |  |
 
 ## Context pointers
 
@@ -166,3 +170,5 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 - 2026-10-03 19:00 ET:30needs-info after automatic approval review rejected the exact reviewed first-result payload/destination; no delivery/claim asserted.33resolved,02/37ready-for-human,31wontfix. All implementation/evaluation/review findings are closed; final authorized metadata/source synchronization continues. [Blocked receipt](drafts/outgoing-2026-10-03/send-receipt-30-blocked.json).
 
 - 2026-10-03 19:36 ET: all Josh/Peter/Eric communications are draft-only for the agent; Yan-Ru sends manually.30ready-for-human,02/37ready-for-human,31wontfix,33resolved. All assigned agent implementation/evaluation/review/draft tasks are complete. Send/team-claim acceptance stays unchecked; no delivery inferred. Final ownership metadata sync precedes pausing the progress heartbeat.
+
+- 2026-10-03 ET: ticket 47 resolved. Extensa-mode decisions D1–D12 are agent-decided under Yan-Ru's 2026-10-03 delegation and revisable. 48–58 are ready-for-agent; 02 no longer blocks any ticket under the Q66 assumption; 59 and 60 are new ready-for-human send tickets with drafts. [Decisions](extensa-design-2026-10-03.md); [ticket 47](issues/47-extensa-design-session.md).
