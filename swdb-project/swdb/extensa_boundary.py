@@ -351,3 +351,5 @@ def register_cli(commands, paths):
     sub.add_argument("--records", type=Path, default=paths.RECORDS)
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
     sub.set_defaults(extensa_handler=level_cli)
+    from swdb import library_operations
+    library_operations.register_cli(commands, paths)

@@ -91,7 +91,7 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 |---|---|---|---|---|
 | 47 | [Extensa-mode design session](issues/47-extensa-design-session.md) | resolved | 03 |  |
 | 48 | [Mode tags, team-boundary refusals and candidate-artifact promotion](issues/48-mode-tags-and-team-boundary.md) | resolved | 11, 15, 47 |  |
-| 49 | [Port Extensa's machinery](issues/49-port-extensa-machinery.md) | ready-for-agent | 07, 10, 11, 47 |  |
+| 49 | [Port Extensa's machinery](issues/49-port-extensa-machinery.md) | resolved | 07, 10, 11, 47 |  |
 | 50 | [Tracer: certify one library operation (packing)](issues/50-library-operation-tracer.md) | ready-for-agent | 11, 47 |  |
 | 51 | [Seed the experimental tier from Extensa](issues/51-seed-extensa-families.md) | ready-for-agent | 50 |  |
 | 52 | [Extensa campaign skeleton](issues/52-campaign-skeleton.md) | ready-for-agent | 07, 24, 48, 49 |  |
@@ -174,3 +174,5 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - 2026-10-03 ET: ticket 47 resolved. Extensa-mode decisions D1–D12 are agent-decided under Yan-Ru's 2026-10-03 delegation and revisable. 48–58 are ready-for-agent; 02 no longer blocks any ticket under the Q66 assumption; 59 and 60 are new ready-for-human send tickets with drafts. [Decisions](extensa-design-2026-10-03.md); [ticket 47](issues/47-extensa-design-session.md).
 
 - 2026-10-03 20:42 ET: ticket 48 resolved. Extensa mode/campaign tags, writer immutability, derived candidate level, team-boundary refusals and candidate promotion with a derived team re-evaluation protocol. [48-mode-tags-and-team-boundary](issues/48-mode-tags-and-team-boundary.md).
+
+- 2026-10-03 21:03 ET: ticket 49 resolved. Extensa loop accounting, runtime probes, certification profiles and BFS-relevant synthesis ported under swdb/extensa/ with provenance; swdb certify --profile and swdb synthesize. [49-port-extensa-machinery](issues/49-port-extensa-machinery.md).

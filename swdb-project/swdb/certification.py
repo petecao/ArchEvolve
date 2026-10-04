@@ -682,10 +682,16 @@ def register_cli(commands):
     sub.add_argument('--runs-dir', type=Path)
     sub.add_argument('--records', type=Path, default=paths.RECORDS)
     sub.add_argument('--library', type=Path, default=ROOT / 'library')
+    # Ticket 49 (2026-10-03 ET): library operations certify against a profile.
+    sub.add_argument('--profile', help='certification profile (library operations)')
+    sub.add_argument('--seed', type=int, help='fixed case seed (default: chosen after the candidate exists)')
     return sub
 
 
 def run_cli(args):
+    if getattr(args, 'profile', None):
+        from swdb.library_operations import certify_cli
+        return certify_cli(args)
     try:
         sizes = tuple(int(x) for x in args.tile_sizes.split(','))
         sources = tuple(int(x) for x in args.sources.split(','))

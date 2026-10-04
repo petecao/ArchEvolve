@@ -182,3 +182,5 @@ Periodic follow-up, 2026-10-03 18:14 ET: root independently read back source6cf 
 2026-10-03 20:17 ET: ticket 47 resolved by agent under Yan-Ru's 2026-10-03 delegation. Extensa-mode decisions D1–D12 (port boundary, one target per campaign, native 10 paired repetitions with an A/A pilot gate, scale-22 native and ticket-29 scale-18 gem5 graphs, campaign file and summary record shapes, provider-call accounting) are recorded in extensa-design-2026-10-03.md, all revisable. Tickets 48–58 are ready-for-agent; 02 no longer blocks (Q66 assumption); send tickets 59 and 60 are ready-for-human with drafts and are never sent by an agent.
 
 2026-10-03 20:42 ET: ticket 48 resolved on the Extensa worktree branch. Mode tags, team-boundary refusals and candidate promotion implemented; 16 new tests and 192 regression cases pass.
+
+2026-10-03 21:03 ET: ticket 49 resolved on the Extensa worktree branch. Port of D1 machinery with SPDX/provenance headers; 28 new tests pass; affected regression 217 pass (3 sandbox-only tempfile failures).
