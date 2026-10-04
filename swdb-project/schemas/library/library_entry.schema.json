@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "library_entry.schema.json",
+  "title": "Typed library entry",
+  "description": "Created 2026-10-03 ET (ticket 46). Shape of one normative typed-library YAML entry (ADR 0007): intrinsic, lowering, library operation or rewrite contract. Evidence state (tier, status, certification) is derived from records and never appears here. swdb.library checks pins, references and clause semantics after this shape.",
+  "type": "object",
+  "required": ["id", "kind", "provenance", "clauses"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "kind": {"enum": ["intrinsic", "lowering", "library_operation", "rewrite_contract"]},
+    "provenance": {"type": "object"},
+    "clauses": {"type": "array", "items": {"$ref": "#/$defs/clause"}},
+    "intrinsic_record": {"$ref": "#/$defs/text"},
+    "signature": {"$ref": "#/$defs/text"},
+    "intent": {"$ref": "#/$defs/text"},
+    "intrinsic": {"$ref": "#/$defs/text"},
+    "code_sha256": {"$ref": "#/$defs/text"},
+    "reference_semantics": {"type": "object"},
+    "memory_footprint": {"type": "object"},
+    "completion": {"type": "object"},
+    "interface": {"type": "object"},
+    "location": {"type": "object"},
+    "build_defines": {"type": "object"},
+    "differential_test": {"type": "object"},
+    "correctness_check": {"type": "object"},
+    "execution_witness": {"type": "object"},
+    "hardware_operations": {"$ref": "#/$defs/texts"},
+    "lowerings": {"$ref": "#/$defs/texts"},
+    "uses_intrinsics": {"$ref": "#/$defs/texts"},
+    "uses_library_operations": {"$ref": "#/$defs/texts"},
+    "strategies": {"$ref": "#/$defs/texts"},
+    "preservation_obligations": {"$ref": "#/$defs/texts"},
+    "runtime_guards": {"type": "array"},
+    "knobs": {"$ref": "#/$defs/mappings"},
+    "negative_controls": {"$ref": "#/$defs/mappings"},
+    "requirement_map": {"$ref": "#/$defs/mappings"},
+    "pattern_key": {"type": "array", "items": {"$ref": "#/$defs/pattern"}}
+  },
+  "allOf": [
+    {"if": {"properties": {"kind": {"const": "intrinsic"}}},
+     "then": {"required": ["intrinsic_record", "signature", "intent", "reference_semantics", "hardware_operations",
+                           "memory_footprint", "completion", "lowerings"]}},
+    {"if": {"properties": {"kind": {"const": "lowering"}}},
+     "then": {"required": ["intrinsic", "interface", "location", "code_sha256", "build_defines", "differential_test"]}},
+    {"if": {"properties": {"kind": {"const": "library_operation"}}},
+     "then": {"required": ["signature", "intent", "location", "code_sha256", "reference_semantics", "uses_intrinsics",
+                           "differential_test"]}},
+    {"if": {"properties": {"kind": {"const": "rewrite_contract"}}},
+     "then": {"required": ["pattern_key", "strategies", "uses_intrinsics", "uses_library_operations", "runtime_guards",
+                           "knobs", "preservation_obligations", "correctness_check", "execution_witness",
+                           "negative_controls", "requirement_map"]}}
+  ],
+  "$defs": {
+    "text": {"type": "string", "minLength": 1},
+    "texts": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "mappings": {"type": "array", "items": {"type": "object"}},
+    "clause": {
+      "type": "object",
+      "required": ["id", "role", "statement", "discharge_mode", "negative_control"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "role": {"type": "string"},
+        "statement": {"type": "string", "minLength": 1},
+        "discharge_mode": {"type": "string"},
+        "negative_control": {"type": "object"},
+        "formal": {"type": ["object", "null"]}
+      }
+    },
+    "pattern": {
+      "type": "object",
+      "required": ["roles", "address_shapes", "update_kind"],
+      "properties": {
+        "roles": {"type": "array", "minItems": 1, "items": {"enum": ["index", "offsets", "target"]}},
+        "address_shapes": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "update_kind": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

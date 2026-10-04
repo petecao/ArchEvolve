@@ -2,7 +2,7 @@
 
 Navigation updated: 2026-09-28 (Eastern Time).
 
-Updated: 2026-09-30 (Eastern Time).
+Updated: 2026-10-03 (Eastern Time): typed-library and statements tables (ticket 46).
 
 Run commands inside `ArchEvolve/swdb-project/`. [The database builder](../../swdb/db.py)
 writes `build/swdb.sqlite` beside `records/` by default (another records folder
@@ -45,8 +45,8 @@ are stored as JSON text, so `true`, `false`, and `null` stay distinct: compare w
 
 | Column | Meaning |
 |---|---|
-| `key` | `records_dir` (the absolute records folder the file was built from), `fingerprint`, or `builder` |
-| `value` | the folder; the sha256 over every record file's path, size, and modification time; or the sha256 of the `swdb` package's code, so any change to the tool rebuilds the file |
+| `key` | `records_dir` (the absolute records folder the file was built from), `library_dir`, `fingerprint`, or `builder` |
+| `value` | the folder; the typed library folder it uses (`library/` beside `records/`); the sha256 over every record file's and every library file's path, size, and modification time, so an edited library entry or pinned code file makes the index stale; or the sha256 of the `swdb` package's code, so any change to the tool rebuilds the file |
 
 ### `records`
 
@@ -281,6 +281,71 @@ One row per metric of each profile.
 | `array_name` | the array, for per-array metrics |
 | `scope` | count scope, where one applies |
 | `tool` | the tool that produced it |
+
+### `library_entries`
+
+One row per typed library entry (ADR 0007), read from the library folder's YAML
+(`schemas/library/library_entry.schema.json` gives the entry shape). The YAML
+stays authoritative; tier and status are derived from records, as `swdb promote`
+and `swdb submit` derive them.
+
+| Column | Meaning |
+|---|---|
+| `id` | entry ID (`intrinsic.`, `lowering.`, `operation.` or `contract.` prefix) |
+| `kind` | intrinsic, lowering, library_operation, or rewrite_contract |
+| `path` | YAML file path relative to the library folder |
+| `content_sha256` | the normative content hash that certification and review records pin |
+| `tier` | experimental or shared (shared only through Yan-Ru's current review), or null if underivable |
+| `status` | draft, certified, inconclusive, refuted, or evaluated_on_target, or null if underivable |
+| `derived_from` | for a derived rewrite contract, the contract it cites (`provenance.derived_from`), else null |
+| `json` | the whole entry |
+
+### `library_dependencies`
+
+| Column | Meaning |
+|---|---|
+| `entry` | library entry ID |
+| `dependency` | an entry in its dependency closure (intrinsics, lowerings, operations, a cited contract) |
+| `content_sha256` | that dependency's current content hash |
+
+### `library_clauses`
+
+| Column | Meaning |
+|---|---|
+| `entry` | library entry ID |
+| `clause` | clause ID (for example `L1` or `BC-L1`) |
+| `role` | precondition, postcondition, frame, legality, or preservation |
+| `discharge_mode` | how the clause is discharged (differential_test, assumed, ...) |
+| `negative_control` | the named control that must be rejected, or `none` |
+| `statement` | the natural-language statement |
+
+### `statements`
+
+The statements index: one row per statement annotation of an implementation
+(`extensions.statements.annotations`, ticket 35).
+
+| Column | Meaning |
+|---|---|
+| `implementation` | implementation ID |
+| `statement` | statement ID |
+| `function` | the function whose statements are annotated (for example `TDStep`) |
+| `path` | source path of the statement |
+| `first_line`, `last_line` | its pinned line range |
+| `revision` | the pinned source revision |
+| `code` | the statement's exact code |
+| `basis` | basis of the annotation |
+| `depends_on` | JSON list of statement IDs it depends on |
+| `agent_claims` | number of retained agent claims (claims stay in `json`) |
+| `json` | the whole annotation, with its claims and facts |
+
+### `statement_steps`
+
+| Column | Meaning |
+|---|---|
+| `implementation` | implementation ID |
+| `statement` | statement ID |
+| `pattern` | access-pattern ID the statement realizes |
+| `step` | step position in that access pattern |
 
 ## Queries
 

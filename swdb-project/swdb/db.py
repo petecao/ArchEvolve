@@ -53,6 +53,17 @@ CREATE TABLE applied_strategies (implementation TEXT NOT NULL, position INTEGER 
 CREATE TABLE implementation_intrinsics (implementation TEXT NOT NULL, intrinsic TEXT NOT NULL,
     PRIMARY KEY (implementation, intrinsic));
 CREATE TABLE intrinsic_extensions (intrinsic TEXT NOT NULL, extension TEXT NOT NULL, PRIMARY KEY (intrinsic, extension));
+CREATE TABLE library_entries (id TEXT PRIMARY KEY, kind TEXT NOT NULL, path TEXT NOT NULL, content_sha256 TEXT NOT NULL,
+    tier TEXT, status TEXT, derived_from TEXT, json TEXT NOT NULL);
+CREATE TABLE library_dependencies (entry TEXT NOT NULL, dependency TEXT NOT NULL, content_sha256 TEXT NOT NULL,
+    PRIMARY KEY (entry, dependency));
+CREATE TABLE library_clauses (entry TEXT NOT NULL, clause TEXT NOT NULL, role TEXT, discharge_mode TEXT,
+    negative_control TEXT, statement TEXT, PRIMARY KEY (entry, clause));
+CREATE TABLE statements (implementation TEXT NOT NULL, statement TEXT NOT NULL, function TEXT, path TEXT,
+    first_line INTEGER, last_line INTEGER, revision TEXT, code TEXT, basis TEXT, depends_on TEXT,
+    agent_claims INTEGER NOT NULL, json TEXT NOT NULL, PRIMARY KEY (implementation, statement));
+CREATE TABLE statement_steps (implementation TEXT NOT NULL, statement TEXT NOT NULL, pattern TEXT NOT NULL,
+    step INTEGER NOT NULL, PRIMARY KEY (implementation, statement, pattern, step));
 """
 
 
@@ -68,12 +79,31 @@ def default_path(records_dir):
     return records_dir.parent / "build" / name
 
 
+def library_dir(records_dir):
+    """The typed library a records folder uses (the repository's beside `records`)."""
+    from swdb.library import default_root
+    return Path(default_root(Path(records_dir))).resolve()
+
+
+def library_files(records_dir):
+    """Every regular file of that library folder (YAML entries and pinned code), sorted."""
+    root = library_dir(records_dir)
+    if not root.is_dir():
+        return []
+    return [(path, path.relative_to(root).as_posix()) for path in sorted(root.rglob("*"))
+            if path.is_file() and not path.is_symlink() and "__pycache__" not in path.parts]
+
+
 def fingerprint(records_dir):
-    """Identifies the exact set of record files: path, size, and modification time of each."""
+    """Identifies the exact set of record files and, since ticket 46 (2026-10-03 ET), of the
+    typed library folder's files: path, size, and modification time of each."""
     digest = hashlib.sha256()
     for path, rel in record_files(Path(records_dir)):
         info = path.stat()
         digest.update(f"{rel}\0{info.st_size}\0{info.st_mtime_ns}\n".encode())
+    for path, rel in library_files(records_dir):
+        info = path.stat()
+        digest.update(f"library/{rel}\0{info.st_size}\0{info.st_mtime_ns}\n".encode())
     return digest.hexdigest()
 
 
@@ -124,6 +154,7 @@ def build(records_dir, db_path):
     con = sqlite3.connect(tmp)
     con.executescript(SCHEMA)
     con.executemany("INSERT INTO meta VALUES (?, ?)", [("records_dir", str(Path(records_dir).resolve())),
+                                                       ("library_dir", str(library_dir(records_dir))),
                                                        ("fingerprint", stamp), ("builder", BUILDER)])
     kernels = {r.id: r.data for r in store.of_kind("kernel")}
     baselines = {k["baseline_implementation"] for k in kernels.values()}
@@ -138,10 +169,43 @@ def build(records_dir, db_path):
             con.execute("INSERT INTO implementation_contexts VALUES (?,?,?,?,?,?)",
                         (rec.id, context["application"], context["source_ancestor"], context["source_baseline"],
                          context["comparison_baseline"], json.dumps(context)))
+    _library(con, records_dir, store)
     con.commit()
     con.close()
     tmp.replace(db_path)
     return {"records": len(store.records), "seconds": time.monotonic() - started}
+
+
+def _library(con, records_dir, store):
+    """Ticket 46 (2026-10-03 ET): typed library entries, their dependency pins and clauses.
+
+    Tier and status are derived from the records exactly as `swdb.library` derives them;
+    an entry whose state cannot be derived (for example an invalid library) gets NULL."""
+    from swdb.library import Library, derived_from
+    root = library_dir(records_dir)
+    if not root.is_dir():
+        return
+    library = Library(root, store)
+    for entry_id, data in sorted(library.entries.items()):
+        try:
+            state = library.state(entry_id)
+        except Exception:  # noqa: BLE001 -- a broken entry is still indexed, without derived state
+            state = {"tier": None, "status": None}
+        try:
+            pins = library.dependency_pins(entry_id)
+        except ValueError:
+            pins = []
+        con.execute("INSERT INTO library_entries VALUES (?,?,?,?,?,?,?,?)",
+                    (entry_id, data.get("kind"), library.files[entry_id].relative_to(root).as_posix(),
+                     library.content_sha256(entry_id), state["tier"], state["status"], derived_from(data),
+                     json.dumps(data)))
+        con.executemany("INSERT INTO library_dependencies VALUES (?,?,?)",
+                        [(entry_id, pin["id"], pin["content_sha256"]) for pin in pins])
+        clauses = data.get("clauses") if isinstance(data.get("clauses"), list) else []
+        con.executemany("INSERT OR IGNORE INTO library_clauses VALUES (?,?,?,?,?,?)",
+                        [(entry_id, c.get("id"), c.get("role"), c.get("discharge_mode"),
+                          (c.get("negative_control") or {}).get("id"), c.get("statement"))
+                         for c in clauses if isinstance(c, dict) and isinstance(c.get("id"), str)])
 
 
 class _Insert:
@@ -180,6 +244,18 @@ class _Insert:
                             (d["id"], p["id"], i, a["name"], a["role"], a["element_type"], a["element_bytes"],
                              a["element_count"], a["layout"], s["address_shape"], s.get("stride"),
                              s.get("index_transform")))
+        # Ticket 46 (2026-10-03 ET): the statements index (statement annotations, ticket 35).
+        statements = (d.get("extensions") or {}).get("statements") or {}
+        for row in statements.get("annotations", []):
+            source = row.get("source") or {}
+            lines = source.get("lines") or [None, None]
+            con.execute("INSERT INTO statements VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+                        (d["id"], row["id"], statements.get("function"), source.get("path"), lines[0], lines[-1],
+                         source.get("revision"), row.get("code"), row.get("basis"),
+                         json.dumps(row.get("depends_on", [])), len(row.get("agent_claims", [])), json.dumps(row)))
+            con.executemany("INSERT OR IGNORE INTO statement_steps VALUES (?,?,?,?)",
+                            [(d["id"], row["id"], step["pattern"], step["step"])
+                             for step in row.get("access_pattern_steps", [])])
 
     @staticmethod
     def input(con, d, *_):

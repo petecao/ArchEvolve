@@ -1,7 +1,9 @@
 """Typed library validation and evidence-derived state. Updated: 2026-10-03 ET.
 
-Normative YAML and code pins never carry review or certification state. Library
-entries are deliberately outside SQLite until the BC reuse/indexing ticket.
+Normative YAML and code pins never carry review or certification state. Since
+ticket 46 (BC reuses the BFS contract), entries have a JSON schema
+(``schemas/library/library_entry.schema.json``) and SQLite tables built by
+``swdb.db``; the YAML stays authoritative.
 """
 import yaml
 import re
@@ -25,6 +27,20 @@ PROMOTION_REVIEWER = 'Yan-Ru Jhou'
 def authorized_reviewer(name):
     """ADR 0007 assigns shared-library review to the project maintainer."""
     return isinstance(name, str) and name.strip().casefold() in {'yan-ru jhou', 'yanrujhou'}
+
+
+SCHEMA = paths.HOME / 'schemas' / 'library' / 'library_entry.schema.json'
+_VALIDATOR = []
+
+
+def entry_validator():
+    """The JSON-schema validator of one normative library entry (ticket 46)."""
+    if not _VALIDATOR:
+        import json
+        schema = json.loads(SCHEMA.read_text())
+        Draft202012Validator.check_schema(schema)
+        _VALIDATOR.append(Draft202012Validator(schema))
+    return _VALIDATOR[0]
 
 
 def derived_from(data):
@@ -163,25 +179,9 @@ class Library:
             for field in ('id','kind','provenance','clauses', *required):
                 if field not in data:
                     error(field, 'required field is missing')
-            list_fields = {'clauses','hardware_operations','lowerings','uses_intrinsics','uses_library_operations','pattern_key','strategies','runtime_guards','knobs','preservation_obligations','negative_controls','requirement_map'}
-            mapping_fields = {'provenance','reference_semantics','memory_footprint','completion','interface','location','build_defines','differential_test','correctness_check','execution_witness'}
-            scalar_fields = {'intrinsic_record','signature','intent','intrinsic','code_sha256'}
-            shape = {'type':'object','properties':{}}
-            for field in required + ('provenance','clauses'):
-                shape['properties'][field] = {'type':'array'} if field in list_fields else {'type':'object'} if field in mapping_fields else {'type':'string','minLength':1} if field in scalar_fields else {}
-            shape['properties']['clauses']['items'] = {'type':'object','required':['id','role','statement','discharge_mode','negative_control'],'properties':{'id':{'type':'string','minLength':1},'role':{'type':'string'},'statement':{'type':'string','minLength':1},'discharge_mode':{'type':'string'},'negative_control':{'type':'object'},'formal':{'type':['object','null']}}}
-            for field in ('hardware_operations','lowerings','uses_intrinsics','uses_library_operations','strategies','preservation_obligations'):
-                if field in shape['properties']:
-                    shape['properties'][field]['items'] = {'type':'string','minLength':1}
-            for field in ('knobs','pattern_key','negative_controls','requirement_map'):
-                if field in shape['properties']:
-                    shape['properties'][field]['items'] = {'type':'object'}
-            if 'pattern_key' in shape['properties']:
-                shape['properties']['pattern_key']['items'] = {'type':'object','required':['roles','address_shapes','update_kind'],'properties':{
-                    'roles':{'type':'array','minItems':1,'items':{'enum':['index','offsets','target']}},
-                    'address_shapes':{'type':'array','minItems':1,'items':{'type':'string'}},
-                    'update_kind':{'type':'string','minLength':1}}}
-            type_errors = list(Draft202012Validator(shape).iter_errors(data))
+            # Ticket 46 (2026-10-03 ET): the entry shape is schemas/library/library_entry.schema.json.
+            # Missing fields are reported above with their names, so 'required' errors are not repeated.
+            type_errors = [problem for problem in entry_validator().iter_errors(data) if problem.validator != 'required']
             if type_errors:
                 for problem in type_errors:
                     error('.'.join(map(str,problem.path)),problem.message)

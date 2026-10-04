@@ -81,7 +81,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 43 | [Yan-Ru promotes the derived BC contract](issues/43-promote-bc-contract.md) | ready-for-human | 42 |  |
 | 44 | [BC gem5 completion witness and execution case](issues/44-bc-gem5-completion-witness.md) | resolved | 39, 40 |  |
 | 45 | [BC gem5 evaluation](issues/45-bc-gem5-evaluation.md) | ready-for-agent | 26, 29, 41, 43, 44 | yes |
-| 46 | [Library JSON schema and SQLite index](issues/46-library-schema-and-index.md) | ready-for-agent | 42 |  |
+| 46 | [Library JSON schema and SQLite index](issues/46-library-schema-and-index.md) | resolved | 42 |  |
 
 ## Phase 5: Extensa mode
 
@@ -182,3 +182,5 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - Ticket 42, completed 2026-10-03 23:20 ET: certification matrix and pass rule are a kernel plug-in; derived contract.bc_read_offload (cites the BFS contract, adds BC-L1) certifies on the Mac, 10/10 cells, 18/18 controls rejected; experimental until ticket 43. [42-bc-certification-and-derived-contract](issues/42-bc-certification-and-derived-contract.md).
 
 - Ticket 44, completed 2026-10-03 23:35 ET: BC gem5 v2 completion witness (bc_witness: BC checks plus the frozen BFS v2 rules on a translated copy), BC verify driver copy, trusted BC oracle driver, forward-pass read-only case without a race companion; fixtures only. [44-bc-gem5-completion-witness](issues/44-bc-gem5-completion-witness.md).
+
+- Ticket 46, completed 2026-10-03 23:50 ET: library entry JSON schema; SQLite library_entries/dependencies/clauses and statements/statement_steps; staleness covers the library folder. [46-library-schema-and-index](issues/46-library-schema-and-index.md).
