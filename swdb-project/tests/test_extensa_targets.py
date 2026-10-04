@@ -344,6 +344,24 @@ def test_native_pilot_spread_stops_without_provider_call(team, base_source):
     assert not (team["root"] / "provider-log.jsonl").exists()
 
 
+def test_native_pilot_gate_is_per_class(team, base_source):
+    """Ticket 64 (2026-10-04 ET): an unstable class is not timed; the stable class continues."""
+    config = provider(team, {"rewriting": [{"patch": native_patch(base_source), "contracts": [],
+                                            "knobs": [], "unresolved": []}]})
+    runner = FakeRunner({"pilot.uniform_random": 1.0, "pilot.kronecker": 1.0,
+                         "fork_scalar_tdstep": 1.3, "upstream_do_bfs": 0.8},
+                        spreads={"pilot.uniform_random": 0.14})
+    _, summary = run(team, native_campaign(team, max_iterations=1), config, runner, FakeHost())
+    assert summary["stop_reason"] != "baseline_unstable"
+    assert summary["pilot"]["unstable_classes"] == ["uniform_random"] and summary["pilot"]["passed"] is False
+    blocks = [c["request"]["id"] for c in runner.calls
+              if c["command"] == "evaluate-pair" and ".pilot." not in c["request"]["id"]]
+    assert blocks and all(".kronecker." in rid for rid in blocks)
+    per_class = {r["class"]: r for r in summary["per_class"]}
+    assert per_class["uniform_random"]["verdict"] == "baseline_unstable"
+    assert per_class["kronecker"]["verdict"] == "gain"
+
+
 def test_native_scale22_exceeds_the_native_evaluator_and_stops(team):
     config = provider(team, {})
     runner = FakeRunner({"pilot": 1.0})

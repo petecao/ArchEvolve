@@ -269,6 +269,38 @@ def _sg_out_degrees(row, sources):
     return degrees
 
 
+#: Ticket 64 (2026-10-04 ET): GAPBS SourcePicker never returns a source with out-degree 0.
+#: This deterministic form replaces such a requested source by the next vertex (ascending,
+#: wrapping) whose out-degree is positive and that is not already a source; it is recorded.
+SOURCE_POLICY = "swdb.sources.next_positive_out_degree.v1"
+
+
+def _out_degree_reader(reference, rows):
+    if reference.get("_streaming"):
+        return lambda vertex: _sg_out_degrees(rows[0], [vertex])[vertex]
+    return lambda vertex: len(reference["adjacency"][vertex])
+
+
+def _apply_source_policy(sources, n, degree):
+    """Replace each zero-out-degree source by the next positive-degree vertex; record each step."""
+    selected, replacements = [], []
+    for source in sources:
+        if degree(source) > 0 and source not in selected:
+            selected.append(source)
+            continue
+        vertex = source
+        for _ in range(n):
+            vertex = (vertex + 1) % n
+            if vertex not in selected and vertex not in sources and degree(vertex) > 0:
+                break
+        else:
+            raise Failure("no vertex with a positive out-degree is available as a replacement source")
+        selected.append(vertex)
+        replacements.append({"requested": source, "requested_out_degree": degree(source),
+                             "selected": vertex, "selected_out_degree": degree(vertex)})
+    return selected, replacements
+
+
 def register_workload(args):
     request = _request(args)
     store = _require_valid(args.records)
@@ -300,6 +332,16 @@ def register_workload(args):
         rows.append(row)
     for source in sources:
         _fail(_integer(source, "source", 0) < reference["num_vertices"], "source vertex is outside the graph")
+    source_policy = None
+    if "source_policy" in request:
+        _fail(request["source_policy"] == SOURCE_POLICY, f"source_policy must be {SOURCE_POLICY}")
+        requested_sources = list(sources)
+        sources, replacements = _apply_source_policy(
+            requested_sources, reference["num_vertices"], _out_degree_reader(reference, rows))
+        source_policy = {"policy": SOURCE_POLICY, "requested_sources": requested_sources,
+                         "replacements": replacements,
+                         "rule": "GAPBS SourcePicker skips out-degree 0; the next vertex (ascending, wrapping) "
+                                 "with positive out-degree that is not already a source replaces it"}
     # Ticket 40 (2026-10-03 ET): the kernel plug-in may refuse sources by
     # out-degree (BC: BCVerifier is vacuous for a source without an outgoing edge).
     if reference.get("_streaming"):
@@ -319,6 +361,7 @@ def register_workload(args):
                     "minimum_out_degree": min(degrees), "maximum_out_degree": max(degrees)}
     definition = {"kernel": kernel["id"], "family": family, "generator": generator,
                   "normalization": NORMALIZATION, "sources": sources, "representations": rows,
+                  **({"source_policy": source_policy} if source_policy else {}),
                   "canonical_sha256": reference_hash, "canonical_format": "swdb.bfs.adjacency.v1",
                   "realized": realized,
                   "metadata_basis": "operator_declared", "adjacency_basis": "parsed_representation"}
