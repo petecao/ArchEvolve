@@ -437,7 +437,9 @@ class TargetAdapter:
                 # (`strict_layer_assertion:range_bounds`), read from the run's own assertion line.
                 names, _counts, _cells = certification_feedback.matrix_checks(record)
                 named = sorted(set(names) | {f"control:{c['id']}" for c in record.get("negative_controls", [])
-                                             if c.get("status") != "rejected"})
+                                             if c.get("status") != "rejected"}
+                               | {f"control:{r['control']}" for r in record.get("clause_controls") or []
+                                  if r.get("enforceable") and not r.get("matched")})
                 # 2026-10-04 ET (final code review): a failed verdict with nothing named (an empty
                 # matrix or no negative controls) must still fail, never read as certified.
                 failed_checks += named or ["certification_failed"]

@@ -516,12 +516,20 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
                                'oracle_frontier_counts': counts, 'tile_size': size, 'threads': threads,
                                'status': 'passed' if passed else 'failed', 'reason': reason, 'build': build, 'run': run})
         names = ['shared_context', 'dropped_continuation', 'oversized_chunk', 'wrong_store_wait'] if calibrate else list(plugin.certification_controls)
-        graph = graphs[-1][1]
-        counts = plugin.certification_oracle(graph, plugin.control_source(sources))
+        # A control runs on the last (two-level) graph unless its plug-in names another matrix
+        # graph (2026-10-04 ET: BC's L4 path-count control needs unequal path counts).
+        control_graphs = {} if calibrate else (getattr(plugin, 'certification_control_graphs', None) or {})
+        by_name = dict(graphs)
+        oracle_counts = {}
         for name in names:
             # Oversized chunk is specifically a 1,024-element build control.
             if name == 'oversized_chunk' and size != 1024:
                 continue
+            graph_name = control_graphs.get(name, graphs[-1][0])
+            graph = by_name[graph_name]
+            if graph_name not in oracle_counts:
+                oracle_counts[graph_name] = plugin.certification_oracle(graph, plugin.control_source(sources))
+            counts = oracle_counts[graph_name]
             mutant = (_rewrite_control(instrument_source(source, calibrate=True), name, calibrate=True) if calibrate
                       else plugin.certification_control(plugin.certification_instrument(source), name))
             if isinstance(mutant, str):
@@ -551,20 +559,94 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
             run = execute([output_mutant, '-f', graph, '-r', plugin.control_source(sources), '-n', '1', '-v'], folder / f'control-{size}-{name}.json', threads=threads)
             passed, reason = judge(run, counts)
             named = re.findall(r'SWDB_(?:STRICT_ASSERT|DIFFERENTIAL_MISMATCH|PRESERVATION_FAIL):([a-z_]+)', run['stdout'] + run['stderr'])
-            semantic_rejection = reason in {'verifier', 'frontier_size_equality', 'execution_witness'} and run['returncode'] == 0
             expected_checks = plugin.certification_controls.get(name, set())
             if calibrate:
                 expected_checks = {'shared_context': {'thread_ownership_tile', 'thread_ownership_register'}, 'dropped_continuation': set(),
                                    'oversized_chunk': {'tile_truncation'}, 'wrong_store_wait': {'read_before_wait'}}[name]
-            asserted = bool(expected_checks.intersection(named))
-            # Runtime preservation guards are a named semantic check, including duplicate enqueue.
-            semantic_rejection = semantic_rejection or ('duplicate_frontier' in named and reason == 'frontier_size_equality')
-            rejected = not passed and not run['timeout'] and (semantic_rejection or asserted)
-            status = 'rejected' if rejected else 'survived' if passed else 'invalid'
+            observed = observed_checks(run, counts, judge, named)
+            status = control_status(expected_checks, observed, run, passed)
             controls.append({'id': name, 'tile_size': size, 'status': status, 'reason': reason,
-                             'named_checks': named, 'fault': fault, 'build': control_build, 'run': run})
+                             'named_checks': named, 'observed_checks': observed, 'graph': graph_name,
+                             'fault': fault, 'build': control_build, 'run': run})
     source_path.write_text(source)  # This is a private build copy, never a vendored tree.
     return matrix, controls
+
+
+SEMANTIC_CHECKS = {'verifier', 'frontier_size_equality', 'execution_witness'}
+
+
+def observed_checks(run, counts, judge, named):
+    """Every check a control run failed, not only the judge's first reason.
+
+    Created 2026-10-04 ET (final code review, ticket 43). Named checks come from the run's
+    own SWDB_* lines; a preservation failure is a frontier-size failure. With a clean exit,
+    a missing verifier PASS is `verifier`, and the judge's later checks (frontier sizes,
+    execution witness) are evaluated as if the verifier had passed, so a clause that names
+    `frontier_size_equality` is not hidden behind an earlier verifier failure.
+    """
+    observed = set(named)
+    text = run['stdout'] + run['stderr']
+    if 'SWDB_PRESERVATION_FAIL:' in text:
+        observed.add('frontier_size_equality')
+    if not run['timeout'] and run['returncode'] == 0 and 'SWDB_STRICT_ASSERT:' not in text:
+        if not re.search(r'Verification\s*:?\s*PASS', run['stdout']):
+            observed.add('verifier')
+            run = {**run, 'stdout': run['stdout'] + '\nVerification: PASS\n'}
+        passed, reason = judge(run, counts)
+        if not passed and reason in SEMANTIC_CHECKS:
+            observed.add(reason)
+    return sorted(observed)
+
+
+def control_status(expected_checks, observed, run, passed):
+    """`rejected`, `survived` or `invalid` for one negative-control run.
+
+    2026-10-04 ET (final code review, ticket 43): a control with expected named checks is
+    rejected only by one of them; a semantic failure no longer stands in for it. A semantic
+    control (empty set) needs a semantic failure with a clean exit.
+    """
+    if expected_checks:
+        rejected = bool(set(expected_checks) & set(observed))
+    else:
+        rejected = run['returncode'] == 0 and bool(SEMANTIC_CHECKS & set(observed))
+    if rejected and not passed and not run['timeout']:
+        return 'rejected'
+    return 'survived' if passed else 'invalid'
+
+
+def producible_checks():
+    """Check names a certification run can report (named SWDB_* checks and semantic checks)."""
+    from swdb.certification_feedback import STRICT_MESSAGES
+    return set(STRICT_MESSAGES) | SEMANTIC_CHECKS | {'duplicate_frontier'}
+
+
+def clause_controls(entry, controls, plugin=None):
+    """Compare each contract clause's negative control with the check the clause names.
+
+    Created 2026-10-04 ET (final code review, ticket 43). A clause is `matched` when every run
+    of its control was rejected and observed the clause's named check. A check name that no
+    run can report is recorded as not `enforceable` (a contract wording defect to fix in the
+    contract, not here) and does not change the verdict; an enforceable mismatch does.
+    A plug-in may add controls to a clause (`certification_clause_controls`, source `plugin`),
+    e.g. BC's L4 parts that the contract's single control does not exercise.
+    """
+    producible = producible_checks()
+    extra = getattr(plugin, 'certification_clause_controls', None) or {}
+    rows = []
+    for clause in entry.get('clauses') or []:
+        control = clause.get('negative_control') or {}
+        pairs = []
+        if control.get('id') not in (None, 'none') and control.get('check'):
+            pairs.append((control['id'], control['check'], 'contract'))
+        pairs += [(cid, check, 'plugin') for cid, check in extra.get(clause.get('id'), ())]
+        for cid, check, origin in pairs:
+            runs = [c for c in controls if c['id'] == cid]
+            seen = sorted(set().union(*(c.get('observed_checks') or [] for c in runs))) if runs else []
+            matched = bool(runs) and all(c['status'] == 'rejected' and check in (c.get('observed_checks') or [])
+                                         for c in runs)
+            rows.append({'clause': clause.get('id'), 'control': cid, 'check': check, 'source': origin,
+                         'observed_checks': seen, 'matched': matched, 'enforceable': check in producible})
+    return rows
 
 
 _CONTROL_EXPECTED = {
@@ -676,6 +758,9 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
     if identity and artifacts.identify(tree)['sha256'] != identity['tree_sha256']:
         raise Failure('candidate source tree changed during certification; results are not bound to the patched identity')
     verdict = 'certified' if matrix and all(c['status'] == 'passed' for c in matrix) and controls and all(c['status'] == 'rejected' for c in controls) else 'failed'
+    clauses = clause_controls(entry, controls, plugin) if identity else None
+    if clauses and any(row['enforceable'] and not row['matched'] for row in clauses):
+        verdict = 'failed'
     if source_digest(library_root) != command_hash:
         raise Failure('certification source files changed during execution; results are not bound to one source identity')
     if not calibrate:
@@ -698,6 +783,7 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         evidence_kind='execution', created_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
     if identity:
         record['candidate'] = identity
+        record['clause_controls'] = clauses
     (folder / 'certification.json').write_text(json.dumps(record, indent=2) + '\n')
     workflow.persist(store.dir, record, create=True)
     return record

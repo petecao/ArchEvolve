@@ -24,6 +24,23 @@ BC_SOURCE = "benchmarks/gapbs/src/bc.cc"
 FRONTIER_TEXT = 'std::cout << "Starting PBFS: " << queue.size() << " elements" << std::endl;'
 CLAIM = "if(claimed){lqueue.push_back(v);}"
 CPU_DEPTH = "const NodeID fresh=__atomic_load_n(&depths[v],__ATOMIC_RELAXED);"
+# L4 parts (2026-10-04 ET, final code review of ticket 43): the successor bit, the edge index
+# and the path-count source must come from the same chunk position as the claimed vertex.
+SUCCESSOR_BIT = "succ.set_bit_atomic(edges[k]);"
+CHUNK_PAIR = "const NodeID v=vertices[k],u=frontier[k];"
+TOKEN_CONTROLS = {
+    # BC-L1: the path-count test uses the DX100 depth hint instead of the CPU depth.
+    "stale_depth_hint": (CPU_DEPTH, "const NodeID fresh=claimed?depth:hint;"),
+    # L4 successor bit: the CPU no longer records the shortest-path successor edge.
+    "dropped_successor_bit": (SUCCESSOR_BIT, "(void)edges[k];"),
+    # L4 edge index: the successor bit names the next edge, not the edge that reached v.
+    # (Another position of the same chunk is not observable on the control graph, whose
+    # accelerated levels claim every edge of a chunk.)
+    "shifted_edge_index": (SUCCESSOR_BIT,
+                           "succ.set_bit_atomic((edges[k]+1)%g.num_edges_directed());"),
+    # L4 path count: the path-count source is another chunk position's frontier vertex.
+    "shifted_path_count_source": (CHUNK_PAIR, "const NodeID v=vertices[k],u=frontier[k==0?count-1:k-1];"),
+}
 # Negative control -> named checks that reject it; an empty set means a semantic
 # rejection (BCVerifier FAIL or frontier inequality) with a clean process exit.
 CONTROLS = {
@@ -32,8 +49,7 @@ CONTROLS = {
     "chunk_off_by_one": {"tile_truncation"}, "dropped_wait": {"byte_offset_overflow", "read_before_wait"},
     "read_before_wait": {"read_before_wait"}, "index_wrap": {"stream_bounds", "byte_offset_overflow"},
     "forged_frontier": {"duplicate_frontier"},
-    # BC-L1: the path-count test uses the DX100 depth hint instead of the CPU depth.
-    "stale_depth_hint": set(),
+    **{name: set() for name in TOKEN_CONTROLS},
 }
 
 
@@ -137,9 +153,10 @@ def control(source, name):
     from swdb.cli import Failure
     if name in LIBRARY_FAULTS:
         return library_control(source, name)
-    if name != "stale_depth_hint":
+    if name not in TOKEN_CONTROLS:
         raise Failure("unknown rewrite control")
-    return replace_tokens(source, CPU_DEPTH, "const NodeID fresh=claimed?depth:hint;", name)
+    before, after = TOKEN_CONTROLS[name]
+    return replace_tokens(source, before, after, name)
 
 # --- gem5 side (ticket 44, 2026-10-03 ET) ----------------------------------
 # The trusted complete-call gem5 driver mirrors BFS's v2 driver: the evaluator
@@ -369,6 +386,14 @@ class BCPlugin(KernelPlugin):
     certification_source = BC_SOURCE
     certification_snapshot = "bc-dx100-scalar-only-20261003-a1.source"
     certification_controls = CONTROLS
+    # On the two-level control graph every accelerated frontier vertex has path count 1, so a
+    # wrong path-count source is invisible there; the Kronecker matrix graph has unequal counts.
+    certification_control_graphs = {"shifted_path_count_source": "kronecker-16"}
+    # L4 names the CAS, successor bit, path count and same-chunk edge index; the contract's
+    # control (skipped_cas_recheck) exercises only the CAS. Recorded per clause by certify.
+    certification_clause_controls = {"L4": [("dropped_successor_bit", "verifier"),
+                                            ("shifted_edge_index", "verifier"),
+                                            ("shifted_path_count_source", "verifier")]}
 
     def certification_rewrite(self, scalar):
         return forward_pass_source(scalar)

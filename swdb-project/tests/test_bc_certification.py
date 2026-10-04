@@ -90,7 +90,10 @@ def test_derived_contract_cites_bfs_adds_bc_l1_and_is_shared():
     assert contract['correctness_check']['kernel'] == 'gapbs-bc' and contract['correctness_check']['symbol'] == 'BCVerifier'
     clause = next(row for row in contract['clauses'] if row['id'] == 'BC-L1')
     assert clause['discharge_mode'] == 'differential_test' and clause['negative_control']['id'] == 'stale_depth_hint'
-    assert {row['id'] for row in contract['negative_controls']} == set(bc.CONTROLS)
+    # Every contract control runs; 2026-10-04 ET the plug-in adds the L4 part controls, which the
+    # promoted contract does not list (its normative content is unchanged).
+    l4_parts = {name for name, _ in kernels.BC.certification_clause_controls['L4']}
+    assert {row['id'] for row in contract['negative_controls']} == set(bc.CONTROLS) - l4_parts
     assert {row['id'] for row in parent['clauses']} < {row['id'] for row in contract['clauses']}
     assert 'contract.bfs_read_offload' in {pin['id'] for pin in library.dependency_pins(contract['id'])}
     # Ticket 43 (2026-10-03 ET) promoted the derived contract; a later target evaluation may
@@ -159,7 +162,7 @@ def _gcc():
         pytest.skip('certification requires GCC with OpenMP')
 
 
-def test_bc_forward_pass_certifies_with_all_18_controls_rejected(tmp_path):
+def test_bc_forward_pass_certifies_with_every_control_rejected(tmp_path):
     """Ticket 62 (2026-10-04 ET): BC keeps certifying after controls moved to the library seam."""
     _gcc()
     _, tree = _bc_tree(tmp_path)
@@ -168,10 +171,13 @@ def test_bc_forward_pass_certifies_with_all_18_controls_rejected(tmp_path):
                                      plugin=kernels.BC)
     assert c.artifacts.identify(tree)['sha256'] == before
     assert len(matrix) == 10 and all(x['status'] == 'passed' for x in matrix)
-    assert len(controls) == 18, [(x['id'], x['status']) for x in controls]
+    assert len(controls) == 2 * len(bc.CONTROLS) == 24, [(x['id'], x['status']) for x in controls]
     assert all(x['status'] == 'rejected' for x in controls), [(x['id'], x['tile_size'], x['status'], x['reason']) for x in controls]
     sites = {x['id']: x['fault']['site'] for x in controls}
-    assert sites.pop('stale_depth_hint') == 'candidate_tokens' and set(sites.values()) == {'library_fault'}
+    token_sites = {name: sites.pop(name) for name in bc.TOKEN_CONTROLS}
+    assert set(token_sites.values()) == {'candidate_tokens'} and set(sites.values()) == {'library_fault'}
+    # 2026-10-04 ET: every run observed its clause's check (L4 parts: the verifier).
+    assert all(x['observed_checks'] for x in controls)
 
 
 def test_strict_bc_candidate_passes_and_the_bc_l1_control_is_rejected(tmp_path):
