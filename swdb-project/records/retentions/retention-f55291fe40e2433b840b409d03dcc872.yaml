@@ -1,0 +1,30 @@
+kind: retention
+schema_version: '0.4'
+id: retention-f55291fe40e2433b840b409d03dcc872
+status: draft
+created: '2026-10-04'
+updated: '2026-10-04'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+event: prune
+evaluation: bc-gem5-20261003-a1.timed-r1.baseline.evaluation
+deleted:
+- path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/checkpoint/cpt.10710410000/system.physmem.store0.pmem
+  sha256: 5842bcc9d93717bdcd1f43655d02132026119c81bb3fcd6f46ddbd33a646d841
+  bytes: 19325136
+- path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/checkpoint/cpt.10710410000/m5.cpt
+  sha256: d0c280afc2c3596920829ca411a4b78f26429f9fd5cb4611cdb43fd33d32756b
+  bytes: 631559
+reason: Automatic execute pruning
+occurred_at: '2026-10-04T04:35:14.140903+00:00'
+host: mbit10
+approval: null
+intent: prune-intent-c00768208ade488dad687679f3e30a67

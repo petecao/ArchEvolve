@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** task
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 26, 29, 41, 43, 44
 **Spec:** `../spec.md`
 **Needs go-ahead:** Yes: Yan-Ru approves the mbit10 dispatch before it starts (Q62).
@@ -12,8 +12,8 @@ Created: 2026-10-03
 ## Acceptance
 
 - [x] The pre-dispatch checks are recorded.
-- [ ] One small gem5 BC run passes the BC completion witness and execution case.
-- [ ] Records are committed after Yan-Ru approves.
+- [x] One small gem5 BC run passes the BC completion witness and execution case.
+- [x] Records are committed after Yan-Ru approves.
 
 ## Comments
 
@@ -79,3 +79,61 @@ Created: 2026-10-03
   `git pull --ff-only`, then in a node lane run
   `python3 tools/bc_gem5_driver.py --stage timed --attempt r1 --id bc-gem5-20261003-a1 --runs-dir /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1 --approval-reference "<Q62>"`
   (about 25 min expected: two executions, aggregates and the comparison).
+
+## Answer
+
+Resolved 2026-10-04 00:52 ET (agent, BC track). The derived BC contract runs on the DX100 target
+model. One small gem5 run passes the BC v2 completion witness for both roles, and the candidate
+passes the read-only execution case and the frontier check. On this graph the candidate is slower.
+
+**Environment.** mbit10, `/data1/yanruj/ArchEvolve` on `yanrujhou_main` at
+`65a7c7b35f9acfb4c8d4b3a5fab375a6e2181770`, carrying the witness fix from b7f7798. Before the pull, the 10
+untracked a1 records matched their origin blobs (`git hash-object`) and were deleted; the untracked
+`records/.retention.lock` was left in place. Lane node 0, lease `mbit10-evaluation-node0` generation
+449, entered through the same `socket_lane.sh` (sha256 `00c269b4...`, equal to origin); `numactl
+--cpunodebind=0 --membind=0`, aligned to `no_gapbs_batch_running`; tmux `swdb-bc-gem5-20261003-r1`
+under `timeout 14400`. Node 1 and the legacy lease were released at dispatch. Another agent's ticket-58
+job held node 1 from 00:35 to 00:37 ET; it shares the OS and memory link. Lane held 2026-10-04 00:25:35 to
+00:48:41 ET (23 min 6 s), lane exit 0, lease released. Load1 1.10 at start, 2.16 at end. `/data1` 41
+GB and `/data` 74 GB free before and after. Raw output (114 MB for a1 and r1 together) stays in
+`/data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/`; it was not copied to the Mac.
+
+**Preflight.** The timed stage admitted 36 GiB on node 0 (estimated capacity 41.16 GB = 38.3 GiB;
+node 1 would have been refused at 27.4 GB) and 8 GiB of storage on `/data1` plus the 20 GiB reserve.
+
+**Runs** (driver `tools/bc_gem5_driver.py --stage timed --attempt r1`, reusing the a1 prepare
+receipts unchanged: protocol `bc-gem5-20261003-a1.protocol.e731422f9ab9f668`, candidate tree
+`d6f86eb6...` equal to `certification.1e389a959ffb4ff9bfdcf4cea9eace06`).
+
+| Workload | Role | Host time (checkpoint + simulation) | BC v2 witness | Read-only case / frontier | Peak RSS |
+| --- | --- | --- | --- | --- | --- |
+| BC Kronecker 14, source 0 | baseline (full-source scalar) | 80 s + 410 s | passed | not requested | 30.5 GiB |
+| same | candidate (contract.bc_read_offload) | 80 s + 457 s | passed | observed (S=3, I=90, R=31, A=0, no indirect stores, I=3R-S); full tiles 25, tail tiles 3; frontier [1,6,2269,9757,509,1] equals the oracle | 32.2 GiB |
+
+Both runs return the same 16,381 scores (FNV-1a `9ec6d9845db5d49c`), and BCVerifier prints PASS after
+the ROI seal. Records: `bc-gem5-20261003-a1.timed-r1.{baseline,candidate}.evaluation`, one-replay
+aggregates `...timed-r1.{baseline,candidate}.aggregate`, comparison `bc-gem5-20261003-a1.timed-r1.comparison`.
+
+**Timing (simulated point ratio, single graph, single source).** Complete-call ROI: baseline 3.075 ms,
+candidate 7.247 ms simulated; ratio 0.424 (decision `regression`). It covers one Kronecker-14 graph,
+source 0 and one deterministic replay. Attribution is joint hardware/software (MAA enabled for the
+candidate only), and the dependency pass stays scalar. This run was chosen to demonstrate reuse,
+not speed. One plausible factor, not measured: scale-14 levels are small (largest 9,757 vertices), so
+per-chunk accelerator setup may outweigh the read savings. No population or native claim.
+
+**Library state.** Using this comparison, `contract.bc_read_offload` now derives as shared/evaluated_on_target.
+
+**Pruning (ticket 26).** The successful r1 executions' checkpoint payloads were pruned
+automatically after durable evaluation (`prune-intent-c0076820...`, `prune-intent-ce1e2d1c...`,
+`retention-3db4bae3...`, `retention-f55291fe...`). The failed a1 baseline keeps its checkpoint. In
+ArchEvolve mode the debug traces (candidate `roi-debug.trace.gz`, 43 MB) stay until a team claim
+cites them or `swdb claim --release` records that none will; that decision is Yan-Ru's.
+
+**After the run.** No yanruj process referencing swdb, gem5, socket_lane or the run remained; no
+tmux session; all three leases read `released`. Nine new records were copied by scp (sha256 match);
+`swdb validate`: 508 valid.
+
+**Left open.** Trace release or claim (above). The failed a1 baseline record stays as
+`missing_observation`; the witness bug that caused it is fixed in b7f7798. The uniform BC workload
+was not run on gem5.
+

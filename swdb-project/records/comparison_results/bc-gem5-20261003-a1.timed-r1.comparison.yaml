@@ -1,0 +1,66 @@
+kind: comparison_result
+schema_version: '0.4'
+id: bc-gem5-20261003-a1.timed-r1.comparison
+status: draft
+created: '2026-10-04'
+updated: '2026-10-04'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bc-gem5-20261003-a1.timed-r1.comparison
+  protocol: bc-gem5-20261003-a1.protocol.e731422f9ab9f668
+  comparison_baseline: dx100-bc-scalar
+  baseline_evaluation: bc-gem5-20261003-a1.timed-r1.baseline.aggregate
+  candidate_evaluation: bc-gem5-20261003-a1.timed-r1.candidate.aggregate
+decision:
+  state: regression
+  reasons: []
+gain_claim: false
+evidence_kind: execution
+metrics:
+  roi_speedup: 0.42426683009478744
+  per_source_position_speedup:
+    '0': 0.42426683009478744
+  confidence_interval:
+    confidence: 0.95
+    lower: 0.42426683009478744
+    upper: 0.42426683009478744
+    method: independent per-source bootstrap of median ratios
+    resamples: 2000
+  relative_spread:
+    baseline:
+      '0': 0.0
+    candidate:
+      '0': 0.0
+  workload: bc-gem5-20261003-kronecker14-s0.bba5ce8b1f8b84b2
+  attribution: joint_hardware_software
+  disclosed_differences:
+    software:
+    - Fresh unchanged full-source dx100-bc-scalar Brandes versus the derived BC forward-pass read offload
+      (contract.bc_read_offload) applied to the certified scalar-only BC snapshot; the CPU keeps the compare-and-swap,
+      queue push, successor bit and path-count update; the dependency pass stays scalar.
+    accelerator:
+    - MAA enabled only for the candidate role.
+    configuration:
+    - Both roles use LLC 8MiB/16-way and identical CPU, caches, memory and clock; accelerator presence
+      differs.
+region_comparisons: []
+finished_at: '2026-10-04T04:48:34.224763+00:00'
+protocol: bc-gem5-20261003-a1.protocol.e731422f9ab9f668
+protocol_sha256: e731422f9ab9f668e659583eb4c8c3f0c3ee249d2e39a51092d5268eb9980909
+baseline_evaluation: bc-gem5-20261003-a1.timed-r1.baseline.aggregate
+candidate_evaluation: bc-gem5-20261003-a1.timed-r1.candidate.aggregate
+comparison_baseline: dx100-bc-scalar
+source_ancestor: dx100-bc-scalar
+evaluation_identities:
+  bc-gem5-20261003-a1.timed-r1.baseline.aggregate: e243fb31abe23b19d93c21a3a3db48534bfb0340196de01e318038bc8c5a2045
+  bc-gem5-20261003-a1.timed-r1.candidate.aggregate: 03fe16416d22eec8678a8763519159719cea70eff5048e31137324678c142e2a

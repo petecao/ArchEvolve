@@ -80,7 +80,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 42 | [BC certification and the derived BC contract](issues/42-bc-certification-and-derived-contract.md) | resolved | 18, 17, 28, 40 |  |
 | 43 | [Yan-Ru promotes the derived BC contract](issues/43-promote-bc-contract.md) | resolved | 42 |  |
 | 44 | [BC gem5 completion witness and execution case](issues/44-bc-gem5-completion-witness.md) | resolved | 39, 40 |  |
-| 45 | [BC gem5 evaluation](issues/45-bc-gem5-evaluation.md) | ready-for-agent | 26, 29, 41, 43, 44 | yes |
+| 45 | [BC gem5 evaluation](issues/45-bc-gem5-evaluation.md) | resolved | 26, 29, 41, 43, 44 | yes |
 | 46 | [Library JSON schema and SQLite index](issues/46-library-schema-and-index.md) | resolved | 42 |  |
 
 ## Phase 5: Extensa mode
@@ -201,3 +201,4 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - 2026-10-03 21:50 ET: ticket 53 resolved. One frozen protocol per campaign, strict >1.05 with spread <=0.1 (gem5 point ratios), native A/A pilot, per-class certification-first selection with faster_uncertified, knob range refusal. [53-speed-rule-and-selection](issues/53-speed-rule-and-selection.md).
 
 - 2026-10-03 21:51 ET: ticket 54 resolved. Every D6 stop reason, uncounted usage-limit/login pauses with resume, campaign-wide call budget, disk cap and preflight, lane conflict, and post-comparison pruning with claimed runs kept are fixture-tested. [54-campaign-budgets](issues/54-campaign-budgets.md).
+- Ticket 45, completed 2026-10-04 00:52 ET: one small BC gem5 run (Kronecker 14, source 0, node 0, 65a7c7b) passes the BC v2 completion witness for baseline and candidate; the candidate passes the read-only case, full/tail tiles and the frontier check. Simulated point ratio 0.424 (regression; one graph, one source). contract.bc_read_offload is now shared/evaluated_on_target. Witness build-ID bug fixed in b7f7798. [45-bc-gem5-evaluation](issues/45-bc-gem5-evaluation.md).
