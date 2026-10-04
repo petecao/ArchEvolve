@@ -298,6 +298,11 @@ class Library:
                             error('pattern_key', 'patterns require roles, address_shapes and update_kind')
                         elif any(role not in {'index','offsets','target'} for role in pattern['roles']):
                             error('pattern_key', 'array roles must come from the array-role vocabulary')
+                        else:
+                            # Ticket 55 (2026-10-04 ET): the site finder matches chains step by step.
+                            from swdb.library_operations import chain_form_problems
+                            for reason in chain_form_problems(pattern['roles'], pattern['address_shapes']):
+                                error('pattern_key', reason)
                 citation = data.get('provenance', {}).get('derived_from')
                 if citation is not None:
                     parent = self.get(citation.get('id')) if isinstance(citation, dict) else None

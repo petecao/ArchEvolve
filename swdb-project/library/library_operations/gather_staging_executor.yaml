@@ -1,4 +1,5 @@
 # Library operation seeded from Extensa (ticket 51). Created 2026-10-03 ET.
+# Updated 2026-10-04 ET (ticket 55): pattern key in chain form, one role and address shape per step.
 id: operation.gather_staging_executor
 kind: library_operation
 provenance:
@@ -31,7 +32,7 @@ uses_intrinsics: []
 uses_library_operations: []
 pattern_key:
 - roles:
-  - index
+  - target
   address_shapes:
   - stream
   update_kind: read
@@ -39,6 +40,7 @@ pattern_key:
   - index
   - target
   address_shapes:
+  - stream
   - single_valued_indirect
   update_kind: read
 differential_test:

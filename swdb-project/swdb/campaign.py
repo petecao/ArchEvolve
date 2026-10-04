@@ -4,8 +4,8 @@ Created 2026-10-03 ET. Original SWDB code (decisions D2-D10 of
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`); the
 loop accounting is the ported `swdb.extensa.search`.
 
-One campaign names one hardware target. Each iteration: a fixed region list (or, after
-ticket 55, a query); one rewrite-role call that returns one patch with per-class knob
+One campaign names one hardware target. Each iteration: a fixed region list, or with
+`regions: query` the query site finder (`swdb.site_finder`, ticket 55); one rewrite-role call that returns one patch with per-class knob
 values; one candidate artifact per workload class; certification (contracts) or the
 uncertified label (no contract); the evaluator through a target adapter; records
 tagged `mode: extensa` and `campaign`; selection per class (certification level first,
@@ -468,8 +468,8 @@ class Campaign:
         if not args.fixture:
             raise UsageError("only the contract-fixture target adapter exists (--fixture); the native-CPU and "
                              "DX100 gem5 adapters are tickets 56 and 57")
-        if self.data["regions"] == "query":
-            raise UsageError("regions: query needs ticket 55's site finder; name a fixed region list")
+        self.query = self.data["regions"] == "query"
+        self.applied_contracts = None     # query mode: contracts the site finder applied this iteration
         self.adapter = FixtureAdapter(args.fixture, self.data, self.team, self.store_dir, self.folder)
 
     # state ------------------------------------------------------------------------------
@@ -600,6 +600,42 @@ class Campaign:
         self.state["setup_calls"] = row["provider_calls"]
         self.state["setup_call_done"] = True
 
+    # regions (ticket 55) ----------------------------------------------------------------------
+    def _find_sites(self):
+        """Run the query site finder over the team store and the campaign's library."""
+        from swdb import site_finder
+        return site_finder.find(self.team, self.data, library=self.library_root,
+                                db_path=site_finder.default_db_path(self.folder))
+
+    def _regions(self, row):
+        """The iteration's region rows: the fixed list, or the site finder's chosen regions,
+        each with why it was chosen; rejected sites are kept with their reasons."""
+        if not self.query:
+            self.current_regions = list(self.data["regions"])
+            return [{"id": r, "reason": "fixed region list (campaign file)"} for r in self.data["regions"]]
+        from swdb import site_finder
+        result = self._find_sites()
+        row["site_finder"] = {"format": result["format"], "query_sha256": result["query_sha256"],
+                              "parameters": result["parameters"], "database": result["database"],
+                              "rejected": [{k: r[k] for k in ("entry", "region", "reason")} for r in result["rejected"]]}
+        self.state["site_finder"] = {"format": result["format"], "query_sha256": result["query_sha256"],
+                                     "parameters": result["parameters"]}
+        if not result["regions"]:
+            raise Stop("infrastructure_failure", "the site finder chose no region: " + "; ".join(
+                f"{r['entry']}: {r['reason']}" for r in result["rejected"])[:2000])
+        self.current_regions = [{"id": r["id"], "source": r["source"], "statements": r["statements"],
+                                 "applications": [{"entry": a["entry"], "contract": a["contract"], "kind": a["kind"]}
+                                                  for a in r["applications"]]} for r in result["regions"]]
+        self.applied_contracts = {a["contract"] for r in result["regions"] for a in r["applications"] if a["contract"]}
+        return site_finder.region_rows(result)
+
+    def _check_sites(self):
+        """Query mode: refuse to start a campaign for which the site finder chooses no region."""
+        result = self._find_sites()
+        if not result["regions"]:
+            raise Failure("regions: query chose no region; rejected sites: " + ("; ".join(
+                f"{r['entry']} {r['region'] or ''}: {r['reason']}" for r in result["rejected"]) or "none"))
+
     # iteration --------------------------------------------------------------------------------
     def _workspace(self, iteration):
         from swdb.library import Library
@@ -610,7 +646,8 @@ class Campaign:
             if path is None:
                 raise Failure(f"campaign contract {cid} is not in the library")
             files[f"contracts/{cid}.yaml"] = path.read_text()
-        files["REGIONS.json"] = json.dumps({"regions": self.data["regions"]}, indent=2)
+        regions = self.current_regions if self.query else self.data["regions"]
+        files["REGIONS.json"] = json.dumps({"regions": regions}, indent=2)
         for cls, best in self.state["bests"].items():
             if best:
                 files[f"best/{cls}.patch"] = best["patch"]
@@ -644,6 +681,8 @@ class Campaign:
         for cid in contracts:
             if cid not in self.data["library"]["contracts"]:
                 return f"contract {cid} is outside the campaign's contracts"
+            if self.applied_contracts is not None and cid not in self.applied_contracts:
+                return f"contract {cid} applies to no region the site finder chose"
             if library.get(cid) is None:
                 return f"contract {cid} is not in the library"
             if library.state(cid)["tier"] not in self.data["library"]["allowed_tiers"]:
@@ -867,6 +906,8 @@ class Campaign:
                           "baselines": {}, "tested_contracts": {}, "synthesized": {}, "retentions": [],
                           "kept_for_claims": [], "setup_done": False, "pilot": None}
             self.ledger = S.SearchLedger(self.budget)
+            if self.query:
+                self._check_sites()
         with self._tags():
             try:
                 if not self.state["setup_done"]:
@@ -881,10 +922,9 @@ class Campaign:
                         raise Stop("stopped_by_yanru", (self.folder / "STOP").read_text().strip()[:200])
                     self.adapter.round = len(self.state["pauses"])
                     index = self.ledger.begin_iteration()
-                    row = {"index": index, "started": _now(), "ended": None,
-                           "regions": [{"id": r, "reason": "fixed region list (campaign file)"}
-                                       for r in self.data["regions"]],
+                    row = {"index": index, "started": _now(), "ended": None, "regions": [],
                            "provider_calls": [], "candidates": [], "feedback_reasons": [], "improved_classes": []}
+                    row["regions"] = self._regions(row)
                     try:
                         outcome = self._iteration(index, row)
                     except Paused as pause:
@@ -973,7 +1013,8 @@ class Campaign:
             budgets={"limits": self.budget.to_dict(), "used": used},
             pauses=copy.deepcopy(self.state["pauses"]), stop_reason=reason.value,
             stop_detail=self.state.get("stop_detail"), artifacts=artifacts_list,
-            retentions=list(self.state["retentions"]), library_entries=library_entries)
+            retentions=list(self.state["retentions"]), library_entries=library_entries,
+            site_finder=self.state.get("site_finder"))
         record["mode"], record["campaign"] = "extensa", self.cid
         return record
 

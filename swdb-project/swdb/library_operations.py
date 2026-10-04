@@ -72,6 +72,26 @@ def pattern_key_problems(keys):
             found.append((where, "pattern_key address shapes must come from the address-shape vocabulary"))
         if key["update_kind"] not in vocabs.get("update_kinds", []):
             found.append((where, "pattern_key update kind must come from the update-kind vocabulary"))
+        found.extend((where, reason) for reason in chain_form_problems(key["roles"], key["address_shapes"]))
+    return found
+
+
+def chain_form_problems(roles, shapes):
+    """Ticket 55 (2026-10-04 ET): a key pattern is a chain (ADR 0003) with one role and one
+    address shape per step, ending at the target; the array before a ranged-indirect step
+    holds its range bounds (role offsets), as the array-role vocabulary defines."""
+    if not isinstance(roles, list) or not isinstance(shapes, list):
+        return []
+    found = []
+    if len(roles) != len(shapes):
+        found.append(f"pattern_key needs one role per address shape ({len(roles)} roles, {len(shapes)} shapes)")
+    if roles and roles[-1] != "target":
+        found.append("pattern_key chain must end at a target role")
+    if "target" in roles[:-1]:
+        found.append("pattern_key chain names target only at its last step")
+    for i in range(1, min(len(roles), len(shapes))):
+        if shapes[i] == "ranged_indirect" and roles[i - 1] != "offsets":
+            found.append(f"pattern_key step {i} is ranged_indirect, so step {i - 1} must have role offsets")
     return found
 
 

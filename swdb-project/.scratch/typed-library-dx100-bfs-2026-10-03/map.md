@@ -97,7 +97,7 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 | 52 | [Extensa campaign skeleton](issues/52-campaign-skeleton.md) | resolved | 07, 24, 48, 49 |  |
 | 53 | [Speed rule, per-class verdicts, selection and knob tuning](issues/53-speed-rule-and-selection.md) | resolved | 52 |  |
 | 54 | [Extensa campaign budgets and pruning](issues/54-campaign-budgets.md) | resolved | 08, 26, 52 |  |
-| 55 | [Query site finder](issues/55-query-site-finder.md) | ready-for-agent | 46, 52 |  |
+| 55 | [Query site finder](issues/55-query-site-finder.md) | resolved | 46, 52 |  |
 | 56 | [Native-CPU Extensa campaign target for BFS](issues/56-native-campaign-target.md) | ready-for-agent | 51, 53, 54, 55 | yes (granted) |
 | 57 | [gem5 Extensa campaign target](issues/57-gem5-campaign-target.md) | ready-for-agent | 29, 53, 54, 55 | yes (granted) |
 | 58 | ["Is the specification enough?" experiment](issues/58-spec-enough-experiment.md) | needs-info | Codex login on mbit10 (Yan-Ru); 07, 08, 20, 48 | yes (granted) |
@@ -201,4 +201,6 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - 2026-10-03 21:50 ET: ticket 53 resolved. One frozen protocol per campaign, strict >1.05 with spread <=0.1 (gem5 point ratios), native A/A pilot, per-class certification-first selection with faster_uncertified, knob range refusal. [53-speed-rule-and-selection](issues/53-speed-rule-and-selection.md).
 
 - 2026-10-03 21:51 ET: ticket 54 resolved. Every D6 stop reason, uncounted usage-limit/login pauses with resume, campaign-wide call budget, disk cap and preflight, lane conflict, and post-comparison pruning with claimed runs kept are fixture-tested. [54-campaign-budgets](issues/54-campaign-budgets.md).
+
+- 2026-10-04 00:58 ET: ticket 55 resolved. `regions: query` runs one SQL site-finder query (sha256 recorded) over access patterns, steps, the statements index, statement legality facts and indexed pattern keys; a contract applies only on exact key match plus a true recorded fact for every legality clause. [55-query-site-finder](issues/55-query-site-finder.md).
 - Ticket 45, completed 2026-10-04 00:52 ET: one small BC gem5 run (Kronecker 14, source 0, node 0, 65a7c7b) passes the BC v2 completion witness for baseline and candidate; the candidate passes the read-only case, full/tail tiles and the frontier check. Simulated point ratio 0.424 (regression; one graph, one source). contract.bc_read_offload is now shared/evaluated_on_target. Witness build-ID bug fixed in b7f7798. [45-bc-gem5-evaluation](issues/45-bc-gem5-evaluation.md).

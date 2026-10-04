@@ -4,6 +4,8 @@ Navigation updated: 2026-09-28 (Eastern Time).
 
 Updated: 2026-10-03 (Eastern Time): typed-library and statements tables (ticket 46).
 
+Updated: 2026-10-04 (Eastern Time): statement facts and pattern-key tables for the query site finder (ticket 55).
+
 Run commands inside `ArchEvolve/swdb-project/`. [The database builder](../../swdb/db.py)
 writes `build/swdb.sqlite` beside `records/` by default (another records folder
 `X` gets `build/swdb-X.sqlite`). It recreates every table in a temporary file,
@@ -346,6 +348,47 @@ The statements index: one row per statement annotation of an implementation
 | `statement` | statement ID |
 | `pattern` | access-pattern ID the statement realizes |
 | `step` | step position in that access pattern |
+
+### `statement_facts`
+
+Recorded facts on statements (`annotation_facts` of a statement annotation; agent claims are
+never copied here). The query site finder (ticket 55, `swdb/site_finder.py`) reads legality
+facts, whose field is `legality:<entry id>:<clause id>` and whose value is true or false.
+
+| Column | Meaning |
+|---|---|
+| `implementation` | implementation ID |
+| `statement` | statement ID |
+| `position` | the fact's position in the statement's `annotation_facts` list |
+| `field` | the fact's field |
+| `value` | its value as JSON text (`true`, `false`, a list, ...) |
+| `basis` | its basis (measured, simulated, reported, code_reading or inferred) |
+| `evidence` | the evidence text the fact cites |
+
+### `library_pattern_keys`
+
+One row per pattern of a library entry's `pattern_key` (rewrite contracts and library
+operations), in key order.
+
+| Column | Meaning |
+|---|---|
+| `entry` | library entry ID |
+| `key_position` | the pattern's position in the key (0 first) |
+| `update_kind` | the update kind it matches |
+| `step_count` | the chain length it matches (the longer of its roles and address shapes) |
+
+### `library_pattern_key_steps`
+
+One row per step of a key pattern; a step missing its role or shape (a malformed key) has a
+null there and never matches.
+
+| Column | Meaning |
+|---|---|
+| `entry` | library entry ID |
+| `key_position` | the key pattern's position |
+| `step` | step position in the chain (0 first) |
+| `role` | the array role at that step (index, offsets or target) |
+| `address_shape` | the address shape at that step |
 
 ## Queries
 

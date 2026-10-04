@@ -64,6 +64,12 @@ CREATE TABLE statements (implementation TEXT NOT NULL, statement TEXT NOT NULL, 
     agent_claims INTEGER NOT NULL, json TEXT NOT NULL, PRIMARY KEY (implementation, statement));
 CREATE TABLE statement_steps (implementation TEXT NOT NULL, statement TEXT NOT NULL, pattern TEXT NOT NULL,
     step INTEGER NOT NULL, PRIMARY KEY (implementation, statement, pattern, step));
+CREATE TABLE statement_facts (implementation TEXT NOT NULL, statement TEXT NOT NULL, position INTEGER NOT NULL,
+    field TEXT NOT NULL, value TEXT, basis TEXT, evidence TEXT, PRIMARY KEY (implementation, statement, position));
+CREATE TABLE library_pattern_keys (entry TEXT NOT NULL, key_position INTEGER NOT NULL, update_kind TEXT,
+    step_count INTEGER NOT NULL, PRIMARY KEY (entry, key_position));
+CREATE TABLE library_pattern_key_steps (entry TEXT NOT NULL, key_position INTEGER NOT NULL, step INTEGER NOT NULL,
+    role TEXT, address_shape TEXT, PRIMARY KEY (entry, key_position, step));
 """
 
 
@@ -79,29 +85,30 @@ def default_path(records_dir):
     return records_dir.parent / "build" / name
 
 
-def library_dir(records_dir):
-    """The typed library a records folder uses (the repository's beside `records`)."""
+def library_dir(records_dir, library=None):
+    """The typed library a records folder uses (the repository's beside `records`), or
+    `library` when a caller names one (ticket 55: `swdb campaign --library`)."""
     from swdb.library import default_root
-    return Path(default_root(Path(records_dir))).resolve()
+    return Path(library if library is not None else default_root(Path(records_dir))).resolve()
 
 
-def library_files(records_dir):
+def library_files(records_dir, library=None):
     """Every regular file of that library folder (YAML entries and pinned code), sorted."""
-    root = library_dir(records_dir)
+    root = library_dir(records_dir, library)
     if not root.is_dir():
         return []
     return [(path, path.relative_to(root).as_posix()) for path in sorted(root.rglob("*"))
             if path.is_file() and not path.is_symlink() and "__pycache__" not in path.parts]
 
 
-def fingerprint(records_dir):
+def fingerprint(records_dir, library=None):
     """Identifies the exact set of record files and, since ticket 46 (2026-10-03 ET), of the
     typed library folder's files: path, size, and modification time of each."""
     digest = hashlib.sha256()
     for path, rel in record_files(Path(records_dir)):
         info = path.stat()
         digest.update(f"{rel}\0{info.st_size}\0{info.st_mtime_ns}\n".encode())
-    for path, rel in library_files(records_dir):
+    for path, rel in library_files(records_dir, library):
         info = path.stat()
         digest.update(f"library/{rel}\0{info.st_size}\0{info.st_mtime_ns}\n".encode())
     return digest.hexdigest()
@@ -118,15 +125,16 @@ def _meta(db_path):
         return {}
 
 
-def is_stale(records_dir, db_path):
-    """True unless the database was built from this very folder in its current state, by the
-    same database code (a newer swdb may add tables or fill them differently)."""
+def is_stale(records_dir, db_path, library=None):
+    """True unless the database was built from this very folder (and library folder) in its
+    current state, by the same database code (a newer swdb may add tables or fill them differently)."""
     db_path = Path(db_path)
     if not db_path.exists():
         return True
     meta = _meta(db_path)
     return (meta.get("records_dir") != str(Path(records_dir).resolve())
-            or meta.get("fingerprint") != fingerprint(records_dir)
+            or meta.get("library_dir") != str(library_dir(records_dir, library))
+            or meta.get("fingerprint") != fingerprint(records_dir, library)
             or meta.get("builder") != BUILDER)
 
 
@@ -140,11 +148,11 @@ def _text(value):
     return json.dumps(value)
 
 
-def build(records_dir, db_path):
+def build(records_dir, db_path, library=None):
     started = time.monotonic()
     # fingerprint first: a record written while the store loads makes the stamp older than
     # the files, so the next query rebuilds instead of trusting a stale database
-    stamp = fingerprint(records_dir)
+    stamp = fingerprint(records_dir, library)
     store = Store(Path(records_dir))
     db_path = Path(db_path)
     db_path.parent.mkdir(parents=True, exist_ok=True)
@@ -154,7 +162,7 @@ def build(records_dir, db_path):
     con = sqlite3.connect(tmp)
     con.executescript(SCHEMA)
     con.executemany("INSERT INTO meta VALUES (?, ?)", [("records_dir", str(Path(records_dir).resolve())),
-                                                       ("library_dir", str(library_dir(records_dir))),
+                                                       ("library_dir", str(library_dir(records_dir, library))),
                                                        ("fingerprint", stamp), ("builder", BUILDER)])
     kernels = {r.id: r.data for r in store.of_kind("kernel")}
     baselines = {k["baseline_implementation"] for k in kernels.values()}
@@ -169,20 +177,20 @@ def build(records_dir, db_path):
             con.execute("INSERT INTO implementation_contexts VALUES (?,?,?,?,?,?)",
                         (rec.id, context["application"], context["source_ancestor"], context["source_baseline"],
                          context["comparison_baseline"], json.dumps(context)))
-    _library(con, records_dir, store)
+    _library(con, records_dir, store, library)
     con.commit()
     con.close()
     tmp.replace(db_path)
     return {"records": len(store.records), "seconds": time.monotonic() - started}
 
 
-def _library(con, records_dir, store):
+def _library(con, records_dir, store, library_root=None):
     """Ticket 46 (2026-10-03 ET): typed library entries, their dependency pins and clauses.
 
     Tier and status are derived from the records exactly as `swdb.library` derives them;
     an entry whose state cannot be derived (for example an invalid library) gets NULL."""
     from swdb.library import Library, derived_from
-    root = library_dir(records_dir)
+    root = library_dir(records_dir, library_root)
     if not root.is_dir():
         return
     library = Library(root, store)
@@ -206,6 +214,22 @@ def _library(con, records_dir, store):
                         [(entry_id, c.get("id"), c.get("role"), c.get("discharge_mode"),
                           (c.get("negative_control") or {}).get("id"), c.get("statement"))
                          for c in clauses if isinstance(c, dict) and isinstance(c.get("id"), str)])
+        # Ticket 55 (2026-10-04 ET): pattern keys as rows, one per key pattern and one per
+        # key step, so the site finder matches them against `steps` in SQL. A malformed key
+        # pattern (not a list of equal-length roles and shapes) is indexed as written; it
+        # can never match, because its steps cannot all equal one chain.
+        keys = data.get("pattern_key") if isinstance(data.get("pattern_key"), list) else []
+        for position, key in enumerate(keys):
+            if not isinstance(key, dict):
+                continue
+            roles = key.get("roles") if isinstance(key.get("roles"), list) else []
+            shapes = key.get("address_shapes") if isinstance(key.get("address_shapes"), list) else []
+            con.execute("INSERT INTO library_pattern_keys VALUES (?,?,?,?)",
+                        (entry_id, position, key.get("update_kind"), max(len(roles), len(shapes))))
+            con.executemany("INSERT INTO library_pattern_key_steps VALUES (?,?,?,?,?)",
+                            [(entry_id, position, step, roles[step] if step < len(roles) else None,
+                              shapes[step] if step < len(shapes) else None)
+                             for step in range(max(len(roles), len(shapes)))])
 
 
 class _Insert:
@@ -256,6 +280,12 @@ class _Insert:
             con.executemany("INSERT OR IGNORE INTO statement_steps VALUES (?,?,?,?)",
                             [(d["id"], row["id"], step["pattern"], step["step"])
                              for step in row.get("access_pattern_steps", [])])
+            # Ticket 55 (2026-10-04 ET): recorded statement facts (never agent claims); the
+            # site finder reads legality facts from here. Values are JSON text.
+            con.executemany("INSERT INTO statement_facts VALUES (?,?,?,?,?,?,?)",
+                            [(d["id"], row["id"], i, f.get("field"), _text(f.get("value")), f.get("basis"),
+                              f.get("evidence"))
+                             for i, f in enumerate(row.get("annotation_facts", [])) if isinstance(f, dict)])
 
     @staticmethod
     def input(con, d, *_):

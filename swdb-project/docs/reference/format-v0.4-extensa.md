@@ -1,7 +1,7 @@
 # Extensa-mode record fields (format 0.4 addition)
 
 Created: 2026-10-03 (Eastern Time)
-Updated: 2026-10-03 (Eastern Time)
+Updated: 2026-10-04 (Eastern Time): site-finder fields (ticket 55)
 
 Extensa mode (ADR 0009, ADR 0010; decisions in
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`) adds optional
@@ -71,7 +71,7 @@ selection uses), `baselines` (each a `role` and its `candidate`), `protocol` (`r
 `threads`, `repetitions`, `sources`, `region_pairs`, `differences`), `workload_classes`
 (each a `class` and its `workload`), `label` (always `single graph per class`), `library`
 (`allowed_tiers`, `contracts`, optional `synthesize` families), `regions` (a fixed list,
-or `query` after ticket 55), `provider` (`name`, `model`, `effort`), `budgets`
+or `query`: the query site finder, ticket 55), `provider` (`name`, `model`, `effort`), `budgets`
 (`max_iterations`, `plateau_iterations`, `lane_hours`, `provider_calls_per_iteration`,
 `provider_calls_setup`, `disk_gb`, `lanes`, optional `max_repairs`), `runs_root` and an
 optional `approval` (`by`, `date`, `scope`, `raised_budgets`, `two_lanes`).
@@ -95,3 +95,14 @@ spreads), `setup` (the profiling call), `iterations` (each with `index`, `starte
 `pauses` (`at`, `reason` usage_limit or login, `resumed_at`), `stop_reason`,
 `stop_detail`, `artifacts`, `retentions` and `library_entries`. Candidate records never
 store a certification level; the summary's `level_at_summary` is a snapshot.
+
+With `regions: query` (ticket 55), each iteration's `regions` row is a chosen region:
+`id` (`<implementation>/<function>:<first line>-<last line>`), a one-line `reason`, and
+`why` (`query_sha256`, `statements`, `source` path, revision and lines, and per applying
+entry its `entry`, `contract` (null for a library operation), `kind`, `content_sha256`,
+`pattern_key` (each key pattern, its matching access patterns and the one `assigned`),
+`statements` and every legality clause with `holds` and `reason`). The iteration also
+carries `site_finder` (`format`, `query_sha256`, `parameters`, `database` fingerprint and
+builder, and `rejected`: each considered site with `entry`, `region` and `reason`), and the
+summary carries `site_finder` (`format`, `query_sha256`, `parameters`; null for a fixed
+list). The decision procedure is documented in `swdb/site_finder.py`.

@@ -253,6 +253,30 @@
     "setup": {
       "type": "object",
       "description": "The setup allowance's provider calls (the profiling agent), before iteration 1."
+    },
+    "site_finder": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Ticket 55 (2026-10-04 ET): the query site finder's format, query sha256 and parameters; null for a fixed region list.",
+      "required": [
+        "format",
+        "query_sha256",
+        "parameters"
+      ],
+      "properties": {
+        "format": {
+          "const": "swdb.site-finder.v1"
+        },
+        "query_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "parameters": {
+          "type": "object"
+        }
+      }
     }
   },
   "required": [
