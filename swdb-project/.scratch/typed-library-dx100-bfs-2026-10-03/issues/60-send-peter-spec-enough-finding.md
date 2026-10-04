@@ -16,3 +16,5 @@ Created: 2026-10-03
 ## Comments
 
 - 2026-10-03 ET: created by ticket 47 under Yan-Ru's 2026-10-03 delegation. All communication with Peter, Josh and Eric is draft-only for agents.
+
+- 2026-10-04 ET: ticket 58 wrote the draft (a3 result: 0/9 certified; scalar operands typed as values instead of register handles). Ready for Yan-Ru to review and send.
