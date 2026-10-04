@@ -304,9 +304,50 @@ def provider_stage(args):
     return {"calls": len(ledger["calls"]), "counted": sum(1 for c in ledger["calls"] if c["counted"])}
 
 
+HUNK = re.compile(r"^@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@(.*)$")
+
+
+def recount(patch):
+    """Rewrite every hunk header's line counts from the hunk body (2026-10-04 ET, a3).
+
+    Equivalent to `git apply --recount`, which the campaign adapters already use: a provider
+    that cannot run tools writes the diff by hand and miscounts. Only the two counts change;
+    start lines, context and edits stay exactly as written. A line with no prefix inside a
+    hunk is a context line that lost its leading space.
+    """
+    lines = patch.split("\n")
+    while lines and lines[-1] == "":
+        lines.pop()
+    out, header, body = [], None, []
+
+    def close():
+        if header is None:
+            return
+        old = sum(1 for line in body if line[:1] in (" ", "-"))
+        new = sum(1 for line in body if line[:1] in (" ", "+"))
+        out.append(f"@@ -{header[0]},{old} +{header[1]},{new} @@{header[2]}")
+        out.extend(body)
+
+    for line in lines:
+        match = HUNK.match(line)
+        if match:
+            close()
+            header, body = (match[1], match[2], match[3]), []
+        elif header is not None and (line.startswith("--- ") or line.startswith("diff ")):
+            close()
+            header, body = None, []
+            out.append(line)
+        elif header is not None:
+            body.append(line if line[:1] in (" ", "-", "+", "\\") else " " + line)
+        else:
+            out.append(line)
+    close()
+    return "\n".join(out) + "\n"
+
+
 def scoring_patch(response_patch):
-    """The provider's bfs.cc diff plus the canonical lowering header addition (harness rule)."""
-    patch = response_patch if response_patch.endswith("\n") else response_patch + "\n"
+    """The provider's bfs.cc diff (hunk counts recounted) plus the canonical lowering header."""
+    patch = recount(response_patch)
     header = LOWERING.read_text()
     lines = header.splitlines()
     addition = ("--- /dev/null\n+++ b/benchmarks/gapbs/src/swdb_dxc_lowering.hpp\n"
@@ -366,7 +407,8 @@ def score_one(args, name, response_patch, folder):
     folder.mkdir(parents=True, exist_ok=True)
     patch_path = folder / "scoring.patch"
     patch_path.write_text(scoring_patch(response_patch))
-    result = {"sample": name, "patch_sha256": artifacts.file_hash(patch_path), "started": now()}
+    result = {"sample": name, "patch_sha256": artifacts.file_hash(patch_path), "response_patch_sha256": sha(response_patch),
+              "patch_normalization": "hunk counts recounted (git apply --recount equivalent)", "started": now()}
     touched = sorted({line[6:].strip() for line in response_patch.splitlines() if line.startswith("+++ b/")})
     result["provider_patch_files"] = touched
     from swdb.store import Store

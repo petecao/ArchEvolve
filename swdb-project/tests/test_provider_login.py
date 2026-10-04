@@ -184,6 +184,17 @@ def test_driver_stops_itself_after_two_failed_sessions(tmp_path, monkeypatch):
     assert len(calls) == 2
 
 
+def test_driver_recounts_hand_written_hunk_headers_only():
+    """a3 (2026-10-04 ET): hand-written diffs miscount hunks; only the counts change."""
+    from pathlib import Path
+    module = driver()
+    patch = "--- a/x\n+++ b/x\n@@ -13,6 +13,7 @@ tail\n a\n b\n+c\n\n d\n@@ -40,1 +41,1 @@\n-e\n+f\n"
+    assert module.recount(patch) == ("--- a/x\n+++ b/x\n@@ -13,4 +13,5 @@ tail\n a\n b\n+c\n \n d\n"
+                                     "@@ -40,1 +41,1 @@\n-e\n+f\n")
+    reference = (Path(__file__).resolve().parents[1] / "library/dx100/peter-section5.patch").read_text()
+    assert module.recount(reference) == reference
+
+
 def test_driver_prompt_forbids_the_commands_the_audit_refused_in_a2():
     module = driver()
     for word in ("heredocs", "`awk`", "`git apply`", "`patch`", "Do not create files"):
