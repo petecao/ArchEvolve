@@ -33,7 +33,7 @@ from pathlib import Path
 import yaml
 from jsonschema import Draft202012Validator
 
-from swdb import artifacts, paths, workflow, yamlio
+from swdb import artifacts, certification_feedback, paths, workflow, yamlio
 from swdb.cli import Failure, UsageError
 from swdb.extensa import search as S
 from swdb.extensa.leakage import scan_patch_additions
@@ -284,6 +284,12 @@ def rewrite_prompt(campaign_id, iteration, classes, files):
         history.append(" `library/swdb_dxc_lowering.hpp` is that header (read it for the intrinsic calls; "
                        "`#include \"swdb_dxc_lowering.hpp\"` from `bfs.cc`) and `library/intrinsics/` describes "
                        "each intrinsic.")
+        if any(f.startswith("library/intrinsics/notes/") for f in files):
+            # Ticket 64 (campaign a6 set last_i to -1; ticket 58 passed values as registers).
+            history.append(" `library/intrinsics/notes/` states each intrinsic's operand kinds: an operand "
+                           "named `*_reg` is a register handle from the thread's `dxc_context` whose value is "
+                           "set by `__dxc_const_i32`, never a plain value; a range-loop batch starts with "
+                           "`last_i_reg` = 0 and `last_j_reg` = -1.")
     best = sorted(f for f in files if f.startswith("best/"))
     if best:
         history.append(" " + ", ".join(f"`{f}`" for f in best) + " hold this campaign's current per-class best patches.")
@@ -718,6 +724,11 @@ class Campaign:
                 ipath = library.files.get(iid)
                 if ipath is not None:
                     files[f"library/intrinsics/{ipath.name}"] = ipath.read_text()
+                    # Ticket 64: the non-normative usage note (operand kinds, conventions) rides
+                    # along; it is outside the entry, so the entry's hash and tier stay unchanged.
+                    note = ipath.parent / "notes" / (ipath.stem + ".md")
+                    if note.is_file():
+                        files[f"library/intrinsics/notes/{note.name}"] = note.read_text()
         references = getattr(self.adapter, "reference_files", None)
         if references and self.data["library"]["contracts"]:
             files.update({f"library/{name}": text for name, text in references().items()})
@@ -846,19 +857,21 @@ class Campaign:
                     entry["level"] = "certified"
                     feedback.append(S.Feedback("certified", "Certification passed.", {"class": cls}).to_dict())
                     break
+                # Ticket 64: name the failing check and its public precondition (never run output).
+                named = certification_feedback.explanation(outcome["failed_checks"])
                 if attempt >= self.max_repairs:
-                    return reject("certification_failed", "Certification failed a named check.",
-                                  failed_checks=outcome["failed_checks"])
+                    return reject("certification_failed", named, failed_checks=outcome["failed_checks"])
                 # 2026-10-04 ET: the repair workspace holds the failing patch, and the prompt names
                 # only the files present (the provider audit refuses reads outside them).
                 files = {**self._workspace(iteration), "CANDIDATE.patch": patch,
-                         "CERTIFICATION.json": json.dumps({"class": cls, "failed_checks": outcome["failed_checks"]})}
+                         "CERTIFICATION.json": json.dumps({"class": cls, "failed_checks": outcome["failed_checks"],
+                                                           "messages": certification_feedback.messages(
+                                                               outcome["failed_checks"])})}
                 repaired = self._call("repair", files, "Repair: `CANDIDATE.patch` failed the certification checks "
                                       "named in `CERTIFICATION.json`; return a repaired patch.\n"
                                       + rewrite_prompt(self.cid, iteration, self.classes, files), row)
                 if repaired is None:
-                    return reject("certification_failed", "Certification failed a named check.",
-                                  failed_checks=outcome["failed_checks"])
+                    return reject("certification_failed", named, failed_checks=outcome["failed_checks"])
                 attempt += 1
                 patch = repaired["patch"]
                 knobs = knobs_by_class(repaired).get(cls, knobs)
