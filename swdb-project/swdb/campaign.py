@@ -937,6 +937,9 @@ class Campaign:
             self.ledger = S.SearchLedger.from_state(self.budget, resumed["ledger"])
             for pause in self.state["pauses"]:
                 pause["resumed_at"] = pause.get("resumed_at") or _now()
+            # Tickets 56/57 (2026-10-04 ET): a resume after an interrupted process also gets
+            # fresh record IDs for the retried iteration.
+            self.state["resumes"] = self.state.get("resumes", 0) + 1
         else:
             self.state = {"campaign": self.cid, "campaign_sha256": self.sha256, "started": _now(),
                           "lane_hours": 0.0, "iterations": [], "bests": {}, "feedback": [], "pauses": [],
@@ -959,7 +962,7 @@ class Campaign:
                 while self.ledger.may_open_iteration():
                     if (self.folder / "STOP").exists():
                         raise Stop("stopped_by_yanru", (self.folder / "STOP").read_text().strip()[:200])
-                    self.adapter.round = len(self.state["pauses"])
+                    self.adapter.round = len(self.state["pauses"]) + self.state.get("resumes", 0)
                     index = self.ledger.begin_iteration()
                     row = {"index": index, "started": _now(), "ended": None, "regions": [],
                            "provider_calls": [], "candidates": [], "feedback_reasons": [], "improved_classes": []}
@@ -983,6 +986,9 @@ class Campaign:
             except Stop as stop:
                 self.ledger.terminate(stop.reason)
                 self.state["stop_detail"] = stop.detail
+            except (Failure, OSError) as exc:      # a real target's command or host failure
+                self.ledger.terminate(S.StopReason.INFRASTRUCTURE_FAILURE)
+                self.state["stop_detail"] = f"{type(exc).__name__}: {exc}"[:2000]
             except Paused as pause:            # setup call
                 self.state["pauses"].append({"at": _now(), "reason": pause.reason, "resumed_at": None,
                                              "iteration": 0})
