@@ -758,7 +758,7 @@ def prompt_context(config, folder):
         if "login_writeback" not in state:
             try:
                 state["login_writeback"] = handle.write_back()
-            except OSError as exc:
+            except Exception as exc:  # never blocks deletion of the copy
                 state["login_writeback"] = {"written_back": False, "reason": f"write-back failed: {type(exc).__name__}"}
         login.unlink(missing_ok=True)
 

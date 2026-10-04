@@ -112,6 +112,53 @@ def test_role_workspace_cleanup_writes_back_then_deletes_copy(tmp_path, codex_ho
     assert "r1" not in json.dumps(manifest)
 
 
+def other_account():
+    data = json.loads(fake("r1"))
+    data["tokens"]["account_id"] = "y"
+    return json.dumps(data).encode()
+
+
+def api_key_login():
+    return json.dumps({"OPENAI_API_KEY": "sk-fixture"}).encode()
+
+
+def changed_mode():
+    data = json.loads(fake("r1"))
+    data["auth_mode"] = "apikey"
+    return json.dumps(data).encode()
+
+
+@pytest.mark.parametrize("planted", [other_account, api_key_login, changed_mode])
+def test_copy_with_another_identity_is_not_written_back(tmp_path, codex_home, planted):
+    # 2026-10-04 ET (final code review): the provider controls its copy; only a token
+    # refresh of the same account and login mode may cross back to the source login.
+    handle = session(tmp_path)
+    handle.path.write_bytes(planted())
+    receipt = handle.write_back()
+    assert receipt["changed"] == "yes" and not receipt["written_back"]
+    assert (codex_home / "auth.json").read_bytes() == fake()
+    assert handle.session_fd is None
+
+
+def test_deeply_nested_copy_still_deletes_copy_and_links(tmp_path, codex_home, monkeypatch):
+    # 2026-10-04 ET (final code review): RecursionError from json.loads escaped cleanup,
+    # leaving the copy (and a hard link holding the original tokens) in place.
+    monkeypatch.setattr(provider_guard, "abi", lambda: 4)
+    role = provider_roles.Role("read_only_fixture", {"type": "object"})
+    workspace = provider_roles.prepare(role, {"code.cc": "source"}, tmp_path / "role", {"kind": "codex"})
+    stash = workspace.login_path.with_name("stash")
+    os.link(workspace.login_path, stash)
+    workspace.login_path.unlink()
+    workspace.login_path.write_bytes(b"[" * 200000)
+    os.link(workspace.login_path, workspace.login_path.with_name("stash2"))
+    workspace.cleanup()
+    assert workspace.metadata["login_copy_deleted"] and not workspace.login_path.exists()
+    assert not stash.exists() and not stash.with_name("stash2").exists()
+    assert not workspace.metadata["login_writeback"]["written_back"]
+    assert (codex_home / "auth.json").read_bytes() == fake()
+    assert workspace.login_copy.session_fd is None
+
+
 def test_preflight_detects_missing_and_malformed_login(codex_home):
     good = provider_login.preflight("codex")
     assert good["state"] == "ok" and good["source_sha256"]

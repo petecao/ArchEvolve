@@ -61,7 +61,8 @@ def problem(kind, data):
     """Why bytes are not a well-formed login (None when they are). Never echoes values."""
     try:
         parsed = json.loads(data)
-    except (ValueError, UnicodeDecodeError):
+    except (ValueError, UnicodeDecodeError, RecursionError):
+        # RecursionError: deeply nested input (a provider controls the copy's bytes).
         return "not valid JSON"
     if not isinstance(parsed, dict):
         return "not a JSON object"
@@ -75,6 +76,37 @@ def problem(kind, data):
     missing = [name for name in fields if not isinstance(inner.get(name), str) or not inner[name]]
     if missing:
         return f"missing {key}.{'/'.join(missing)}"
+    return None
+
+
+#: Fields a token refresh may change, per provider: (top-level keys, keys inside EXPECTED[kind][0]).
+REFRESHABLE = {"codex": ({"last_refresh"}, {"access_token", "refresh_token", "id_token"}),
+               "claude": (set(), {"accessToken", "refreshToken", "expiresAt"})}
+
+
+def identity_change(kind, before, after):
+    """Why `after` is not a token refresh of the same login as `before` (None when it is).
+
+    Added 2026-10-04 ET (final code review). The provider controls its login copy, so a
+    session must not be able to plant a different account, login mode or API key in
+    the user's source login: only the refreshable token fields may differ.
+    """
+    kind = "codex" if kind == "codex" else "claude"
+    try:
+        old, new = json.loads(before), json.loads(after)
+    except (ValueError, UnicodeDecodeError, RecursionError):
+        return "not valid JSON"
+    key, _ = EXPECTED[kind]
+    top, inner = REFRESHABLE[kind]
+    if not isinstance(old, dict) or not isinstance(new, dict) \
+            or not isinstance(old.get(key), dict) or not isinstance(new.get(key), dict):
+        return "not an OAuth login"
+    if {k: v for k, v in old.items() if k not in top | {key}} \
+            != {k: v for k, v in new.items() if k not in top | {key}}:
+        return "account or login mode changed"
+    if {k: v for k, v in old[key].items() if k not in inner} \
+            != {k: v for k, v in new[key].items() if k not in inner}:
+        return "account or login mode changed"
     return None
 
 
@@ -199,10 +231,15 @@ class Copy:
             if self.source.is_symlink() or not self.source.is_file():
                 receipt["reason"] = "source login unavailable"
                 return receipt
-            current = _sha(self.source.read_bytes())
+            current_bytes = self.source.read_bytes()
+            current = _sha(current_bytes)
             if current != self.snapshot_sha256:
                 receipt.update(reason="source changed during session; newer login kept",
                                source_sha256_current=current)
+                return receipt
+            changed = identity_change(self.kind, current_bytes, data)
+            if changed:
+                receipt["reason"] = "not a token refresh of the source login: " + changed
                 return receipt
             _atomic_write(self.source, data)
         receipt.update(written_back=True, reason="refreshed login written back",
