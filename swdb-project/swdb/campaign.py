@@ -270,7 +270,9 @@ header `swdb_dxc_lowering.hpp`; patch `bfs.cc` only.{history} Return ONE
 unified diff against `source/` in `patch`. Do not state performance outcomes.
 Work only by reading the files listed here and writing your answer: read no other path, do not
 use shell heredocs, `git apply`, `patch` or any command that runs or applies generated text; put
-the diff only in `patch`. Workspace files: {files}.
+the diff only in `patch`. To read, use only `cat FILE`, `nl -ba FILE`, `sed -n 'A,Bp' FILE` with
+literal line numbers, `grep -n 'TEXT' FILE`, `ls DIR` and `wc -l FILE`, one command at a time,
+with no pipes, awk, command substitution or redirection. Workspace files: {files}.
 """
 
 
