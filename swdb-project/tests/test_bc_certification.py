@@ -79,7 +79,7 @@ def test_bc_forward_pass_rewrite_replaces_only_the_scalar_pbfs():
         bc.instrument_source(source.replace(bc.FRONTIER_TEXT, 'std::cout << queue.size();'))
 
 
-def test_derived_contract_cites_bfs_adds_bc_l1_and_stays_experimental():
+def test_derived_contract_cites_bfs_adds_bc_l1_and_is_shared():
     store = Store(ROOT / 'records')
     library = Library(ROOT / 'library', store)
     assert library.validate() == []
@@ -93,7 +93,10 @@ def test_derived_contract_cites_bfs_adds_bc_l1_and_stays_experimental():
     assert {row['id'] for row in contract['negative_controls']} == set(bc.CONTROLS)
     assert {row['id'] for row in parent['clauses']} < {row['id'] for row in contract['clauses']}
     assert 'contract.bfs_read_offload' in {pin['id'] for pin in library.dependency_pins(contract['id'])}
-    assert library.state(contract['id'])['tier'] == 'experimental'
+    # Ticket 43 (2026-10-03 ET) promoted the derived contract; a later target evaluation may
+    # raise its status (updated 2026-10-04 ET).
+    state = library.state(contract['id'])
+    assert state['tier'] == 'shared' and state['status'] in {'certified', 'evaluated_on_target'}
     assert library.state(parent['id']) == {'tier': 'shared', 'status': 'evaluated_on_target'}
 
 
