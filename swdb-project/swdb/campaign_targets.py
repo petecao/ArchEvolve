@@ -608,6 +608,7 @@ class NativeAdapter(TargetAdapter):
 
     def pilot(self, cls, role):
         """D3 A/A pilot: the baseline timed against itself with the full protocol."""
+        isolation = self.isolated()          # waits (bounded) when the campaign requires isolation
         if self.other_gem5():
             raise _stop("infrastructure_failure", self.other_gem5())
         tag = f"{self.cid}.pilot.{cls}.{role}"
@@ -618,7 +619,35 @@ class NativeAdapter(TargetAdapter):
             raise _stop("infrastructure_failure", f"A/A pilot {cls}/{role} failed: {reason}"[:1500])
         numbers = self._numbers(result)
         return {"spread": max(numbers["spreads"]), "comparison": result["id"], "evaluations": evaluations,
-                "other_socket": other}
+                "other_socket": other, "isolation": self.isolation_end(isolation)}
+
+    #: Ticket 56 isolation test (2026-10-04 ET): bounded wait for a free other socket.
+    ISOLATION_WAIT_S = 2 * 3600
+    ISOLATION_POLL_S = 60
+
+    def isolated(self):
+        """With `protocol.isolation: other_socket_free`, a native block starts only while the other
+        socket's lease is released; it waits (bounded) and records the state at start and end."""
+        if self.campaign["protocol"].get("isolation") != "other_socket_free":
+            return None
+        waited, started = 0, time.monotonic()
+        while True:
+            lease = self.other_socket_lease()
+            if lease is None:
+                return {"other_socket": "released", "waited_s": round(time.monotonic() - started, 1),
+                        "load_average": list(os.getloadavg())}
+            if time.monotonic() - started >= self.ISOLATION_WAIT_S:
+                raise _stop("infrastructure_failure",
+                            f"isolated native block: the other socket stayed held ({lease.get('lease')}, "
+                            f"campaign {lease.get('campaign')}) for {self.ISOLATION_WAIT_S} s")
+            time.sleep(self.ISOLATION_POLL_S)
+
+    def isolation_end(self, start):
+        if start is None:
+            return None
+        lease = self.other_socket_lease()
+        return {**start, "other_socket_at_end": "released" if lease is None else lease,
+                "load_average_at_end": list(os.getloadavg())}
 
     def other_gem5(self):
         lease = self.other_socket_lease()
@@ -635,6 +664,7 @@ class NativeAdapter(TargetAdapter):
 
     def compare(self, candidate, cls, role, iteration, attempt, baseline_evaluation=None):
         tag = f"{self.cid}.{self._it(iteration)}.{cls}.a{attempt}.{role}"
+        isolation = self.isolated()
         other = self.other_socket_lease()
         result, reason, evaluations = self._block(tag, candidate["id"], role, cls)
         if result is None:
@@ -643,7 +673,8 @@ class NativeAdapter(TargetAdapter):
             raise Refused(kind, f"Native evaluation against {role} did not complete.", [kind])
         numbers = self._numbers(result)
         return {"comparison": result["id"], **numbers, "evaluations": evaluations,
-                "baseline_evaluation": f"{tag}.baseline-eval", "other_socket": other}
+                "baseline_evaluation": f"{tag}.baseline-eval", "other_socket": other,
+                "isolation": self.isolation_end(isolation)}
 
 
 # --- DX100 gem5 (ticket 57) -------------------------------------------------------------------------
