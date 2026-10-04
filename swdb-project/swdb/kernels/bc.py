@@ -157,6 +157,157 @@ def control(source, name):
                                            '<< swdb_forged_counts[swdb_forged_level++] << " elements"', 1)
     return mutated
 
+# --- gem5 side (ticket 44, 2026-10-03 ET) ----------------------------------
+# The trusted complete-call gem5 driver mirrors BFS's v2 driver: the evaluator
+# preloads the original serialized CSR before the checkpoint, times one Brandes
+# call, prints the returned score storage and a fingerprint, then checks the
+# exact returned scores after the ROI with the oracle below.
+
+GEM5_CHECKER = "dx100.bc.verifier.v2"
+GEM5_ROI = "bc.complete_call.v1"
+
+BC_ORACLE_METHOD = r"""
+  // BCVerifier's serial Brandes on the evaluator-owned original CSR, in the
+  // source's float types (Count = CountT). Ticket 44, 2026-10-03 ET.
+  template <class Count> bool verify_scores(const float *tested, uint64_t count) {
+    if (!tested || count != nodes_) return false;
+    if (offsets_[source_] == offsets_[source_+1]) return false;  // vacuous source
+    std::vector<int32_t> depth(nodes_, -1), order;
+    std::vector<Count> paths(nodes_, Count(0));
+    order.reserve(nodes_);
+    depth[source_] = 0; paths[source_] = Count(1); order.push_back(source_);
+    for (uint64_t at = 0; at < order.size(); ++at) {
+      const int32_t u = order[at];
+      for (uint64_t e = offsets_[u]; e < offsets_[u+1]; ++e) {
+        const int32_t v = neighbors_[e];
+        if (depth[v] == -1) { depth[v] = depth[u]+1; order.push_back(v); }
+        if (depth[v] == depth[u]+1) paths[v] += paths[u];
+      }
+    }
+    int32_t deepest = 0;
+    for (uint64_t v = 0; v < nodes_; ++v) deepest = std::max(deepest, depth[v]);
+    std::vector<std::vector<int32_t> > levels(deepest+1);
+    for (uint64_t v = 0; v < nodes_; ++v) if (depth[v] != -1) levels[depth[v]].push_back(int32_t(v));
+    std::vector<float> deltas(nodes_, 0.0f), scores(nodes_, 0.0f);
+    for (int32_t level = deepest; level >= 0; --level)
+      for (int32_t u : levels[level]) {
+        for (uint64_t e = offsets_[u]; e < offsets_[u+1]; ++e) {
+          const int32_t v = neighbors_[e];
+          if (depth[v] == depth[u]+1) deltas[u] += (paths[u] / paths[v]) * (1 + deltas[v]);
+        }
+        scores[u] += deltas[u];
+      }
+    const float biggest = *std::max_element(scores.begin(), scores.end());
+    if (!(biggest > 0.0f)) return false;  // vacuous reference
+    for (uint64_t v = 0; v < nodes_; ++v) {
+      const float reference = scores[v] / biggest;
+      if (!std::isfinite(reference)) return false;
+      // Stricter than BCVerifier's '>' test: NaN or infinite scores fail.
+      if (!(std::fabs(tested[v] - reference) <= std::numeric_limits<float>::epsilon())) return false;
+    }
+    return true;
+  }
+"""
+
+
+def bc_oracle():
+    from swdb.dx100_candidate import ORIGINAL_GRAPH_ORACLE
+    anchor = "  bool verify(const int32_t *parent, uint64_t count) {"
+    if ORIGINAL_GRAPH_ORACLE.count(anchor) != 1:
+        raise ValueError("original graph oracle anchor changed")
+    return ORIGINAL_GRAPH_ORACLE.replace(anchor, BC_ORACLE_METHOD + anchor, 1)
+
+
+def gem5_driver(source, model, function, diagnostic=None, *, sg_offset_bytes=8, trusted_graph=True,
+                count_type="float"):
+    """Trusted complete-call BC evaluator for gem5 (same treatment as BFS's v2 driver)."""
+    import json
+    from swdb.dx100_candidate import SUPPRESSED
+    if type(sg_offset_bytes) is not int or sg_offset_bytes not in {4, 8}:
+        raise ValueError('serialized graph offsets must be 4 or 8 bytes')
+    if not trusted_graph:
+        raise ValueError('BC gem5 evaluation always uses the trusted original-graph oracle')
+    if count_type not in {"float", "double"}:
+        raise ValueError('count_type must be float or double')
+    prefix = "\n".join(f"#define {name}(...) ((void)0)" for name in SUPPRESSED)
+    suffix = "\n".join(f"#undef {name}" for name in SUPPRESSED)
+    instrumentation = (f"#define SWDB_REGION_COUNT {len(diagnostic['regions'])}\n#include "
+        + json.dumps(diagnostic['runtime']['path'])) if diagnostic else ""
+    return f'''// Trusted generated evaluator, 2026-10-03 (ticket 44). Complete BC call only.
+#include <algorithm>
+#include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <cerrno>
+#include <cstring>
+#include <limits>
+#include <stdexcept>
+#include <vector>
+#include <iostream>
+#include {json.dumps(str(model / 'include/gem5/m5ops.h'))}
+{bc_oracle()}
+{instrumentation}
+{prefix}
+#define main swdb_gem5_original_main
+#include {json.dumps(str(source))}
+#undef main
+{suffix}
+int main(int argc, char **argv) {{
+  try {{
+  swdb_original::Graph oracle(argc, argv, {sg_offset_bytes});
+  CLIterApp cli(argc, argv, "SWDB complete-call BC", 1);
+  if (!cli.ParseArgs()) return 2;
+  Builder builder(cli);
+  Graph graph = builder.MakeGraph();
+  const int64_t source = cli.start_vertex();
+  if (source < 0 || source >= graph.num_nodes()) return 3;
+  if (uint64_t(graph.num_nodes()) != oracle.nodes() || source != oracle.source()) return 3;
+  const uint64_t original_nodes = oracle.nodes();
+  SourcePicker<Graph> picker(graph, static_cast<NodeID>(source));
+  m5_checkpoint(0, 0);
+  std::cout << "ROI started: 4 configured threads" << std::endl;
+  m5_work_begin(0, 0);
+  m5_reset_stats(0, 0);
+  {'::swdb_profile::start();' if diagnostic else ''}
+  auto scores = {function}(graph, picker, 1, cli.logging_en());
+  {'::swdb_profile::stop();' if diagnostic else ''}
+  m5_dump_stats(0, 0);
+  m5_work_end(0, 0);
+  std::printf("SWDB_BC_SCORE_STORAGE address=%llx count=%llu element_bytes=4\\n",
+      static_cast<unsigned long long>(reinterpret_cast<uintptr_t>(scores.data())),
+      static_cast<unsigned long long>(scores.size()));
+  std::cout << "ROI End!!!" << std::endl;
+  m5_exit(0);
+  {'::swdb_profile::write();' if diagnostic else ''}
+  // Continuation sees precisely the score object returned by the timed call.
+  const float *score_values = scores.data();
+  const uint64_t score_count = scores.size();
+  bool valid = score_count == original_nodes;
+  uint64_t digest = UINT64_C(14695981039346656037);
+  for (uint64_t i = 0; i < score_count && i < original_nodes; ++i) {{
+    uint32_t bits = 0;
+    std::memcpy(&bits, &score_values[i], 4);
+    for (unsigned b = 0; b < 4; ++b) {{
+      digest ^= (bits >> (8 * b)) & 255u;
+      digest *= UINT64_C(1099511628211);
+    }}
+  }}
+  if (valid) valid = oracle.verify_scores<{count_type}>(score_values, score_count);
+  std::printf("SWDB_BC_RESULT source=%lld vertices=%lld score_count=%llu score_fnv1a64=%016llx\\n",
+      static_cast<long long>(source), static_cast<long long>(original_nodes),
+      static_cast<unsigned long long>(score_count), static_cast<unsigned long long>(digest));
+  std::printf("Verification: %s\\n", valid ? "PASS" : "FAIL");
+  std::fflush(stdout);
+  return valid ? 0 : 4;
+  }} catch (const std::exception &error) {{
+    std::fprintf(stderr, "Trusted BC evaluator: %s\\n", error.what());
+    return 5;
+  }}
+}}
+'''
+
+
 class BCPlugin(KernelPlugin):
     kernel = "gapbs-bc"
     name = "BC"
@@ -173,6 +324,62 @@ class BCPlugin(KernelPlugin):
     statement_function = "PBFS"
     # CountT per application source: float in DX100 bc.cc, double in upstream GAPBS.
     count_types = {"dx100-gapbs": "float", "gapbs": "double"}
+
+    # gem5 side (ticket 44): BC's v2 completion witness and read-only execution case.
+    gem5_roi = GEM5_ROI
+    gem5_checkers = frozenset({GEM5_CHECKER})
+    gem5_witness_checker = GEM5_CHECKER
+    gem5_functions = frozenset({"Brandes"})
+    gem5_result_field = "score_results"
+    gem5_storage_marker = "SWDB_BC_SCORE_STORAGE"
+    protected_verifier_key = "protected_bc_verifier"
+    gem5_bounds_check = "trusted driver checks the returned score length before the original-graph oracle"
+    gem5_oracle_symbol = "swdb_original::Graph::verify_scores"
+    gem5_oracle_bounds_check = ("trusted original-CSR oracle checks exact score length, a non-vacuous source "
+                                "and finite scores within float epsilon of serial Brandes")
+    # The frozen BFS driver accepts only BFS checkers; BC has its own copy. The
+    # kernel-agnostic syscall-trace parser and memory observer are shared.
+    gem5_verification_runtime = ("scripts/dx100_bc_verify.py", "scripts/dx100_host_memory.py",
+                                 "swdb/dx100_witness.py")
+    frontier_text = FRONTIER_TEXT
+    frontier_prefix = "Starting PBFS:"
+    read_only_rule_text = "S>=1,I>=1,R>=1,A=0,indirect_stores=0,I=3*R-S"
+    race_companion = False  # BC's L3 stays assumed; no parent-gather race case
+
+    def gem5_driver(self, source, model, function, diagnostic=None, **options):
+        # compile_candidate selects 8-byte offsets for upstream GAPBS (CountT double)
+        # and 4-byte offsets for DX100 GAPBS (CountT float).
+        options.setdefault("count_type", "double" if options.get("sg_offset_bytes", 8) == 8 else "float")
+        return gem5_driver(source, model, function, diagnostic, **options)
+
+    def graph_verification_contract(self, application):
+        from swdb.bc_witness import graph_verification_contract
+        return graph_verification_contract(application)
+
+    def parse_gem5_result(self, line, number, after_seal):
+        from swdb.bc_witness import parse_result
+        return parse_result(line, number, after_seal)
+
+    def gem5_result_complete(self, row):
+        return row["vertices"] == row["score_count"]
+
+    def gem5_failure_message(self):
+        return "BC original-graph oracle printed FAIL, independently of process exit status"
+
+    def validate_completed_witness(self, evaluation, **options):
+        from swdb.bc_witness import validate_completed_witness
+        return validate_completed_witness(evaluation, **options)
+
+    def validate_record_witness(self, evaluation, store=None):
+        from swdb.bc_witness import validate_record_witness
+        return validate_record_witness(evaluation, store=store)
+
+    def read_only_rule(self, stream, indirect, ranges, alu, stores):
+        # Forward-pass order (bc_read_offload.inc): per chunk one stream load,
+        # two row-bound gathers and a final empty range loop; per non-empty range
+        # tile three gathers (neighbors, frontier vertex, depth hint).
+        return (stream >= 1 and indirect >= 1 and ranges >= 1 and alu == stores == 0
+                and indirect == 3 * ranges - stream)
 
     # Candidate certification (ticket 42).
     certification_source = BC_SOURCE

@@ -190,3 +190,5 @@ Periodic follow-up, 2026-10-03 18:14 ET: root independently read back source6cf 
 2026-10-03 23:05 ET: ticket 40 resolved (BC track): BC native plug-in, scalar-only BC snapshot script, BC workload registration; 17 BC cases and 218 regression cases pass. Ticket 41 can run on mbit10 (see its comment).
 
 2026-10-03 23:20 ET: ticket 42 resolved (BC track): BC forward-pass patch certified on the Mac (certification.1e389a959ffb4ff9bfdcf4cea9eace06: 10 cells pass, 18 controls rejected incl. BC-L1 stale_depth_hint); contract.bc_read_offload stays experimental for Yan-Ru's review (ticket 43).
+
+2026-10-03 23:35 ET: ticket 44 resolved (BC track): BC gem5 completion witness and read-only execution case, fixtures only (18 cases); ticket 45 still needs the gem5 run.

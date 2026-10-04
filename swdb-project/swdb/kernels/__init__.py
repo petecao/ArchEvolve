@@ -57,6 +57,7 @@ class KernelPlugin:
                                  "swdb/dx100_witness.py")
     frontier_text = None          # exact per-level frontier print in the rewritten region
     frontier_prefix = None
+    race_companion = False        # read-only protocols require the parent-gather race companion (BFS L3)
 
     def gem5_driver(self, source, model, function, diagnostic=None, **options):
         raise NotImplementedError

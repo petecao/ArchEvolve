@@ -576,8 +576,16 @@ def _validate_settings(settings, store, *, require_simulation_identity=False):
               "required_accelerator_cases needs unique supported per-role typed observations")
         if 'read_only_executed' in accelerator['candidate']:
             _fail(accelerator['baseline'] == [], 'read-only protocol baseline must have no accelerator cases')
-            from swdb.read_only_checks import validate_companion_settings
-            validate_companion_settings(correctness, store)
+            # Ticket 44 (2026-10-03 ET): only BFS's L3 has a parent-gather race companion.
+            read_only_plugin = kernels.require(settings["kernel"], "protocol freeze")
+            _fail(correctness.get("verifier") == read_only_plugin.gem5_witness_checker,
+                  'read-only companion protocol requires the v2 verifier')
+            if read_only_plugin.race_companion:
+                from swdb.read_only_checks import validate_companion_settings
+                validate_companion_settings(correctness, store)
+            else:
+                _fail(not correctness.get('companion_cases'),
+                      f'{read_only_plugin.name} read-only protocols have no parent-gather race companion')
     fixed_reference = mode == "artifact_reference" or (mode != "native" and all(
         value.get("adapter") == "dx100.author_artifact.v1" for value in settings["builds"].values()))
     if require_simulation_identity and fixed_reference:

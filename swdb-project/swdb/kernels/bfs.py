@@ -42,6 +42,7 @@ class BFSPlugin(KernelPlugin):
     frontier_text = 'std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;'
     frontier_prefix = "Starting TDStep:"
     read_only_rule_text = "S>=1,I>=1,R>=1,A=0,indirect_stores=0,I=3*R-S"
+    race_companion = True  # ticket 44: the L3 parent-gather race companion is BFS-specific
 
     def gem5_driver(self, source, model, function, diagnostic=None, **options):
         from swdb.dx100_candidate import driver

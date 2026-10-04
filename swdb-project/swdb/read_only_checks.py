@@ -107,6 +107,10 @@ def companion_acceptance(store, protocol, request, candidate_evaluation):
     correctness = protocol['settings']['correctness']
     if 'read_only_executed' not in correctness.get('required_accelerator_cases', {}).get('candidate', []):
         return None
+    # Ticket 44 (2026-10-03 ET): kernels without a race companion (BC) have none to accept.
+    plugin = kernels.get(protocol['settings'].get('kernel'))
+    if plugin is not None and not plugin.race_companion:
+        return None
     validate_companion_settings(correctness, store)
     case = correctness['companion_cases']['parent_gather_race']
     selected = request.get('companion_evaluations')
