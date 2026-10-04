@@ -1,6 +1,9 @@
-"""Durable native BFS evaluation with evaluator-owned result checking.
+"""Durable native kernel evaluation with evaluator-owned result checking.
 
 Updated: 2026-09-26. Real timing, fixture timing, and profiling remain distinct.
+2026-10-03 ET (ticket 38): the entry point, ROI, trusted driver, trial format and
+independent result check come from the candidate kernel's plug-in
+(``swdb.kernels``); BFS keeps its exact former constants and verifier.
 """
 
 import copy
@@ -23,11 +26,13 @@ from collections import deque
 from bisect import bisect_left
 from pathlib import Path
 
-from swdb import artifacts, paths, profile, workflow
+from swdb import artifacts, kernels, paths, profile, workflow
 from swdb.cli import Failure, _require_valid
 from swdb.store import Store
 from swdb.vocab import load_all
 
+# BFS aliases kept for scripts that pin the BFS driver template; new code asks
+# the kernel plug-in (kernels.BFS.native_roi / native_driver).
 ROI = "bfs.complete_call.v1"
 DRIVER = paths.HOME / "tools" / "bfs_native" / "driver.cc.in"
 MAX_REQUEST_BYTES = 10 * 1024 * 1024
@@ -383,7 +388,7 @@ class Session:
         return log
 
 
-def _compile_settings(request, candidate, root):
+def _compile_settings(request, candidate, root, plugin=None):
     context = candidate["context"]
     refs = context["code"]
     ref = refs[0] if isinstance(refs, list) else refs
@@ -391,7 +396,7 @@ def _compile_settings(request, candidate, root):
         raise Failure("native evaluator requires an application-backed candidate")
     source = root / artifacts.relative_path(ref["path"])
     if not source.is_file():
-        raise Failure("candidate BFS translation unit is missing")
+        raise Failure(f"candidate {(plugin or kernels.BFS).name} translation unit is missing")
     build = request.get("build", {})
     if not isinstance(build, dict):
         raise Failure("build must be a mapping")
@@ -424,14 +429,14 @@ def _compile_settings(request, candidate, root):
     return executable, flags, includes, source, "dx100_scalar_func" if dx100 else "gapbs_native"
 
 
-def _protect_driver_macros(candidate, root, *, extra_text=""):
+def _protect_driver_macros(candidate, root, *, extra_text="", driver=None):
     """Reject preprocessor substitution of the trusted driver after source inclusion.
 
     Scan all UTF-8 candidate inputs, including .inc files and extensionless
     headers. Splicing and comment removal precede directive recognition, matching
     the relevant preprocessing phases. This does not claim to sandbox hostile C++.
     """
-    template = DRIVER.read_text()
+    template = Path(driver or DRIVER).read_text()
     suffix = template.split("#undef main", 1)[1] + "\n" + extra_text
     identifiers = set(re.findall(r"\b[A-Za-z_]\w*\b", suffix)) | {"main", "_OPENMP"}
     trusted_headers = {Path(name).name for name in re.findall(r"#include <([^>]+)>", template + "\n" + extra_text)} | {"omp.h"}
@@ -473,8 +478,8 @@ def _request(request):
         _integer(source, "source", minimum=0)
     if len(sources) * repetitions > 10000:
         raise Failure("evaluation exceeds the 10000-trial limit")
-    if request.get("roi") != ROI:
-        raise Failure(f"native evaluator only supports the protected ROI {ROI}")
+    if request.get("roi") not in kernels.native_rois():
+        raise Failure(f"native evaluator only supports the protected ROI {' or '.join(kernels.native_rois())}")
     if "fixture" in request and not isinstance(request["fixture"], bool):
         raise Failure("fixture must be an explicit boolean")
     budget = request.get("budget")
@@ -545,9 +550,14 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
         if not candidate or candidate["state"] == "incomplete":
             raise Failure("candidate is missing or incomplete")
         implementation = store.get(candidate["implementation"], "implementation")
-        if (implementation.get("kernel") != "gapbs-bfs" or implementation.get("function") != "DOBFS"
-                or candidate["context"].get("function", implementation["function"]) != "DOBFS"):
-            raise Failure("native complete-call adapter supports the identified DOBFS entry point only")
+        plugin = kernels.get(implementation.get("kernel"))
+        if plugin is None:
+            raise Failure(f"native evaluation has no kernel plug-in for {implementation.get('kernel')!r}; "
+                          + kernels.BFS.native_entry_error())
+        if not plugin.native_entry_supported(implementation, candidate):
+            raise Failure(plugin.native_entry_error())
+        if request["roi"] != plugin.native_roi:
+            raise Failure(f"native {plugin.name} evaluation only supports the protected ROI {plugin.native_roi}")
         data.update(candidate=candidate["id"],
                     source_snapshot=candidate["source_snapshot"], implementation=candidate["implementation"])
         if candidate.get("proposal"):
@@ -594,8 +604,8 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
         session.begin("source_resolution")
         root = artifacts.verify(candidate["artifact"])
         artifacts.check_protections(root, candidate["protections"])
-        _protect_driver_macros(candidate, root)
-        compiler, flags, includes, source, adapter = _compile_settings(request, candidate, root)
+        _protect_driver_macros(candidate, root, driver=plugin.native_driver)
+        compiler, flags, includes, source, adapter = _compile_settings(request, candidate, root, plugin)
         impl = copy.deepcopy(store.get(candidate["implementation"], "implementation"))
         impl["build"]["flags"] = shlex.join(flags)
         vocabs, _ = load_all(paths.VOCAB)
@@ -607,16 +617,16 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
                 raise Failure("explicit comparison baseline is missing or realizes a different kernel")
             data["comparison_baseline"] = baseline
         data["context"] = {"candidate_sha256": candidate["artifact"]["sha256"],
-                           "function": "DOBFS",
+                           "function": plugin.native_function,
                            "source_revision": candidate["context"]["source"]["commit"],
                            "application": candidate["context"]["application"], "adapter": adapter,
                            "target": machine["id"], "machine_sha256": artifacts.digest(machine),
                            "threads": threads, "sources": sources, "repetitions": repetitions,
-                           "roi": ROI, "protocol": request.get("protocol"), "basis": "measured",
+                           "roi": plugin.native_roi, "protocol": request.get("protocol"), "basis": "measured",
                            "process_policy": "one fresh process per source and repetition; graph construction before ROI",
-                           "verifier": "swdb.bfs.structural.v1", "verifier_sha256": artifacts.file_hash(__file__),
+                           "verifier": plugin.native_verifier, "verifier_sha256": plugin.native_verifier_sha256(),
                            "backend_configuration": request.get("target_configuration", {}),
-                           "instrumentation": {"template_sha256": artifacts.file_hash(DRIVER), "treatment": "included"},
+                           "instrumentation": {"template_sha256": artifacts.file_hash(plugin.native_driver), "treatment": "included"},
                            "host": host, "architecture": platform.machine(), "lane": lane,
                            "load_average": list(os.getloadavg()), "budget": budget}
         if preflight is not None:
@@ -641,7 +651,7 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
         if registered_representation is not None:
             workload["representation"] = registered_representation
         if any(source >= canonical["num_vertices"] for source in sources):
-            raise Failure("requested BFS source outside canonical graph")
+            raise Failure(f"requested {plugin.name} source outside canonical graph")
         graph_path = folder / "graph.swdb"
         with graph_path.open("w") as output:
             output.write(f"SWDBGRAPH1 {canonical['num_vertices']} {workload['num_directed_edges']} {int(canonical['directed'])}\n")
@@ -665,12 +675,12 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
             required=bool(request.get("protocol")) and request.get("fixture") is not True)
         session.finish()
         wrapper = build_folder / "native_driver.cc"
-        template = DRIVER.read_text()
+        template = Path(plugin.native_driver).read_text()
         wrapper.write_text(template.replace("#include SWDB_SOURCE_INCLUDE", "#include " + json.dumps(str(source))))
-        binary = build_folder / "bfs-native"
+        binary = build_folder / plugin.native_binary
         command = [compiler, *flags, *(f"-I{p}" for p in includes), str(wrapper), "-o", str(binary)]
         data["build"] = {"directory": str(build_folder), "compiler": compiler, "flags": flags, "command": command,
-                         "wrapper_sha256": artifacts.file_hash(wrapper), "template_sha256": artifacts.file_hash(DRIVER)}
+                         "wrapper_sha256": artifacts.file_hash(wrapper), "template_sha256": artifacts.file_hash(plugin.native_driver)}
         if reuse is None:
             version_log = session.execute("compiler_identity", [compiler, "--version"], min(30, budget["build_seconds"]))
             data["build"]["compiler_version"] = version_log.read_text(errors="replace").splitlines()[:2]
@@ -710,19 +720,19 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
                                 budget["run_seconds"], env, repetition=repetition, source_position=position, source=source)
                 executed = copy.deepcopy(session.current)
                 session.begin("correctness", repetition=repetition, source_position=position, source=source)
-                observed, output_hash = json_observation(output, canonical["num_vertices"] * 24 + 4096,
-                                                        "parent/timing output")
-                if observed.get("format") != "swdb.bfs.native.trial.v1":
+                observed, output_hash = json_observation(output, plugin.native_output_limit(canonical["num_vertices"]),
+                                                        "parent/timing output" if plugin is kernels.BFS else "result/timing output")
+                if observed.get("format") != plugin.native_trial_format:
                     raise StageFailure("missing_observation", "native trial output has the wrong format")
                 if (type(observed.get("source")) is not int or observed["source"] != source
-                        or observed.get("roi") != ROI or type(observed.get("configured_threads")) is not int
+                        or observed.get("roi") != plugin.native_roi or type(observed.get("configured_threads")) is not int
                         or observed["configured_threads"] != threads):
                     raise StageFailure("incompatible", "native output source, ROI, or configured threads differ from request")
                 duration = observed.get("duration_s")
                 if isinstance(duration, bool) or not isinstance(duration, (int, float)) or not math.isfinite(duration) or duration <= 0:
                     raise StageFailure("missing_observation", "native ROI duration must be positive and finite")
                 observation = {"source": source, "source_position": position, "repetition": repetition,
-                               "duration_s": duration, "roi": ROI, "basis": "measured", "quantity": "native_roi_wall_seconds",
+                               "duration_s": duration, "roi": plugin.native_roi, "basis": "measured", "quantity": "native_roi_wall_seconds",
                                "binary_sha256": data["build"]["binary_sha256"], "output": str(output),
                                "output_sha256": output_hash, "verified": False,
                                "evidence_kind": data["evidence_kind"]}
@@ -731,11 +741,11 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
                         "started": executed["started"], "finished": executed["finished"],
                         "execution_log": executed["log"], "execution_log_sha256": executed["log_sha256"]}
                 data["timing"].append(observation)
-                check = verify_parents(canonical["adjacency"], source, observed.get("parents"))
+                check = plugin.check_native_trial(canonical["adjacency"], source, observed)
                 session.remaining()
                 check.update(source=source, source_position=position, repetition=repetition, trial=trial,
                              output_sha256=observation["output_sha256"], binary_sha256=observation["binary_sha256"],
-                             graph_sha256=workload["canonical_sha256"], verifier="swdb.bfs.structural.v1")
+                             graph_sha256=workload["canonical_sha256"], verifier=plugin.native_verifier)
                 if pairing is not None:
                     check["pairing"] = copy.deepcopy(observation["pairing"])
                 data["correctness"]["checks"].append(check)

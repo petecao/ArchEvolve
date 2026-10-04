@@ -6,6 +6,9 @@ each additional protocol explicitly (``shared_protocols``) and retains one exact
 binding per protocol; aggregation and comparison select the binding they use.
 
 2026-09-28 (R11): determinism evidence is a repository file bound by sha256.
+
+2026-10-03 ET (ticket 38): workload registration and protocol validation accept
+any kernel with an evaluator plug-in (``swdb.kernels``), BFS first.
 """
 
 import copy
@@ -20,7 +23,7 @@ import struct
 from bisect import bisect_left
 from pathlib import Path
 
-from swdb import artifacts, workflow
+from swdb import artifacts, kernels, workflow
 from swdb.cli import Failure, _require_valid
 from swdb.problems import Problem
 
@@ -251,7 +254,7 @@ def register_workload(args):
     request = _request(args)
     store = _require_valid(args.records)
     kernel = _get(store, request.get("kernel"), "kernel")
-    _fail(kernel["id"] == "gapbs-bfs", "BFS workload registration requires the shared BFS kernel")
+    plugin = kernels.require(kernel["id"], "workload registration")
     family = _text(request.get("family"), "family")
     generator = request.get("generator")
     _fail(isinstance(generator, dict) and isinstance(generator.get("parameters"), dict), "generator parameters are required")
@@ -259,7 +262,7 @@ def register_workload(args):
     _text(generator.get("revision"), "generator.revision")
     _fail(request.get("normalization") == NORMALIZATION, "normalization must declare the supported simple graph policy")
     sources = request.get("sources")
-    _fail(isinstance(sources, list) and len(sources) > 0, "actual ordered BFS sources are required")
+    _fail(isinstance(sources, list) and len(sources) > 0, f"actual ordered {plugin.name} sources are required")
     representations = request.get("representations")
     _fail(isinstance(representations, list) and representations, "representations must be a nonempty list")
     rows, reference, ids = [], None, set()
@@ -482,7 +485,7 @@ def _validate_settings(settings, store, *, require_simulation_identity=False):
     _fail(isinstance(settings, dict), "settings must be a mapping")
     mode = settings.get("mode")
     _fail(mode in {"native", "artifact_reference", "controlled_simulator"}, "unsupported comparison mode")
-    _fail(_get(store, settings.get("kernel"), "kernel")["id"] == "gapbs-bfs", "BFS protocols require the shared BFS kernel")
+    kernels.require(_get(store, settings.get("kernel"), "kernel")["id"], "protocol freeze")
     _text(settings.get("roi"), "roi")
     _integer(settings.get("threads"), "threads")
     if "native_runtime" in settings:
@@ -700,7 +703,8 @@ def validate_protocol_for_evaluation(store, request, candidate, actual_build=Non
     if request.get("fixture") is not True or "native_runtime" in settings:
         from swdb.bfs_native import validate_runtime_policy
         validate_runtime_policy(settings.get("native_runtime"), settings["threads"])
-    _fail(request.get("roi", "bfs.complete_call.v1") == settings["roi"], "ROI differs from frozen settings")
+    _fail(request.get("roi", kernels.require(settings["kernel"], "protocol evaluation").native_roi) == settings["roi"],
+          "ROI differs from frozen settings")
     target = settings["targets"][role]
     _fail(request.get("machine") == target["id"] and request.get("target_configuration", {}) == target["configuration"],
           "target or configuration differs from frozen settings")

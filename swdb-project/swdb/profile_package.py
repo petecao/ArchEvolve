@@ -359,6 +359,9 @@ def assemble(args):
     candidate = _get(store, evaluation.get("candidate"), "candidate")
     impl = _get(store, request.get("implementation"), "implementation")
     _fail(impl["id"] == evaluation["implementation"] == candidate["implementation"], "requested implementation differs from evaluation")
+    # Ticket 38 (2026-10-03 ET): packages exist only for kernels with an evaluator plug-in.
+    from swdb import kernels
+    kernels.require(impl.get("kernel"), "profile package assembly")
     _fail(candidate["artifact"]["sha256"] == _context(evaluation)["source_sha256"], "evaluation source identity differs from candidate")
     _fail(_same(request.get("context"), _context(evaluation)), "requested exact source/workload/target/sources/threads/ROI differs from evaluation")
     root = artifacts.verify(candidate["artifact"])

@@ -1,6 +1,8 @@
-"""Compiler-derived BFS function/loop inventory, without a symbol catalog.
+"""Compiler-derived kernel function/loop inventory, without a symbol catalog.
 
 Updated: 2026-09-25. This is a metadata-only parse; execution retains OpenMP.
+2026-10-03 ET (ticket 38): the request names the kernel plug-in's label (BFS by
+default) for the recorded scope; discovery itself is kernel independent.
 """
 import ctypes as C
 import hashlib
@@ -38,7 +40,7 @@ def _compiler_sensitive(name):
                         "__has_c_attribute", "__has_declspec_attribute", "__is_identifier"})
 
 
-def discover(source, arguments, library):
+def discover(source, arguments, library, kernel_name="BFS"):
     """Return only compiler-resolved editable extents, fail on any parse error."""
     source = Path(source).resolve()
     raw = source.read_bytes()
@@ -226,7 +228,7 @@ def discover(source, arguments, library):
                 "library": str(library), "arguments": arguments, "diagnostics": diagnostics,
                 "parser_adaptations": adaptations,
                 "regions": regions, "unresolved": unresolved,
-                "scope": "free functions and ordinary loops defined in the BFS translation-unit source file",
+                "scope": f"free functions and ordinary loops defined in the {kernel_name} translation-unit source file",
                 "limitations": ["header-defined, library, virtual/member and compiler-outlined code is not independently attributed",
                     "free function template timing combines instantiations sharing one source extent",
                     "inlined source scopes remain source scopes, not machine-code symbols",
@@ -257,5 +259,5 @@ def instrument(source, regions):
 
 if __name__ == "__main__":
     request = json.loads(Path(sys.argv[1]).read_text())
-    result = discover(request["source"], request["arguments"], request["library"])
+    result = discover(request["source"], request["arguments"], request["library"], request.get("kernel_name", "BFS"))
     Path(sys.argv[2]).write_text(json.dumps(result, indent=2))

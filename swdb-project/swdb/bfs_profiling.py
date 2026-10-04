@@ -1,6 +1,8 @@
 """Execution-bound automatic BFS source attribution and modeled memory events.
 
 Updated: 2026-10-03. Diagnostic artifacts never replace primary native ROI timing.
+2026-10-03 ET (ticket 38): the trusted driver, trial check and per-line function
+come from the primary evaluation's kernel plug-in (BFS unchanged).
 """
 import copy
 import itertools
@@ -14,7 +16,7 @@ import sys
 import uuid
 from pathlib import Path
 
-from swdb import artifacts, bfs_discovery, bfs_native as native, db, paths, profile, workflow
+from swdb import artifacts, bfs_discovery, bfs_native as native, db, kernels, paths, profile, workflow
 from swdb import callgrind_lines
 from swdb.cli import Failure, _require_valid
 
@@ -133,13 +135,15 @@ def _discovery_settings(request, compiler, flags, includes, macro_log):
     return library, arguments
 
 
-def _trial_output(output, graph, source, threads):
-    value, digest = native.json_observation(output, graph["num_vertices"]*24+4096, "diagnostic parent output")
-    if (value.get("format") != "swdb.bfs.native.trial.v1" or type(value.get("source")) is not int
-            or value["source"] != source or value.get("roi") != native.ROI
+def _trial_output(output, graph, source, threads, plugin=None):
+    plugin = plugin or kernels.BFS
+    value, digest = native.json_observation(output, plugin.native_output_limit(graph["num_vertices"]),
+                                            "diagnostic parent output" if plugin is kernels.BFS else "diagnostic result output")
+    if (value.get("format") != plugin.native_trial_format or type(value.get("source")) is not int
+            or value["source"] != source or value.get("roi") != plugin.native_roi
             or type(value.get("configured_threads")) is not int or value["configured_threads"] != threads):
         raise native.StageFailure("incompatible", "diagnostic source, ROI, or threads differ")
-    check = native.verify_parents(graph["adjacency"], source, value.get("parents"))
+    check = plugin.check_native_trial(graph["adjacency"], source, value)
     if not check["passed"]: raise native.StageFailure("incorrect", check["reason"])
     duration = value.get("duration_s")
     if isinstance(duration, bool) or not isinstance(duration, (float, int)) or not math.isfinite(duration) or duration <= 0:
@@ -164,10 +168,12 @@ def _region_observations(path, regions):
     return rows, digest
 
 
-def _wrapper(source, prefix, start, end, after):
-    template = native.DRIVER.read_text()
+def _wrapper(source, prefix, start, end, after, plugin=None):
+    plugin = plugin or kernels.BFS
+    template = Path(plugin.native_driver).read_text()
     template = prefix + "\n" + template.replace("#include SWDB_SOURCE_INCLUDE", "#include " + json.dumps(str(source)))
-    template = template.replace("auto parent =", start + "\n        auto parent =")
+    anchor = plugin.driver_call_anchor
+    template = template.replace(anchor, start + "\n        " + anchor)
     template = template.replace("const auto end = std::chrono::steady_clock::now();",
                                 end + "\n        const auto end = std::chrono::steady_clock::now();")
     template = template.replace("output.close();", "output.close();\n        " + after)
@@ -215,6 +221,7 @@ def run(args):
             raise Failure("profiling requires a complete independently checked native evaluation")
         if evaluation["evidence_kind"] != "execution":
             raise Failure("contract-fixture timing cannot authorize an execution profile")
+        plugin = kernels.by_native_verifier(evaluation["context"].get("verifier"))
         env, actual_runtime = native.runtime_environment(evaluation["context"]["threads"],
             evaluation.get("build", {}).get("native_runtime"), required=True)
         for key in ("candidate", "source_snapshot", "implementation", "machine"):
@@ -226,7 +233,8 @@ def run(args):
             raise Failure("primary timed binary changed or is unavailable")
         artifacts.check_protections(root, candidate["protections"])
         native._protect_driver_macros(candidate, root, extra_text=RUNTIME.read_text() +
-            "\n#include <valgrind/callgrind.h>\nCALLGRIND_START_INSTRUMENTATION CALLGRIND_STOP_INSTRUMENTATION CALLGRIND_ZERO_STATS CALLGRIND_DUMP_STATS")
+            "\n#include <valgrind/callgrind.h>\nCALLGRIND_START_INSTRUMENTATION CALLGRIND_STOP_INSTRUMENTATION CALLGRIND_ZERO_STATS CALLGRIND_DUMP_STATS",
+            driver=plugin.native_driver)
         machine = store.get(data["machine"], "machine")
         host = socket.gethostname().split(".")[0]
         if artifacts.digest(machine) != evaluation["context"]["machine_sha256"]:
@@ -281,7 +289,7 @@ def run(args):
         graph, facts = native.read_canonical_graph(graph_path)
         if facts["canonical_sha256"] != evaluation["context"]["workload"]["canonical_sha256"]:
             raise Failure("canonical graph identity differs")
-        compiler, flags, includes, source, adapter = native._compile_settings(evaluation["request"], candidate, root)
+        compiler, flags, includes, source, adapter = native._compile_settings(evaluation["request"], candidate, root, plugin)
         if compiler != evaluation["build"]["compiler"] or flags != evaluation["build"]["flags"]:
             raise Failure("diagnostic build compiler/settings differ from resolved primary build")
         version = session.execute("compiler_identity", [compiler, "--version"], 30)
@@ -290,7 +298,8 @@ def run(args):
         macro = session.execute("preprocessor_identity", [compiler, *flags, "-dM", "-E", "-v", "-x", "c++", "/dev/null"], 30)
         library, arguments = _discovery_settings(request, compiler, flags, includes, macro)
         discovery_request = folder / "discovery-request.json"
-        discovery_request.write_text(json.dumps({"source": str(source), "arguments": arguments, "library": str(library)}))
+        discovery_request.write_text(json.dumps({"source": str(source), "arguments": arguments, "library": str(library),
+                                                 "kernel_name": plugin.name}))
         discovery_output = folder / "discovery.json"
         session.execute("source_discovery", [sys.executable, str(Path(bfs_discovery.__file__)), str(discovery_request), str(discovery_output)], budget["discovery_seconds"])
         discovered = json.loads(discovery_output.read_text())
@@ -301,15 +310,15 @@ def run(args):
         data["discovery"]["library_sha256"] = artifacts.file_hash(library.resolve())
         data["discovery"]["pass_sha256"] = artifacts.file_hash(bfs_discovery.__file__)
         data["discovery"]["collector_sha256"] = artifacts.file_hash(__file__)
-        diagnostic_source = build_folder / "instrumented_bfs.cc"
+        diagnostic_source = build_folder / f"instrumented_{plugin.binary_stem}.cc"
         diagnostic_source.write_bytes(bfs_discovery.instrument(source, rows))
         runtime = build_folder / "runtime.hpp"
         runtime.write_bytes(RUNTIME.read_bytes())
         prefix = f'#define SWDB_REGION_COUNT {len(rows)}\n#include ' + json.dumps(str(runtime))
         driver = build_folder / "regions_driver.cc"
         driver.write_text(_wrapper(diagnostic_source, prefix, "::swdb_profile::start();", "::swdb_profile::stop();",
-            '::swdb_profile::write((std::string(argv[3]) + ".regions.json").c_str());'))
-        binary = build_folder / "bfs-regions"
+            '::swdb_profile::write((std::string(argv[3]) + ".regions.json").c_str());', plugin))
+        binary = build_folder / f"{plugin.binary_stem}-regions"
         command = [compiler, *flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary)]
         data["build"] = {"directory": str(build_folder), "compiler": compiler, "compiler_version": evaluation["build"]["compiler_version"], "flags": flags,
             "command": command, "wrapper_sha256": artifacts.file_hash(driver), "runtime_sha256": artifacts.file_hash(runtime),
@@ -339,7 +348,7 @@ def run(args):
                 if artifacts.file_hash(binary) != binary_hash or artifacts.file_hash(graph_path) != evaluation["context"]["workload"]["canonical_file_sha256"]:
                     raise Failure("diagnostic binary or graph changed")
                 session.execute("region_execution", [str(binary), str(graph_path), str(source_id), str(output)], budget["run_seconds"], env)
-                check = _trial_output(output, graph, source_id, threads)
+                check = _trial_output(output, graph, source_id, threads, plugin)
                 counters, counter_hash = _region_observations(Path(str(output)+".regions.json"), rows)
                 for row, observed in zip(rows, counters):
                     row["metrics"]["inclusive_thread_cpu_seconds"] += observed["inclusive_ns"] / 1e9
@@ -362,7 +371,7 @@ def run(args):
             data["correspondence"] = _correspondence(data, prior)
         if request.get("memory", True):
             try:
-                _memory(session, data, request, source, includes, compiler, flags, graph_path, graph, env, budget)
+                _memory(session, data, request, source, includes, compiler, flags, graph_path, graph, env, budget, plugin)
                 if data.get("per_line_memory"):
                     from swdb.annotation import statement_costs
                     implementation = store.get(data["implementation"], "implementation")
@@ -391,7 +400,8 @@ def run(args):
     return workflow.persist(args.records, data, getattr(args, "db", None))
 
 
-def _memory(session, data, request, source, includes, compiler, flags, graph_path, graph, env, budget):
+def _memory(session, data, request, source, includes, compiler, flags, graph_path, graph, env, budget, plugin=None):
+    plugin = plugin or kernels.BFS
     settings = request.get("memory_model", {})
     if not isinstance(settings, dict): raise Failure("memory_model must be a mapping")
     valgrind = shutil.which(settings.get("collector", "valgrind"))
@@ -409,8 +419,8 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
     driver = build_folder / "memory_driver.cc"
     driver.write_text(_wrapper(source, '#include <valgrind/callgrind.h>',
         "CALLGRIND_START_INSTRUMENTATION;",
-        "CALLGRIND_DUMP_STATS; CALLGRIND_STOP_INSTRUMENTATION;", ""))
-    binary = build_folder / "bfs-memory"
+        "CALLGRIND_DUMP_STATS; CALLGRIND_STOP_INSTRUMENTATION;", "", plugin))
+    binary = build_folder / f"{plugin.binary_stem}-memory"
     memory_flags = list(flags)
     if "-g" not in memory_flags: memory_flags.append("-g")
     command = [compiler, *memory_flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary)]
@@ -427,7 +437,7 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
                    str(binary), str(graph_path), str(source_id), str(output)]
         session.execute("memory_execution", command, budget["run_seconds"], env,
                         repetition=repetition, source_position=position, source=source_id)
-        check = _trial_output(output, graph, source_id, data["context"]["threads"])
+        check = _trial_output(output, graph, source_id, data["context"]["threads"], plugin)
         nonzero = []
         for file in sorted(folder.glob(raw.name+"*")):
             # Only the explicit client dump defines the ROI. Stopping
@@ -450,7 +460,7 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
             available = metric in events
             data["dynamic_memory"].append({"metric": metric, "available": available,
                 "value": events.get(metric), "unit": "references" if metric in ("Dr", "Dw") else "misses",
-                "definition": definition, "basis": "simulated", "scope": "ROI", "attribution_granularity": "whole BFS call",
+                "definition": definition, "basis": "simulated", "scope": "ROI", "attribution_granularity": f"whole {plugin.name} call",
                 "collector": collector, "artifact_sha256": binary_hash, "source_artifact_sha256": data["context"]["candidate_sha256"],
                 "counter_validation": execution["counter_validation"],
                 "execution": {"source": source_id, "source_position": position, "repetition": repetition},
@@ -460,20 +470,20 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
 
     if request.get("per_line", False):
         _per_line_memory(session, data, source, includes, compiler, memory_flags,
-                         graph_path, graph, env, budget, valgrind, collector)
+                         graph_path, graph, env, budget, valgrind, collector, plugin)
 
 
-def _tdstep_source(source, regions):
-    """Retain TDStep's function identity and its exact original debug lines."""
-    functions = [r for r in regions if r.get("kind") == "function" and r.get("name") == "TDStep"]
+def _tdstep_source(source, regions, function="TDStep"):
+    """Retain the profiled function's identity (TDStep for BFS) and its exact original debug lines."""
+    functions = [r for r in regions if r.get("kind") == "function" and r.get("name") == function]
     if len(functions) != 1:
-        raise Failure("per-line profiling needs exactly one compiler-discovered scalar TDStep")
+        raise Failure(f"per-line profiling needs exactly one compiler-discovered scalar {function}")
     region = functions[0]
     raw = source.read_bytes()
     begin = region["insertion_range"][0]
     declaration = region["byte_range"][0]
     if not 0 <= declaration < begin <= len(raw) or raw[begin-1:begin] != b"{":
-        raise Failure("TDStep source scope does not identify its opening brace")
+        raise Failure(f"{function} source scope does not identify its opening brace")
     name = json.dumps(str(source))
     # Keep this diagnostic function out of DOBFS's inlined body, so its function
     # identity survives -O3. All other original compilation settings remain.
@@ -482,32 +492,34 @@ def _tdstep_source(source, regions):
 
 
 def _per_line_memory(session, data, source, includes, compiler, flags,
-                     graph_path, graph, env, budget, valgrind, collector):
+                     graph_path, graph, env, budget, valgrind, collector, plugin=None):
     """Collect one complete-call dump and retain only TDStep self-cost rows.
 
     Repeated START/ZERO/DUMP/STOP scopes produce inconsistent Callgrind summaries.
     One global instrumentation interval includes every worker and preserves cache
     history from intervening BFS work; attribution remains limited to TDStep.
     """
+    plugin = plugin or kernels.BFS
+    function, stem, name = plugin.statement_function, plugin.binary_stem, plugin.name
     folder, build = session.folder, Path(data["build"]["directory"])
-    source_file = build / "statement_bfs.cc"
-    source_file.write_bytes(_tdstep_source(source, data["regions"]))
+    source_file = build / f"statement_{stem}.cc"
+    source_file.write_bytes(_tdstep_source(source, data["regions"], function))
     driver = build / "statement_driver.cc"
     driver.write_text(_wrapper(source_file, "#include <valgrind/callgrind.h>",
-        "CALLGRIND_START_INSTRUMENTATION;", "CALLGRIND_DUMP_STATS; CALLGRIND_STOP_INSTRUMENTATION;", ""))
-    binary = build / "bfs-statements"
+        "CALLGRIND_START_INSTRUMENTATION;", "CALLGRIND_DUMP_STATS; CALLGRIND_STOP_INSTRUMENTATION;", "", plugin))
+    binary = build / f"{stem}-statements"
     command = [compiler, *flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary)]
     session.execute("statement_memory_build", command, budget["build_seconds"])
     binary_hash = artifacts.file_hash(binary)
     data["artifacts"]["statement_binary"] = {"path": str(binary), "sha256": binary_hash,
         "flags": flags, "wrapper_sha256": artifacts.file_hash(driver),
         "instrumented_source_sha256": artifacts.file_hash(source_file),
-        "difference": "debug info; original debug line map; TDStep noinline; one complete-call instrumentation interval"}
-    line_collector = {**collector, "initial_state": "empty model caches at the complete BFS call boundary",
-        "scope": "raw collection covers the complete BFS call on every thread; retained self costs cover all TDStep invocations and outlined workers",
-        "model_limits": collector["model_limits"] + "; diagnostic TDStep is not inlined; whole-call cache history includes intervening BFS work; no per-invocation isolation"}
+        "difference": f"debug info; original debug line map; {function} noinline; one complete-call instrumentation interval"}
+    line_collector = {**collector, "initial_state": f"empty model caches at the complete {name} call boundary",
+        "scope": f"raw collection covers the complete {name} call on every thread; retained self costs cover all {function} invocations and outlined workers",
+        "model_limits": collector["model_limits"] + f"; diagnostic {function} is not inlined; whole-call cache history includes intervening {name} work; no per-invocation isolation"}
     data.setdefault("per_line_memory", [])
-    source_path = next(r["path"] for r in data["regions"] if r.get("kind") == "function" and r.get("name") == "TDStep")
+    source_path = next(r["path"] for r in data["regions"] if r.get("kind") == "function" and r.get("name") == function)
     source_file_hash = artifacts.file_hash(source)
     for repetition, (position, source_id) in itertools.product(
             range(data["context"]["repetitions"]), enumerate(data["context"]["sources"])):
@@ -519,7 +531,7 @@ def _per_line_memory(session, data, source, includes, compiler, flags,
             f"--callgrind-out-file={raw}", str(binary), str(graph_path), str(source_id), str(output)]
         session.execute("statement_memory_execution", command, budget["run_seconds"], env,
                         repetition=repetition, source_position=position, source=source_id)
-        check = _trial_output(output, graph, source_id, data["context"]["threads"])
+        check = _trial_output(output, graph, source_id, data["context"]["threads"], plugin)
         dumps = []
         def dump_order(path):
             suffix = path.name[len(raw.name):]
@@ -537,14 +549,14 @@ def _per_line_memory(session, data, source, includes, compiler, flags,
             raise native.StageFailure("missing_observation", "no nonempty complete-call client dump")
         parsed = parse_callgrind_lines(file, raw=content)
         if any(sum(row["events"].get(metric, 0) for row in parsed) > total for metric, total in totals.items()):
-            raise native.StageFailure("missing_observation", "TDStep line self costs exceed the dump summary")
-        selected = [r for r in parsed if callgrind_lines.in_function(r["function"])]
+            raise native.StageFailure("missing_observation", f"{function} line self costs exceed the dump summary")
+        selected = [r for r in parsed if callgrind_lines.in_function(r["function"], function)]
         if not selected:
-            raise native.StageFailure("missing_observation", "TDStep dump lacks debug source self costs")
+            raise native.StageFailure("missing_observation", f"{function} dump lacks debug source self costs")
         execution = {"source": source_id, "source_position": position,
                      "repetition": repetition, "dump_position": 0}
         for row in selected:
-            row.update(execution=execution, collector=line_collector, scope="TDStep",
+            row.update(execution=execution, collector=line_collector, scope=function,
                 artifact_sha256=binary_hash, source_artifact_sha256=data["context"]["candidate_sha256"],
                 raw_artifact=str(file), raw_sha256=raw_hash,
                 counter_validation={"state": "valid", "method": callgrind_lines.METHOD})

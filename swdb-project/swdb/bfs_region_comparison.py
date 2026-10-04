@@ -184,7 +184,7 @@ def _sample(store, primary, package_id, pair, role):
 
 
 def _native_samples(store, primary, package_id, pair, role):
-    from swdb import bfs_discovery, bfs_native, bfs_profiling, profile_package
+    from swdb import bfs_discovery, bfs_native, bfs_profiling, kernels, profile_package
     from swdb.cli import Failure
 
     candidate, package, profile, row = _associated_profile(store, primary, package_id, pair, role)
@@ -193,7 +193,11 @@ def _native_samples(store, primary, package_id, pair, role):
         _fail(build.get('native_runtime') == primary['build']['native_runtime'],
               'native diagnostic runtime inputs differ from primary')
     _fail(primary['context'].get('basis') == 'measured' and not primary.get('component_evaluations')
-          and primary['context'].get('roi') == bfs_native.ROI, 'native diagnostic requires a native complete-call primary')
+          and kernels.by_native_roi(primary['context'].get('roi')) is not None,
+          'native diagnostic requires a native complete-call primary')
+    # Ticket 38 (2026-10-03 ET): the primary's retained verifier selects its plug-in.
+    plugin = kernels.by_native_verifier(primary['context'].get('verifier'))
+    _fail(primary['context'].get('roi') == plugin.native_roi, 'native diagnostic requires a native complete-call primary')
     _fail(profile.get('outcome', {}).get('state') in {'partial', 'complete'}
           and context.get('primary_evaluation') == primary['id']
           and profile.get('request', {}).get('evaluation') == primary['id'], 'native profile association is incomplete')
@@ -225,7 +229,7 @@ def _native_samples(store, primary, package_id, pair, role):
     local(binary)
     directory = Path(build['directory'])
     for filename, field in (('runtime.hpp', 'runtime_sha256'), ('regions_driver.cc', 'wrapper_sha256'),
-                            ('instrumented_bfs.cc', 'instrumented_source_sha256')):
+                            (f'instrumented_{plugin.binary_stem}.cc', 'instrumented_source_sha256')):
         local({'path': str(directory / filename), 'sha256': build[field]})
     root = artifacts.verify(candidate['artifact'])
     regions = profile['regions']
@@ -282,7 +286,7 @@ def _native_samples(store, primary, package_id, pair, role):
               and _timestamp(matching[0].get('started')) >= _timestamp(primary['context']['protocol_binding']['frozen_at']),
               'native diagnostic execution receipt is missing, failed, or predates freeze')
         try:
-            checked = bfs_profiling._trial_output(local(output), graph, cell['source'], context['threads'])
+            checked = bfs_profiling._trial_output(local(output), graph, cell['source'], context['threads'], plugin)
             observed, digest = bfs_profiling._region_observations(local(report), regions)
         except bfs_native.StageFailure as exc:
             raise Failure('native diagnostic raw observation is invalid: ' + str(exc)) from None
@@ -305,7 +309,7 @@ def _native_samples(store, primary, package_id, pair, role):
             'quantity': 'diagnostic_thread_cpu_seconds', 'timing_scope': row['scope'],
             'attribution': pair['attribution'], 'checker': context['verifier'],
             'primary_checker_sha256': context['verifier_sha256'],
-            'raw_recheck_checker_sha256': artifacts.file_hash(bfs_native.__file__)})
+            'raw_recheck_checker_sha256': plugin.native_verifier_sha256()})
     _fail(all(row.get('metrics', {}).get(key) == value for key, value in totals.items()),
           'native accumulated region values differ from the raw trial reports')
     return samples

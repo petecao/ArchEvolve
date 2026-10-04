@@ -73,7 +73,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 
 | # | Ticket | Status | Blocked by | Go-ahead |
 |---|---|---|---|---|
-| 38 | [Prefactor: kernel plug-in seam, native side](issues/38-kernel-seam-native.md) | ready-for-agent | — |  |
+| 38 | [Prefactor: kernel plug-in seam, native side](issues/38-kernel-seam-native.md) | resolved | — |  |
 | 39 | [Prefactor: kernel plug-in seam, gem5 side](issues/39-kernel-seam-gem5.md) | ready-for-agent | 23 |  |
 | 40 | [BC on the native evaluator (code)](issues/40-bc-native-code.md) | ready-for-agent | 38 |  |
 | 41 | [BC native evaluation on mbit10](issues/41-bc-native-run.md) | ready-for-agent | 08, 40 | yes |
@@ -172,3 +172,5 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - 2026-10-03 19:36 ET: all Josh/Peter/Eric communications are draft-only for the agent; Yan-Ru sends manually.30ready-for-human,02/37ready-for-human,31wontfix,33resolved. All assigned agent implementation/evaluation/review/draft tasks are complete. Send/team-claim acceptance stays unchecked; no delivery inferred. Final ownership metadata sync precedes pausing the progress heartbeat.
 
 - 2026-10-03 ET: ticket 47 resolved. Extensa-mode decisions D1–D12 are agent-decided under Yan-Ru's 2026-10-03 delegation and revisable. 48–58 are ready-for-agent; 02 no longer blocks any ticket under the Q66 assumption; 59 and 60 are new ready-for-human send tickets with drafts. [Decisions](extensa-design-2026-10-03.md); [ticket 47](issues/47-extensa-design-session.md).
+
+- Ticket 38, completed 2026-10-03 21:00 ET: native kernel plug-in seam (`swdb/kernels/`), BFS the only plug-in with its exact former identities; 350 BFS regression cases pass. [38-kernel-seam-native](issues/38-kernel-seam-native.md).

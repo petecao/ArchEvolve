@@ -1,4 +1,7 @@
-"""Prospective paired native collection and receipt admission. Updated: 2026-09-27."""
+"""Prospective paired native collection and receipt admission. Updated: 2026-09-27.
+
+2026-10-03 ET (ticket 38): raw rechecks use the evaluation's kernel plug-in.
+"""
 
 import copy
 import json
@@ -8,7 +11,7 @@ import signal
 import time
 from pathlib import Path
 
-from swdb import artifacts, bfs_native, workflow
+from swdb import artifacts, bfs_native, kernels, workflow
 from swdb.cli import Failure, _require_valid
 
 METHOD = "native_paired.v1"
@@ -254,22 +257,26 @@ def validate_receipt(store, baseline, candidate, settings, *, verify_raw=True):
                     and check.get("source") == slot["source"],
                     "paired retained correctness does not bind a passed check to the registered graph and source")
             continue
+        # Ticket 38 (2026-10-03 ET): the evaluation's retained native verifier
+        # selects its kernel plug-in; records before the seam are BFS.
+        plugin = kernels.by_native_verifier(evaluation["context"].get("verifier"))
         try:
-            raw, raw_hash = bfs_native.json_observation(observation["output"], bfs_native.MAX_VERTICES * 24 + 4096,
+            raw, raw_hash = bfs_native.json_observation(observation["output"], plugin.native_output_limit(bfs_native.MAX_VERTICES),
                                                        "paired raw execution output")
         except bfs_native.StageFailure as exc:
             raise Failure(str(exc)) from None
         require(raw_hash == observation["output_sha256"]
                 and artifacts.file_hash(binding["execution_log"]) == binding["execution_log_sha256"],
                 "paired raw execution evidence changed or is unavailable")
-        require(raw.get("format") == "swdb.bfs.native.trial.v1"
+        require(raw.get("format") == plugin.native_trial_format
                 and type(raw.get("source")) is int and raw["source"] == slot["source"]
                 and type(raw.get("configured_threads")) is int and raw["configured_threads"] == evaluation["context"]["threads"]
                 and raw.get("roi") == observation["roi"]
                 and type(raw.get("duration_s")) in (int, float) and raw["duration_s"] == observation["duration_s"],
                 "paired timing/context differs from its hash-bound raw output")
-        checked = bfs_native.verify_parents(canonical["adjacency"], slot["source"], raw.get("parents"))
-        require(checked["passed"], "paired raw parent vector failed independent structural verification: " + str(checked["reason"]))
+        checked = plugin.check_native_trial(canonical["adjacency"], slot["source"], raw)
+        require(checked["passed"], f"paired raw {'parent vector' if plugin is kernels.BFS else 'result'} failed independent "
+                f"{'structural ' if plugin is kernels.BFS else ''}verification: " + str(checked["reason"]))
         require(check.get("graph_sha256") == actual_workload["canonical_sha256"]
                 and all(check.get(key) == value for key, value in checked.items()),
                 "paired retained correctness differs from the independent raw-result check")
