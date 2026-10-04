@@ -1,0 +1,206 @@
+{
+  "format": "swdb.bfs.t15-correction-terminal-observation.v1",
+  "date": "2026-09-26",
+  "repository_commit": "d5e215966a7d4d673050a78c6a6d77053aa62a85",
+  "id": "bfs-t15-correction-simulator-batch-20260926-a1",
+  "terminal": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch/terminal-validation.json",
+    "sha256": "a381c65c739a76b24983103c34c73602016ade8a94753ffd6817d562950b3398"
+  },
+  "terminal_bytes": 140187,
+  "lease_snapshot": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch/terminal-lease-snapshot.json",
+    "sha256": "e8b07cfd94649463e91e3d8ec68c89bdd2ca25ebf616716e504db6720e1985ba"
+  },
+  "accounting": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch/terminal-accounting.json",
+    "sha256": "70c8bf7b0ba8666c253495560c359fadca6111880e9d1fb54a5e17f74d895769"
+  },
+  "driver": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1/bfs-t15-correction-simulator-batch-20260926-a1.driver/driver.json",
+    "sha256": "ab4a9677cba2f87465ddb5e2c0122d18f465c7ce22407b1d408cc9981760170b"
+  },
+  "evaluation": {
+    "path": "/data1/yanruj/EvolveSWDB_t15_gzip_correction_20260926_a1/records/evaluations/bfs-t15-correction-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation.yaml",
+    "sha256": "e98ef7197e48e713b05e8bfea17461328d690e3b4c16d174b398438621cbce1d"
+  },
+  "observed_at": "2026-09-26T21:54:05.889090-04:00",
+  "state": "failed",
+  "cleanup_state": "terminal_no_live_owned_processes",
+  "union_count": 105,
+  "zombies": [
+    {
+      "pid": 3155761,
+      "start_ticks": 497577869,
+      "sources": [
+        "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1/bfs-t15-correction-simulator-batch-20260926-a1.driver/driver.json",
+        "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch/launch.json"
+      ],
+      "state": "Z",
+      "rss_bytes": 0,
+      "role": "tmux_launcher",
+      "current": {
+        "pid": 3155761,
+        "parent_pid": 359742,
+        "start_ticks": 497577869,
+        "state": "Z",
+        "rss_bytes": 0
+      }
+    }
+  ],
+  "completed_samples": 0,
+  "evaluation_outcome": {
+    "state": "interrupted",
+    "stage": "execution_identity",
+    "reason": "interrupted by SIGTERM"
+  },
+  "correctness": {
+    "state": "unverified",
+    "checks": []
+  },
+  "cleanup": {
+    "state": "settled_within_budget",
+    "driver": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1/bfs-t15-correction-simulator-batch-20260926-a1.driver/driver.json",
+      "sha256": "ab4a9677cba2f87465ddb5e2c0122d18f465c7ce22407b1d408cc9981760170b"
+    },
+    "ledger": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1/bfs-t15-correction-simulator-batch-20260926-a1.driver/cleanup-ledger.json",
+      "sha256": "68102549df0df1e7e3d2e1a6a3c042d331af6ad270b1cc05b1d0671f431b79df"
+    },
+    "run_id": "bfs-t15-correction-simulator-batch-20260926-a1",
+    "driver_outcome": "failed",
+    "binding": "cc53cfa94e3c13d4e46bf0bec6e1009a02a15ac339df664c8e6b4b245fa99e2d",
+    "creator": {
+      "pid": 3155839,
+      "start_ticks": 497577900
+    },
+    "budget_seconds": 30,
+    "spent_seconds": 13.349886041134617,
+    "settled_events": 90,
+    "observed_at": "2026-09-26T21:54:05.864333-04:00",
+    "embedded_cleanup_snapshots": "nonfinal",
+    "process_absence_verified": false,
+    "empirical_qualification": false
+  },
+  "storage_final_read_only": {
+    "state": "within_existing_storage_budget",
+    "run_id": "bfs-t15-correction-simulator-batch-20260926-a1",
+    "driver": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1/bfs-t15-correction-simulator-batch-20260926-a1.driver/driver.json",
+      "sha256": "ab4a9677cba2f87465ddb5e2c0122d18f465c7ce22407b1d408cc9981760170b"
+    },
+    "terminal_audit": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch/terminal-validation.json",
+      "sha256": "a381c65c739a76b24983103c34c73602016ade8a94753ffd6817d562950b3398"
+    },
+    "storage_paths": [
+      "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1",
+      "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch"
+    ],
+    "raw_bytes": 11886592,
+    "preparation_charges": [
+      {
+        "id": "bfs-gem5-gzip-transport-20260926-a1",
+        "elapsed_seconds": 472,
+        "raw_bytes": 200704
+      },
+      {
+        "id": "bfs-t15-simulator-batch-20260926-a1",
+        "elapsed_seconds": 1124,
+        "raw_bytes": 11014971392
+      },
+      {
+        "id": "bfs-t15-correction-linux-20260926-a1",
+        "elapsed_seconds": 600,
+        "raw_bytes": 2147483648
+      }
+    ],
+    "charged_raw_bytes": 13174542336,
+    "ceiling_bytes": 42949672960,
+    "observed_at": "2026-09-26T21:54:06.147971-04:00",
+    "driver_storage_snapshot": "nonfinal",
+    "requires_recheck_after_any_write": true,
+    "process_absence_verified": false,
+    "empirical_qualification": false
+  },
+  "audit_wall_seconds": 0.33834332413971424,
+  "process_observation_passes": [
+    {
+      "observed_at": "2026-09-26T21:54:05.855975-04:00",
+      "count": 105,
+      "present": [
+        {
+          "pid": 3155761,
+          "start_ticks": 497577869,
+          "sources": [
+            "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1/bfs-t15-correction-simulator-batch-20260926-a1.driver/driver.json",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch/launch.json"
+          ],
+          "state": "Z",
+          "rss_bytes": 0,
+          "role": "tmux_launcher",
+          "current": {
+            "pid": 3155761,
+            "parent_pid": 359742,
+            "start_ticks": 497577869,
+            "state": "Z",
+            "rss_bytes": 0
+          }
+        }
+      ]
+    },
+    {
+      "observed_at": "2026-09-26T21:54:05.889090-04:00",
+      "count": 105,
+      "present": [
+        {
+          "pid": 3155761,
+          "start_ticks": 497577869,
+          "sources": [
+            "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1/bfs-t15-correction-simulator-batch-20260926-a1.driver/driver.json",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch/launch.json"
+          ],
+          "state": "Z",
+          "rss_bytes": 0,
+          "role": "tmux_launcher",
+          "current": {
+            "pid": 3155761,
+            "parent_pid": 359742,
+            "start_ticks": 497577869,
+            "state": "Z",
+            "rss_bytes": 0
+          }
+        }
+      ]
+    }
+  ],
+  "driver_finished": "2026-09-26T21:52:07.874658-04:00",
+  "original_outer_started": "2026-09-26T21:50:45.851819-04:00",
+  "original_outer_deadline": "2026-09-27T09:14:09.851819-04:00",
+  "failure": {
+    "path": "/data1/yanruj/EvolveSWDB_t15_gzip_correction_20260926_a1/scripts/bfs_storage.py",
+    "line": 37,
+    "operation": "os.stat(entry.name, dir_fd=parent, follow_symlinks=False)",
+    "error": "FileNotFoundError: [Errno 2] No such file or directory: '.swdb.sqlite.3156540.tmp-journal'"
+  },
+  "helper_returncode": 1,
+  "outer_returncode": 1,
+  "lane": 1,
+  "lease_generation": 416,
+  "lease_released": true,
+  "kernel_lock_absent_in_both_passes": true,
+  "other_lane": {
+    "node": 0,
+    "generation": 332,
+    "state": "held"
+  },
+  "no_checkpoint_or_guest_claim": true,
+  "source_sha256": "485914c80e272b1ab4d05d7866d2ba0d981d0c3ba41cb510c509e4acdb8f4eac",
+  "source_error_frame": {
+    "path": "scripts/bfs_storage.py",
+    "line": 37
+  },
+  "automatic_retry": false,
+  "closed_roots_frozen_after": "2026-09-26T21:54:06.147971-04:00"
+}

@@ -1,0 +1,32 @@
+{
+  "observed_at": "2026-09-27T02:39:00.787391-04:00",
+  "full_runtime_blob_count": 806,
+  "full_runtime_matches": true,
+  "config_sha256": "fa97a1db79cf2a4af4696b6c2f0eddf00945dbe536e8a65688f33429c53ce74f",
+  "leases": {
+    "mbit10-evaluation": {
+      "state": "released",
+      "generation": 77,
+      "kernel_held": false
+    },
+    "mbit10-evaluation-node0": {
+      "state": "held",
+      "generation": 347,
+      "kernel_held": true
+    },
+    "mbit10-evaluation-node1": {
+      "state": "released",
+      "generation": 443,
+      "kernel_held": false
+    }
+  },
+  "disk_available_bytes": {
+    "/data": 170506608640,
+    "/data1": 16999501824
+  },
+  "dispatch_files": {
+    "operator-preparation.json": 875,
+    "admission.json": 20798
+  },
+  "mutations": false
+}

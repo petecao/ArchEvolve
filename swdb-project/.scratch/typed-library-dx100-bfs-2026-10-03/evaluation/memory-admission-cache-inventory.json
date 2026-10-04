@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "kind": "bounded_read_only_pinned_model_toolchain_cache_inventory",
+  "created_utc": "2026-10-03T12:46:10.904247+00:00",
+  "elapsed_seconds": 0.13521053362637758,
+  "discovery_limit_seconds": 90,
+  "walk_completed": true,
+  "roots": [
+    "/data1/yanruj/DX100-bfs-e4fc4af/build",
+    "/data1/yanruj/DX100-bfs-e4fc4af/ext",
+    "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks",
+    "/data1/yanruj/llvm18/lib",
+    "/data1/yanruj/llvm18/bin"
+  ],
+  "counts": {
+    "visited_owned_regular_files": 9583,
+    "queried_files": 2598,
+    "errors": 0,
+    "active_file_exclusions": 0,
+    "recent_file_exclusions": 0,
+    "small_file_count": 6985
+  },
+  "owned_processes_inspected": 24,
+  "process_visibility_limits": [
+    {
+      "pid": 359656,
+      "comm": "(sd-pam)",
+      "reason": "protected_owned_process_metadata"
+    },
+    {
+      "pid": 1568304,
+      "comm": "sshd",
+      "reason": "protected_owned_process_metadata"
+    },
+    {
+      "pid": 3570805,
+      "comm": "qs",
+      "reason": "protected_owned_process_metadata"
+    }
+  ],
+  "minimum_queried_file_bytes": 65536,
+  "root_totals": {
+    "/data1/yanruj/DX100-bfs-e4fc4af/build": {
+      "queried_cached_bytes": 676474880,
+      "clean_unmapped_cached_bytes": 676474880
+    },
+    "/data1/yanruj/DX100-bfs-e4fc4af/ext": {
+      "queried_cached_bytes": 5197824,
+      "clean_unmapped_cached_bytes": 5197824
+    },
+    "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks": {
+      "queried_cached_bytes": 2523136,
+      "clean_unmapped_cached_bytes": 2523136
+    },
+    "/data1/yanruj/llvm18/lib": {
+      "queried_cached_bytes": 135147520,
+      "clean_unmapped_cached_bytes": 135147520
+    },
+    "/data1/yanruj/llvm18/bin": {
+      "queried_cached_bytes": 0,
+      "clean_unmapped_cached_bytes": 0
+    }
+  },
+  "observed_clean_unmapped_cached_bytes": 819343360,
+  "unqueried_small_owned_file_max_possible_cached_bytes": 75100160,
+  "selected_roots_cache_upper_bound_bytes": 894443520,
+  "six_gib_clean_cache_identified": false,
+  "large_candidate_inventory": [
+    {
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+      "device": 2097,
+      "inode": 57711533,
+      "owner_uid": 114316761,
+      "mode": "0o777",
+      "nlink": 1,
+      "size": 676472872,
+      "mtime_ns": 1790374647934626077,
+      "cached_bytes": 676474880,
+      "dirty_bytes": 0,
+      "writeback_bytes": 0,
+      "visible_fd_or_mapping": false
+    },
+    {
+      "path": "/data1/yanruj/llvm18/lib/libclang.so.18.1.8",
+      "device": 2097,
+      "inode": 54161600,
+      "owner_uid": 114316761,
+      "mode": "0o644",
+      "nlink": 1,
+      "size": 134954816,
+      "mtime_ns": 1720216275000000000,
+      "cached_bytes": 134955008,
+      "dirty_bytes": 0,
+      "writeback_bytes": 0,
+      "visible_fd_or_mapping": false
+    }
+  ],
+  "notes": [
+    "No input file contents read; metadata and cachestat only.",
+    "Visible open or mapped files and files modified in the last hour were excluded.",
+    "Protected authentication/control-process and other-user metadata limits visibility; no cache action authorized by this inventory.",
+    "NUMA placement unavailable. Future release requires concrete root review after timing jobs stop and fresh file/clean/use checks.",
+    "No cache advice, file data modification, deletion, process termination or job start."
+  ]
+}

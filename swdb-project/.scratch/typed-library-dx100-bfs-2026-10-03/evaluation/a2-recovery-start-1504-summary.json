@@ -1,0 +1,184 @@
+{
+  "format": "swdb.typed-library-a2-recovery-live-readback.v1",
+  "observed_at": "2026-10-03T19:06:49.117813+00:00",
+  "updated": "2026-10-03 15:07 ET",
+  "source": "6cfcd245ba34c8df5947307aad2cf2353400b281",
+  "branch": "yanrujhou_main",
+  "tracked_changes": "",
+  "leases": [
+    {
+      "name": "mbit10-evaluation-node0",
+      "kernel_held": true,
+      "metadata_state": "held",
+      "generation": 445
+    },
+    {
+      "name": "mbit10-evaluation-node1",
+      "kernel_held": false,
+      "metadata_state": "released",
+      "generation": 506
+    },
+    {
+      "name": "mbit10-evaluation",
+      "kernel_held": false,
+      "metadata_state": "released",
+      "generation": 77
+    }
+  ],
+  "driver": {
+    "id": "typed-library-bfs-gem5-20261003-a2",
+    "stage": "timed",
+    "state": "running",
+    "started": "2026-10-03T19:04:26.697413+00:00",
+    "runtime_commit": "6cfcd245ba34c8df5947307aad2cf2353400b281",
+    "recovery_id": "r1",
+    "recovery_manifest_sha256": "c61cb65b657f4cc343de2662e2cfdc48433675ea83b5662efd1c816a276200a0",
+    "preflight": {
+      "disk": "/data1",
+      "runs_folder": "/data1/yanruj/EvolveSWDB_runs",
+      "free_bytes": 44773130240,
+      "memory_node": 0,
+      "free_memory_bytes": 35932065792,
+      "secondary_free_bytes": 78837571584,
+      "node_memory_stats_bytes": {
+        "MemTotal": 66951016448,
+        "MemFree": 35932065792,
+        "Inactive(file)": 21265698816,
+        "Mapped": 972054528,
+        "Shmem": 6598656,
+        "Dirty": 446464,
+        "Writeback": 0,
+        "Unevictable": 40005632
+      },
+      "node_zone_reserve_bytes": 450916352,
+      "node_managed_memory_bytes": 66951016448,
+      "estimated_memory_capacity_bytes": 41760395264,
+      "memory_capacity_basis": "node_memfree_plus_conservative_inactive_file.v1",
+      "inactive_file_credit_bytes": 10123296768,
+      "node_memory_reserve_bytes": 4294967296,
+      "format": "swdb.dispatch-preflight.v1",
+      "observed_at": "2026-10-03T19:04:26.808098+00:00",
+      "planned_raw_bytes": 8589934592,
+      "reserve_bytes": 21474836480,
+      "memory_budget_bytes": 38654705664,
+      "state": "admitted"
+    },
+    "reason": null
+  },
+  "recovery": {
+    "manifest": {
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/a2-aggregation-failure-summary.json",
+      "sha256": "c61cb65b657f4cc343de2662e2cfdc48433675ea83b5662efd1c816a276200a0"
+    },
+    "original_driver": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/driver.json",
+      "sha256": "6b69c4796c97ff1b443b1bb10e14493435ecb7dadf2e7415fdb59320d82552d6",
+      "bytes": 5093
+    },
+    "original_runtime_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+    "failed_command": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate-aggregate.command.json",
+      "sha256": "d6eb159e730f6863154535bcedde7c114457c4e5c8544842a915d07f5af1ee38",
+      "bytes": 605
+    },
+    "reused": [
+      {
+        "stage": "timed.w0.baseline",
+        "record": {
+          "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation",
+          "sha256": "fd42274d782eb737bf0e3f6c7c766d6b4c382bb1debc3de6009ba3af05de9cb8"
+        },
+        "command": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline.command.json",
+          "sha256": "f3970ac47cdec9b5b5ec2580a013ebb1ef6dc1089dc19bf52a038a56e6b1fef6",
+          "bytes": 1110
+        },
+        "request": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline.request.json",
+          "sha256": "b1ba1dd3009bcecc5e57511226492daec0017f5b1465ba3fc1702e938d3343b7",
+          "bytes": 1769
+        },
+        "output": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline.json",
+          "sha256": "d1d24b509404835cd34ec88fa3769525cd1c5efc107bc2ccd03e0ae4f3f4b9a3",
+          "bytes": 248130
+        }
+      },
+      {
+        "stage": "timed.w0.candidate",
+        "record": {
+          "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation",
+          "sha256": "38a7e690f14c228b118031dec1f89b16b521c8af204eacb32bc15a8732d2d7eb"
+        },
+        "command": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate.command.json",
+          "sha256": "252a33e2568211107c0d881e74bc5cac73bbc423a8a257d3121f481916ecb28a",
+          "bytes": 1114
+        },
+        "request": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate.request.json",
+          "sha256": "caf4c0fd11aa3d3fbc3de0ce0fbbb15d1c3eecfab4d9d898c3144109ef8a54b1",
+          "bytes": 1782
+        },
+        "output": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.candidate.json",
+          "sha256": "e22e4cb6b41a7108c37950a24817dab5bc57f89ba37d1e7b8e6e19eb851ba68a",
+          "bytes": 257965
+        }
+      },
+      {
+        "stage": "timed.w0.baseline-aggregate",
+        "record": {
+          "id": "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.aggregate",
+          "sha256": "9b821fd4c8bbc207c64a4aa18ddb99f67a7f8b9b706c04d91d7d5e057ec49366"
+        },
+        "command": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline-aggregate.command.json",
+          "sha256": "203749fb9448fe13c317c402f7c4a50b968b0142e91ea45f413d1aecc723bbfb",
+          "bytes": 1079
+        },
+        "request": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline-aggregate.request.json",
+          "sha256": "8538feef3229e50cf7ccb5b82839c2fca7543e9236719bea8ac23155508b6c1b",
+          "bytes": 308
+        },
+        "output": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed/timed.w0.baseline-aggregate.json",
+          "sha256": "06a67357cdf5261153fa62fb7f37b13dba05f23ede0b228a2108883a8f0645ab",
+          "bytes": 385941
+        }
+      }
+    ],
+    "fresh_ids": [
+      "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.evaluation",
+      "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.evaluation",
+      "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w0.candidate.aggregate",
+      "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.aggregate",
+      "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.aggregate",
+      "typed-library-bfs-gem5-20261003-a2.recovery.r1.w0.comparison",
+      "typed-library-bfs-gem5-20261003-a2.recovery.r1.w1.comparison"
+    ],
+    "postprocessing_timeout_seconds": 3600
+  },
+  "progress": {
+    "stage": "recovery.r1.timed.w0.candidate-aggregate",
+    "command": "aggregate-evaluations",
+    "started": "2026-10-03T19:05:06.604109+00:00",
+    "state": "running",
+    "request_id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w0.candidate.aggregate",
+    "timeout_seconds": 3600,
+    "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 445)"
+  },
+  "owned_processes": [
+    "1605658  359742 Ss+        02:22 00:00:00 12748 /usr/bin/python3 /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-timed-r1/operator-wrapper.py",
+    "1605660 1605658 Ss         02:22 00:00:00  2092 timeout --signal=TERM --kill-after=90s 39000s bash /data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh 0 typed-library-bfs-gem5-20261003-a2-timed-r1 --record /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-timed-r1/lane.json --no-align --load1-max 8 --lease-timeout-s 30 -- /usr/bin/python3 tools/typed_library_gem5_driver.py --stage timed --id typed-library-bfs-gem5-20261003-a2 --recovery-id r1 --recovery-manifest /data1/yanruj/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/a2-aggregation-failure-summary.json --recovery-sha256 c61cb65b657f4cc343de2662e2cfdc48433675ea83b5662efd1c816a276200a0 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003",
+    "1605661 1605660 S          02:22 00:00:00  3852 bash /data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh 0 typed-library-bfs-gem5-20261003-a2-timed-r1 --record /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-timed-r1/lane.json --no-align --max-cell-age-s 900 --load1-max 8 --lease-timeout-s 30 -- /usr/bin/python3 tools/typed_library_gem5_driver.py --stage timed --id typed-library-bfs-gem5-20261003-a2 --recovery-id r1 --recovery-manifest /data1/yanruj/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/a2-aggregation-failure-summary.json --recovery-sha256 c61cb65b657f4cc343de2662e2cfdc48433675ea83b5662efd1c816a276200a0 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003",
+    "1605727 1605661 S          02:22 00:00:40 212904 /usr/bin/python3 tools/typed_library_gem5_driver.py --stage timed --id typed-library-bfs-gem5-20261003-a2 --recovery-id r1 --recovery-manifest /data1/yanruj/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/a2-aggregation-failure-summary.json --recovery-sha256 c61cb65b657f4cc343de2662e2cfdc48433675ea83b5662efd1c816a276200a0 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003",
+    "1605834 1605727 Rs         01:42 00:01:42 209608 /usr/bin/python3 -m swdb aggregate-evaluations --records /data1/yanruj/ArchEvolve/swdb-project/records --format json --db /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w0.candidate-aggregate.request.json"
+  ],
+  "uptime": "15:06:49 up 64 days,  7:25, 11 users,  load average: 2.43, 1.75, 1.48",
+  "limitations": [
+    "Running postprocessing is not a completed aggregate or qualified comparison.",
+    "Raw evidence and full independent final audit remain remote/pending."
+  ]
+}

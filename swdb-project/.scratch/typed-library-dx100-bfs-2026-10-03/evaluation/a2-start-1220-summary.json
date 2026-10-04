@@ -1,0 +1,42 @@
+{
+  "format": "swdb.a2-start-operator-readback.v1",
+  "observed_utc": "2026-10-03T16:21:36.030618+00:00",
+  "observed_et": "2026-10-03 12:21 ET",
+  "id": "typed-library-bfs-gem5-20261003-a2",
+  "source_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+  "branch": "yanrujhou_main",
+  "driver_stage": "prepare",
+  "driver_state": "running",
+  "driver_started_utc": "2026-10-03T16:20:12.366728+00:00",
+  "current_public_stage": "compile-baseline.primary",
+  "public_started_utc": "2026-10-03T16:21:14.067914+00:00",
+  "public_timeout_seconds": 660,
+  "driver_pid": 1589376,
+  "wrapper_pid": 1589310,
+  "outer_timeout_pid": 1589309,
+  "actual_lease_suffix": ".lease",
+  "leases": {
+    "node0": "kernel held/metadata held/generation442",
+    "node1": "kernel free/metadata released",
+    "legacy": "kernel free/metadata released"
+  },
+  "driver_sha256": "22d0a845472c218fb738669af8822d8449b4afe6422783a6f20b9c20e110aa91",
+  "tracked_changes": [],
+  "fresh_prepare_preflight": {
+    "state": "admitted",
+    "node": 0,
+    "literal_free_memory_bytes": 35514503168,
+    "estimated_memory_capacity_bytes": 41449029632,
+    "prepare_memory_budget_bytes": 4294967296,
+    "future_simulator_memory_budget_bytes": 38654705664,
+    "disk_free_bytes": 46124802048,
+    "secondary_free_bytes": 78837571584,
+    "planned_raw_bytes": 4294967296,
+    "disk_reserve_bytes": 21474836480
+  },
+  "actual_new_protocol_id": "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0",
+  "next_stages": "Only after actual preparation complete, run same-source companions; require strict exact public/raw observed acceptance before four fresh timed samples.",
+  "point_ratios": "none",
+  "evidence_origin": "Live independent root SSH outputs; mutable progress is unsealed, no raw copied or raw hash invented.",
+  "publication": "Pending until all measurements stop; no Git source/metadata sync during active stage."
+}

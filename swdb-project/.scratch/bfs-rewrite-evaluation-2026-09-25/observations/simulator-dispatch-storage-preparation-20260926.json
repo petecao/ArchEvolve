@@ -1,0 +1,88 @@
+{
+  "format": "swdb.local-repair-receipt.v1",
+  "date": "2026-09-26",
+  "timezone": "America/New_York",
+  "scope": "Exact simulator batch raw and sibling dispatch storage accounting; prospective simulator fixture IDs only. No host execution, fixed-plan edits, new bounds, or clock reset.",
+  "git_head": "953d9ea4eab90d067e60f99ad2b2051414ba3bc5",
+  "files": [
+    {
+      "repository_path": "scripts/bfs_simulator_batch.py",
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_batch.py",
+      "bytes": 44666,
+      "sha256": "43a82a80a4be40ab0aec85b76241ea94d332f89e0a0a7a10b385f0750a78d9f4",
+      "before_sha256": "17a61980fb944046ed06f2f500d90e94d5bddc80f56501e655eb11e39633630c"
+    },
+    {
+      "repository_path": "scripts/bfs_simulator_batch_terminal.py",
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_batch_terminal.py",
+      "bytes": 11995,
+      "sha256": "f21e7bcd7cc4ebeef86c66265c3405237fa206c81d92b6c2248b3cbccc7b291b",
+      "before_sha256": "5effde6def4b3ef140edd909121c96bb46a28a23b9af909fe3f5060f84bdcc45"
+    },
+    {
+      "repository_path": "scripts/bfs_linux_fixture.py",
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_linux_fixture.py",
+      "bytes": 13247,
+      "sha256": "8db5b5955e05271cebc0ae3dc7c50515f75e901e91edcc5b62b4b40beb784fe4",
+      "before_sha256": "36b1b61b35a07a8ad457ed94e2af152fc02188dbffc7d4d5246c411a3a45bf2d"
+    },
+    {
+      "repository_path": "tests/test_bfs_simulator_batch.py",
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_batch.py",
+      "bytes": 39628,
+      "sha256": "72fc34819f71895028be234c3db415efad6c24abeda229554816650813d03f10",
+      "before_sha256": "fe4831e6e5d2aeced110c643a8445c694f69872eb96be2232f86a4161583a575"
+    },
+    {
+      "repository_path": "tests/test_bfs_simulator_storage.py",
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_storage.py",
+      "bytes": 9194,
+      "sha256": "81867ad769ed24e9d6e1b2d305d34c0a42b29571b38e46f2bf04c5fe1e8c0220",
+      "before_sha256": null
+    }
+  ],
+  "root_owned_document": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-simulator-batches-20260926.md",
+    "bytes": 18231,
+    "sha256": "2ac984f3871defbf153cc728f64b304a38f3cac87c4d7d565931241607cde716"
+  },
+  "tests": [
+    {
+      "command": "python3 -m pytest tests/test_bfs_simulator_storage.py -q",
+      "result": "14 expected red cases in 0.17s; real allocated dispatch finalization case reproduced original omission; other cases include new API/route expectations",
+      "log": {
+        "path": "/private/tmp/bfs-simulator-dispatch-storage-red-20260926.log",
+        "bytes": 21092,
+        "sha256": "0746f080264b4d779a316251b8d1f134167c90f3cdca35641163e69cdcd4f323"
+      }
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_simulator_storage.py tests/test_bfs_simulator_batch.py -q",
+      "result": "78 passed, 2 Linux-only skipped in 15.86s",
+      "log": {
+        "path": "/private/tmp/bfs-simulator-dispatch-storage-green1-20260926.log",
+        "bytes": 191,
+        "sha256": "ec9544090952e857de251d07044dce47f2435684a0a8d49c6c26b769ee6b977e"
+      }
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_simulator_storage.py tests/test_bfs_simulator_batch.py tests/test_bfs_simulator_batch_admission.py tests/test_bfs_linux_fixture.py tests/test_bfs_linux_fixture_audit.py -q",
+      "result": "201 passed, 3 Linux-only skipped in 16.94s",
+      "log": {
+        "path": "/private/tmp/bfs-simulator-dispatch-storage-focused-20260926.log",
+        "bytes": 272,
+        "sha256": "3c797f64fcf03c4359eafac2ef8ffb636acf2d522bf3074883cbc1d9015fe096"
+      }
+    }
+  ],
+  "behavior": [
+    "Both live monitor and finalizer charge only canonical runs and exact sibling runs.dispatch, reject missing/symlinked/non-directory roots, retain both paths.",
+    "Large real allocated .dispatch file triggers original ceiling before any series; the same omission also fails finalization.",
+    "Terminal reader reopens exact frozen plan and historical preparation receipts/directories, validates persisted terminal driver binding, and recounts all files including post-helper/audit output.",
+    "Caller persists first terminal storage result then performs final read-only recheck after last charged-root write. No self-referential digest loop or side budget.",
+    "Simulator owned_cleanup/interruption fixed fixture routes use a2; unrun native_campaign route stays a1. Old proof/measurement pins unchanged."
+  ],
+  "terminal_api": "validate_storage_accounting(driver_ref, terminal_ref, *, current)",
+  "terminal_contract": "Already-persisted exact .dispatch/terminal-validation.json with id/state/driver path+hash, observed_at, lease_released:true, terminal cleanup_state. Independent full process and lease closure still required. Final readback does not prove empirical qualification.",
+  "validation": "git diff --check clean; focused files frozen; no more tests needed absent a new concrete defect."
+}

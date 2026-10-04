@@ -1,0 +1,172 @@
+{
+  "budget": {
+    "per_command_seconds": 3,
+    "total_seconds": 15
+  },
+  "commands": [
+    {
+      "command": [
+        "date",
+        "--iso-8601=seconds"
+      ],
+      "returncode": 0,
+      "state": "complete",
+      "stderr": "",
+      "stdout": "2026-10-03T09:06:08-04:00\n",
+      "timeout_seconds": 3
+    },
+    {
+      "command": [
+        "uptime"
+      ],
+      "returncode": 0,
+      "state": "complete",
+      "stderr": "",
+      "stdout": " 09:06:08 up 64 days,  1:25,  9 users,  load average: 1.36, 1.21, 1.33\n",
+      "timeout_seconds": 3
+    },
+    {
+      "command": [
+        "who"
+      ],
+      "returncode": 0,
+      "state": "complete",
+      "stderr": "",
+      "stdout": "yanruj   pts/0        2026-10-03 09:05 (tmux(359742).%639)\n",
+      "timeout_seconds": 3
+    },
+    {
+      "command": [
+        "df",
+        "-h",
+        "/data1",
+        "/data"
+      ],
+      "returncode": 0,
+      "state": "complete",
+      "stderr": "",
+      "stdout": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   44G  98% /data1\n/dev/sdb1       1.8T  1.7T   74G  96% /data\n",
+      "timeout_seconds": 3
+    },
+    {
+      "command": [
+        "free",
+        "-h"
+      ],
+      "returncode": 0,
+      "state": "complete",
+      "stderr": "",
+      "stdout": "               total        used        free      shared  buff/cache   available\nMem:           125Gi       8.0Gi        52Gi        14Mi        66Gi       117Gi\nSwap:             0B          0B          0B\n",
+      "timeout_seconds": 3
+    },
+    {
+      "command": [
+        "cat",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
+      ],
+      "returncode": 1,
+      "state": "unavailable",
+      "stderr": "cat: /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor: No such file or directory\n",
+      "stdout": "",
+      "timeout_seconds": 3
+    },
+    {
+      "command": [
+        "cat",
+        "/sys/devices/system/cpu/intel_pstate/no_turbo"
+      ],
+      "returncode": 1,
+      "state": "unavailable",
+      "stderr": "cat: /sys/devices/system/cpu/intel_pstate/no_turbo: No such file or directory\n",
+      "stdout": "",
+      "timeout_seconds": 3
+    },
+    {
+      "command": [
+        "lscpu"
+      ],
+      "returncode": 0,
+      "state": "complete",
+      "stderr": "",
+      "stdout": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           46 bits physical, 57 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  64\nOn-line CPU(s) list:                     0-63\nVendor ID:                               GenuineIntel\nModel name:                              Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz\nCPU family:                              6\nModel:                                   106\nThread(s) per core:                      2\nCore(s) per socket:                      16\nSocket(s):                               2\nStepping:                                6\nBogoMIPS:                                5800.00\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 intel_ppin ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect wbnoinvd dtherm ida arat pln pts vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid fsrm md_clear pconfig flush_l1d arch_capabilities\nVirtualization:                          VT-x\nL1d cache:                               1.5 MiB (32 instances)\nL1i cache:                               1 MiB (32 instances)\nL2 cache:                                40 MiB (32 instances)\nL3 cache:                                48 MiB (2 instances)\nNUMA node(s):                            2\nNUMA node0 CPU(s):                       0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62\nNUMA node1 CPU(s):                       1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63\nVulnerability Gather data sampling:      Mitigation; Microcode\nVulnerability Indirect target selection: Mitigation; Aligned branch/return thunks\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Mitigation; Clear CPU buffers; SMT vulnerable\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Not affected\n",
+      "timeout_seconds": 3
+    },
+    {
+      "command": [
+        "numactl",
+        "--hardware"
+      ],
+      "returncode": 0,
+      "state": "complete",
+      "stderr": "",
+      "stdout": "available: 2 nodes (0-1)\nnode 0 cpus: 0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62\nnode 0 size: 63849 MB\nnode 0 free: 30509 MB\nnode 1 cpus: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47 49 51 53 55 57 59 61 63\nnode 1 size: 64496 MB\nnode 1 free: 23506 MB\nnode distances:\nnode   0   1 \n  0:  10  20 \n  1:  20  10 \n",
+      "timeout_seconds": 3
+    },
+    {
+      "command": [
+        "uname",
+        "-a"
+      ],
+      "returncode": 0,
+      "state": "complete",
+      "stderr": "",
+      "stdout": "Linux mbit10 6.8.0-136-generic #136-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 21:53:05 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux\n",
+      "timeout_seconds": 3
+    },
+    {
+      "command": [
+        "cat",
+        "/sys/devices/system/node/node0/meminfo"
+      ],
+      "returncode": 0,
+      "state": "complete",
+      "stderr": "",
+      "stdout": "Node 0 MemTotal:       65381852 kB\nNode 0 MemFree:        31241848 kB\nNode 0 MemUsed:        34140004 kB\nNode 0 SwapCached:            0 kB\nNode 0 Active:          2273096 kB\nNode 0 Inactive:       23855388 kB\nNode 0 Active(anon):     500464 kB\nNode 0 Inactive(anon):    46200 kB\nNode 0 Active(file):    1772632 kB\nNode 0 Inactive(file): 23809188 kB\nNode 0 Unevictable:       39068 kB\nNode 0 Mlocked:           35996 kB\nNode 0 Dirty:                20 kB\nNode 0 Writeback:             0 kB\nNode 0 FilePages:      25603032 kB\nNode 0 Mapped:           949364 kB\nNode 0 AnonPages:        564676 kB\nNode 0 Shmem:              6448 kB\nNode 0 KernelStack:       12424 kB\nNode 0 PageTables:        12472 kB\nNode 0 SecPageTables:         0 kB\nNode 0 NFS_Unstable:          0 kB\nNode 0 Bounce:                0 kB\nNode 0 WritebackTmp:          0 kB\nNode 0 KReclaimable:    5105472 kB\nNode 0 Slab:            6073324 kB\nNode 0 SReclaimable:    5075508 kB\nNode 0 SUnreclaim:       997816 kB\nNode 0 AnonHugePages:         0 kB\nNode 0 ShmemHugePages:        0 kB\nNode 0 ShmemPmdMapped:        0 kB\nNode 0 FileHugePages:         0 kB\nNode 0 FilePmdMapped:         0 kB\nNode 0 Unaccepted:            0 kB\nNode 0 HugePages_Total:     0\nNode 0 HugePages_Free:      0\nNode 0 HugePages_Surp:      0\n",
+      "timeout_seconds": 3
+    },
+    {
+      "command": [
+        "cat",
+        "/sys/devices/system/node/node1/meminfo"
+      ],
+      "returncode": 0,
+      "state": "complete",
+      "stderr": "",
+      "stdout": "Node 1 MemTotal:       66044412 kB\nNode 1 MemFree:        24070576 kB\nNode 1 MemUsed:        41973836 kB\nNode 1 SwapCached:            0 kB\nNode 1 Active:          1288728 kB\nNode 1 Inactive:       13917464 kB\nNode 1 Active(anon):     100376 kB\nNode 1 Inactive(anon):    11544 kB\nNode 1 Active(file):    1188352 kB\nNode 1 Inactive(file): 13905920 kB\nNode 1 Unevictable:         184 kB\nNode 1 Mlocked:             184 kB\nNode 1 Dirty:                 0 kB\nNode 1 Writeback:             0 kB\nNode 1 FilePages:      15102556 kB\nNode 1 Mapped:            78100 kB\nNode 1 AnonPages:        104008 kB\nNode 1 Shmem:              8144 kB\nNode 1 KernelStack:       10120 kB\nNode 1 PageTables:         5096 kB\nNode 1 SecPageTables:         0 kB\nNode 1 NFS_Unstable:          0 kB\nNode 1 Bounce:                0 kB\nNode 1 WritebackTmp:          0 kB\nNode 1 KReclaimable:   23828044 kB\nNode 1 Slab:           25301104 kB\nNode 1 SReclaimable:   23764960 kB\nNode 1 SUnreclaim:      1536144 kB\nNode 1 AnonHugePages:         0 kB\nNode 1 ShmemHugePages:        0 kB\nNode 1 ShmemPmdMapped:        0 kB\nNode 1 FileHugePages:         0 kB\nNode 1 FilePmdMapped:         0 kB\nNode 1 Unaccepted:            0 kB\nNode 1 HugePages_Total:     0\nNode 1 HugePages_Free:      0\nNode 1 HugePages_Surp:      0\n",
+      "timeout_seconds": 3
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "--abbrev-ref",
+        "HEAD"
+      ],
+      "returncode": 0,
+      "state": "complete",
+      "stderr": "",
+      "stdout": "yanrujhou_main\n",
+      "timeout_seconds": 3
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "returncode": 0,
+      "state": "complete",
+      "stderr": "",
+      "stdout": "f642a94ba41e79f79b28a540cb8d758e15bec633\n",
+      "timeout_seconds": 3
+    }
+  ],
+  "cwd": "/data1/yanruj/ArchEvolve/swdb-project",
+  "evidence_kind": "execution",
+  "finished": "2026-10-03T13:06:08.440600+00:00",
+  "format": "swdb.host-observation.v1",
+  "host": "mbit10",
+  "host_cost_is_bfs_performance": false,
+  "host_wall_s": 0.08117531333118677,
+  "started": "2026-10-03T13:06:08.359456+00:00"
+}

@@ -1,0 +1,65 @@
+{
+  "observed_at": "2026-09-27T02:38:30.314437-04:00",
+  "state": "independent_actual_admission_passed",
+  "admission": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1.dispatch/admission.json",
+    "sha256": "60552ea7faabd4145873b17817d986bb3eec675b369d80163da28ef5c6ec6871"
+  },
+  "runtime_commit": "07baead5fe5cf3718e18e1d2313db6899f2638c8",
+  "all_inputs_and_proofs_validated": true,
+  "runtime_clean": true,
+  "python": {
+    "path": "/usr/bin/python3.12",
+    "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+  },
+  "clock": {
+    "not_before": "2026-09-27T02:36:51.689801-04:00",
+    "latest_start": "2026-09-27T03:13:39.851819-04:00",
+    "absolute_end": "2026-09-27T09:14:09.851819-04:00"
+  },
+  "preparation_charges": [
+    {
+      "id": "bfs-gem5-gzip-transport-20260926-a1",
+      "elapsed_seconds": 472,
+      "raw_bytes": 200704
+    },
+    {
+      "id": "bfs-t15-simulator-batch-20260926-a1",
+      "elapsed_seconds": 1124,
+      "raw_bytes": 11014971392
+    },
+    {
+      "id": "bfs-t15-correction-linux-20260926-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    },
+    {
+      "id": "bfs-t15-correction-simulator-batch-20260926-a1",
+      "elapsed_seconds": 201,
+      "raw_bytes": 11886592
+    },
+    {
+      "id": "bfs-t15-setup-recovery-linux-20260926-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    },
+    {
+      "id": "bfs-supervision-recovery-linux-20260926-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    },
+    {
+      "id": "bfs-t15-supervision-recovery-simulator-batch-20260926-a1",
+      "elapsed_seconds": 4551,
+      "raw_bytes": 1433210880
+    },
+    {
+      "id": "bfs-supervision-lease-recovery-linux-20260927-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    }
+  ],
+  "no_historical_proof_alias": true,
+  "no_launch_yet": true,
+  "mutations": false
+}

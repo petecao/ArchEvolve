@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-27 ET",
+  "scope": "Read-only78-ref audit of divergentrecords/docs/observations/requests/operators; implementation runtime source reviewed separately by otherworker",
+  "current": "9b852952a21a91caf23eb5a23682056a812ccc80",
+  "verdict": "No additional content merge needed in scopedpaths; preserve currenttree and retain branch tips as mergeparents",
+  "audit_counts": {
+    "unique_paths": 28,
+    "blob_variants": 29,
+    "branch_only": []
+  },
+  "newly_fetched_a6": {
+    "commit": "bc6cc7ba2ee618450822e6d158a42a2bf18daadf",
+    "mergebase": "08a373d14a64ed2b935601fd7f9ec47b137115a3",
+    "changed_paths": 3,
+    "every_changed_path_mode_and_blob_identical_to_current": true,
+    "mismatches": []
+  },
+  "exact_record_blobs": {
+    "records/evaluations/bfs-dx100-build-20260925-a2.yaml": "ec6db8a43db6fcb6af668f835475e04e7a05fb83",
+    "records/hardware_targets/dx100-e4fc4af-4c.yaml": "0e9187d76395eebbbf7d7dc895ab48f682c1c311"
+  },
+  "reasoning": [
+    "Currentdocs/observations extend stale preparation-only variants with export/readiness/failure/cleanup/provenance updates; no branch-exclusive validmetadata found",
+    "Older buildrecord lacks generated_tracked_object_cleanup receipt; currentrecord preserves that append and equals newlyfetcheda6 bytes",
+    "Olderhardwaretarget note says nobuild; currentnote accurately points to buildonly receipt and retains nonacceptance boundary; equalsa6",
+    "Oldplanvariants reference historicalcoveragea1 or olderproofmaps; currentcanonicalhistoricalplans retain reviewedcorrections and laterbranchesremainhistoricallyretrievable",
+    "Providercontext2 node1 vsnode0 variants are intentional and both documentedwithexactGitpins; do notoverwritecurrentnode0variant just because actualdispatchusedhistoricalnode1commit",
+    "Only2branch-onlyfilesareaccidental__pycache__blobs fromnever-dispatcheda1; exclude frommaincontent whilepreservingcommitancestry"
+  ],
+  "changes_made": false
+}

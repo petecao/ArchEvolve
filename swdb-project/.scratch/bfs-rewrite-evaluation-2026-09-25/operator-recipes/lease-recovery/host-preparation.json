@@ -1,0 +1,56 @@
+{
+  "created": "2026-09-27",
+  "observed_at": "2026-09-27T02:29:21.913457-04:00",
+  "scope": "bounded read-only host verification; no proof launch",
+  "runtime": {
+    "root": "/data1/yanruj/EvolveSWDB_lease_recovery_runtime_20260927_a1",
+    "commit": "07baead5fe5cf3718e18e1d2313db6899f2638c8",
+    "files": 806,
+    "source_bytes": 14219422,
+    "manifest_bytes": 136935,
+    "manifest_sha256": "4f3b76a4d0d947afacc1985d9d3a7f126857163599aee26c02eece62fd87b781",
+    "exact_git_bytes_modes_names": true,
+    "no_untracked_runtime_files": true,
+    "observed_epoch": 1790490529.2275405
+  },
+  "helper_comparison": {
+    "created": "2026-09-27",
+    "observed_at": "2026-09-27T02:27:27-04:00",
+    "reviewed": true,
+    "host_subtree_equal": true,
+    "method": "git fetch origin; git diff --quiet HEAD @{upstream} -- AgenticRefiner/scripts/host; direct sha256sum",
+    "checkout": "/data1/yanruj/Memacc-evolveswdb-lane",
+    "checkout_commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+    "fetched_upstream_commit": "2ffb83aeb98cb6a3e57314a2308ef7c1bba99ef8"
+  },
+  "leases": {
+    "legacy": {
+      "state": "released",
+      "generation": 77,
+      "kernel_held": false,
+      "metadata_sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0"
+    },
+    "node0": {
+      "state": "held",
+      "generation": 346,
+      "kernel_held": true,
+      "metadata_sha256": "23f31f2ef696b5867655a7a4efd7ac9625389b84d7d930b887d24560b0698841"
+    },
+    "node1": {
+      "state": "released",
+      "generation": 440,
+      "kernel_held": false,
+      "metadata_sha256": "7b84304fb767f5e987daa03e00a2956bb2ab53d89c53107b9b92e076fd4e20b9"
+    }
+  },
+  "new_five_roots_and_final_receipt_absent": true,
+  "available_bytes": {
+    "/data1": 17071951872,
+    "/data": 170813681664
+  },
+  "python_pytest_direct_identity_matches_config": true,
+  "config_local_validation": "operator.load_config passed; host guard repeated at dispatch",
+  "config_sha256": "075ae30112e8b4ddb7854f449a1e4277f5ef9608fff335553e066785a208f7bd",
+  "operator_sha256": "e8eebe45c5525cfe6b385653c4139cb0230769c9786bfdc344256b31a291915d",
+  "launch_sha256": "46c0da7a2f679b2e5e35ee1d1322bbd9c813aafc68e605192e796d1807ae1ffc"
+}

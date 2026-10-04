@@ -1,0 +1,197 @@
+{
+  "created": "2026-09-26T19:04:48.641630-04:00",
+  "scope": "Independent narrow diagnosis and next-phase admission lesson; no source change, third standalone readback, fixture, host call, or experiment",
+  "decision": "Preserve both failed native standalone readbacks and dirty historical5e8. Defer full native qualification to the already-required prospective prepare/publish phase, with separately fixed finite aggregate accounting.",
+  "result": "No additional standalone-native-readback gate found. A2 simulator remains independent of native qualification after current operational closure and its own fresh admission.",
+  "actual_failed_attempt": {
+    "id": "bfs-native-one-thread-readback-20260926-a2",
+    "reported_started": "2026-09-26T19:00:20-04:00",
+    "failure": "campaign_runtime -> validate_root_entries: tested root contains an untracked import or metadata entry",
+    "stage": "before pinned_readback; no reader spawn or events",
+    "supervisor_commit": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+    "tracked_git_clean": true,
+    "sole_extra_root_entry": ".pytest_cache",
+    "cache_mtime": "2026-09-26T18:42:49.573145-04:00",
+    "cache_children": [
+      ".gitignore",
+      "v",
+      "CACHEDIR.TAG",
+      "README.md"
+    ],
+    "cache_preserved": true,
+    "terminal_audit": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2.dispatch/terminal-validation.json",
+      "bytes": 11104,
+      "sha256": "33ff5c13e67bc317156014c800a17d02aaf27107e28631aa2efbfe6e2dc68e33"
+    },
+    "terminal_audited_at": "2026-09-26T19:01:55-04:00",
+    "outer_exit": 1,
+    "helper_exit": 1,
+    "node": 0,
+    "lease_generation": 328,
+    "released_and_kernel_clear_observations": 2,
+    "retained_identity_observations": 2,
+    "retained_identity_union": [
+      {
+        "pid": 3081575,
+        "start_ticks": 496555297,
+        "state": "Z",
+        "rss_bytes": 0,
+        "role": "exact_tmux_pane"
+      },
+      {
+        "pid": 3081578,
+        "start_ticks": 496555303,
+        "state": "absent",
+        "role": "timeout"
+      },
+      {
+        "pid": 3081579,
+        "start_ticks": 496555303,
+        "state": "absent",
+        "role": "helper"
+      },
+      {
+        "pid": 3081648,
+        "start_ticks": 496555328,
+        "state": "absent",
+        "role": "recipe"
+      }
+    ],
+    "limitations": "Host-reported actual retained identity closure; no independent remote rehash or scan here. Do not reconstruct ephemeral startup Git identities or equate sampled union with complete historical process coverage."
+  },
+  "manual_fixture_command": {
+    "cwd": "/data1/yanruj/EvolveSWDB_bfs_reader_20260926_a2",
+    "argv": [
+      "/data1/yanruj/venvs/evolveswdb-test/bin/python3",
+      "-s",
+      "-m",
+      "pytest",
+      "tests/test_bfs_one_thread_freeze.py::test_linux_fast_reader_retains_actual_unreaped_identity",
+      "--basetemp=/data/yanruj/EvolveSWDB_runs/bfs-native-reader-fast-exit-linux-20260926-a1/pytest",
+      "--junitxml=/data/yanruj/EvolveSWDB_runs/bfs-native-reader-fast-exit-linux-20260926-a1/junit.xml",
+      "-q"
+    ],
+    "cacheprovider_disabled": false,
+    "cache_dir_redirected": false,
+    "observed_controls": [
+      "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+      "PYTHONDONTWRITEBYTECODE=1"
+    ],
+    "lesson": "Neither control disables pytest built-in cacheprovider. The manual fixture wrote .pytest_cache at its execution time. The fixture proof remains genuine lifecycle evidence, but does not establish a subsequently pristine root."
+  },
+  "source_findings": [
+    {
+      "path": "scripts/bfs_native_campaign.py",
+      "lines": [
+        85,
+        91,
+        95,
+        100
+      ],
+      "finding": "Root inventory includes ignored entries; tracked-clean git status does not satisfy this production runtime guard. .gitignore ignores .pytest_cache at line4."
+    },
+    {
+      "path": "/private/tmp/bfs-native-readback-a2-preflight-v2-20260926.md",
+      "lines": [
+        13,
+        21
+      ],
+      "finding": "Preflight explicitly required pristine runtime before launch; manual-fixture section fixed selector/proof but omitted a cache-disabled full command."
+    },
+    {
+      "path": "scripts/bfs_freeze_pilot.py",
+      "lines": [
+        697,
+        707,
+        709,
+        429
+      ],
+      "finding": "Both prepare and publish execute prepare; explicit one-thread prepare invokes qualification again. Neither accepts a prior standalone readback file."
+    },
+    {
+      "path": "scripts/bfs_one_thread_calibration.py",
+      "lines": [
+        190,
+        197,
+        300,
+        302
+      ],
+      "finding": "Each qualification invokes the pristine original319 reader with its own900 work+30 cleanup cap, and unchanged original arguments/result checks."
+    },
+    {
+      "path": "scripts/bfs_simulator_batch.py",
+      "lines": [
+        257,
+        269
+      ],
+      "finding": "Simulator prerequisites require A3/A2/paired/provider evidence; no standalone native qualification dependency."
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/spec.md",
+      "lines": [
+        362,
+        364
+      ],
+      "finding": "Attempt/time/resource limits precede execution; calibration and freeze precede candidate assessment. No mandatory separate standalone reader phase is specified."
+    }
+  ],
+  "future_preparation_only": [
+    "Keep the existing5e8 checkout/cache, manual proof and both readback failures unchanged. Do not silently clean them and relaunch a2.",
+    "Use a fresh exact future publisher checkout after authorized metadata imports; freeze its HEAD and explicit runtime inventory before standard Linux proofs.",
+    "Use reviewed standard cache-disabled pytest commands (-p no:cacheprovider), retained external --basetemp/JUnit paths and controlled environment; retain exact full argv.",
+    "Run the real production campaign_runtime on the intended checkout after preparation and again before any later publisher launch; ordinary tracked-clean Git checks are insufficient.",
+    "Plan both source-specific prepare and publish operations explicitly: four fresh reader invocations, at most4*(900+30)=3720 reader seconds, plus prospectively bounded shared metadata/public-get/artifact-hash/finalization work. This is not an accepted or launched budget yet.",
+    "Do not promote the native study until later full original319 validation, all fresh diagnostics/control gates and shared T15 accelerator package gates actually pass; published outputs must revalidate their review.",
+    "A2 may use its separately admitted tested5a0 plan after current cleanup and host gates; retain same21:00 latest start,3600 originalclock,node0-only and no retry."
+  ],
+  "retained_local_inputs": [
+    {
+      "path": "/private/tmp/bfs-native-reader-fast-exit-actual-20260926.json",
+      "bytes": 4368,
+      "sha256": "f3cc5db3b2039b27dc2733dad725feafcd170eec06947f6bb1395d246f037e2e"
+    },
+    {
+      "path": "/private/tmp/bfs-native-readback-a2-preflight-v2-20260926.md",
+      "bytes": 9298,
+      "sha256": "2c65efe08a4a3c7b399bdf04d2c662e9bd01b462010583e2f0433a632b8e14f6"
+    },
+    {
+      "path": "/private/tmp/bfs-native-readback-a2-recipe-20260926.py",
+      "bytes": 17626,
+      "sha256": "cc1d2dda1d0c3498c0c12312183249b700fbec983bbba6f0e7e2d40510047339"
+    },
+    {
+      "path": "/private/tmp/bfs-a2-corrected-fixtures-standards-review-20260926.json",
+      "bytes": 9354,
+      "sha256": "0724a386555068b235e6524f99b2cb6a5bb9e3fd7e68003db48200f7453e23f7"
+    }
+  ],
+  "exact_publisher_code_pins": [
+    {
+      "commit": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+      "path": "scripts/bfs_native_campaign.py",
+      "bytes": 72515,
+      "sha256": "e341ada6cec7ee628c7fb75576b47f863ce4b6d30059ae100ad5acdea58cb0e4"
+    },
+    {
+      "commit": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+      "path": "scripts/bfs_one_thread_calibration.py",
+      "bytes": 23642,
+      "sha256": "77fc98b00e745122668b35e7b1f3bbe383a80009315a5a24865f992b08da201a"
+    },
+    {
+      "commit": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+      "path": "scripts/bfs_freeze_pilot.py",
+      "bytes": 54032,
+      "sha256": "6607a22eaae8d10e8f31c7dd53b80aa3fe4944935c3a1edc4f72514e015be5c6"
+    },
+    {
+      "commit": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+      "path": ".gitignore",
+      "bytes": 225,
+      "sha256": "5eb3ac6d7e1cf60658c61a3c09d4d3ee02de7c792aabddf7351b50028f3ea5b0"
+    }
+  ],
+  "actual_evidence_basis": "Host typed messages confirming exact command/cache metadata/error and terminal audit; local source/read-only contract inspection. No host mutation or further test."
+}

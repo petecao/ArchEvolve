@@ -1,0 +1,187 @@
+{
+  "created": "2026-09-26T22:20:54.757993-04:00",
+  "kind": "exact combined reviewed runtime export; local preparation only",
+  "source_commit": "99005ee11272115dd2275ea078beb478d03738bf",
+  "commit": "37c02c55ed01e8d26e543d7c40703c488b37ee66",
+  "sole_parent": "d5e215966a7d4d673050a78c6a6d77053aa62a85",
+  "branch": "codex/bfs-recovery-runtime-20260926-a1",
+  "destination": "git@github.com:ruchou/EvolveSWDB.git",
+  "files": [
+    {
+      "path": "scripts/bfs_native_campaign.py",
+      "mode": "100644",
+      "git_blob": "e4a6722e27be92062b3b7f93656058aa2c206d36",
+      "bytes": 79769,
+      "sha256": "e044cd1ad724d590446bde54bf2dff23bfa47199d4026f1456e66c68952d3835"
+    },
+    {
+      "path": "scripts/bfs_simulator_series.py",
+      "mode": "100644",
+      "git_blob": "a08a8faf731162bc1fc37bede5b59c9048375663",
+      "bytes": 34217,
+      "sha256": "09757ee71ac13ace2b7d0cbea0a0ba5b8efb3dd22042189cc0029c5e4cc38bbb"
+    },
+    {
+      "path": "scripts/bfs_storage.py",
+      "mode": "100644",
+      "git_blob": "5d0504c88685190500c070b38114d29904b2a5a5",
+      "bytes": 4824,
+      "sha256": "20dd7dd37c512a36ac37d7f9b94ec3235eb4ff86753587f4b0bb3fbb93646054"
+    },
+    {
+      "path": "scripts/bfs_t17_diagnostic_build.py",
+      "mode": "100644",
+      "git_blob": "6e1cfe9c8187782e346ef389c57834ad476cb876",
+      "bytes": 19903,
+      "sha256": "d58d70b0743725a413254e49cc89bd509b1dedb6370930809b082fa4277f99b8"
+    },
+    {
+      "path": "tests/test_bfs_native_execution.py",
+      "mode": "100644",
+      "git_blob": "878e77f9bc1ef47b324913b1ecf2c6be2d0af144",
+      "bytes": 25280,
+      "sha256": "6c2e67c4af9e841322421fb93689785a0e96737ce9402dbd18bf985ebf327ff9"
+    },
+    {
+      "path": "tests/test_bfs_native_storage.py",
+      "mode": "100644",
+      "git_blob": "edc0455d92003f5de69c8b72480094ccb5c20e6d",
+      "bytes": 9957,
+      "sha256": "14e7586274276213396367b774cb5058331730f563128170d25099b4daac95e7"
+    },
+    {
+      "path": "tests/test_bfs_simulator_primary_reuse.py",
+      "mode": "100644",
+      "git_blob": "bf8d35140275c9cb4948f55b9f0e2196fa926511",
+      "bytes": 4471,
+      "sha256": "c7f36f2de27aef62b48fca28089715d0975d89e1be749fe86c2c530f7aeaf20d"
+    },
+    {
+      "path": "tests/test_bfs_simulator_series.py",
+      "mode": "100644",
+      "git_blob": "cad72e458d780fe1ce8c4c157c2255828dac66b6",
+      "bytes": 35420,
+      "sha256": "8b6d3a0a4b0b97ff700cecf2e524774a204bdd740ad299b032726a96ef47f80b"
+    },
+    {
+      "path": "tests/test_bfs_storage.py",
+      "mode": "100644",
+      "git_blob": "92a85add03b1d6d11eeccad1a024c9fc36a3f133",
+      "bytes": 14389,
+      "sha256": "ec57c2785bdb2b1abc970a598a9cce45fa0599881a9f82f32acdbc318fec285e"
+    },
+    {
+      "path": "tests/test_bfs_t17_diagnostic_build.py",
+      "mode": "100644",
+      "git_blob": "a745ec9a0673addb256d9cfdfea102a15b2809ee",
+      "bytes": 14539,
+      "sha256": "a81c2f5c813f12bdbaba42d2a16f3b0ed0eca230e39f620c07f098e506ed6873"
+    },
+    {
+      "path": "docs/bfs-native-reassessment-20260926.md",
+      "mode": "100644",
+      "git_blob": "3699ebb90fed3a7639cff4ab33381582ff768813",
+      "bytes": 12915,
+      "sha256": "9106ede1dea65e677876f78303d4b3b5054acc8ee2d604d27929d358e295c279"
+    },
+    {
+      "path": "docs/bfs-simulator-primary-reuse-20260926.md",
+      "mode": "100644",
+      "git_blob": "126845bf9eaf96d9cb13dea89c09d4af28dd86cb",
+      "bytes": 2198,
+      "sha256": "7295acb4a84c315edc1744f169d3c8415332a548e9de9228809f3e148e99beaf"
+    },
+    {
+      "path": "docs/bfs-storage-transient-entries-20260926.md",
+      "mode": "100644",
+      "git_blob": "ec33d87a8fe47a8f7b043937507967fa123fa528",
+      "bytes": 2631,
+      "sha256": "436d2bd13c8f24fd2e8529c72f7594c99a190776f50a2e0bd6a89849531c1bd6"
+    },
+    {
+      "path": "docs/bfs-t17-diagnostic-build-20260926.md",
+      "mode": "100644",
+      "git_blob": "562104110f3007fff9cbf7a7e7c9da70e5351156",
+      "bytes": 4890,
+      "sha256": "c0a940859cc895587f29158c434245ceb3d3a21b3d8f5896f824508132411941"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/t17-diagnostic-build-only-20260926-a1.json",
+      "mode": "100644",
+      "git_blob": "4f5c2486b7ada0b57b616a8da85ee20210fead68",
+      "bytes": 561,
+      "sha256": "272def5a75dd974d8fa46b3ccdd56016ea1ddf0f2af545990fc02cc25405e5c1"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/t17-build-only-terminal-20260926.json",
+      "mode": "100644",
+      "git_blob": "59bb459fb2d3c15f3b39aadf0ca3fcb68baa71ed",
+      "bytes": 1930,
+      "sha256": "a124548a4d1e71003faeb895d9e09d1e060933ba41a99f1d9ae282689c886536"
+    },
+    {
+      "path": "scripts/bfs_simulator_batch.py",
+      "mode": "100644",
+      "git_blob": "50c7158205a93d1b37f9319cf4ee9157714f2d46",
+      "bytes": 66837,
+      "sha256": "cdb9fefb2925846f7890aac9d4d53734391f969c9adf657753f878854688022b"
+    },
+    {
+      "path": "scripts/bfs_linux_fixture.py",
+      "mode": "100644",
+      "git_blob": "8fb8b1ec4742e7a8f23cfbefc55d309ea77fb880",
+      "bytes": 13323,
+      "sha256": "81b4dd01692be4e27685abbe7561b9b40b33d39262589557e0a715fb6db72ee9"
+    },
+    {
+      "path": "tests/test_bfs_owned_execution.py",
+      "mode": "100644",
+      "git_blob": "7ebfa80064c77909004a65f232d59f381639574f",
+      "bytes": 17237,
+      "sha256": "94d962417a38790b38fe4279ae33ea1d761511851b21358ec44bfc049a6de10f"
+    },
+    {
+      "path": "tests/test_bfs_linux_fixture.py",
+      "mode": "100644",
+      "git_blob": "c06d9b051f794d7c47b9028fd61d0dc2c4e0172a",
+      "bytes": 10156,
+      "sha256": "69a0be09e3b90b7bf3ff45d32dc67d88d646de8109dab2f1d62032b50ac1252c"
+    },
+    {
+      "path": "tests/test_bfs_simulator_storage.py",
+      "mode": "100644",
+      "git_blob": "477f826b3a755ad5911ac322b0da7934b2c3cb86",
+      "bytes": 9194,
+      "sha256": "230ee542835c361ec11b2610bd23568ef8f35ba5c5ec74729a89b0de7139dcec"
+    },
+    {
+      "path": "tests/test_bfs_simulator_setup_recovery.py",
+      "mode": "100644",
+      "git_blob": "3a9e8695b8184ae31348b89cd1111e2394aca35b",
+      "bytes": 15620,
+      "sha256": "b420903cd0423af44908f44575a306c701b17f6733e238930c68769435e21d37"
+    },
+    {
+      "path": "docs/bfs-t15-setup-recovery-20260926.md",
+      "mode": "100644",
+      "git_blob": "865d4aaf656024e964edfc6b3455ca6e81b0c591",
+      "bytes": 6053,
+      "sha256": "0b1df4cbc337e4b8d8cccc5bab673e56e7fd758eaf1bcc07e4c583156ae2c6b0"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-setup-recovery-simulator-batch-20260926-a1.json",
+      "mode": "100644",
+      "git_blob": "97882dd5663f1db82cd4b192387fc843ef4d160a",
+      "bytes": 12215,
+      "sha256": "edf0d8e908247b1f8e3a66c471c463c5b7a442237336d37d20c52accf6d987b0"
+    }
+  ],
+  "total_files": 24,
+  "total_bytes": 418529,
+  "pushed": false,
+  "approval_required": true,
+  "exclusions": "No held provider-result or native evidence packet; no new Claude payload; no raw output; no root tracker/history commits or unrelated weeklogs.",
+  "prior_block": "Supersedes unpushed 46f3a264 T17-only export. Automatic approval review rejected that exact push; this new payload requires separate exact approval before any transfer.",
+  "state": "superseded_before_transfer",
+  "blocker": "Independent review reproduced T17 ownership proof reader requiring four cases while the new pinned runtime produces five. The local isolated subset passed but lacked this integration assertion; no transfer or host execution occurred."
+}

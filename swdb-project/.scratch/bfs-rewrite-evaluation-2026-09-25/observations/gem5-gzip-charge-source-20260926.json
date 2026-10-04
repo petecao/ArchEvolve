@@ -1,0 +1,38 @@
+{
+  "created": "2026-09-26",
+  "kind": "conservative_preparation_charge_source",
+  "id": "bfs-gem5-gzip-transport-20260926-a1",
+  "preflight": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/preflight.json",
+    "sha256": "8b6414f6635d257278c891d6ec7a6b27943117160d9363b19e957f39a12d8dee",
+    "bytes": 36265
+  },
+  "preflight_observed_at": "2026-09-26T20:58:40.404730-04:00",
+  "terminal": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/terminal-validation.json",
+    "sha256": "fc478833e8b93b6f373d0dba49192f40e3f7f01d95c6b1538ab3d42dcc0f70b5",
+    "bytes": 12515
+  },
+  "terminal_observed_at": "2026-09-26T21:00:20.228003-04:00",
+  "driver": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1/driver.json",
+    "sha256": "913293ee4dcacef41aee597c6f2df534bd96e295d2ba93a17f070a5d02764aa1",
+    "bytes": 36479
+  },
+  "lane": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/lane.json",
+    "sha256": "f34bc3114a1b9f0359907cb9051b805dceb610005e3632c6fa9ec281e0fe8f46",
+    "bytes": 1497
+  },
+  "storage_paths": [
+    "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1",
+    "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch"
+  ],
+  "final_allocated_bytes": 200704,
+  "final_readonly_recount_at": "2026-09-26T21:06:31.417855-04:00",
+  "wall_envelope_seconds": 471.013125,
+  "charged_seconds_ceiling": 472,
+  "includes_idle_wait": true,
+  "new_empirical_work": false,
+  "closed_roots_modified": false
+}

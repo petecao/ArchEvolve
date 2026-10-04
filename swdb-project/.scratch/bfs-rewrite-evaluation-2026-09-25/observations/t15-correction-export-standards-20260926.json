@@ -1,0 +1,272 @@
+{
+  "created": "2026-09-26T21:32:03.455176-04:00",
+  "state": "clean",
+  "scope": "Local Git object export readback only; no checkout/worktree/index/network mutations or test reruns",
+  "commit": "d5e215966a7d4d673050a78c6a6d77053aa62a85",
+  "sole_parent": "6732d5327c4f9e22d97367ee3eeb3c09118867d3",
+  "source_commit": "5a2b669044d8bc0826e4a483532a8acabcb47324",
+  "inventory": {
+    "path": "/private/tmp/bfs-t15-gzip-correction-export-20260926.json",
+    "sha256": "06867271866bb429e0949062810463ac165580dfeb515316491c5a6cd57f5b88"
+  },
+  "path_count": 21,
+  "bytes": 533439,
+  "all_blobs_equal_reviewed_local_and_source_commit": true,
+  "all_modes": "100644",
+  "held_paths_absent_from_tree_and_history": [
+    "records/proposals/bfs-campaign-preparation-20260925-a1.dx100-instructions.yaml",
+    "records/candidates/bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1.yaml",
+    "records/proposals/bfs-campaign-preparation-20260925-a1.upstream-instructions.yaml",
+    "records/candidates/bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1.yaml",
+    "records/proposals/bfs-campaign-preparation-20260925-a1.upstream-annotated.yaml",
+    "docs/evidence/bfs-provider-initial-20260926-a1.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.pair.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.pair.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.pair.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.pair.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.candidate.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.candidate.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.candidate.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.candidate.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.122d39652ae0c326.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.b8f33855cc6c657e.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.f613a3b01a24e380.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.ffd9925db46a63a9.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.profile.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.profile.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.profile.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.profile.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.source.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.source.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.source.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.source.yaml"
+  ],
+  "held_commit_absent_from_ancestry": "5f1b8028619976b36df5fa24b8aacb91bf488168",
+  "record_changes": [],
+  "fixed_old_plans_unchanged": true,
+  "new_plan_canonical_sha256": "4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea",
+  "storage_helper_in_proof_dependency_set": true,
+  "files": [
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-correction-simulator-batch-20260926-a1.json",
+      "bytes": 9414,
+      "sha256": "d93e8c02574e1b2fcf90f8c8b1f79c2c83bd63b81d377e627ede71b7755f7f62",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-correction-reservation-standards-final-v2-20260926.json"
+      ]
+    },
+    {
+      "path": "docs/bfs-dx100-gzip-trace-20260926.md",
+      "bytes": 4093,
+      "sha256": "5f138fd9e4302968911e39e79d931e4bdafa53b8be123349dc98e96a79cafe39",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-correction-charge-standards-20260926.json"
+      ]
+    },
+    {
+      "path": "docs/bfs-scalar-v2-builds-20260926.md",
+      "bytes": 10465,
+      "sha256": "f312e62edd0b76273eca36778a6dc64de98c6ec99018ad67b9b80e422ff085fe",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-storage-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "docs/bfs-t15-correction-proofgroup-20260926.md",
+      "bytes": 7447,
+      "sha256": "7eb0bf563a095943b8ff28b6d917e43a9905420bce01bb7cb53d7d574b4e535c",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-storage-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "docs/bfs-t15-gzip-correction-20260926.md",
+      "bytes": 4536,
+      "sha256": "34285b9fd14626aca1d79ec633476aa87f66bcf42739e8098895e31080081140",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-correction-reservation-standards-final-v2-20260926.json",
+        "/private/tmp/bfs-storage-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "scripts/bfs_dx100_coverage_execution.py",
+      "bytes": 44653,
+      "sha256": "baf1d58946c218b870df0bc6c8e25f6d5284ccf465f57f8725263b10c61364aa",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-gzip-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "scripts/bfs_freeze_pilot.py",
+      "bytes": 54917,
+      "sha256": "04c0ad1de4c7d67cb3b58ed37cd177cb6542952d7dd4419f6ba30f4b56b3989f",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-gzip-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "scripts/bfs_linux_fixture.py",
+      "bytes": 13247,
+      "sha256": "544971e14f229dffa0945277db7a97e5dcb0ef14c1c78ef319e7e6555b1f5441",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-correction-reservation-standards-final-v2-20260926.json",
+        "/private/tmp/bfs-storage-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "scripts/bfs_simulator_batch.py",
+      "bytes": 56532,
+      "sha256": "46b171a570b606892c54bf63701f70fde74fa3cfe0a438ab2bd73634fb7047b0",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-storage-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "scripts/bfs_simulator_series.py",
+      "bytes": 30265,
+      "sha256": "a568e4e6da573ccc281df7deff214abb59d9d87799e274b9abaff1a90ca87b43",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-storage-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "scripts/bfs_storage.py",
+      "bytes": 2586,
+      "sha256": "485914c80e272b1ab4d05d7866d2ba0d981d0c3ba41cb510c509e4acdb8f4eac",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-storage-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "swdb/bfs_protocol.py",
+      "bytes": 79485,
+      "sha256": "db9001407504e31d41a33b12c2730ccb43005c2c50ab43724e47540b126ffeac",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-gzip-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "swdb/dx100.py",
+      "bytes": 57955,
+      "sha256": "2fc67143bacd480189003bbf6b471b8d9b1d36239bbb7a2d6aac40e0f1bc771f",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-gzip-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "swdb/dx100_coverage.py",
+      "bytes": 12197,
+      "sha256": "9881c5460d73af490a1b530424e6ea579330d8b7a9e239815a63d1b60a427e95",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-gzip-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "swdb/dx100_profile.py",
+      "bytes": 25334,
+      "sha256": "c361893384b96511e0de05d2b7ab01b895b638c3ab364cf6212b2776fd064595",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-gzip-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "swdb/profile_package.py",
+      "bytes": 35157,
+      "sha256": "8eae9ba6ae289c332d4dd113b364dcff381969d8c5806db9a6aede7d374a5665",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-gzip-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "tests/test_bfs_simulator_correction.py",
+      "bytes": 16019,
+      "sha256": "9b7de48c088c6bc1dfdc0ede632c23ed65b4d40de08610b7bb3e03a10ba2ec9d",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-storage-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "tests/test_bfs_simulator_series.py",
+      "bytes": 33248,
+      "sha256": "78c219a8bf92d8c38a6400d9d8fdee9f715c8d3fd0c05d843257c8394201a3fc",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-storage-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "tests/test_bfs_simulator_storage.py",
+      "bytes": 9194,
+      "sha256": "7db4f48df5b5c38f68902eb936251d8aaa80d122f135c249e66bad2b6724d28a",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-storage-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "tests/test_bfs_storage.py",
+      "bytes": 7847,
+      "sha256": "25e1b4b53e555646a3b6bce38486b0c398d68d66def616b5a900f24dd582cb24",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-storage-standards-review-20260926.json"
+      ]
+    },
+    {
+      "path": "tests/test_dx100_gzip_trace.py",
+      "bytes": 18848,
+      "sha256": "414525f9039e702ab56b4a3c977e5eb83c56ec13744b3c1e64d1de20539f1e6e",
+      "mode": "100644",
+      "matches_local_and_source_commit": true,
+      "review_receipts": [
+        "/private/tmp/bfs-gzip-standards-review-20260926.json"
+      ]
+    }
+  ],
+  "limits": [
+    "Root-reported remote push not repeated; local exact exported Git object independently checked.",
+    "Actual new proof group and admission are not yet produced or admitted.",
+    "Running d5e validation checkout was never accessed or changed."
+  ]
+}

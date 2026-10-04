@@ -1,0 +1,278 @@
+{
+  "approval_reference": "typed-library-related-approval-20261003",
+  "closeout": {
+    "leases": [
+      {
+        "generation": 439,
+        "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.meta.json",
+        "released_at": "2026-10-03T13:08:57Z",
+        "state": "released"
+      },
+      {
+        "generation": 506,
+        "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.meta.json",
+        "released_at": "2026-10-03T12:51:22Z",
+        "state": "released"
+      },
+      {
+        "generation": 77,
+        "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.meta.json",
+        "released_at": "2026-09-12T04:49:11Z",
+        "state": "released"
+      }
+    ],
+    "public_record_validation": "OK: 443 record(s) valid",
+    "raw_policy": "All raw provider output, traces, input source, binaries, and profile artifacts remain remote. Metadata export requires root review and Git only.",
+    "sealed_package_verified": true
+  },
+  "driver": {
+    "bytes": 2244,
+    "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a3/driver.json",
+    "sha256": "d992d1fb85bc744ef37dca5adff0fdae408c5f4271588a8ed1c000fb4acda358"
+  },
+  "external_host_operation": {
+    "receipt": "/data1/yanruj/EvolveSWDB_runs/typed-library-trace-cache-release-20261003-a3/operator-receipt.json",
+    "scope": "prior selective cached-page release; raw file bytes and identities retained",
+    "sha256": "b23ddb33b5eadf6645903b93e66ef8c66b0d88132a46334ed5578ccce9d57266"
+  },
+  "finished": "2026-10-03T13:08:57.162161+00:00",
+  "format": "swdb.typed-library-annotation-operator-audit.v1",
+  "host": "mbit10",
+  "ids": {
+    "annotation_attempt": "typed-library-bfs-scalar-profile-20261003-a2.annotation-a3",
+    "implementation": "dx100-bfs-scalar",
+    "native": "typed-library-bfs-scalar-profile-20261003-a2.native",
+    "profile_package": "typed-library-bfs-scalar-profile-20261003-a2.package.v1.619546ae9c6f60fe",
+    "region_profile": "typed-library-bfs-scalar-profile-20261003-a2.profile"
+  },
+  "lane": 0,
+  "observed_at": "2026-10-03T13:13:00.934277+00:00",
+  "preceding_attempts": [
+    {
+      "attempt": 1,
+      "driver": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a1/driver.json",
+      "outcome": "failed; original missing standard login path; preserved"
+    },
+    {
+      "attempt": 2,
+      "driver": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a2/driver.json",
+      "outcome": "failed; actual unsupported uniqueItems schema400; preserved"
+    }
+  ],
+  "profile_runtime_commit": "f6972ebbf9c842c1a7091716505577d06c637231",
+  "provider": {
+    "audit_command_events": 6,
+    "audit_events": 11,
+    "audit_passed": true,
+    "cli_version": "codex-cli 0.153.0",
+    "credential_bytes_read_or_changed_by_operator": false,
+    "effort": "xhigh",
+    "file_access_events": 14,
+    "guard_passed": true,
+    "legitimate_codex_home": "/data1/yanruj/.codex",
+    "login_copy_deleted": true,
+    "model": "gpt-5.6-sol",
+    "native_executable_sha256": "fce635028842bfe9257140e8b7d53162732945e2f356fc35225be0702b4974be",
+    "receipt": {
+      "bytes": 16916,
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/provider.json",
+      "sha256": "e706199fe28531573974e2e63675a97a550f6b030f7c7b3569de90bd08c0b5d9"
+    },
+    "semantic_output_schema_sha256": "aa1aec6a43285f16c7815cad29bb99d151a661caea506071b7c90a1d78de4507",
+    "stderr_401_token_invalidated_signals": true,
+    "stderr_signals_fatal_to_this_attempt": false,
+    "wire_schema": {
+      "bytes": 1007,
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/provider-home/output-schema.json",
+      "sha256": "3928d885d99918a2dae55546682d1cdcde7e537a2455459a19a802659cc84796"
+    }
+  },
+  "returncode": 0,
+  "runtime_commit": "f642a94ba41e79f79b28a540cb8d758e15bec633",
+  "scoring": {
+    "basis": "simulated",
+    "contradiction_rule": "absolute difference between expected rank and simulated midrank exceeds 1",
+    "gain_claim": false,
+    "limitations": [
+      "Debug-line self costs can exclude optimized/coalesced or header-inlined work.",
+      "Four zero-miss statements have tied simulated midrank 5.5; queue append has zero attributed rows.",
+      "Simulated ranks do not prove a native bottleneck."
+    ],
+    "rank_tie_policy": "average ranks",
+    "receipt": {
+      "bytes": 14011,
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a3/score.json",
+      "sha256": "4ed80ab182db5cc1bfa4db29bf12a3ae5812276e0386eb581f9e489db3a9b4ae"
+    },
+    "spearman_rank_correlation": 0.4925690038994379,
+    "statements": [
+      {
+        "attributed_rows": 1,
+        "callgrind_rank": 3.0,
+        "contradicted": false,
+        "expected_cost_rank": 4,
+        "statement": "bfs-td-frontier",
+        "value": 6731
+      },
+      {
+        "attributed_rows": 1,
+        "callgrind_rank": 2.0,
+        "contradicted": false,
+        "expected_cost_rank": 3,
+        "statement": "bfs-td-row-bounds",
+        "value": 6809
+      },
+      {
+        "attributed_rows": 1,
+        "callgrind_rank": 1.0,
+        "contradicted": false,
+        "expected_cost_rank": 2,
+        "statement": "bfs-td-neighbor",
+        "value": 479207
+      },
+      {
+        "attributed_rows": 1,
+        "callgrind_rank": 5.5,
+        "contradicted": true,
+        "expected_cost_rank": 1,
+        "statement": "bfs-td-parent-read",
+        "value": 0
+      },
+      {
+        "attributed_rows": 1,
+        "callgrind_rank": 5.5,
+        "contradicted": false,
+        "expected_cost_rank": 6,
+        "statement": "bfs-td-parent-cas",
+        "value": 0
+      },
+      {
+        "attributed_rows": 1,
+        "callgrind_rank": 5.5,
+        "contradicted": true,
+        "expected_cost_rank": 7,
+        "statement": "bfs-td-parent-store",
+        "value": 0
+      },
+      {
+        "attributed_rows": 0,
+        "callgrind_rank": 5.5,
+        "contradicted": false,
+        "expected_cost_rank": 5,
+        "statement": "bfs-td-queue-append",
+        "value": 0
+      }
+    ],
+    "top_3_overlap": 0.6666666666666666,
+    "top_3_overlap_count": 2,
+    "top_3_tie_policy": "expected overlap under uniform choice at the tied boundary"
+  },
+  "started": "2026-10-03T13:06:08.358871+00:00",
+  "state": "complete",
+  "statement_table": {
+    "bytes": 2080,
+    "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a3/josh-statement-table.md",
+    "sha256": "5772ad33d4525bd5cce94682d1e01e8c1afaa2ac646b5b0847db4eb2ee6623a7",
+    "status": "draft for human sending; not sent"
+  },
+  "tool_events": {
+    "actual_invocations": 3,
+    "additional_material_access": false,
+    "events": [
+      {
+        "aggregated_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "event_type": "item.started",
+        "item": {
+          "command": "/bin/bash -lc \"sed -n '1,240p' statement-context.json && sed -n '1,320p' statement-source.cc\"",
+          "exit_code": null,
+          "id": "item_1",
+          "status": "in_progress",
+          "type": "command_execution"
+        },
+        "raw_jsonl_line": 4
+      },
+      {
+        "aggregated_output_sha256": "54a0976d20242eb78b2025528c24add94d235c9a6381827f5563bfa896d42ab8",
+        "event_type": "item.completed",
+        "item": {
+          "command": "/bin/bash -lc \"sed -n '1,240p' statement-context.json && sed -n '1,320p' statement-source.cc\"",
+          "exit_code": 0,
+          "id": "item_1",
+          "status": "completed",
+          "type": "command_execution"
+        },
+        "raw_jsonl_line": 5
+      },
+      {
+        "aggregated_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "event_type": "item.started",
+        "item": {
+          "command": "/bin/bash -lc \"sed -n '200,520p' statement-context.json\"",
+          "exit_code": null,
+          "id": "item_2",
+          "status": "in_progress",
+          "type": "command_execution"
+        },
+        "raw_jsonl_line": 6
+      },
+      {
+        "aggregated_output_sha256": "b72c43c996312e944d8a0560cc3ba39ba6331f419423a5b402e64352dfbf95ac",
+        "event_type": "item.completed",
+        "item": {
+          "command": "/bin/bash -lc \"sed -n '200,520p' statement-context.json\"",
+          "exit_code": 0,
+          "id": "item_2",
+          "status": "completed",
+          "type": "command_execution"
+        },
+        "raw_jsonl_line": 7
+      },
+      {
+        "aggregated_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "event_type": "item.started",
+        "item": {
+          "command": "/bin/bash -lc \"sed -n '520,920p' statement-context.json\"",
+          "exit_code": null,
+          "id": "item_3",
+          "status": "in_progress",
+          "type": "command_execution"
+        },
+        "raw_jsonl_line": 8
+      },
+      {
+        "aggregated_output_sha256": "6a1712e6e7fdcae95ef4a511744ad5b71036d28487dd3a1d5c59e91db16fb50b",
+        "event_type": "item.completed",
+        "item": {
+          "command": "/bin/bash -lc \"sed -n '520,920p' statement-context.json\"",
+          "exit_code": 0,
+          "id": "item_3",
+          "status": "completed",
+          "type": "command_execution"
+        },
+        "raw_jsonl_line": 9
+      }
+    ],
+    "interpretation": "Source-reading shell commands implement input access. Literal no-tools wording and this input-access distinction are retained for final specification review.",
+    "measurement_compiler_profiler_evaluator_execution": false,
+    "purpose": "read the two declared input files",
+    "raw_complete_event_log": {
+      "bytes": 35571,
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/stdout.txt",
+      "sha256": "db9613f45097bbd882de6825585eadb928905bca849008aebf9d893d4b4d2f6a"
+    }
+  },
+  "visible_files": [
+    "statement-context.json",
+    "statement-source.cc"
+  ],
+  "withheld": [
+    "per-line memory ground truth",
+    "statement-memory ground truth",
+    "rank scores"
+  ],
+  "workspace": {
+    "bytes": 912,
+    "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/workspace.json",
+    "sha256": "1d0877c57157bd8b085015300e47778132a2ec874d316a2d6d0aa8eb1560f7e5"
+  }
+}

@@ -1,0 +1,84 @@
+kind: operation
+schema_version: '0.4'
+id: dx100.mmio.v1.alu-scalar-lt.i32
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+provenance:
+- id: dx100-pinned-source
+  kind: source_code
+  description: API declaration and model implementation inspected at pinned DX100
+    revision; no executable or performance claim.
+  uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/API/MAA_gem5.hpp
+name: maa_alu_scalar<int32_t>
+interface:
+  id: dx100-mmio
+  version: 1.0-e4fc4af
+model:
+  id: dx100-gem5
+  revision: e4fc4afdf894f295442cef3604667a469fab8e62
+backend: dx100-gem5-se
+support: source_supported
+signature: maa_alu_scalar<int32_t>(int src_tile, int scalar_reg, int dst_tile, Operation_t::LT_OP,
+  int cond_tile=-1)
+types:
+- int32_t
+memory_effects: Compares signed int32 source-tile values to a scalar register and
+  writes a Boolean result tile.
+masks: Optional condition tile; -1 disables masking.
+repeated_indices: Not applicable to application memory.
+ordering: Instruction descriptor writes end with mfence; descriptor issue does not
+  imply completion. Dependencies use allocated register/tile identities; preserve
+  the author BFS critical section for competing parent updates.
+completion: Wait on the appropriate completed tile before CPU consumption and obtain
+  its actual size; scalar-register access uses get_reg. No unsupported global memory-ordering
+  guarantee is implied.
+resources:
+  tiles: 3
+  scalar_registers: 1
+  allocation: Counts are the maximum distinct operand slots for this call, including
+    optional mask/result slots. Allocate valid nonoverlapping slots; 4-core default
+    has 32 32-bit tiles and 32 scalar registers shared across the call sequence.
+build:
+  headers:
+  - benchmarks/API/MAA_gem5.hpp
+  - benchmarks/API/MAA.hpp
+  - gem5/m5ops.h
+  defines:
+  - GEM5
+  - NUM_CORES=4
+  - TILE_SIZE=16384 (or matching supported tile size)
+  dependencies:
+  - x86 m5ops
+  - DX100 memory-mapped model at matching revision
+  - 16 GB guest memory and matching scratchpad/MMIO map
+semantics:
+  masked:
+    state: supported
+    value: true
+    basis: code_reading
+    description: The API encodes an optional condition tile.
+  operation:
+    state: supported
+    value: LT_OP
+    basis: code_reading
+    description: ALU.cc implements signed int32 less-than.
+  writes_application_memory:
+    state: supported
+    value: false
+    basis: code_reading
+    description: Only scratchpad destination values are written.
+declaration_evidence:
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/API/MAA_gem5.hpp#L175-L192
+  path: benchmarks/API/MAA_gem5.hpp
+  sha256: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+  lines:
+  - 175
+  - 192
+implementation_evidence:
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/ALU.cc#L357-L428
+  path: src/mem/MAA/ALU.cc
+  sha256: 3eab45bf9847d5b1a97df2149ad2aa67b46f8e72c000d54bd01c384fa608e0e6
+  lines:
+  - 357
+  - 428

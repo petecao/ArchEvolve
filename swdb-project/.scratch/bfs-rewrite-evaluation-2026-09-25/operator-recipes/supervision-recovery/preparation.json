@@ -1,0 +1,70 @@
+{
+  "created": "2026-09-27",
+  "state": "prospective_not_dispatched",
+  "format": "swdb.bfs.supervision-group-operator-preparation.v1",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/supervision-recovery/README.md",
+      "bytes": 5661,
+      "sha256": "6b351697c361628a076c2e86343edee1a3d1971134438be3127de3c0aa1a9f7f"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/supervision-recovery/config-template.json",
+      "bytes": 1067,
+      "sha256": "8df4930783fdb23e4be641d1e3b9867b84514c67b543a8fd988f92fe973a0f30"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/supervision-recovery/launch.sh",
+      "bytes": 1457,
+      "sha256": "46c0da7a2f679b2e5e35ee1d1322bbd9c813aafc68e605192e796d1807ae1ffc"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/supervision-recovery/operator.py",
+      "bytes": 16880,
+      "sha256": "c40875e68a2c28e0c5b47517d63d0b2c40f26e51414c43f4d253154c8d77b992"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/supervision-recovery/runtime-manifest.json",
+      "bytes": 136114,
+      "sha256": "447ff528f5015587c702d42007a3607cf0373a800714d8ab59a515cdf9c7afc9"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/supervision-recovery/test_operator.py",
+      "bytes": 6617,
+      "sha256": "efb69eb11d11dc21ddf5e1d54e4bc82525e1f7b35c84fba4305da934215abdcb"
+    }
+  ],
+  "validation": {
+    "result": "16 passed in 0.27s",
+    "log": {
+      "path": "/private/tmp/bfs-supervision-operator-tests-20260927-ownership.log",
+      "bytes": 99,
+      "sha256": "ac188113d7aa29b09977570c3113c7911fdac14c7be067a828e6dd3b2138d6c9"
+    },
+    "includes_independent_original_lock_reproducer": true,
+    "bash_syntax": "passed",
+    "compile_without_bytecode": "passed"
+  },
+  "retained_failures": [
+    {
+      "path": "/private/tmp/bfs-operator-lock-red-20260927.log",
+      "bytes": 2979,
+      "sha256": "31bde212a525df3cbad42eafab7b25c17098eb84cd0c49475ceee9aba368cf9a"
+    },
+    {
+      "path": "/private/tmp/bfs-supervision-operator-tests-20260927-reviewed.log",
+      "bytes": 3250,
+      "sha256": "5bf8865324527cc7b7369c26464b012c79d497fe9f17c8b566ee780a01558bcb"
+    }
+  ],
+  "unresolved": [
+    "fresh full helper upstream comparison in sealed configuration",
+    "independent final operator review",
+    "Git delivery and exact operator/config pins",
+    "fresh free-lane/capacity admission"
+  ],
+  "remote_execution": false,
+  "lane_acquired": false,
+  "provider_calls": 0,
+  "compiler_calls": 0
+}

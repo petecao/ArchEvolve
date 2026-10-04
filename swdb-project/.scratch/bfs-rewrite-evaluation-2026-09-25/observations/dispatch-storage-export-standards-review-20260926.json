@@ -1,0 +1,38 @@
+{
+  "created": "2026-09-26 ET",
+  "scope": "Exact six-blob export readback only; no tests or host work",
+  "commit": "8c39ae09406dad0da253b21dbe2c87e263f8c5fb",
+  "sole_parent": "d11dc04449997734a93b982646977b04008afeff",
+  "files": {
+    "docs/bfs-simulator-batches-20260926.md": {
+      "sha256": "2ac984f3871defbf153cc728f64b304a38f3cac87c4d7d565931241607cde716",
+      "bytes": 18231
+    },
+    "scripts/bfs_linux_fixture.py": {
+      "sha256": "8db5b5955e05271cebc0ae3dc7c50515f75e901e91edcc5b62b4b40beb784fe4",
+      "bytes": 13247
+    },
+    "scripts/bfs_simulator_batch.py": {
+      "sha256": "43a82a80a4be40ab0aec85b76241ea94d332f89e0a0a7a10b385f0750a78d9f4",
+      "bytes": 44666
+    },
+    "scripts/bfs_simulator_batch_terminal.py": {
+      "sha256": "f21e7bcd7cc4ebeef86c66265c3405237fa206c81d92b6c2248b3cbccc7b291b",
+      "bytes": 11995
+    },
+    "tests/test_bfs_simulator_batch.py": {
+      "sha256": "72fc34819f71895028be234c3db415efad6c24abeda229554816650813d03f10",
+      "bytes": 39628
+    },
+    "tests/test_bfs_simulator_storage.py": {
+      "sha256": "81867ad769ed24e9d6e1b2d305d34c0a42b29571b38e46f2bf04c5fe1e8c0220",
+      "bytes": 9194
+    }
+  },
+  "all_match_independently_reviewed_bytes": true,
+  "inventory": {
+    "path": "/private/tmp/bfs-dispatch-storage-export-20260926.json",
+    "sha256": "0951faee70b4dc045fb1f6990e91ad5b12d1e939a634cf40cf164c4cbbee1252"
+  },
+  "limitation": "Local Git object check; push state reported by Root and not re-queried."
+}

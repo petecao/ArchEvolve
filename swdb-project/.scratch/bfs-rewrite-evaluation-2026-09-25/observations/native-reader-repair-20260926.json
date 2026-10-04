@@ -1,0 +1,82 @@
+{
+  "created": "2026-09-26",
+  "scope": "Generated reader Path-API repair and optional immediate spawn/finished observations",
+  "state": "repaired_independently_reviewed_linux_proof_pending",
+  "author": {
+    "path": "/private/tmp/bfs-reader-observer-preparation-20260926.json",
+    "bytes": 3494,
+    "sha256": "fee0d94a1678ca2a262abd1f8e7eeb5c86467aa39259cfb2ac08d219c9f59bec"
+  },
+  "path_reproduction": {
+    "path": "/private/tmp/bfs-reader-path-repair-20260926.json",
+    "bytes": 3238,
+    "sha256": "c5dddbe1219ab8520e5d3111c35c0613567ebbcf1405fe87a12ce3689e994266"
+  },
+  "path_independent_review": {
+    "path": "/private/tmp/bfs-reader-path-standards-review-20260926.json",
+    "bytes": 5008,
+    "sha256": "d0a60748f35185accee47358d21365fdb1a0450d8abf6b6dc4dbaa12720be9b4"
+  },
+  "observer_independent_review": {
+    "path": "/private/tmp/bfs-reader-observer-standards-review-20260926.json",
+    "bytes": 4025,
+    "sha256": "1a3871d5d5a47b6bc5783c110e74982e4ac2abd80aff0f16168da078fcdbbc5a"
+  },
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_one_thread_calibration.py",
+      "bytes": 23642,
+      "sha256": "77fc98b00e745122668b35e7b1f3bbe383a80009315a5a24865f992b08da201a"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_one_thread_freeze.py",
+      "bytes": 31892,
+      "sha256": "279973e1f1a6c66fb334524d50fb62288b4196b22d7bcb957e38fd0df7bc9f64"
+    }
+  ],
+  "contract": {
+    "entry_points": [
+      "qualify(spec,packets,store,identities,gates,*,reader_observer=None)",
+      "pinned_readback(selected,receipt,store,*,reader_observer=None)"
+    ],
+    "events": [
+      "spawn",
+      "finished"
+    ],
+    "spawn": "Capture real Linux /proc identity immediately after Popen, before poll/communicate; require same PID, parent and integer start ticks, then synchronous callback.",
+    "finished": "Same existing cleanup deadline after original stop and unconditional wait/pipe closure; reports real returncode, direct_reaped, identity, original/cleanup errors, monotonic deadline/start and explicitly pre-event elapsed cost. Callback completion is checked against that same deadline.",
+    "failure": "Observer failure rejects admission and runs original cleanup; an earlier reader exception remains primary. No new cleanup reserve.",
+    "output": "Callback metadata is separate; deterministic qualification result is identical when observer is used or omitted."
+  },
+  "author_validation": {
+    "command": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_one_thread_freeze.py -q --basetemp /private/tmp/bfs-reader-observer-final-20260926",
+    "result": "57 passed, 1 skipped in 7.24s",
+    "log": {
+      "path": "/private/tmp/bfs-reader-observer-final-20260926.log",
+      "bytes": 110,
+      "sha256": "aaaacda451437445d000b3ab8ea68de714d0fff54d585ce0db886f5ab9f685bd"
+    },
+    "coverage": [
+      "actual subprocess and actual Store API",
+      "fast completed child remains unreaped at spawn observation",
+      "spawn/finished callback failures reject and reap",
+      "earlier nonzero child failure preserved when final observation also fails",
+      "final observation cannot reset cleanup deadline",
+      "observer/no-observer deterministic result equality",
+      "qualify forwards exact optional observer"
+    ],
+    "source_after_test_change": "Function docstring only; no behavioral changes after this final run.",
+    "diff_check": "clean"
+  },
+  "independent_result": "10 passed, 1 Linux-only skipped, 50 deselected in0.72s; three independent boundary probes included.",
+  "required_linux_proof": {
+    "selector": "tests/test_bfs_one_thread_freeze.py::test_linux_fast_reader_retains_actual_unreaped_identity",
+    "behavior": "Real waitid(WNOWAIT|WNOHANG), bounded five-second fixture wait, actual /proc zombie PID/start capture before communicate, then direct reap and absence.",
+    "status": "skipped on macOS; no actual Linux claim"
+  },
+  "limits": [
+    "No change to measured319, published3f38, failed attempt, raw records or statistical policy.",
+    "Corrected readback remains a separate prospective single attempt; no retry or qualification has occurred.",
+    "Running full regression at e4c4015 does not include this later production repair."
+  ]
+}

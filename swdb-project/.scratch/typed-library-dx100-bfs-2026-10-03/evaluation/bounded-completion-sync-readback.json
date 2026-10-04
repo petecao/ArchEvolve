@@ -1,0 +1,27 @@
+{
+  "format": "swdb.bounded-completion-sync-readback.v1",
+  "observed_utc": "2026-10-03T15:16:45.808452+00:00",
+  "observed_et": "2026-10-03 11:16 ET",
+  "branch": "yanrujhou_main",
+  "source_commit": "982d19b23eb0303ecacc938c5334e6479b861197",
+  "source_sync": "Git fast-forward after independent kernel/meta lease-free and no owned measurement checks",
+  "validated_records": 449,
+  "library_states": {
+    "shared_evaluated_on_target": 19,
+    "shared_certified": 2,
+    "entries": 21
+  },
+  "witnesses": {
+    "timed": {
+      "state": "verified",
+      "retained_artifacts": 9
+    },
+    "diagnostic": {
+      "state": "verified",
+      "retained_artifacts": 9
+    }
+  },
+  "companion_acceptance": "observed and exactly equal to retained outcome",
+  "timed_launch": "authorized afterward; not proven by this receipt",
+  "evidence_origin": "Live operator SSH tool output; no raw file copied or invented raw receipt/hash"
+}

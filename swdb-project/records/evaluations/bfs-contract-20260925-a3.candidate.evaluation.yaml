@@ -1,0 +1,688 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs-contract-20260925-a3.candidate.evaluation
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  candidate: bfs-contract-20260925-a3.candidate-proposal.candidate-1
+  machine: bfs-contract-20260925-a3.local-host
+  threads: 1
+  sources: [0, 4]
+  repetitions: 5
+  roi: bfs.complete_call.v1
+  fixture: true
+  comparison_baseline: bfs-contract-20260925-a3.independent-reference
+  build:
+    compiler: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler
+    flags: [-std=c++11, -O2]
+  workload:
+    id: bfs-contract-20260925-a3.workload.584a833b37d4d8a1
+  budget:
+    build_seconds: 10
+    run_seconds: 2
+    total_seconds: 900
+  id: bfs-contract-20260925-a3.candidate.evaluation
+  protocol: bfs-contract-20260925-a3.fixture-protocol.d414370aaa72b04e
+  protocol_role: candidate
+outcome:
+  state: complete
+  stage: evaluation
+  reason: null
+stages:
+- stage: source_resolution
+  state: complete
+  started: '2026-09-26T02:03:52.034800+00:00'
+  finished: '2026-09-26T02:03:54.059719+00:00'
+- stage: workload_resolution
+  state: complete
+  started: '2026-09-26T02:03:56.070586+00:00'
+  finished: '2026-09-26T02:03:58.115261+00:00'
+- stage: compiler_identity
+  state: complete
+  started: '2026-09-26T02:04:00.164704+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler
+  - --version
+  timeout_s: 10.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/002-compiler_identity.log
+  finished: '2026-09-26T02:04:02.209415+00:00'
+  returncode: 0
+  host_wall_s: 0.0415336670121178
+  log_sha256: 59e960c3fab64f5eebb2633af6acc33c9a17d65e46f6ef93099f3827e21208f5
+- stage: build
+  state: complete
+  started: '2026-09-26T02:04:04.189998+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler
+  - -std=c++11
+  - -O2
+  - -I/private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate-proposal/source/src
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/native_driver.cc
+  - -o
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/bfs-native
+  timeout_s: 10.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/003-build.log
+  finished: '2026-09-26T02:04:06.197800+00:00'
+  returncode: 0
+  host_wall_s: 0.021359374979510903
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: execution
+  state: complete
+  started: '2026-09-26T02:04:10.238751+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/bfs-native
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/graph.swdb
+  - '0'
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-0-0.json
+  timeout_s: 2.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/004-execution.log
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T02:04:12.414674+00:00'
+  returncode: 0
+  host_wall_s: 0.18757662503048778
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: correctness
+  state: complete
+  started: '2026-09-26T02:04:14.432994+00:00'
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T02:04:16.451041+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T02:04:18.443529+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/bfs-native
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/graph.swdb
+  - '4'
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-0-1.json
+  timeout_s: 2.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/006-execution.log
+  repetition: 0
+  source_position: 1
+  source: 4
+  finished: '2026-09-26T02:04:20.501529+00:00'
+  returncode: 0
+  host_wall_s: 0.04144720803014934
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: correctness
+  state: complete
+  started: '2026-09-26T02:04:22.547568+00:00'
+  repetition: 0
+  source_position: 1
+  source: 4
+  finished: '2026-09-26T02:04:24.545224+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T02:04:26.550428+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/bfs-native
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/graph.swdb
+  - '0'
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-1-0.json
+  timeout_s: 2.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/008-execution.log
+  repetition: 1
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T02:04:28.570538+00:00'
+  returncode: 0
+  host_wall_s: 0.04081583395600319
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: correctness
+  state: complete
+  started: '2026-09-26T02:04:30.607707+00:00'
+  repetition: 1
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T02:04:32.598110+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T02:04:34.616642+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/bfs-native
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/graph.swdb
+  - '4'
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-1-1.json
+  timeout_s: 2.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/010-execution.log
+  repetition: 1
+  source_position: 1
+  source: 4
+  finished: '2026-09-26T02:04:36.723939+00:00'
+  returncode: 0
+  host_wall_s: 0.04108899994753301
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: correctness
+  state: complete
+  started: '2026-09-26T02:04:38.759377+00:00'
+  repetition: 1
+  source_position: 1
+  source: 4
+  finished: '2026-09-26T02:04:40.793572+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T02:04:42.836019+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/bfs-native
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/graph.swdb
+  - '0'
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-2-0.json
+  timeout_s: 2.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/012-execution.log
+  repetition: 2
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T02:04:44.866885+00:00'
+  returncode: 0
+  host_wall_s: 0.03856404195539653
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: correctness
+  state: complete
+  started: '2026-09-26T02:04:46.928084+00:00'
+  repetition: 2
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T02:04:48.953102+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T02:04:51.016854+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/bfs-native
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/graph.swdb
+  - '4'
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-2-1.json
+  timeout_s: 2.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/014-execution.log
+  repetition: 2
+  source_position: 1
+  source: 4
+  finished: '2026-09-26T02:04:53.051482+00:00'
+  returncode: 0
+  host_wall_s: 0.03747058298904449
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: correctness
+  state: complete
+  started: '2026-09-26T02:04:55.067924+00:00'
+  repetition: 2
+  source_position: 1
+  source: 4
+  finished: '2026-09-26T02:04:57.111868+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T02:04:59.157765+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/bfs-native
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/graph.swdb
+  - '0'
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-3-0.json
+  timeout_s: 2.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/016-execution.log
+  repetition: 3
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T02:05:01.191000+00:00'
+  returncode: 0
+  host_wall_s: 0.04135120799764991
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: correctness
+  state: complete
+  started: '2026-09-26T02:05:03.187956+00:00'
+  repetition: 3
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T02:05:05.168502+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T02:05:07.143888+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/bfs-native
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/graph.swdb
+  - '4'
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-3-1.json
+  timeout_s: 2.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/018-execution.log
+  repetition: 3
+  source_position: 1
+  source: 4
+  finished: '2026-09-26T02:05:09.166161+00:00'
+  returncode: 0
+  host_wall_s: 0.04070004203822464
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: correctness
+  state: complete
+  started: '2026-09-26T02:05:11.140249+00:00'
+  repetition: 3
+  source_position: 1
+  source: 4
+  finished: '2026-09-26T02:05:13.124508+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T02:05:15.183591+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/bfs-native
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/graph.swdb
+  - '0'
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-4-0.json
+  timeout_s: 2.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/020-execution.log
+  repetition: 4
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T02:05:17.252609+00:00'
+  returncode: 0
+  host_wall_s: 0.03770708292722702
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: correctness
+  state: complete
+  started: '2026-09-26T02:05:19.250525+00:00'
+  repetition: 4
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T02:05:21.230280+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T02:05:23.207839+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/bfs-native
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/graph.swdb
+  - '4'
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-4-1.json
+  timeout_s: 2.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/022-execution.log
+  repetition: 4
+  source_position: 1
+  source: 4
+  finished: '2026-09-26T02:05:25.241451+00:00'
+  returncode: 0
+  host_wall_s: 0.03880587499588728
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: correctness
+  state: complete
+  started: '2026-09-26T02:05:27.239700+00:00'
+  repetition: 4
+  source_position: 1
+  source: 4
+  finished: '2026-09-26T02:05:29.227445+00:00'
+  reason: null
+- stage: aggregation
+  state: complete
+  started: '2026-09-26T02:05:31.224103+00:00'
+  finished: '2026-09-26T02:05:33.224626+00:00'
+timing:
+- source: 0
+  source_position: 0
+  repetition: 0
+  duration_s: 0.1
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+  output: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-0-0.json
+  output_sha256: 619bdc68346483dbe122d54c6b5a7a5d3fd82fba0cfc14c507e669f02c27589f
+  verified: true
+  evidence_kind: contract_fixture
+- source: 4
+  source_position: 1
+  repetition: 0
+  duration_s: 0.1
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+  output: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-0-1.json
+  output_sha256: d1a2f8a4b2d3349226ae5abc9b6a4e68870c08bb383fb64052703338465adddd
+  verified: true
+  evidence_kind: contract_fixture
+- source: 0
+  source_position: 0
+  repetition: 1
+  duration_s: 0.1
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+  output: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-1-0.json
+  output_sha256: 619bdc68346483dbe122d54c6b5a7a5d3fd82fba0cfc14c507e669f02c27589f
+  verified: true
+  evidence_kind: contract_fixture
+- source: 4
+  source_position: 1
+  repetition: 1
+  duration_s: 0.1
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+  output: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-1-1.json
+  output_sha256: d1a2f8a4b2d3349226ae5abc9b6a4e68870c08bb383fb64052703338465adddd
+  verified: true
+  evidence_kind: contract_fixture
+- source: 0
+  source_position: 0
+  repetition: 2
+  duration_s: 0.1
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+  output: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-2-0.json
+  output_sha256: 619bdc68346483dbe122d54c6b5a7a5d3fd82fba0cfc14c507e669f02c27589f
+  verified: true
+  evidence_kind: contract_fixture
+- source: 4
+  source_position: 1
+  repetition: 2
+  duration_s: 0.1
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+  output: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-2-1.json
+  output_sha256: d1a2f8a4b2d3349226ae5abc9b6a4e68870c08bb383fb64052703338465adddd
+  verified: true
+  evidence_kind: contract_fixture
+- source: 0
+  source_position: 0
+  repetition: 3
+  duration_s: 0.1
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+  output: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-3-0.json
+  output_sha256: 619bdc68346483dbe122d54c6b5a7a5d3fd82fba0cfc14c507e669f02c27589f
+  verified: true
+  evidence_kind: contract_fixture
+- source: 4
+  source_position: 1
+  repetition: 3
+  duration_s: 0.1
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+  output: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-3-1.json
+  output_sha256: d1a2f8a4b2d3349226ae5abc9b6a4e68870c08bb383fb64052703338465adddd
+  verified: true
+  evidence_kind: contract_fixture
+- source: 0
+  source_position: 0
+  repetition: 4
+  duration_s: 0.1
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+  output: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-4-0.json
+  output_sha256: 619bdc68346483dbe122d54c6b5a7a5d3fd82fba0cfc14c507e669f02c27589f
+  verified: true
+  evidence_kind: contract_fixture
+- source: 4
+  source_position: 1
+  repetition: 4
+  duration_s: 0.1
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+  output: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/trial-4-1.json
+  output_sha256: d1a2f8a4b2d3349226ae5abc9b6a4e68870c08bb383fb64052703338465adddd
+  verified: true
+  evidence_kind: contract_fixture
+correctness:
+  state: passed
+  checks:
+  - passed: true
+    reason: null
+    reachable_vertices: 4
+    source: 0
+    source_position: 0
+    repetition: 0
+    trial: 0
+    output_sha256: 619bdc68346483dbe122d54c6b5a7a5d3fd82fba0cfc14c507e669f02c27589f
+    binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+    graph_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 1
+    source: 4
+    source_position: 1
+    repetition: 0
+    trial: 1
+    output_sha256: d1a2f8a4b2d3349226ae5abc9b6a4e68870c08bb383fb64052703338465adddd
+    binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+    graph_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 4
+    source: 0
+    source_position: 0
+    repetition: 1
+    trial: 2
+    output_sha256: 619bdc68346483dbe122d54c6b5a7a5d3fd82fba0cfc14c507e669f02c27589f
+    binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+    graph_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 1
+    source: 4
+    source_position: 1
+    repetition: 1
+    trial: 3
+    output_sha256: d1a2f8a4b2d3349226ae5abc9b6a4e68870c08bb383fb64052703338465adddd
+    binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+    graph_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 4
+    source: 0
+    source_position: 0
+    repetition: 2
+    trial: 4
+    output_sha256: 619bdc68346483dbe122d54c6b5a7a5d3fd82fba0cfc14c507e669f02c27589f
+    binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+    graph_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 1
+    source: 4
+    source_position: 1
+    repetition: 2
+    trial: 5
+    output_sha256: d1a2f8a4b2d3349226ae5abc9b6a4e68870c08bb383fb64052703338465adddd
+    binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+    graph_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 4
+    source: 0
+    source_position: 0
+    repetition: 3
+    trial: 6
+    output_sha256: 619bdc68346483dbe122d54c6b5a7a5d3fd82fba0cfc14c507e669f02c27589f
+    binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+    graph_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 1
+    source: 4
+    source_position: 1
+    repetition: 3
+    trial: 7
+    output_sha256: d1a2f8a4b2d3349226ae5abc9b6a4e68870c08bb383fb64052703338465adddd
+    binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+    graph_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 4
+    source: 0
+    source_position: 0
+    repetition: 4
+    trial: 8
+    output_sha256: 619bdc68346483dbe122d54c6b5a7a5d3fd82fba0cfc14c507e669f02c27589f
+    binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+    graph_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 1
+    source: 4
+    source_position: 1
+    repetition: 4
+    trial: 9
+    output_sha256: d1a2f8a4b2d3349226ae5abc9b6a4e68870c08bb383fb64052703338465adddd
+    binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+    graph_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    verifier: swdb.bfs.structural.v1
+profiling:
+  state: unavailable
+  reasons:
+  - automatic function attribution not collected
+  - automatic loop attribution not collected
+  - dynamic memory observations not collected
+raw_artifacts:
+- host: YanRus-Mac-Studio
+  path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation
+  kind: evaluation_run
+- host: YanRus-Mac-Studio
+  path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build
+  kind: evaluation_build
+gain_claim: false
+evidence_kind: contract_fixture
+candidate: bfs-contract-20260925-a3.candidate-proposal.candidate-1
+source_snapshot: bfs-contract-20260925-a3.source
+implementation: gapbs-bfs-do
+proposal: bfs-contract-20260925-a3.candidate-proposal
+profile_package: bfs-contract-20260925-a3.fixture-package
+machine: bfs-contract-20260925-a3.local-host
+comparison_baseline: bfs-contract-20260925-a3.independent-reference
+context:
+  candidate_sha256: b1caf5ac833838d2533ae74c281d0fe155e1eda589b9af16ddbba0a4210c9f8e
+  function: DOBFS
+  source_revision: 2972aeb2703165bafd921222f4ed7196f542d3a8
+  application: gapbs
+  adapter: gapbs_native
+  target: bfs-contract-20260925-a3.local-host
+  machine_sha256: b8e9059c7989f1bac8a02f7a1301d4760b080a36eb646a4f06993cc75593e0f3
+  threads: 1
+  sources: [0, 4]
+  repetitions: 5
+  roi: bfs.complete_call.v1
+  protocol: bfs-contract-20260925-a3.fixture-protocol.d414370aaa72b04e
+  basis: measured
+  process_policy: one fresh process per source and repetition; graph construction before ROI
+  verifier: swdb.bfs.structural.v1
+  verifier_sha256: 807d685a889a30741a9d06215314c44cbb333676d4be03663a22821d3a543730
+  backend_configuration: {}
+  instrumentation:
+    template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+    treatment: included
+  host: YanRus-Mac-Studio
+  architecture: arm64
+  lane: null
+  load_average: [13.1416015625, 11.537109375, 8.6591796875]
+  budget:
+    build_seconds: 10.0
+    run_seconds: 2.0
+    total_seconds: 900.0
+  workload:
+    id: bfs-contract-20260925-a3.workload.584a833b37d4d8a1
+    family: contract_fixture
+    generator:
+      name: explicit correctness fixture
+      revision: fixture-v1
+      parameters: {}
+    representation:
+      id: bfs-contract-20260925-a3.json
+      path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/fixture-graph.json
+      sha256: 2fabd85301bc851142904400e7bb3c5943a3a8c0f1ce28e00d971039d65c5b48
+      format: json_graph
+      application: gapbs
+      canonical_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+      bytes: 80
+      loader: swdb.gapbs-representation.v1
+      adjacency_verified: true
+    normalization: 'simple graph: remove self loops and duplicates; symmetrize if undirected; sort neighbors'
+    canonical_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    adjacency_order_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    num_vertices: 5
+    num_directed_edges: 4
+    directed: true
+    sources: [0, 4]
+    canonical_path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/graph.swdb
+    canonical_file_sha256: dbbad7018b7c65366ac423f8d505929eb0364e00bff34c20cd4fa2227cb4ea43
+  protocol_binding:
+    protocol: bfs-contract-20260925-a3.fixture-protocol.d414370aaa72b04e
+    frozen_sha256: d414370aaa72b04e762587ba0120a7b7ee2a567284287164478d654f105922d5
+    workload_id: bfs-contract-20260925-a3.workload.584a833b37d4d8a1
+    workload_sha256: 584a833b37d4d8a12dc6d52e5a91e17e8f7edce7e1936d2e0871a27a16de462a
+    role: candidate
+    frozen_at: '2026-09-26T02:01:58.655746+00:00'
+    bound_at: '2026-09-26T02:03:58.115236+00:00'
+    settings_sha256: d30debeea52981e6f6fb2d33898288cc4f37cc52d2f2ecd76cd69c40f3395ea0
+build:
+  directory: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build
+  compiler: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler
+  flags: [-std=c++11, -O2]
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler
+  - -std=c++11
+  - -O2
+  - -I/private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate-proposal/source/src
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/native_driver.cc
+  - -o
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/bfs-native
+  wrapper_sha256: bb454ea348e43f997e9c145fb6014d30bfed431699ee19802d632a0800b26aff
+  template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+  compiler_version:
+  - SWDB explicit contract fixture compiler v1
+  binary: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate.evaluation/build/bfs-native
+  binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+  execution_environment:
+    OMP_NUM_THREADS: '1'
+    OMP_DYNAMIC: 'FALSE'
+    OMP_PROC_BIND: close
+    OMP_PLACES: cores
+summary:
+  trials: 10
+  median_roi_seconds: 0.1
+  by_source_position:
+  - source_position: 0
+    source: 0
+    median_roi_seconds: 0.1
+  - source_position: 1
+    source: 4
+    median_roi_seconds: 0.1
+  gain_claim: false

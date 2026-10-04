@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evaluation",
+  "title": "Durable native evaluation",
+  "description": "Introduced 2026-09-25. Failure evidence is retained independently of successful profiles.",
+  "properties": {
+    "kind": {
+      "const": "evaluation"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "message_version": {
+      "const": "1.0"
+    },
+    "producer": {
+      "type": "object"
+    },
+    "request": {},
+    "candidate": {
+      "$ref": "#/$defs/id",
+      "x-ref": "candidate"
+    },
+    "proposal": {
+      "$ref": "#/$defs/id",
+      "x-ref": "proposal"
+    },
+    "source_snapshot": {
+      "$ref": "#/$defs/id",
+      "x-ref": "source_snapshot"
+    },
+    "profile_package": {
+      "$ref": "#/$defs/id",
+      "x-ref": "profile_package"
+    },
+    "implementation": {
+      "$ref": "#/$defs/id",
+      "x-ref": "implementation"
+    },
+    "machine": {
+      "$ref": "#/$defs/id",
+      "x-ref": "machine"
+    },
+    "comparison_baseline": {
+      "$ref": "#/$defs/id",
+      "x-ref": "implementation"
+    },
+    "context": {
+      "type": "object"
+    },
+    "build": {
+      "type": "object"
+    },
+    "summary": {
+      "type": "object"
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "submitted",
+            "running",
+            "complete",
+            "failed",
+            "timed_out",
+            "interrupted",
+            "incorrect",
+            "missing_observation",
+            "incompatible",
+            "budget_exhausted"
+          ]
+        },
+        "stage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "state",
+        "stage",
+        "reason"
+      ]
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "running",
+              "complete",
+              "failed",
+              "timed_out",
+              "interrupted",
+              "incorrect",
+              "missing_observation",
+              "incompatible",
+              "budget_exhausted"
+            ]
+          },
+          "started": {
+            "type": "string"
+          },
+          "finished": {
+            "type": "string"
+          },
+          "host_wall_s": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "stage",
+          "state",
+          "started"
+        ]
+      }
+    },
+    "timing": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "source_position": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "repetition": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "duration_s": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "roi": {
+            "type": "string"
+          },
+          "basis": {
+            "enum": [
+              "measured",
+              "simulated"
+            ]
+          },
+          "quantity": {
+            "enum": [
+              "native_roi_wall_seconds",
+              "simulated_roi_seconds"
+            ]
+          },
+          "binary_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "output": {
+            "type": "string"
+          },
+          "output_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "evidence_kind": {
+            "enum": [
+              "execution",
+              "contract_fixture"
+            ]
+          }
+        },
+        "required": [
+          "source",
+          "source_position",
+          "repetition",
+          "duration_s",
+          "roi",
+          "basis",
+          "quantity",
+          "binary_sha256",
+          "output",
+          "output_sha256",
+          "verified",
+          "evidence_kind"
+        ]
+      }
+    },
+    "correctness": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "unverified",
+            "passed",
+            "failed"
+          ]
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "state",
+        "checks"
+      ]
+    },
+    "profiling": {
+      "type": "object"
+    },
+    "raw_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "gain_claim": {
+      "const": false
+    },
+    "evidence_kind": {
+      "enum": [
+        "execution",
+        "contract_fixture"
+      ]
+    },
+    "component_evaluations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "evaluation": {
+            "$ref": "#/$defs/id",
+            "x-ref": "evaluation"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "evaluation",
+          "sha256"
+        ]
+      }
+    }
+  },
+  "required": [
+    "message_version",
+    "producer",
+    "request",
+    "outcome",
+    "stages",
+    "timing",
+    "correctness",
+    "profiling",
+    "raw_artifacts",
+    "gain_claim",
+    "evidence_kind"
+  ]
+}

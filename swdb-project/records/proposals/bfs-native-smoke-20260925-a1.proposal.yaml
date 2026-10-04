@@ -1,0 +1,65 @@
+kind: proposal
+schema_version: '0.4'
+id: bfs-native-smoke-20260925-a1.proposal
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb-native-diagnostic-client
+  role: sw
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-native-smoke-20260925-a1.proposal
+  producer:
+    name: swdb-native-diagnostic-client
+    role: sw
+    test_client: true
+  profile_package: bfs-native-smoke-20260925-a1.package
+  source_snapshot: bfs-native-smoke-20260925-a1.source
+  implementation: dx100-bfs-scalar
+  source_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  regions:
+  - benchmarks/gapbs/src/bfs.cc:1-536:6835fc42dfadcb60
+  intent: Remove the redundant non-atomic parent store immediately after successful scalar CAS; preserve
+    BFS semantics.
+  constraints:
+    editable_files: [benchmarks/gapbs/src/bfs.cc]
+    preserve_correctness: true
+    preserve_roi: true
+  payload:
+    kind: patch
+    content: |
+      --- a/benchmarks/gapbs/src/bfs.cc
+      +++ b/benchmarks/gapbs/src/bfs.cc
+      @@ -245,7 +245,6 @@
+                           // indirect write (parent, v_tile, u_tile)
+                           // core fetch v tile
+                           if (compare_and_swap(parent[v], curr_val, u)) {
+      -                        parent[v] = u;
+                               lqueue.push_back(v);
+                           }
+                       }
+  required_operations: []
+payload_sha256: 2b18b03acca4545a4401fc5883eb32589889126481395b6a629025d06f97c1ed
+outcome:
+  state: candidate_created
+  stage: rewriting
+  reason: null
+attempts:
+- number: 1
+  stage: rewriting
+  state: completed
+  candidate: bfs-native-smoke-20260925-a1.proposal.candidate-1
+raw_artifacts:
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-smoke-20260925/bfs-native-smoke-20260925-a1.proposal
+  stage: rewriting
+source_snapshot: bfs-native-smoke-20260925-a1.source
+profile_package: bfs-native-smoke-20260925-a1.package
+candidate: bfs-native-smoke-20260925-a1.proposal.candidate-1

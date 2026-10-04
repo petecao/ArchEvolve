@@ -1,0 +1,1594 @@
+kind: implementation
+schema_version: '0.4'
+status: draft
+deprecated_by: null
+extensions:
+  statements:
+    version: '1.0'
+    step_index_base: 0
+    function: TDStep
+    annotations:
+    - id: bfs-td-frontier
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [240, 240]
+      code: NodeID u = queue.shared[i];
+      access_pattern_steps:
+      - pattern: td-frontier-read
+        step: 0
+      depends_on: []
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+      agent_claims:
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: pattern_class
+        value:
+        - pattern: td-frontier-read
+          address_shapes: [stream]
+          update_kind: read
+        basis: code_reading
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: index_provenance
+        value: []
+        basis: code_reading
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: expected_cost_rank
+        value: 4
+        basis: inferred
+    - id: bfs-td-row-bounds
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [241, 241]
+      code: for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+      access_pattern_steps:
+      - pattern: td-row-bounds-read
+        step: 1
+      - pattern: td-row-end-read
+        step: 1
+      depends_on: [bfs-td-frontier]
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+      agent_claims:
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: pattern_class
+        value:
+        - pattern: td-row-bounds-read
+          address_shapes: [stream, single_valued_indirect]
+          update_kind: read
+        - pattern: td-row-end-read
+          address_shapes: [stream, single_valued_indirect]
+          update_kind: read
+        basis: code_reading
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: index_provenance
+        value: [bfs-td-frontier]
+        basis: code_reading
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: expected_cost_rank
+        value: 3
+        basis: inferred
+    - id: bfs-td-neighbor
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [242, 242]
+      code: NodeID v = g.out_neighbors_[j];
+      access_pattern_steps:
+      - pattern: td-neighbor-read
+        step: 2
+      depends_on: [bfs-td-row-bounds]
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+      agent_claims:
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: pattern_class
+        value:
+        - pattern: td-neighbor-read
+          address_shapes: [stream, single_valued_indirect, ranged_indirect]
+          update_kind: read
+        basis: code_reading
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: index_provenance
+        value: [bfs-td-frontier, bfs-td-row-bounds]
+        basis: code_reading
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: expected_cost_rank
+        value: 2
+        basis: inferred
+    - id: bfs-td-parent-read
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [243, 243]
+      code: NodeID curr_val = parent[v];
+      access_pattern_steps:
+      - pattern: td-parent-read
+        step: 3
+      depends_on: [bfs-td-neighbor]
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+      agent_claims:
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: pattern_class
+        value:
+        - pattern: td-parent-read
+          address_shapes: [stream, single_valued_indirect, ranged_indirect, single_valued_indirect]
+          update_kind: read
+        basis: code_reading
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: index_provenance
+        value: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor]
+        basis: code_reading
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by:
+        - evidence: typed-library-bfs-scalar-profile-20261003-a2.profile
+          profile_sha256: 3df8599662e915ec66d6c326d1999103454ef4b49ca7125d06e33762c4d91883
+          basis: simulated
+          rule: absolute difference between expected rank and simulated midrank exceeds 1
+          observed_rank: 5.5
+        field: expected_cost_rank
+        value: 1
+        basis: inferred
+    - id: bfs-td-parent-cas
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [247, 247]
+      code: if (compare_and_swap(parent[v], curr_val, u)) {
+      access_pattern_steps:
+      - pattern: td-parent-cas
+        step: 3
+      depends_on: [bfs-td-frontier, bfs-td-neighbor, bfs-td-parent-read]
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+      agent_claims:
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: pattern_class
+        value:
+        - pattern: td-parent-cas
+          address_shapes: [stream, single_valued_indirect, ranged_indirect, single_valued_indirect]
+          update_kind: compare_and_swap
+        basis: inferred
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: index_provenance
+        value: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor]
+        basis: inferred
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: expected_cost_rank
+        value: 6
+        basis: inferred
+    - id: bfs-td-parent-store
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [248, 248]
+      code: parent[v] = u;
+      access_pattern_steps:
+      - pattern: td-parent-store
+        step: 3
+      depends_on: [bfs-td-parent-cas]
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+      agent_claims:
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: pattern_class
+        value:
+        - pattern: td-parent-store
+          address_shapes: [stream, single_valued_indirect, ranged_indirect, single_valued_indirect]
+          update_kind: write
+        basis: inferred
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: index_provenance
+        value: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor]
+        basis: inferred
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by:
+        - evidence: typed-library-bfs-scalar-profile-20261003-a2.profile
+          profile_sha256: 3df8599662e915ec66d6c326d1999103454ef4b49ca7125d06e33762c4d91883
+          basis: simulated
+          rule: absolute difference between expected rank and simulated midrank exceeds 1
+          observed_rank: 5.5
+        field: expected_cost_rank
+        value: 7
+        basis: inferred
+    - id: bfs-td-queue-append
+      source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [249, 249]
+      code: lqueue.push_back(v);
+      access_pattern_steps:
+      - pattern: td-queue-append
+        step: 0
+      depends_on: [bfs-td-parent-cas]
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+      agent_claims:
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: pattern_class
+        value:
+        - pattern: td-queue-append
+          address_shapes: [stream]
+          update_kind: write
+        basis: inferred
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: index_provenance
+        value: []
+        basis: inferred
+      - model: gpt-5.6-sol
+        effort: xhigh
+        prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+        input_sha256s:
+          statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+          statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+        classification: rewrite_provider
+        contradicted_by: []
+        field: expected_cost_rank
+        value: 5
+        basis: inferred
+    access_chain: [queue.shared, VertexOffsets, g.out_neighbors_, 'parent (read, CAS, store)', lqueue.local_queue]
+    note: The final queue append is a conditional side effect, not an address indexed by parent. Its own
+      stream pattern and statement dependencies retain that distinction. IDs and pinned source lines come
+      from Josh's root examples/bfs.source-observations.yaml; source reading only, not Peter feature extraction.
+    source_mappings:
+    - id: bfs-td-frontier
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [77, 77]
+      source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+      source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      original_source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [240, 240]
+      source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+      mapping_method: removed_pinned_line_ranges
+      projected_removed_ranges_lines: [77, 77]
+      code: NodeID u = queue.shared[i];
+      access_pattern_steps:
+      - pattern: td-frontier-read
+        step: 0
+      depends_on: []
+    - id: bfs-td-row-bounds
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [78, 78]
+      source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+      source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      original_source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [241, 241]
+      source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+      mapping_method: removed_pinned_line_ranges
+      projected_removed_ranges_lines: [78, 78]
+      code: for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+      access_pattern_steps:
+      - pattern: td-row-bounds-read
+        step: 1
+      - pattern: td-row-end-read
+        step: 1
+      depends_on: [bfs-td-frontier]
+    - id: bfs-td-neighbor
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [79, 79]
+      source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+      source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      original_source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [242, 242]
+      source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+      mapping_method: removed_pinned_line_ranges
+      projected_removed_ranges_lines: [79, 79]
+      code: NodeID v = g.out_neighbors_[j];
+      access_pattern_steps:
+      - pattern: td-neighbor-read
+        step: 2
+      depends_on: [bfs-td-row-bounds]
+    - id: bfs-td-parent-read
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [80, 80]
+      source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+      source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      original_source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [243, 243]
+      source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+      mapping_method: removed_pinned_line_ranges
+      projected_removed_ranges_lines: [80, 80]
+      code: NodeID curr_val = parent[v];
+      access_pattern_steps:
+      - pattern: td-parent-read
+        step: 3
+      depends_on: [bfs-td-neighbor]
+    - id: bfs-td-parent-cas
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [84, 84]
+      source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+      source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      original_source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [247, 247]
+      source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+      mapping_method: removed_pinned_line_ranges
+      projected_removed_ranges_lines: [84, 84]
+      code: if (compare_and_swap(parent[v], curr_val, u)) {
+      access_pattern_steps:
+      - pattern: td-parent-cas
+        step: 3
+      depends_on: [bfs-td-frontier, bfs-td-neighbor, bfs-td-parent-read]
+    - id: bfs-td-parent-store
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [85, 85]
+      source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+      source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      original_source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [248, 248]
+      source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+      mapping_method: removed_pinned_line_ranges
+      projected_removed_ranges_lines: [85, 85]
+      code: parent[v] = u;
+      access_pattern_steps:
+      - pattern: td-parent-store
+        step: 3
+      depends_on: [bfs-td-parent-cas]
+    - id: bfs-td-queue-append
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [86, 86]
+      source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+      source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      original_source:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [249, 249]
+      source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+      mapping_method: removed_pinned_line_ranges
+      projected_removed_ranges_lines: [86, 86]
+      code: lqueue.push_back(v);
+      access_pattern_steps:
+      - pattern: td-queue-append
+        step: 0
+      depends_on: [bfs-td-parent-cas]
+  statement_annotation_scores:
+  - format: swdb.statement-annotation-score.v1
+    implementation: dx100-bfs-scalar
+    source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+    region_profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+    region_profile_sha256: 3df8599662e915ec66d6c326d1999103454ef4b49ca7125d06e33762c4d91883
+    basis: simulated
+    gain_claim: false
+    spearman_rank_correlation: 0.4925690038994379
+    top_3_overlap: 0.6666666666666666
+    top_3_overlap_count: 2
+    rank_tie_policy: average ranks
+    top_3_tie_policy: expected overlap under uniform choice at the tied boundary
+    contradiction_rule: absolute difference between expected rank and simulated midrank exceeds 1
+    statements:
+    - statement: bfs-td-frontier
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [77, 77]
+      metric: last_level_misses
+      value: 6731
+      basis: simulated
+      unit: misses
+      profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      source_mapping:
+        id: bfs-td-frontier
+        path: benchmarks/gapbs/src/bfs.cc
+        lines: [77, 77]
+        source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+        source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+        source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+        original_source:
+          root: application
+          path: benchmarks/gapbs/src/bfs.cc
+          revision: e4fc4afdf894f295442cef3604667a469fab8e62
+          lines: [240, 240]
+        source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+        mapping_method: removed_pinned_line_ranges
+        projected_removed_ranges_lines: [77, 77]
+        code: NodeID u = queue.shared[i];
+        access_pattern_steps:
+        - pattern: td-frontier-read
+          step: 0
+        depends_on: []
+      attributed_rows: 1
+      limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs
+        on the statement line
+      expected_cost_rank: 4
+      callgrind_rank: 3.0
+      contradicted: false
+    - statement: bfs-td-row-bounds
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [78, 78]
+      metric: last_level_misses
+      value: 6809
+      basis: simulated
+      unit: misses
+      profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      source_mapping:
+        id: bfs-td-row-bounds
+        path: benchmarks/gapbs/src/bfs.cc
+        lines: [78, 78]
+        source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+        source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+        source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+        original_source:
+          root: application
+          path: benchmarks/gapbs/src/bfs.cc
+          revision: e4fc4afdf894f295442cef3604667a469fab8e62
+          lines: [241, 241]
+        source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+        mapping_method: removed_pinned_line_ranges
+        projected_removed_ranges_lines: [78, 78]
+        code: for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+        access_pattern_steps:
+        - pattern: td-row-bounds-read
+          step: 1
+        - pattern: td-row-end-read
+          step: 1
+        depends_on: [bfs-td-frontier]
+      attributed_rows: 1
+      limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs
+        on the statement line
+      expected_cost_rank: 3
+      callgrind_rank: 2.0
+      contradicted: false
+    - statement: bfs-td-neighbor
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [79, 79]
+      metric: last_level_misses
+      value: 479207
+      basis: simulated
+      unit: misses
+      profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      source_mapping:
+        id: bfs-td-neighbor
+        path: benchmarks/gapbs/src/bfs.cc
+        lines: [79, 79]
+        source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+        source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+        source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+        original_source:
+          root: application
+          path: benchmarks/gapbs/src/bfs.cc
+          revision: e4fc4afdf894f295442cef3604667a469fab8e62
+          lines: [242, 242]
+        source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+        mapping_method: removed_pinned_line_ranges
+        projected_removed_ranges_lines: [79, 79]
+        code: NodeID v = g.out_neighbors_[j];
+        access_pattern_steps:
+        - pattern: td-neighbor-read
+          step: 2
+        depends_on: [bfs-td-row-bounds]
+      attributed_rows: 1
+      limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs
+        on the statement line
+      expected_cost_rank: 2
+      callgrind_rank: 1.0
+      contradicted: false
+    - statement: bfs-td-parent-read
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [80, 80]
+      metric: last_level_misses
+      value: 0
+      basis: simulated
+      unit: misses
+      profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      source_mapping:
+        id: bfs-td-parent-read
+        path: benchmarks/gapbs/src/bfs.cc
+        lines: [80, 80]
+        source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+        source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+        source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+        original_source:
+          root: application
+          path: benchmarks/gapbs/src/bfs.cc
+          revision: e4fc4afdf894f295442cef3604667a469fab8e62
+          lines: [243, 243]
+        source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+        mapping_method: removed_pinned_line_ranges
+        projected_removed_ranges_lines: [80, 80]
+        code: NodeID curr_val = parent[v];
+        access_pattern_steps:
+        - pattern: td-parent-read
+          step: 3
+        depends_on: [bfs-td-neighbor]
+      attributed_rows: 1
+      limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs
+        on the statement line
+      expected_cost_rank: 1
+      callgrind_rank: 5.5
+      contradicted: true
+    - statement: bfs-td-parent-cas
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [84, 84]
+      metric: last_level_misses
+      value: 0
+      basis: simulated
+      unit: misses
+      profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      source_mapping:
+        id: bfs-td-parent-cas
+        path: benchmarks/gapbs/src/bfs.cc
+        lines: [84, 84]
+        source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+        source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+        source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+        original_source:
+          root: application
+          path: benchmarks/gapbs/src/bfs.cc
+          revision: e4fc4afdf894f295442cef3604667a469fab8e62
+          lines: [247, 247]
+        source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+        mapping_method: removed_pinned_line_ranges
+        projected_removed_ranges_lines: [84, 84]
+        code: if (compare_and_swap(parent[v], curr_val, u)) {
+        access_pattern_steps:
+        - pattern: td-parent-cas
+          step: 3
+        depends_on: [bfs-td-frontier, bfs-td-neighbor, bfs-td-parent-read]
+      attributed_rows: 1
+      limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs
+        on the statement line
+      expected_cost_rank: 6
+      callgrind_rank: 5.5
+      contradicted: false
+    - statement: bfs-td-parent-store
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [85, 85]
+      metric: last_level_misses
+      value: 0
+      basis: simulated
+      unit: misses
+      profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      source_mapping:
+        id: bfs-td-parent-store
+        path: benchmarks/gapbs/src/bfs.cc
+        lines: [85, 85]
+        source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+        source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+        source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+        original_source:
+          root: application
+          path: benchmarks/gapbs/src/bfs.cc
+          revision: e4fc4afdf894f295442cef3604667a469fab8e62
+          lines: [248, 248]
+        source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+        mapping_method: removed_pinned_line_ranges
+        projected_removed_ranges_lines: [85, 85]
+        code: parent[v] = u;
+        access_pattern_steps:
+        - pattern: td-parent-store
+          step: 3
+        depends_on: [bfs-td-parent-cas]
+      attributed_rows: 1
+      limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs
+        on the statement line
+      expected_cost_rank: 7
+      callgrind_rank: 5.5
+      contradicted: true
+    - statement: bfs-td-queue-append
+      path: benchmarks/gapbs/src/bfs.cc
+      lines: [86, 86]
+      metric: last_level_misses
+      value: 0
+      basis: simulated
+      unit: misses
+      profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+      source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+      source_mapping:
+        id: bfs-td-queue-append
+        path: benchmarks/gapbs/src/bfs.cc
+        lines: [86, 86]
+        source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+        source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+        source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+        original_source:
+          root: application
+          path: benchmarks/gapbs/src/bfs.cc
+          revision: e4fc4afdf894f295442cef3604667a469fab8e62
+          lines: [249, 249]
+        source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+        mapping_method: removed_pinned_line_ranges
+        projected_removed_ranges_lines: [86, 86]
+        code: lqueue.push_back(v);
+        access_pattern_steps:
+        - pattern: td-queue-append
+          step: 0
+        depends_on: [bfs-td-parent-cas]
+      attributed_rows: 0
+      limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs
+        on the statement line
+      expected_cost_rank: 5
+      callgrind_rank: 5.5
+      contradicted: false
+id: dx100-bfs-scalar
+created: '2026-09-25'
+updated: '2026-10-03'
+provenance:
+- id: src-dx100-bfs
+  kind: source_code
+  description: DX100 bfs.cc scalar DOBFS calls only TDStep; main selects it when MAA is undefined. Read
+    2026-09-25.
+  uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/bfs.cc
+name: DX100 scalar top-down BFS
+kernel: gapbs-bfs
+application: dx100-gapbs
+source_baseline: dx100-bfs-scalar
+function: DOBFS
+origin:
+  kind: application_source
+  description: Scalar non-MAA starting implementation in pinned DX100 source.
+  derived_from: null
+code:
+- root: application
+  path: benchmarks/gapbs/src/bfs.cc
+  sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+build:
+  compiler: g++
+  flags: -std=c++11 -O3 -Wall -fopenmp -pthread -DFUNC
+  command: '{cxx} {flags} -I{app}/benchmarks/API -I{app}/benchmarks/gapbs/src {source} -o {binary}'
+run:
+  command: '{binary} {input_args} -n {trials}'
+  timer: gapbs_trial_time
+  threads_env: OMP_NUM_THREADS
+  kernel_symbols: [DOBFS, TDStep, InitParent]
+  index_stream: null
+evaluator:
+  backend: native
+  command: '{binary} {input_args} -n 1 -v'
+  pass_regex: Verification:\s+PASS
+  verifier:
+    description: DX100 BFSVerifier structurally checks parent edges, depths and reachability from the
+      same source. Native FUNC binding; GEM5 post-ROI correctness requires its own evaluator.
+    code:
+      root: application
+      path: benchmarks/gapbs/src/bfs.cc
+      sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+      lines: [458, 509]
+verification:
+  status: unchecked
+  evidence: []
+  scope: Imported source only; no native or simulated target/workload has been checked by this record.
+loops:
+- id: td-frontier
+  description: TDStep visits each vertex in the current queue window.
+  parent: null
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-dx100-bfs]
+  parallel:
+    construct: omp_for_in_parallel_region
+    schedule: null
+    reduction: null
+- id: td-neighbors
+  description: TDStep iterates the outgoing CSR range of each frontier vertex.
+  parent: td-frontier
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-dx100-bfs]
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+access_patterns:
+- id: td-frontier-read
+  expression: NodeID u = queue.shared[i]
+  loop: td-frontier
+  steps:
+  - array:
+      name: queue.shared
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+  agent_claims:
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: pattern_class
+    value:
+      pattern: td-frontier-read
+      address_shapes: [stream]
+      update_kind: read
+    basis: code_reading
+    statement: bfs-td-frontier
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: index_provenance
+    value: []
+    basis: code_reading
+    statement: bfs-td-frontier
+- id: td-row-bounds-read
+  expression: VertexOffsets[u]
+  loop: td-frontier
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsets
+      role: target
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads the row start indexed by the frontier vertex u.
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+  agent_claims:
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: pattern_class
+    value:
+      pattern: td-row-bounds-read
+      address_shapes: [stream, single_valued_indirect]
+      update_kind: read
+    basis: code_reading
+    statement: bfs-td-row-bounds
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: index_provenance
+    value: [bfs-td-frontier]
+    basis: code_reading
+    statement: bfs-td-row-bounds
+- id: td-row-end-read
+  expression: VertexOffsets[u + 1]
+  loop: td-frontier
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsets
+      role: target
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: affine
+    note: Reads the row end using u + 1; the +1 is affine index arithmetic on the loaded vertex ID.
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+  agent_claims:
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: pattern_class
+    value:
+      pattern: td-row-end-read
+      address_shapes: [stream, single_valued_indirect]
+      update_kind: read
+    basis: code_reading
+    statement: bfs-td-row-bounds
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: index_provenance
+    value: [bfs-td-frontier]
+    basis: code_reading
+    statement: bfs-td-row-bounds
+- id: td-neighbor-read
+  expression: g.out_neighbors_[j]
+  loop: td-neighbors
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsets
+      role: offsets
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads row start VertexOffsets[u] and row end VertexOffsets[u + 1]; +1 is affine index arithmetic.
+  - array:
+      name: g.out_neighbors_
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: Iterates j from VertexOffsets[u] (inclusive) to VertexOffsets[u + 1] (exclusive).
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+  agent_claims:
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: pattern_class
+    value:
+      pattern: td-neighbor-read
+      address_shapes: [stream, single_valued_indirect, ranged_indirect]
+      update_kind: read
+    basis: code_reading
+    statement: bfs-td-neighbor
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: index_provenance
+    value: [bfs-td-frontier, bfs-td-row-bounds]
+    basis: code_reading
+    statement: bfs-td-neighbor
+- id: td-parent-read
+  expression: parent[v]
+  loop: td-neighbors
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsets
+      role: offsets
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads row start VertexOffsets[u] and row end VertexOffsets[u + 1]; +1 is affine index arithmetic.
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: Iterates j from VertexOffsets[u] (inclusive) to VertexOffsets[u + 1] (exclusive).
+  - array:
+      name: parent
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+  agent_claims:
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: pattern_class
+    value:
+      pattern: td-parent-read
+      address_shapes: [stream, single_valued_indirect, ranged_indirect, single_valued_indirect]
+      update_kind: read
+    basis: code_reading
+    statement: bfs-td-parent-read
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: index_provenance
+    value: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor]
+    basis: code_reading
+    statement: bfs-td-parent-read
+- id: td-parent-cas
+  expression: compare_and_swap(parent[v], curr_val, u)
+  loop: td-neighbors
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsets
+      role: offsets
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads row start VertexOffsets[u] and row end VertexOffsets[u + 1]; +1 is affine index arithmetic.
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: Iterates j from VertexOffsets[u] (inclusive) to VertexOffsets[u + 1] (exclusive).
+  - array:
+      name: parent
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+  update_kind: compare_and_swap
+  update:
+    pseudocode: if parent[v] == curr_val, atomically set parent[v] = u
+    side_effects: On success, an explicit parent store and lqueue.push_back(v) follow.
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+  condition: curr_val < 0
+  agent_claims:
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: pattern_class
+    value:
+      pattern: td-parent-cas
+      address_shapes: [stream, single_valued_indirect, ranged_indirect, single_valued_indirect]
+      update_kind: compare_and_swap
+    basis: inferred
+    statement: bfs-td-parent-cas
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: index_provenance
+    value: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor]
+    basis: inferred
+    statement: bfs-td-parent-cas
+- id: td-parent-store
+  expression: parent[v] = u
+  loop: td-neighbors
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsets
+      role: offsets
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads row start VertexOffsets[u] and row end VertexOffsets[u + 1]; +1 is affine index arithmetic.
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: Iterates j from VertexOffsets[u] (inclusive) to VertexOffsets[u + 1] (exclusive).
+  - array:
+      name: parent
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+  update_kind: write
+  update:
+    pseudocode: parent[v] = u
+    side_effects: Explicit store retained from the authors' source inside the successful CAS branch.
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+  condition: compare_and_swap(parent[v], curr_val, u) succeeds
+  agent_claims:
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: pattern_class
+    value:
+      pattern: td-parent-store
+      address_shapes: [stream, single_valued_indirect, ranged_indirect, single_valued_indirect]
+      update_kind: write
+    basis: inferred
+    statement: bfs-td-parent-store
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: index_provenance
+    value: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor]
+    basis: inferred
+    statement: bfs-td-parent-store
+- id: td-queue-append
+  expression: lqueue.push_back(v)
+  loop: td-neighbors
+  steps:
+  - array:
+      name: lqueue.local_queue
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: '16384'
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: One position per successful discovery within this thread-local QueueBuffer; resets on flush.
+      Append is controlled by CAS success, not indexed by parent values. Buffer slots may be reused after
+      a flush in the same frontier.
+  update_kind: write
+  update:
+    pseudocode: if local buffer is full, flush; local_queue[in++] = v
+    side_effects: QueueBuffer.flush reserves a shared queue range using fetch_and_add and copies the local
+      buffer; TDStep flushes at line 254 before the level finishes.
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bfs]
+  evidence_refs: [src-dx100-bfs]
+  condition: compare_and_swap(parent[v], curr_val, u) succeeds
+  agent_claims:
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: pattern_class
+    value:
+      pattern: td-queue-append
+      address_shapes: [stream]
+      update_kind: write
+    basis: inferred
+    statement: bfs-td-queue-append
+  - model: gpt-5.6-sol
+    effort: xhigh
+    prompt_sha256: d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8
+    input_sha256s:
+      statement-context.json: 8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214
+      statement-source.cc: 7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c
+    classification: rewrite_provider
+    contradicted_by: []
+    field: index_provenance
+    value: []
+    basis: inferred
+    statement: bfs-td-queue-append
+notes:
+- TDStep statement annotation covers the frontier, CSR row bounds and neighbors, parent read/CAS/store,
+  and local queue append; code reading only, not dynamic profiling.
+- Despite its retained direction-optimizing header, scalar DOBFS calls TDStep only.
+- The pinned graph representation uses int32_t SGOffset; upstream GAPBS serialization must not be assumed
+  equivalent.
+- No -DMAA flag is passed; native functional API setup is not accelerated performance evidence.
+- Duplicate parent destinations may occur across frontier vertices; the three parent patterns record this
+  possibility, not a measured duplicate rate.
+- The row-bounds statement maps separately to the VertexOffsets[u] and VertexOffsets[u + 1] read patterns;
+  its two reads are not collapsed into one terminal access expression.

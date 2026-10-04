@@ -1,0 +1,39 @@
+{
+  "created": "2026-09-26",
+  "started": "2026-09-26T14:02:45.947514-04:00",
+  "commit": "d9b134044dd88a9b85008a73da19dea8430be901",
+  "cwd": "/Users/yanrujhou/.codex/worktrees/bfs-validation/EvolveSWDB",
+  "command": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "timeout_seconds": 5400,
+  "state": "failed",
+  "pid": 56599,
+  "exit_code": 1,
+  "elapsed_seconds": 3088.503367792,
+  "finished": "2026-09-26T14:54:14.471956-04:00",
+  "log": {
+    "path": "/private/tmp/bfs-full-suite-20260926-1402-d9b1340.log",
+    "sha256": "e26de4802c802db2da5e5f9ddcfac0054f70a83750c33e536451ce4ebd82930a"
+  },
+  "result": {
+    "passed": 1530,
+    "skipped": 5,
+    "errors": 11,
+    "pytest_seconds": 3088.26
+  },
+  "failure_scope": "All 11 errors share the simulator-shaped module fixture setup in tests/test_bfs_region_comparison.py.",
+  "correction": {
+    "commit": "f35eba9e3bab50f73eb15060bf273f68d29a517e",
+    "receipt": "simulator-fixture-runtime-correction-20260926.json",
+    "targeted_passed": 25,
+    "targeted_seconds": 135.86,
+    "full_suite_rerun": false
+  },
+  "claim": "The exact d9b1340 full suite failed; its corrected fixture passed the separate targeted group. No full-suite green claim."
+}

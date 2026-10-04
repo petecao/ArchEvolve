@@ -1,0 +1,355 @@
+{
+  "created": "2026-09-27",
+  "kind": "scheduled_host_health",
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260927-0003.json",
+    "bytes": 513422,
+    "sha256": "adfe53ee35cbf9ac2ba84310118518f1504cd3c71e367a0d39b1c6f64ee98124"
+  },
+  "observed_at": "2026-09-27T00:01:51.259988-04:00",
+  "leases": {
+    "mbit10-evaluation-node0": {
+      "state": "released",
+      "generation": 332,
+      "kernel": [],
+      "owner": null
+    },
+    "mbit10-evaluation-node1": {
+      "state": "released",
+      "generation": 430,
+      "kernel": [],
+      "owner": null
+    },
+    "mbit10-evaluation": {
+      "state": "released",
+      "generation": 77,
+      "kernel": [],
+      "owner": null
+    }
+  },
+  "disk": {
+    "/data1": {
+      "free_bytes": 17239150592
+    },
+    "/data": {
+      "free_bytes": 176956395520
+    }
+  },
+  "load": "0.09 0.29 0.55 2/1523 3251657",
+  "capacity": [
+    {
+      "node": 0,
+      "estimated_available_kib": 59282060,
+      "global_available_kib": 122626140,
+      "eligible": true
+    },
+    {
+      "node": 1,
+      "estimated_available_kib": 61097304,
+      "global_available_kib": 122626140,
+      "eligible": true
+    }
+  ],
+  "heads": {
+    "active_acceptance": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_acceptance_20260926_a1",
+      "head": "53f2e7686a41d3472c9e0824a0a9b09117884e0b",
+      "branch": "HEAD"
+    },
+    "native_paired": {
+      "path": "/data1/yanruj/EvolveSWDB_native_paired_20260926_a1",
+      "head": "98b5f50e93f531ce0395fe7e161f812a406d6d9d",
+      "branch": "HEAD"
+    },
+    "a3": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_continuation_20260926_a3",
+      "head": "1018432fdb3800522d723afb874f3bffa41dd0e5",
+      "branch": "HEAD"
+    },
+    "historical_dx": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_20260925_a1",
+      "head": "5802a5a76599de952f58a57d00c193ea9f1341d7",
+      "branch": "HEAD"
+    },
+    "historical_native": {
+      "path": "/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18",
+      "head": "41303ed7fb02f9a5c515e2e951d27e20869c73e9",
+      "branch": "codex/bfs-native-repeatability-evidence-20260926-a1"
+    },
+    "historical_witness": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_witness_20260926_a1",
+      "head": "51df06120982e23e4f3f0590ec3132ebf23f9af3",
+      "branch": "codex/bfs-dx100-witness-evidence-20260926-a1"
+    },
+    "helper": {
+      "path": "/data1/yanruj/Memacc-evolveswdb-lane",
+      "head": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+      "branch": "yanrujhou_main"
+    },
+    "orchestration": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_orchestration_20260926_a1",
+      "head": "a53e619de11278e2763c7a22576308d1a23f19bf",
+      "branch": "HEAD"
+    },
+    "native_one_thread": {
+      "path": "/data1/yanruj/EvolveSWDB_native_one_thread_20260926_a1",
+      "head": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+      "branch": "HEAD"
+    },
+    "a2_tested": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926",
+      "head": "67313d9b2a45d9f0fb23d935b56e755a3a19fa7f",
+      "branch": "HEAD"
+    },
+    "supervision": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a1",
+      "head": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+      "branch": "HEAD"
+    },
+    "reader_a2": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_reader_20260926_a2",
+      "head": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+      "branch": "HEAD"
+    },
+    "a2_tested_v2": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2",
+      "head": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+      "branch": "HEAD"
+    },
+    "supervision_v2": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a2",
+      "head": "4c109430d4c7b80df220c4064e4e2c9ddbc66005",
+      "branch": "HEAD"
+    },
+    "setup_recovery": {
+      "path": "/data1/yanruj/EvolveSWDB_t15_setup_recovery_20260926_a1",
+      "head": "eb2f51d0a02b7d3d1ca9cc02b022a18f1181a3e2",
+      "branch": "codex/bfs-recovery-runtime-20260926-a2"
+    },
+    "t15_gzip_correction": {
+      "path": "/data1/yanruj/EvolveSWDB_t15_gzip_correction_20260926_a1",
+      "head": "d5e215966a7d4d673050a78c6a6d77053aa62a85",
+      "branch": "codex/bfs-t15-gzip-correction-20260926-a1"
+    },
+    "t16_freeze": {
+      "path": "/data1/yanruj/EvolveSWDB_t16_freeze_20260926_a1",
+      "head": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07"
+    },
+    "campaign_preflight": {
+      "path": "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a1",
+      "head": "d11dc04449997734a93b982646977b04008afeff"
+    },
+    "scalar_preparation": "6732d5327c4f9e22d97367ee3eeb3c09118867d3"
+  },
+  "active_campaign_head": "8c39ae09406dad0da253b21dbe2c87e263f8c5fb",
+  "helper": {
+    "path": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+    "bytes": 10510,
+    "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8"
+  },
+  "upstream": {
+    "observed_at": "2026-09-27T00:01:52.014694-04:00",
+    "value": "e4ac23ce0753f58cd2aabb6321f4a05107b03aa8\trefs/heads/yanrujhou_main",
+    "method": "git ls-remote only; no fetch or checkout update"
+  },
+  "historical_hashes_unchanged": true,
+  "prior_2133_receipts_unchanged": true,
+  "closed_terminal_hashes_unchanged": {
+    "t15_original": true,
+    "t15_correction": true,
+    "scalar": true,
+    "gzip": true
+  },
+  "closed_root_allocations": {
+    "t15_original": {
+      "paths": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1",
+          "allocated_bytes": 11014610944
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch",
+          "allocated_bytes": 360448
+        }
+      ],
+      "total_bytes": 11014971392,
+      "expected_bytes": 11014971392,
+      "matches_closed_recount": true,
+      "method": "separate read-only du -sk metadata walks; no root writes"
+    },
+    "t15_correction": {
+      "paths": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1",
+          "allocated_bytes": 11665408
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch",
+          "allocated_bytes": 221184
+        }
+      ],
+      "total_bytes": 11886592,
+      "expected_bytes": 11886592,
+      "matches_closed_recount": true,
+      "method": "separate read-only du -sk metadata walks; no root writes"
+    },
+    "scalar": {
+      "paths": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1",
+          "allocated_bytes": 13123584
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch",
+          "allocated_bytes": 155648
+        }
+      ],
+      "total_bytes": 13279232,
+      "expected_bytes": null,
+      "matches_closed_recount": null,
+      "method": "separate read-only du -sk metadata walks; no root writes"
+    },
+    "gzip": {
+      "paths": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1",
+          "allocated_bytes": 94208
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch",
+          "allocated_bytes": 106496
+        }
+      ],
+      "total_bytes": 200704,
+      "expected_bytes": 200704,
+      "matches_closed_recount": true,
+      "method": "separate read-only du -sk metadata walks; no root writes"
+    },
+    "scalar_full": {
+      "paths": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1",
+          "exists": true,
+          "allocated_bytes": 13123584
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch",
+          "exists": true,
+          "allocated_bytes": 155648
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.tmp",
+          "exists": true,
+          "allocated_bytes": 4096
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+          "exists": true,
+          "allocated_bytes": 1052672
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+          "exists": true,
+          "allocated_bytes": 1105920
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+          "exists": true,
+          "allocated_bytes": 1069056
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+          "exists": true,
+          "allocated_bytes": 1105920
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build.yaml",
+          "exists": true,
+          "allocated_bytes": 20480
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build.yaml",
+          "exists": true,
+          "allocated_bytes": 90112
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build.yaml",
+          "exists": true,
+          "allocated_bytes": 16384
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build.yaml",
+          "exists": true,
+          "allocated_bytes": 57344
+        }
+      ],
+      "total_bytes": 17801216,
+      "expected_bytes": 17801216,
+      "matches_closed_recount": true,
+      "method": "original exact11-path closed inventory; missing paths explicitly reported"
+    }
+  },
+  "t16_roi_progress": {
+    "observed_at": "2026-09-27T00:01:54.008054-04:00",
+    "log_bytes": 168061,
+    "log_mtime": "2026-09-27T03:20:22.440918+00:00",
+    "read_bytes": 16384,
+    "read_offset": 151677,
+    "last_tick_in_tail": 308936615500,
+    "roi_seal_exists": false,
+    "roi_stats_exists": false,
+    "seal_markers_in_tail": 0,
+    "completed_roi_claim": false,
+    "prefix_read_bytes": 16384,
+    "explicit_entry_markers_in_prefix": {
+      "ROI start": 1
+    },
+    "prefix_beginning_simulation_text_present": false,
+    "last_host_phase": {
+      "phase": "simulate_begin",
+      "pid": 3093548,
+      "elapsed_s": 67.95671142172068,
+      "tick": null,
+      "cause": null
+    },
+    "phase_is_roi_entry_proof": false
+  },
+  "a4_failed_group": {
+    "observation": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-setup-recovery-linux-20260926-a1.dispatch/failed-group-observation.json",
+      "bytes": 30687,
+      "sha256": "50a12cb2568a07713a3bd5e6ff6553f81d0a0d9d470e0904a99d25aadd304c08"
+    },
+    "state": "failed",
+    "owned_cases_passed": 5,
+    "interruption_cases_passed": 2,
+    "interruption_auditor_returncode": 1,
+    "reason": "fixture lane subsequently reacquired by other generation before audit; pending remains unaccepted",
+    "re_audit_performed": false
+  },
+  "t16": {
+    "state": "failed",
+    "terminal": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/terminal-validation.json",
+      "bytes": 1344179,
+      "sha256": "e049e2957c15994b8a34125e5113d96f7e2da7b4ecb69094da55523c3cfd0baf"
+    },
+    "accounting": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/terminal-accounting.json",
+      "bytes": 2164,
+      "sha256": "3a3fe7add8a31984dea554813befc8d27ed135e3b570b9eac142cf24f0dc53c3"
+    },
+    "union_count": 944,
+    "current_present": [],
+    "current_unknown": [],
+    "closed_allocated_bytes": 658644992,
+    "matches_closed_recount": true
+  },
+  "other_owned": {
+    "terminal_present": [],
+    "scalar_present": [],
+    "t15_correction_present": []
+  },
+  "no_new_dispatch": true
+}
+

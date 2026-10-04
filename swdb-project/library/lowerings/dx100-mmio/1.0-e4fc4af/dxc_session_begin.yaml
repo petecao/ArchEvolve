@@ -1,0 +1,85 @@
+kind: lowering
+id: lowering.dxc_session_begin.dx100-mmio.1.0-e4fc4af
+intrinsic: intrinsic.dxc_session_begin
+provenance:
+  origin:
+    intrinsic_specification: Peter v1.1
+  intrinsic_specification:
+    path: docs/bfs-intrinsics-spec-yanru.md
+    sha256: 3e54374ae43c841bad3f71d9210cb110742dfdb1bf688cde1953de9df64aabf9
+    root: repository
+    version: '1.1'
+    commit: 0b56895
+    section: '3'
+  hardware_candidate:
+    path: runs/bfs-maple-comparison-v0.1/case-01/handoffs/candidate-02/intrinsic-draft.yaml
+    sha256: 01f05bdc517922a082a10c9e28d8f1501c92892ba06a1e5298a60e7cc5d0bf30
+    root: repository
+    id: gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute
+    catalog_sha256: adf17f3e114878ed0edbe55abb8ea219445fa2aef3c97e6c369230b796872fb0
+  catalog:
+    path: catalog/hardware-v0.1.yaml
+    sha256: adf17f3e114878ed0edbe55abb8ea219445fa2aef3c97e6c369230b796872fb0
+    root: repository
+    design: dx100-artifact-e4fc4af
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    claim_ids:
+    - dxc-gather
+    - dxc-range
+    - dxc-stream
+    - dxc-completion
+    - dxc-byte-offset-domain
+  operation_ids: []
+  requirement_ids:
+  - dxc-observer
+  - dxc-reuse
+  - dxc-capacity
+interface:
+  id: dx100-mmio
+  version: 1.0-e4fc4af
+location:
+  path: dx100/dxc_lowering.hpp
+  symbol: __dxc_session_begin
+code_sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+build_defines:
+  strict:
+  - FUNC
+  - GEM5
+  - SWDB_STRICT
+  tile_sizes:
+  - 16384
+  - 1024
+  core_count: 4
+differential_test:
+  path: dx100/drivers/differential.cc
+  sha256: 5a30fd75e7a23db709eb7e112d9202f46037cadc8b8c9d667ac472fd77f5e976
+  root: library
+  input_set:
+    operation: session_begin
+    seeds:
+    - 0
+    tile_sizes:
+    - 16384
+    - 1024
+    threads: 4
+    indices:
+    - repeated
+    - zero
+    - tail
+    long_rows: false
+clauses:
+- id: result
+  role: postcondition
+  statement: The lowering matches the pinned reference semantics on its declared inputs.
+  discharge_mode: differential_test
+  negative_control:
+    id: second_session_begin
+    check: session_begin_twice
+  formal:
+    language: reference
+    reference:
+      path: dx100/reference.hpp
+      sha256: 75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897
+      root: library
+      symbol: session_begin
+  formal_label: stated

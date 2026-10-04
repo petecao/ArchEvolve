@@ -1,0 +1,58 @@
+{
+  "created": "2026-09-26",
+  "run_id": "bfs-native-one-thread-readback-20260926-a1",
+  "host": "mbit10",
+  "state": "failed_before_validation",
+  "started": "2026-09-26T18:10:50.930589-04:00",
+  "observed_at": "2026-09-26T18:13:04-04:00",
+  "supervisor_commit": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+  "recipe_commit": "39d330fb61911e9bbbc8d65a30825452e63afb33",
+  "collector_commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+  "outer_exit": 1,
+  "helper_exit": 1,
+  "lane": 0,
+  "lease_generation": 326,
+  "released_at": "2026-09-26T18:10:54-04:00",
+  "error": "AttributeError: 'str' object has no attribute 'rglob'",
+  "cause": "Generated launcher passes JSON records path string to old collector Store, which requires pathlib.Path; validation never starts.",
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a1.dispatch/terminal-validation.json",
+    "bytes": 3904,
+    "sha256": "9dcb3b3b33c443d2199dc0c25490612906d0f1c60f4917ed27d690cc8ab5ba7c"
+  },
+  "readback_result": "pending only; no qualified/published result",
+  "cleanup": {
+    "complete_owned_identity_union": false,
+    "reason": "Reader exited before first sampler observation; its PID/start union is unavailable.",
+    "current_exact_argv_scan": "No own-user live match for dedicated raw path, validate_driver_receipt or bfs_one_thread_calibration.",
+    "helper_pid": 3075512,
+    "helper_state": "absent",
+    "pane": {
+      "pid": 3075508,
+      "start_ticks": 496258377,
+      "state": "Z",
+      "rss_bytes": 0
+    },
+    "interpretation": "Current bounded scan and known wrapper facts only; not complete historical process closure."
+  },
+  "measurement_driver_sha256": "81596a440b9114c5f4a6b2edb1d8a799b748ae01c144bc82a218902755115092",
+  "measurement_unchanged": true,
+  "retry": false,
+  "gain_claim": false,
+  "protocol_freeze": false,
+  "next_action": "Repair launcher with real generated-child regression; assess durable child identity capture and independently review. No retry of consumed attempt.",
+  "current_inactivity_supplement": {
+    "observed_at": "2026-09-26T18:14:44-04:00",
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a1.dispatch/current-inactivity-supplement.json",
+    "bytes": 2700,
+    "sha256": "3faeb3be8364fcca8bfc8012030df9b630b45f8362a7038a02039f19a0a58b74",
+    "launch_tick_window": [
+      496258293,
+      496258900
+    ],
+    "complete_own_user_scans": 2,
+    "live_survivors": 0,
+    "only_survivor": "exact recorded pane3075508/start496258377, stateZ/RSS0",
+    "independent_standards": "Sufficient current-inactivity evidence for separate fixture admission with fresh normal host gates; does not establish full historical reader closure."
+  }
+}

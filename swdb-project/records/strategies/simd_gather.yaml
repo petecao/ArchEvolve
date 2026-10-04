@@ -1,0 +1,48 @@
+kind: strategy
+schema_version: '0.3'
+id: simd_gather
+status: draft
+deprecated_by: null
+created: '2026-09-23'
+updated: '2026-09-23'
+provenance:
+- id: intel-guide
+  kind: vendor_reference
+  description: 'Intel Intrinsics Guide, _mm512_i32gather_ps (AVX512F, VGATHERDPS): loads 16 32-bit
+    elements, each from base plus one 32-bit index of a vector times scale. See the intrinsic record
+    mm512_i32gather_ps for how its facts were checked.'
+  uri: https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm512_i32gather_ps
+- id: grilling-2026-09-23
+  kind: human_report
+  description: Grilling session of 2026-09-23 (spec Q1-Q16), which chose SIMD gather as a seed strategy
+    whose effect is widening an indirect access to several lanes per instruction.
+  uri: null
+name: SIMD gather
+target: access_pattern
+effect:
+- kind: widen
+  lanes: lanes
+  note: One gather instruction performs lanes of the pattern's indirect accesses, one per lane.
+parameters:
+- name: lanes
+  meaning: Accesses per gather instruction (16 for 32-bit elements with AVX-512).
+  unit: elements
+preconditions:
+  requires_shapes:
+  - single_valued_indirect
+  requires_update_kinds:
+  - read
+  requires_semantics:
+  - field: loop_carried_dependencies
+    value: false
+  unchecked:
+  - The lanes come from iterations that may run in any order (the loop is vectorizable across them).
+  - Every index fits the gather's index width (32-bit signed for an i32 gather), and the element width
+    matches the intrinsic's element_bits.
+  - Iterations left over when the trip count is not a multiple of lanes are handled (a remainder loop or
+    a masked gather).
+common_intrinsics:
+- mm512_i32gather_ps
+notes:
+- No reported benefit is recorded yet; none was verified from a source. Measured benefit will come from
+  implementations that apply the strategy, compared with their baselines.

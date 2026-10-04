@@ -1,0 +1,1228 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs-dx100-coverage-20260926-a2.execute
+status: draft
+created: '2026-09-26'
+updated: '2026-09-26'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-dx100-coverage-20260926-a2.execute
+  machine: mbit10
+  hardware_target: dx100-e4fc4af-4c
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  build_evaluation: bfs-dx100-build-20260925-a2
+  simulator:
+    path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+    sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+  candidate: bfs-author-maa-compile-20260925-a1.candidate
+  candidate_build: bfs-dx100-coverage-20260926-a2.compile
+  binary:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-dx100-coverage-20260926-a2.compile/bfs
+    sha256: 54af63dc38499abc7fb810162228d6cb4f3ec493eb5512297bb419a78a20b94c
+  workload:
+    id: bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e
+    source: 0
+    representation:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/graph/coverage.sg
+      sha256: d4697713f585b9670e1c44d26df94c72889f4c82fbd68b72e15627e6a0b39a56
+  configuration:
+    mode: MAA
+    l3_size_mb: 8
+    l3_assoc: 16
+    tile_elements: 16384
+  verification:
+    checker: dx100.bfs.verifier.v2
+    max_ticks: 10000000000
+    coverage: true
+    post_roi_trace: SyscallBase
+  budget:
+    total_seconds: 3100
+    memory_gib: 48
+    storage_gib: 4
+    checkpoint_seconds: 300
+    run_seconds: 2700
+outcome:
+  state: complete
+  stage: execution
+  reason: The exact timed guest passed its post-ROI structural verifier; complete profiling remains required.
+stages:
+- stage: execution_identity
+  state: complete
+  started: '2026-09-26T23:10:03.588136+00:00'
+  finished: '2026-09-26T23:10:08.724326+00:00'
+- stage: checkpoint
+  state: complete
+  started: '2026-09-26T23:10:12.795198+00:00'
+  command:
+  - /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+  - --outdir=/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/checkpoint
+  - /data1/yanruj/DX100-bfs-e4fc4af/configs/deprecated/example/se.py
+  - --cpu-type
+  - AtomicSimpleCPU
+  - -n
+  - '4'
+  - --mem-size
+  - 16GB
+  - --max-checkpoints
+  - '1'
+  - --cmd
+  - /data1/yanruj/EvolveSWDB_builds/bfs-dx100-coverage-20260926-a2.compile/bfs
+  - --options
+  - -f /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/graph/coverage.sg
+    -l -n 1 -v -r 0
+  timeout_s: 300
+  log: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/001-checkpoint.log
+  finished: '2026-09-26T23:11:31.372324+00:00'
+  host_wall_s: 74.49557805713266
+  returncode: 0
+  log_sha256: ecf77559753bf1147436f1a89620f3d402bae3bf34bc0aa5d59d015b7c73515e
+  reason: null
+  sampled_peak_process_group_rss_kib: 175512
+- stage: simulation
+  state: complete
+  started: '2026-09-26T23:11:40.454715+00:00'
+  command:
+  - /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+  - --debug-flags=MAATrace,MAARangeFuser,MAAIndirect
+  - --outdir=/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/simulation
+  - /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/verification-runtime/scripts/dx100_verify.py
+  - --cpu-type
+  - X86O3CPU
+  - -n
+  - '4'
+  - --mem-size
+  - 16GB
+  - --sys-clock
+  - 3.2GHz
+  - --cpu-clock
+  - 3.2GHz
+  - --caches
+  - --l1d_size=32kB
+  - --l1d_assoc=8
+  - --l1d-hwp-type=StridePrefetcher
+  - --l1d_mshrs=16
+  - --l1d_write_buffers=8
+  - --l1i_size=32kB
+  - --l1i_assoc=8
+  - --l1i-hwp-type=StridePrefetcher
+  - --l1i_mshrs=16
+  - --l1i_write_buffers=8
+  - --l2cache
+  - --l2_size=256kB
+  - --l2_assoc=4
+  - --l2-hwp-type=StridePrefetcher
+  - --l2_mshrs=32
+  - --l2_write_buffers=16
+  - --l3cache
+  - --l3_size=8MB
+  - --l3_assoc=16
+  - --l3_mshrs=256
+  - --l3_write_buffers=128
+  - --l3_ports
+  - '4'
+  - --cacheline_size=64
+  - --mem-type
+  - Ramulator2
+  - --ramulator-config
+  - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+  - --mem-channels
+  - '2'
+  - --maa_ncbus_width
+  - '32'
+  - --prog-interval=1000
+  - --maa
+  - --maa_num_maas
+  - '1'
+  - --maa_num_tile_elements
+  - '16384'
+  - --maa_l2_uncacheable
+  - --maa_l3_uncacheable
+  - --maa_num_initial_row_table_slices
+  - '32'
+  - --cmd
+  - /data1/yanruj/EvolveSWDB_builds/bfs-dx100-coverage-20260926-a2.compile/bfs
+  - --options
+  - -f /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/graph/coverage.sg
+    -l -n 1 -v -r 0
+  - --checkpoint-dir
+  - /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/checkpoint
+  - -r
+  - '1'
+  timeout_s: 2700
+  log: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/002-simulation.log
+  finished: '2026-09-26T23:14:46.058750+00:00'
+  host_wall_s: 181.16414599586278
+  returncode: 0
+  log_sha256: d9c7dff812dc043f0d3273f3c65cd90294848c15f8ecfc9fc89cb0ef3f35abde
+  reason: null
+  sampled_peak_process_group_rss_kib: 33740392
+- stage: execution_observations
+  state: complete
+  started: '2026-09-26T23:15:28.324479+00:00'
+  finished: '2026-09-26T23:15:34.089697+00:00'
+timing:
+- source: 0
+  source_position: 0
+  repetition: 0
+  duration_s: 0.000290122517
+  roi: bfs.complete_call.v1
+  basis: simulated
+  quantity: simulated_roi_seconds
+  binary_sha256: 54af63dc38499abc7fb810162228d6cb4f3ec493eb5512297bb419a78a20b94c
+  output: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/002-simulation.log
+  output_sha256: d9c7dff812dc043f0d3273f3c65cd90294848c15f8ecfc9fc89cb0ef3f35abde
+  statistics_sha256: 74ffae83c969590e0d1a49de71dd4640752d820aa73852eae000565c98893f61
+  verified: true
+  evidence_kind: execution
+correctness:
+  state: passed
+  checks:
+  - state: passed
+    checker: dx100.bfs.verifier.v2
+    execution: bfs-dx100-coverage-20260926-a2.execute
+    binding:
+      model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      simulator:
+        path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+        sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+      binary:
+        path: /data1/yanruj/EvolveSWDB_builds/bfs-dx100-coverage-20260926-a2.compile/bfs
+        sha256: 54af63dc38499abc7fb810162228d6cb4f3ec493eb5512297bb419a78a20b94c
+      workload:
+        id: bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e
+        source: 0
+        representation:
+          path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/graph/coverage.sg
+          sha256: d4697713f585b9670e1c44d26df94c72889f4c82fbd68b72e15627e6a0b39a56
+      guest_cores: 4
+      guest_memory: 16GB
+      options: -f /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/graph/coverage.sg
+        -l -n 1 -v -r 0
+      entry_script_sha256: aacc6e624b7ab0e7b032d5cb913974fa790efdca84598bf468c11f14b9575d0f
+      roi: bfs.complete_call.v1
+      candidate_build: bfs-dx100-coverage-20260926-a2.compile
+      modeled_configuration:
+        mode: MAA
+        l3_size_mb: 8
+        l3_assoc: 16
+        tile_elements: 16384
+        guest_cores: 4
+        guest_memory: 16GB
+        cpu: X86O3CPU
+        clock_hz: 3200000000
+        model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        cache:
+          l1d_kib: 32
+          l1i_kib: 32
+          l1_assoc: 8
+          l2_kib: 256
+          l2_assoc: 4
+          l3_mib: 8
+          l3_assoc: 16
+          cacheline_bytes: 64
+          prefetcher: StridePrefetcher
+        memory:
+          model: Ramulator2
+          channels: 2
+          size: 16GB
+          configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        cpu_clock: 3.2GHz
+        ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        command_arguments:
+        - --cpu-type
+        - X86O3CPU
+        - -n
+        - '4'
+        - --mem-size
+        - 16GB
+        - --sys-clock
+        - 3.2GHz
+        - --cpu-clock
+        - 3.2GHz
+        - --caches
+        - --l1d_size=32kB
+        - --l1d_assoc=8
+        - --l1d-hwp-type=StridePrefetcher
+        - --l1d_mshrs=16
+        - --l1d_write_buffers=8
+        - --l1i_size=32kB
+        - --l1i_assoc=8
+        - --l1i-hwp-type=StridePrefetcher
+        - --l1i_mshrs=16
+        - --l1i_write_buffers=8
+        - --l2cache
+        - --l2_size=256kB
+        - --l2_assoc=4
+        - --l2-hwp-type=StridePrefetcher
+        - --l2_mshrs=32
+        - --l2_write_buffers=16
+        - --l3cache
+        - --l3_size=8MB
+        - --l3_assoc=16
+        - --l3_mshrs=256
+        - --l3_write_buffers=128
+        - --l3_ports
+        - '4'
+        - --cacheline_size=64
+        - --mem-type
+        - Ramulator2
+        - --ramulator-config
+        - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+        - --mem-channels
+        - '2'
+        - --maa_ncbus_width
+        - '32'
+        - --prog-interval=1000
+        - --maa
+        - --maa_num_maas
+        - '1'
+        - --maa_num_tile_elements
+        - '16384'
+        - --maa_l2_uncacheable
+        - --maa_l3_uncacheable
+        - --maa_num_initial_row_table_slices
+        - '32'
+      hardware_target: dx100-e4fc4af-4c
+    target: dx100-e4fc4af-4c
+    configuration:
+      mode: MAA
+      l3_size_mb: 8
+      l3_assoc: 16
+      tile_elements: 16384
+      guest_cores: 4
+      guest_memory: 16GB
+      cpu: X86O3CPU
+      clock_hz: 3200000000
+      model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      cache:
+        l1d_kib: 32
+        l1i_kib: 32
+        l1_assoc: 8
+        l2_kib: 256
+        l2_assoc: 4
+        l3_mib: 8
+        l3_assoc: 16
+        cacheline_bytes: 64
+        prefetcher: StridePrefetcher
+      memory:
+        model: Ramulator2
+        channels: 2
+        size: 16GB
+        configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+      cpu_clock: 3.2GHz
+      ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+      command_arguments:
+      - --cpu-type
+      - X86O3CPU
+      - -n
+      - '4'
+      - --mem-size
+      - 16GB
+      - --sys-clock
+      - 3.2GHz
+      - --cpu-clock
+      - 3.2GHz
+      - --caches
+      - --l1d_size=32kB
+      - --l1d_assoc=8
+      - --l1d-hwp-type=StridePrefetcher
+      - --l1d_mshrs=16
+      - --l1d_write_buffers=8
+      - --l1i_size=32kB
+      - --l1i_assoc=8
+      - --l1i-hwp-type=StridePrefetcher
+      - --l1i_mshrs=16
+      - --l1i_write_buffers=8
+      - --l2cache
+      - --l2_size=256kB
+      - --l2_assoc=4
+      - --l2-hwp-type=StridePrefetcher
+      - --l2_mshrs=32
+      - --l2_write_buffers=16
+      - --l3cache
+      - --l3_size=8MB
+      - --l3_assoc=16
+      - --l3_mshrs=256
+      - --l3_write_buffers=128
+      - --l3_ports
+      - '4'
+      - --cacheline_size=64
+      - --mem-type
+      - Ramulator2
+      - --ramulator-config
+      - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+      - --mem-channels
+      - '2'
+      - --maa_ncbus_width
+      - '32'
+      - --prog-interval=1000
+      - --maa
+      - --maa_num_maas
+      - '1'
+      - --maa_num_tile_elements
+      - '16384'
+      - --maa_l2_uncacheable
+      - --maa_l3_uncacheable
+      - --maa_num_initial_row_table_slices
+      - '32'
+    timed_source:
+      path: /data1/yanruj/EvolveSWDB_sources/bfs-author-maa-compile-20260925-a1.candidate/source/benchmarks/gapbs/src/bfs.cc
+      sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+    verifier_source:
+      path: /data1/yanruj/EvolveSWDB_builds/bfs-dx100-coverage-20260926-a2.compile/complete_call.cc
+      sha256: f475dd81793df5b370f4ca8dd8f1ad8386f611f4ecaf36c2edfd3ed68571fd67
+      symbol: swdb_original::Graph::verify
+      bounds_check: trusted original-CSR oracle checks exact parent length and range before traversal
+        validation
+    sealed_roi:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/simulation/roi-seal.json
+      sha256: 6797c6c5a123662dedb96cad0b98bb1d8833897f8a076d1f65f62a4c5c4e912b
+    output:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/002-simulation.log
+      sha256: d9c7dff812dc043f0d3273f3c65cd90294848c15f8ecfc9fc89cb0ef3f35abde
+    requested_checks: 1
+    observed_verdicts:
+    - verdict: PASS
+      line: 2837678
+      after_seal: true
+    continuation:
+      checker: dx100.bfs.verifier.v2
+      chunk_ticks: 1000000000
+      exit_cause: simulate() limit reached
+      exit_code: 0
+      exit_tick: 6914135939
+      exit_witness:
+        allowed_cpus: [system.switch_cpus0, system.switch_cpus1, system.switch_cpus2, system.switch_cpus3]
+        caller:
+          cpu: system.switch_cpus0
+          thread: 0
+        completed: true
+        enabled_tick: 5914135939
+        end_tick: 6914135939
+        events_after_exit: 4
+        exit_request:
+          call_line: 15
+          return_line: 16
+          return_value: 0
+          status: 0
+          tick: 6432518088
+        format: swdb.dx100.exit-witness.v1
+        initial_partial_calls: []
+        line_count: 20
+        pending_calls: []
+        progress_records:
+        - cpu: system.switch_cpus3
+          event: 335
+          interval_committed: 7388644
+          ipc: '02.31265'
+          line: 17
+          tick: 6606344500
+          total_committed: 7388644
+        - cpu: system.switch_cpus2
+          event: 334
+          interval_committed: 7452776
+          ipc: '02.33272'
+          line: 18
+          tick: 6606344500
+          total_committed: 7452776
+        - cpu: system.switch_cpus1
+          event: 333
+          interval_committed: 6467089
+          ipc: '002.0242'
+          line: 19
+          tick: 6606344500
+          total_committed: 6467089
+        - cpu: system.switch_cpus0
+          event: 332
+          interval_committed: 8462777
+          ipc: '02.64885'
+          line: 20
+          tick: 6606344500
+          total_committed: 8462777
+        trace:
+          bytes: 1884
+          path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/simulation/post-roi-syscalls.log
+          sha256: 034411d653e7be52b91f2f8858c027db816caa329cf53a13b6c721784c990b18
+      max_ticks: 10000000000
+      normal_exit_observed: false
+      parser_sha256: 2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091
+      post_roi_trace:
+        bytes: 1884
+        disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+        disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+        enabled_tick: 5914135939
+        flag: SyscallBase
+        format_flags: [FmtFlag]
+        output: separate_simulator_trace
+        path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/simulation/post-roi-syscalls.log
+        scope: post-seal verifier continuation only
+        sha256: 034411d653e7be52b91f2f8858c027db816caa329cf53a13b6c721784c990b18
+      simulated_ticks: 1000000000
+      state: finished
+      stop_reason: exit_witness
+    parent_results:
+    - source: 0
+      vertices: 8212
+      parent_count: 8212
+      parent_fnv1a64: a2756ac98d74d1b0
+      line: 2837677
+      after_seal: true
+      fingerprint_kind: noncryptographic FNV-1a over little-endian signed32 parent values
+    coverage:
+      state: observed
+      tick_interval: [5622403663, 5912526180]
+      completed_trace_units:
+        S: 8
+        I: 96
+        R: 24
+        A: 16
+      address_space_contract:
+        model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        instruction_baseAddr: guest virtual; compared only with returned parent.data()
+        recvData_addr: translated physical cache line; compared only with other physical words
+        source_evidence:
+        - path: src/mem/MAA/IF.cc
+          sha256: fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561
+          lines: [38, 63]
+        - path: src/mem/MAA/IndirectAccess.cc
+          sha256: 7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db
+          lines: [494, 505]
+      range_output_tile_sizes:
+        '16384': 8
+        '2048': 4
+        '0': 8
+        '1024': 4
+      full_tiles:
+        state: observed
+        count: 8
+        capacity: 16384
+      tail_tiles:
+        state: observed
+        count: 8
+        capacity: 16384
+      competing_parent_updates:
+        state: observed
+        count: 14546
+        samples:
+        - physical_word_address: 4098048
+          prior_value: 3073
+          new_value: 3074
+          tick: 5766927344
+          line: 882875
+        - physical_word_address: 4098052
+          prior_value: 3073
+          new_value: 3074
+          tick: 5766927344
+          line: 882878
+        - physical_word_address: 4098056
+          prior_value: 3073
+          new_value: 3074
+          tick: 5766927344
+          line: 882881
+        - physical_word_address: 4098060
+          prior_value: 3073
+          new_value: 3074
+          tick: 5766927344
+          line: 882884
+        - physical_word_address: 4098064
+          prior_value: 3073
+          new_value: 3074
+          tick: 5766927344
+          line: 882887
+        - physical_word_address: 4098068
+          prior_value: 3073
+          new_value: 3074
+          tick: 5766927344
+          line: 882890
+        - physical_word_address: 4098072
+          prior_value: 3073
+          new_value: 3074
+          tick: 5766927344
+          line: 882893
+        - physical_word_address: 4098076
+          prior_value: 3073
+          new_value: 3074
+          tick: 5766927344
+          line: 882896
+        parent_storage:
+          virtual_address: 444384
+          count: 8212
+          line: 2837671
+        target_tracking_truncated: false
+        definition: Different signed32 vector-store values observed at the same physical word, from instructions
+          whose virtual base is the returned parent array.
+      limits: Positive counts prove these finite observed cases only. Graph topology is not substituted
+        for executed updates; traces outside the selected ROI are excluded.
+      accelerator_executed: true
+      instruction_counters:
+        system.maa.numInst_INDRD: 80
+        system.maa.numInst_INDWR: 16
+        system.maa.numInst_STRRD: 8
+        system.maa.numInst_RANGE: 24
+        system.maa.numInst_ALUS: 16
+        system.maa.numInst_INV: 41
+        system.maa.numInst: 185
+    scope: This execution only; finite graph/source checking is not a proof for all inputs.
+    completion_sequence:
+      kind: protected_candidate
+      times: []
+      observed: true
+    passed: true
+    source: 0
+    source_position: 0
+    repetition: 0
+    binary_sha256: 54af63dc38499abc7fb810162228d6cb4f3ec493eb5512297bb419a78a20b94c
+    graph_sha256: e03a3905f9105b898b730387092d92a68b854cdd44280adb39b1bd9423a4a968
+    output_sha256: d9c7dff812dc043f0d3273f3c65cd90294848c15f8ecfc9fc89cb0ef3f35abde
+profiling:
+  state: incomplete
+  reasons:
+  - BFS ROI, regions, and memory metrics require the profile collector.
+raw_artifacts:
+- host: mbit10
+  path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute
+  kind: dx100_execute
+- host: mbit10
+  kind: host_observation
+  path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/host-observation.json
+  sha256: 5c212e9e9c4acd10f1f6d4a8475fafe7be9967c882b0812eb136711f28b90190
+  host_wall_s: 0.08246184606105089
+  evidence_kind: execution
+  unavailable_commands: 2
+- host: mbit10
+  kind: process_group_memory
+  path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/001-checkpoint.memory.jsonl
+  sha256: f80991a7b5347ab64ed176c0e9d2b331e72f51afa6f0fcacd0de7609a02656b9
+- host: mbit10
+  kind: process_group_memory
+  path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/002-simulation.memory.jsonl
+  sha256: 14c3512189e6109fdee8eabb54d3e50172412621ff9a3722556fdf38643fb389
+- host: mbit10
+  kind: simulator_host_memory_phases
+  path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/simulation/host-memory-phases.jsonl
+  sha256: 92b68925a397820e4dfedb8c3f97028703009ac2b70772200fdbd15cd44a76f2
+- kind: simulation
+  artifact:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/simulation
+    sha256: 8feed6f80f4c2c85b5fa40429fa4e93a89f399a3ddfa2ccf7e2767b48465a5b7
+    files:
+    - path: citations.bib
+      sha256: fdc8f17efa3fbc1401cc7e2abef63bcc3b99c38297ee69e4a39ed578be1bc8c0
+      bytes: 3951
+      executable: false
+    - path: config.ini
+      sha256: 05fd5c20010bc37a6afed3581d61e9d3afc1a224fce97a8e2acc5be8e916b866
+      bytes: 145285
+      executable: false
+    - path: config.json
+      sha256: 9e4ee56883ab83756cca9642e10a1e39c3f8e8bc3adad3b7db32b7c54b89a670
+      bytes: 409600
+      executable: false
+    - path: fs/proc/cpuinfo
+      sha256: 6a3bb84922536b0d0c374a7e29f19497ff167cb62b315ace0c4757a28237686f
+      bytes: 1576
+      executable: false
+    - path: fs/proc/stat
+      sha256: 77f984b7e5466538244ea688c0225d6ce4be8c9571c181dd59f63990e028ea51
+      bytes: 94
+      executable: false
+    - path: fs/sys/devices/system/cpu/online
+      sha256: f0e7dd3ebbfd0bb1bfeca50048635775fe0cc4eae4280a9a924de9450351064b
+      bytes: 3
+      executable: false
+    - path: fs/sys/devices/system/cpu/possible
+      sha256: f0e7dd3ebbfd0bb1bfeca50048635775fe0cc4eae4280a9a924de9450351064b
+      bytes: 3
+      executable: false
+    - path: host-memory-phases.jsonl
+      sha256: 92b68925a397820e4dfedb8c3f97028703009ac2b70772200fdbd15cd44a76f2
+      bytes: 10261
+      executable: false
+    - path: post-roi-syscalls.log
+      sha256: 034411d653e7be52b91f2f8858c027db816caa329cf53a13b6c721784c990b18
+      bytes: 1884
+      executable: false
+    - path: roi-seal.json
+      sha256: 6797c6c5a123662dedb96cad0b98bb1d8833897f8a076d1f65f62a4c5c4e912b
+      bytes: 4158
+      executable: false
+    - path: roi-stats.txt
+      sha256: 74ffae83c969590e0d1a49de71dd4640752d820aa73852eae000565c98893f61
+      bytes: 1081666
+      executable: false
+    - path: stats.txt
+      sha256: ccf27bfe0beedd9481b1ecefb757026aac6c04151fdf789ab107998b9ca39c9f
+      bytes: 2169398
+      executable: false
+gain_claim: false
+evidence_kind: execution
+machine: mbit10
+context:
+  backend: dx100-gem5-se
+  target: dx100-e4fc4af-4c
+  target_sha256: 94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1
+  model:
+    id: dx100-gem5
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  interface:
+    id: dx100-mmio
+    version: 1.0-e4fc4af
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  host: mbit10
+  lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 329)'
+  budget:
+    total_seconds: 3100
+    memory_gib: 48
+    storage_gib: 4
+    checkpoint_seconds: 300
+    run_seconds: 2700
+  load_average: [0.76513671875, 0.31591796875, 0.16552734375]
+  roi: bfs.complete_call.v1
+  basis: simulated
+  host_observation:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/host-observation.json
+    sha256: 5c212e9e9c4acd10f1f6d4a8475fafe7be9967c882b0812eb136711f28b90190
+    host_wall_s: 0.08246184606105089
+    evidence_kind: execution
+    unavailable_commands: 2
+  application: dx100-gapbs
+  workload:
+    id: bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e
+    workload_sha256: 6b1e2f2dc16f6a0e6da4142864a8daa2048013f60aa27e91b5995593fba80f9b
+    canonical_sha256: e03a3905f9105b898b730387092d92a68b854cdd44280adb39b1bd9423a4a968
+    sources: [0]
+    realized:
+      num_vertices: 8212
+      num_directed_edges: 147492
+      directed: false
+      isolated_vertices: 1
+      minimum_out_degree: 0
+      maximum_out_degree: 4097
+    representation:
+      id: bfs-dx100-coverage-20260926-a2.sg32
+      path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/graph/coverage.sg
+      sha256: d4697713f585b9670e1c44d26df94c72889f4c82fbd68b72e15627e6a0b39a56
+      format: gapbs_sg32le
+      application: dx100-gapbs
+      canonical_sha256: e03a3905f9105b898b730387092d92a68b854cdd44280adb39b1bd9423a4a968
+      bytes: 622829
+      loader: swdb.gapbs-representation.v1
+      adjacency_verified: true
+  graph_verification:
+    contract: swdb.bfs.original-adjacency.v1
+    input_format: gapbs.sg32
+    byte_order: little
+    adjacency: outgoing CSR from exact registered serialized input
+    maximum_extra_bytes: 2147483648
+    preload: before checkpoint and ROI
+    verification: after ROI on exact returned parent buffer
+    allocation: all oracle adjacency and checker work arrays allocated before ROI
+  protected_bfs_verifier:
+    path: /data1/yanruj/EvolveSWDB_sources/bfs-author-maa-compile-20260925-a1.candidate/source/benchmarks/gapbs/src/bfs.cc
+    sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+    symbol: BFSVerifier
+    protected_text_sha256: f55852f16a74a11542ccca387a2ddf61d1f538b006e9e35935b50c48662bf721
+    bounds_check: trusted driver validates parent length and values before BFSVerifier
+  timed_source:
+    path: /data1/yanruj/EvolveSWDB_sources/bfs-author-maa-compile-20260925-a1.candidate/source/benchmarks/gapbs/src/bfs.cc
+    sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+  verifier_source:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-dx100-coverage-20260926-a2.compile/complete_call.cc
+    sha256: f475dd81793df5b370f4ca8dd8f1ad8386f611f4ecaf36c2edfd3ed68571fd67
+    symbol: swdb_original::Graph::verify
+    bounds_check: trusted original-CSR oracle checks exact parent length and range before traversal validation
+  candidate_build: bfs-dx100-coverage-20260926-a2.compile
+  candidate_driver:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-dx100-coverage-20260926-a2.compile/complete_call.cc
+    sha256: f475dd81793df5b370f4ca8dd8f1ad8386f611f4ecaf36c2edfd3ed68571fd67
+  suppressed_internal_events: [m5_reset_stats, m5_dump_stats, m5_work_begin, m5_work_end, m5_exit]
+  candidate_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  configuration:
+    mode: MAA
+    l3_size_mb: 8
+    l3_assoc: 16
+    tile_elements: 16384
+    guest_cores: 4
+    guest_memory: 16GB
+    cpu: X86O3CPU
+    clock_hz: 3200000000
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    cache:
+      l1d_kib: 32
+      l1i_kib: 32
+      l1_assoc: 8
+      l2_kib: 256
+      l2_assoc: 4
+      l3_mib: 8
+      l3_assoc: 16
+      cacheline_bytes: 64
+      prefetcher: StridePrefetcher
+    memory:
+      model: Ramulator2
+      channels: 2
+      size: 16GB
+      configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+    cpu_clock: 3.2GHz
+    ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+    command_arguments:
+    - --cpu-type
+    - X86O3CPU
+    - -n
+    - '4'
+    - --mem-size
+    - 16GB
+    - --sys-clock
+    - 3.2GHz
+    - --cpu-clock
+    - 3.2GHz
+    - --caches
+    - --l1d_size=32kB
+    - --l1d_assoc=8
+    - --l1d-hwp-type=StridePrefetcher
+    - --l1d_mshrs=16
+    - --l1d_write_buffers=8
+    - --l1i_size=32kB
+    - --l1i_assoc=8
+    - --l1i-hwp-type=StridePrefetcher
+    - --l1i_mshrs=16
+    - --l1i_write_buffers=8
+    - --l2cache
+    - --l2_size=256kB
+    - --l2_assoc=4
+    - --l2-hwp-type=StridePrefetcher
+    - --l2_mshrs=32
+    - --l2_write_buffers=16
+    - --l3cache
+    - --l3_size=8MB
+    - --l3_assoc=16
+    - --l3_mshrs=256
+    - --l3_write_buffers=128
+    - --l3_ports
+    - '4'
+    - --cacheline_size=64
+    - --mem-type
+    - Ramulator2
+    - --ramulator-config
+    - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+    - --mem-channels
+    - '2'
+    - --maa_ncbus_width
+    - '32'
+    - --prog-interval=1000
+    - --maa
+    - --maa_num_maas
+    - '1'
+    - --maa_num_tile_elements
+    - '16384'
+    - --maa_l2_uncacheable
+    - --maa_l3_uncacheable
+    - --maa_num_initial_row_table_slices
+    - '32'
+  backend_configuration:
+    mode: MAA
+    l3_size_mb: 8
+    l3_assoc: 16
+    tile_elements: 16384
+    guest_cores: 4
+    guest_memory: 16GB
+    cpu: X86O3CPU
+    clock_hz: 3200000000
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    cache:
+      l1d_kib: 32
+      l1i_kib: 32
+      l1_assoc: 8
+      l2_kib: 256
+      l2_assoc: 4
+      l3_mib: 8
+      l3_assoc: 16
+      cacheline_bytes: 64
+      prefetcher: StridePrefetcher
+    memory:
+      model: Ramulator2
+      channels: 2
+      size: 16GB
+      configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+    cpu_clock: 3.2GHz
+    ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+    command_arguments:
+    - --cpu-type
+    - X86O3CPU
+    - -n
+    - '4'
+    - --mem-size
+    - 16GB
+    - --sys-clock
+    - 3.2GHz
+    - --cpu-clock
+    - 3.2GHz
+    - --caches
+    - --l1d_size=32kB
+    - --l1d_assoc=8
+    - --l1d-hwp-type=StridePrefetcher
+    - --l1d_mshrs=16
+    - --l1d_write_buffers=8
+    - --l1i_size=32kB
+    - --l1i_assoc=8
+    - --l1i-hwp-type=StridePrefetcher
+    - --l1i_mshrs=16
+    - --l1i_write_buffers=8
+    - --l2cache
+    - --l2_size=256kB
+    - --l2_assoc=4
+    - --l2-hwp-type=StridePrefetcher
+    - --l2_mshrs=32
+    - --l2_write_buffers=16
+    - --l3cache
+    - --l3_size=8MB
+    - --l3_assoc=16
+    - --l3_mshrs=256
+    - --l3_write_buffers=128
+    - --l3_ports
+    - '4'
+    - --cacheline_size=64
+    - --mem-type
+    - Ramulator2
+    - --ramulator-config
+    - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+    - --mem-channels
+    - '2'
+    - --maa_ncbus_width
+    - '32'
+    - --prog-interval=1000
+    - --maa
+    - --maa_num_maas
+    - '1'
+    - --maa_num_tile_elements
+    - '16384'
+    - --maa_l2_uncacheable
+    - --maa_l3_uncacheable
+    - --maa_num_initial_row_table_slices
+    - '32'
+  execution_binding:
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    simulator:
+      path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+      sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+    binary:
+      path: /data1/yanruj/EvolveSWDB_builds/bfs-dx100-coverage-20260926-a2.compile/bfs
+      sha256: 54af63dc38499abc7fb810162228d6cb4f3ec493eb5512297bb419a78a20b94c
+    workload:
+      id: bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e
+      source: 0
+      representation:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/graph/coverage.sg
+        sha256: d4697713f585b9670e1c44d26df94c72889f4c82fbd68b72e15627e6a0b39a56
+    guest_cores: 4
+    guest_memory: 16GB
+    options: -f /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/graph/coverage.sg
+      -l -n 1 -v -r 0
+    entry_script_sha256: aacc6e624b7ab0e7b032d5cb913974fa790efdca84598bf468c11f14b9575d0f
+    roi: bfs.complete_call.v1
+    candidate_build: bfs-dx100-coverage-20260926-a2.compile
+    modeled_configuration:
+      mode: MAA
+      l3_size_mb: 8
+      l3_assoc: 16
+      tile_elements: 16384
+      guest_cores: 4
+      guest_memory: 16GB
+      cpu: X86O3CPU
+      clock_hz: 3200000000
+      model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      cache:
+        l1d_kib: 32
+        l1i_kib: 32
+        l1_assoc: 8
+        l2_kib: 256
+        l2_assoc: 4
+        l3_mib: 8
+        l3_assoc: 16
+        cacheline_bytes: 64
+        prefetcher: StridePrefetcher
+      memory:
+        model: Ramulator2
+        channels: 2
+        size: 16GB
+        configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+      cpu_clock: 3.2GHz
+      ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+      command_arguments:
+      - --cpu-type
+      - X86O3CPU
+      - -n
+      - '4'
+      - --mem-size
+      - 16GB
+      - --sys-clock
+      - 3.2GHz
+      - --cpu-clock
+      - 3.2GHz
+      - --caches
+      - --l1d_size=32kB
+      - --l1d_assoc=8
+      - --l1d-hwp-type=StridePrefetcher
+      - --l1d_mshrs=16
+      - --l1d_write_buffers=8
+      - --l1i_size=32kB
+      - --l1i_assoc=8
+      - --l1i-hwp-type=StridePrefetcher
+      - --l1i_mshrs=16
+      - --l1i_write_buffers=8
+      - --l2cache
+      - --l2_size=256kB
+      - --l2_assoc=4
+      - --l2-hwp-type=StridePrefetcher
+      - --l2_mshrs=32
+      - --l2_write_buffers=16
+      - --l3cache
+      - --l3_size=8MB
+      - --l3_assoc=16
+      - --l3_mshrs=256
+      - --l3_write_buffers=128
+      - --l3_ports
+      - '4'
+      - --cacheline_size=64
+      - --mem-type
+      - Ramulator2
+      - --ramulator-config
+      - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+      - --mem-channels
+      - '2'
+      - --maa_ncbus_width
+      - '32'
+      - --prog-interval=1000
+      - --maa
+      - --maa_num_maas
+      - '1'
+      - --maa_num_tile_elements
+      - '16384'
+      - --maa_l2_uncacheable
+      - --maa_l3_uncacheable
+      - --maa_num_initial_row_table_slices
+      - '32'
+    hardware_target: dx100-e4fc4af-4c
+  execution_binding_sha256: 5eb12bd8a13c63c097047b80367dade97fd9731b03540f74e756d74ecf67ddc8
+  source: 0
+  sources: [0]
+  threads: 4
+  verification_runtime:
+    format: swdb.dx100.verification-runtime.v1
+    files:
+    - source:
+        code_root: /data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2
+        repository_relative_path: scripts/dx100_verify.py
+        copied_sha256: 371657977d56816a37f4885f19923f37175331d2d15b5d7f6e6049d3fa8c1395
+      snapshot:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/verification-runtime/scripts/dx100_verify.py
+        sha256: 371657977d56816a37f4885f19923f37175331d2d15b5d7f6e6049d3fa8c1395
+    - source:
+        code_root: /data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2
+        repository_relative_path: scripts/dx100_host_memory.py
+        copied_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+      snapshot:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/verification-runtime/scripts/dx100_host_memory.py
+        sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+    - source:
+        code_root: /data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2
+        repository_relative_path: swdb/dx100_witness.py
+        copied_sha256: 2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091
+      snapshot:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/verification-runtime/swdb/dx100_witness.py
+        sha256: 2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091
+    source_paths_are_provenance_only: true
+  verification_parser:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/verification-runtime/swdb/dx100_witness.py
+    sha256: 2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091
+  verification_driver:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/verification-runtime/scripts/dx100_verify.py
+    sha256: 371657977d56816a37f4885f19923f37175331d2d15b5d7f6e6049d3fa8c1395
+  host_memory_observer:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/verification-runtime/scripts/dx100_host_memory.py
+    sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+    sample_interval_seconds: 5
+    scope: host process group and bounded phase observations; no modeled changes
+  instrumentation:
+    treatment: primary
+    roi: bfs.complete_call.v1
+    suppressed_internal_events: [m5_reset_stats, m5_dump_stats, m5_work_begin, m5_work_end, m5_exit]
+    verification: same_guest_post_roi
+    debug_flags: MAATrace,MAARangeFuser,MAAIndirect
+    graph_verification:
+      contract: swdb.bfs.original-adjacency.v1
+      input_format: gapbs.sg32
+      byte_order: little
+      adjacency: outgoing CSR from exact registered serialized input
+      maximum_extra_bytes: 2147483648
+      preload: before checkpoint and ROI
+      verification: after ROI on exact returned parent buffer
+      allocation: all oracle adjacency and checker work arrays allocated before ROI
+    verifier_runtime:
+      driver_sha256: 371657977d56816a37f4885f19923f37175331d2d15b5d7f6e6049d3fa8c1395
+      parser_sha256: 2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091
+      observer_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+    post_roi_trace:
+      flag: SyscallBase
+      scope: post-seal verifier continuation only
+      output: separate_simulator_trace
+      format_flags: [FmtFlag]
+      disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+      disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+      chunk_ticks: 1000000000
+  verifier: dx100.bfs.verifier.v2
+  repetitions: 1
+  checkpoint_manifest:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/checkpoint-manifest.json
+    sha256: e1119254b89d7a0afa45073059e283598938ca014a3866c0fde8767ac88187b0
+  debug_flags: MAATrace,MAARangeFuser,MAAIndirect
+  sealed_roi:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/simulation/roi-seal.json
+    sha256: 6797c6c5a123662dedb96cad0b98bb1d8833897f8a076d1f65f62a4c5c4e912b
+    driver_sha256: 371657977d56816a37f4885f19923f37175331d2d15b5d7f6e6049d3fa8c1395
+    execution_binding_sha256: 5eb12bd8a13c63c097047b80367dade97fd9731b03540f74e756d74ecf67ddc8
+    format: swdb.dx100.roi-seal.v1
+    host_memory_observer_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+    roi_exit_cause: m5_exit instruction encountered
+    roi_exit_tick: 5914135939
+    statistics:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/simulation/roi-stats.txt
+      sha256: 74ffae83c969590e0d1a49de71dd4640752d820aa73852eae000565c98893f61
+    verification:
+      checker: dx100.bfs.verifier.v2
+      chunk_ticks: 1000000000
+      exit_cause: simulate() limit reached
+      exit_code: 0
+      exit_tick: 6914135939
+      exit_witness:
+        allowed_cpus: [system.switch_cpus0, system.switch_cpus1, system.switch_cpus2, system.switch_cpus3]
+        caller:
+          cpu: system.switch_cpus0
+          thread: 0
+        completed: true
+        enabled_tick: 5914135939
+        end_tick: 6914135939
+        events_after_exit: 4
+        exit_request:
+          call_line: 15
+          return_line: 16
+          return_value: 0
+          status: 0
+          tick: 6432518088
+        format: swdb.dx100.exit-witness.v1
+        initial_partial_calls: []
+        line_count: 20
+        pending_calls: []
+        progress_records:
+        - cpu: system.switch_cpus3
+          event: 335
+          interval_committed: 7388644
+          ipc: '02.31265'
+          line: 17
+          tick: 6606344500
+          total_committed: 7388644
+        - cpu: system.switch_cpus2
+          event: 334
+          interval_committed: 7452776
+          ipc: '02.33272'
+          line: 18
+          tick: 6606344500
+          total_committed: 7452776
+        - cpu: system.switch_cpus1
+          event: 333
+          interval_committed: 6467089
+          ipc: '002.0242'
+          line: 19
+          tick: 6606344500
+          total_committed: 6467089
+        - cpu: system.switch_cpus0
+          event: 332
+          interval_committed: 8462777
+          ipc: '02.64885'
+          line: 20
+          tick: 6606344500
+          total_committed: 8462777
+        trace:
+          bytes: 1884
+          path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/simulation/post-roi-syscalls.log
+          sha256: 034411d653e7be52b91f2f8858c027db816caa329cf53a13b6c721784c990b18
+      max_ticks: 10000000000
+      normal_exit_observed: false
+      parser_sha256: 2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091
+      post_roi_trace:
+        bytes: 1884
+        disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+        disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+        enabled_tick: 5914135939
+        flag: SyscallBase
+        format_flags: [FmtFlag]
+        output: separate_simulator_trace
+        path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/simulation/post-roi-syscalls.log
+        scope: post-seal verifier continuation only
+        sha256: 034411d653e7be52b91f2f8858c027db816caa329cf53a13b6c721784c990b18
+      simulated_ticks: 1000000000
+      state: finished
+      stop_reason: exit_witness
+    verification_parser:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/verification-runtime/swdb/dx100_witness.py
+      sha256: 2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091
+  statistics:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/simulation/roi-stats.txt
+    sha256: 74ffae83c969590e0d1a49de71dd4640752d820aa73852eae000565c98893f61
+  post_roi_trace:
+    bytes: 1884
+    disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+    disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+    enabled_tick: 5914135939
+    flag: SyscallBase
+    format_flags: [FmtFlag]
+    output: separate_simulator_trace
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/simulation/post-roi-syscalls.log
+    scope: post-seal verifier continuation only
+    sha256: 034411d653e7be52b91f2f8858c027db816caa329cf53a13b6c721784c990b18
+  actual_configuration:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2.execute/simulation/config.ini
+    sha256: 05fd5c20010bc37a6afed3581d61e9d3afc1a224fce97a8e2acc5be8e916b866
+  exit_tick: 5914135939
+  exit_cause: m5_exit instruction encountered
+  roi_ticks:
+    sim_ticks: 290122517
+    tick_frequency_hz: 1000000000000
+    duration_s: 0.000290122517
+    unit: seconds
+    conversion: simTicks / simFreq; no fixed clock-period divisor
+candidate: bfs-author-maa-compile-20260925-a1.candidate
+source_snapshot: bfs-author-maa-compile-20260925-a1.source
+implementation: dx100-bfs-maa-reference
+build:
+  binary: /data1/yanruj/EvolveSWDB_builds/bfs-dx100-coverage-20260926-a2.compile/bfs
+  binary_sha256: 54af63dc38499abc7fb810162228d6cb4f3ec493eb5512297bb419a78a20b94c
+  simulator: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+  simulator_sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+  model_build:
+    evaluation: bfs-dx100-build-20260925-a2
+    sha256: 13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea
+  compiler: /usr/bin/g++-13
+  compiler_version:
+  - g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  - Copyright (C) 2023 Free Software Foundation, Inc.
+  flags:
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -g
+  - -fopenmp
+  - -DGEM5
+  - -DNUM_CORES=4
+  - -DTILE_SIZE=16384
+  - -DMAA
+  adapter: dx100.complete_call.v2

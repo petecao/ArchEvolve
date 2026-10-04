@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "certification",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "certification"
+    },
+    "message_version": {
+      "type": "string"
+    },
+    "producer": {
+      "type": "object"
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "content_sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "content_sha256"],
+        "properties": {
+          "id": {"type": "string"},
+          "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "candidate": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "command": {
+      "type": "object"
+    },
+    "host": {
+      "type": "object"
+    },
+    "matrix": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "negative_controls": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "verdict": {
+      "enum": [
+        "certified",
+        "failed",
+        "inconclusive"
+      ]
+    },
+    "evidence_basis": {
+      "const": "simulated"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "raw_artifacts": {
+      "type": "array"
+    },
+    "outcome": {
+      "type": "object"
+    },
+    "evidence_kind": {
+      "enum": [
+        "execution",
+        "contract_fixture"
+      ]
+    }
+  },
+  "required": [
+    "entry",
+    "command",
+    "host",
+    "matrix",
+    "negative_controls",
+    "verdict",
+    "evidence_basis"
+  ]
+}

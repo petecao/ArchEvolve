@@ -1,0 +1,133 @@
+{
+  "format": "swdb.bfs.interim-spec-readiness-review.v1",
+  "date": "2026-09-26",
+  "timezone": "America/New_York",
+  "reviewer": "independent Spec reviewer",
+  "base": "1bdb7d4037916dea782c40239a6415b61a47f3c1",
+  "initial_head": "df6ff7988f0ce06562b376adfc2faf93cf0fe58d",
+  "checkpoint_head": "c2f987bb585dcccbd8658e9e7767fb694a6084b9",
+  "current_head": "c2f987bb585dcccbd8658e9e7767fb694a6084b9",
+  "diff_command": "git diff 1bdb7d4037916dea782c40239a6415b61a47f3c1...HEAD",
+  "review_inputs": {
+    "commits": {
+      "path": "/private/tmp/bfs-interim-spec-commits-20260926.txt",
+      "bytes": 11661,
+      "sha256": "1cd131cf6c7f2c5b4baa8306ba00765c7a69515ed0ec6c9995479af20ac284e3"
+    },
+    "diff": {
+      "path": "/private/tmp/bfs-interim-spec-fixed-diff-20260926.patch",
+      "bytes": 13092586,
+      "sha256": "7a49c9f2b4e1dd7734db72e8dd01a17a61609550651dadcd9c98a4906af272ee"
+    },
+    "files": {
+      "path": "/private/tmp/bfs-interim-spec-files-20260926.txt",
+      "bytes": 29773,
+      "sha256": "dc0f085b818a8f6eabcc08c51bfa4f6bae530fb43f24ca831504e052267945d8"
+    }
+  },
+  "scope": [
+    "Read the spec, all 21 ticket contracts, project terminology/ADRs and rules.",
+    "Targeted source inspection of public query/proposal/capability/profile/protocol/correctness/coverage interactions, including current reviewed dirty execution changes.",
+    "Stopped broader search at the concrete paired-coverage finding when root authorized its narrow repair."
+  ],
+  "finding": {
+    "priority": "P2",
+    "state": "repaired_pending_integration",
+    "files_before": [
+      "swdb/bfs_coverage.py:170",
+      "swdb/bfs_coverage.py:297"
+    ],
+    "spec": {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/spec.md",
+      "line": 262,
+      "quote": "Before candidate performance assessment, freeze workloads, threads, targets/configurations, ROI definitions, correctness coverage, instrumentation treatment, repetition/aggregation rules, and profitability criteria in a versioned protocol."
+    },
+    "description": "Coverage omitted the frozen sampling policy and paired-receipt admission. A valid paired comparison was recalculated using independent resampling; a consistently resealed failed pair could still pass fixture-comparison validation after substituting independent statistics.",
+    "public_reproduction": {
+      "paired_95pct_interval": [
+        1.0,
+        1.0
+      ],
+      "incorrect_coverage_95pct_interval": [
+        0.3535533905932738,
+        2.309401076758503
+      ],
+      "evidence_kind": "contract_fixture",
+      "empirical_gain": false
+    }
+  },
+  "repair": {
+    "files": [
+      {
+        "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/bfs_coverage.py",
+        "bytes": 49640,
+        "sha256": "34e38c497c6b417f180823aebf9b8c408e4d7e3c15a44625564e545d5d95b4b9"
+      },
+      {
+        "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_paired_coverage.py",
+        "bytes": 4098,
+        "sha256": "a0004643d055a416671c766885cd3271513e0be3153f94099cb87832364c5763"
+      }
+    ],
+    "behavior": [
+      "Both fixture and empirical coverage readers use frozen sampling for statistics.",
+      "Both readers reopen the pair through existing validate_receipt and bind the recorded pair identity to its current validated receipt, including evaluation identities, schedule, raw outputs, graph/structural checks and binaries.",
+      "Independent serial coverage refuses paired evidence. Fixture evidence remains ineligible for empirical acceptance."
+    ],
+    "policy_changes": false
+  },
+  "preserved_red": {
+    "probe": {
+      "path": "/private/tmp/test_bfs_interim_spec_pair_coverage_20260926.py",
+      "bytes": 2548,
+      "sha256": "efd3433fe918ef8567818924652982aabd19c962cd3b8695d7c202f223ca58e7"
+    },
+    "log": {
+      "path": "/private/tmp/bfs-interim-spec-pair-coverage-20260926.log",
+      "bytes": 5660,
+      "sha256": "835c5b5d5affbd2bd25cd565c98f889dc6343d8a71ef40f969f7121b37b5ea49"
+    },
+    "result": "2 failed in47.84s"
+  },
+  "validation": [
+    {
+      "command": "python3 -m pytest tests/test_bfs_paired_coverage.py /private/tmp/test_bfs_interim_spec_pair_coverage_20260926.py -q",
+      "result": "7 passed in103.09s",
+      "log": {
+        "path": "/private/tmp/bfs-interim-spec-pair-coverage-fixed-20260926.log",
+        "bytes": 110,
+        "sha256": "208f9efddc39344640ab72a0243d7bfcaaa33ee10efef724271cbcc71412cb89"
+      }
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_coverage.py -q",
+      "result": "24 passed in124.22s",
+      "log": {
+        "path": "/private/tmp/bfs-interim-spec-coverage-serial-regression-20260926.log",
+        "bytes": 111,
+        "sha256": "3aae3258add8a8d4d9f794ffec93aa4081366666cb4afca6a54709c51a221ab2"
+      }
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "limits": [
+    "Interim targeted readiness audit, not final all-ticket acceptance review.",
+    "Tickets13 and15-21 remain empirically incomplete; they are known open work, not new implementation findings.",
+    "Only synthetic public CLI/local temporary record probes; no canonical record edits, host work, provider calls, exports or commits.",
+    "No additional finding established before the requested stop; empirical acceptance and final full Spec review remain required."
+  ],
+  "source_preparation_receipt": {
+    "path": "/private/tmp/bfs-interim-spec-readiness-repair-20260926.json",
+    "bytes": 5361,
+    "sha256": "34496693fc770b038ff06d15dcbcdb88a9203d9a4930b3a9605014294f7b9796"
+  },
+  "independent_standards_recheck": {
+    "path": "/private/tmp/bfs-paired-coverage-standards-review-20260926.json",
+    "bytes": 2588,
+    "sha256": "41faa6f0afed1ad3d6fb82c5e9ad2eb93a9043bc8655ff435232858d85d5919f"
+  },
+  "root_verification": "Exact two-file and test-log hashes reopened2026-09-26; both original failure probes retained."
+}

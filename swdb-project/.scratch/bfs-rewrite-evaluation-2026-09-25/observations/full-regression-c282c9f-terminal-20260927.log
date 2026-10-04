@@ -1,0 +1,74 @@
+........................................................................ [  2%]
+........................................................................ [  5%]
+.................................................ss..................... [  8%]
+........................................................................ [ 11%]
+........................................................................ [ 14%]
+...........................................s............................ [ 17%]
+........................................................................ [ 20%]
+.........ss............................................................. [ 23%]
+........ss.............................................................. [ 26%]
+........................................................................ [ 29%]
+........................................................................ [ 32%]
+........................................................................ [ 35%]
+............s..................................sss.............s...s.... [ 38%]
+.....................................s.................................. [ 41%]
+........................................................................ [ 44%]
+........................................................................ [ 46%]
+........................................................................ [ 49%]
+....................................ss.................................. [ 52%]
+........................................................................ [ 55%]
+........................................................................ [ 58%]
+........................F............................................... [ 61%]
+...............F........................................................ [ 64%]
+............ss.......................................................... [ 67%]
+........................................................................ [ 70%]
+........................................................................ [ 73%]
+........................................................................ [ 76%]
+........................................................................ [ 79%]
+........................................................................ [ 82%]
+........................................................................ [ 85%]
+...........................................ss........................... [ 88%]
+........................................................................ [ 90%]
+........................................................................ [ 93%]
+........................................................................ [ 96%]
+............................................................s........... [ 99%]
+......                                                                   [100%]
+=================================== FAILURES ===================================
+__________ test_fixed_recovery_preserves_science_and_only_flat_costs ___________
+
+    def test_fixed_recovery_preserves_science_and_only_flat_costs():
+        old, value = plan('t15-correction'), recovery()
+        batch.validate_plan(old,'t15-correction'); batch.validate_plan(value,'t15-setup-recovery')
+        excluded = {'id','series','accounting','budget_authority','clock','clock_policy','supervision'}
+        assert {k:v for k,v in old.items() if k not in excluded} == {k:v for k,v in value.items() if k not in excluded}
+        assert [{k:v for k,v in row.items() if k!='id'} for row in old['series']] == [
+            {k:v for k,v in row.items() if k!='id'} for row in value['series']]
+        assert value['supervision'] == old['supervision'] | {
+            'required_linux_cases':old['supervision']['required_linux_cases']+['sqlite_journal_unlink']}
+        rows=charges()
+        assert sum(row['elapsed_seconds'] for row in rows)==2997
+        assert sum(row['raw_bytes'] for row in rows)==15322025984
+        assert 43200-2997==40203 and 40*batch.GIB-15322025984==27627646976
+        assert len({row['id'] for row in rows})==5
+>       assert runner.SELECTIONS['owned_cleanup'][0].endswith('-a4') and CASE in runner.SELECTIONS['owned_cleanup'][2]
+E       AssertionError: assert (False)
+E        +  where False = <built-in method endswith of str object at 0x107e0dc50>('-a4')
+E        +    where <built-in method endswith of str object at 0x107e0dc50> = 'bfs-simulator-owned-linux-20260926-a5'.endswith
+
+tests/test_bfs_simulator_setup_recovery.py:44: AssertionError
+_______________ test_only_consumed_simulator_fixture_ids_advance _______________
+
+    def test_only_consumed_simulator_fixture_ids_advance():
+>       assert fixture_runner.SELECTIONS['owned_cleanup'][0] == 'bfs-simulator-owned-linux-20260926-a4'
+E       AssertionError: assert 'bfs-simulato...x-20260926-a5' == 'bfs-simulato...x-20260926-a4'
+E         
+E         - bfs-simulator-owned-linux-20260926-a4
+E         ?                                     ^
+E         + bfs-simulator-owned-linux-20260926-a5
+E         ?                                     ^
+
+tests/test_bfs_simulator_storage.py:166: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_bfs_simulator_setup_recovery.py::test_fixed_recovery_preserves_science_and_only_flat_costs
+FAILED tests/test_bfs_simulator_storage.py::test_only_consumed_simulator_fixture_ids_advance
+2 failed, 2431 passed, 21 skipped in 4377.83s (1:12:57)

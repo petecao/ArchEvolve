@@ -1,0 +1,1055 @@
+{
+  "observed_at": "2026-09-27T06:57:22.797525-04:00",
+  "state": "independent_exact_runtime_group_closure_verified",
+  "runtime": "/data1/yanruj/EvolveSWDB_protocol_recovery_runtime_20260927_a1",
+  "runtime_commit": "2a64a188f08811baf09ab9c61e69633c3d45a7f2",
+  "final": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-protocol-recovery-linux-20260927-a1.final.json",
+    "sha256": "a77da4476a159cb7a715c60dfe2f43e1ac7b91df51afc557a013f9add00dd47f",
+    "bytes": 19544
+  },
+  "group_started": "2026-09-27T06:56:09.617456-04:00",
+  "group_finished": "2026-09-27T06:56:36.420090-04:00",
+  "actual_wall_seconds": 26.802634,
+  "exact_runtime_consumer_passed": true,
+  "reports": [
+    {
+      "kind": "supplement",
+      "passed": 66,
+      "skipped": 0,
+      "proof": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-protocol-recovery-linux-20260927-a1.dispatch/supplement.readback.json",
+        "sha256": "cb8a8e32a4fac67802581923e95e62f6da08690bcf221e31d7d37ddcfbfc1774"
+      },
+      "terminal": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-protocol-recovery-linux-20260927-a1.dispatch/supplement/terminal-validation.json",
+        "sha256": "ce5c31beaf4caea6ca99fbe75ebf8fa515c88e1ccbf78924df00c38f4651e1b3"
+      },
+      "driver": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-protocol-recovery-linux-20260927-a1.dispatch/supplement/driver.json",
+        "sha256": "86737c01ab82d9bb4504e39ef12ecce9dc051eb14620b332635da168c60ffc4c"
+      },
+      "strict_cleanup": {
+        "ledger": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-protocol-recovery-linux-20260927-a1.dispatch/supplement/cleanup-ledger.json",
+          "sha256": "74968eb797654375138ab629767c4e422a0b25729efa61d9e42cc00c8e1e978a"
+        },
+        "binding": "51093dc037267e00f85c1b8bc52aff532d1405933efd124618acf5fb0c85a37c",
+        "spent_seconds": 0.40560033079236746,
+        "events": 5
+      },
+      "union_count": 6,
+      "observations": [
+        {
+          "processes": [
+            {
+              "pid": 3711758,
+              "start_ticks": 500850272,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711760,
+              "start_ticks": 500850273,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711764,
+              "start_ticks": 500850291,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711765,
+              "start_ticks": 500850291,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711836,
+              "start_ticks": 500850314,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711874,
+              "start_ticks": 500850554,
+              "state": "absent",
+              "current_identity": null
+            }
+          ],
+          "leases": {
+            "mbit10-evaluation": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.meta.json",
+              "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-12T04:49:11Z",
+                "lease": {
+                  "acquired_at": "2026-09-12T01:35:42Z",
+                  "daemon_pid": 209457,
+                  "daemon_start_token": "sh209457-1789176942",
+                  "generation": 77,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": "2026-09-12T04:49:11Z",
+                "session_note": null,
+                "session_state": "none",
+                "state": "released",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": false
+            },
+            "mbit10-evaluation-node0": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.meta.json",
+              "sha256": "4ec2804986088cc9c7adc387419672208860bcc4220021eb1b4103daf882010f",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-27T10:53:47Z",
+                "lease": {
+                  "acquired_at": "2026-09-27T10:53:47Z",
+                  "daemon_pid": 3710573,
+                  "daemon_start_token": "sh3710573-1790506427",
+                  "generation": 362,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation-node0",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": null,
+                "session_note": null,
+                "session_state": "none",
+                "state": "held",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": true
+            },
+            "mbit10-evaluation-node1": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.meta.json",
+              "sha256": "af59ba6f95cd515b8e5f14e109bbfc58fd22bb5e99d74f0c0913306962d3dd27",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-27T10:56:35Z",
+                "lease": {
+                  "acquired_at": "2026-09-27T10:56:27Z",
+                  "daemon_pid": 3712215,
+                  "daemon_start_token": "sh3712215-1790506587",
+                  "generation": 450,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation-node1",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": "2026-09-27T10:56:35Z",
+                "session_note": null,
+                "session_state": "none",
+                "state": "released",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": false
+            }
+          }
+        },
+        {
+          "processes": [
+            {
+              "pid": 3711758,
+              "start_ticks": 500850272,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711760,
+              "start_ticks": 500850273,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711764,
+              "start_ticks": 500850291,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711765,
+              "start_ticks": 500850291,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711836,
+              "start_ticks": 500850314,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711874,
+              "start_ticks": 500850554,
+              "state": "absent",
+              "current_identity": null
+            }
+          ],
+          "leases": {
+            "mbit10-evaluation": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.meta.json",
+              "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-12T04:49:11Z",
+                "lease": {
+                  "acquired_at": "2026-09-12T01:35:42Z",
+                  "daemon_pid": 209457,
+                  "daemon_start_token": "sh209457-1789176942",
+                  "generation": 77,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": "2026-09-12T04:49:11Z",
+                "session_note": null,
+                "session_state": "none",
+                "state": "released",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": false
+            },
+            "mbit10-evaluation-node0": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.meta.json",
+              "sha256": "4ec2804986088cc9c7adc387419672208860bcc4220021eb1b4103daf882010f",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-27T10:53:47Z",
+                "lease": {
+                  "acquired_at": "2026-09-27T10:53:47Z",
+                  "daemon_pid": 3710573,
+                  "daemon_start_token": "sh3710573-1790506427",
+                  "generation": 362,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation-node0",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": null,
+                "session_note": null,
+                "session_state": "none",
+                "state": "held",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": true
+            },
+            "mbit10-evaluation-node1": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.meta.json",
+              "sha256": "af59ba6f95cd515b8e5f14e109bbfc58fd22bb5e99d74f0c0913306962d3dd27",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-27T10:56:35Z",
+                "lease": {
+                  "acquired_at": "2026-09-27T10:56:27Z",
+                  "daemon_pid": 3712215,
+                  "daemon_start_token": "sh3712215-1790506587",
+                  "generation": 450,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation-node1",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": "2026-09-27T10:56:35Z",
+                "session_note": null,
+                "session_state": "none",
+                "state": "released",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": false
+            }
+          }
+        }
+      ],
+      "generation": 448,
+      "outer_exit": 0
+    },
+    {
+      "kind": "owned_cleanup",
+      "passed": 5,
+      "skipped": 0,
+      "proof": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260927-a8/proof.json",
+        "sha256": "90fe0e3f39f029faf61a1cd6cad4f0335c6acfcd32d853a0322bf712074cdb8f"
+      },
+      "terminal": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260927-a8/terminal-audit.json",
+        "sha256": "6aecef4bdb6b8aba4f34aa53b99dfa586066e200dd8cfd62669a5a7300afd1e0"
+      },
+      "driver": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260927-a8/driver.json",
+        "sha256": "97d6179d1ce0d8a19dbdfe04c3b5ea27fae7f71b4d0b94a43efd60e2b605b7f0"
+      },
+      "strict_cleanup": {
+        "ledger": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260927-a8/cleanup-ledger.json",
+          "sha256": "5fa7fd36a31faf5d44ac501dde9986d9c1ebe603ca4003f9bb58b6019ce2173f"
+        },
+        "binding": "954e0457e4d22c8f07539bfea607fe9b9fd0f028c4eb9bf7b0cf2941571156f6",
+        "spent_seconds": 0.3876136243343353,
+        "events": 5
+      },
+      "union_count": 9,
+      "observations": [
+        {
+          "processes": [
+            {
+              "pid": 3711970,
+              "start_ticks": 500850856,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711974,
+              "start_ticks": 500850857,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711978,
+              "start_ticks": 500850875,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711979,
+              "start_ticks": 500850876,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712050,
+              "start_ticks": 500850897,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712085,
+              "start_ticks": 500851139,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712110,
+              "start_ticks": 500851263,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712111,
+              "start_ticks": 500851270,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712113,
+              "start_ticks": 500851278,
+              "state": "absent",
+              "current_identity": null
+            }
+          ],
+          "leases": {
+            "mbit10-evaluation": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.meta.json",
+              "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-12T04:49:11Z",
+                "lease": {
+                  "acquired_at": "2026-09-12T01:35:42Z",
+                  "daemon_pid": 209457,
+                  "daemon_start_token": "sh209457-1789176942",
+                  "generation": 77,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": "2026-09-12T04:49:11Z",
+                "session_note": null,
+                "session_state": "none",
+                "state": "released",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": false
+            },
+            "mbit10-evaluation-node0": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.meta.json",
+              "sha256": "4ec2804986088cc9c7adc387419672208860bcc4220021eb1b4103daf882010f",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-27T10:53:47Z",
+                "lease": {
+                  "acquired_at": "2026-09-27T10:53:47Z",
+                  "daemon_pid": 3710573,
+                  "daemon_start_token": "sh3710573-1790506427",
+                  "generation": 362,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation-node0",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": null,
+                "session_note": null,
+                "session_state": "none",
+                "state": "held",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": true
+            },
+            "mbit10-evaluation-node1": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.meta.json",
+              "sha256": "af59ba6f95cd515b8e5f14e109bbfc58fd22bb5e99d74f0c0913306962d3dd27",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-27T10:56:35Z",
+                "lease": {
+                  "acquired_at": "2026-09-27T10:56:27Z",
+                  "daemon_pid": 3712215,
+                  "daemon_start_token": "sh3712215-1790506587",
+                  "generation": 450,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation-node1",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": "2026-09-27T10:56:35Z",
+                "session_note": null,
+                "session_state": "none",
+                "state": "released",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": false
+            }
+          }
+        },
+        {
+          "processes": [
+            {
+              "pid": 3711970,
+              "start_ticks": 500850856,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711974,
+              "start_ticks": 500850857,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711978,
+              "start_ticks": 500850875,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3711979,
+              "start_ticks": 500850876,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712050,
+              "start_ticks": 500850897,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712085,
+              "start_ticks": 500851139,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712110,
+              "start_ticks": 500851263,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712111,
+              "start_ticks": 500851270,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712113,
+              "start_ticks": 500851278,
+              "state": "absent",
+              "current_identity": null
+            }
+          ],
+          "leases": {
+            "mbit10-evaluation": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.meta.json",
+              "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-12T04:49:11Z",
+                "lease": {
+                  "acquired_at": "2026-09-12T01:35:42Z",
+                  "daemon_pid": 209457,
+                  "daemon_start_token": "sh209457-1789176942",
+                  "generation": 77,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": "2026-09-12T04:49:11Z",
+                "session_note": null,
+                "session_state": "none",
+                "state": "released",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": false
+            },
+            "mbit10-evaluation-node0": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.meta.json",
+              "sha256": "4ec2804986088cc9c7adc387419672208860bcc4220021eb1b4103daf882010f",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-27T10:53:47Z",
+                "lease": {
+                  "acquired_at": "2026-09-27T10:53:47Z",
+                  "daemon_pid": 3710573,
+                  "daemon_start_token": "sh3710573-1790506427",
+                  "generation": 362,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation-node0",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": null,
+                "session_note": null,
+                "session_state": "none",
+                "state": "held",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": true
+            },
+            "mbit10-evaluation-node1": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.meta.json",
+              "sha256": "af59ba6f95cd515b8e5f14e109bbfc58fd22bb5e99d74f0c0913306962d3dd27",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-27T10:56:35Z",
+                "lease": {
+                  "acquired_at": "2026-09-27T10:56:27Z",
+                  "daemon_pid": 3712215,
+                  "daemon_start_token": "sh3712215-1790506587",
+                  "generation": 450,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation-node1",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": "2026-09-27T10:56:35Z",
+                "session_note": null,
+                "session_state": "none",
+                "state": "released",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": false
+            }
+          }
+        }
+      ],
+      "generation": 449,
+      "outer_exit": 0
+    },
+    {
+      "kind": "dx100_interruption",
+      "passed": 2,
+      "skipped": 0,
+      "proof": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260927-a8/proof.json",
+        "sha256": "f4ef165eb3839bfef7da01235eea4b01ae7c287d549e06a04e574feb8b2cf0cf"
+      },
+      "terminal": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260927-a8/terminal-audit.json",
+        "sha256": "2a60e4d63e4a09d87dc6c5de6cd189c7ccf1f31b629fb4a625ced477dab65545"
+      },
+      "driver": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260927-a8/driver.json",
+        "sha256": "0b7c23fba48402d7a5f46408578dce36f67f9fb1c7401de265c34005fcea4cbe"
+      },
+      "strict_cleanup": {
+        "ledger": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260927-a8/cleanup-ledger.json",
+          "sha256": "3bf7817b1daa88865a80ca78b1e64c6e2cff89cacb3b51ff8d4307071b30ec5a"
+        },
+        "binding": "34c0e2556f0ca0dccc6f7772deac1631fdacef8d7076e05bcde970cc9854d96e",
+        "spent_seconds": 0.3923099162057042,
+        "events": 5
+      },
+      "union_count": 7,
+      "observations": [
+        {
+          "processes": [
+            {
+              "pid": 3712208,
+              "parent_pid": 359742,
+              "start_ticks": 500851979,
+              "state": "Z",
+              "rss_bytes": 0,
+              "role": "tmux_launcher"
+            },
+            {
+              "pid": 3712210,
+              "start_ticks": 500851979,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712214,
+              "start_ticks": 500851998,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712215,
+              "start_ticks": 500851998,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712286,
+              "start_ticks": 500852020,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712373,
+              "start_ticks": 500852253,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712410,
+              "start_ticks": 500852516,
+              "state": "absent",
+              "current_identity": null
+            }
+          ],
+          "leases": {
+            "mbit10-evaluation": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.meta.json",
+              "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-12T04:49:11Z",
+                "lease": {
+                  "acquired_at": "2026-09-12T01:35:42Z",
+                  "daemon_pid": 209457,
+                  "daemon_start_token": "sh209457-1789176942",
+                  "generation": 77,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": "2026-09-12T04:49:11Z",
+                "session_note": null,
+                "session_state": "none",
+                "state": "released",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": false
+            },
+            "mbit10-evaluation-node0": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.meta.json",
+              "sha256": "4ec2804986088cc9c7adc387419672208860bcc4220021eb1b4103daf882010f",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-27T10:53:47Z",
+                "lease": {
+                  "acquired_at": "2026-09-27T10:53:47Z",
+                  "daemon_pid": 3710573,
+                  "daemon_start_token": "sh3710573-1790506427",
+                  "generation": 362,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation-node0",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": null,
+                "session_note": null,
+                "session_state": "none",
+                "state": "held",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": true
+            },
+            "mbit10-evaluation-node1": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.meta.json",
+              "sha256": "af59ba6f95cd515b8e5f14e109bbfc58fd22bb5e99d74f0c0913306962d3dd27",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-27T10:56:35Z",
+                "lease": {
+                  "acquired_at": "2026-09-27T10:56:27Z",
+                  "daemon_pid": 3712215,
+                  "daemon_start_token": "sh3712215-1790506587",
+                  "generation": 450,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation-node1",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": "2026-09-27T10:56:35Z",
+                "session_note": null,
+                "session_state": "none",
+                "state": "released",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": false
+            }
+          }
+        },
+        {
+          "processes": [
+            {
+              "pid": 3712208,
+              "parent_pid": 359742,
+              "start_ticks": 500851979,
+              "state": "Z",
+              "rss_bytes": 0,
+              "role": "tmux_launcher"
+            },
+            {
+              "pid": 3712210,
+              "start_ticks": 500851979,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712214,
+              "start_ticks": 500851998,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712215,
+              "start_ticks": 500851998,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712286,
+              "start_ticks": 500852020,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712373,
+              "start_ticks": 500852253,
+              "state": "absent",
+              "current_identity": null
+            },
+            {
+              "pid": 3712410,
+              "start_ticks": 500852516,
+              "state": "absent",
+              "current_identity": null
+            }
+          ],
+          "leases": {
+            "mbit10-evaluation": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.meta.json",
+              "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-12T04:49:11Z",
+                "lease": {
+                  "acquired_at": "2026-09-12T01:35:42Z",
+                  "daemon_pid": 209457,
+                  "daemon_start_token": "sh209457-1789176942",
+                  "generation": 77,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": "2026-09-12T04:49:11Z",
+                "session_note": null,
+                "session_state": "none",
+                "state": "released",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": false
+            },
+            "mbit10-evaluation-node0": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.meta.json",
+              "sha256": "4ec2804986088cc9c7adc387419672208860bcc4220021eb1b4103daf882010f",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-27T10:53:47Z",
+                "lease": {
+                  "acquired_at": "2026-09-27T10:53:47Z",
+                  "daemon_pid": 3710573,
+                  "daemon_start_token": "sh3710573-1790506427",
+                  "generation": 362,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation-node0",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": null,
+                "session_note": null,
+                "session_state": "none",
+                "state": "held",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": true
+            },
+            "mbit10-evaluation-node1": {
+              "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.meta.json",
+              "sha256": "af59ba6f95cd515b8e5f14e109bbfc58fd22bb5e99d74f0c0913306962d3dd27",
+              "metadata": {
+                "active_session": null,
+                "heartbeat_at": "2026-09-27T10:56:35Z",
+                "lease": {
+                  "acquired_at": "2026-09-27T10:56:27Z",
+                  "daemon_pid": 3712215,
+                  "daemon_start_token": "sh3712215-1790506587",
+                  "generation": 450,
+                  "host": "mbit10",
+                  "lease_name": "mbit10-evaluation-node1",
+                  "mode": "measure",
+                  "session_id": null
+                },
+                "attempt_pid": null,
+                "attempt_start_token": null,
+                "recovered_from_generation": null,
+                "released_at": "2026-09-27T10:56:35Z",
+                "session_note": null,
+                "session_state": "none",
+                "state": "released",
+                "writer": "hostlock.sh"
+              },
+              "kernel_held": false
+            }
+          }
+        }
+      ],
+      "generation": 450,
+      "outer_exit": 0
+    }
+  ],
+  "charged_roots": [
+    "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260927-a8",
+    "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260927-a8.dispatch",
+    "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260927-a8",
+    "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260927-a8.dispatch",
+    "/data/yanruj/EvolveSWDB_runs/bfs-protocol-recovery-linux-20260927-a1.dispatch"
+  ],
+  "actual_final_allocated_bytes": 5246976,
+  "capacity": {
+    "/data/yanruj/EvolveSWDB_runs": 156888596480,
+    "/data1": 16884436992,
+    "inputs": {
+      "global": "MemTotal:       131426264 kB\nMemFree:        48181852 kB\nMemAvailable:   121966736 kB\nBuffers:        10216644 kB\nCached:         36897696 kB\nSwapCached:            0 kB\nActive:         15281412 kB\nInactive:       33273444 kB\nActive(anon):     779156 kB\nInactive(anon):   683444 kB\nActive(file):   14502256 kB\nInactive(file): 32590000 kB\nUnevictable:       39100 kB\nMlocked:           36028 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:              7572 kB\nWriteback:             0 kB\nAnonPages:       1479484 kB\nMapped:          1134040 kB\nShmem:              7168 kB\nKReclaimable:   28526180 kB\nSlab:           30894432 kB\nSReclaimable:   28438492 kB\nSUnreclaim:      2455940 kB\nKernelStack:       25008 kB\nPageTables:        29748 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    65713132 kB\nCommitted_AS:    5342928 kB\nVmallocTotal:   13743895347199 kB\nVmallocUsed:      431676 kB\nVmallocChunk:          0 kB\nPercpu:           339968 kB\nHardwareCorrupted:     8 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:    37224420 kB\nDirectMap2M:    94334976 kB\nDirectMap1G:     4194304 kB\n",
+      "node": "Node 1 MemTotal:       66044412 kB\nNode 1 MemFree:        32917052 kB\nNode 1 MemUsed:        33127360 kB\nNode 1 SwapCached:            0 kB\nNode 1 Active:          1867652 kB\nNode 1 Inactive:        4435560 kB\nNode 1 Active(anon):     241120 kB\nNode 1 Inactive(anon):    67220 kB\nNode 1 Active(file):    1626532 kB\nNode 1 Inactive(file):  4368340 kB\nNode 1 Unevictable:         184 kB\nNode 1 Mlocked:             184 kB\nNode 1 Dirty:               464 kB\nNode 1 Writeback:             0 kB\nNode 1 FilePages:       5996464 kB\nNode 1 Mapped:           135028 kB\nNode 1 AnonPages:        306576 kB\nNode 1 Shmem:              1412 kB\nNode 1 KernelStack:       10712 kB\nNode 1 PageTables:         9064 kB\nNode 1 SecPageTables:         0 kB\nNode 1 NFS_Unstable:          0 kB\nNode 1 Bounce:                0 kB\nNode 1 WritebackTmp:          0 kB\nNode 1 KReclaimable:   23944040 kB\nNode 1 Slab:           25449760 kB\nNode 1 SReclaimable:   23911680 kB\nNode 1 SUnreclaim:      1538080 kB\nNode 1 AnonHugePages:         0 kB\nNode 1 ShmemHugePages:        0 kB\nNode 1 ShmemPmdMapped:        0 kB\nNode 1 FileHugePages:         0 kB\nNode 1 FilePmdMapped:         0 kB\nNode 1 Unaccepted:            0 kB\nNode 1 HugePages_Total:     0\nNode 1 HugePages_Free:      0\nNode 1 HugePages_Surp:      0\n",
+      "zones": "Node 0, zone      DMA\n  per-node stats\n      nr_inactive_anon 154056\n      nr_active_anon 134509\n      nr_inactive_file 7055415\n      nr_active_file 3218931\n      nr_unevictable 9729\n      nr_slab_reclaimable 1131703\n      nr_slab_unreclaimable 229465\n      nr_isolated_anon 0\n      nr_isolated_file 0\n      workingset_nodes 731623\n      workingset_refault_anon 0\n      workingset_refault_file 27369717\n      workingset_activate_anon 0\n      workingset_activate_file 23927515\n      workingset_restore_anon 0\n      workingset_restore_file 16387779\n      workingset_nodereclaim 4114454\n      nr_anon_pages 293227\n      nr_mapped    249753\n      nr_file_pages 10279469\n      nr_dirty     1777\n      nr_writeback 0\n      nr_writeback_temp 0\n      nr_shmem     1439\n      nr_shmem_hugepages 0\n      nr_shmem_pmdmapped 0\n      nr_file_hugepages 0\n      nr_file_pmdmapped 0\n      nr_anon_transparent_hugepages 0\n      nr_vmscan_write 0\n      nr_vmscan_immediate_reclaim 0\n      nr_dirtied   1077770600\n      nr_written   654953460\n      nr_throttled_written 0\n      nr_kernel_misc_reclaimable 13832\n      nr_foll_pin_acquired 218719290\n      nr_foll_pin_released 218719290\n      nr_kernel_stack 14296\n      nr_page_table_pages 5171\n      nr_sec_page_table_pages 0\n      nr_swapcached 0\n      pgpromote_success 0\n      pgpromote_candidate 0\n      pgdemote_kswapd 0\n      pgdemote_direct 0\n      pgdemote_khugepaged 0\n  pages free     2816\n        boost    0\n        min      2\n        low      5\n        high     8\n        spanned  4095\n        present  3998\n        managed  3840\n        cma      0\n        protection: (0, 1418, 63834, 63834, 63834)\n      nr_free_pages 2816\n      nr_zone_inactive_anon 0\n      nr_zone_active_anon 0\n      nr_zone_inactive_file 0\n      nr_zone_active_file 0\n      nr_zone_unevictable 0\n      nr_zone_write_pending 0\n      nr_mlock     0\n      nr_bounce    0\n      nr_zspages   0\n      nr_free_cma  0\n      nr_unaccepted 0\n      numa_hit     1\n      numa_miss    0\n      numa_foreign 0\n      numa_interleave 0\n      numa_local   1\n      numa_other   0\n  pagesets\n    cpu: 0\n              count: 0\n              high:  7\n              batch: 1\n  vm stats threshold: 14\n    cpu: 1\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 2\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 3\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 4\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 5\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 6\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 7\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 8\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 9\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 10\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 11\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 12\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 13\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 14\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 15\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 16\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 17\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 18\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 19\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 20\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 21\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 22\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 23\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 24\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 25\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 26\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 27\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 28\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 29\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 30\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 31\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 32\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 33\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 34\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 35\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 36\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 37\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 38\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 39\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 40\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 41\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 42\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 43\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 44\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 45\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 46\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 47\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 48\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 49\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 50\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 51\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 52\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 53\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 54\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 55\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 56\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 57\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 58\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 59\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 60\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 61\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 62\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 63\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n  node_unreclaimable:  1\n  start_pfn:           1\nNode 0, zone    DMA32\n  pages free     81584\n        boost    0\n        min      235\n        low      577\n        high     919\n        spanned  1044480\n        present  379897\n        managed  363200\n        cma      0\n        protection: (0, 0, 62415, 62415, 62415)\n      nr_free_pages 81584\n      nr_zone_inactive_anon 0\n      nr_zone_active_anon 8\n      nr_zone_inactive_file 240343\n      nr_zone_active_file 34674\n      nr_zone_unevictable 0\n      nr_zone_write_pending 0\n      nr_mlock     0\n      nr_bounce    0\n      nr_zspages   0\n      nr_free_cma  0\n      nr_unaccepted 0\n      numa_hit     877893664\n      numa_miss    4352815\n      numa_foreign 0\n      numa_interleave 1\n      numa_local   877893041\n      numa_other   4353438\n  pagesets\n    cpu: 0\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 1\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 2\n              count: 1\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 3\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 4\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 5\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 6\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 7\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 8\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 9\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 10\n              count: 2\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 11\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 12\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 13\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 14\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 15\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 16\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 17\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 18\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 19\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 20\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 21\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 22\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 23\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 24\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 25\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 26\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 27\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 28\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 29\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 30\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 31\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 32\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 33\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 34\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 35\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 36\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 37\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 38\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 39\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 40\n              count: 1\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 41\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 42\n              count: 1\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 43\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 44\n              count: 1\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 45\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 46\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 47\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 48\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 49\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 50\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 51\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 52\n              count: 1\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 53\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 54\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 55\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 56\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 57\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 58\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 59\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 60\n              count: 4\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 61\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 62\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 63\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n  node_unreclaimable:  1\n  start_pfn:           4096\nNode 0, zone   Normal\n  pages free     3731800\n        boost    64369\n        min      75330\n        low      91306\n        high     107282\n        spanned  16252928\n        present  16252928\n        managed  15978423\n        cma      0\n        protection: (0, 0, 0, 0, 0)\n      nr_free_pages 3731800\n      nr_zone_inactive_anon 154056\n      nr_zone_active_anon 134501\n      nr_zone_inactive_file 6815072\n      nr_zone_active_file 3184257\n      nr_zone_unevictable 9729\n      nr_zone_write_pending 1777\n      nr_mlock     8961\n      nr_bounce    0\n      nr_zspages   0\n      nr_free_cma  0\n      nr_unaccepted 0\n      numa_hit     140644916650\n      numa_miss    4839463958\n      numa_foreign 2642071494\n      numa_interleave 34827692\n      numa_local   140628433185\n      numa_other   4834072400\n  pagesets\n    cpu: 0\n              count: 3641\n              high:  3704\n              batch: 63\n  vm stats threshold: 125\n    cpu: 1\n              count: 48\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 2\n              count: 6372\n              high:  22354\n              batch: 63\n  vm stats threshold: 125\n    cpu: 3\n              count: 847\n              high:  1533\n              batch: 63\n  vm stats threshold: 125\n    cpu: 4\n              count: 392\n              high:  9688\n              batch: 63\n  vm stats threshold: 125\n    cpu: 5\n              count: 593\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 6\n              count: 7093\n              high:  7093\n              batch: 63\n  vm stats threshold: 125\n    cpu: 7\n              count: 5\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 8\n              count: 879\n              high:  880\n              batch: 63\n  vm stats threshold: 125\n    cpu: 9\n              count: 208\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 10\n              count: 6057\n              high:  6057\n              batch: 63\n  vm stats threshold: 125\n    cpu: 11\n              count: 324\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 12\n              count: 700\n              high:  1108\n              batch: 63\n  vm stats threshold: 125\n    cpu: 13\n              count: 182\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 14\n              count: 17403\n              high:  17403\n              batch: 63\n  vm stats threshold: 125\n    cpu: 15\n              count: 100\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 16\n              count: 3475\n              high:  3476\n              batch: 63\n  vm stats threshold: 125\n    cpu: 17\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 18\n              count: 1058\n              high:  1064\n              batch: 63\n  vm stats threshold: 125\n    cpu: 19\n              count: 3\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 20\n              count: 2944\n              high:  18298\n              batch: 63\n  vm stats threshold: 125\n    cpu: 21\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 22\n              count: 936\n              high:  1759\n              batch: 63\n  vm stats threshold: 125\n    cpu: 23\n              count: 1\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 24\n              count: 6782\n              high:  6782\n              batch: 63\n  vm stats threshold: 125\n    cpu: 25\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 26\n              count: 1067\n              high:  1067\n              batch: 63\n  vm stats threshold: 125\n    cpu: 27\n              count: 56\n              high:  904\n              batch: 63\n  vm stats threshold: 125\n    cpu: 28\n              count: 1050\n              high:  1127\n              batch: 63\n  vm stats threshold: 125\n    cpu: 29\n              count: 8\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 30\n              count: 3937\n              high:  3937\n              batch: 63\n  vm stats threshold: 125\n    cpu: 31\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 32\n              count: 1503\n              high:  4899\n              batch: 63\n  vm stats threshold: 125\n    cpu: 33\n              count: 1\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 34\n              count: 806\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 35\n              count: 538\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 36\n              count: 1783\n              high:  1840\n              batch: 63\n  vm stats threshold: 125\n    cpu: 37\n              count: 67\n              high:  2079\n              batch: 63\n  vm stats threshold: 125\n    cpu: 38\n              count: 821\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 39\n              count: 689\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 40\n              count: 41629\n              high:  41629\n              batch: 63\n  vm stats threshold: 125\n    cpu: 41\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 42\n              count: 484\n              high:  982\n              batch: 63\n  vm stats threshold: 125\n    cpu: 43\n              count: 18\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 44\n              count: 398\n              high:  2181\n              batch: 63\n  vm stats threshold: 125\n    cpu: 45\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 46\n              count: 230\n              high:  904\n              batch: 63\n  vm stats threshold: 125\n    cpu: 47\n              count: 728\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 48\n              count: 11305\n              high:  11352\n              batch: 63\n  vm stats threshold: 125\n    cpu: 49\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 50\n              count: 636\n              high:  1127\n              batch: 63\n  vm stats threshold: 125\n    cpu: 51\n              count: 20\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 52\n              count: 10725\n              high:  10725\n              batch: 63\n  vm stats threshold: 125\n    cpu: 53\n              count: 97\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 54\n              count: 2017\n              high:  2080\n              batch: 63\n  vm stats threshold: 125\n    cpu: 55\n              count: 3\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 56\n              count: 704\n              high:  913\n              batch: 63\n  vm stats threshold: 125\n    cpu: 57\n              count: 47\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 58\n              count: 3977\n              high:  3988\n              batch: 63\n  vm stats threshold: 125\n    cpu: 59\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 60\n              count: 13492\n              high:  13536\n              batch: 63\n  vm stats threshold: 125\n    cpu: 61\n              count: 18\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 62\n              count: 1188\n              high:  1568\n              batch: 63\n  vm stats threshold: 125\n    cpu: 63\n              count: 38\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n  node_unreclaimable:  1\n  start_pfn:           1048576\nNode 0, zone  Movable\n  pages free     0\n        boost    0\n        min      32\n        low      32\n        high     32\n        spanned  0\n        present  0\n        managed  0\n        cma      0\n        protection: (0, 0, 0, 0, 0)\nNode 0, zone   Device\n  pages free     0\n        boost    0\n        min      0\n        low      0\n        high     0\n        spanned  0\n        present  0\n        managed  0\n        cma      0\n        protection: (0, 0, 0, 0, 0)\nNode 1, zone      DMA\n  pages free     0\n        boost    0\n        min      0\n        low      0\n        high     0\n        spanned  0\n        present  0\n        managed  0\n        cma      0\n        protection: (0, 0, 0, 0, 0)\nNode 1, zone    DMA32\n  pages free     0\n        boost    0\n        min      0\n        low      0\n        high     0\n        spanned  0\n        present  0\n        managed  0\n        cma      0\n        protection: (0, 0, 0, 0, 0)\nNode 1, zone   Normal\n  per-node stats\n      nr_inactive_anon 16805\n      nr_active_anon 60280\n      nr_inactive_file 1092085\n      nr_active_file 406633\n      nr_unevictable 46\n      nr_slab_reclaimable 5977920\n      nr_slab_unreclaimable 384520\n      nr_isolated_anon 0\n      nr_isolated_file 0\n      workingset_nodes 118029\n      workingset_refault_anon 0\n      workingset_refault_file 15580262\n      workingset_activate_anon 0\n      workingset_activate_file 13319564\n      workingset_restore_anon 0\n      workingset_restore_file 4301528\n      workingset_nodereclaim 3176076\n      nr_anon_pages 76644\n      nr_mapped    33757\n      nr_file_pages 1499116\n      nr_dirty     116\n      nr_writeback 0\n      nr_writeback_temp 0\n      nr_shmem     353\n      nr_shmem_hugepages 0\n      nr_shmem_pmdmapped 0\n      nr_file_hugepages 0\n      nr_file_pmdmapped 0\n      nr_anon_transparent_hugepages 0\n      nr_vmscan_write 0\n      nr_vmscan_immediate_reclaim 0\n      nr_dirtied   466638301\n      nr_written   326356877\n      nr_throttled_written 0\n      nr_kernel_misc_reclaimable 8090\n      nr_foll_pin_acquired 35881478\n      nr_foll_pin_released 35881478\n      nr_kernel_stack 10712\n      nr_page_table_pages 2266\n      nr_sec_page_table_pages 0\n      nr_swapcached 0\n      pgpromote_success 0\n      pgpromote_candidate 0\n      pgdemote_kswapd 0\n      pgdemote_direct 0\n      pgdemote_khugepaged 0\n  pages free     8229263\n        boost    0\n        min      11328\n        low      27839\n        high     44350\n        spanned  16777216\n        present  16777216\n        managed  16511103\n        cma      0\n        protection: (0, 0, 0, 0, 0)\n      nr_free_pages 8229263\n      nr_zone_inactive_anon 16805\n      nr_zone_active_anon 60280\n      nr_zone_inactive_file 1092085\n      nr_zone_active_file 406633\n      nr_zone_unevictable 46\n      nr_zone_write_pending 116\n      nr_mlock     46\n      nr_bounce    0\n      nr_zspages   0\n      nr_free_cma  0\n      nr_unaccepted 0\n      numa_hit     85187695948\n      numa_miss    2647992709\n      numa_foreign 4838769638\n      numa_interleave 31128917\n      numa_local   85069828355\n      numa_other   2761020925\n  pagesets\n    cpu: 0\n              count: 29\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 1\n              count: 314\n              high:  932\n              batch: 63\n  vm stats threshold: 125\n    cpu: 2\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 3\n              count: 1244\n              high:  2371\n              batch: 63\n  vm stats threshold: 125\n    cpu: 4\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 5\n              count: 2006\n              high:  2058\n              batch: 63\n  vm stats threshold: 125\n    cpu: 6\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 7\n              count: 796\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 8\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 9\n              count: 340\n              high:  989\n              batch: 63\n  vm stats threshold: 125\n    cpu: 10\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 11\n              count: 204\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 12\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 13\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 14\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 15\n              count: 739\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 16\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 17\n              count: 869\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 18\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 19\n              count: 510\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 20\n              count: 8\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 21\n              count: 1276\n              high:  1340\n              batch: 63\n  vm stats threshold: 125\n    cpu: 22\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 23\n              count: 3439\n              high:  4221\n              batch: 63\n  vm stats threshold: 125\n    cpu: 24\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 25\n              count: 322\n              high:  943\n              batch: 63\n  vm stats threshold: 125\n    cpu: 26\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 27\n              count: 456\n              high:  932\n              batch: 63\n  vm stats threshold: 125\n    cpu: 28\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 29\n              count: 341\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 30\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 31\n              count: 2231\n              high:  5657\n              batch: 63\n  vm stats threshold: 125\n    cpu: 32\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 33\n              count: 2428\n              high:  7533\n              batch: 63\n  vm stats threshold: 125\n    cpu: 34\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 35\n              count: 2980\n              high:  3507\n              batch: 63\n  vm stats threshold: 125\n    cpu: 36\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 37\n              count: 1553\n              high:  1595\n              batch: 63\n  vm stats threshold: 125\n    cpu: 38\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 39\n              count: 3411\n              high:  3438\n              batch: 63\n  vm stats threshold: 125\n    cpu: 40\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 41\n              count: 826\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 42\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 43\n              count: 742\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 44\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 45\n              count: 871\n              high:  871\n              batch: 63\n  vm stats threshold: 125\n    cpu: 46\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 47\n              count: 1204\n              high:  1263\n              batch: 63\n  vm stats threshold: 125\n    cpu: 48\n              count: 1\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 49\n              count: 810\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 50\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 51\n              count: 831\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 52\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 53\n              count: 1257\n              high:  1445\n              batch: 63\n  vm stats threshold: 125\n    cpu: 54\n              count: 8\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 55\n              count: 195\n              high:  926\n              batch: 63\n  vm stats threshold: 125\n    cpu: 56\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 57\n              count: 103\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 58\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 59\n              count: 598\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 60\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 61\n              count: 187\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 62\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 63\n              count: 310\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n  node_unreclaimable:  0\n  start_pfn:           17301504\nNode 1, zone  Movable\n  pages free     0\n        boost    0\n        min      32\n        low      32\n        high     32\n        spanned  0\n        present  0\n        managed  0\n        cma      0\n        protection: (0, 0, 0, 0, 0)\nNode 1, zone   Device\n  pages free     0\n        boost    0\n        min      0\n        low      0\n        high     0\n        spanned  12484608\n        present  0\n        managed  0\n        cma      0\n        protection: (0, 0, 0, 0, 0)\n"
+    },
+    "estimate": {
+      "node": 1,
+      "page_size_bytes": 4096,
+      "node_fields_kib": {
+        "MemTotal": 66044412,
+        "MemFree": 32917052,
+        "MemUsed": 33127360,
+        "SwapCached": 0,
+        "Active": 1867652,
+        "Inactive": 4435560,
+        "Active(anon)": 241120,
+        "Inactive(anon)": 67220,
+        "Active(file)": 1626532,
+        "Inactive(file)": 4368340,
+        "Unevictable": 184,
+        "Mlocked": 184,
+        "Dirty": 464,
+        "Writeback": 0,
+        "FilePages": 5996464,
+        "Mapped": 135028,
+        "AnonPages": 306576,
+        "Shmem": 1412,
+        "KernelStack": 10712,
+        "PageTables": 9064,
+        "SecPageTables": 0,
+        "NFS_Unstable": 0,
+        "Bounce": 0,
+        "WritebackTmp": 0,
+        "KReclaimable": 23944040,
+        "Slab": 25449760,
+        "SReclaimable": 23911680,
+        "SUnreclaim": 1538080,
+        "AnonHugePages": 0,
+        "ShmemHugePages": 0,
+        "ShmemPmdMapped": 0,
+        "FileHugePages": 0,
+        "FilePmdMapped": 0,
+        "Unaccepted": 0
+      },
+      "zones": [
+        {
+          "name": "DMA",
+          "low": 0,
+          "high": 0,
+          "managed": 0,
+          "protection": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "reserved_pages": 0
+        },
+        {
+          "name": "DMA32",
+          "low": 0,
+          "high": 0,
+          "managed": 0,
+          "protection": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "reserved_pages": 0
+        },
+        {
+          "name": "Normal",
+          "low": 27839,
+          "high": 44350,
+          "managed": 16511103,
+          "protection": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "reserved_pages": 44350
+        },
+        {
+          "name": "Movable",
+          "low": 32,
+          "high": 32,
+          "managed": 0,
+          "protection": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "reserved_pages": 0
+        },
+        {
+          "name": "Device",
+          "low": 0,
+          "high": 0,
+          "managed": 0,
+          "protection": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "reserved_pages": 0
+        }
+      ],
+      "low_watermarks_kib": 111484,
+      "reserved_kib": 177400,
+      "clean_file_lru_kib": 5994408,
+      "reclaimable_slab_kib": 23911680,
+      "before_uncertainty_discount_kib": 62422772,
+      "uncertainty_discount_kib": 1048576,
+      "estimated_available_kib": 61374196,
+      "global_available_kib": 121966736,
+      "required_node_kib": 54525952,
+      "required_global_kib": 67108864,
+      "eligible": true,
+      "definition": "Linux v6.8 MemAvailable node analogue; subtract dirty/writeback; exclude miscellaneous reclaimable memory; extra 1 GiB discount",
+      "estimate_is_guarantee": false
+    },
+    "required_node_bytes": 21474836480,
+    "required_global_bytes": 25769803776,
+    "load_average": [
+      2.12451171875,
+      1.98828125,
+      1.72265625
+    ]
+  },
+  "charged_task": "T16 only",
+  "charged_seconds_per_task": 600,
+  "charged_bytes_per_task": 2147483648,
+  "no_refund": true,
+  "mutations": false,
+  "empirical_acceptance": false
+}

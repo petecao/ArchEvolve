@@ -1,0 +1,74 @@
+kind: intrinsic
+id: intrinsic.dxc_session_begin
+intrinsic_record: dxc_session_begin
+provenance:
+  origin:
+    intrinsic_specification: Peter v1.1
+  intrinsic_specification:
+    path: docs/bfs-intrinsics-spec-yanru.md
+    sha256: 3e54374ae43c841bad3f71d9210cb110742dfdb1bf688cde1953de9df64aabf9
+    root: repository
+    version: '1.1'
+    commit: 0b56895
+    section: '3'
+  hardware_candidate:
+    path: runs/bfs-maple-comparison-v0.1/case-01/handoffs/candidate-02/intrinsic-draft.yaml
+    sha256: 01f05bdc517922a082a10c9e28d8f1501c92892ba06a1e5298a60e7cc5d0bf30
+    root: repository
+    id: gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute
+    catalog_sha256: adf17f3e114878ed0edbe55abb8ea219445fa2aef3c97e6c369230b796872fb0
+  catalog:
+    path: catalog/hardware-v0.1.yaml
+    sha256: adf17f3e114878ed0edbe55abb8ea219445fa2aef3c97e6c369230b796872fb0
+    root: repository
+    design: dx100-artifact-e4fc4af
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    claim_ids:
+    - dxc-gather
+    - dxc-range
+    - dxc-stream
+    - dxc-completion
+    - dxc-byte-offset-domain
+  operation_ids: []
+  requirement_ids:
+  - dxc-observer
+  - dxc-reuse
+  - dxc-capacity
+signature: void __dxc_session_begin()
+intent: Realize session begin over the pinned DX100 hardware interface.
+caveats:
+- Functional-model certification is pre-check evidence only; it does not establish
+  target visibility.
+reference_semantics: &id001
+  path: dx100/reference.hpp
+  sha256: 75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897
+  root: library
+  symbol: session_begin
+hardware_operations: []
+memory_footprint:
+  reads:
+  - existing allocation/initialization state
+  writes:
+  - session metadata and instrumentation counters
+completion:
+  mode: asynchronous_until_covering_wait
+  host_concurrency: unknown
+  owner: Eric
+  assumptions:
+  - A tile wait covers its producer and transitive dependencies, not unrelated operations
+    or a store source.
+  - CPU tile size/pointer reads do not wait.
+lowerings:
+- lowering.dxc_session_begin.dx100-mmio.1.0-e4fc4af
+clauses:
+- id: result
+  role: postcondition
+  statement: The lowering matches the pinned reference semantics on its declared inputs.
+  discharge_mode: differential_test
+  negative_control:
+    id: second_session_begin
+    check: session_begin_twice
+  formal:
+    language: reference
+    reference: *id001
+  formal_label: stated

@@ -1,0 +1,72 @@
+kind: comparison_result
+schema_version: '0.4'
+id: bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.comparison
+status: draft
+created: '2026-09-27'
+updated: '2026-09-27'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.comparison
+  protocol: bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3
+  baseline_evaluation: bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.baseline.evaluation
+  candidate_evaluation: bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation
+  comparison_baseline: dx100-bfs-scalar
+decision:
+  state: inconclusive
+  reasons:
+  - Timing spread exceeds the frozen threshold.
+gain_claim: false
+evidence_kind: execution
+metrics:
+  roi_speedup: 1.0003511744314062
+  per_source_position_speedup:
+    '0': 1.0007660381860377
+    '1': 0.9992948369090735
+    '2': 1.0009934984520714
+  confidence_interval:
+    confidence: 0.95
+    lower: 0.9958370576595712
+    upper: 1.0197415184444678
+    method: paired_repetition_block_bootstrap.v1
+    resamples: 2000
+  relative_spread:
+    baseline:
+      '0': 0.1294497785030889
+      '1': 0.13814474835197516
+      '2': 0.13767667013695906
+    candidate:
+      '0': 0.014727994023315262
+      '1': 0.02112691178693874
+      '2': 0.020871737965755865
+  paired_collection:
+    id: bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.pair
+    receipt_sha256: 72eed40f2f3ed80916eb112db8acb29ee1b392c499b589b014a27366753194f4
+    schedule_sha256: d86e7631fe22327762de7b21145fd968d40661a3c53a3051c36f7b981f25001c
+  workload: bfs-20260925-kronecker18.48de8267ac2098d5
+  attribution: software_on_fixed_target
+  disclosed_differences:
+    software:
+    - Explicit source rewrite evaluated after this freeze
+    accelerator: []
+    configuration: []
+region_comparisons: []
+finished_at: '2026-09-27T15:37:46.036262+00:00'
+protocol: bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3
+protocol_sha256: 0d2d6da657751ff391f75087bd620737cae90206767b97d0ee474acb0342e034
+baseline_evaluation: bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.baseline.evaluation
+candidate_evaluation: bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation
+comparison_baseline: dx100-bfs-scalar
+source_ancestor: dx100-bfs-scalar
+evaluation_identities:
+  bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.baseline.evaluation: aec93f5764ea7a86dfdc4ffdcd7de5d9e58e2a0b2563843992afe75323255b51
+  bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation: d4463fd030ccca9d15af8d8ab1ec84ce41e06176746ef10deb44105585c20062

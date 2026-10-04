@@ -1,0 +1,30 @@
+{
+  "created": "2026-09-26",
+  "id": "bfs-simulated-fixture-runtime-correction-20260926",
+  "cause": "Explicit simulator fixture copied native build runtime metadata from its seed. The simulated profile correctly failed the native consistency guard.",
+  "change": "Remove native_runtime and execution_environment while constructing simulator-shaped fixtures; production guards and actual records unchanged.",
+  "before": {
+    "passed": 1,
+    "errors": 1,
+    "seconds": 46.67
+  },
+  "after": {
+    "passed": 25,
+    "failed": 0,
+    "seconds": 135.86
+  },
+  "artifacts": [
+    {
+      "path": "/private/tmp/bfs-regional-runtime-repro-20260926.log",
+      "bytes": 12947,
+      "sha256": "353acd1402a542f609a929050ff3a11d68b0078f27fbae6addd3501319b75f61"
+    },
+    {
+      "path": "/private/tmp/bfs-regional-runtime-correction-20260926.log",
+      "bytes": 111,
+      "sha256": "84b3a78d547bfb8fd798569f067dea60820d58b8684010fc51c6d336983db312"
+    }
+  ],
+  "full_suite": "Original d9b1340 snapshot completed with 1530 passed, 5 skipped, 11 setup errors; all errors share this fixture mismatch. The 25-test targeted correction passed separately.",
+  "empirical_evidence": false
+}

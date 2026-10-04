@@ -1,0 +1,29 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T17:45:32-04:00",
+  "host": "mbit10",
+  "scope": "Lightweight Git-only preparation; no fixture, auditor, compilation or measurement",
+  "checkout": "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a1",
+  "commit": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+  "branch_state": "detached",
+  "tracked_and_untracked_state": "pristine",
+  "origin": "git@github.com:ruchou/EvolveSWDB.git",
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-supervision-checkout-preparation-20260926-a1-v2.json",
+    "bytes": 3523,
+    "sha256": "d7571b8ad2eaceec4c53b00c2d5a9b4b43d281176056aa68ed2e7fdd848309ad"
+  },
+  "preparation_failure_retained": "Original receipt had a literal backslash-n terminator; additive valid v2 preserves its reference and unchanged factual fields.",
+  "runtime_hashes": {
+    "scripts/bfs_a2_linux_fixture.py": "ab2f28b64af523f031691fe08a508111aa4d80617f4e57fabe554f783f5cb5f3",
+    "scripts/bfs_linux_fixture.py": "36b1b61b35a07a8ad457ed94e2af152fc02188dbffc7d4d5246c411a3a45bf2d",
+    "scripts/bfs_linux_fixture_audit.py": "c2fb516cf83152f23875da8782cb4701972cc47b87555d317179bd6d403afca6",
+    "scripts/bfs_owned_execution.py": "58b36373160d8ae95352251786cce5fa84297afcee29ce4818f3580dd0d991a6"
+  },
+  "active_native": "319645eab0a25c815fa03fe1c372d32b4ba45d10 unchanged; socket1 generation402 remains held",
+  "limits": [
+    "Actual Linux admission waits for independent whole-native terminal cleanup.",
+    "Historical A2 tested checkout remains pinned to67313d9.",
+    "No empirical freeze or final acceptance follows from a code checkout."
+  ]
+}

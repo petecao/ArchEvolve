@@ -1,0 +1,27 @@
+{
+  "created": "2026-09-27",
+  "contract": "docs/bfs-handoff-contract-v1.md",
+  "format_version": "1.0",
+  "live_collaborator_integration": false,
+  "note": "Rendered by scripts/bfs_handoff_examples.py through `swdb handoff-message` from actual master records. All submissions are representative test clients.",
+  "examples": [
+    {"file": "profile-package.dx100-patch-kronecker.json", "message": "profile_package",
+     "record": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.package.v1.d612335972200df6",
+     "shows": "complete native package of an evaluated candidate: ranked regions, Callgrind memory rows, region correspondence, strategies without performance guarantee"},
+    {"file": "rewrite-proposal.sw-patch.json", "message": "rewrite_proposal",
+     "record": "bfs-campaign-preparation-20260925-a1.dx100-patch",
+     "shows": "SW test-client supplied patch that created the T18 candidate"},
+    {"file": "rewrite-proposal.hw-annotated-full-files.json", "message": "rewrite_proposal",
+     "record": "bfs-campaign-preparation-20260925-a1.upstream-annotated-context6",
+     "shows": "HW test-client annotated source with required DX100 operations; stream-json provider capture and full_files edit format"},
+    {"file": "rewrite-proposal.hw-annotated-failed.json", "message": "rewrite_proposal",
+     "record": "bfs-campaign-preparation-20260925-a1.upstream-annotated-context5",
+     "shows": "retained failed submission (corrupt provider patch); no candidate"},
+    {"file": "evaluation-result.dx100-patch-kronecker.json", "message": "evaluation_result",
+     "record": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation",
+     "shows": "completed native evaluation with an inconclusive frozen-policy comparison; no performance claim"},
+    {"file": "evaluation-result.dx100-patch-uniform-interrupted.json", "message": "evaluation_result",
+     "record": "bfs-native-acceptance-20260927-dx100-patch-b1.uniform-random.candidate-1.evaluation",
+     "shows": "retained interrupted evaluation; incomplete measurement is distinct from an incorrect candidate"}
+  ]
+}

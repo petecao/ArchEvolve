@@ -1,0 +1,148 @@
+{
+  "format": "swdb.bfs.provider-context-operational-preparation.v1",
+  "created": "2026-09-26",
+  "state": "locally_reviewed_operational_preparation_not_host_admission",
+  "runtime_commit": "0dc0d4fecfe2903ff0cc1ba9e6b738a8f5c1a4f1",
+  "runtime_root": "/data1/yanruj/EvolveSWDB_provider_context_runtime_20260926_a1",
+  "origin_records_commit": "5f1b8028619976b36df5fa24b8aacb91bf488168",
+  "proposal_id": "bfs-campaign-preparation-20260925-a1.upstream-annotated-context1",
+  "prompt": {
+    "bytes": 518016,
+    "sha256": "6042ab21a40f270ac9f21007de8e0a2d7c55850ab1448253697c446801d07f63"
+  },
+  "bounds": {
+    "outer_seconds": 750,
+    "work_seconds": 720,
+    "cleanup_seconds": 30,
+    "public_submit_seconds": 660,
+    "provider_call_seconds": 600,
+    "original_provider_total_seconds": 1800,
+    "previous_provider_used_seconds": 62.419636563397944,
+    "floored_provider_remaining_seconds": 1737,
+    "provider_budget_usd_per_call": 10,
+    "maximum_later_repairs": 2,
+    "calls_in_this_job": 1,
+    "repairs_in_this_job": 0,
+    "sampled_rss_bytes": 17179869184,
+    "retained_bytes": 1073741824
+  },
+  "validation": {
+    "command": "python3 -m pytest .scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/test_bfs_provider_context_recipe_20260926.py -q",
+    "result": "23 passed in 0.55s",
+    "bash_syntax": "passed",
+    "evidence_kind": "local_contract_fixture",
+    "host_dispatches": 0,
+    "provider_calls": 0,
+    "log": {
+      "path": "/private/tmp/bfs-provider-context-git-final-v3-20260926.log",
+      "bytes": 99,
+      "sha256": "1cc2d4c9f8f05ffd7d2d078562705701dc5f0379e4d15b54b417f3ef0eefa396"
+    }
+  },
+  "scope": [
+    "One exact context submit and fresh public retrieval only; no build/evaluation/repair.",
+    "Pristine corrected runtime; separate data-only Git-derived record view and counted raw/cache/database/source outputs.",
+    "Isolated pre-import committed-file manifest + existing campaign_runtime before/after.",
+    "Original scalar/native/T16/proof failures retained; no budget replenishment."
+  ],
+  "limitations": [
+    "Actual Linux proof envelope and fresh host lane/health admission remain prerequisites.",
+    "A proof at another final recovery commit establishes only identical tested primitive/dependency bytes, not this new driver.",
+    "Clock test injects procfs on macOS; no actual host PID claim."
+  ],
+  "artifacts": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/bfs-provider-context1-20260926.py",
+      "bytes": 24985,
+      "sha256": "db8206aab19da03ac68b9e90076fa651d7349e276b1ec919302bf376fe83319d"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/bfs-provider-context1-launch-20260926.sh",
+      "bytes": 2740,
+      "sha256": "2b423dd61e73cfe143f75ea89f9ddf2923b680123c47670fd04878720b9aceca"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/bfs-provider-context1-preflight-20260926.md",
+      "bytes": 8574,
+      "sha256": "874ee51ff38a541ac2637c8d5606924a5b5c1af0c2954ebd6f5a02af791ce2e9"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/bfs-provider-context1-runtime-20260926.json",
+      "bytes": 56767,
+      "sha256": "83415cf174cb2790b8a4d17b3030d5c09fd90394d49695b90ad054dd04552549"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/independent-review-20260926.json",
+      "bytes": 4460,
+      "sha256": "b2d041e0f37291b128dc2b5b03c448e364be1b281e97424a4c4e57357a636916"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/test_bfs_provider_context_recipe_20260926.py",
+      "bytes": 9007,
+      "sha256": "127419b0b2611a35271d7baaeb3652dedfb7f887b53079cde30fa3726e88cced"
+    }
+  ],
+  "preserved_preparation_evidence": [
+    {
+      "path": "/private/tmp/bfs-provider-context1-before-import-guard-20260926.py",
+      "bytes": 19402,
+      "sha256": "50e3b489594083719194975ea2d2084babc6e062bee505c1114897ba206c8607"
+    },
+    {
+      "path": "/private/tmp/bfs-provider-recipe-runtime-spec-red-20260926.log",
+      "bytes": 1879,
+      "sha256": "c412bb176f1cf2623454dbe62b8b53ea3aa65dd4a1e164751dcb819256d2e5de"
+    },
+    {
+      "path": "/private/tmp/bfs-provider-context1-launch-before-stdin-fix-20260926.sh",
+      "bytes": 2708,
+      "sha256": "ac515bbc4f12f4b783962ecec2c38ee80be467c52c5863ce869091d2cd817b94"
+    },
+    {
+      "path": "/private/tmp/bfs-provider-wrapper-clock-red-20260926.log",
+      "bytes": 2391,
+      "sha256": "861f1ca748ad1dcb9a91b926d17f429619b49c6c6a5d731d45b0f0599dcfe59e"
+    },
+    {
+      "path": "/private/tmp/bfs-provider-context1-launch-before-pane-capture-20260926.sh",
+      "bytes": 2712,
+      "sha256": "b88211bbdc23858754760b33b5ffec6b8d2088ca3d505b80fd00ef4a1ed0a7bf"
+    },
+    {
+      "path": "/private/tmp/bfs-provider-wrapper-pane-capture-red-20260926.log",
+      "bytes": 1889,
+      "sha256": "d8dfc364e46e9f3004f4d8a909c5ae9c5469f1abb3110a0cced7b374d6827deb"
+    },
+    {
+      "path": "/private/tmp/bfs-provider-context1-launch-before-bytecode-fix-20260926.sh",
+      "bytes": 2731,
+      "sha256": "5a92f0a7f419e087f1a32ccffc5c70c5aad4ea11f571b2ecc238f948335aece0"
+    },
+    {
+      "path": "/private/tmp/bfs-provider-wrapper-bytecode-red-20260926.log",
+      "bytes": 1756,
+      "sha256": "3d6ec69b56345b62cf4c586be3f2a1664f7d883946a704c7ca32349c8aef71f9"
+    },
+    {
+      "path": "/private/tmp/bfs-provider-context-git-final-v3-20260926.log",
+      "bytes": 99,
+      "sha256": "1cc2d4c9f8f05ffd7d2d078562705701dc5f0379e4d15b54b417f3ef0eefa396"
+    },
+    {
+      "path": "/private/tmp/bfs-provider-final-standards-review-20260926.json",
+      "bytes": 4460,
+      "sha256": "b2d041e0f37291b128dc2b5b03c448e364be1b281e97424a4c4e57357a636916"
+    },
+    {
+      "path": "/private/tmp/bfs-provider-final-standards-v3-20260926.log",
+      "bytes": 99,
+      "sha256": "a83fe8a6d62c6c879256796cce0c017dfdbd5c223c36f403b61dcb1a4ff768e6"
+    }
+  ],
+  "independent_review": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/independent-review-20260926.json",
+    "bytes": 4460,
+    "sha256": "b2d041e0f37291b128dc2b5b03c448e364be1b281e97424a4c4e57357a636916"
+  },
+  "independent_review_summary": "23 contract cases and original adapted import-guard probe pass; all372 committed runtime blobs match. No host invocation or provider call."
+}

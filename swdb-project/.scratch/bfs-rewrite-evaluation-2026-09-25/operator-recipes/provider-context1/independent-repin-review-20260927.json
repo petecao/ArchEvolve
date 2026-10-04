@@ -1,0 +1,65 @@
+{
+  "created": "2026-09-27",
+  "state": "scoped_repin_review_passed",
+  "remote_execution": false,
+  "baseline": "40b82ef",
+  "runtime_commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+  "runtime_root": "/data1/yanruj/EvolveSWDB_supervision_recovery_runtime_20260927_a1",
+  "manifest_files": 375,
+  "manifest_source_bytes": 3887708,
+  "mode_counts": {
+    "100644": 371,
+    "100755": 4
+  },
+  "checks": [
+    "Git ls-tree names exactly equal manifest runtime inventory and root entries",
+    "Every runtime Git object is regular blob100644/100755; exact content bytes and SHA256 match manifest",
+    "Recipe is byte-identical to historical review after only root, commit and manifest SHA replacements",
+    "Wrapper byte-identical to historical review; isolated -I -B pre-import guard retained",
+    "23 local recipe contracts passed; no actual provider or Linux proof claimed"
+  ],
+  "test_command": {
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1"
+    },
+    "argv": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/test_bfs_provider_context_recipe_20260926.py"
+    ]
+  },
+  "log": "/private/tmp/bfs-provider-repin-independent-20260927.log",
+  "files": [
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/bfs-provider-context1-20260926.py",
+      "bytes": 24989,
+      "sha256": "ca46630cea6b07e027ea31ae1f139fe52160a299ec7b18ec853ba9bcf2a6f739"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/bfs-provider-context1-launch-20260926.sh",
+      "bytes": 2740,
+      "sha256": "2b423dd61e73cfe143f75ea89f9ddf2923b680123c47670fd04878720b9aceca"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/bfs-provider-context1-runtime-20260926.json",
+      "bytes": 57269,
+      "sha256": "55d236947c3c0907d1f883493137244b99e3906cbd667a732af4dbd1d27a918c"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/test_bfs_provider_context_recipe_20260926.py",
+      "bytes": 9007,
+      "sha256": "2292e9cd69627a71018b7b1e56d6427cb55882606a94dac51069e63271e9c26b"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context1/bfs-provider-context1-preflight-20260926.md",
+      "bytes": 8598,
+      "sha256": "8b46ac152113a2687d8c4ed7e09dcf977c25936e80138d82c4f0f19d3aae0a3b"
+    }
+  ],
+  "remaining": "Fresh host proofgroup, exact prompt/package compatibility at runtime8cb and actual free-lane/resource admission before call"
+}

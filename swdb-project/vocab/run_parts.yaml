@@ -1,0 +1,15 @@
+name: run_parts
+description: The parts of one profile run, each of which can complete or not.
+values:
+  - value: build
+    meaning: Compiling the implementation.
+  - value: correctness
+    meaning: Running the kernel's correctness check once.
+  - value: timing
+    meaning: The timing sweep over thread counts.
+  - value: sweeps
+    meaning: The single-threaded logging run that counts sweeps per call.
+  - value: index_features
+    meaning: The index-stream feature extractor.
+  - value: cachegrind
+    meaning: The single-threaded cachegrind simulation.

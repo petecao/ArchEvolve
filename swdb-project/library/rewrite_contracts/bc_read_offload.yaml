@@ -1,0 +1,308 @@
+# Derived BC read-offload contract. Created: 2026-10-03 ET (ticket 42).
+kind: rewrite_contract
+id: contract.bc_read_offload
+provenance:
+  origin:
+    intrinsic_specification: Peter v1.1
+    derived_contract: BFS read offload applied to the BC forward pass (ticket 42, 2026-10-03 ET)
+  intrinsic_specification:
+    path: docs/bfs-intrinsics-spec-yanru.md
+    sha256: 3e54374ae43c841bad3f71d9210cb110742dfdb1bf688cde1953de9df64aabf9
+    root: repository
+    version: '1.1'
+    commit: 0b56895
+    section: '5'
+  hardware_candidate:
+    path: runs/bfs-maple-comparison-v0.1/case-01/handoffs/candidate-02/intrinsic-draft.yaml
+    sha256: 01f05bdc517922a082a10c9e28d8f1501c92892ba06a1e5298a60e7cc5d0bf30
+    root: repository
+    id: gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute
+    catalog_sha256: adf17f3e114878ed0edbe55abb8ea219445fa2aef3c97e6c369230b796872fb0
+  catalog:
+    path: catalog/hardware-v0.1.yaml
+    sha256: adf17f3e114878ed0edbe55abb8ea219445fa2aef3c97e6c369230b796872fb0
+    root: repository
+    design: dx100-artifact-e4fc4af
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    claim_ids: [dxc-gather, dxc-range, dxc-stream, dxc-completion, dxc-byte-offset-domain]
+  derived_from:
+    id: contract.bfs_read_offload
+    content_sha256: 867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51
+    relation: Same pattern key, intrinsics, knobs, runtime guards and E1-E5 fixes; BC forward pass (PBFS)
+      instead of BFS TDStep; adds BC-L1.
+  rewrite:
+    path: dx100/bc_read_offload.inc
+    root: library
+    sha256: 3898b439b0121954474b5012ff2a6fff65bf90ba4166d20d8eb276a96d013b5c
+    symbol: void PBFS(
+pattern_key:
+- roles: [target]
+  address_shapes: [stream]
+  update_kind: read
+- roles: [index, target]
+  address_shapes: [stream, single_valued_indirect]
+  update_kind: read
+- roles: [index, offsets, target]
+  address_shapes: [stream, single_valued_indirect, ranged_indirect]
+  update_kind: read
+- roles: [index, offsets, index, target]
+  address_shapes: [stream, single_valued_indirect, ranged_indirect, single_valued_indirect]
+  update_kind: read
+strategies: [dx100_read_offload]
+uses_intrinsics:
+- intrinsic.dxc_gather
+- intrinsic.dxc_session_begin
+- intrinsic.dxc_thread_context
+- intrinsic.dxc_const_i32
+- intrinsic.dxc_wait
+- intrinsic.dxc_range_loop
+- intrinsic.dxc_stream_load
+- intrinsic.dxc_tile_size
+- intrinsic.dxc_tile_pointer
+uses_library_operations: []
+clauses:
+- id: L1
+  role: legality
+  statement: Continuation emits exactly the nested CSR loop vertex pairs.
+  discharge_mode: differential_test
+  negative_control:
+    id: dropped_continuation
+    check: frontier_size_equality
+  formal:
+    language: reference
+    reference:
+      path: dx100/reference.hpp
+      sha256: 75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897
+      root: library
+      symbol: range_loop
+  formal_label: stated
+- id: L2
+  role: legality
+  statement: Within PBFS each depth changes at most once from -1 to the current depth.
+  discharge_mode: differential_test
+  negative_control:
+    id: skipped_cas_recheck
+    check: duplicate_frontier
+  natural_language_only: Ownership, memory order or application obligations exceed the closed predicate
+    alphabet.
+- id: L3
+  role: legality
+  statement: DX100 depth gathers return no value older than depth initialization.
+  discharge_mode: assumed
+  negative_control:
+    id: none
+    reason: Target observation or named assumption, not a local test discharge.
+  natural_language_only: Ownership, memory order or application obligations exceed the closed predicate
+    alphabet.
+  owner: Eric
+  evidence: Derived from pinned specification L3; BC has no parent-gather race case yet, so the assumption
+    stays named for BC target runs.
+- id: L4
+  role: legality
+  statement: The CPU retains the depth CAS, the queue push, the successor bit and the path-count update;
+    frontier vertex, edge index and hint come from the same chunk.
+  discharge_mode: structural
+  negative_control:
+    id: skipped_cas_recheck
+    check: duplicate_frontier
+  natural_language_only: Ownership, memory order or application obligations exceed the closed predicate
+    alphabet.
+- id: L5
+  role: legality
+  statement: DX100 reads of CPU-written queue, offsets and depths see stores preceding descriptor issue.
+  discharge_mode: assumed
+  negative_control:
+    id: none
+    reason: Target observation or named assumption, not a local test discharge.
+  natural_language_only: Ownership, memory order or application obligations exceed the closed predicate
+    alphabet.
+  owner: Eric
+  evidence: Pinned specification L5; no target coherence guarantee is asserted.
+- id: BC-L1
+  role: legality
+  statement: The path-count test reads the depth on the CPU after the compare-and-swap, never the DX100
+    hint; a hint may be stale for a vertex claimed later in the same level.
+  discharge_mode: differential_test
+  negative_control:
+    id: stale_depth_hint
+    check: verifier
+  natural_language_only: Ownership, memory order or application obligations exceed the closed predicate
+    alphabet.
+- id: frontier_threshold
+  role: legality
+  statement: Frontier threshold is an integer of at least one.
+  discharge_mode: runtime_guard
+  negative_control:
+    id: chunk_off_by_one
+    check: knob_range
+  natural_language_only: Ownership, memory order or application obligations exceed the closed predicate
+    alphabet.
+- id: chunk_size
+  role: legality
+  statement: Chunk size is positive and never exceeds the actual build tile capacity.
+  discharge_mode: static_assertion
+  negative_control:
+    id: chunk_off_by_one
+    check: tile_truncation
+  natural_language_only: Ownership, memory order or application obligations exceed the closed predicate
+    alphabet.
+- id: schedule
+  role: legality
+  statement: Schedule is static or dynamic, with positive granularity.
+  discharge_mode: structural
+  negative_control:
+    id: shared_context
+    check: schedule_range
+  natural_language_only: Ownership, memory order or application obligations exceed the closed predicate
+    alphabet.
+- id: once_enqueue
+  role: preservation
+  statement: Each discovered vertex is enqueued exactly once; trustworthy per-depth counts must match.
+  discharge_mode: differential_test
+  negative_control:
+    id: forged_frontier
+    check: duplicate_frontier
+  natural_language_only: Ownership, memory order or application obligations exceed the closed predicate
+    alphabet.
+runtime_guards:
+- condition: num_vertices <= 1073741823 && directed_edges <= 1073741823
+  fallback: scalar_forward_pass_for_the_whole_BC_call
+- condition: omp_threads <= build.core_count
+  fallback: scalar_forward_pass_for_the_whole_BC_call
+knobs:
+- name: frontier_threshold
+  default: 64
+  range:
+    min: 1
+    max: 2147483647
+  origin: Peter v1.1 section 5
+  legality_clause: frontier_threshold
+- name: chunk_size
+  default: build.tile_size
+  range:
+    min: 1
+    max: 65535
+    upper_bound: build.tile_size
+  origin: Peter v1.1 section 5 with E4
+  legality_clause: chunk_size
+- name: schedule
+  default: dynamic
+  range:
+    choices: [dynamic, static]
+  origin: Peter v1.1 section 5
+  legality_clause: schedule
+- name: schedule_granularity
+  default: 1
+  range:
+    min: 1
+    max: 2147483647
+  origin: Peter v1.1 section 5
+  legality_clause: schedule
+preservation_obligations: [once_enqueue]
+correctness_check:
+  kernel: gapbs-bc
+  application: dx100-gapbs
+  symbol: BCVerifier
+  scope: full BC call (forward and dependency passes); target-bound check remains gem5
+execution_witness:
+  functional: accelerated_chunks > 0 whenever a forward-pass frontier reaches frontier_threshold
+  gem5:
+    case: read_only_executed
+    stream_min: 1
+    range_min: 1
+    indirect_min: 1
+    alu: 0
+    indirect_stores: 0
+    equation: indirect = 3 * range - stream
+negative_controls:
+- id: shared_context
+  kind: overlapping_pointer
+  check: named BC correctness, preservation or strict-layer check
+- id: skipped_cas_recheck
+  kind: double_claim
+  check: named BC correctness, preservation or strict-layer check
+- id: dropped_continuation
+  kind: dropped_operand
+  check: named BC correctness, preservation or strict-layer check
+- id: chunk_off_by_one
+  kind: dropped_operand
+  check: named BC correctness, preservation or strict-layer check
+- id: dropped_wait
+  kind: dropped_operand
+  check: named BC correctness, preservation or strict-layer check
+- id: read_before_wait
+  kind: dropped_operand
+  check: named BC correctness, preservation or strict-layer check
+- id: index_wrap
+  kind: dropped_operand
+  check: named BC correctness, preservation or strict-layer check
+- id: forged_frontier
+  kind: double_claim
+  check: named BC correctness, preservation or strict-layer check
+- id: stale_depth_hint
+  kind: stale_read
+  check: BCVerifier (lost path counts change the scores)
+requirement_map:
+- hardware_candidate: gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute
+  operation_ids: [dxc-gather, dxc-ranged-gather, dxc-stream_load]
+  requirement_id: dxc-region-binding
+  discharge_mode: runtime_guard
+  reason: Bound to contract clauses and certified strict-layer checks; target assumptions remain assumed.
+- hardware_candidate: gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute
+  operation_ids: [dxc-gather, dxc-ranged-gather, dxc-stream_load]
+  requirement_id: dxc-widths
+  discharge_mode: static_assertion
+  reason: Bound to contract clauses and certified strict-layer checks; target assumptions remain assumed.
+- hardware_candidate: gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute
+  operation_ids: [dxc-gather, dxc-ranged-gather, dxc-stream_load]
+  requirement_id: dxc-validity
+  discharge_mode: differential_test
+  reason: Bound to contract clauses and certified strict-layer checks; target assumptions remain assumed.
+- hardware_candidate: gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute
+  operation_ids: [dxc-gather, dxc-ranged-gather, dxc-stream_load]
+  requirement_id: dxc-observer
+  discharge_mode: assumed
+  reason: Bound to contract clauses and certified strict-layer checks; target assumptions remain assumed.
+- hardware_candidate: gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute
+  operation_ids: [dxc-gather, dxc-ranged-gather, dxc-stream_load]
+  requirement_id: dxc-numerical
+  discharge_mode: not_applicable
+  reason: RMW and returned old values are not used.
+- hardware_candidate: gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute
+  operation_ids: [dxc-gather, dxc-ranged-gather, dxc-stream_load]
+  requirement_id: dxc-reuse
+  discharge_mode: assumed
+  reason: Bound to contract clauses and certified strict-layer checks; target assumptions remain assumed.
+- hardware_candidate: gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute
+  operation_ids: [dxc-gather, dxc-ranged-gather, dxc-stream_load]
+  requirement_id: dxc-old-destination
+  discharge_mode: not_applicable
+  reason: RMW and returned old values are not used.
+- hardware_candidate: gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute
+  operation_ids: [dxc-gather, dxc-ranged-gather, dxc-stream_load]
+  requirement_id: dxc-byte-offset
+  discharge_mode: runtime_guard
+  reason: Bound to contract clauses and certified strict-layer checks; target assumptions remain assumed.
+- hardware_candidate: gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute
+  operation_ids: [dxc-gather, dxc-ranged-gather, dxc-stream_load]
+  requirement_id: dxc-capacity
+  discharge_mode: static_assertion
+  reason: Bound to contract clauses and certified strict-layer checks; target assumptions remain assumed.
+l3_outcome:
+  observed: no BC race case yet; BCVerifier PASS on each target run is the only check
+  refuted: BCVerifier FAIL with the stale-hint path excluded; separate CPU-depth-load contract required
+  inconclusive: verifier failed without a localized cause; diagnose before timed runs
+fixes:
+- E1 per-thread context
+- E2 register handles
+- E3 session and region lifecycle
+- E4 chunk capacity
+- E5 covering wait and barriers
+specification_notes:
+- Both count guards include 1073741823, one more than Peter section 5 code; this agrees with section 4
+  and Josh byte-offset requirement.
+- Derived 2026-10-03 ET (ticket 42) from contract.bfs_read_offload; experimental until Yan-Ru reviews
+  it (ticket 43).
+- The BFS parent store has no BC counterpart; the CPU depth CAS is the only depth write.
+- Both passes stay in one Brandes call; only the forward pass is rewritten and the dependency pass stays
+  scalar.

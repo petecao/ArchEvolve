@@ -1,0 +1,680 @@
+kind: implementation
+schema_version: '0.2'
+id: gapbs-cc-sv
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: src-gapbs-cc-sv
+  kind: source_code
+  description: gapbs src/cc_sv.cc (ShiloachVishkin, lines 49-83; main, lines 152-160) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8,
+    copied unchanged next to this record on 2026-09-22; src/graph.h, src/pvector.h and src/benchmark.h
+    read from apps/gapbs.
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/cc_sv.cc#L49-L83
+name: gapbs Connected Components, Shiloach-Vishkin (ShiloachVishkin from cc_sv.cc)
+kernel: gapbs-cc
+function: ShiloachVishkin
+origin:
+  kind: upstream_alternative
+  description: gapbs's Shiloach-Vishkin connected components, src/cc_sv.cc at upstream commit 2972aeb2703165bafd921222f4ed7196f542d3a8;
+    built as gapbs's cc_sv binary.
+  derived_from: null
+code:
+- root: records
+  path: implementations/gapbs-cc-sv/cc_sv.cc
+  lines: [49, 83]
+  excerpt: |-
+    pvector<NodeID> ShiloachVishkin(const Graph &g) {
+      pvector<NodeID> comp(g.num_nodes());
+      #pragma omp parallel for
+      for (NodeID n=0; n < g.num_nodes(); n++)
+        comp[n] = n;
+      bool change = true;
+      int num_iter = 0;
+      while (change) {
+        change = false;
+        num_iter++;
+        #pragma omp parallel for
+        for (NodeID u=0; u < g.num_nodes(); u++) {
+          for (NodeID v : g.out_neigh(u)) {
+            NodeID comp_u = comp[u];
+            NodeID comp_v = comp[v];
+            if (comp_u == comp_v) continue;
+            // Hooking condition so lower component ID wins independent of direction
+            NodeID high_comp = comp_u > comp_v ? comp_u : comp_v;
+            NodeID low_comp = comp_u + (comp_v - high_comp);
+            if (high_comp == comp[high_comp]) {
+              change = true;
+              comp[high_comp] = low_comp;
+            }
+          }
+        }
+        #pragma omp parallel for
+        for (NodeID n=0; n < g.num_nodes(); n++) {
+          while (comp[n] != comp[comp[n]]) {
+            comp[n] = comp[comp[n]];
+          }
+        }
+      }
+      cout << "Shiloach-Vishkin took " << num_iter << " iterations" << endl;
+      return comp;
+    }
+  sha256: f239bd71cee27cba37f3824ae7b2520c291b116ccc83a329d09484b631c599ee
+build:
+  compiler: g++
+  flags: -std=c++11 -O3 -Wall -fopenmp
+  command: '{cxx} {flags} -I {app}/src {source} -o {binary}'
+run:
+  command: '{binary} {input_args} -n {trials}'
+  timer: gapbs_trial_time
+  threads_env: OMP_NUM_THREADS
+  sweep_log_flag: null
+  kernel_symbols: [ShiloachVishkin]
+  index_stream:
+    order: out_neighbors_by_vertex
+    pattern: link-comp-v
+    note: Every sweep's link loop reads comp[v] for every v in g.out_neigh(u), u = 0..N-1 (lines 60-63);
+      the continue at line 64 comes after the read, so no neighbor is skipped. The order is exact at one
+      thread; with more threads the static chunks interleave.
+  sweep_count_regex: Shiloach-Vishkin took (\d+) iterations
+loops:
+- id: init
+  description: Initialize comp[n] = n for all vertices
+  parent: null
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-cc-sv]
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: records
+    path: implementations/gapbs-cc-sv/cc_sv.cc
+    lines: [51, 53]
+    excerpt: |2-
+        #pragma omp parallel for
+        for (NodeID n=0; n < g.num_nodes(); n++)
+          comp[n] = n;
+    sha256: null
+- id: sweep
+  description: 'while (change): one hooking pass over all edges, then one compress pass'
+  parent: null
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-cc-sv]
+    note: Repeats until a sweep hooks nothing (lines 56-80); the count depends on the input and on the
+      schedule. The function prints it ("Shiloach-Vishkin took N iterations", line 81), but not as a <step>
+      <value> log line.
+  parallel:
+    construct: serial
+    schedule: null
+    reduction: null
+  code:
+    root: records
+    path: implementations/gapbs-cc-sv/cc_sv.cc
+    lines: [56, 80]
+    excerpt: |2-
+        while (change) {
+          change = false;
+          num_iter++;
+          #pragma omp parallel for
+          for (NodeID u=0; u < g.num_nodes(); u++) {
+            for (NodeID v : g.out_neigh(u)) {
+              NodeID comp_u = comp[u];
+              NodeID comp_v = comp[v];
+              if (comp_u == comp_v) continue;
+              // Hooking condition so lower component ID wins independent of direction
+              NodeID high_comp = comp_u > comp_v ? comp_u : comp_v;
+              NodeID low_comp = comp_u + (comp_v - high_comp);
+              if (high_comp == comp[high_comp]) {
+                change = true;
+                comp[high_comp] = low_comp;
+              }
+            }
+          }
+          #pragma omp parallel for
+          for (NodeID n=0; n < g.num_nodes(); n++) {
+            while (comp[n] != comp[comp[n]]) {
+              comp[n] = comp[comp[n]];
+            }
+          }
+        }
+    sha256: null
+- id: link-vertex
+  description: 'For u over all vertices: try to hook across each edge'
+  parent: sweep
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_sweep
+    basis: code_reading
+    evidence_refs: [src-gapbs-cc-sv]
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: records
+    path: implementations/gapbs-cc-sv/cc_sv.cc
+    lines: [59, 73]
+    excerpt: |2-
+          #pragma omp parallel for
+          for (NodeID u=0; u < g.num_nodes(); u++) {
+            for (NodeID v : g.out_neigh(u)) {
+              NodeID comp_u = comp[u];
+              NodeID comp_v = comp[v];
+              if (comp_u == comp_v) continue;
+              // Hooking condition so lower component ID wins independent of direction
+              NodeID high_comp = comp_u > comp_v ? comp_u : comp_v;
+              NodeID low_comp = comp_u + (comp_v - high_comp);
+              if (high_comp == comp[high_comp]) {
+                change = true;
+                comp[high_comp] = low_comp;
+              }
+            }
+          }
+    sha256: null
+- id: link-edge
+  description: 'For v in g.out_neigh(u): if comp[u] != comp[v] and the higher label is a root, hook it
+    under the lower'
+  parent: link-vertex
+  trip_count:
+    value: null
+    formula: num_edges_directed
+    scope: per_sweep
+    basis: code_reading
+    evidence_refs: [src-gapbs-cc-sv]
+    note: Summed over all u in one sweep; for one u it is out_degree(u). The continue at line 64 skips
+      only the hook.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: records
+    path: implementations/gapbs-cc-sv/cc_sv.cc
+    lines: [61, 72]
+    excerpt: |2-
+            for (NodeID v : g.out_neigh(u)) {
+              NodeID comp_u = comp[u];
+              NodeID comp_v = comp[v];
+              if (comp_u == comp_v) continue;
+              // Hooking condition so lower component ID wins independent of direction
+              NodeID high_comp = comp_u > comp_v ? comp_u : comp_v;
+              NodeID low_comp = comp_u + (comp_v - high_comp);
+              if (high_comp == comp[high_comp]) {
+                change = true;
+                comp[high_comp] = low_comp;
+              }
+            }
+    sha256: null
+- id: compress-vertex
+  description: 'For n over all vertices: shorten n''s path to its root'
+  parent: sweep
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_sweep
+    basis: code_reading
+    evidence_refs: [src-gapbs-cc-sv]
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: records
+    path: implementations/gapbs-cc-sv/cc_sv.cc
+    lines: [74, 79]
+    excerpt: |2-
+          #pragma omp parallel for
+          for (NodeID n=0; n < g.num_nodes(); n++) {
+            while (comp[n] != comp[comp[n]]) {
+              comp[n] = comp[comp[n]];
+            }
+          }
+    sha256: null
+- id: compress-chase
+  description: 'while comp[n] != comp[comp[n]]: comp[n] = comp[comp[n]] (pointer jumping)'
+  parent: compress-vertex
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-cc-sv]
+    note: One iteration per pointer-jumping step (lines 76-78); depends on tree depths after the hooking
+      pass and on concurrent updates.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: records
+    path: implementations/gapbs-cc-sv/cc_sv.cc
+    lines: [76, 78]
+    excerpt: |2-
+            while (comp[n] != comp[comp[n]]) {
+              comp[n] = comp[comp[n]];
+            }
+    sha256: null
+access_patterns:
+- id: init-comp
+  expression: comp[n] = n
+  loop: init
+  steps:
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: write
+  update:
+    pseudocode: comp[n] = n
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+  evidence_refs: [src-gapbs-cc-sv]
+- id: link-comp-u
+  expression: comp_u = comp[u]
+  loop: link-edge
+  steps:
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 0
+    note: line 62, re-read for every neighbor of the same u
+  update_kind: read
+  update:
+    pseudocode: comp_u = comp[u]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: The same element comp[u] is read once per neighbor of u (stride 0 in this loop).
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: A hook at line 70 by an earlier iteration (of this or another u) can change comp[u] when u
+        is a root.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Other threads store hooks into comp during the same loop (line 70).
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: A plain load; a stale label is corrected in a later sweep.
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Which hooks a read sees depends on the schedule and thread timing.
+    numerical_requirement:
+      value: any_valid_result
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: CCVerifier accepts any labeling that induces the components; which labels a read sees depends
+        on the schedule.
+  evidence_refs: [src-gapbs-cc-sv]
+- id: link-comp-v
+  expression: comp_v = comp[v] for v in g.out_neigh(u)
+  loop: link-edge
+  steps:
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: stream
+    stride: 1
+    note: reads out_index_[u] and out_index_[u+1], the bounds of u's neighbor range
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: walks out_neighbors_[out_index_[u] .. out_index_[u+1]) (line 61)
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: 'line 63: comp_v = comp[v]'
+  update_kind: read
+  update:
+    pseudocode: comp_v = comp[v]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Each v is read once per in-edge in a sweep; any vertex with degree above 1 repeats. The profile's
+        duplicate_ratio measures how much, per input.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: The graph is const Graph&; out_index_ and out_neighbors_ are not written.
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Hooks stored at line 70 by earlier iterations of the same sweep change the labels later iterations
+        read.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: All threads read comp while others store hooks into it.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: A plain load; a stale label is corrected in a later sweep.
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Which hooks a read sees depends on the schedule and thread timing.
+    numerical_requirement:
+      value: any_valid_result
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: CCVerifier accepts any labeling that induces the components; which labels a read sees depends
+        on the schedule.
+  evidence_refs: [src-gapbs-cc-sv]
+- id: link-hook
+  expression: if (high_comp == comp[high_comp]) comp[high_comp] = low_comp
+  loop: link-edge
+  steps:
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: stream
+    stride: 1
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: the neighbor v (line 61)
+  - array:
+      name: comp
+      role: index
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: comp_v = comp[v] (line 63)
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: high_comp = max(comp_u, comp_v) (line 66), a label read from comp; one lookup comp[high_comp]
+      (line 68), then a plain store to the same element (line 70)
+  update_kind: arbitrary
+  update:
+    pseudocode: high = max(comp_u, comp_v); low = min(comp_u, comp_v); if (comp[high] == high) { change
+      = true; comp[high] = low; }
+    side_effects: sets the shared bool change = true (line 69) with a plain store, which keeps the sweep
+      loop going
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Many edges lead to the same root, so the same comp[high_comp] is tested and stored by many
+        iterations.
+    index_modified_during_loop:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: The index step is comp itself, which other iterations store into (line 70) during the same
+        loop.
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: A hook changes the roots later iterations find in the same sweep.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Threads test and store roots in the one shared comp array.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: 'Not atomic in the code: the test (line 68) and the store (line 70) are separate plain accesses,
+        so two threads can hook the same root to different labels and the last store wins. The lost hook
+        is repaired later: change was set, so another sweep runs, and the loop ends only when a sweep
+        hooks nothing, that is, when no edge joins two labels (lines 56-80).'
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Which hook of a root survives depends on the schedule and thread timing; every surviving hook
+        joins vertices of one component.
+    numerical_requirement:
+      value: any_valid_result
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: CCVerifier accepts any labeling that induces the components; which labels a read sees depends
+        on the schedule.
+  note: 'Update kind arbitrary, not compare_and_swap: the store is conditional on the element''s old value
+    (it must still be a root) but the test and the store are not one atomic step.'
+  evidence_refs: [src-gapbs-cc-sv]
+- id: compress-chase
+  expression: comp[comp[n]] in while (comp[n] != comp[comp[n]])
+  loop: compress-chase
+  steps:
+  - array:
+      name: comp
+      role: index
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: comp[n] for n over all vertices (line 76)
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: pointer_chase
+    note: comp[comp[n]] (lines 76-77), repeated with the updated comp[n] until comp[n] is a root's label
+  update_kind: read
+  update:
+    pseudocode: while (comp[n] != comp[comp[n]]) comp[n] = comp[comp[n]]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Every vertex of a tree chases through the same ancestors and root.
+    index_modified_during_loop:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: comp[n], the index step, is rewritten by line 77 in the same loop, and other threads rewrite
+        the ancestors it points to.
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Iteration n reads comp[m] for an ancestor m that iteration m may be rewriting concurrently.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Threads read ancestors that other threads are compressing.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: 'Plain loads and stores: a thread sees an old or a new ancestor, both on the path to the same
+        root, because hooking (lines 59-73) has finished before this loop starts.'
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: The number of hops depends on which concurrent updates a thread sees; the result does not.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: After the loop every comp[n] is its root's label, whatever the order.
+  evidence_refs: [src-gapbs-cc-sv]
+- id: compress-store
+  expression: comp[n] = comp[comp[n]]
+  loop: compress-chase
+  steps:
+  - array:
+      name: comp
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 0
+    note: the same element comp[n] each iteration of the while loop (line 77)
+  update_kind: arbitrary
+  update:
+    pseudocode: comp[n] = comp[comp[n]]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: comp[n] is stored once per pointer-jumping step of iteration n (stride 0); no other iteration
+        stores it.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Other iterations read comp[n] as an ancestor while n is being compressed.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Other threads read comp[n] through their chases while this thread stores it.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: A plain 4-byte store; readers see the old or the new ancestor, both on the path to the same
+        root.
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: Interleaving with other threads' chases depends on the schedule; the final value does not.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-cc-sv]
+      note: The final comp[n] is its root's label regardless of order.
+  note: 'Update kind arbitrary: the new value is comp at the old value (pointer jumping).'
+  evidence_refs: [src-gapbs-cc-sv]
+notes:
+- 'Build uses the application''s headers: -I apps/gapbs/src.'
+- NodeID is int32_t (src/benchmark.h line 31); comp is pvector<NodeID>, one 4-byte label per vertex.
+- gapbs CSR index arrays hold pointers (DestID_**), 8 bytes per element on 64-bit hosts.
+- The three omp parallel for loops (lines 51, 59, 74) have no schedule clause (the OpenMP runtime's default
+  applies).
+- 'run.sweep_log_flag is null: ShiloachVishkin never calls PrintStep and ignores -l; it prints its sweep
+  count once as "Shiloach-Vishkin took N iterations" (line 81), which the profiler''s step-log parser
+  does not read.'
+- 'Compared with the baseline (Afforest): every sweep visits all edges and hooks with plain stores repaired
+  by further sweeps, instead of one sampled pass plus one pass over the remaining edges with compare-and-swap
+  hooks.'
+- Sweeps per call come from the line 'Shiloach-Vishkin took N iterations' (cc_sv.cc line 81) through run.sweep_count_regex.
+extensions: {}

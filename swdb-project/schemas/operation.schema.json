@@ -1,0 +1,286 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "operation",
+  "title": "Accelerator operation contract",
+  "description": "Source-backed accelerator capability contract. Updated 2026-09-25.",
+  "properties": {
+    "kind": {
+      "const": "operation"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interface": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ]
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
+      },
+      "required": [
+        "id",
+        "revision"
+      ]
+    },
+    "backend": {
+      "type": "string",
+      "minLength": 1
+    },
+    "support": {
+      "enum": [
+        "source_supported",
+        "unknown",
+        "unsupported"
+      ]
+    },
+    "signature": {
+      "type": "string",
+      "minLength": 1
+    },
+    "types": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "memory_effects": {
+      "type": "string",
+      "minLength": 1
+    },
+    "masks": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repeated_indices": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ordering": {
+      "type": "string",
+      "minLength": 1
+    },
+    "completion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resources": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tiles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scalar_registers": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "allocation": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "tiles",
+        "scalar_registers",
+        "allocation"
+      ]
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "headers": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "defines": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "headers",
+        "defines",
+        "dependencies"
+      ]
+    },
+    "semantics": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "state": {
+            "enum": [
+              "supported",
+              "unsupported",
+              "unknown"
+            ]
+          },
+          "value": {},
+          "basis": {
+            "enum": [
+              "code_reading",
+              "unknown"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "state",
+          "value",
+          "basis",
+          "description"
+        ]
+      }
+    },
+    "declaration_evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "uri": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "lines": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "required": [
+          "uri",
+          "path",
+          "sha256",
+          "lines"
+        ]
+      }
+    },
+    "implementation_evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "uri": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "lines": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "required": [
+          "uri",
+          "path",
+          "sha256",
+          "lines"
+        ]
+      }
+    }
+  },
+  "required": [
+    "name",
+    "interface",
+    "model",
+    "backend",
+    "support",
+    "signature",
+    "types",
+    "memory_effects",
+    "masks",
+    "repeated_indices",
+    "ordering",
+    "completion",
+    "resources",
+    "build",
+    "semantics",
+    "declaration_evidence",
+    "implementation_evidence"
+  ]
+}

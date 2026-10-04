@@ -1,0 +1,83 @@
+{
+  "date": "2026-09-26",
+  "kind": "prospective_native_readback_a2_preparation",
+  "state": "awaiting_final_independent_review_and_host_admission",
+  "supervisor_commit": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+  "collector_commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+  "files": [
+    {
+      "path": "/private/tmp/bfs-native-readback-a2-recipe-20260926.py",
+      "bytes": 17626,
+      "sha256": "cc1d2dda1d0c3498c0c12312183249b700fbec983bbba6f0e7e2d40510047339"
+    },
+    {
+      "path": "/private/tmp/bfs-native-readback-a2-selection-prepared-20260926.json",
+      "bytes": 2820,
+      "sha256": "e69e7250ad24135063106dac8764ca1311435bec7eb11141e2b573153b303774"
+    },
+    {
+      "path": "/private/tmp/bfs-native-readback-a2-preflight-v2-20260926.md",
+      "bytes": 9298,
+      "sha256": "2c65efe08a4a3c7b399bdf04d2c662e9bd01b462010583e2f0433a632b8e14f6"
+    },
+    {
+      "path": "/private/tmp/test_bfs_native_readback_a2_recipe_20260926.py",
+      "bytes": 10832,
+      "sha256": "70a0acfb4705a3c0595fcc60c80457c9c232223cb939ad590f11ecd69d6919d5"
+    },
+    {
+      "path": "/private/tmp/bfs-native-readback-a2-finish-fixed-20260926.log",
+      "bytes": 99,
+      "sha256": "7108cfc4a66cbd3f2dc2907c6c0c1bca04257dc216d17007bc61504c52486720"
+    },
+    {
+      "path": "/private/tmp/bfs-native-readback-a2-finish-standards-red-20260926.log",
+      "bytes": 1711,
+      "sha256": "29303f491026514aed2a28ab458b4a4606e3beb8be2e268fab9960c192926d40"
+    },
+    {
+      "path": "/private/tmp/bfs-native-readback-a2-recipe-v1-reviewed-20260926.py",
+      "bytes": 17443,
+      "sha256": "64e68a9b3640562868d4ce5da56a7e70dcb4b8142c440952e2e95b75a7dbb95e"
+    },
+    {
+      "path": "/private/tmp/bfs-native-reader-fast-exit-actual-20260926.json",
+      "bytes": 4368,
+      "sha256": "f3cc5db3b2039b27dc2733dad725feafcd170eec06947f6bb1395d246f037e2e"
+    }
+  ],
+  "validation": {
+    "command": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest /private/tmp/test_bfs_native_readback_a2_recipe_20260926.py /private/tmp/test_native_readback_a2_finish_standards_20260926.py -q --basetemp /private/tmp/bfs-native-readback-a2-finish-fixed-20260926",
+    "result": "22 passed in 0.16s",
+    "bash_syntax": "passed",
+    "evidence_kind": "local_contract_fixtures",
+    "actual_linux_proof": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-reader-fast-exit-linux-20260926-a1/proof.json",
+      "sha256": "79f349b0e348e4ee47e63a4a74ff04565497e7c7df45848c6cd9e1aad940b4b1"
+    }
+  },
+  "scope": {
+    "reader_calls": 1,
+    "original_reader_work_seconds": 900,
+    "original_reader_cleanup_seconds": 30,
+    "cumulative_ancillary_seconds": 60,
+    "whole_seconds": 990,
+    "new_cleanup_reserve": false,
+    "measurement": false,
+    "provider": false,
+    "protocol_freeze": false,
+    "gain_claim": false
+  },
+  "constraints": [
+    "earliest2026-09-26T19:00:00-04:00/latest23:43:30/hard2026-09-27T00:00:00-04:00",
+    "original a1 failed evidence stays unchanged",
+    "manual Linux one-case proof and final independent review before dispatch",
+    "independent full terminal union and lease/kernel closure after dispatch"
+  ],
+  "supersedes_preparation": {
+    "path": "/private/tmp/bfs-native-readback-a2-preparation-20260926.json",
+    "bytes": 2311,
+    "sha256": "4b1320fd837db2ec736d166b7a63d25960083eb941c6df159870784e40d593d5"
+  },
+  "repaired_review_finding": "Preserve earliest final observation error if snapshot persistence also fails; annotate secondary error inside original deadline."
+}

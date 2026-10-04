@@ -1,0 +1,71 @@
+{
+  "created": "2026-09-26",
+  "updated": "2026-09-26",
+  "state": "prepared_commit_export_rejected_specific_approval_pending",
+  "destination": {
+    "repository": "git@github.com:ruchou/EvolveSWDB.git",
+    "visibility": "private",
+    "branch": "codex/bfs-provider-evidence-20260926-a1"
+  },
+  "prepared_commit": "5f1b8028619976b36df5fa24b8aacb91bf488168",
+  "parent": "6346189b55132f195b02544b729f34100d10ba92",
+  "file_count": 6,
+  "total_file_bytes": 169515,
+  "embedded_source_patch_bytes": 69232,
+  "embedded_text_breakdown": {
+    "annotation_bytes": 19463,
+    "generated_patch_bytes": 2352,
+    "existing_source_context_excerpt_bytes": 43951,
+    "protection_excerpt_bytes": 3466
+  },
+  "excluded": [
+    "raw full prompts",
+    "raw provider responses",
+    "raw logs",
+    "source artifact files",
+    "binaries",
+    "credentials"
+  ],
+  "files": [
+    {
+      "path": "records/proposals/bfs-campaign-preparation-20260925-a1.dx100-instructions.yaml",
+      "bytes": 10454,
+      "sha256": "a556d0ca47c2f04661eaa9af35c6c86b5fff0afd22a76ebcd9f6d5df5b1551f6"
+    },
+    {
+      "path": "records/candidates/bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1.yaml",
+      "bytes": 66369,
+      "sha256": "2a4691b9036c7ecbbae4be956ece6d602e55a2a0f296f45a958f7e91c2ce9ac4"
+    },
+    {
+      "path": "records/proposals/bfs-campaign-preparation-20260925-a1.upstream-instructions.yaml",
+      "bytes": 5787,
+      "sha256": "67358a5bf833d8c6b74ea96cae6719f0364a5a68a927e55fdd322ab1778699d3"
+    },
+    {
+      "path": "records/candidates/bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1.yaml",
+      "bytes": 27922,
+      "sha256": "0de28d0baa815453b27791196316ba72af1b9658266e18880a79872f21f9ec59"
+    },
+    {
+      "path": "records/proposals/bfs-campaign-preparation-20260925-a1.upstream-annotated.yaml",
+      "bytes": 35067,
+      "sha256": "d8cffc3c1fe014830df2c0b5d504e130d17c2570265c40e06c96dbcfef53952a"
+    },
+    {
+      "path": "docs/evidence/bfs-provider-initial-20260926-a1.yaml",
+      "bytes": 23916,
+      "sha256": "fe44b437a629b39d540561c4035de8cc5b41530594b6d75197d6b0068574f868"
+    }
+  ],
+  "host_inventory": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/git-packet-inventory.json",
+    "sha256": "8fbc9a7af9ba78e6e5366cd7faa000aa64edc586c00e226526122f8551c2fc6d"
+  },
+  "approval_review": {
+    "result": "rejected before network push",
+    "reason": "Different six-file packet and branch from the specifically approved 14-file transfer; embedded source excerpts require exact approval.",
+    "follow_up": "Exact six-file packet/destination question is pending. No retry or alternate destination."
+  },
+  "original_three_transfers": "All complete; this is a separately held result metadata transfer."
+}

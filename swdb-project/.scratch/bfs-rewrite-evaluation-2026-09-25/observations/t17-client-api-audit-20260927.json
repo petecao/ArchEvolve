@@ -1,0 +1,57 @@
+{
+  "date_et": "2026-09-27",
+  "scope": "local existing public API contract audit; no simulator execution or new runtime/client code",
+  "result": {
+    "passed": 125,
+    "seconds": 276.19,
+    "exit_code": 0
+  },
+  "command": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest -q -p no:cacheprovider tests/test_bfs_simulator_series.py tests/test_bfs_aggregation.py tests/test_bfs_region_comparison.py tests/test_bfs_protocol.py > /private/tmp/bfs-t17-client-api-audit-20260927.log 2>&1",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-acceptance/README.md",
+      "bytes": 10318,
+      "sha256": "7279ab3a2bd071c765795a76dfed738ef517414e5f046fc06dc2551a04dacd25"
+    },
+    {
+      "path": "/private/tmp/bfs-t17-client-api-audit-20260927.log",
+      "bytes": 192,
+      "sha256": "aea7ca23db88f245ffb3b170231fc98e4f760b9436119bd946b43f940531a833"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_series.py",
+      "bytes": 34217,
+      "sha256": "09757ee71ac13ace2b7d0cbea0a0ba5b8efb3dd22042189cc0029c5e4cc38bbb"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/bfs_protocol.py",
+      "bytes": 79485,
+      "sha256": "db9001407504e31d41a33b12c2730ccb43005c2c50ab43724e47540b126ffeac"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/bfs_region_comparison.py",
+      "bytes": 24058,
+      "sha256": "dc047b2893bbd65b5b4354a749af5580fbacd1f392b5e5892b9f21c85d152b94"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_series.py",
+      "bytes": 35420,
+      "sha256": "8b6d3a0a4b0b97ff700cecf2e524774a204bdd740ad299b032726a96ef47f80b"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_aggregation.py",
+      "bytes": 10294,
+      "sha256": "0a88d8197e5a4c83459ba3d609472e193d2aefd022ba72d15f3312c5382f0c40"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_region_comparison.py",
+      "bytes": 16230,
+      "sha256": "11f4f241b72b3f2bf83da340e793585471b1499049a835936b721e9db78c0449"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_protocol.py",
+      "bytes": 45453,
+      "sha256": "e755b33b6e82f6929b023babe749c11964740e6693c758929fb9e201072bd62f"
+    }
+  ]
+}

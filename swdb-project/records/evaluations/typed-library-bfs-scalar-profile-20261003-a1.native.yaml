@@ -1,0 +1,297 @@
+kind: evaluation
+schema_version: '0.4'
+id: typed-library-bfs-scalar-profile-20261003-a1.native
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: typed-library-bfs-scalar-profile-20261003-a1.native
+  machine: mbit10
+  candidate: typed-library-bfs-scalar-profile-20261003-a1.baseline
+  workload:
+    id: bfs-20260928-kronecker18-s0.cf4283236c5cb50c
+  sources: [0]
+  threads: 4
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  protocol: null
+  fixture: false
+  budget:
+    build_seconds: 120
+    run_seconds: 120
+    total_seconds: 600
+outcome:
+  state: complete
+  stage: evaluation
+  reason: null
+stages:
+- stage: source_resolution
+  state: complete
+  started: '2026-10-03T12:16:13.775600+00:00'
+  finished: '2026-10-03T12:16:16.403869+00:00'
+- stage: workload_resolution
+  state: complete
+  started: '2026-10-03T12:16:19.001868+00:00'
+  finished: '2026-10-03T12:16:37.826644+00:00'
+- stage: compiler_identity
+  state: complete
+  started: '2026-10-03T12:16:40.563308+00:00'
+  command: [/usr/bin/g++, --version]
+  timeout_s: 30
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a1.native/002-compiler_identity.log
+  finished: '2026-10-03T12:16:43.192560+00:00'
+  returncode: 0
+  host_wall_s: 0.004274455830454826
+  log_sha256: 59d1cbef41d4ae78d5063d525b7aa13d18dc0493ea00537efc19b2ee398cb5a8
+- stage: build
+  state: complete
+  started: '2026-10-03T12:16:45.981157+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a1.baseline/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a1.baseline/source/benchmarks/API
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a1.native/native_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a1.native/bfs-native
+  timeout_s: 120.0
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a1.native/003-build.log
+  finished: '2026-10-03T12:16:51.016385+00:00'
+  returncode: 0
+  host_wall_s: 2.3205456091091037
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: execution
+  state: complete
+  started: '2026-10-03T12:16:56.387753+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a1.native/bfs-native
+  - /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a1.native/graph.swdb
+  - '0'
+  - /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a1.native/trial-0-0.json
+  timeout_s: 120.0
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a1.native/004-execution.log
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-10-03T12:17:00.286859+00:00'
+  returncode: 0
+  host_wall_s: 1.3186884270980954
+  log_sha256: 2e6713ea99e462b9cb6ee1941c1ea80685ab72762fa5c93285c4360f10df351d
+- stage: correctness
+  state: complete
+  started: '2026-10-03T12:17:03.009006+00:00'
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-10-03T12:17:06.305392+00:00'
+  reason: null
+- stage: aggregation
+  state: complete
+  started: '2026-10-03T12:17:09.040214+00:00'
+  finished: '2026-10-03T12:17:11.634641+00:00'
+timing:
+- source: 0
+  source_position: 0
+  repetition: 0
+  duration_s: 0.017854971
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 7b5c7032806506f1caf1330fba592494647afb59ac4df32f4ea0c0abbd56f38b
+  output: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a1.native/trial-0-0.json
+  output_sha256: e335c940bf6201326793c63b567b2498863c911059f65de53d4813997e5a0266
+  verified: true
+  evidence_kind: execution
+correctness:
+  state: passed
+  checks:
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 0
+    source_position: 0
+    repetition: 0
+    trial: 0
+    output_sha256: e335c940bf6201326793c63b567b2498863c911059f65de53d4813997e5a0266
+    binary_sha256: 7b5c7032806506f1caf1330fba592494647afb59ac4df32f4ea0c0abbd56f38b
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+profiling:
+  state: unavailable
+  reasons:
+  - automatic function attribution not collected
+  - automatic loop attribution not collected
+  - dynamic memory observations not collected
+raw_artifacts:
+- host: mbit10
+  path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a1.native
+  kind: evaluation_run
+- host: mbit10
+  path: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a1.native
+  kind: evaluation_build
+- host: mbit10
+  kind: host_observation
+  path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a1.native/host-observation.json
+  sha256: fd07da0d1bef2247eef3a15f78cb9c824da9f573664199acd6c2b5563389ceee
+  host_wall_s: 0.07854182086884975
+  evidence_kind: execution
+  unavailable_commands: 2
+gain_claim: false
+evidence_kind: execution
+candidate: typed-library-bfs-scalar-profile-20261003-a1.baseline
+source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+implementation: dx100-bfs-scalar
+machine: mbit10
+context:
+  candidate_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function: DOBFS
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  application: dx100-gapbs
+  adapter: dx100_scalar_func
+  target: mbit10
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  threads: 4
+  sources: [0]
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  protocol: null
+  basis: measured
+  process_policy: one fresh process per source and repetition; graph construction before ROI
+  verifier: swdb.bfs.structural.v1
+  verifier_sha256: 4f5e4557045e07103ada68b177bb1cc21d303108cb0b7be648df4bfd2fe20510
+  backend_configuration: {}
+  instrumentation:
+    template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+    treatment: included
+  host: mbit10
+  architecture: x86_64
+  lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 431)'
+  load_average: [1.88232421875, 1.45068359375, 1.2548828125]
+  budget:
+    build_seconds: 120.0
+    run_seconds: 120.0
+    total_seconds: 600.0
+  dispatch_preflight:
+    disk: /data1
+    runs_folder: /data1/yanruj/EvolveSWDB_runs
+    free_bytes: 46567600128
+    memory_node: 0
+    free_memory_bytes: 27730907136
+    secondary_free_bytes: 78819528704
+    format: swdb.dispatch-preflight.v1
+    observed_at: '2026-10-03T12:16:13.775131+00:00'
+    planned_raw_bytes: 2147483648
+    reserve_bytes: 21474836480
+    memory_budget_bytes: 4294967296
+    state: admitted
+  host_observation:
+    path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a1.native/host-observation.json
+    sha256: fd07da0d1bef2247eef3a15f78cb9c824da9f573664199acd6c2b5563389ceee
+    host_wall_s: 0.07854182086884975
+    evidence_kind: execution
+    unavailable_commands: 2
+  workload:
+    id: bfs-20260928-kronecker18-s0.cf4283236c5cb50c
+    family: kronecker
+    generator:
+      name: DX100 GAPBS converter
+      revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      parameters:
+        scale: 18
+        edge_factor: 16
+        seed: 27491095
+        symmetrize: true
+        binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+        source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+        explicit_symmetrize_flag: false
+      command:
+      - /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20260925/bfs-20260925-kronecker18/converter
+      - -g
+      - '18'
+      - -k
+      - '16'
+      - -b
+      - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+    representation:
+      id: bfs-20260925-kronecker18.dx100
+      path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+      sha256: 9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143
+      format: gapbs_sg32le
+      application: dx100-gapbs
+      canonical_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+      bytes: 31492177
+      loader: swdb.gapbs-representation.v1
+      adjacency_verified: true
+    normalization: 'simple graph: remove self loops and duplicates; symmetrize if undirected; sort neighbors'
+    canonical_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    adjacency_order_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    num_vertices: 262143
+    num_directed_edges: 7610898
+    directed: false
+    sources: [0]
+    canonical_path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a1.native/graph.swdb
+    canonical_file_sha256: 167cde96d3528a030f842d63b4cf3c142040ea56dbfb1ee2e94552c39ccd9c0e
+build:
+  directory: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a1.native
+  compiler: /usr/bin/g++
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a1.baseline/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a1.baseline/source/benchmarks/API
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a1.native/native_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a1.native/bfs-native
+  wrapper_sha256: 9e1fa6bd9905ede588a7c5a67980005a3fcf968f13582e3d809109c96d270df9
+  template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+  compiler_version:
+  - g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  - Copyright (C) 2023 Free Software Foundation, Inc.
+  binary: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a1.native/bfs-native
+  binary_sha256: 7b5c7032806506f1caf1330fba592494647afb59ac4df32f4ea0c0abbd56f38b
+  execution_environment:
+    OMP_NUM_THREADS: '4'
+    OMP_DYNAMIC: 'FALSE'
+    OMP_PROC_BIND: close
+    OMP_PLACES: cores
+  native_runtime:
+    version: 1
+    environment:
+      OMP_NUM_THREADS: '4'
+      OMP_DYNAMIC: 'FALSE'
+      OMP_PROC_BIND: close
+      OMP_PLACES: cores
+      OMP_THREAD_LIMIT: '16'
+      OMP_WAIT_POLICY: PASSIVE
+      GOMP_SPINCOUNT: '0'
+      GOMP_CPU_AFFINITY: null
+summary:
+  trials: 1
+  median_roi_seconds: 0.017854971
+  by_source_position:
+  - source_position: 0
+    source: 0
+    median_roi_seconds: 0.017854971
+  gain_claim: false

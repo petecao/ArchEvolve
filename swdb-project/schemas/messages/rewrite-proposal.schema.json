@@ -1,0 +1,258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SWDB rewrite proposal message 1.0 / 1.1",
+  "description": "Provisional public handoff, created 2026-09-25. Submitting a request never certifies correctness or performance.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "message_version",
+    "id",
+    "producer",
+    "profile_package",
+    "source_snapshot",
+    "implementation",
+    "source_sha256",
+    "regions",
+    "intent",
+    "constraints",
+    "payload"
+  ],
+  "properties": {
+    "message_version": {
+      "enum": [
+        "1.0",
+        "1.1"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "role",
+        "test_client"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "sw",
+            "hw",
+            "operator",
+            "worker"
+          ]
+        },
+        "test_client": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profile_package": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "source_snapshot": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "implementation": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "regions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "intent": {
+      "type": "string",
+      "minLength": 1
+    },
+    "strategy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parameters": {
+      "type": "object"
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "editable_files",
+        "preserve_correctness",
+        "preserve_roi"
+      ],
+      "properties": {
+        "editable_files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "preserve_correctness": {
+          "const": true
+        },
+        "preserve_roi": {
+          "const": true
+        }
+      }
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "content"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "patch",
+            "natural_language",
+            "structured_instructions",
+            "annotated_source"
+          ]
+        },
+        "content": {
+          "type": [
+            "string",
+            "object"
+          ]
+        }
+      }
+    },
+    "required_operations": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "hardware_target": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "require_executable_backend": {
+      "type": "boolean"
+    },
+    "visible_files": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "library": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "entries",
+        "shipped_files"
+      ],
+      "properties": {
+        "contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "content_sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "content_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "content_sha256"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "content_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        "shipped_files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "sha256",
+              "lowerings"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "lowerings": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "library"
+        ]
+      },
+      "then": {
+        "properties": {
+          "message_version": {
+            "const": "1.1"
+          }
+        }
+      }
+    }
+  ]
+}

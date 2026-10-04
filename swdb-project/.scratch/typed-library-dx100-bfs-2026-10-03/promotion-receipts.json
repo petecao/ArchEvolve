@@ -1,0 +1,113 @@
+{
+  "recorded": "2026-10-03 ET",
+  "approval_reference": "typed-library-related-approval-20261003",
+  "reviewer": "Yan-Ru Jhou",
+  "recorded_by": "root agent acting on explicit user approval",
+  "entries": [
+    {
+      "entry": "contract.bfs_read_offload",
+      "sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51",
+      "review": "review.contract.bfs_read_offload.9d24483b85b4"
+    },
+    {
+      "entry": "intrinsic.dxc_alu_scalar",
+      "sha256": "12129d01a66be3089c2cff9b7b8444bcd039e31bed34c7b7022e20858961d5dd",
+      "review": "review.intrinsic.dxc_alu_scalar.e62afdf2ba10"
+    },
+    {
+      "entry": "intrinsic.dxc_const_i32",
+      "sha256": "d321f3c5d234afa7a41121f923a6e0a0edef51015c4f7ebe3cbe463c0a92950f",
+      "review": "review.intrinsic.dxc_const_i32.d4dd31c9bccb"
+    },
+    {
+      "entry": "intrinsic.dxc_gather",
+      "sha256": "f1a54734b19e5223a1b2b11b91d177913ecda7296ce45592acb91412b4c6609d",
+      "review": "review.intrinsic.dxc_gather.f1248bbd8716"
+    },
+    {
+      "entry": "intrinsic.dxc_range_loop",
+      "sha256": "dd2abc9caac3f39254ffa28d254b8308b95f73b496b1fb9a40bb8f570da54f57",
+      "review": "review.intrinsic.dxc_range_loop.b94ad1459b4e"
+    },
+    {
+      "entry": "intrinsic.dxc_session_begin",
+      "sha256": "69f444bf9d4800ebb4b1b29d45496b3cc2f0f49ea404bba4a65ec5343439de91",
+      "review": "review.intrinsic.dxc_session_begin.25377de861ef"
+    },
+    {
+      "entry": "intrinsic.dxc_stream_load",
+      "sha256": "2deb4038416c9950ab524497a10071c69b5b295f87659d43d0ec24a8313fe79c",
+      "review": "review.intrinsic.dxc_stream_load.2ffa75febb5e"
+    },
+    {
+      "entry": "intrinsic.dxc_thread_context",
+      "sha256": "9a25951c2ee114ff9e1c5265c2da5452bf3f8c5f850c36afeb157b00be0e8e88",
+      "review": "review.intrinsic.dxc_thread_context.62c2acf8f8e9"
+    },
+    {
+      "entry": "intrinsic.dxc_tile_pointer",
+      "sha256": "c276531e321c1fdfd12f6730d91e1351e5a864a0214931452e29bae78b10d20e",
+      "review": "review.intrinsic.dxc_tile_pointer.80d8b789ad2b"
+    },
+    {
+      "entry": "intrinsic.dxc_tile_size",
+      "sha256": "8072dc02828ab0b865a11bd063b96b7412de71f435a450c1cb156e793f957c06",
+      "review": "review.intrinsic.dxc_tile_size.1673afc66817"
+    },
+    {
+      "entry": "intrinsic.dxc_wait",
+      "sha256": "e349a9c69489091c35d5cb3654cae16b0b5361f8706fd4c4f21052756cc815de",
+      "review": "review.intrinsic.dxc_wait.acbc442c30b6"
+    },
+    {
+      "entry": "lowering.dxc_alu_scalar.dx100-mmio.1.0-e4fc4af",
+      "sha256": "16c16390e9fb10b2a9a33db7c5ea629cfe778297730717d4db9e66dc79e9b064",
+      "review": "review.lowering.dxc_alu_scalar.dx100-mmio.1.0-e4fc4af.8cb6836517f1"
+    },
+    {
+      "entry": "lowering.dxc_const_i32.dx100-mmio.1.0-e4fc4af",
+      "sha256": "e4916a2ec1bbb672ce27b6c4ef52a10a38e19458c914d09bb9e0c0969eea5bcf",
+      "review": "review.lowering.dxc_const_i32.dx100-mmio.1.0-e4fc4af.0685ed862869"
+    },
+    {
+      "entry": "lowering.dxc_gather.dx100-mmio.1.0-e4fc4af",
+      "sha256": "3ad324abd6d51613450786e617deafad181831cb82be867ae479968374a2a8f9",
+      "review": "review.lowering.dxc_gather.dx100-mmio.1.0-e4fc4af.5fbdc54aafeb"
+    },
+    {
+      "entry": "lowering.dxc_range_loop.dx100-mmio.1.0-e4fc4af",
+      "sha256": "683c4ecb61a61ea24de68930b11b40bc8a987465d3ec39cf6e1330af6b2a3831",
+      "review": "review.lowering.dxc_range_loop.dx100-mmio.1.0-e4fc4af.efb702529a62"
+    },
+    {
+      "entry": "lowering.dxc_session_begin.dx100-mmio.1.0-e4fc4af",
+      "sha256": "8584f0c4b2358692e6f76be3d653ee461baa8addaab8a9fd15788a3382984569",
+      "review": "review.lowering.dxc_session_begin.dx100-mmio.1.0-e4fc4af.f2eef2e4ca4f"
+    },
+    {
+      "entry": "lowering.dxc_stream_load.dx100-mmio.1.0-e4fc4af",
+      "sha256": "bfd124d6ce44b13ab96c3f4bb1d8b640aca4ade018ef007138004abc9b5f5f53",
+      "review": "review.lowering.dxc_stream_load.dx100-mmio.1.0-e4fc4af.aff5009bae9a"
+    },
+    {
+      "entry": "lowering.dxc_thread_context.dx100-mmio.1.0-e4fc4af",
+      "sha256": "3dd51312fd5d6bc55939b475163bb881ccfc0b68335b060d24a16d12b48dff3e",
+      "review": "review.lowering.dxc_thread_context.dx100-mmio.1.0-e4fc4af.d73c3f3ab493"
+    },
+    {
+      "entry": "lowering.dxc_tile_pointer.dx100-mmio.1.0-e4fc4af",
+      "sha256": "842531eb06ab38e5c79eecceaf36b536d690d2c2be580f94949b727429c8b7dc",
+      "review": "review.lowering.dxc_tile_pointer.dx100-mmio.1.0-e4fc4af.af987e005edf"
+    },
+    {
+      "entry": "lowering.dxc_tile_size.dx100-mmio.1.0-e4fc4af",
+      "sha256": "91a183168d5adb02cf9ee7eefbbeb396615dec36d4b8ec0ebce88c0c42c5b323",
+      "review": "review.lowering.dxc_tile_size.dx100-mmio.1.0-e4fc4af.9db1c5304636"
+    },
+    {
+      "entry": "lowering.dxc_wait.dx100-mmio.1.0-e4fc4af",
+      "sha256": "d0cda6d52b5a86f3d53f8c4af12be8a8eac3c64fdcd37244ed35d70735acaae2",
+      "review": "review.lowering.dxc_wait.dx100-mmio.1.0-e4fc4af.9b659e23dc6e"
+    }
+  ]
+}

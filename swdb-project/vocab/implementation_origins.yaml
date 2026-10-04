@@ -1,0 +1,13 @@
+name: implementation_origins
+description: Where an implementation's code came from.
+values:
+  - value: application_source
+    meaning: Code as found in the application's own source (the baseline implementation).
+  - value: upstream_alternative
+    meaning: Another implementation shipped in the application's upstream source.
+  - value: derived
+    meaning: Written by changing another implementation; the note names which.
+  - value: collaborator
+    meaning: Supplied by an ArchEvolve collaborator.
+  - value: agent
+    meaning: Written by an agent; stays draft until a person reviews it.

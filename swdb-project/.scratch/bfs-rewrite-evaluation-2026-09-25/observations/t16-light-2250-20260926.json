@@ -1,0 +1,134 @@
+{
+  "observed_at": "2026-09-26T22:50:21.387408-04:00",
+  "batches": {
+    "t16": {
+      "state": "running",
+      "reason": null,
+      "outer_exit": null,
+      "sample": {
+        "observed_at": "2026-09-26T22:50:21.359558-04:00",
+        "raw_bytes": 636801024,
+        "charged_raw_bytes": 1767788544,
+        "elapsed_seconds": 8991.133615414612,
+        "charged_elapsed_seconds": 9244.13361715246,
+        "sampled_tree_rss_bytes": 30949220352
+      },
+      "series": [
+        {
+          "id": "bfs-t16-simulator-batch-20260926-a1.artifact.scalar",
+          "state": "running",
+          "reason": null,
+          "completed_samples": 0,
+          "stages_complete": 7,
+          "last_stages": [
+            {
+              "state": "complete",
+              "started": "2026-09-26T20:21:39.946528-04:00",
+              "finished": "2026-09-26T20:21:42.672767-04:00",
+              "returncode": 0,
+              "identity": {
+                "pid": 3090339,
+                "parent_pid": 3089858,
+                "start_ticks": 497043283,
+                "state": "R",
+                "rss_bytes": 0
+              },
+              "reason": null
+            },
+            {
+              "state": "running",
+              "started": "2026-09-26T20:21:44.208193-04:00",
+              "finished": null,
+              "returncode": null,
+              "identity": {
+                "pid": 3090376,
+                "parent_pid": 3089858,
+                "start_ticks": 497043709,
+                "state": "R",
+                "rss_bytes": 0
+              },
+              "reason": null
+            }
+          ]
+        }
+      ],
+      "live_processes": [
+        {
+          "pid": 3093548,
+          "parent_pid": 3090376,
+          "start_ticks": 497060228,
+          "state": "R",
+          "rss_bytes": 30668750848
+        },
+        {
+          "pid": 3090376,
+          "parent_pid": 3089858,
+          "start_ticks": 497043709,
+          "state": "S",
+          "rss_bytes": 103317504
+        },
+        {
+          "pid": 3089858,
+          "parent_pid": 3089797,
+          "start_ticks": 497039930,
+          "state": "S",
+          "rss_bytes": 97198080
+        },
+        {
+          "pid": 3089797,
+          "parent_pid": 3089727,
+          "start_ticks": 497036338,
+          "state": "S",
+          "rss_bytes": 79953920
+        }
+      ]
+    }
+  },
+  "roi_progress": {
+    "observed_at": "2026-09-26T22:50:21.389652-04:00",
+    "log_bytes": 139017,
+    "log_mtime": "2026-09-27T02:50:16.779122+00:00",
+    "read_offset": 122633,
+    "read_bytes": 16384,
+    "last_tick_in_tail": 255936615500,
+    "seal_file_exists": false,
+    "roi_stats_exists": false,
+    "seal_markers_in_tail": 0,
+    "completed_roi_claim": false
+  },
+  "leases": {
+    "mbit10-evaluation-node0.meta.json": {
+      "state": "held",
+      "generation": 332,
+      "owner": {
+        "pid": 3089727,
+        "parent_pid": 3089726,
+        "start_ticks": 497036314,
+        "state": "S",
+        "rss_bytes": 3670016
+      },
+      "released_at": null
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "state": "released",
+      "generation": 420,
+      "owner": null,
+      "released_at": "2026-09-27T02:49:41Z"
+    },
+    "mbit10-evaluation.meta.json": {
+      "state": "released",
+      "generation": 77,
+      "owner": null,
+      "released_at": "2026-09-12T04:49:11Z"
+    }
+  },
+  "disk_free_bytes": {
+    "/data1": 17256148992,
+    "/data": 182485049344
+  },
+  "load": [
+    1.36376953125,
+    1.7744140625,
+    1.66259765625
+  ]
+}

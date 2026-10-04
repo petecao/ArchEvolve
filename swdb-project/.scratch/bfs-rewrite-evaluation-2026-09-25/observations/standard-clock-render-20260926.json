@@ -1,0 +1,60 @@
+{
+  "created": "2026-09-26",
+  "purpose": "local actual generated clock execution with fake proc stat; no host or fixture dispatch",
+  "source_sha256": "e3fb3fe4e7177b775c89e2d084b5305e2ce84c9ea790c71a567d5e729ec1ba92",
+  "cases": [
+    {
+      "kind": "owned_cleanup",
+      "output_dir": "/private/tmp/bfs-standard-clock-render-7ykzeo9j/owned_cleanup",
+      "command_bytes": 834,
+      "command_sha256": "a3922251297ac293acaaccd9b67d3cadea0a1f5fd60804409cac318bf2607103",
+      "launch_sha256": "4e85c993f9a28edd739061ccf67eed6a027d9d843423a2f5c7cd5bbbf40d7d98",
+      "actual_last_bytes": [
+        101,
+        32,
+        49,
+        10
+      ],
+      "argv_equal": true,
+      "final_lane": [
+        "--lane",
+        "1"
+      ],
+      "generated_write_constant_codepoints": [
+        [
+          10
+        ],
+        [
+          10
+        ]
+      ]
+    },
+    {
+      "kind": "dx100_interruption",
+      "output_dir": "/private/tmp/bfs-standard-clock-render-7ykzeo9j/dx100_interruption",
+      "command_bytes": 851,
+      "command_sha256": "c526e998de3105502c639b9f2a44a95c51650b76be3e9af5496934c32a0ce758",
+      "launch_sha256": "838aebde7511c2cc7ae7064fa1f30d3a607e1835787ca4dca68d804a3df45ef1",
+      "actual_last_bytes": [
+        101,
+        32,
+        49,
+        10
+      ],
+      "argv_equal": true,
+      "final_lane": [
+        "--lane",
+        "1"
+      ],
+      "generated_write_constant_codepoints": [
+        [
+          10
+        ],
+        [
+          10
+        ]
+      ]
+    }
+  ],
+  "state": "passed"
+}

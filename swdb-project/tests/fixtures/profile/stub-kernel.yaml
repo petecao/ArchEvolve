@@ -1,0 +1,34 @@
+# A kernel for profile tests (Created 2026-09-22): its "correctness check" is the stub's -v.
+kind: kernel
+schema_version: "0.2"
+id: stub-kernel
+status: draft
+deprecated_by: null
+created: 2026-09-22
+updated: 2026-09-22
+provenance:
+  - id: src-stub
+    kind: source_code
+    description: Test fixture, not a real kernel.
+    uri: null
+name: Stub kernel
+application: gapbs
+computes: Nothing; the stub prints gapbs-style timer lines.
+correctness_check:
+  command: "{binary} {input_args} -n 1 -v"
+  verifier:
+    description: The stub prints Verification PASS unless STUB_FAIL_VERIFY is set.
+    code:
+      root: records
+      path: implementations/stub-impl/stub_bench.py
+      lines: null
+      excerpt: null
+      sha256: null
+  pass_criterion: prints Verification PASS
+  pass_regex: 'Verification:\s+PASS'
+  tolerance:
+    value: null
+    measure: none (stub)
+baseline_implementation: stub-impl
+notes: []
+extensions: {}

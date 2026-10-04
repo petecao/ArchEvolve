@@ -1,0 +1,110 @@
+{
+  "date": "2026-09-27 ET",
+  "observed_at": "2026-09-27T07:17:54.485040-04:00",
+  "verdict": "independent_admission_readback_pass",
+  "admission": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-protocol-recovery-simulator-batch-20260927-a1.dispatch/admission.json",
+    "sha256": "d93c96500d078796806cb03994fafba8905b957834ca155dcc39698e715e17ac",
+    "bytes": 21323
+  },
+  "runtime": "/data1/yanruj/EvolveSWDB_t16_protocol_recovery_runtime_20260927_a1",
+  "code_commit": "2a64a188f08811baf09ab9c61e69633c3d45a7f2",
+  "runtime_clean": true,
+  "current_runtime_map_match": true,
+  "exact_proof_consumer_passed": true,
+  "proof_final_sha256": "a77da4476a159cb7a715c60dfe2f43e1ac7b91df51afc557a013f9add00dd47f",
+  "protocols": {
+    "artifact": {
+      "id": "author-reference-seal-runtime-20260927-a1.635cf14b1f7a25f7",
+      "sha256": "14eccccf4ad561970055f65c65ea2929fdf3bc6f53e4622e98e9bcad64805421"
+    },
+    "control": {
+      "id": "author-matched-control-seal-runtime-20260927-a1.50411a54eafe34cb",
+      "sha256": "602ddb804c9f8ea6c1a6e133a1102a556380265997192eae668001dd5c2ba2ea"
+    }
+  },
+  "both_roles_exact_runtime_settings": true,
+  "prepared_at": "2026-09-27T07:16:31.610017-04:00",
+  "clock": {
+    "not_before": "2026-09-27T07:16:31.610017-04:00",
+    "latest_start": "2026-09-27T14:15:47.225985-04:00",
+    "absolute_end": "2026-09-27T20:16:17.225985-04:00"
+  },
+  "charges": [
+    {
+      "id": "bfs-20260925-uniform22",
+      "elapsed_seconds": 111,
+      "raw_bytes": 1124384768
+    },
+    {
+      "id": "bfs-author-scalar-compile-20260925-a1",
+      "elapsed_seconds": 72,
+      "raw_bytes": 3301376
+    },
+    {
+      "id": "bfs-author-maa-compile-20260925-a1",
+      "elapsed_seconds": 70,
+      "raw_bytes": 3301376
+    },
+    {
+      "id": "bfs-t16-simulator-batch-20260926-a1",
+      "elapsed_seconds": 11121,
+      "raw_bytes": 658644992
+    },
+    {
+      "id": "bfs-supervision-recovery-linux-20260926-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    },
+    {
+      "id": "bfs-supervision-lease-recovery-linux-20260927-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    },
+    {
+      "id": "bfs-seal-recovery-linux-20260927-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    },
+    {
+      "id": "bfs-t16-seal-recovery-simulator-batch-20260927-a1",
+      "elapsed_seconds": 1839,
+      "raw_bytes": 11907072
+    },
+    {
+      "id": "bfs-protocol-recovery-linux-20260927-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    }
+  ],
+  "total_charged_seconds": 15613,
+  "total_charged_bytes": 10391474176,
+  "input_availability_count": 52,
+  "all_input_artifacts_verified": true,
+  "fresh_runs_and_launch_absent": true,
+  "empirical_execution": false,
+  "operator_review": {
+    "commit": "f775fd02fd1a59f46d42a875b5633045b5520210",
+    "test_result": "...........                                                              [100%]\n11 passed in 0.06s",
+    "all_packet_files_match_git_and_reviewed_local_files": true,
+    "all817manifest_entries_match_independently_verified_runtime": true,
+    "config_sha256": "91fb81e07ba824427927e4e8aec81bae086dfc0506d87be1396a0133b7400626",
+    "resolved_finding": "Pre-export config initially retained old seal manifest absolute path; corrected before any preparation. Old packet retained; regression test added."
+  },
+  "limits": [
+    "Root conditionally authorized one scientific launch after this readback and fresh lane/capacity guard",
+    "No scientific launch performed by this independent reviewer",
+    "All prior failed roots and protocols unchanged"
+  ],
+  "fresh_prelaunch_guard": {
+    "path": "/private/tmp/bfs-t16-protocol-prelaunch-guard-20260927.json",
+    "sha256": "0b929beac0551dd898a3a647f45b38b6be2b063bcf22328b75d727180e460138",
+    "observed_at": "2026-09-27T07:17:41.064230-04:00",
+    "runtime_guard_passed": true,
+    "node": 1,
+    "lane_and_legacy_released_kernel_unlocked": true,
+    "capacity_passed": true,
+    "other_lane_external_held": true
+  },
+  "conditional_root_launch_clearance": "All independent conditions passed; communicated one-shot exact wrapper/helper launch clearance to reviewer, subject to built-in immediate guards and no retry"
+}

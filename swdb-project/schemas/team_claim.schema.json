@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "team_claim",
+  "title": "team_claim",
+  "description": "Introduced 2026-10-03 ET. Immutable custody metadata; evaluations are never rewritten.",
+  "properties": {
+    "schema_version": {
+      "const": "0.4"
+    },
+    "message_version": {
+      "const": "1.0"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "sw",
+            "hw",
+            "operator",
+            "worker"
+          ]
+        },
+        "test_client": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "role",
+        "test_client"
+      ]
+    },
+    "kind": {
+      "const": "team_claim"
+    },
+    "action": {
+      "enum": [
+        "claim",
+        "release"
+      ]
+    },
+    "records": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "audience": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evaluation": {
+      "type": "string",
+      "x-ref": "evaluation"
+    },
+    "recorded_at": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "kind",
+    "schema_version",
+    "message_version",
+    "producer",
+    "action",
+    "records",
+    "audience",
+    "recorded_at"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "action": {
+            "const": "claim"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "records": {
+            "minItems": 1
+          },
+          "audience": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "action": {
+            "const": "release"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "evaluation"
+        ],
+        "properties": {
+          "records": {
+            "maxItems": 0
+          },
+          "audience": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
+}

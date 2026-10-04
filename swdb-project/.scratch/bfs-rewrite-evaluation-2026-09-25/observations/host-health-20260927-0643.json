@@ -1,0 +1,459 @@
+{
+  "created": "2026-09-27",
+  "observed_at": "2026-09-27T06:43:14.932170-04:00",
+  "host": "mbit10",
+  "id": "bfs-t16-seal-recovery-simulator-batch-20260927-a1",
+  "leases": {
+    "mbit10-evaluation": {
+      "metadata": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-12T04:49:11Z",
+        "lease": {
+          "acquired_at": "2026-09-12T01:35:42Z",
+          "daemon_pid": 209457,
+          "daemon_start_token": "sh209457-1789176942",
+          "generation": 77,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-09-12T04:49:11Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "stable": true,
+      "kernel_held": false
+    },
+    "mbit10-evaluation-node0": {
+      "metadata": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-27T10:41:26Z",
+        "lease": {
+          "acquired_at": "2026-09-27T10:40:53Z",
+          "daemon_pid": 3707802,
+          "daemon_start_token": "sh3707802-1790505653",
+          "generation": 360,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node0",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-09-27T10:41:26Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "stable": true,
+      "kernel_held": false
+    },
+    "mbit10-evaluation-node1": {
+      "metadata": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-27T09:37:44Z",
+        "lease": {
+          "acquired_at": "2026-09-27T08:48:09Z",
+          "daemon_pid": 3593444,
+          "daemon_start_token": "sh3593444-1790498889",
+          "generation": 447,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node1",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-09-27T09:37:44Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "stable": true,
+      "kernel_held": false
+    }
+  },
+  "disks": {
+    "/data1": 16866963456,
+    "/data": 157117218816
+  },
+  "load": [
+    1.36083984375,
+    1.67578125,
+    1.6279296875
+  ],
+  "read_only": true,
+  "memory": {
+    "/proc/meminfo": "MemTotal:       131426264 kB\nMemFree:        49565028 kB\nMemAvailable:   122671344 kB\nBuffers:        10203340 kB\nCached:         36255272 kB\nSwapCached:            0 kB\nActive:         14687544 kB\nInactive:       32987860 kB\nActive(anon):     555420 kB\nInactive(anon):   683480 kB\nActive(file):   14132124 kB\nInactive(file): 32304380 kB\nUnevictable:       39100 kB\nMlocked:           36028 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:               472 kB\nWriteback:             0 kB\nAnonPages:       1256140 kB\nMapped:          1022372 kB\nShmem:              7164 kB\nKReclaimable:   28503364 kB\nSlab:           30867672 kB\nSReclaimable:   28415676 kB\nSUnreclaim:      2451996 kB\nKernelStack:       24336 kB\nPageTables:        27876 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    65713132 kB\nCommitted_AS:    5089480 kB\nVmallocTotal:   13743895347199 kB\nVmallocUsed:      430924 kB\nVmallocChunk:          0 kB\nPercpu:           339712 kB\nHardwareCorrupted:     8 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:    37224420 kB\nDirectMap2M:    94334976 kB\nDirectMap1G:     4194304 kB\n",
+    "/sys/devices/system/node/node0/meminfo": "Node 0 MemTotal:       65381852 kB\nNode 0 MemFree:        16538432 kB\nNode 0 MemUsed:        48843420 kB\nNode 0 SwapCached:            0 kB\nNode 0 Active:         12857016 kB\nNode 0 Inactive:       28578376 kB\nNode 0 Active(anon):     334880 kB\nNode 0 Inactive(anon):   616248 kB\nNode 0 Active(file):   12522136 kB\nNode 0 Inactive(file): 27962128 kB\nNode 0 Unevictable:       38916 kB\nNode 0 Mlocked:           35844 kB\nNode 0 Dirty:               256 kB\nNode 0 Writeback:             0 kB\nNode 0 FilePages:      40504776 kB\nNode 0 Mapped:           889520 kB\nNode 0 AnonPages:        969796 kB\nNode 0 Shmem:              5764 kB\nNode 0 KernelStack:       13912 kB\nNode 0 PageTables:        19520 kB\nNode 0 SecPageTables:         0 kB\nNode 0 NFS_Unstable:          0 kB\nNode 0 Bounce:                0 kB\nNode 0 WritebackTmp:          0 kB\nNode 0 KReclaimable:    4552992 kB\nNode 0 Slab:            5412320 kB\nNode 0 SReclaimable:    4497664 kB\nNode 0 SUnreclaim:       914656 kB\nNode 0 AnonHugePages:         0 kB\nNode 0 ShmemHugePages:        0 kB\nNode 0 ShmemPmdMapped:        0 kB\nNode 0 FileHugePages:         0 kB\nNode 0 FilePmdMapped:         0 kB\nNode 0 Unaccepted:            0 kB\nNode 0 HugePages_Total:     0\nNode 0 HugePages_Free:      0\nNode 0 HugePages_Surp:      0\n",
+    "/sys/devices/system/node/node1/meminfo": "Node 1 MemTotal:       66044412 kB\nNode 1 MemFree:        33026596 kB\nNode 1 MemUsed:        33017816 kB\nNode 1 SwapCached:            0 kB\nNode 1 Active:          1830528 kB\nNode 1 Inactive:        4409484 kB\nNode 1 Active(anon):     220540 kB\nNode 1 Inactive(anon):    67232 kB\nNode 1 Active(file):    1609988 kB\nNode 1 Inactive(file):  4342252 kB\nNode 1 Unevictable:         184 kB\nNode 1 Mlocked:             184 kB\nNode 1 Dirty:               216 kB\nNode 1 Writeback:             0 kB\nNode 1 FilePages:       5953836 kB\nNode 1 Mapped:           132852 kB\nNode 1 AnonPages:        286344 kB\nNode 1 Shmem:              1400 kB\nNode 1 KernelStack:       10424 kB\nNode 1 PageTables:         8356 kB\nNode 1 SecPageTables:         0 kB\nNode 1 NFS_Unstable:          0 kB\nNode 1 Bounce:                0 kB\nNode 1 WritebackTmp:          0 kB\nNode 1 KReclaimable:   23950372 kB\nNode 1 Slab:           25455352 kB\nNode 1 SReclaimable:   23918012 kB\nNode 1 SUnreclaim:      1537340 kB\nNode 1 AnonHugePages:         0 kB\nNode 1 ShmemHugePages:        0 kB\nNode 1 ShmemPmdMapped:        0 kB\nNode 1 FileHugePages:         0 kB\nNode 1 FilePmdMapped:         0 kB\nNode 1 Unaccepted:            0 kB\nNode 1 HugePages_Total:     0\nNode 1 HugePages_Free:      0\nNode 1 HugePages_Surp:      0\n"
+  },
+  "processes": [],
+  "drivers": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.driver/driver.json",
+      "state": "failed",
+      "started": "2026-09-27T05:14:01.100680-04:00",
+      "outer_deadline": "2026-09-27T20:16:17.225985-04:00",
+      "code_commit": "923cf33b955104fdf96705b648933e7d486a3810",
+      "samples": null,
+      "series": [
+        {
+          "id": "bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar",
+          "state": "failed",
+          "command": [
+            "/usr/bin/python3.12",
+            "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/scripts/bfs_simulator_series.py",
+            "--id",
+            "bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar",
+            "--candidate",
+            "bfs-author-scalar-compile-20260925-a1.candidate",
+            "--workload",
+            "bfs-20260925-uniform22.f23b09bb0c0601b5",
+            "--build-evaluation",
+            "bfs-dx100-build-20260925-a2",
+            "--diagnostic-build",
+            "bfs-author-scalar-compile-20260925-a1.diagnostic.build",
+            "--configuration",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.driver/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.configuration.json",
+            "--runs-dir",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar",
+            "--records",
+            "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/records",
+            "--lane",
+            "0",
+            "--author-binary",
+            "--verifier",
+            "dx100.bfs.verifier.v2",
+            "--require-capacity",
+            "--total-seconds",
+            "21600",
+            "--checkpoint-seconds",
+            "3600",
+            "--run-seconds",
+            "14400",
+            "--diagnostic-seconds",
+            "600",
+            "--memory-gib",
+            "48",
+            "--storage-gib",
+            "15",
+            "--batch-storage-gib",
+            "52",
+            "--verification-ticks",
+            "100000000000000",
+            "--owned-cleanup-ledger",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.driver/cleanup-ledger.json",
+            "--owned-cleanup-binding",
+            "7182ae23a4ef4242ae27ef809735640944b260ce7959237d3853f692d9099047",
+            "--trace-transport",
+            "gem5-gzip.v1",
+            "--protocol",
+            "bfs-author-reference-20260925.b4cbd3924b40e7df",
+            "--protocol-role",
+            "baseline"
+          ],
+          "started": "2026-09-27T05:14:16.417374-04:00",
+          "series_seconds": 21600,
+          "remaining_storage_gib": 52,
+          "cleanup": {
+            "state": "all_owned_descendants_absent",
+            "subreaper": true,
+            "observed": [],
+            "checked_at": "2026-09-27T05:15:13.132075-04:00",
+            "direct_reaped": true,
+            "shared_budget": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.driver/cleanup-ledger.json",
+            "errors": []
+          },
+          "finished": "2026-09-27T05:15:13.142317-04:00"
+        }
+      ],
+      "ticket_acceptance": false,
+      "stages": [
+        {
+          "state": "failed",
+          "started": "2026-09-27T05:14:16.419027-04:00",
+          "finished": "2026-09-27T05:15:13.135785-04:00",
+          "returncode": 1,
+          "identity": {
+            "pid": 3629752,
+            "parent_pid": 3629167,
+            "start_ticks": 500238930,
+            "state": "R",
+            "rss_bytes": 0
+          },
+          "command": [
+            "/usr/bin/python3.12",
+            "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/scripts/bfs_simulator_series.py",
+            "--id",
+            "bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar",
+            "--candidate",
+            "bfs-author-scalar-compile-20260925-a1.candidate",
+            "--workload",
+            "bfs-20260925-uniform22.f23b09bb0c0601b5"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.driver/driver.json",
+      "state": "failed",
+      "started": null,
+      "outer_deadline": null,
+      "code_commit": null,
+      "samples": [],
+      "series": null,
+      "ticket_acceptance": null,
+      "stages": [
+        {
+          "state": "complete",
+          "started": "2026-09-27T05:14:19.671621-04:00",
+          "finished": "2026-09-27T05:14:23.963641-04:00",
+          "returncode": 0,
+          "identity": {
+            "pid": 3629912,
+            "parent_pid": 3629752,
+            "start_ticks": 500239256,
+            "state": "R",
+            "rss_bytes": 0
+          },
+          "command": [
+            "/usr/bin/python3.12",
+            "-m",
+            "swdb",
+            "get",
+            "bfs-author-scalar-compile-20260925-a1.candidate",
+            "--records",
+            "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/records",
+            "--db"
+          ]
+        },
+        {
+          "state": "complete",
+          "started": "2026-09-27T05:14:25.484457-04:00",
+          "finished": "2026-09-27T05:14:28.255130-04:00",
+          "returncode": 0,
+          "identity": {
+            "pid": 3630111,
+            "parent_pid": 3629752,
+            "start_ticks": 500239837,
+            "state": "R",
+            "rss_bytes": 0
+          },
+          "command": [
+            "/usr/bin/python3.12",
+            "-m",
+            "swdb",
+            "get",
+            "bfs-author-scalar-compile-20260925-a1.source",
+            "--records",
+            "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/records",
+            "--db"
+          ]
+        },
+        {
+          "state": "complete",
+          "started": "2026-09-27T05:14:29.762793-04:00",
+          "finished": "2026-09-27T05:14:32.273772-04:00",
+          "returncode": 0,
+          "identity": {
+            "pid": 3630182,
+            "parent_pid": 3629752,
+            "start_ticks": 500240265,
+            "state": "R",
+            "rss_bytes": 0
+          },
+          "command": [
+            "/usr/bin/python3.12",
+            "-m",
+            "swdb",
+            "get",
+            "dx100-bfs-scalar",
+            "--records",
+            "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/records",
+            "--db"
+          ]
+        },
+        {
+          "state": "complete",
+          "started": "2026-09-27T05:14:33.824137-04:00",
+          "finished": "2026-09-27T05:14:36.335282-04:00",
+          "returncode": 0,
+          "identity": {
+            "pid": 3630194,
+            "parent_pid": 3629752,
+            "start_ticks": 500240671,
+            "state": "R",
+            "rss_bytes": 0
+          },
+          "command": [
+            "/usr/bin/python3.12",
+            "-m",
+            "swdb",
+            "get",
+            "bfs-20260925-uniform22.f23b09bb0c0601b5",
+            "--records",
+            "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/records",
+            "--db"
+          ]
+        },
+        {
+          "state": "complete",
+          "started": "2026-09-27T05:14:37.834201-04:00",
+          "finished": "2026-09-27T05:14:40.345773-04:00",
+          "returncode": 0,
+          "identity": {
+            "pid": 3630205,
+            "parent_pid": 3629752,
+            "start_ticks": 500241072,
+            "state": "R",
+            "rss_bytes": 0
+          },
+          "command": [
+            "/usr/bin/python3.12",
+            "-m",
+            "swdb",
+            "get",
+            "bfs-author-reference-20260925.b4cbd3924b40e7df",
+            "--records",
+            "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/records",
+            "--db"
+          ]
+        },
+        {
+          "state": "complete",
+          "started": "2026-09-27T05:14:43.351643-04:00",
+          "finished": "2026-09-27T05:14:45.863339-04:00",
+          "returncode": 0,
+          "identity": {
+            "pid": 3630212,
+            "parent_pid": 3629752,
+            "start_ticks": 500241624,
+            "state": "R",
+            "rss_bytes": 0
+          },
+          "command": [
+            "/usr/bin/python3.12",
+            "-m",
+            "swdb",
+            "get",
+            "bfs-dx100-build-20260925-a2",
+            "--records",
+            "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/records",
+            "--db"
+          ]
+        },
+        {
+          "state": "complete",
+          "started": "2026-09-27T05:14:49.370866-04:00",
+          "finished": "2026-09-27T05:14:51.882462-04:00",
+          "returncode": 0,
+          "identity": {
+            "pid": 3630264,
+            "parent_pid": 3629752,
+            "start_ticks": 500242226,
+            "state": "R",
+            "rss_bytes": 0
+          },
+          "command": [
+            "/usr/bin/python3.12",
+            "-m",
+            "swdb",
+            "get",
+            "bfs-author-scalar-compile-20260925-a1.diagnostic.build",
+            "--records",
+            "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/records",
+            "--db"
+          ]
+        },
+        {
+          "state": "failed",
+          "started": "2026-09-27T05:14:53.400619-04:00",
+          "finished": "2026-09-27T05:15:12.990662-04:00",
+          "returncode": 1,
+          "identity": {
+            "pid": 3630294,
+            "parent_pid": 3629752,
+            "start_ticks": 500242629,
+            "state": "R",
+            "rss_bytes": 0
+          },
+          "command": [
+            "/usr/bin/python3.12",
+            "-m",
+            "swdb",
+            "dx100-execute",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.driver/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.s0.r0.primary.evaluation.request.json",
+            "--runs-dir",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar",
+            "--lane"
+          ]
+        }
+      ]
+    }
+  ],
+  "logs": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.driver/00.stderr",
+      "bytes": 1431,
+      "age_seconds": 5281.917594909668
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.driver/ledger.jsonl",
+      "bytes": 546223,
+      "age_seconds": 5281.892612934113
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.driver/001-get.stderr",
+      "bytes": 0,
+      "age_seconds": 5329.469220161438
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.driver/007-dx100-execute.stderr",
+      "bytes": 0,
+      "age_seconds": 5301.552955389023
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.driver/006-get.stderr",
+      "bytes": 0,
+      "age_seconds": 5305.583006858826
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.driver/002-get.stderr",
+      "bytes": 0,
+      "age_seconds": 5325.190220832825
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.driver/005-get.stderr",
+      "bytes": 0,
+      "age_seconds": 5311.602093458176
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.driver/000-get.stderr",
+      "bytes": 0,
+      "age_seconds": 5335.282355546951
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.driver/004-get.stderr",
+      "bytes": 0,
+      "age_seconds": 5317.119174003601
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.driver/003-get.stderr",
+      "bytes": 0,
+      "age_seconds": 5321.129241943359
+    }
+  ],
+  "outer_exit": "1\n",
+  "processes_second": []
+}

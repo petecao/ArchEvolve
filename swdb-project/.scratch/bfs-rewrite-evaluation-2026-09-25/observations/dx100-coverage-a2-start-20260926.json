@@ -1,0 +1,266 @@
+{
+  "observed_at": "2026-09-26T19:09:49.585533-04:00",
+  "launch": {
+    "outer_started": "2026-09-26T19:09:05.775756-04:00",
+    "outer_deadline": "2026-09-26T20:09:05.775756-04:00",
+    "pane_identity": {
+      "pid": 3082625,
+      "start_ticks": 496607862
+    },
+    "command": [
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=30s",
+      "3569.999889s",
+      "bash",
+      "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+      "0",
+      "bfs-dx100-coverage-20260926-a2",
+      "--record",
+      "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2.dispatch/lane.json",
+      "--",
+      "env",
+      "-u",
+      "PYTHONPATH",
+      "-u",
+      "PYTHONHOME",
+      "-u",
+      "PYTHONSTARTUP",
+      "-u",
+      "PYTHONUSERBASE",
+      "-u",
+      "PYTHONOPTIMIZE",
+      "-u",
+      "PYTEST_ADDOPTS",
+      "-u",
+      "PYTEST_PLUGINS",
+      "-u",
+      "LD_PRELOAD",
+      "-u",
+      "LD_LIBRARY_PATH",
+      "-u",
+      "GCC_EXEC_PREFIX",
+      "-u",
+      "COMPILER_PATH",
+      "-u",
+      "LIBRARY_PATH",
+      "-u",
+      "CPATH",
+      "-u",
+      "CPLUS_INCLUDE_PATH",
+      "-u",
+      "C_INCLUDE_PATH",
+      "PYTHONNOUSERSITE=1",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "TMPDIR=/data1/yanruj/tmp",
+      "PATH=/usr/bin:/bin",
+      "/usr/bin/python3.12",
+      "-s",
+      "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2/scripts/bfs_dx100_coverage_a2.py",
+      "--expected-commit",
+      "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+      "--admission",
+      "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2.dispatch/admission.json",
+      "--admission-sha256",
+      "f4a78cead72984871f7dfe468c729d613ef4b5744281205318ea1bc9e7c0e18c",
+      "--outer-started",
+      "2026-09-26T19:09:05.775756-04:00",
+      "--outer-deadline",
+      "2026-09-26T20:09:05.775756-04:00",
+      "--pane-pid",
+      "3082625",
+      "--pane-start-ticks",
+      "496607862"
+    ],
+    "admission": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2.dispatch/admission.json",
+      "sha256": "f4a78cead72984871f7dfe468c729d613ef4b5744281205318ea1bc9e7c0e18c"
+    }
+  },
+  "outer_exit": null,
+  "lease": {
+    "active_session": null,
+    "heartbeat_at": "2026-09-26T23:09:05Z",
+    "lease": {
+      "acquired_at": "2026-09-26T23:09:05Z",
+      "daemon_pid": 3082629,
+      "daemon_start_token": "sh3082629-1790464145",
+      "generation": 329,
+      "host": "mbit10",
+      "lease_name": "mbit10-evaluation-node0",
+      "mode": "measure",
+      "session_id": null
+    },
+    "attempt_pid": null,
+    "attempt_start_token": null,
+    "recovered_from_generation": null,
+    "released_at": null,
+    "session_note": null,
+    "session_state": "none",
+    "state": "held",
+    "writer": "hostlock.sh"
+  },
+  "driver": {
+    "state": "running",
+    "reason": null,
+    "started": "2026-09-26T19:09:06.396965-04:00",
+    "finished": null,
+    "driver_pid": 3082700,
+    "entered_at": null,
+    "process_observations": null,
+    "resource_error": null,
+    "cleanup": null,
+    "accounting": null
+  },
+  "stages": [
+    {
+      "name": "capacity",
+      "stage": null,
+      "state": "complete",
+      "identity": {
+        "pid": 3082713,
+        "parent_pid": 3082700,
+        "start_ticks": 496608134,
+        "state": "R",
+        "rss_bytes": 0
+      },
+      "started": "2026-09-26T19:09:08.452882-04:00",
+      "finished": "2026-09-26T19:09:08.558461-04:00",
+      "returncode": 0,
+      "host_wall_s": 0.10421159956604242,
+      "command": [
+        "/usr/bin/python3.12",
+        "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2/scripts/dx100_capacity.py",
+        "--node",
+        "0",
+        "--output",
+        "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/capacity.json"
+      ],
+      "stdout": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/capacity.stdout",
+        "sha256": "ff6c54d50ec9db07e0f7f458f82b3b29376e24c0dba7ed481bbaa6af0d7cfc15"
+      },
+      "stderr": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/capacity.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "generate",
+      "stage": null,
+      "state": "complete",
+      "identity": {
+        "pid": 3082716,
+        "parent_pid": 3082700,
+        "start_ticks": 496608145,
+        "state": "R",
+        "rss_bytes": 0
+      },
+      "started": "2026-09-26T19:09:08.563836-04:00",
+      "finished": "2026-09-26T19:09:10.574569-04:00",
+      "returncode": 0,
+      "host_wall_s": 2.006723281927407,
+      "command": [
+        "/usr/bin/python3.12",
+        "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2/scripts/bfs_dx100_coverage_graph.py",
+        "--output-directory",
+        "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/graph",
+        "--records",
+        "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2/records",
+        "--lane",
+        "mbit10-evaluation-node0"
+      ],
+      "stdout": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/generate.stdout",
+        "sha256": "5e10d2ae742cf4de2fab5db8ec4b2dac110b38bf3be2769d4573aafa8194a3a8"
+      },
+      "stderr": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/generate.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "register-workload",
+      "stage": null,
+      "state": "complete",
+      "identity": {
+        "pid": 3082717,
+        "parent_pid": 3082700,
+        "start_ticks": 496608347,
+        "state": "R",
+        "rss_bytes": 0
+      },
+      "started": "2026-09-26T19:09:10.582198-04:00",
+      "finished": "2026-09-26T19:09:20.007309-04:00",
+      "returncode": 0,
+      "host_wall_s": 9.422160019166768,
+      "command": [
+        "/usr/bin/python3.12",
+        "-s",
+        "-m",
+        "swdb",
+        "register-workload",
+        "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/register-workload.request.json",
+        "--records",
+        "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2/records",
+        "--format",
+        "json"
+      ],
+      "stdout": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/register-workload.stdout",
+        "sha256": "7680949f4fa0bc0d77754636aea1bea21c84cbae5d214cab2fc2d03c81c3403b"
+      },
+      "stderr": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/register-workload.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "dx100-compile",
+      "stage": null,
+      "state": "running",
+      "identity": {
+        "pid": 3082721,
+        "parent_pid": 3082700,
+        "start_ticks": 496609290,
+        "state": "R",
+        "rss_bytes": 0
+      },
+      "started": "2026-09-26T19:09:20.014225-04:00",
+      "finished": null,
+      "returncode": null,
+      "host_wall_s": null,
+      "command": [
+        "/usr/bin/python3.12",
+        "-s",
+        "-m",
+        "swdb",
+        "dx100-compile",
+        "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/dx100-compile.request.json",
+        "--records",
+        "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2/records",
+        "--runs-dir",
+        "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2",
+        "--lane",
+        "0",
+        "--format",
+        "json"
+      ],
+      "stdout": null,
+      "stderr": null
+    }
+  ],
+  "driver_live": {
+    "pid": 3082700,
+    "start_ticks": 496607892,
+    "parent_pid": 3082629,
+    "state": "S",
+    "rss_bytes": 80011264
+  },
+  "resource": {
+    "samples": 9,
+    "peak_rss_bytes": 213557248,
+    "last_sampled_at": "2026-09-26T19:09:48.225853-04:00",
+    "last_artifact_bytes": 1910453
+  }
+}

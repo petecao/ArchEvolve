@@ -1,0 +1,55 @@
+kind: workload
+schema_version: '0.4'
+id: bfs-contract-20260925-a3.workload.584a833b37d4d8a1
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+requested_id: bfs-contract-20260925-a3.workload
+version: 1
+supersedes: null
+invalidated_comparisons: []
+definition:
+  kernel: gapbs-bfs
+  family: contract_fixture
+  generator:
+    name: explicit correctness fixture
+    revision: fixture-v1
+    parameters: {}
+  normalization:
+    remove_self_loops: true
+    deduplicate: true
+    sort_neighbors: true
+    symmetrize_undirected: true
+  sources: [0, 4]
+  representations:
+  - id: bfs-contract-20260925-a3.json
+    path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/fixture-graph.json
+    sha256: 2fabd85301bc851142904400e7bb3c5943a3a8c0f1ce28e00d971039d65c5b48
+    format: json_graph
+    application: gapbs
+    canonical_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    bytes: 80
+    loader: swdb.gapbs-representation.v1
+    adjacency_verified: true
+  canonical_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+  canonical_format: swdb.bfs.adjacency.v1
+  realized:
+    num_vertices: 5
+    num_directed_edges: 4
+    directed: true
+    isolated_vertices: 1
+    minimum_out_degree: 0
+    maximum_out_degree: 2
+  metadata_basis: operator_declared
+  adjacency_basis: parsed_representation
+identity_sha256: 584a833b37d4d8a12dc6d52e5a91e17e8f7edce7e1936d2e0871a27a16de462a

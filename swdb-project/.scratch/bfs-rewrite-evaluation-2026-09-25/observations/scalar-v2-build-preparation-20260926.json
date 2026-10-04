@@ -1,0 +1,81 @@
+{
+  "format": "swdb.bfs.scalar-v2-build-preparation.v1",
+  "created": "2026-09-26",
+  "state": "local_contract_preparation",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_scalar_v2_builds.py",
+      "bytes": 25240,
+      "sha256": "4d2af07f5cf161f3a18e266532216ec725492207f7ac7a1fa077b8893e2a43c7"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_scalar_v2_builds.py",
+      "bytes": 21108,
+      "sha256": "1816e590f5e11aaa60091f2b8af9b913457e65f85961fc09b5303f7b489685dc"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-scalar-v2-builds-20260926.md",
+      "bytes": 8229,
+      "sha256": "d5f39deafd3cdeea248e71ac19e9195a4bf4360d626b83f42e7008ae014f4f84"
+    }
+  ],
+  "manifest": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.preparation.json",
+    "bytes": 31130,
+    "sha256": "055f1b4ef92f74c9d04b24ea6b9542998802686253caebd28d0ee5837e814383"
+  },
+  "tests": {
+    "command": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_scalar_v2_builds.py -q --basetemp /private/tmp/bfs-scalar-v2-lock-20260926",
+    "passed": 49,
+    "elapsed_seconds": 12.2,
+    "log": {
+      "path": "/private/tmp/bfs-scalar-v2-lock-20260926.log",
+      "bytes": 100,
+      "sha256": "e79e62c8ae1be7d82528504c2d577a0795159a28d869858269df27d96948adcd"
+    }
+  },
+  "earlier_validation": [
+    {
+      "path": "/private/tmp/bfs-scalar-v2-builds-first-20260926.log",
+      "bytes": 99,
+      "sha256": "b3fbc58656e0d87a6d5702a9450a905a2d35c880600326b1f05854f3baf02f46"
+    },
+    {
+      "path": "/private/tmp/bfs-scalar-v2-builds-focused-20260926.log",
+      "bytes": 100,
+      "sha256": "ff04ee6ebc46d667ae50410e0ff6c2fa61acf88a670e0c009c5fe0901ff7d63a"
+    }
+  ],
+  "preserved_reviewer_repro": [
+    {
+      "path": "/private/tmp/test_scalar_clock_transition_standards_20260926.py",
+      "bytes": 1146,
+      "sha256": "cdb741a5c37b026acee8fb8102b12ad897d3a334e84e2a244feb4d8327051970"
+    },
+    {
+      "path": "/private/tmp/bfs-scalar-clock-transition-standards-red-20260926.log",
+      "bytes": 1762,
+      "sha256": "0e1b474a7924b92b87ea9e520d859ee9aad803f6efc5443534b452bd421b4b3e"
+    }
+  ],
+  "runtime_bounds": {
+    "outer_seconds": 1200,
+    "work_seconds": 1170,
+    "shared_cleanup_seconds": 30,
+    "public_compile_work_seconds_each": 240,
+    "compiler_seconds_each": 120,
+    "cumulative_ancillary_seconds": 210,
+    "sampled_rss_bytes": 17179869184,
+    "new_artifact_bytes": 17179869184,
+    "build_subset_bytes": 4294967296
+  },
+  "actual_host_execution": false,
+  "provider_calls": 0,
+  "guest_executions": 0,
+  "builds_run": 0,
+  "limitations": [
+    "Local direct-child fixtures do not prove Linux descendant supervision. Existing independently sealed owned_cleanup proof is reusable only for exact matching lifecycle/test/Python bytes, with original proof commit retained separately.",
+    "Future exact clean code commit, capacity/lane/helper admission and final post-helper process/storage/ledger audit are required. No absolute launch window or admission has been instantiated.",
+    "The fixed external build/source/model paths are reopened only at future host admission; local fixtures do not claim host availability."
+  ]
+}

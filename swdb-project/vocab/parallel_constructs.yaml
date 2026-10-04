@@ -1,0 +1,11 @@
+name: parallel_constructs
+description: How a loop runs in parallel.
+values:
+  - value: serial
+    meaning: The loop runs on one thread.
+  - value: omp_parallel_for
+    meaning: An OpenMP parallel for (see schedule and reduction).
+  - value: omp_for_in_parallel_region
+    meaning: An OpenMP for inside an enclosing parallel region.
+  - value: nested_serial
+    meaning: A serial loop nested in a parallel loop; each thread runs it for its own outer iterations.

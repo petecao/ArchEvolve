@@ -1,0 +1,50 @@
+# The smallest valid profile (Created 2026-09-22), for validation-rule tests. Real
+# profiles are written by swdb profile, never by hand.
+kind: profile
+schema_version: "0.2"
+id: stub-impl.tiny-sym.testhost.20260922t000000z
+status: draft
+deprecated_by: null
+created: 2026-09-22
+updated: 2026-09-22
+provenance:
+  - id: run
+    kind: measurement
+    description: Test fixture.
+    uri: null
+implementation: stub-impl
+input: tiny-sym
+machine: testhost
+complete: true
+build:
+  compiler: c++
+  compiler_version: fixture
+  flags: ""
+  command: cp a b
+  application_commit: null
+  swdb_commit: null
+  swdb_dirty: null
+environment:
+  host: testhost
+  binding: OMP_PLACES=cores OMP_PROC_BIND=close
+  started: "2026-09-22T00:00:00Z"
+runs_folder:
+  host: testhost
+  path: /nowhere
+parts:
+  - part: timing
+    outcome: complete
+timing:
+  - {threads: 1, trials: 1, times_s: [0.1], median_s: 0.1, min_s: 0.1, max_s: 0.1, spread: 0.0, command: stub -n 1}
+counts:
+  iterations: {value: 18, scope: per_sweep, basis: measured, evidence_refs: [run]}
+metrics:
+  - {name: time_per_trial_median, value: 0.1, unit: s, basis: measured, threads: 1, evidence_refs: [run]}
+bottleneck:
+  value: parallelism_bound
+  basis: inferred
+  memory_limit: null
+  rests_on: [parallel_efficiency]
+  evidence_refs: [run]
+notes: []
+extensions: {}

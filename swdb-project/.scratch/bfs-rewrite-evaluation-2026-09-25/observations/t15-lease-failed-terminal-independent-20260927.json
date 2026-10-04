@@ -1,0 +1,3172 @@
+{
+  "observed_at": "2026-09-27T04:14:37.186111-04:00",
+  "driver_reference": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1/bfs-t15-lease-recovery-simulator-batch-20260927-a1.driver/driver.json",
+    "sha256": "27105be29414e1b7631d62d170f70603c6f3619fc77c88c2c6d9fec7412b6375"
+  },
+  "driver": {
+    "state": "failed",
+    "reason": "ValueError: public stage exited 1",
+    "started": "2026-09-27T02:39:54.176460-04:00",
+    "finished": "2026-09-27T03:47:00.065704-04:00",
+    "elapsed_seconds": 4025.8892556857318,
+    "outer_started": "2026-09-27T02:39:53.162109-04:00",
+    "outer_deadline": "2026-09-27T09:14:09.851819-04:00",
+    "ticket_acceptance": false,
+    "gain_claim": false,
+    "resource_validation": {
+      "samples": 13142,
+      "peak_sampled_rss_bytes": 35254079488,
+      "observed_identities": [
+        {
+          "pid": 3339889,
+          "start_ticks": 499312675
+        },
+        {
+          "pid": 3340067,
+          "start_ticks": 499316134
+        },
+        {
+          "pid": 3340119,
+          "start_ticks": 499316457
+        },
+        {
+          "pid": 3340129,
+          "start_ticks": 499317030
+        },
+        {
+          "pid": 3340185,
+          "start_ticks": 499317431
+        },
+        {
+          "pid": 3340196,
+          "start_ticks": 499317831
+        },
+        {
+          "pid": 3340248,
+          "start_ticks": 499318461
+        },
+        {
+          "pid": 3340257,
+          "start_ticks": 499319018
+        },
+        {
+          "pid": 3340261,
+          "start_ticks": 499319438
+        },
+        {
+          "pid": 3340353,
+          "start_ticks": 499320104
+        },
+        {
+          "pid": 3340481,
+          "start_ticks": 499321430
+        },
+        {
+          "pid": 3340501,
+          "start_ticks": 499322137
+        },
+        {
+          "pid": 3340519,
+          "start_ticks": 499323347
+        },
+        {
+          "pid": 3340520,
+          "start_ticks": 499323444
+        },
+        {
+          "pid": 3340536,
+          "start_ticks": 499324150
+        },
+        {
+          "pid": 3340745,
+          "start_ticks": 499328979
+        },
+        {
+          "pid": 3340814,
+          "start_ticks": 499330547
+        },
+        {
+          "pid": 3340843,
+          "start_ticks": 499331758
+        },
+        {
+          "pid": 3341042,
+          "start_ticks": 499333771
+        },
+        {
+          "pid": 3341062,
+          "start_ticks": 499335078
+        },
+        {
+          "pid": 3341312,
+          "start_ticks": 499339510
+        },
+        {
+          "pid": 3341331,
+          "start_ticks": 499339607
+        },
+        {
+          "pid": 3341410,
+          "start_ticks": 499340817
+        },
+        {
+          "pid": 3341792,
+          "start_ticks": 499343537
+        },
+        {
+          "pid": 3341894,
+          "start_ticks": 499344040
+        },
+        {
+          "pid": 3341901,
+          "start_ticks": 499344137
+        },
+        {
+          "pid": 3342008,
+          "start_ticks": 499346054
+        },
+        {
+          "pid": 3342013,
+          "start_ticks": 499346150
+        },
+        {
+          "pid": 3342155,
+          "start_ticks": 499348068
+        },
+        {
+          "pid": 3342176,
+          "start_ticks": 499348164
+        },
+        {
+          "pid": 3342770,
+          "start_ticks": 499350081
+        },
+        {
+          "pid": 3342830,
+          "start_ticks": 499352095
+        },
+        {
+          "pid": 3342838,
+          "start_ticks": 499352191
+        },
+        {
+          "pid": 3342999,
+          "start_ticks": 499354108
+        },
+        {
+          "pid": 3343009,
+          "start_ticks": 499354204
+        },
+        {
+          "pid": 3343621,
+          "start_ticks": 499356924
+        },
+        {
+          "pid": 3343741,
+          "start_ticks": 499359645
+        },
+        {
+          "pid": 3343760,
+          "start_ticks": 499359741
+        },
+        {
+          "pid": 3344235,
+          "start_ticks": 499362462
+        },
+        {
+          "pid": 3344360,
+          "start_ticks": 499365182
+        },
+        {
+          "pid": 3344442,
+          "start_ticks": 499365279
+        },
+        {
+          "pid": 3348300,
+          "start_ticks": 499371019
+        },
+        {
+          "pid": 3350337,
+          "start_ticks": 499371727
+        },
+        {
+          "pid": 3350605,
+          "start_ticks": 499371822
+        },
+        {
+          "pid": 3355469,
+          "start_ticks": 499374748
+        },
+        {
+          "pid": 3355941,
+          "start_ticks": 499376055
+        },
+        {
+          "pid": 3357309,
+          "start_ticks": 499379580
+        },
+        {
+          "pid": 3357579,
+          "start_ticks": 499380287
+        },
+        {
+          "pid": 3357587,
+          "start_ticks": 499380383
+        },
+        {
+          "pid": 3359877,
+          "start_ticks": 499385322
+        },
+        {
+          "pid": 3359993,
+          "start_ticks": 499385418
+        },
+        {
+          "pid": 3362310,
+          "start_ticks": 499390657
+        },
+        {
+          "pid": 3362499,
+          "start_ticks": 499391161
+        },
+        {
+          "pid": 3362883,
+          "start_ticks": 499391868
+        },
+        {
+          "pid": 3362933,
+          "start_ticks": 499391964
+        },
+        {
+          "pid": 3363170,
+          "start_ticks": 499392671
+        },
+        {
+          "pid": 3365376,
+          "start_ticks": 499396699
+        },
+        {
+          "pid": 3367417,
+          "start_ticks": 499403951
+        },
+        {
+          "pid": 3367496,
+          "start_ticks": 499404047
+        },
+        {
+          "pid": 3378033,
+          "start_ticks": 499408783
+        },
+        {
+          "pid": 3378277,
+          "start_ticks": 499409490
+        },
+        {
+          "pid": 3378330,
+          "start_ticks": 499409586
+        },
+        {
+          "pid": 3378547,
+          "start_ticks": 499410293
+        },
+        {
+          "pid": 3378867,
+          "start_ticks": 499411000
+        },
+        {
+          "pid": 3378913,
+          "start_ticks": 499411097
+        },
+        {
+          "pid": 3379163,
+          "start_ticks": 499411804
+        },
+        {
+          "pid": 3381654,
+          "start_ticks": 499417546
+        },
+        {
+          "pid": 3381737,
+          "start_ticks": 499417642
+        },
+        {
+          "pid": 3381975,
+          "start_ticks": 499418350
+        },
+        {
+          "pid": 3382300,
+          "start_ticks": 499419057
+        },
+        {
+          "pid": 3382340,
+          "start_ticks": 499419153
+        },
+        {
+          "pid": 3385427,
+          "start_ticks": 499425903
+        },
+        {
+          "pid": 3385701,
+          "start_ticks": 499426610
+        },
+        {
+          "pid": 3385734,
+          "start_ticks": 499426707
+        },
+        {
+          "pid": 3385989,
+          "start_ticks": 499427414
+        },
+        {
+          "pid": 3386410,
+          "start_ticks": 499428121
+        },
+        {
+          "pid": 3386423,
+          "start_ticks": 499428217
+        },
+        {
+          "pid": 3389780,
+          "start_ticks": 499435673
+        },
+        {
+          "pid": 3389788,
+          "start_ticks": 499435770
+        },
+        {
+          "pid": 3389804,
+          "start_ticks": 499436477
+        },
+        {
+          "pid": 3389911,
+          "start_ticks": 499438190
+        },
+        {
+          "pid": 3389912,
+          "start_ticks": 499438287
+        },
+        {
+          "pid": 3390000,
+          "start_ticks": 499438993
+        },
+        {
+          "pid": 3391449,
+          "start_ticks": 499440708
+        },
+        {
+          "pid": 3391488,
+          "start_ticks": 499440804
+        },
+        {
+          "pid": 3391563,
+          "start_ticks": 499441511
+        },
+        {
+          "pid": 3391603,
+          "start_ticks": 499443225
+        },
+        {
+          "pid": 3391605,
+          "start_ticks": 499443321
+        },
+        {
+          "pid": 3391687,
+          "start_ticks": 499445035
+        },
+        {
+          "pid": 3391747,
+          "start_ticks": 499446748
+        },
+        {
+          "pid": 3391748,
+          "start_ticks": 499446845
+        },
+        {
+          "pid": 3392026,
+          "start_ticks": 499448559
+        },
+        {
+          "pid": 3392095,
+          "start_ticks": 499450272
+        },
+        {
+          "pid": 3392096,
+          "start_ticks": 499450368
+        },
+        {
+          "pid": 3392175,
+          "start_ticks": 499452081
+        },
+        {
+          "pid": 3392247,
+          "start_ticks": 499453892
+        },
+        {
+          "pid": 3392518,
+          "start_ticks": 499458925
+        },
+        {
+          "pid": 3392612,
+          "start_ticks": 499461142
+        },
+        {
+          "pid": 3394066,
+          "start_ticks": 499462855
+        },
+        {
+          "pid": 3394364,
+          "start_ticks": 499462952
+        },
+        {
+          "pid": 3396864,
+          "start_ticks": 499463863
+        },
+        {
+          "pid": 3397135,
+          "start_ticks": 499463959
+        },
+        {
+          "pid": 3399612,
+          "start_ticks": 499464870
+        },
+        {
+          "pid": 3399893,
+          "start_ticks": 499464966
+        },
+        {
+          "pid": 3405326,
+          "start_ticks": 499473226
+        },
+        {
+          "pid": 3405738,
+          "start_ticks": 499474233
+        },
+        {
+          "pid": 3407056,
+          "start_ticks": 499476954
+        },
+        {
+          "pid": 3407073,
+          "start_ticks": 499477051
+        },
+        {
+          "pid": 3409527,
+          "start_ticks": 499482493
+        },
+        {
+          "pid": 3409575,
+          "start_ticks": 499482590
+        },
+        {
+          "pid": 3409979,
+          "start_ticks": 499483500
+        },
+        {
+          "pid": 3409998,
+          "start_ticks": 499483597
+        },
+        {
+          "pid": 3410351,
+          "start_ticks": 499484304
+        },
+        {
+          "pid": 3410482,
+          "start_ticks": 499484507
+        },
+        {
+          "pid": 3410565,
+          "start_ticks": 499484604
+        },
+        {
+          "pid": 3413242,
+          "start_ticks": 499490046
+        },
+        {
+          "pid": 3413265,
+          "start_ticks": 499490143
+        },
+        {
+          "pid": 3413591,
+          "start_ticks": 499491054
+        },
+        {
+          "pid": 3413601,
+          "start_ticks": 499491150
+        },
+        {
+          "pid": 3413982,
+          "start_ticks": 499492060
+        },
+        {
+          "pid": 3414023,
+          "start_ticks": 499492157
+        },
+        {
+          "pid": 3414692,
+          "start_ticks": 499494877
+        },
+        {
+          "pid": 3414763,
+          "start_ticks": 499495884
+        },
+        {
+          "pid": 3414948,
+          "start_ticks": 499496891
+        },
+        {
+          "pid": 3417051,
+          "start_ticks": 499499912
+        },
+        {
+          "pid": 3418665,
+          "start_ticks": 499503640
+        },
+        {
+          "pid": 3418686,
+          "start_ticks": 499503737
+        },
+        {
+          "pid": 3419046,
+          "start_ticks": 499504647
+        },
+        {
+          "pid": 3419156,
+          "start_ticks": 499504744
+        },
+        {
+          "pid": 3419575,
+          "start_ticks": 499505655
+        },
+        {
+          "pid": 3419659,
+          "start_ticks": 499505751
+        },
+        {
+          "pid": 3420879,
+          "start_ticks": 499508473
+        },
+        {
+          "pid": 3421375,
+          "start_ticks": 499509480
+        },
+        {
+          "pid": 3421800,
+          "start_ticks": 499510487
+        },
+        {
+          "pid": 3424420,
+          "start_ticks": 499516229
+        },
+        {
+          "pid": 3424796,
+          "start_ticks": 499516829
+        },
+        {
+          "pid": 3424977,
+          "start_ticks": 499517236
+        },
+        {
+          "pid": 3424994,
+          "start_ticks": 499517333
+        },
+        {
+          "pid": 3425614,
+          "start_ticks": 499518244
+        },
+        {
+          "pid": 3425658,
+          "start_ticks": 499518340
+        },
+        {
+          "pid": 3428533,
+          "start_ticks": 499525090
+        },
+        {
+          "pid": 3428663,
+          "start_ticks": 499526097
+        },
+        {
+          "pid": 3428742,
+          "start_ticks": 499527104
+        },
+        {
+          "pid": 3439855,
+          "start_ticks": 499532946
+        }
+      ],
+      "hard_memory_quota": false
+    },
+    "final_ledger": {
+      "observed_at": "2026-09-27T03:47:00.065685-04:00",
+      "elapsed_seconds": 4026.903594349511,
+      "charged_elapsed_seconds": 12774.903595011681,
+      "raw_bytes": 1432760320,
+      "charged_raw_bytes": 22482964480,
+      "absolute_end": "2026-09-27T09:14:09.851819-04:00"
+    }
+  },
+  "strict_cleanup_ledger": {
+    "passed": true,
+    "result": {
+      "state": "settled_within_budget",
+      "driver": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1/bfs-t15-lease-recovery-simulator-batch-20260927-a1.driver/driver.json",
+        "sha256": "27105be29414e1b7631d62d170f70603c6f3619fc77c88c2c6d9fec7412b6375"
+      },
+      "ledger": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1/bfs-t15-lease-recovery-simulator-batch-20260927-a1.driver/cleanup-ledger.json",
+        "sha256": "1ddc1f85cd155b0a3db1e2c6be84bc0e012e1853e599f55a6a3dbc4f1209b83f"
+      },
+      "run_id": "bfs-t15-lease-recovery-simulator-batch-20260927-a1",
+      "driver_outcome": "failed",
+      "binding": "5947220462c3aeb8a851f443be643b565d0dd069bd72e22ade25f83f78eb75fa",
+      "creator": {
+        "pid": 3339889,
+        "start_ticks": 499312675
+      },
+      "budget_seconds": 30,
+      "spent_seconds": 2.4619779760017995,
+      "settled_events": 23,
+      "observed_at": "2026-09-27T04:14:33.666011-04:00",
+      "embedded_cleanup_snapshots": "nonfinal",
+      "process_absence_verified": false,
+      "empirical_qualification": false
+    }
+  },
+  "cleanup_ledger_reference": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1/bfs-t15-lease-recovery-simulator-batch-20260927-a1.driver/cleanup-ledger.json",
+    "sha256": "1ddc1f85cd155b0a3db1e2c6be84bc0e012e1853e599f55a6a3dbc4f1209b83f"
+  },
+  "identity_count": 246,
+  "identity_observations": [
+    [
+      {
+        "pid": 3033637,
+        "start_ticks": 493713694,
+        "state": "absent"
+      },
+      {
+        "pid": 3033641,
+        "start_ticks": 493713696,
+        "state": "absent"
+      },
+      {
+        "pid": 3033642,
+        "start_ticks": 493713696,
+        "state": "absent"
+      },
+      {
+        "pid": 3033713,
+        "start_ticks": 493713722,
+        "state": "absent"
+      },
+      {
+        "pid": 3033715,
+        "start_ticks": 493714029,
+        "state": "absent"
+      },
+      {
+        "pid": 3033841,
+        "start_ticks": 493715284,
+        "state": "absent"
+      },
+      {
+        "pid": 3034264,
+        "start_ticks": 493739998,
+        "state": "absent"
+      },
+      {
+        "pid": 3034277,
+        "start_ticks": 493741281,
+        "state": "absent"
+      },
+      {
+        "pid": 3034476,
+        "start_ticks": 493746772,
+        "state": "absent"
+      },
+      {
+        "pid": 3034544,
+        "start_ticks": 493748058,
+        "state": "absent"
+      },
+      {
+        "pid": 3034758,
+        "start_ticks": 493754291,
+        "state": "absent"
+      },
+      {
+        "pid": 3034759,
+        "start_ticks": 493754292,
+        "state": "absent"
+      },
+      {
+        "pid": 3034761,
+        "start_ticks": 493754292,
+        "state": "absent"
+      },
+      {
+        "pid": 3034830,
+        "start_ticks": 493754313,
+        "state": "absent"
+      },
+      {
+        "pid": 3034854,
+        "start_ticks": 493754584,
+        "state": "absent"
+      },
+      {
+        "pid": 3035383,
+        "start_ticks": 493772404,
+        "state": "absent"
+      },
+      {
+        "pid": 3035541,
+        "start_ticks": 493777886,
+        "state": "absent"
+      },
+      {
+        "pid": 3035589,
+        "start_ticks": 493783409,
+        "state": "absent"
+      },
+      {
+        "pid": 3035734,
+        "start_ticks": 493788940,
+        "state": "absent"
+      },
+      {
+        "pid": 3035779,
+        "start_ticks": 493794450,
+        "state": "absent"
+      },
+      {
+        "pid": 3035982,
+        "start_ticks": 493799985,
+        "state": "absent"
+      },
+      {
+        "pid": 3036133,
+        "start_ticks": 493805468,
+        "state": "absent"
+      },
+      {
+        "pid": 3036233,
+        "start_ticks": 493810985,
+        "state": "absent"
+      },
+      {
+        "pid": 3036283,
+        "start_ticks": 493816496,
+        "state": "absent"
+      },
+      {
+        "pid": 3036429,
+        "start_ticks": 493822019,
+        "state": "absent"
+      },
+      {
+        "pid": 3036582,
+        "start_ticks": 493827564,
+        "state": "absent"
+      },
+      {
+        "pid": 3036629,
+        "start_ticks": 493833078,
+        "state": "absent"
+      },
+      {
+        "pid": 3036734,
+        "start_ticks": 493838592,
+        "state": "absent"
+      },
+      {
+        "pid": 3036969,
+        "start_ticks": 493855156,
+        "state": "absent"
+      },
+      {
+        "pid": 3037143,
+        "start_ticks": 493869057,
+        "state": "absent"
+      },
+      {
+        "pid": 3037305,
+        "start_ticks": 493874629,
+        "state": "absent"
+      },
+      {
+        "pid": 3037538,
+        "start_ticks": 493883063,
+        "state": "absent"
+      },
+      {
+        "pid": 3037596,
+        "start_ticks": 493888697,
+        "state": "absent"
+      },
+      {
+        "pid": 3037670,
+        "start_ticks": 493897092,
+        "state": "absent"
+      },
+      {
+        "pid": 3037721,
+        "start_ticks": 493902722,
+        "state": "absent"
+      },
+      {
+        "pid": 3037824,
+        "start_ticks": 493911141,
+        "state": "absent"
+      },
+      {
+        "pid": 3037954,
+        "start_ticks": 493919712,
+        "state": "absent"
+      },
+      {
+        "pid": 3038026,
+        "start_ticks": 493928204,
+        "state": "absent"
+      },
+      {
+        "pid": 3038420,
+        "start_ticks": 493946412,
+        "state": "absent"
+      },
+      {
+        "pid": 3038485,
+        "start_ticks": 493952499,
+        "state": "absent"
+      },
+      {
+        "pid": 3038486,
+        "start_ticks": 493952499,
+        "state": "absent"
+      },
+      {
+        "pid": 3038649,
+        "start_ticks": 493964650,
+        "state": "absent"
+      },
+      {
+        "pid": 3038756,
+        "start_ticks": 493973146,
+        "state": "absent"
+      },
+      {
+        "pid": 3038885,
+        "start_ticks": 493981706,
+        "state": "absent"
+      },
+      {
+        "pid": 3038909,
+        "start_ticks": 493984560,
+        "state": "absent"
+      },
+      {
+        "pid": 3038986,
+        "start_ticks": 493993111,
+        "state": "absent"
+      },
+      {
+        "pid": 3039147,
+        "start_ticks": 494007223,
+        "state": "absent"
+      },
+      {
+        "pid": 3039419,
+        "start_ticks": 494018704,
+        "state": "absent"
+      },
+      {
+        "pid": 3039494,
+        "start_ticks": 494027233,
+        "state": "absent"
+      },
+      {
+        "pid": 3039604,
+        "start_ticks": 494035727,
+        "state": "absent"
+      },
+      {
+        "pid": 3039675,
+        "start_ticks": 494044337,
+        "state": "absent"
+      },
+      {
+        "pid": 3039816,
+        "start_ticks": 494055787,
+        "state": "absent"
+      },
+      {
+        "pid": 3040001,
+        "start_ticks": 494064412,
+        "state": "absent"
+      },
+      {
+        "pid": 3040025,
+        "start_ticks": 494067327,
+        "state": "absent"
+      },
+      {
+        "pid": 3040126,
+        "start_ticks": 494078867,
+        "state": "absent"
+      },
+      {
+        "pid": 3040229,
+        "start_ticks": 494090461,
+        "state": "absent"
+      },
+      {
+        "pid": 3040255,
+        "start_ticks": 494093380,
+        "state": "absent"
+      },
+      {
+        "pid": 3040692,
+        "start_ticks": 494117069,
+        "state": "absent"
+      },
+      {
+        "pid": 3040769,
+        "start_ticks": 494119988,
+        "state": "absent"
+      },
+      {
+        "pid": 3040794,
+        "start_ticks": 494123002,
+        "state": "absent"
+      },
+      {
+        "pid": 3040858,
+        "start_ticks": 494125973,
+        "state": "absent"
+      },
+      {
+        "pid": 3041112,
+        "start_ticks": 494144408,
+        "state": "absent"
+      },
+      {
+        "pid": 3041441,
+        "start_ticks": 494165247,
+        "state": "absent"
+      },
+      {
+        "pid": 3041491,
+        "start_ticks": 494170846,
+        "state": "absent"
+      },
+      {
+        "pid": 3041569,
+        "start_ticks": 494179269,
+        "state": "absent"
+      },
+      {
+        "pid": 3041702,
+        "start_ticks": 494184873,
+        "state": "absent"
+      },
+      {
+        "pid": 3041834,
+        "start_ticks": 494198878,
+        "state": "absent"
+      },
+      {
+        "pid": 3042204,
+        "start_ticks": 494207454,
+        "state": "absent"
+      },
+      {
+        "pid": 3042411,
+        "start_ticks": 494215915,
+        "state": "absent"
+      },
+      {
+        "pid": 3042493,
+        "start_ticks": 494224405,
+        "state": "absent"
+      },
+      {
+        "pid": 3042540,
+        "start_ticks": 494230037,
+        "state": "absent"
+      },
+      {
+        "pid": 3042830,
+        "start_ticks": 494241468,
+        "state": "absent"
+      },
+      {
+        "pid": 3043089,
+        "start_ticks": 494267081,
+        "state": "absent"
+      },
+      {
+        "pid": 3043372,
+        "start_ticks": 494275662,
+        "state": "absent"
+      },
+      {
+        "pid": 3044055,
+        "start_ticks": 494295719,
+        "state": "absent"
+      },
+      {
+        "pid": 3044216,
+        "start_ticks": 494307167,
+        "state": "absent"
+      },
+      {
+        "pid": 3044306,
+        "start_ticks": 494315704,
+        "state": "absent"
+      },
+      {
+        "pid": 3044448,
+        "start_ticks": 494324303,
+        "state": "absent"
+      },
+      {
+        "pid": 3044668,
+        "start_ticks": 494338418,
+        "state": "absent"
+      },
+      {
+        "pid": 3044987,
+        "start_ticks": 494356819,
+        "state": "absent"
+      },
+      {
+        "pid": 3045234,
+        "start_ticks": 494365368,
+        "state": "absent"
+      },
+      {
+        "pid": 3045479,
+        "start_ticks": 494373943,
+        "state": "absent"
+      },
+      {
+        "pid": 3045604,
+        "start_ticks": 494385395,
+        "state": "absent"
+      },
+      {
+        "pid": 3045854,
+        "start_ticks": 494405539,
+        "state": "absent"
+      },
+      {
+        "pid": 3046121,
+        "start_ticks": 494417042,
+        "state": "absent"
+      },
+      {
+        "pid": 3046484,
+        "start_ticks": 494428614,
+        "state": "absent"
+      },
+      {
+        "pid": 3046727,
+        "start_ticks": 494443122,
+        "state": "absent"
+      },
+      {
+        "pid": 3047022,
+        "start_ticks": 494457679,
+        "state": "absent"
+      },
+      {
+        "pid": 3047218,
+        "start_ticks": 494475247,
+        "state": "absent"
+      },
+      {
+        "pid": 3047438,
+        "start_ticks": 494492880,
+        "state": "absent"
+      },
+      {
+        "pid": 3047472,
+        "start_ticks": 494495781,
+        "state": "absent"
+      },
+      {
+        "pid": 3047977,
+        "start_ticks": 494522472,
+        "state": "absent"
+      },
+      {
+        "pid": 3048010,
+        "start_ticks": 494525429,
+        "state": "absent"
+      },
+      {
+        "pid": 3339775,
+        "start_ticks": 499312595,
+        "state": "absent"
+      },
+      {
+        "pid": 3339785,
+        "start_ticks": 499312600,
+        "state": "absent"
+      },
+      {
+        "pid": 3339820,
+        "start_ticks": 499312653,
+        "state": "absent"
+      },
+      {
+        "pid": 3339889,
+        "start_ticks": 499312675,
+        "state": "absent"
+      },
+      {
+        "pid": 3340067,
+        "start_ticks": 499316134,
+        "state": "absent"
+      },
+      {
+        "pid": 3340119,
+        "start_ticks": 499316457,
+        "state": "absent"
+      },
+      {
+        "pid": 3340129,
+        "start_ticks": 499317030,
+        "state": "absent"
+      },
+      {
+        "pid": 3340185,
+        "start_ticks": 499317431,
+        "state": "absent"
+      },
+      {
+        "pid": 3340196,
+        "start_ticks": 499317831,
+        "state": "absent"
+      },
+      {
+        "pid": 3340248,
+        "start_ticks": 499318461,
+        "state": "absent"
+      },
+      {
+        "pid": 3340257,
+        "start_ticks": 499319018,
+        "state": "absent"
+      },
+      {
+        "pid": 3340261,
+        "start_ticks": 499319438,
+        "state": "absent"
+      },
+      {
+        "pid": 3340353,
+        "start_ticks": 499320104,
+        "state": "absent"
+      },
+      {
+        "pid": 3340481,
+        "start_ticks": 499321430,
+        "state": "absent"
+      },
+      {
+        "pid": 3340501,
+        "start_ticks": 499322137,
+        "state": "absent"
+      },
+      {
+        "pid": 3340519,
+        "start_ticks": 499323347,
+        "state": "absent"
+      },
+      {
+        "pid": 3340520,
+        "start_ticks": 499323444,
+        "state": "absent"
+      },
+      {
+        "pid": 3340536,
+        "start_ticks": 499324150,
+        "state": "absent"
+      },
+      {
+        "pid": 3340745,
+        "start_ticks": 499328979,
+        "state": "absent"
+      },
+      {
+        "pid": 3340814,
+        "start_ticks": 499330547,
+        "state": "absent"
+      },
+      {
+        "pid": 3340843,
+        "start_ticks": 499331758,
+        "state": "absent"
+      },
+      {
+        "pid": 3341042,
+        "start_ticks": 499333771,
+        "state": "absent"
+      },
+      {
+        "pid": 3341062,
+        "start_ticks": 499335078,
+        "state": "absent"
+      },
+      {
+        "pid": 3341312,
+        "start_ticks": 499339510,
+        "state": "absent"
+      },
+      {
+        "pid": 3341331,
+        "start_ticks": 499339607,
+        "state": "absent"
+      },
+      {
+        "pid": 3341410,
+        "start_ticks": 499340817,
+        "state": "absent"
+      },
+      {
+        "pid": 3341792,
+        "start_ticks": 499343537,
+        "state": "absent"
+      },
+      {
+        "pid": 3341894,
+        "start_ticks": 499344040,
+        "state": "absent"
+      },
+      {
+        "pid": 3341901,
+        "start_ticks": 499344137,
+        "state": "absent"
+      },
+      {
+        "pid": 3342008,
+        "start_ticks": 499346054,
+        "state": "absent"
+      },
+      {
+        "pid": 3342013,
+        "start_ticks": 499346150,
+        "state": "absent"
+      },
+      {
+        "pid": 3342155,
+        "start_ticks": 499348068,
+        "state": "absent"
+      },
+      {
+        "pid": 3342176,
+        "start_ticks": 499348164,
+        "state": "absent"
+      },
+      {
+        "pid": 3342770,
+        "start_ticks": 499350081,
+        "state": "absent"
+      },
+      {
+        "pid": 3342830,
+        "start_ticks": 499352095,
+        "state": "absent"
+      },
+      {
+        "pid": 3342838,
+        "start_ticks": 499352191,
+        "state": "absent"
+      },
+      {
+        "pid": 3342999,
+        "start_ticks": 499354108,
+        "state": "absent"
+      },
+      {
+        "pid": 3343009,
+        "start_ticks": 499354204,
+        "state": "absent"
+      },
+      {
+        "pid": 3343621,
+        "start_ticks": 499356924,
+        "state": "absent"
+      },
+      {
+        "pid": 3343653,
+        "start_ticks": 499357931,
+        "state": "absent"
+      },
+      {
+        "pid": 3343741,
+        "start_ticks": 499359645,
+        "state": "absent"
+      },
+      {
+        "pid": 3343760,
+        "start_ticks": 499359741,
+        "state": "absent"
+      },
+      {
+        "pid": 3344235,
+        "start_ticks": 499362462,
+        "state": "absent"
+      },
+      {
+        "pid": 3344360,
+        "start_ticks": 499365182,
+        "state": "absent"
+      },
+      {
+        "pid": 3344442,
+        "start_ticks": 499365279,
+        "state": "absent"
+      },
+      {
+        "pid": 3348300,
+        "start_ticks": 499371019,
+        "state": "absent"
+      },
+      {
+        "pid": 3350337,
+        "start_ticks": 499371727,
+        "state": "absent"
+      },
+      {
+        "pid": 3350605,
+        "start_ticks": 499371822,
+        "state": "absent"
+      },
+      {
+        "pid": 3355469,
+        "start_ticks": 499374748,
+        "state": "absent"
+      },
+      {
+        "pid": 3355941,
+        "start_ticks": 499376055,
+        "state": "absent"
+      },
+      {
+        "pid": 3357309,
+        "start_ticks": 499379580,
+        "state": "absent"
+      },
+      {
+        "pid": 3357579,
+        "start_ticks": 499380287,
+        "state": "absent"
+      },
+      {
+        "pid": 3357587,
+        "start_ticks": 499380383,
+        "state": "absent"
+      },
+      {
+        "pid": 3359877,
+        "start_ticks": 499385322,
+        "state": "absent"
+      },
+      {
+        "pid": 3359993,
+        "start_ticks": 499385418,
+        "state": "absent"
+      },
+      {
+        "pid": 3362310,
+        "start_ticks": 499390657,
+        "state": "absent"
+      },
+      {
+        "pid": 3362499,
+        "start_ticks": 499391161,
+        "state": "absent"
+      },
+      {
+        "pid": 3362883,
+        "start_ticks": 499391868,
+        "state": "absent"
+      },
+      {
+        "pid": 3362933,
+        "start_ticks": 499391964,
+        "state": "absent"
+      },
+      {
+        "pid": 3363170,
+        "start_ticks": 499392671,
+        "state": "absent"
+      },
+      {
+        "pid": 3363739,
+        "start_ticks": 499393475,
+        "state": "absent"
+      },
+      {
+        "pid": 3363916,
+        "start_ticks": 499393978,
+        "state": "absent"
+      },
+      {
+        "pid": 3365376,
+        "start_ticks": 499396699,
+        "state": "absent"
+      },
+      {
+        "pid": 3367417,
+        "start_ticks": 499403951,
+        "state": "absent"
+      },
+      {
+        "pid": 3367496,
+        "start_ticks": 499404047,
+        "state": "absent"
+      },
+      {
+        "pid": 3378033,
+        "start_ticks": 499408783,
+        "state": "absent"
+      },
+      {
+        "pid": 3378277,
+        "start_ticks": 499409490,
+        "state": "absent"
+      },
+      {
+        "pid": 3378330,
+        "start_ticks": 499409586,
+        "state": "absent"
+      },
+      {
+        "pid": 3378547,
+        "start_ticks": 499410293,
+        "state": "absent"
+      },
+      {
+        "pid": 3378867,
+        "start_ticks": 499411000,
+        "state": "absent"
+      },
+      {
+        "pid": 3378913,
+        "start_ticks": 499411097,
+        "state": "absent"
+      },
+      {
+        "pid": 3379163,
+        "start_ticks": 499411804,
+        "state": "absent"
+      },
+      {
+        "pid": 3381654,
+        "start_ticks": 499417546,
+        "state": "absent"
+      },
+      {
+        "pid": 3381737,
+        "start_ticks": 499417642,
+        "state": "absent"
+      },
+      {
+        "pid": 3381975,
+        "start_ticks": 499418350,
+        "state": "absent"
+      },
+      {
+        "pid": 3382300,
+        "start_ticks": 499419057,
+        "state": "absent"
+      },
+      {
+        "pid": 3382340,
+        "start_ticks": 499419153,
+        "state": "absent"
+      },
+      {
+        "pid": 3385427,
+        "start_ticks": 499425903,
+        "state": "absent"
+      },
+      {
+        "pid": 3385701,
+        "start_ticks": 499426610,
+        "state": "absent"
+      },
+      {
+        "pid": 3385734,
+        "start_ticks": 499426707,
+        "state": "absent"
+      },
+      {
+        "pid": 3385989,
+        "start_ticks": 499427414,
+        "state": "absent"
+      },
+      {
+        "pid": 3386410,
+        "start_ticks": 499428121,
+        "state": "absent"
+      },
+      {
+        "pid": 3386423,
+        "start_ticks": 499428217,
+        "state": "absent"
+      },
+      {
+        "pid": 3389780,
+        "start_ticks": 499435673,
+        "state": "absent"
+      },
+      {
+        "pid": 3389788,
+        "start_ticks": 499435770,
+        "state": "absent"
+      },
+      {
+        "pid": 3389804,
+        "start_ticks": 499436477,
+        "state": "absent"
+      },
+      {
+        "pid": 3389911,
+        "start_ticks": 499438190,
+        "state": "absent"
+      },
+      {
+        "pid": 3389912,
+        "start_ticks": 499438287,
+        "state": "absent"
+      },
+      {
+        "pid": 3390000,
+        "start_ticks": 499438993,
+        "state": "absent"
+      },
+      {
+        "pid": 3391449,
+        "start_ticks": 499440708,
+        "state": "absent"
+      },
+      {
+        "pid": 3391488,
+        "start_ticks": 499440804,
+        "state": "absent"
+      },
+      {
+        "pid": 3391563,
+        "start_ticks": 499441511,
+        "state": "absent"
+      },
+      {
+        "pid": 3391603,
+        "start_ticks": 499443225,
+        "state": "absent"
+      },
+      {
+        "pid": 3391605,
+        "start_ticks": 499443321,
+        "state": "absent"
+      },
+      {
+        "pid": 3391687,
+        "start_ticks": 499445035,
+        "state": "absent"
+      },
+      {
+        "pid": 3391721,
+        "start_ticks": 499446545,
+        "state": "absent"
+      },
+      {
+        "pid": 3391747,
+        "start_ticks": 499446748,
+        "state": "absent"
+      },
+      {
+        "pid": 3391748,
+        "start_ticks": 499446845,
+        "state": "absent"
+      },
+      {
+        "pid": 3392026,
+        "start_ticks": 499448559,
+        "state": "absent"
+      },
+      {
+        "pid": 3392095,
+        "start_ticks": 499450272,
+        "state": "absent"
+      },
+      {
+        "pid": 3392096,
+        "start_ticks": 499450368,
+        "state": "absent"
+      },
+      {
+        "pid": 3392175,
+        "start_ticks": 499452081,
+        "state": "absent"
+      },
+      {
+        "pid": 3392247,
+        "start_ticks": 499453892,
+        "state": "absent"
+      },
+      {
+        "pid": 3392518,
+        "start_ticks": 499458925,
+        "state": "absent"
+      },
+      {
+        "pid": 3392612,
+        "start_ticks": 499461142,
+        "state": "absent"
+      },
+      {
+        "pid": 3394066,
+        "start_ticks": 499462855,
+        "state": "absent"
+      },
+      {
+        "pid": 3394364,
+        "start_ticks": 499462952,
+        "state": "absent"
+      },
+      {
+        "pid": 3396864,
+        "start_ticks": 499463863,
+        "state": "absent"
+      },
+      {
+        "pid": 3397135,
+        "start_ticks": 499463959,
+        "state": "absent"
+      },
+      {
+        "pid": 3399612,
+        "start_ticks": 499464870,
+        "state": "absent"
+      },
+      {
+        "pid": 3399893,
+        "start_ticks": 499464966,
+        "state": "absent"
+      },
+      {
+        "pid": 3405326,
+        "start_ticks": 499473226,
+        "state": "absent"
+      },
+      {
+        "pid": 3405738,
+        "start_ticks": 499474233,
+        "state": "absent"
+      },
+      {
+        "pid": 3407056,
+        "start_ticks": 499476954,
+        "state": "absent"
+      },
+      {
+        "pid": 3407073,
+        "start_ticks": 499477051,
+        "state": "absent"
+      },
+      {
+        "pid": 3409527,
+        "start_ticks": 499482493,
+        "state": "absent"
+      },
+      {
+        "pid": 3409575,
+        "start_ticks": 499482590,
+        "state": "absent"
+      },
+      {
+        "pid": 3409842,
+        "start_ticks": 499483093,
+        "state": "absent"
+      },
+      {
+        "pid": 3409979,
+        "start_ticks": 499483500,
+        "state": "absent"
+      },
+      {
+        "pid": 3409998,
+        "start_ticks": 499483597,
+        "state": "absent"
+      },
+      {
+        "pid": 3410351,
+        "start_ticks": 499484304,
+        "state": "absent"
+      },
+      {
+        "pid": 3410482,
+        "start_ticks": 499484507,
+        "state": "absent"
+      },
+      {
+        "pid": 3410565,
+        "start_ticks": 499484604,
+        "state": "absent"
+      },
+      {
+        "pid": 3413242,
+        "start_ticks": 499490046,
+        "state": "absent"
+      },
+      {
+        "pid": 3413265,
+        "start_ticks": 499490143,
+        "state": "absent"
+      },
+      {
+        "pid": 3413591,
+        "start_ticks": 499491054,
+        "state": "absent"
+      },
+      {
+        "pid": 3413601,
+        "start_ticks": 499491150,
+        "state": "absent"
+      },
+      {
+        "pid": 3413982,
+        "start_ticks": 499492060,
+        "state": "absent"
+      },
+      {
+        "pid": 3414023,
+        "start_ticks": 499492157,
+        "state": "absent"
+      },
+      {
+        "pid": 3414692,
+        "start_ticks": 499494877,
+        "state": "absent"
+      },
+      {
+        "pid": 3414763,
+        "start_ticks": 499495884,
+        "state": "absent"
+      },
+      {
+        "pid": 3414948,
+        "start_ticks": 499496891,
+        "state": "absent"
+      },
+      {
+        "pid": 3417051,
+        "start_ticks": 499499912,
+        "state": "absent"
+      },
+      {
+        "pid": 3417393,
+        "start_ticks": 499500619,
+        "state": "absent"
+      },
+      {
+        "pid": 3418665,
+        "start_ticks": 499503640,
+        "state": "absent"
+      },
+      {
+        "pid": 3418686,
+        "start_ticks": 499503737,
+        "state": "absent"
+      },
+      {
+        "pid": 3419046,
+        "start_ticks": 499504647,
+        "state": "absent"
+      },
+      {
+        "pid": 3419156,
+        "start_ticks": 499504744,
+        "state": "absent"
+      },
+      {
+        "pid": 3419575,
+        "start_ticks": 499505655,
+        "state": "absent"
+      },
+      {
+        "pid": 3419659,
+        "start_ticks": 499505751,
+        "state": "absent"
+      },
+      {
+        "pid": 3420879,
+        "start_ticks": 499508473,
+        "state": "absent"
+      },
+      {
+        "pid": 3421375,
+        "start_ticks": 499509480,
+        "state": "absent"
+      },
+      {
+        "pid": 3421800,
+        "start_ticks": 499510487,
+        "state": "absent"
+      },
+      {
+        "pid": 3424420,
+        "start_ticks": 499516229,
+        "state": "absent"
+      },
+      {
+        "pid": 3424796,
+        "start_ticks": 499516829,
+        "state": "absent"
+      },
+      {
+        "pid": 3424977,
+        "start_ticks": 499517236,
+        "state": "absent"
+      },
+      {
+        "pid": 3424994,
+        "start_ticks": 499517333,
+        "state": "absent"
+      },
+      {
+        "pid": 3425614,
+        "start_ticks": 499518244,
+        "state": "absent"
+      },
+      {
+        "pid": 3425658,
+        "start_ticks": 499518340,
+        "state": "absent"
+      },
+      {
+        "pid": 3428533,
+        "start_ticks": 499525090,
+        "state": "absent"
+      },
+      {
+        "pid": 3428663,
+        "start_ticks": 499526097,
+        "state": "absent"
+      },
+      {
+        "pid": 3428742,
+        "start_ticks": 499527104,
+        "state": "absent"
+      },
+      {
+        "pid": 3439855,
+        "start_ticks": 499532946,
+        "state": "absent"
+      }
+    ],
+    [
+      {
+        "pid": 3033637,
+        "start_ticks": 493713694,
+        "state": "absent"
+      },
+      {
+        "pid": 3033641,
+        "start_ticks": 493713696,
+        "state": "absent"
+      },
+      {
+        "pid": 3033642,
+        "start_ticks": 493713696,
+        "state": "absent"
+      },
+      {
+        "pid": 3033713,
+        "start_ticks": 493713722,
+        "state": "absent"
+      },
+      {
+        "pid": 3033715,
+        "start_ticks": 493714029,
+        "state": "absent"
+      },
+      {
+        "pid": 3033841,
+        "start_ticks": 493715284,
+        "state": "absent"
+      },
+      {
+        "pid": 3034264,
+        "start_ticks": 493739998,
+        "state": "absent"
+      },
+      {
+        "pid": 3034277,
+        "start_ticks": 493741281,
+        "state": "absent"
+      },
+      {
+        "pid": 3034476,
+        "start_ticks": 493746772,
+        "state": "absent"
+      },
+      {
+        "pid": 3034544,
+        "start_ticks": 493748058,
+        "state": "absent"
+      },
+      {
+        "pid": 3034758,
+        "start_ticks": 493754291,
+        "state": "absent"
+      },
+      {
+        "pid": 3034759,
+        "start_ticks": 493754292,
+        "state": "absent"
+      },
+      {
+        "pid": 3034761,
+        "start_ticks": 493754292,
+        "state": "absent"
+      },
+      {
+        "pid": 3034830,
+        "start_ticks": 493754313,
+        "state": "absent"
+      },
+      {
+        "pid": 3034854,
+        "start_ticks": 493754584,
+        "state": "absent"
+      },
+      {
+        "pid": 3035383,
+        "start_ticks": 493772404,
+        "state": "absent"
+      },
+      {
+        "pid": 3035541,
+        "start_ticks": 493777886,
+        "state": "absent"
+      },
+      {
+        "pid": 3035589,
+        "start_ticks": 493783409,
+        "state": "absent"
+      },
+      {
+        "pid": 3035734,
+        "start_ticks": 493788940,
+        "state": "absent"
+      },
+      {
+        "pid": 3035779,
+        "start_ticks": 493794450,
+        "state": "absent"
+      },
+      {
+        "pid": 3035982,
+        "start_ticks": 493799985,
+        "state": "absent"
+      },
+      {
+        "pid": 3036133,
+        "start_ticks": 493805468,
+        "state": "absent"
+      },
+      {
+        "pid": 3036233,
+        "start_ticks": 493810985,
+        "state": "absent"
+      },
+      {
+        "pid": 3036283,
+        "start_ticks": 493816496,
+        "state": "absent"
+      },
+      {
+        "pid": 3036429,
+        "start_ticks": 493822019,
+        "state": "absent"
+      },
+      {
+        "pid": 3036582,
+        "start_ticks": 493827564,
+        "state": "absent"
+      },
+      {
+        "pid": 3036629,
+        "start_ticks": 493833078,
+        "state": "absent"
+      },
+      {
+        "pid": 3036734,
+        "start_ticks": 493838592,
+        "state": "absent"
+      },
+      {
+        "pid": 3036969,
+        "start_ticks": 493855156,
+        "state": "absent"
+      },
+      {
+        "pid": 3037143,
+        "start_ticks": 493869057,
+        "state": "absent"
+      },
+      {
+        "pid": 3037305,
+        "start_ticks": 493874629,
+        "state": "absent"
+      },
+      {
+        "pid": 3037538,
+        "start_ticks": 493883063,
+        "state": "absent"
+      },
+      {
+        "pid": 3037596,
+        "start_ticks": 493888697,
+        "state": "absent"
+      },
+      {
+        "pid": 3037670,
+        "start_ticks": 493897092,
+        "state": "absent"
+      },
+      {
+        "pid": 3037721,
+        "start_ticks": 493902722,
+        "state": "absent"
+      },
+      {
+        "pid": 3037824,
+        "start_ticks": 493911141,
+        "state": "absent"
+      },
+      {
+        "pid": 3037954,
+        "start_ticks": 493919712,
+        "state": "absent"
+      },
+      {
+        "pid": 3038026,
+        "start_ticks": 493928204,
+        "state": "absent"
+      },
+      {
+        "pid": 3038420,
+        "start_ticks": 493946412,
+        "state": "absent"
+      },
+      {
+        "pid": 3038485,
+        "start_ticks": 493952499,
+        "state": "absent"
+      },
+      {
+        "pid": 3038486,
+        "start_ticks": 493952499,
+        "state": "absent"
+      },
+      {
+        "pid": 3038649,
+        "start_ticks": 493964650,
+        "state": "absent"
+      },
+      {
+        "pid": 3038756,
+        "start_ticks": 493973146,
+        "state": "absent"
+      },
+      {
+        "pid": 3038885,
+        "start_ticks": 493981706,
+        "state": "absent"
+      },
+      {
+        "pid": 3038909,
+        "start_ticks": 493984560,
+        "state": "absent"
+      },
+      {
+        "pid": 3038986,
+        "start_ticks": 493993111,
+        "state": "absent"
+      },
+      {
+        "pid": 3039147,
+        "start_ticks": 494007223,
+        "state": "absent"
+      },
+      {
+        "pid": 3039419,
+        "start_ticks": 494018704,
+        "state": "absent"
+      },
+      {
+        "pid": 3039494,
+        "start_ticks": 494027233,
+        "state": "absent"
+      },
+      {
+        "pid": 3039604,
+        "start_ticks": 494035727,
+        "state": "absent"
+      },
+      {
+        "pid": 3039675,
+        "start_ticks": 494044337,
+        "state": "absent"
+      },
+      {
+        "pid": 3039816,
+        "start_ticks": 494055787,
+        "state": "absent"
+      },
+      {
+        "pid": 3040001,
+        "start_ticks": 494064412,
+        "state": "absent"
+      },
+      {
+        "pid": 3040025,
+        "start_ticks": 494067327,
+        "state": "absent"
+      },
+      {
+        "pid": 3040126,
+        "start_ticks": 494078867,
+        "state": "absent"
+      },
+      {
+        "pid": 3040229,
+        "start_ticks": 494090461,
+        "state": "absent"
+      },
+      {
+        "pid": 3040255,
+        "start_ticks": 494093380,
+        "state": "absent"
+      },
+      {
+        "pid": 3040692,
+        "start_ticks": 494117069,
+        "state": "absent"
+      },
+      {
+        "pid": 3040769,
+        "start_ticks": 494119988,
+        "state": "absent"
+      },
+      {
+        "pid": 3040794,
+        "start_ticks": 494123002,
+        "state": "absent"
+      },
+      {
+        "pid": 3040858,
+        "start_ticks": 494125973,
+        "state": "absent"
+      },
+      {
+        "pid": 3041112,
+        "start_ticks": 494144408,
+        "state": "absent"
+      },
+      {
+        "pid": 3041441,
+        "start_ticks": 494165247,
+        "state": "absent"
+      },
+      {
+        "pid": 3041491,
+        "start_ticks": 494170846,
+        "state": "absent"
+      },
+      {
+        "pid": 3041569,
+        "start_ticks": 494179269,
+        "state": "absent"
+      },
+      {
+        "pid": 3041702,
+        "start_ticks": 494184873,
+        "state": "absent"
+      },
+      {
+        "pid": 3041834,
+        "start_ticks": 494198878,
+        "state": "absent"
+      },
+      {
+        "pid": 3042204,
+        "start_ticks": 494207454,
+        "state": "absent"
+      },
+      {
+        "pid": 3042411,
+        "start_ticks": 494215915,
+        "state": "absent"
+      },
+      {
+        "pid": 3042493,
+        "start_ticks": 494224405,
+        "state": "absent"
+      },
+      {
+        "pid": 3042540,
+        "start_ticks": 494230037,
+        "state": "absent"
+      },
+      {
+        "pid": 3042830,
+        "start_ticks": 494241468,
+        "state": "absent"
+      },
+      {
+        "pid": 3043089,
+        "start_ticks": 494267081,
+        "state": "absent"
+      },
+      {
+        "pid": 3043372,
+        "start_ticks": 494275662,
+        "state": "absent"
+      },
+      {
+        "pid": 3044055,
+        "start_ticks": 494295719,
+        "state": "absent"
+      },
+      {
+        "pid": 3044216,
+        "start_ticks": 494307167,
+        "state": "absent"
+      },
+      {
+        "pid": 3044306,
+        "start_ticks": 494315704,
+        "state": "absent"
+      },
+      {
+        "pid": 3044448,
+        "start_ticks": 494324303,
+        "state": "absent"
+      },
+      {
+        "pid": 3044668,
+        "start_ticks": 494338418,
+        "state": "absent"
+      },
+      {
+        "pid": 3044987,
+        "start_ticks": 494356819,
+        "state": "absent"
+      },
+      {
+        "pid": 3045234,
+        "start_ticks": 494365368,
+        "state": "absent"
+      },
+      {
+        "pid": 3045479,
+        "start_ticks": 494373943,
+        "state": "absent"
+      },
+      {
+        "pid": 3045604,
+        "start_ticks": 494385395,
+        "state": "absent"
+      },
+      {
+        "pid": 3045854,
+        "start_ticks": 494405539,
+        "state": "absent"
+      },
+      {
+        "pid": 3046121,
+        "start_ticks": 494417042,
+        "state": "absent"
+      },
+      {
+        "pid": 3046484,
+        "start_ticks": 494428614,
+        "state": "absent"
+      },
+      {
+        "pid": 3046727,
+        "start_ticks": 494443122,
+        "state": "absent"
+      },
+      {
+        "pid": 3047022,
+        "start_ticks": 494457679,
+        "state": "absent"
+      },
+      {
+        "pid": 3047218,
+        "start_ticks": 494475247,
+        "state": "absent"
+      },
+      {
+        "pid": 3047438,
+        "start_ticks": 494492880,
+        "state": "absent"
+      },
+      {
+        "pid": 3047472,
+        "start_ticks": 494495781,
+        "state": "absent"
+      },
+      {
+        "pid": 3047977,
+        "start_ticks": 494522472,
+        "state": "absent"
+      },
+      {
+        "pid": 3048010,
+        "start_ticks": 494525429,
+        "state": "absent"
+      },
+      {
+        "pid": 3339775,
+        "start_ticks": 499312595,
+        "state": "absent"
+      },
+      {
+        "pid": 3339785,
+        "start_ticks": 499312600,
+        "state": "absent"
+      },
+      {
+        "pid": 3339820,
+        "start_ticks": 499312653,
+        "state": "absent"
+      },
+      {
+        "pid": 3339889,
+        "start_ticks": 499312675,
+        "state": "absent"
+      },
+      {
+        "pid": 3340067,
+        "start_ticks": 499316134,
+        "state": "absent"
+      },
+      {
+        "pid": 3340119,
+        "start_ticks": 499316457,
+        "state": "absent"
+      },
+      {
+        "pid": 3340129,
+        "start_ticks": 499317030,
+        "state": "absent"
+      },
+      {
+        "pid": 3340185,
+        "start_ticks": 499317431,
+        "state": "absent"
+      },
+      {
+        "pid": 3340196,
+        "start_ticks": 499317831,
+        "state": "absent"
+      },
+      {
+        "pid": 3340248,
+        "start_ticks": 499318461,
+        "state": "absent"
+      },
+      {
+        "pid": 3340257,
+        "start_ticks": 499319018,
+        "state": "absent"
+      },
+      {
+        "pid": 3340261,
+        "start_ticks": 499319438,
+        "state": "absent"
+      },
+      {
+        "pid": 3340353,
+        "start_ticks": 499320104,
+        "state": "absent"
+      },
+      {
+        "pid": 3340481,
+        "start_ticks": 499321430,
+        "state": "absent"
+      },
+      {
+        "pid": 3340501,
+        "start_ticks": 499322137,
+        "state": "absent"
+      },
+      {
+        "pid": 3340519,
+        "start_ticks": 499323347,
+        "state": "absent"
+      },
+      {
+        "pid": 3340520,
+        "start_ticks": 499323444,
+        "state": "absent"
+      },
+      {
+        "pid": 3340536,
+        "start_ticks": 499324150,
+        "state": "absent"
+      },
+      {
+        "pid": 3340745,
+        "start_ticks": 499328979,
+        "state": "absent"
+      },
+      {
+        "pid": 3340814,
+        "start_ticks": 499330547,
+        "state": "absent"
+      },
+      {
+        "pid": 3340843,
+        "start_ticks": 499331758,
+        "state": "absent"
+      },
+      {
+        "pid": 3341042,
+        "start_ticks": 499333771,
+        "state": "absent"
+      },
+      {
+        "pid": 3341062,
+        "start_ticks": 499335078,
+        "state": "absent"
+      },
+      {
+        "pid": 3341312,
+        "start_ticks": 499339510,
+        "state": "absent"
+      },
+      {
+        "pid": 3341331,
+        "start_ticks": 499339607,
+        "state": "absent"
+      },
+      {
+        "pid": 3341410,
+        "start_ticks": 499340817,
+        "state": "absent"
+      },
+      {
+        "pid": 3341792,
+        "start_ticks": 499343537,
+        "state": "absent"
+      },
+      {
+        "pid": 3341894,
+        "start_ticks": 499344040,
+        "state": "absent"
+      },
+      {
+        "pid": 3341901,
+        "start_ticks": 499344137,
+        "state": "absent"
+      },
+      {
+        "pid": 3342008,
+        "start_ticks": 499346054,
+        "state": "absent"
+      },
+      {
+        "pid": 3342013,
+        "start_ticks": 499346150,
+        "state": "absent"
+      },
+      {
+        "pid": 3342155,
+        "start_ticks": 499348068,
+        "state": "absent"
+      },
+      {
+        "pid": 3342176,
+        "start_ticks": 499348164,
+        "state": "absent"
+      },
+      {
+        "pid": 3342770,
+        "start_ticks": 499350081,
+        "state": "absent"
+      },
+      {
+        "pid": 3342830,
+        "start_ticks": 499352095,
+        "state": "absent"
+      },
+      {
+        "pid": 3342838,
+        "start_ticks": 499352191,
+        "state": "absent"
+      },
+      {
+        "pid": 3342999,
+        "start_ticks": 499354108,
+        "state": "absent"
+      },
+      {
+        "pid": 3343009,
+        "start_ticks": 499354204,
+        "state": "absent"
+      },
+      {
+        "pid": 3343621,
+        "start_ticks": 499356924,
+        "state": "absent"
+      },
+      {
+        "pid": 3343653,
+        "start_ticks": 499357931,
+        "state": "absent"
+      },
+      {
+        "pid": 3343741,
+        "start_ticks": 499359645,
+        "state": "absent"
+      },
+      {
+        "pid": 3343760,
+        "start_ticks": 499359741,
+        "state": "absent"
+      },
+      {
+        "pid": 3344235,
+        "start_ticks": 499362462,
+        "state": "absent"
+      },
+      {
+        "pid": 3344360,
+        "start_ticks": 499365182,
+        "state": "absent"
+      },
+      {
+        "pid": 3344442,
+        "start_ticks": 499365279,
+        "state": "absent"
+      },
+      {
+        "pid": 3348300,
+        "start_ticks": 499371019,
+        "state": "absent"
+      },
+      {
+        "pid": 3350337,
+        "start_ticks": 499371727,
+        "state": "absent"
+      },
+      {
+        "pid": 3350605,
+        "start_ticks": 499371822,
+        "state": "absent"
+      },
+      {
+        "pid": 3355469,
+        "start_ticks": 499374748,
+        "state": "absent"
+      },
+      {
+        "pid": 3355941,
+        "start_ticks": 499376055,
+        "state": "absent"
+      },
+      {
+        "pid": 3357309,
+        "start_ticks": 499379580,
+        "state": "absent"
+      },
+      {
+        "pid": 3357579,
+        "start_ticks": 499380287,
+        "state": "absent"
+      },
+      {
+        "pid": 3357587,
+        "start_ticks": 499380383,
+        "state": "absent"
+      },
+      {
+        "pid": 3359877,
+        "start_ticks": 499385322,
+        "state": "absent"
+      },
+      {
+        "pid": 3359993,
+        "start_ticks": 499385418,
+        "state": "absent"
+      },
+      {
+        "pid": 3362310,
+        "start_ticks": 499390657,
+        "state": "absent"
+      },
+      {
+        "pid": 3362499,
+        "start_ticks": 499391161,
+        "state": "absent"
+      },
+      {
+        "pid": 3362883,
+        "start_ticks": 499391868,
+        "state": "absent"
+      },
+      {
+        "pid": 3362933,
+        "start_ticks": 499391964,
+        "state": "absent"
+      },
+      {
+        "pid": 3363170,
+        "start_ticks": 499392671,
+        "state": "absent"
+      },
+      {
+        "pid": 3363739,
+        "start_ticks": 499393475,
+        "state": "absent"
+      },
+      {
+        "pid": 3363916,
+        "start_ticks": 499393978,
+        "state": "absent"
+      },
+      {
+        "pid": 3365376,
+        "start_ticks": 499396699,
+        "state": "absent"
+      },
+      {
+        "pid": 3367417,
+        "start_ticks": 499403951,
+        "state": "absent"
+      },
+      {
+        "pid": 3367496,
+        "start_ticks": 499404047,
+        "state": "absent"
+      },
+      {
+        "pid": 3378033,
+        "start_ticks": 499408783,
+        "state": "absent"
+      },
+      {
+        "pid": 3378277,
+        "start_ticks": 499409490,
+        "state": "absent"
+      },
+      {
+        "pid": 3378330,
+        "start_ticks": 499409586,
+        "state": "absent"
+      },
+      {
+        "pid": 3378547,
+        "start_ticks": 499410293,
+        "state": "absent"
+      },
+      {
+        "pid": 3378867,
+        "start_ticks": 499411000,
+        "state": "absent"
+      },
+      {
+        "pid": 3378913,
+        "start_ticks": 499411097,
+        "state": "absent"
+      },
+      {
+        "pid": 3379163,
+        "start_ticks": 499411804,
+        "state": "absent"
+      },
+      {
+        "pid": 3381654,
+        "start_ticks": 499417546,
+        "state": "absent"
+      },
+      {
+        "pid": 3381737,
+        "start_ticks": 499417642,
+        "state": "absent"
+      },
+      {
+        "pid": 3381975,
+        "start_ticks": 499418350,
+        "state": "absent"
+      },
+      {
+        "pid": 3382300,
+        "start_ticks": 499419057,
+        "state": "absent"
+      },
+      {
+        "pid": 3382340,
+        "start_ticks": 499419153,
+        "state": "absent"
+      },
+      {
+        "pid": 3385427,
+        "start_ticks": 499425903,
+        "state": "absent"
+      },
+      {
+        "pid": 3385701,
+        "start_ticks": 499426610,
+        "state": "absent"
+      },
+      {
+        "pid": 3385734,
+        "start_ticks": 499426707,
+        "state": "absent"
+      },
+      {
+        "pid": 3385989,
+        "start_ticks": 499427414,
+        "state": "absent"
+      },
+      {
+        "pid": 3386410,
+        "start_ticks": 499428121,
+        "state": "absent"
+      },
+      {
+        "pid": 3386423,
+        "start_ticks": 499428217,
+        "state": "absent"
+      },
+      {
+        "pid": 3389780,
+        "start_ticks": 499435673,
+        "state": "absent"
+      },
+      {
+        "pid": 3389788,
+        "start_ticks": 499435770,
+        "state": "absent"
+      },
+      {
+        "pid": 3389804,
+        "start_ticks": 499436477,
+        "state": "absent"
+      },
+      {
+        "pid": 3389911,
+        "start_ticks": 499438190,
+        "state": "absent"
+      },
+      {
+        "pid": 3389912,
+        "start_ticks": 499438287,
+        "state": "absent"
+      },
+      {
+        "pid": 3390000,
+        "start_ticks": 499438993,
+        "state": "absent"
+      },
+      {
+        "pid": 3391449,
+        "start_ticks": 499440708,
+        "state": "absent"
+      },
+      {
+        "pid": 3391488,
+        "start_ticks": 499440804,
+        "state": "absent"
+      },
+      {
+        "pid": 3391563,
+        "start_ticks": 499441511,
+        "state": "absent"
+      },
+      {
+        "pid": 3391603,
+        "start_ticks": 499443225,
+        "state": "absent"
+      },
+      {
+        "pid": 3391605,
+        "start_ticks": 499443321,
+        "state": "absent"
+      },
+      {
+        "pid": 3391687,
+        "start_ticks": 499445035,
+        "state": "absent"
+      },
+      {
+        "pid": 3391721,
+        "start_ticks": 499446545,
+        "state": "absent"
+      },
+      {
+        "pid": 3391747,
+        "start_ticks": 499446748,
+        "state": "absent"
+      },
+      {
+        "pid": 3391748,
+        "start_ticks": 499446845,
+        "state": "absent"
+      },
+      {
+        "pid": 3392026,
+        "start_ticks": 499448559,
+        "state": "absent"
+      },
+      {
+        "pid": 3392095,
+        "start_ticks": 499450272,
+        "state": "absent"
+      },
+      {
+        "pid": 3392096,
+        "start_ticks": 499450368,
+        "state": "absent"
+      },
+      {
+        "pid": 3392175,
+        "start_ticks": 499452081,
+        "state": "absent"
+      },
+      {
+        "pid": 3392247,
+        "start_ticks": 499453892,
+        "state": "absent"
+      },
+      {
+        "pid": 3392518,
+        "start_ticks": 499458925,
+        "state": "absent"
+      },
+      {
+        "pid": 3392612,
+        "start_ticks": 499461142,
+        "state": "absent"
+      },
+      {
+        "pid": 3394066,
+        "start_ticks": 499462855,
+        "state": "absent"
+      },
+      {
+        "pid": 3394364,
+        "start_ticks": 499462952,
+        "state": "absent"
+      },
+      {
+        "pid": 3396864,
+        "start_ticks": 499463863,
+        "state": "absent"
+      },
+      {
+        "pid": 3397135,
+        "start_ticks": 499463959,
+        "state": "absent"
+      },
+      {
+        "pid": 3399612,
+        "start_ticks": 499464870,
+        "state": "absent"
+      },
+      {
+        "pid": 3399893,
+        "start_ticks": 499464966,
+        "state": "absent"
+      },
+      {
+        "pid": 3405326,
+        "start_ticks": 499473226,
+        "state": "absent"
+      },
+      {
+        "pid": 3405738,
+        "start_ticks": 499474233,
+        "state": "absent"
+      },
+      {
+        "pid": 3407056,
+        "start_ticks": 499476954,
+        "state": "absent"
+      },
+      {
+        "pid": 3407073,
+        "start_ticks": 499477051,
+        "state": "absent"
+      },
+      {
+        "pid": 3409527,
+        "start_ticks": 499482493,
+        "state": "absent"
+      },
+      {
+        "pid": 3409575,
+        "start_ticks": 499482590,
+        "state": "absent"
+      },
+      {
+        "pid": 3409842,
+        "start_ticks": 499483093,
+        "state": "absent"
+      },
+      {
+        "pid": 3409979,
+        "start_ticks": 499483500,
+        "state": "absent"
+      },
+      {
+        "pid": 3409998,
+        "start_ticks": 499483597,
+        "state": "absent"
+      },
+      {
+        "pid": 3410351,
+        "start_ticks": 499484304,
+        "state": "absent"
+      },
+      {
+        "pid": 3410482,
+        "start_ticks": 499484507,
+        "state": "absent"
+      },
+      {
+        "pid": 3410565,
+        "start_ticks": 499484604,
+        "state": "absent"
+      },
+      {
+        "pid": 3413242,
+        "start_ticks": 499490046,
+        "state": "absent"
+      },
+      {
+        "pid": 3413265,
+        "start_ticks": 499490143,
+        "state": "absent"
+      },
+      {
+        "pid": 3413591,
+        "start_ticks": 499491054,
+        "state": "absent"
+      },
+      {
+        "pid": 3413601,
+        "start_ticks": 499491150,
+        "state": "absent"
+      },
+      {
+        "pid": 3413982,
+        "start_ticks": 499492060,
+        "state": "absent"
+      },
+      {
+        "pid": 3414023,
+        "start_ticks": 499492157,
+        "state": "absent"
+      },
+      {
+        "pid": 3414692,
+        "start_ticks": 499494877,
+        "state": "absent"
+      },
+      {
+        "pid": 3414763,
+        "start_ticks": 499495884,
+        "state": "absent"
+      },
+      {
+        "pid": 3414948,
+        "start_ticks": 499496891,
+        "state": "absent"
+      },
+      {
+        "pid": 3417051,
+        "start_ticks": 499499912,
+        "state": "absent"
+      },
+      {
+        "pid": 3417393,
+        "start_ticks": 499500619,
+        "state": "absent"
+      },
+      {
+        "pid": 3418665,
+        "start_ticks": 499503640,
+        "state": "absent"
+      },
+      {
+        "pid": 3418686,
+        "start_ticks": 499503737,
+        "state": "absent"
+      },
+      {
+        "pid": 3419046,
+        "start_ticks": 499504647,
+        "state": "absent"
+      },
+      {
+        "pid": 3419156,
+        "start_ticks": 499504744,
+        "state": "absent"
+      },
+      {
+        "pid": 3419575,
+        "start_ticks": 499505655,
+        "state": "absent"
+      },
+      {
+        "pid": 3419659,
+        "start_ticks": 499505751,
+        "state": "absent"
+      },
+      {
+        "pid": 3420879,
+        "start_ticks": 499508473,
+        "state": "absent"
+      },
+      {
+        "pid": 3421375,
+        "start_ticks": 499509480,
+        "state": "absent"
+      },
+      {
+        "pid": 3421800,
+        "start_ticks": 499510487,
+        "state": "absent"
+      },
+      {
+        "pid": 3424420,
+        "start_ticks": 499516229,
+        "state": "absent"
+      },
+      {
+        "pid": 3424796,
+        "start_ticks": 499516829,
+        "state": "absent"
+      },
+      {
+        "pid": 3424977,
+        "start_ticks": 499517236,
+        "state": "absent"
+      },
+      {
+        "pid": 3424994,
+        "start_ticks": 499517333,
+        "state": "absent"
+      },
+      {
+        "pid": 3425614,
+        "start_ticks": 499518244,
+        "state": "absent"
+      },
+      {
+        "pid": 3425658,
+        "start_ticks": 499518340,
+        "state": "absent"
+      },
+      {
+        "pid": 3428533,
+        "start_ticks": 499525090,
+        "state": "absent"
+      },
+      {
+        "pid": 3428663,
+        "start_ticks": 499526097,
+        "state": "absent"
+      },
+      {
+        "pid": 3428742,
+        "start_ticks": 499527104,
+        "state": "absent"
+      },
+      {
+        "pid": 3439855,
+        "start_ticks": 499532946,
+        "state": "absent"
+      }
+    ]
+  ],
+  "leases": {
+    "mbit10-evaluation": {
+      "metadata_state": "released",
+      "generation": 77,
+      "kernel_held": false
+    },
+    "mbit10-evaluation-node0": {
+      "metadata_state": "released",
+      "generation": 351,
+      "kernel_held": false
+    },
+    "mbit10-evaluation-node1": {
+      "metadata_state": "released",
+      "generation": 445,
+      "kernel_held": false
+    }
+  },
+  "storage_observations": [
+    {
+      "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1": 1432666112,
+      "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1.dispatch": 102400
+    },
+    {
+      "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1": 1432666112,
+      "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1.dispatch": 102400
+    }
+  ],
+  "storage_stable": true,
+  "final_allocated_bytes": 1432768512,
+  "outer_exit": "1",
+  "outer_finished": "2026-09-27T03:47:00,606779930-04:00",
+  "series": {
+    "state": "failed",
+    "reason": "ValueError: public stage exited 1",
+    "samples": [],
+    "host_wall_s": 3990.4504888458177
+  },
+  "public_output_bytes": 217633,
+  "public_stderr_bytes": 0,
+  "mutation": false,
+  "new_evaluation_or_parser": false,
+  "accounting": {
+    "outer_started_exact": "2026-09-27T02:39:53.162109-04:00",
+    "outer_finished_exact": "2026-09-27T03:47:00.606779930-04:00",
+    "outer_elapsed_seconds_exact_decimal": "4027.444670930",
+    "outer_execution_seconds_ceiling": 4028,
+    "independent_closed_at": "2026-09-27T04:14:37.186111-04:00",
+    "closure_inclusive_seconds": 5684.024002,
+    "closure_inclusive_seconds_ceiling": 5685,
+    "driver_elapsed_seconds": 4025.8892556857318,
+    "embedded_final_wall_seconds": 4026.903594349511,
+    "final_allocated_bytes": 1432768512,
+    "wrapper_after_driver_bytes": 8192,
+    "prior_charged_seconds": 8748,
+    "closure_inclusive_aggregate_seconds": 14433,
+    "final_charged_raw_bytes": 22482972672,
+    "no_refund": true
+  },
+  "all_retained_identities_absent_twice": true,
+  "complete_union_sources": [
+    "driver and descendant driver JSON",
+    "all ledger.jsonl and owned-resources.jsonl rows",
+    "dispatch launch and lane"
+  ]
+}

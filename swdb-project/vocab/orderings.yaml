@@ -1,0 +1,11 @@
+name: orderings
+description: What order an access pattern's accesses must happen in for the kernel to stay correct.
+values:
+  - value: any_order
+    meaning: Iterations may run in any order and the result is the same up to the numerical requirement.
+  - value: schedule_dependent
+    meaning: Accesses may see values written earlier in the same loop, so the result depends on the order the schedule produces; any order still passes the correctness check.
+  - value: program_order
+    meaning: Accesses must keep the sequential program order.
+  - value: level_synchronous
+    meaning: Order within one level (frontier) is free; levels must complete in order.

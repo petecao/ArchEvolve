@@ -1,0 +1,136 @@
+[
+  {
+    "title": "What is the SW database?",
+    "narration": "0:00–0:50 (50 seconds). The Software Database is the shared store of software knowledge in ArchEvolve. It connects actual application code to the facts the software and hardware agents need when they make decisions. Its purpose is to answer three questions: which implementations exist, how they touch memory, and what their measured behavior is under a particular input and machine. We also store reusable strategies for changing the code. Without this shared store, each request would start from an informal workload description and the agents would need to recover those facts again. We have implemented the records and the tools that validate, query, profile and export them. I will first show what a record contains and where the database connects to the other components.",
+    "sources": [
+      "CONTEXT.md",
+      ".scratch/evolveswdb-2026-09-22/spec.md",
+      "swdb/cli.py"
+    ]
+  },
+  {
+    "title": "What does it store?",
+    "narration": "0:50–1:55 (65 seconds). The database has four groups of information. First, applications and kernels state the source, the computation and its correctness check. Second, implementations hold real code, loop structure, memory-access patterns and dependencies. PageRank has separate Gauss-Seidel and Jacobi implementation records. Third, inputs, machines and profiles tell us the context and observed behavior of that code. A timing is attached to one implementation, input and machine, so we do not confuse results from different conditions. Fourth, optimization strategies and intrinsics record ways to change the code and the conditions those changes require. For example, packing describes gathering values into contiguous storage. Each fact carries its evidence basis. These records are linked by stable IDs. YAML files in git are the source of truth, and the tool builds a SQLite database for queries.",
+    "sources": [
+      "CONTEXT.md",
+      "docs/adr/0001-kernel-identity-is-its-correctness-check.md",
+      "docs/adr/0002-yaml-in-git-is-the-master-copy-sqlite-is-generated.md",
+      "records/implementations/gapbs-pr-jacobi.yaml",
+      "records/strategies/packing.yaml"
+    ]
+  },
+  {
+    "title": "How does it connect to ArchEvolve?",
+    "narration": "1:55–3:05 (70 seconds). This is the architecture around the Software Database. The Controller coordinates the software and hardware work. The software agent queries the database for implementations, memory-access behavior and eligible strategies. It can submit new implementation or profile records through the validated write path. On the hardware side, the database generates a workload view. That view combines the implementation, input, machine and profile into the hardware agent’s expected format, including code, access patterns, array sizes, semantics and measurements. The hardware agent can reason about a hardware candidate and its software requirements using this view and its own hardware catalog. Those requirements return through the Controller for software adaptation. The database does not own the Controller or hardware search. The query, write and export interfaces exist today. The dashed coordination links show the intended architecture, not a claim that the full agent loop has run.",
+    "sources": [
+      ".scratch/evolveswdb-2026-09-22/spec.md",
+      "archevolve/hw_ensemble/hardware-agent.md",
+      "swdb/cli.py",
+      "swdb/view.py",
+      "swdb/writer.py"
+    ]
+  },
+  {
+    "title": "One example: PageRank’s contribution gather",
+    "narration": "3:05–4:10 (65 seconds). Here is what those two consumers receive from the same stored implementation. Jacobi PageRank reads a neighbor identifier, then uses that identifier to read the neighbor’s contribution. We record that indirection explicitly along with the relevant dependency semantics. For the software agent, the strategy query reports that this gather passes packing’s encoded conditions. That is a candidate worth investigating, with manual checks still required for value stability and amortization. For the hardware agent, the workload view describes the indirect read and its semantics and supplies the array footprint and timing for the selected input and machine. Both sides refer to the same code and evidence. They receive different views for different decisions, without having to reconstruct the source facts independently.",
+    "sources": [
+      "records/implementations/gapbs-pr-jacobi.yaml",
+      "records/strategies/packing.yaml",
+      "swdb/strategy.py",
+      "swdb/view.py"
+    ]
+  },
+  {
+    "title": "What works today, and what comes next",
+    "narration": "4:10–5:00 (50 seconds). The current database covers six kernels and eight implementations from GAPBS, with thirty-two profiles across four inputs. Thirty-one profiles are complete. The implemented interfaces validate and store records, answer queries and generate hardware workload views. We also have a catalog of five strategies and two intrinsics. These counts show that the structure is populated and exercised. They are not a claim of measured gains from applying those strategies. Our next proposed experiment is to select one eligible strategy, complete its manual checks, implement it as a derived implementation and measure the full cost against its baseline after checking correctness. That would close the loop between stored knowledge, a concrete code change and new evidence in the database.",
+    "sources": [
+      "records/",
+      ".scratch/evolveswdb-2026-09-22/map.md",
+      ".scratch/optimization-strategies-2026-09-23/map.md"
+    ]
+  },
+  {
+    "title": "Backup: PageRank scaling changes with input size",
+    "narration": "Backup only. These are recorded timings for the same Jacobi implementation on two Kronecker inputs. Both runs used the mbit10 Xeon Gold 6326, within one socket, and five trials at each thread count. The chart divides the one-thread median by each multi-thread median. The smaller input reaches about four times speedup and then flattens. The larger input reaches thirteen point three five times at sixteen threads. Their recorded footprints are eight point three three megabytes and five hundred eighty point three five megabytes, compared with a twenty-four mebibyte last-level cache per socket. For the small case, the code’s dynamic chunk size of sixteen thousand three hundred eighty-four gives only four chunks for roughly sixty-five thousand vertices. This helps explain the plateau. We retain measured timing separately from simulated cache misses and inferred bottleneck labels. The result motivates storing profiles per input. It does not by itself establish a memory-latency cause for the larger case.",
+    "sources": [
+      "records/profiles/gapbs-pr-jacobi.kron-g16-k16.mbit10.20260922t212416z.yaml",
+      "records/profiles/gapbs-pr-jacobi.kron-g22-k16.mbit10.20260922t215412z.yaml",
+      "records/machines/mbit10.yaml",
+      "apps/gapbs/src/pr_spmv.cc"
+    ]
+  },
+  {
+    "title": "Backup: complete record inventory",
+    "narration": "Backup only. Counts are from all YAML records at the stated checkout. The 59 records all retain draft status. Access patterns are nested within implementations, so their count is not added to the record total. All 21 tickets across the initial milestone and strategy extension are marked resolved. Ticket status does not establish research effectiveness.",
+    "sources": [
+      "records/",
+      ".scratch/evolveswdb-2026-09-22/map.md",
+      ".scratch/optimization-strategies-2026-09-23/map.md"
+    ]
+  },
+  {
+    "title": "Backup: application and profile coverage",
+    "narration": "Backup only. Every implementation has one profile for each of the four pilot inputs, for 32 profiles. Thirty-one are complete. Triangle counting on the larger Kronecker input timed out in its correctness verifier and remains incomplete. Its timing and simulation output must not be treated as correctness-verified performance. Existing implementations come from upstream GAPBS, including Jacobi.",
+    "sources": [
+      "records/kernels/",
+      "records/implementations/",
+      "records/inputs/",
+      "records/profiles/"
+    ]
+  },
+  {
+    "title": "Backup: implemented database operations",
+    "narration": "Backup only. YAML is the source of truth and SQLite is a generated query cache. Validation covers schemas, vocabularies and cross-record rules. Adding a record validates it before storing it and rebuilding the cache. Agent-origin additions retain draft status and agent-run provenance. Queries cover access patterns, semantic conditions, implementations and strategies. A workload view adapts stored records to the hardware-side format, but completed integration with a running HW agent is not established here.",
+    "sources": [
+      "swdb/cli.py",
+      "swdb/db.py",
+      "swdb/writer.py",
+      "swdb/view.py",
+      "docs/database.md",
+      "docs/adr/0002-yaml-in-git-is-the-master-copy-sqlite-is-generated.md"
+    ]
+  },
+  {
+    "title": "Backup: profiling and evidence types",
+    "narration": "Backup only. The profiling pipeline records build provenance, host conditions, correctness checks and stages. Timing uses the application’s trial timer and retains all repetitions, medians, minima, maxima and spreads. Footprints use sizes and formulas. Index-stream features characterize recorded indirect streams and are available in 12 profiles, not all 32. Cachegrind simulates cache behavior at one thread, with kernel-function filtering. Bottleneck labels are inferences from counter-free evidence. The profile stores which stage completed and why other stages did not.",
+    "sources": [
+      "swdb/profile.py",
+      "tools/index_features/",
+      "docs/mbit10-profiling.md",
+      "records/profiles/"
+    ]
+  },
+  {
+    "title": "Backup: optimization strategies and intrinsics",
+    "narration": "Backup only. The five strategy records identify changes by target and effect rather than name alone. Parameters such as distance or tile size do not create a new strategy identity. Preconditions return legal, illegal or undetermined, with unencoded obligations retained as manual checks. Benefits in strategy records are reported claims, not measured gains in this project. The intrinsic records cover the prefetch wrapper and an AVX-512 gather wrapper. Intrinsic use derives required ISA extensions for an implementation.",
+    "sources": [
+      "docs/adr/0004-optimization-strategy-is-a-record-identified-by-its-effect.md",
+      "records/strategies/",
+      "records/intrinsics/",
+      "swdb/strategy.py",
+      "swdb/isa.py"
+    ]
+  },
+  {
+    "title": "Backup: safeguards and remaining boundaries",
+    "narration": "Backup only. These distinctions prevent a schema-valid record from being mistaken for a scientifically established result. The database checks references and evidence bases, preserves unknown semantics and enforces ISA requirements during profiling. Workload view generation exists, but this deck does not assert completed hardware-agent integration. The shared-host measurements are from committed profile records. This deck preparation did not rerun them or independently recheck the remote raw files.",
+    "sources": [
+      "swdb/rules.py",
+      "swdb/validate.py",
+      "swdb/isa.py",
+      "swdb/profile.py",
+      "swdb/view.py",
+      ".claude/rules/remote_server.md"
+    ]
+  },
+  {
+    "title": "Backup: PageRank timing and setup",
+    "narration": "Backup only. These are medians in milliseconds, rounded from the profile records. Speedup is the one-thread median divided by the 16-thread median. Each median uses five trials. The two experiments have different graph sizes, so absolute times should not be compared as a speedup. The footprint is recorded in decimal MB, and the cache is 24 MiB = 25,165,824 bytes. The labels parallelism_bound and memory_bound are stored inferences. The small-input implementation uses dynamic scheduling with a chunk size of 16,384. Timing is the application Trial Time, not end-to-end process wall time. Raw records identify build commits and raw-output paths. This deck does not independently revalidate remote files.",
+    "sources": [
+      "records/profiles/gapbs-pr-jacobi.kron-g16-k16.mbit10.20260922t212416z.yaml",
+      "records/profiles/gapbs-pr-jacobi.kron-g22-k16.mbit10.20260922t215412z.yaml",
+      "apps/gapbs/src/pr_spmv.cc",
+      "records/machines/mbit10.yaml"
+    ]
+  }
+]

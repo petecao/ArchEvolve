@@ -1,0 +1,33 @@
+{
+  "stage": "score",
+  "command": [
+    "/usr/bin/python3",
+    "-m",
+    "swdb",
+    "annotate-score",
+    "--records",
+    "/data1/yanruj/ArchEvolve/swdb-project/records",
+    "--format",
+    "json",
+    "dx100-bfs-scalar",
+    "--source-snapshot",
+    "bfs-dx100-scalar-only-20260929-a1.source",
+    "--region-profile",
+    "typed-library-bfs-scalar-profile-20261003-a2.profile",
+    "--table",
+    "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a3/josh-statement-table.md"
+  ],
+  "started": "2026-10-03T13:08:45.412774+00:00",
+  "timeout_seconds": 180,
+  "finished": "2026-10-03T13:08:57.160013+00:00",
+  "returncode": 0,
+  "state": "complete",
+  "output": {
+    "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a3/score.json",
+    "sha256": "4ed80ab182db5cc1bfa4db29bf12a3ae5812276e0386eb581f9e489db3a9b4ae"
+  },
+  "stderr": {
+    "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a3/score.stderr.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

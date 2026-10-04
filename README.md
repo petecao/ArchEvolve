@@ -4,6 +4,14 @@ The active target is the **DX100-modified GAP BFS**, using Peter's v1.2 sparse a
 
 Local work for this task lives in `/Users/jvgrewal/Desktop/ArchEvolve`. Run commands from the repository root.
 
+## Software database (`swdb-project/`)
+
+Added 2026-09-29 ET. Yan-Ru's EvolveSWDB repository now lives in [`swdb-project/`](swdb-project/README.md), imported with `git subtree` so its full history is kept. It holds the kernel records, schemas, vocabularies, profiling scripts, and the `swdb` tool. Its own rules ([AGENTS.md](swdb-project/AGENTS.md), [CONTEXT.md](swdb-project/CONTEXT.md), [ADRs](swdb-project/docs/adr/)) apply inside that folder only.
+
+```sh
+cd swdb-project && python3 -m pytest -q
+```
+
 ## Current offline forward path
 
 **Feature reports → normalized evidence → typed operation queries → conditional candidates → intrinsic-description packages, YAML and Mermaid.**

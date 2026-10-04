@@ -1,0 +1,3017 @@
+kind: region_profile
+schema_version: '0.4'
+id: bfs-native-pilot-20260925-dx10018-a1.kronecker.profile
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-native-pilot-20260925-dx10018-a1.kronecker.profile
+  evaluation: bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation
+  memory: true
+  budget:
+    discovery_seconds: 120
+    build_seconds: 180
+    run_seconds: 600
+    total_seconds: 1200
+outcome:
+  state: partial
+  stage: profiling
+  reason: bounded source attribution; see explicit coverage and metric limits
+stages:
+- stage: compiler_identity
+  state: complete
+  started: '2026-09-26T03:15:09.755351+00:00'
+  command: [/usr/bin/g++, --version]
+  timeout_s: 30
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/000-compiler_identity.log
+  finished: '2026-09-26T03:15:18.317407+00:00'
+  returncode: 0
+  host_wall_s: 0.008318268693983555
+  log_sha256: 59d1cbef41d4ae78d5063d525b7aa13d18dc0493ea00537efc19b2ee398cb5a8
+- stage: preprocessor_identity
+  state: complete
+  started: '2026-09-26T03:15:26.231792+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -dM
+  - -E
+  - -v
+  - -x
+  - c++
+  - /dev/null
+  timeout_s: 30
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/001-preprocessor_identity.log
+  finished: '2026-09-26T03:15:34.521975+00:00'
+  returncode: 0
+  host_wall_s: 0.03309181798249483
+  log_sha256: d58a7a01aae5e14f33d6a229c942108f4dbe465380c45e785f418d13981a2433
+- stage: source_discovery
+  state: complete
+  started: '2026-09-26T03:15:42.353381+00:00'
+  command:
+  - /usr/bin/python3
+  - /data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/swdb/bfs_discovery.py
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/discovery-request.json
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/discovery.json
+  timeout_s: 120.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/002-source_discovery.log
+  finished: '2026-09-26T03:15:51.357504+00:00'
+  returncode: 0
+  host_wall_s: 0.7670454541221261
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: region_build
+  state: complete
+  started: '2026-09-26T03:16:00.360964+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/API
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/regions_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/bfs-regions
+  timeout_s: 180.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/003-region_build.log
+  finished: '2026-09-26T03:16:12.691423+00:00'
+  returncode: 0
+  host_wall_s: 3.176811051554978
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: region_execution
+  state: complete
+  started: '2026-09-26T03:16:21.323183+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/bfs-regions
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '0'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/regions-0-0.json
+  timeout_s: 600.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/004-region_execution.log
+  finished: '2026-09-26T03:16:31.792902+00:00'
+  returncode: 0
+  host_wall_s: 2.171427267603576
+  log_sha256: 2e6713ea99e462b9cb6ee1941c1ea80685ab72762fa5c93285c4360f10df351d
+- stage: region_execution
+  state: complete
+  started: '2026-09-26T03:16:50.793601+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/bfs-regions
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '1234'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/regions-0-1.json
+  timeout_s: 600.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/005-region_execution.log
+  finished: '2026-09-26T03:17:02.386618+00:00'
+  returncode: 0
+  host_wall_s: 2.2723543914034963
+  log_sha256: 26e4c7e85e9029950c0a240452a2239c929dd574c5b4ecb5e7fd15759db23d92
+- stage: region_execution
+  state: complete
+  started: '2026-09-26T03:17:22.481714+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/bfs-regions
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '7777'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/regions-0-2.json
+  timeout_s: 600.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/006-region_execution.log
+  finished: '2026-09-26T03:17:33.777560+00:00'
+  returncode: 0
+  host_wall_s: 1.9203769965097308
+  log_sha256: 38844c801b02afe66363afabf13df096e046e9f966ee5f011bd27d62f01ffd3e
+- stage: memory_collector_identity
+  state: complete
+  started: '2026-09-26T03:17:51.589885+00:00'
+  command: [/usr/bin/valgrind, --version]
+  timeout_s: 30
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/007-memory_collector_identity.log
+  finished: '2026-09-26T03:17:59.727269+00:00'
+  returncode: 0
+  host_wall_s: 0.009085897356271744
+  log_sha256: 06bd4b41e0b515a43bbb6fa5d24e6596c4604fbc070ea04aa1dd8d2ad3035a53
+- stage: memory_build
+  state: complete
+  started: '2026-09-26T03:18:08.531608+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -g
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/API
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/memory_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/bfs-memory
+  timeout_s: 180.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/008-memory_build.log
+  finished: '2026-09-26T03:18:21.729482+00:00'
+  returncode: 0
+  host_wall_s: 4.128683705814183
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: memory_execution
+  state: complete
+  started: '2026-09-26T03:18:30.727357+00:00'
+  command:
+  - /usr/bin/valgrind
+  - --tool=callgrind
+  - --cache-sim=yes
+  - --collect-atstart=yes
+  - --instr-atstart=no
+  - --separate-threads=no
+  - --I1=32768,8,64
+  - --D1=49152,12,64
+  - --LL=25165824,12,64
+  - --callgrind-out-file=/data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-0.out
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/bfs-memory
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '0'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/memory-0-0.json
+  timeout_s: 600.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/009-memory_execution.log
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T03:18:55.489910+00:00'
+  returncode: 0
+  host_wall_s: 15.15730783995241
+  log_sha256: 7901a6583135c174d5bb4ec850390ee103b4411952e5b9fc92622ae1f12589ba
+- stage: memory_execution
+  state: complete
+  started: '2026-09-26T03:19:15.067194+00:00'
+  command:
+  - /usr/bin/valgrind
+  - --tool=callgrind
+  - --cache-sim=yes
+  - --collect-atstart=yes
+  - --instr-atstart=no
+  - --separate-threads=no
+  - --I1=32768,8,64
+  - --D1=49152,12,64
+  - --LL=25165824,12,64
+  - --callgrind-out-file=/data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-1.out
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/bfs-memory
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '1234'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/memory-0-1.json
+  timeout_s: 600.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/010-memory_execution.log
+  repetition: 0
+  source_position: 1
+  source: 1234
+  finished: '2026-09-26T03:19:37.594995+00:00'
+  returncode: 0
+  host_wall_s: 14.312367387115955
+  log_sha256: f0ac74f16a27d9cbbfcdf5a1ee748f5a9f07d38b4dc35b25f6de570db668c917
+- stage: memory_execution
+  state: complete
+  started: '2026-09-26T03:19:58.419807+00:00'
+  command:
+  - /usr/bin/valgrind
+  - --tool=callgrind
+  - --cache-sim=yes
+  - --collect-atstart=yes
+  - --instr-atstart=no
+  - --separate-threads=no
+  - --I1=32768,8,64
+  - --D1=49152,12,64
+  - --LL=25165824,12,64
+  - --callgrind-out-file=/data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-2.out
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/bfs-memory
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '7777'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/memory-0-2.json
+  timeout_s: 600.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/011-memory_execution.log
+  repetition: 0
+  source_position: 2
+  source: 7777
+  finished: '2026-09-26T03:20:21.517180+00:00'
+  returncode: 0
+  host_wall_s: 14.409704441204667
+  log_sha256: 0b00ebb2db6b639d1e28fe1f1cc829fbc63c9d5a3e92ff17adbb0d388647342c
+regions:
+- id: function:bfs.cc:2157:ba2f8e639d5daef5
+  kind: function
+  name: TDStepMAA
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [66, 225]
+  byte_range: [2157, 10394]
+  insertion_range: [2307, 10394]
+  source_sha256: ba2f8e639d5daef5d58debef79db66fcac1e5296a5f53c207e3a80b92280725f
+  text: |-
+    void TDStepMAA(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue, int num_nodes, int num_edges) {
+    #ifdef GEM5
+        clear_mem_region();
+        add_mem_region(queue.beginp(), queue.endp());                   // 6
+        add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());   // 7
+        add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8
+        add_mem_region(parent.beginp(), parent.endp());                 // 9
+    #endif
+    #pragma omp parallel
+        {
+            int tile0, tile1, tile2, tile3, tile4, tile5, tile6, tile7;
+            int reg0, reg1, regOne, regZero, last_i_reg, last_j_reg;
+            int tid = omp_get_thread_num();
+            tile0 = tiles0[tid];
+            tile1 = tiles1[tid];
+            tile2 = tiles2[tid];
+            tile3 = tiles3[tid];
+            tile4 = tiles4[tid];
+            tile5 = tiles5[tid];
+            tile6 = tilesi[tid];
+            tile7 = tilesj[tid];
+            reg0 = regs0[tid];
+            reg1 = regs1[tid];
+            regOne = regs2[tid];
+            regZero = regs3[tid];
+            last_i_reg = last_i_regs[tid];
+            last_j_reg = last_j_regs[tid];
+            QueueBuffer<NodeID> lqueue(queue);
+            maa_const<int>(1, regOne);
+            maa_const<int>(0, regZero);
+            __restrict__ uint32_t *tile0Ptr = get_cacheable_tile_pointer<uint32_t>(tile0);
+            __restrict__ uint32_t *tile4Ptr = get_cacheable_tile_pointer<uint32_t>(tile4);
+            int *tile5Ptr = get_cacheable_tile_pointer<int>(tile5);
+            int idx = (int)queue.shared_out_start;
+            int len = (int)queue.shared_out_end;
+            while (idx < len) {
+                int current_len_size = len - idx;
+    #if TILE_SIZE == 32768
+                const int tile_size = current_len_size > NUM_CORES * 32768   ? 32768
+                                      : current_len_size > NUM_CORES * 16384 ? 16384
+                                      : current_len_size > NUM_CORES * 8192  ? 8192
+                                      : current_len_size > NUM_CORES * 4096  ? 4096
+                                      : current_len_size > NUM_CORES * 2048  ? 2048
+                                      : current_len_size > NUM_CORES * 1024  ? 1024
+                                                                             : -1;
+    #elif TILE_SIZE == 16384
+                const int tile_size = current_len_size > NUM_CORES * 16384  ? 16384
+                                      : current_len_size > NUM_CORES * 8192 ? 8192
+                                      : current_len_size > NUM_CORES * 4096 ? 4096
+                                      : current_len_size > NUM_CORES * 2048 ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 8192
+                const int tile_size = current_len_size > NUM_CORES * 8192   ? 8192
+                                      : current_len_size > NUM_CORES * 4096 ? 4096
+                                      : current_len_size > NUM_CORES * 2048 ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 4096
+                const int tile_size = current_len_size > NUM_CORES * 4096   ? 4096
+                                      : current_len_size > NUM_CORES * 2048 ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 2048
+                const int tile_size = current_len_size > NUM_CORES * 2048   ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 1024
+                const int tile_size = current_len_size > NUM_CORES * 1024 ? 1024
+                                                                          : -1;
+    #else
+                assert(false);
+    #endif
+                if (tile_size != -1) {
+                    // #pragma omp master
+                    //                 std::cout << "Starting TDSTEP: tile: " << tile_size << " idx: " << idx << " (maa)" << std::endl;
+                    int min = idx + tid * tile_size;
+                    int max = min + tile_size;
+                    maa_const<int>((int)min, reg0);
+                    maa_const<int>((int)max, reg1);
+                    // tile0 = u = queue.shared[i]
+                    maa_stream_load(queue.shared, reg0, reg1, regOne, tile0);
+                    // tile1 = VertexOffsets[u]
+                    maa_indirect_load<int>(VertexOffsets.start_, tile0, tile1);
+                    // tile2 = VertexOffsets[u+1]
+                    maa_indirect_load<int>(&VertexOffsets.start_[1], tile0, tile2);
+                    // do while using range loop api
+                    maa_const<int>(0, last_i_reg);
+                    maa_const<int>(-1, last_j_reg);
+                    int curr_tile7_size = 0;
+                    do {
+                        // tile6 = i
+                        // tile7 = j
+                        maa_range_loop<int>(last_i_reg, last_j_reg, tile1, tile2, regOne, tile6, tile7);
+                        // tile0 = v = g.out_neighbors_[j]
+                        maa_indirect_load<int>(g.out_neighbors_, tile7, tile0);
+                        // tile3 = inner u = queue.shared[i]
+                        maa_indirect_load<int>((NodeID *)(queue.shared + min), tile6, tile3);
+                        // Transfer tile7, tile0, tile3
+                        wait_ready(tile7);
+                        curr_tile7_size = get_tile_size(tile7);
+                        if (curr_tile7_size == 0) {
+                            break;
+                        }
+    #pragma omp critical
+                        {
+                            // tile7 = parent[v]
+                            maa_indirect_load<int>(parent.data(), tile0, tile7);
+                            // tile4 = parent[v] < 0
+                            maa_alu_scalar<int>(tile7, regZero, tile4, Operation_t::LT_OP);
+                            // if (tile4 -- parent[v] < 0)
+                            //     tile5 = parent[v]
+                            //     parent[v] = inner u
+                            maa_indirect_store_vector<int>(parent.data(), tile0, tile3, tile4, tile5);
+                            wait_ready(tile3);
+                            // #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                            //                     for (int i = 0; i < curr_tile7_size; i++) {
+                            //                         if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                            //                             std::cout << "v:" << tile0Ptr[i] << " op[v]<0: " << tile4Ptr[i] << " np[v] " << tile5Ptr[i] << std::endl;
+                            //                         }
+                            //                     }
+                        }
+    #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                        for (int i = 0; i < curr_tile7_size; i++) {
+                            if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                                lqueue.push_back(tile0Ptr[i]);
+                            }
+                        }
+                    } while (curr_tile7_size > 0);
+                    idx += NUM_CORES * tile_size;
+                } else {
+    #pragma omp barrier
+    // #pragma omp master
+    //                 std::cout << "Starting TDSTEP: tile: " << tile_size << " idx: " << idx << " (base)" << std::endl;
+    #pragma omp for schedule(dynamic, 64)
+                    for (int i = idx; i < len; i++) {
+                        NodeID u = queue.shared[i];
+                        for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                            NodeID v = g.out_neighbors_[j];
+                            NodeID curr_val = parent[v];
+                            if (curr_val < 0) {
+                                // indirect write (parent, v_tile, u_tile)
+                                // core fetch v tile
+                                if (compare_and_swap(parent[v], curr_val, u)) {
+                                    parent[v] = u;
+                                    lqueue.push_back(v);
+                                }
+                            }
+                        }
+                    }
+                    idx = len;
+                }
+            }
+
+            lqueue.flush();
+        }
+    #ifdef GEM5
+        clear_mem_region();
+    #endif
+    }
+  function: TDStepMAA
+  usr: c:@F@TDStepMAA#&1$@S@CSRGraph>#I#I#Vb1#&$@S@pvector>#I#S2_#&$@S@SlidingQueue>#I#I#I#
+  helpers:
+  - omp_get_thread_num
+  - QueueBuffer
+  - maa_const
+  - get_cacheable_tile_pointer
+  - maa_stream_load
+  - maa_indirect_load
+  - maa_range_loop
+  - wait_ready
+  - get_tile_size
+  - data
+  - maa_alu_scalar
+  - maa_indirect_store_vector
+  - operator[]
+  - compare_and_swap
+  - push_back
+  - flush
+  callers: [DOBFSMAA]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - uint32_t
+  - Operation_t
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:2157:ba2f8e639d5daef5
+- id: loop:bfs.cc:3718:555ee7236ddd1e7f
+  kind: loop
+  name: while
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [101, 218]
+  byte_range: [3718, 10318]
+  insertion_range: [3718, 10318]
+  source_sha256: 555ee7236ddd1e7f01fd36c69f0682b7d3ec7ae468976dca19865fed64ef615f
+  text: |-
+    while (idx < len) {
+                int current_len_size = len - idx;
+    #if TILE_SIZE == 32768
+                const int tile_size = current_len_size > NUM_CORES * 32768   ? 32768
+                                      : current_len_size > NUM_CORES * 16384 ? 16384
+                                      : current_len_size > NUM_CORES * 8192  ? 8192
+                                      : current_len_size > NUM_CORES * 4096  ? 4096
+                                      : current_len_size > NUM_CORES * 2048  ? 2048
+                                      : current_len_size > NUM_CORES * 1024  ? 1024
+                                                                             : -1;
+    #elif TILE_SIZE == 16384
+                const int tile_size = current_len_size > NUM_CORES * 16384  ? 16384
+                                      : current_len_size > NUM_CORES * 8192 ? 8192
+                                      : current_len_size > NUM_CORES * 4096 ? 4096
+                                      : current_len_size > NUM_CORES * 2048 ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 8192
+                const int tile_size = current_len_size > NUM_CORES * 8192   ? 8192
+                                      : current_len_size > NUM_CORES * 4096 ? 4096
+                                      : current_len_size > NUM_CORES * 2048 ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 4096
+                const int tile_size = current_len_size > NUM_CORES * 4096   ? 4096
+                                      : current_len_size > NUM_CORES * 2048 ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 2048
+                const int tile_size = current_len_size > NUM_CORES * 2048   ? 2048
+                                      : current_len_size > NUM_CORES * 1024 ? 1024
+                                                                            : -1;
+    #elif TILE_SIZE == 1024
+                const int tile_size = current_len_size > NUM_CORES * 1024 ? 1024
+                                                                          : -1;
+    #else
+                assert(false);
+    #endif
+                if (tile_size != -1) {
+                    // #pragma omp master
+                    //                 std::cout << "Starting TDSTEP: tile: " << tile_size << " idx: " << idx << " (maa)" << std::endl;
+                    int min = idx + tid * tile_size;
+                    int max = min + tile_size;
+                    maa_const<int>((int)min, reg0);
+                    maa_const<int>((int)max, reg1);
+                    // tile0 = u = queue.shared[i]
+                    maa_stream_load(queue.shared, reg0, reg1, regOne, tile0);
+                    // tile1 = VertexOffsets[u]
+                    maa_indirect_load<int>(VertexOffsets.start_, tile0, tile1);
+                    // tile2 = VertexOffsets[u+1]
+                    maa_indirect_load<int>(&VertexOffsets.start_[1], tile0, tile2);
+                    // do while using range loop api
+                    maa_const<int>(0, last_i_reg);
+                    maa_const<int>(-1, last_j_reg);
+                    int curr_tile7_size = 0;
+                    do {
+                        // tile6 = i
+                        // tile7 = j
+                        maa_range_loop<int>(last_i_reg, last_j_reg, tile1, tile2, regOne, tile6, tile7);
+                        // tile0 = v = g.out_neighbors_[j]
+                        maa_indirect_load<int>(g.out_neighbors_, tile7, tile0);
+                        // tile3 = inner u = queue.shared[i]
+                        maa_indirect_load<int>((NodeID *)(queue.shared + min), tile6, tile3);
+                        // Transfer tile7, tile0, tile3
+                        wait_ready(tile7);
+                        curr_tile7_size = get_tile_size(tile7);
+                        if (curr_tile7_size == 0) {
+                            break;
+                        }
+    #pragma omp critical
+                        {
+                            // tile7 = parent[v]
+                            maa_indirect_load<int>(parent.data(), tile0, tile7);
+                            // tile4 = parent[v] < 0
+                            maa_alu_scalar<int>(tile7, regZero, tile4, Operation_t::LT_OP);
+                            // if (tile4 -- parent[v] < 0)
+                            //     tile5 = parent[v]
+                            //     parent[v] = inner u
+                            maa_indirect_store_vector<int>(parent.data(), tile0, tile3, tile4, tile5);
+                            wait_ready(tile3);
+                            // #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                            //                     for (int i = 0; i < curr_tile7_size; i++) {
+                            //                         if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                            //                             std::cout << "v:" << tile0Ptr[i] << " op[v]<0: " << tile4Ptr[i] << " np[v] " << tile5Ptr[i] << std::endl;
+                            //                         }
+                            //                     }
+                        }
+    #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                        for (int i = 0; i < curr_tile7_size; i++) {
+                            if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                                lqueue.push_back(tile0Ptr[i]);
+                            }
+                        }
+                    } while (curr_tile7_size > 0);
+                    idx += NUM_CORES * tile_size;
+                } else {
+    #pragma omp barrier
+    // #pragma omp master
+    //                 std::cout << "Starting TDSTEP: tile: " << tile_size << " idx: " << idx << " (base)" << std::endl;
+    #pragma omp for schedule(dynamic, 64)
+                    for (int i = idx; i < len; i++) {
+                        NodeID u = queue.shared[i];
+                        for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                            NodeID v = g.out_neighbors_[j];
+                            NodeID curr_val = parent[v];
+                            if (curr_val < 0) {
+                                // indirect write (parent, v_tile, u_tile)
+                                // core fetch v tile
+                                if (compare_and_swap(parent[v], curr_val, u)) {
+                                    parent[v] = u;
+                                    lqueue.push_back(v);
+                                }
+                            }
+                        }
+                    }
+                    idx = len;
+                }
+            }
+  function: TDStepMAA
+  usr: null
+  helpers: []
+  callers: [DOBFSMAA]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - uint32_t
+  - Operation_t
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:2157:ba2f8e639d5daef5
+- id: loop:bfs.cc:7062:a164130f692c4691
+  kind: loop
+  name: do
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [156, 194]
+  byte_range: [7062, 9276]
+  insertion_range: [7062, 9276]
+  source_sha256: a164130f692c4691a1df95bb18da5990228b1bbb0669c69eb51ea371703e624c
+  text: |-
+    do {
+                        // tile6 = i
+                        // tile7 = j
+                        maa_range_loop<int>(last_i_reg, last_j_reg, tile1, tile2, regOne, tile6, tile7);
+                        // tile0 = v = g.out_neighbors_[j]
+                        maa_indirect_load<int>(g.out_neighbors_, tile7, tile0);
+                        // tile3 = inner u = queue.shared[i]
+                        maa_indirect_load<int>((NodeID *)(queue.shared + min), tile6, tile3);
+                        // Transfer tile7, tile0, tile3
+                        wait_ready(tile7);
+                        curr_tile7_size = get_tile_size(tile7);
+                        if (curr_tile7_size == 0) {
+                            break;
+                        }
+    #pragma omp critical
+                        {
+                            // tile7 = parent[v]
+                            maa_indirect_load<int>(parent.data(), tile0, tile7);
+                            // tile4 = parent[v] < 0
+                            maa_alu_scalar<int>(tile7, regZero, tile4, Operation_t::LT_OP);
+                            // if (tile4 -- parent[v] < 0)
+                            //     tile5 = parent[v]
+                            //     parent[v] = inner u
+                            maa_indirect_store_vector<int>(parent.data(), tile0, tile3, tile4, tile5);
+                            wait_ready(tile3);
+                            // #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                            //                     for (int i = 0; i < curr_tile7_size; i++) {
+                            //                         if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                            //                             std::cout << "v:" << tile0Ptr[i] << " op[v]<0: " << tile4Ptr[i] << " np[v] " << tile5Ptr[i] << std::endl;
+                            //                         }
+                            //                     }
+                        }
+    #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                        for (int i = 0; i < curr_tile7_size; i++) {
+                            if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+                                lqueue.push_back(tile0Ptr[i]);
+                            }
+                        }
+                    } while (curr_tile7_size > 0);
+  function: TDStepMAA
+  usr: null
+  helpers: []
+  callers: [DOBFSMAA]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - uint32_t
+  - Operation_t
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:2157:ba2f8e639d5daef5
+- id: loop:bfs.cc:9557:d3183c577229b91e
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [201, 215]
+  byte_range: [9557, 10267]
+  insertion_range: [9589, 10267]
+  source_sha256: d3183c577229b91edfe9cb2792cf213958309f872871f822f3d60495b409beb3
+  text: |-
+    for (int i = idx; i < len; i++) {
+                        NodeID u = queue.shared[i];
+                        for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                            NodeID v = g.out_neighbors_[j];
+                            NodeID curr_val = parent[v];
+                            if (curr_val < 0) {
+                                // indirect write (parent, v_tile, u_tile)
+                                // core fetch v tile
+                                if (compare_and_swap(parent[v], curr_val, u)) {
+                                    parent[v] = u;
+                                    lqueue.push_back(v);
+                                }
+                            }
+                        }
+                    }
+  function: TDStepMAA
+  usr: null
+  helpers: []
+  callers: [DOBFSMAA]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - uint32_t
+  - Operation_t
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:2157:ba2f8e639d5daef5
+- id: loop:bfs.cc:9659:781ab83e6d1b28c0
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [203, 214]
+  byte_range: [9659, 10249]
+  insertion_range: [9659, 10249]
+  source_sha256: 781ab83e6d1b28c0815701c42db67ffe0bb9806b3882940de203e97a60848bed
+  text: |-
+    for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                            NodeID v = g.out_neighbors_[j];
+                            NodeID curr_val = parent[v];
+                            if (curr_val < 0) {
+                                // indirect write (parent, v_tile, u_tile)
+                                // core fetch v tile
+                                if (compare_and_swap(parent[v], curr_val, u)) {
+                                    parent[v] = u;
+                                    lqueue.push_back(v);
+                                }
+                            }
+                        }
+  function: TDStepMAA
+  usr: null
+  helpers: []
+  callers: [DOBFSMAA]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - uint32_t
+  - Operation_t
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:2157:ba2f8e639d5daef5
+- id: function:bfs.cc:10396:92351720b886b03a
+  kind: function
+  name: TDStep
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [227, 259]
+  byte_range: [10396, 11692]
+  insertion_range: [10543, 11692]
+  source_sha256: 92351720b886b03a3170e3ce91ef579321c5cdaa516f5c6e38a7ba4c9b706aca
+  text: |-
+    void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue, int num_nodes, int num_edges) {
+    #ifdef GEM5
+        clear_mem_region();
+        add_mem_region(queue.beginp(), queue.endp());                   // 6
+        add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());   // 7
+        add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8
+        add_mem_region(parent.beginp(), parent.endp());                 // 9
+    #endif
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for nowait
+            for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                NodeID u = queue.shared[i];
+                for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                    NodeID v = g.out_neighbors_[j];
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        // indirect write (parent, v_tile, u_tile)
+                        // core fetch v tile
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            parent[v] = u;
+                            lqueue.push_back(v);
+                        }
+                    }
+                }
+            }
+            lqueue.flush();
+        }
+    #ifdef GEM5
+        clear_mem_region();
+    #endif
+    }
+  function: TDStep
+  usr: c:@F@TDStep#&1$@S@CSRGraph>#I#I#Vb1#&$@S@pvector>#I#S2_#&$@S@SlidingQueue>#I#I#I#
+  helpers: [QueueBuffer, 'operator[]', compare_and_swap, push_back, flush]
+  callers: [DOBFS]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - size_t
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.28597073900000003
+    exclusive_thread_cpu_seconds: 0.07543482
+    invocations: 20
+    exclusive_function_thread_cpu_seconds: 0.907237647
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:10396:92351720b886b03a
+- id: loop:bfs.cc:10980:784979f83d8fbb08
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [239, 253]
+  byte_range: [10980, 11617]
+  insertion_range: [11051, 11617]
+  source_sha256: 784979f83d8fbb081a978ab6f74bad01b784baf4380ab6818607f1ac77a4794d
+  text: |-
+    for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                NodeID u = queue.shared[i];
+                for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                    NodeID v = g.out_neighbors_[j];
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        // indirect write (parent, v_tile, u_tile)
+                        // core fetch v tile
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            parent[v] = u;
+                            lqueue.push_back(v);
+                        }
+                    }
+                }
+            }
+  function: TDStep
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - size_t
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.831802827
+    exclusive_thread_cpu_seconds: 0.387260321
+    invocations: 521700
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:10396:92351720b886b03a
+- id: loop:bfs.cc:11105:4abc496fc9c3ddd0
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [241, 252]
+  byte_range: [11105, 11607]
+  insertion_range: [11105, 11607]
+  source_sha256: 4abc496fc9c3ddd0d8780135931ee02616204e21a8656a076cd73f747d04dc1c
+  text: |-
+    for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                    NodeID v = g.out_neighbors_[j];
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        // indirect write (parent, v_tile, u_tile)
+                        // core fetch v tile
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            parent[v] = u;
+                            lqueue.push_back(v);
+                        }
+                    }
+                }
+  function: TDStep
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - size_t
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.444542506
+    exclusive_thread_cpu_seconds: 0.444542506
+    invocations: 521700
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:10396:92351720b886b03a
+- id: function:bfs.cc:11694:cd1ef9d28c8c62ca
+  kind: function
+  name: TDStep2
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [261, 282]
+  byte_range: [11694, 12448]
+  insertion_range: [11781, 12448]
+  source_sha256: cd1ef9d28c8c62ca8a2c340177951a7dbaa740ce3e9302ea3b9ce763851a50a1
+  text: |-
+    int64_t TDStep2(const Graph &g, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue) {
+        int64_t scout_count = 0;
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for reduction(+ : scout_count) nowait
+            for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                NodeID u = *q_iter;
+                for (NodeID v : g.out_neigh(u)) {
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                            scout_count += -curr_val;
+                        }
+                    }
+                }
+            }
+            lqueue.flush();
+        }
+        return scout_count;
+    }
+  function: TDStep2
+  usr: c:@F@TDStep2#&1$@S@CSRGraph>#I#I#Vb1#&$@S@pvector>#I#&$@S@SlidingQueue>#I#
+  helpers:
+  - QueueBuffer
+  - begin
+  - end
+  - out_neigh
+  - operator[]
+  - compare_and_swap
+  - push_back
+  - flush
+  callers: []
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:11694:cd1ef9d28c8c62ca
+- id: loop:bfs.cc:11939:ee8a2407c2e768df
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [267, 278]
+  byte_range: [11939, 12392]
+  insertion_range: [12005, 12392]
+  source_sha256: ee8a2407c2e768dff49d6ca1d8d0f638495c6952159f63bc01e4c62e9e94565a
+  text: |-
+    for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                NodeID u = *q_iter;
+                for (NodeID v : g.out_neigh(u)) {
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                            scout_count += -curr_val;
+                        }
+                    }
+                }
+            }
+  function: TDStep2
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:11694:cd1ef9d28c8c62ca
+- id: loop:bfs.cc:12051:d3f90fae3543181f
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [269, 277]
+  byte_range: [12051, 12382]
+  insertion_range: [12051, 12382]
+  source_sha256: d3f90fae3543181f3ce5df866bea21d3b3bb2ecd044103944273db1e4c30ff71
+  text: |-
+    for (NodeID v : g.out_neigh(u)) {
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                            scout_count += -curr_val;
+                        }
+                    }
+                }
+  function: TDStep2
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:11694:cd1ef9d28c8c62ca
+- id: function:bfs.cc:12450:3e560c996879193b
+  kind: function
+  name: QueueToBitmap
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [284, 290]
+  byte_range: [12450, 12680]
+  insertion_range: [12517, 12680]
+  source_sha256: 3e560c996879193bc6c4b1bda8a34996b8b542c9231ad8fc5af16b7977999f4b
+  text: |-
+    void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+    #pragma omp parallel for
+        for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+            NodeID u = *q_iter;
+            bm.set_bit_atomic(u);
+        }
+    }
+  function: QueueToBitmap
+  usr: c:@F@QueueToBitmap#&1$@S@SlidingQueue>#I#&$@S@Bitmap#
+  helpers: [begin, end, set_bit_atomic]
+  callers: []
+  referenced_types: [SlidingQueue, NodeID, Bitmap]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:12450:3e560c996879193b
+- id: loop:bfs.cc:12547:6fce0a8bf1585475
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [286, 289]
+  byte_range: [12547, 12678]
+  insertion_range: [12613, 12678]
+  source_sha256: 6fce0a8bf158547509cbb72c209724fe846ba3ee42c4c6f59f2c2bcb42bab441
+  text: |-
+    for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+            NodeID u = *q_iter;
+            bm.set_bit_atomic(u);
+        }
+  function: QueueToBitmap
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [SlidingQueue, NodeID, Bitmap]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:12450:3e560c996879193b
+- id: function:bfs.cc:12682:9ca128eb96d3fcc8
+  kind: function
+  name: BitmapToQueue
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [292, 304]
+  byte_range: [12682, 13054]
+  insertion_range: [12784, 13054]
+  source_sha256: 9ca128eb96d3fcc8f69d73fee58e9fcd06cf8627e0d3b1dee4b8c9ee5226697a
+  text: |-
+    void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                       SlidingQueue<NodeID> &queue) {
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for nowait
+            for (NodeID n = 0; n < g.num_nodes(); n++)
+                if (bm.get_bit(n))
+                    lqueue.push_back(n);
+            lqueue.flush();
+        }
+        queue.slide_window();
+    }
+  function: BitmapToQueue
+  usr: c:@F@BitmapToQueue#&1$@S@CSRGraph>#I#I#Vb1#&1$@S@Bitmap#&$@S@SlidingQueue>#I#
+  helpers: [QueueBuffer, num_nodes, get_bit, push_back, flush, slide_window]
+  callers: []
+  referenced_types: [Graph, Bitmap, SlidingQueue, NodeID, QueueBuffer]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:12682:9ca128eb96d3fcc8
+- id: loop:bfs.cc:12886:ec35536f223b52f4
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [298, 300]
+  byte_range: [12886, 12996]
+  insertion_range: [12941, 12996]
+  source_sha256: ec35536f223b52f4377c50e849b0d1edb09134486bb9fc5a82f3ea97301015e9
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+                if (bm.get_bit(n))
+                    lqueue.push_back(n);
+  function: BitmapToQueue
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [Graph, Bitmap, SlidingQueue, NodeID, QueueBuffer]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:12682:9ca128eb96d3fcc8
+- id: function:bfs.cc:13056:a64d92c2d52fcfe5
+  kind: function
+  name: InitParent
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [306, 312]
+  byte_range: [13056, 13302]
+  insertion_range: [13100, 13302]
+  source_sha256: a64d92c2d52fcfe583c71a23b2ca992cac0cdd0549e8a92b0fb5cf331a91ee1a
+  text: |-
+    pvector<NodeID> InitParent(const Graph &g) {
+        pvector<NodeID> parent(g.num_nodes());
+    #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+        return parent;
+    }
+  function: InitParent
+  usr: c:@F@InitParent#&1$@S@CSRGraph>#I#I#Vb1#
+  helpers: [pvector, num_nodes, 'operator[]', out_degree]
+  callers: [DOBFS, DOBFSMAA]
+  referenced_types: [pvector, NodeID, Graph]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.14695431
+    exclusive_thread_cpu_seconds: 0.095807913
+    invocations: 3
+    exclusive_function_thread_cpu_seconds: 0.34857068999999996
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:13056:a64d92c2d52fcfe5
+- id: loop:bfs.cc:13173:7429be52f28ee4f6
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [309, 310]
+  byte_range: [13173, 13281]
+  insertion_range: [13224, 13281]
+  source_sha256: 7429be52f28ee4f605b59b8f8f8963bc23d10594fb262ed1fa032c095231adca
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+            parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+  function: InitParent
+  usr: null
+  helpers: []
+  callers: [DOBFS, DOBFSMAA]
+  referenced_types: [pvector, NodeID, Graph]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.252762777
+    exclusive_thread_cpu_seconds: 0.252762777
+    invocations: 786429
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:13056:a64d92c2d52fcfe5
+- id: function:bfs.cc:13304:76a956649bfe9705
+  kind: function
+  name: DOBFS
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [314, 364]
+  byte_range: [13304, 14855]
+  insertion_range: [13440, 14855]
+  source_sha256: 76a956649bfe97051a02af951fec5f4bc552440d0fb952c642fa4a5968d9cae5
+  text: |-
+    pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                          int alpha = 1, int beta = 18) {
+        int num_nodes = g.num_nodes();
+        int num_edges = g.num_edges_directed();
+        if (logging_enabled)
+            PrintStep("Source", static_cast<int64_t>(source));
+        pvector<SGOffset> VertexOffsetsOut = g.VertexOffsets();
+        Timer t;
+        alloc_MAA();
+        init_MAA();
+        t.Start();
+        pvector<NodeID> parent = InitParent(g);
+        t.Stop();
+        if (logging_enabled)
+            PrintStep("i", t.Seconds());
+        parent[source] = source;
+        SlidingQueue<NodeID> queue(g.num_nodes());
+        queue.push_back(source);
+        queue.slide_window();
+        Bitmap curr(g.num_nodes());
+        curr.reset();
+        Bitmap front(g.num_nodes());
+        front.reset();
+
+    #ifdef GEM5
+        std::cout << "ROI started: " << omp_get_num_threads() << " threads" << std::endl;
+        m5_work_begin(0, 0);
+        m5_reset_stats(0, 0);
+    #endif
+        while (!queue.empty()) {
+            std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+            t.Start();
+            TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled) {
+                PrintStep("td", t.Seconds());
+            }
+        }
+    #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            if (parent[n] < -1)
+                parent[n] = -1;
+    #ifdef GEM5
+        m5_dump_stats(0, 0);
+        m5_work_end(0, 0);
+        std::cout << "ROI End!!!" << std::endl;
+        m5_exit(0);
+    #endif
+        return parent;
+    }
+  function: DOBFS
+  usr: c:@F@DOBFS#&1$@S@CSRGraph>#I#I#Vb1#I#b#I#I#
+  helpers:
+  - num_nodes
+  - num_edges_directed
+  - PrintStep
+  - basic_string
+  - VertexOffsets
+  - Timer
+  - alloc_MAA
+  - init_MAA
+  - Start
+  - InitParent
+  - Stop
+  - Seconds
+  - operator[]
+  - SlidingQueue
+  - push_back
+  - slide_window
+  - Bitmap
+  - reset
+  - empty
+  - operator<<
+  - size
+  - TDStep
+  - pvector
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.5875358
+    exclusive_thread_cpu_seconds: 0.09479378499999999
+    invocations: 3
+    exclusive_function_thread_cpu_seconds: 0.30721467399999997
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:13304:76a956649bfe9705
+- id: loop:bfs.cc:14239:db5227d6bf4ba808
+  kind: loop
+  name: while
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [343, 352]
+  byte_range: [14239, 14579]
+  insertion_range: [14239, 14579]
+  source_sha256: db5227d6bf4ba80839e6e815da4a5de5020fd6be3e1147e55f92927b50c3b430
+  text: |-
+    while (!queue.empty()) {
+            std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+            t.Start();
+            TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled) {
+                PrintStep("td", t.Seconds());
+            }
+        }
+  function: DOBFS
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.28674475
+    exclusive_thread_cpu_seconds: 0.000774011
+    invocations: 3
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:13304:76a956649bfe9705
+- id: loop:bfs.cc:14609:01da7bd21c1235d7
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [354, 356]
+  byte_range: [14609, 14707]
+  insertion_range: [14660, 14707]
+  source_sha256: 01da7bd21c1235d7332ac2bf4123b457ff5757c5477c545eca47d07fb8f67c63
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+            if (parent[n] < -1)
+                parent[n] = -1;
+  function: DOBFS
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.21164687799999998
+    exclusive_thread_cpu_seconds: 0.21164687799999998
+    invocations: 786429
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:13304:76a956649bfe9705
+- id: function:bfs.cc:14857:094895302872aee0
+  kind: function
+  name: DOBFSMAA
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [366, 443]
+  byte_range: [14857, 17407]
+  insertion_range: [14999, 17407]
+  source_sha256: 094895302872aee07c44cac8f82564e826603f552ce1448b8e5460f1ddb5c349
+  text: |-
+    pvector<NodeID> DOBFSMAA(const Graph &g, NodeID source, bool logging_enabled = false,
+                             int alpha = 1, int beta = 18) {
+        int num_nodes = g.num_nodes();
+        int num_edges = g.num_edges_directed();
+        if (logging_enabled)
+            PrintStep("Source", static_cast<int64_t>(source));
+        pvector<SGOffset> VertexOffsetsOut = g.VertexOffsets();
+        Timer t;
+        alloc_MAA();
+        init_MAA();
+        t.Start();
+    #pragma omp parallel
+        {
+    #pragma omp critical
+            {
+                int tid = omp_get_thread_num();
+                tiles0[tid] = get_new_tile<int>();
+                tiles1[tid] = get_new_tile<int>();
+                tiles2[tid] = get_new_tile<int>();
+                tiles3[tid] = get_new_tile<int>();
+                tiles4[tid] = get_new_tile<int>();
+                tiles5[tid] = get_new_tile<int>();
+                tilesi[tid] = get_new_tile<int>();
+                tilesj[tid] = get_new_tile<int>();
+                regs0[tid] = get_new_reg<int>();
+                regs1[tid] = get_new_reg<int>();
+                regs2[tid] = get_new_reg<int>();
+                regs3[tid] = get_new_reg<int>();
+                regs4[tid] = get_new_reg<int>();
+                regs5[tid] = get_new_reg<int>();
+                last_i_regs[tid] = get_new_reg<int>();
+                last_j_regs[tid] = get_new_reg<int>();
+            }
+        }
+        pvector<NodeID> parent = InitParent(g);
+        t.Stop();
+        if (logging_enabled)
+            PrintStep("i", t.Seconds());
+        parent[source] = source;
+        SlidingQueue<NodeID> queue(g.num_nodes());
+        queue.push_back(source);
+        queue.slide_window();
+        Bitmap curr(g.num_nodes());
+        curr.reset();
+        Bitmap front(g.num_nodes());
+        front.reset();
+
+    #ifdef GEM5
+        std::cout << "ROI started: " << omp_get_num_threads() << " threads" << std::endl;
+        m5_work_begin(0, 0);
+        m5_reset_stats(0, 0);
+    #endif
+        while (!queue.empty()) {
+            t.Start();
+            bool isMAA = true;
+            std::cout << "Starting TDStepMAA: " << queue.size() << " elements" << std::endl;
+            TDStepMAA(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled) {
+                if (isMAA)
+                    PrintStep("td_maa", t.Seconds());
+                else
+                    PrintStep("td", t.Seconds());
+            }
+        }
+    #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            if (parent[n] < -1)
+                parent[n] = -1;
+    #ifdef GEM5
+        m5_dump_stats(0, 0);
+        m5_work_end(0, 0);
+        std::cout << "ROI End!!!" << std::endl;
+        m5_exit(0);
+    #endif
+        return parent;
+    }
+  function: DOBFSMAA
+  usr: c:@F@DOBFSMAA#&1$@S@CSRGraph>#I#I#Vb1#I#b#I#I#
+  helpers:
+  - num_nodes
+  - num_edges_directed
+  - PrintStep
+  - basic_string
+  - VertexOffsets
+  - Timer
+  - alloc_MAA
+  - init_MAA
+  - Start
+  - omp_get_thread_num
+  - get_new_tile
+  - get_new_reg
+  - InitParent
+  - Stop
+  - Seconds
+  - operator[]
+  - SlidingQueue
+  - push_back
+  - slide_window
+  - Bitmap
+  - reset
+  - empty
+  - operator<<
+  - size
+  - TDStepMAA
+  - pvector
+  callers: []
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:14857:094895302872aee0
+- id: loop:bfs.cc:16664:d6668c43308db1a5
+  kind: loop
+  name: while
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [418, 431]
+  byte_range: [16664, 17131]
+  insertion_range: [16664, 17131]
+  source_sha256: d6668c43308db1a59dc93d07795b7f58efc2ad3fbe6a93b20840f76c34fafe53
+  text: |-
+    while (!queue.empty()) {
+            t.Start();
+            bool isMAA = true;
+            std::cout << "Starting TDStepMAA: " << queue.size() << " elements" << std::endl;
+            TDStepMAA(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled) {
+                if (isMAA)
+                    PrintStep("td_maa", t.Seconds());
+                else
+                    PrintStep("td", t.Seconds());
+            }
+        }
+  function: DOBFSMAA
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:14857:094895302872aee0
+- id: loop:bfs.cc:17161:01da7bd21c1235d7
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [433, 435]
+  byte_range: [17161, 17259]
+  insertion_range: [17212, 17259]
+  source_sha256: 01da7bd21c1235d7332ac2bf4123b457ff5757c5477c545eca47d07fb8f67c63
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+            if (parent[n] < -1)
+                parent[n] = -1;
+  function: DOBFSMAA
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:14857:094895302872aee0
+- id: function:bfs.cc:17409:660ca89daefffcee
+  kind: function
+  name: PrintBFSStats
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [445, 456]
+  byte_range: [17409, 17781]
+  insertion_range: [17478, 17781]
+  source_sha256: 660ca89daefffcee213996f21b5338c0cd52f823457bf58e3a994bee95d05a04
+  text: |-
+    void PrintBFSStats(const Graph &g, const pvector<NodeID> &bfs_tree) {
+        int64_t tree_size = 0;
+        int64_t n_edges = 0;
+        for (NodeID n : g.vertices()) {
+            if (bfs_tree[n] >= 0) {
+                n_edges += g.out_degree(n);
+                tree_size++;
+            }
+        }
+        cout << "BFS Tree has " << tree_size << " nodes and ";
+        cout << n_edges << " edges" << endl;
+    }
+  function: PrintBFSStats
+  usr: c:@F@PrintBFSStats#&1$@S@CSRGraph>#I#I#Vb1#&1$@S@pvector>#I#
+  helpers: [operator*, vertices, 'operator[]', out_degree, operator<<]
+  callers: []
+  referenced_types: [Graph, pvector, NodeID, int64_t]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:17409:660ca89daefffcee
+- id: loop:bfs.cc:17535:a8105cce278141c3
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [448, 453]
+  byte_range: [17535, 17679]
+  insertion_range: [17535, 17679]
+  source_sha256: a8105cce278141c3759b9973c40c12789eb0f32462d9e43ba7ce4242d825b6ce
+  text: |-
+    for (NodeID n : g.vertices()) {
+            if (bfs_tree[n] >= 0) {
+                n_edges += g.out_degree(n);
+                tree_size++;
+            }
+        }
+  function: PrintBFSStats
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [Graph, pvector, NodeID, int64_t]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:17409:660ca89daefffcee
+- id: function:bfs.cc:18047:546ec83dfdeaf3fe
+  kind: function
+  name: BFSVerifier
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [463, 509]
+  byte_range: [18047, 19648]
+  insertion_range: [18144, 19648]
+  source_sha256: 546ec83dfdeaf3fec444ebfcc1c70b72588f13dd21194e0d19146a5d6f5f5d96
+  text: |-
+    bool BFSVerifier(const Graph &g, NodeID source,
+                     const pvector<NodeID> &parent) {
+        pvector<int> depth(g.num_nodes(), -1);
+        depth[source] = 0;
+        vector<NodeID> to_visit;
+        to_visit.reserve(g.num_nodes());
+        to_visit.push_back(source);
+        for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+        for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+        return true;
+    }
+  function: BFSVerifier
+  usr: c:@F@BFSVerifier#&1$@S@CSRGraph>#I#I#Vb1#I#&1$@S@pvector>#I#
+  helpers:
+  - pvector
+  - num_nodes
+  - operator[]
+  - vector
+  - reserve
+  - push_back
+  - begin
+  - operator!=
+  - end
+  - operator++
+  - operator*
+  - out_neigh
+  - vertices
+  - operator<<
+  - in_neigh
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:18047:546ec83dfdeaf3fe
+- id: loop:bfs.cc:18313:859f5c781239d2af
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [470, 478]
+  byte_range: [18313, 18585]
+  insertion_range: [18313, 18585]
+  source_sha256: 859f5c781239d2afa384246228ba88c634694e7be3bfb36835a19fd12fa81a8a
+  text: |-
+    for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:18047:546ec83dfdeaf3fe
+- id: loop:bfs.cc:18408:696dcb82ce1ee80d
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [472, 477]
+  byte_range: [18408, 18579]
+  insertion_range: [18408, 18579]
+  source_sha256: 696dcb82ce1ee80df7e1500bbf764349585ad5968d8f45e5aac89c3ce28c0175
+  text: |-
+    for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:18047:546ec83dfdeaf3fe
+- id: loop:bfs.cc:18590:5688108067948590
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [479, 507]
+  byte_range: [18590, 19629]
+  insertion_range: [18590, 19629]
+  source_sha256: 568810806794859013d79d3866031532944edd5e06bf0ef002028cde36deb171
+  text: |-
+    for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:18047:546ec83dfdeaf3fe
+- id: loop:bfs.cc:18963:61928faa9fc30778
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [489, 498]
+  byte_range: [18963, 19325]
+  insertion_range: [18963, 19325]
+  source_sha256: 61928faa9fc30778009b87fb9807969ac3532e62625421b22b79cd25b03ac08c
+  text: |-
+    for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:18047:546ec83dfdeaf3fe
+- id: function:bfs.cc:19650:7a7b5f224b2acf8f
+  kind: function
+  name: main
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [511, 536]
+  byte_range: [19650, 20516]
+  insertion_range: [19684, 20516]
+  source_sha256: 7a7b5f224b2acf8ff9416b29e133952d76182231067a6c5f9caf4522e5eebcc4
+  text: |-
+    int main(int argc, char *argv[]) {
+        CLApp cli(argc, argv, "breadth-first search");
+        if (!cli.ParseArgs())
+            return -1;
+        Builder b(cli);
+        Graph g = b.MakeGraph();
+        SourcePicker<Graph> sp(g, cli.start_vertex());
+    #ifdef GEM5
+        std::cout << "Fake Checkpoint started" << std::endl;
+        m5_checkpoint(0, 0);
+        std::cout << "Fake Checkpoint ended" << std::endl;
+    #endif
+        auto BFSBound = [&sp, &cli](const Graph &g) {
+    #ifdef MAA
+            return DOBFSMAA(g, sp.PickNext(), cli.logging_en());
+    #else
+            return DOBFS(g, sp.PickNext(), cli.logging_en());
+    #endif
+        };
+        SourcePicker<Graph> vsp(g, cli.start_vertex());
+        auto VerifierBound = [&vsp](const Graph &g, const pvector<NodeID> &parent) {
+            return BFSVerifier(g, vsp.PickNext(), parent);
+        };
+        BenchmarkKernel(cli, g, BFSBound, PrintBFSStats, VerifierBound);
+        return 0;
+    }
+  function: main
+  usr: c:@F@main#I#**C#
+  helpers:
+  - CLApp
+  - basic_string
+  - ParseArgs
+  - BuilderBase
+  - MakeGraph
+  - SourcePicker
+  - start_vertex
+  - DOBFS
+  - PickNext
+  - logging_en
+  - BFSVerifier
+  - BenchmarkKernel
+  - (lambda at /data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/gapbs/src/bfs.cc:523:21)
+  - (lambda at /data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/gapbs/src/bfs.cc:531:26)
+  callers: []
+  referenced_types: [CLApp, Builder, Graph, SourcePicker, pvector, NodeID]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function_region: function:bfs.cc:19650:7a7b5f224b2acf8f
+dynamic_memory:
+- metric: Dr
+  available: true
+  value: 62513683
+  unit: references
+  definition: executed data read references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-0.out.1
+  raw_sha256: c2130cd7eda5504e1db384a92f3690bfa5ff840910373106b01bd9759e5313d0
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: Dw
+  available: true
+  value: 1804066
+  unit: references
+  definition: executed data write references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-0.out.1
+  raw_sha256: c2130cd7eda5504e1db384a92f3690bfa5ff840910373106b01bd9759e5313d0
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mr
+  available: true
+  value: 7470861
+  unit: misses
+  definition: simulated first-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-0.out.1
+  raw_sha256: c2130cd7eda5504e1db384a92f3690bfa5ff840910373106b01bd9759e5313d0
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mw
+  available: true
+  value: 57245
+  unit: misses
+  definition: simulated first-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-0.out.1
+  raw_sha256: c2130cd7eda5504e1db384a92f3690bfa5ff840910373106b01bd9759e5313d0
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmr
+  available: true
+  value: 524969
+  unit: misses
+  definition: simulated last-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-0.out.1
+  raw_sha256: c2130cd7eda5504e1db384a92f3690bfa5ff840910373106b01bd9759e5313d0
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmw
+  available: true
+  value: 49321
+  unit: misses
+  definition: simulated last-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-0.out.1
+  raw_sha256: c2130cd7eda5504e1db384a92f3690bfa5ff840910373106b01bd9759e5313d0
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: Dr
+  available: true
+  value: 58335305
+  unit: references
+  definition: executed data read references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 1234
+    source_position: 1
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-1.out.1
+  raw_sha256: e99523d48a3b3a72fb7129a5e41d3c45cf7435d5409dd14a7190d2b00aa24dea
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: Dw
+  available: true
+  value: 1807708
+  unit: references
+  definition: executed data write references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 1234
+    source_position: 1
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-1.out.1
+  raw_sha256: e99523d48a3b3a72fb7129a5e41d3c45cf7435d5409dd14a7190d2b00aa24dea
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mr
+  available: true
+  value: 7472455
+  unit: misses
+  definition: simulated first-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 1234
+    source_position: 1
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-1.out.1
+  raw_sha256: e99523d48a3b3a72fb7129a5e41d3c45cf7435d5409dd14a7190d2b00aa24dea
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mw
+  available: true
+  value: 57225
+  unit: misses
+  definition: simulated first-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 1234
+    source_position: 1
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-1.out.1
+  raw_sha256: e99523d48a3b3a72fb7129a5e41d3c45cf7435d5409dd14a7190d2b00aa24dea
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmr
+  available: true
+  value: 526258
+  unit: misses
+  definition: simulated last-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 1234
+    source_position: 1
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-1.out.1
+  raw_sha256: e99523d48a3b3a72fb7129a5e41d3c45cf7435d5409dd14a7190d2b00aa24dea
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmw
+  available: true
+  value: 49146
+  unit: misses
+  definition: simulated last-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 1234
+    source_position: 1
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-1.out.1
+  raw_sha256: e99523d48a3b3a72fb7129a5e41d3c45cf7435d5409dd14a7190d2b00aa24dea
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: Dr
+  available: true
+  value: 61665411
+  unit: references
+  definition: executed data read references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 7777
+    source_position: 2
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-2.out.1
+  raw_sha256: 1f4128ee49d15b9c9acd46442aa5bfeb31671e477d88b1e71099a7c1e2de0afe
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: Dw
+  available: true
+  value: 1804459
+  unit: references
+  definition: executed data write references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 7777
+    source_position: 2
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-2.out.1
+  raw_sha256: 1f4128ee49d15b9c9acd46442aa5bfeb31671e477d88b1e71099a7c1e2de0afe
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mr
+  available: true
+  value: 7469142
+  unit: misses
+  definition: simulated first-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 7777
+    source_position: 2
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-2.out.1
+  raw_sha256: 1f4128ee49d15b9c9acd46442aa5bfeb31671e477d88b1e71099a7c1e2de0afe
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mw
+  available: true
+  value: 57262
+  unit: misses
+  definition: simulated first-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 7777
+    source_position: 2
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-2.out.1
+  raw_sha256: 1f4128ee49d15b9c9acd46442aa5bfeb31671e477d88b1e71099a7c1e2de0afe
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmr
+  available: true
+  value: 525996
+  unit: misses
+  definition: simulated last-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 7777
+    source_position: 2
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-2.out.1
+  raw_sha256: 1f4128ee49d15b9c9acd46442aa5bfeb31671e477d88b1e71099a7c1e2de0afe
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmw
+  available: true
+  value: 48428
+  unit: misses
+  definition: simulated last-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 7777
+    source_position: 2
+    repetition: 0
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-2.out.1
+  raw_sha256: 1f4128ee49d15b9c9acd46442aa5bfeb31671e477d88b1e71099a7c1e2de0afe
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+executions:
+- kind: regions
+  source: 0
+  source_position: 0
+  repetition: 0
+  binary_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/regions-0-0.json
+  region_output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/regions-0-0.json.regions.json
+  region_output_sha256: 513ded24d5e39de2a6f65fbda68e702fc1be298347f6e4ea1fd833200a2b38fa
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 173900
+  output_sha256: 59eb1890a8d21650d097115cbbdda4def78ec08ad860feeba45a14a6bd1e6bc8
+  diagnostic_wall_seconds: 0.206181788
+- kind: regions
+  source: 1234
+  source_position: 1
+  repetition: 0
+  binary_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/regions-0-1.json
+  region_output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/regions-0-1.json.regions.json
+  region_output_sha256: 735e0768e86e53ef86a5a4743b41bffd385aa14980924f4e537b672aea6608ca
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 173900
+  output_sha256: 094af29d992e3c763441e1ed404731a525b4ed971758d5811f1cb54da6d0ab04
+  diagnostic_wall_seconds: 0.210261573
+- kind: regions
+  source: 7777
+  source_position: 2
+  repetition: 0
+  binary_sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/regions-0-2.json
+  region_output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/regions-0-2.json.regions.json
+  region_output_sha256: 2b7fcbac0192105c8d770941a9de7217d4c0782d73f3b05f1e110547461f8c55
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 173900
+  output_sha256: 23adbdfd8904ba9742b2f881a6318b1130762634014ea11d75ad7dad1d1a5553
+  diagnostic_wall_seconds: 0.239095698
+- kind: memory
+  source: 0
+  source_position: 0
+  repetition: 0
+  binary_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/memory-0-0.json
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-0.out.1
+  raw_sha256: c2130cd7eda5504e1db384a92f3690bfa5ff840910373106b01bd9759e5313d0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 173900
+  output_sha256: e84dce7142a9fee2bea5c4133045addcfde6bdfe8a011c856c2b4f5c3c140518
+  diagnostic_wall_seconds: 5.811352211
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+- kind: memory
+  source: 1234
+  source_position: 1
+  repetition: 0
+  binary_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/memory-0-1.json
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-1.out.1
+  raw_sha256: e99523d48a3b3a72fb7129a5e41d3c45cf7435d5409dd14a7190d2b00aa24dea
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 173900
+  output_sha256: ca2fbf4acbad3dbb04f4aa25b02faa22b1cbb4d2199afcca79bf19bda2c8880e
+  diagnostic_wall_seconds: 4.715048271
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+- kind: memory
+  source: 7777
+  source_position: 2
+  repetition: 0
+  binary_sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/memory-0-2.json
+  raw_artifact: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/callgrind-0-2.out.1
+  raw_sha256: 1f4128ee49d15b9c9acd46442aa5bfeb31671e477d88b1e71099a7c1e2de0afe
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 173900
+  output_sha256: bc5e7441a9666040ce2a497073d44441d1aa85e8c01624281430631a4db071a1
+  diagnostic_wall_seconds: 5.278494692
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+raw_artifacts:
+- host: mbit10
+  path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile
+  kind: diagnostic_profile
+- host: mbit10
+  path: /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile
+  kind: diagnostic_build
+- host: mbit10
+  kind: host_observation
+  path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/host-observation.json
+  sha256: 96831555b8ef645327595607536998071d5d257488311b79939e66132aba3870
+  host_wall_s: 0.08312128484249115
+  evidence_kind: execution
+  unavailable_commands: 2
+reasons:
+- 'source coverage: header-defined, library, virtual/member and compiler-outlined code is not independently
+  attributed'
+- 'source coverage: inlined source scopes remain source scopes, not machine-code symbols'
+- 'source coverage: OpenMP-disabled metadata inventory preserves _OPENMP; actual diagnostic execution
+  retains original OpenMP flags'
+- 'source coverage: metadata parser substitutes Clang builtin/OpenMP declarations in the compiler-private
+  header slot while preserving actual system-library search order; execution uses original compiler headers'
+- 'source coverage: metadata uses Clang predefined compiler macros; compiler-identity/feature tokens in
+  the source file are rejected, while header-defined macro conditions and indirect expansions remain outside
+  branch-equivalence guarantees'
+- 'source coverage: transformation-specific OpenMP pragmas and macro-generated loop extents may remain
+  unresolved'
+- 'source coverage: GNU __restrict__ erased for source inventory only; alias semantics are not inferred;
+  actual builds retain original source and qualifiers'
+- some compiler source regions could not be safely instrumented
+gain_claim: false
+candidate: bfs-native-pilot-20260925-dx10018-a1.baseline
+source_snapshot: bfs-native-pilot-20260925-dx10018-a1.source
+implementation: dx100-bfs-scalar
+machine: mbit10
+evaluation: bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation
+context:
+  candidate_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function: DOBFS
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  application: dx100-gapbs
+  adapter: dx100_scalar_func
+  target: mbit10
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  threads: 4
+  sources: [0, 1234, 7777]
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  protocol: null
+  basis: measured
+  process_policy: one fresh process per source and repetition; graph construction before ROI
+  verifier: swdb.bfs.structural.v1
+  verifier_sha256: 807d685a889a30741a9d06215314c44cbb333676d4be03663a22821d3a543730
+  backend_configuration:
+    lane: mbit10-evaluation-node1
+  instrumentation:
+    template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+    treatment: included
+  host: mbit10
+  architecture: x86_64
+  lane: 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 394)'
+  load_average: [16.41357421875, 16.61962890625, 16.23828125]
+  budget:
+    discovery_seconds: 120.0
+    build_seconds: 180.0
+    run_seconds: 600.0
+    total_seconds: 1200.0
+  host_observation:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/host-observation.json
+    sha256: 96831555b8ef645327595607536998071d5d257488311b79939e66132aba3870
+    host_wall_s: 0.08312128484249115
+    evidence_kind: execution
+    unavailable_commands: 2
+  workload:
+    id: bfs-20260925-kronecker18.48de8267ac2098d5
+    family: kronecker
+    generator:
+      name: DX100 GAPBS converter
+      revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      parameters:
+        scale: 18
+        edge_factor: 16
+        seed: 27491095
+        symmetrize: true
+        binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+        source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+        explicit_symmetrize_flag: false
+      command:
+      - /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20260925/bfs-20260925-kronecker18/converter
+      - -g
+      - '18'
+      - -k
+      - '16'
+      - -b
+      - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+    representation:
+      id: bfs-20260925-kronecker18.dx100
+      path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+      sha256: 9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143
+      format: gapbs_sg32le
+      application: dx100-gapbs
+      canonical_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+      bytes: 31492177
+      loader: swdb.gapbs-representation.v1
+      adjacency_verified: true
+    normalization: 'simple graph: remove self loops and duplicates; symmetrize if undirected; sort neighbors'
+    canonical_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    adjacency_order_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    num_vertices: 262143
+    num_directed_edges: 7610898
+    directed: false
+    sources: [0, 1234, 7777]
+    canonical_path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+    canonical_file_sha256: 167cde96d3528a030f842d63b4cf3c142040ea56dbfb1ee2e94552c39ccd9c0e
+  primary_binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  primary_evaluation: bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation
+  primary_load_average: [23.0888671875, 16.9599609375, 16.15673828125]
+  timing_basis: diagnostic accumulated thread CPU seconds; primary ROI wall timing remains in evaluation
+  overhead_treatment: scope instrumentation overhead is included; no synthetic subtraction or gain claim
+discovery:
+  backend: libclang-cindex
+  version: clang version 18.1.8
+  library: /data1/yanruj/llvm18/lib/libclang.so
+  arguments:
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -pthread
+  - -DFUNC
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/API
+  - -isystem
+  - /usr/include/c++/13
+  - -isystem
+  - /usr/include/x86_64-linux-gnu/c++/13
+  - -isystem
+  - /usr/include/c++/13/backward
+  - -isystem
+  - /data1/yanruj/llvm18/lib/clang/18/include
+  - -isystem
+  - /usr/local/include
+  - -isystem
+  - /usr/include/x86_64-linux-gnu
+  - -isystem
+  - /usr/include
+  - -D_OPENMP=201511
+  - -D__restrict__=
+  - -fno-openmp
+  - -Wno-unknown-pragmas
+  - -resource-dir
+  - /data1/yanruj/llvm18/lib/clang/18
+  diagnostics: []
+  parser_adaptations:
+  - GNU __restrict__ erased for source inventory only; alias semantics are not inferred; actual builds
+    retain original source and qualifiers
+  unresolved:
+  - kind: loop
+    name: for
+    line: 189
+    reason: transformation-specific or continued OpenMP pragma cannot be safely wrapped
+  scope: free functions and ordinary loops defined in the BFS translation-unit source file
+  limitations:
+  - header-defined, library, virtual/member and compiler-outlined code is not independently attributed
+  - inlined source scopes remain source scopes, not machine-code symbols
+  - OpenMP-disabled metadata inventory preserves _OPENMP; actual diagnostic execution retains original
+    OpenMP flags
+  - metadata parser substitutes Clang builtin/OpenMP declarations in the compiler-private header slot
+    while preserving actual system-library search order; execution uses original compiler headers
+  - metadata uses Clang predefined compiler macros; compiler-identity/feature tokens in the source file
+    are rejected, while header-defined macro conditions and indirect expansions remain outside branch-equivalence
+    guarantees
+  - transformation-specific OpenMP pragmas and macro-generated loop extents may remain unresolved
+  - GNU __restrict__ erased for source inventory only; alias semantics are not inferred; actual builds
+    retain original source and qualifiers
+  library_sha256: 27b38bfdb37d164878767c40c8ce9538c96e801a37d2a67234bee043945de139
+  pass_sha256: 9bee90040d1c4defa96793774ca877d2d26c351303d8e1927448ba0ef0d20ffb
+  collector_sha256: 85cc8311cf86c679c9297d261430b86240d321dd7fcb1f2837b4d438f4e00a8a
+build:
+  directory: /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile
+  compiler: /usr/bin/g++
+  compiler_version:
+  - g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  - Copyright (C) 2023 Free Software Foundation, Inc.
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/API
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/regions_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/bfs-regions
+  wrapper_sha256: 74acedc5a27f397bd5ef879238caabe17bd5b69e564b9aee4d6d7609b111a8d3
+  runtime_sha256: 7f74da428f5c5ef984c156ebb89d987d3f6cd08de830ce7131564238c54b3c11
+  instrumented_source_sha256: a3bc5e5426b8c93bdd655c3fd8bdc15adade9fec4fbc3ced7b43ed701e376c81
+artifacts:
+  primary_binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  region_binary:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/bfs-regions
+    sha256: 44a84b03100f5b2c71c3fb1062074b01b0a168ba50c7874793df36ab442262a5
+    difference: automatic source scope guards; original build flags retained
+  memory_binary:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile/bfs-memory
+    sha256: a13ec0805ee6bd7270231a1a711ae3f170227b0613124377acf3aebdb32148ac
+    flags:
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -g
+    wrapper_sha256: 7e57ab36424475ccc77bba9a3f29def502b51b644044fa3e4a59bd195e745c28
+    difference: original candidate source; client ROI guards and debug info, no region guards

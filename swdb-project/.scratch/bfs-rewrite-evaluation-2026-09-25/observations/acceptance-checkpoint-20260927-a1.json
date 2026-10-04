@@ -1,0 +1,555 @@
+{
+  "created": "2026-09-27",
+  "started_at_et": "2026-09-27T05:48:45.933554-04:00",
+  "code_commit": "d1ac452ca61a1c98ce84f5d9872a6b410a641e60",
+  "query_implementation_commit": "3c3efd3",
+  "kind": "fresh_local_public_coverage_and_get",
+  "scope": "Local metadata only; remote raw artifacts not reopened; no evaluation or acceptance claim.",
+  "request": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/acceptance-checkpoint-20260927-a1.json",
+    "bytes": 191,
+    "sha256": "d37514a38a26987acf04db5906ff206457dae2ff6263b7abb1d948f82b650652"
+  },
+  "fresh_index": "/private/tmp/bfs-t21-public-query-20260927-a1.sqlite",
+  "commands": [
+    {
+      "argv": [
+        "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+        "-B",
+        "-m",
+        "swdb",
+        "bfs-coverage",
+        "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/acceptance-checkpoint-20260927-a1.json",
+        "--db",
+        "/private/tmp/bfs-t21-public-query-20260927-a1.sqlite",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": {
+        "path": "/private/tmp/bfs-t21-public-query-20260927-a1.coverage.json",
+        "bytes": 1931607,
+        "sha256": "352086f3dad142ef6fb36548df1917da1f87f9e3f484a293e1d92bb5531d81fb"
+      },
+      "stderr": {
+        "path": "/private/tmp/bfs-t21-public-query-20260927-a1.coverage.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+        "-B",
+        "-m",
+        "swdb",
+        "get",
+        "bfs-campaign-preparation-20260925-a1.upstream-annotated-context3",
+        "--chain",
+        "--db",
+        "/private/tmp/bfs-t21-public-query-20260927-a1.sqlite",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": {
+        "path": "/private/tmp/bfs-t21-public-query-20260927-a1.t20.json",
+        "bytes": 5007295,
+        "sha256": "78bb81c2af408abc056d5c9b275d3e35ad19e52dbe07bc8e21138366859c40d1"
+      },
+      "stderr": {
+        "path": "/private/tmp/bfs-t21-public-query-20260927-a1.t20.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+        "-B",
+        "-m",
+        "swdb",
+        "get",
+        "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
+        "--chain",
+        "--db",
+        "/private/tmp/bfs-t21-public-query-20260927-a1.sqlite",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": {
+        "path": "/private/tmp/bfs-t21-public-query-20260927-a1.t18.json",
+        "bytes": 6020208,
+        "sha256": "b2e56b7ad7373863ae8774e8ec0150e92792ccbf34377c3595cf34b6ee8fbb74"
+      },
+      "stderr": {
+        "path": "/private/tmp/bfs-t21-public-query-20260927-a1.t18.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+        "-B",
+        "-m",
+        "swdb",
+        "get",
+        "bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1",
+        "--chain",
+        "--db",
+        "/private/tmp/bfs-t21-public-query-20260927-a1.sqlite",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": {
+        "path": "/private/tmp/bfs-t21-public-query-20260927-a1.t19.json",
+        "bytes": 4914367,
+        "sha256": "d62f0bbcbb22591f0d6265c61be141f5e31385694836e37ce440083fe26da932"
+      },
+      "stderr": {
+        "path": "/private/tmp/bfs-t21-public-query-20260927-a1.t19.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "acceptance": "incomplete",
+  "gain_claim": false,
+  "external_verification_complete": false,
+  "identity_sha256": "33b9a0c989d5143f46fcf7a6e3fa809173dd16ef17aeb4ae0316e4e433efba15",
+  "criteria": {
+    "AC01": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "shared BFS source contexts are queried independently"
+    },
+    "AC02": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "complete real packages retain discovered function/loop rankings and coverage"
+    },
+    "AC03": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "a new helper or loop absent from prior compiler discovery must appear among the five highest measured regions of its kind",
+      "evidence": [
+        {
+          "profile_package": "bfs-package-smoke-20260925-a1.after.package.v1.81772095f055cd8b",
+          "region": "function:bfs.cc:13265:6fc5eb0a7ba83e8f"
+        },
+        {
+          "profile_package": "bfs-package-smoke-20260925-a1.after.package.v1.81772095f055cd8b",
+          "region": "loop:bfs.cc:13349:04801d9eee488cf7"
+        },
+        {
+          "profile_package": "bfs-package-smoke-20260925-a1.after.package.v1.81772095f055cd8b",
+          "region": "loop:bfs.cc:13399:fb59de3ee2e8a6f6"
+        }
+      ]
+    },
+    "AC04": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "qualifying packages contain dynamic memory observations tied to diagnostic execution"
+    },
+    "AC05": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "forward applicability and reverse package-bound matches preserve unresolved conditions without performance promises",
+      "evidence": [
+        "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.122d39652ae0c326",
+        "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.b8f33855cc6c657e",
+        "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.f613a3b01a24e380",
+        "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.ffd9925db46a63a9",
+        "bfs-native-pilot-20260925-dx10018-a1.kronecker.package.v1.1d44ec6b44f05000",
+        "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718",
+        "bfs-native-pilot-20260925-upstream18-a2.kronecker.package.v1.6a34b061dcca355b",
+        "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6",
+        "bfs-package-smoke-20260925-a1.before.package.v1.1187f3a8ca4968d0",
+        "bfs-package-smoke-20260925-a1.after.package.v1.81772095f055cd8b"
+      ]
+    },
+    "AC06": {
+      "state": "incomplete",
+      "reason": "all eight fixed source/payload/family cells must qualify"
+    },
+    "AC07": {
+      "state": "incomplete",
+      "reason": "qualifying cells require a changed candidate and retained proposal chain"
+    },
+    "AC08": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "stale source, unsupported operation, and protected verifier/ROI requests must retain explicit non-success records",
+      "evidence": {
+        "source": [
+          "bfs-contract-20260925-a3.stale-source"
+        ],
+        "operations": [
+          "bfs-campaign-preparation-20260925-a1.upstream-annotated",
+          "bfs-contract-20260925-a3.unsupported-operation"
+        ],
+        "protected": [
+          "bfs-contract-20260925-a3.protected-verifier"
+        ]
+      }
+    },
+    "AC09": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "failure contracts must remain retrievable; unfavorable fixture ratios demonstrate handling only, never empirical regression",
+      "evidence": {
+        "build_failure": [
+          "bfs-contract-20260925-a3.build-failure",
+          "bfs-dx100-build-20260925-a1",
+          "bfs-instruction-smoke-20260925-a1.structured-instructions.evaluation"
+        ],
+        "verifier_failure_exit_zero": [
+          "bfs-contract-20260925-a3.incorrect"
+        ],
+        "timeout": [
+          "bfs-contract-20260925-a3.timeout"
+        ],
+        "budget_exhausted": [
+          "bfs-contract-20260925-a3.budget",
+          "bfs-dx100-smoke-20260925-a4",
+          "bfs-dx100-smoke-20260925-a5"
+        ],
+        "missing_observation": [
+          "bfs-contract-20260925-a3.missing",
+          "bfs-dx100-exit-probe-20260926-a1",
+          "bfs-dx100-profile-20260926-a1.diagnostic",
+          "bfs-dx100-profile-20260926-a1.primary",
+          "bfs-dx100-smoke-20260925-a3",
+          "bfs-dx100-smoke-20260925-a6"
+        ],
+        "regression": []
+      },
+      "unfavorable_fixture_demonstrations": [
+        {
+          "comparison": "bfs-contract-20260925-a3.comparison",
+          "classification": "contract_fixture",
+          "outcome": "unfavorable_fixture_ratio",
+          "fixture_ratio": 0.5,
+          "empirical_regression": false,
+          "gain_claim": false
+        }
+      ],
+      "classified_failures": {
+        "build_failure": [
+          {
+            "id": "bfs-contract-20260925-a3.build-failure",
+            "classification": "contract_fixture"
+          },
+          {
+            "id": "bfs-dx100-build-20260925-a1",
+            "classification": "execution"
+          },
+          {
+            "id": "bfs-instruction-smoke-20260925-a1.structured-instructions.evaluation",
+            "classification": "execution"
+          }
+        ],
+        "verifier_failure_exit_zero": [
+          {
+            "id": "bfs-contract-20260925-a3.incorrect",
+            "classification": "contract_fixture"
+          }
+        ],
+        "timeout": [
+          {
+            "id": "bfs-contract-20260925-a3.timeout",
+            "classification": "contract_fixture"
+          }
+        ],
+        "budget_exhausted": [
+          {
+            "id": "bfs-contract-20260925-a3.budget",
+            "classification": "contract_fixture"
+          },
+          {
+            "id": "bfs-dx100-smoke-20260925-a4",
+            "classification": "execution"
+          },
+          {
+            "id": "bfs-dx100-smoke-20260925-a5",
+            "classification": "execution"
+          }
+        ],
+        "missing_observation": [
+          {
+            "id": "bfs-contract-20260925-a3.missing",
+            "classification": "contract_fixture"
+          },
+          {
+            "id": "bfs-dx100-exit-probe-20260926-a1",
+            "classification": "execution"
+          },
+          {
+            "id": "bfs-dx100-profile-20260926-a1.diagnostic",
+            "classification": "execution"
+          },
+          {
+            "id": "bfs-dx100-profile-20260926-a1.primary",
+            "classification": "execution"
+          },
+          {
+            "id": "bfs-dx100-smoke-20260925-a3",
+            "classification": "execution"
+          },
+          {
+            "id": "bfs-dx100-smoke-20260925-a6",
+            "classification": "execution"
+          }
+        ],
+        "regression": []
+      }
+    },
+    "AC10": {
+      "state": "incomplete",
+      "reason": "timed structural checks plus observed full/tail/parent-update cases are required"
+    },
+    "AC11": {
+      "state": "incomplete",
+      "reason": "one identical correct accelerated candidate per source must cover both families"
+    },
+    "AC12": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "real native CPU execution requires independent checks and complete dynamic profiling"
+    },
+    "AC13": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "actual profiling demonstrations retain primary ROI separately from diagnostic region and memory quantities"
+    },
+    "AC14": {
+      "state": "satisfied_by_retained_metadata",
+      "reason": "a retained compatible comparison must resolve a baseline different from source ancestry; fixtures prove this contract only",
+      "evidence": [
+        "bfs-contract-20260925-a3.comparison"
+      ]
+    },
+    "AC15": {
+      "state": "incomplete",
+      "reason": "artifact-reference and controlled-reference comparisons are distinct obligations"
+    },
+    "AC16": {
+      "state": "incomplete",
+      "reason": "every accepted cell binds its actual workload and settings to a current immutable pre-execution protocol"
+    },
+    "AC17": {
+      "state": "incomplete",
+      "reason": "at least one generated correct candidate must pass its frozen profitability policy against its unaccelerated source baseline"
+    },
+    "AC18": {
+      "state": "incomplete",
+      "reason": "all required cases, reference obligations, failures, and regressions must be accounted for"
+    },
+    "AC19": {
+      "state": "incomplete",
+      "reason": "declared operation support must be backed by an executable backend and actual accelerated candidate runs",
+      "evidence": [
+        "dx100-e4fc4af-4c"
+      ]
+    },
+    "AC20": {
+      "state": "incomplete",
+      "reason": "versioned linked handoff artifacts and real labeled SW/HW test-client submissions are required; live collaborator integration is not claimed"
+    }
+  },
+  "matrix": [
+    {
+      "starting_implementation": "dx100-bfs-scalar",
+      "route": "instruction",
+      "payload": "natural_language",
+      "graph_family": "kronecker",
+      "required_basis": "simulated",
+      "accelerator_required": true,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "dx100-bfs-scalar",
+      "route": "instruction",
+      "payload": "natural_language",
+      "graph_family": "uniform_random",
+      "required_basis": "simulated",
+      "accelerator_required": true,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "dx100-bfs-scalar",
+      "route": "supplied_code",
+      "payload": "patch",
+      "graph_family": "kronecker",
+      "required_basis": "measured",
+      "accelerator_required": false,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "dx100-bfs-scalar",
+      "route": "supplied_code",
+      "payload": "patch",
+      "graph_family": "uniform_random",
+      "required_basis": "measured",
+      "accelerator_required": false,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "gapbs-bfs-do",
+      "route": "instruction",
+      "payload": "structured_instructions",
+      "graph_family": "kronecker",
+      "required_basis": "measured",
+      "accelerator_required": false,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "gapbs-bfs-do",
+      "route": "instruction",
+      "payload": "structured_instructions",
+      "graph_family": "uniform_random",
+      "required_basis": "measured",
+      "accelerator_required": false,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "gapbs-bfs-do",
+      "route": "supplied_code",
+      "payload": "annotated_source",
+      "graph_family": "kronecker",
+      "required_basis": "simulated",
+      "accelerator_required": true,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "gapbs-bfs-do",
+      "route": "supplied_code",
+      "payload": "annotated_source",
+      "graph_family": "uniform_random",
+      "required_basis": "simulated",
+      "accelerator_required": true,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    }
+  ],
+  "source_acceleration_minima": [
+    {
+      "starting_implementation": "dx100-bfs-scalar",
+      "candidate_ids": [],
+      "state": "incomplete"
+    },
+    {
+      "starting_implementation": "gapbs-bfs-do",
+      "candidate_ids": [],
+      "state": "incomplete"
+    }
+  ],
+  "reference_obligations": {
+    "artifact_reference_comparisons": {
+      "state": "incomplete",
+      "comparisons": []
+    },
+    "controlled_reference_comparisons": {
+      "state": "incomplete",
+      "comparisons": []
+    }
+  },
+  "missing_protocols": [],
+  "live_collaborator_integration": false,
+  "history_counts": {
+    "proposal": 18,
+    "evaluation": 63,
+    "comparison_result": 1
+  },
+  "retrievals": [
+    {
+      "id": "bfs-campaign-preparation-20260925-a1.upstream-annotated-context3",
+      "top_level_keys": [
+        "root",
+        "records"
+      ],
+      "output": {
+        "path": "/private/tmp/bfs-t21-public-query-20260927-a1.t20.json",
+        "bytes": 5007295,
+        "sha256": "78bb81c2af408abc056d5c9b275d3e35ad19e52dbe07bc8e21138366859c40d1"
+      },
+      "chain_records": 37,
+      "kind": "proposal",
+      "outcome": {
+        "state": "failed",
+        "stage": "rewriting",
+        "reason": "Command '['/data1/yanruj/.npm-global/bin/claude', '-p', '--safe-mode', '--tools', '', '--strict-mcp-config', '--mcp-config', '{\"mcpServers\":{}}', '--no-session-persistence', '--output-format', 'json', '--json-schema', '{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"interpretation\", \"patch\", \"unresolved\"], \"properties\": {\"interpretation\": {\"type\": \"string\"}, \"patch\": {\"type\": \"string\"}, \"unresolved\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}}}', '--max-budget-usd', '10']' timed out after 600 seconds"
+      },
+      "candidate_state": null,
+      "proposal": null,
+      "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source"
+    },
+    {
+      "id": "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
+      "top_level_keys": [
+        "root",
+        "records"
+      ],
+      "output": {
+        "path": "/private/tmp/bfs-t21-public-query-20260927-a1.t18.json",
+        "bytes": 6020208,
+        "sha256": "b2e56b7ad7373863ae8774e8ec0150e92792ccbf34377c3595cf34b6ee8fbb74"
+      },
+      "chain_records": 43,
+      "kind": "candidate",
+      "outcome": null,
+      "candidate_state": "unverified",
+      "proposal": "bfs-campaign-preparation-20260925-a1.dx100-patch",
+      "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source"
+    },
+    {
+      "id": "bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1",
+      "top_level_keys": [
+        "root",
+        "records"
+      ],
+      "output": {
+        "path": "/private/tmp/bfs-t21-public-query-20260927-a1.t19.json",
+        "bytes": 4914367,
+        "sha256": "d62f0bbcbb22591f0d6265c61be141f5e31385694836e37ce440083fe26da932"
+      },
+      "chain_records": 38,
+      "kind": "candidate",
+      "outcome": null,
+      "candidate_state": "unverified",
+      "proposal": "bfs-campaign-preparation-20260925-a1.upstream-instructions",
+      "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source"
+    }
+  ],
+  "indexed_records": 251,
+  "finished_at_et": "2026-09-27T05:49:21.581806-04:00",
+  "query_files_unchanged_from_3c3efd3": true,
+  "selection_note": "No accepted candidate protocols or completed reference comparisons are available. Empty selections explicitly preserve those unmet obligations; author-reference protocols alone do not establish comparison results.",
+  "remote_failure_boundary": "The independently closed T16 seal-recovery failure is tracked in t16-seal-terminal-independent-20260927.json, not imported into this local master-record report. No simulation or accepted sample resulted."
+}

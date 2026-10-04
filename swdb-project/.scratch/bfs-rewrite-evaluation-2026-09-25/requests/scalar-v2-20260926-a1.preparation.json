@@ -1,0 +1,685 @@
+{
+  "format": "swdb.bfs.scalar-v2-build-preparation.v1",
+  "date": "2026-09-26",
+  "timezone": "America/New_York",
+  "id": "bfs-scalar-v2-preparation-20260926-a1",
+  "state": "prepared_not_dispatched",
+  "purpose": "Four unchanged scalar source-baseline builds under current complete_call.v2 original-adjacency verification; distinct from all retained v1 builds and the consumed T17 candidate build.",
+  "scope": {
+    "new_candidate": false,
+    "source_change": false,
+    "strategy_change": false,
+    "provider_calls": 0,
+    "repairs": 0,
+    "simulator_executions": 0,
+    "candidate_performance": false,
+    "t20_candidate_prepared": false,
+    "policy_change": false,
+    "gain_claim": false
+  },
+  "runtime_preparation": {
+    "git_head": "8af4c1b68c0ebd4797ed4c2b7c151c21895c9262",
+    "files": [
+      {
+        "path": "swdb/cli.py",
+        "sha256": "d613805c26fb22edb3f8b3eb8553d7cb39ec9669443f2319538e025391d9e738",
+        "bytes": 22114
+      },
+      {
+        "path": "swdb/dx100.py",
+        "sha256": "f4e82d3163d3c2d3d4764aace07da952b0ca67c0aaf480c3738ccd9f0641deec",
+        "bytes": 57054
+      },
+      {
+        "path": "swdb/dx100_candidate.py",
+        "sha256": "d75202db0cfdd7a1d30867c253b93a68b23d333f22c20184cb9ce9616068e613",
+        "bytes": 22412
+      },
+      {
+        "path": "swdb/dx100_diagnostic.py",
+        "sha256": "e736c8e037a4af2d8dfb7958b32382e03e9eecda5f59c09a5a4560f9ea7d202c",
+        "bytes": 5529
+      },
+      {
+        "path": "swdb/bfs_discovery.py",
+        "sha256": "6f5414eb9844688dfe5f651cb030d5885f6b70ad6c7e10b4ddf1d7cd04e60021",
+        "bytes": 15127
+      },
+      {
+        "path": "swdb/bfs_profiling.py",
+        "sha256": "b622f49ee228f6ff63cdd112f61cf965187f39ed4aed1fe3d6ebd90880a87443",
+        "bytes": 34097
+      },
+      {
+        "path": "swdb/bfs_native.py",
+        "sha256": "e385e50961b9c96ea7c6018aaa09a30df4c49f3286e56500e7ed3f1376a6e942",
+        "bytes": 42346
+      },
+      {
+        "path": "swdb/workflow.py",
+        "sha256": "37aa80bb4adc947fdfe0ff4556d3205f000fd1ef98774c84317d79098441607f",
+        "bytes": 27977
+      },
+      {
+        "path": "schemas/evaluation.schema.json",
+        "sha256": "a4286638867def108662dc4a8d68506505f7b78f3c1f8d4d7b6acefc6b34fe1e",
+        "bytes": 5851
+      }
+    ],
+    "final_execution_commit": null,
+    "final_python_identity": null,
+    "note": "Inspection pins, not an execution runtime seal. Use a separately reviewed clean idle checkout; preserve all active/historical checkouts."
+  },
+  "model": {
+    "root": "/data1/yanruj/DX100-bfs-e4fc4af",
+    "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+    "build": {
+      "id": "bfs-dx100-build-20260925-a2",
+      "kind": "evaluation",
+      "canonical_sha256": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea",
+      "record": {
+        "path": "records/evaluations/bfs-dx100-build-20260925-a2.yaml",
+        "sha256": "e61de36a9c80a5f2c272c08bf12f0050c3ba9c25c7243432e2ea6cb4e29cecaf",
+        "bytes": 11533
+      }
+    },
+    "build_receipt": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/build-receipt.json",
+      "sha256": "c465447ddc5cc37faa7cb3127a7f9f00b6b557c326e8319e5d694ee9933f8d6c"
+    },
+    "target": {
+      "id": "dx100-e4fc4af-4c",
+      "kind": "hardware_target",
+      "canonical_sha256": "94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1",
+      "record": {
+        "path": "records/hardware_targets/dx100-e4fc4af-4c.yaml",
+        "sha256": "66e9458534e293b63b81cb813d4d268d7bb599f2862073adc74e5c86d1aa755f",
+        "bytes": 2302
+      }
+    }
+  },
+  "bounds": {
+    "jobs": 1,
+    "sequence": "four ordered, sequential public compile calls; stop on first unsuccessful call; no retries",
+    "outer_seconds": 1200,
+    "work_seconds": 1170,
+    "shared_cleanup_seconds": 30,
+    "calls": 4,
+    "api_seconds_per_call": 240,
+    "compile_seconds_per_call": 120,
+    "aggregate_api_allocations_seconds": 960,
+    "shared_ancillary_work_seconds": 210,
+    "sampled_rss_bytes": 17179869184,
+    "new_retained_artifacts_bytes": 17179869184,
+    "build_subset_bytes": 4294967296,
+    "request_combined_raw_build_bytes_per_call": 1073741824,
+    "sample_interval_seconds": 5,
+    "maximum_sample_gap_seconds": 30,
+    "source_build_free_reserve_bytes": 10737418240,
+    "raw_free_reserve_bytes": 32212254720,
+    "node_available_bytes": 21474836480,
+    "global_available_bytes": 25769803776,
+    "outer_started": null,
+    "absolute_deadline": null
+  },
+  "budget_accounting": {
+    "derivation": "Per-call 120 compile / 240 API / 16 GiB sampled process-group RSS / 1 GiB combined raw+build are copied from each retained successful v1 request. Aggregate 1200 seconds is four 300-second T17 enclosing envelopes combined with exactly one shared 30-second cleanup reserve, leaving 1170 work. Four API allocations total 960 seconds; all preflight, queries, hashing, indexing and persistence share remaining 210 work seconds. No per-stage or per-call cleanup reset.",
+    "diagnostic_substages": "Existing 30-second preprocessor and 120-second discovery plus compiler identity/build share the same 240 API cap; allowances are clipped to remaining API/outer work. Their summed maxima are not added to the deadline.",
+    "status": "Prospective fixed preparation ceiling, not a started allowance or dispatch authorization. Root must review the enclosing execution recipe and clock before use.",
+    "campaign_charge": "Charge all four builds and metadata overhead once to the common unchanged-baseline simulator preparation ledger. Later T17/T20 treatments cite these exact artifacts and carry this prior cost; they cannot restart this preparation or treat it as free. No extension of any consumed v1, T17, native pilot, provider, or T15/T16 fixed budget is implied. No existing source-route budget silently absorbs this work.",
+    "failure": "Retain failure/timeout/partial stages and cleanup outcome. Unstarted cells remain unused. No automatic retry, alternate compiler/source/flags, or extension."
+  },
+  "destinations": {
+    "raw_root": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1",
+    "dispatch_root": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch",
+    "sqlite_cache": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/swdb.sqlite",
+    "request_snapshots": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/requests",
+    "source_inputs": "Retained original source artifacts are read-only; no snapshot or proposal is regenerated.",
+    "unused_remote_paths_checked": false
+  },
+  "operations": [
+    {
+      "ordinal": 1,
+      "source": "dx100",
+      "role": "primary",
+      "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+      "request": {
+        "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.dx100.primary.json",
+        "sha256": "59f2195fff3677662d1c7f862ba7fd28f2ee5bcfc7fadee023dd56bcaff40159",
+        "bytes": 551
+      },
+      "request_canonical_sha256": "15c2b726ce835553c9e48b8858b873b85c28a05e334e07b010659670f6b28c24",
+      "local_id_unused": true,
+      "host_id_unused": null,
+      "historical_v1_build": {
+        "id": "bfs-dx100-compile-20260925-a1.primary.build",
+        "kind": "evaluation",
+        "canonical_sha256": "6cfa6ef7b39d58bef085b6b6c05d9ca8778b079209473529deca9272c6a79667",
+        "record": {
+          "path": "records/evaluations/bfs-dx100-compile-20260925-a1.primary.build.yaml",
+          "sha256": "e94b6d9851f9d60e403aae40ee3b8522a58f58d2848b74986bde700012c15a9d",
+          "bytes": 16452
+        }
+      },
+      "candidate": {
+        "id": "bfs-dx100-compile-20260925-a1.candidate",
+        "kind": "candidate",
+        "canonical_sha256": "965a13a8617a0be03838a0d41701a4bb8b6e2cfdc12c5893e0b686af874eaf35",
+        "record": {
+          "path": "records/candidates/bfs-dx100-compile-20260925-a1.candidate.yaml",
+          "sha256": "7e679b119e45b3bcf33472f865ff21290f448c2beff9d1fe524762a620833f11",
+          "bytes": 22538
+        }
+      },
+      "source_snapshot": {
+        "id": "bfs-dx100-compile-20260925-a1.source",
+        "kind": "source_snapshot",
+        "canonical_sha256": "ea9df8f1958a2e09550f8b82d4fb486f5dc805e6dec069e46d578cfebe5c0412",
+        "record": {
+          "path": "records/source_snapshots/bfs-dx100-compile-20260925-a1.source.yaml",
+          "sha256": "79453b2a9a7af40991fe3cd4ab0039911e650f2335496cccaae9a9cb44b4cf9d",
+          "bytes": 45318
+        }
+      },
+      "implementation": {
+        "id": "dx100-bfs-scalar",
+        "kind": "implementation",
+        "canonical_sha256": "81ffac2bdf90e50f2350675edd53c16162c0251e8bb23fc17d4cfe421cd32e61",
+        "record": {
+          "path": "records/implementations/dx100-bfs-scalar.yaml",
+          "sha256": "d8db5a38ad78cb7a92059724991c623550ee41a5a6b5cd7517fbbf0d4ba37f76",
+          "bytes": 3835
+        }
+      },
+      "source_artifact": {
+        "path": "/data1/yanruj/EvolveSWDB_sources/bfs-dx100-compile-20260925-a1.candidate/source",
+        "sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+        "reopened_on_host_in_this_preparation": false
+      },
+      "public_compile_argv": [
+        "${PYTHON}",
+        "-m",
+        "swdb",
+        "dx100-compile",
+        "${CODE_ROOT}/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.dx100.primary.json",
+        "--records",
+        "${RECORDS}",
+        "--db",
+        "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/swdb.sqlite",
+        "--runs-dir",
+        "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1",
+        "--lane",
+        "0",
+        "--format",
+        "json"
+      ],
+      "post_compile_get_argv": [
+        "${PYTHON}",
+        "-m",
+        "swdb",
+        "get",
+        "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+        "--chain",
+        "--records",
+        "${RECORDS}",
+        "--db",
+        "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/swdb.sqlite",
+        "--format",
+        "json"
+      ],
+      "expected_output": {
+        "evaluation_id": "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+        "raw_directory": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+        "build_directory": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+        "adapter": "dx100.complete_call.v2",
+        "roi": "bfs.complete_call.v1",
+        "diagnostic_regions": false,
+        "correctness": "unverified",
+        "timing": [],
+        "gain_claim": false
+      },
+      "historical_compiler": {
+        "compiler": "/usr/bin/g++-13",
+        "compiler_sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769",
+        "compiler_version": [
+          "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+          "Copyright (C) 2023 Free Software Foundation, Inc."
+        ]
+      },
+      "historical_discovery": null
+    },
+    {
+      "ordinal": 2,
+      "source": "dx100",
+      "role": "diagnostic",
+      "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+      "request": {
+        "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.dx100.diagnostic.json",
+        "sha256": "869d4dc70ac41fa6996554cb1666ff497dcafa6dc869719e07e725ad04ea880a",
+        "bytes": 553
+      },
+      "request_canonical_sha256": "39a8b4789c26b966c216c7cb2d7107c3a77d24a3357f5bf49e43874cb36069c8",
+      "local_id_unused": true,
+      "host_id_unused": null,
+      "historical_v1_build": {
+        "id": "bfs-dx100-compile-20260925-a1.diagnostic.build",
+        "kind": "evaluation",
+        "canonical_sha256": "08dcc7721780dfe7e04f142c4c25d6be76efa7db0c114e2286266f04d8b71e4e",
+        "record": {
+          "path": "records/evaluations/bfs-dx100-compile-20260925-a1.diagnostic.build.yaml",
+          "sha256": "4719ff0507514fd2879cdf6db0cbfd2d2f203f3f7ec68532ad555402c51b83cf",
+          "bytes": 87565
+        }
+      },
+      "candidate": {
+        "id": "bfs-dx100-compile-20260925-a1.candidate",
+        "kind": "candidate",
+        "canonical_sha256": "965a13a8617a0be03838a0d41701a4bb8b6e2cfdc12c5893e0b686af874eaf35",
+        "record": {
+          "path": "records/candidates/bfs-dx100-compile-20260925-a1.candidate.yaml",
+          "sha256": "7e679b119e45b3bcf33472f865ff21290f448c2beff9d1fe524762a620833f11",
+          "bytes": 22538
+        }
+      },
+      "source_snapshot": {
+        "id": "bfs-dx100-compile-20260925-a1.source",
+        "kind": "source_snapshot",
+        "canonical_sha256": "ea9df8f1958a2e09550f8b82d4fb486f5dc805e6dec069e46d578cfebe5c0412",
+        "record": {
+          "path": "records/source_snapshots/bfs-dx100-compile-20260925-a1.source.yaml",
+          "sha256": "79453b2a9a7af40991fe3cd4ab0039911e650f2335496cccaae9a9cb44b4cf9d",
+          "bytes": 45318
+        }
+      },
+      "implementation": {
+        "id": "dx100-bfs-scalar",
+        "kind": "implementation",
+        "canonical_sha256": "81ffac2bdf90e50f2350675edd53c16162c0251e8bb23fc17d4cfe421cd32e61",
+        "record": {
+          "path": "records/implementations/dx100-bfs-scalar.yaml",
+          "sha256": "d8db5a38ad78cb7a92059724991c623550ee41a5a6b5cd7517fbbf0d4ba37f76",
+          "bytes": 3835
+        }
+      },
+      "source_artifact": {
+        "path": "/data1/yanruj/EvolveSWDB_sources/bfs-dx100-compile-20260925-a1.candidate/source",
+        "sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+        "reopened_on_host_in_this_preparation": false
+      },
+      "public_compile_argv": [
+        "${PYTHON}",
+        "-m",
+        "swdb",
+        "dx100-compile",
+        "${CODE_ROOT}/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.dx100.diagnostic.json",
+        "--records",
+        "${RECORDS}",
+        "--db",
+        "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/swdb.sqlite",
+        "--runs-dir",
+        "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1",
+        "--lane",
+        "0",
+        "--format",
+        "json"
+      ],
+      "post_compile_get_argv": [
+        "${PYTHON}",
+        "-m",
+        "swdb",
+        "get",
+        "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+        "--chain",
+        "--records",
+        "${RECORDS}",
+        "--db",
+        "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/swdb.sqlite",
+        "--format",
+        "json"
+      ],
+      "expected_output": {
+        "evaluation_id": "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+        "raw_directory": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+        "build_directory": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+        "adapter": "dx100.complete_call.v2",
+        "roi": "bfs.complete_call.v1",
+        "diagnostic_regions": true,
+        "correctness": "unverified",
+        "timing": [],
+        "gain_claim": false
+      },
+      "historical_compiler": {
+        "compiler": "/usr/bin/g++-13",
+        "compiler_sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769",
+        "compiler_version": [
+          "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+          "Copyright (C) 2023 Free Software Foundation, Inc."
+        ]
+      },
+      "historical_discovery": {
+        "library": "/data1/yanruj/llvm18/lib/libclang.so",
+        "library_sha256": "27b38bfdb37d164878767c40c8ce9538c96e801a37d2a67234bee043945de139",
+        "pass_sha256": "de69e35b5b0295915bdfded66fdde2cdf18463d13058dccc7f906497ecea2b1e"
+      }
+    },
+    {
+      "ordinal": 3,
+      "source": "upstream",
+      "role": "primary",
+      "id": "bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+      "request": {
+        "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.upstream.primary.json",
+        "sha256": "b6f7eba34891f18a41f75617f41644b41ee28df8546e7db3a534e59319cdc493",
+        "bytes": 557
+      },
+      "request_canonical_sha256": "6961f237ff6ae08b616a0b47099712432d193ae9df6dfb44f06678e8d1f49740",
+      "local_id_unused": true,
+      "host_id_unused": null,
+      "historical_v1_build": {
+        "id": "bfs-upstream-compile-20260925-a1.primary.build",
+        "kind": "evaluation",
+        "canonical_sha256": "0fd7495da0325acf4c7a4c0f0db4c656d4ef7cd5c43be7e7208eb4cfb0232b48",
+        "record": {
+          "path": "records/evaluations/bfs-upstream-compile-20260925-a1.primary.build.yaml",
+          "sha256": "474d6f93d91b4a59914ec7b9999de8243a6ad4670a36df2212ea66cac85cf58b",
+          "bytes": 14730
+        }
+      },
+      "candidate": {
+        "id": "bfs-upstream-compile-20260925-a1.candidate",
+        "kind": "candidate",
+        "canonical_sha256": "ccd0df5c59924a0968b6c860fb28a6ce19974790feb380919cf0ba81d5aa0f57",
+        "record": {
+          "path": "records/candidates/bfs-upstream-compile-20260925-a1.candidate.yaml",
+          "sha256": "3b3f572aac8ee18ed38155bc3b787182ab7345e9d9fafca84f575bb16cbc9124",
+          "bytes": 16261
+        }
+      },
+      "source_snapshot": {
+        "id": "bfs-upstream-compile-20260925-a1.source",
+        "kind": "source_snapshot",
+        "canonical_sha256": "bdb4c224ac90326e424c24e810737cb7de1556b72fd527ca0821bda5f3d1bec6",
+        "record": {
+          "path": "records/source_snapshots/bfs-upstream-compile-20260925-a1.source.yaml",
+          "sha256": "632b1a00ec91608125e5e12915ecaee45f01150602765fbd8b16404ca60283bc",
+          "bytes": 21804
+        }
+      },
+      "implementation": {
+        "id": "gapbs-bfs-do",
+        "kind": "implementation",
+        "canonical_sha256": "9bf61bf51ce76a09a7b4a8aaf163d28b1ce7284f8a708aaeecb8129550e10190",
+        "record": {
+          "path": "records/implementations/gapbs-bfs-do.yaml",
+          "sha256": "133435ae7e732ec6a1407be3544649d1c4fe5db21a1248f3ab438464502d9fbb",
+          "bytes": 42994
+        }
+      },
+      "source_artifact": {
+        "path": "/data1/yanruj/EvolveSWDB_sources/bfs-upstream-compile-20260925-a1.candidate/source",
+        "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+        "reopened_on_host_in_this_preparation": false
+      },
+      "public_compile_argv": [
+        "${PYTHON}",
+        "-m",
+        "swdb",
+        "dx100-compile",
+        "${CODE_ROOT}/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.upstream.primary.json",
+        "--records",
+        "${RECORDS}",
+        "--db",
+        "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/swdb.sqlite",
+        "--runs-dir",
+        "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1",
+        "--lane",
+        "0",
+        "--format",
+        "json"
+      ],
+      "post_compile_get_argv": [
+        "${PYTHON}",
+        "-m",
+        "swdb",
+        "get",
+        "bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+        "--chain",
+        "--records",
+        "${RECORDS}",
+        "--db",
+        "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/swdb.sqlite",
+        "--format",
+        "json"
+      ],
+      "expected_output": {
+        "evaluation_id": "bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+        "raw_directory": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+        "build_directory": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+        "adapter": "dx100.complete_call.v2",
+        "roi": "bfs.complete_call.v1",
+        "diagnostic_regions": false,
+        "correctness": "unverified",
+        "timing": [],
+        "gain_claim": false
+      },
+      "historical_compiler": {
+        "compiler": "/usr/bin/g++-13",
+        "compiler_sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769",
+        "compiler_version": [
+          "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+          "Copyright (C) 2023 Free Software Foundation, Inc."
+        ]
+      },
+      "historical_discovery": null
+    },
+    {
+      "ordinal": 4,
+      "source": "upstream",
+      "role": "diagnostic",
+      "id": "bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+      "request": {
+        "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.upstream.diagnostic.json",
+        "sha256": "ccce3d3936e36eac4f8aae98774f0ad54fa1dd8566ca87920dc4c9d950899bc5",
+        "bytes": 559
+      },
+      "request_canonical_sha256": "50b513a1614f1476c544182e3714ff396312a2f824880848c31427d66dc19b2b",
+      "local_id_unused": true,
+      "host_id_unused": null,
+      "historical_v1_build": {
+        "id": "bfs-upstream-compile-20260925-a1.diagnostic.build",
+        "kind": "evaluation",
+        "canonical_sha256": "c7bbe6864e8b8d8422fa624373e3b514f84deee589e4476bf83eef86b527f2e4",
+        "record": {
+          "path": "records/evaluations/bfs-upstream-compile-20260925-a1.diagnostic.build.yaml",
+          "sha256": "e22d7a4a5cdf8c963a09db0b06b2e479ce01ffdf203b7a17830e80bf5d48dc65",
+          "bytes": 51937
+        }
+      },
+      "candidate": {
+        "id": "bfs-upstream-compile-20260925-a1.candidate",
+        "kind": "candidate",
+        "canonical_sha256": "ccd0df5c59924a0968b6c860fb28a6ce19974790feb380919cf0ba81d5aa0f57",
+        "record": {
+          "path": "records/candidates/bfs-upstream-compile-20260925-a1.candidate.yaml",
+          "sha256": "3b3f572aac8ee18ed38155bc3b787182ab7345e9d9fafca84f575bb16cbc9124",
+          "bytes": 16261
+        }
+      },
+      "source_snapshot": {
+        "id": "bfs-upstream-compile-20260925-a1.source",
+        "kind": "source_snapshot",
+        "canonical_sha256": "bdb4c224ac90326e424c24e810737cb7de1556b72fd527ca0821bda5f3d1bec6",
+        "record": {
+          "path": "records/source_snapshots/bfs-upstream-compile-20260925-a1.source.yaml",
+          "sha256": "632b1a00ec91608125e5e12915ecaee45f01150602765fbd8b16404ca60283bc",
+          "bytes": 21804
+        }
+      },
+      "implementation": {
+        "id": "gapbs-bfs-do",
+        "kind": "implementation",
+        "canonical_sha256": "9bf61bf51ce76a09a7b4a8aaf163d28b1ce7284f8a708aaeecb8129550e10190",
+        "record": {
+          "path": "records/implementations/gapbs-bfs-do.yaml",
+          "sha256": "133435ae7e732ec6a1407be3544649d1c4fe5db21a1248f3ab438464502d9fbb",
+          "bytes": 42994
+        }
+      },
+      "source_artifact": {
+        "path": "/data1/yanruj/EvolveSWDB_sources/bfs-upstream-compile-20260925-a1.candidate/source",
+        "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+        "reopened_on_host_in_this_preparation": false
+      },
+      "public_compile_argv": [
+        "${PYTHON}",
+        "-m",
+        "swdb",
+        "dx100-compile",
+        "${CODE_ROOT}/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.upstream.diagnostic.json",
+        "--records",
+        "${RECORDS}",
+        "--db",
+        "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/swdb.sqlite",
+        "--runs-dir",
+        "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1",
+        "--lane",
+        "0",
+        "--format",
+        "json"
+      ],
+      "post_compile_get_argv": [
+        "${PYTHON}",
+        "-m",
+        "swdb",
+        "get",
+        "bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+        "--chain",
+        "--records",
+        "${RECORDS}",
+        "--db",
+        "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/swdb.sqlite",
+        "--format",
+        "json"
+      ],
+      "expected_output": {
+        "evaluation_id": "bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+        "raw_directory": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+        "build_directory": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+        "adapter": "dx100.complete_call.v2",
+        "roi": "bfs.complete_call.v1",
+        "diagnostic_regions": true,
+        "correctness": "unverified",
+        "timing": [],
+        "gain_claim": false
+      },
+      "historical_compiler": {
+        "compiler": "/usr/bin/g++-13",
+        "compiler_sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769",
+        "compiler_version": [
+          "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+          "Copyright (C) 2023 Free Software Foundation, Inc."
+        ]
+      },
+      "historical_discovery": {
+        "library": "/data1/yanruj/llvm18/lib/libclang.so",
+        "library_sha256": "27b38bfdb37d164878767c40c8ce9538c96e801a37d2a67234bee043945de139",
+        "pass_sha256": "9bee90040d1c4defa96793774ca877d2d26c351303d8e1927448ba0ef0d20ffb"
+      }
+    }
+  ],
+  "required_before_dispatch": [
+    "Seal exact code/Python/controlled environment and owned-lifecycle Linux proof; no checkout mutation after that pin.",
+    "Recheck all four IDs and raw/build/cache/dispatch paths unused in the actual authoritative host Store/filesystem; local absence does not establish remote absence.",
+    "Fresh helper upstream/script identity, both socket and legacy leases, lane0 admission, node/global headroom, free-space reserves and host load. Honor any active other-node-idle prerequisite.",
+    "Reopen exact source/candidate/model/target records and manifests/protections, compiler binary/version and model build receipt; model remains clean pinned e4fc4af.",
+    "Diagnostic builds must reopen retained libclang/library/resource mapping and actual preprocessing/collector identities; differences require explicit prospective review, not a silent substitute.",
+    "Retain exact original outer/pane PID-start/clock before helper startup. Enclose all calls in reviewed whole-tree Owned supervision, continuous original-clock resource accounting and one shared cleanup ledger. The public compile process-group guard alone is not whole-tree cleanup proof."
+  ],
+  "retained_evidence": [
+    "Fresh public get of model, target, both candidates/source snapshots/implementations; all get/compile/get-chain calls use explicit external sqlite_cache.",
+    "Per-call exact request/argv, stdout/stderr/exit, stage times, compiler and generated source/binary manifests, v2 verifier/diagnostic bindings, raw and build storage; all public failures retained.",
+    "Direct spawn/reap identities, every sampled/known/adopted identity plus exact pane/ancestry and settled shared cleanup ledger; independent terminal union/lane generation/kernel closure after helper release.",
+    "No claimed host success until fresh public get --chain matches the canonical completed build and exact request, adapter, source/compiler/model and diagnostic role."
+  ],
+  "local_validation": {
+    "date": "2026-09-26",
+    "scope": "Local Mac contract and catalog checks only; no compiler, provider, simulator, or remote process invoked. Temporary request records are discarded and never canonical evidence.",
+    "catalog_records": 218,
+    "cases": [
+      {
+        "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+        "public_entrypoint": "swdb dx100-compile",
+        "exit": 1,
+        "expected_local_refusal": "execution host differs from requested machine",
+        "request_retained_exactly": true,
+        "stages_started": 0,
+        "compiler_invoked": false,
+        "seconds": 6.826947707915679
+      },
+      {
+        "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+        "public_entrypoint": "swdb dx100-compile",
+        "exit": 1,
+        "expected_local_refusal": "execution host differs from requested machine",
+        "request_retained_exactly": true,
+        "stages_started": 0,
+        "compiler_invoked": false,
+        "seconds": 6.889174457872286
+      },
+      {
+        "id": "bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+        "public_entrypoint": "swdb dx100-compile",
+        "exit": 1,
+        "expected_local_refusal": "execution host differs from requested machine",
+        "request_retained_exactly": true,
+        "stages_started": 0,
+        "compiler_invoked": false,
+        "seconds": 6.779778291936964
+      },
+      {
+        "id": "bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+        "public_entrypoint": "swdb dx100-compile",
+        "exit": 1,
+        "expected_local_refusal": "execution host differs from requested machine",
+        "request_retained_exactly": true,
+        "stages_started": 0,
+        "compiler_invoked": false,
+        "seconds": 6.830286458134651
+      }
+    ],
+    "temporary_catalog_schema_and_cross_reference_validation": {
+      "records": 222,
+      "problems": 0
+    },
+    "static_and_pure_checks": [
+      "Exact historical request field shape retained; only id changed",
+      "workflow.message_from_text JSON-compatible parsing",
+      "Actual _integer strict budget checks and compile storage/key limits",
+      "Local new IDs absent before temporary writes",
+      "Unchanged candidate/source manifest identity and source_baseline role",
+      "Application, selected DOBFS function, false acceleration and primary/diagnostic booleans",
+      "Compatible completed execution model-build and target/backend/revision catalog bindings",
+      "Expected current compiler adapter is dx100.complete_call.v2; remote paths are not accessed locally"
+    ],
+    "limits": [
+      "No standalone dx100-compile request JSON schema or dry-run API exists; evaluation request is schema-unconstrained and semantic validation is in the public compiler.",
+      "Public local probe intentionally stops at the real host mismatch guard, before lanes/model/source paths; downstream source/compiler/artifact and discovery checks are not claimed executed.",
+      "No build success, executable readiness, correctness, profile, protocol qualification, or gain is established."
+    ],
+    "receipt": {
+      "path": "/private/tmp/bfs-scalar-v2-request-validation-20260926.json",
+      "sha256": "5ae7ca638821a8ff89a0c9c14e910fe81f4f51bb0131999af20ac40cda82e1ae",
+      "bytes": 3014
+    },
+    "validation_script": {
+      "path": "/private/tmp/prepare-scalar-v2-requests-20260926.py",
+      "sha256": "1d76166386e80827a1857365c2d30744c7584019cb5b68bf027624f7c6c6066c",
+      "bytes": 13832
+    }
+  },
+  "references": [
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/t17-build-only-plan-20260926.md",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/campaign-plan.md",
+    "docs/bfs-candidate-simulator-next-steps-20260926.md"
+  ]
+}

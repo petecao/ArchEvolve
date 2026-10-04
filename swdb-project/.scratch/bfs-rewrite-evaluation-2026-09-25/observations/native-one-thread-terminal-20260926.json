@@ -1,0 +1,53 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T17:58:54-04:00",
+  "host": "mbit10",
+  "run_id": "bfs-native-one-thread-pilot-20260926-a1",
+  "code_commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+  "state": "complete",
+  "driver_finished": "2026-09-26T17:56:28.630676-04:00",
+  "elapsed_seconds": 10133.011292,
+  "outer_exit": 0,
+  "terminal_audit": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-pilot-20260926-a1.dispatch/terminal-validation.json",
+    "bytes": 44539,
+    "sha256": "9fe880825baefb4179e14f30310916054aacf2af86b050ec2ad9c05fb37ed0d4"
+  },
+  "driver": {
+    "bytes": 486592,
+    "sha256": "81596a440b9114c5f4a6b2edb1d8a799b748ae01c144bc82a218902755115092",
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-pilot-20260926-a1/bfs-native-one-thread-pilot-20260926-a1.driver/driver.json"
+  },
+  "primary": {
+    "structural_checks_passed": 240,
+    "planned": 240,
+    "fixed_controls_passed": 4,
+    "spread_groups_passed": 24,
+    "numerical_gain_veto_triggered": false
+  },
+  "diagnostics": {
+    "complete_packages": 4,
+    "structural_checks_passed": 24,
+    "valid_memory_rows": 72
+  },
+  "resources": {
+    "samples": 2001,
+    "peak_sampled_tree_rss_bytes": 1262804992
+  },
+  "cleanup": {
+    "state": "terminal_and_reaped",
+    "retained_pid_start_identities": 131,
+    "all_absent_on_two_passes": true,
+    "zombie_count": 0,
+    "socket": 1,
+    "lease_generation": 402,
+    "lease_state": "released",
+    "kernel_lock": "empty"
+  },
+  "limits": [
+    "Actual collector completion and independent process closure; prospective publisher readback is still pending.",
+    "No native or simulator protocol freeze, candidate gain or final acceptance is claimed.",
+    "Original hard end2026-09-26T20:11:35.041327-04:00 and all historical failures are unchanged.",
+    "Raw artifacts remain on mbit10. This typed observation records the host worker audit; it does not replace the pinned reader."
+  ]
+}

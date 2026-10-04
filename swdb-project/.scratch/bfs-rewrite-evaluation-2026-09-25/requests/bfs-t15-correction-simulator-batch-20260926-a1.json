@@ -1,0 +1,203 @@
+{
+  "format": "swdb.bfs.simulator-batch-plan.v1",
+  "created": "2026-09-26",
+  "updated": "2026-09-26",
+  "automatic_retry_allowed": false,
+  "gain_claim": false,
+  "model_build": "bfs-dx100-build-20260925-a2",
+  "target": "dx100-e4fc4af-4c",
+  "verifier": "dx100.bfs.verifier.v2",
+  "roi": "bfs.dx100.traversal.v1",
+  "threads": 4,
+  "repetitions": 2,
+  "warmups": 0,
+  "verification_ticks": 100000000000000,
+  "clock": "Required sealed admission supplies prospective absolute start/latest-start/end; no automatic clock origin.",
+  "profitability": {
+    "minimum_speedup": 1.05,
+    "maximum_relative_spread": 0.1,
+    "confidence": 0.95,
+    "bootstrap_resamples": 2000,
+    "bootstrap_seed": 20260925
+  },
+  "historical_failure": {
+    "id": "bfs-dx100-witness-20260926-a1",
+    "file_sha256": "9a941cdff315e283b13563bf81ef2f45ba0712bbcf6d31b92f6232488efa3b42"
+  },
+  "required_a3": "bfs-dx100-witness-20260926-a3",
+  "id": "bfs-t15-correction-simulator-batch-20260926-a1",
+  "role": "shared_size_calibration",
+  "bounds": {
+    "batch_seconds": 43200,
+    "series_seconds": 21600,
+    "cleanup_seconds": 30,
+    "checkpoint_seconds": 3600,
+    "run_seconds": 3600,
+    "diagnostic_seconds": 600,
+    "memory_gib": 48,
+    "storage_gib": 10,
+    "batch_storage_gib": 40,
+    "raw_reserve_gib": 30,
+    "build_reserve_gib": 10,
+    "monitor_interval_seconds": 5,
+    "sampled_tree_memory_gib": 52,
+    "maximum_telemetry_gap_seconds": 30
+  },
+  "budget_authority": "One separately declared lossless-transport correction; original43200s/40GiB aggregate retained, with failed-attempt closure, smoke envelope and full fixed Linux-preparation reservation charged. No automatic retry or nested correction.",
+  "series": [
+    {
+      "id": "bfs-t15-correction-simulator-batch-20260926-a1.uniform18",
+      "candidate": "bfs-author-maa-compile-20260925-a1.candidate",
+      "diagnostic_build": "bfs-author-maa-compile-20260925-a1.diagnostic.build",
+      "workload": "bfs-20260925-uniform18.cd2169a5c421baf7",
+      "sources": [
+        0,
+        1234,
+        7777
+      ],
+      "configuration": {
+        "mode": "MAA",
+        "l3_size_mb": 8,
+        "l3_assoc": 16,
+        "tile_elements": 16384
+      },
+      "accelerated": true,
+      "protocol_key": null,
+      "protocol_role": null
+    },
+    {
+      "id": "bfs-t15-correction-simulator-batch-20260926-a1.kronecker18",
+      "candidate": "bfs-author-maa-compile-20260925-a1.candidate",
+      "diagnostic_build": "bfs-author-maa-compile-20260925-a1.diagnostic.build",
+      "workload": "bfs-20260925-kronecker18.48de8267ac2098d5",
+      "sources": [
+        0,
+        1234,
+        7777
+      ],
+      "configuration": {
+        "mode": "MAA",
+        "l3_size_mb": 8,
+        "l3_assoc": 16,
+        "tile_elements": 16384
+      },
+      "accelerated": true,
+      "protocol_key": null,
+      "protocol_role": null
+    }
+  ],
+  "record_sha256": {
+    "bfs-20260925-kronecker18.48de8267ac2098d5": "38ecdcb6ed58c15b9dbd3ed1449f18e4ffc69ddc2f2ab6a8192b144c25030199",
+    "bfs-20260925-uniform18.cd2169a5c421baf7": "e345524d8c91f4363292c47e81510c3fe34e3f80284ed9945ce4fa0e4e63afdd",
+    "bfs-author-maa-compile-20260925-a1.candidate": "1018e9002c86a2e0ef7850be0bc66dbec9849d388cced45542c61a18cd619fff",
+    "bfs-author-maa-compile-20260925-a1.diagnostic.build": "de0c71b6f0fe54a88be05ca5fb93bb5980d44fc787294964a63568c70d785beb",
+    "bfs-author-maa-compile-20260925-a1.source": "f1b53e83398c74871f0cf46dc8f98b728254992a8ee63aaf7419732680b42fb6",
+    "bfs-dx100-build-20260925-a2": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea",
+    "bfs-dx100-witness-20260926-a1": "c5ec9b7ca044728d61fb01be67616ea66e6364bd1c160569ab5dad9382570b8e",
+    "dx100-bfs-maa-reference": "3f8646f57df66f2db9f8236240c82fcdf2d610f47d28b7814e749333bceb9ae0",
+    "dx100-e4fc4af-4c": "94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1",
+    "mbit10": "fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79"
+  },
+  "protocol_requests": {},
+  "accounting": {
+    "included": "New coordinator entry through final cleanup, every new series and output, prior failed attempt through final closure, smoke preparation through final recount, and the full nonrefundable600s/2GiB prospective Linux proof reservation. No resume, retry, credit or allowance enlargement.",
+    "excluded": "Immutable common model/toolchain/author binaries and registered scale18 inputs are historical shared infrastructure. Native pilot, failed/expired witness history, a3 correctness and coverage are separately bounded prerequisites; do not charge them again here.",
+    "preparation": [
+      {
+        "id": "bfs-gem5-gzip-transport-20260926-a1",
+        "driver": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1/driver.json",
+          "sha256": "913293ee4dcacef41aee597c6f2df534bd96e295d2ba93a17f070a5d02764aa1"
+        },
+        "lane": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/lane.json",
+          "sha256": "f34bc3114a1b9f0359907cb9051b805dceb610005e3632c6fa9ec281e0fe8f46"
+        },
+        "storage_paths": [
+          "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1",
+          "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch"
+        ],
+        "closed_envelope": {
+          "preflight": {
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/preflight.json",
+            "sha256": "8b6414f6635d257278c891d6ec7a6b27943117160d9363b19e957f39a12d8dee"
+          },
+          "terminal": {
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/terminal-validation.json",
+            "sha256": "fc478833e8b93b6f373d0dba49192f40e3f7f01d95c6b1538ab3d42dcc0f70b5"
+          },
+          "started": "2026-09-26T20:58:40.404730-04:00",
+          "finished": "2026-09-26T21:06:31.417855-04:00",
+          "retained_bytes": 200704
+        }
+      }
+    ],
+    "retained_failed_batches": [
+      {
+        "id": "bfs-t15-simulator-batch-20260926-a1",
+        "driver": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver/driver.json",
+          "sha256": "b62d2131aeef346c5a16c4612def7dcecef8faaae475d97869565e4830d33c61"
+        },
+        "lane": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/lane.json",
+          "sha256": "ffb4dd66125080b460f1082a52922dc444fcc69c5e309a7266cc17fd52c8be2d"
+        },
+        "terminal": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/terminal-validation.json",
+          "sha256": "5f2a053673a697a678939106ebcf7d2a7ce0c7b882cb5ce4e94df43023517ee5"
+        },
+        "cleanup_ledger": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver/cleanup-ledger.json",
+          "sha256": "01eef60d603d90aacb4df9c786f61c5cfb4b48d3f74c5565d14b104a630036bb"
+        },
+        "closed_at": "2026-09-26T20:39:58.522576-04:00",
+        "storage_paths": [
+          "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1",
+          "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch"
+        ],
+        "retained_bytes": 11014971392
+      }
+    ],
+    "preparation_reservation": {
+      "id": "bfs-t15-correction-linux-20260926-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648,
+      "selections": {
+        "owned_cleanup": "bfs-simulator-owned-linux-20260926-a3",
+        "dx100_interruption": "bfs-simulator-interruption-linux-20260926-a3"
+      },
+      "storage_paths": [
+        "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a3",
+        "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a3.dispatch",
+        "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a3",
+        "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a3.dispatch",
+        "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-linux-20260926-a1.dispatch"
+      ],
+      "scope": "Both single90-second exact-code Linux fixtures and their preflight,60-second independent audits, wrapper exit/hash readbacks, final accounting and all five output roots. Charge the full reservation without refund; actual execution must fit before admission."
+    }
+  },
+  "required_coverage": "bfs-dx100-coverage-20260926-a2.execute",
+  "historical_coverage_failure": {
+    "id": "bfs-dx100-coverage-20260926-a1.execute",
+    "state": "interrupted_public_marker_retained",
+    "sha256": "f64b604d10bf579c832145b07d6b6cee39d81833d23711375a6625f59fbc57f9",
+    "file_sha256": "dfa28a3bbe8170fe2e3dff6b140a41b4bfc7873c3e903fc39d73cc258acac26e"
+  },
+  "supervision": {
+    "format": "swdb.bfs.simulator-supervision.v1",
+    "cleanup": "shared_atomic_reservations_total_30_seconds",
+    "rss_source": "linux.proc_pid_stat.field24.v1",
+    "hard_memory_quota": false,
+    "outer_helper_preflight_included": true,
+    "required_linux_cases": [
+      "detached_success",
+      "detached_failure",
+      "nested_interruption",
+      "nested_term_resistant",
+      "public_dx100_interruption"
+    ],
+    "final_kill_and_persistence_reserve_seconds": 10
+  },
+  "trace_transport": "gem5-gzip.v1"
+}

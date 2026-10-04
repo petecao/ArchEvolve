@@ -1,0 +1,334 @@
+kind: evaluation
+schema_version: '0.4'
+id: typed-library-bfs-gem5-20261003-a1.candidate.primary.build
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: typed-library-bfs-gem5-20261003-a1.candidate.primary.build
+  machine: mbit10
+  hardware_target: dx100-e4fc4af-4c
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  build_evaluation: bfs-dx100-build-20260925-a2
+  candidate: typed-library-bfs-gem5-20261003-a1.proposal.candidate-1
+  function: DOBFS
+  accelerated: true
+  roi: bfs.complete_call.v1
+  parent_gather_diagnostic: false
+  budget:
+    total_seconds: 600
+    build_seconds: 300
+    memory_gib: 4
+    storage_gib: 1
+outcome:
+  state: complete
+  stage: candidate_build
+  reason: Identified candidate compiled; no simulated correctness or timing inferred.
+stages:
+- stage: candidate_compiler_identity
+  state: complete
+  started: '2026-10-03T12:50:26.049886+00:00'
+  command: [/usr/bin/g++-13, --version]
+  timeout_s: 30
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/000-candidate_compiler_identity.log
+  finished: '2026-10-03T12:50:30.967723+00:00'
+  host_wall_s: 2.0406884597614408
+  returncode: 0
+  log_sha256: b240ade48d7a4743cb2e7940990dd5a8dbc15120543c7eadd9541435edd2efd2
+  reason: null
+  sampled_peak_process_group_rss_kib: 0
+- stage: candidate_compile
+  state: complete
+  started: '2026-10-03T12:50:36.185360+00:00'
+  command:
+  - /usr/bin/g++-13
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -g
+  - -fopenmp
+  - -DGEM5
+  - -DNUM_CORES=4
+  - -DTILE_SIZE=16384
+  - -DMAA
+  - -I/data1/yanruj/DX100-bfs-e4fc4af/include
+  - -I/data1/yanruj/DX100-bfs-e4fc4af/util/m5/src
+  - -I/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/API
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-gem5-20261003-a1.proposal/source/benchmarks/gapbs/src
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/complete_call.cc
+  - /data1/yanruj/DX100-bfs-e4fc4af/util/m5/src/abi/x86/m5op.S
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/bfs
+  timeout_s: 300
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/001-candidate_compile.log
+  finished: '2026-10-03T12:50:42.880998+00:00'
+  host_wall_s: 4.074438516050577
+  returncode: 0
+  log_sha256: a38fb469e62e27ccbf81be27410e150c8af3b82216cd9700fd8f7e9921dbad70
+  reason: null
+  sampled_peak_process_group_rss_kib: 197636
+timing: []
+correctness:
+  state: unverified
+  checks: []
+profiling:
+  state: incomplete
+  reasons:
+  - BFS ROI, regions, and memory metrics require the profile collector.
+raw_artifacts:
+- host: mbit10
+  path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.candidate.primary.build
+  kind: dx100_compile
+- host: mbit10
+  kind: host_observation
+  path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/host-observation.json
+  sha256: 5af5bf38288a59132961dc17b29a91cc68e61c44976610316f28966aaabfa5c5
+  host_wall_s: 0.07753859367221594
+  evidence_kind: execution
+  unavailable_commands: 2
+- host: mbit10
+  kind: process_group_memory
+  path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/000-candidate_compiler_identity.memory.jsonl
+  sha256: fd36b2434c46a6c86f438466e84c39278efeb2618ff2ad59c2e8c31d7bd66017
+- host: mbit10
+  kind: process_group_memory
+  path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/001-candidate_compile.memory.jsonl
+  sha256: ea9f5ef5fc788e338288dc454965ee116323a46537541656709766082e092012
+- kind: candidate_build
+  artifact:
+    path: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.candidate.primary.build
+    sha256: 27e2a757d20d3bc5796a107aefd037e30b56c149acc09fc61efccb9077ad2d0f
+    files:
+    - path: bfs
+      sha256: 0def0c6a7e13c07f29e05260d12d0d243d70b29589d8c99cf97abc4a2f5e8069
+      bytes: 1053360
+      executable: true
+    - path: complete_call.cc
+      sha256: 67834299349dacdc143ff07a637c5498aed6abbeda3000cf7c5ae99e514d53f4
+      bytes: 9149
+      executable: false
+gain_claim: false
+evidence_kind: execution
+machine: mbit10
+context:
+  backend: dx100-gem5-se
+  target: dx100-e4fc4af-4c
+  target_sha256: 94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1
+  model:
+    id: dx100-gem5
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  interface:
+    id: dx100-mmio
+    version: 1.0-e4fc4af
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  host: mbit10
+  lane: 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 506)'
+  budget:
+    total_seconds: 600
+    build_seconds: 300
+    memory_gib: 4
+    storage_gib: 1
+  load_average: [2.1025390625, 1.81787109375, 1.548828125]
+  roi: bfs.complete_call.v1
+  basis: simulated
+  dispatch_preflight:
+    disk: /data1
+    runs_folder: /data1/yanruj/EvolveSWDB_runs
+    free_bytes: 46273028096
+    memory_node: 1
+    free_memory_bytes: 23931473920
+    secondary_free_bytes: 78837571584
+    format: swdb.dispatch-preflight.v1
+    observed_at: '2026-10-03T12:50:25.945330+00:00'
+    planned_raw_bytes: 1073741824
+    reserve_bytes: 21474836480
+    memory_budget_bytes: 4294967296
+    state: admitted
+  host_observation:
+    path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/host-observation.json
+    sha256: 5af5bf38288a59132961dc17b29a91cc68e61c44976610316f28966aaabfa5c5
+    host_wall_s: 0.07753859367221594
+    evidence_kind: execution
+    unavailable_commands: 2
+  build_directory: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.candidate.primary.build
+  candidate_sha256: 991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1
+  application: dx100-gapbs
+  source_path: benchmarks/gapbs/src/bfs.cc
+  function: DOBFS
+  accelerated_requested: true
+  model_build: bfs-dx100-build-20260925-a2
+  suppressed_internal_events: [m5_reset_stats, m5_dump_stats, m5_work_begin, m5_work_end, m5_exit]
+  driver:
+    path: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/complete_call.cc
+    sha256: 67834299349dacdc143ff07a637c5498aed6abbeda3000cf7c5ae99e514d53f4
+  timed_source:
+    path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-gem5-20261003-a1.proposal/source/benchmarks/gapbs/src/bfs.cc
+    sha256: 093c56b91837122380fd5e66766c92947e5f1c5194dd4c038936bc28934864dc
+  verifier_source:
+    path: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/complete_call.cc
+    sha256: 67834299349dacdc143ff07a637c5498aed6abbeda3000cf7c5ae99e514d53f4
+    symbol: swdb_original::Graph::verify
+    bounds_check: trusted original-CSR oracle checks exact parent length and range before traversal validation
+  graph_verification:
+    contract: swdb.bfs.original-adjacency.v1
+    input_format: gapbs.sg32
+    byte_order: little
+    adjacency: outgoing CSR from exact registered serialized input
+    maximum_extra_bytes: 2147483648
+    preload: before checkpoint and ROI
+    verification: after ROI on exact returned parent buffer
+    allocation: all oracle adjacency and checker work arrays allocated before ROI
+  protected_bfs_verifier:
+    path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-gem5-20261003-a1.proposal/source/benchmarks/gapbs/src/bfs.cc
+    sha256: 093c56b91837122380fd5e66766c92947e5f1c5194dd4c038936bc28934864dc
+    symbol: BFSVerifier
+    protected_text_sha256: f55852f16a74a11542ccca387a2ddf61d1f538b006e9e35935b50c48662bf721
+    bounds_check: trusted driver validates parent length and values before BFSVerifier
+candidate: typed-library-bfs-gem5-20261003-a1.proposal.candidate-1
+source_snapshot: typed-library-bfs-scalar-profile-20261003-a2.package.v1.source
+implementation: dx100-bfs-scalar
+proposal: typed-library-bfs-gem5-20261003-a1.proposal
+build:
+  compiler: /usr/bin/g++-13
+  compiler_sha256: 1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769
+  flags:
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -g
+  - -fopenmp
+  - -DGEM5
+  - -DNUM_CORES=4
+  - -DTILE_SIZE=16384
+  - -DMAA
+  driver:
+    path: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/complete_call.cc
+    sha256: 67834299349dacdc143ff07a637c5498aed6abbeda3000cf7c5ae99e514d53f4
+  m5ops:
+    path: /data1/yanruj/DX100-bfs-e4fc4af/util/m5/src/abi/x86/m5op.S
+    sha256: fe20d70d689c341ee614121d7aac1431b81d2178943a113ea1aa1d7c5ef50c69
+  binary: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/bfs
+  source_artifact:
+    path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-gem5-20261003-a1.proposal/source
+    sha256: 991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1
+    files:
+    - path: LICENSE
+      sha256: b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2
+      bytes: 1208
+      executable: false
+    - path: PROVENANCE.md
+      sha256: 3009aa7f259294b67bfbbee311ead96d66050a86f1a7bfde715556f10174e6c6
+      bytes: 619
+      executable: false
+    - path: benchmarks/API/MAA.hpp
+      sha256: 4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd
+      bytes: 1323
+      executable: false
+    - path: benchmarks/API/MAA_atomics.hpp
+      sha256: 896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a
+      bytes: 845
+      executable: false
+    - path: benchmarks/API/MAA_functional.hpp
+      sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+      bytes: 25345
+      executable: false
+    - path: benchmarks/API/MAA_gem5.hpp
+      sha256: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+      bytes: 27473
+      executable: false
+    - path: benchmarks/API/MAA_gem5_magic.hpp
+      sha256: e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32
+      bytes: 9802
+      executable: false
+    - path: benchmarks/API/MAA_utility.hpp
+      sha256: 3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e
+      bytes: 786
+      executable: false
+    - path: benchmarks/gapbs/LICENSE
+      sha256: bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3
+      bytes: 1499
+      executable: false
+    - path: benchmarks/gapbs/src/benchmark.h
+      sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+      bytes: 3565
+      executable: false
+    - path: benchmarks/gapbs/src/bfs.cc
+      sha256: 093c56b91837122380fd5e66766c92947e5f1c5194dd4c038936bc28934864dc
+      bytes: 11755
+      executable: false
+    - path: benchmarks/gapbs/src/bitmap.h
+      sha256: 6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465
+      bytes: 1706
+      executable: false
+    - path: benchmarks/gapbs/src/builder.h
+      sha256: 2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01
+      bytes: 16778
+      executable: false
+    - path: benchmarks/gapbs/src/command_line.h
+      sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+      bytes: 8511
+      executable: false
+    - path: benchmarks/gapbs/src/generator.h
+      sha256: 24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe
+      bytes: 6418
+      executable: false
+    - path: benchmarks/gapbs/src/graph.h
+      sha256: 79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0
+      bytes: 8276
+      executable: false
+    - path: benchmarks/gapbs/src/platform_atomics.h
+      sha256: 9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd
+      bytes: 4198
+      executable: false
+    - path: benchmarks/gapbs/src/pvector.h
+      sha256: b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d
+      bytes: 4265
+      executable: false
+    - path: benchmarks/gapbs/src/reader.h
+      sha256: 951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1
+      bytes: 9268
+      executable: false
+    - path: benchmarks/gapbs/src/sliding_queue.h
+      sha256: 3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c
+      bytes: 2502
+      executable: false
+    - path: benchmarks/gapbs/src/swdb_dxc_lowering.hpp
+      sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+      bytes: 3153
+      executable: false
+    - path: benchmarks/gapbs/src/timer.h
+      sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+      bytes: 1161
+      executable: false
+    - path: benchmarks/gapbs/src/util.h
+      sha256: a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6
+      bytes: 1953
+      executable: false
+    - path: benchmarks/gapbs/src/writer.h
+      sha256: 3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea
+      bytes: 2898
+      executable: false
+    - path: include/gem5/asm/generic/m5ops.h
+      sha256: 28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d
+      bytes: 5479
+      executable: false
+    - path: include/gem5/m5ops.h
+      sha256: bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8
+      bytes: 3937
+      executable: false
+  compiler_version:
+  - g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  - Copyright (C) 2023 Free Software Foundation, Inc.
+  adapter: dx100.complete_call.v2
+  binary_sha256: 0def0c6a7e13c07f29e05260d12d0d243d70b29589d8c99cf97abc4a2f5e8069
