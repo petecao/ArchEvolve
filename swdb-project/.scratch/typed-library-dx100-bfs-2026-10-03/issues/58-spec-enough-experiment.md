@@ -3,7 +3,7 @@
 Created: 2026-10-03
 Updated: 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D7, D10)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 48 (07, 08, 20 resolved)
 **Spec:** `../spec.md`
 **Needs go-ahead:** Granted. Yan-Ru approved mbit10 dispatch on 2026-10-03. The experiment is one dispatch (Q62), and actual lane admission and receipts are still required.
