@@ -1,6 +1,7 @@
 """Real target adapters for `swdb campaign` (tickets 56 and 57).
 
-Created 2026-10-04 ET. Original SWDB code (design decisions D2-D4, D7, D9 and D10 of
+Created 2026-10-04 ET; ticket 63 (2026-10-04 ET): a native campaign that pins evaluator v2
+freezes protocols with that evaluator, its driver and its compiled verifier. Original SWDB code (design decisions D2-D4, D7, D9 and D10 of
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`).
 
 An adapter turns the campaign loop's steps into the public SWDB evaluator commands, run
@@ -450,9 +451,23 @@ class NativeAdapter(TargetAdapter):
     def roots(self):
         return super().roots() + list(NATIVE_TEMPLATES.values()) + list(ROLE_IMPLEMENTATION.values())
 
+    def evaluator(self):
+        """Ticket 63: the campaign file may pin evaluator v2 (absent means v1)."""
+        from swdb.bfs_native_scalable import EVALUATOR_V1
+        return self.campaign["protocol"].get("evaluator", EVALUATOR_V1)
+
+    def planned_bytes(self):
+        # A v2 paired block keeps 60 small trial records plus gzip parent vectors
+        # (at most 16 MiB raw each at scale 22) and logs: well under 2 GiB.
+        from swdb.bfs_native_scalable import EVALUATOR_V2
+        return 2 * GIB if self.evaluator() == EVALUATOR_V2 else self.PLANNED_BYTES
+
     def prepare(self):
         super().prepare()
         from swdb.bfs_native import MAX_DIRECTED_EDGES, MAX_VERTICES
+        from swdb import bfs_native_scalable as scalable
+        if self.evaluator() == scalable.EVALUATOR_V2:
+            MAX_VERTICES, MAX_DIRECTED_EDGES = scalable.MAX_VERTICES, scalable.MAX_DIRECTED_EDGES
         store = self._store()
         for row in self.campaign["workload_classes"]:
             realized = store.get(row["workload"], "workload")["definition"]["realized"]
@@ -500,6 +515,14 @@ class NativeAdapter(TargetAdapter):
                                                f"Baseline role {role}: {ROLE_IMPLEMENTATION[role]} unchanged source."],
                                   "accelerator": [], "configuration": []}
             out["region_pairs"] = []
+            from swdb import bfs_native_scalable as scalable
+            if self.evaluator() == scalable.EVALUATOR_V2:
+                # Ticket 63: new protocols pin evaluator v2, its driver and its compiled verifier.
+                out["evaluator"] = scalable.EVALUATOR_V2
+                out["correctness"]["verifier"] = scalable.VERIFIER_V2
+                for side in ("baseline", "candidate"):
+                    out["instrumentation"][side] = {"template_sha256": artifacts.file_hash(scalable.DRIVER_V2),
+                                                    "treatment": "included"}
             request = {"message_version": "1.0", "id": f"{self.cid}.protocol.{role}", "version": 1, "settings": out}
             code, record = self.runner("freeze-protocol", request, stage=f"freeze-{role}", timeout=600)
             if code or not record or record.get("kind") != "protocol":
