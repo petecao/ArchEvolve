@@ -332,9 +332,25 @@ def _snapshot_module():
     return module
 
 
+def _without_registered_snapshot(records, snapshot_id):
+    """Drop a registered snapshot and every record that cites it, directly or transitively, from
+    the temporary records copy, so registration can be tested again (2026-10-04 ET: ticket 41
+    registered the real snapshot, and later BC tickets cite it)."""
+    removed, files = {snapshot_id}, sorted(records.path.rglob("*.yaml"))
+    while True:
+        cited = [f for f in files if f.exists() and (f.stem in removed or any(i in f.read_text() for i in removed))]
+        new = {f.stem for f in cited} - removed
+        for f in cited:
+            f.unlink()
+        if not new:
+            return
+        removed |= new
+
+
 def test_dx100_scalar_bc_snapshot_removes_the_accelerated_code_and_registers(records, tmp_path):
     records.copy_repo()
     module = _snapshot_module()
+    _without_registered_snapshot(records, "bc-dx100-scalar-only-20261003-a1.source")
     original = (REPO / "apps/dx100" / module.BC).read_text()
     assert "PBFSMAA" in original and "BrandesMaa" in original
     data = module.materialize(tmp_path / "snapshot", records.path)
