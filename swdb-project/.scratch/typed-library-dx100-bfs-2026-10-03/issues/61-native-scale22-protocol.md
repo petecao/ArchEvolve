@@ -16,8 +16,9 @@ materialization limits, so the A/A pilot could not start:
 
 - `swdb/bfs_native.py:39-41`: `MAX_VERTICES = 2_000_000`, `MAX_DIRECTED_EDGES = 32_000_000`,
   `MAX_GRAPH_BYTES = 512 MiB`.
-- Kronecker 22 and uniform 22 have 4,194,304 vertices and about 134 million (uniform) directed
-  edges. `swdb/bfs_protocol.py` `_representation(..., allow_streaming=False)` refuses them
+- `bfs-20261004-kronecker22.3dc69be403db57e9` has 4,194,302 vertices and 128,311,450 directed edges
+  (1,798,070 isolated vertices); `bfs-20261004-uniform22.facb16e6260c3a82` has 4,194,304 vertices and
+  134,217,158 directed edges. `swdb/bfs_protocol.py` `_representation(..., allow_streaming=False)` refuses them
   ("registered graph exceeds native materialization limits").
 - Even with the limits raised, the evaluator builds a Python adjacency (several GB per evaluation),
   writes a text `graph.swdb` copy (about 2 GB per evaluation) and verifies every timed trial in pure
