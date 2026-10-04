@@ -738,18 +738,27 @@ def prompt_context(config, folder):
     if abi() < 4:
         # Refuse before any credential is copied off its protected location.
         raise Failure("SWDB provider guard requires Linux Landlock ABI >= 4; refusing unguarded session")
-    original = Path(os.environ.get("CODEX_HOME", str(Path.home() / ".codex"))) / "auth.json" if kind == "codex" else Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude"))) / ".credentials.json"
-    login = home / original.name
+    from swdb import provider_login
+    login = home / provider_login.login_name(kind)
     try:
-        if original.is_symlink() or not original.is_file():
-            raise Failure("provider login file is unavailable")
-        shutil.copyfile(original, login)
-        login.chmod(0o600)
+        handle = provider_login.copy(kind, login)
         result = context(config, workspace, home, folder, login_path=login)
     except BaseException:
         login.unlink(missing_ok=True)
         raise
-    result["cleanup"] = lambda: login.unlink(missing_ok=True)
+    state = {}
+
+    def cleanup():
+        # A refreshed login is written back before the copy is deleted (ticket 58).
+        if "login_writeback" not in state:
+            try:
+                state["login_writeback"] = handle.write_back()
+            except OSError as exc:
+                state["login_writeback"] = {"written_back": False, "reason": f"write-back failed: {type(exc).__name__}"}
+        login.unlink(missing_ok=True)
+
+    result["cleanup"] = cleanup
+    result["login_writeback"] = state
     return result
 
 

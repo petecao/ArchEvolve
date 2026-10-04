@@ -1,20 +1,19 @@
 """Role-specific inputs over the shared provider process, guard and audit.
 
-Updated: 2026-10-03. Inputs are built by trusted SWDB callers, never copied by
+Updated: 2026-10-04 (login write-back). Inputs are built by trusted SWDB callers, never copied by
 walking a repository. Each file is explicit; real invocations require mbit10.
 """
 
 import copy
 import json
-import os
 import re
-import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
 
-from swdb import artifacts, provider_adapters, provider_audit, provider_guard, provider_workspace, rewrite
+from swdb import (artifacts, provider_adapters, provider_audit, provider_guard, provider_login,
+                  provider_workspace, rewrite)
 from swdb.cli import Failure
 
 FORBIDDEN_KEYS = {"evaluator", "verification", "correctness_check", "protections",
@@ -101,20 +100,15 @@ def prepare(role, files, folder, config):
         target.write_text(content)
         workspace.visible[name] = artifacts.file_hash(target)
     kind = config.get("emulates", config["kind"])
-    login_name = "auth.json" if kind == "codex" else ".credentials.json"
-    workspace.login_path = home / login_name
+    workspace.login_path = home / provider_login.login_name(kind)
     try:
         if config["kind"] == "external_fixture":
             workspace.login_path.write_text('{"fixture":true}\n')
         else:
             if provider_guard.abi() < 4:
                 raise Failure("SWDB provider guard requires Linux Landlock ABI >= 4")
-            original = (Path(os.environ.get("CODEX_HOME", str(Path.home()/".codex"))) / login_name
-                        if kind == "codex" else
-                        Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home()/".claude"))) / login_name)
-            if original.is_symlink() or not original.is_file():
-                raise Failure("agent role provider login file is unavailable")
-            shutil.copyfile(original, workspace.login_path)
+            workspace.login_copy = provider_login.copy(kind, workspace.login_path,
+                                                       "agent role provider login file is unavailable")
         workspace.login_path.chmod(0o600)
         workspace.metadata = {"format": "swdb.provider-role-workspace.v1", "role": role.name,
             "root": str(root), "home": str(home), "read_only": role.read_only,

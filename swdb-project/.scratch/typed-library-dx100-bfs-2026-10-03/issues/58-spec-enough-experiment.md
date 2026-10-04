@@ -1,7 +1,7 @@
 # 58 — "Is the specification enough?" experiment
 
 Created: 2026-10-03
-Updated: 2026-10-04 ET (attempt a1 blocked on the Codex login); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D7, D10)
+Updated: 2026-10-04 ET (login write-back fix; attempt a1 blocked on the Codex login); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D7, D10)
 **Type:** slice
 **Status:** needs-info
 **Blocked by:** Codex login on mbit10 (Yan-Ru); 48, 07, 08, 20 resolved
@@ -71,3 +71,19 @@ Updated: 2026-10-04 ET (attempt a1 blocked on the Codex login); 2026-10-03 ET (r
     alone. The driver keeps the official verdict and adds a labeled diagnostic, never a
     certification: the functional matrix, which control sites exist, and the controls run where a
     site exists.
+  - 2026-10-04 00:45 ET: likely root cause of a1's 401s found and fixed (local only, not yet on mbit10). Every
+    guarded session copied `auth.json` from CODEX_HOME into a private provider home and deleted the
+    copy afterward. Codex refreshes its OAuth tokens inside a session and saves them only to the
+    `auth.json` in its own home, and the refresh token is single use. So any session that refreshed
+    (for example the ticket 07/20 sessions) left the source holding a consumed refresh token, and the
+    next session got `token_invalidated` / `refresh_token_reused`. Fix: new
+    `swdb/provider_login.py`, used by `provider_workspace`, `provider_roles` and
+    `provider_guard.prompt_context`. When a session ends, a changed copy that is still a well-formed
+    login is written back atomically (temp file, `os.replace`, mode 0600) under a lock file
+    (`auth.json.swdb-lock`), only if the source still holds the snapshot the session started from.
+    Receipts record only short hashes and changed/written flags (`workspace_manifest.login_writeback`).
+    The copy is still deleted and audited. The driver now runs an offline login preflight before each
+    session: a missing or malformed login, or a login whose hash a session already saw refused,
+    pauses the run as an uncounted D7 login failure (`ledger.preflights`). Tests:
+    `tests/test_provider_login.py`. Yan-Ru still has to run `codex login` on mbit10 once, because
+    the current source token is already consumed.

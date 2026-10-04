@@ -45,7 +45,7 @@ PROJECT = Path(__file__).resolve().parents[1]
 REPOSITORY = PROJECT.parent
 sys.path.insert(0, str(PROJECT))
 
-from swdb import artifacts, certification, provider_adapters, provider_roles, workflow  # noqa: E402
+from swdb import artifacts, certification, provider_adapters, provider_login, provider_roles, workflow  # noqa: E402
 from swdb.cli import Failure, UsageError, _require_valid  # noqa: E402
 
 CAMPAIGN_PATTERN = "extensa-gem5-bfs-{date}-s1"
@@ -187,6 +187,24 @@ def sample_ids():
     return [(arm, n) for n in range(1, SAMPLES + 1) for arm in ARMS]   # interleaved in time
 
 
+def login_preflight(ledger, ledger_path, kind="codex"):
+    """D7 login preflight (2026-10-04): pause, uncounted, before any session is spent.
+
+    Offline only: a missing or malformed login file, or the same login file (by hash)
+    that a recorded session already saw refused, pauses the run. Never records values.
+    Returns the login file's short hash for the session row.
+    """
+    check = provider_login.preflight(kind)
+    refused = {c.get("login_source_sha256") for c in ledger["calls"] if c.get("outcome") == "login"} - {None}
+    if check["state"] == "ok" and check["source_sha256"] in refused:
+        check.update(state="login", reason="this login was already refused by the provider; run `codex login`")
+    if check["state"] != "ok":
+        ledger.setdefault("preflights", []).append({"at": now(), "outcome": "login", "counted": False, **check})
+        save(ledger_path, ledger)
+        raise Failure(f"provider paused (login); uncounted; preflight: {check['reason']}")
+    return check["source_sha256"]
+
+
 def provider_stage(args):
     root, _records, runs = folders(args)
     runs.mkdir(parents=True, exist_ok=True)
@@ -224,9 +242,10 @@ def provider_stage(args):
             raise Failure("the next provider call could exceed the lane-hour budget")
         files, input_pins = arm_files(arm, base)
         provider_roles._inputs(files)       # refused inputs never open (or count) a call
+        login_sha = None if args.provider_config else login_preflight(ledger, ledger_path)
         folder.mkdir(parents=True, exist_ok=True)
         row = {"arm": arm, "sample": n, "invocation": f"{args.campaign}.{arm}-s{n}", "started": now(),
-               "input_pins": input_pins, "visible_files": sorted(files)}
+               "input_pins": input_pins, "visible_files": sorted(files), "login_source_sha256": login_sha}
         try:
             response, meta = provider_roles.run(ROLE, files, PROMPT.format(campaign=args.campaign, arm=arm, sample=n),
                                                 config, folder / "provider")
@@ -249,6 +268,8 @@ def provider_stage(args):
                    classification=meta.get("classification"), cli_version=meta.get("cli_version"),
                    audit_passed=audit.get("passed"), guard_passed=(meta.get("guard_result") or {}).get("passed"),
                    login_copy_deleted=(meta.get("workspace_manifest") or {}).get("login_copy_deleted"),
+                   login_writeback={k: v for k, v in ((meta.get("workspace_manifest") or {})
+                                    .get("login_writeback") or {}).items() if k in ("changed", "written_back", "reason")},
                    lane=meta.get("lane"))
         ledger["calls"].append(row)
         save(ledger_path, ledger)
