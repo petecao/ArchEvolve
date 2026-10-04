@@ -107,8 +107,14 @@ def fixture_file(team, *, iterations=None, **changes):
     return path
 
 
+def knob_rows(knobs):
+    """The rewrite role's knob rows (2026-10-04 ET) from {class: {name: value}}."""
+    return [{"class": cls, "name": name, "value": value}
+            for cls, values in (knobs or {}).items() for name, value in values.items()]
+
+
 def rewrite(contracts=(CONTRACT,), knobs=None, patch=PATCH):
-    return {"patch": patch, "contracts": list(contracts), "knobs": knobs or {}, "unresolved": []}
+    return {"patch": patch, "contracts": list(contracts), "knobs": knob_rows(knobs), "unresolved": []}
 
 
 def provider(team, plan):

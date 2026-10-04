@@ -229,7 +229,12 @@ def _roles():
         "required": ["patch", "contracts", "knobs", "unresolved"],
         "properties": {"patch": {"type": "string"},
                        "contracts": {"type": "array", "items": {"type": "string"}},
-                       "knobs": {"type": "object", "additionalProperties": {"type": "object"}},
+                       # 2026-10-04 ET (ticket 57, campaign a1): strict structured output needs a fixed
+                       # object shape, so knob assignments are a list of {class, name, value} rows.
+                       "knobs": {"type": "array", "items": {
+                           "type": "object", "additionalProperties": False, "required": ["class", "name", "value"],
+                           "properties": {"class": {"type": "string"}, "name": {"type": "string"},
+                                          "value": {"type": ["number", "string"]}}}},
                        "unresolved": {"type": "array", "items": {"type": "string"}}}})
     profiling = provider_roles.Role("extensa_profiling", {
         "type": "object", "additionalProperties": False, "required": ["notes"],
@@ -238,17 +243,34 @@ def _roles():
             "independent_test_generation": provider_roles.ROLES["independent_test_generation"]}
 
 
+def knobs_by_class(response):
+    """{class: {knob: value}} from the rewrite role's knob rows (a mapping is accepted as is)."""
+    knobs = response.get("knobs") or {}
+    if isinstance(knobs, dict):
+        return knobs
+    out = {}
+    for row in knobs:
+        value = row["value"]
+        if isinstance(value, float) and value.is_integer():
+            value = int(value)
+        out.setdefault(row["class"], {})[row["name"]] = value
+    return out
+
+
 REWRITE_PROMPT = """\
 Extensa-mode rewrite, campaign {campaign}, iteration {iteration}.
 Rewrite the base source under `source/` within the regions in REGIONS.json. You may use
 the rewrite contracts under `contracts/` (name the ones you use in `contracts`) and give at
-most one knob assignment per workload class in `knobs` (classes: {classes}); knob values
+most one knob assignment per workload class in `knobs`, one row {{class, name, value}} per knob
+(classes: {classes}); knob values
 must stay inside the contract's declared ranges; the evaluator defines each assigned value
 as the macro `SWDB_KNOB_<KNOB NAME IN UPPER CASE>` at the top of `bfs.cc` (give each knob a
 default with `#ifndef`). When you name a contract, the evaluator adds its canonical lowering
 header `swdb_dxc_lowering.hpp`; patch `bfs.cc` only. `best/` holds this campaign's current
 per-class best patches and FEEDBACK.json the previous iteration's feedback. Return ONE
 unified diff against `source/` in `patch`. Do not state performance outcomes.
+Work only by reading the files and writing your answer: do not use shell heredocs, `git apply`,
+`patch` or any command that runs or applies generated text; put the diff only in `patch`.
 """
 
 
@@ -744,7 +766,7 @@ class Campaign:
 
     def _artifact(self, iteration, cls, response, row, feedback):
         patch, contracts = response["patch"], list(response.get("contracts") or [])
-        knobs = (response.get("knobs") or {}).get(cls, {})
+        knobs = knobs_by_class(response).get(cls, {})
         entry = {"id": None, "class": cls, "patch_sha256": artifacts.digest(patch), "knobs": knobs,
                  "contracts": contracts, "certification": None, "comparisons": [], "level": None,
                  "selection": None, "_patch": patch}
@@ -806,7 +828,7 @@ class Campaign:
                                   failed_checks=outcome["failed_checks"])
                 attempt += 1
                 patch = repaired["patch"]
-                knobs = (repaired.get("knobs") or {}).get(cls, knobs)
+                knobs = knobs_by_class(repaired).get(cls, knobs)
                 entry.update(_patch=patch, patch_sha256=artifacts.digest(patch), knobs=knobs)
                 problem = self._knob_problem(contracts, knobs)
                 if problem:
@@ -939,7 +961,8 @@ class Campaign:
                 pause["resumed_at"] = pause.get("resumed_at") or _now()
             # Tickets 56/57 (2026-10-04 ET): a resume after an interrupted process also gets
             # fresh record IDs for the retried iteration.
-            self.state["resumes"] = self.state.get("resumes", 0) + 1
+            if not self.state.pop("clean_exit", False):
+                self.state["resumes"] = self.state.get("resumes", 0) + 1
         else:
             self.state = {"campaign": self.cid, "campaign_sha256": self.sha256, "started": _now(),
                           "lane_hours": 0.0, "iterations": [], "bests": {}, "feedback": [], "pauses": [],
@@ -957,6 +980,8 @@ class Campaign:
                     self.adapter.restore(self.state)
                 if self.data["target"] == "native_cpu" and self.state["pilot"] is None:
                     self._pilot()
+                if getattr(self.args, "baselines_only", False) and self.ledger.stop()[0] is None:
+                    return self._baselines_only()
                 if self.ledger.stop()[0] is None:
                     self._setup_call()
                 while self.ledger.may_open_iteration():
@@ -996,6 +1021,30 @@ class Campaign:
                 self._save()
                 return {"state": "paused", "reason": pause.reason, "campaign": self.cid}
             return self._finish()
+
+    def _baselines_only(self):
+        """Run the provider-free setup steps, then pause (2026-10-04 ET, ticket 57).
+
+        On gem5 this evaluates the one baseline per class that serves every candidate, so a
+        campaign can do its baseline work while the provider login is in use elsewhere. A
+        later `--resume` continues with the setup provider call and iteration 1."""
+        if self.data["target"] == "dx100_gem5":
+            for cls in self.classes:
+                for role in self.roles:
+                    key = f"{cls}/{role}"
+                    if key in self.state["baselines"]:
+                        continue
+                    self._step("evaluation", job=True)
+                    started = time.monotonic()
+                    self.state["baselines"][key] = self.adapter.baseline_evaluation(cls, role)
+                    self._spent("evaluation", started)
+                    self._save()
+        self.state.setdefault("prepared", []).append(_now())
+        self.state["clean_exit"] = True
+        self.adapter.release_lane()
+        self._save()
+        return {"state": "prepared", "campaign": self.cid, "baselines": self.state["baselines"],
+                "lane_hours": self.state["lane_hours"], "resume": f"swdb campaign {self.file} --resume"}
 
     def _finish(self):
         from swdb import writer
@@ -1089,5 +1138,7 @@ def register_cli(commands, paths_module):
                      help="override the campaign file's runs_root (tests use a temporary folder)")
     sub.add_argument("--fixture", type=Path, default=None, help="contract-fixture target adapter file")
     sub.add_argument("--resume", action="store_true", help="resume a paused campaign")
+    sub.add_argument("--baselines-only", action="store_true",
+                     help="run setup and the per-class gem5 baselines (no provider call), then pause")
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
     sub.set_defaults(extensa_handler=run_cli)

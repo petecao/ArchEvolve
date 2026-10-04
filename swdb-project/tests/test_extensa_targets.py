@@ -20,7 +20,7 @@ import yaml
 from conftest import REPO
 from swdb import campaign, campaign_targets, certification
 from swdb.store import Store
-from test_extensa_campaign import provider
+from test_extensa_campaign import knob_rows, provider
 
 CONTRACT = "contract.bfs_read_offload"
 GIB = 1024 ** 3
@@ -223,7 +223,7 @@ def gem5_campaign(team, **budgets):
 def test_gem5_one_baseline_per_class_point_ratios_and_memory_admission(team, base_source):
     patch = inside_patch(base_source)
     config = provider(team, {"rewriting": [{"patch": patch, "contracts": [CONTRACT],
-                                            "knobs": {"kronecker": {"frontier_threshold": 32}}, "unresolved": []}]})
+                                            "knobs": knob_rows({"kronecker": {"frontier_threshold": 32}}), "unresolved": []}]})
     runner, host = FakeRunner({"kronecker": 1.4, "uniform_random": 1.02}), FakeHost()
     loop, summary = run(team, gem5_campaign(team), config, runner, host)
     assert summary["stop_reason"] == "max_iterations" and summary["evidence_basis"] == "simulated"
@@ -259,7 +259,7 @@ def test_gem5_one_baseline_per_class_point_ratios_and_memory_admission(team, bas
 
 def test_gem5_session_begin_outside_is_refused_before_any_job(team, base_source):
     config = provider(team, {"rewriting": [{"patch": outside_patch(base_source), "contracts": [CONTRACT],
-                                            "knobs": {}, "unresolved": []}]})
+                                            "knobs": [], "unresolved": []}]})
     runner, host = FakeRunner({"kronecker": 1.4, "uniform_random": 1.4}), FakeHost()
     _, summary = run(team, gem5_campaign(team, max_iterations=1), config, runner, host)
     rows = summary["iterations"][0]["candidates"]
@@ -272,7 +272,7 @@ def test_gem5_session_begin_outside_is_refused_before_any_job(team, base_source)
 
 def test_gem5_edit_without_contract_is_refused(team, base_source):
     config = provider(team, {"rewriting": [{"patch": inside_patch(base_source), "contracts": [],
-                                            "knobs": {}, "unresolved": []}]})
+                                            "knobs": [], "unresolved": []}]})
     runner = FakeRunner({"kronecker": 1.4, "uniform_random": 1.4})
     _, summary = run(team, gem5_campaign(team, max_iterations=1), config, runner, FakeHost())
     assert {r["level"] for r in summary["iterations"][0]["candidates"]} == {"rejected"}
@@ -297,7 +297,7 @@ def native_campaign(team, workloads=(KRON18, UNIFORM18), **budgets):
 
 def test_native_paired_blocks_against_both_baselines_select_on_fork(team, base_source):
     config = provider(team, {"rewriting": [{"patch": native_patch(base_source), "contracts": [],
-                                            "knobs": {}, "unresolved": []}]})
+                                            "knobs": [], "unresolved": []}]})
     runner = FakeRunner({"pilot": 1.0, "fork_scalar_tdstep": 1.3, "upstream_do_bfs": 0.8})
     _, summary = run(team, native_campaign(team, max_iterations=1), config, runner, FakeHost())
     freezes = [c["request"] for c in runner.calls if c["command"] == "freeze-protocol"]
@@ -357,3 +357,37 @@ def test_native_blocks_refuse_while_a_gem5_campaign_holds_the_other_socket(team,
     assert summary["stop_reason"] == "infrastructure_failure"
     assert "extensa-gem5-bfs-20261004-a1" in summary["stop_detail"]
     assert not [c for c in runner.calls if c["command"] == "evaluate-pair"]
+
+
+def test_gem5_baselines_only_runs_no_provider_call_and_resume_reuses_them(team, base_source):
+    config = provider(team, {"rewriting": [{"patch": inside_patch(base_source), "contracts": [CONTRACT],
+                                            "knobs": [], "unresolved": []}]})
+    runner, host = FakeRunner({"kronecker": 1.4, "uniform_random": 1.02}), FakeHost()
+    path = gem5_campaign(team, max_iterations=1)
+    common_args = dict(file=path, records=team["records"], library=None, provider_config=config, runs_root=None,
+                       fixture=None, adapter_options={"runner": runner, "host": host, "certify": fake_certify})
+
+    def loop(**extra):
+        made = campaign.Campaign(Namespace(**common_args, **extra))
+        made.adapter._representation = lambda workload: {"path": f"/fixture/{workload}.sg", "sha256": "2" * 64}
+        original = made.adapter.freeze_protocol
+
+        def freeze(settings):
+            result = original(settings)
+            runner.protocol_settings = made.adapter.protocol["settings"]
+            runner.protocol = made.adapter.protocol
+            return result
+        made.adapter.freeze_protocol = freeze
+        return made
+    prepared = loop(resume=False, baselines_only=True).run()
+    assert prepared["state"] == "prepared"
+    assert set(prepared["baselines"]) == {"kronecker/fork_scalar_tdstep", "uniform_random/fork_scalar_tdstep"}
+    assert not (team["root"] / "provider-log.jsonl").exists()
+    assert len([c for c in runner.calls if c["command"] == "dx100-execute"]) == 2
+    resumed = loop(resume=True)
+    resumed.adapter.protocol = runner.protocol          # the fixture freeze kept no protocol record
+    summary = resumed.run()
+    baselines = [c for c in runner.calls if c["command"] == "dx100-execute"
+                 and c["request"]["protocol_role"] == "baseline"]
+    assert len(baselines) == 2 and summary["stop_reason"] == "max_iterations"
+    assert summary["iterations"][0]["candidates"][0]["id"].startswith("extensa-gem5-bfs-20261004-f1.it1.")
