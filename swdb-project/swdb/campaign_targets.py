@@ -611,6 +611,10 @@ class Gem5Adapter(TargetAdapter):
     def needs_header(self, contracts):
         return bool(contracts)
 
+    def reference_files(self):
+        """The canonical lowering header a contract edit calls (shown read-only to the provider)."""
+        return {"swdb_dxc_lowering.hpp": (self.library_root / "dx100" / "dxc_lowering.hpp").read_text()}
+
     def admit(self, candidate, contracts):
         """Ticket 57: the DX100 session begin must run inside the timed BFS call."""
         if not contracts:
