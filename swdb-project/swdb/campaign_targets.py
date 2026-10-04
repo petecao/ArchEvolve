@@ -436,10 +436,12 @@ class TargetAdapter:
                 # Ticket 64: a strict-layer failure names the strict check it hit
                 # (`strict_layer_assertion:range_bounds`), read from the run's own assertion line.
                 names, _counts, _cells = certification_feedback.matrix_checks(record)
-                failed_checks += sorted(set(names)
-                                        | {f"control:{c['id']}" for c in record.get("negative_controls", [])
-                                           if c.get("status") != "rejected"})
-        passed = not failed_checks
+                named = sorted(set(names) | {f"control:{c['id']}" for c in record.get("negative_controls", [])
+                                             if c.get("status") != "rejected"})
+                # 2026-10-04 ET (final code review): a failed verdict with nothing named (an empty
+                # matrix or no negative controls) must still fail, never read as certified.
+                failed_checks += named or ["certification_failed"]
+        passed = not failed_checks and len(records) == len(contracts) and all(records)
         return {"record": next((r for r in records if r), None), "outcome": "certified" if passed else "failed",
                 "failed_checks": failed_checks or []}
 

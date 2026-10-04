@@ -972,10 +972,18 @@ class Campaign:
         for role in self.roles:
             self._step("evaluation", job=True)
             if target == "native_cpu":
-                lease = self.adapter.other_socket_lease()
-                if lease and lease.get("mode") == "extensa" and lease.get("target") == "dx100_gem5":
-                    raise Stop("infrastructure_failure", "native timed blocks refuse to start while the other "
-                               f"socket's lease is held by a gem5 job of Extensa campaign {lease.get('campaign')}")
+                # 2026-10-04 ET (final code review): the adapter's check honors the campaign's
+                # approval.gem5_other_socket (ticket 64), exactly as the pilot does.
+                other_gem5 = getattr(self.adapter, "other_gem5", None)
+                if other_gem5 is not None:
+                    refusal = other_gem5()
+                else:
+                    lease = self.adapter.other_socket_lease()
+                    refusal = (lease and lease.get("mode") == "extensa" and lease.get("target") == "dx100_gem5"
+                               and "native timed blocks refuse to start while the other socket's lease is held "
+                               f"by a gem5 job of Extensa campaign {lease.get('campaign')}")
+                if refusal:
+                    raise Stop("infrastructure_failure", refusal)
                 baseline_eval = None
             else:
                 key = f"{cls}/{role}"

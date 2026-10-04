@@ -420,6 +420,39 @@ def test_approved_native_blocks_run_beside_another_campaigns_gem5_and_record_it(
     assert recorded["kronecker"]["fork_scalar_tdstep"]["campaign"] == "extensa-gem5-bfs-20261004-a7"
 
 
+def test_approved_beside_gem5_the_iteration_blocks_also_run(team, base_source):
+    """2026-10-04 ET (final code review): the iteration's evaluation honored only the pilot's
+    approval check; an approved campaign passed its pilot and then stopped at its first block."""
+    other = {"lease": "mbit10-evaluation-node1", "mode": "extensa", "target": "dx100_gem5",
+             "campaign": "extensa-gem5-bfs-20261004-a7"}
+    path = native_campaign(team, max_iterations=1)
+    data = yaml.safe_load(path.read_text())
+    data["approval"]["gem5_other_socket"] = True
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    config = provider(team, {"rewriting": [{"patch": native_patch(base_source), "contracts": [],
+                                            "knobs": [], "unresolved": []}]})
+    runner = FakeRunner({"pilot": 1.0, "fork_scalar_tdstep": 1.3, "upstream_do_bfs": 0.8})
+    _, summary = run(team, path, config, runner, FakeHost(other=other))
+    assert summary["pilot"]["passed"] is True
+    assert summary["stop_reason"] != "infrastructure_failure", summary.get("stop_detail")
+    (it,) = summary["iterations"]
+    assert all(c["comparisons"] for c in it["candidates"])
+
+
+def test_failed_certificate_with_nothing_named_is_not_certified(tmp_path):
+    """2026-10-04 ET (final code review): an empty matrix or no negative controls make the
+    certificate `failed`; the adapter must not rebuild that into `certified`."""
+    def failed_without_names(store, contract, **kwargs):
+        return {"id": "certification.fixture", "verdict": "failed", "matrix": [{"status": "passed"}],
+                "negative_controls": []}
+
+    adapter = campaign_targets.TargetAdapter.__new__(campaign_targets.TargetAdapter)
+    adapter._certify = failed_without_names
+    adapter.store_dir = adapter.folder = adapter.library_root = tmp_path
+    outcome = adapter.certify({"id": "candidate.fixture"}, [CONTRACT], 1, "kronecker", 0)
+    assert outcome["outcome"] == "failed" and outcome["failed_checks"] == ["certification_failed"]
+
+
 class SequenceHost(FakeHost):
     """The other socket is held for the first `held` checks, then released."""
 
