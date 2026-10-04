@@ -261,7 +261,13 @@ def materialize_snapshot(store, snapshot_id, destination):
     derivation = snapshot.get('context', {}).get('source_derivation')
     if derivation:
         # Ticket 42: each scalar-only derivation names its own script (BFS's predates the field).
-        script = ROOT / derivation.get('script', 'scripts/prepare_dx100_scalar_snapshot.py')
+        script = (ROOT / derivation.get('script', 'scripts/prepare_dx100_scalar_snapshot.py')).resolve()
+        # 2026-10-04 ET (final code review): a record field names code that is executed, so it
+        # must be a snapshot-preparation script of this checkout.
+        scripts = (ROOT / 'scripts').resolve()
+        if (script.parent != scripts or not re.fullmatch(r'prepare_[a-z0-9_]+_snapshot\.py', script.name)
+                or not script.is_file()):
+            raise Failure('source derivation script must be a scripts/prepare_*_snapshot.py of this checkout')
         spec = importlib.util.spec_from_file_location('swdb_scalar_snapshot', script)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
