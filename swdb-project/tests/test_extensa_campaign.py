@@ -257,7 +257,7 @@ def test_campaign_synthesis_writes_an_experimental_entry_with_campaign_origin(te
             "  static void gather(ValueT* out, const ValueT* source, const IndexT* idx, std::size_t n, std::size_t m) {\n"
             "    (void)m; for (std::size_t i = 0; i < n; ++i) out[i] = source[(std::size_t)idx[i]];\n  }\n};\n")
     config = provider(team, {"rewriting": [rewrite(contracts=())],
-                             "synthesis": [{"entry": {"summary": "fixture"}, "unresolved": [],
+                             "synthesis": [{"entry": {"name": "fixture", "summary": "fixture"}, "unresolved": [],
                                             "files": [{"path": "backends/synth_native_cpu_gather.hh",
                                                        "content": good}]}]})
     path = campaign_file(team, library={"allowed_tiers": ["experimental"], "contracts": [], "synthesize": ["gather"]},
