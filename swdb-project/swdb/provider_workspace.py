@@ -1,4 +1,4 @@
-"""Derived provider workspaces and source diffs. Updated: 2026-09-30.
+"""Derived provider workspaces and source diffs. Updated: 2026-10-04 (login write-back).
 
 Trusted source and evaluator inputs are never writable provider inputs. Workspace
 edits are converted to a patch and pass the ordinary candidate protection path.
@@ -56,12 +56,20 @@ class Workspace:
     redactions: dict = field(default_factory=dict)
     login_path: Path = None
     metadata: dict = field(default_factory=dict)
+    login_copy: object = None     # provider_login.Copy for a real login; None for fixtures
 
     def cleanup(self):
-        """Delete the login copy, including hard links and byte copies left by tools."""
+        """Write a refreshed login back, then delete the login copy, including hard
+        links and byte copies left by tools."""
         if self.login_path is None or self.metadata.get("login_copy_deleted"):
             self.metadata["login_copy_deleted"] = True
             return
+        if self.login_copy is not None and "login_writeback" not in self.metadata:
+            try:
+                self.metadata["login_writeback"] = self.login_copy.write_back()
+            except OSError as exc:     # never blocks deletion of the copy
+                self.metadata["login_writeback"] = {"written_back": False,
+                                                    "reason": f"write-back failed: {type(exc).__name__}"}
         removed = []
         try:
             identity = self.login_path.stat()
@@ -255,11 +263,9 @@ def prepare(request, source, package, store, output_dir, config):
             if provider_guard.abi() < 4:
                 # Refuse before any credential is copied off its protected location.
                 raise Failure("SWDB provider guard requires Linux Landlock ABI >= 4; refusing unguarded session")
-            original = (Path(os.environ.get("CODEX_HOME", str(Path.home() / ".codex"))) / login_name
-                        if kind == "codex" else Path(os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude"))) / login_name)
-            if original.is_symlink() or not original.is_file():
-                raise Failure("rewrite provider login file is unavailable")
-            shutil.copyfile(original, workspace.login_path)
+            from swdb import provider_login
+            workspace.login_copy = provider_login.copy(kind, workspace.login_path,
+                                                       "rewrite provider login file is unavailable")
         workspace.login_path.chmod(0o600)
         workspace.metadata = {"format": "swdb.provider-workspace.v1", "root": str(root), "home": str(home),
                               "source_files": sorted(workspace.source_files), "visible_files": sorted(workspace.visible),
