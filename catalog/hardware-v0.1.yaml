@@ -1,5 +1,5 @@
 catalog_id: archevolve-hardware
-revision: 0.1.4
+revision: 0.1.5
 format: hardware-catalog-v0.1
 status: research_reviewed_prototype
 project_selections:
@@ -98,7 +98,8 @@ sources:
     title: 'SpZip: Architectural Support for Effective Data Compression In Irregular Applications'
     edition: Author-hosted conference manuscript, 14 pages
     url: https://people.csail.mit.edu/sanchez/papers/2021.spzip.isca.pdf
-    locator_basis: One-based PDF pages; Terminus printed page = PDF page + 1232.
+    locator_basis: One-based PDF pages, 14-page author-hosted manuscript; no Terminus printed-page offset
+      applies.
     sha256: f84a1525f4a7340d4e4410e58da949d3e277a39c1fbcef376b1160349802fd60
     authors:
     - Yifan Yang
@@ -1200,6 +1201,238 @@ claims:
     - Required-gather (ILD) mechanism scope; does not extend existing operation contracts, infer physical
       interfaces, or establish fairness, global coherence or performance.
     - Public e4fc4af model only; static inspection is not simulator execution or hardware validation.
+  omi-term-partition:
+    source_refs:
+    - terminus-paper
+    locator: PDF pp.6–9 §§IV-C–E, V-B–D; Figs.8,12,15
+    statement: Serializer buffers same-partition tasks until conflicting users finish; it issues ready heads
+      of per-partition buffers round-robin. A task holds at most one partition, releases its old partition
+      on a change, and re-enqueues for the new one. Local SWMR exclusion permits concurrent readers or a
+      single writer.
+    evidence_kind: paper_specification
+    limitations:
+    - Partition execution order is distinct from ROB result order and shared-memory synchronization between
+      cores.
+    - Do not treat the textual grab/enqueue description as a cycle-accurate lock-acquisition protocol; exact
+      buffer-full admission and fairness bounds are not specified.
+  omi-term-rob:
+    source_refs:
+    - terminus-paper
+    locator: PDF pp.5–6 §IV-B, Fig.7; pp.8–9 §V-C, Fig.15; p.10 Table II
+    statement: Each task allocates a ROB entry in arrival order. Its taskID is the ROB position, propagated
+      with task data; finished tasks write results to the ROB for enqueue-order core consumption. ROB stores
+      up to 32 bytes of task context; each PE row accesses an 8-byte slice. Reference configuration has
+      256 entries.
+    evidence_kind: paper_specification
+    limitations:
+    - ROB result order is not a global write-visibility fence.
+    - Exact ROB entry reclamation cycle, full-ROB admission/retry behavior and taskID generation/reuse protection
+      are unspecified.
+  omi-term-memory:
+    source_refs:
+    - terminus-paper
+    locator: PDF pp.8–9 §V-C; Fig.13
+    statement: Memory requester and response handler are decoupled; the response handler has a 32-entry
+      completion buffer. Reads issue when their destination output queue has enough space, choosing among
+      ready reads round-robin; writes launch when input address and value are ready. Data is fetched from
+      L2 at cache-line granularity.
+    evidence_kind: paper_specification
+    limitations:
+    - Exact request tag encoding, completion-buffer slot reclamation and arbitration of writes against reads
+      are unspecified.
+    - Cache-line granularity is not evidence of sorting or coalescing arbitrary task addresses.
+  omi-term-filter:
+    source_refs:
+    - terminus-paper
+    locator: PDF p.5 §IV-A, Fig.5; p.9 §V-C
+    statement: Read streams terminate with a marker. Filter compares fetched values and produces matching
+      positions and optionally values, or an empty marker. Parallel comparators and a collapsing network
+      pack retained values contiguously in the output queue; a time-multiplexed context retains filter value
+      or position for processing read responses.
+    evidence_kind: paper_specification
+    limitations:
+    - Packing surviving values is not memory-request coalescing; a general response-tag ABI is not specified.
+  omi-term-host:
+    source_refs:
+    - terminus-paper
+    locator: PDF pp.6–7 §IV-D, Listing 3; pp.8–9 §V-C–E
+    statement: 'Deferred tasks enter a defer queue without releasing their partition. A CPU handler may
+      respond through a defer return queue to continue an individual primitive, or complete core-side work
+      and release the partition. terminus_acquire is asynchronous: it blocks new partition entrants, waits
+      for running users to release, then notifies the CPU through the defer queue.'
+    evidence_kind: paper_specification
+    limitations:
+    - Acquire issuance does not itself grant access. CPU handlers and shared-memory node locks remain separate
+      from engine execution.
+    - Exact defer queue capacities, interrupt scheduling latency, fault/replay and per-resource reclamation
+      protocols are unspecified.
+  omi-term-variant:
+    source_refs:
+    - terminus-paper
+    locator: PDF p.12 §VII-E, Fig.22
+    statement: 'The evaluated no-atomics/no-multiplication variant defers atomics and hash operations to
+      the CPU. Figure 22 evaluates hash-table benchmarks: ycsb still speeds up, to a lesser extent, because
+      traversal eliminates unpredictable branches and long-latency loads; hashjoin relies more critically
+      on these primitives because hashing is most of its work.'
+    evidence_kind: paper_specification
+    limitations:
+    - Applies to the deferred configuration; it does not upgrade its engine CAS support or establish a CPU-handler
+      performance bound.
+  omi-term-capacity:
+    source_refs:
+    - terminus-paper
+    locator: PDF pp.12–13 §VII-F, Fig.23; p.9 §V-D
+    statement: YCSB sensitivity experiments find 64–256 task ROB entries necessary for high performance
+      in that study. With one or few partitions, fine-grained update workloads see negligible speedups.
+      The task timeline explains overlapping nonconflicting tasks while same-partition conflicts serialize,
+      including false conflicts with limited partitions.
+    evidence_kind: paper_specification
+    limitations:
+    - Source-cohort sensitivity, not legal tuning ranges or a universal optimal capacity; no new workload
+      speedup is claimed.
+  omi-prod-tables:
+    source_refs:
+    - prodigy-paper
+    locator: PDF p.7 §§III-B3, IV-A–B; Fig.9
+    statement: Software runtime stores configure DIG node, edge-index and edge tables. Node base, count
+      and data size become virtual base/bound addresses; the edge-index table locates outgoing edges. PFHR
+      entries contain free status, node ID, virtual trigger address, cache-line-aligned physical outstanding
+      address and an offset bitmap of outstanding byte addresses in that line.
+    evidence_kind: paper_specification
+    limitations:
+    - DIG is dependency metadata, not required-operation offload code; bitmap tracking is not a documented
+      general demand coalescer.
+  omi-prod-advance:
+    source_refs:
+    - prodigy-paper
+    locator: PDF pp.7–8 §§IV-C–D; Figs.10–11
+    statement: A demand load to a trigger region initializes multiple lookahead prefetch sequences according
+      to trigger bounds and direction. On prefetch fill, a physical line-address CAM lookup finds tracking
+      PFHR state, DIG edges and indirection type; returned indices/pointers or base/bound pairs generate
+      subsequent single-valued or ranged prefetches. New PFHRs track non-leaf-node requests; traversal continues
+      to a DIG leaf.
+    evidence_kind: paper_specification
+    limitations:
+    - No architecturally returned gather stream or program-order result queue.
+    - Duplicate physical-address CAM matches, exact scheduling among edges/ranges, arbitration and generation
+      protection for stale fills are unspecified.
+  omi-prod-lookahead:
+    source_refs:
+    - prodigy-paper
+    locator: PDF pp.7–8 §IV-C1; Fig.10
+    statement: The lookahead heuristic decreases distance with increasing DIG critical-path depth up to
+      three; depth four or more uses distance one. Trigger metadata supplies bounds and ascending/descending
+      traversal. When the core demands the trigger address of a live sequence, Prodigy drops that sequence
+      to favor future work.
+    evidence_kind: paper_specification
+    limitations:
+    - Dropping a speculative sequence cannot be generalized to suppress required CPU loads.
+    - Logical sequence cancellation does not establish physical request cancellation or exact safe PFHR
+      reuse ordering.
+  omi-prod-finite:
+    source_refs:
+    - prodigy-paper
+    locator: PDF p.9 §IV-G; p.10 §VI-A, Fig.12; p.13 §VI-F
+    statement: When all PFHRs are busy, a prefetch is dropped. The study sweeps 4, 8, 16 and 32 PFHRs and
+      chooses 16 as its reference tradeoff. For area estimation it assumes 16-entry DIG tables, versus a
+      largest evaluated DIG of 11 nodes/11 edges. A general prefetch throttling mechanism is not implemented
+      and is future work.
+    evidence_kind: paper_specification
+    limitations:
+    - 16-entry DIG tables are an area-estimation assumption, not an established runtime bound for every
+      run.
+    - No blocking required-work admission/backpressure or generic programmable throttler is inferred.
+  omi-prod-negative:
+    source_refs:
+    - prodigy-paper
+    locator: PDF pp.10–11 §§VI-A–C, Figs.12–15; p.14 §VI-G
+    statement: Increasing PFHRs beyond eight hurts cc in the capacity experiment as untimely prefetches
+      pollute caches. Timely prefetches aim to reduce demand memory stalls, but Prodigy does not account
+      for branch-dependent neighbor selection or ordered-algorithm node priority; inaccurate prefetches
+      and cache thrashing may result. Larger DIGs may need more table/PFHR storage.
+    evidence_kind: paper_specification
+    limitations:
+    - Performance observations remain scoped to evaluated benchmarks, inputs and system; metadata coverage
+      does not prove timeliness or usefulness.
+  omi-spzip-scheduler:
+    source_refs:
+    - spzip-paper
+    locator: PDF p.6 §III-B; Fig.10
+    statement: Fetcher time-multiplexes operator contexts over an access unit and decompression unit. Circular
+      scratchpad queues have min/max/head/tail state. A ready operator has an input element, sufficient
+      space in its output queues and an available functional unit; ready operators are selected round-robin,
+      passing the input head and context ID to the FU. Contexts retain FU-specific state such as a range
+      current index.
+    evidence_kind: paper_specification
+    limitations:
+    - Ready-operator order is not destination atomic-update order; queue-space or FU pressure prevents operator
+      firing.
+    - Exact number of contexts and queue-credit reservation/reclamation cycles are not established by this
+      description.
+  omi-spzip-access:
+    source_refs:
+    - spzip-paper
+    locator: PDF p.6 §III-B; Fig.10; p.9 §III-E, Table I
+    statement: Access-unit address generation and response handling are decoupled. Responses write to operator
+      output queues; the AU supports up to eight outstanding cache lines in the described implementation
+      and sends accesses to L2. Each engine has a 2 KB queue scratchpad shared by configured queues.
+    evidence_kind: paper_specification
+    limitations:
+    - Eight cache lines is not eight whole traversals or eight requests per operator; 2 KB is not capacity
+      per queue.
+    - Exact response tags, out-of-order line reassembly and slot release protocol are unspecified; no locality
+      sort/coalescer is documented.
+  omi-spzip-markers:
+    source_refs:
+    - spzip-paper
+    locator: PDF pp.6–7 §III-B; Fig.11, Listing 4; PDF pp.3–4 §II-C, Figs.5–6, Listing 2
+    statement: Queues tag each 32-bit word with a marker bit. A range fetch emits a marker after each range,
+      may associate a value with it, and operators pass input markers through to output queues. Markers
+      delimit neighbor sets/frontier ranges so the CPU interprets dequeued stream elements. Push pipelines
+      supply required adjacency/source streams, while destination indirection prefetch has no output queue.
+    evidence_kind: paper_specification
+    limitations:
+    - Markers establish stream/chunk identity, not a generic global task tag or cross-queue CPU update order.
+    - A marker is not a fence for completion of CPU atomics or all engine writes; exact context reuse timing
+      remains unspecified.
+  omi-spzip-compression:
+    source_refs:
+    - spzip-paper
+    locator: PDF pp.3–4 §II-B–C; p.6 §III-B; p.9 §IV (Schemes)
+    statement: Fetcher decompression operators use delta encoding and BPC. Delta encoding is preferable
+      for short streams such as neighbor sets; BPC needs longer chunks (e.g. 32 elements) to compress effectively.
+      In evaluated Push, only the adjacency matrix is compressed, using delta encoding; vertex data is not
+      compressed.
+    evidence_kind: paper_specification
+    limitations:
+    - Compression preference is source-specific, not a documented adaptive per-chunk selector.
+    - Compressor SWU/MQU, bin writes, sorted update batching and PHI are outside this Push record; no destination
+      compression/update execution is added.
+  omi-spzip-cpu:
+    source_refs:
+    - spzip-paper
+    locator: PDF p.4 §II-C, Fig.5, Listing 2; pp.8–9 §III-D
+    statement: Fetcher/compressor use coherent accesses and queue synchronization. Read-only adjacency and
+      phase-separated read/write streams can be served directly; shared Push destination data needing parallel
+      atomic RMW is prefetched into nearby cache but not served as authoritative data by the fetcher. CPU
+      performs atomics. Context switches require engine quiescence and saving/restoring contexts.
+    evidence_kind: paper_specification
+    limitations:
+    - CPU update result, visibility and synchronization remain CPU/application responsibilities; queue consumption
+      is not update completion.
+    - No blanket claim that the whole SpZip design cannot write, nor a generic atomics executor.
+  omi-spzip-push-negative:
+    source_refs:
+    - spzip-paper
+    locator: PDF p.4 §II-C, Fig.7; PDF pp.9–10 §IV, §V-A, Fig.15
+    statement: The illustrative BFS Push experiment on a large web graph and 16-core system reports 1.7x
+      over software Push, mainly from accelerating traversals; traffic is nearly unchanged. Scatter destination
+      updates account for over 80% of traffic and are uncompressed; scattered neighbor IDs compress poorly.
+      Evaluation includes Push variants with and without DFS preprocessing.
+    evidence_kind: paper_specification
+    limitations:
+    - The illustration is not a universal speedup or proof of compression benefit. Full compression results
+      for UB/PHI must not be promoted into Push.
 mechanism_families:
 - id: queue-latency-tolerance
   name: Queue-backed asynchronous access
@@ -2861,6 +3094,80 @@ designs:
   limitations:
   - No generic fetch-add/min/max task promoted solely from ALU primitives.
   - No inspected official source implementation or runtime validation.
+  internal_mechanisms:
+  - id: term-reference-partition-storage
+    kind: buffering
+    status: described
+    description: Reference engine has 32 partitions with 16 entries per partition buffer, separate from
+      its 256-entry task ROB and 32-entry memory completion buffer. PE links use shallow buffers and memory
+      paths use larger decoupling queues; unspecified depths remain unknown.
+    claim_refs:
+    - term-config
+    - omi-term-memory
+    - omi-term-rob
+  - id: term-partition-heads
+    kind: issue_policy
+    status: described
+    description: Ready partition-buffer heads issue round-robin under engine-local SWMR exclusion. Partition
+      changes release the old ownership and re-enqueue for the new partition; at most one partition is held
+      per engine task.
+    claim_refs:
+    - omi-term-partition
+  - id: term-task-result-rob
+    kind: reordering
+    status: described
+    description: TaskID is the ROB position and flows with task data; tasks may finish out of order but
+      ROB results are delivered in enqueue order. ROB task contexts retain long-lived operands separately
+      from pipeline queues.
+    claim_refs:
+    - omi-term-rob
+  - id: term-memory-issue
+    kind: issue_policy
+    status: described
+    description: Reads need destination queue space and arbitrate round-robin; writes launch with ready
+      address/value. A separate response handler tracks in-flight accesses in a 32-entry completion buffer.
+    claim_refs:
+    - omi-term-memory
+  - id: term-filter-packing
+    kind: other
+    status: described
+    description: Time-multiplexed filtering retains value/position context, packs matching fetched values/positions
+      and preserves stream termination markers; this packs results rather than coalescing arbitrary requests.
+    claim_refs:
+    - omi-term-filter
+  - id: term-core-partition-handoff
+    kind: completion
+    status: described
+    description: Defer retains the task partition; CPU response can resume an individual primitive or the
+      handler can finish core-side and release. Asynchronous acquire grants ownership only after running
+      users drain and notification arrives. CPU/shared-memory synchronization remains distinct.
+    claim_refs:
+    - omi-term-host
+  - id: term-target-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: term-exact-transport-and-reuse
+    kind: completion
+    status: unknown
+    description: null
+    claim_refs: []
+  performance_hypotheses:
+  - id: term-task-overlap
+    description: Overlapping nonconflicting task traversals may hide memory latency while partition exclusion
+      protects conflicts and the ROB restores result order.
+    workload_conditions:
+    - Legal partition assignment and correct local/global synchronization
+    - Enough independent tasks and ROB/partition capacity
+    limiting_factors:
+    - False conflicts and update-heavy small-partition serialization
+    - Ordered-result head blocking; CPU handlers and shared-memory locks may add latency
+    - Source capacity sweeps are workload-specific, not legal tuning domains
+    claim_refs:
+    - omi-term-capacity
+    - omi-term-partition
+    - omi-term-rob
 - id: terminus-micro2024-deferred
   name: Terminus with atomics and hashing deferred
   revision: MICRO2024-section-VII-E
@@ -3150,6 +3457,99 @@ designs:
   - No generic fetch-add/min/max task promoted solely from ALU primitives.
   - No inspected official source implementation or runtime validation.
   - The default configuration CAS capability is not inherited as an engine capability.
+  internal_mechanisms:
+  - id: term-reference-partition-storage
+    kind: buffering
+    status: described
+    description: Reference engine has 32 partitions with 16 entries per partition buffer, separate from
+      its 256-entry task ROB and 32-entry memory completion buffer. PE links use shallow buffers and memory
+      paths use larger decoupling queues; unspecified depths remain unknown.
+    claim_refs:
+    - term-config
+    - omi-term-memory
+    - omi-term-rob
+  - id: term-partition-heads
+    kind: issue_policy
+    status: described
+    description: Ready partition-buffer heads issue round-robin under engine-local SWMR exclusion. Partition
+      changes release the old ownership and re-enqueue for the new partition; at most one partition is held
+      per engine task.
+    claim_refs:
+    - omi-term-partition
+  - id: term-task-result-rob
+    kind: reordering
+    status: described
+    description: TaskID is the ROB position and flows with task data; tasks may finish out of order but
+      ROB results are delivered in enqueue order. ROB task contexts retain long-lived operands separately
+      from pipeline queues.
+    claim_refs:
+    - omi-term-rob
+  - id: term-memory-issue
+    kind: issue_policy
+    status: described
+    description: Reads need destination queue space and arbitrate round-robin; writes launch with ready
+      address/value. A separate response handler tracks in-flight accesses in a 32-entry completion buffer.
+    claim_refs:
+    - omi-term-memory
+  - id: term-filter-packing
+    kind: other
+    status: described
+    description: Time-multiplexed filtering retains value/position context, packs matching fetched values/positions
+      and preserves stream termination markers; this packs results rather than coalescing arbitrary requests.
+    claim_refs:
+    - omi-term-filter
+  - id: term-core-partition-handoff
+    kind: completion
+    status: described
+    description: Defer retains the task partition; CPU response can resume an individual primitive or the
+      handler can finish core-side and release. Asynchronous acquire grants ownership only after running
+      users drain and notification arrives. CPU/shared-memory synchronization remains distinct.
+    claim_refs:
+    - omi-term-host
+  - id: term-target-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: term-exact-transport-and-reuse
+    kind: completion
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: term-deferred-atomics-and-hash
+    kind: dependency_tracking
+    status: described
+    description: In this configuration atomic and multiplication/hash primitives go to CPU handlers; partition/ROB
+      mechanisms still apply, and engine CAS is not inferred.
+    claim_refs:
+    - omi-term-variant
+    - omi-term-host
+  performance_hypotheses:
+  - id: term-task-overlap
+    description: Overlapping nonconflicting task traversals may hide memory latency while partition exclusion
+      protects conflicts and the ROB restores result order.
+    workload_conditions:
+    - Legal partition assignment and correct local/global synchronization
+    - Enough independent tasks and ROB/partition capacity
+    limiting_factors:
+    - False conflicts and update-heavy small-partition serialization
+    - Ordered-result head blocking; CPU handlers and shared-memory locks may add latency
+    - Source capacity sweeps are workload-specific, not legal tuning domains
+    claim_refs:
+    - omi-term-capacity
+    - omi-term-partition
+    - omi-term-rob
+  - id: term-deferred-cost
+    description: Removing atomic/multiplier engine support trades implementation cost for CPU execution;
+      traversal-dominated ycsb and hashing-dominated hashjoin respond differently in the source study.
+    workload_conditions:
+    - Legal CPU handlers preserve synchronization and return values
+    - Mapping can tolerate handler frequency
+    limiting_factors:
+    - CPU execution and handoff costs; hashing dominates hashjoin in the cited experiment
+    - No engine CAS capability in this configuration
+    claim_refs:
+    - omi-term-variant
 - id: prodigy-hpca2021
   name: Prodigy
   revision: HPCA2021-peer-reviewed-manuscript
@@ -3240,6 +3640,70 @@ designs:
   limitations:
   - No performance ranking against other catalog records.
   - No global ban on CPU writes is imposed on this read-assistance mechanism.
+  internal_mechanisms:
+  - id: prod-dig-and-pfhr
+    kind: dependency_tracking
+    status: described
+    description: Node, edge-index and edge tables encode dependency traversal. PFHR free/node/trigger/physical-line/offset-bitmap
+      state tracks speculative outstanding work and associates fills by line-address CAM lookup.
+    claim_refs:
+    - omi-prod-tables
+    - omi-prod-advance
+  - id: prod-trigger-and-advance
+    kind: issue_policy
+    status: described
+    description: Trigger-region demand loads initialize lookahead sequences; prefetch fills drive DIG single-valued/ranged
+      traversal toward leaves, with PFHRs allocated only for non-leaf requests. This is optional prefetch,
+      with no required-value output.
+    claim_refs:
+    - omi-prod-advance
+  - id: prod-lookahead-and-drop
+    kind: issue_policy
+    status: described
+    description: Trigger direction/bounds and DIG-depth lookahead guide speculative runahead; demand of
+      a live trigger address drops its sequence. Busy PFHRs drop prefetches, and a general throttler is
+      unimplemented.
+    claim_refs:
+    - omi-prod-lookahead
+    - omi-prod-finite
+  - id: prod-finite-tracking
+    kind: buffering
+    status: described
+    description: Reference design selects 16 PFHRs after 4/8/16/32 sensitivity experiments; 16-entry DIG
+      tables are separately an area-estimation assumption. Full tracking drops optional work rather than
+      blocking required CPU loads.
+    claim_refs:
+    - omi-prod-finite
+  - id: prod-required-result-order
+    kind: reordering
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: prod-exact-cancel-and-pfhr-reuse
+    kind: completion
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: prod-general-target-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  performance_hypotheses:
+  - id: prod-timely-useful-prefetch
+    description: DIG-guided lookahead may hide demand latency when predicted dependencies are useful and
+      fills are timely.
+    workload_conditions:
+    - Valid DIG and trigger ranges for actual traversal
+    - Enough PFHR/table resources and useful runahead
+    limiting_factors:
+    - Untimely fills and cache pollution; cc degrades above eight PFHRs in the cited experiment
+    - Unrepresented control-flow or priority information
+    - Full PFHR drops and absent general throttling
+    claim_refs:
+    - omi-prod-negative
+    - omi-prod-lookahead
+    - omi-prod-finite
 - id: spzip-isca2021-push
   name: SpZip Push graph mapping
   revision: ISCA2021-Push
@@ -3400,6 +3864,78 @@ designs:
   - SpZip is ISCA 2021 despite the old cached filename saying MICRO.
   - Compressor/memory-queue writes are real but outside the selected Push destination-update mapping.
   - No fabricated internal ports or whole-design CPU-only rule.
+  internal_mechanisms:
+  - id: spzip-ready-operator-round-robin
+    kind: issue_policy
+    status: described
+    description: Input availability, output queue free space and FU availability gate operator firing; ready
+      contexts share access/decompression units round-robin, retaining range progress in context state.
+    claim_refs:
+    - omi-spzip-scheduler
+  - id: spzip-finite-queues-and-access
+    kind: buffering
+    status: described
+    description: Circular queues share a 2 KB engine scratchpad; AU address generation and response handling
+      decouple up to eight outstanding cache lines. Queue or FU pressure prevents further operator firing.
+    claim_refs:
+    - omi-spzip-scheduler
+    - omi-spzip-access
+  - id: spzip-stream-identity
+    kind: completion
+    status: described
+    description: Range markers and marker pass-through delimit required adjacency/source streams for CPU
+      interpretation. Destination-prefetch indirection has no output queue and supplies no authoritative
+      shared destination value.
+    claim_refs:
+    - omi-spzip-markers
+    - omi-spzip-cpu
+  - id: spzip-push-decompression
+    kind: other
+    status: described
+    description: Push evaluation compresses adjacency using delta encoding. Fetcher decompression and queue
+      decoupling hide traversal/decompression latency; BPC exists but its longer-chunk benefits do not establish
+      a Push destination compression path.
+    claim_refs:
+    - omi-spzip-compression
+  - id: spzip-cpu-update-boundary
+    kind: completion
+    status: described
+    description: CPU executes shared destination atomics; fetcher issues coherent destination prefetch.
+      Queue stream completion remains separate from CPU update completion; context switching needs quiescence
+      and context save/restore.
+    claim_refs:
+    - omi-spzip-cpu
+  - id: spzip-exact-response-association
+    kind: reordering
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: spzip-exact-slot-and-context-reuse
+    kind: completion
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: spzip-general-target-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  performance_hypotheses:
+  - id: spzip-push-traversal
+    description: Required-stream decoupling and destination prefetch may accelerate Push traversal; adjacency
+      compression benefit depends on neighbor-ID compressibility and remaining traffic bottlenecks.
+    workload_conditions:
+    - Correct DCL queue layout, markers and phase ownership
+    - CPU retains destination atomics
+    - Enough queue space and available FUs for useful runahead
+    limiting_factors:
+    - Scattered neighbor IDs compress poorly
+    - Scatter destination updates remain uncompressed and may dominate bandwidth
+    - PHI/UB compression and queue-size ablations do not establish Push gains
+    claim_refs:
+    - omi-spzip-push-negative
+    - omi-spzip-compression
+    - omi-spzip-scheduler
 - id: maple-isca2022
   name: MAPLE queue-fetch and LIMA engine
   revision: ISCA2022-paper+public-742a22d-inspection

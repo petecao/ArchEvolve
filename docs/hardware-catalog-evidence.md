@@ -1,8 +1,12 @@
 # Hardware catalog v0.1: what the evidence permits
 
+## October 3 internal mechanisms
+
+Current revision **0.1.5** retains seven design records and 39 operations, with 84 claims and 30 source records. [The internal mechanism handoff](hardware-internals-v015.md) compares their actual admission, issue, result-association and state-lifetime mechanisms. It does not add operation/type support, physical interfaces or performance validation. The October 1 and September 29 sections below describe their historical revisions.
+
 ## October 1 MAPLE supplement
 
-Data revision **0.1.3** added Eric's selected [MAPLE paper](https://jbalkind.github.io/docs/isca2022_maple.pdf), ISCA 2022, as one parameterized `maple-isca2022` design. Current revision **0.1.4** retains seven records and 39 operations, with 48 claims and 26 source records after two supplemental RTL observations. Source metadata records conference/year, PDF hash and exact page/section/figure locators. The original six records and claims are unchanged; their September 29 audit below remains historical.
+Data revision **0.1.3** added Eric's selected [MAPLE paper](https://jbalkind.github.io/docs/isca2022_maple.pdf), ISCA 2022, as one parameterized `maple-isca2022` design. Revision **0.1.4** retained seven records and 39 operations, with 48 claims and 26 source records after two supplemental RTL observations. Source metadata records conference/year, PDF hash and exact page/section/figure locators. The original six records and claims were unchanged in that supplement; their September 29 audit below remains historical.
 
 MAPLE queue loads and LLC hints have distinct execution roles. Paper-specified FIFO slot association, pipeline buffering, LIMA index chunks, acknowledgement versus consume completion, and stable-array requirements are recorded. Arbitrary target coalescing, general typed domains and current engine CAS are not established. [The MAPLE handoff](maple-dx100-handoff.md) explains these boundaries, the BFS comparison and the source-backed logical-path diagram. The raw PDF stays outside Git; no RTL/API execution or numerical speedup was performed here.
 
