@@ -80,7 +80,7 @@ login before the coordinator's hold; no login failure was observed.
 | kronecker | 4 | none | none (no candidate reached gem5) | `no_gain`, single graph per class, simulated |
 | uniform_random | 4 | none | none | `no_gain`, single graph per class, simulated |
 
-- Certification now runs on every applied edit (8 certifications; iteration 2's patch did not
+- Certification now runs on every applied edit (11 certification runs; iteration 2's patch did not
   apply). Every edit fails the matrix on the strict layer's `range_bounds`, and 3–5 of 16
   controls are rejected. The control-site refusal from a5 is gone.
 - Cause: every edit initializes the range loop's `last_i` register to -1. The strict layer and
