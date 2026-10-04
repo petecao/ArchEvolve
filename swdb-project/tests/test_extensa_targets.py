@@ -420,6 +420,37 @@ def test_approved_native_blocks_run_beside_another_campaigns_gem5_and_record_it(
     assert recorded["kronecker"]["fork_scalar_tdstep"]["campaign"] == "extensa-gem5-bfs-20261004-a7"
 
 
+class SequenceHost(FakeHost):
+    """The other socket is held for the first `held` checks, then released."""
+
+    def __init__(self, held):
+        super().__init__()
+        self.held, self.checks = held, 0
+
+    def other_socket_lease(self, lane, roots):
+        self.checks += 1
+        if self.checks <= self.held:
+            return {"lease": "mbit10-evaluation-node1", "mode": None, "target": None, "campaign": None}
+        return None
+
+
+def test_isolated_native_blocks_wait_for_a_free_other_socket_and_record_it(team, base_source, monkeypatch):
+    """Ticket 56 isolation test (2026-10-04 ET): protocol.isolation waits, then records the state."""
+    monkeypatch.setattr(campaign_targets.NativeAdapter, "ISOLATION_POLL_S", 0)
+    path = native_campaign(team)
+    data = yaml.safe_load(path.read_text())
+    data["protocol"]["isolation"] = "other_socket_free"
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    runner, host = FakeRunner({"pilot": 1.0}, spreads={"pilot": 0.14}), SequenceHost(held=3)
+    _, summary = run(team, path, provider(team, {}), runner, host)
+    assert summary["stop_reason"] == "baseline_unstable"
+    isolation = summary["pilot"]["isolation_by_class_and_role"]
+    assert isolation["kronecker"]["fork_scalar_tdstep"]["other_socket"] == "released"
+    assert all(row["other_socket_at_end"] == "released" for roles in isolation.values() for row in roles.values())
+    data["approval"]["gem5_other_socket"] = True
+    assert any("protocol.isolation" in p for p in campaign.campaign_problems(data))
+
+
 def test_gem5_baselines_only_runs_no_provider_call_and_resume_reuses_them(team, base_source):
     config = provider(team, {"rewriting": [{"patch": inside_patch(base_source), "contracts": [CONTRACT],
                                             "knobs": [], "unresolved": []}]})

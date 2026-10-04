@@ -107,6 +107,8 @@ def campaign_problems(data):
             problems.append("protocol.evaluator: names a native evaluator version; gem5 campaigns have none")
     elif proto["repetitions"] < 5:
         problems.append("protocol.repetitions: a native campaign needs at least 5 paired repetitions")
+    if proto.get("isolation") and (target != "native_cpu" or (data.get("approval") or {}).get("gem5_other_socket")):
+        problems.append("protocol.isolation: native only, and it excludes approval.gem5_other_socket")
     if proto["region_pairs"]:
         problems.append("protocol.region_pairs: Extensa protocols have no region pairs")
     if data["label"] != LABEL:
@@ -661,12 +663,16 @@ class Campaign:
                 spreads.setdefault(cls, {})[role] = block["spread"]
                 if block.get("other_socket") is not None:
                     self.state.setdefault("pilot_other_socket", {}).setdefault(cls, {})[role] = block["other_socket"]
+                if block.get("isolation") is not None:
+                    self.state.setdefault("pilot_isolation", {}).setdefault(cls, {})[role] = block["isolation"]
                 self._spent("evaluation", started)
         unstable = [cls for cls in self.classes if any(s > SPREAD_LIMIT for s in spreads[cls].values())]
         self.state["pilot"] = {"spreads_by_class_and_role": spreads, "passed": not unstable,
                                "unstable_classes": unstable}
         if self.state.get("pilot_other_socket"):
             self.state["pilot"]["other_socket_by_class_and_role"] = self.state["pilot_other_socket"]
+        if self.state.get("pilot_isolation"):
+            self.state["pilot"]["isolation_by_class_and_role"] = self.state["pilot_isolation"]
         self._apply_pilot()
         if not self.classes:
             self.ledger.terminate(S.StopReason.BASELINE_UNSTABLE)

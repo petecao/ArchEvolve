@@ -1,7 +1,7 @@
 # 56 — Native-CPU Extensa campaign target for BFS
 
 Created: 2026-10-03
-Updated: 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
+Updated: 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 51, 53, 54, 55
@@ -113,3 +113,23 @@ gem5 job and a3 partly did; whether the other socket's work drives the regimes i
 are already in force, and no further legitimate control is available without counters or frequency control
 (ticket 64). Re-running in the hope of a quieter host would select on the outcome, so no further attempt was
 made; a protocol change is Yan-Ru's.
+
+### Pre-registration 2026-10-04 12:40 ET: one isolation test (written before the run)
+
+Decision by the coordinating agent under Yan-Ru's delegation (agent-decided; revisable).
+
+- **Hypothesis.** A gem5 job on the other socket drives the two speed regimes seen in a3/a4.
+- **Test.** Exactly one A/A pilot, both classes and both roles, under the same frozen protocol settings as a4
+  (evaluator v2, D3 sources with ticket 64's recorded replacement, 10 paired repetitions, 1 thread, `-O3`),
+  as campaign `extensa-native-bfs-20261004-a5` on node 1. The a4 approval flag (`gem5_other_socket`) is off.
+  The campaign file sets `protocol.isolation: other_socket_free`: every native block starts only while node 0's
+  lease is released (bounded wait, 2 h), and the other socket's state and the host load are recorded at the
+  start and end of every block. The run script records other users and load at the start and end.
+- **Start rule.** Start only after gem5 campaign a7 has finished and node 0's lease is released, checked
+  every 15 min; a7 is not touched.
+- **Decision rule.** Gate unchanged: every A/A spread at most 0.1 per class.
+  - Both classes pass: the same run continues straight into the full-scope campaign (Codex calls through the
+    session lock), isolated the same way.
+  - A class fails: it gets `baseline_unstable`; ticket 56 closes with that Answer; a needs-info ticket proposes
+    protocol options to Yan-Ru.
+- **The result is reported whatever it shows. No further reruns.**
