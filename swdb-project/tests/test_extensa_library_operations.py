@@ -145,6 +145,30 @@ def test_seeded_families_declare_origin_pattern_key_and_three_controls(name):
         assert f"class {variant}" not in body
 
 
+def test_a_pinned_input_changed_during_the_run_refuses_the_receipt(tmp_path, monkeypatch):
+    """2026-10-04 ET (final code review): the reference semantics, driver templates and control
+    mutations were hash-checked only before the run."""
+    from swdb import library_operations
+    from swdb.cli import Failure
+    from swdb.library import Library
+    from swdb.store import Store
+    lib, records = _library(tmp_path)
+    library = Library(lib, Store(records))
+    entry = library.get("operation.pack_executor")
+    reference = library_operations.inputs(library, entry)["reference"]
+    real = library_operations._run_cell
+
+    def tampering(*args, **kwargs):
+        result = real(*args, **kwargs)
+        reference.write_text(reference.read_text() + "\n// changed mid-run\n")
+        return result
+    monkeypatch.setattr(library_operations, "_run_cell", tampering)
+    with pytest.raises(Failure, match="pinned certification inputs changed during execution"):
+        library_operations.certify_entry(Store(records), library, "operation.pack_executor",
+                                         lib / "profiles" / "pack_executor.yaml", runs_dir=tmp_path / "runs")
+    assert not (records / "certifications").exists()
+
+
 def test_validate_rejects_an_unknown_pattern_key_role(tmp_path):
     lib, records = _library(tmp_path)
     entry_file = lib / "library_operations" / "regroup_executor.yaml"

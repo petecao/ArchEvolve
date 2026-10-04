@@ -295,6 +295,13 @@ def certify_entry(store, library, entry_id, profile_path, runs_dir=None, seed=No
                and controls and all(c["status"] == "rejected" for c in controls) else "failed")
     if library.content_sha256(entry_id) != content_sha256 or _source_digest(library.root) != command_hash:
         raise Failure("library entry or certification sources changed during execution")
+    # 2026-10-04 ET (final code review): the pinned body, reference, driver templates and control
+    # mutations are hash-checked again after the run, not only before it.
+    try:
+        if inputs(library, entry) != resolved:
+            raise Failure("library entry or certification sources changed during execution")
+    except (Failure, UsageError) as exc:
+        raise Failure(f"pinned certification inputs changed during execution: {exc}") from None
     record = workflow.record(
         "certification", "certification." + uuid.uuid4().hex,
         entry={"id": entry_id, "content_sha256": content_sha256}, dependencies=dependencies,
