@@ -1,0 +1,93 @@
+kind: workload
+schema_version: '0.4'
+id: bfs-20261004-kronecker22.3dc69be403db57e9
+status: draft
+created: '2026-10-04'
+updated: '2026-10-04'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+requested_id: bfs-20261004-kronecker22
+version: 1
+supersedes: null
+invalidated_comparisons: []
+definition:
+  kernel: gapbs-bfs
+  family: kronecker
+  generator:
+    name: DX100 GAPBS converter
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    command:
+    - /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20261004/bfs-20261004-kronecker22/converter
+    - -g
+    - '22'
+    - -k
+    - '16'
+    - -b
+    - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20261004/bfs-20261004-kronecker22/graph-dx100.sg
+    parameters:
+      scale: 22
+      edge_factor: 16
+      seed: 27491095
+      symmetrize: true
+      explicit_symmetrize_flag: false
+      binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+      source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+  normalization:
+    remove_self_loops: true
+    deduplicate: true
+    sort_neighbors: true
+    symmetrize_undirected: true
+  sources: [0, 1234, 7777]
+  representations:
+  - id: bfs-20261004-kronecker22.dx100
+    path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20261004/bfs-20261004-kronecker22/graph-dx100.sg
+    sha256: 04eb5fdfd748a4d4299642addb1f5f407dc33f8f128b4fb3934bc5cc1dbac852
+    format: gapbs_sg32le
+    application: dx100-gapbs
+    canonical_sha256: adf370e6a7ae351afc70c6983926937f6dc5eb4c3619edf077823ffa1d023ae1
+    bytes: 530023021
+    loader: swdb.gapbs-representation.v1
+    adjacency_verified: true
+    verification:
+      method: exact_mmap_csr_transpose_membership
+      parser_sha256: ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893
+      compiler: /usr/bin/x86_64-linux-gnu-g++-13
+      budgets:
+        compile_timeout_s: 60
+        timeout_s: 900
+  - id: bfs-20261004-kronecker22.upstream
+    path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20261004/bfs-20261004-kronecker22/graph-upstream.sg
+    sha256: edd01594a76e6d5c9f4eabf440f863b876a28cfe36c6790963084e41c8a28db0
+    format: gapbs_sg64le
+    application: gapbs
+    canonical_sha256: adf370e6a7ae351afc70c6983926937f6dc5eb4c3619edf077823ffa1d023ae1
+    bytes: 546800241
+    loader: swdb.gapbs-representation.v1
+    adjacency_verified: true
+    verification:
+      method: exact_mmap_csr_transpose_membership
+      parser_sha256: ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893
+      compiler: /usr/bin/x86_64-linux-gnu-g++-13
+      budgets:
+        compile_timeout_s: 60
+        timeout_s: 900
+  canonical_sha256: adf370e6a7ae351afc70c6983926937f6dc5eb4c3619edf077823ffa1d023ae1
+  canonical_format: swdb.bfs.adjacency.v1
+  realized:
+    num_vertices: 4194302
+    num_directed_edges: 128311450
+    directed: false
+    isolated_vertices: 1798070
+    minimum_out_degree: 0
+    maximum_out_degree: 162839
+  metadata_basis: operator_declared
+  adjacency_basis: parsed_representation
+identity_sha256: 3dc69be403db57e92bb8aa6e63ddd1e2f8e9c223214e7179503ea8198b35a63c
