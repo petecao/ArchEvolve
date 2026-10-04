@@ -280,6 +280,10 @@ def rewrite_prompt(campaign_id, iteration, classes, files):
     """The rewrite prompt names only the files the workspace holds (2026-10-04 ET, campaign a2:
     the provider audit refused a read of an absent `best/` and FEEDBACK.json)."""
     history = []
+    if "library/swdb_dxc_lowering.hpp" in files:
+        history.append(" `library/swdb_dxc_lowering.hpp` is that header (read it for the intrinsic calls; "
+                       "`#include \"swdb_dxc_lowering.hpp\"` from `bfs.cc`) and `library/intrinsics/` describes "
+                       "each intrinsic.")
     best = sorted(f for f in files if f.startswith("best/"))
     if best:
         history.append(" " + ", ".join(f"`{f}`" for f in best) + " hold this campaign's current per-class best patches.")
@@ -707,6 +711,16 @@ class Campaign:
             if path is None:
                 raise Failure(f"campaign contract {cid} is not in the library")
             files[f"contracts/{cid}.yaml"] = path.read_text()
+            # 2026-10-04 ET (attempt a4): a contract edit needs the intrinsics' C++ interface. The
+            # workspace holds each used intrinsic's entry and the target's canonical lowering
+            # header as read-only references (as ticket 58's arms did); no evaluator input.
+            for iid in (library.get(cid) or {}).get("uses_intrinsics", []):
+                ipath = library.files.get(iid)
+                if ipath is not None:
+                    files[f"library/intrinsics/{ipath.name}"] = ipath.read_text()
+        references = getattr(self.adapter, "reference_files", None)
+        if references and self.data["library"]["contracts"]:
+            files.update({f"library/{name}": text for name, text in references().items()})
         regions = self.current_regions if self.query else self.data["regions"]
         files["REGIONS.json"] = json.dumps({"regions": regions}, indent=2)
         for cls, best in self.state["bests"].items():
