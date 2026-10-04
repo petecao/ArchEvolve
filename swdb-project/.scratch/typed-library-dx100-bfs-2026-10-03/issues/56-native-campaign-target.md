@@ -1,7 +1,7 @@
 # 56 — Native-CPU Extensa campaign target for BFS
 
 Created: 2026-10-03
-Updated: 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
+Updated: 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 51, 53, 54, 55
@@ -83,3 +83,33 @@ time with `--baselines-only` so no provider call could run before the shared Cod
   [64](64-native-scale22-pilot-unstable.md).
 
 No candidate was timed, so there is no verdict per class ("single graph per class", measured: not reached).
+
+### Update 2026-10-04 12:15 ET: campaign a4 (ticket 64 workloads, per-class gate)
+
+Ticket 64 (agent-decided under Yan-Ru's delegation; revisable; 0.1 threshold unchanged) re-registered both
+scale-22 workloads with the recorded source policy (Kronecker sources 0, 1234, 7778; 7777 had out-degree 0;
+uniform unchanged), made the A/A gate per class, and admitted native blocks beside another campaign's gem5 job
+when the campaign file approves it (`approval.gem5_other_socket`, other socket recorded per block).
+
+`extensa-native-bfs-20261004-a4` ran at full scope (provider calls allowed through the Codex session lock) on
+node 1 (lease generation 522, 10:59-12:01 ET, load1 1.8-3.6, commit 67c671c) while gem5 campaign
+`extensa-gem5-bfs-20261004-a7` held node 0 (recorded for every pilot block). Every trial passed the compiled
+verifier. Pilot max spread per class and role:
+
+| Class | Fork scalar TDStep | Upstream DO-BFS | Class result |
+|---|---|---|---|
+| Kronecker 22 (sources 0/1234/7778) | 0.225 | 0.153 | baseline_unstable |
+| Uniform 22 (sources 0/1234/7777) | 0.147 | 0.014 | baseline_unstable |
+
+Both classes failed, so the campaign stopped with **`baseline_unstable`**: 0 iterations, 0 provider calls,
+1.04 lane-hours, 2.68 GB peak disk. Summary `records/campaign_summaries/extensa-native-bfs-20261004-a4.summary.yaml`.
+No candidate was timed, so no class has a verdict about a candidate ("single graph per class", measured: not reached).
+
+What the per-repetition data show (no trial removed): upstream DO-BFS switches between two regimes about 15%
+apart (Kronecker 157.8 / 134.6 ms; uniform 143.5 / 125.1 ms in ticket 64's diagnostics). In a4 the uniform
+upstream blocks stayed in one regime (0.014), while the Kronecker upstream blocks switched (0.15); in a3 it was
+the reverse. The fork baseline (0.7-1.5 s ROI) spreads 0.05-0.22 without a clear regime. a4 ran beside the a7
+gem5 job and a3 partly did; whether the other socket's work drives the regimes is untested. Pinning and membind
+are already in force, and no further legitimate control is available without counters or frequency control
+(ticket 64). Re-running in the hope of a quieter host would select on the outcome, so no further attempt was
+made; a protocol change is Yan-Ru's.
