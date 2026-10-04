@@ -404,6 +404,22 @@ def test_native_blocks_refuse_while_a_gem5_campaign_holds_the_other_socket(team,
     assert not [c for c in runner.calls if c["command"] == "evaluate-pair"]
 
 
+def test_approved_native_blocks_run_beside_another_campaigns_gem5_and_record_it(team, base_source):
+    """Ticket 64 (2026-10-04 ET): approval.gem5_other_socket admits it; the other socket is recorded."""
+    other = {"lease": "mbit10-evaluation-node1", "mode": "extensa", "target": "dx100_gem5",
+             "campaign": "extensa-gem5-bfs-20261004-a7"}
+    path = native_campaign(team)
+    data = yaml.safe_load(path.read_text())
+    data["approval"]["gem5_other_socket"] = True
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    runner = FakeRunner({"pilot": 1.0}, spreads={"pilot": 0.14})
+    _, summary = run(team, path, provider(team, {}), runner, FakeHost(other=other))
+    assert summary["stop_reason"] == "baseline_unstable"         # the pilot ran; its gate decided
+    assert len([c for c in runner.calls if c["command"] == "evaluate-pair"]) == 4
+    recorded = summary["pilot"]["other_socket_by_class_and_role"]
+    assert recorded["kronecker"]["fork_scalar_tdstep"]["campaign"] == "extensa-gem5-bfs-20261004-a7"
+
+
 def test_gem5_baselines_only_runs_no_provider_call_and_resume_reuses_them(team, base_source):
     config = provider(team, {"rewriting": [{"patch": inside_patch(base_source), "contracts": [CONTRACT],
                                             "knobs": [], "unresolved": []}]})

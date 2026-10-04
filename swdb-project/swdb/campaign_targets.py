@@ -611,15 +611,23 @@ class NativeAdapter(TargetAdapter):
         if self.other_gem5():
             raise _stop("infrastructure_failure", self.other_gem5())
         tag = f"{self.cid}.pilot.{cls}.{role}"
+        other = self.other_socket_lease()
         result, reason, evaluations = self._block(tag, self.baseline(role), role, cls,
                                                   getattr(self, "aa_protocols", {}).get(role))
         if result is None:
             raise _stop("infrastructure_failure", f"A/A pilot {cls}/{role} failed: {reason}"[:1500])
         numbers = self._numbers(result)
-        return {"spread": max(numbers["spreads"]), "comparison": result["id"], "evaluations": evaluations}
+        return {"spread": max(numbers["spreads"]), "comparison": result["id"], "evaluations": evaluations,
+                "other_socket": other}
 
     def other_gem5(self):
         lease = self.other_socket_lease()
+        # Ticket 64 (2026-10-04 ET): a campaign file may approve native blocks beside ANOTHER
+        # campaign's gem5 job (approval.gem5_other_socket); the other socket is then recorded
+        # with every block. A gem5 job of this same campaign is always refused.
+        approved = (self.campaign.get("approval") or {}).get("gem5_other_socket") is True
+        if lease and approved and lease.get("campaign") != self.cid:
+            return None
         if lease and lease.get("mode") == "extensa" and lease.get("target") == "dx100_gem5":
             return ("native timed blocks refuse to start while the other socket's lease is held by a gem5 job "
                     f"of Extensa campaign {lease.get('campaign')}")
@@ -627,6 +635,7 @@ class NativeAdapter(TargetAdapter):
 
     def compare(self, candidate, cls, role, iteration, attempt, baseline_evaluation=None):
         tag = f"{self.cid}.{self._it(iteration)}.{cls}.a{attempt}.{role}"
+        other = self.other_socket_lease()
         result, reason, evaluations = self._block(tag, candidate["id"], role, cls)
         if result is None:
             kind = "correctness_failed" if re.search(r"incorrect|verifier|parent", reason or "") else \
@@ -634,7 +643,7 @@ class NativeAdapter(TargetAdapter):
             raise Refused(kind, f"Native evaluation against {role} did not complete.", [kind])
         numbers = self._numbers(result)
         return {"comparison": result["id"], **numbers, "evaluations": evaluations,
-                "baseline_evaluation": f"{tag}.baseline-eval"}
+                "baseline_evaluation": f"{tag}.baseline-eval", "other_socket": other}
 
 
 # --- DX100 gem5 (ticket 57) -------------------------------------------------------------------------

@@ -657,11 +657,16 @@ class Campaign:
             for role in self.roles:
                 self._step("evaluation", job=True)
                 started = time.monotonic()
-                spreads.setdefault(cls, {})[role] = self.adapter.pilot(cls, role)["spread"]
+                block = self.adapter.pilot(cls, role)
+                spreads.setdefault(cls, {})[role] = block["spread"]
+                if block.get("other_socket") is not None:
+                    self.state.setdefault("pilot_other_socket", {}).setdefault(cls, {})[role] = block["other_socket"]
                 self._spent("evaluation", started)
         unstable = [cls for cls in self.classes if any(s > SPREAD_LIMIT for s in spreads[cls].values())]
         self.state["pilot"] = {"spreads_by_class_and_role": spreads, "passed": not unstable,
                                "unstable_classes": unstable}
+        if self.state.get("pilot_other_socket"):
+            self.state["pilot"]["other_socket_by_class_and_role"] = self.state["pilot_other_socket"]
         self._apply_pilot()
         if not self.classes:
             self.ledger.terminate(S.StopReason.BASELINE_UNSTABLE)
