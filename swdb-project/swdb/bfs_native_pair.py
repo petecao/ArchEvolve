@@ -1,6 +1,7 @@
 """Prospective paired native collection and receipt admission. Updated: 2026-09-27.
 
 2026-10-03 ET (ticket 38): raw rechecks use the evaluation's kernel plug-in.
+2026-10-04 ET (ticket 63): evaluator v2 receipts recheck raw output with the compiled verifier.
 """
 
 import copy
@@ -201,7 +202,20 @@ def validate_receipt(store, baseline, candidate, settings, *, verify_raw=True):
             "paired schedule differs from the prospective seeded order")
     require(len(pair["observations"]) == len(planned), "paired receipt has incomplete trial coverage")
     workload_id = baseline["context"]["workload"]["id"]
-    if verify_raw:
+    from swdb import bfs_native_scalable as scalable
+    v2 = scalable.evaluator_of_settings(settings) == scalable.EVALUATOR_V2
+    if verify_raw and v2:
+        # Ticket 63: v2 re-binds the registered SG file by hash; no Python adjacency.
+        registered = _get(store, workload_id, "workload")
+        verify_immutable(registered)
+        canonical, actual_workload = None, {"canonical_sha256": registered["definition"]["canonical_sha256"]}
+        for evaluation in evaluations.values():
+            graph_input = evaluation["context"]["workload"].get("graph_input", {})
+            require(any(rep.get("sha256") == graph_input.get("sha256") and rep.get("path") == graph_input.get("path")
+                        for rep in registered["definition"]["representations"])
+                    and artifacts.file_hash(graph_input["path"]) == graph_input["sha256"],
+                    "paired SG input differs from the registered representation")
+    elif verify_raw:
         canonical, actual_workload = bfs_native.canonical_graph(materialize_workload(store, workload_id))
     else:
         registered = _get(store, workload_id, "workload")
@@ -256,6 +270,27 @@ def validate_receipt(store, baseline, candidate, settings, *, verify_raw=True):
             require(check.get("graph_sha256") == actual_workload["canonical_sha256"] and check.get("passed") is True
                     and check.get("source") == slot["source"],
                     "paired retained correctness does not bind a passed check to the registered graph and source")
+            continue
+        if v2:
+            try:
+                raw, raw_hash = bfs_native.json_observation(observation["output"], scalable.TRIAL_RECORD_LIMIT,
+                                                           "paired raw trial record")
+            except bfs_native.StageFailure as exc:
+                raise Failure(str(exc)) from None
+            require(raw_hash == observation["output_sha256"]
+                    and artifacts.file_hash(binding["execution_log"]) == binding["execution_log_sha256"],
+                    "paired raw execution evidence changed or is unavailable")
+            require(scalable.check_trial_record(raw, slot["source"], evaluation["context"]["threads"], observation["roi"],
+                                                evaluation["context"]["workload"]["num_vertices"]) is None
+                    and type(raw.get("duration_s")) in (int, float) and raw["duration_s"] == observation["duration_s"],
+                    "paired timing/context differs from its hash-bound raw output")
+            checked = scalable.recheck_retained(evaluation, observation, check, slot["source"], graph_checked=True)
+            checked["parents_sha256"] = observation.get("parents_sha256")
+            require(checked["passed"], "paired raw parent vector failed independent structural verification: "
+                    + str(checked["reason"]))
+            require(check.get("graph_sha256") == actual_workload["canonical_sha256"]
+                    and all(check.get(key) == value for key, value in checked.items()),
+                    "paired retained correctness differs from the independent raw-result check")
             continue
         # Ticket 38 (2026-10-03 ET): the evaluation's retained native verifier
         # selects its kernel plug-in; records before the seam are BFS.

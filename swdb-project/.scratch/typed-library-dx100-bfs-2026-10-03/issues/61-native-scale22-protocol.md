@@ -1,9 +1,10 @@
 # 61 — Native protocol for the scale-22 Extensa classes
 
 Created: 2026-10-04 ET (by ticket 56)
+Updated: 2026-10-04 06:30 ET (resolved as a decision)
 **Type:** decision
-**Status:** needs-info
-**Blocked by:** Yan-Ru's choice below
+**Status:** resolved
+**Blocked by:** —
 **Spec:** `../spec.md`; [design decisions](../extensa-design-2026-10-03.md) D3, D4
 
 **What to decide:** how a native Extensa campaign can time BFS on the scale-22 graphs D4 chose.
@@ -45,3 +46,18 @@ The native acceptance campaign `extensa-native-bfs-20261004-a1` therefore stoppe
 
 Agent recommendation: option 1, because D3's reason for scale 22 (spread 0.13-0.14 at scale 18)
 remains, and the evaluator's limits are input bounds, not a correctness rule.
+
+## Answer
+
+Resolved 2026-10-04 06:30 ET as a decision: **option 1, a scalable native verifier.** Agent-decided under
+Yan-Ru's 2026-10-04 delegation; revisable by Yan-Ru.
+
+- D3 and D4 stay unchanged: Kronecker and uniform scale 22 (edge factor 16), sources `[0, 1234, 7777]`,
+  10 paired repetitions, 1 thread, `bfs.complete_call.v1`, `-O3`, and the A/A pilot gate at spread 0.1.
+- The evaluator gets new version identifiers instead of raised v1 limits: native evaluator
+  `swdb.native.evaluator.scalable.v2` with verifier `swdb.bfs.structural.compiled.v2`. Native evaluator v1
+  (`swdb.bfs.structural.v1`) and every protocol and record frozen under it keep their meaning. New
+  protocols pin v2 explicitly (`settings.evaluator`).
+- The verifier criterion is unchanged (ADR 0001): exactly `verify_parents`, compiled.
+- Implementation slice: ticket [63](63-scalable-native-verifier.md). The campaign file
+  `campaigns/extensa/extensa-native-bfs-20261004-a2.yaml` pins v2; ticket 56's acceptance run uses it.

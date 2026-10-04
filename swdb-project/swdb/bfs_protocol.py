@@ -513,7 +513,10 @@ def _validate_settings(settings, store, *, require_simulation_identity=False):
     _fail(isinstance(settings, dict), "settings must be a mapping")
     mode = settings.get("mode")
     _fail(mode in {"native", "artifact_reference", "controlled_simulator"}, "unsupported comparison mode")
-    kernels.require(_get(store, settings.get("kernel"), "kernel")["id"], "protocol freeze")
+    settings_plugin = kernels.require(_get(store, settings.get("kernel"), "kernel")["id"], "protocol freeze")
+    # Ticket 63 (2026-10-04 ET): evaluator v2 and the compiled verifier are pinned together.
+    from swdb.bfs_native_scalable import validate_settings as validate_evaluator
+    validate_evaluator(settings, settings_plugin)
     _text(settings.get("roi"), "roi")
     _integer(settings.get("threads"), "threads")
     if "native_runtime" in settings:
@@ -676,7 +679,7 @@ def freeze_protocol(args):
     # checkers; simulated fixture protocols have long named the native check).
     plugin = kernels.require(settings["kernel"], "protocol freeze")
     verifier = settings["correctness"]["verifier"]
-    _fail(verifier == plugin.native_verifier or verifier in plugin.gem5_checkers,
+    _fail(verifier in {plugin.native_verifier, plugin.native_scalable_verifier} - {None} or verifier in plugin.gem5_checkers,
           f"correctness verifier {verifier!r} does not belong to the {plugin.name} kernel plug-in")
     # Ticket 40 (2026-10-03 ET): a native freeze names its kernel's protected ROI.
     _fail(settings["mode"] != "native" or settings["roi"] == plugin.native_roi,
@@ -740,9 +743,15 @@ def validate_protocol_for_evaluation(store, request, candidate, actual_build=Non
     _fail(wid in protocol["workload_identities"], "workload is outside the frozen protocol")
     workload = _get(store, wid, "workload")
     _fail(verify_immutable(workload) == protocol["workload_identities"][wid], "frozen workload changed")
-    from swdb.bfs_native import canonical_graph
-    canonical, _ = canonical_graph(materialize_workload(store, wid) if set(workload_request) == {"id"} else workload_request)
-    _fail(artifacts.digest(canonical) == workload["definition"]["canonical_sha256"], "requested adjacency differs from frozen workload")
+    from swdb.bfs_native_scalable import EVALUATOR_V2, evaluator_of_settings
+    if evaluator_of_settings(settings) == EVALUATOR_V2:
+        # Ticket 63: v2 binds the registered workload (immutable, frozen identity above);
+        # its SG input is hash-bound to that registration before every trial.
+        _fail(set(workload_request) == {"id"}, "evaluator v2 protocols evaluate registered workloads only")
+    else:
+        from swdb.bfs_native import canonical_graph
+        canonical, _ = canonical_graph(materialize_workload(store, wid) if set(workload_request) == {"id"} else workload_request)
+        _fail(artifacts.digest(canonical) == workload["definition"]["canonical_sha256"], "requested adjacency differs from frozen workload")
     _fail(request.get("sources") == workload["definition"]["sources"], "source sequence differs from frozen workload")
     _fail(request.get("threads") == settings["threads"] and request.get("repetitions") == settings["sampling"]["repetitions"],
           "threads/repetitions differ from frozen settings")
@@ -1162,6 +1171,9 @@ def _evaluation_samples(store, evaluation, protocol, role):
                                   for row in bindings), "simulation execution binding contradicts frozen build")
     _fail(context.get("instrumentation") == settings["instrumentation"][role], "instrumentation differs from frozen treatment")
     _fail(context.get("verifier") == settings["correctness"]["verifier"], "correctness verifier differs from frozen coverage")
+    from swdb.bfs_native_scalable import EVALUATOR_V1, evaluator_of_settings
+    _fail(context.get("evaluator", EVALUATOR_V1) == evaluator_of_settings(settings),
+          "native evaluator version differs from the frozen protocol")
     _fail(set(settings["correctness"]["required_cases"]).issubset(set(context.get("correctness_cases", []))),
           "required correctness cases have no evidence")
     binary = build.get("binary_sha256")

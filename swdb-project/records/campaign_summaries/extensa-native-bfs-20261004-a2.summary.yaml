@@ -1,0 +1,120 @@
+kind: campaign_summary
+schema_version: '0.4'
+id: extensa-native-bfs-20261004-a2.summary
+status: draft
+created: '2026-10-04'
+updated: '2026-10-04'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+mode: extensa
+campaign: extensa-native-bfs-20261004-a2
+campaign_file:
+  path: campaigns/extensa/extensa-native-bfs-20261004-a2.yaml
+  sha256: 9a319d45c67d5a48b41e52ca3c822cfb429471e4846ea9f5c84183d0fa9dfd04
+swdb_commit: 36e75441a94e0af6e7a07010db0dc6c00724dead
+extensa_source:
+  repository: MaizeHPC/MemAcc
+  commit: af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+target: native_cpu
+evidence_basis: measured
+evidence_kind: execution
+protocol:
+  id: extensa-native-bfs-20261004-a2.protocol.fork_scalar_tdstep.97f7d602d4e92fbf
+  identity_sha256: 97f7d602d4e92fbf39f63a6e56569b1c82f819bd2ef8c04e9d34f93f3673f545
+  settings:
+    target: native_cpu
+    roi: bfs.complete_call.v1
+    threads: 1
+    repetitions: 10
+    sources: [0, 1234, 7777]
+    region_pairs: []
+    differences: 'Extensa campaign extensa-native-bfs-20261004-a2: provider rewrites of the fork''s scalar
+      TDStep (scalar-only snapshot plus patch) versus the unchanged full-source dx100-bfs-scalar DOBFS,
+      and separately versus upstream direction-optimizing GAPBS BFS. Native evaluator v2 (mmap SG driver,
+      compiled structural verifier).'
+    evidence_basis: measured
+    profitability:
+      minimum_speedup: 1.05
+      maximum_relative_spread: 0.1
+      rule: lower bound strictly above the minimum; every spread at most the maximum
+    workloads:
+      kronecker: bfs-20261004-kronecker22.3dc69be403db57e9
+      uniform_random: bfs-20261004-uniform22.facb16e6260c3a82
+  by_role:
+    fork_scalar_tdstep:
+      id: extensa-native-bfs-20261004-a2.protocol.fork_scalar_tdstep.97f7d602d4e92fbf
+      identity_sha256: 97f7d602d4e92fbf39f63a6e56569b1c82f819bd2ef8c04e9d34f93f3673f545
+    upstream_do_bfs:
+      id: extensa-native-bfs-20261004-a2.protocol.upstream_do_bfs.1ee2856cbb33f446
+      identity_sha256: 1ee2856cbb33f4461c4ff0da5c4a5366dab8806b25dcf0b2238938dc5f1352c7
+baselines:
+- role: fork_scalar_tdstep
+  candidate: bfs-native-pilot-20260925-dx10018-a1.baseline
+  evaluation_ids_by_class: {}
+- role: upstream_do_bfs
+  candidate: bfs-native-pilot-20260925-upstream18-a2.baseline
+  evaluation_ids_by_class: {}
+workload_classes:
+- class: kronecker
+  workload: bfs-20261004-kronecker22.3dc69be403db57e9
+  sources: [0, 1234, 7777]
+- class: uniform_random
+  workload: bfs-20261004-uniform22.facb16e6260c3a82
+  sources: [0, 1234, 7777]
+label: single graph per class
+provider:
+  name: codex
+  model: gpt-5.6-sol
+  effort: xhigh
+pilot: null
+setup:
+  provider_calls: []
+iterations: []
+per_class:
+- class: kronecker
+  verdict: no_gain
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+- class: uniform_random
+  verdict: no_gain
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+budgets:
+  limits:
+    max_iterations: 8
+    plateau_iterations: 4
+    lane_hours: 24
+    provider_calls_per_iteration: 3
+    provider_calls_setup: 1
+    disk_gb: 20
+    lanes: 1
+  used:
+    iterations: 0
+    lane_hours: 0.216414
+    provider_calls_counted: 0
+    provider_calls_uncounted: 0
+    disk_gb_peak: 0.377863
+pauses: []
+stop_reason: infrastructure_failure
+stop_detail: 'A/A pilot kronecker/upstream_do_bfs failed: candidate preparation failed: actual build differs
+  from frozen settings'
+artifacts: []
+retentions: []
+library_entries: []
+site_finder: null

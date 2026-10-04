@@ -4,6 +4,10 @@ Updated: 2026-09-26. Real timing, fixture timing, and profiling remain distinct.
 2026-10-03 ET (ticket 38): the entry point, ROI, trusted driver, trial format and
 independent result check come from the candidate kernel's plug-in
 (``swdb.kernels``); BFS keeps its exact former constants and verifier.
+2026-10-04 ET (ticket 63): a protocol (or unprotocoled request) that pins
+``swdb.native.evaluator.scalable.v2`` takes the scalable BFS path of
+``swdb.bfs_native_scalable`` (mmap SG driver, compiled verifier). Everything else,
+including every v1 protocol and record, keeps this module's v1 behavior.
 """
 
 import copy
@@ -27,6 +31,7 @@ from bisect import bisect_left
 from pathlib import Path
 
 from swdb import artifacts, kernels, paths, profile, workflow
+from swdb import bfs_native_scalable as scalable
 from swdb.cli import Failure, _require_valid
 from swdb.store import Store
 from swdb.vocab import load_all
@@ -558,6 +563,11 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
             raise Failure(plugin.native_entry_error())
         if request["roi"] != plugin.native_roi:
             raise Failure(f"native {plugin.name} evaluation only supports the protected ROI {plugin.native_roi}")
+        evaluator = scalable.request_evaluator(store, request)
+        v2 = evaluator == scalable.EVALUATOR_V2
+        if v2 and getattr(plugin, "native_scalable_verifier", None) != scalable.VERIFIER_V2:
+            raise Failure(f"{scalable.EVALUATOR_V2} supports the BFS kernel only")
+        driver_template = scalable.DRIVER_V2 if v2 else plugin.native_driver
         data.update(candidate=candidate["id"],
                     source_snapshot=candidate["source_snapshot"], implementation=candidate["implementation"])
         if candidate.get("proposal"):
@@ -604,7 +614,7 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
         session.begin("source_resolution")
         root = artifacts.verify(candidate["artifact"])
         artifacts.check_protections(root, candidate["protections"])
-        _protect_driver_macros(candidate, root, driver=plugin.native_driver)
+        _protect_driver_macros(candidate, root, driver=driver_template)
         compiler, flags, includes, source, adapter = _compile_settings(request, candidate, root, plugin)
         impl = copy.deepcopy(store.get(candidate["implementation"], "implementation"))
         impl["build"]["flags"] = shlex.join(flags)
@@ -624,11 +634,16 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
                            "threads": threads, "sources": sources, "repetitions": repetitions,
                            "roi": plugin.native_roi, "protocol": request.get("protocol"), "basis": "measured",
                            "process_policy": "one fresh process per source and repetition; graph construction before ROI",
-                           "verifier": plugin.native_verifier, "verifier_sha256": plugin.native_verifier_sha256(),
+                           "verifier": scalable.VERIFIER_V2 if v2 else plugin.native_verifier,
+                           "verifier_sha256": artifacts.file_hash(scalable.VERIFIER_SOURCE) if v2 else plugin.native_verifier_sha256(),
                            "backend_configuration": request.get("target_configuration", {}),
-                           "instrumentation": {"template_sha256": artifacts.file_hash(plugin.native_driver), "treatment": "included"},
+                           "instrumentation": {"template_sha256": artifacts.file_hash(driver_template), "treatment": "included"},
                            "host": host, "architecture": platform.machine(), "lane": lane,
                            "load_average": list(os.getloadavg()), "budget": budget}
+        if v2:
+            data["context"]["evaluator"] = evaluator
+            data["context"]["process_policy"] = ("one fresh process per source and repetition; graph mapped "
+                                                 "from the registered SG file before ROI")
         if preflight is not None:
             data['context']['dispatch_preflight'] = preflight
         if pairing is not None:
@@ -640,25 +655,35 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
         session.begin("workload_resolution")
         supplied_workload = request.get("workload")
         registered_representation = None
-        if isinstance(supplied_workload, dict) and set(supplied_workload) == {"id"}:
+        if v2:
+            workload = scalable.resolve_workload(store, supplied_workload, data["context"]["application"])
+            canonical, graph_input = None, workload["graph_input"]
+            vertices = workload["num_vertices"]
+        elif isinstance(supplied_workload, dict) and set(supplied_workload) == {"id"}:
             try:
                 from swdb.bfs_protocol import materialize_workload
             except ImportError:
                 raise Failure("registered-workload materialization is unavailable") from None
             supplied_workload = materialize_workload(store, supplied_workload["id"])
             registered_representation = supplied_workload["registered_representation"]
-        canonical, workload = canonical_graph(supplied_workload)
-        if registered_representation is not None:
-            workload["representation"] = registered_representation
-        if any(source >= canonical["num_vertices"] for source in sources):
+        if not v2:
+            canonical, workload = canonical_graph(supplied_workload)
+            if registered_representation is not None:
+                workload["representation"] = registered_representation
+            vertices = canonical["num_vertices"]
+        if any(source >= vertices for source in sources):
             raise Failure(f"requested {plugin.name} source outside canonical graph")
-        graph_path = folder / "graph.swdb"
-        with graph_path.open("w") as output:
-            output.write(f"SWDBGRAPH1 {canonical['num_vertices']} {workload['num_directed_edges']} {int(canonical['directed'])}\n")
-            for u, neighbors in enumerate(canonical["adjacency"]):
-                for v in neighbors:
-                    output.write(f"{u} {v}\n")
-        workload.update(sources=sources, canonical_path=str(graph_path), canonical_file_sha256=artifacts.file_hash(graph_path))
+        if v2:
+            graph_path = Path(graph_input["path"])
+            workload.update(sources=sources)
+        else:
+            graph_path = folder / "graph.swdb"
+            with graph_path.open("w") as output:
+                output.write(f"SWDBGRAPH1 {canonical['num_vertices']} {workload['num_directed_edges']} {int(canonical['directed'])}\n")
+                for u, neighbors in enumerate(canonical["adjacency"]):
+                    for v in neighbors:
+                        output.write(f"{u} {v}\n")
+            workload.update(sources=sources, canonical_path=str(graph_path), canonical_file_sha256=artifacts.file_hash(graph_path))
         data["context"]["workload"] = workload
         frozen_runtime = None
         if request.get("protocol"):
@@ -675,12 +700,12 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
             required=bool(request.get("protocol")) and request.get("fixture") is not True)
         session.finish()
         wrapper = build_folder / "native_driver.cc"
-        template = Path(plugin.native_driver).read_text()
+        template = Path(driver_template).read_text()
         wrapper.write_text(template.replace("#include SWDB_SOURCE_INCLUDE", "#include " + json.dumps(str(source))))
         binary = build_folder / plugin.native_binary
         command = [compiler, *flags, *(f"-I{p}" for p in includes), str(wrapper), "-o", str(binary)]
         data["build"] = {"directory": str(build_folder), "compiler": compiler, "flags": flags, "command": command,
-                         "wrapper_sha256": artifacts.file_hash(wrapper), "template_sha256": artifacts.file_hash(plugin.native_driver)}
+                         "wrapper_sha256": artifacts.file_hash(wrapper), "template_sha256": artifacts.file_hash(driver_template)}
         if reuse is None:
             version_log = session.execute("compiler_identity", [compiler, "--version"], min(30, budget["build_seconds"]))
             data["build"]["compiler_version"] = version_log.read_text(errors="replace").splitlines()[:2]
@@ -702,6 +727,18 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
         artifacts.verify(candidate["artifact"])
         data["build"]["execution_environment"] = controlled_environment(threads)
         data["build"]["native_runtime"] = actual_runtime
+        if v2:
+            # The evaluator's own result check: compiled from repository source with
+            # fixed flags and the host C++ compiler, never with request settings.
+            identity = scalable.verifier_identity()
+            verifier_binary = build_folder / "bfs-verify"
+            verifier_command = scalable.build_command(verifier_binary)
+            session.execute("verifier_build", verifier_command, min(300, budget["build_seconds"]))
+            if not verifier_binary.is_file() or artifacts.file_hash(scalable.VERIFIER_SOURCE) != identity["source_sha256"]:
+                raise Failure("compiled verifier build failed or its source changed")
+            data["build"]["verifier"] = {**identity, "compiler": verifier_command[0], "command": verifier_command,
+                                         "binary": str(verifier_binary),
+                                         "binary_sha256": artifacts.file_hash(verifier_binary)}
         session.save()
         slot = yield data
         for repetition in range(repetitions):
@@ -714,20 +751,34 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
                 output = folder / f"trial-{repetition}-{position}.json"
                 if artifacts.file_hash(binary) != data["build"]["binary_sha256"]:
                     raise Failure("timed binary changed after build")
-                if artifacts.file_hash(graph_path) != workload["canonical_file_sha256"]:
-                    raise Failure("protected canonical graph changed before execution")
-                session.execute("execution", [str(binary), str(graph_path), str(source), str(output)],
+                if v2:
+                    if artifacts.file_hash(graph_path) != graph_input["sha256"]:
+                        raise Failure("registered SG input changed before execution")
+                    parents_path = folder / f"trial-{repetition}-{position}.parents.i32"
+                    command = [str(binary), str(graph_path), str(graph_input["offset_bytes"]), str(source),
+                               str(output), str(parents_path)]
+                else:
+                    if artifacts.file_hash(graph_path) != workload["canonical_file_sha256"]:
+                        raise Failure("protected canonical graph changed before execution")
+                    command = [str(binary), str(graph_path), str(source), str(output)]
+                session.execute("execution", command,
                                 budget["run_seconds"], env, repetition=repetition, source_position=position, source=source)
                 executed = copy.deepcopy(session.current)
                 session.begin("correctness", repetition=repetition, source_position=position, source=source)
-                observed, output_hash = json_observation(output, plugin.native_output_limit(canonical["num_vertices"]),
-                                                        "parent/timing output" if plugin is kernels.BFS else "result/timing output")
-                if observed.get("format") != plugin.native_trial_format:
-                    raise StageFailure("missing_observation", "native trial output has the wrong format")
-                if (type(observed.get("source")) is not int or observed["source"] != source
-                        or observed.get("roi") != plugin.native_roi or type(observed.get("configured_threads")) is not int
-                        or observed["configured_threads"] != threads):
-                    raise StageFailure("incompatible", "native output source, ROI, or configured threads differ from request")
+                if v2:
+                    observed, output_hash = json_observation(output, scalable.TRIAL_RECORD_LIMIT, "trial record")
+                    problem = scalable.check_trial_record(observed, source, threads, plugin.native_roi, vertices)
+                    if problem:
+                        raise StageFailure(*problem)
+                else:
+                    observed, output_hash = json_observation(output, plugin.native_output_limit(canonical["num_vertices"]),
+                                                            "parent/timing output" if plugin is kernels.BFS else "result/timing output")
+                    if observed.get("format") != plugin.native_trial_format:
+                        raise StageFailure("missing_observation", "native trial output has the wrong format")
+                    if (type(observed.get("source")) is not int or observed["source"] != source
+                            or observed.get("roi") != plugin.native_roi or type(observed.get("configured_threads")) is not int
+                            or observed["configured_threads"] != threads):
+                        raise StageFailure("incompatible", "native output source, ROI, or configured threads differ from request")
                 duration = observed.get("duration_s")
                 if isinstance(duration, bool) or not isinstance(duration, (int, float)) or not math.isfinite(duration) or duration <= 0:
                     raise StageFailure("missing_observation", "native ROI duration must be positive and finite")
@@ -741,12 +792,28 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
                         "started": executed["started"], "finished": executed["finished"],
                         "execution_log": executed["log"], "execution_log_sha256": executed["log_sha256"]}
                 data["timing"].append(observation)
-                check = plugin.check_native_trial(canonical["adjacency"], source, observed,
-                                                  application=data["context"]["application"])
+                if v2:
+                    if not parents_path.is_file() or parents_path.is_symlink():
+                        raise StageFailure("missing_observation", "parent vector output missing or unsafe")
+                    parents_hash = artifacts.file_hash(parents_path)
+                    if artifacts.file_hash(graph_path) != graph_input["sha256"]:
+                        raise Failure("registered SG input changed before verification")
+                    if artifacts.file_hash(data["build"]["verifier"]["binary"]) != data["build"]["verifier"]["binary_sha256"]:
+                        raise Failure("compiled verifier changed after build")
+                    check = scalable.run_verifier(data["build"]["verifier"]["binary"], graph_input, source,
+                                                  parents_path, max(1.0, min(budget["run_seconds"] * 5, session.remaining())))
+                    if artifacts.file_hash(parents_path) != parents_hash:
+                        raise Failure("parent vector changed during verification")
+                    retained, raw_hash, gz_hash = scalable.compress_parents(parents_path)
+                    observation.update(parents_output=str(retained), parents_sha256=raw_hash, parents_gzip_sha256=gz_hash)
+                    check["parents_sha256"] = raw_hash
+                else:
+                    check = plugin.check_native_trial(canonical["adjacency"], source, observed,
+                                                      application=data["context"]["application"])
                 session.remaining()
                 check.update(source=source, source_position=position, repetition=repetition, trial=trial,
                              output_sha256=observation["output_sha256"], binary_sha256=observation["binary_sha256"],
-                             graph_sha256=workload["canonical_sha256"], verifier=plugin.native_verifier)
+                             graph_sha256=workload["canonical_sha256"], verifier=data["context"]["verifier"])
                 if pairing is not None:
                     check["pairing"] = copy.deepcopy(observation["pairing"])
                 data["correctness"]["checks"].append(check)

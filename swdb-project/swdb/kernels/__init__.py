@@ -32,6 +32,7 @@ class KernelPlugin:
     native_roi = None         # protected ROI identifier
     native_trial_format = None
     native_verifier = None    # evaluator-owned result-check identifier
+    native_scalable_verifier = None  # compiled result check of evaluator v2 (ticket 63)
     native_driver = None      # trusted driver template path
     native_binary = None      # timed binary name inside the build folder
     binary_stem = None        # prefix of diagnostic build artifacts ("bfs")
@@ -195,7 +196,7 @@ def by_native_verifier(verifier, default="gapbs-bfs"):
     if verifier is None:
         return _REGISTRY[default]
     for plugin in _REGISTRY.values():
-        if plugin.native_verifier == verifier:
+        if verifier in (plugin.native_verifier, plugin.native_scalable_verifier):
             return plugin
     raise Failure(f"no kernel plug-in owns native verifier {verifier!r}")
 

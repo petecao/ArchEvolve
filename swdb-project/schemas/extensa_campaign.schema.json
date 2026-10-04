@@ -31,7 +31,9 @@
         "repetitions": {"type": "integer", "minimum": 1},
         "sources": {"type": "array", "minItems": 1, "items": {"type": "integer", "minimum": 0}},
         "region_pairs": {"type": "boolean"},
-        "differences": {"type": "string", "minLength": 1}
+        "differences": {"type": "string", "minLength": 1},
+        "evaluator": {"enum": ["swdb.native.evaluator.v1", "swdb.native.evaluator.scalable.v2"],
+                      "description": "Native evaluator version the campaign's protocols pin (ticket 63, 2026-10-04 ET); absent means v1."}
       }
     },
     "workload_classes": {

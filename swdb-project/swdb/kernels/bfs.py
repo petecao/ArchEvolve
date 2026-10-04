@@ -19,6 +19,9 @@ class BFSPlugin(KernelPlugin):
     native_roi = "bfs.complete_call.v1"
     native_trial_format = "swdb.bfs.native.trial.v1"
     native_verifier = "swdb.bfs.structural.v1"
+    # Ticket 63 (2026-10-04 ET): the compiled verifier of evaluator v2
+    # (tools/bfs_native/bfs_verify.cc); the same criterion as verify_parents.
+    native_scalable_verifier = "swdb.bfs.structural.compiled.v2"
     native_driver = paths.HOME / "tools" / "bfs_native" / "driver.cc.in"
     native_binary = "bfs-native"
     binary_stem = "bfs"

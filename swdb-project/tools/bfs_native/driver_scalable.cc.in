@@ -1,0 +1,150 @@
+// Evaluator-owned scalable BFS driver (swdb.native.evaluator.scalable.v2).
+// Created 2026-10-04 ET (ticket 63). SWDB_SOURCE_INCLUDE is replaced with the exact
+// candidate path at build time. Same ROI and timed call as driver.cc.in; it differs only
+// outside the ROI: it maps the registered GAPBS SG file directly (no text graph copy) and
+// writes the returned parent vector as little-endian int32 to a separate file, beside a
+// small JSON trial record (swdb.bfs.native.trial.v2).
+// Limits: n <= 2^23 vertices, m <= 2^28 directed edges, SG file <= 3 GiB. Heap use outside
+// the candidate's BFS is the CSR copy: (n+1)*8 + m*4 bytes, doubled for a directed graph.
+#include <chrono>
+#include <cstdint>
+#include <cstdio>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <limits>
+#include <stdexcept>
+#include <string>
+#include <vector>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
+#define main swdb_unused_application_main
+#include SWDB_SOURCE_INCLUDE
+#undef main
+
+namespace swdb_native {
+const uint64_t max_vertices = uint64_t(1) << 23;
+const uint64_t max_edges = uint64_t(1) << 28;
+const uint64_t max_sg_bytes = uint64_t(3) << 30;
+
+uint64_t read_le(const unsigned char *p, unsigned width) {
+    uint64_t value = 0;
+    for (unsigned b = 0; b < width; ++b) value |= uint64_t(p[b]) << (8 * b);
+    return value;
+}
+
+void copy_csr(const unsigned char *base, uint64_t n, uint64_t m, unsigned width,
+              NodeID **&index, NodeID *&neighbors) {
+    const unsigned char *offsets = base, *targets = base + (n + 1) * width;
+    if (read_le(offsets, width) != 0 || read_le(offsets + n * width, width) != m)
+        throw std::runtime_error("invalid SG CSR endpoints");
+    neighbors = new NodeID[m ? m : 1];
+    index = new NodeID*[n + 1];
+    uint64_t previous = 0;
+    for (uint64_t u = 0; u <= n; ++u) {
+        uint64_t at = read_le(offsets + u * width, width);
+        if (at < previous || at > m) throw std::runtime_error("invalid SG CSR offsets");
+        index[u] = neighbors + at;
+        previous = at;
+    }
+    for (uint64_t e = 0; e < m; ++e) {
+        int64_t v = int64_t(int32_t(uint32_t(read_le(targets + e * 4, 4))));
+        if (v < 0 || uint64_t(v) >= n) throw std::runtime_error("SG neighbor outside graph");
+        neighbors[e] = static_cast<NodeID>(v);
+    }
+}
+
+Graph read_sg(const char *path, unsigned width) {
+    if (width != 4 && width != 8) throw std::runtime_error("offset width must be four or eight");
+    int fd = open(path, O_RDONLY | O_NOFOLLOW);
+    if (fd < 0) throw std::runtime_error("cannot open SG input");
+    struct stat st;
+    if (fstat(fd, &st) != 0 || !S_ISREG(st.st_mode) || st.st_size <= 0 ||
+        uint64_t(st.st_size) > max_sg_bytes) {
+        close(fd);
+        throw std::runtime_error("SG input must be a regular file within 3 GiB");
+    }
+    size_t size = size_t(st.st_size);
+    void *mapping = mmap(nullptr, size, PROT_READ, MAP_PRIVATE, fd, 0);
+    close(fd);
+    if (mapping == MAP_FAILED) throw std::runtime_error("cannot map SG input");
+    const unsigned char *data = static_cast<const unsigned char *>(mapping);
+    try {
+        if (size < 1 + 2 * width || data[0] > 1) throw std::runtime_error("invalid SG header");
+        bool directed = data[0] == 1;
+        uint64_t m = read_le(data + 1, width), n = read_le(data + 1 + width, width);
+        uint64_t sign = uint64_t(1) << (8 * width - 1);
+        if ((m & sign) || (n & sign) || n < 1 || n > max_vertices || m > max_edges)
+            throw std::runtime_error("SG dimensions outside the scalable driver limits");
+        uint64_t block = (n + 1) * width + m * 4;
+        if (1 + 2 * uint64_t(width) + block * (directed ? 2 : 1) != size)
+            throw std::runtime_error("truncated or trailing SG data");
+        NodeID **index = nullptr, **inverse_index = nullptr;
+        NodeID *neighbors = nullptr, *inverse_neighbors = nullptr;
+        copy_csr(data + 1 + 2 * width, n, m, width, index, neighbors);
+        if (directed) copy_csr(data + 1 + 2 * width + block, n, m, width, inverse_index, inverse_neighbors);
+        munmap(mapping, size);
+        if (!directed) return Graph(int64_t(n), index, neighbors);
+        return Graph(int64_t(n), index, neighbors, inverse_index, inverse_neighbors);
+    } catch (...) {
+        munmap(mapping, size);
+        throw;
+    }
+}
+}
+
+int main(int argc, char **argv) {
+    try {
+        if (argc != 6) throw std::runtime_error("expected SG file, offset width, source, trial output, parent output");
+        size_t parsed = 0;
+        long long width = std::stoll(argv[2], &parsed);
+        if (parsed != std::string(argv[2]).size()) throw std::runtime_error("invalid offset width");
+        long long requested_source = std::stoll(argv[3], &parsed);
+        if (parsed != std::string(argv[3]).size()) throw std::runtime_error("invalid source");
+        Graph graph = swdb_native::read_sg(argv[1], static_cast<unsigned>(width == 4 || width == 8 ? width : 0));
+        if (requested_source < 0 || requested_source >= graph.num_nodes())
+            throw std::runtime_error("source outside graph");
+        NodeID source = static_cast<NodeID>(requested_source);
+        int configured_threads = 1;
+#ifdef _OPENMP
+        omp_set_dynamic(0);
+        configured_threads = omp_get_max_threads();
+#endif
+        // This boundary includes all initialization and normalization inside DOBFS.
+        // The returned parent vector remains alive when the stop timestamp is taken.
+        const auto begin = std::chrono::steady_clock::now();
+        auto parent = DOBFS(graph, source, false);
+        const auto end = std::chrono::steady_clock::now();
+        if (parent.size() != static_cast<size_t>(graph.num_nodes()))
+            throw std::runtime_error("returned parent length differs from graph");
+        std::vector<unsigned char> encoded(parent.size() * 4);
+        for (size_t i = 0; i < parent.size(); ++i) {
+            uint32_t value = static_cast<uint32_t>(static_cast<int32_t>(parent[i]));
+            for (unsigned b = 0; b < 4; ++b) encoded[i * 4 + b] = static_cast<unsigned char>(value >> (8 * b));
+        }
+        std::ofstream parents(argv[5], std::ios::binary);
+        parents.write(reinterpret_cast<const char *>(encoded.data()), static_cast<std::streamsize>(encoded.size()));
+        parents.close();
+        if (!parents) throw std::runtime_error("cannot persist parent vector");
+        std::ofstream output(argv[4]);
+        output << std::setprecision(17)
+               << "{\"format\":\"swdb.bfs.native.trial.v2\",\"source\":" << source
+               << ",\"configured_threads\":" << configured_threads
+               << ",\"roi\":\"bfs.complete_call.v1\",\"duration_s\":"
+               << std::chrono::duration<double>(end - begin).count()
+               << ",\"num_vertices\":" << graph.num_nodes()
+               << ",\"parents_encoding\":\"int32le\",\"parents_bytes\":" << encoded.size() << "}\n";
+        output.close();
+        if (!output) throw std::runtime_error("cannot persist trial record");
+        return 0;
+    } catch (const std::exception &error) {
+        std::cerr << "SWDB driver failure: " << error.what() << '\n';
+        return 2;
+    }
+}

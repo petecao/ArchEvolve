@@ -1,6 +1,7 @@
 """Real target adapters for `swdb campaign` (tickets 56 and 57).
 
-Created 2026-10-04 ET. Original SWDB code (design decisions D2-D4, D7, D9 and D10 of
+Created 2026-10-04 ET; ticket 63 (2026-10-04 ET): a native campaign that pins evaluator v2
+freezes protocols with that evaluator, its driver and its compiled verifier. Original SWDB code (design decisions D2-D4, D7, D9 and D10 of
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`).
 
 An adapter turns the campaign loop's steps into the public SWDB evaluator commands, run
@@ -450,9 +451,23 @@ class NativeAdapter(TargetAdapter):
     def roots(self):
         return super().roots() + list(NATIVE_TEMPLATES.values()) + list(ROLE_IMPLEMENTATION.values())
 
+    def evaluator(self):
+        """Ticket 63: the campaign file may pin evaluator v2 (absent means v1)."""
+        from swdb.bfs_native_scalable import EVALUATOR_V1
+        return self.campaign["protocol"].get("evaluator", EVALUATOR_V1)
+
+    def planned_bytes(self):
+        # A v2 paired block keeps 60 small trial records plus gzip parent vectors
+        # (at most 16 MiB raw each at scale 22) and logs: well under 2 GiB.
+        from swdb.bfs_native_scalable import EVALUATOR_V2
+        return 2 * GIB if self.evaluator() == EVALUATOR_V2 else self.PLANNED_BYTES
+
     def prepare(self):
         super().prepare()
         from swdb.bfs_native import MAX_DIRECTED_EDGES, MAX_VERTICES
+        from swdb import bfs_native_scalable as scalable
+        if self.evaluator() == scalable.EVALUATOR_V2:
+            MAX_VERTICES, MAX_DIRECTED_EDGES = scalable.MAX_VERTICES, scalable.MAX_DIRECTED_EDGES
         store = self._store()
         for row in self.campaign["workload_classes"]:
             realized = store.get(row["workload"], "workload")["definition"]["realized"]
@@ -500,22 +515,48 @@ class NativeAdapter(TargetAdapter):
                                                f"Baseline role {role}: {ROLE_IMPLEMENTATION[role]} unchanged source."],
                                   "accelerator": [], "configuration": []}
             out["region_pairs"] = []
+            from swdb import bfs_native_scalable as scalable
+            if self.evaluator() == scalable.EVALUATOR_V2:
+                # Ticket 63: new protocols pin evaluator v2, its driver and its compiled verifier.
+                out["evaluator"] = scalable.EVALUATOR_V2
+                out["correctness"]["verifier"] = scalable.VERIFIER_V2
+                for side in ("baseline", "candidate"):
+                    out["instrumentation"][side] = {"template_sha256": artifacts.file_hash(scalable.DRIVER_V2),
+                                                    "treatment": "included"}
             request = {"message_version": "1.0", "id": f"{self.cid}.protocol.{role}", "version": 1, "settings": out}
             code, record = self.runner("freeze-protocol", request, stage=f"freeze-{role}", timeout=600)
             if code or not record or record.get("kind") != "protocol":
                 raise _stop("infrastructure_failure", f"native protocol freeze for {role} failed (see jobs/freeze-{role})")
             frozen[role] = {"id": record["id"], "identity_sha256": record["identity_sha256"]}
+            if out["builds"]["baseline"] != out["builds"]["candidate"]:
+                # Ticket 63 (2026-10-04 ET): the A/A pilot times this role's baseline against
+                # itself, so it needs a protocol whose candidate side is the baseline build
+                # (the upstream role's candidate build is the DX100 fork's).
+                aa = copy.deepcopy(out)
+                aa["builds"]["candidate"] = copy.deepcopy(aa["builds"]["baseline"])
+                aa["instrumentation"]["candidate"] = copy.deepcopy(aa["instrumentation"]["baseline"])
+                aa["differences"]["software"] = aa["differences"]["software"] + [
+                    "A/A pilot protocol: both sides are the baseline build."]
+                request = {"message_version": "1.0", "id": f"{self.cid}.protocol.{role}.aa", "version": 1,
+                           "settings": aa}
+                code, record = self.runner("freeze-protocol", request, stage=f"freeze-{role}-aa", timeout=600)
+                if code or not record or record.get("kind") != "protocol":
+                    raise _stop("infrastructure_failure",
+                                f"native A/A protocol freeze for {role} failed (see jobs/freeze-{role}-aa)")
+                frozen[role]["aa"] = record["id"]
         self.protocols = {role: row["id"] for role, row in frozen.items()}
+        self.aa_protocols = {role: row.get("aa", row["id"]) for role, row in frozen.items()}
         base = frozen[self.campaign["base_source"]]
         return {"id": base["id"], "identity_sha256": base["identity_sha256"], "settings": settings, "by_role": frozen}
 
     def restore(self, state):
         if state.get("protocol") and getattr(self, "protocols", None) is None:      # a resumed campaign
             self.protocols = {role: row["id"] for role, row in state["protocol"]["by_role"].items()}
+            self.aa_protocols = {role: row.get("aa", row["id"]) for role, row in state["protocol"]["by_role"].items()}
 
-    def _member(self, rid, candidate, role, cls, side):
+    def _member(self, rid, candidate, role, cls, side, protocol=None):
         return {"message_version": "1.0", "id": rid, "candidate": candidate, "machine": self.campaign["machine"],
-                "protocol": self.protocols[role], "protocol_role": side,
+                "protocol": protocol or self.protocols[role], "protocol_role": side,
                 "threads": self.campaign["protocol"]["threads"],
                 "repetitions": self.campaign["protocol"]["repetitions"],
                 "sources": list(self.campaign["protocol"]["sources"]), "roi": self.campaign["protocol"]["roi"],
@@ -529,18 +570,19 @@ class NativeAdapter(TargetAdapter):
     def _workload(self, cls):
         return next(c["workload"] for c in self.campaign["workload_classes"] if c["class"] == cls)
 
-    def _block(self, tag, candidate, role, cls):
+    def _block(self, tag, candidate, role, cls, protocol=None):
         """One paired block (its own baseline evaluation) and its comparison."""
+        protocol = protocol or self.protocols[role]
         pair = {"message_version": "1.0", "id": f"{tag}.pair", "collection": {"method": "native_paired.v1",
                 "order_seed": 20260926}, "budget": {"total_seconds": 7200},
-                "baseline": self._member(f"{tag}.baseline-eval", self.baseline(role), role, cls, "baseline"),
-                "candidate": self._member(f"{tag}.candidate-eval", candidate, role, cls, "candidate")}
+                "baseline": self._member(f"{tag}.baseline-eval", self.baseline(role), role, cls, "baseline", protocol),
+                "candidate": self._member(f"{tag}.candidate-eval", candidate, role, cls, "candidate", protocol)}
         code, record = self.runner("evaluate-pair", pair, stage=f"{tag}.pair", timeout=7500,
                                    extra=["--runs-dir", self.runs, "--lane", self.lane])
         if not record or record.get("outcome", {}).get("state") != "complete":
             reason = (record or {}).get("outcome", {}).get("reason") or "paired collection failed"
             return None, reason, [pair["baseline"]["id"], pair["candidate"]["id"]]
-        compare = {"message_version": "1.0", "id": f"{tag}.comparison", "protocol": self.protocols[role],
+        compare = {"message_version": "1.0", "id": f"{tag}.comparison", "protocol": protocol,
                    "comparison_baseline": ROLE_IMPLEMENTATION[role],
                    "baseline_evaluation": pair["baseline"]["id"], "candidate_evaluation": pair["candidate"]["id"]}
         code, result = self.runner("compare-evaluations", compare, stage=f"{tag}.comparison", timeout=POSTPROCESS_SECONDS)
@@ -561,7 +603,8 @@ class NativeAdapter(TargetAdapter):
         if self.other_gem5():
             raise _stop("infrastructure_failure", self.other_gem5())
         tag = f"{self.cid}.pilot.{cls}.{role}"
-        result, reason, evaluations = self._block(tag, self.baseline(role), role, cls)
+        result, reason, evaluations = self._block(tag, self.baseline(role), role, cls,
+                                                  getattr(self, "aa_protocols", {}).get(role))
         if result is None:
             raise _stop("infrastructure_failure", f"A/A pilot {cls}/{role} failed: {reason}"[:1500])
         numbers = self._numbers(result)

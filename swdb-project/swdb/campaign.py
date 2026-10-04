@@ -15,7 +15,8 @@ feedback. The campaign stops on its budgets (D6 stop reasons) and writes one
 
 `--fixture` selects the contract-fixture target adapter. Without it, the campaign's
 target selects a real adapter from `swdb.campaign_targets`: native CPU (ticket 56) or DX100
-gem5 (ticket 57), updated 2026-10-04 ET.
+gem5 (ticket 57), updated 2026-10-04 ET. Ticket 63 (2026-10-04 ET): a native campaign file
+may pin `protocol.evaluator` (native evaluator v2 for the scale-22 graphs).
 """
 from __future__ import annotations
 
@@ -102,6 +103,8 @@ def campaign_problems(data):
             problems.append("protocol.sources: a gem5 campaign uses exactly one source")
         if [b["role"] for b in data["baselines"]] != ["fork_scalar_tdstep"]:
             problems.append("baselines: a gem5 campaign compares against fork_scalar_tdstep only")
+        if "evaluator" in proto:
+            problems.append("protocol.evaluator: names a native evaluator version; gem5 campaigns have none")
     elif proto["repetitions"] < 5:
         problems.append("protocol.repetitions: a native campaign needs at least 5 paired repetitions")
     if proto["region_pairs"]:
