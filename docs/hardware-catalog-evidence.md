@@ -2,7 +2,9 @@
 
 ## October 3 internal mechanisms
 
-Current revision **0.1.5** retains seven design records and 39 operations, with 84 claims and 30 source records. [The internal mechanism handoff](hardware-internals-v015.md) compares their actual admission, issue, result-association and state-lifetime mechanisms. It does not add operation/type support, physical interfaces or performance validation. The October 1 and September 29 sections below describe their historical revisions.
+Current revision **0.1.6** adds the [reviewed TMU mapping reference](tmu-catalog-admission.md): eight records, 44 operation records, 96 claims and 31 source records. The mapping supplies exact CSR-SpMV operands and callback events; CPU arithmetic/stores and five unknown contracts remain separate. Generic gather is not promoted to this mapping. Four added operation records explicitly exclude unsupported directions.
+
+Revision **0.1.5** retained seven design records and 39 operations, with 84 claims and 30 source records. [The internal mechanism handoff](hardware-internals-v015.md) compares their actual admission, issue, result-association and state-lifetime mechanisms. That annotation update did not add operation/type support, physical interfaces or performance validation. The October 1 and September 29 sections below describe their historical revisions.
 
 ## October 1 MAPLE supplement
 

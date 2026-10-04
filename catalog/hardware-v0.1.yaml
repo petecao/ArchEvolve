@@ -1,5 +1,5 @@
 catalog_id: archevolve-hardware
-revision: 0.1.5
+revision: 0.1.6
 format: hardware-catalog-v0.1
 status: research_reviewed_prototype
 project_selections:
@@ -372,6 +372,13 @@ sources:
     provenance_notes:
     - Cached bytes independently hash-checked and exact mechanism locators inspected on 2026-10-02. Not
       authenticated to the paper evaluation or private/current virtualization.
+  tmu-micro2023-primary:
+    title: A Tensor Marshaling Unit for Sparse Tensor Algebra on General-Purpose Processors
+    edition: MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF
+    url: https://doi.org/10.1145/3613424.3614284
+    locator_basis: 1-based PDF pages (15-page institutional copy); figures/tables/sections verified locally;
+      not handoff page approximations
+    sha256: d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2
 claims:
   maple-api:
     source_refs:
@@ -1433,6 +1440,132 @@ claims:
     limitations:
     - The illustration is not a universal speedup or proof of compression benefit. Full compression results
       for UB/PHI must not be promoted into Push.
+  tmu-traversal:
+    source_refs:
+    - tmu-micro2023-primary
+    locator: PDF p5, §4.1, Tables 1–2
+    statement: DnsFbrT uses constant begin/end/stride; RngFbrT uses parent stream begin/end plus constant
+      offset/stride; IdxFbrT uses parent begin plus fixed size/offset/stride. ite produces induction indexes;
+      mem loads p[x]; chained mem streams implement indirect lookup.
+    evidence_kind: paper_specification
+    limitations:
+    - Table 1 names Index/IdxFbrT; nearby prose calls the SpMM primitive Indirect. This proposal follows
+      the table signature. Integer signatures do not establish bit widths or legal numeric/address domains.
+  tmu-fig8:
+    source_refs:
+    - tmu-micro2023-primary
+    locator: PDF p6, Fig. 8 lines 2–21; §4.4; PDF p5 §4.2
+    statement: Fig8 traverses row pointers with DnsFbrT(0,num_rows), broadcasts row begin/end to two RngFbrT
+      lanes with offsets 0/1 and stride 2, loads column indexes and nnz values, loads b through column indexes,
+      LockStep-marshals paired vectors, and registers GITE ri and GEND re.
+    evidence_kind: paper_specification
+    limitations:
+    - Two lanes are the illustration, not the Table 5 evaluated eight-lane system or a legal tuning interval.
+      Boundaries require padding or an msk predicate (§4.2); Fig8 omits a concrete predicate/padding ABI.
+  tmu-cpu:
+    source_refs:
+    - tmu-micro2023-primary
+    locator: PDF p5 Fig. 4; PDF p6 Fig. 6 and §4.3
+    statement: TMU supplies required operands and ordered callback IDs. CPU ri multiplies vector operands
+      and reduces/accumulates into sum; CPU re stores x[i++] and resets sum.
+    evidence_kind: paper_specification
+    limitations:
+    - A CPU store is not a TMU scatter capability; CPU reduction is not TMU arithmetic.
+  tmu-tu:
+    source_refs:
+    - tmu-micro2023-primary
+    locator: PDF pp6–7, §5.1
+    statement: TU fbeg waits for valid parent bounds; fite stalls on full circular streams, pushes iteration/control
+      and stream elements; fend emits end. Streams within a TU are equal-size and controlled simultaneously.
+      Element i of a child queue derives from element i of its parent.
+    evidence_kind: paper_specification
+    limitations:
+    - Logical association does not define physical request/response tags or slots.
+  tmu-merges:
+    source_refs:
+    - tmu-micro2023-primary
+    locator: PDF p7, §5.2
+    statement: TG activity follows the preceding layer predicate; gite requires valid heads of all active
+      lanes. Disjunctive merge consumes minimum-index active lanes and emits iteration, ending when all
+      finish. Conjunctive merge consumes minimum-index lanes but emits iteration only when all active lanes
+      match, ending when any active lane finishes. LockStep consumes active unfinished lanes and ends when
+      all active lanes finish.
+    evidence_kind: paper_specification
+    limitations:
+    - These general TG modes are context, not extra operations admitted for this Fig8 LockStep mapping.
+      Sorted-coordinate merge preconditions are not discharged by retrieval.
+  tmu-outq:
+    source_refs:
+    - tmu-micro2023-primary
+    locator: PDF p6 §4.3; PDF p7 §5.3
+    statement: Head/body/tail callbacks have IDs and scalar/vector/predicate operands. TG output FSMs serialize
+      across groups with previous/next waiting states to preserve callback/operand order. outQ and its buffers
+      are double-buffered; the core processes a full chunk while TMU fills another.
+    evidence_kind: paper_specification
+    limitations:
+    - Callback order is not physical memory-response order or global CPU visibility. Ready/consumed acknowledgment,
+      reuse and final partial chunk protocol are unspecified in inspected sections.
+  tmu-arbiter:
+    source_refs:
+    - tmu-micro2023-primary
+    locator: PDF p7, §5.4
+    statement: Cacheline requests prioritize leftmost outer-loop layers; select TUs round-robin within a
+      layer; select streams in configuration order and requests within a queue in order.
+    evidence_kind: paper_specification
+    limitations:
+    - No general CAM coalescer, duplicate suppression, predictor, response ordering, or fairness bound established.
+  tmu-sizing:
+    source_refs:
+    - tmu-micro2023-primary
+    locator: PDF pp7–8, §5.5
+    statement: TUs of a layer instantiate equal stream counts and sizes at configuration. TUs within a lane
+      share storage, allowing shorter leftward queues. Analytical queue allocation uses statically estimated
+      nnzs per fiber.
+    evidence_kind: paper_specification
+    limitations:
+    - Not a complete legal capacity/configuration domain or a proven sizing model for a new workload.
+  tmu-integration:
+    source_refs:
+    - tmu-micro2023-primary
+    locator: PDF pp8–9, §5.6
+    statement: TMU traverses via coherent read-only requests from LLC and writes thread-private memory-mapped
+      outQ into host private L2. It uses virtual addresses and host L2 TLB/MMU; page fault interrupts the
+      core and MMU signals retry after translation. Context switching quiesces and saves/restores state
+      including initial configuration, ite heads and control registers.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper assumes no shared read-write data between TMU/host/other cores. This route is not a universal
+      CPU memory-consistency guarantee. Detailed drain/cancel/replay, fault ordering, concurrent source
+      mutation and acknowledgment protocol remain unknown.
+  tmu-reference:
+    source_refs:
+    - tmu-micro2023-primary
+    locator: PDF p9, Table 5 and §6; PDF p9, §6 RTL implementation and area analysis
+    statement: Evaluation reports gem5 v20.1.0.0, 8 lanes, 4 TGs with mergers, 2KB per-lane storage and
+      128 outstanding requests. Paper separately reports a SystemVerilog implementation and synthesis/place-and-route.
+    evidence_kind: paper_specification
+    limitations:
+    - Reported model and RTL do not establish publicly accessible runnable source, RTL bytes, evaluated
+      commit or an executable ABI. Reference counts are not supported tuning ranges.
+  tmu-scope:
+    source_refs:
+    - tmu-micro2023-primary
+    locator: PDF p6 Figs. 6/8 and §4.3; PDF pp8–9 §5.6
+    statement: This proposed Fig8 mapping admits required operand/event reads only. Its CPU arithmetic,
+      CPU stores and any atomic read-modify-write are outside the TMU operation contract.
+    evidence_kind: research_inference
+    limitations:
+    - Scope exclusion is a proposal decision, not a claim that every conceivable TMU extension is impossible.
+  tmu-unknowns:
+    source_refs:
+    - tmu-micro2023-primary
+    locator: PDF p5 Tables 1–2; p6 Fig. 8/§4.3; p7 §§5.1–5.4; pp8–9 §5.6
+    statement: Inspected primary sections do not establish concrete configuration/register encodings, numeric
+      widths, physical response tags, chunk ownership/consumption/finalpartial protocol or complete fault/drain/replay
+      ordering.
+    evidence_kind: research_inference
+    limitations:
+    - Evidence limit only; unknown is not unsupported.
 mechanism_families:
 - id: queue-latency-tolerance
   name: Queue-backed asynchronous access
@@ -1450,6 +1583,9 @@ mechanism_families:
 - id: compressed-stream
   name: Compressed stream traversal
   description: Queue-connected fetching and compression operators with mapping-specific duties.
+- id: tmu-fiber-operand-event-marshaling
+  description: Dependent fiber traversal and ordered callback/operand supply; family confers no inherited
+    capabilities.
 decision_questions:
 - id: operation-result
   question: Is the requested result a fetched value, update success, old value, reduction, or only a cache
@@ -1511,6 +1647,17 @@ decision_questions:
   - prod-config
   - spzip-config
   - dxc-reuse-scope
+- id: tmu-executable-contract
+  question: Who binds physical read association, typed ABI, chunk consumption and fault/drain semantics?
+  why_it_matters: Paper logical paths are insufficient for an executable CPU-connected adapter.
+  claim_refs:
+  - tmu-unknowns
+- id: tmu-representation-fit
+  question: Can the workload consume the exact CSR operand/event representation while retaining CPU arithmetic/stores?
+  why_it_matters: Generic gather retrieval cannot prove callback or sparse-layout compatibility.
+  claim_refs:
+  - tmu-fig8
+  - tmu-scope
 designs:
 - id: dx100-paper-v2
   name: DX100 paper
@@ -4672,3 +4819,369 @@ designs:
   - No universal numeric speedup, legal queue range or memory-service model is inferred.
   - No native CAS or arbitrary nested gather support inferred from extensibility.
   - Queue scratchpad is not kept coherent after fetching mutable data.
+- id: tmu-micro2023-fig8-spmv
+  name: TMU MICRO2023 Fig8 two-lane CSR SpMV supply mapping
+  revision: source-scoped-proposal-r1
+  record_kind: mapping
+  summary: Required operand and ordered row callback supply; host CPU performs arithmetic and output stores.
+  mechanism_refs:
+  - tmu-fiber-operand-event-marshaling
+  source_refs:
+  - tmu-micro2023-primary
+  operations:
+  - id: required-operand-event-supply
+    operation: read
+    subtype: csr_spmv_two_lane_operand_event_supply
+    execution_role: execute
+    address_patterns:
+    - sequential
+    - ranged_indirect
+    - indirect
+    support: paper_specified
+    claim_refs:
+    - tmu-traversal
+    - tmu-fig8
+    - tmu-cpu
+    - tmu-outq
+    realization:
+      kind: mapping_role
+      description: Published Fig8 traversal/LockStep/output sequence supplies required CPU inputs and
+        row callbacks; it is not one generic gather instruction.
+      claim_refs:
+      - tmu-fig8
+      - tmu-cpu
+    result:
+      form: Ordered callback-ID stream with paired nnz/vec operands for ri, and operand-free re row-end
+        event.
+      old_value: not_applicable
+      validity: Valid active lane operands with padding or predicate treatment of exhausted lanes; stream
+        association follows parent element ordinal.
+      claim_refs:
+      - tmu-fig8
+      - tmu-tu
+      - tmu-merges
+    ordering:
+      scope: Mapped thread callback/operand sequence across TGs
+      description: Serialized outQ construction preserves callback order; no physical response or global
+        memory order follows.
+      claim_refs:
+      - tmu-outq
+    completion:
+      event: GEND emits re after mapped row iterations. Full output chunks are processed by CPU; global
+        done/consumed acknowledgment and final partial delivery are unknown.
+      visibility: Paper-private outQ injected into host L2; CPU result-store visibility and universal
+        observers are not established by this supply event.
+      claim_refs:
+      - tmu-outq
+      - tmu-integration
+    type_constraints:
+      payload_types: []
+      index_width_bits: []
+      claim_refs:
+      - tmu-unknowns
+      notes: Fig6 vfloat and Table1 int are explanatory types; no concrete payload precision/index bit
+        width assigned.
+    datatype_notes: CPU vector reduction order may differ from scalar accumulation; numerical equivalence
+      must be established for the mapping.
+    limitations:
+    - Physical memory response tags/slots, duplicate cacheline association and out-of-order completion
+      rules.
+    - Concrete ABI/register encodings, payload/index widths and address arithmetic/containment.
+    - Chunk readiness, ownership, consumption acknowledgment, safe reuse, callback splitting and final
+      partial chunk delivery.
+    - Outstanding request drain/cancellation and precise exception, retry and context-switch replay semantics.
+    - Concurrent source mutation, aliasing and cross-core observation beyond the paper-private read-only
+      mapping.
+  - id: cpu-store
+    operation: write
+    subtype: scatter
+    execution_role: execute
+    address_patterns: []
+    support: unsupported
+    claim_refs:
+    - tmu-scope
+    result:
+      form: Excluded from this operand/event-supply mapping
+      old_value: not_applicable
+      validity: No admitted TMU result for this direction
+      claim_refs:
+      - tmu-scope
+    ordering:
+      scope: No admitted ordering contract
+      description: CPU effects require their own contract.
+      claim_refs:
+      - tmu-scope
+    completion:
+      event: No TMU completion admitted
+      visibility: No TMU visibility admitted
+      claim_refs:
+      - tmu-scope
+    datatype_notes: No admitted typed arithmetic/update path
+    limitations:
+    - Mapping scope exclusion only; CPU callbacks still perform their documented work.
+  - id: cpu-reduce
+    operation: reduce
+    subtype: add
+    execution_role: execute
+    address_patterns: []
+    support: unsupported
+    claim_refs:
+    - tmu-scope
+    result:
+      form: Excluded from this operand/event-supply mapping
+      old_value: not_applicable
+      validity: No admitted TMU result for this direction
+      claim_refs:
+      - tmu-scope
+    ordering:
+      scope: No admitted ordering contract
+      description: CPU effects require their own contract.
+      claim_refs:
+      - tmu-scope
+    completion:
+      event: No TMU completion admitted
+      visibility: No TMU visibility admitted
+      claim_refs:
+      - tmu-scope
+    datatype_notes: No admitted typed arithmetic/update path
+    limitations:
+    - Mapping scope exclusion only; CPU callbacks still perform their documented work.
+  - id: atomic-add
+    operation: read_modify_write
+    subtype: add
+    execution_role: execute
+    address_patterns: []
+    support: unsupported
+    claim_refs:
+    - tmu-scope
+    result:
+      form: Excluded from this operand/event-supply mapping
+      old_value: not_applicable
+      validity: No admitted TMU result for this direction
+      claim_refs:
+      - tmu-scope
+    ordering:
+      scope: No admitted ordering contract
+      description: CPU effects require their own contract.
+      claim_refs:
+      - tmu-scope
+    completion:
+      event: No TMU completion admitted
+      visibility: No TMU visibility admitted
+      claim_refs:
+      - tmu-scope
+    datatype_notes: No admitted typed arithmetic/update path
+    limitations:
+    - Mapping scope exclusion only; CPU callbacks still perform their documented work.
+  - id: atomic-cas
+    operation: read_modify_write
+    subtype: cas
+    execution_role: execute
+    address_patterns: []
+    support: unsupported
+    claim_refs:
+    - tmu-scope
+    result:
+      form: Excluded from this operand/event-supply mapping
+      old_value: not_applicable
+      validity: No admitted TMU result for this direction
+      claim_refs:
+      - tmu-scope
+    ordering:
+      scope: No admitted ordering contract
+      description: CPU effects require their own contract.
+      claim_refs:
+      - tmu-scope
+    completion:
+      event: No TMU completion admitted
+      visibility: No TMU visibility admitted
+      claim_refs:
+      - tmu-scope
+    datatype_notes: No admitted typed arithmetic/update path
+    limitations:
+    - Mapping scope exclusion only; CPU callbacks still perform their documented work.
+  requirements:
+  - id: csr-layout
+    description: Supply valid CSR ptrs of num_rows+1, monotone/in-range row intervals, aligned idxs/vals
+      ordinals and b-contained column indexes; establish address arithmetic and accessible storage.
+    scope: Every mapped traversal
+    verification: required
+    claim_refs:
+    - tmu-traversal
+    - tmu-fig8
+  - id: cpu-callbacks
+    description: Provide CPU ri/re dispatch, initialized sum and row index, numerical policy and valid
+      output x. CPU owns multiply/reduction/stores.
+    scope: Host execution of Fig6
+    verification: required
+    claim_refs:
+    - tmu-cpu
+  - id: boundaries
+    description: Establish padding or msk-based validity for odd-length rows, exhausted lanes and empty
+      rows; preserve exactly one row-end callback even without row iterations.
+    scope: LockStep operand/event sequence
+    verification: required
+    claim_refs:
+    - tmu-fig8
+    - tmu-merges
+  - id: private-source-lifetime
+    description: Establish source/outQ lifetime, thread-private outQ and an alias/mutation discipline
+      consistent with the paper assumptions; CPU outputs cannot invalidate source reads.
+    scope: Inputs, callbacks and other cores during supply
+    verification: required
+    claim_refs:
+    - tmu-integration
+  - id: sizing
+    description: Allocate parent/dependent streams and TG/lane resources for this mapping; establish sufficient
+      queue space and progress with the CPU consumer.
+    scope: Configuration and backpressure
+    verification: required
+    claim_refs:
+    - tmu-tu
+    - tmu-sizing
+    - tmu-reference
+  - id: representation-types
+    description: Bind payload/index widths, concrete instruction/configuration encodings and address calculations
+      before adapter implementation.
+    scope: Executable mapping ABI
+    verification: unknown
+    claim_refs:
+    - tmu-unknowns
+  - id: response-association
+    description: Physical memory response tags/slots, duplicate cacheline association and out-of-order
+      completion rules.
+    scope: Physical read responses
+    verification: unknown
+    claim_refs:
+    - tmu-tu
+    - tmu-unknowns
+  - id: chunk-lifetime
+    description: Chunk readiness, ownership, consumption acknowledgment, safe reuse, callback splitting
+      and final partial chunk delivery.
+    scope: Producer/consumer outQ
+    verification: unknown
+    claim_refs:
+    - tmu-outq
+    - tmu-unknowns
+  - id: fault-drain
+    description: Outstanding request drain/cancellation and precise exception, retry and context-switch
+      replay semantics.
+    scope: Fault/retry/quiesce/resume
+    verification: unknown
+    claim_refs:
+    - tmu-integration
+    - tmu-unknowns
+  - id: visibility
+    description: Concurrent source mutation, aliasing and cross-core observation beyond the paper-private
+      read-only mapping.
+    scope: CPU input/output synchronization and observers
+    verification: unknown
+    claim_refs:
+    - tmu-integration
+    - tmu-unknowns
+  parameters:
+  - id: fig8-lanes
+    unit: lanes
+    state: fixed_reference
+    value: 2
+    domain: null
+    claim_refs:
+    - tmu-fig8
+    notes: Illustrative Fig8 mapping only. No legal tuning range established.
+  - id: fig8-inner-stride
+    unit: elements
+    state: fixed_reference
+    value: 2
+    domain: null
+    claim_refs:
+    - tmu-fig8
+    notes: Paired offsets 0/1 in this mapping. No legal tuning range established.
+  - id: evaluated-lanes
+    unit: lanes
+    state: fixed_reference
+    value: 8
+    domain: null
+    claim_refs:
+    - tmu-reference
+    notes: Table5 evaluated system, distinct from Fig8. No legal tuning range established.
+  - id: evaluated-tgs
+    unit: groups
+    state: fixed_reference
+    value: 4
+    domain: null
+    claim_refs:
+    - tmu-reference
+    notes: Table5 evaluated system. No legal tuning range established.
+  - id: evaluated-lane-storage
+    unit: KB as printed
+    state: fixed_reference
+    value: 2
+    domain: null
+    claim_refs:
+    - tmu-reference
+    notes: Table5 prints 2KB; not converted into an assumed byte ABI. No legal tuning range established.
+  - id: evaluated-outstanding-requests
+    unit: requests
+    state: fixed_reference
+    value: 128
+    domain: null
+    claim_refs:
+    - tmu-reference
+    notes: Table5 evaluated system. No legal tuning range established.
+  - id: legal-queue-capacity
+    unit: elements
+    state: unknown
+    value: null
+    domain: null
+    claim_refs:
+    - tmu-unknowns
+    notes: Unestablished; reference values do not select this domain.
+  - id: outq-chunk-capacity
+    unit: bytes
+    state: unknown
+    value: null
+    domain: null
+    claim_refs:
+    - tmu-unknowns
+    notes: Unestablished; reference values do not select this domain.
+  - id: payload-width
+    unit: bits
+    state: unknown
+    value: null
+    domain: null
+    claim_refs:
+    - tmu-unknowns
+    notes: Unestablished; reference values do not select this domain.
+  - id: index-width
+    unit: bits
+    state: unknown
+    value: null
+    domain: null
+    claim_refs:
+    - tmu-unknowns
+    notes: Unestablished; reference values do not select this domain.
+  interface:
+    software_supplies: CSR and dense-vector bases, num_rows, traversal/stream/TG configuration, callback
+      IDs and operand registration, private outQ; exact ABI unknown.
+    invocation: Fig8 explanatory DnsFbrT/BCast/RngFbrT/LockStep/add_callback configuration; no runnable
+      public library or concrete start/drain instruction established.
+    outputs: ri callback ID plus nnz/vec vectors; re callback ID at row end. CPU dispatch consumes them
+      and owns x stores.
+    claim_refs:
+    - tmu-fig8
+    - tmu-cpu
+    - tmu-outq
+    - tmu-integration
+  limitations:
+  - Physical memory response tags/slots, duplicate cacheline association and out-of-order completion rules.
+  - Concrete ABI/register encodings, payload/index widths and address arithmetic/containment.
+  - Chunk readiness, ownership, consumption acknowledgment, safe reuse, callback splitting and final partial
+    chunk delivery.
+  - Outstanding request drain/cancellation and precise exception, retry and context-switch replay semantics.
+  - Concurrent source mutation, aliasing and cross-core observation beyond the paper-private read-only
+    mapping.
+  - Proposal only; no production catalog edits, execution, timing or hardware correctness validation.
+  - v0 has no structured event schema, chunk ownership state machine or fault contract; these remain prose
+    requirements and evidence limits.
+  - read/execute applies only to required operand supply. General gather, pointer chase, TMU arithmetic
+    and stores gain no support.
