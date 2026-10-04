@@ -188,3 +188,5 @@ Periodic follow-up, 2026-10-03 18:14 ET: root independently read back source6cf 
 2026-10-03 22:40 ET: ticket 39 resolved (BC track): gem5 side of the kernel plug-in seam; frozen BFS gem5 helpers byte-identical; full suite 3,672 passed/35 skipped, remaining 34 failures identical on clean 8ad6e8a.
 
 2026-10-03 23:05 ET: ticket 40 resolved (BC track): BC native plug-in, scalar-only BC snapshot script, BC workload registration; 17 BC cases and 218 regression cases pass. Ticket 41 can run on mbit10 (see its comment).
+
+2026-10-03 23:20 ET: ticket 42 resolved (BC track): BC forward-pass patch certified on the Mac (certification.1e389a959ffb4ff9bfdcf4cea9eace06: 10 cells pass, 18 controls rejected incl. BC-L1 stale_depth_hint); contract.bc_read_offload stays experimental for Yan-Ru's review (ticket 43).

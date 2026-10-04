@@ -77,7 +77,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 39 | [Prefactor: kernel plug-in seam, gem5 side](issues/39-kernel-seam-gem5.md) | resolved | 23 |  |
 | 40 | [BC on the native evaluator (code)](issues/40-bc-native-code.md) | resolved | 38 |  |
 | 41 | [BC native evaluation on mbit10](issues/41-bc-native-run.md) | ready-for-agent | 08, 40 | yes |
-| 42 | [BC certification and the derived BC contract](issues/42-bc-certification-and-derived-contract.md) | ready-for-agent | 18, 17, 28, 40 |  |
+| 42 | [BC certification and the derived BC contract](issues/42-bc-certification-and-derived-contract.md) | resolved | 18, 17, 28, 40 |  |
 | 43 | [Yan-Ru promotes the derived BC contract](issues/43-promote-bc-contract.md) | ready-for-human | 42 |  |
 | 44 | [BC gem5 completion witness and execution case](issues/44-bc-gem5-completion-witness.md) | ready-for-agent | 39, 40 |  |
 | 45 | [BC gem5 evaluation](issues/45-bc-gem5-evaluation.md) | ready-for-agent | 26, 29, 41, 43, 44 | yes |
@@ -178,3 +178,5 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - Ticket 39, completed 2026-10-03 22:40 ET: gem5 kernel plug-in seam (driver/oracle, verifier binding, v2 witness, accelerator cases); BFS unchanged; 34 listed failures are pre-existing on 8ad6e8a. [39-kernel-seam-gem5](issues/39-kernel-seam-gem5.md).
 
 - Ticket 40, completed 2026-10-03 23:05 ET: BC plug-in on the native evaluator (BCVerifier reproduction, NaN-closed; vacuous sources refused), DX100 BC record and scalar snapshot derivation, BC workloads on BFS graph files, BC protocol freeze. [40-bc-native-code](issues/40-bc-native-code.md).
+
+- Ticket 42, completed 2026-10-03 23:20 ET: certification matrix and pass rule are a kernel plug-in; derived contract.bc_read_offload (cites the BFS contract, adds BC-L1) certifies on the Mac, 10/10 cells, 18/18 controls rejected; experimental until ticket 43. [42-bc-certification-and-derived-contract](issues/42-bc-certification-and-derived-contract.md).

@@ -79,6 +79,35 @@ class BFSPlugin(KernelPlugin):
         return (stream >= 1 and indirect >= 1 and ranges >= 1 and alu == stores == 0
                 and indirect == 3 * ranges - stream)
 
+    # Candidate certification (ticket 42): the exact BFS functions used before.
+    certification_source = "benchmarks/gapbs/src/bfs.cc"
+    certification_snapshot = "bfs-dx100-scalar-only-20260929-a1.source"
+
+    @property
+    def certification_controls(self):
+        from swdb.certification import _CONTROL_EXPECTED
+        return _CONTROL_EXPECTED
+
+    def certification_rewrite(self, scalar):
+        from swdb.certification import peter_source
+        return peter_source(scalar)
+
+    def certification_instrument(self, source):
+        from swdb.certification import instrument_source
+        return instrument_source(source)
+
+    def certification_oracle(self, graph, source):
+        from swdb.certification import graph_oracle
+        return graph_oracle(graph, source)
+
+    def certification_judge(self, result, counts, *, threshold=64):
+        from swdb.certification import judge_bfs
+        return judge_bfs(result, counts, threshold=threshold)
+
+    def certification_control(self, source, name):
+        from swdb.certification import _rewrite_control
+        return _rewrite_control(source, name)
+
     def native_output_limit(self, vertices):
         return vertices * 24 + 4096
 

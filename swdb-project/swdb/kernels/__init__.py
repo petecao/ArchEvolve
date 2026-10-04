@@ -101,6 +101,35 @@ class KernelPlugin:
         counts = Counter(value for value in depth if value >= 0)
         return [counts[level] for level in range(max(counts) + 1)]
 
+    # Candidate certification (ticket 42): the matrix instance and pass rule of a
+    # rewrite contract whose correctness check names this kernel.
+    certification_source = None    # translation unit a certified candidate rewrites
+    certification_snapshot = None  # registered scalar-only snapshot the rewrite starts from
+    certification_controls = {}    # negative-control ID -> named checks that reject it
+
+    def certification_rewrite(self, scalar):
+        """The library rewrite of the scalar translation unit (the deliverable patch)."""
+        raise NotImplementedError
+
+    def certification_instrument(self, source):
+        """Insert the evaluator-owned preservation checks into a private build copy."""
+        raise NotImplementedError
+
+    def certification_oracle(self, graph, source):
+        """Trusted per-level frontier counts for one serialized graph and source."""
+        raise NotImplementedError
+
+    def certification_judge(self, result, counts, *, threshold=64):
+        """(passed, reason) for one matrix cell."""
+        raise NotImplementedError
+
+    def certification_control(self, source, name):
+        """The candidate source with one named negative-control mutation."""
+        raise NotImplementedError
+
+    def control_source(self, sources):
+        return sources[0]
+
     def native_entry_error(self):
         return f"native complete-call adapter supports the identified {self.native_function} entry point only"
 

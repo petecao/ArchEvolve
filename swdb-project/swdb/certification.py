@@ -1,7 +1,11 @@
-"""Executable DX100 library and BFS candidate certification (2026-10-03 ET).
+"""Executable DX100 library and kernel candidate certification (2026-10-03 ET).
 
 This is finite strict-functional evidence, never target timing or a formal proof.
 Controls count only after compilation and a named runtime rejection.
+
+Ticket 42 (2026-10-03 ET): a candidate's matrix instance and pass rule come from
+the kernel plug-in named by its rewrite contract's correctness check
+(``swdb.kernels``). BFS keeps the functions below; BC adds its own.
 """
 from __future__ import annotations
 
@@ -254,8 +258,10 @@ def materialize_snapshot(store, snapshot_id, destination):
     if not snapshot:
         raise Failure('unknown source snapshot: ' + snapshot_id)
     source = destination / 'source'
-    if snapshot.get('context', {}).get('source_derivation'):
-        script = ROOT / 'scripts/prepare_dx100_scalar_snapshot.py'
+    derivation = snapshot.get('context', {}).get('source_derivation')
+    if derivation:
+        # Ticket 42: each scalar-only derivation names its own script (BFS's predates the field).
+        script = ROOT / derivation.get('script', 'scripts/prepare_dx100_scalar_snapshot.py')
         spec = importlib.util.spec_from_file_location('swdb_scalar_snapshot', script)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
@@ -305,17 +311,24 @@ def peter_source(scalar):
     return source.replace('    return parent;\n}\n\n\nvoid PrintBFSStats', '    __dxc_report();\n    return parent;\n}\n\n\nvoid PrintBFSStats', 1)
 
 
-def create_peter_patch(store, output, library=None):
-    """Produce the deliverable patch without changing a vendored source byte."""
+def create_peter_patch(store, output, library=None, plugin=None, temporary_root='/private/tmp'):
+    """Produce the deliverable patch without changing a vendored source byte.
+
+    Ticket 42: ``plugin`` selects the kernel (default BFS: Peter section 5); its
+    snapshot, rewritten translation unit and source rewrite come from the plug-in.
+    """
+    from swdb import kernels
+    plugin = plugin or kernels.BFS
     library = Path(library or ROOT / 'library')
     import difflib
-    with tempfile.TemporaryDirectory(prefix='swdb-peter-patch-', dir='/private/tmp') as temporary:
-        tree, _ = materialize_snapshot(store, DEFAULT_SNAPSHOT, Path(temporary))
-        original = (tree / BFS).read_text()
-        source = peter_source(original)
+    rewritten = plugin.certification_source
+    with tempfile.TemporaryDirectory(prefix='swdb-peter-patch-', dir=temporary_root) as temporary:
+        tree, _ = materialize_snapshot(store, plugin.certification_snapshot, Path(temporary))
+        original = (tree / rewritten).read_text()
+        source = plugin.certification_rewrite(original)
         header = (library / 'dx100/dxc_lowering.hpp').read_text()
         diff = ''.join(difflib.unified_diff(original.splitlines(True), source.splitlines(True),
-                                          fromfile='a/' + BFS, tofile='b/' + BFS))
+                                          fromfile='a/' + rewritten, tofile='b/' + rewritten))
         diff += ''.join(difflib.unified_diff([], header.splitlines(True), fromfile='/dev/null', tofile='b/' + HEADER))
         Path(output).write_text(diff)
     return {'patch': str(Path(output).resolve()), 'header_sha256': artifacts.file_hash(library / 'dx100/dxc_lowering.hpp')}
@@ -476,9 +489,20 @@ def _rewrite_control(source, name, *, calibrate=False):
     return mutated
 
 
-def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrate=False, threshold=64):
+def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrate=False, threshold=64, plugin=None):
+    """Run the candidate matrix and its controls; the kernel plug-in supplies the instance.
+
+    Calibration is the BFS authors' reference and always uses the BFS functions.
+    """
+    from swdb import kernels
+    plugin = plugin or kernels.BFS
+    if calibrate and plugin is not kernels.BFS:
+        raise Failure('calibration exists only for the BFS authors reference')
+    instrument = lambda text, **flags: instrument_source(text, **flags) if calibrate else plugin.certification_instrument(text)
+    judge = lambda run, counts: (judge_bfs(run, counts, calibrate=True, threshold=threshold) if calibrate
+                                 else plugin.certification_judge(run, counts, threshold=threshold))
     graphs = matrix_graphs(folder, library, threads)
-    source = (tree / BFS).read_text()
+    source = (tree / plugin.certification_source).read_text()
     if calibrate:
         source = source.replace('wait_ready(tile3);', 'wait_ready(tile5);', 1)
         source = source.replace('    return parent;\n}\n\nvoid PrintBFSStats', '    std::printf("SWDB strict_operations=%llu\\n",(unsigned long long)swdb_strict::operation_count());\n    return parent;\n}\n\nvoid PrintBFSStats', 1)
@@ -490,10 +514,11 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
             section = section.replace('    return parent;', '    std::printf("SWDB strict_operations=%llu\\n",(unsigned long long)swdb_strict::operation_count());\n    return parent;', 1)
             source = source[:begin] + section + source[end:]
     matrix, controls = [], []
-    source_path = tree / BFS
+    source_path = tree / plugin.certification_source
+    stem = plugin.binary_stem
     for size in tile_sizes:
-        source_path.write_text(instrument_source(source, calibrate=calibrate))
-        output = folder / f'bfs-{size}'
+        source_path.write_text(instrument(source, calibrate=calibrate))
+        output = folder / f'{stem}-{size}'
         build = compile_cpp(source_path, output, library, tile_size=size, threads=threads, tree=tree,
                             defines=['-DMAA'] if calibrate else [])
         if build['returncode'] != 0:
@@ -501,32 +526,33 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
             continue
         for graph_name, graph in graphs:
             for source_vertex in sources:
-                counts = graph_oracle(graph, source_vertex)
+                counts = plugin.certification_oracle(graph, source_vertex)
                 run = execute([output, '-f', graph, '-r', source_vertex, '-n', '1', '-v'], folder / f'{graph_name}-{size}-{source_vertex}.json', threads=threads)
-                passed, reason = judge_bfs(run, counts, calibrate=calibrate, threshold=threshold)
+                passed, reason = judge(run, counts)
                 matrix.append({'graph': graph_name, 'graph_sha256': artifacts.file_hash(graph), 'source': source_vertex,
                                'oracle_frontier_counts': counts, 'tile_size': size, 'threads': threads,
                                'status': 'passed' if passed else 'failed', 'reason': reason, 'build': build, 'run': run})
-        names = ['shared_context', 'dropped_continuation', 'oversized_chunk', 'wrong_store_wait'] if calibrate else list(_CONTROL_EXPECTED)
+        names = ['shared_context', 'dropped_continuation', 'oversized_chunk', 'wrong_store_wait'] if calibrate else list(plugin.certification_controls)
         graph = graphs[-1][1]
-        counts = graph_oracle(graph, sources[0])
+        counts = plugin.certification_oracle(graph, plugin.control_source(sources))
         for name in names:
             # Oversized chunk is specifically a 1,024-element build control.
             if name == 'oversized_chunk' and size != 1024:
                 continue
-            mutant = _rewrite_control(instrument_source(source, calibrate=calibrate), name, calibrate=calibrate)
+            mutant = (_rewrite_control(instrument_source(source, calibrate=True), name, calibrate=True) if calibrate
+                      else plugin.certification_control(plugin.certification_instrument(source), name))
             source_path.write_text(mutant)
-            output_mutant = folder / f'bfs-{size}-{name}'
+            output_mutant = folder / f'{stem}-{size}-{name}'
             control_build = compile_cpp(source_path, output_mutant, library, tile_size=size, threads=threads, tree=tree,
                                         defines=['-DMAA'] if calibrate else [])
             if control_build['returncode']:
                 controls.append({'id': name, 'tile_size': size, 'status': 'invalid', 'reason': 'build failed', 'build': control_build})
                 continue
-            run = execute([output_mutant, '-f', graph, '-r', sources[0], '-n', '1', '-v'], folder / f'control-{size}-{name}.json', threads=threads)
-            passed, reason = judge_bfs(run, counts, calibrate=calibrate, threshold=threshold)
+            run = execute([output_mutant, '-f', graph, '-r', plugin.control_source(sources), '-n', '1', '-v'], folder / f'control-{size}-{name}.json', threads=threads)
+            passed, reason = judge(run, counts)
             named = re.findall(r'SWDB_(?:STRICT_ASSERT|DIFFERENTIAL_MISMATCH|PRESERVATION_FAIL):([a-z_]+)', run['stdout'] + run['stderr'])
             semantic_rejection = reason in {'verifier', 'frontier_size_equality', 'execution_witness'} and run['returncode'] == 0
-            expected_checks = _CONTROL_EXPECTED.get(name, set())
+            expected_checks = plugin.certification_controls.get(name, set())
             if calibrate:
                 expected_checks = {'shared_context': {'thread_ownership_tile', 'thread_ownership_register'}, 'dropped_continuation': set(),
                                    'oversized_chunk': {'tile_truncation'}, 'wrong_store_wait': {'read_before_wait'}}[name]
@@ -550,13 +576,16 @@ _CONTROL_EXPECTED = {
 }
 
 
-def check_candidate_scope(tree, snapshot):
-    """Every changed source byte belongs to this BFS rewrite's declared files."""
+def check_candidate_scope(tree, snapshot, plugin=None):
+    """Every changed source byte belongs to this kernel rewrite's declared files."""
+    from swdb import kernels
+    plugin = plugin or kernels.BFS
+    rewritten = plugin.certification_source
     original = {item['path']: item for item in snapshot['artifact']['files']}
     current = {item['path']: item for item in artifacts.manifest(tree)}
     changed = {path for path in set(original) | set(current) if original.get(path) != current.get(path)}
-    if changed - {BFS, HEADER} or BFS not in changed:
-        raise UsageError('BFS contract permits only the BFS rewrite and canonical lowering header; '
+    if changed - {rewritten, HEADER} or rewritten not in changed:
+        raise UsageError(f'{plugin.name} contract permits only the {plugin.name} rewrite and canonical lowering header; '
                          'changed files: ' + ', '.join(sorted(changed)))
     return sorted(changed)
 
@@ -606,6 +635,10 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
     elif candidate or snapshot:
         if entry.get('kind') != 'rewrite_contract':
             raise UsageError('candidate-artifact certification requires a rewrite contract')
+        from swdb import kernels
+        plugin = kernels.get(entry.get('correctness_check', {}).get('kernel'))
+        if plugin is None or plugin.certification_source is None:
+            raise UsageError('rewrite contract correctness check names no kernel with a certification plug-in')
         if candidate:
             data = store.get(candidate, 'candidate')
             if not data:
@@ -622,7 +655,7 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         if not original_snapshot:
             raise Failure('candidate has no registered source snapshot')
         artifacts.check_protections(tree, original_snapshot['protections'])
-        changed_files = check_candidate_scope(tree, original_snapshot)
+        changed_files = check_candidate_scope(tree, original_snapshot, plugin)
         header = tree / HEADER
         if not header.is_file() or artifacts.file_hash(header) != artifacts.file_hash(library_root / 'dx100/dxc_lowering.hpp'):
             raise Failure('candidate must ship the byte-identical canonical lowering header')
@@ -631,7 +664,8 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         if candidate:
             identity['id'] = candidate
         threshold = 64
-        matrix, controls = certify_bfs(tree, library_root, folder, tile_sizes, threads, sources, threshold=threshold)
+        matrix, controls = certify_bfs(tree, library_root, folder, tile_sizes, threads, sources, threshold=threshold,
+                                       plugin=plugin)
     else:
         if entry.get('kind') not in {'lowering', 'intrinsic', 'library_operation'}:
             raise UsageError('entry requires a candidate artifact or a differential-test driver')

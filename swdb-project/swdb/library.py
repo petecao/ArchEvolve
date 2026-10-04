@@ -27,6 +27,12 @@ def authorized_reviewer(name):
     return isinstance(name, str) and name.strip().casefold() in {'yan-ru jhou', 'yanrujhou'}
 
 
+def derived_from(data):
+    """The contract ID a derived rewrite contract cites, or None (ticket 42, 2026-10-03 ET)."""
+    citation = (data.get('provenance') or {}).get('derived_from') if isinstance(data.get('provenance'), dict) else None
+    return citation.get('id') if isinstance(citation, dict) else None
+
+
 def default_root(records=None):
     if records is None or Path(records).resolve() == paths.RECORDS.resolve():
         return paths.HOME / 'library'
@@ -81,6 +87,10 @@ class Library:
                 references = data.get('lowerings', [])
             else:
                 references = data.get('uses_intrinsics', []) + data.get('uses_library_operations', [])
+                # Ticket 42: a derived contract depends on the contract it cites.
+                parent = derived_from(data)
+                if parent:
+                    references = references + [parent]
             for dependency in references:
                 if self.get(dependency) is None:
                     raise ValueError(f'unknown library dependency {dependency}')
@@ -284,6 +294,19 @@ class Library:
                             error('pattern_key', 'patterns require roles, address_shapes and update_kind')
                         elif any(role not in {'index','offsets','target'} for role in pattern['roles']):
                             error('pattern_key', 'array roles must come from the array-role vocabulary')
+                citation = data.get('provenance', {}).get('derived_from')
+                if citation is not None:
+                    parent = self.get(citation.get('id')) if isinstance(citation, dict) else None
+                    if (not isinstance(citation, dict) or citation.get('id') == entry_id or parent is None
+                            or parent.get('kind') != 'rewrite_contract'):
+                        error('provenance.derived_from', 'a derived contract cites another existing rewrite contract')
+                    elif citation.get('content_sha256') != self.content_sha256(citation['id']):
+                        error('provenance.derived_from', 'cited contract content changed; re-derive and re-pin')
+                    else:
+                        parent_clauses = {c.get('id') for c in parent.get('clauses', []) if isinstance(c, dict)}
+                        missing = parent_clauses - ids
+                        if missing:
+                            error('clauses', 'a derived contract keeps every cited clause ID: ' + ', '.join(sorted(missing)))
                 controls = data.get('negative_controls', [])
                 kinds = {c.get('kind') for c in controls if isinstance(c,dict)} if isinstance(controls,list) else set()
                 if not {'overlapping_pointer','double_claim','dropped_operand'} <= kinds:
