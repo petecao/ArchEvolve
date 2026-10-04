@@ -1,10 +1,10 @@
 # 58 — "Is the specification enough?" experiment
 
 Created: 2026-10-03
-Updated: 2026-10-04 ET (login write-back fix; attempt a1 blocked on the Codex login); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D7, D10)
+Updated: 2026-10-04 ET (resolved after attempt a3); 2026-10-04 ET (login write-back fix; attempt a1 blocked on the Codex login); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D7, D10)
 **Type:** slice
-**Status:** needs-info
-**Blocked by:** Codex login on mbit10 (Yan-Ru); 48, 07, 08, 20 resolved
+**Status:** resolved
+**Blocked by:** — (48, 07, 08, 20, 62 resolved)
 **Spec:** `../spec.md`
 **Needs go-ahead:** Granted. Yan-Ru approved mbit10 dispatch on 2026-10-03. The experiment is one dispatch (Q62), and actual lane admission and receipts are still required.
 
@@ -87,3 +87,50 @@ Updated: 2026-10-04 ET (login write-back fix; attempt a1 blocked on the Codex lo
     pauses the run as an uncounted D7 login failure (`ledger.preflights`). Tests:
     `tests/test_provider_login.py`. Yan-Ru still has to run `codex login` on mbit10 once, because
     the current source token is already consumed.
+
+## Answer
+
+Resolved 2026-10-04 08:03 ET by the agent under Yan-Ru's 2026-10-04 delegation (agent-decided;
+revisable). A3 used 9 more counted calls than the original 9-call budget, because the
+experiment needs 3 samples per input.
+
+**Attempt a2** (node 1, generation 509, 01:40–02:22 ET, commit `0775f7d`): 0 samples scored.
+Five sessions were counted and failed the strict audit: heredocs, awk, non-literal sed and
+`git apply`/`git diff`. A sixth session crashed the driver: the audit raised ENAMETOOLONG on
+an awk program. That crash is fixed in `db49d5d`. Three sessions never opened. Compact record:
+[evaluation/spec-enough-a2-summary.json](../evaluation/spec-enough-a2-summary.json).
+
+**Attempt a3** (node 1, generation 512, 06:59–07:51 ET, sessions at `d56d972`; rescore at
+generation 513 on `3965ca1`; 0.91 lane-hours; load1 1.3–1.4).
+
+- Prompt: plain reads only, the diff written by hand, and no heredocs, awk, git, patch or
+  file writes. The audit stayed strict.
+- Certifier: ticket 62.
+- Sessions ran strictly sequentially under `swdb-session.lock`. All 9 completed and passed
+  the audit.
+- Positive control: ticket 20's patch certified through the same path
+  (`certification.bc0341d701f441d4b8396116230eddd4`, 10/10 cells, 16/16 controls).
+- Recount fix: in the first scoring pass, hand-written hunk counts were wrong, so `git apply`
+  refused 6 patches. Hunk counts are now recounted before scoring (`d8aaa64`, equivalent to
+  `git apply --recount`, as the campaign adapters already do). The 6 samples were rescored;
+  their earlier scores are kept as `score.before-recount`.
+
+| Input | s1 | s2 | s3 | Certified | Controls rejected |
+|---|---|---|---|---:|---:|
+| spec | no apply | failed, matrix 0/10 | failed, 0/10 | 0/3 | 0/48 |
+| spec + draft | failed, 0/10 | failed, 0/10 | failed, 0/10 (1 control) | 0/3 | 1/48 |
+| spec + draft + contract | no apply | no apply | failed, 0/10 | 0/3 | 0/48 |
+
+"No apply": the hand-written context dropped a blank line at bfs.cc line 97. "Failed": the
+strict layer reported `register_handle` / `thread_ownership_register` in every cell.
+
+**Finding.** All 9 samples pass plain values where DX100 takes register handles
+(`__dxc_stream_load(queue.shared, chunk_begin, chunk_end, 1, tile)` and the `stride` of
+`__dxc_range_loop`). They follow Peter v1.1 §3.1/§3.3 and the §5 template, which give these
+operands `int32_t` value types. The lowering header's `int` parameters do not disambiguate.
+The contract's label "E2 register handles" did not help either. The specification is
+therefore not enough: it must type scalar operands as per-thread registers set by a
+constant-load. Compact record:
+[evaluation/spec-enough-a3-summary.json](../evaluation/spec-enough-a3-summary.json). Draft for
+Peter: [drafts/outgoing-2026-10-03/60-peter-spec-enough.md](../drafts/outgoing-2026-10-03/60-peter-spec-enough.md)
+(ticket 60; never sent by the agent).

@@ -113,7 +113,14 @@ def audit(path, kind, workspace_root, visible_files, home_root=None, login_paths
         if name.startswith("~") or "$" in name or "\\" in name:
             fail("external_file_access", f"provider file access outside the visible set: {name}", event)
             return
-        target = (Path(cwd or root) / name).resolve()
+        try:
+            target = (Path(cwd or root) / name).resolve()
+            target.exists()
+        except (OSError, ValueError):
+            # 2026-10-04 ET (ticket 58 a2): a parsed "path" the OS cannot even stat (for
+            # example an awk program, ENAMETOOLONG) is an audit refusal, never a crash.
+            fail("invalid_file_access", "provider file path cannot be resolved", event)
+            return
         try:
             rel = target.relative_to(root).as_posix()
         except ValueError:

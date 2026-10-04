@@ -1,7 +1,7 @@
 # 57 — gem5 Extensa campaign target
 
 Created: 2026-10-03
-Updated: 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D2, D4, D7)
+Updated: 2026-10-04 ET (a6 rerun with the ticket 62 certifier); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D2, D4, D7)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 53, 54, 55 (29 resolved)
@@ -55,6 +55,7 @@ Follow-up: [62](62-spelling-independent-certification-controls.md) (certificatio
 | a3 | 0.29 | 5 | plateau | wrong hunk counts (git apply), one audited `sed` refusal, a no-contract edit |
 | a4 | 0.34 | 5 | plateau | edits never began a DX100 session (workspace lacked the lowering header) |
 | a5 | 0.86 | 11 | plateau | every applied contract edit: certify lacks control site `shared_context` |
+| a6 | 1.93 | 11 | plateau | certify now runs on every applied edit (ticket 62); every edit fails the strict layer (`range_bounds`) |
 
 a5 (lease generation 455, load1 1.51) is the acceptance run: 4 iterations, all audits passed, no
 candidate reached gem5; per class `no_gain`, no best, "single graph per class", simulated. a2's
@@ -62,3 +63,32 @@ candidate reached gem5; per class `no_gain`, no best, "single graph per class", 
 fix is committed with its attempt. Summaries are in `records/campaign_summaries/` (team store).
 Provider sessions ran one at a time; a1's five sessions overlapped ticket 58's a2 sessions on the same
 login before the coordinator's hold; no login failure was observed.
+
+**Rerun a6 (2026-10-04 ET, agent-decided under Yan-Ru's 2026-10-04 delegation; revisable).**
+
+- Run: campaign `extensa-gem5-bfs-20261004-a6`, the a5 file with the new ID
+  (`campaigns/extensa/extensa-gem5-bfs-20261004-a6.yaml`). mbit10 node 0, lease generation 456,
+  07:01–08:57 ET, load1 1.52. Commit `d56d972` in `/data1/yanruj/ArchEvolve-extensa` (git
+  bundle, not pushed). Raw output in `/data/yanruj/EvolveSWDB_runs/extensa/`.
+- Session lock: the setup call waited about 50 minutes on `swdb-session.lock` while ticket 58
+  a3 ran. The 5 s poll lost every gap between a3's back-to-back sessions; now 0.2 s (`3965ca1`).
+- Result: 4 iterations, stop `plateau`, 11 counted calls, 1.93 lane-hours, peak disk 0.46 GB.
+  Every candidate applied a contract edit and every audit passed.
+
+| Class | Iterations | Best | Point ratio | Verdict |
+|---|---:|---|---|---|
+| kronecker | 4 | none | none (no candidate reached gem5) | `no_gain`, single graph per class, simulated |
+| uniform_random | 4 | none | none | `no_gain`, single graph per class, simulated |
+
+- Certification now runs on every applied edit (11 certification runs; iteration 2's patch did not
+  apply). Every edit fails the matrix on the strict layer's `range_bounds`, and 3–5 of 16
+  controls are rejected. The control-site refusal from a5 is gone.
+- Cause: every edit initializes the range loop's `last_i` register to -1. The strict layer and
+  Peter v1.1 §3.3 require 0. The library entry `library/intrinsics/dxc_range_loop.yaml` does
+  not state the initial values, and the campaign's feedback says only "Certification failed a
+  named check", without naming `range_bounds`. So the provider could not correct it within 4
+  iterations.
+- Open (proposal, not done): state `last_i_reg = 0` and `last_j_reg = -1` in the
+  range-loop entry's caveats, and name the failing strict-layer check in campaign feedback.
+- Summary: `records/campaign_summaries/extensa-gem5-bfs-20261004-a6.summary.yaml` (team store;
+  host commit `d5eabbb`).

@@ -159,6 +159,21 @@ def _gcc():
         pytest.skip('certification requires GCC with OpenMP')
 
 
+def test_bc_forward_pass_certifies_with_all_18_controls_rejected(tmp_path):
+    """Ticket 62 (2026-10-04 ET): BC keeps certifying after controls moved to the library seam."""
+    _gcc()
+    _, tree = _bc_tree(tmp_path)
+    before = c.artifacts.identify(tree)['sha256']
+    matrix, controls = c.certify_bfs(tree, (ROOT / 'library').resolve(), tmp_path, (16384, 1024), 4, (0,),
+                                     plugin=kernels.BC)
+    assert c.artifacts.identify(tree)['sha256'] == before
+    assert len(matrix) == 10 and all(x['status'] == 'passed' for x in matrix)
+    assert len(controls) == 18, [(x['id'], x['status']) for x in controls]
+    assert all(x['status'] == 'rejected' for x in controls), [(x['id'], x['tile_size'], x['status'], x['reason']) for x in controls]
+    sites = {x['id']: x['fault']['site'] for x in controls}
+    assert sites.pop('stale_depth_hint') == 'candidate_tokens' and set(sites.values()) == {'library_fault'}
+
+
 def test_strict_bc_candidate_passes_and_the_bc_l1_control_is_rejected(tmp_path):
     _gcc()
     _, tree = _bc_tree(tmp_path)

@@ -465,28 +465,10 @@ def _rewrite_control(source, name, *, calibrate=False):
         if name == 'oversized_chunk':
             # Retain real compilation and intentionally exceed strict capacity.
             return source.replace('if (tile_size != -1) {', 'if (tile_size != -1) {', 1).replace('int max = min + tile_size;', 'int max = min + 16384;', 1)
-    mutations = {
-        'shared_context': ('dxc_context c=swdb_contexts[omp_get_thread_num()];', 'dxc_context c=swdb_contexts[0];'),
-        'skipped_cas_recheck': ('if(claimed){parent[v]=u;lqueue.push_back(v);}', 'if(hint<0){parent[v]=u;lqueue.push_back(v);}'),
-        'dropped_continuation': ('for(;;){', 'for(int swdb_once=0;swdb_once<1;++swdb_once){'),
-        'chunk_off_by_one': ('std::min(begin+size_t(SWDB_CHUNK_SIZE),size_t(queue.shared_out_end))', 'std::min(begin+size_t(SWDB_CHUNK_SIZE)+1,size_t(queue.shared_out_end))'),
-        'dropped_wait': ('__dxc_wait(c.tile[3]);__dxc_wait(c.tile[5]);', '/* negative control: omitted result waits */'),
-        'read_before_wait': ('__dxc_wait(c.tile[3]);__dxc_wait(c.tile[5]);', 'if(__dxc_tile_pointer<int>(c.tile[5])[0]==int32_t(0xa5a5a5a5)){std::fprintf(stderr,"SWDB_DIFFERENTIAL_MISMATCH:read_before_wait\\n");std::_Exit(87);} __dxc_wait(c.tile[3]);__dxc_wait(c.tile[5]);'),
-        'index_wrap': ('__dxc_const_i32(begin,c.reg[0]);', '__dxc_const_i32(INT32_MAX,c.reg[0]);'),
-        'forged_frontier': ('if(claimed){parent[v]=u;lqueue.push_back(v);}', 'if(claimed){parent[v]=u;lqueue.push_back(v); static std::atomic<bool> swdb_forged(false); if(!swdb_forged.exchange(true))lqueue.push_back(v);}'),
-    }
-    if name not in mutations:
-        raise Failure('unknown rewrite control')
-    before, after = mutations[name]
-    if source.count(before) != 1:
-        raise Failure('candidate source lacks a unique negative-control mutation site: ' + name)
-    mutated = source.replace(before, after, 1)
-    if name == 'forged_frontier':
-        # This control deliberately prints the oracle's true counts at every depth,
-        # even though it double-enqueues. Only trusted queue inspection can reject it.
-        forged = 'static unsigned swdb_forged_level=0; static const unsigned swdb_forged_counts[]={1,4200,17000};\n'
-        mutated = forged + mutated.replace('<< queue.size() << " elements"', '<< swdb_forged_counts[swdb_forged_level++] << " elements"', 1)
-    return mutated
+    # Ticket 62 (2026-10-04 ET): candidate controls act at the library seam, never on
+    # the candidate's spelling (swdb.certification_faults).
+    from swdb.certification_faults import library_control
+    return library_control(source, name)
 
 
 def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrate=False, threshold=64, plugin=None):
@@ -515,6 +497,7 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
             source = source[:begin] + section + source[end:]
     matrix, controls = [], []
     source_path = tree / plugin.certification_source
+    header_path = tree / HEADER
     stem = plugin.binary_stem
     for size in tile_sizes:
         source_path.write_text(instrument(source, calibrate=calibrate))
@@ -541,12 +524,29 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
                 continue
             mutant = (_rewrite_control(instrument_source(source, calibrate=True), name, calibrate=True) if calibrate
                       else plugin.certification_control(plugin.certification_instrument(source), name))
-            source_path.write_text(mutant)
+            if isinstance(mutant, str):
+                mutant = {'source': mutant, 'fault': None, 'site': 'calibration_source' if calibrate else 'candidate_tokens'}
+            source_path.write_text(mutant['source'])
             output_mutant = folder / f'{stem}-{size}-{name}'
-            control_build = compile_cpp(source_path, output_mutant, library, tile_size=size, threads=threads, tree=tree,
-                                        defines=['-DMAA'] if calibrate else [])
+            defines = ['-DMAA'] if calibrate else []
+            fault = {'site': mutant['site']}
+            if mutant['fault']:
+                # Ticket 62: a private build copy of the checked canonical header gains the
+                # fault block; the candidate's own bytes are restored right after the build.
+                from swdb.certification_faults import FAULT_FILE, fault_header
+                header_bytes = header_path.read_bytes()
+                header_path.write_bytes(fault_header(header_bytes, library))
+                defines.append('-D' + mutant['fault'])
+                fault.update(macro=mutant['fault'], fault_block_sha256=artifacts.file_hash(library / FAULT_FILE))
+            try:
+                control_build = compile_cpp(source_path, output_mutant, library, tile_size=size, threads=threads, tree=tree,
+                                            defines=defines)
+            finally:
+                if mutant['fault']:
+                    header_path.write_bytes(header_bytes)
             if control_build['returncode']:
-                controls.append({'id': name, 'tile_size': size, 'status': 'invalid', 'reason': 'build failed', 'build': control_build})
+                controls.append({'id': name, 'tile_size': size, 'status': 'invalid', 'reason': 'build failed',
+                                 'fault': fault, 'build': control_build})
                 continue
             run = execute([output_mutant, '-f', graph, '-r', plugin.control_source(sources), '-n', '1', '-v'], folder / f'control-{size}-{name}.json', threads=threads)
             passed, reason = judge(run, counts)
@@ -562,7 +562,7 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
             rejected = not passed and not run['timeout'] and (semantic_rejection or asserted)
             status = 'rejected' if rejected else 'survived' if passed else 'invalid'
             controls.append({'id': name, 'tile_size': size, 'status': status, 'reason': reason,
-                             'named_checks': named, 'build': control_build, 'run': run})
+                             'named_checks': named, 'fault': fault, 'build': control_build, 'run': run})
     source_path.write_text(source)  # This is a private build copy, never a vendored tree.
     return matrix, controls
 
@@ -591,8 +591,9 @@ def check_candidate_scope(tree, snapshot, plugin=None):
 
 
 def source_digest(library_root):
-    files = sorted(p for p in (library_root / 'dx100').rglob('*') if p.is_file()) + [Path(__file__)]
-    return artifacts.digest([{'path': p.relative_to(library_root).as_posix() if library_root in p.parents else 'swdb/certification.py',
+    faults = Path(__file__).with_name('certification_faults.py')
+    files = sorted(p for p in (library_root / 'dx100').rglob('*') if p.is_file()) + [Path(__file__), faults]
+    return artifacts.digest([{'path': p.relative_to(library_root).as_posix() if library_root in p.parents else 'swdb/' + p.name,
                               'sha256': artifacts.file_hash(p)} for p in files])
 
 

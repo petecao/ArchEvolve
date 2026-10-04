@@ -11,6 +11,14 @@ well-formed login is written back to the source atomically under a file lock.
 
 Token values are never logged or recorded: receipts hold only short file hashes
 and changed/written flags.
+
+Session lock (ticket 62, 2026-10-04 ET; agent-decided under Yan-Ru's delegation,
+revisable): every real provider session holds an exclusive flock on
+`swdb-session.lock` in the provider's home (CODEX_HOME / CLAUDE_CONFIG_DIR) from the
+moment its login copy is taken until the copy has been written back. Two sessions on
+one login therefore never overlap, across agents, clones and processes. A waiting
+session polls up to `SWDB_SESSION_LOCK_TIMEOUT_S` seconds (default 3600) and then
+fails before any provider call.
 """
 
 import contextlib
@@ -20,12 +28,15 @@ import json
 import os
 import shutil
 import tempfile
-from dataclasses import dataclass
+import time
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from swdb.cli import Failure
 
 LOCK_SUFFIX = ".swdb-lock"
+SESSION_LOCK = "swdb-session.lock"
+SESSION_LOCK_POLL_S = 0.2  # short: a 5 s poll lost every gap between back-to-back sessions (a6, 2026-10-04)
 #: Required nested string fields of a well-formed login, per provider.
 EXPECTED = {"codex": ("tokens", ("access_token", "refresh_token")),
             "claude": ("claudeAiOauth", ("accessToken", "refreshToken"))}
@@ -80,6 +91,45 @@ def locked(path):
         os.close(fd)
 
 
+def session_lock_path(kind):
+    """The one-session-per-login lock file in the provider's home."""
+    return source(kind).parent / SESSION_LOCK
+
+
+def acquire_session(kind, timeout_s=None, poll_s=SESSION_LOCK_POLL_S):
+    """Hold the exclusive session lock of this login; return (fd, value-free receipt)."""
+    if timeout_s is None:
+        timeout_s = float(os.environ.get("SWDB_SESSION_LOCK_TIMEOUT_S", "3600"))
+    path = session_lock_path(kind)
+    fd = os.open(path, os.O_RDWR | os.O_CREAT, 0o600)
+    started = time.monotonic()
+    waited = False
+    try:
+        while True:
+            try:
+                fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                break
+            except BlockingIOError:
+                waited = True
+                if time.monotonic() - started >= timeout_s:
+                    raise Failure(f"another provider session holds {SESSION_LOCK} on this login; "
+                                  f"waited {timeout_s:.0f} s") from None
+                time.sleep(poll_s)
+        os.ftruncate(fd, 0)
+        os.write(fd, f"pid={os.getpid()} host={os.uname().nodename}\n".encode())
+    except BaseException:
+        os.close(fd)
+        raise
+    return fd, {"lock": SESSION_LOCK, "waited": waited, "wait_s": round(time.monotonic() - started, 3)}
+
+
+def release_session(fd):
+    try:
+        fcntl.flock(fd, fcntl.LOCK_UN)
+    finally:
+        os.close(fd)
+
+
 def _atomic_write(path, data):
     fd, temporary = tempfile.mkstemp(dir=path.parent, prefix="." + path.name + ".swdb-")
     try:
@@ -102,8 +152,26 @@ class Copy:
     source: Path
     path: Path
     snapshot_sha256: str
+    session_fd: int = None
+    session_lock: dict = field(default_factory=dict)
+
+    def release(self):
+        """Release the session lock (idempotent)."""
+        fd, self.session_fd = self.session_fd, None
+        if fd is not None:
+            release_session(fd)
 
     def write_back(self):
+        """Write back (see _write_back), then release the session lock."""
+        try:
+            receipt = self._write_back()
+        finally:
+            self.release()
+        if self.session_lock:
+            receipt["session_lock"] = dict(self.session_lock)
+        return receipt
+
+    def _write_back(self):
         """Return a value-free receipt; write a refreshed copy back to the source.
 
         Written only when the copy changed, is a well-formed login, and the source
@@ -147,10 +215,17 @@ def copy(kind, destination, unavailable="provider login file is unavailable"):
     original = source(kind)
     if original.is_symlink() or not original.is_file():
         raise Failure(unavailable)
-    with locked(original):
-        shutil.copyfile(original, destination)
-    Path(destination).chmod(0o600)
-    return Copy(kind, original, Path(destination), _sha(Path(destination).read_bytes()))
+    # The session lock is taken before the copy and held until write_back/release.
+    fd, receipt = acquire_session(kind)
+    try:
+        with locked(original):
+            shutil.copyfile(original, destination)
+        Path(destination).chmod(0o600)
+        return Copy(kind, original, Path(destination), _sha(Path(destination).read_bytes()),
+                    session_fd=fd, session_lock=receipt)
+    except BaseException:
+        release_session(fd)
+        raise
 
 
 def preflight(kind):

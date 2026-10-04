@@ -127,35 +127,19 @@ def judge(result, counts, *, threshold=64):
 
 
 def control(source, name):
-    """Mutate the actual candidate code; no fabricated runtime results."""
+    """One negative control of the candidate (ticket 62, 2026-10-04 ET).
+
+    The eight controls shared with BFS act at the library seam
+    (``swdb.certification_faults``). BC-L1 has no library seam: it rewrites the CPU's
+    depth reread at a token-matched site, insensitive to whitespace and comments.
+    """
+    from swdb.certification_faults import LIBRARY_FAULTS, library_control, replace_tokens
     from swdb.cli import Failure
-    mutations = {
-        "shared_context": ("dxc_context c=swdb_contexts[omp_get_thread_num()];", "dxc_context c=swdb_contexts[0];"),
-        "skipped_cas_recheck": (CLAIM, "if(hint==-1){lqueue.push_back(v);}"),
-        "dropped_continuation": ("for(;;){", "for(int swdb_once=0;swdb_once<1;++swdb_once){"),
-        "chunk_off_by_one": ("std::min(begin+size_t(SWDB_CHUNK_SIZE),size_t(queue.shared_out_end))",
-                             "std::min(begin+size_t(SWDB_CHUNK_SIZE)+1,size_t(queue.shared_out_end))"),
-        "dropped_wait": ("__dxc_wait(c.tile[3]);__dxc_wait(c.tile[5]);", "/* negative control: omitted result waits */"),
-        "read_before_wait": ("__dxc_wait(c.tile[3]);__dxc_wait(c.tile[5]);",
-                             'if(__dxc_tile_pointer<int>(c.tile[5])[0]==int32_t(0xa5a5a5a5)){std::fprintf(stderr,"SWDB_DIFFERENTIAL_MISMATCH:read_before_wait\\n");std::_Exit(87);} __dxc_wait(c.tile[3]);__dxc_wait(c.tile[5]);'),
-        "index_wrap": ("__dxc_const_i32(begin,c.reg[0]);", "__dxc_const_i32(INT32_MAX,c.reg[0]);"),
-        "forged_frontier": (CLAIM, "if(claimed){lqueue.push_back(v); static std::atomic<bool> swdb_forged(false); "
-                                   "if(!swdb_forged.exchange(true))lqueue.push_back(v);}"),
-        "stale_depth_hint": (CPU_DEPTH, "const NodeID fresh=claimed?depth:hint;"),
-    }
-    if name not in mutations:
+    if name in LIBRARY_FAULTS:
+        return library_control(source, name)
+    if name != "stale_depth_hint":
         raise Failure("unknown rewrite control")
-    before, after = mutations[name]
-    if source.count(before) != 1:
-        raise Failure("candidate source lacks a unique negative-control mutation site: " + name)
-    mutated = source.replace(before, after, 1)
-    if name == "forged_frontier":
-        # Prints the oracle's true counts at every depth despite the double enqueue;
-        # only the trusted queue inspection can reject it.
-        forged = "static unsigned swdb_forged_level=0; static const unsigned swdb_forged_counts[]={1,4200,17000};\n"
-        mutated = forged + mutated.replace('<< queue.size() << " elements"',
-                                           '<< swdb_forged_counts[swdb_forged_level++] << " elements"', 1)
-    return mutated
+    return replace_tokens(source, CPU_DEPTH, "const NodeID fresh=claimed?depth:hint;", name)
 
 # --- gem5 side (ticket 44, 2026-10-03 ET) ----------------------------------
 # The trusted complete-call gem5 driver mirrors BFS's v2 driver: the evaluator
