@@ -266,12 +266,25 @@ most one knob assignment per workload class in `knobs`, one row {{class, name, v
 must stay inside the contract's declared ranges; the evaluator defines each assigned value
 as the macro `SWDB_KNOB_<KNOB NAME IN UPPER CASE>` at the top of `bfs.cc` (give each knob a
 default with `#ifndef`). When you name a contract, the evaluator adds its canonical lowering
-header `swdb_dxc_lowering.hpp`; patch `bfs.cc` only. `best/` holds this campaign's current
-per-class best patches and FEEDBACK.json the previous iteration's feedback. Return ONE
+header `swdb_dxc_lowering.hpp`; patch `bfs.cc` only.{history} Return ONE
 unified diff against `source/` in `patch`. Do not state performance outcomes.
-Work only by reading the files and writing your answer: do not use shell heredocs, `git apply`,
-`patch` or any command that runs or applies generated text; put the diff only in `patch`.
+Work only by reading the files listed here and writing your answer: read no other path, do not
+use shell heredocs, `git apply`, `patch` or any command that runs or applies generated text; put
+the diff only in `patch`. Workspace files: {files}.
 """
+
+
+def rewrite_prompt(campaign_id, iteration, classes, files):
+    """The rewrite prompt names only the files the workspace holds (2026-10-04 ET, campaign a2:
+    the provider audit refused a read of an absent `best/` and FEEDBACK.json)."""
+    history = []
+    best = sorted(f for f in files if f.startswith("best/"))
+    if best:
+        history.append(" " + ", ".join(f"`{f}`" for f in best) + " hold this campaign's current per-class best patches.")
+    if "FEEDBACK.json" in files:
+        history.append(" `FEEDBACK.json` holds the previous iteration's feedback.")
+    return REWRITE_PROMPT.format(campaign=campaign_id, iteration=iteration, classes=", ".join(classes),
+                                 history="".join(history), files=", ".join(f"`{f}`" for f in sorted(files)))
 
 
 # --- the contract-fixture target adapter ---------------------------------------------------
@@ -736,8 +749,8 @@ class Campaign:
         return None
 
     def _iteration(self, iteration, row):
-        response = self._call("rewriting", self._workspace(iteration), REWRITE_PROMPT.format(
-            campaign=self.cid, iteration=iteration, classes=", ".join(self.classes)), row)
+        files = self._workspace(iteration)
+        response = self._call("rewriting", files, rewrite_prompt(self.cid, iteration, self.classes, files), row)
         if response is None:
             row["feedback_reasons"].append("provider_output_invalid")
             self.state["feedback"] = [S.Feedback("provider_output_invalid",
@@ -820,9 +833,13 @@ class Campaign:
                 if attempt >= self.max_repairs:
                     return reject("certification_failed", "Certification failed a named check.",
                                   failed_checks=outcome["failed_checks"])
-                repaired = self._call("repair", {**self._workspace(iteration), "CERTIFICATION.json": json.dumps(
-                    {"class": cls, "failed_checks": outcome["failed_checks"]})},
-                    "Repair the patch so the named certification checks pass.", row)
+                # 2026-10-04 ET: the repair workspace holds the failing patch, and the prompt names
+                # only the files present (the provider audit refuses reads outside them).
+                files = {**self._workspace(iteration), "CANDIDATE.patch": patch,
+                         "CERTIFICATION.json": json.dumps({"class": cls, "failed_checks": outcome["failed_checks"]})}
+                repaired = self._call("repair", files, "Repair: `CANDIDATE.patch` failed the certification checks "
+                                      "named in `CERTIFICATION.json`; return a repaired patch.\n"
+                                      + rewrite_prompt(self.cid, iteration, self.classes, files), row)
                 if repaired is None:
                     return reject("certification_failed", "Certification failed a named check.",
                                   failed_checks=outcome["failed_checks"])
