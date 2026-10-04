@@ -82,3 +82,33 @@ def test_native_evaluation_refuses_an_roi_no_plugin_owns(evaluation_setup):
     assert result.returncode == 1
     assert "protected ROI" in data["outcome"]["reason"] and "bfs.complete_call.v1" in data["outcome"]["reason"]
 
+
+def test_protocol_freeze_binds_the_verifier_to_the_kernel_plugin(evaluation_setup, tmp_path):
+    """Ticket 39: a frozen correctness verifier must belong to the protocol kernel's plug-in."""
+    records, _, _, base = evaluation_setup
+    request = _workload_request(records, tmp_path, base["workload"]["graph"])
+    workload = _command(records, "register-workload", _payload(tmp_path, "register", request))
+    settings = _settings(base, workload)
+    settings["correctness"]["verifier"] = "swdb.bc.brandes_scores.v1"  # another kernel's check
+    freeze = {"message_version": "1.0", "id": "mismatched-verifier", "version": 1, "settings": settings}
+    result = records.swdb("freeze-protocol", _payload(tmp_path, "freeze", freeze), "--format", "json")
+    assert result.returncode == 1
+    assert "does not belong to the BFS kernel plug-in" in result.stderr
+    settings["correctness"]["verifier"] = "swdb.bfs.structural.v1"
+    freeze["id"] = "matched-verifier"
+    _command(records, "freeze-protocol", _payload(tmp_path, "freeze2", freeze))
+
+
+def test_gem5_seam_selects_bfs_by_checker_and_keeps_its_rules():
+    from swdb import kernels
+    from swdb.bfs_protocol import accelerator_cases
+    assert kernels.by_gem5_checker("dx100.bfs.verifier.v2") is kernels.BFS
+    assert kernels.by_gem5_roi("bfs.complete_call.v1") is kernels.BFS
+    assert kernels.BFS.gem5_verification_runtime == (
+        "scripts/dx100_verify.py", "scripts/dx100_host_memory.py", "swdb/dx100_witness.py")
+    observed = {"state": "observed", "stream": 2, "indirect": 7, "range": 3, "alu": 0, "indirect_stores": 0}
+    check = {"checker": "dx100.bfs.verifier.v2",
+             "coverage": {"instruction_counters": {}, "completed_trace_units": {}, "read_only_executed": observed}}
+    assert accelerator_cases(check) == {"read_only_executed"}
+    observed["indirect"] = 8
+    assert accelerator_cases(check) == set()

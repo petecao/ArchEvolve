@@ -40,6 +40,67 @@ class KernelPlugin:
     verifier_symbol = None    # protected kernel verifier in the source
     statement_function = None  # function whose statements are profiled per line
 
+    # gem5 side (ticket 39): build adapter driver/oracle, verifier binding,
+    # completion witness, accelerator cases and their trace extractors.
+    gem5_roi = None               # complete-call ROI of the trusted gem5 driver
+    gem5_checkers = frozenset()   # accepted post-ROI checker identities
+    gem5_witness_checker = None   # the checker whose runs carry a completion witness
+    gem5_functions = frozenset()  # identified entry points the gem5 adapter may select
+    gem5_result_field = None      # correctness-check field holding protected result lines
+    gem5_storage_marker = None    # stdout marker naming the returned result storage
+    protected_verifier_key = None  # context key retaining the protected source verifier
+    gem5_bounds_check = None      # how the trusted driver bounds the result before the source verifier
+    gem5_oracle_symbol = None     # trusted original-graph oracle symbol in the gem5 driver
+    gem5_oracle_bounds_check = None
+    # Trusted gem5 verification runtime: (driver, observer, parser) repository paths.
+    gem5_verification_runtime = ("scripts/dx100_verify.py", "scripts/dx100_host_memory.py",
+                                 "swdb/dx100_witness.py")
+    frontier_text = None          # exact per-level frontier print in the rewritten region
+    frontier_prefix = None
+
+    def gem5_driver(self, source, model, function, diagnostic=None, **options):
+        raise NotImplementedError
+
+    def graph_verification_contract(self, application):
+        raise NotImplementedError
+
+    def parse_gem5_result(self, line, number, after_seal):
+        """Return the protected result row for one stdout line, or None."""
+        return None
+
+    def gem5_result_complete(self, row):
+        return False
+
+    def gem5_failure_message(self):
+        return f"{self.name} verifier printed FAIL, independently of process exit status"
+
+    def validate_completed_witness(self, evaluation, **options):
+        raise NotImplementedError
+
+    def validate_record_witness(self, evaluation, store=None):
+        raise NotImplementedError
+
+    def read_only_rule(self, stream, indirect, ranges, alu, stores):
+        """Exact instruction-mix rule of the read-only execution case."""
+        return False
+
+    read_only_rule_text = None
+
+    def frontier_oracle(self, adjacency, source):
+        """Per-depth discovered-vertex counts from the trusted adjacency."""
+        from collections import Counter, deque
+        depth = [-1] * len(adjacency)
+        depth[source] = 0
+        queue = deque([source])
+        while queue:
+            u = queue.popleft()
+            for v in adjacency[u]:
+                if depth[v] == -1:
+                    depth[v] = depth[u] + 1
+                    queue.append(v)
+        counts = Counter(value for value in depth if value >= 0)
+        return [counts[level] for level in range(max(counts) + 1)]
+
     def native_entry_error(self):
         return f"native complete-call adapter supports the identified {self.native_function} entry point only"
 
@@ -107,6 +168,23 @@ def by_native_verifier(verifier, default="gapbs-bfs"):
 
 def by_native_roi(roi):
     return next((plugin for plugin in _REGISTRY.values() if plugin.native_roi == roi), None)
+
+
+def by_gem5_checker(checker):
+    """The plug-in that owns a post-ROI checker identity, or None."""
+    return next((plugin for plugin in _REGISTRY.values() if checker in plugin.gem5_checkers), None)
+
+
+def by_gem5_roi(roi):
+    return next((plugin for plugin in _REGISTRY.values() if plugin.gem5_roi == roi), None)
+
+
+def gem5_checkers():
+    return sorted(checker for plugin in _REGISTRY.values() for checker in plugin.gem5_checkers)
+
+
+def witness_checkers():
+    return {plugin.gem5_witness_checker for plugin in _REGISTRY.values() if plugin.gem5_witness_checker}
 
 
 def native_rois():

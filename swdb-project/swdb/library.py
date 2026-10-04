@@ -404,13 +404,15 @@ class Library:
             return 'inconclusive'
         witness = (contract or {}).get('execution_witness',{}).get('gem5',{}).get('case')
         completed = checks and all(c.get('passed') is True and c.get('continuation',{}).get('normal_exit_observed') is True for c in checks)
-        from swdb.dx100_witness import CHECKER, validate_record_witness
-        v2 = (context.get('verifier') == CHECKER
+        # Ticket 39 (2026-10-03 ET): every kernel plug-in's witness checker is v2.
+        from swdb import kernels
+        WITNESSED = kernels.witness_checkers()
+        v2 = (context.get('verifier') in WITNESSED
               or context.get('adapter') == 'dx100.complete_call.v2'
-              or evaluation.get('request', {}).get('verification', {}).get('checker') == CHECKER
+              or evaluation.get('request', {}).get('verification', {}).get('checker') in WITNESSED
               or evaluation.get('build', {}).get('adapter') == 'dx100.complete_call.v2'
-              or any(c.get('checker') == CHECKER or c.get('verifier') == CHECKER
-                     or c.get('continuation', {}).get('checker') == CHECKER
+              or any(c.get('checker') in WITNESSED or c.get('verifier') in WITNESSED
+                     or c.get('continuation', {}).get('checker') in WITNESSED
                      or 'exit_witness' in c.get('continuation', {}) for c in checks))
         if v2:
             from swdb.cli import Failure
@@ -418,7 +420,8 @@ class Library:
             # its authoritative v2 validation, never an unbound completion flag
             # or a fallback to legacy normal-exit metadata after rejection.
             try:
-                validate_record_witness(evaluation, store=store)
+                plugin = kernels.by_gem5_checker(context.get('verifier')) or kernels.BFS
+                plugin.validate_record_witness(evaluation, store=store)
                 completed = True
             except Failure:
                 completed = False

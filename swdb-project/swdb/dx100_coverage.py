@@ -118,9 +118,11 @@ def validate_trace(evaluation, deadline=None, store=None):
             raise Failure('compressed trace needs exactly one sealed statistics interval')
         stage = next(stage for stage in evaluation['stages'] if stage['stage'] == 'simulation')
         log = _file({'path': stage['log'], 'sha256': stage['log_sha256']}, 'compressed-trace stdout')
+        from swdb import kernels
         actual = observe(log, intervals[0]['values'], context['configuration']['tile_elements'],
                          trace=reference, deadline=deadline,
-                         read_only=evaluation.get('request', {}).get('verification', {}).get('read_only', False))
+                         read_only=evaluation.get('request', {}).get('verification', {}).get('read_only', False),
+                         plugin=kernels.by_gem5_checker(context.get('verifier')))
         checks = evaluation.get('correctness', {}).get('checks', [])
         if len(checks) != 1 or any(artifacts.digest(value) != artifacts.digest(checks[0].get('coverage', {}).get(key))
                                    for key, value in actual.items()):
@@ -128,7 +130,12 @@ def validate_trace(evaluation, deadline=None, store=None):
     return reference
 
 
-def observe(log, values, tile_elements, *, trace=None, deadline=None, read_only=False):
+def observe(log, values, tile_elements, *, trace=None, deadline=None, read_only=False, plugin=None):
+    # Ticket 39 (2026-10-03 ET): the result-storage marker and the read-only
+    # instruction-mix rule come from the checker's kernel plug-in (BFS default).
+    from swdb import kernels
+    plugin = plugin or kernels.BFS
+    marker = plugin.gem5_storage_marker
     try:
         end = int(values["finalTick"])
         start = end - int(values["simTicks"])
@@ -152,8 +159,8 @@ def observe(log, values, tile_elements, *, trace=None, deadline=None, read_only=
             for number, line in trace_lines(trace, trace_identity, deadline):
                 yield number, line, 'debug_trace'
     for number, line, origin in lines():
-        storage = (re.fullmatch(r"SWDB_BFS_PARENT_STORAGE address=([a-f0-9]+) count=(\d+) element_bytes=4\s*", line)
-                   if origin == 'stdout' and line.startswith("SWDB_BFS_PARENT_STORAGE ") else None)
+        storage = (re.fullmatch(re.escape(marker) + r" address=([a-f0-9]+) count=(\d+) element_bytes=4\s*", line)
+                   if marker and origin == 'stdout' and line.startswith(marker + " ") else None)
         if storage and origin == 'stdout':
             parent_storage = {"virtual_address": int(storage[1], 16), "count": int(storage[2]), "line": number}
             if trace is not None:
@@ -242,13 +249,12 @@ def observe(log, values, tile_elements, *, trace=None, deadline=None, read_only=
         ranges = sum(value for key, value in opcode_counts.items() if key.startswith('RANGE'))
         alu = sum(value for key, value in opcode_counts.items() if key.startswith('ALU'))
         stores = sum(value for key, value in opcode_counts.items() if key.startswith('INDIR_ST'))
-        observed = (stream >= 1 and indirect >= 1 and ranges >= 1 and alu == stores == 0
-            and indirect == 3 * ranges - stream and not pending_opcodes
+        observed = (plugin.read_only_rule(stream, indirect, ranges, alu, stores) and not pending_opcodes
             and sum(opcode_counts.values()) == sum(units.values())
             and units.get('S', 0) == stream and units.get('I', 0) == indirect
             and units.get('R', 0) == ranges and units.get('A', 0) == 0)
         result['read_only_executed'] = {'state': 'observed' if observed else 'unobserved',
             'count': int(observed), 'stream': stream, 'indirect': indirect, 'range': ranges,
             'alu': alu, 'indirect_stores': stores,
-            'rule': 'S>=1,I>=1,R>=1,A=0,indirect_stores=0,I=3*R-S'}
+            'rule': plugin.read_only_rule_text}
     return result

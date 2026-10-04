@@ -1,9 +1,13 @@
-"""Finite read-offload checks and L3 companion admission. Updated: 2026-10-03 ET."""
+"""Finite read-offload checks and L3 companion admission. Updated: 2026-10-03 ET.
+
+Ticket 39 (2026-10-03 ET): the frontier print text and the post-ROI checker come
+from the evaluation's kernel plug-in (``swdb.kernels``); BFS keeps its values.
+"""
 from collections import Counter, deque
 from pathlib import Path
 import re
 
-from swdb import artifacts
+from swdb import artifacts, kernels
 from swdb.cli import Failure
 
 FRONTIER_TEXT = 'std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;'
@@ -32,13 +36,19 @@ def oracle_counts(store, workload_id, source):
     return [counts[level] for level in range(max(counts) + 1)]
 
 
-def observe_output(log, store, workload_id, source):
+def _plugin(verifier):
+    return kernels.by_gem5_checker(verifier) or kernels.BFS
+
+
+def observe_output(log, store, workload_id, source, plugin=None):
+    plugin = plugin or kernels.BFS
+    prefix = plugin.frontier_prefix
     frontiers, probes = [], []
     with Path(log).open(errors='strict') as stream:
         for number, line in enumerate(stream, 1):
-            if line.startswith('Starting TDStep:'):
-                found = re.fullmatch(r'Starting TDStep: (\d+) elements\n?', line)
-                _need(found is not None, 'Starting TDStep frontier line differs from exact text')
+            if line.startswith(prefix):
+                found = re.fullmatch(re.escape(prefix) + r' (\d+) elements\n?', line)
+                _need(found is not None, f'{prefix[:-1]} frontier line differs from exact text')
                 frontiers.append({'count': int(found[1]), 'line': number})
             if line.startswith('SWDB cas_fail_negative_hint='):
                 found = PROBE.fullmatch(line)
@@ -69,18 +79,19 @@ def validate_frontier(evaluation, check, store):
     path = Path(output['path'])
     _need(path.is_file() and not path.is_symlink() and artifacts.file_hash(path) == output['sha256'],
           'frontier correctness output is unavailable or changed')
-    actual = observe_output(path, store, workload, check['source'])['frontier_sizes']
+    plugin = _plugin(evaluation.get('context', {}).get('verifier'))
+    actual = observe_output(path, store, workload, check['source'], plugin)['frontier_sizes']
     _need(actual == check['frontier_sizes'], 'frontier sizes differ from the exact stdout bytes')
     source = evaluation['context'].get('timed_source', {})
     source_path = Path(source.get('path', ''))
     _need(source_path.is_file() and not source_path.is_symlink()
           and artifacts.file_hash(source_path) == source.get('sha256')
-          and sum(line.strip() == FRONTIER_TEXT for line in source_path.read_text().splitlines()) == 1, 'read-only frontier print statement is not exact-text checked in timed source')
+          and sum(line.strip() == plugin.frontier_text for line in source_path.read_text().splitlines()) == 1, 'read-only frontier print statement is not exact-text checked in timed source')
     return actual
 
 
 def validate_companion_settings(correctness, store):
-    _need(correctness.get('verifier') == 'dx100.bfs.verifier.v2',
+    _need(correctness.get('verifier') in kernels.witness_checkers(),
           'read-only companion protocol requires the v2 verifier')
     case = correctness.get('companion_cases', {}).get('parent_gather_race')
     _need(isinstance(case, dict) and set(case) == {'workload', 'source'}
@@ -115,7 +126,7 @@ def companion_acceptance(store, protocol, request, candidate_evaluation):
         _need(candidate is not None and context.get('candidate_sha256') == candidate.get('artifact', {}).get('sha256')
               and candidate_evaluation['context'].get('candidate_sha256') == candidate.get('artifact', {}).get('sha256'),
               'parent-gather companion candidate artifact identity differs')
-        _need(context.get('verifier') == 'dx100.bfs.verifier.v2'
+        _need(context.get('verifier') == correctness['verifier']
               and context.get('workload', {}).get('id') == case['workload']
               and context.get('source') == case['source']
               and context.get('target') == candidate_evaluation['context'].get('target')
@@ -147,7 +158,8 @@ def companion_acceptance(store, protocol, request, candidate_evaluation):
                       'parent-gather diagnostic changes flags beyond its explicit probe define')
         rows[role] = {'evaluation': rid, 'sha256': artifacts.digest(evaluation), 'frontier_sizes': checks[0]['frontier_sizes']}
         if role == 'diagnostic':
-            actual = observe_output(checks[0]['output']['path'], store, case['workload'], case['source'])['parent_gather_race']
+            actual = observe_output(checks[0]['output']['path'], store, case['workload'], case['source'],
+                                    _plugin(context.get('verifier')))['parent_gather_race']
             _need(actual == checks[0].get('parent_gather_race'), 'diagnostic race counters differ from exact stdout')
             rows[role]['parent_gather_race'] = actual
     outcome = rows['diagnostic']['parent_gather_race']['outcome']

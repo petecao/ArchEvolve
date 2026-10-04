@@ -432,11 +432,12 @@ def accelerator_cases(check):
                 and any(isinstance(key, str) and key.endswith(".numInst") and positive(value) for key, value in counters.items())
                 and all(positive(units.get(unit)) for unit in ("S", "I", "R", "A")))
     readonly = coverage.get('read_only_executed', {})
+    # Ticket 39 (2026-10-03 ET): the read-only rule belongs to the checker's kernel plug-in.
+    plugin = kernels.by_gem5_checker(check.get('checker')) or kernels.BFS
     read_only = (isinstance(readonly, dict) and readonly.get('state') == 'observed'
         and all(type(readonly.get(key)) is int for key in ('stream', 'indirect', 'range', 'alu', 'indirect_stores'))
-        and readonly['stream'] >= 1 and readonly['indirect'] >= 1 and readonly['range'] >= 1
-        and readonly['alu'] == readonly['indirect_stores'] == 0
-        and readonly['indirect'] == 3 * readonly['range'] - readonly['stream'])
+        and plugin.read_only_rule(readonly['stream'], readonly['indirect'], readonly['range'],
+                                  readonly['alu'], readonly['indirect_stores']))
     if not executed and not read_only:
         return set()
     observed = ({"executed"} if executed else set()) | ({'read_only_executed'} if read_only else set())
@@ -635,6 +636,13 @@ def freeze_protocol(args):
             validate_runtime_policy(settings.get("native_runtime"), settings["threads"])
     except (KeyError, TypeError, ValueError) as exc:
         raise Failure(f"invalid protocol settings: {exc}") from None
+    # Tickets 38/39 (2026-10-03 ET): a new freeze binds its correctness verifier to
+    # the kernel plug-in (its native result check or one of its gem5 post-ROI
+    # checkers; simulated fixture protocols have long named the native check).
+    plugin = kernels.require(settings["kernel"], "protocol freeze")
+    verifier = settings["correctness"]["verifier"]
+    _fail(verifier == plugin.native_verifier or verifier in plugin.gem5_checkers,
+          f"correctness verifier {verifier!r} does not belong to the {plugin.name} kernel plug-in")
     identities = {wid: verify_immutable(_get(store, wid, "workload")) for wid in settings["workloads"]}
     companion_cases = settings.get('correctness', {}).get('companion_cases', {})
     companion = companion_cases.get('parent_gather_race') if isinstance(companion_cases, dict) else None
@@ -969,12 +977,13 @@ def _check_verifier_identity(evaluation, store=None):
     # Retain historical records, but do not qualify the old mutable-Graph
     # checker through v1 or an aggregate that merely copies a newer context.
     build = evaluation.get('build', {})
-    if context.get('roi') == 'bfs.complete_call.v1' and (
+    roi_plugin = kernels.by_gem5_roi(context.get('roi'))
+    if roi_plugin is not None and (
             verifier.startswith('dx100.') or context.get('candidate_build')
             or str(build.get('adapter', '')).startswith('dx100.complete_call.')):
-        from swdb.dx100_witness import graph_verification_contract, WitnessError
+        from swdb.dx100_witness import WitnessError
         try:
-            contract = graph_verification_contract(context.get('application'))
+            contract = roi_plugin.graph_verification_contract(context.get('application'))
         except WitnessError as exc:
             raise Failure('complete-call original-adjacency qualification failed: ' + str(exc)) from None
         _fail(build.get('adapter') == 'dx100.complete_call.v2'
@@ -993,9 +1002,9 @@ def _check_verifier_identity(evaluation, store=None):
         if verifier.startswith('dx100.'):
             from swdb.dx100_coverage import validate_trace
             validate_trace(evaluation, store=store)
-        if verifier == "dx100.bfs.verifier.v2":
-            from swdb.dx100_witness import validate_record_witness
-            validate_record_witness(evaluation, store=store)
+        witness_plugin = kernels.by_gem5_checker(verifier)
+        if witness_plugin is not None and verifier == witness_plugin.gem5_witness_checker:
+            witness_plugin.validate_record_witness(evaluation, store=store)
         return
     _fail(store is not None, "aggregate correctness requires its actual component records")
     retained = []

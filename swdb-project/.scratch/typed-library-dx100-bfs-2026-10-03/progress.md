@@ -181,4 +181,8 @@ Periodic follow-up, 2026-10-03 18:14 ET: root independently read back source6cf 
 
 2026-10-03 20:17 ET: ticket 47 resolved by agent under Yan-Ru's 2026-10-03 delegation. Extensa-mode decisions D1–D12 (port boundary, one target per campaign, native 10 paired repetitions with an A/A pilot gate, scale-22 native and ticket-29 scale-18 gem5 graphs, campaign file and summary record shapes, provider-call accounting) are recorded in extensa-design-2026-10-03.md, all revisable. Tickets 48–58 are ready-for-agent; 02 no longer blocks (Q66 assumption); send tickets 59 and 60 are ready-for-human with drafts and are never sent by an agent.
 
+2026-10-03 20:27 ET heartbeat (tickets 38–58): Yan-Ru added push/ssh permission rules; e3b27c7..2268ad9 (ticket 47) pushed. BC-track agent active on 38 (uncommitted seam edits in bfs_* modules). Extensa-track agent active on 48 in its worktree. mbit10 reachable (load1 1.04); no agent-owned evaluation or lease held. Tickets 41/45/56/57/58 wait on code.
+
 2026-10-03 21:00 ET: ticket 38 resolved (BC track): native kernel plug-in seam in `swdb/kernels/`, BFS the only plug-in with its exact former identities; 350 BFS regression cases pass.
+
+2026-10-03 22:40 ET: ticket 39 resolved (BC track): gem5 side of the kernel plug-in seam; frozen BFS gem5 helpers byte-identical; full suite 3,672 passed/35 skipped, remaining 34 failures identical on clean 8ad6e8a.

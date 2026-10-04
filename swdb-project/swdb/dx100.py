@@ -1,6 +1,9 @@
 """Bounded DX100 build, checkpoint, and unverified execution workflows.
 
 Updated: 2026-09-26. Build/smoke evidence never certifies a timed binary.
+2026-10-03 ET (ticket 39): the post-ROI checker, its trusted runtime files, the
+protected result line and the read-only rule come from the kernel plug-in that
+owns the checker (``swdb.kernels``); BFS keeps its exact former values.
 """
 
 import json
@@ -14,7 +17,7 @@ import sys
 import time
 import uuid
 
-from swdb import artifacts, bfs_protocol, paths, profile, workflow
+from swdb import artifacts, bfs_protocol, kernels, paths, profile, workflow
 from swdb.bfs_native import Session, StageFailure, Stopped, _integer, _now
 from swdb.cli import Failure, _require_valid
 from swdb.processes import stop_group
@@ -36,13 +39,12 @@ def _file(reference, name):
     return path
 
 
-def _verification_runtime(session):
+def _verification_runtime(session, files=None):
     """Preserve the exact trusted v2 helpers beyond a later checkout update."""
     folder = session.folder / 'verification-runtime'
     folder.mkdir(exist_ok=False)
     rows = []
-    for relative in ('scripts/dx100_verify.py', 'scripts/dx100_host_memory.py',
-                     'swdb/dx100_witness.py'):
+    for relative in files or kernels.BFS.gem5_verification_runtime:
         source = paths.HOME / relative
         original = {'path': str(source), 'sha256': artifacts.file_hash(source)}
         _file(original, 'trusted verification helper')
@@ -383,7 +385,8 @@ def _correctness(session, request, result_folder, log, completed):
     """Retain sealed ROI and explicit post-ROI verdict, even after interruption."""
     data = session.data
     checker = request['verification']['checker']
-    witnessed = checker == 'dx100.bfs.verifier.v2'
+    plugin = kernels.by_gem5_checker(checker) or kernels.BFS
+    witnessed = checker == plugin.gem5_witness_checker
     seal_path = result_folder / "roi-seal.json"
     if not seal_path.is_file():
         data["correctness"]["checks"].append({"state": "unverified", "reason": "No sealed ROI receipt was produced."})
@@ -451,11 +454,9 @@ def _correctness(session, request, result_folder, log, completed):
             found = re.match(r"^\s*Verification\s*:\s*(PASS|FAIL)\s*$", line)
             if found:
                 verdicts.append({"verdict": found[1], "line": number, "after_seal": sealed_markers == 1})
-            found = re.fullmatch(r"SWDB_BFS_RESULT source=(\d+) vertices=(\d+) parent_count=(\d+) parent_fnv1a64=([a-f0-9]{16})\s*", line)
+            found = plugin.parse_gem5_result(line, number, sealed_markers == 1)
             if found:
-                parent_results.append({"source": int(found[1]), "vertices": int(found[2]), "parent_count": int(found[3]),
-                    "parent_fnv1a64": found[4], "line": number, "after_seal": sealed_markers == 1,
-                    "fingerprint_kind": "noncryptographic FNV-1a over little-endian signed32 parent values"})
+                parent_results.append(found)
             found = re.fullmatch(r'\s*(Verification Time|Average Time):\s*([0-9]+(?:\.[0-9]+)?(?:[eE][+-]?\d+)?)\s*', line)
             if found:
                 value = float(found[2])
@@ -471,7 +472,7 @@ def _correctness(session, request, result_folder, log, completed):
     if data["context"].get("candidate_build"):
         valid = (valid and len(parent_results) == 1 and parent_results[0]["after_seal"]
             and parent_results[0]["source"] == data["context"]["source"]
-            and parent_results[0]["vertices"] == parent_results[0]["parent_count"])
+            and plugin.gem5_result_complete(parent_results[0]))
         if witnessed:
             valid = valid and parent_results[0]['line'] < verdicts[0]['line']
     elif witnessed:
@@ -485,7 +486,7 @@ def _correctness(session, request, result_folder, log, completed):
     trace = result_folder / TRACE_NAME if request['verification'].get('trace_transport') == TRANSPORT else None
     coverage = observe(log, interval_values, request["configuration"]["tile_elements"],
                        trace=trace, deadline=session.deadline,
-                       read_only=request['verification'].get('read_only', False))
+                       read_only=request['verification'].get('read_only', False), plugin=plugin)
     if trace is not None:
         data['context']['debug_trace'] = coverage['debug_trace']
     trace_ends = coverage["completed_trace_units"]
@@ -501,7 +502,7 @@ def _correctness(session, request, result_folder, log, completed):
         "sealed_roi": {"path": str(seal_path), "sha256": artifacts.file_hash(seal_path)},
         "output": {"path": str(log), "sha256": artifacts.file_hash(log)},
         "requested_checks": 1, "observed_verdicts": verdicts, "continuation": terminal,
-        "parent_results": parent_results,
+        plugin.gem5_result_field: parent_results,
         "coverage": {**coverage, "accelerator_executed": acceleration, "instruction_counters": counters},
         "scope": "This execution only; finite graph/source checking is not a proof for all inputs."}]}
     if witnessed:
@@ -516,7 +517,7 @@ def _correctness(session, request, result_folder, log, completed):
         from swdb.read_only_checks import observe_output
         store = _require_valid(session.args.records)
         check = data['correctness']['checks'][0]
-        check.update(observe_output(log, store, request['workload']['id'], data['context']['source']))
+        check.update(observe_output(log, store, request['workload']['id'], data['context']['source'], plugin))
         from swdb.read_only_checks import validate_frontier
         try:
             validate_frontier(data, check, store)
@@ -535,9 +536,8 @@ def _correctness(session, request, result_folder, log, completed):
             'parent_gather_race': check['parent_gather_race']}, sort_keys=True, indent=2) + '\n')
         data['context']['coverage_report'] = {'path': str(report), 'sha256': artifacts.file_hash(report)}
     if witnessed and valid and not explicit_failure:
-        from swdb.dx100_witness import validate_completed_witness
         try:
-            validate_completed_witness(data, require_complete_evaluation=False)
+            plugin.validate_completed_witness(data, require_complete_evaluation=False)
         except (Failure, ValueError, TypeError, KeyError, OSError) as exc:
             valid = False
             data['correctness']['state'] = 'unverified'
@@ -552,7 +552,7 @@ def _correctness(session, request, result_folder, log, completed):
             data['correctness']['checks'][0].update(state='failed', passed=False, reason=read_only_failure)
     session.save()
     if explicit_failure:
-        raise StageFailure("incorrect", "BFS structural verifier printed FAIL, independently of process exit status")
+        raise StageFailure("incorrect", plugin.gem5_failure_message())
     if read_only_failure:
         raise StageFailure('incorrect', read_only_failure)
     if not valid and completed:
@@ -622,9 +622,9 @@ def execute(args):
                     or source not in registered["sources"]):
                 raise Failure("execution graph/source differs from its registered workload")
             data["context"]["workload"] = registered
-        if compiled and compiled['context'].get('roi') == 'bfs.complete_call.v1':
-            from swdb.dx100_witness import graph_verification_contract
-            contract = graph_verification_contract(application)
+        roi_plugin = kernels.by_gem5_roi(compiled['context'].get('roi')) if compiled else None
+        if roi_plugin is not None:
+            contract = roi_plugin.graph_verification_contract(application)
             verifier_source = compiled['context'].get('verifier_source', {})
             driver_reference = compiled['context'].get('driver', {})
             if (compiled['build'].get('adapter') != 'dx100.complete_call.v2'
@@ -635,7 +635,8 @@ def execute(args):
             if not request.get('fixture') and registered is None:
                 raise Failure('original-adjacency candidate checking requires a registered workload')
             data['context']['graph_verification'] = dict(contract)
-            data['context']['protected_bfs_verifier'] = compiled['context']['protected_bfs_verifier']
+            key = roi_plugin.protected_verifier_key
+            data['context'][key] = compiled['context'][key]
         if 'protocol_trial' in request:
             trial = request['protocol_trial']
             if not isinstance(trial, dict) or set(trial) != {'source_position', 'repetition'}:
@@ -730,24 +731,32 @@ def execute(args):
         env.pop('SWDB_DX100_POST_ROI_CPU', None)
         verify = request.get("verification")
         driver = paths.HOME / "scripts/dx100_verify.py"
+        checker_plugin = None
         if verify is not None:
+            checker_plugin = kernels.by_gem5_checker(verify.get("checker")) if isinstance(verify, dict) else None
             if (not isinstance(verify, dict) or set(verify) - {"checker", "max_ticks", "coverage", "post_roi_trace", "trace_transport", "post_roi_cpu", "read_only"}
-                    or verify.get("checker") not in {"dx100.bfs.verifier.v1", "dx100.bfs.verifier.v2"} or "max_ticks" not in verify):
-                raise Failure("verification requires checker dx100.bfs.verifier.v1 or v2 and max_ticks")
+                    or checker_plugin is None or "max_ticks" not in verify):
+                raise Failure("verification requires checker dx100.bfs.verifier.v1 or v2 and max_ticks "
+                              "(or another kernel plug-in checker: " + ", ".join(kernels.gem5_checkers()) + ")")
+            witnessed = verify['checker'] == checker_plugin.gem5_witness_checker
+            if compiled:
+                compiled_kernel = (store.get(compiled.get('implementation'), 'implementation') or {}).get('kernel')
+                if compiled.get('implementation') and compiled_kernel and compiled_kernel != checker_plugin.kernel:
+                    raise Failure('verification checker belongs to another kernel than the compiled candidate')
             if type(verify.get("coverage", False)) is not bool:
                 raise Failure("verification.coverage must be boolean")
             if type(verify.get('read_only', False)) is not bool:
                 raise Failure('verification.read_only must be boolean')
-            if verify.get('read_only') and (verify['checker'] != 'dx100.bfs.verifier.v2' or not verify.get('coverage')):
+            if verify.get('read_only') and (not witnessed or not verify.get('coverage')):
                 raise Failure('read-only qualification requires v2 correctness and coverage tracing')
             if 'post_roi_trace' in verify and (type(verify['post_roi_trace']) is not str
                     or verify['post_roi_trace'] != 'SyscallBase'):
                 raise Failure('verification.post_roi_trace must be SyscallBase when present')
-            if verify['checker'] == 'dx100.bfs.verifier.v2' and verify.get('post_roi_trace') != 'SyscallBase':
+            if witnessed and verify.get('post_roi_trace') != 'SyscallBase':
                 raise Failure('v2 verification requires explicit post_roi_trace: SyscallBase')
             # R12 (2026-09-27): opt-in atomic verifier continuation after the ROI seal.
             if 'post_roi_cpu' in verify and (verify['post_roi_cpu'] != 'AtomicSimpleCPU'
-                                             or verify['checker'] != 'dx100.bfs.verifier.v2'):
+                                             or not witnessed):
                 raise Failure('verification.post_roi_cpu must be AtomicSimpleCPU with the v2 checker')
             if 'trace_transport' in verify and verify['trace_transport'] != 'gem5-gzip.v1':
                 raise Failure('verification.trace_transport must be gem5-gzip.v1 when present')
@@ -763,11 +772,10 @@ def execute(args):
                         "symbol": "BFSVerifier", "lines": [463, 508],
                         "harness": {"path": str(harness), "sha256": artifacts.file_hash(harness)}})
             observer = paths.HOME / 'scripts/dx100_host_memory.py'
-            if verify['checker'] == 'dx100.bfs.verifier.v2':
-                runtime = _verification_runtime(session)
-                driver = runtime / 'scripts/dx100_verify.py'
-                observer = runtime / 'scripts/dx100_host_memory.py'
-                parser = runtime / 'swdb/dx100_witness.py'
+            if witnessed:
+                files = checker_plugin.gem5_verification_runtime
+                runtime = _verification_runtime(session, files)
+                driver, observer, parser = (runtime / relative for relative in files)
                 data['context']['verification_parser'] = {'path': str(parser), 'sha256': artifacts.file_hash(parser)}
             data["context"]["verification_driver"] = {"path": str(driver), "sha256": artifacts.file_hash(driver)}
             data['context']['host_memory_observer'] = {'path': str(observer),
@@ -789,7 +797,7 @@ def execute(args):
             instrumentation['graph_verification'] = dict(data['context']['graph_verification'])
         if verify and 'trace_transport' in verify:
             data['context']['trace_transport'] = verify['trace_transport']
-        if verify and verify['checker'] == 'dx100.bfs.verifier.v2':
+        if verify and witnessed:
             instrumentation['verifier_runtime'] = {
                 'driver_sha256': data['context']['verification_driver']['sha256'],
                 'parser_sha256': data['context']['verification_parser']['sha256'],
@@ -797,7 +805,7 @@ def execute(args):
         if verify and 'post_roi_trace' in verify:
             instrumentation['post_roi_trace'] = {
                 'flag': verify['post_roi_trace'], 'scope': 'post-seal verifier continuation only'}
-            if verify['checker'] == 'dx100.bfs.verifier.v2':
+            if witnessed:
                 instrumentation['post_roi_trace'].update(output='separate_simulator_trace', format_flags=['FmtFlag'],
                     disabled_format_flags=['FmtTicksOff', 'FmtStackTrace'],
                     disabled_roi_flags=['MAATrace', 'MAARangeFuser', 'MAAIndirect'], chunk_ticks=10**9)
