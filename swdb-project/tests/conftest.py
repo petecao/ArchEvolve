@@ -1,5 +1,6 @@
 """Shared test helpers: every test drives `swdb` as a separate process."""
 
+import contextlib
 import copy
 import os
 import shutil
@@ -98,3 +99,39 @@ def records(tmp_path):
     rec = Records()
     rec.path.mkdir()
     return rec
+
+
+# 2026-10-04 ET (final code review): the suite once left stray `records/*/fixture.*.yaml` files
+# in the real checkout. Every test now fails if it creates, changes or deletes a file under the
+# checkout's `records/` or `library/`; files it created are removed so the checkout stays clean.
+GUARDED = ("records", "library")
+
+
+def _checkout_files():
+    files = {}
+    for name in GUARDED:
+        for folder, _dirs, names in os.walk(REPO / name):
+            for item in names:
+                path = os.path.join(folder, item)
+                try:
+                    state = os.stat(path)
+                except FileNotFoundError:
+                    continue
+                files[path] = (state.st_size, state.st_mtime_ns)
+    return files
+
+
+@pytest.fixture(autouse=True)
+def checkout_records_unchanged():
+    before = _checkout_files()
+    yield
+    after = _checkout_files()
+    created = sorted(set(after) - set(before))
+    changed = sorted(p for p in set(after) & set(before) if after[p] != before[p])
+    deleted = sorted(set(before) - set(after))
+    for path in created:
+        with contextlib.suppress(OSError):
+            os.unlink(path)
+    if created or changed or deleted:
+        pytest.fail("test wrote into the checkout's records/library: "
+                    f"created={created[:5]} changed={changed[:5]} deleted={deleted[:5]}")
