@@ -45,7 +45,12 @@ def test_explanation_names_range_bounds_and_the_continuation_convention():
     text = F.explanation(["control:dropped_wait", "strict_layer_assertion:range_bounds"])
     assert text.startswith("Certification failed. range_bounds: __dxc_range_loop")
     assert "last_i_reg = 0" in text and "last_j_reg = -1" in text
-    assert "Negative controls not rejected: 1." in text and len(text) <= 400
+    assert "Negative controls not rejected (1): dropped_wait." in text and len(text) <= 400
+
+
+def test_a_passing_matrix_with_a_surviving_control_names_the_control():
+    assert F.explanation(["control:forged_frontier"]) == \
+        "Certification failed. Negative controls not rejected (1): forged_frontier."
 
 
 @pytest.mark.parametrize("check", sorted(F.STRICT_MESSAGES))

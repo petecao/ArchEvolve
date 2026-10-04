@@ -123,8 +123,12 @@ def explanation(failed_checks, limit=400):
         name = check.split(":", 1)[1] if check.startswith(STRICT_PREFIX + ":") else check
         text = message(check)
         parts.append(f"{name}: {text}" if text else name)
-    head = "Certification failed. " + ("; ".join(parts) + "." if parts else "")
-    tail = f" Negative controls not rejected: {len(controls)}." if controls else ""
+    head = "Certification failed." + (" " + "; ".join(parts) + "." if parts else "")
+    # a7 (2026-10-04 ET): with a passing matrix the surviving controls are the whole failure,
+    # so they are named (the same names the `failed_checks` field already carries).
+    named = ", ".join(c.split(":", 1)[1] for c in controls)
+    tail = (f" Negative controls not rejected ({len(controls)}): {named}." if controls and len(named) <= 200
+            else f" Negative controls not rejected: {len(controls)}." if controls else "")
     if len(head) + len(tail) > limit:
         names = ", ".join(c.split(":", 1)[1] if c.startswith(STRICT_PREFIX + ":") else c for c in primary)
         first = parts[0] if parts else ""
