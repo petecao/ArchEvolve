@@ -194,3 +194,5 @@ Periodic follow-up, 2026-10-03 18:14 ET: root independently read back source6cf 
 2026-10-03 23:35 ET: ticket 44 resolved (BC track): BC gem5 completion witness and read-only execution case, fixtures only (18 cases); ticket 45 still needs the gem5 run.
 
 2026-10-03 23:50 ET: ticket 46 resolved (BC track): typed-library JSON schema, SQLite library and statements index, library-aware staleness (8 cases).
+
+2026-10-03 23:15 ET: ticket 41 resolved (BC track): on mbit10 (ec50f78, lane node 1, generation 507, 23:03-23:09 ET, load1 1.00) the scalar BC snapshot and the Kronecker and uniform scale-18 BC workloads registered, and native evaluation bc-native-20261003-a1.kronecker18 passed BCVerifier in 9/9 trials; lease released, no owned process left.

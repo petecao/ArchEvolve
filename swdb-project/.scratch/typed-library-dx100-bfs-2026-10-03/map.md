@@ -76,7 +76,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 38 | [Prefactor: kernel plug-in seam, native side](issues/38-kernel-seam-native.md) | resolved | — |  |
 | 39 | [Prefactor: kernel plug-in seam, gem5 side](issues/39-kernel-seam-gem5.md) | resolved | 23 |  |
 | 40 | [BC on the native evaluator (code)](issues/40-bc-native-code.md) | resolved | 38 |  |
-| 41 | [BC native evaluation on mbit10](issues/41-bc-native-run.md) | ready-for-agent | 08, 40 | yes |
+| 41 | [BC native evaluation on mbit10](issues/41-bc-native-run.md) | resolved | 08, 40 | yes |
 | 42 | [BC certification and the derived BC contract](issues/42-bc-certification-and-derived-contract.md) | resolved | 18, 17, 28, 40 |  |
 | 43 | [Yan-Ru promotes the derived BC contract](issues/43-promote-bc-contract.md) | ready-for-human | 42 |  |
 | 44 | [BC gem5 completion witness and execution case](issues/44-bc-gem5-completion-witness.md) | resolved | 39, 40 |  |
@@ -184,3 +184,5 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - Ticket 44, completed 2026-10-03 23:35 ET: BC gem5 v2 completion witness (bc_witness: BC checks plus the frozen BFS v2 rules on a translated copy), BC verify driver copy, trusted BC oracle driver, forward-pass read-only case without a race companion; fixtures only. [44-bc-gem5-completion-witness](issues/44-bc-gem5-completion-witness.md).
 
 - Ticket 46, completed 2026-10-03 23:50 ET: library entry JSON schema; SQLite library_entries/dependencies/clauses and statements/statement_steps; staleness covers the library folder. [46-library-schema-and-index](issues/46-library-schema-and-index.md).
+
+- Ticket 41, completed 2026-10-03 23:15 ET: BC workloads bc-20261003-kronecker18/uniform18 registered on the BFS scale-18 graphs; scalar BC snapshot registered; native evaluation bc-native-20261003-a1.kronecker18 passes BCVerifier (9/9 trials) on mbit10 node 1, commit ec50f78. [41-bc-native-run](issues/41-bc-native-run.md).
