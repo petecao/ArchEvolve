@@ -96,7 +96,7 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 | 51 | [Seed the experimental tier from Extensa](issues/51-seed-extensa-families.md) | resolved | 50 |  |
 | 52 | [Extensa campaign skeleton](issues/52-campaign-skeleton.md) | resolved | 07, 24, 48, 49 |  |
 | 53 | [Speed rule, per-class verdicts, selection and knob tuning](issues/53-speed-rule-and-selection.md) | resolved | 52 |  |
-| 54 | [Extensa campaign budgets and pruning](issues/54-campaign-budgets.md) | ready-for-agent | 08, 26, 52 |  |
+| 54 | [Extensa campaign budgets and pruning](issues/54-campaign-budgets.md) | resolved | 08, 26, 52 |  |
 | 55 | [Query site finder](issues/55-query-site-finder.md) | ready-for-agent | 46, 52 |  |
 | 56 | [Native-CPU Extensa campaign target for BFS](issues/56-native-campaign-target.md) | ready-for-agent | 51, 53, 54, 55 | yes (granted) |
 | 57 | [gem5 Extensa campaign target](issues/57-gem5-campaign-target.md) | ready-for-agent | 29, 53, 54, 55 | yes (granted) |
@@ -184,3 +184,5 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - 2026-10-03 21:49 ET: ticket 52 resolved. swdb campaign runs fixture iterations end to end (campaign file schema and D5 refusals, tagged campaign store, campaign_summary in both stores); native and gem5 adapters remain tickets 56/57. [52-campaign-skeleton](issues/52-campaign-skeleton.md).
 
 - 2026-10-03 21:50 ET: ticket 53 resolved. One frozen protocol per campaign, strict >1.05 with spread <=0.1 (gem5 point ratios), native A/A pilot, per-class certification-first selection with faster_uncertified, knob range refusal. [53-speed-rule-and-selection](issues/53-speed-rule-and-selection.md).
+
+- 2026-10-03 21:51 ET: ticket 54 resolved. Every D6 stop reason, uncounted usage-limit/login pauses with resume, campaign-wide call budget, disk cap and preflight, lane conflict, and post-comparison pruning with claimed runs kept are fixture-tested. [54-campaign-budgets](issues/54-campaign-budgets.md).
