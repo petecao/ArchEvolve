@@ -302,7 +302,11 @@ def test_native_paired_blocks_against_both_baselines_select_on_fork(team, base_s
     _, summary = run(team, native_campaign(team, max_iterations=1), config, runner, FakeHost())
     freezes = [c["request"] for c in runner.calls if c["command"] == "freeze-protocol"]
     assert [f["id"] for f in freezes] == ["extensa-native-bfs-20261004-f1.protocol.fork_scalar_tdstep",
-                                          "extensa-native-bfs-20261004-f1.protocol.upstream_do_bfs"]
+                                          "extensa-native-bfs-20261004-f1.protocol.upstream_do_bfs",
+                                          "extensa-native-bfs-20261004-f1.protocol.upstream_do_bfs.aa"]
+    # Ticket 63: the upstream A/A pilot freezes both sides as the upstream baseline build.
+    aa = freezes[2]["settings"]
+    assert aa["builds"]["candidate"] == aa["builds"]["baseline"] == freezes[1]["settings"]["builds"]["baseline"]
     upstream = freezes[1]["settings"]["builds"]
     assert upstream["baseline"]["adapter"] == "gapbs_native" and upstream["candidate"]["adapter"] == "dx100_scalar_func"
     assert all(f["settings"]["targets"]["baseline"]["configuration"] == {"lane": "mbit10-evaluation-node0"}
@@ -310,6 +314,8 @@ def test_native_paired_blocks_against_both_baselines_select_on_fork(team, base_s
     pairs = [c["request"] for c in runner.calls if c["command"] == "evaluate-pair"]
     pilots = [p for p in pairs if ".pilot." in p["id"]]
     assert len(pilots) == 4 and all(p["baseline"]["candidate"] == p["candidate"]["candidate"] for p in pilots)
+    assert all(p["baseline"]["protocol"].endswith(".upstream_do_bfs.aa.0123456789abcdef") == (".upstream_do_bfs." in p["id"])
+               for p in pilots)
     blocks = [p for p in pairs if ".pilot." not in p["id"]]
     assert len(blocks) == 4            # two classes x two baselines, each its own paired block
     for p in blocks:
@@ -361,7 +367,7 @@ def test_native_scale22_runs_under_evaluator_v2_protocols(team, base_source):
     assert summary["stop_reason"] == "baseline_unstable"        # reached the pilot, not a setup stop
     freezes = [c["request"]["settings"] for c in runner.calls if c["command"] == "freeze-protocol"]
     template = artifacts.file_hash(scalable.DRIVER_V2)
-    assert len(freezes) == 2 and all(
+    assert len(freezes) == 3 and all(
         f["evaluator"] == scalable.EVALUATOR_V2 and f["correctness"]["verifier"] == scalable.VERIFIER_V2
         and all(f["instrumentation"][side] == {"template_sha256": template, "treatment": "included"}
                 for side in ("baseline", "candidate")) for f in freezes)

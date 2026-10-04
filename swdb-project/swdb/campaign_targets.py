@@ -528,17 +528,35 @@ class NativeAdapter(TargetAdapter):
             if code or not record or record.get("kind") != "protocol":
                 raise _stop("infrastructure_failure", f"native protocol freeze for {role} failed (see jobs/freeze-{role})")
             frozen[role] = {"id": record["id"], "identity_sha256": record["identity_sha256"]}
+            if out["builds"]["baseline"] != out["builds"]["candidate"]:
+                # Ticket 63 (2026-10-04 ET): the A/A pilot times this role's baseline against
+                # itself, so it needs a protocol whose candidate side is the baseline build
+                # (the upstream role's candidate build is the DX100 fork's).
+                aa = copy.deepcopy(out)
+                aa["builds"]["candidate"] = copy.deepcopy(aa["builds"]["baseline"])
+                aa["instrumentation"]["candidate"] = copy.deepcopy(aa["instrumentation"]["baseline"])
+                aa["differences"]["software"] = aa["differences"]["software"] + [
+                    "A/A pilot protocol: both sides are the baseline build."]
+                request = {"message_version": "1.0", "id": f"{self.cid}.protocol.{role}.aa", "version": 1,
+                           "settings": aa}
+                code, record = self.runner("freeze-protocol", request, stage=f"freeze-{role}-aa", timeout=600)
+                if code or not record or record.get("kind") != "protocol":
+                    raise _stop("infrastructure_failure",
+                                f"native A/A protocol freeze for {role} failed (see jobs/freeze-{role}-aa)")
+                frozen[role]["aa"] = record["id"]
         self.protocols = {role: row["id"] for role, row in frozen.items()}
+        self.aa_protocols = {role: row.get("aa", row["id"]) for role, row in frozen.items()}
         base = frozen[self.campaign["base_source"]]
         return {"id": base["id"], "identity_sha256": base["identity_sha256"], "settings": settings, "by_role": frozen}
 
     def restore(self, state):
         if state.get("protocol") and getattr(self, "protocols", None) is None:      # a resumed campaign
             self.protocols = {role: row["id"] for role, row in state["protocol"]["by_role"].items()}
+            self.aa_protocols = {role: row.get("aa", row["id"]) for role, row in state["protocol"]["by_role"].items()}
 
-    def _member(self, rid, candidate, role, cls, side):
+    def _member(self, rid, candidate, role, cls, side, protocol=None):
         return {"message_version": "1.0", "id": rid, "candidate": candidate, "machine": self.campaign["machine"],
-                "protocol": self.protocols[role], "protocol_role": side,
+                "protocol": protocol or self.protocols[role], "protocol_role": side,
                 "threads": self.campaign["protocol"]["threads"],
                 "repetitions": self.campaign["protocol"]["repetitions"],
                 "sources": list(self.campaign["protocol"]["sources"]), "roi": self.campaign["protocol"]["roi"],
@@ -552,18 +570,19 @@ class NativeAdapter(TargetAdapter):
     def _workload(self, cls):
         return next(c["workload"] for c in self.campaign["workload_classes"] if c["class"] == cls)
 
-    def _block(self, tag, candidate, role, cls):
+    def _block(self, tag, candidate, role, cls, protocol=None):
         """One paired block (its own baseline evaluation) and its comparison."""
+        protocol = protocol or self.protocols[role]
         pair = {"message_version": "1.0", "id": f"{tag}.pair", "collection": {"method": "native_paired.v1",
                 "order_seed": 20260926}, "budget": {"total_seconds": 7200},
-                "baseline": self._member(f"{tag}.baseline-eval", self.baseline(role), role, cls, "baseline"),
-                "candidate": self._member(f"{tag}.candidate-eval", candidate, role, cls, "candidate")}
+                "baseline": self._member(f"{tag}.baseline-eval", self.baseline(role), role, cls, "baseline", protocol),
+                "candidate": self._member(f"{tag}.candidate-eval", candidate, role, cls, "candidate", protocol)}
         code, record = self.runner("evaluate-pair", pair, stage=f"{tag}.pair", timeout=7500,
                                    extra=["--runs-dir", self.runs, "--lane", self.lane])
         if not record or record.get("outcome", {}).get("state") != "complete":
             reason = (record or {}).get("outcome", {}).get("reason") or "paired collection failed"
             return None, reason, [pair["baseline"]["id"], pair["candidate"]["id"]]
-        compare = {"message_version": "1.0", "id": f"{tag}.comparison", "protocol": self.protocols[role],
+        compare = {"message_version": "1.0", "id": f"{tag}.comparison", "protocol": protocol,
                    "comparison_baseline": ROLE_IMPLEMENTATION[role],
                    "baseline_evaluation": pair["baseline"]["id"], "candidate_evaluation": pair["candidate"]["id"]}
         code, result = self.runner("compare-evaluations", compare, stage=f"{tag}.comparison", timeout=POSTPROCESS_SECONDS)
@@ -584,7 +603,8 @@ class NativeAdapter(TargetAdapter):
         if self.other_gem5():
             raise _stop("infrastructure_failure", self.other_gem5())
         tag = f"{self.cid}.pilot.{cls}.{role}"
-        result, reason, evaluations = self._block(tag, self.baseline(role), role, cls)
+        result, reason, evaluations = self._block(tag, self.baseline(role), role, cls,
+                                                  getattr(self, "aa_protocols", {}).get(role))
         if result is None:
             raise _stop("infrastructure_failure", f"A/A pilot {cls}/{role} failed: {reason}"[:1500])
         numbers = self._numbers(result)
