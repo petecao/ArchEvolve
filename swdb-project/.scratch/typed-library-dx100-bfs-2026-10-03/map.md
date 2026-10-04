@@ -78,7 +78,7 @@ Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (readied 
 | 40 | [BC on the native evaluator (code)](issues/40-bc-native-code.md) | resolved | 38 |  |
 | 41 | [BC native evaluation on mbit10](issues/41-bc-native-run.md) | resolved | 08, 40 | yes |
 | 42 | [BC certification and the derived BC contract](issues/42-bc-certification-and-derived-contract.md) | resolved | 18, 17, 28, 40 |  |
-| 43 | [Yan-Ru promotes the derived BC contract](issues/43-promote-bc-contract.md) | ready-for-human | 42 |  |
+| 43 | [Yan-Ru promotes the derived BC contract](issues/43-promote-bc-contract.md) | resolved | 42 |  |
 | 44 | [BC gem5 completion witness and execution case](issues/44-bc-gem5-completion-witness.md) | resolved | 39, 40 |  |
 | 45 | [BC gem5 evaluation](issues/45-bc-gem5-evaluation.md) | ready-for-agent | 26, 29, 41, 43, 44 | yes |
 | 46 | [Library JSON schema and SQLite index](issues/46-library-schema-and-index.md) | resolved | 42 |  |
@@ -186,3 +186,5 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - Ticket 46, completed 2026-10-03 23:50 ET: library entry JSON schema; SQLite library_entries/dependencies/clauses and statements/statement_steps; staleness covers the library folder. [46-library-schema-and-index](issues/46-library-schema-and-index.md).
 
 - Ticket 41, completed 2026-10-03 23:15 ET: BC workloads bc-20261003-kronecker18/uniform18 registered on the BFS scale-18 graphs; scalar BC snapshot registered; native evaluation bc-native-20261003-a1.kronecker18 passes BCVerifier (9/9 trials) on mbit10 node 1, commit ec50f78. [41-bc-native-run](issues/41-bc-native-run.md).
+
+- Ticket 43, completed 2026-10-03 23:31 ET: contract.bc_read_offload was agent-reviewed and promoted under Yan-Ru's 2026-10-03 delegation and is revisable by Yan-Ru. It is now shared/certified (review.contract.bc_read_offload.30a3747420b3). The Mac re-certification matches certification.1e389a95, and the review found no blocker. [43-promote-bc-contract](issues/43-promote-bc-contract.md), [review](bc-contract-review-2026-10-03.md).
