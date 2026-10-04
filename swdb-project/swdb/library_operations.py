@@ -20,6 +20,7 @@ import shutil
 import signal
 import socket
 import subprocess
+import tempfile
 import uuid
 from pathlib import Path
 
@@ -259,7 +260,7 @@ def certify_entry(store, library, entry_id, profile_path, runs_dir=None, seed=No
         raise Failure(f"certification refused: {exc}") from None
     resolved = inputs(library, entry)
     seed = secrets.randbits(32) if seed is None else int(seed)
-    base = artifacts.external_directory(runs_dir or "/private/tmp/swdb-certification")
+    base = artifacts.external_directory(runs_dir or Path(tempfile.gettempdir()) / "swdb-certification")
     folder = base / ("certify-" + uuid.uuid4().hex)
     folder.mkdir(parents=True)
     content_sha256 = library.content_sha256(entry_id)

@@ -311,7 +311,7 @@ def peter_source(scalar):
     return source.replace('    return parent;\n}\n\n\nvoid PrintBFSStats', '    __dxc_report();\n    return parent;\n}\n\n\nvoid PrintBFSStats', 1)
 
 
-def create_peter_patch(store, output, library=None, plugin=None, temporary_root='/private/tmp'):
+def create_peter_patch(store, output, library=None, plugin=None, temporary_root=None):
     """Produce the deliverable patch without changing a vendored source byte.
 
     Ticket 42: ``plugin`` selects the kernel (default BFS: Peter section 5); its
@@ -705,7 +705,7 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
             raise UsageError('unknown library entry: ' + entry_id)
         content_sha256 = catalog.content_sha256(entry_id)
         dependencies = catalog.dependency_pins(entry_id)
-    base = artifacts.external_directory(runs_dir or '/private/tmp/swdb-certification')
+    base = artifacts.external_directory(runs_dir or Path(tempfile.gettempdir()) / 'swdb-certification')
     folder = base / ('certify-' + uuid.uuid4().hex)
     folder.mkdir()
     before = artifacts.identify(ROOT / 'apps/dx100')
