@@ -1,7 +1,7 @@
 # 56 — Native-CPU Extensa campaign target for BFS
 
 Created: 2026-10-03
-Updated: 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
+Updated: 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 51, 53, 54, 55
@@ -58,3 +58,28 @@ is `native_cpu` and no `--fixture` is given:
 **Assumptions (agent-decided, revisable).** One protocol per baseline role (not one per campaign);
 the uniform class uses a new three-source registration of the same graph; the campaign stops rather
 than raising the evaluator's limits (an evaluator change is Yan-Ru's call, ticket 61).
+
+### Update 2026-10-04 10:55 ET: A/A pilot under native evaluator v2 (tickets 61, 63)
+
+Ticket 61 was decided as option 1 (agent-decided under Yan-Ru's 2026-10-04 delegation; revisable) and
+implemented in ticket 63: native evaluator `swdb.native.evaluator.scalable.v2` with the compiled verifier
+`swdb.bfs.structural.compiled.v2`. D3/D4 are unchanged. Run on mbit10 from the clone
+`/data1/yanruj/ArchEvolve-native` (git bundles, not pushed), runs root `/data/yanruj/EvolveSWDB_runs`
+(`/data1` had 40 GB free), node 1 through `socket_lane.sh` (Memacc checkout current with its origin), each
+time with `--baselines-only` so no provider call could run before the shared Codex login has a session lock.
+
+- `extensa-native-bfs-20261004-a2` (generation 516, 09:08 ET, commit 36e7544): first pilot block passed
+  correctness on every trial; it stopped with `infrastructure_failure` at the upstream A/A block ("actual
+  build differs from frozen settings"). Ticket 56's adapter timed the upstream baseline as the candidate side
+  of a protocol whose candidate build is the DX100 fork's. Fixed in fd983a6: roles whose builds differ get
+  an A/A protocol `<campaign>.protocol.<role>.aa` with the baseline build on both sides.
+- `extensa-native-bfs-20261004-a3` (generation 517, 09:31-10:31 ET, load1 1.1-2.1, commit fd983a6): all four
+  pilot blocks completed, every trial verified by the compiled verifier. Stop reason **`baseline_unstable`**.
+  Max spread per class and role: Kronecker fork 0.161, Kronecker upstream 0.012, uniform fork 0.057, uniform
+  upstream 0.134. 0 provider calls, 0.99 lane-hours, 2.36 GB peak disk. Summary
+  `records/campaign_summaries/extensa-native-bfs-20261004-a3.summary.yaml` (a2's beside it).
+- Main cause found: source 7777 is isolated in the Kronecker 22 graph; its ROI is only initialization,
+  bimodal at about 49 or 58 ms. Per D3, no threshold changed; the protocol follow-up is needs-info ticket
+  [64](64-native-scale22-pilot-unstable.md).
+
+No candidate was timed, so there is no verdict per class ("single graph per class", measured: not reached).
