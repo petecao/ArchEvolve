@@ -80,7 +80,9 @@
         "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
         "scope": {"type": "string", "minLength": 1},
         "raised_budgets": {"type": "array", "items": {"type": "string"}},
-        "two_lanes": {"type": "boolean"}
+        "two_lanes": {"type": "boolean"},
+        "gem5_other_socket": {"type": "boolean",
+                              "description": "Native blocks may run while another campaign's gem5 job holds the other socket; recorded per block (ticket 64, 2026-10-04 ET)."}
       }
     }
   }

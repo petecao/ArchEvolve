@@ -132,8 +132,10 @@
             "enum": [
               "gain",
               "no_gain",
-              "inconclusive"
-            ]
+              "inconclusive",
+              "baseline_unstable"
+            ],
+            "description": "baseline_unstable (2026-10-04 ET, ticket 64): the class failed the native A/A pilot and was not timed."
           },
           "best": {
             "type": [

@@ -518,6 +518,7 @@ class Campaign:
                                                   f"{self.file}@{self.sha256}")
         self.max_repairs = self.data["budgets"].get("max_repairs", DEFAULT_MAX_REPAIRS)
         self.classes = [c["class"] for c in self.data["workload_classes"]]
+        self.all_classes = list(self.classes)
         self.roles = [b["role"] for b in self.data["baselines"]]
         from swdb import rewrite
         self.provider_config = rewrite.configuration(Path(args.provider_config))
@@ -645,19 +646,38 @@ class Campaign:
         self.state["setup_done"] = True
 
     def _pilot(self):
-        """Native A/A pilot (D3): any spread above 0.1 stops before any provider call."""
+        """Native A/A pilot (D3): a class with any spread above 0.1 is not timed.
+
+        Ticket 64 (2026-10-04 ET, agent-decided under Yan-Ru's delegation; revisable): the gate
+        applies per class. An unstable class stops as `baseline_unstable` for that class only;
+        the campaign stops with `baseline_unstable` only when every class is unstable. The
+        threshold is unchanged and never loosened inside a campaign."""
         spreads = {}
         for cls in self.classes:
             for role in self.roles:
                 self._step("evaluation", job=True)
                 started = time.monotonic()
-                spreads.setdefault(cls, {})[role] = self.adapter.pilot(cls, role)["spread"]
+                block = self.adapter.pilot(cls, role)
+                spreads.setdefault(cls, {})[role] = block["spread"]
+                if block.get("other_socket") is not None:
+                    self.state.setdefault("pilot_other_socket", {}).setdefault(cls, {})[role] = block["other_socket"]
                 self._spent("evaluation", started)
-        passed = all(s <= SPREAD_LIMIT for row in spreads.values() for s in row.values())
-        self.state["pilot"] = {"spreads_by_class_and_role": spreads, "passed": passed}
-        if not passed:
+        unstable = [cls for cls in self.classes if any(s > SPREAD_LIMIT for s in spreads[cls].values())]
+        self.state["pilot"] = {"spreads_by_class_and_role": spreads, "passed": not unstable,
+                               "unstable_classes": unstable}
+        if self.state.get("pilot_other_socket"):
+            self.state["pilot"]["other_socket_by_class_and_role"] = self.state["pilot_other_socket"]
+        self._apply_pilot()
+        if not self.classes:
             self.ledger.terminate(S.StopReason.BASELINE_UNSTABLE)
-            self.state["stop_detail"] = "baseline A/A spread exceeds 0.1"
+            self.state["stop_detail"] = "baseline A/A spread exceeds 0.1 in every class"
+
+    def _apply_pilot(self):
+        """Time only the classes whose A/A pilot passed (also after a resume)."""
+        unstable = (self.state.get("pilot") or {}).get("unstable_classes")
+        if unstable is None and (self.state.get("pilot") or {}).get("passed") is False:
+            unstable = list(self.all_classes)      # a pilot recorded before the per-class gate
+        self.classes = [cls for cls in self.all_classes if cls not in (unstable or [])]
 
     def _setup_call(self):
         if self.budget.provider_calls_setup < 1 or self.state.get("setup_call_done"):
@@ -1016,6 +1036,8 @@ class Campaign:
                     self.adapter.restore(self.state)
                 if self.data["target"] == "native_cpu" and self.state["pilot"] is None:
                     self._pilot()
+                elif self.data["target"] == "native_cpu":
+                    self._apply_pilot()
                 if getattr(self.args, "baselines_only", False) and self.ledger.stop()[0] is None:
                     return self._baselines_only()
                 if self.ledger.stop()[0] is None:
@@ -1082,6 +1104,19 @@ class Campaign:
         return {"state": "prepared", "campaign": self.cid, "baselines": self.state["baselines"],
                 "lane_hours": self.state["lane_hours"], "resume": f"swdb campaign {self.file} --resume"}
 
+    def _class_row(self, c):
+        """Ticket 64 (2026-10-04 ET): report the registered timed sources and any recorded replacement."""
+        row = {"class": c["class"], "workload": c["workload"], "sources": list(self.data["protocol"]["sources"])}
+        try:
+            from swdb.store import Store
+            definition = (Store(self.store_dir).get(c["workload"], "workload") or {}).get("definition", {})
+        except Exception:      # a fixture store without the workload keeps the campaign's sources
+            definition = {}
+        if definition.get("source_policy"):
+            row["sources"] = list(definition["sources"])
+            row["source_policy"] = definition["source_policy"]
+        return row
+
     def _finish(self):
         from swdb import writer
         self.adapter.release_lane()
@@ -1102,9 +1137,12 @@ class Campaign:
         except ValueError:
             rel = str(self.file.resolve())
         per_class = []
-        for cls in self.classes:
+        unstable = (self.state.get("pilot") or {}).get("unstable_classes") or []
+        for cls in self.all_classes:
             pool = [c for r in self.state["iterations"] for c in r["candidates"] if c["class"] == cls]
             best, faster, verdict = select(pool)
+            if cls in unstable:
+                verdict = "baseline_unstable"
             other = None
             if best:
                 other = next(({"role": c["baseline_role"], "ratio": c["ratio"], "lower": c["lower"],
@@ -1136,8 +1174,7 @@ class Campaign:
             baselines=[{"role": b["role"], "candidate": b["candidate"],
                         "evaluation_ids_by_class": {k.split("/")[0]: v for k, v in self.state["baselines"].items()
                                                     if k.split("/")[1] == b["role"]}} for b in self.data["baselines"]],
-            workload_classes=[{"class": c["class"], "workload": c["workload"],
-                               "sources": list(self.data["protocol"]["sources"])} for c in self.data["workload_classes"]],
+            workload_classes=[self._class_row(c) for c in self.data["workload_classes"]],
             label=LABEL, provider=dict(self.data["provider"]), pilot=self.state.get("pilot"),
             setup={"provider_calls": self.state.get("setup_calls", [])},
             iterations=copy.deepcopy(self.state["iterations"]), per_class=per_class,

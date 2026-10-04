@@ -466,3 +466,25 @@ def test_v2_settings_pin_evaluator_and_verifier_together(v2_setup, tmp_path):
     member = {**request["candidate"], "id": "v2.mismatch", "evaluator": "swdb.native.evaluator.v1"}
     result = records.swdb("evaluate", _payload(tmp_path, "mismatch", member), "--runs-dir", runs, "--format", "json")
     assert "differs from the frozen protocol" in json.loads(result.stdout)["outcome"]["reason"]
+
+
+def test_registration_replaces_zero_out_degree_sources_and_records_it(v2_setup, tmp_path):
+    """Ticket 64 (2026-10-04 ET): GAPBS SourcePicker rule, deterministic successor, recorded."""
+    graph = {"num_vertices": 7, "directed": False, "edges": [[0, 1], [1, 2], [5, 6], [4, 5]]}
+    records = v2_setup[0]
+    request = _workload_request(records, tmp_path, graph, name="isolated-source")
+    request["sources"] = [3, 4, 0]
+    request["source_policy"] = "swdb.sources.next_positive_out_degree.v1"
+    workload = _command(records, "register-workload", _payload(tmp_path, "isolated", request))
+    definition = workload["definition"]
+    assert definition["sources"] == [5, 4, 0]      # 3 is isolated; 4 is already a source, so 5
+    assert definition["source_policy"]["requested_sources"] == [3, 4, 0]
+    assert definition["source_policy"]["replacements"] == [
+        {"requested": 3, "requested_out_degree": 0, "selected": 5, "selected_out_degree": 2}]
+    request.update(id="isolated-source-unknown", source_policy="random")
+    refused = records.swdb("register-workload", _payload(tmp_path, "unknown", request), "--format", "json")
+    assert refused.returncode == 1
+    request.pop("source_policy")
+    request["id"] = "isolated-source-plain"
+    plain = _command(records, "register-workload", _payload(tmp_path, "plain", request))
+    assert plain["definition"]["sources"] == [3, 4, 0] and "source_policy" not in plain["definition"]

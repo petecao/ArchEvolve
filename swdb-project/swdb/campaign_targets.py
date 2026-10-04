@@ -477,10 +477,14 @@ class NativeAdapter(TargetAdapter):
                             f"{realized['num_directed_edges']} directed edges) exceeds the native evaluator's "
                             f"materialization limits ({MAX_VERTICES} vertices, {MAX_DIRECTED_EDGES} directed edges); "
                             "the native protocol cannot time it")
-            sources = store.get(row["workload"], "workload")["definition"]["sources"]
-            if sources != list(self.campaign["protocol"]["sources"]):
+            definition = store.get(row["workload"], "workload")["definition"]
+            sources = definition["sources"]
+            # Ticket 64 (2026-10-04 ET): a registration may replace a zero-out-degree source
+            # (recorded source_policy); the campaign's sources are then the requested ones.
+            requested = definition.get("source_policy", {}).get("requested_sources", sources)
+            if requested != list(self.campaign["protocol"]["sources"]):
                 raise _stop("infrastructure_failure",
-                            f"class {row['class']} workload {row['workload']} registers sources {sources}, "
+                            f"class {row['class']} workload {row['workload']} registers sources {requested}, "
                             f"not the campaign's {self.campaign['protocol']['sources']}")
 
     def baseline(self, role):
@@ -559,13 +563,17 @@ class NativeAdapter(TargetAdapter):
                 "protocol": protocol or self.protocols[role], "protocol_role": side,
                 "threads": self.campaign["protocol"]["threads"],
                 "repetitions": self.campaign["protocol"]["repetitions"],
-                "sources": list(self.campaign["protocol"]["sources"]), "roi": self.campaign["protocol"]["roi"],
+                "sources": self._sources(cls), "roi": self.campaign["protocol"]["roi"],
                 "target_configuration": {"lane": self.lane},
                 "workload": {"id": self._workload(cls)}, "comparison_baseline": ROLE_IMPLEMENTATION[role],
                 "build": {"compiler": "/usr/bin/g++", "flags": list(NATIVE_FLAGS)},
                 "budget": {"build_seconds": 300, "run_seconds": 120, "total_seconds": 7200},
                 "build_directory": str(Path("/data1/yanruj/EvolveSWDB_builds") / self.cid / rid)
                 if socket.gethostname().split(".")[0] == "mbit10" else str(self.folder / "builds" / rid)}
+
+    def _sources(self, cls):
+        """The class workload's registered (timed) sources (ticket 64)."""
+        return list(self._get(self._workload(cls), "workload")["definition"]["sources"])
 
     def _workload(self, cls):
         return next(c["workload"] for c in self.campaign["workload_classes"] if c["class"] == cls)
@@ -603,15 +611,23 @@ class NativeAdapter(TargetAdapter):
         if self.other_gem5():
             raise _stop("infrastructure_failure", self.other_gem5())
         tag = f"{self.cid}.pilot.{cls}.{role}"
+        other = self.other_socket_lease()
         result, reason, evaluations = self._block(tag, self.baseline(role), role, cls,
                                                   getattr(self, "aa_protocols", {}).get(role))
         if result is None:
             raise _stop("infrastructure_failure", f"A/A pilot {cls}/{role} failed: {reason}"[:1500])
         numbers = self._numbers(result)
-        return {"spread": max(numbers["spreads"]), "comparison": result["id"], "evaluations": evaluations}
+        return {"spread": max(numbers["spreads"]), "comparison": result["id"], "evaluations": evaluations,
+                "other_socket": other}
 
     def other_gem5(self):
         lease = self.other_socket_lease()
+        # Ticket 64 (2026-10-04 ET): a campaign file may approve native blocks beside ANOTHER
+        # campaign's gem5 job (approval.gem5_other_socket); the other socket is then recorded
+        # with every block. A gem5 job of this same campaign is always refused.
+        approved = (self.campaign.get("approval") or {}).get("gem5_other_socket") is True
+        if lease and approved and lease.get("campaign") != self.cid:
+            return None
         if lease and lease.get("mode") == "extensa" and lease.get("target") == "dx100_gem5":
             return ("native timed blocks refuse to start while the other socket's lease is held by a gem5 job "
                     f"of Extensa campaign {lease.get('campaign')}")
@@ -619,6 +635,7 @@ class NativeAdapter(TargetAdapter):
 
     def compare(self, candidate, cls, role, iteration, attempt, baseline_evaluation=None):
         tag = f"{self.cid}.{self._it(iteration)}.{cls}.a{attempt}.{role}"
+        other = self.other_socket_lease()
         result, reason, evaluations = self._block(tag, candidate["id"], role, cls)
         if result is None:
             kind = "correctness_failed" if re.search(r"incorrect|verifier|parent", reason or "") else \
@@ -626,7 +643,7 @@ class NativeAdapter(TargetAdapter):
             raise Refused(kind, f"Native evaluation against {role} did not complete.", [kind])
         numbers = self._numbers(result)
         return {"comparison": result["id"], **numbers, "evaluations": evaluations,
-                "baseline_evaluation": f"{tag}.baseline-eval"}
+                "baseline_evaluation": f"{tag}.baseline-eval", "other_socket": other}
 
 
 # --- DX100 gem5 (ticket 57) -------------------------------------------------------------------------
