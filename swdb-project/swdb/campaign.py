@@ -905,6 +905,10 @@ class Campaign:
                 patch = repaired["patch"]
                 knobs = knobs_by_class(repaired).get(cls, knobs)
                 entry.update(_patch=patch, patch_sha256=artifacts.digest(patch), knobs=knobs)
+                # 2026-10-04 ET (final code review): a repaired patch passes the same leakage
+                # scan as a first rewrite before it can become a candidate or `best/` input.
+                if scan_patch_additions(patch):
+                    return reject("provider_output_invalid", "The patch text states a performance outcome.")
                 problem = self._knob_problem(contracts, knobs)
                 if problem:
                     return reject("knob_out_of_range", problem)
@@ -957,13 +961,20 @@ class Campaign:
                     campaign=self.cid, goal="A correct, simple C++11 backend for this hook.")
                 outcome = S.CallOutcome.COMPLETED
             except Failure as exc:
-                result, outcome = {"state": "failed", "reason": str(exc)}, S.CallOutcome.FAILED
+                # 2026-10-04 ET (final code review): D7 — usage-limit and login failures are
+                # uncounted and pause the campaign; the family stays unsynthesized for the resume.
+                from swdb import provider_adapters
+                outcome = (S.CallOutcome.USAGE_LIMIT if isinstance(exc, provider_adapters.ProviderUnavailable)
+                           else S.CallOutcome.LOGIN if LOGIN.search(str(exc)) else S.CallOutcome.FAILED)
+                result = {"state": "failed", "reason": str(exc)}
             self._spent("synthesis", started)
             self.ledger.close_call(call, outcome)
             row["provider_calls"].append({"role": "synthesis", "invocation": call.invocation,
                                           "outcome": outcome.value, "counted": call.counted,
                                           "model": self.data["provider"]["model"],
                                           "effort": self.data["provider"]["effort"]})
+            if outcome in S.UNCOUNTED_CALL_OUTCOMES:
+                raise Paused(outcome.value)
             self.state["synthesized"][family] = {"state": result.get("state"), "entry": result.get("entry"),
                                                  "tier": result.get("tier")}
 

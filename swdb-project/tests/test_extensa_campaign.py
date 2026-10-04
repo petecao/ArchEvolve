@@ -273,3 +273,39 @@ def test_campaign_synthesis_writes_an_experimental_entry_with_campaign_origin(te
     certifications = [c for c in records_of(campaign_store(team), "certifications") if c["entry"]["id"] == added["entry"]]
     assert certifications and all(c["mode"] == "extensa" and c["campaign"] == CID for c in certifications)
     assert all(c["level"] == "uncertified" for c in it["candidates"])
+
+
+# --- 2026-10-04 ET: final code review regressions ------------------------------------------------
+
+LEAKY = PATCH.replace("+int alpha = 14;", "+int alpha = 14; // 2x speedup, 30% faster")
+
+
+def test_repaired_patch_is_leakage_scanned_like_a_first_rewrite(team):
+    row = {cls: {"certification": ["failed", "certified"],
+                 "comparisons": {"fork_scalar_tdstep": comparison(1.2), "upstream_do_bfs": comparison(0.9)}}
+           for cls in ("kronecker", "uniform_random")}
+    config = provider(team, {"repair": [rewrite(patch=LEAKY)]})
+    summary = run(team, campaign_file(team), fixture_file(team, iterations=[row]), config)
+    candidates = summary["iterations"][0]["candidates"]
+    assert candidates and all(c["level"] == "rejected" for c in candidates)
+    # The first class receives the leaky repair; the per-iteration call budget leaves the
+    # second class without a repair call, so it is rejected for its certification failure.
+    assert candidates[0]["rejection"] == "The patch text states a performance outcome."
+    assert candidates[1]["rejection"].startswith("Certification failed.")
+
+
+def test_synthesis_usage_limit_pauses_uncounted_and_is_retried_on_resume(team):
+    library = team["root"] / "library"
+    shutil.copytree(REPO / "library" / "library_operations", library / "library_operations")
+    shutil.copytree(REPO / "library" / "profiles", library / "profiles")
+    for folder in ("intrinsics", "lowerings", "rewrite_contracts"):
+        (library / folder).mkdir()
+    config = provider(team, {"rewriting": [rewrite(contracts=())], "synthesis": ["usage_limit"]})
+    path = campaign_file(team, library={"allowed_tiers": ["experimental"], "contracts": [], "synthesize": ["gather"]},
+                         budgets={"provider_calls_setup": 0})
+    paused = run(team, path, fixture_file(team), config, "--library", library)
+    assert paused["state"] == "paused" and paused["reason"] == "usage_limit"
+    state = json.loads((campaign_store(team).parent / "state.json").read_text())
+    assert "gather" not in state["synthesized"]
+    (pause,) = state["pauses"]
+    assert pause["provider_calls"][-1]["role"] == "synthesis" and pause["provider_calls"][-1]["counted"] is False

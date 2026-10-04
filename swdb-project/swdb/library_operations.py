@@ -497,10 +497,14 @@ def synthesize(family, *, library_root, records, provider_config, runs, campaign
     runs = artifacts.external_directory(runs)
     session = runs / ("synthesis-" + uuid.uuid4().hex)
     calls = []
+    provider_errors = []
 
     def invoker(files, prompt):
         try:
             response, metadata = provider_roles.run("synthesis", files, prompt, config, session / "provider")
+        except Failure as exc:
+            provider_errors.append(exc)
+            raise
         finally:
             receipt = session / "provider" / "provider.json"
             meta = json.loads(receipt.read_text()) if receipt.is_file() else {}
@@ -511,6 +515,10 @@ def synthesize(family, *, library_root, records, provider_config, runs, campaign
     reference_dir = library_root / "library_operations" / "reference"
     target = CpuCompileTarget(dataclasses.replace(spec.target, flags=(*spec.target.flags, f"-I{reference_dir}")))
     outcome = run_synthesis(spec, contract, target, session / "synthesis", invoker=invoker)
+    if provider_errors:
+        # 2026-10-04 ET (final code review): a provider failure (usage limit, login, guard) is not a
+        # rejected synthesis; the caller classifies it (D7: usage-limit and login calls are uncounted).
+        raise provider_errors[0]
     result = {"family": family, "contract_sha256": contract_sha256(contract), "provider_calls": calls,
               "synthesis": {"ok": outcome.ok, "reason": outcome.reason[:1000]}, "entry": None, "certification": None}
     if not outcome.ok:
