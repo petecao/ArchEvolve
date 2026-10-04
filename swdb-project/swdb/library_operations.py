@@ -48,6 +48,30 @@ def body_problems(library, entry):
             found.append(("location", f"library-operation body includes a DX100 header: {target}"))
     if MAA_CALL.search(re.sub(r"//[^\n]*|/\*.*?\*/", " ", text, flags=re.S)):
         found.append(("location", "library-operation body calls a maa_* hardware function"))
+    found.extend(pattern_key_problems(entry.get("pattern_key")))
+    return found
+
+
+def pattern_key_problems(keys):
+    """Library-operation pattern keys use the same shape and vocabularies as contracts."""
+    if keys is None:
+        return []
+    from swdb import vocab
+    vocabs, _problems = vocab.load_all(paths.VOCAB)
+    if not isinstance(keys, list) or not keys:
+        return [("pattern_key", "pattern_key must be a nonempty list")]
+    found = []
+    for i, key in enumerate(keys):
+        where = f"pattern_key[{i}]"
+        if not isinstance(key, dict) or set(key) != {"roles", "address_shapes", "update_kind"}:
+            found.append((where, "pattern needs exactly roles, address_shapes and update_kind"))
+            continue
+        if not key["roles"] or any(r not in vocabs.get("array_roles", []) for r in key["roles"]):
+            found.append((where, "pattern_key roles must come from the array-role vocabulary"))
+        if not key["address_shapes"] or any(s not in vocabs.get("address_shapes", []) for s in key["address_shapes"]):
+            found.append((where, "pattern_key address shapes must come from the address-shape vocabulary"))
+        if key["update_kind"] not in vocabs.get("update_kinds", []):
+            found.append((where, "pattern_key update kind must come from the update-kind vocabulary"))
     return found
 
 

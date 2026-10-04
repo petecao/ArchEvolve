@@ -186,3 +186,5 @@ Periodic follow-up, 2026-10-03 18:14 ET: root independently read back source6cf 
 2026-10-03 21:03 ET: ticket 49 resolved on the Extensa worktree branch. Port of D1 machinery with SPDX/provenance headers; 28 new tests pass; affected regression 217 pass (3 sandbox-only tempfile failures).
 
 2026-10-03 21:08 ET: ticket 50 resolved on the Extensa worktree branch. Packing tracer certifies; 8 new tests pass.
+
+2026-10-03 21:12 ET: ticket 51 resolved on the Extensa worktree branch. Four seeded entries certify; library-operation tests 21 pass.

@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// Ported 2026-10-03 from MaizeHPC/MemAcc af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+// Source: AgenticRefiner/refiner/synthesis/drivers/gather_cand.cpp.tmpl
+// SWDB changes: the candidate TU drives the library body (VertexRelabelExecutor) instead of a SynthBackend hook (2026-10-03 ET, ticket 51).
+#include "{{BACKEND_HEADER}}"
+#include <cstddef>
+#include <cstdint>
+extern "C" void swdb_cand_relabel(double* out, const double* in, const std::int32_t* perm, std::size_t n) {
+  VertexRelabelExecutor<std::int32_t> ex;
+  if (!ex.adopt_permutation(perm, n)) return;
+  ex.permute_values(in, out);
+}

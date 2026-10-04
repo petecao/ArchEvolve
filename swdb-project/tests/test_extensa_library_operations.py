@@ -36,7 +36,15 @@ def _certify(tmp_path, entry, profile):
     return result, record, lib, records
 
 
-SEEDED = [("operation.pack_executor", "pack_executor")]
+SEEDED = [("operation.pack_executor", "pack_executor"),
+          ("operation.update_binning_executor", "update_binning_executor"),
+          ("operation.vertex_relabel_executor", "vertex_relabel_executor"),
+          ("operation.regroup_executor", "regroup_executor"),
+          ("operation.gather_staging_executor", "gather_staging_executor")]
+FAMILIES = {"update_binning_executor": ("DataLayoutAPI/update_binning.hh", "binned/binned_update_executor.yaml"),
+            "vertex_relabel_executor": ("DataLayoutAPI/vertex_relabel.hh", "relabel/vertex_relabel_executor.yaml"),
+            "regroup_executor": ("DataLayoutAPI/data_layout.hh", "regroup/regroup_executor.yaml"),
+            "gather_staging_executor": ("DataLayoutAPI/gather_staging.hh", "staging/gather_staging_executor.yaml")}
 
 
 @pytest.mark.parametrize("entry, profile", SEEDED)
@@ -91,7 +99,7 @@ def test_entry_records_its_extensa_origin_and_pins():
     assert "SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception" in head[0] and "af3d6d7f" in head[1]
 
 
-@pytest.mark.parametrize("body", ["pack.hh"])
+@pytest.mark.parametrize("body", ["pack.hh", "binning.hh", "relabel.hh", "regroup.hh", "gather_staging.hh"])
 def test_body_builds_as_cxx11_O3(tmp_path, body):
     cxx = shutil.which("g++-16") or shutil.which("g++") or shutil.which("clang++")
     source = tmp_path / "use.cc"
@@ -116,3 +124,32 @@ def test_validate_rejects_a_body_that_uses_dx100(tmp_path, injected):
     result = run_swdb("validate", "--records", records, "--library", lib)
     assert result.returncode == 1
     assert "DX100 header" in result.stderr or "maa_" in result.stderr
+
+
+@pytest.mark.parametrize("name", sorted(FAMILIES))
+def test_seeded_families_declare_origin_pattern_key_and_three_controls(name):
+    entry = yaml.safe_load((OPS / f"{name}.yaml").read_text())
+    origin = entry["provenance"]["origin"]
+    header, contract = FAMILIES[name]
+    assert origin["commit"] == "af3d6d7f7a69a72facdc3b95b42e78c952f44a76"
+    assert header in origin["paths"] and f"AgenticRefiner/transformations/{contract}" in origin["paths"]
+    keys = entry["pattern_key"]
+    assert keys and all(set(k) == {"roles", "address_shapes", "update_kind"} for k in keys)
+    controls = [c["negative_control"] for c in entry["clauses"] if c["negative_control"]["id"] != "none"]
+    assert len(controls) >= 3 and all(c["check"] for c in controls)
+    profile = yaml.safe_load((REPO / "library" / "profiles" / f"{name}.yaml").read_text())
+    assert {c["id"] for c in profile["controls"]} == {c["id"] for c in controls}
+    body = (OPS / entry["location"]["path"].split("/", 1)[1]).read_text()
+    assert "SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception" in body.splitlines()[0]
+    for variant in ("Tiled", "tiled", "Team", "Fused"):
+        assert f"class {variant}" not in body
+
+
+def test_validate_rejects_an_unknown_pattern_key_role(tmp_path):
+    lib, records = _library(tmp_path)
+    entry_file = lib / "library_operations" / "regroup_executor.yaml"
+    entry = yaml.safe_load(entry_file.read_text())
+    entry["pattern_key"][0]["roles"] = ["frontier"]
+    entry_file.write_text(yaml.safe_dump(entry, sort_keys=False))
+    result = run_swdb("validate", "--records", records, "--library", lib)
+    assert result.returncode == 1 and "pattern_key" in result.stderr

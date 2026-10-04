@@ -93,7 +93,7 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 | 48 | [Mode tags, team-boundary refusals and candidate-artifact promotion](issues/48-mode-tags-and-team-boundary.md) | resolved | 11, 15, 47 |  |
 | 49 | [Port Extensa's machinery](issues/49-port-extensa-machinery.md) | resolved | 07, 10, 11, 47 |  |
 | 50 | [Tracer: certify one library operation (packing)](issues/50-library-operation-tracer.md) | resolved | 11, 47 |  |
-| 51 | [Seed the experimental tier from Extensa](issues/51-seed-extensa-families.md) | ready-for-agent | 50 |  |
+| 51 | [Seed the experimental tier from Extensa](issues/51-seed-extensa-families.md) | resolved | 50 |  |
 | 52 | [Extensa campaign skeleton](issues/52-campaign-skeleton.md) | ready-for-agent | 07, 24, 48, 49 |  |
 | 53 | [Speed rule, per-class verdicts, selection and knob tuning](issues/53-speed-rule-and-selection.md) | ready-for-agent | 52 |  |
 | 54 | [Extensa campaign budgets and pruning](issues/54-campaign-budgets.md) | ready-for-agent | 08, 26, 52 |  |
@@ -178,3 +178,5 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - 2026-10-03 21:03 ET: ticket 49 resolved. Extensa loop accounting, runtime probes, certification profiles and BFS-relevant synthesis ported under swdb/extensa/ with provenance; swdb certify --profile and swdb synthesize. [49-port-extensa-machinery](issues/49-port-extensa-machinery.md).
 
 - 2026-10-03 21:08 ET: ticket 50 resolved. operation.pack_executor (base PackExecutor, experimental) certifies end to end against swdb_ref::pack_gather; three controls rejected by named checks; DX100 bodies refused by swdb validate. [50-library-operation-tracer](issues/50-library-operation-tracer.md).
+
+- 2026-10-03 21:12 ET: ticket 51 resolved. Binning, relabeling, regrouping and gather-staging entries seeded in the experimental tier; each certifies with three named-check controls and declares a pattern key. [51-seed-extensa-families](issues/51-seed-extensa-families.md).

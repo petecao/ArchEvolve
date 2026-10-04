@@ -46,6 +46,18 @@ D1's not-ported list is imported or copied (`tests/test_extensa_machinery.py` ch
 | `library/library_operations/controls/pack_executor.{off_by_one_index,dropped_chain_level,aliasing_write}.hh` | as `pack.hh` | negative controls: one mutation each |
 | `library/library_operations/pack_executor.yaml` (entry, not code) | semantics of `AgenticRefiner/transformations/pack/pack_executor.yaml` | experimental tier; origin is the Extensa commit and paths |
 
+## Ported files (ticket 51)
+
+| SWDB file | MemAcc source | Notes |
+|---|---|---|
+| `library/library_operations/binning.hh` | `DataLayoutAPI/update_binning.hh` (`BinPlan`, `CpuBinDrainBackend`, `UpdateBinningExecutor`) | entry `operation.update_binning_executor`; semantics `AgenticRefiner/transformations/binned/binned_update_executor.yaml`; base Fast path, no advisor |
+| `library/library_operations/relabel.hh` | `DataLayoutAPI/vertex_relabel.hh` (`VertexRelabelExecutor`) | entry `operation.vertex_relabel_executor`; semantics `AgenticRefiner/transformations/relabel/vertex_relabel_executor.yaml`; `std::stable_sort` replaces the parallel merge |
+| `library/library_operations/regroup.hh` | `DataLayoutAPI/data_layout.hh`, `DataLayoutAPI/data_layout_impl.hh` (`RegroupExecutor`) | entry `operation.regroup_executor`; semantics `AgenticRefiner/transformations/regroup/regroup_executor.yaml` |
+| `library/library_operations/gather_staging.hh` | `DataLayoutAPI/gather_staging.hh` (`GatherStagingExecutor`) | entry `operation.gather_staging_executor`; semantics `AgenticRefiner/transformations/staging/gather_staging_executor.yaml` |
+| `library/library_operations/drivers/{update_binning,vertex_relabel,regroup,gather_staging}_executor_cand.cpp.tmpl` | `AgenticRefiner/refiner/synthesis/drivers/{bin_drain,gather,regroup,gather_stream}_cand.cpp.tmpl` | drive the executor class |
+| `library/library_operations/drivers/relabel_{ref,cand,run}.cpp.tmpl` | `AgenticRefiner/refiner/synthesis/drivers/gather_{ref,cand,run}.cpp.tmpl` | SWDB addition adapted for relabeling |
+| `library/library_operations/controls/{update_binning,vertex_relabel,regroup,gather_staging}_executor.*.hh` | as the body they mutate | three negative controls per entry |
+
 ## Original SWDB files that use the port (not ported, no MemAcc header)
 
 `swdb/library_operations.py`, `swdb/extensa_boundary.py`, `swdb/campaign.py`,
