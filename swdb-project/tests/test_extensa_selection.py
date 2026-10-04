@@ -62,13 +62,26 @@ def test_speed_rule_is_strict_above_1_05_with_spread_at_most_0_1(numbers, target
 
 
 def test_native_pilot_with_unstable_baseline_stops_before_any_provider_call(team):
+    # Ticket 64 (2026-10-04 ET) made the A/A gate per class: the campaign stops only when
+    # every class is unstable (updated 2026-10-04 ET by the final code review).
     path = campaign_file(team)
     fx = fixture_file(team, pilot={"kronecker": {"fork_scalar_tdstep": 0.04, "upstream_do_bfs": 0.12},
-                                   "uniform_random": {"fork_scalar_tdstep": 0.04, "upstream_do_bfs": 0.05}})
+                                   "uniform_random": {"fork_scalar_tdstep": 0.11, "upstream_do_bfs": 0.05}})
     summary = run(team, path, fx, provider(team, {}))
     assert summary["stop_reason"] == "baseline_unstable" and summary["pilot"]["passed"] is False
     assert summary["budgets"]["used"]["provider_calls_counted"] == 0 and summary["iterations"] == []
     assert log(team) == []
+
+
+def test_native_pilot_unstable_class_is_never_timed_while_the_stable_class_runs(team):
+    path = campaign_file(team)
+    fx = fixture_file(team, pilot={"kronecker": {"fork_scalar_tdstep": 0.04, "upstream_do_bfs": 0.12},
+                                   "uniform_random": {"fork_scalar_tdstep": 0.04, "upstream_do_bfs": 0.05}})
+    summary = run(team, path, fx, provider(team, {}))
+    assert summary["pilot"]["passed"] is False and summary["pilot"]["unstable_classes"] == ["kronecker"]
+    assert all(c["class"] == "uniform_random" for it in summary["iterations"] for c in it["candidates"])
+    verdicts = {row["class"]: row["verdict"] for row in summary["per_class"]}
+    assert verdicts["kronecker"] == "baseline_unstable" and verdicts["uniform_random"] != "baseline_unstable"
 
 
 def test_selection_ranks_certification_first_and_lists_faster_uncertified(team):
