@@ -59,3 +59,39 @@ records Yan-Ru's review of an Extensa candidate artifact. The review record has:
   Each request cites the campaign, candidate, review and team protocol under `origin`.
 
 A failed (rejected) candidate artifact is never promoted.
+
+## Campaign files (ticket 52)
+
+`campaigns/extensa/<campaign-id>.yaml`, format `swdb.extensa-campaign.v1`, schema
+`schemas/extensa_campaign.schema.json` (an input file, not a record). Fields: `format`,
+`id` (`extensa-(native|gem5)-bfs-YYYYMMDD-<letter><n>`, matching the file name), `created`,
+`mode` (`extensa`), `kernel` (`gapbs-bfs`), one `target` (`native_cpu` or `dx100_gem5`;
+decision D2), `machine`, `base_source` (the baseline role the provider rewrites and
+selection uses), `baselines` (each a `role` and its `candidate`), `protocol` (`roi`,
+`threads`, `repetitions`, `sources`, `region_pairs`, `differences`), `workload_classes`
+(each a `class` and its `workload`), `label` (always `single graph per class`), `library`
+(`allowed_tiers`, `contracts`, optional `synthesize` families), `regions` (a fixed list,
+or `query` after ticket 55), `provider` (`name`, `model`, `effort`), `budgets`
+(`max_iterations`, `plateau_iterations`, `lane_hours`, `provider_calls_per_iteration`,
+`provider_calls_setup`, `disk_gb`, `lanes`, optional `max_repairs`), `runs_root` and an
+optional `approval` (`by`, `date`, `scope`, `raised_budgets`, `two_lanes`).
+
+`swdb validate` refuses a gem5 campaign with repetitions other than 1 or more than one
+source, a native campaign with fewer than 5 repetitions, `region_pairs: true`, another
+label, a budget above the spec default without an approval naming it in
+`raised_budgets`, and `lanes: 2` without `two_lanes: true`.
+
+## Campaign summary records (ticket 52)
+
+Kind `campaign_summary` (`records/campaign_summaries/`), written once when a campaign
+stops, to the campaign store and to the team store. Fields (decision D6): `campaign_file`
+(`path`, `sha256`), `swdb_commit`, `extensa_source` (`repository`, `commit`), `target`,
+`evidence_basis`, `evidence_kind` (`contract_fixture` for fixture adapters),
+`protocol`, `baselines`, `workload_classes`, `label`, `provider`, `pilot` (native A/A
+spreads), `setup` (the profiling call), `iterations` (each with `index`, `started`, `ended`,
+`regions`, `provider_calls`, `candidates`, `feedback_reasons`, `improved_classes`),
+`per_class` (`class`, `verdict`, `best`, `best_level`, `best_selection_baseline`,
+`best_other_baseline`, `faster_uncertified`, `label`), `budgets` (`limits`, `used`),
+`pauses` (`at`, `reason` usage_limit or login, `resumed_at`), `stop_reason`,
+`stop_detail`, `artifacts`, `retentions` and `library_entries`. Candidate records never
+store a certification level; the summary's `level_at_summary` is a snapshot.

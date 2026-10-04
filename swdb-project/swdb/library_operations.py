@@ -447,9 +447,16 @@ def install_synthesized(library_root, family, header_text, *, origin, summary=""
 
 
 def synthesize_cli(args):
-    """`swdb synthesize FAMILY`: one charged synthesis-role call, then `swdb certify`.
+    """`swdb synthesize FAMILY`: one charged synthesis-role call, then `swdb certify`."""
+    return synthesize(args.family, library_root=Path(args.library), records=Path(args.records),
+                      provider_config=Path(args.provider_config), runs=args.runs_dir, campaign=args.campaign,
+                      goal=args.goal)
 
-    The entry stays in the library (experimental tier) only if certification passes."""
+
+def synthesize(family, *, library_root, records, provider_config, runs, campaign=None,
+               goal="A correct, simple C++11 backend for this hook."):
+    """One synthesis call; the entry stays in the library (experimental tier) only if
+    `swdb certify` passes its profile. Used by `swdb synthesize` and `swdb campaign`."""
     import dataclasses
     from swdb import provider_roles, rewrite
     from swdb.library import Library
@@ -458,16 +465,16 @@ def synthesize_cli(args):
     from swdb.extensa.synthesis.spec import load_doc
     from swdb.extensa.synthesis.synthesize import run_synthesis
     from swdb.extensa.synthesis.targets.cpu_like import CpuCompileTarget
-    if args.family not in FAMILIES:
-        raise UsageError(f"unknown synthesis family {args.family!r}")
-    library_root = Path(args.library)
-    store = Store(Path(args.records))
-    contract = resolve_contract(FAMILIES[args.family], library_root)
-    spec = load_doc({"family": args.family, "goal": args.goal,
+    if family not in FAMILIES:
+        raise UsageError(f"unknown synthesis family {family!r}")
+    library_root = Path(library_root)
+    store = Store(Path(records))
+    contract = resolve_contract(FAMILIES[family], library_root)
+    spec = load_doc({"family": family, "goal": goal,
                      "target": {"name": "native-cpu", "harness": "cpu_like", "isa": platform.machine(),
                                 "toolchain": {"cc": sanitize_compiler(), "flags": ["-std=c++11", "-O1"]}}})
-    config = rewrite.configuration(Path(args.provider_config))
-    runs = artifacts.external_directory(args.runs_dir)
+    config = rewrite.configuration(Path(provider_config))
+    runs = artifacts.external_directory(runs)
     session = runs / ("synthesis-" + uuid.uuid4().hex)
     calls = []
 
@@ -484,16 +491,16 @@ def synthesize_cli(args):
     reference_dir = library_root / "library_operations" / "reference"
     target = CpuCompileTarget(dataclasses.replace(spec.target, flags=(*spec.target.flags, f"-I{reference_dir}")))
     outcome = run_synthesis(spec, contract, target, session / "synthesis", invoker=invoker)
-    result = {"family": args.family, "contract_sha256": contract_sha256(contract), "provider_calls": calls,
+    result = {"family": family, "contract_sha256": contract_sha256(contract), "provider_calls": calls,
               "synthesis": {"ok": outcome.ok, "reason": outcome.reason[:1000]}, "entry": None, "certification": None}
     if not outcome.ok:
         result["state"] = "rejected"
         return result
-    origin = {"kind": "extensa_synthesis", "campaign": args.campaign,
+    origin = {"kind": "extensa_synthesis", "campaign": campaign,
               "harness": {"repository": "MaizeHPC/MemAcc", "commit": "af3d6d7f7a69a72facdc3b95b42e78c952f44a76",
                           "path": "AgenticRefiner/refiner/synthesis/"},
               "contract_sha256": contract_sha256(contract)}
-    entry_id, folder, profile_file = install_synthesized(library_root, args.family, outcome.header_text,
+    entry_id, folder, profile_file = install_synthesized(library_root, family, outcome.header_text,
                                                          origin=origin, summary=outcome.entry.get("summary", ""))
     try:
         library = Library(library_root, store=store)
@@ -512,7 +519,7 @@ def synthesize_cli(args):
         profile_file.unlink(missing_ok=True)
         result["state"] = "rejected"
         return result
-    state = Library(library_root, store=Store(Path(args.records))).state(entry_id)
+    state = Library(library_root, store=Store(Path(records))).state(entry_id)
     result.update(state="installed", entry=entry_id, tier=state["tier"], status=state["status"])
     return result
 

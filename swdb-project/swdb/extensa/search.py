@@ -275,6 +275,28 @@ class SearchLedger:
         ordered = tuple(r for r in STOP_PRECEDENCE if r in conditions)
         return (ordered[0] if ordered else None), ordered
 
+    # -- persistence (SWDB addition: a paused campaign resumes from its state file) ----
+    def to_state(self) -> dict:
+        return {"iteration": self.iteration, "iterations_completed": self.iterations_completed,
+                "plateau": self.plateau, "calls": [c.to_dict() for c in self.calls],
+                "iterations": [r.to_dict() for r in self.iterations],
+                "terminal": self._terminal.value if self._terminal else None,
+                "iteration_calls": self._iteration_calls, "setup_calls": self._setup_calls}
+
+    @classmethod
+    def from_state(cls, budget: SearchBudget, state: dict) -> "SearchLedger":
+        ledger = cls(budget)
+        ledger.iteration = state["iteration"]
+        ledger.iterations_completed = state["iterations_completed"]
+        ledger.plateau = state["plateau"]
+        ledger.calls = [CallRecord(**c) for c in state["calls"]]
+        ledger.iterations = [IterationRecord(r["index"], IterationOutcome(r["outcome"]), r["advanced_plateau"],
+                                             r["plateau_counter"]) for r in state["iterations"]]
+        ledger._terminal = StopReason(state["terminal"]) if state["terminal"] else None
+        ledger._iteration_calls = state["iteration_calls"]
+        ledger._setup_calls = state["setup_calls"]
+        return ledger
+
     def to_dict(self) -> dict:
         winner, coincident = self.stop()
         return {"budget": self.budget.to_dict(), "iterations_completed": self.iterations_completed,

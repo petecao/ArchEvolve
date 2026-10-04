@@ -353,3 +353,5 @@ def register_cli(commands, paths):
     sub.set_defaults(extensa_handler=level_cli)
     from swdb import library_operations
     library_operations.register_cli(commands, paths)
+    from swdb import campaign
+    campaign.register_cli(commands, paths)
