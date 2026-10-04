@@ -36,7 +36,7 @@ from swdb.cli import Failure
 
 LOCK_SUFFIX = ".swdb-lock"
 SESSION_LOCK = "swdb-session.lock"
-SESSION_LOCK_POLL_S = 5.0
+SESSION_LOCK_POLL_S = 0.2  # short: a 5 s poll lost every gap between back-to-back sessions (a6, 2026-10-04)
 #: Required nested string fields of a well-formed login, per provider.
 EXPECTED = {"codex": ("tokens", ("access_token", "refresh_token")),
             "claude": ("claudeAiOauth", ("accessToken", "refreshToken"))}
