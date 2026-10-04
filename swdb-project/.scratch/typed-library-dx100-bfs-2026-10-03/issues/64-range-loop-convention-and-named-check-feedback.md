@@ -89,5 +89,17 @@ that tier. So the entries are unchanged, and the usage notes live beside them:
   `FEEDBACK.json` and rewrite workspace carry the check, the convention and the notes, and no
   run output.
 
-Regression suites: `tests/test_extensa_targets.py` and `tests/test_extensa_campaign.py`
-(27 passed). `swdb validate` reports 517 valid records.
+Regression suites:
+- 27 passed in `tests/test_extensa_targets.py` and `tests/test_extensa_campaign.py`.
+- Also passed: budgets (9), selection (12), boundary (16) and intrinsics (10).
+- `swdb validate` reports all records valid.
+- `test_library_submit.py::test_actual_dx100_submit_reproduces_the_certified_tree` fails. It
+  expects status `certified`, but the entry has been `evaluated_on_target` since tickets 28/45.
+  The failure does not involve the notes or the feedback.
+- `test_provider_workspace.py` did not finish within this session's 15-minute cap.
+
+**Follow-up (2026-10-04 ET, from campaign a7).** If the matrix passes and only controls survive,
+the feedback now names those controls ("Negative controls not rejected (1): forged_frontier.").
+Before, it gave only a count. Commit `4d94e47`; this fix was not in a7's checkout. Ticket 57 a7
+used the rest of this ticket. No edit set `last_i` to -1, and both classes reached a certified
+gem5 candidate.
