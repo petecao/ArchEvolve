@@ -10,7 +10,7 @@ Subject: Extensa mode in SWDB: what is ported, and the license assumption
 Hi Peter,
 
 This note is about Extensa mode, the research loop I am building inside SWDB.
-Everything below is on branch `yanrujhou_main`, commit `COMMIT_SHA`.
+Everything below is on branch `yanrujhou_main`, commit `e3b27c7`.
 
 **What I ported.** I am porting four parts of Extensa (MemAcc
 `af3d6d7f7a69a72facdc3b95b42e78c952f44a76`, folder `AgenticRefiner/`) into SWDB:
