@@ -190,3 +190,5 @@ Periodic follow-up, 2026-10-03 18:14 ET: root independently read back source6cf 
 2026-10-03 21:12 ET: ticket 51 resolved on the Extensa worktree branch. Four seeded entries certify; library-operation tests 21 pass.
 
 2026-10-03 21:49 ET: ticket 52 resolved on the Extensa worktree branch. Campaign skeleton with the contract-fixture adapter; 12 campaign tests pass.
+
+2026-10-03 21:50 ET: ticket 53 resolved on the Extensa worktree branch. 12 selection/speed-rule tests pass.
