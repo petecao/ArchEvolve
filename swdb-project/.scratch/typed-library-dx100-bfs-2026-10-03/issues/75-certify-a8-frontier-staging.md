@@ -1,10 +1,10 @@
 # 75 — Certify native a8's best: a TDStep frontier-staging contract, promotion and team re-evaluation
 
 Created: 2026-10-05 11:40 ET (from ticket 56's a8 result; Yan-Ru: "certify it", 2026-10-05)
-Updated: 2026-10-05 12:25 ET (decisions revised after the independent review, before any certification record or
-run)
+Updated: 2026-10-05 15:00 ET (resolved); 2026-10-05 12:25 ET (decisions revised after the independent review, before any
+certification record or run)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** —
 **Spec:** `../spec.md`; [design decisions](../extensa-design-2026-10-03.md) D9; ADR 0007, 0008, 0010;
 [15](15-library-tiers-and-entry-promotion.md), [43](43-promote-bc-contract.md), [48](48-mode-tags-and-team-boundary.md),
@@ -126,3 +126,88 @@ only the body of `TDStep` in `benchmarks/gapbs/src/bfs.cc`:
 
 - 2026-10-05 11:40 ET: claimed by the agent (ticket 75; 74 is reserved for a concurrent guard fix).
 - 2026-10-05 12:30 ET: independent review (PROMOTE AFTER FIXES) addressed; [review](../frontier-staging-contract-review-2026-10-05.md). Certification `certification.b7954f4d…` certified (20/20, 8/8); contract promoted to shared (`review.contract.bfs_tdstep_frontier_staging.a8452cbb68ab`). The re-evaluation pre-registration above is committed before any mbit10 action.
+- 2026-10-05 13:40 ET: ticket 76 (certify 1.4, blinded and attributed) reached `yanrujhou_main` during this ticket.
+  As the coordinator asked, the branch merged it, the native path was ported to 1.4, the tree was certified
+  under both versions, and the contract was promoted again only after 1.4 certified.
+
+## Answer
+
+Resolved 2026-10-05 15:00 ET by the agent. Agent-decided, agent-reviewed and promoted under Yan-Ru's 2026-10-05 delegation;
+revisable. Not pushed.
+
+**Contract** `contract.bfs_tdstep_frontier_staging` (content `f0919f00…`): tier **shared**, status **certified**.
+- Clauses: S1 coverage, S2 lane correspondence (formal half: the `gather_stream` reference pin), S3 frame (assumed
+  and owned by the reviewer per candidate), C1 claim and push at the seams, C2 post-claim store elimination with
+  preconditions (i)–(iv).
+- Preservation obligations: `frontier_size_equality` and `once_enqueue`. Correctness check: BFSVerifier.
+- Knob `frontier_batch`: default 16, range 1–4096.
+
+**Controls** (each a seam fault the candidate cannot see; two builds each):
+
+| Control | Clause | Named check | 1.3 | 1.4 (attribution) |
+|---|---|---|---|---|
+| `claim_without_write` | C2 | `verifier` | rejected | rejected (`lost_claim_left_unset`) |
+| `partial_batch_dropped` | S1, `frontier_size_equality` | `frontier_size_equality` | rejected | rejected (`missing_child_of_hidden_vertex`) |
+| `stale_row_offset` | S2 | `verifier` | rejected | rejected (`parent_without_edge_from_stale_vertex`) |
+| `forged_frontier` | C1, `once_enqueue` | `duplicate_frontier` | rejected | rejected (`duplicate_is_forged_push`) |
+
+A variant that keeps the post-claim store leaves `claim_without_write` alive (tests). Real spellings of both
+staging bugs fail the positive cells. A raw-builtin claim fails `seam_witness` in every 1.4 cell.
+
+**Certification of the exact a8 tree.** Tree `7acca955…`, bound to the a8 candidate by `--candidate-record`. The
+harness scan has 0 findings, and the rewrite scope holds (one function definition, signature unchanged).
+
+| Record | Command | Cells | Controls |
+|---|---|---|---|
+| `certification.f5b8f6a732714abfad544aaa65982438` | 1.3 | 22/22 | 8/8 rejected |
+| `certification.7f15786592134bdabbc921f16c806ce1` | 1.4 | 22/22, one binary per build, seam witness clean | 8/8 rejected and attributed |
+| `certification.b7954f4df9dd4e228fb12437b845f190` | "1.4" label, 1.3-isolation path, before the ticket 76 merge | 20/20 | 8/8 (earlier content `dcaf63ec…`) |
+
+- Code: `swdb/certification_native.py`, `library/native/certification/` and `v1_4/`, and
+  `library/profiles/native_bfs_tdstep.yaml`.
+- The certification command stays version 1.4, with 1.3 selectable. Native contracts are routed by their
+  `certification_profile` pin.
+- `--candidate-record` was added.
+- Tests: `tests/test_certification_native.py`, 27 cases. With the certification, blinding, isolation, typed-library,
+  BC, Extensa and campaign-target suites: 333 passed.
+
+**Reviews.** [Review file](../frontier-staging-contract-review-2026-10-05.md).
+- The first review returned PROMOTE AFTER FIXES. It found four majors: the directive scan, the scope, the store
+  plan and the controls' wording. All were fixed before the first certification.
+- The second review covered the 1.4 port. It also returned PROMOTE AFTER FIXES: two blockings, two majors and
+  minors. All were fixed, except that DX100 record file names still reveal the fault (left open).
+- Promotion: `review.contract.bfs_tdstep_frontier_staging.92527fd3e03f` cites both certifications.
+- `review.…a8452cbb68ab` (content `dcaf63ec…`) is history.
+
+**Team re-evaluation (ticket 48; pre-registered above, commit 6e1fe61, before the run).**
+- Team protocol `bfs-native-scale22-ci-team-20261005.9f1ed533a09ae832`. It is new, because no team protocol covered
+  scale 22 or the CI-width rule.
+- Candidate promotion `review.extensa-native-bfs-20261005-a8.it1.kronecker.a0.95a37f742399`. Derived protocol
+  `…-reeval-uniform-random-bb0f642780c4.2e33442a1cf31c02`.
+- Host: mbit10 node 1 through `socket_lane.sh` (Memacc 76cca35, equal to its origin), lease generation 527.
+- Time: 12:30–14:51 ET (`16:30:44Z`–`18:51:39Z`). Load1 1.6–2.0, users `yanruj` only.
+- The node 0 and legacy leases were released at the start and end of both blocks. Commit 6e1fe61 (worktree from a
+  git bundle). Runs root `/data1/yanruj/EvolveSWDB_runs/t75-reeval-20261005` (0.24 GB). Lane exit 0.
+
+| Class | Block | Ratio vs fork scalar TDStep [95% CI] | CI width / ratio | Verdict |
+|---|---|---|---|---|
+| uniform_random (uniform22) | A/A (fork vs fork) | 0.996 [0.989, 1.001] | 0.013 | passes (inside (0.952, 1.05)) |
+| uniform_random (uniform22) | certified candidate | **1.454 [1.442, 1.464]** | 0.015 | **gain** |
+
+- The result replicates a8's 1.457 and 1.450. "Single graph per class", measured.
+- The comparison `t75-reeval-20261005.candidate.uniform_random.comparison` now admits the candidate to team results
+  (`extensa_boundary.refusal` returns none).
+- Upstream DO-BFS was not re-timed; a8 measured 0.141 against it, so the artifact is still about 7× slower than
+  upstream.
+- Evidence: [`evaluation/ticket75-certification-and-reevaluation-2026-10-05.json`](../evaluation/ticket75-certification-and-reevaluation-2026-10-05.json).
+  The mbit10 records arrived by git bundle (commit d94ced9).
+
+**Open (for Yan-Ru).**
+- The DX100 1.4 record file names reveal the fault through `/proc/self/fd`. Native runs now use nonce names.
+- The DX100 1.3/1.4 scan still allows authored `#if` blocks, since the DX100 rewrites use them, so a candidate can
+  test the seam macros there.
+- The store elimination has no strategy effect in the vocabulary.
+- Kronecker for this artifact stays `inconclusive` (a8). No team re-evaluation was run for that class.
+- `source_digest` now includes `library/native/`, so DX100 `sources_sha256` values differ from ticket 76's
+  `29f3bcab…`.
+
