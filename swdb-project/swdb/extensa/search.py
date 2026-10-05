@@ -78,9 +78,13 @@ class CallOutcome(str, Enum):
     LOGIN = "login"
     #: SWDB addition, ticket 73 (2026-10-05 ET): transient provider-side unavailability (D7, uncounted).
     PROVIDER_CAPACITY = "provider_capacity"
+    #: SWDB addition, ticket 74 (2026-10-05 ET): the provider guard stopped the call for the harness's own
+    #: limit on the provider runtime, not for anything the model did (D7: not a real attempt, uncounted).
+    GUARD_INFRASTRUCTURE = "guard_infrastructure"
 
 
-UNCOUNTED_CALL_OUTCOMES = frozenset({CallOutcome.USAGE_LIMIT, CallOutcome.LOGIN, CallOutcome.PROVIDER_CAPACITY})
+UNCOUNTED_CALL_OUTCOMES = frozenset({CallOutcome.USAGE_LIMIT, CallOutcome.LOGIN, CallOutcome.PROVIDER_CAPACITY,
+                                     CallOutcome.GUARD_INFRASTRUCTURE})
 
 BUDGET_KEYS = ("max_iterations", "plateau_iterations", "lane_hours", "provider_calls_per_iteration",
                "provider_calls_setup", "disk_gb", "lanes")

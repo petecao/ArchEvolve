@@ -160,10 +160,11 @@ def _patch(tmp_path, transform):
 
 
 def _certify(tmp_path, monkeypatch, transform):
+    """Certify 1.3 explicitly (ticket 76 made 1.4 the default; 1.3 stays selectable and unchanged)."""
     _gcc()
     monkeypatch.setattr(c.workflow, 'persist', lambda *args, **kwargs: None)
     return c.certify(Store(ROOT / 'records'), CONTRACT, snapshot=c.DEFAULT_SNAPSHOT, patch=_patch(tmp_path, transform),
-                     runs_dir=tmp_path / 'runs')
+                     runs_dir=tmp_path / 'runs', version='1.3')
 
 
 def fake_rejection_on_probe(source):
@@ -201,8 +202,7 @@ def _controls(record):
 
 def test_candidate_that_fakes_rejection_lines_is_refused(tmp_path, monkeypatch):
     record = _certify(tmp_path, monkeypatch, fake_rejection_on_probe)
-    # 2026-10-05 ET (ticket 75): command 1.4 adds the native path; DX100 isolation is 1.3's.
-    assert record['verdict'] == 'failed' and record['command']['version'] == c.VERSION
+    assert record['verdict'] == 'failed' and record['command']['version'] == '1.3'
     assert all(x['status'] == 'passed' for x in record['matrix'])
     assert {name for name, _, status in _controls(record) if status != 'rejected'} == {'skipped_cas_recheck'}
     for control in (x for x in record['negative_controls'] if x['id'] == 'skipped_cas_recheck'):
@@ -219,7 +219,7 @@ def test_candidate_that_tests_a_fault_macro_is_refused_by_the_scan(tmp_path, mon
 
 def test_fault_macro_probe_cannot_change_behavior_under_faults(tmp_path, monkeypatch):
     """With the scan switched off, the macro is never defined in the candidate's translation unit."""
-    monkeypatch.setattr(isolation, 'refuse_scan_findings', lambda original, candidate: None)
+    monkeypatch.setattr(isolation, 'refuse_scan_findings', lambda original, candidate, **kwargs: None)
     record = _certify(tmp_path, monkeypatch, fault_macro_probe)
     assert record['verdict'] == 'failed'
     assert all(x['status'] == 'passed' for x in record['matrix'])

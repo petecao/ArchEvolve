@@ -70,6 +70,12 @@ class ProviderCapacity(ProviderUnavailable):
     Not a failed rewrite and not a usage limit: a campaign backs off and retries, uncounted."""
 
 
+class GuardInfrastructure(Failure):
+    """Ticket 74: the provider guard stopped the call only for the harness's own limit on the provider
+    runtime (for example Codex's startup thread burst), never for anything the model did. Not a
+    failed rewrite and not a provider entitlement: a campaign retries the call, uncounted."""
+
+
 def events(path):
     for line in Path(path).read_text(errors="replace").splitlines():
         try:

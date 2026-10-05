@@ -37,9 +37,32 @@ aliasing.
 
 ## Certification and promotion after the fixes
 
-- Certification `records/certifications/certification.b7954f4df9dd4e228fb12437b845f190.yaml` (certify 1.4, Mac,
-  2026-10-05 12:27 ET): contract content `dcaf63ec…`, tree `7acca955…` (the a8 artifact), candidate
+- Certification `records/certifications/certification.b7954f4df9dd4e228fb12437b845f190.yaml` (Mac,
+  2026-10-05 12:27 ET; its command version reads "1.4" but it is the 1.3-isolation native path, written before
+  ticket 76's certify 1.4 was merged): contract content `dcaf63ec…`, tree `7acca955…` (the a8 artifact), candidate
   `extensa-native-bfs-20261005-a8.it1.kronecker.a0`, scan 0 findings; 20/20 cells, 8/8 controls rejected, each by
   its expected check; every clause row matched.
-- Promotion `records/reviews/review.contract.bfs_tdstep_frontier_staging.a8452cbb68ab.yaml` (12:28 ET): tier shared,
-  status certified. Agent-reviewed and promoted under Yan-Ru's delegation; revisable.
+- Promotion `records/reviews/review.contract.bfs_tdstep_frontier_staging.a8452cbb68ab.yaml` (12:28 ET) for content
+  `dcaf63ec…`. That content was superseded by the 1.4 port below (the profile pin changed), so this review no
+  longer makes the entry shared; it stays as history.
+
+## Second review: the port to certify 1.4 (2026-10-05 14:20 ET)
+
+Ticket 76 put certify 1.4 (blinded, attributed) on `yanrujhou_main` while ticket 75 ran. The coordinator asked
+for the same tree to be certified under both versions, and for promotion only if 1.4 also certifies. The native
+path was merged and ported (`library/native/certification/v1_4/`, `certify_native_v14`). A second independent
+reviewer (read-only) returned PROMOTE AFTER FIXES:
+
+| # | Severity | Finding | Resolution |
+|---|---|---|---|
+| 1 | blocking | No 1.4 certification of the a8 tree; the contract content changed with the profile pin. | Certified under 1.3 and 1.4 after the merge; promotion re-issued for the new content (ticket 75 Answer). |
+| 2 | blocking | New files untracked. | Committed in the merge. |
+| 3 | major | partial_batch_dropped ran on a graph no positive cell used, so the input named the control. | Every control-only graph also gets a positive cell at the control thread count (22 cells). |
+| 4 | major | No record-level tests for the native 1.4 rules. | Added: each attribution rule both ways, the native witness, the other-target witness, a fault line in a no-fault run, repeated `fault hidden` lines. |
+| 5 | minor | Stale and lost-claim rules looser than needed. | Stale hits are limited to the recorded stale row; the lost-claim rule also requires the returned parent to fail the parent check. |
+| 6 | minor | Only one `fault hidden` line parsed. | Hidden lines accumulate. |
+| 7 | minor | Record file names reveal the fault through `/proc/self/fd` (also DX100 1.4). | Native runs name record files by nonce; the DX100 path is **open for Yan-Ru** (not changed here). |
+| 8 | minor | 1.3 wording in C1, the profile note and the schema. | Reworded. |
+
+No DX100 regression was found. `source_digest` now also covers `library/native/` and `certification_native.py`,
+so DX100 `sources_sha256` values differ from ticket 76's `29f3bcab…` from this commit on.

@@ -1,7 +1,7 @@
 # 70 — Certification isolation: verdicts the candidate cannot print, faults it cannot see
 
 Created: 2026-10-04 22:05 ET (from the open finding of ticket 67)
-Updated: 2026-10-05 00:40 ET (resolved)
+Updated: 2026-10-05 13:25 ET (the open items are addressed by ticket 76, certify 1.4); 2026-10-05 00:40 ET (resolved)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** —

@@ -33,7 +33,7 @@ from swdb import artifacts, yamlio
 from swdb.cli import Failure, UsageError
 
 PROFILE_FORMAT = 'swdb.native-candidate-profile.v1'
-_PROFILE_FIELDS = {'format', 'id', 'entry', 'date', 'target', 'kernel', 'harness', 'matrix', 'controls',
+_PROFILE_FIELDS = {'format', 'id', 'entry', 'date', 'target', 'kernel', 'harness', 'harness_v14', 'matrix', 'controls',
                    'required_categories', 'rewrite_scope', 'instrumentation', 'execution_witness', 'notes'}
 _HARNESS_FIELDS = {'prelude', 'record', 'seams', 'driver'}
 _MATRIX_FIELDS = {'builds', 'threads', 'graphs', 'control_threads', 'control_graph', 'fault_batch', 'sources'}
@@ -46,6 +46,14 @@ MATRIX_GRAPHS = ('kronecker-10', 'kronecker-14', 'kronecker-16', 'uniform-14', '
 #: The second window holds 17 vertices in push order 1..17 (one thread expands the source), so a dropped
 #: final partial batch of a 16-lane staging loses exactly vertex 17 and its unique leaf.
 CONTROL_GRAPHS = ('staging-tail-17',)
+
+
+def positive_runs(spec, graphs, controls):
+    """(threads, graph name) of every positive cell: the matrix, plus each control-only graph at the
+    controls' thread count, so no control runs on an input that no positive run uses (ticket 75 review)."""
+    runs = [(threads, name) for threads in spec['threads'] for name, _ in graphs]
+    extra = sorted({c.get('graph') for c in controls} - {name for name, _ in graphs} - {None})
+    return runs + [(spec['control_threads'], name) for name in extra]
 
 
 def staging_tail_graph(path, width=17):
@@ -146,12 +154,20 @@ def load_profile(catalog, entry):
     if {c['id'] for c in controls} != declared:
         raise UsageError('native candidate profile controls differ from the contract negative_controls')
     scope = _closed(data['rewrite_scope'], {'file', 'begin', 'end'}, 'rewrite_scope')
-    hook = _closed(data['instrumentation'], {'anchor', 'hook'}, 'instrumentation')
+    hook = _closed(data['instrumentation'], {'anchor', 'hook', 'hook_v14'}, 'instrumentation')
+    # Ticket 75 (merged after ticket 76): the certify 1.4 harness (one binary, blinded plan).
+    resolved_v14 = {}
+    for name, item in _closed(data['harness_v14'], _HARNESS_FIELDS, 'harness_v14').items():
+        try:
+            catalog._pin({**item, 'root': 'library'})
+            resolved_v14[name] = catalog.resolve({**item, 'root': 'library'})
+        except (KeyError, TypeError, ValueError, OSError) as exc:
+            raise UsageError(f'native candidate profile harness_v14 {name}: {exc}') from None
     witness = _closed(data['execution_witness'], {'rule'}, 'execution_witness')
     if witness['rule'] != 'claims_and_pushes_when_reached':
         raise UsageError('native candidate profile names an unknown execution-witness rule')
     return {'path': path, 'sha256': artifacts.file_hash(path), 'data': data, 'harness': resolved,
-            'scope': scope, 'hook': hook}
+            'harness_v14': resolved_v14, 'scope': scope, 'hook': hook}
 
 
 # --- scope and instrumentation -------------------------------------------------------------------
@@ -226,7 +242,7 @@ def instrument(profile, source):
 class NativeBuild:
     """The objects of one candidate tree at one build configuration (ticket 70's CandidateBuild shape)."""
 
-    def __init__(self, folder, profile, tree, source_path, build, fault_batch):
+    def __init__(self, folder, profile, tree, source_path, build, fault_batch, harness=None):
         from swdb.certification import compiler
         self.folder, self.profile, self.tree = Path(folder), profile, Path(tree)
         self.source_path, self.build = Path(source_path), build
@@ -235,6 +251,7 @@ class NativeBuild:
         self.flags = list(build['flags'])
         self.includes = ['-I' + str(self.tree / 'benchmarks/API'), '-I' + str(self.tree / 'include')]
         self.fault_batch = fault_batch
+        self.harness = harness or profile['harness']   # 1.3 harness, or the 1.4 one (one seam object)
         self._trusted = {}
 
     def _compile(self, source, output, extra=()):
@@ -248,7 +265,7 @@ class NativeBuild:
     def candidate_object(self, text, label):
         self.source_path.write_text(text)
         extra = ['-Dmain=swdb_candidate_main', '-iquote', str(self.source_path.parent), *self.includes,
-                 '-include', str(self.profile['harness']['prelude'])]
+                 '-include', str(self.harness['prelude'])]
         output = self.folder / f'candidate-{label}.o'
         result = self._compile(self.source_path, output, extra)
         result['object'] = str(output)
@@ -258,7 +275,7 @@ class NativeBuild:
     def trusted_object(self, kind, fault=None):
         key = (kind, fault)
         if key not in self._trusted:
-            source = self.profile['harness']['record' if kind == 'record' else 'seams']
+            source = self.harness['record' if kind == 'record' else 'seams']
             name = kind if kind == 'record' else 'seams-' + (fault or 'none').lower()
             output = self.folder / f'{name}.o'
             extra = [f'-DSWDB_NATIVE_FAULT_BATCH={self.fault_batch}'] if kind == 'seams' else []
@@ -336,18 +353,18 @@ def certify_native(tree, library, folder, profile, plugin, *, sources=None):
             matrix.append({'build': label, 'status': 'failed', 'reason': 'build failed', 'compile': positive,
                            'link': link})
             continue
-        for threads in matrix_spec['threads']:
-            for graph_name, graph in graphs:
-                for vertex in sources:
-                    counts = plugin.certification_oracle(graph, vertex)
-                    run = isolation.run(output, graph, vertex, folder / f'{graph_name}-{label}-t{threads}-{vertex}.json',
-                                        threads)
-                    verdict = judge_native(plugin, run, graph, vertex, counts, adjacency)
-                    matrix.append({'graph': graph_name, 'graph_sha256': artifacts.file_hash(graph), 'source': vertex,
-                                   'oracle_frontier_counts': counts, 'build': label, 'flags': build_spec['flags'],
-                                   'threads': threads, 'status': 'passed' if verdict['passed'] else 'failed',
-                                   'reason': verdict['reason'], 'compile': positive, 'link': link, 'run': run,
-                                   **evidence(link, verdict)})
+        for threads, graph_name in positive_runs(matrix_spec, graphs, data['controls']):
+            graph = by_name[graph_name]
+            for vertex in sources:
+                counts = plugin.certification_oracle(graph, vertex)
+                run = isolation.run(output, graph, vertex, folder / f'{graph_name}-{label}-t{threads}-{vertex}.json',
+                                    threads)
+                verdict = judge_native(plugin, run, graph, vertex, counts, adjacency)
+                matrix.append({'graph': graph_name, 'graph_sha256': artifacts.file_hash(graph), 'source': vertex,
+                               'oracle_frontier_counts': counts, 'build': label, 'flags': build_spec['flags'],
+                               'threads': threads, 'status': 'passed' if verdict['passed'] else 'failed',
+                               'reason': verdict['reason'], 'compile': positive, 'link': link, 'run': run,
+                               **evidence(link, verdict)})
         vertex = sources[0]
         threads = matrix_spec['control_threads']
         for control in data['controls']:
@@ -374,3 +391,197 @@ def certify_native(tree, library, folder, profile, plugin, *, sources=None):
                              'link': control_link, 'run': run, **record})
     source_path.write_text(source)  # a private build copy, never a vendored tree
     return matrix, controls
+
+
+# --- certify 1.4 (blinded, attributed; ticket 76's mechanism for native-CPU contracts) ------------
+
+#: The native 1.4 seam object's fault indices (library/native/certification/v1_4/seams.cc `enum Fault`).
+FAULT_INDEX_V14 = {None: 0, 'claim_without_write': 1, 'partial_batch_dropped': 2, 'stale_row_offset': 3,
+                   'forged_frontier': 4}
+ATTRIBUTION_V14 = {'claim_without_write': 'lost_claim_left_unset',
+                   'partial_batch_dropped': 'missing_child_of_hidden_vertex',
+                   'stale_row_offset': 'parent_without_edge_from_stale_vertex',
+                   'forged_frontier': 'duplicate_is_forged_push'}
+
+
+def _plan_line(fault, nonce):
+    line = f'plan 2 {FAULT_INDEX_V14[fault]:02d} {nonce}\n'.encode('ascii')
+    assert len(line) == 43
+    return line
+
+
+def run_v14(binary, graph, source, log, threads, fault=None):
+    """One blinded run: a fresh record file and a plan pipe (ticket 76's descriptor layout)."""
+    import os
+    import secrets
+    from swdb.certification import execute
+    from swdb.certification_blinding import CHANNEL_ENV, PLAN_ENV
+    nonce = secrets.token_hex(16)
+    # Ticket 75 review: the record file is named by the nonce (the parent keeps the mapping in `log`),
+    # so the candidate cannot learn the fault from the descriptor's path.
+    record = Path(log).parent / f'run-{nonce}.record'
+    descriptor = os.open(record, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    plan_read, plan_write = os.pipe()
+    try:
+        os.write(plan_write, _plan_line(fault, nonce))
+        os.close(plan_write)
+        plan_write = None
+        result = execute([binary, '-f', graph, '-r', source, '-n', '1', '-v'], log, threads=threads,
+                         extra_env={CHANNEL_ENV: str(descriptor), PLAN_ENV: str(plan_read)},
+                         pass_fds=(descriptor, plan_read))
+    finally:
+        os.close(descriptor)
+        os.close(plan_read)
+        if plan_write is not None:
+            os.close(plan_write)
+    result.update(record=str(record.resolve()), record_sha256=artifacts.file_hash(record),
+                  plan={'fault': fault, 'nonce': nonce})
+    return result
+
+
+def witness_v14(parsed, counts, book):
+    """Native execution witness under 1.4: claims and pushes through the seams once BFS passes the source."""
+    return len(counts) <= 1 or (bool(parsed.get('claims')) and bool(parsed.get('pushes')))
+
+
+def attributed_v14(fault, parsed, verdict, book, adjacency, source):
+    """(attributed, evidence) of one native control run, from its trusted records alone."""
+    from swdb import certification_blinding as blinding
+    rule = ATTRIBUTION_V14[fault]
+    if fault == 'forged_frontier':
+        return blinding.attributed(fault, parsed, verdict, book, {'duplicate_frontier'})
+    values = (parsed['result'] or {}).get('values') or []
+    record = parsed['native_faults'].get({'claim_without_write': 'lost', 'partial_batch_dropped': 'hidden',
+                                          'stale_row_offset': 'stale'}[fault])
+    if not record:
+        return False, {'rule': rule, 'fault_record': None}
+    if rule == 'lost_claim_left_unset':
+        address, value = record[0], record[1]
+        base = parsed['result_base'][0] if parsed['result_base'] else None
+        vertex = (address - base) // 4 if base is not None and (address - base) % 4 == 0 else -1
+        depth = {v: d for d, level in enumerate(blinding.level_sets(adjacency, source)) for v in level}
+        parent = values[vertex] if 0 <= vertex < len(values) else None
+        wrong = parent is None or not (0 <= parent < len(adjacency) and vertex in adjacency[parent]
+                                       and depth.get(parent, -2) + 1 == depth.get(vertex, -1))
+        hit = 0 <= vertex < len(values) and parent != value and wrong
+        return hit, {'rule': rule, 'vertex': vertex, 'claimed_value': value,
+                     'returned': values[vertex] if 0 <= vertex < len(values) else None}
+    if rule == 'missing_child_of_hidden_vertex':
+        children = {v for u in record for v in adjacency[u]}
+        levels = blinding.level_sets(adjacency, source)
+        observed = [set(w) for _, w in parsed['windows'] if w]
+        for depth, expected in enumerate(levels):
+            seen = observed[depth] if depth < len(observed) else set()
+            if seen != expected:
+                hits = sorted((expected - seen) & children)
+                return bool(hits), {'rule': rule, 'level': depth, 'hidden': record[:5], 'missing_children': hits[:5]}
+        return False, {'rule': rule, 'hidden': record[:5], 'levels_equal': True}
+    u, begin, end = record[0], record[1], record[2]
+    flat = [v for row in adjacency for v in row]
+    stale_row = set(flat[max(begin, 0):max(end, 0)])
+    neighbors = set(adjacency[u])
+    hits = [x for x, parent in enumerate(values) if parent == u and x != u and x not in neighbors and x in stale_row]
+    return bool(hits), {'rule': rule, 'vertex': u, 'children_without_edge': hits[:5]}
+
+
+def certify_native_v14(tree, library, folder, profile, plugin, *, rng=None):
+    """The profile's matrix and controls under certify 1.4: one binary per build, blinded plans, a random
+    order per build, attributed rejections, the slide-window ledger and the seam witness."""
+    import random
+    from swdb import certification as c
+    from swdb import certification_blinding as blinding
+    from swdb.certification_feedback import STRICT_MESSAGES
+    rng = rng or random.SystemRandom()
+    data = profile['data']
+    spec = data['matrix']
+    harness = profile['harness_v14']
+    sources = list(spec['sources'])
+    graphs = c.matrix_graphs(folder, library, max(spec['threads']))
+    by_name = dict(graphs)
+    tail = folder / 'staging-tail-17.sg'
+    staging_tail_graph(tail)
+    by_name['staging-tail-17'] = tail
+    source_path = Path(tree) / data['rewrite_scope']['file']
+    source = source_path.read_text()
+    hook = profile['hook']
+    if source.count(hook['anchor']) != 1 or source.count('bool BFSVerifier(') != 1:
+        raise Failure('BFS frontier logging statement or correctness check differs from the protected text')
+    instrumented = source.replace(hook['anchor'], hook['hook_v14'] + '\n        ' + hook['anchor'], 1) + \
+        harness['driver'].read_text()
+    adjacency = {}
+
+    def rows(graph):
+        if graph not in adjacency:
+            adjacency[graph] = c.graph_adjacency(graph)
+        return adjacency[graph]
+
+    def judged(run, graph, vertex, counts):
+        parsed = blinding.parse_records(run['record'], set(STRICT_MESSAGES))
+        check = lambda values: plugin.certification_check_result(rows(graph), vertex, values)
+        verdict = blinding.judge(run, parsed, counts, check_result=check, result_kind=plugin.certification_result_kind,
+                                 source=vertex, claims_address_result=True, witness=witness_v14)
+        return parsed, verdict
+
+    matrix, controls, schedule = [], [], []
+    for build_spec in spec['builds']:
+        label = build_spec['id']
+        build = NativeBuild(folder / f'bfs-{label}.v14', profile, tree, source_path, build_spec, spec['fault_batch'],
+                            harness=harness)
+        positive = build.candidate_object(instrumented, 'positive')
+        output = folder / f'bfs-{label}.v14.bin'
+        link = build.link(positive, None, output) if positive['returncode'] == 0 else positive
+        if link['returncode'] != 0:
+            matrix.append({'build': label, 'status': 'failed', 'reason': 'build failed', 'compile': positive, 'link': link})
+            continue
+        binary_sha256 = artifacts.file_hash(output)
+        jobs = [{'kind': 'matrix', 'graph_name': name, 'graph': by_name[name], 'vertex': vertex, 'threads': threads,
+                 'fault': None} for threads, name in positive_runs(spec, graphs, data['controls']) for vertex in sources]
+        for control in data['controls']:
+            name = control.get('graph', spec['control_graph'])
+            jobs.append({'kind': 'control', 'control': control, 'graph_name': name, 'graph': by_name[name],
+                         'vertex': sources[0], 'threads': spec['control_threads'], 'fault': control['id']})
+        for canonical, job in enumerate(jobs):
+            job['canonical'] = canonical
+        rng.shuffle(jobs)
+        done_matrix, done_controls = [], []
+        for order, job in enumerate(jobs):
+            schedule.append({'build': label, 'order': order, 'kind': job['kind'],
+                             'name': job['fault'] or f"{job['graph_name']}/t{job['threads']}/{job['vertex']}"})
+            counts = plugin.certification_oracle(job['graph'], job['vertex'])
+            tag = job['fault'] or f"{job['graph_name']}-t{job['threads']}-{job['vertex']}"
+            run = run_v14(output, job['graph'], job['vertex'], folder / f'v14-{label}-{tag}.json', job['threads'],
+                          fault=job['fault'])
+            parsed, verdict = judged(run, job['graph'], job['vertex'], counts)
+            evidence = {'candidate_object_sha256': link['candidate_object_sha256'], 'binary_sha256': binary_sha256,
+                        'seam_object_sha256': link['seam_object_sha256'],
+                        'record_object_sha256': link['record_object_sha256'], 'plan': run['plan'],
+                        'named_checks': verdict['named_checks'], 'observed_checks': verdict['observed_checks'],
+                        'result_check': verdict['result_check'], 'record_problems': verdict['record_problems'],
+                        'seam_witness': verdict['seam_witness'], 'schedule_order': order}
+            if job['kind'] == 'matrix':
+                done_matrix.append((job['canonical'], {
+                    'graph': job['graph_name'], 'graph_sha256': artifacts.file_hash(job['graph']), 'source': job['vertex'],
+                    'oracle_frontier_counts': counts, 'build': label, 'flags': build_spec['flags'],
+                    'threads': job['threads'], 'status': 'passed' if verdict['passed'] else 'failed',
+                    'reason': verdict['reason'], 'compile': positive, 'link': link, 'run': run, **evidence}))
+                continue
+            control = job['control']
+            status = c.control_status({control['expected_check']}, verdict['observed_checks'], run, verdict['passed'])
+            reason = verdict['reason']
+            ok, attribution = attributed_v14(job['fault'], parsed, verdict, verdict['_book'], rows(job['graph']),
+                                             job['vertex'])
+            if status == 'rejected' and not ok:
+                status, reason = 'invalid', 'check_not_attributed_to_fault'
+            done_controls.append((job['canonical'], {
+                'id': control['id'], 'build': label, 'threads': job['threads'], 'expected_check': control['expected_check'],
+                'status': status, 'reason': reason, 'graph': job['graph_name'],
+                'graph_sha256': artifacts.file_hash(job['graph']),
+                'fault': {'site': 'library_fault', 'plan': control['id'], 'delivery': 'run_plan', 'version': 1,
+                          'attribution': ATTRIBUTION_V14[control['id']],
+                          'seam_source_sha256': artifacts.file_hash(harness['seams'])},
+                'attribution': {'attributed': ok, **attribution}, 'compile': positive, 'link': link, 'run': run,
+                **evidence}))
+        matrix.extend(cell for _, cell in sorted(done_matrix, key=lambda pair: pair[0]))
+        controls.extend(cell for _, cell in sorted(done_controls, key=lambda pair: pair[0]))
+    source_path.write_text(source)  # a private build copy, never a vendored tree
+    return matrix, controls, schedule

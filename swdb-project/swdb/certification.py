@@ -43,12 +43,26 @@ from swdb.store import Store
 # harness scan refuses candidate text naming harness symbols. Records before 1.3 read named checks
 # from stdout/stderr and selected faults with a macro in the candidate's translation unit; they
 # keep that meaning. Lowering certification and calibration are unchanged.
-# 1.4 (2026-10-05 ET, ticket 75): native-CPU candidate certification for a rewrite contract that pins
-# a native candidate profile (swdb.certification_native): its own build matrix, seams and faults
-# (library/native/certification/), the same isolation as 1.3. `--candidate-record` binds a
-# snapshot-plus-patch certification to an Extensa candidate record whose artifact sha256 equals the
-# patched tree. DX100 certification, lowering certification and calibration are unchanged.
+# 1.4 (2026-10-05 ET, ticket 76; agent-decided under Yan-Ru's delegation, revisable): candidate
+# artifacts are certified by swdb.certification_blinding. Per tile size the positive matrix and every
+# library-fault control run one binary; the fault arrives in a blinded run plan; all runs take a
+# random order; a library-fault control is rejected only when its check is attributable to the
+# fault's own action; windows are read from the queue at each slide; positive runs must pass the
+# seam witness (contract clause L4). Records of 1.3 and earlier keep their meaning, and
+# `certify(..., version='1.3')` (CLI `--command-version 1.3`) still runs 1.3 unchanged.
+# Lowering certification and calibration certify only evaluator-pinned trusted code (ticket 76) and
+# are unchanged.
 VERSION = '1.4'
+VERSIONS = ('1.3', '1.4')
+# Ticket 75 (2026-10-05 ET, merged after ticket 76): native-CPU candidate certification for a rewrite
+# contract that pins a native candidate profile (swdb.certification_native, library/native/). Under
+# version 1.3 it uses 1.3's isolation (one candidate object per build, one seam object per fault, a
+# frontier hook before DOBFS's protected print); under 1.4 it uses 1.4's blinding (one binary, a
+# blinded plan, random order, attributed rejections, the slide-window ledger and the seam witness).
+# certification.b7954f4df9dd4e228fb12437b845f190 was written on the ticket 75 branch before this merge,
+# when that branch numbered its 1.3-isolation native path "1.4"; its sources_sha256 06fe4cc5... names
+# that code. `--candidate-record` binds a snapshot-plus-patch certification to an Extensa candidate
+# record whose artifact sha256 equals the patched tree.
 ROOT = paths.HOME
 BFS = 'benchmarks/gapbs/src/bfs.cc'
 HEADER = 'benchmarks/gapbs/src/swdb_dxc_lowering.hpp'
@@ -272,6 +286,14 @@ def lowering_build(entry_id, library, tile_sizes, threads):
 
 
 def certify_lowering(entry_id, library, folder, tile_sizes, threads):
+    """Differential certification of one lowering entry against its reference semantics.
+
+    Ticket 76 (2026-10-05 ET): this reads verdict lines (`SWDB_DIFFERENTIAL_PASS`, named checks)
+    from the driver's output. That is sound only because every byte it runs is evaluator-trusted:
+    the lowering header, the differential driver and the reference are library files whose sha256
+    the entry pins (checked before and after the run), and no candidate artifact, patch or
+    provider output reaches this path (`certify` routes candidates to the rewrite-contract path).
+    """
     operation, driver, defines, inputs = lowering_build(entry_id, library, tile_sizes, threads)
     matrix, controls = [], []
     for size in tile_sizes:
@@ -485,11 +507,13 @@ def matrix_graphs(folder, library, threads):
     return graphs
 
 
-def instrument_source(source, *, calibrate=False):
+def instrument_source(source, *, calibrate=False, frontier_hook=True):
     """Insert the evaluator's frontier inspection before the protected frontier print.
 
     Ticket 70 (certify 1.3): for a candidate the inspection only records the window
     (``candidate_prelude.hpp``, forced in by the build); calibration keeps the 1.2 in-source check.
+    Ticket 76 (certify 1.4): ``frontier_hook=False`` inserts nothing into the candidate's function
+    (the forced 1.4 prelude records each window at the queue's slide); the checks stay.
     """
     statement = AUTHOR_FRONTIER_TEXT if calibrate else FRONTIER_TEXT
     if source.count(statement) != 1:
@@ -497,7 +521,8 @@ def instrument_source(source, *, calibrate=False):
     # Protect the source kernel verifier and the standard harness's PASS rendering.
     if source.count('bool BFSVerifier(') != 1:
         raise Failure('BFS correctness check is missing or ambiguous')
-    source = source.replace(statement, 'swdb_certification_frontier(queue);\n        ' + statement)
+    if frontier_hook or calibrate:
+        source = source.replace(statement, 'swdb_certification_frontier(queue);\n        ' + statement)
     if not calibrate:
         return source
     if calibrate:
@@ -550,17 +575,24 @@ def _rewrite_control(source, name, *, calibrate=False):
 
 
 def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrate=False, threshold=64, plugin=None,
-                contract=None):
+                contract=None, version=VERSION):
     """Run the matrix and its controls; the kernel plug-in supplies the instance.
 
     Calibration is the BFS authors' reference and always uses the BFS functions and the 1.2
     in-process checks (it certifies the authors' code, not a candidate). A candidate artifact is
-    certified by :func:`certify_candidate` (certify 1.3, ticket 70).
+    certified by :func:`certify_candidate` (certify 1.3, ticket 70) or, from certify 1.4 (ticket 76),
+    by ``swdb.certification_blinding.certify_candidate``.
     """
     from swdb import kernels
     if not calibrate:
-        return certify_candidate(tree, library, folder, tile_sizes, threads, sources, threshold=threshold,
-                                 plugin=plugin or kernels.BFS, contract=contract)
+        if version == '1.3':
+            return certify_candidate(tree, library, folder, tile_sizes, threads, sources, threshold=threshold,
+                                     plugin=plugin or kernels.BFS, contract=contract)
+        from swdb import certification_blinding
+        matrix, controls, _schedule = certification_blinding.certify_candidate(
+            tree, library, folder, tile_sizes, threads, sources, threshold=threshold, plugin=plugin or kernels.BFS,
+            contract=contract)
+        return matrix, controls
     if plugin not in (None, kernels.BFS):
         raise Failure('calibration exists only for the BFS authors reference')
     plugin = kernels.BFS
@@ -779,6 +811,8 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
 
 
 SEMANTIC_CHECKS = {'verifier', 'frontier_size_equality', 'execution_witness'}
+# Ticket 76 (certify 1.4): the seam witness of contract clause L4, from the trusted ledger.
+SEAM_WITNESS = 'seam_witness'
 
 
 def observed_checks(run, counts, judge, named):
@@ -827,7 +861,7 @@ def producible_checks():
     """
     from swdb.certification_feedback import STRICT_MESSAGES
     from swdb.certification_legality import CHECKS
-    return set(STRICT_MESSAGES) | SEMANTIC_CHECKS | {'duplicate_frontier'} | set(CHECKS)
+    return set(STRICT_MESSAGES) | SEMANTIC_CHECKS | {'duplicate_frontier', SEAM_WITNESS} | set(CHECKS)
 
 
 def clause_controls(entry, controls, plugin=None):
@@ -899,9 +933,10 @@ def source_digest(library_root):
     legality = Path(__file__).with_name('certification_legality.py')  # ticket 68
     isolation = Path(__file__).with_name('certification_isolation.py')  # ticket 70
     native = Path(__file__).with_name('certification_native.py')  # ticket 75
+    blinding = Path(__file__).with_name('certification_blinding.py')  # ticket 76
     files = (sorted(p for p in (library_root / 'dx100').rglob('*') if p.is_file())
              + sorted(p for p in (library_root / 'native').rglob('*') if p.is_file())
-             + [Path(__file__), faults, legality, isolation, native])
+             + [Path(__file__), faults, legality, isolation, blinding, native])
     return artifacts.digest([{'path': p.relative_to(library_root).as_posix() if library_root in p.parents else 'swdb/' + p.name,
                               'sha256': artifacts.file_hash(p)} for p in files])
 
@@ -931,7 +966,7 @@ def bind_candidate_record(path, snapshot_id, tree):
 
 def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None,
             snapshot=None, patch=None, calibrate=False, tile_sizes=(16384, 1024), threads=4, sources=(0,),
-            candidate_record=None):
+            candidate_record=None, version=None):
     from swdb.library import Library
     from swdb import certification_native as native
     library_root = Path(library or ROOT / 'library').resolve()
@@ -951,6 +986,16 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         raise UsageError('use --candidate or the paired --snapshot/--patch input')
     if not calibrate and not entry_id:
         raise UsageError('certification requires an entry ID')
+    # Ticket 76: 1.4 by default; 1.3 stays selectable for candidate artifacts (its records keep their
+    # meaning, and work in progress under 1.3 can be repeated exactly).
+    version = version or VERSION
+    if version not in VERSIONS:
+        raise UsageError('certify command version must be one of ' + ', '.join(VERSIONS))
+    # Ticket 76: calibration and lowering certification still read printed lines, so they must only
+    # ever run trusted code: the pinned authors' tree (calibration) or hash-pinned library files
+    # (lowerings). Neither takes candidate input.
+    if calibrate and (candidate or snapshot or patch):
+        raise UsageError('calibration certifies only the pinned authors source; it takes no candidate input')
     if calibrate:
         entry_id = entry_id or 'calibration.dx100_authors_t17'
         content_sha256 = artifacts.digest({'source_tree': artifacts.identify(ROOT / 'apps/dx100')['sha256'], 'fix': 'wait_ready(tile3) -> wait_ready(tile5)', 'strict_layer': artifacts.identify(library_root / 'dx100/strict')['sha256']})
@@ -972,7 +1017,7 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         artifacts.copy_snapshot(ROOT / 'apps/dx100', tree)
         matrix, controls = certify_bfs(tree, library_root, folder, tile_sizes, threads, sources, calibrate=True)
     elif native_entry is not None:
-        # Ticket 75 (certify 1.4): a native-CPU contract; its pinned profile is the matrix.
+        # Ticket 75: a native-CPU contract; its pinned profile is the matrix (1.3 isolation or 1.4 blinding).
         if not (candidate or snapshot):
             raise UsageError('a native-CPU rewrite contract certifies a candidate artifact')
         from swdb import kernels
@@ -1003,11 +1048,11 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         changed_files = native.check_scope(profile, tree, original_snapshot, snapshot_text)
         from swdb.certification_isolation import refuse_scan_findings, scan
         candidate_text = (tree / profile['scope']['file']).read_text()
-        refuse_scan_findings(snapshot_text, candidate_text, directives=True)
+        refuse_scan_findings(snapshot_text, candidate_text, version, directives=True)
         identity = {'contract': entry_id, 'contract_sha256': content_sha256,
                     'tree_sha256': artifacts.identify(tree)['sha256'], 'snapshot': snapshot_id,
                     'changed_files': changed_files,
-                    'scan': {'findings': len(scan(snapshot_text, candidate_text, directives=True)),
+                    'scan': {'findings': len(scan(snapshot_text, candidate_text, version, directives=True)),
                              'directives': 'only #pragma omp may be authored'},
                     'rewrite_scope': {'file': profile['scope']['file'], 'function': profile['scope']['begin']}}
         if candidate:
@@ -1017,7 +1062,11 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
             identity.update(id=bound.pop('id'), candidate_record=bound)
         if tuple(sources) != (0,):
             raise UsageError('a native-CPU profile pins its sources; --sources cannot override them')
-        matrix, controls = native.certify_native(tree, library_root, folder, profile, plugin)
+        native_schedule = None
+        if version == '1.3':
+            matrix, controls = native.certify_native(tree, library_root, folder, profile, plugin)
+        else:
+            matrix, controls, native_schedule = native.certify_native_v14(tree, library_root, folder, profile, plugin)
         native_profile = {'id': profile['data']['id'], 'path': str(profile['path'].relative_to(library_root)),
                           'sha256': profile['sha256'], 'target': 'native_cpu',
                           # Ticket 75 review: pre-check on the certifying host, not on the target machine.
@@ -1057,9 +1106,10 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         header = tree / HEADER
         if not header.is_file() or artifacts.file_hash(header) != artifacts.file_hash(library_root / 'dx100/dxc_lowering.hpp'):
             raise Failure('candidate must ship the byte-identical canonical lowering header')
-        # Ticket 70 (certify 1.3): candidate-authored text may not name harness symbols.
+        # Ticket 70 (certify 1.3): candidate-authored text may not name harness symbols. Ticket 76:
+        # 1.4 also refuses descriptor reads, temporary files and frame introspection.
         from swdb.certification_isolation import refuse_scan_findings
-        refuse_scan_findings(snapshot_text, (tree / plugin.certification_source).read_text())
+        refuse_scan_findings(snapshot_text, (tree / plugin.certification_source).read_text(), version=version)
         identity = {'contract': entry_id, 'contract_sha256': content_sha256,
                     'tree_sha256': artifacts.identify(tree)['sha256'], 'snapshot': snapshot_id, 'changed_files': changed_files}
         if candidate:
@@ -1069,7 +1119,7 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
             identity.update(id=bound.pop('id'), candidate_record=bound)
         threshold = 64
         matrix, controls = certify_bfs(tree, library_root, folder, tile_sizes, threads, sources, threshold=threshold,
-                                       plugin=plugin, contract=entry)
+                                       plugin=plugin, contract=entry, version=version)
     else:
         if entry.get('kind') not in {'lowering', 'intrinsic', 'library_operation'}:
             raise UsageError('entry requires a candidate artifact or a differential-test driver')
@@ -1098,7 +1148,7 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
     record = workflow.record('certification', 'certification.' + uuid.uuid4().hex,
         entry={'id': entry_id, 'content_sha256': content_sha256},
         dependencies=dependencies,
-        command={'version': VERSION, 'sources_sha256': command_hash},
+        command={'version': version, 'sources_sha256': command_hash},
         host={'hostname': socket.gethostname(), 'system': platform.system(), 'architecture': platform.machine(), 'compiler': compiler()},
         matrix=matrix, negative_controls=controls, verdict=verdict, evidence_basis='simulated',
         evidence_kind='execution', created_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
@@ -1107,6 +1157,8 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         record['clause_controls'] = clauses
     if native_entry is not None:
         record['profile'] = native_profile  # ticket 75
+        if native_schedule is not None:
+            record['profile']['schedule'] = native_schedule   # certify 1.4: the random run order
     (folder / 'certification.json').write_text(json.dumps(record, indent=2) + '\n')
     workflow.persist(store.dir, record, create=True)
     return record
@@ -1132,6 +1184,9 @@ def register_cli(commands):
     # Ticket 75 (2026-10-05 ET): bind a --snapshot/--patch run to an Extensa candidate record (read only).
     sub.add_argument('--candidate-record', type=Path,
                      help='candidate record file whose artifact the patched tree must reproduce')
+    # Ticket 76 (2026-10-05 ET): candidate artifacts default to certify 1.4; 1.3 stays selectable.
+    sub.add_argument('--command-version', choices=VERSIONS, default=None,
+                     help='certify command version for candidate artifacts (default: the current version)')
     return sub
 
 
@@ -1147,7 +1202,8 @@ def run_cli(args):
     record = certify(Store(Path(args.records)), args.entry_id, runs_dir=args.runs_dir, library=args.library,
                      candidate=args.candidate, snapshot=args.snapshot, patch=args.patch, calibrate=args.calibrate,
                      tile_sizes=sizes, threads=args.threads, sources=sources,
-                     candidate_record=getattr(args, 'candidate_record', None))
+                     candidate_record=getattr(args, 'candidate_record', None),
+                     version=getattr(args, 'command_version', None))
     print(json.dumps({'id': record['id'], 'verdict': record['verdict'], 'matrix_cells': len(record['matrix']),
                       'negative_controls': len(record['negative_controls'])}, indent=2))
     return 0 if record['verdict'] == 'certified' else 1

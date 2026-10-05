@@ -67,7 +67,7 @@ uses_library_operations: []
 certification_profile:
   root: library
   path: profiles/native_bfs_tdstep.yaml
-  sha256: ff2b9ea0ddfc3fd1554c0679c7ab8bb8f1caa0dfcacce28508810db6b985524a
+  sha256: ad5b76b8674a2289437b663b6c8aa5d15a1337596e4881819adc250d57b14a36
 rewrite:
   scope: The definition of TDStep in benchmarks/gapbs/src/bfs.cc of the fork's scalar-only snapshot. Certify checks
     before any build that every other byte of the tree is unchanged, that the region holds exactly one function
@@ -90,7 +90,7 @@ clauses:
   statement: Frontier coverage. Across all threads the batched loop stages and expands every window position in
     [shared_out_start, shared_out_end) exactly once, including the final partial batch of (size mod B)
     positions; the worksharing schedule only distributes whole batches. Holds for every integer B of at least 1.
-    For a candidate it is discharged by the positive matrix; its control (a fault on the step's inputs) shows that
+    For a candidate it is discharged by the positive cells; its control (a fault on the step's inputs) shows that
     frontier_size_equality catches a dropped final partial batch, whatever the candidate.
   discharge_mode: differential_test
   negative_control:
@@ -138,9 +138,10 @@ clauses:
   role: legality
   statement: Claim retained. Each discovery of an unvisited vertex v (parent[v] < 0) by frontier vertex u is one
     call compare_and_swap(parent[v], curr_val, u) from platform_atomics.h and, on success only, exactly one
-    QueueBuffer push_back(v); both go through these library seams, where the certification faults act. A
-    candidate that bypasses a seam leaves forged_frontier or claim_without_write alive; the spelling is also
-    checked by the promotion reviewer per candidate.
+    QueueBuffer push_back(v); both go through these library seams, where the certification faults act. Under
+    certify 1.4 a candidate that bypasses a seam fails seam_witness in every positive cell (under 1.3 it leaves
+    forged_frontier or claim_without_write alive); the spelling is also checked by the promotion reviewer per
+    candidate.
   discharge_mode: structural
   negative_control:
     id: forged_frontier

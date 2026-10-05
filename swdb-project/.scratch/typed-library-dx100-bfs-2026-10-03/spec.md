@@ -2,6 +2,7 @@
 
 Created: 2026-10-03 00:50 ET
 Updated: 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66)
+Updated: 2026-10-05 12:50 ET (ticket 76: certify 1.4, blinded controls and attributed rejections)
 Updated: 2026-10-04 22:40 ET (ticket 70: certification isolation, certify 1.3)
 Updated: 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's
 2026-10-03 delegation and revisable; see [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md))
@@ -592,6 +593,25 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
     imitates an evaluator line.
   - `forged_frontier` no longer forges the print. Calibration and lowering certification are
     unchanged.
+- **Blinding and attribution (certify 1.4; ticket 76, 2026-10-05 ET; agent-decided under Yan-Ru's
+  delegation, revisable).** The default for candidate artifacts; 1.3 stays selectable
+  (`--command-version 1.3`) and older records keep their meaning.
+  - Per tile size, the positive matrix and every library-fault control run one binary. The fault
+    arrives at run time in a fixed-length plan on a pipe that trusted code drains before `main`.
+    All runs of a tile size take a fresh random order.
+  - A library-fault control is rejected only when its named check is attributable to the fault's
+    own action, from trusted seam records: a duplicate behind a forged claim or the forged push
+    copy; a strict failure inside the faulted stream load or on a thread the fault acted on; a
+    missing frontier vertex behind an edge the dropped continuation removed.
+  - Trusted code reads each window from the queue at its slide; nothing is inserted into the
+    candidate's function.
+  - Positive runs also need the **seam witness** (clause L4): one frontier queue; each window equals
+    the pushes into it; every pushed vertex but the source is claimed by the pushing thread through
+    `compare_and_swap` at one array's slot (for BFS, the returned parent array); and the execution
+    witness needs a DX100 gather from that array.
+  - Extensa feedback names a surviving control only as `negative_controls_not_rejected`.
+  - Calibration and lowering certification still read printed lines; they run only pinned, trusted
+    code, and calibration refuses candidate input.
 - **Calibration** (`--calibrate`). Builds from the full DX100 source through the strict layer and
   runs the BFS matrix under its own pass rule: the verifier's PASS text; per-level frontier sizes,
   read from the authors' `Starting TDStepMAA: <n> elements` lines, equal to the trusted oracle's;

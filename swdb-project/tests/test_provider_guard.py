@@ -1,4 +1,4 @@
-"""Linux confinement through public submit. Updated: 2026-09-30 ET.
+"""Linux confinement through public submit. Updated: 2026-10-05 ET (ticket 74: split thread caps, lane CPUs).
 
 Run on mbit10 inside socket_lane.sh. Probes report actual kernel results in
 retained fixture events; these are confinement checks, not provider evidence.
@@ -13,6 +13,7 @@ from pathlib import Path
 import pytest
 import yaml
 
+from swdb import provider_guard
 from test_provider_workspace import proposal_setup
 
 pytestmark = pytest.mark.skipif(sys.platform != "linux", reason="Landlock ABI 4 checks require Linux")
@@ -82,8 +83,9 @@ print(json.dumps({"type":"turn.completed","usage":{"output_tokens":1}}),flush=Tr
     policy = meta["guard_policy"]
     assert policy["enforced"] is True and policy["landlock_abi"] >= 4
     assert policy["tcp_connect_ports"] == [443] and policy["inner_tcp_connect_ports"] == []
-    assert policy["limits"] == {"threads": 16, "memory_bytes": 32 * 1024**3,
+    assert policy["limits"] == {"threads": 16, "runtime_threads": 64, "memory_bytes": 32 * 1024**3,
                                 "command_seconds": 120, "workspace_bytes": 5 * 1024**3}
+    assert policy["lane_cpus"] == sorted(os.sched_getaffinity(0))
     log = Path(meta["audit"]["raw_log"]["path"])
     event = next(json.loads(line) for line in log.read_text().splitlines() if '"command_execution"' in line)
     observed = event["item"]["aggregated_output"]
@@ -98,14 +100,35 @@ RESOURCE_PROGRAM = '''import ctypes, json, os, platform, shutil, signal, sys, th
 from pathlib import Path
 if "--version" in sys.argv:
  print("resource-guard-fixture-1"); raise SystemExit(0)
-mode = json.loads(Path(sys.argv[1]).read_text())["mode"]
+plan = json.loads(Path(sys.argv[1]).read_text())
+mode = plan["mode"]
 pidfile = Path("build/resource-pid.json")
 pidfile.write_text(json.dumps({"provider": os.getpid()}))
 print(json.dumps({"type":"item.completed", "item":{"type":"command_execution", "command":"local resource fixture probe", "exit_code":0, "aggregated_output":"started:"+mode}}), flush=True)
 if mode == "threads":
+ # Ticket 74: a tool process (not the provider runtime) over the 16-thread tool cap.
+ if os.fork() == 0:
+  gate = threading.Event()
+  for number in range(17):
+   threading.Thread(target=gate.wait, daemon=True).start()
+  time.sleep(30); os._exit(0)
+elif mode == "runtime_threads":
+ # The provider runtime itself over its 64-thread cap: a harness limit, not tool work.
  gate = threading.Event()
- for number in range(17):
+ for number in range(64):
   threading.Thread(target=gate.wait, daemon=True).start()
+elif mode == "cpu_escape":
+ # A tool process widening its affinity beyond the lane (as taskset or numactl would).
+ # The CPUs come from the plan: under Landlock os.cpu_count() cannot read the host's CPU
+ # list and falls back to this process's one-CPU affinity, so no escape would happen.
+ if os.fork() == 0:
+  try:
+   os.sched_setaffinity(0, plan["escape_cpus"])
+   observed = sorted(os.sched_getaffinity(0))
+  except OSError as error:
+   observed = "error:" + str(error.errno)
+  Path("build/cpu-escape.json").write_text(json.dumps({"pid": os.getpid(), "affinity": observed}))
+  time.sleep(30); os._exit(0)
 elif mode == "workspace":
  # Two sparse files cross the actual aggregate 5 GiB allowance without
  # allocating 6 GiB physically. Each file stays below RLIMIT_FSIZE.
@@ -194,17 +217,23 @@ print(json.dumps({"type":"turn.completed"}), flush=True)
 
 
 @pytest.mark.parametrize("mode,reason", [
-    ("threads", "provider resource limit exceeded"),
+    ("threads", "provider resource limit exceeded: tool threads="),
+    ("runtime_threads", "provider resource limit exceeded by the provider runtime"),
+    ("cpu_escape", "may run outside the lane CPUs"),
     ("orphan_threads", "provider resource limit exceeded"),
     ("supervisor_signals", "provider resource limit exceeded"),
     ("workspace", "provider workspace exceeds"),
     ("command_timeout", "provider tool command exceeds the 120 s wall-time limit"),
 ])
 def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_path, mode, reason):
+    if mode == "cpu_escape" and set(os.sched_getaffinity(0)) == set(range(os.cpu_count())):
+        pytest.skip("run inside socket_lane.sh: the observer's affinity is every CPU")
     records, runs, _, request = proposal_setup
     program, plan = tmp_path / "resource-fixture.py", tmp_path / "resource-plan.json"
     program.write_text(RESOURCE_PROGRAM)
-    plan.write_text(json.dumps({"mode": mode}))
+    lane = set(os.sched_getaffinity(0))
+    escape = sorted(set(range(os.cpu_count())) - lane)[:1]     # one CPU outside the lane; the child only sleeps
+    plan.write_text(json.dumps({"mode": mode, "escape_cpus": escape}))
     config = tmp_path / "resource-config.yaml"
     config.write_text(yaml.safe_dump({"kind":"external_fixture", "emulates":"codex", "workspace":True,
         "command":[sys.executable, str(program), str(plan)], "timeout_s":150, "total_seconds":180}))
@@ -223,7 +252,14 @@ def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_pat
     else:
         assert meta["host_wall_s"] < 10, "fixture reached its own completion instead of being stopped by the guard"
     violations = meta["audit"]["violations"]
-    assert any(v["code"] == "resource_limit" and reason in v["reason"] for v in violations)
+    if mode == "cpu_escape":
+        # The premise held: the guard observed the tool's affinity on the CPU outside the lane.
+        assert any(f"lane CPUs: {escape}" in r for r in meta["guard_result"]["reasons"]), meta["guard_result"]
+        report = Path(meta["workspace_manifest"]["root"]) / "build/cpu-escape.json"
+        if report.exists():                     # written right after the call, unless the guard was faster
+            assert json.loads(report.read_text())["affinity"] == escape
+    code = "guard_violation" if mode == "cpu_escape" else "resource_limit"
+    assert any(v["code"] == code and reason in v["reason"] for v in violations)
     assert not any(v["code"] == "outbound_connection" for v in violations)
     assert not meta["guard_result"]["passed"]
     assert any(reason in r for r in meta["guard_result"]["reasons"])
@@ -233,6 +269,7 @@ def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_pat
     assert not (Path(meta["workspace_manifest"]["home"]) / "auth.json").exists()
     policy = meta["guard_policy"]
     assert policy["limits"]["threads"] == 16 and policy["limits"]["memory_bytes"] == 32*1024**3
+    assert policy["limits"]["runtime_threads"] == 64
     assert policy["limits"]["command_seconds"] == 120
     assert policy["limits"]["workspace_bytes"] == 5*1024**3 and "test_override" not in policy
     assert policy["process_ownership"]["subreaper"] is True
@@ -267,15 +304,22 @@ def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_pat
             assert observed["helper_sigterm"] == observed["helper_pidfd_signal"] == "terminated"
         if mode in {"orphan_threads", "supervisor_signals"}:
             details = json.loads((Path(meta["audit"]["raw_log"]["path"]).parent / "resource-overrun.json").read_text())
-            orphan = next(row for row in details if row["pid"] == detached["pid"])
+            assert details["format"] == "swdb.guard-overrun.v2" and details["scope"] == "tools"
+            orphan = next(row for row in details["processes"] if row["pid"] == detached["pid"])
             assert orphan["parent"] == cleanup["tracer_pid"] and orphan["threads"] > 1
+            assert orphan["scope"] == "tool"          # adopted by the tracer, still the model's work
             # The observer may catch the allocation before all 17 requested
-            # threads start. Admission depends on the actual aggregate count.
-            assert sum(row["threads"] for row in details) > policy["limits"]["threads"]
-            assert any(row["pid"] == cleanup["tracer_pid"] for row in details)
+            # threads start. Admission depends on the actual tool-thread count.
+            assert details["tools"]["threads"] > policy["limits"]["threads"]
+            assert any(row["pid"] == cleanup["tracer_pid"] and row["scope"] == "tracer" for row in details["processes"])
     if mode in {"threads", "orphan_threads", "supervisor_signals"}:
         measured = next(r for r in meta["guard_result"]["reasons"] if reason in r)
-        assert int(re.search(r"threads=(\d+)", measured)[1]) > 16
+        assert int(re.search(r"tool threads=(\d+)", measured)[1]) > 16
+        assert provider_guard.harness_limit(Path(meta["audit"]["raw_log"]["path"]).parent) is None
+    elif mode == "runtime_threads":
+        measured = next(r for r in meta["guard_result"]["reasons"] if reason in r)
+        assert int(re.search(r"runtime threads=(\d+)", measured)[1]) > 64
+        assert provider_guard.harness_limit(Path(meta["audit"]["raw_log"]["path"]).parent) == measured
     elif mode == "workspace":
         growth = [workspace / "build" / name for name in ("resource-growth-a.bin", "resource-growth-b.bin")]
         assert sum(p.stat().st_size for p in growth) == 6*1024**3

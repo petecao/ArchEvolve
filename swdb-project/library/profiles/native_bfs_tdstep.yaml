@@ -21,6 +21,21 @@ harness:
   driver:
     path: dx100/certification/bfs_driver.inc
     sha256: ad9a5a647614000a0716075e0a4d661df9453b5ff9365db9d239bd1b06416d3a
+# Certify 1.4 (ticket 76's blinded mechanism, added 2026-10-05 ET): one binary per build, a blinded run plan,
+# attributed rejections, the slide-window ledger and the seam witness.
+harness_v14:
+  prelude:
+    path: native/certification/v1_4/prelude.hpp
+    sha256: 237bce843d5a115cf8dc14e807474f6f5033e914b6c9a5ceafbdbb86b7b97c2f
+  record:
+    path: native/certification/v1_4/record.cc
+    sha256: 1a977b1a781ec2c252b1d7522b28bb17a7f529a56e294086d11518834328708b
+  seams:
+    path: native/certification/v1_4/seams.cc
+    sha256: 445f76a04e2013fd1fa2b577e53cd6e24e33a10da708a7d8a03fb9587f75b895
+  driver:
+    path: dx100/certification/v1_4/bfs_driver.inc
+    sha256: 6c104ea0227283599920c97d388026594434ceb74516d0fe82187e8f7e98ea8f
 matrix:
   builds:
   - id: o3
@@ -69,16 +84,22 @@ rewrite_scope:
 instrumentation:
   anchor: 'std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;'
   hook: 'swdb_certification_frontier(queue, VertexOffsetsOut);'
+  # 1.4: windows come from the slide-window ledger; the hook only hands the row offsets to trusted code.
+  hook_v14: 'swdb_certification_offsets(queue, VertexOffsetsOut);'
 execution_witness:
   rule: claims_and_pushes_when_reached
 notes:
-- Every control is a fault in the separately compiled seam object; the positive matrix and all controls of one
-  build link the same candidate object (ticket 70 isolation).
+- Under certify 1.3 every control is a fault in its own separately compiled seam object, linked to the one
+  candidate object of the build (ticket 70). Under 1.4 one binary per build holds every fault; a blinded run plan
+  selects it, runs take a random order, rejections must be attributed to the fault, windows come from the
+  slide-window ledger and positive cells must pass the seam witness (ticket 76's mechanism).
+- Positive cells: the matrix (2 builds x 2 thread counts x 5 graphs) plus each control-only graph
+  (staging-tail-17) at the control thread count, so no control runs on an input no positive cell uses: 22 cells.
 - Controls run from source 0 on the two-level graph, where each fault fires deterministically in the first step
   (one frontier vertex), except partial_batch_dropped, which runs on staging-tail-17 (a 17-vertex second window in
   push order 1..17, each with a unique leaf), so a true partial batch of one vertex is dropped after one full batch.
 - claim_without_write and forged_frontier act inside the seams the candidate calls (a candidate that bypasses them
   leaves the control alive); partial_batch_dropped and stale_row_offset act on step inputs and show the checks'
-  sensitivity. S1 and S2 for a given candidate are discharged by the positive matrix (20 cells).
+  sensitivity. S1 and S2 for a given candidate are discharged by the 22 positive cells.
 - "Rewrite scope: the region between the markers must stay one function definition with the snapshot's signature,
   and authored lines may hold no preprocessor directive other than '#pragma omp' (harness scan)."

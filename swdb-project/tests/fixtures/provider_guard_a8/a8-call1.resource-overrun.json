@@ -1,0 +1,37 @@
+[
+  {
+    "pid": 1866131,
+    "parent": 1851904,
+    "start_time_ticks": 569379279,
+    "threads": 1,
+    "resident_bytes": 4153344,
+    "tasks": [
+      "strace"
+    ]
+  },
+  {
+    "pid": 1866134,
+    "parent": 1866131,
+    "start_time_ticks": 569379284,
+    "threads": 16,
+    "resident_bytes": 79814656,
+    "tasks": [
+      "codex",
+      "codex-main",
+      "tokio-rt-worker",
+      "tokio-rt-worker",
+      "tokio-rt-worker",
+      "tokio-rt-worker",
+      "tokio-rt-worker",
+      "notify-rs inoti",
+      "notify-rs inoti",
+      "tokio-rt-worker",
+      "tokio-rt-worker",
+      "tokio-rt-worker",
+      "tokio-rt-worker",
+      "tokio-rt-worker",
+      "tokio-rt-worker",
+      "tokio-rt-worker"
+    ]
+  }
+]

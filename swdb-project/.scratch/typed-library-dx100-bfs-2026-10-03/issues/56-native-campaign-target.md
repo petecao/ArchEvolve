@@ -1,7 +1,7 @@
 # 56 — Native-CPU Extensa campaign target for BFS
 
 Created: 2026-10-03
-Updated: 2026-10-05 10:00 ET (a8 result: uniform gain, uncertified; Kronecker inconclusive); 2026-10-05 03:15 ET (a7 erratum; a8 pre-registered); 2026-10-05 02:50 ET (a7 addendum: speed rule ci_width.v2, uniform no_gain at plateau, Kronecker baseline_unstable); 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
+Updated: 2026-10-05 10:45 ET (a8 erratum, ticket 74); 2026-10-05 10:00 ET (a8 result: uniform gain, uncertified; Kronecker inconclusive); 2026-10-05 03:15 ET (a7 erratum; a8 pre-registered); 2026-10-05 02:50 ET (a7 addendum: speed rule ci_width.v2, uniform no_gain at plateau, Kronecker baseline_unstable); 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 51, 53, 54, 55
@@ -398,3 +398,11 @@ Summary `records/campaign_summaries/extensa-native-bfs-20261005-a8.summary.yaml`
 host and Mac). Compact evidence:
 [`evaluation/native-a8-ci-gate-v2-2026-10-05.json`](../evaluation/native-a8-ci-gate-v2-2026-10-05.json). This was
 the last native run under `ci_width.v2`. No rerun.
+
+**Erratum 2026-10-05 10:45 ET (ticket [74](74-provider-guard-runtime-threads.md)).** a8's plateau was reached
+partly through two miscounted guard stops. Calls 1 and 6 were stopped by the harness's own aggregate 16-thread
+cap about 0.5 s after launch, before any tool command: strace plus Codex's own runtime (16 threads, 12 of them
+tokio threads). Under D7 neither was a real attempt, and both should have been uncounted infrastructure pauses
+with the call retried. Iteration 5 instead ended without a rewrite and completed the 4-iteration plateau, so the
+stop is partly **infrastructure-driven**. Uniform's measured `gain` (iterations 1 and 4) and Kronecker's
+`inconclusive` stand as measured. The a8 records and summary are left unedited.

@@ -31,6 +31,11 @@ Not closed (recorded in ticket 70): code in the candidate's process can still pr
 time (for example call ``compare_and_swap`` on scratch data and see whether a failed compare
 succeeds) and then misbehave on purpose; the frontier inspection runs at the protected print,
 inside the candidate's own function.
+
+Updated: 2026-10-05 ET (ticket 76). Certify 1.4 (``swdb.certification_blinding``) closes those two
+holes as far as one process allows and is the default. This module stays the unchanged 1.3 path
+(``certify(..., version='1.3')``); its scan also serves 1.4 with the larger primitive set
+:data:`PRIMITIVES_1_4`.
 """
 from __future__ import annotations
 
@@ -271,6 +276,17 @@ PRIMITIVES = {
     'system', 'popen', 'fork', 'vfork', 'execl', 'execlp', 'execle', 'execv', 'execve', 'execvp',
     'posix_spawn', 'posix_spawnp', 'ptrace', 'mmap', 'mprotect',
 }
+# Certify 1.4 (ticket 76, 2026-10-05 ET) also refuses reading descriptors (the run plan arrives on
+# one), files that could carry state from one run to the next, and frame or symbol introspection.
+# Defense in depth only: 1.4's guarantees do not rest on the scan (ticket 76, residual threats).
+PRIMITIVES_1_4 = PRIMITIVES | {
+    'read', 'pread', 'readv', 'preadv', 'recv', 'recvfrom', 'recvmsg', 'socket', 'socketpair', 'pipe', 'pipe2',
+    'ifstream', 'basic_ifstream', 'tmpfile', 'tmpnam', 'mkstemp', 'mkostemp', 'mkdtemp', 'shm_open', 'sem_open',
+    'msgget', 'shmget', 'filesystem', 'opendir', 'readdir', 'scandir', 'stat', 'fstat', 'lstat', 'access',
+    'sysctl', 'proc_pidinfo', 'task_for_pid', 'backtrace', 'backtrace_symbols', '__builtin_frame_address',
+    '__builtin_return_address', '__builtin_extract_return_addr', 'dl_iterate_phdr', '_dyld_get_image_header',
+    '_dyld_image_count', 'getauxval', 'process_vm_readv', 'prctl', 'signal', 'sigaction', 'setjmp', 'longjmp',
+}
 # Text that imitates an evaluator line (verdicts no longer come from output; refused anyway).
 IMITATIONS = ('SWDB_STRICT_ASSERT', 'SWDB_PRESERVATION_FAIL', 'SWDB_DIFFERENTIAL', 'SWDB_CERT',
               'trusted_frontier', 'accelerated_chunks', 'strict_operations', 'Verification', '/proc/', '/dev/fd')
@@ -281,15 +297,18 @@ def _literal_text(token):
     return re.sub(r'\\(.)', r'\1', body)
 
 
-def scan(original, candidate, *, directives=False):
+def scan(original, candidate, version='1.3', *, directives=False):
     """Findings [(line, token, why)] in candidate-authored lines (those not in the snapshot text).
 
-    ``directives`` (certify 1.4, ticket 75 review; native-CPU contracts): an authored preprocessor
-    directive other than ``#pragma omp`` is refused, and so is the token ``defined``. The seam macros
-    (``compare_and_swap``, ``QueueBuffer``) exist only in certification builds, so ``#ifndef
-    QueueBuffer`` would let a candidate run other code on the target. The DX100 rewrites author
-    ``#ifdef`` blocks of their own and keep the 1.3 scan.
+    ``version`` '1.4' (ticket 76) refuses the larger primitive set :data:`PRIMITIVES_1_4`.
+
+    ``directives`` (ticket 75 review; native-CPU contracts): an authored preprocessor directive other
+    than ``#pragma omp`` is refused, and so is the token ``defined``. The seam macros
+    (``compare_and_swap``, ``QueueBuffer``, ``SlidingQueue``) exist only in certification builds, so
+    ``#ifndef QueueBuffer`` would let a candidate run other code on the target. The DX100 rewrites
+    author ``#ifdef`` blocks of their own and keep the scan without it.
     """
+    primitives = PRIMITIVES_1_4 if version == '1.4' else PRIMITIVES
     from swdb.certification_faults import tokens
     authored = set()
     matcher = difflib.SequenceMatcher(None, original.splitlines(), candidate.splitlines(), autojunk=False)
@@ -336,16 +355,16 @@ def scan(original, candidate, *, directives=False):
             findings.append((line, token, 'preprocessor directive (only #pragma omp may be authored)'))
         elif token in BUILD_IDENTITY:
             findings.append((line, token, 'certification-build macro'))
-        elif token in PRIMITIVES:
+        elif token in primitives:
             findings.append((line, token, 'descriptor, environment, loader or process primitive'))
     if literal:
         flush_literal()
     return findings
 
 
-def refuse_scan_findings(original, candidate, *, directives=False):
-    findings = scan(original, candidate, directives=directives)
+def refuse_scan_findings(original, candidate, version='1.3', *, directives=False):
+    findings = scan(original, candidate, version, directives=directives)
     if findings:
         shown = '; '.join(f'line {line} {token!r} ({why})' for line, token, why in findings[:5])
         more = f' and {len(findings) - 5} more' if len(findings) > 5 else ''
-        raise UsageError('candidate source refused by the harness scan (certify 1.3): ' + shown + more)
+        raise UsageError(f'candidate source refused by the harness scan (certify {version}): ' + shown + more)
