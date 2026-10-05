@@ -1,8 +1,9 @@
 # 72 — Native upstream DO-BFS trials are two-level: options for Yan-Ru
 
 Created: 2026-10-04 23:10 ET (by ticket 56, campaign `extensa-native-bfs-20261004-a6`)
+Updated: 2026-10-04 23:25 ET (decided; rule pre-registered before any run)
 **Type:** decision
-**Status:** needs-info
+**Status:** claimed
 **Blocked by:** —
 **Spec:** `../spec.md`; [design decisions](../extensa-design-2026-10-03.md) D3; [56](56-native-campaign-target.md), [64](64-native-scale22-pilot-unstable.md), [66](66-native-protocol-after-isolation-test.md)
 
@@ -41,3 +42,47 @@ evidence [`evaluation/native-a6-ci-gate-2026-10-04.json`](../evaluation/native-a
 **Agent recommendation:** option 1 (with 3 as reporting), because the upstream comparison never selects and
 the fork baseline passes the pre-registered gate in both classes. Any choice needs a fresh A/A pilot under a
 newly pre-registered rule; a6 is never re-judged.
+
+## Decision and pre-registration (written before any run under the new rule)
+
+**Decision 2026-10-04 23:20 ET**, agent-decided by the coordinating agent under Yan-Ru's delegation ("continue
+working"; revisable): the recommendation, option 1 with option 3 as reporting.
+
+**Version.** New speed rule `swdb.speed_rule.ci_width.v2`, chosen in the campaign file
+(`protocol.speed_rule`). Rule v1 (ticket 66) and the range rule keep their meaning; **a6 is never re-judged**.
+
+**What stays exactly as in v1 (ticket 66 pre-registration).** Every frozen protocol: 20 repetitions,
+circular block bootstrap over repetitions in collection order (blocks of 4, 2000 resamples, seed 20260925),
+95% percentile interval, per-comparison gate `relative_ci_width.v1` at most 0.05. Candidate verdicts per
+comparison: `inconclusive` if the width exceeds 0.05, else `gain` only if the lower bound is strictly above
+1.05, else `no_gain`. Selection uses the fork scalar TDStep comparison (Q61). Evaluator v3 (ticket 71).
+
+**What changes in v2.**
+
+1. **A/A pilot gates on the selection baseline only.** The pilot still times both roles per class. A class
+   passes if and only if its `base_source` role (fork scalar TDStep) A/A block has relative CI width at most
+   0.05 and its interval lies strictly inside (1/1.05, 1.05). The upstream DO-BFS A/A block is recorded with
+   its interval and its pass/fail under the same test, as description only.
+2. **Upstream comparisons stay beside each candidate** with their own verdict under the same per-comparison
+   rule; under v2 they can be `inconclusive`. They never select.
+3. **Level mix of upstream trials (reporting only).** For every upstream DO-BFS block (A/A pilot and each
+   candidate comparison), each side's ROI times per source are sorted and split at the largest ratio between
+   adjacent times. If that ratio is at least 1.08, the block side is `two_level`: the trials above the split are
+   slow. Otherwise it is `one_level` with no slow trials. Reported per side and source: level count, number and
+   share of slow trials, the medians of both levels and their ratio; plus each side's overall slow share. The
+   classification never changes a verdict.
+
+**Run a7 (pre-registered).**
+
+- Campaign file `campaigns/extensa/extensa-native-bfs-20261004-a7.yaml`: the same as a6 except
+  `speed_rule: swdb.speed_rule.ci_width.v2`. It keeps 20 repetitions, evaluator v3,
+  `isolation: other_socket_free`, both workloads and the D5 default budgets (at most 8 iterations, plateau 4,
+  24 lane-hours, 3 provider calls per iteration plus 1 setup call through the Codex session lock, 20 GB disk,
+  1 lane).
+- Host: mbit10 node 1 through MemAcc's `socket_lane.sh` from an up-to-date checkout, started only while the
+  node 0, node 1 and legacy leases are all released; runs root by the 20 GB rule.
+- One run: the pilot, then the campaign for passing classes, in one process.
+- **The result is reported whatever it shows. No rerun is chosen by outcome.** One exception, as in a6: an
+  `infrastructure_failure` before the first pilot block completes may be fixed and restarted once.
+- A class with a `gain`: if its best candidate used a contract, it is re-certified on the Mac with the current
+  certifier (`swdb certify` 1.2 or later). A best without a contract is reported as `uncertified`.
