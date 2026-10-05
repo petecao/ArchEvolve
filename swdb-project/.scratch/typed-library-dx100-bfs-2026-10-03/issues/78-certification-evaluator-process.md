@@ -172,3 +172,5 @@ passes alone, likely files edited during the run).
 
 New in 1.5: a DX100 region outside the arena heap is refused; a 4-byte claim outside the heap
 runs locally, unrecorded and unfaulted; `malloc` memory is invisible to the evaluator.
+
+- 2026-10-05 16:12 ET: verified on Linux (mbit10, socket lane 0, lease generation 462, b728afe): tests/test_certification_process.py + tests/test_library_operation_blinding.py 38 passed.
