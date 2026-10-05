@@ -1,7 +1,7 @@
 # Map: Typed library and DX100 BFS rewrites in ArchEvolve and Extensa modes
 
 Created: 2026-10-03 02:28 ET
-Updated: 2026-10-04 21:50 ET (row 69 added; profiling role strict schema); 2026-10-04 21:40 ET (row 68 added; knob_range and schedule_range); 2026-10-04 21:10 ET (row 67 added; forged_frontier v2 and the a7 re-judgement); 2026-10-04 21:50 ET (row 66 added; ticket 56 a5 result and 57 a7 audit pointers); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review)
+Updated: 2026-10-05 00:40 ET (row 70 added; certification isolation, certify 1.3); 2026-10-04 21:50 ET (row 69 added; profiling role strict schema); 2026-10-04 21:40 ET (row 68 added; knob_range and schedule_range); 2026-10-04 21:10 ET (row 67 added; forged_frontier v2 and the a7 re-judgement); 2026-10-04 21:50 ET (row 66 added; ticket 56 a5 result and 57 a7 audit pointers); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review)
 **Type:** ticket map
 **Status:** ready-for-agent
 **Spec:** [spec.md](spec.md)
@@ -113,6 +113,7 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 | 67 | [forged_frontier v2: a control every correct rewrite can kill](issues/67-forged-frontier-control-v2.md) | resolved | — |  |
 | 68 | [knob_range and schedule_range: make the contracts' named checks enforceable](issues/68-knob-range-and-schedule-range-checks.md) | resolved | — |  |
 | 69 | [Profiling role schema against the providers' strict mode](issues/69-profiling-role-strict-schema.md) | resolved | — |  |
+| 70 | [Certification isolation: verdicts the candidate cannot print, faults it cannot see](issues/70-certification-isolation.md) | resolved | — |  |
 
 ## Context pointers
 
@@ -232,3 +233,11 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - 2026-10-04 21:10 ET: ticket 67 resolved (agent-decided under Yan-Ru's 2026-10-04 delegation; revisable). forged_frontier v2 duplicates the first CPU queue push of the run, so it no longer depends on chunk or tile timing; it is versioned (`fault.version`, certify command 1.1). The six a7 candidates that failed only on v1 now certify on the Mac (10/10, 16/16). None has a gem5 timing, so they are "certified, not timed" and both class selections stand. Open: named-check lines and fault macros are visible to candidate code. [67-forged-frontier-control-v2](issues/67-forged-frontier-control-v2.md), [57 addendum](issues/57-gem5-campaign-target.md), [evidence](evaluation/a7-forged-frontier-v2-rejudge-2026-10-04.json).
 - 2026-10-04 21:40 ET: ticket 68 resolved (agent-decided under Yan-Ru's 2026-10-04 delegation; revisable). `swdb certify` (command 1.2) now enforces knob_range (the SWDB_KNOB_<NAME> assignments, resolved by the preprocessor, inside the contract ranges) and schedule_range (every OpenMP worksharing schedule clause is static or dynamic with an in-range constant chunk). It runs two certifier controls, knob_out_of_range and schedule_out_of_range. No contract text changed; the contract's own controls for these clauses are recorded as unable to exercise them. Ticket 20 (20/20), BC (28/28) and both a7 bests re-certify on the Mac. [68-knob-range-and-schedule-range-checks](issues/68-knob-range-and-schedule-range-checks.md), [evidence](evaluation/legality-checks-recertification-2026-10-04.json).
 - 2026-10-04 21:50 ET: ticket 69 resolved (agent-decided under Yan-Ru's 2026-10-04 delegation; revisable). The profiling role's minLength, minItems and minimum need no change. Codex strict mode accepted the byte-identical wire schema in annotation a3 (sha256 3928d885…) and refused only uniqueItems, which the transport already drops. `strict_problems` now also checks keywords against the accepted and refused sets, on each role's wire schema. Open: the Claude path is unverified. [69-profiling-role-strict-schema](issues/69-profiling-role-strict-schema.md).
+- 2026-10-05 00:40 ET: ticket 70 resolved (agent-decided under Yan-Ru's 2026-10-04 delegation; revisable). `swdb certify` 1.3 isolates candidate certification:
+  - Every named check is computed out of process from evaluator records on a harness-opened descriptor. An evaluator-owned `main` records the kernel's result.
+  - Faults live in a separately compiled seam object, linked to one unchanged candidate object.
+  - A harness scan refuses candidate text that names harness symbols.
+  - Two adversarial patches that certify under 1.2 are refused under 1.3.
+  - Ticket 20 (20/20), BC (28/28) and both a7 bests (20/20) re-certify. a7 `it5.kronecker.a2` and `it6.kronecker.a0` are now refused by the scan; neither is a best.
+  - Open: run-time seam probing, the frontier hook inside the candidate's function, and feedback that names controls.
+  - [70-certification-isolation](issues/70-certification-isolation.md), [evidence](evaluation/certification-isolation-2026-10-04.json).

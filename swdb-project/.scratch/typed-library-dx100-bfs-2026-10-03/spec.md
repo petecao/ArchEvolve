@@ -2,6 +2,7 @@
 
 Created: 2026-10-03 00:50 ET
 Updated: 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66)
+Updated: 2026-10-04 22:40 ET (ticket 70: certification isolation, certify 1.3)
 Updated: 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's
 2026-10-03 delegation and revisable; see [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md))
 **Type:** spec
@@ -574,6 +575,22 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   reference semantics (lowerings and library operations), the verifier, frontier-size equality, the
   accelerated-chunk count, or a strict-layer assertion. A build failure, timeout or crash without
   an assertion marks it invalid, and an invalid control blocks certification like a surviving one.
+- **Isolation (certify 1.3; ticket 70, 2026-10-04 22:40 ET; agent-decided under Yan-Ru's
+  2026-10-04 delegation, revisable).** For candidate artifacts, the pass rule above keeps its checks
+  but not its inputs. No verdict is read from the candidate's stdout or stderr.
+  - An evaluator-owned `main` calls the protected entry point (`DOBFS`, `Brandes`) and records the
+    returned vector. The evaluator's own result check (`verify_parents`, `verify_scores`) stands in
+    for the printed `PASS`.
+  - The frontier inspection records each window. `duplicate_frontier` and the frontier sizes are
+    judged out of process, as are the strict-layer check names and the witness counters.
+  - Records go to a descriptor the harness opens for each run.
+  - Faults live in a separately compiled seam object. The candidate's object is the same for the
+    positive matrix and every library-fault control.
+  - A harness scan refuses candidate-authored lines that name harness or fault symbols,
+    `SWDB_STRICT` or `FUNC`, descriptor, environment, loader or process primitives, or text that
+    imitates an evaluator line.
+  - `forged_frontier` no longer forges the print. Calibration and lowering certification are
+    unchanged.
 - **Calibration** (`--calibrate`). Builds from the full DX100 source through the strict layer and
   runs the BFS matrix under its own pass rule: the verifier's PASS text; per-level frontier sizes,
   read from the authors' `Starting TDStepMAA: <n> elements` lines, equal to the trusted oracle's;
