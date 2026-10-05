@@ -3,6 +3,7 @@
 Created: 2026-10-03 (Eastern Time)
 Updated: 2026-10-04 (Eastern Time): site-finder fields (ticket 55); campaign isolation and gem5 approval fields
 Updated: 2026-10-04 21:30 (Eastern Time): `protocol.speed_rule` and evaluator v3 (tickets 66 and 67)
+Updated: 2026-10-04 23:25 (Eastern Time): speed rule `swdb.speed_rule.ci_width.v2` (ticket 72)
 
 Extensa mode (ADR 0009, ADR 0010; decisions in
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`) adds optional
@@ -94,6 +95,13 @@ and `profitability.gate` (`statistic: relative_ci_width.v1`, `maximum`) instead 
 It needs at least 8 repetitions and is refused for gem5. `evaluator` may also name
 `swdb.native.evaluator.scalable.v3` (saturating parent narrowing; trial format
 `swdb.bfs.native.trial.v3` with `parents_saturated`).
+
+Added 2026-10-04 ET (ticket 72): `speed_rule` may also be `swdb.speed_rule.ci_width.v2`. Its frozen
+protocols equal v1's; only the A/A pilot differs: it gates each class on the `base_source` role alone.
+The summary's `pilot` adds `gating_roles`, a `gates` flag per role in `ci_by_class_and_role`, and
+`level_mix_by_class_and_role`; each upstream DO-BFS comparison row adds `level_mix` (per side: `slow_share`
+and `by_source_position` rows with `levels`, `slow_trials`, `trials`, `slow_share`, level medians and
+`level_ratio`). The level mix is reporting only.
 
 `swdb validate` refuses a gem5 campaign with repetitions other than 1 or more than one
 source, a native campaign with fewer than 5 repetitions, `region_pairs: true`, another

@@ -1,0 +1,498 @@
+{
+ "created": "2026-10-05 02:50 ET",
+ "ticket": 56,
+ "campaign": "extensa-native-bfs-20261004-a7",
+ "preregistration": "issues/72-native-upstream-two-level-trials.md (commit 3147b31, before the run)",
+ "host": {
+  "machine": "mbit10",
+  "lane": "node 1 via MemAcc socket_lane.sh (Memacc-evolveswdb-lane 76cca35, equal to origin)",
+  "lease_generation": 525,
+  "started_utc": "2026-10-05T03:33:13Z",
+  "ended_utc": "2026-10-05T06:43:57Z",
+  "load1_range": [
+   1.3,
+   2.5
+  ],
+  "users": [
+   "yanruj"
+  ],
+  "other_socket": "released at start and end of every block",
+  "commit": "8aea84f4ce1fa050357ef3c4ae91fe4198557bc6",
+  "checkout": "/data1/yanruj/ArchEvolve-native (branch t56-a7, from a git bundle)",
+  "runs_root": "/data/yanruj/EvolveSWDB_runs/extensa/extensa-native-bfs-20261004-a7 (/data1 had 40 GB free)"
+ },
+ "summary": {
+  "path": "records/campaign_summaries/extensa-native-bfs-20261004-a7.summary.yaml",
+  "sha256": "93935b26f3578600523e23562c9f6cfe63a1ec6a0146ef92494284fbc1c14d80",
+  "stop_reason": "plateau",
+  "budgets_used": {
+   "iterations": 4,
+   "lane_hours": 3.150559,
+   "provider_calls_counted": 5,
+   "provider_calls_uncounted": 0,
+   "disk_gb_peak": 0.522414
+  }
+ },
+ "pilot": {
+  "spreads_by_class_and_role": {
+   "kronecker": {
+    "fork_scalar_tdstep": 0.18869059011820322,
+    "upstream_do_bfs": 0.011049478659778563
+   },
+   "uniform_random": {
+    "fork_scalar_tdstep": 0.09924153736261049,
+    "upstream_do_bfs": 0.13744464122338823
+   }
+  },
+  "passed": false,
+  "unstable_classes": [
+   "kronecker"
+  ],
+  "speed_rule": "swdb.speed_rule.ci_width.v2",
+  "ci_by_class_and_role": {
+   "kronecker": {
+    "fork_scalar_tdstep": {
+     "ratio": 1.0054999282662798,
+     "lower": 0.9854497064603894,
+     "upper": 1.040829983591991,
+     "relative_width": 0.055077355626559084,
+     "passed": false,
+     "gates": true
+    },
+    "upstream_do_bfs": {
+     "ratio": 0.9997868525536814,
+     "lower": 0.9993349606256305,
+     "upper": 1.0005977660732486,
+     "relative_width": 0.0012630746687581872,
+     "passed": true,
+     "gates": false
+    }
+   },
+   "uniform_random": {
+    "fork_scalar_tdstep": {
+     "ratio": 1.0038146218250557,
+     "lower": 0.9975262828129281,
+     "upper": 1.0111630153658921,
+     "relative_width": 0.013584911254003084,
+     "passed": true,
+     "gates": true
+    },
+    "upstream_do_bfs": {
+     "ratio": 1.0002642350931819,
+     "lower": 0.9994784878166381,
+     "upper": 1.0009451799327744,
+     "relative_width": 0.0014663046669860559,
+     "passed": true,
+     "gates": false
+    }
+   }
+  },
+  "gate": {
+   "maximum_relative_ci_width": 0.05,
+   "aa_interval": [
+    0.9523809523809523,
+    1.05
+   ]
+  },
+  "gating_roles": [
+   "fork_scalar_tdstep"
+  ],
+  "level_mix_by_class_and_role": {
+   "kronecker": {
+    "upstream_do_bfs": {
+     "baseline": {
+      "by_source_position": {
+       "0": {
+        "levels": 1,
+        "slow_trials": 0,
+        "trials": 20,
+        "slow_share": 0.0,
+        "largest_adjacent_ratio": 1.0056354913978165
+       },
+       "1": {
+        "levels": 1,
+        "slow_trials": 0,
+        "trials": 20,
+        "slow_share": 0.0,
+        "largest_adjacent_ratio": 1.0039425265125852
+       },
+       "2": {
+        "levels": 1,
+        "slow_trials": 0,
+        "trials": 20,
+        "slow_share": 0.0,
+        "largest_adjacent_ratio": 1.0013388116566497
+       }
+      },
+      "slow_share": 0.0
+     },
+     "candidate": {
+      "by_source_position": {
+       "0": {
+        "levels": 1,
+        "slow_trials": 0,
+        "trials": 20,
+        "slow_share": 0.0,
+        "largest_adjacent_ratio": 1.0023806216998807
+       },
+       "1": {
+        "levels": 1,
+        "slow_trials": 0,
+        "trials": 20,
+        "slow_share": 0.0,
+        "largest_adjacent_ratio": 1.0035582929255824
+       },
+       "2": {
+        "levels": 1,
+        "slow_trials": 0,
+        "trials": 20,
+        "slow_share": 0.0,
+        "largest_adjacent_ratio": 1.0027523309589153
+       }
+      },
+      "slow_share": 0.0
+     }
+    }
+   },
+   "uniform_random": {
+    "upstream_do_bfs": {
+     "baseline": {
+      "by_source_position": {
+       "0": {
+        "levels": 2,
+        "slow_trials": 19,
+        "trials": 20,
+        "slow_share": 0.95,
+        "fast_median_s": 0.124028641,
+        "slow_median_s": 0.142899653,
+        "level_ratio": 1.1521504375751404,
+        "largest_adjacent_ratio": 1.148584487029895
+       },
+       "1": {
+        "levels": 1,
+        "slow_trials": 0,
+        "trials": 20,
+        "slow_share": 0.0,
+        "largest_adjacent_ratio": 1.0030710516600856
+       },
+       "2": {
+        "levels": 1,
+        "slow_trials": 0,
+        "trials": 20,
+        "slow_share": 0.0,
+        "largest_adjacent_ratio": 1.007987337591605
+       }
+      },
+      "slow_share": 0.31666666666666665
+     },
+     "candidate": {
+      "by_source_position": {
+       "0": {
+        "levels": 1,
+        "slow_trials": 0,
+        "trials": 20,
+        "slow_share": 0.0,
+        "largest_adjacent_ratio": 1.0020564582319376
+       },
+       "1": {
+        "levels": 1,
+        "slow_trials": 0,
+        "trials": 20,
+        "slow_share": 0.0,
+        "largest_adjacent_ratio": 1.001647256007975
+       },
+       "2": {
+        "levels": 1,
+        "slow_trials": 0,
+        "trials": 20,
+        "slow_share": 0.0,
+        "largest_adjacent_ratio": 1.0131536335403162
+       }
+      },
+      "slow_share": 0.0
+     }
+    }
+   }
+  },
+  "isolation_by_class_and_role": {
+   "kronecker": {
+    "fork_scalar_tdstep": {
+     "other_socket": "released",
+     "waited_s": 0.0,
+     "load_average": [
+      1.697265625,
+      1.20556640625,
+      1.2177734375
+     ],
+     "other_socket_at_end": "released",
+     "load_average_at_end": [
+      2.17041015625,
+      2.05908203125,
+      1.95458984375
+     ]
+    },
+    "upstream_do_bfs": {
+     "other_socket": "released",
+     "waited_s": 0.0,
+     "load_average": [
+      2.17041015625,
+      2.05908203125,
+      1.95458984375
+     ],
+     "other_socket_at_end": "released",
+     "load_average_at_end": [
+      2.00537109375,
+      2.0615234375,
+      2.0234375
+     ]
+    }
+   },
+   "uniform_random": {
+    "fork_scalar_tdstep": {
+     "other_socket": "released",
+     "waited_s": 0.0,
+     "load_average": [
+      2.00537109375,
+      2.0615234375,
+      2.0234375
+     ],
+     "other_socket_at_end": "released",
+     "load_average_at_end": [
+      2.087890625,
+      2.07470703125,
+      2.02001953125
+     ]
+    },
+    "upstream_do_bfs": {
+     "other_socket": "released",
+     "waited_s": 0.0,
+     "load_average": [
+      2.087890625,
+      2.07470703125,
+      2.02001953125
+     ],
+     "other_socket_at_end": "released",
+     "load_average_at_end": [
+      2.26513671875,
+      2.1689453125,
+      2.0654296875
+     ]
+    }
+   }
+  }
+ },
+ "iterations": [
+  {
+   "index": 1,
+   "provider_calls": [
+    {
+     "role": "rewriting",
+     "invocation": "extensa-native-bfs-20261004-a7.call2",
+     "outcome": "completed",
+     "counted": true,
+     "model": "gpt-5.6-sol",
+     "effort": "xhigh",
+     "classification": "rewrite_provider"
+    }
+   ],
+   "candidates": [
+    {
+     "id": null,
+     "class": "uniform_random",
+     "patch_sha256": "6e747abb18e0d7aca29f7302952187fba2250344633b6ba88af80053a9ab98a9",
+     "knobs": {},
+     "contracts": [],
+     "certification": null,
+     "comparisons": [],
+     "level": "rejected",
+     "selection": null,
+     "rejection": "The patch changes a protected region: protected evaluator/ROI input changed: benchmarks/gapbs/src/bfs.cc (verifier)"
+    }
+   ],
+   "feedback_reasons": [
+    "correctness_failed"
+   ]
+  },
+  {
+   "index": 2,
+   "provider_calls": [
+    {
+     "role": "rewriting",
+     "invocation": "extensa-native-bfs-20261004-a7.call3",
+     "outcome": "completed",
+     "counted": true,
+     "model": "gpt-5.6-sol",
+     "effort": "xhigh",
+     "classification": "rewrite_provider"
+    }
+   ],
+   "candidates": [
+    {
+     "id": "extensa-native-bfs-20261004-a7.it2.uniform_random.a0",
+     "class": "uniform_random",
+     "patch_sha256": "6b4f332681205733448d077e84f09212d675bcce4962a409e2ef016f43d846c3",
+     "knobs": {},
+     "contracts": [],
+     "certification": null,
+     "comparisons": [
+      {
+       "baseline_role": "fork_scalar_tdstep",
+       "comparison": "extensa-native-bfs-20261004-a7.it2.uniform_random.a0.fork_scalar_tdstep.comparison",
+       "ratio": 1.0044181217107675,
+       "lower": 0.9952263944327081,
+       "spread": 0.09267317368213737,
+       "verdict": "no_gain",
+       "baseline_evaluation": "extensa-native-bfs-20261004-a7.it2.uniform_random.a0.fork_scalar_tdstep.baseline-eval",
+       "upper": 1.0168059239772531,
+       "relative_ci_width": 0.021484607931794217
+      },
+      {
+       "baseline_role": "upstream_do_bfs",
+       "comparison": "extensa-native-bfs-20261004-a7.it2.uniform_random.a0.upstream_do_bfs.comparison",
+       "ratio": 0.08867028674940886,
+       "lower": 0.08452468084263848,
+       "spread": 0.1547296074510053,
+       "verdict": "inconclusive",
+       "baseline_evaluation": "extensa-native-bfs-20261004-a7.it2.uniform_random.a0.upstream_do_bfs.baseline-eval",
+       "upper": 0.09266726285730181,
+       "relative_ci_width": 0.09182988251380184,
+       "level_mix": {
+        "baseline": {
+         "by_source_position": {
+          "0": {
+           "levels": 2,
+           "slow_trials": 8,
+           "trials": 20,
+           "slow_share": 0.4,
+           "fast_median_s": 0.12433158799999999,
+           "slow_median_s": 0.143073483,
+           "level_ratio": 1.1507412179115737,
+           "largest_adjacent_ratio": 1.1441098553671802
+          },
+          "1": {
+           "levels": 2,
+           "slow_trials": 11,
+           "trials": 20,
+           "slow_share": 0.55,
+           "fast_median_s": 0.124132919,
+           "slow_median_s": 0.14296274,
+           "level_ratio": 1.1516907936403236,
+           "largest_adjacent_ratio": 1.1458782686561941
+          },
+          "2": {
+           "levels": 2,
+           "slow_trials": 5,
+           "trials": 20,
+           "slow_share": 0.25,
+           "fast_median_s": 0.124265416,
+           "slow_median_s": 0.142952847,
+           "level_ratio": 1.150383200745089,
+           "largest_adjacent_ratio": 1.1435241757499903
+          }
+         },
+         "slow_share": 0.4
+        },
+        "candidate": {
+         "by_source_position": {
+          "0": {
+           "levels": 1,
+           "slow_trials": 0,
+           "trials": 20,
+           "slow_share": 0.0,
+           "largest_adjacent_ratio": 1.0332942405245895
+          },
+          "1": {
+           "levels": 1,
+           "slow_trials": 0,
+           "trials": 20,
+           "slow_share": 0.0,
+           "largest_adjacent_ratio": 1.027123574620099
+          },
+          "2": {
+           "levels": 1,
+           "slow_trials": 0,
+           "trials": 20,
+           "slow_share": 0.0,
+           "largest_adjacent_ratio": 1.0408316245811262
+          }
+         },
+         "slow_share": 0.0
+        }
+       }
+      }
+     ],
+     "level": "uncertified",
+     "selection": {
+      "lower": 0.9952263944327081,
+      "verdict": "no_gain",
+      "ratio": 1.0044181217107675
+     },
+     "artifact_sha256": "86f440c25633f6a69e76b4ca07f777b38583ae3df5934d7aebe12cf670fc19df"
+    }
+   ],
+   "feedback_reasons": [
+    "uncertified_edit",
+    "verdict_no_gain"
+   ]
+  },
+  {
+   "index": 3,
+   "provider_calls": [
+    {
+     "role": "rewriting",
+     "invocation": "extensa-native-bfs-20261004-a7.call4",
+     "outcome": "failed",
+     "counted": true,
+     "model": "gpt-5.6-sol",
+     "effort": "xhigh",
+     "classification": "rewrite_provider"
+    }
+   ],
+   "candidates": [],
+   "feedback_reasons": [
+    "provider_output_invalid"
+   ]
+  },
+  {
+   "index": 4,
+   "provider_calls": [
+    {
+     "role": "rewriting",
+     "invocation": "extensa-native-bfs-20261004-a7.call5",
+     "outcome": "failed",
+     "counted": true,
+     "model": "gpt-5.6-sol",
+     "effort": "xhigh",
+     "classification": "rewrite_provider"
+    }
+   ],
+   "candidates": [],
+   "feedback_reasons": [
+    "provider_output_invalid"
+   ]
+  }
+ ],
+ "per_class": [
+  {
+   "class": "kronecker",
+   "verdict": "baseline_unstable",
+   "best": null,
+   "best_level": null,
+   "best_selection_baseline": null,
+   "best_other_baseline": null,
+   "faster_uncertified": [],
+   "label": "single graph per class"
+  },
+  {
+   "class": "uniform_random",
+   "verdict": "no_gain",
+   "best": null,
+   "best_level": null,
+   "best_selection_baseline": null,
+   "best_other_baseline": null,
+   "faster_uncertified": [],
+   "label": "single graph per class"
+  }
+ ],
+ "provider_capacity_note": "Calls 4 and 5 (iterations 3 and 4) ended after about 3.5 s with the Codex error 'Selected model is at capacity'; the harness counted them as failed rewriting calls (provider_output_invalid), not as uncounted usage-limit pauses (D7)."
+}

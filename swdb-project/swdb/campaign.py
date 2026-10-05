@@ -20,6 +20,8 @@ may pin `protocol.evaluator` (native evaluator v2 for the scale-22 graphs). Tick
 (2026-10-04 ET, decided by Yan-Ru): a native campaign file may set `protocol.speed_rule:
 swdb.speed_rule.ci_width.v1` (a relative bootstrap CI-width gate for the A/A pilot and every
 candidate block, from the same CI as the 1.05 lower bound); files without it keep the range rule.
+Ticket 72 (2026-10-04 ET): `swdb.speed_rule.ci_width.v2` is v1 with the A/A pilot gated on the
+`base_source` role only, and a reported level mix of upstream DO-BFS trials.
 """
 from __future__ import annotations
 
@@ -29,6 +31,7 @@ import datetime
 import json
 import re
 import shutil
+import statistics
 import subprocess
 import time
 from argparse import Namespace
@@ -51,6 +54,11 @@ SPREAD_LIMIT = 0.1             # every spread must be <= 0.1
 #: `protocol.speed_rule` keeps the range rule; protocols frozen under it keep their meaning.
 RANGE_RULE = "swdb.speed_rule.range.v1"
 CI_WIDTH_RULE = "swdb.speed_rule.ci_width.v1"
+#: Ticket 72 (2026-10-04 ET, agent-decided under Yan-Ru's delegation; revisable): as v1, but the A/A
+#: pilot gates only on the campaign's selection baseline (`base_source`); other roles are reported.
+CI_WIDTH_RULE_V2 = "swdb.speed_rule.ci_width.v2"
+CI_RULES = (CI_WIDTH_RULE, CI_WIDTH_RULE_V2)
+LEVEL_SPLIT_MIN_RATIO = 1.08   # ticket 72: two-level trials when the largest adjacent ratio is >= 1.08
 CI_WIDTH_LIMIT = 0.05          # relative 95% CI width (upper - lower) / ratio must be <= 0.05
 CI_BLOCK_LENGTH = 4            # circular block bootstrap: 4 consecutive repetitions per block
 AA_EQUIVALENCE = 1.05          # an A/A CI must lie strictly inside (1/1.05, 1.05)
@@ -118,7 +126,7 @@ def campaign_problems(data):
             problems.append("protocol.evaluator: names a native evaluator version; gem5 campaigns have none")
     elif proto["repetitions"] < 5:
         problems.append("protocol.repetitions: a native campaign needs at least 5 paired repetitions")
-    if proto.get("speed_rule") == CI_WIDTH_RULE:
+    if proto.get("speed_rule") in CI_RULES:
         if target != "native_cpu":
             problems.append("protocol.speed_rule: the CI-width rule is native only (gem5 reports point ratios)")
         elif proto["repetitions"] < 2 * CI_BLOCK_LENGTH:
@@ -202,8 +210,8 @@ def speed_rule(campaign):
 def protocol_settings(campaign):
     """The campaign-level frozen settings every adapter freezes into one protocol."""
     proto = campaign["protocol"]
-    if speed_rule(campaign) == CI_WIDTH_RULE:
-        profitability = {"minimum_speedup": GAIN_THRESHOLD, "speed_rule": CI_WIDTH_RULE,
+    if speed_rule(campaign) in CI_RULES:
+        profitability = {"minimum_speedup": GAIN_THRESHOLD, "speed_rule": speed_rule(campaign),
                          "gate": {"statistic": "relative_ci_width.v1", "maximum": CI_WIDTH_LIMIT},
                          "block_length": CI_BLOCK_LENGTH, "aa_equivalence": AA_EQUIVALENCE,
                          "rule": "relative 95% CI width at most the gate; then the lower bound of the same CI "
@@ -226,7 +234,7 @@ def apply_speed_rule(frozen, settings):
     analysis, its block length and `profitability.gate`, and removes `maximum_relative_spread`."""
     profitability = settings["profitability"]
     frozen["profitability"]["minimum_speedup"] = profitability["minimum_speedup"]
-    if profitability.get("speed_rule") != CI_WIDTH_RULE:
+    if profitability.get("speed_rule") not in CI_RULES:
         frozen["profitability"]["maximum_relative_spread"] = profitability["maximum_relative_spread"]
         return frozen
     from swdb.bfs_protocol import ANALYSIS_CIRCULAR_BLOCK
@@ -252,7 +260,7 @@ def speed_verdict(comparison, target, rule=RANGE_RULE):
     a relative CI width above 0.05 is inconclusive. Otherwise a gain needs lower > 1.05."""
     if target == "dx100_gem5":
         return "gain" if comparison["ratio"] > GAIN_THRESHOLD else "no_gain"
-    if rule == CI_WIDTH_RULE:
+    if rule in CI_RULES:
         if relative_ci_width(comparison) > CI_WIDTH_LIMIT:
             return "inconclusive"
     elif any(s > SPREAD_LIMIT for s in comparison["spreads"]):
@@ -260,12 +268,46 @@ def speed_verdict(comparison, target, rule=RANGE_RULE):
     return "gain" if comparison["lower"] > GAIN_THRESHOLD else "no_gain"
 
 
+def pilot_gating_roles(rule, roles, base_source):
+    """Roles whose A/A block gates a class: every role, or (ci_width.v2, ticket 72) the selection baseline."""
+    return [base_source] if rule == CI_WIDTH_RULE_V2 else list(roles)
+
+
+def level_mix(times):
+    """Ticket 72 (reporting only): split one side's sorted ROI times of one source at the largest
+    adjacent ratio; at least LEVEL_SPLIT_MIN_RATIO means two levels, the upper group being slow."""
+    xs = sorted(times)
+    if len(xs) < 2:
+        return {"levels": 1, "slow_trials": 0, "trials": len(xs), "slow_share": 0.0}
+    split = max(range(1, len(xs)), key=lambda i: xs[i] / xs[i - 1])
+    ratio = xs[split] / xs[split - 1]
+    if ratio < LEVEL_SPLIT_MIN_RATIO:
+        return {"levels": 1, "slow_trials": 0, "trials": len(xs), "slow_share": 0.0,
+                "largest_adjacent_ratio": ratio}
+    fast, slow = xs[:split], xs[split:]
+    fast_median, slow_median = statistics.median(fast), statistics.median(slow)
+    return {"levels": 2, "slow_trials": len(slow), "trials": len(xs), "slow_share": len(slow) / len(xs),
+            "fast_median_s": fast_median, "slow_median_s": slow_median,
+            "level_ratio": slow_median / fast_median, "largest_adjacent_ratio": ratio}
+
+
+def level_mix_of(evaluation):
+    """Per-source level mix of one evaluation's timing, plus the side's overall slow share."""
+    by_source = {}
+    for row in evaluation.get("timing", []):
+        by_source.setdefault(row["source_position"], []).append(row["duration_s"])
+    sources = {str(pos): level_mix(times) for pos, times in sorted(by_source.items())}
+    total = sum(v["trials"] for v in sources.values())
+    return {"by_source_position": sources,
+            "slow_share": (sum(v["slow_trials"] for v in sources.values()) / total) if total else 0.0}
+
+
 def pilot_passes(block, rule=RANGE_RULE):
     """One A/A pilot block under the campaign's speed rule.
 
     Range rule: spread at most 0.1. CI-width rule (ticket 66): relative CI width at most 0.05
     and the CI strictly inside (1/1.05, 1.05)."""
-    if rule != CI_WIDTH_RULE:
+    if rule not in CI_RULES:
         return block["spread"] <= SPREAD_LIMIT
     return (relative_ci_width(block) <= CI_WIDTH_LIMIT
             and 1 / AA_EQUIVALENCE < block["lower"] and block["upper"] < AA_EQUIVALENCE)
@@ -740,18 +782,22 @@ class Campaign:
         its relative CI width exceeds 0.05 or its CI leaves (1/1.05, 1.05); spreads are recorded
         as description only."""
         rule = speed_rule(self.data)
-        spreads, intervals, failed = {}, {}, {}
+        gating = pilot_gating_roles(rule, self.roles, self.data["base_source"])
+        spreads, intervals, failed, mixes = {}, {}, {}, {}
         for cls in self.classes:
             for role in self.roles:
                 self._step("evaluation", job=True)
                 started = time.monotonic()
                 block = self.adapter.pilot(cls, role)
                 spreads.setdefault(cls, {})[role] = block["spread"]
-                if rule == CI_WIDTH_RULE:
+                if rule in CI_RULES:
                     intervals.setdefault(cls, {})[role] = {
                         "ratio": block["ratio"], "lower": block["lower"], "upper": block["upper"],
-                        "relative_width": relative_ci_width(block), "passed": pilot_passes(block, rule)}
-                if not pilot_passes(block, rule):
+                        "relative_width": relative_ci_width(block), "passed": pilot_passes(block, rule),
+                        "gates": role in gating}
+                if block.get("level_mix") is not None:
+                    mixes.setdefault(cls, {})[role] = block["level_mix"]
+                if role in gating and not pilot_passes(block, rule):
                     failed.setdefault(cls, []).append(role)
                 if block.get("other_socket") is not None:
                     self.state.setdefault("pilot_other_socket", {}).setdefault(cls, {})[role] = block["other_socket"]
@@ -761,10 +807,13 @@ class Campaign:
         unstable = [cls for cls in self.classes if failed.get(cls)]
         self.state["pilot"] = {"spreads_by_class_and_role": spreads, "passed": not unstable,
                                "unstable_classes": unstable}
-        if rule == CI_WIDTH_RULE:
+        if rule in CI_RULES:
             self.state["pilot"].update(speed_rule=rule, ci_by_class_and_role=intervals,
                                        gate={"maximum_relative_ci_width": CI_WIDTH_LIMIT,
-                                             "aa_interval": [1 / AA_EQUIVALENCE, AA_EQUIVALENCE]})
+                                             "aa_interval": [1 / AA_EQUIVALENCE, AA_EQUIVALENCE]},
+                                       gating_roles=gating)
+        if mixes:
+            self.state["pilot"]["level_mix_by_class_and_role"] = mixes
         if self.state.get("pilot_other_socket"):
             self.state["pilot"]["other_socket_by_class_and_role"] = self.state["pilot_other_socket"]
         if self.state.get("pilot_isolation"):
@@ -772,7 +821,7 @@ class Campaign:
         self._apply_pilot()
         if not self.classes:
             self.ledger.terminate(S.StopReason.BASELINE_UNSTABLE)
-            self.state["stop_detail"] = ("baseline A/A CI-width gate failed in every class" if rule == CI_WIDTH_RULE
+            self.state["stop_detail"] = ("baseline A/A CI-width gate failed in every class" if rule in CI_RULES
                                          else "baseline A/A spread exceeds 0.1 in every class")
 
     def _apply_pilot(self):
@@ -1101,8 +1150,10 @@ class Campaign:
                    "ratio": result["ratio"], "lower": result["lower"],
                    "spread": max(result["spreads"]), "verdict": verdict,
                    "baseline_evaluation": result["baseline_evaluation"]}
-            if target == "native_cpu" and rule == CI_WIDTH_RULE:
+            if target == "native_cpu" and rule in CI_RULES:
                 row.update(upper=result["upper"], relative_ci_width=relative_ci_width(result))
+            if result.get("level_mix") is not None:
+                row["level_mix"] = result["level_mix"]
             entry["comparisons"].append(row)
             self._prune(result["evaluations"])
 

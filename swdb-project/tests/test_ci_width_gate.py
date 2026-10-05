@@ -233,3 +233,60 @@ def test_ci_width_candidate_block_wider_than_the_gate_is_inconclusive(team):
     summary = run(team, path, fx, provider(team, {}))
     assert {row["verdict"] for row in summary["per_class"]} == {"inconclusive"}
     assert all(row["best"] is None for row in summary["per_class"])
+
+
+# --- ticket 72: speed rule ci_width.v2 (the pilot gates on the selection baseline only) -------------
+
+def test_level_mix_splits_two_level_trials_and_leaves_one_level_alone():
+    from swdb.campaign import level_mix, level_mix_of
+    two = level_mix([0.135, 0.1586, 0.1352, 0.1588, 0.1351, 0.159, 0.1349, 0.1353])
+    assert two["levels"] == 2 and two["slow_trials"] == 3 and two["slow_share"] == pytest.approx(3 / 8)
+    assert two["level_ratio"] == pytest.approx(0.1588 / 0.1351, rel=1e-3)
+    one = level_mix([1.00, 1.02, 0.99, 1.05, 1.01])
+    assert one["levels"] == 1 and one["slow_trials"] == 0 and one["largest_adjacent_ratio"] < 1.08
+    evaluation = {"timing": [{"source_position": p, "duration_s": d}
+                             for p, ds in ((0, [0.124, 0.143, 0.124, 0.143]), (1, [0.10, 0.101, 0.10, 0.102]))
+                             for d in ds]}
+    mix = level_mix_of(evaluation)
+    assert mix["by_source_position"]["0"]["slow_trials"] == 2 and mix["by_source_position"]["1"]["levels"] == 1
+    assert mix["slow_share"] == pytest.approx(2 / 8)
+
+
+def test_v2_campaign_files_are_admitted_like_v1():
+    from swdb.campaign import CI_WIDTH_RULE_V2, pilot_gating_roles
+    assert campaign_problems(_campaign(speed_rule=CI_WIDTH_RULE_V2)) == []
+    assert any("at least 8 repetitions" in p
+               for p in campaign_problems(_campaign(speed_rule=CI_WIDTH_RULE_V2, repetitions=6)))
+    v2 = _campaign(speed_rule=CI_WIDTH_RULE_V2)
+    assert protocol_settings(v2)["profitability"]["gate"] == protocol_settings(_campaign())["profitability"]["gate"]
+    roles = ["fork_scalar_tdstep", "upstream_do_bfs"]
+    assert pilot_gating_roles(CI_WIDTH_RULE_V2, roles, "fork_scalar_tdstep") == ["fork_scalar_tdstep"]
+    assert pilot_gating_roles(CI_WIDTH_RULE, roles, "fork_scalar_tdstep") == roles
+    assert pilot_gating_roles(RANGE_RULE, roles, "fork_scalar_tdstep") == roles
+
+
+def test_v2_pilot_gates_on_the_selection_baseline_and_reports_upstream(team):
+    from swdb.campaign import CI_WIDTH_RULE_V2
+    path = campaign_file(team, protocol={"repetitions": 20, "speed_rule": CI_WIDTH_RULE_V2})
+    wide_upstream = _aa(0.12)                                   # a6-like upstream A/A: fails the block test
+    fx = fixture_file(team, pilot={"kronecker": {"fork_scalar_tdstep": _aa(0.06), "upstream_do_bfs": wide_upstream},
+                                   "uniform_random": {"fork_scalar_tdstep": _aa(0.02),
+                                                      "upstream_do_bfs": wide_upstream}})
+    summary = run(team, path, fx, provider(team, {}))
+    pilot = summary["pilot"]
+    assert pilot["speed_rule"] == CI_WIDTH_RULE_V2 and pilot["gating_roles"] == ["fork_scalar_tdstep"]
+    assert pilot["unstable_classes"] == ["kronecker"]           # its fork block fails; upstream never gates
+    up = pilot["ci_by_class_and_role"]["uniform_random"]["upstream_do_bfs"]
+    assert up["passed"] is False and up["gates"] is False
+    verdicts = {row["class"]: row["verdict"] for row in summary["per_class"]}
+    assert verdicts == {"kronecker": "baseline_unstable", "uniform_random": "gain"}
+    comps = [c for it in summary["iterations"] for cand in it["candidates"] for c in cand["comparisons"]]
+    assert {c["baseline_role"] for c in comps} == {"fork_scalar_tdstep", "upstream_do_bfs"}
+
+
+def test_v1_pilot_still_gates_on_every_role(team):
+    path = campaign_file(team, protocol={"repetitions": 20, "speed_rule": CI_WIDTH_RULE})
+    fx = fixture_file(team, pilot={cls: {"fork_scalar_tdstep": _aa(0.02), "upstream_do_bfs": _aa(0.12)}
+                                   for cls in ("kronecker", "uniform_random")})
+    summary = run(team, path, fx, provider(team, {}))
+    assert summary["stop_reason"] == "baseline_unstable" and summary["iterations"] == []

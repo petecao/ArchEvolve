@@ -1,7 +1,7 @@
 # 56 — Native-CPU Extensa campaign target for BFS
 
 Created: 2026-10-03
-Updated: 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
+Updated: 2026-10-05 02:50 ET (a7 addendum: speed rule ci_width.v2, uniform no_gain at plateau, Kronecker baseline_unstable); 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 51, 53, 54, 55
@@ -258,3 +258,56 @@ nothing to re-certify. Summary `records/campaign_summaries/extensa-native-bfs-20
   independently.
 - No rerun was made. The protocol question is Yan-Ru's: needs-info ticket
   [72](72-native-upstream-two-level-trials.md).
+
+### Addendum 2026-10-05 02:50 ET: campaign a7 under speed rule ci_width.v2. Kronecker is `baseline_unstable`; uniform is `no_gain` at plateau
+
+**Rule.** Ticket [72](72-native-upstream-two-level-trials.md), decided 2026-10-04 23:15 ET under Yan-Ru's delegation
+and pre-registered before the run (commit `3147b31`): the same per-comparison CI-width rule as a6, but the A/A
+pilot gates each class on the fork scalar TDStep (the selection baseline) only. Upstream DO-BFS is reported beside
+it with its own verdict and a per-side level mix. a6 is not re-judged.
+
+**Run.** Campaign `extensa-native-bfs-20261004-a7`:
+
+- Host: mbit10 node 1 through `socket_lane.sh` (Memacc `76cca35`, equal to its origin), lease generation 525.
+  The node 0 and legacy leases were released at launch and at the start and end of every block.
+- Time: 2026-10-04 23:33 to 2026-10-05 02:43 ET (`03:33:13Z`-`06:43:57Z`). Load1 1.3-2.5. Users: `yanruj` only.
+- Code: commit `8aea84f` (branch `t56-a7`, from a git bundle). Runs root `/data/...`.
+- Lane exit code 1 comes from the run script's last `pgrep`; the campaign exited 0.
+
+**A/A pilot (pre-registered gate).**
+
+| Class | Role | Ratio [95% CI] | CI width / ratio | Gates? | Block passes? |
+|---|---|---|---|---|---|
+| Kronecker 22 | fork scalar TDStep | 1.006 [0.985, 1.041] | 0.055 | yes | **no** |
+| Kronecker 22 | upstream DO-BFS | 1.000 [0.999, 1.001] | 0.001 | no | yes |
+| Uniform 22 | fork scalar TDStep | 1.004 [0.998, 1.011] | 0.014 | yes | **yes** |
+| Uniform 22 | upstream DO-BFS | 1.000 [1.000, 1.001] | 0.002 | no | yes |
+
+Kronecker is therefore `baseline_unstable` (in a6 the same fork block measured 0.040). Uniform was timed.
+
+Upstream level mix in the pilot (reporting only): every upstream source was on one level except uniform
+baseline source 0 (19 of 20 slow). The regimes that broke a6's upstream blocks did not recur in these blocks.
+
+**Campaign (uniform only).**
+
+| It. | Candidate | Fork scalar TDStep: ratio [CI], width, verdict | Upstream DO-BFS: ratio [CI], width, verdict | Upstream slow share (baseline / candidate) |
+|---|---|---|---|---|
+| 1 | rejected: the patch changed the protected verifier region of `bfs.cc` | — | — | — |
+| 2 | `it2.uniform_random.a0`, uncertified (no contract) | 1.004 [0.995, 1.017], 0.022, `no_gain` | 0.089 [0.085, 0.093], 0.092, `inconclusive` | 0.40 / 0.00 |
+| 3 | none: the rewriting call failed (see below) | — | — | — |
+| 4 | none: the rewriting call failed (see below) | — | — | — |
+
+- Stop: `plateau` after 4 iterations. 5 counted provider calls (setup 1, rewriting 4), 0 uncounted. 3.15 lane-hours,
+  0.52 GB peak disk.
+- Per class: Kronecker `baseline_unstable`; uniform `no_gain`, no best, nothing faster listed. Label "single
+  graph per class", measured. **No gain**, so nothing was re-certified (certify 1.3 was merged on the Mac and
+  stood ready).
+- **Provider outage counted against the budget.** Calls 4 and 5 (iterations 3 and 4) ended after about 3.5 s
+  with the Codex error "Selected model is at capacity". The harness counted them as failed rewriting calls
+  (`provider_output_invalid`) instead of uncounted usage-limit pauses (D7), and they completed the 4-iteration
+  plateau. Per the pre-registration there is no rerun. The classification is a harness defect to fix before the
+  next campaign.
+
+Summary `records/campaign_summaries/extensa-native-bfs-20261004-a7.summary.yaml` (team store; sha256 `93935b26…`
+on host and Mac). Compact evidence:
+[`evaluation/native-a7-ci-gate-v2-2026-10-05.json`](../evaluation/native-a7-ci-gate-v2-2026-10-05.json).
