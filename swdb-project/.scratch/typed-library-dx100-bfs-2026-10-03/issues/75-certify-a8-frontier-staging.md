@@ -1,7 +1,7 @@
 # 75 — Certify native a8's best: a TDStep frontier-staging contract, promotion and team re-evaluation
 
 Created: 2026-10-05 11:40 ET (from ticket 56's a8 result; Yan-Ru: "certify it", 2026-10-05)
-Updated: 2026-10-05 18:30 ET (addendum: review attribution and re-promotion, spec review C1, C3); 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-05 16:55 ET (legacy-lease audit, code review S13); 2026-10-05 15:00 ET (resolved); 2026-10-05 12:25 ET (decisions revised after the independent review, before any
+Updated: 2026-10-05 19:20 ET (addendum: native certify 1.5 record and re-promotion citing it); 2026-10-05 18:30 ET (addendum: review attribution and re-promotion, spec review C1, C3); 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-05 16:55 ET (legacy-lease audit, code review S13); 2026-10-05 15:00 ET (resolved); 2026-10-05 12:25 ET (decisions revised after the independent review, before any
 certification record or run)
 **Type:** slice
 **Status:** resolved
@@ -237,4 +237,20 @@ the run either. The isolation recorded here stands. Audit details: ticket 56's a
   `reeval-9534c5107d8c-c1e45d3b` already run, so the re-evaluation comparison
   `t75-reeval-20261005.candidate.uniform_random.comparison` still admits the candidate. No run was repeated.
 - Listed in the spec's "Awaiting ratification" section.
+
+## Addendum 2026-10-05 19:20 ET: native certify 1.5 record; re-promotion cites it
+
+After the certification fixes merged (fix B, `5a9583c`: per-family procedure tables; native-CPU contracts run
+1.3–1.5, default 1.5), the exact a8 tree was certified again on the Mac under the current native command:
+`certification.ac33f5548c154caba9adbf0e4abb8925`, command 1.5 (family `native`, sources match the frozen version,
+commit `b156044`, no local changes), contract content `f0919f00…`, **certified**: 22/22 cells, 8/8 controls
+rejected, evidence basis `measured`. It is bound to the a8 candidate by `--candidate-record`.
+
+Under the derived-level rule (newest command version for the current contract content), this record is the one
+that counts, so the 18:30 ET re-promotion (`…1657514d8e7d`, citing the 1.4 record) no longer counts as the
+promotion. The candidate was promoted again through the attributed path: `review.extensa-native-bfs-20261005-a8.
+it1.kronecker.a0.c12ddfdf5c1b` (performed by an agent under Yan-Ru's delegation) cites the 1.5 record and the a8
+summary, reuses the derived protocol and the request `reeval-9534c5107d8c-c1e45d3b`, and the re-evaluation
+comparison `t75-reeval-20261005.candidate.uniform_random.comparison` still admits the candidate. No run was
+repeated on mbit10.
 

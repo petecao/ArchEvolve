@@ -270,8 +270,8 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
   The campaign isolation check now covers the legacy lease; the lease audit of a5–a8 and ticket 75 found no block run
   while a `hostlock.sh` holder had it (isolation caveat for a5–a8: metadata, not kernel locks) [56](issues/56-native-campaign-target.md).
   ADR 0012 records the CI-width speed rule; ADR 0010 has a supersession note. Reviews state who performed them;
-  attribution corrections for the four agent reviews; the a8 candidate re-promoted with the 1.4 certification of the
-  current contract content [75](issues/75-certify-a8-frontier-staging.md), [43](issues/43-promote-bc-contract.md).
+  attribution corrections for the four agent reviews; the a8 candidate re-certified under native certify 1.5
+  (`certification.ac33f554…`, 22/22, 8/8) and re-promoted citing it [75](issues/75-certify-a8-frontier-staging.md), [43](issues/43-promote-bc-contract.md).
   Promotion refuses stale certifications and superseded team protocols; levels follow the newest command version.
   The spec's "Awaiting ratification" section lists the rules and reviews decided under delegation; 93a2a94's
   behavior changes are ticket [79](issues/79-certify-1-5-behavior-changes.md).

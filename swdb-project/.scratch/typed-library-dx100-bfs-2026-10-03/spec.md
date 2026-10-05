@@ -22,7 +22,7 @@ Yan-Ru ratifies or reverses each one.
 | `approval.gem5_other_socket` (C11) | A campaign file may admit native timed blocks beside another campaign's gem5 job on the other socket (recorded per block), against D2's "never overlap". | [64](issues/64-native-scale22-pilot-unstable.md) |
 | Per-class A/A gate (C12) | A failing class gets `baseline_unstable` and is not timed; the campaign stops only when every class fails (D3 stopped the whole campaign). | [64](issues/64-native-scale22-pilot-unstable.md), ADR 0012 |
 | Certify 1.5 behavior changes of commit `93a2a94` (C13) | Nonce-named DX100 record files (1.4 and 1.5) and the DX100 authored-directive rule (1.5), added inside a ticket scoped as a refactor. | [79](issues/79-certify-1-5-behavior-changes.md) |
-| Agent reviews and promotions (C1) | `contract.bc_read_offload` (ticket 43), `contract.bfs_tdstep_frontier_staging` (ticket 75) and the a8 candidate artifact (ticket 75; re-promoted 2026-10-05 with the 1.4 certification) were reviewed and promoted by agents. Their records now say so (attribution corrections). | [43](issues/43-promote-bc-contract.md), [75](issues/75-certify-a8-frontier-staging.md) |
+| Agent reviews and promotions (C1) | `contract.bc_read_offload` (ticket 43), `contract.bfs_tdstep_frontier_staging` (ticket 75) and the a8 candidate artifact (ticket 75; re-promoted 2026-10-05 with its native certify 1.5 record) were reviewed and promoted by agents. Their records now say so (attribution corrections). | [43](issues/43-promote-bc-contract.md), [75](issues/75-certify-a8-frontier-staging.md) |
 
 ## Problem Statement
 
