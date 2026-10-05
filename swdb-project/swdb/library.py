@@ -1,9 +1,17 @@
-"""Typed library validation and evidence-derived state. Updated: 2026-10-03 ET.
+"""Typed library validation and evidence-derived state. Updated: 2026-10-05 ET.
 
 Normative YAML and code pins never carry review or certification state. Since
 ticket 46 (BC reuses the BFS contract), entries have a JSON schema
 (``schemas/library/library_entry.schema.json``) and SQLite tables built by
 ``swdb.db``; the YAML stays authoritative.
+
+Spec review C1 (2026-10-05 ET): a review record says who performed it. ``reviewer`` names the
+maintainer on whose authority the review counts (ADR 0007); ``performed_by`` (absent: human) says
+who did the reviewing, and an agent review names who delegated it, the delegation and the review
+document. An attribution correction (a review whose ``target_kind`` is ``review``) fixes the
+attribution of an earlier review without rewriting it; readers report the corrected attribution.
+Code review F20: ``review_record`` builds every review record (library entries, Extensa candidate
+artifacts and corrections); ``knob_problem`` holds the knob-range rule a campaign enforces.
 """
 import yaml
 import re
@@ -25,8 +33,162 @@ PROMOTION_REVIEWER = 'Yan-Ru Jhou'
 
 
 def authorized_reviewer(name):
-    """ADR 0007 assigns shared-library review to the project maintainer."""
+    """ADR 0007 assigns shared-library review to the project maintainer.
+
+    The one reviewer check: library promotion, candidate promotion and campaign approvals use it."""
     return isinstance(name, str) and name.strip().casefold() in {'yan-ru jhou', 'yanrujhou'}
+
+
+# --- who performed a review (spec review C1, 2026-10-05 ET) -------------------------------
+
+PERFORMERS = ('human', 'agent')
+ATTRIBUTION_FIELDS = ('performed_by', 'delegated_by', 'delegation', 'review_document')
+
+
+def attribution_from_args(args):
+    """The attribution named on the command line; without options, a human review (the old behavior)."""
+    from swdb.cli import UsageError
+    row = {'performed_by': getattr(args, 'performed_by', None) or 'human',
+           **{key: getattr(args, key, None) for key in ATTRIBUTION_FIELDS[1:]}}
+    problems = attribution_problems(row)
+    if problems:
+        raise UsageError('; '.join(problems) + ' (--performed-by, --delegated-by, --delegation, --review-document)')
+    return row
+
+
+def attribution_problems(row):
+    """Reasons an attribution (a review's own fields or a correction's) is incomplete."""
+    performed = row.get('performed_by', 'human')
+    if performed not in PERFORMERS:
+        return [f'performed_by must be one of {", ".join(PERFORMERS)}']
+    if performed == 'agent':
+        problems = []
+        if not authorized_reviewer(row.get('delegated_by')):
+            problems.append(f'an agent review names {PROMOTION_REVIEWER} as delegated_by')
+        if not row.get('delegation') or not row.get('review_document'):
+            problems.append('an agent review names its delegation and its review document')
+        return problems
+    if row.get('delegated_by') or row.get('delegation'):
+        return ['delegated_by and delegation describe an agent review (performed_by: agent)']
+    return []
+
+
+def review_record(rid, target, evidence, performer, *, description, target_kind=None,
+                  reviewer=PROMOTION_REVIEWER, provenance_kind=None, **fields):
+    """One review record (library entry, Extensa candidate artifact or attribution correction).
+
+    A human review keeps the record shape written before C1 (provenance `human_report`); an agent
+    review carries provenance `agent_run` and its attribution fields."""
+    from swdb import writer
+    human = performer.get('performed_by', 'human') == 'human'
+    if not human:
+        description += (f" Performed by an agent under {performer['delegated_by']}'s delegation "
+                        f"({performer['delegation']}); review document {performer['review_document']}.")
+    record = {'kind': 'review', 'schema_version': '0.4', 'id': rid, 'status': 'reviewed',
+              'created': writer.today(), 'updated': writer.today(),
+              'provenance': [{'id': 'review', 'kind': provenance_kind or ('human_report' if human else 'agent_run'),
+                              'description': description, 'uri': None}]}
+    if target_kind:
+        record['target_kind'] = target_kind
+    record.update(target=target, reviewer=reviewer, reviewed_at=writer.now(), evidence=evidence)
+    if not human:
+        record.update({key: performer[key] for key in ATTRIBUTION_FIELDS})
+    elif performer.get('review_document'):
+        record['review_document'] = performer['review_document']
+    record.update(fields)
+    return record
+
+
+def review_digest(review):
+    """The content identity an attribution correction pins (canonical JSON of the record)."""
+    return artifacts.digest(review)
+
+
+def review_attribution(store, review):
+    """Who performed `review`: its own fields, or its newest attribution correction."""
+    own = {'performed_by': review.get('performed_by', 'human'),
+           **{key: review.get(key) for key in ATTRIBUTION_FIELDS[1:]}, 'corrected_by': None}
+    if store is None:
+        return own
+    pin = {'id': review.get('id'), 'content_sha256': review_digest(review)}
+    corrections = sorted((r.data for r in store.of_kind('review')
+                          if r.data.get('target_kind') == 'review' and r.data.get('target') == pin),
+                         key=lambda r: r.get('reviewed_at', ''))
+    if not corrections:
+        return own
+    newest = corrections[-1]
+    return {**{key: newest['attribution'].get(key) for key in ATTRIBUTION_FIELDS}, 'corrected_by': newest['id']}
+
+
+def correct_review(args):
+    """`swdb correct-review REVIEW`: record who actually performed an earlier review (C1).
+
+    The earlier review stays unchanged; the correction pins its content, states the attribution and
+    names who recorded the correction (`--recorded-by`)."""
+    import uuid
+    from swdb import writer
+    from swdb.cli import Failure
+    from swdb.store import Store
+    review = Store(args.records).get(args.id, 'review')
+    if review is None or review.get('target_kind') == 'review':
+        raise Failure(f'{args.id} is not a review record that can be corrected')
+    attribution = attribution_from_args(args)
+    record = review_record(
+        f'review.correction.{args.id}.{uuid.uuid4().hex[:12]}',
+        {'id': args.id, 'content_sha256': review_digest(review)}, [args.id], {'performed_by': 'human'},
+        description=f'Attribution correction of {args.id}, recorded by {args.recorded_by} through swdb '
+                    f'correct-review: {args.reason}',
+        target_kind='review', reviewer=args.recorded_by, provenance_kind=args.recorder_kind,
+        attribution=attribution)
+    writer.commit(args.records, new=[record])
+    return record
+
+
+def validate_correction(record, ctx):
+    """An attribution correction pins an existing review and states a complete attribution."""
+    data, rel = record.data, record.rel
+    target = ctx.store.get(data['target']['id'], 'review')
+    if target is None or target.get('target_kind') == 'review':
+        yield Problem(rel, 'target.id', 'an attribution correction targets an existing review record')
+        return
+    if review_digest(target) != data['target']['content_sha256']:
+        yield Problem(rel, 'target.content_sha256', 'the correction does not pin the review it corrects')
+    if data.get('evidence') != [data['target']['id']]:
+        yield Problem(rel, 'evidence', 'the correction cites exactly the review it corrects')
+    for problem in attribution_problems(data['attribution']):
+        yield Problem(rel, 'attribution', problem)
+
+
+def attribution_record_problems(record):
+    """A review's own attribution must be complete, and its provenance must not call an agent
+    review a human report (spec review C1)."""
+    data = record.data
+    for problem in attribution_problems({key: data.get(key) for key in ATTRIBUTION_FIELDS
+                                         if data.get(key) is not None}):
+        yield Problem(record.rel, 'performed_by', problem)
+    if data.get('performed_by') == 'agent' and any(p.get('kind') == 'human_report'
+                                                   for p in data.get('provenance') or []):
+        yield Problem(record.rel, 'provenance', 'an agent-performed review is not a human_report')
+
+
+def knob_problem(library, contracts, knobs):
+    """The first knob value outside what the named contracts declare, or None (moved from the
+    campaign loop, code review 2026-10-05 ET: the range rule belongs to the library)."""
+    declared = {}
+    for cid in contracts:
+        for knob in (library.get(cid) or {}).get('knobs', []):
+            declared[knob.get('name')] = knob
+    for name, value in (knobs or {}).items():
+        knob = declared.get(name)
+        if knob is None:
+            return f'knob {name} is not declared by the contracts used'
+        bounds = knob.get('range') or {}
+        if 'choices' in bounds:
+            if value not in bounds['choices']:
+                return f'knob {name}={value!r} is outside its declared choices'
+        elif type(value) not in (int, float) or not bounds.get('min', value) <= value <= bounds.get('max', value):
+            return f'knob {name}={value!r} is outside its declared range'
+    return None
 
 
 SCHEMA = paths.HOME / 'schemas' / 'library' / 'library_entry.schema.json'
@@ -366,16 +528,7 @@ class Library:
                 status = 'certified'
             elif 'refuted' in lower_states:
                 status = 'refuted'
-        dependencies = data.get('lowerings',[]) if data['kind'] == 'intrinsic' else [entry_id]
-        def current_review(review):
-            if (review.get('kind') != 'review' or not authorized_reviewer(review.get('reviewer'))
-                    or review.get('target') != {'id':entry_id,'content_sha256':sha}):
-                return False
-            evidence = [store.get(rid,'certification') for rid in review.get('evidence',[])] if store else []
-            covered = {c['entry']['id'] for c in evidence if c and c.get('verdict') == 'certified'
-                       and c['entry']['id'] in dependencies and self.current_certification(c)}
-            return set(dependencies) <= covered
-        tier = 'shared' if any(current_review(r) for r in records) else 'experimental'
+        tier = 'shared' if self.current_reviews(entry_id, store) else 'experimental'
         target_states = []
         for evaluation in records:
             if evaluation.get('kind') != 'evaluation' or not store:
@@ -405,6 +558,25 @@ class Library:
         elif status != 'refuted' and 'inconclusive' in target_states:
             status = 'inconclusive'
         return {'tier':tier,'status':status}
+
+    def current_reviews(self, entry_id, store=None):
+        """The maintainer's reviews of the entry's current content whose evidence certifies every
+        dependency's current content, oldest first (the entry is shared while any exists)."""
+        store = store or self.store
+        data = self.get(entry_id)
+        sha = self.content_sha256(entry_id)
+        dependencies = data.get('lowerings', []) if data['kind'] == 'intrinsic' else [entry_id]
+        found = []
+        for record in (store.of_kind('review') if store else []):
+            review = record.data
+            if not authorized_reviewer(review.get('reviewer')) or review.get('target') != {'id': entry_id, 'content_sha256': sha}:
+                continue
+            evidence = [store.get(rid, 'certification') for rid in review.get('evidence', [])]
+            covered = {c['entry']['id'] for c in evidence if c and c.get('verdict') == 'certified'
+                       and c['entry']['id'] in dependencies and self.current_certification(c)}
+            if set(dependencies) <= covered:
+                found.append(review)
+        return sorted(found, key=lambda r: r.get('reviewed_at', ''))
 
     def _target_state(self, evaluation, candidate, contract, store):
         """Only an entered target run can derive state. Updated: 2026-10-03 ET."""
@@ -474,14 +646,17 @@ class Library:
 
 
 def promote(args):
-    """Record review without rewriting normative entries. Created: 2026-10-03."""
-    import datetime
+    """Record review without rewriting normative entries. Created: 2026-10-03.
+
+    Updated 2026-10-05 ET (spec review C1): the record states who performed the review
+    (`--performed-by agent` with `--delegated-by`, `--delegation` and `--review-document`)."""
     import uuid
     from swdb import writer
     from swdb.store import Store
     from swdb.cli import Failure
     if not authorized_reviewer(args.reviewer):
         raise Failure(f'promotion requires the designated reviewer {PROMOTION_REVIEWER}')
+    attribution = attribution_from_args(args)
     store = Store(args.records)
     library = Library(args.library or paths.HOME / 'library', store)
     issues = library.validate()
@@ -502,11 +677,9 @@ def promote(args):
                 and library.current_certification(r.data)]
     if not evidence:
         raise Failure('no current passing certification receipt')
-    now = datetime.datetime.now(datetime.timezone.utc).isoformat()
-    record = {'kind':'review','schema_version':'0.4','id':f'review.{args.id}.{uuid.uuid4().hex[:12]}',
-              'status':'reviewed','created':writer.today(),'updated':writer.today(),
-              'provenance':[{'id':'review','kind':'human_report','description':f'Review recorded by {args.reviewer} through swdb promote.','uri':None}],
-              'target':{'id':args.id,'content_sha256':sha},'reviewer':PROMOTION_REVIEWER,'reviewed_at':now,'evidence':evidence}
+    record = review_record(f'review.{args.id}.{uuid.uuid4().hex[:12]}', {'id': args.id, 'content_sha256': sha},
+                           evidence, attribution, reviewer=args.reviewer,
+                           description=f'Review recorded by {args.reviewer} through swdb promote.')
     writer.commit(args.records,new=[record])
     return record
 
@@ -585,6 +758,7 @@ def validate_record(record, ctx):
         if candidate and (candidate.get('contract') != data['entry']['id'] or candidate.get('contract_sha256') != data['entry']['content_sha256'] or not re.fullmatch('[0-9a-f]{64}', str(candidate.get('tree_sha256','')))):
             yield Problem(record.rel,'candidate','candidate certification requires exact contract and tree pins')
     elif record.kind == 'review':
+        yield from attribution_record_problems(record)
         for index, rid in enumerate(data['evidence']):
             certification = ctx.store.get(rid, 'certification')
             if not certification or certification.get('verdict') != 'certified' or certification.get('evidence_kind') != 'execution':

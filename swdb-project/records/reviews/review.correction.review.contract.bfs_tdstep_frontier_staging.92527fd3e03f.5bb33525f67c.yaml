@@ -1,0 +1,27 @@
+kind: review
+schema_version: '0.4'
+id: review.correction.review.contract.bfs_tdstep_frontier_staging.92527fd3e03f.5bb33525f67c
+status: reviewed
+created: '2026-10-05'
+updated: '2026-10-05'
+provenance:
+- id: review
+  kind: agent_run
+  description: 'Attribution correction of review.contract.bfs_tdstep_frontier_staging.92527fd3e03f, recorded
+    by Claude (coding agent), code review of 2026-10-05 under Yan-Ru Jhou''s delegation through swdb correct-review:
+    the review was performed by an agent under delegation, but the record names Yan-Ru Jhou as reviewer
+    with provenance human_report (spec review C1)'
+  uri: null
+target_kind: review
+target:
+  id: review.contract.bfs_tdstep_frontier_staging.92527fd3e03f
+  content_sha256: be9d1da92f53c1477aeb7f317aea69372cc253b33dbe709ca9512bdfc3259379
+reviewer: Claude (coding agent), code review of 2026-10-05 under Yan-Ru Jhou's delegation
+reviewed_at: '2026-10-05T21:05:54.168587+00:00'
+evidence:
+- review.contract.bfs_tdstep_frontier_staging.92527fd3e03f
+attribution:
+  performed_by: agent
+  delegated_by: Yan-Ru Jhou
+  delegation: Yan-Ru Jhou's 2026-10-05 delegation ("certify it"); ticket 75, agent-reviewed and promoted
+  review_document: .scratch/typed-library-dx100-bfs-2026-10-03/frontier-staging-contract-review-2026-10-05.md

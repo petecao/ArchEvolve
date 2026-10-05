@@ -1,5 +1,9 @@
 """Command line: `swdb <command>`. Exit 0 = success, 1 = the check or command failed,
-2 = usage error. Errors go to stderr; results (YAML or JSON) go to stdout."""
+2 = usage error. Errors go to stderr; results (YAML or JSON) go to stdout.
+
+Updated: 2026-10-05 ET (code review): the `campaign` and library-operation commands register here
+directly; `promote` states who performed a review and `correct-review` corrects an earlier
+attribution (spec review C1)."""
 
 import argparse
 import json
@@ -45,6 +49,16 @@ def main(argv=None):
     sub.add_argument("--protocol", help="Extensa candidate: the current team protocol to derive the re-evaluation from")
     sub.add_argument("--workload-class", help="Extensa candidate: the artifact's workload class (workload family)")
     sub.add_argument("--output", type=Path, help="Extensa candidate: folder for the re-evaluation requests")
+    _attribution_options(sub)
+
+    sub = command("correct-review", "record who actually performed an earlier review (the review stays unchanged)",
+                  fmt=True)
+    sub.add_argument("id", help="the review record to correct")
+    sub.add_argument("--recorded-by", required=True, help="who records this correction")
+    sub.add_argument("--recorder-kind", choices=["agent_run", "human_report"], default="agent_run",
+                     help="provenance of the correction itself (default agent_run)")
+    sub.add_argument("--reason", required=True, help="why the earlier attribution was wrong")
+    _attribution_options(sub)
 
     command("build", "regenerate the SQLite database from the records, from scratch", db=True)
 
@@ -226,8 +240,10 @@ def main(argv=None):
     sub.add_argument("id")
     sub.add_argument("--chain", action="store_true", help="include linked proposal, candidate, source, and package records")
 
-    from swdb import annotation, certification, extensa_boundary, retention
+    from swdb import annotation, campaign, certification, extensa_boundary, library_operations, retention
     extensa_boundary.register_cli(commands, paths)
+    library_operations.register_cli(commands, paths)
+    campaign.register_cli(commands, paths)
     annotation.register_cli(commands)
     certification.register_cli(commands)
     retention.register_cli(commands)
@@ -241,6 +257,15 @@ def main(argv=None):
     except Failure as exc:
         print(f"swdb {args.command}: {exc}", file=sys.stderr)
         return 1
+
+
+def _attribution_options(sub):
+    """Who performed a review (spec review C1, 2026-10-05 ET); without them, a human review."""
+    sub.add_argument("--performed-by", choices=["human", "agent"], default=None,
+                     help="who did the reviewing (default human)")
+    sub.add_argument("--delegated-by", help="an agent review: the maintainer who delegated it")
+    sub.add_argument("--delegation", help="an agent review: what was delegated and when")
+    sub.add_argument("--review-document", help="repository path of the written review")
 
 
 def _dispatch(args):
@@ -269,6 +294,10 @@ def _dispatch(args):
             _emit(promote_candidate(args), args.format)
             return 0
         _emit(promote(args), args.format)
+        return 0
+    if args.command == "correct-review":
+        from swdb.library import correct_review
+        _emit(correct_review(args), args.format)
         return 0
     if args.command == "capture-machine":
         return _capture(args)

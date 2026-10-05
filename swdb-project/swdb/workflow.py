@@ -1,6 +1,7 @@
 """Public, durable proposal workflow. Source changes never imply correctness.
 
-Updated: 2026-09-30 (the proposal provider block describes one attempt); 2026-09-29
+Updated: 2026-10-05 ET (`swdb get` of a library entry reports who performed its current review,
+spec review C1); 2026-09-30 (the proposal provider block describes one attempt); 2026-09-29
 (pinned repair identity and unavailable-provider retries); 2026-09-28 (patch headers
 parsed outside hunk bodies only). YAML records remain authoritative; raw artifacts are external.
 """
@@ -169,7 +170,12 @@ def get_record(args):
             problems = library.validate()
             if problems:
                 raise Failure('library validation failed: ' + '; '.join(str(p) for p in problems[:5]))
-            return {**entry, "content_sha256": library.content_sha256(args.id), **library.state(args.id)}
+            from swdb.library import review_attribution
+            reviews = library.current_reviews(args.id)
+            review = ({"id": reviews[-1]["id"], "attribution": review_attribution(store, reviews[-1])}
+                      if reviews else None)
+            return {**entry, "content_sha256": library.content_sha256(args.id), **library.state(args.id),
+                    "review": review}
         raise Failure(f"record {args.id!r} does not exist")
     if getattr(args, "chain", False):
         seen = {}
