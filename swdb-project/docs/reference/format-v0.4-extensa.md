@@ -2,7 +2,7 @@
 
 Created: 2026-10-03 (Eastern Time)
 Updated: 2026-10-04 (Eastern Time): site-finder fields (ticket 55); campaign isolation and gem5 approval fields
-Updated: 2026-10-04 21:40 (Eastern Time): `protocol.speed_rule` and evaluator v3 (tickets 66 and 67)
+Updated: 2026-10-04 21:30 (Eastern Time): `protocol.speed_rule` and evaluator v3 (tickets 66 and 67)
 
 Extensa mode (ADR 0009, ADR 0010; decisions in
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`) adds optional
