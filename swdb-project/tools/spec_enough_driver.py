@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Ticket 58: the "is the specification enough?" experiment driver.
+"""Ticket 58: the "is the intrinsic specification enough?" experiment driver.
 
-Created: 2026-10-04 ET. Extensa mode (decisions D7, D10 of
+Created: 2026-10-04 ET. Updated: 2026-10-05 ET (code review: P1 call outcomes, P6 named
+budgets, J5 public names, glossary). Extensa mode (decisions D7, D10 of
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`).
 
 Three inputs (arms), each given to the rewrite role through the provider launcher
@@ -11,27 +12,37 @@ Three inputs (arms), each given to the rewrite role through the provider launche
   B `spec_draft`         A plus Josh's hardware-candidate draft;
   C `spec_draft_contract` B plus our rewrite contract `contract.bfs_read_offload`.
 
+The arm IDs are recorded labels (legacy: "spec" there means the intrinsic specification).
 Every arm also gets the same base source (the scalar-only snapshot), the canonical
-lowering header the certifier requires, and HARNESS.md (the evaluator's interface:
-which file may change, build macros, the protected logging line and the execution
-witness hooks). The working rewrite (ticket 20's patch) and the authors' accelerated
-code are never inputs; the role's input check and a driver check refuse them.
+lowering header the certifier requires, and the evaluator interface file (`HARNESS.md`,
+its recorded legacy name: which file may change, build macros, the protected logging
+line and the execution witness hooks). The working rewrite (ticket 20's patch) and the
+authors' accelerated code are never inputs; the role's input check and a driver check
+refuse them. The provider-visible texts (PROMPT, EVALUATOR_INTERFACE) are pinned inputs
+whose hashes the summaries record, so their wording is never edited.
 
-Each sample is scored by `swdb certify` (contract.bfs_read_offload, scalar-only snapshot,
-full matrix) with records created under the Extensa tags. Since ticket 62 (2026-10-04 ET)
-the negative controls are library-side faults, so a sample's spelling no longer decides
-whether a control exists. If certification aborts for another reason, the sample is not
-certified and a labeled diagnostic is kept; the diagnostic is never a certification.
+Each sample's candidate artifact is scored by `swdb certify` (contract.bfs_read_offload,
+scalar-only snapshot, full matrix) with records created under the Extensa tags. Since ticket
+62 (2026-10-04 ET) the negative controls are library-side faults, so a sample's spelling no
+longer decides whether a control exists. If certification aborts for another reason, the
+sample is not certified and a labeled diagnostic is kept; the diagnostic is never a
+certification.
 
 Attempt a3 (2026-10-04 ET): the prompt names the only commands the strict audit can
 follow (plain reads) and forbids heredocs, awk, git apply, patch and file writes; a
-`STOP-<attempt>` file in the campaign folder stops the provider stage before its next
-session; and the stage stops itself (writing that file) when the attempt's first
+`STOP-<attempt>` file in the Extensa campaign folder stops the provider stage before its
+next session; and the stage stops itself (writing that file) when the attempt's first
 `--stop-after-failures` sessions all fail.
+
+Call outcomes (code review P1, 2026-10-05 ET): every provider call is classified by
+`swdb.provider_adapters.classify`, the classifier the Extensa campaign uses. A usage limit,
+provider capacity, guard runtime limit or login stop is recorded uncounted under its own
+outcome and pauses the stage; a resume retries the sample. Before, a capacity stop was
+recorded as `usage_limit` and a guard runtime-limit stop was counted as a failed rewrite.
 
 Stages: `provider` (all samples, sequential, at most the budgeted counted calls),
 `score` (scores samples as their responses appear), `reference` (scores ticket 20's
-patch through the same harness as a positive control; no provider call) and
+patch through the same evaluator interface as a positive control; no provider call) and
 `summary`. Raw output stays under <runs root>/extensa/<campaign>/.
 """
 
@@ -50,13 +61,16 @@ PROJECT = Path(__file__).resolve().parents[1]
 REPOSITORY = PROJECT.parent
 sys.path.insert(0, str(PROJECT))
 
-from swdb import artifacts, certification, provider_adapters, provider_login, provider_roles, workflow  # noqa: E402
+from swdb import (artifacts, certification, certification_legality, kernels, provider_adapters,  # noqa: E402
+                  provider_login, provider_roles, workflow)
 from swdb.cli import Failure, UsageError, _require_valid  # noqa: E402
+from swdb.extensa import search  # noqa: E402
 
 CAMPAIGN_PATTERN = "extensa-gem5-bfs-{date}-s1"
 SNAPSHOT = "bfs-dx100-scalar-only-20260929-a1.source"
 SNAPSHOT_SHA256 = "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af"
 CONTRACT = "contract.bfs_read_offload"
+#: The intrinsic specification (Peter's v1.1); `SPEC` and the `spec*` arm IDs are recorded names.
 SPEC = {"commit": "0b56895", "path": "docs/bfs-intrinsics-spec-yanru.md",
         "sha256": "3e54374ae43c841bad3f71d9210cb110742dfdb1bf688cde1953de9df64aabf9"}
 DRAFT = {"path": "runs/bfs-maple-comparison-v0.1/case-01/handoffs/candidate-02/intrinsic-draft.yaml",
@@ -65,12 +79,20 @@ DRAFT_REDACTION = ("inspected TDStepMAA sequence", "inspected accelerated-TDStep
 CONTRACT_FILE = "swdb-project/library/rewrite_contracts/bfs_read_offload.yaml"
 LOWERING = PROJECT / "library/dx100/dxc_lowering.hpp"
 REFERENCE_PATCH = PROJECT / "library/dx100/peter-section5.patch"
-LOGIN = re.compile(r"login|not logged in|unauthori[sz]ed|authentication|credentials|token_invalidated|"
-                   r"refresh_token_reused", re.I)
 ARMS = ("spec", "spec_draft", "spec_draft_contract")
 SAMPLES = 3
 COUNTED_CALL_BUDGET = len(ARMS) * SAMPLES        # D7-style cap for this experiment: 9
 LANE_SECONDS = 3 * 3600                           # ticket 58: about 3 lane-hours
+#: P6 (2026-10-05 ET): the per-call provider budget; also the lane time a next call may need.
+CALL_SECONDS = 1200
+STOP_AFTER_FAILURES = 2                           # a3: stop when the first N counted sessions all fail
+SCORE_POLL_SECONDS = 30                           # the score stage's wait for the next response
+#: Certification matrix of every sample (tile sizes, OpenMP threads, BFS sources).
+TILE_SIZES = (16384, 1024)
+CERTIFY_THREADS = 4
+CERTIFY_SOURCES = (0,)
+#: The file name of the evaluator interface in every arm's workspace (recorded inputs keep it).
+EVALUATOR_INTERFACE_FILE = "HARNESS.md"
 #: Distinctive text of the working rewrite (ticket 20's patch); never an input.
 WORKING_REWRITE_MARKERS = ("swdb_contexts[omp_get_thread_num()]", "if(claimed){parent[v]=u;lqueue.push_back(v);}",
                            "Peter section 5 read offload, fixes E1-E5")
@@ -101,7 +123,8 @@ Tool rules (a strict audit checks every command; one violation discards the samp
   `patch`. Hunk headers must count lines exactly.
 """
 
-HARNESS = """\
+#: The evaluator interface every arm reads (provider-visible text; its hash is recorded as `harness_sha256`).
+EVALUATOR_INTERFACE = """\
 # Harness interface (identical for every input)
 
 - Only `benchmarks/gapbs/src/bfs.cc` may change. The harness adds
@@ -161,7 +184,7 @@ def base_source(scratch):
 
 def arm_files(arm, base):
     files = dict(base)
-    files["HARNESS.md"] = HARNESS
+    files[EVALUATOR_INTERFACE_FILE] = EVALUATOR_INTERFACE
     files["lowering/swdb_dxc_lowering.hpp"] = LOWERING.read_text()
     files["spec/bfs-intrinsics-spec.md"] = spec_text()
     pins = {"spec/bfs-intrinsics-spec.md": SPEC["sha256"]}
@@ -201,22 +224,32 @@ def sample_ids():
     return [(arm, n) for n in range(1, SAMPLES + 1) for arm in ARMS]   # interleaved in time
 
 
+#: Ledger rows name the login file's short hash (16 hex digits) `login_source_short_hash` since
+#: 2026-10-05 ET (J6); rows of attempts a1-a3 call the same value `login_source_sha256`.
+LOGIN_HASH_KEYS = ("login_source_short_hash", "login_source_sha256")
+
+
+def uncounted(row):
+    """True for a recorded call that D7 leaves uncounted (any attempt's row format)."""
+    return row.get("counted") is False or row.get("outcome") in {o.value for o in search.UNCOUNTED_CALL_OUTCOMES}
+
+
 def login_preflight(ledger, ledger_path, kind="codex"):
     """D7 login preflight (2026-10-04): pause, uncounted, before any session is spent.
 
-    Offline only: a missing or malformed login file, or the same login file (by hash)
-    that a recorded session already saw refused, pauses the run. Never records values.
-    Returns the login file's short hash for the session row.
+    Offline only: a missing or malformed login file, a provider home a lab host forbids, or the
+    same login file (by short hash) that a recorded session already saw refused, pauses the run.
+    Never records values. Returns the login file's short hash for the session row.
     """
     check = provider_login.preflight(kind)
-    refused = {c.get("login_source_sha256") for c in ledger["calls"] if c.get("outcome") == "login"} - {None}
-    if check["state"] == "ok" and check["source_sha256"] in refused:
+    refused = {c.get(key) for c in ledger["calls"] if c.get("outcome") == "login" for key in LOGIN_HASH_KEYS} - {None}
+    if check["state"] == "ok" and check["source_short_hash"] in refused:
         check.update(state="login", reason="this login was already refused by the provider; run `codex login`")
     if check["state"] != "ok":
         ledger.setdefault("preflights", []).append({"at": now(), "outcome": "login", "counted": False, **check})
         save(ledger_path, ledger)
         raise Failure(f"provider paused (login); uncounted; preflight: {check['reason']}")
-    return check["source_sha256"]
+    return check["source_short_hash"]
 
 
 def provider_stage(args):
@@ -232,7 +265,7 @@ def provider_stage(args):
         config_path = args.provider_config
     else:
         save(config_path, {"kind": "codex", "command": [args.codex_command], "workspace": True,
-                           "timeout_s": 1200, "total_seconds": 1200, "max_repairs": 0})
+                           "timeout_s": CALL_SECONDS, "total_seconds": CALL_SECONDS, "max_repairs": 0})
     from swdb import rewrite
     config = rewrite.configuration(config_path)
     if (root / "base-source").exists():
@@ -244,8 +277,7 @@ def provider_stage(args):
         if stop.exists():
             raise Failure(f"provider stage stopped by {stop.name}: {stop.read_text().strip()[:300]}")
         folder = runs / f"{arm}-s{n}"
-        if (folder / "failure.json").is_file() and \
-                json.loads((folder / "failure.json").read_text())["outcome"] in ("login", "usage_limit"):
+        if (folder / "failure.json").is_file() and uncounted(json.loads((folder / "failure.json").read_text())):
             k = 1
             while folder.with_name(f"{folder.name}.paused{k}").exists():
                 k += 1
@@ -255,29 +287,25 @@ def provider_stage(args):
         counted = sum(1 for c in ledger["calls"] if c["counted"])
         if counted >= COUNTED_CALL_BUDGET:
             raise Failure("the experiment's counted provider calls are spent")
-        if time.monotonic() - started + 1200 > args.lane_seconds:
+        if time.monotonic() - started + CALL_SECONDS > args.lane_seconds:
             raise Failure("the next provider call could exceed the lane-hour budget")
         files, input_pins = arm_files(arm, base)
-        provider_roles._inputs(files)       # refused inputs never open (or count) a call
-        login_sha = None if args.provider_config else login_preflight(ledger, ledger_path)
+        provider_roles.checked_inputs(files)       # refused inputs never open (or count) a call
+        login_hash = None if args.provider_config else login_preflight(ledger, ledger_path)
         folder.mkdir(parents=True, exist_ok=True)
         row = {"arm": arm, "sample": n, "invocation": f"{args.campaign}.{arm}-s{n}", "started": now(),
-               "input_pins": input_pins, "visible_files": sorted(files), "login_source_sha256": login_sha}
+               "input_pins": input_pins, "visible_files": sorted(files), "login_source_short_hash": login_hash}
         try:
             response, meta = provider_roles.run(ROLE, files, PROMPT.format(campaign=args.campaign, arm=arm, sample=n),
                                                 config, folder / "provider")
             row.update(outcome="completed", counted=True)
             save(folder / "response.json", response)
-        except provider_adapters.ProviderUnavailable as exc:
-            row.update(outcome="usage_limit", counted=False, error=str(exc))
         except Failure as exc:
-            # D7: a login failure is uncounted and pauses the run. Codex reports it only on
-            # stderr (attempt a1, 2026-10-04: 401 token_invalidated / refresh_token_reused).
-            text = str(exc)
-            stderr = folder / "provider" / "stderr.txt"
-            detail = text + (stderr.read_text(errors="replace") if stderr.is_file() else "")
-            login = bool(LOGIN.search(detail))
-            row.update(outcome="login" if login else "failed", counted=not login, error=text)
+            # D7 / P1 (2026-10-05 ET): the shared classifier. Usage limit, capacity, guard runtime limit
+            # and login (Codex reports a login failure only on stderr: attempt a1, 401 token_invalidated
+            # / refresh_token_reused) are uncounted; everything else is a counted failure.
+            outcome = provider_adapters.classify(exc, folder / "provider")
+            row.update(outcome=outcome.value, counted=outcome not in search.UNCOUNTED_CALL_OUTCOMES, error=str(exc))
         receipt = folder / "provider" / "provider.json"
         meta = json.loads(receipt.read_text()) if receipt.is_file() else {}
         audit = meta.get("audit") or {}
@@ -292,7 +320,7 @@ def provider_stage(args):
         save(ledger_path, ledger)
         if row["outcome"] != "completed":
             save(folder / "failure.json", row)
-        if row["outcome"] in ("usage_limit", "login"):
+        if not row["counted"]:
             raise Failure(f"provider paused ({row['outcome']}); uncounted; resume later")
         counted_rows = [c for c in ledger["calls"] if c["counted"]]
         limit = args.stop_after_failures
@@ -356,14 +384,31 @@ def scoring_patch(response_patch):
 
 
 def control_sites(source):
-    sites = {}
-    for name in certification._CONTROL_EXPECTED:
+    """Which of the BFS plug-in's negative controls can be built on this source (diagnostic only).
+
+    J5 (2026-10-05 ET): through the kernel plug-in's public interface, not certification internals."""
+    plugin, sites = kernels.BFS, {}
+    for name in plugin.certification_controls:
         try:
-            certification._rewrite_control(certification.instrument_source(source), name)
+            plugin.certification_control(plugin.certification_instrument(source), name)
             sites[name] = True
         except Failure:
             sites[name] = False
     return sites
+
+
+def planned_controls():
+    """How many negative controls certification runs for one sample (P6, 2026-10-05 ET).
+
+    Derived from the BFS plug-in's controls, plus the legality controls when the contract has
+    knob or schedule clauses (ticket 68), once per tile size. An aborted certification reports
+    this total; the driver once hard-coded 16 (certify 1.0-1.1, before the legality controls)."""
+    import yaml
+    contract = yaml.safe_load((REPOSITORY / CONTRACT_FILE).read_text())
+    names = len(kernels.BFS.certification_controls)
+    if certification_legality.applies(contract):
+        names += len(certification_legality.CONTROLS)
+    return names * len(TILE_SIZES)
 
 
 class _SiteControls:
@@ -379,7 +424,6 @@ class _SiteControls:
 
 
 def diagnostic(patch_path, folder, library):
-    from swdb import kernels
     store = _require_valid(PROJECT / "records")
     folder.mkdir(parents=True, exist_ok=True)
     tree, _snapshot = certification.materialize_snapshot(store, SNAPSHOT, folder)
@@ -390,8 +434,8 @@ def diagnostic(patch_path, folder, library):
     except Failure as exc:
         sites = {"error": str(exc)}
     present = {k for k, v in sites.items() if v is True}
-    matrix, controls = certification.certify_bfs(tree, library, folder, (16384, 1024), 4, (0,),
-                                                 plugin=_SiteControls(kernels.BFS, present))
+    matrix, controls = certification.certify_bfs(tree, library, folder, TILE_SIZES, CERTIFY_THREADS,
+                                                 CERTIFY_SOURCES, plugin=_SiteControls(kernels.BFS, present))
     return {"label": "diagnostic, not certification", "control_sites": sites,
             "matrix": [{k: c.get(k) for k in ("graph", "tile_size", "source", "status", "reason")} for c in matrix],
             "matrix_passed": sum(1 for c in matrix if c["status"] == "passed"), "matrix_cells": len(matrix),
@@ -417,7 +461,8 @@ def score_one(args, name, response_patch, folder):
     workflow.CREATION_TAGS.update(mode="extensa", campaign=args.campaign)
     try:
         record = certification.certify(Store(store_dir), CONTRACT, runs_dir=folder / "certify", snapshot=SNAPSHOT,
-                                       patch=patch_path, tile_sizes=(16384, 1024), threads=4, sources=(0,))
+                                       patch=patch_path, tile_sizes=TILE_SIZES, threads=CERTIFY_THREADS,
+                                       sources=CERTIFY_SOURCES)
         controls = record["negative_controls"]
         result.update(certification=record["id"], verdict=record["verdict"],
                       matrix_passed=sum(1 for c in record["matrix"] if c["status"] == "passed"),
@@ -431,7 +476,7 @@ def score_one(args, name, response_patch, folder):
             shutil.copy2(path, records / "certifications" / path.name)
     except (Failure, UsageError) as exc:
         result.update(verdict="aborted", certification=None, abort_reason=str(exc),
-                      controls_rejected=0, controls_total=16)
+                      controls_rejected=0, controls_total=planned_controls())
     finally:
         workflow.CREATION_TAGS.clear()
         workflow.CREATION_TAGS.update(previous)
@@ -465,12 +510,12 @@ def score_stage(args):
         if pending and not progressed:
             if (args.provider_done.is_file() if args.provider_done else False):
                 break
-            time.sleep(30)
+            time.sleep(SCORE_POLL_SECONDS)
     return {"unscored": sorted(pending)}
 
 
 def reference_stage(args):
-    """Positive control of the harness: ticket 20's bfs.cc diff through the same scoring path."""
+    """Positive control of the evaluator interface: ticket 20's bfs.cc diff through the same scoring path."""
     _root, _records, runs = folders(args)
     text = REFERENCE_PATCH.read_text()
     bfs_only = text[:text.index("--- /dev/null\n+++ b/benchmarks/gapbs/src/swdb_dxc_lowering.hpp")]
@@ -508,7 +553,7 @@ def summary_stage(args):
                          "snapshot": {"id": SNAPSHOT, "sha256": SNAPSHOT_SHA256},
                          "lowering": {"path": "swdb-project/library/dx100/dxc_lowering.hpp",
                                       "sha256": artifacts.file_hash(LOWERING)},
-                         "harness_sha256": sha(HARNESS), "prompt_sha256": sha(PROMPT)},
+                         "harness_sha256": sha(EVALUATOR_INTERFACE), "prompt_sha256": sha(PROMPT)},
               "budget": {"counted_calls_limit": COUNTED_CALL_BUDGET, "lane_seconds": args.lane_seconds,
                          "counted_calls_used": sum(1 for c in ledger["calls"] if c["counted"]),
                          "uncounted_calls": sum(1 for c in ledger["calls"] if not c["counted"])},
@@ -529,7 +574,7 @@ def main(argv=None):
     parser.add_argument("--lane-seconds", type=int, default=LANE_SECONDS)
     parser.add_argument("--attempt", default="a1", help="attempt label; each attempt keeps its own runs and ledger")
     parser.add_argument("--provider-done", type=Path, help="file whose presence ends the score stage's wait")
-    parser.add_argument("--stop-after-failures", type=int, default=2,
+    parser.add_argument("--stop-after-failures", type=int, default=STOP_AFTER_FAILURES,
                         help="stop when the attempt's first N counted sessions all fail (0 disables)")
     args = parser.parse_args(argv)
     if not re.fullmatch(r"a[0-9]+", args.attempt):

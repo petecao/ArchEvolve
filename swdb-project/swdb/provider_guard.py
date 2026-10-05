@@ -1,4 +1,4 @@
-"""Linux Landlock boundary and external resource observation. Updated: 2026-10-05 ET (ticket 74).
+"""Linux Landlock boundary and external resource observation. Updated: 2026-10-05 ET (code review).
 
 The standalone entry point imports only the standard library. It fails closed if
 ABI 4 is unavailable; the evaluator stays outside the confined process tree.
@@ -9,7 +9,11 @@ ordinary helper signals; this is not general hostile-process isolation.
 refuse io_uring and TCP Fast Open sends, which the connect() trace cannot observe.
 2026-10-05 (ticket 74): tool commands and the provider runtime have separate thread
 caps, every owned thread must stay on the lane's CPUs, and an overrun of the runtime
-cap is recorded as a harness limit (`harness_limit`), not as the model's work.
+cap is recorded as a guard runtime limit (`guard_runtime_limit`), not as the model's work.
+2026-10-05 ET (code review P4/P5, J3-J5): the limits are named constants (LIMITS), the lane
+check reuses the profile's CPU-list parser, the lane check is public (`verified_lane`), and a
+prompt-only session places its login through `provider_login.start`. Persisted values are
+unchanged: an overrun record still carries `scope: runtime`.
 """
 import ctypes
 import errno
@@ -39,8 +43,17 @@ class GuardError(RuntimeError):
 #: host the runtime reached 20 including strace. 64 leaves more than 3x margin and still stops a runaway.
 TOOL_THREADS = 16
 RUNTIME_THREADS = 64
+#: Story 33's aggregate resident-memory cap; inner Claude tool commands also get it as RLIMIT_AS.
+MEMORY_BYTES = 32 * 1024**3
+#: Wall-time limit of every tool process (and RLIMIT_CPU / timeout(1) of inner tool commands).
+COMMAND_SECONDS = 120
+#: Workspace plus provider home (and RLIMIT_FSIZE per file).
+WORKSPACE_BYTES = 5 * 1024**3
+LIMITS = {"threads": TOOL_THREADS, "runtime_threads": RUNTIME_THREADS, "memory_bytes": MEMORY_BYTES,
+          "command_seconds": COMMAND_SECONDS, "workspace_bytes": WORKSPACE_BYTES}
 RESOURCE_REASON = "provider resource limit exceeded"
-HARNESS_SCOPE = "runtime"
+#: The overrun-record scope of a guard runtime limit (persisted in `resource-overrun.json`).
+RUNTIME_SCOPE = "runtime"
 
 
 def resource_scope(rows, runtime_keys, limits):
@@ -63,21 +76,21 @@ def resource_scope(rows, runtime_keys, limits):
                                                 and runtime["resident_bytes"] <= limits["memory_bytes"]):
         scope = "tools"
     elif runtime["threads"] > limits["runtime_threads"] or runtime["resident_bytes"] > limits["memory_bytes"]:
-        scope = HARNESS_SCOPE
+        scope = RUNTIME_SCOPE
     detail = (f"tool threads={tools['threads']} (limit {limits['threads']}), runtime threads="
               f"{runtime['threads']} (limit {limits['runtime_threads']}), resident_bytes={resident}")
     reason = (None if scope is None else f"{RESOURCE_REASON}: {detail}" if scope == "tools"
-              else f"{RESOURCE_REASON} by the provider runtime (harness limit, not model work): {detail}")
+              else f"{RESOURCE_REASON} by the provider runtime (guard runtime limit, not model work): {detail}")
     return {"scope": scope, "reason": reason, "runtime": runtime, "tools": tools}
 
 
-def harness_limit(folder):
+def guard_runtime_limit(folder):
     """The guard's reason when it stopped this call only for its own limit on the provider runtime.
 
     Ticket 74. Reads the observer-written receipts of one call folder (outside the provider's
     Landlock write roots). Returns None unless every guard reason is a resource limit and the
     overrun was not the model's tool work. A record from before ticket 74 (a flat process list
-    charged against one aggregate cap, as in campaign a8) is re-split with the current limits."""
+    charged against one aggregate cap, as in Extensa campaign a8) is re-split with the current limits."""
     folder = Path(folder)
     try:
         audit = json.loads((folder / "guard-audit.json").read_text())
@@ -91,7 +104,7 @@ def harness_limit(folder):
             isinstance(r, str) and r.startswith(RESOURCE_REASON) for r in reasons):
         return None
     if isinstance(record, dict):
-        return record.get("reason") if record.get("scope") == HARNESS_SCOPE else None
+        return record.get("reason") if record.get("scope") == RUNTIME_SCOPE else None
     if not isinstance(record, list):
         return None
     cleanup, provider = audit.get("process_cleanup") or {}, audit.get("original_provider") or {}
@@ -99,8 +112,7 @@ def harness_limit(folder):
                    if row.get("pid") == cleanup.get("tracer_pid")), None)
     runtime_keys = {tracer, (provider.get("pid"), provider.get("start_time_ticks"))} - {None}
     try:
-        verdict = resource_scope(record, runtime_keys, {"threads": TOOL_THREADS, "runtime_threads": RUNTIME_THREADS,
-                                                        "memory_bytes": 32 * 1024**3})
+        verdict = resource_scope(record, runtime_keys, LIMITS)
     except (KeyError, TypeError):
         return None
     if verdict["scope"] == "tools":
@@ -108,17 +120,12 @@ def harness_limit(folder):
     return f"{'; '.join(reasons)} (legacy aggregate cap; under ticket 74: {verdict['reason'] or 'within limits'})"
 
 
-def _cpu_list(text):
-    cpus = set()
-    for part in text.strip().split(","):
-        if part:
-            low, _, high = part.partition("-")
-            cpus.update(range(int(low), int(high or low) + 1))
-    return cpus
-
-
 def _task_cpus(pid):
-    """Every CPU any thread of this process may run on (per-thread masks can differ)."""
+    """Every CPU any thread of this process may run on (per-thread masks can differ).
+
+    Runs in the evaluator only (never in the standalone launcher), so it reuses the profile's
+    CPU-list parser, the one the lane verification itself applies (J4, 2026-10-05 ET)."""
+    from swdb.profile import _cpu_set
     cpus = set()
     for task in Path(f"/proc/{pid}/task").iterdir():
         try:
@@ -126,7 +133,7 @@ def _task_cpus(pid):
         except OSError:
             continue
         if match:
-            cpus |= _cpu_list(match[1])
+            cpus |= _cpu_set(match[1])
     return cpus
 
 
@@ -478,11 +485,12 @@ def restrict(policy, inner=False):
     # such runtimes, so each also gets a kernel-enforced 32 GiB address space.
     resource.setrlimit(resource.RLIMIT_FSIZE, (policy["limits"]["workspace_bytes"],) * 2)
     if inner:
-        resource.setrlimit(resource.RLIMIT_CPU, (120, 120))
+        resource.setrlimit(resource.RLIMIT_CPU, (COMMAND_SECONDS, COMMAND_SECONDS))
         resource.setrlimit(resource.RLIMIT_AS, (policy["limits"]["memory_bytes"],) * 2)
 
 
-def _lane():
+def verified_lane():
+    """The verified socket lane this process runs in on mbit10 (public since 2026-10-05 ET, J5)."""
     if socket.gethostname().split(".")[0] != "mbit10":
         raise GuardError("real rewrite providers require a verified socket lane on mbit10")
     # Reuse the evaluator's kernel-backed verification: exact socket affinity,
@@ -493,6 +501,11 @@ def _lane():
                    "cpus": Path(f"/sys/devices/system/node/node{node}/cpulist").read_text().strip()}
                    for node in (0, 1)]}
     return _verified_lane(machine, None)
+
+
+def _lane():
+    """Legacy name, still used by callers outside the provider modules; follows `verified_lane`."""
+    return verified_lane()
 
 
 def _api_addresses(kind):
@@ -545,7 +558,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
     try:
         if abi() < 4:
             raise GuardError("SWDB provider guard requires Linux Landlock ABI >= 4; refusing unguarded session")
-        lane = _lane() if not fixture or socket.gethostname().split(".")[0] == "mbit10" else None
+        lane = verified_lane() if not fixture or socket.gethostname().split(".")[0] == "mbit10" else None
         tracer = shutil.which("strace")
         if not tracer:
             raise GuardError("SWDB provider guard requires strace for outbound connection auditing")
@@ -608,16 +621,14 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                   "inner_tcp_connect_ports": [], "tcp_bind_ports": [],
                   "model_api": _api_addresses(kind) if not fixture else {"hosts": [], "addresses": []},
                   "login_path": str(login_path) if login_path else None,
-                  "limits": {"threads": TOOL_THREADS, "runtime_threads": RUNTIME_THREADS,
-                             "memory_bytes": 32 * 1024**3,
-                             "command_seconds": 120, "workspace_bytes": 5 * 1024**3},
+                  "limits": dict(LIMITS),
                   "limit_enforcement": {
                       "threads": "observed: threads of tool commands and all their descendants (every owned "
                                  "process except the tracer, the original CLI and its exact persistent service), "
                                  "polled every 0.1 s; attempt stopped on overrun (ticket 74)",
                       "runtime_threads": "observed: threads of the tracer, the original CLI and its exact "
-                                         "persistent service, polled every 0.1 s; an overrun is a harness "
-                                         "limit, recorded with scope 'runtime' (ticket 74)",
+                                         "persistent service, polled every 0.1 s; an overrun is a guard "
+                                         "runtime limit, recorded with scope 'runtime' (ticket 74)",
                       "lane_cpus": "observed: every thread's allowed CPUs must stay inside the observer's lane "
                                    "affinity, polled every 0.1 s (ticket 74)",
                       "memory_bytes": "observed: aggregate resident memory polled every 0.1 s; inner tool "
@@ -778,7 +789,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                 if not provider_root and not persistent_service and row["state"] not in {"Z", "X"}:
                     lifetime = time.clock_gettime(time.CLOCK_BOOTTIME) - row["start_time_ticks"] / os.sysconf("SC_CLK_TCK")
                     if lifetime > policy["limits"]["command_seconds"]:
-                        reasons.append("provider tool command exceeds the 120 s wall-time limit")
+                        reasons.append(f"provider tool command exceeds the {COMMAND_SECONDS} s wall-time limit")
                         raise Failure(reasons[-1])
             size = 0
             for path in [*workspace.rglob("*"), *home.rglob("*")]:
@@ -875,17 +886,11 @@ def prompt_context(config, folder):
     workspace, home = folder / "workspace", folder / "provider-home"
     workspace.mkdir(exist_ok=True)
     home.mkdir(mode=0o700, exist_ok=True)
-    kind = config.get("resolved_kind", config.get("kind"))
-    if abi() < 4:
-        # Refuse before any credential is copied off its protected location.
-        raise Failure("SWDB provider guard requires Linux Landlock ABI >= 4; refusing unguarded session")
+    if config.get("kind") == "external_fixture":
+        raise Failure("prompt-only guarded context is for real providers only")
     from swdb import provider_login
-    login = home / provider_login.login_name(kind)
-    try:
-        handle = provider_login.copy(kind, login)
-    except BaseException:
-        login.unlink(missing_ok=True)
-        raise
+    # Refuses before any credential is copied off its protected location (Landlock ABI < 4).
+    login, handle = provider_login.start(config, home)
     try:
         result = context(config, workspace, home, folder, login_path=login)
     except BaseException:
@@ -897,10 +902,7 @@ def prompt_context(config, folder):
     def cleanup():
         # A refreshed login is written back before the copy is deleted (ticket 58).
         if "login_writeback" not in state:
-            try:
-                state["login_writeback"] = handle.write_back()
-            except Exception as exc:  # never blocks deletion of the copy
-                state["login_writeback"] = {"written_back": False, "reason": f"write-back failed: {type(exc).__name__}"}
+            state["login_writeback"] = handle.write_back_safely()
         login.unlink(missing_ok=True)
 
     result["cleanup"] = cleanup
@@ -982,7 +984,7 @@ def main():
         if filter_fd is not None:
             os.close(filter_fd)
     if inner:
-        command = ["/usr/bin/timeout", "--signal=TERM", "--kill-after=5", "120", *command]
+        command = ["/usr/bin/timeout", "--signal=TERM", "--kill-after=5", str(COMMAND_SECONDS), *command]
     os.execvpe(command[0], command, os.environ)
 
 
