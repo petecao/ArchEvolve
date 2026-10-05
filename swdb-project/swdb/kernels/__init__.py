@@ -125,8 +125,11 @@ class KernelPlugin:
         """(passed, reason) for one matrix cell."""
         raise NotImplementedError
 
-    def certification_control(self, source, name):
-        """The candidate source with one named negative-control mutation."""
+    def certification_control(self, source, name, *, counts=None):
+        """The candidate source with one named negative-control mutation.
+
+        ``counts``: the trusted oracle's frontier counts for the control's graph and source.
+        """
         raise NotImplementedError
 
     def control_source(self, sources):

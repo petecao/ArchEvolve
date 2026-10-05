@@ -142,7 +142,7 @@ def judge(result, counts, *, threshold=64):
     return True, "all_checks_passed"
 
 
-def control(source, name):
+def control(source, name, *, counts=None):
     """One negative control of the candidate (ticket 62, 2026-10-04 ET).
 
     The eight controls shared with BFS act at the library seam
@@ -152,7 +152,7 @@ def control(source, name):
     from swdb.certification_faults import LIBRARY_FAULTS, library_control, replace_tokens
     from swdb.cli import Failure
     if name in LIBRARY_FAULTS:
-        return library_control(source, name)
+        return library_control(source, name, counts=counts)
     if name not in TOKEN_CONTROLS:
         raise Failure("unknown rewrite control")
     before, after = TOKEN_CONTROLS[name]
@@ -407,8 +407,8 @@ class BCPlugin(KernelPlugin):
     def certification_judge(self, result, counts, *, threshold=64):
         return judge(result, counts, threshold=threshold)
 
-    def certification_control(self, source, name):
-        return control(source, name)
+    def certification_control(self, source, name, *, counts=None):
+        return control(source, name, counts=counts)
 
     def native_output_limit(self, vertices):
         # Up to 9 significant digits, sign, exponent and separator per score.

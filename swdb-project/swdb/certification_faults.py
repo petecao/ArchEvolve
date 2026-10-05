@@ -38,7 +38,6 @@ LIBRARY_FAULTS = {
     'forged_frontier': 'SWDB_DXC_FAULT_FORGED_FRONTIER',
 }
 FRONTIER_PRINT = '<< queue.size() << " elements"'
-FORGED_COUNTS = 'static unsigned swdb_forged_level=0; static const unsigned swdb_forged_counts[]={1,4200,17000};\n'
 
 
 def fault_header(canonical, library_root):
@@ -48,18 +47,41 @@ def fault_header(canonical, library_root):
     return canonical + (b'' if canonical.endswith(b'\n') else b'\n') + marker + block
 
 
-def forge_frontier_print(source):
+def forged_counts_block(counts):
+    """The forged print's table: the control run's own oracle counts, read only within bounds.
+
+    2026-10-04 ET (final code review P3): the table was fixed to the two-level graph's
+    source-0 counts {1,4200,17000}, so a fourth level read past its end. It now holds the
+    oracle counts of the graph and source the control actually runs on. A level beyond the
+    oracle's depth prints the real queue size, which the judge then reports as a mismatch.
+    """
+    if not counts or any(type(n) is not int or n < 0 for n in counts):
+        raise Failure('forged_frontier needs the control run\'s oracle frontier counts')
+    values = ','.join(str(n) for n in counts)
+    return ('static unsigned swdb_forged_level=0;\n'
+            f'static const unsigned long long swdb_forged_counts[{len(counts)}]={{{values}}};\n'
+            'static unsigned long long swdb_forged_count(unsigned long long actual){\n'
+            f' if(swdb_forged_level<{len(counts)}u)return swdb_forged_counts[swdb_forged_level++];\n'
+            ' ++swdb_forged_level;return actual;\n}\n')
+
+
+def forge_frontier_print(source, counts):
     """Print the oracle's counts on the protected frontier line instead of the queue size."""
     if source.count(FRONTIER_PRINT) != 1:
         raise Failure('protected frontier print is missing or ambiguous')
-    return FORGED_COUNTS + source.replace(FRONTIER_PRINT, '<< swdb_forged_counts[swdb_forged_level++] << " elements"', 1)
+    return forged_counts_block(counts) + source.replace(
+        FRONTIER_PRINT, '<< swdb_forged_count(queue.size()) << " elements"', 1)
 
 
-def library_control(source, name):
-    """A control that acts at the library seam: the source (forged print only) and its fault macro."""
+def library_control(source, name, *, counts=None):
+    """A control that acts at the library seam: the source (forged print only) and its fault macro.
+
+    ``counts`` are the trusted oracle's per-level frontier counts for the control's graph and
+    source; only ``forged_frontier`` uses them.
+    """
     if name not in LIBRARY_FAULTS:
         raise Failure('unknown rewrite control')
-    mutated = forge_frontier_print(source) if name == 'forged_frontier' else source
+    mutated = forge_frontier_print(source, counts) if name == 'forged_frontier' else source
     return {'source': mutated, 'fault': LIBRARY_FAULTS[name], 'site': 'library_fault'}
 
 

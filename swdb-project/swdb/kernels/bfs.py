@@ -108,9 +108,9 @@ class BFSPlugin(KernelPlugin):
         from swdb.certification import judge_bfs
         return judge_bfs(result, counts, threshold=threshold)
 
-    def certification_control(self, source, name):
+    def certification_control(self, source, name, *, counts=None):
         from swdb.certification import _rewrite_control
-        return _rewrite_control(source, name)
+        return _rewrite_control(source, name, counts=counts)
 
     def native_output_limit(self, vertices):
         return vertices * 24 + 4096

@@ -74,7 +74,7 @@ def test_bc_forward_pass_rewrite_replaces_only_the_scalar_pbfs():
     instrumented = bc.instrument_source(source)
     assert 'swdb_certification_frontier(queue);' in instrumented and '#include "MAA.hpp"' not in instrumented
     for name in bc.CONTROLS:
-        assert bc.control(instrumented, name) != instrumented
+        assert bc.control(instrumented, name, counts=[1, 2]) != instrumented
     with pytest.raises(Failure):
         bc.instrument_source(source.replace(bc.FRONTIER_TEXT, 'std::cout << queue.size();'))
 
