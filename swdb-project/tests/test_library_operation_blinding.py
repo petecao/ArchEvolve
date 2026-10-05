@@ -57,7 +57,7 @@ def _certify(lib, records, runs, entry, profile, version):
 
 def _no_scan(monkeypatch):
     from swdb import library_operation_blinding
-    monkeypatch.setattr(library_operation_blinding, "scan_sources", lambda sources: {})
+    monkeypatch.setattr(library_operation_blinding, "scan_sources", lambda sources, primitives=None: {})
 
 
 # --- attack 1: an agent-authored control prints the rejection instead of containing the defect ------
@@ -356,6 +356,11 @@ def test_relabel_certifies_under_1_2_with_the_call_in_a_separate_process(tmp_pat
     record = _certify(lib, records, tmp_path / "runs", *RELABEL, None)
     assert record["command"]["version"] == "1.2" == library_operations.VERSION
     assert record["verdict"] == "certified", record["negative_controls"]
+    # 2026-10-05 ET (review fixes C10, ADR 0008): its own version field, and plain C++ on the host is measured.
+    assert record["command"]["library_operation_version"] == "1.2" and record["command"]["family"] == "library_operation"
+    assert record["evidence_basis"] == "measured"
+    assert {"swdb/certification_isolation.py", "swdb/certification_faults.py"} <= {
+        row["path"] for row in record["command"]["sources"]}
     isolation = record["command"]["isolation"]
     assert set(isolation["process_split"]) == {"evaluator", "candidate"}
     for build in isolation["binaries"].values():

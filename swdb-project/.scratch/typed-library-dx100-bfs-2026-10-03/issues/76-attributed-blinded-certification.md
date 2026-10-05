@@ -1,7 +1,7 @@
 # 76 — Certify 1.4: blinded controls, attributed rejections, a trusted frontier ledger, aggregate feedback
 
 Created: 2026-10-05 12:13 ET (from the open items of ticket 70)
-Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-05 13:25 ET (resolved); 2026-10-05 14:21 ET (the open library-operation item is addressed by ticket 77)
+Updated: 2026-10-05 17:45 ET (version-label drift addendum); 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-05 14:21 ET (the open library-operation item is addressed by ticket 77); 2026-10-05 13:25 ET (resolved)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 70
@@ -158,3 +158,26 @@ agent-synthesized bodies. It still classifies a control's abort by the printed l
 `SWDB_PRESERVATION_FAIL:frame_violation` (`swdb/extensa/synthesis/certify.py` `classify_abort`).
 Its positive verdict compares output bytes, which is sound. A follow-up ticket should give its
 controls the same record-channel treatment.
+
+## Addendum: version-label drift (2026-10-05 17:45 ET, code review)
+
+Agent-decided under Yan-Ru's delegation; revisable. No record is edited.
+
+Two behavior changes kept the label "1.4":
+- **`certification.b7954f4df9dd4e228fb12437b845f190`** (ticket 75) says command 1.4, but it ran the
+  1.3-isolation native path: the ticket 75 branch at 6e1fe61 numbered that path "1.4" before this
+  ticket's 1.4 was merged (its `sources_sha256` `06fe4cc5…` is what 6e1fe61's own code records).
+  Its procedure is native 1.3.
+- **Commit 93a2a94** (ticket 78) renamed the record files of DX100 1.4 runs from the cell or control
+  name (`<log>.record`, so the descriptor's path named the fault) to `run-<nonce>.record`, without a
+  version change. DX100 1.4 records with `sources_sha256` from c2fb788 (`29f3bcab…`, this ticket's
+  re-certifications), 9490d57, 537818e, be156e8, 8c08fe6, 12ec6fe, ce6e6e9 or 9e267fd used cell-named
+  files. The same commit added the DX100 directive rule to 1.5, whose prototype records from 12ec6fe,
+  ce6e6e9 and 9e267fd lack it.
+
+From 2026-10-05 the labels are disambiguated, not rewritten: `swdb.certification_procedures.classify`
+maps each old record to the procedure it ran through `LEGACY_ALIASES`, keyed by family, label and
+`sources_sha256` (computed from each commit's own code). Going forward any behavior change gets a new
+version: each version's files have a frozen manifest digest in the version table, and
+`tests/test_certification_procedures.py` fails when they change without a table change. Ticket 78
+records the rest of the review fixes.

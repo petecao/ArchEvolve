@@ -1,7 +1,7 @@
 # 68 — knob_range and schedule_range: make the contracts' named checks enforceable
 
 Created: 2026-10-04 21:35 ET (by the final code review, 2026-10-04, requested known issue 3)
-Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-04 21:35 ET (resolved)
+Updated: 2026-10-05 17:40 ET (erratum: knob_range read only SWDB_KNOB_<NAME>; fixed in certify 1.6); 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-04 21:35 ET (resolved)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** None — can start immediately
@@ -108,3 +108,49 @@ identity is unchanged.
   feedback 40, Extensa (campaign, targets, selection, budgets, boundary, machinery, library
   operations) 123, library index/submit/typed library and format docs 112, all passed. `swdb validate`:
   524 records valid.
+
+## Erratum (2026-10-05 17:40 ET, spec review C4)
+
+Agent-decided under Yan-Ru's delegation; revisable. Old records are not edited.
+
+**Defect.** `knob_range` (rules v1, certify 1.2-1.5) probed only the campaign spelling
+`SWDB_KNOB_<NAME>`. The promoted DX100 patches spell their knobs `SWDB_FRONTIER_THRESHOLD` and
+`SWDB_CHUNK_SIZE` (`library/dx100/peter-section5.patch` lines 18-19, `library/dx100/bc-forward-pass.patch`
+line 26). For them v1 never saw the assignment and recorded the contract default, so a ticket 20 tree
+with `#define SWDB_FRONTIER_THRESHOLD 0` passed `knob_range` as "64, contract_default". The
+`knob_out_of_range` control defined `SWDB_KNOB_FRONTIER_THRESHOLD 0`, which that code never reads, so
+the control was rejected without changing the run. The table above ("keep the contract defaults (64,
+tile size, dynamic, 1)") reports what v1 recorded, not what the patches assign.
+
+**Fix: certify 1.6 (the new default), legality rules v2** (`swdb/certification_legality.py`; 1.3-1.5
+keep v1 unchanged, so their records keep their meaning):
+- every declared spelling of a knob (`SWDB_KNOB_<NAME>`, `SWDB_<NAME>`) is probed, and the value comes
+  from the spellings the candidate's code uses; a spelling that appears only in its own
+  `#ifndef`/`#define`/`#undef` is not used;
+- a knob with no used spelling is recorded `unverified`, never the default; for the knob whose clause
+  names `knob_range` (frontier_threshold) that fails the check; used spellings that disagree fail it;
+- `knob_out_of_range` sets every spelling the candidate uses;
+- `schedule_out_of_range` also mutates `_Pragma("omp ... for ...")` operators (spec review C24): a
+  candidate whose worksharing loops are all `_Pragma` no longer aborts the certification.
+
+Regression tests (`tests/test_certification_legality.py`): a threshold of 0 in ticket 20's spelling is
+rejected by `knob_range` (unit and a full certify 1.6 run: every cell `knob_range`, value 0 from
+`SWDB_FRONTIER_THRESHOLD`); unverified knobs; disagreeing spellings; the v2 control; `_Pragma`
+mutation (v1 still aborts on a `_Pragma`-only source); a full 1.6 certification of ticket 20 with both
+TDStep loops written as `_Pragma` (certified, `schedule_out_of_range` rejected by `schedule_range`).
+
+**Re-check of the certificates that report knob values** (Mac, 2026-10-05, 1.5 = v1 vs 1.6 = v2 on the
+same trees; no committed certificate reports knob values: the committed contract certificates are
+command 1.0, before this ticket):
+
+| Input | frontier_threshold v1 -> v2 | chunk_size v1 -> v2 | schedule, granularity v1 -> v2 | Verdict |
+|---|---|---|---|---|
+| Ticket 20 (BFS) | 64 contract_default -> **64 assignment** (`SWDB_FRONTIER_THRESHOLD`) | tile size contract_default -> **assignment** (`SWDB_CHUNK_SIZE`) | dynamic, 1 contract_default -> **unverified** | certified, unchanged |
+| Ticket 42 (BC) | same as ticket 20 | same | same | certified, unchanged |
+| a7 `it4.kronecker.a2` | 1 assignment -> 1 assignment | 16384/1024 assignment, unchanged | -> unverified | certified, unchanged |
+| a7 `it8.uniform_random.a1` | 1 assignment -> 1 assignment | unchanged | -> unverified | certified, unchanged |
+
+So the recorded values change for ticket 20 and BC (source `contract_default` becomes `assignment`;
+the value 64 was right by luck of the default) and the schedule rows of all four become `unverified`
+(their clause is enforced by `schedule_range`, which is unchanged). No verdict changes. Evidence:
+[`evaluation/certification-review-fixes-2026-10-05.json`](../evaluation/certification-review-fixes-2026-10-05.json).

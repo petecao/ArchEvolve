@@ -360,9 +360,15 @@ class BCPlugin(KernelPlugin):
     # Candidate certification (ticket 42).
     certification_source = BC_SOURCE
     certification_snapshot = "bc-dx100-scalar-only-20261003-a1.source"
-    certification_driver = "dx100/certification/bc_driver.inc"   # ticket 70
-    certification_driver_v14 = "dx100/certification/v1_4/bc_driver.inc"   # ticket 76
-    certification_driver_v15 = "dx100/certification/v1_5/bc_driver.inc"   # ticket 78
+    # The evaluator-owned driver of each candidate certify version (2026-10-05 ET, review fix F10);
+    # the per-version attributes are the earlier names, kept as aliases.
+    certification_drivers = {"1.3": "dx100/certification/bc_driver.inc",          # ticket 70
+                             "1.4": "dx100/certification/v1_4/bc_driver.inc",     # ticket 76
+                             "1.5": "dx100/certification/v1_5/bc_driver.inc",     # ticket 78
+                             "1.6": "dx100/certification/v1_5/bc_driver.inc"}
+    certification_driver = certification_drivers["1.3"]
+    certification_driver_v14 = certification_drivers["1.4"]
+    certification_driver_v15 = certification_drivers["1.5"]
     # Ticket 76: BC claims address PBFS's private depths array, which Brandes does not return.
     certification_claims_address_result = False
     certification_result_kind = "f32"

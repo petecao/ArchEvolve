@@ -23,7 +23,7 @@ Controls now attach to the library side:
 * Token-matched sites. A kernel control with no library seam (BC-L1 ``stale_depth_hint``)
   matches a C++ token sequence, insensitive to whitespace, line breaks and comments.
 
-Until certify 1.2, ``forged_frontier`` also forged the protected frontier print to the oracle's
+Until certify 1.2, ``forged_frontier`` also forged the protected frontier print to the reference
 counts, so that only the trusted queue inspection could reject it. From 1.3 no verdict is read
 from printed output, so the print is left alone and the fault is a pure library fault.
 
