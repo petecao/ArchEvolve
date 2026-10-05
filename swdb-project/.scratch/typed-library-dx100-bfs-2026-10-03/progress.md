@@ -1,12 +1,13 @@
 # Implementation and evaluation progress
 
-Updated: 2026-10-05 17:25 ET (current status of tickets 01–78; everything below "Status on 2026-10-03" is
+Updated: 2026-10-05 17:25 ET (current status of tickets 01–79; everything below "Status on 2026-10-03" is
 historical); 2026-10-03 19:36 ET.
 
 ## Current status (2026-10-05 17:25 ET)
 
-- **Tickets 01–78:** 72 resolved, 5 ready-for-human, 1 wontfix (31). The ready-for-human ones are Yan-Ru's:
-  02 (Peter confirms the license), 30, 37, 59 and 60 (messages the agent drafted; Yan-Ru sends).
+- **Tickets 01–79:** 72 resolved, 6 ready-for-human, 1 wontfix (31). The ready-for-human ones are Yan-Ru's:
+  02 (Peter confirms the license), 30, 37, 59 and 60 (messages the agent drafted; Yan-Ru sends) and 79
+  (ratify certify 1.5's behavior changes).
 - **Latest results.** Native campaign a8 (ticket 56): uniform `gain` 1.457 [1.450, 1.472], Kronecker
   `inconclusive`. Its best is certified under contract `contract.bfs_tdstep_frontier_staging` and re-evaluated
   under a team protocol: 1.454 [1.442, 1.464] on uniform22 (ticket 75). Certify 1.5 and library-operation

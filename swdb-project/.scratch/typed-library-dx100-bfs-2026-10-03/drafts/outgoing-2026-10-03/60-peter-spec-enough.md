@@ -1,6 +1,7 @@
 # Draft: "Is the specification enough?" finding for Peter
 
 Created: 2026-10-04 ET
+Updated: 2026-10-05 18:20 ET (spec review C23: input A was the spec plus the lowering header, stated in the text and table)
 Status: draft (Yan-Ru sends manually; the agent never sends)
 To: Peter
 Ticket: [60](../../issues/60-send-peter-spec-enough-finding.md) (from ticket [58](../../issues/58-spec-enough-experiment.md))
@@ -22,15 +23,19 @@ sessions ran one at a time on mbit10. Each input added documents:
   (`swdb-project/library/rewrite_contracts/bfs_read_offload.yaml`, branch `yanrujhou_main`,
   commit `f62401c`).
 
-Every input also got the scalar BFS source and our lowering header
-(`swdb-project/library/dx100/dxc_lowering.hpp`, commit `f62401c`). Our working rewrite was hidden.
+Every input also got the scalar BFS source, our lowering header
+(`swdb-project/library/dx100/dxc_lowering.hpp`, commit `f62401c`) and a short build note;
+without them no rewrite could build or be scored. So input A was your spec plus an executable
+intrinsic interface, not the spec alone: the header's API already encodes part of the
+per-thread contexts and the session lifecycle (our contract's E1 and E3). Our working rewrite
+was hidden.
 `swdb certify` scored each rewrite on the DX100 strict functional model: verifier, per-level
 frontier sizes, the accelerated-chunk witness and 16 negative controls. As a check, our
 working rewrite certified through the same path (10/10 cells, 16/16 controls).
 
 | Input | Certified | Controls rejected | Patch applied |
 |---|---:|---:|---:|
-| A: spec | 0/3 | 0/48 | 2/3 |
+| A: spec (+ lowering header) | 0/3 | 0/48 | 2/3 |
 | B: spec + draft | 0/3 | 1/48 | 3/3 |
 | C: spec + draft + contract | 0/3 | 0/48 | 1/3 |
 

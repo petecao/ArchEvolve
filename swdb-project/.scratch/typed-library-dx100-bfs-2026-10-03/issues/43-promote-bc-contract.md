@@ -1,6 +1,7 @@
 # 43 — Yan-Ru promotes the derived BC contract
 
 Created: 2026-10-03
+Updated: 2026-10-05 18:30 ET (addendum: attribution correction, stale hashed note)
 **Type:** task
 **Status:** resolved
 **Blocked by:** 42
@@ -26,3 +27,17 @@ Resolved 2026-10-03 23:31 ET. Agent-reviewed and promoted under Yan-Ru's 2026-10
 - **Promotion:** `swdb promote contract.bc_read_offload` wrote `records/reviews/review.contract.bc_read_offload.30a3747420b3.yaml` for content `969276431d91…` with evidence `certification.1e389a959ffb4ff9bfdcf4cea9eace06`. State is now shared/certified, and `swdb validate` reports 489 valid records.
 - **Follow-ups (minor):** add an L4 control that mutates the successor-bit edge index or the path-count source; clause `negative_control.check` names are not matched against the observed rejection reasons (inherited from the BFS contract).
 - **Codex second opinion:** not obtained. `codex exec` cannot start inside the agent sandbox (Operation not permitted).
+
+## Addendum 2026-10-05 18:30 ET (spec review C1, C20)
+
+- **Attribution.** This review and promotion were performed by an agent under Yan-Ru's 2026-10-03 delegation,
+  but `review.contract.bc_read_offload.30a3747420b3` names Yan-Ru as reviewer with provenance `human_report`.
+  The record is unchanged; the attribution correction
+  `review.correction.review.contract.bc_read_offload.30a3747420b3.11a0ec69d6c9` states the agent review, the
+  delegation and the review document, and `swdb get contract.bc_read_offload` reports it. Listed in the spec's
+  "Awaiting ratification" section.
+- **Stale hashed text.** `library/rewrite_contracts/bc_read_offload.yaml` lines 304–305 (`specification_notes`)
+  still say the contract is "experimental until Yan-Ru reviews it (ticket 43)". The note is part of the entry's
+  hashed content, so editing it would change the content sha256 and void the certification and review. It is
+  to be corrected at the next revision of the contract.
+
