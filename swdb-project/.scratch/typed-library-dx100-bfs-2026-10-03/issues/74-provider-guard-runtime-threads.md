@@ -1,7 +1,7 @@
 # 74 — The guard's thread cap bounds the model's work; a stop for the harness's own limit is uncounted
 
 Created: 2026-10-05 10:15 ET (from campaign `extensa-native-bfs-20261005-a8`, ticket 56 a8 result)
-Updated: 2026-10-05 10:45 ET (resolved)
+Updated: 2026-10-05 12:00 ET (cpu_escape test fixed; mbit10 re-run pending); 2026-10-05 10:45 ET (resolved)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** —
@@ -91,3 +91,18 @@ Resolved 2026-10-05 10:45 ET by the agent (worktree branch, not pushed; Mac only
   before the next real campaign.
 - Not changed: `swdb submit` (`provider_workspace.run`) gets the new caps but keeps its own failure accounting.
 - The a8 records are unedited; ticket 56's a8 result carries the erratum.
+
+### Follow-up 2026-10-05 12:00 ET: the `cpu_escape` test, not the guard, was wrong
+
+The coordinator's mbit10 run of `tests/test_provider_guard.py` in socket lane 0 (on `6b4372b`) gave 14 passed
+and 1 failed. In `cpu_escape`, the fixture ran to its own completion and failed with "rewrite interpretation must
+produce actual edits and explain them", so the guard never saw an escape. The fixture widened its affinity to
+`range(os.cpu_count())`. Under Landlock the provider cannot read the host's CPU list, so `os.cpu_count()` most
+likely fell back to the process's own one-CPU affinity (or failed), and the "escape" stayed on its lane CPU.
+Outside the guard, a forked child under `numactl --cpunodebind=0` widens to all 64 CPUs (checked on mbit10), so a
+real escape is possible and the guard's check is needed. The guard's order is unchanged: the lane check runs on
+every poll, before the interpretation is read.
+
+Fix (commit `227a61d`): the test names one CPU outside the observer's lane in the plan, and the child sets
+exactly that CPU. The test now asserts that the guard's reason names that CPU, so a vacuous premise cannot pass
+again. The re-run on mbit10 is pending Yan-Ru's approval for remote writes (clone, lane job).
