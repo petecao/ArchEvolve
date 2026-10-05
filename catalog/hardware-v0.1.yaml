@@ -1,5 +1,5 @@
 catalog_id: archevolve-hardware
-revision: 0.1.7
+revision: 0.1.8
 format: hardware-catalog-v0.1
 status: research_reviewed_prototype
 project_selections:
@@ -392,6 +392,23 @@ sources:
     document_type: conference_paper
     locator_basis: One-based PDF pages; sections, figures, tables and algorithms. Proceedings pp. 543–557.
     sha256: 4028d0f2742286ae436e15a9536a0181091563b4e0a7d69b41fe197eb85683e5
+  axi-pack-coalescer:
+    title: 'Near-Memory Parallel Indexing and Coalescing: Enabling Highly Efficient Indirect Access for
+      SpMV'
+    edition: Official DATE2024 conference archive PDF
+    url: https://past.date-conference.com/proceedings-archive/2024/DATA/381_pdf_upload.pdf
+    doi: 10.23919/DATE58400.2024.10546797
+    document_type: conference_paper
+    conference: DATE
+    publication_year: 2024
+    locator_basis: One-based PDF pages in the official six-page DATE2024 conference archive.
+    sha256: dea5a1a457aeeb7a45ea839de475c7da8d6c7896f456c9b37a3ba19483b97c9a
+    retrieval_date: '2026-09-30'
+    reviewed_on: '2026-10-05'
+    provenance_notes:
+    - Paper-scoped required SELL staging mapping; DATE2023 direct-vector integration is separate.
+    - Public adjacent Ara transport modules do not authenticate this publication-specific coalescer, staging
+      driver or runnable ABI.
 claims:
   maple-api:
     source_refs:
@@ -1727,6 +1744,96 @@ claims:
     evidence_kind: paper_specification
     limitations:
     - Excluded from this base COBRA mapping; its reduction unit cannot be inherited by base COBRA.
+  axi24-index:
+    statement: Wide index fetches feed N parallel index queues and dependent narrow element request generation.
+    source_refs:
+    - axi-pack-coalescer
+    locator: PDF p.2 §II-A Fig.2a
+    evidence_kind: paper_specification
+    limitations:
+    - Publication-scoped evidence; no runnable binding or independent reproduction.
+  axi24-window:
+    statement: W oldest narrow requests form a parallel comparison window; N,W powers of two, W>=N; single
+      CSHR aggregates same-block hits.
+    source_refs:
+    - axi-pack-coalescer
+    locator: PDF p.2 §II-B Fig.2b
+    evidence_kind: paper_specification
+    limitations:
+    - Publication-scoped evidence; no runnable binding or independent reproduction.
+  axi24-association:
+    statement: Hitmap and per-position offset queues associate wide responses with narrow consumers; W element
+      queues and downsizer enforce original order before packing.
+    source_refs:
+    - axi-pack-coalescer
+    locator: PDF pp.2–3 §II-B
+    evidence_kind: paper_specification
+    limitations:
+    - Publication-scoped evidence; no runnable binding or independent reproduction.
+  axi24-progress:
+    statement: Regulator timeout forwards an incomplete window; separate watcher watchdog issues a pending
+      coalesced wide request.
+    source_refs:
+    - axi-pack-coalescer
+    locator: PDF p.2 §II-B
+    evidence_kind: paper_specification
+    limitations:
+    - Publication-scoped evidence; no runnable binding or independent reproduction.
+  axi24-staging:
+    statement: CVA6 programs L2-SPM contiguous/indirect staging; prefetcher AXI-Pack path is distinct from
+      Ara/CVA6 ordinary AXI4 consumer access.
+    source_refs:
+    - axi-pack-coalescer
+    locator: PDF p.3 §II-C Fig.2c
+    evidence_kind: paper_specification
+    limitations:
+    - Publication-scoped evidence; no runnable binding or independent reproduction.
+  axi24-tiles:
+    statement: Six L2 arrays hold slice pointers, results, double-buffered nonzeros and indexed vectors;
+      execution interrupts on pointer depletion or full result array and signals refresh.
+    source_refs:
+    - axi-pack-coalescer
+    locator: PDF p.3 §II-C
+    evidence_kind: paper_specification
+    limitations:
+    - Publication-scoped evidence; no runnable binding or independent reproduction.
+  axi24-reference:
+    statement: 'Reference queue depths: index 256, up/down 2, hitmap 128, offsets 2048/W; on-chip storage
+      27 KB at W=256 and 16-lane VPC with 384 KB L2 (paper notation). The integrated interfaces are 512
+      bits wide.'
+    source_refs:
+    - axi-pack-coalescer
+    locator: PDF p.3 section II-C and section III Table I
+    evidence_kind: paper_specification
+    limitations:
+    - Publication-scoped evidence; no runnable binding or independent reproduction.
+  axi24-types:
+    statement: Evaluated workloads use 32-bit indices and 64-bit nonzeros/metadata, SELL with 32 rows per
+      slice.
+    source_refs:
+    - axi-pack-coalescer
+    locator: PDF p.3 §III
+    evidence_kind: paper_specification
+    limitations:
+    - Publication-scoped evidence; no runnable binding or independent reproduction.
+  axi24-scope-required:
+    statement: 'Required staging classification is an interpretation of the actual dataflow: computation
+      consumes operands staged into L2; no general optional-prediction path is claimed.'
+    source_refs:
+    - axi-pack-coalescer
+    locator: PDF p.3 §II-C; this report Required staging section
+    evidence_kind: research_inference
+    limitations:
+    - Publication-scoped evidence; no runnable binding or independent reproduction.
+  axi24-scope-unknown:
+    statement: Exact host ready/drain/register/result-lifetime/translation ABI is not established by inspected
+      evidence.
+    source_refs:
+    - axi-pack-coalescer
+    locator: PDF pp.2–3 §II versus public artifact inventory in this report
+    evidence_kind: research_inference
+    limitations:
+    - Publication-scoped evidence; no runnable binding or independent reproduction.
 mechanism_families:
 - id: queue-latency-tolerance
   name: Queue-backed asynchronous access
@@ -1750,6 +1857,9 @@ mechanism_families:
 - id: cobra-hierarchical-tuple-binning
   description: Cacheline tuple collection and hierarchical repartitioning for software propagation blocking;
     no inherited atomics.
+- id: axi-pack-required-l2-staging
+  description: Programmed required operand staging into L2 with bounded request-window block coalescing;
+    no inherited capabilities or generic gather substitution.
 decision_questions:
 - id: operation-result
   question: Is the requested result a fetched value, update success, old value, reduction, or only a cache
@@ -5787,3 +5897,219 @@ designs:
     claim_refs:
     - cobra-bottleneck
     - cobra-drain
+
+- id: axi-pack-date2024-sell-required-l2-gather
+  name: DATE2024 SELL SpMV required indexed-vector staging
+  revision: DATE2024 official paper; artifact unauthenticated
+  record_kind: mapping
+  summary: Programmed required indirect read staging into L2 scratchpad, followed by ordinary AXI4 Ara
+    consumer loads. Scope is the published SELL SpMV path.
+  mechanism_refs:
+  - axi-pack-required-l2-staging
+  source_refs:
+  - axi-pack-coalescer
+  operations:
+  - id: indexed-vector-staging
+    operation: read
+    subtype: sell_required_l2_staging
+    execution_role: execute
+    address_patterns:
+    - indirect
+    support: paper_specified
+    claim_refs:
+    - axi24-index
+    - axi24-staging
+    - axi24-scope-required
+    result:
+      form: Indexed-vector operand stream densely staged in configured L2 scratchpad arrays; transport
+        returns original narrow-request order.
+      old_value: not_applicable
+      validity: Required operands; exact host-visible per-tile readiness event and padded-lane handling
+        unknown.
+      claim_refs:
+      - axi24-association
+      - axi24-staging
+    ordering:
+      scope: Adapter narrow read return sequence
+      description: Restores original narrow-request ordering after block coalescing; no global memory
+        or arbitrary cross-ID ordering guarantee.
+      claim_refs:
+      - axi24-association
+    completion:
+      event: Transport responses and application pointer-depleted/result-full refresh are described; exact
+        gather-ready/final-drain event not exposed.
+      visibility: Destination-ready, software barrier, final output visibility and consumer-release ABI
+        unknown.
+      claim_refs:
+      - axi24-progress
+      - axi24-tiles
+      - axi24-scope-unknown
+    realization:
+      kind: mapping_role
+      description: CVA6 configures L2 staging and Ara consumes it over ordinary AXI4. CPU/VPC multiply-add,
+        output ownership and result drain remain outside this gather operation.
+      claim_refs:
+      - axi24-staging
+      - axi24-tiles
+    datatype_notes: 32-bit indices and 64-bit nonzeros/metadata are evaluated widths; do not infer all
+      signedness, element/index type domains or arithmetic safety.
+    limitations:
+    - No general scatter, duplicate-write ordering, coherent atomics or inherited DATE2023 ISA path.
+    - No authenticated publication-specific RTL or staging driver ABI.
+  requirements:
+  - id: tile-lifetime
+    description: Resolve first/final tile readiness, overlap epochs, result-full drain, consumer release
+      and buffer reuse.
+    scope: Published SELL SpMV staged-read mapping
+    claim_refs:
+    - axi24-tiles
+    - axi24-scope-unknown
+    verification: unknown
+  - id: address-service
+    description: Resolve actual index encoding, address bounds/overflow, source immutability/aliases,
+      translation/fault/cache visibility.
+    scope: Published SELL SpMV staged-read mapping
+    claim_refs:
+    - axi24-index
+    - axi24-scope-unknown
+    verification: unknown
+  - id: credits-and-order
+    description: Resolve full queue reservation, partial-window/warp rollover, final drain, response IDs/interleaving
+      and backpressure.
+    scope: Published SELL SpMV staged-read mapping
+    claim_refs:
+    - axi24-window
+    - axi24-association
+    - axi24-progress
+    verification: unknown
+  - id: artifact-binding
+    description: Authenticate RTL, control registers, driver and custom DRAMSys ABI to publication revision.
+    scope: Published SELL SpMV staged-read mapping
+    claim_refs:
+    - axi24-scope-unknown
+    verification: unknown
+  parameters:
+  - id: target_block_bits
+    unit: bits
+    state: fixed_reference
+    value: 512
+    domain: null
+    claim_refs:
+    - axi24-reference
+    notes: Evaluated reference only; not selected geometry or complete legal domain.
+  - id: reference_window
+    unit: narrow requests
+    state: fixed_reference
+    value: 256
+    domain: null
+    claim_refs:
+    - axi24-reference
+    notes: Evaluated reference only; not selected geometry or complete legal domain.
+  - id: hitmap_depth
+    unit: hitmap FIFO entries
+    state: fixed_reference
+    value: 128
+    domain: null
+    claim_refs:
+    - axi24-reference
+    notes: Evaluated reference only; not selected geometry or complete legal domain.
+  - id: l2_size
+    unit: KB (paper notation)
+    state: fixed_reference
+    value: 384
+    domain: null
+    claim_refs:
+    - axi24-reference
+    notes: Evaluated reference only; not selected geometry or complete legal domain. The paper label is
+      retained; exact byte conversion is not established here.
+  - id: request_ports_N
+    unit: narrow request ports
+    state: unknown
+    value: null
+    domain: null
+    claim_refs: []
+    notes: 'Necessary paper conditions only: N,W are powers of two, W>=N; evaluated N and full legal domain
+      unknown.'
+  - id: window_W
+    unit: narrow requests
+    state: open
+    value: null
+    domain: null
+    claim_refs:
+    - axi24-window
+    notes: Necessary coupled power-of-two constraints are not a complete legal parameter domain; offsets
+      reference depth 2048/W adds unresolved legality constraints.
+  interface:
+    software_supplies: CVA6 configures contiguous/indirect L2-SPM staging for SELL tiles. Source/destination
+      register/descriptor encoding unavailable.
+    invocation: Programmed first-tile staging followed by overlapped later tile refill; no invented function
+      or register layout.
+    outputs: Required indexed-vector values in L2 for ordinary Ara loads. SpMV arithmetic, result output
+      and final drain are separate responsibilities.
+    claim_refs:
+    - axi24-staging
+    - axi24-tiles
+    - axi24-scope-unknown
+  internal_mechanisms:
+  - id: index-parallelism
+    kind: dependency_tracking
+    status: described
+    description: Wide index fetches feed N parallel index queues and dependent narrow element request
+      generation.
+    claim_refs:
+    - axi24-index
+  - id: window-warp
+    kind: coalescing
+    status: described
+    description: W oldest narrow requests form a parallel comparison window; N,W powers of two, W>=N;
+      single CSHR aggregates same-block hits.
+    claim_refs:
+    - axi24-window
+  - id: return-order
+    kind: reordering
+    status: described
+    description: Hitmap and per-position offset queues associate wide responses with narrow consumers;
+      W element queues and downsizer enforce original order before packing.
+    claim_refs:
+    - axi24-association
+  - id: partial-progress
+    kind: completion
+    status: described
+    description: Regulator timeout forwards an incomplete window; separate watcher watchdog issues a pending
+      coalesced wide request.
+    claim_refs:
+    - axi24-progress
+  - id: staged-tiles
+    kind: buffering
+    status: described
+    description: Six L2 arrays hold slice pointers, results, double-buffered nonzeros and indexed vectors;
+      execution interrupts on pointer depletion or full result array and signals refresh.
+    claim_refs:
+    - axi24-tiles
+  - id: host-ready-drain-abi
+    kind: completion
+    status: unknown
+    description: null
+    claim_refs: []
+  limitations:
+  - Only the DATE2024 paper-scoped mapping; not DATE2023 direct vector-register integration.
+  - Parameter domains, translations/coherence, final partial/drain, faults and result lifetime remain
+    open.
+  - No implementation or performance certificate.
+  performance_hypotheses:
+  - id: bounded-block-coalescing
+    description: Requests sharing a DRAM block within the finite W window may reduce transferred blocks
+      while L2 staging overlaps vector computation. This is a mechanism hypothesis, not a cross-design
+      ranking.
+    workload_conditions:
+    - Published tiled SELL SpMV operand staging; configured L2 arrays and source lifetime must hold.
+    - Enough same-block requests inside W and overlap opportunity for subsequent tile staging.
+    limiting_factors:
+    - Window/FIFO capacity, request diversity, partial-window progress and payload-transfer costs.
+    - Unresolved first/final tile readiness, reuse and result-drain interface.
+    claim_refs:
+    - axi24-window
+    - axi24-association
+    - axi24-staging
+    - axi24-tiles
+    - axi24-scope-unknown

@@ -1,0 +1,266 @@
+{
+  "id": "axi-pack-date2024-sell-required-l2-gather",
+  "name": "DATE2024 SELL SpMV required indexed-vector staging",
+  "revision": "DATE2024 official paper; artifact unauthenticated",
+  "record_kind": "mapping",
+  "summary": "Programmed required indirect read staging into L2 scratchpad, followed by ordinary AXI4 Ara consumer loads. Scope is the published SELL SpMV path.",
+  "mechanism_refs": [
+    "axi-pack-required-l2-staging"
+  ],
+  "source_refs": [
+    "axi-pack-coalescer"
+  ],
+  "operations": [
+    {
+      "id": "indexed-vector-staging",
+      "operation": "read",
+      "subtype": "sell_required_l2_staging",
+      "execution_role": "execute",
+      "address_patterns": [
+        "indirect"
+      ],
+      "support": "paper_specified",
+      "claim_refs": [
+        "axi24-index",
+        "axi24-staging",
+        "axi24-scope-required"
+      ],
+      "result": {
+        "form": "Indexed-vector operand stream densely staged in configured L2 scratchpad arrays; transport returns original narrow-request order.",
+        "old_value": "not_applicable",
+        "validity": "Required operands; exact host-visible per-tile readiness event and padded-lane handling unknown.",
+        "claim_refs": [
+          "axi24-association",
+          "axi24-staging"
+        ]
+      },
+      "ordering": {
+        "scope": "Adapter narrow read return sequence",
+        "description": "Restores original narrow-request ordering after block coalescing; no global memory or arbitrary cross-ID ordering guarantee.",
+        "claim_refs": [
+          "axi24-association"
+        ]
+      },
+      "completion": {
+        "event": "Transport responses and application pointer-depleted/result-full refresh are described; exact gather-ready/final-drain event not exposed.",
+        "visibility": "Destination-ready, software barrier, final output visibility and consumer-release ABI unknown.",
+        "claim_refs": [
+          "axi24-progress",
+          "axi24-tiles",
+          "axi24-scope-unknown"
+        ]
+      },
+      "realization": {
+        "kind": "mapping_role",
+        "description": "CVA6 configures L2 staging and Ara consumes it over ordinary AXI4. CPU/VPC multiply-add, output ownership and result drain remain outside this gather operation.",
+        "claim_refs": [
+          "axi24-staging",
+          "axi24-tiles"
+        ]
+      },
+      "datatype_notes": "32-bit indices and 64-bit nonzeros/metadata are evaluated widths; do not infer all signedness, element/index type domains or arithmetic safety.",
+      "limitations": [
+        "No general scatter, duplicate-write ordering, coherent atomics or inherited DATE2023 ISA path.",
+        "No authenticated publication-specific RTL or staging driver ABI."
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "tile-lifetime",
+      "description": "Resolve first/final tile readiness, overlap epochs, result-full drain, consumer release and buffer reuse.",
+      "scope": "Published SELL SpMV staged-read mapping",
+      "claim_refs": [
+        "axi24-tiles",
+        "axi24-scope-unknown"
+      ],
+      "verification": "unknown"
+    },
+    {
+      "id": "address-service",
+      "description": "Resolve actual index encoding, address bounds/overflow, source immutability/aliases, translation/fault/cache visibility.",
+      "scope": "Published SELL SpMV staged-read mapping",
+      "claim_refs": [
+        "axi24-index",
+        "axi24-scope-unknown"
+      ],
+      "verification": "unknown"
+    },
+    {
+      "id": "credits-and-order",
+      "description": "Resolve full queue reservation, partial-window/warp rollover, final drain, response IDs/interleaving and backpressure.",
+      "scope": "Published SELL SpMV staged-read mapping",
+      "claim_refs": [
+        "axi24-window",
+        "axi24-association",
+        "axi24-progress"
+      ],
+      "verification": "unknown"
+    },
+    {
+      "id": "artifact-binding",
+      "description": "Authenticate RTL, control registers, driver and custom DRAMSys ABI to publication revision.",
+      "scope": "Published SELL SpMV staged-read mapping",
+      "claim_refs": [
+        "axi24-scope-unknown"
+      ],
+      "verification": "unknown"
+    }
+  ],
+  "parameters": [
+    {
+      "id": "target_block_bits",
+      "unit": "bits",
+      "state": "fixed_reference",
+      "value": 512,
+      "domain": null,
+      "claim_refs": [
+        "axi24-reference"
+      ],
+      "notes": "Evaluated reference only; not selected geometry or complete legal domain."
+    },
+    {
+      "id": "reference_window",
+      "unit": "narrow requests",
+      "state": "fixed_reference",
+      "value": 256,
+      "domain": null,
+      "claim_refs": [
+        "axi24-reference"
+      ],
+      "notes": "Evaluated reference only; not selected geometry or complete legal domain."
+    },
+    {
+      "id": "hitmap_depth",
+      "unit": "hitmap FIFO entries",
+      "state": "fixed_reference",
+      "value": 128,
+      "domain": null,
+      "claim_refs": [
+        "axi24-reference"
+      ],
+      "notes": "Evaluated reference only; not selected geometry or complete legal domain."
+    },
+    {
+      "id": "l2_size",
+      "unit": "KB (paper notation)",
+      "state": "fixed_reference",
+      "value": 384,
+      "domain": null,
+      "claim_refs": [
+        "axi24-reference"
+      ],
+      "notes": "Evaluated reference only; not selected geometry or complete legal domain. The paper label is retained; exact byte conversion is not established here."
+    },
+    {
+      "id": "request_ports_N",
+      "unit": "narrow request ports",
+      "state": "unknown",
+      "value": null,
+      "domain": null,
+      "claim_refs": [],
+      "notes": "Necessary paper conditions only: N,W are powers of two, W>=N; evaluated N and full legal domain unknown."
+    },
+    {
+      "id": "window_W",
+      "unit": "narrow requests",
+      "state": "open",
+      "value": null,
+      "domain": null,
+      "claim_refs": [
+        "axi24-window"
+      ],
+      "notes": "Necessary coupled power-of-two constraints are not a complete legal parameter domain; offsets reference depth 2048/W adds unresolved legality constraints."
+    }
+  ],
+  "interface": {
+    "software_supplies": "CVA6 configures contiguous/indirect L2-SPM staging for SELL tiles. Source/destination register/descriptor encoding unavailable.",
+    "invocation": "Programmed first-tile staging followed by overlapped later tile refill; no invented function or register layout.",
+    "outputs": "Required indexed-vector values in L2 for ordinary Ara loads. SpMV arithmetic, result output and final drain are separate responsibilities.",
+    "claim_refs": [
+      "axi24-staging",
+      "axi24-tiles",
+      "axi24-scope-unknown"
+    ]
+  },
+  "internal_mechanisms": [
+    {
+      "id": "index-parallelism",
+      "kind": "dependency_tracking",
+      "status": "described",
+      "description": "Wide index fetches feed N parallel index queues and dependent narrow element request generation.",
+      "claim_refs": [
+        "axi24-index"
+      ]
+    },
+    {
+      "id": "window-warp",
+      "kind": "coalescing",
+      "status": "described",
+      "description": "W oldest narrow requests form a parallel comparison window; N,W powers of two, W>=N; single CSHR aggregates same-block hits.",
+      "claim_refs": [
+        "axi24-window"
+      ]
+    },
+    {
+      "id": "return-order",
+      "kind": "reordering",
+      "status": "described",
+      "description": "Hitmap and per-position offset queues associate wide responses with narrow consumers; W element queues and downsizer enforce original order before packing.",
+      "claim_refs": [
+        "axi24-association"
+      ]
+    },
+    {
+      "id": "partial-progress",
+      "kind": "completion",
+      "status": "described",
+      "description": "Regulator timeout forwards an incomplete window; separate watcher watchdog issues a pending coalesced wide request.",
+      "claim_refs": [
+        "axi24-progress"
+      ]
+    },
+    {
+      "id": "staged-tiles",
+      "kind": "buffering",
+      "status": "described",
+      "description": "Six L2 arrays hold slice pointers, results, double-buffered nonzeros and indexed vectors; execution interrupts on pointer depletion or full result array and signals refresh.",
+      "claim_refs": [
+        "axi24-tiles"
+      ]
+    },
+    {
+      "id": "host-ready-drain-abi",
+      "kind": "completion",
+      "status": "unknown",
+      "description": null,
+      "claim_refs": []
+    }
+  ],
+  "limitations": [
+    "Only the DATE2024 paper-scoped mapping; not DATE2023 direct vector-register integration.",
+    "Parameter domains, translations/coherence, final partial/drain, faults and result lifetime remain open.",
+    "No implementation or performance certificate."
+  ],
+  "performance_hypotheses": [
+    {
+      "id": "bounded-block-coalescing",
+      "description": "Requests sharing a DRAM block within the finite W window may reduce transferred blocks while L2 staging overlaps vector computation. This is a mechanism hypothesis, not a cross-design ranking.",
+      "workload_conditions": [
+        "Published tiled SELL SpMV operand staging; configured L2 arrays and source lifetime must hold.",
+        "Enough same-block requests inside W and overlap opportunity for subsequent tile staging."
+      ],
+      "limiting_factors": [
+        "Window/FIFO capacity, request diversity, partial-window progress and payload-transfer costs.",
+        "Unresolved first/final tile readiness, reuse and result-drain interface."
+      ],
+      "claim_refs": [
+        "axi24-window",
+        "axi24-association",
+        "axi24-staging",
+        "axi24-tiles",
+        "axi24-scope-unknown"
+      ]
+    }
+  ]
+}
