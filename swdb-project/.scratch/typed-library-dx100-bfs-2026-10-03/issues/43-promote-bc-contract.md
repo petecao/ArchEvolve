@@ -26,3 +26,6 @@ Resolved 2026-10-03 23:31 ET. Agent-reviewed and promoted under Yan-Ru's 2026-10
 - **Promotion:** `swdb promote contract.bc_read_offload` wrote `records/reviews/review.contract.bc_read_offload.30a3747420b3.yaml` for content `969276431d91…` with evidence `certification.1e389a959ffb4ff9bfdcf4cea9eace06`. State is now shared/certified, and `swdb validate` reports 489 valid records.
 - **Follow-ups (minor):** add an L4 control that mutates the successor-bit edge index or the path-count source; clause `negative_control.check` names are not matched against the observed rejection reasons (inherited from the BFS contract).
 - **Codex second opinion:** not obtained. `codex exec` cannot start inside the agent sandbox (Operation not permitted).
+- **2026-10-05 17:50 ET (spec review C22):** a current certificate under certify 1.6 is committed beside the
+  1.0 evidence this promotion cites: `certification.1e424fce0b694628959f8275548e05b9` (certified, 10/10,
+  28/28). The promotion record is not changed; see the [ticket 42 addendum](42-bc-certification-and-derived-contract.md).

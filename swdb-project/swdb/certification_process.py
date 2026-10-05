@@ -1,4 +1,4 @@
-"""Candidate certification with the record-keeping in a separate evaluator process (certify 1.5).
+"""Candidate certification with the record-keeping in a separate evaluator process (certify 1.5, 1.6).
 
 Created: 2026-10-05 ET (ticket 78). Scope decided by Yan-Ru 2026-10-05: an engineering refactor
 that moves certification record-keeping out of the candidate's process, plus an overhead
@@ -7,13 +7,13 @@ of scope (ticket 78).
 
 Certify 1.4 (``swdb.certification_blinding``) linked the candidate object, the record writer
 (``record.cc``) and the seams (``seams.cc``) into one binary, so the record descriptor, the run plan,
-the fault logic, the frontier ledger and the strict model's state all lived in the candidate's
+the fault logic, the seam-witness events and the strict model's state all lived in the candidate's
 address space. Certify 1.5 splits the run into two processes:
 
 - **evaluator** (trusted; ``library/dx100/certification/v1_5/evaluator.cc`` linked with the
   unchanged 1.4 ``record.cc`` and ``seams.cc`` and the unchanged strict layer). It holds the record
-  descriptor and the run plan, the fault logic, the ledger, the strict model's state and the witness
-  counters, and writes every record line from its own state.
+  descriptor and the run plan, the fault logic, the seam-witness events, the strict model's state and
+  the witness counters, and writes every record line from its own state.
 - **candidate** (the candidate object linked with ``client.cc`` only). Its C++ heap is a shared
   arena mapped at one address in both processes, so the arrays the DX100 model reads and the
   parent array every claim updates are memory the evaluator reads and writes directly. Each seam call
@@ -21,24 +21,28 @@ address space. Certify 1.5 splits the run into two processes:
 
 The record format, the plan, the blinding, the random order, the judge, the attribution rules and
 the scan are 1.4's, unchanged (``certification_blinding``): only the build and the run differ.
+
+Updated: 2026-10-05 ET (code-review fixes C4, C24, F3, F5): certify 1.6 is this module with the
+version table's legality rules v2 (``swdb.certification_legality``); builds and runs share
+``swdb.certification_common``. The 1.5 behavior is unchanged.
 """
 from __future__ import annotations
 
-import os
 import re
 import secrets
 from pathlib import Path
 
 from swdb import artifacts
+from swdb import certification_common as common
 from swdb.cli import Failure
 
-VERSION = '1.5'
 FOLDER = 'dx100/certification/v1_5'
 PRELUDE = FOLDER + '/prelude.hpp'
 CLIENT_INCLUDE = FOLDER + '/client'
 CONTEXT = FOLDER + '/evaluator_context.hpp'
 EVALUATOR_SOURCES = (FOLDER + '/evaluator.cc', 'dx100/certification/v1_4/record.cc', 'dx100/certification/v1_4/seams.cc')
 CLIENT_SOURCE = FOLDER + '/client.cc'
+record_path = common.record_path
 
 
 def _client_flags(flags, library):
@@ -53,47 +57,34 @@ def _client_flags(flags, library):
     return [*flags[:index], '-I' + str(library / CLIENT_INCLUDE), *flags[index:]]
 
 
-class Build:
-    """Objects and binaries of one candidate tree at one tile size (certify 1.5).
+def _std17(flags):
+    return [f for f in flags if f != '-std=c++11'] + ['-std=c++17']
+
+
+class Build(common.ObjectBuild):
+    """Objects and binaries of one candidate tree at one tile size (certify 1.5 and later).
 
     ``link`` returns the candidate binary (candidate object + client object). ``evaluator`` (one per
     tile size) is linked from trusted sources only. The link record names both binaries' sha256.
     """
 
     def __init__(self, folder, library, tree, source_path, tile_size, threads):
-        from swdb.certification import compiler
         from swdb.certification_isolation import _flags
-        self.folder, self.library, self.tree = Path(folder), Path(library), Path(tree)
+        self.library, self.tree = Path(library), Path(tree)
         self.source_path, self.tile_size, self.threads = Path(source_path), tile_size, threads
-        self.folder.mkdir(parents=True, exist_ok=True)
-        self.compiler = compiler()
-        self.flags = _flags(self.library, self.tree, tile_size, threads)
+        super().__init__(folder, _flags(self.library, self.tree, tile_size, threads))
         self.client_flags = _client_flags(self.flags, self.library)
         self._client = None
         self._evaluator = None
 
-    def _compile(self, source, output, flags, extra=()):
-        from swdb.certification import execute
-        command = [self.compiler, *flags, *extra, '-c', str(source), '-o', str(output)]
-        result = execute(command, Path(str(output) + '.build.json'), timeout=180)
-        if result['returncode'] == 0:
-            result['object_sha256'] = artifacts.file_hash(output)
-        result['object'] = str(output)
-        return result
-
     def candidate_object(self, text, label):
-        self.source_path.write_text(text)
-        extra = ['-Dmain=swdb_candidate_main', '-iquote', str(self.source_path.parent),
-                 '-include', str(self.library / PRELUDE)]
-        result = self._compile(self.source_path, self.folder / f'candidate-{label}.o', self.client_flags, extra)
-        result['source_sha256'] = artifacts.digest(text)
-        return result
+        return self.compile_candidate(self.source_path, text, label, prelude=self.library / PRELUDE,
+                                      flags=self.client_flags)
 
     def client_object(self):
         if self._client is None:
-            flags = [f for f in self.client_flags if f != '-std=c++11'] + ['-std=c++17']
-            result = self._compile(self.library / CLIENT_SOURCE, self.folder / 'client-v15.o', flags,
-                                   ['-I' + str(self.library / FOLDER)])
+            result = self.compile(self.library / CLIENT_SOURCE, self.folder / 'client-v15.o',
+                                  _std17(self.client_flags), ['-I' + str(self.library / FOLDER)])
             if result['returncode']:
                 raise Failure('trusted certification client failed to build; see ' + result['log'])
             self._client = result
@@ -101,19 +92,17 @@ class Build:
 
     def evaluator(self):
         """The evaluator binary: evaluator.cc + 1.4 record.cc + 1.4 seams.cc, strict layer."""
-        from swdb.certification import execute
         if self._evaluator is None:
-            flags = [f for f in self.flags if f != '-std=c++11'] + ['-std=c++17']
             extra = ['-I' + str(self.library / FOLDER), '-include', str(self.library / CONTEXT)]
             objects = []
             for source in EVALUATOR_SOURCES:
-                result = self._compile(self.library / source, self.folder / (Path(source).stem + '-evaluator-v15.o'), flags, extra)
+                result = self.compile(self.library / source, self.folder / (Path(source).stem + '-evaluator-v15.o'),
+                                      _std17(self.flags), extra)
                 if result['returncode']:
                     raise Failure('trusted certification evaluator failed to build; see ' + result['log'])
                 objects.append(result)
             output = self.folder / 'swdb-evaluator'
-            link = execute([self.compiler, '-fopenmp', *[o['object'] for o in objects], '-o', str(output)],
-                           Path(str(output) + '.link.json'), timeout=180)
+            link = self.link_objects([o['object'] for o in objects], output)
             if link['returncode']:
                 raise Failure('trusted certification evaluator failed to link; see ' + link['log'])
             self._evaluator = {'binary': str(output), 'sha256': artifacts.file_hash(output),
@@ -121,10 +110,8 @@ class Build:
         return self._evaluator
 
     def link(self, candidate, output):
-        from swdb.certification import execute
         client, evaluator = self.client_object(), self.evaluator()
-        command = [self.compiler, '-fopenmp', candidate['object'], client['object'], '-o', str(output)]
-        result = execute(command, Path(str(output) + '.link.json'), timeout=180)
+        result = self.link_objects([candidate['object'], client['object']], output)
         result.update(candidate_object_sha256=candidate.get('object_sha256'),
                       record_object_sha256=evaluator['objects']['record.cc'],
                       seam_object_sha256=evaluator['objects']['seams.cc'],
@@ -135,35 +122,14 @@ class Build:
         return result
 
 
-def record_path(log, nonce):
-    """A neutral record file name (ticket 78, from ticket 75's review): named by the run's nonce, not by
-    the cell or control, so no path the run can see names its fault. ``log`` keeps the mapping."""
-    return Path(log).parent / f'run-{nonce}.record'
-
-
 def run(link, graph, source, log, threads, fault=None):
     """One run: the evaluator gets the record descriptor and the plan pipe and starts the candidate
     binary as its child (only the shared arena is passed on); stdout and stderr are only logged."""
-    from swdb.certification import execute
-    from swdb.certification_blinding import CHANNEL_ENV, PLAN_ENV, plan_line
+    from swdb.certification_blinding import plan_line
     nonce = secrets.token_hex(16)
-    record = record_path(log, nonce)
-    descriptor = os.open(record, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
-    plan_read, plan_write = os.pipe()
-    try:
-        os.write(plan_write, plan_line(fault, nonce))
-        os.close(plan_write)
-        plan_write = None
-        result = execute([link['evaluator'], link['binary'], '-f', graph, '-r', source, '-n', '1', '-v'], log,
-                         threads=threads, extra_env={CHANNEL_ENV: str(descriptor), PLAN_ENV: str(plan_read)},
-                         pass_fds=(descriptor, plan_read))
-    finally:
-        os.close(descriptor)
-        os.close(plan_read)
-        if plan_write is not None:
-            os.close(plan_write)
-    result.update(record=str(record.resolve()), record_sha256=artifacts.file_hash(record),
-                  plan={'fault': fault, 'nonce': nonce}, evaluator_sha256=link['evaluator_sha256'])
+    result = common.run_blinded([link['evaluator'], link['binary'], *common.graph_argv(graph, source)],
+                                plan_line(fault, nonce), nonce, fault, log, threads)
+    result['evaluator_sha256'] = link['evaluator_sha256']
     return result
 
 
@@ -172,12 +138,17 @@ def run_one(job, log, threads):
 
 
 def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, threshold=64, plugin, contract=None,
-                      rng=None):
-    """Certify one candidate tree with certify 1.5: 1.4's procedure and judge, the 1.5 process split."""
+                      rng=None, procedure=None):
+    """Certify one candidate tree with certify 1.5 or 1.6: 1.4's procedure and judge, the process split.
+
+    ``procedure`` is the version table's entry (candidate 1.5 when omitted); it names the driver and
+    the legality rules (1.6: legality v2)."""
     from swdb import certification_blinding as blinding
+    from swdb import certification_procedures as procedures
+    procedure = procedure or procedures.procedure(procedures.CANDIDATE, '1.5')
     return blinding.certify_candidate(tree, library, folder, tile_sizes, threads, sources, threshold=threshold,
-                                      plugin=plugin, contract=contract, rng=rng, build_class=Build, runner=run_one,
-                                      driver_attribute='certification_driver_v15', build_suffix='v15')
+                                      plugin=plugin, contract=contract, rng=rng, procedure=procedure,
+                                      build_class=Build, runner=run_one, build_suffix='v15')
 
 
 # --- native-CPU contracts (ticket 75's path) under 1.5 -------------------------------------------------
@@ -199,17 +170,12 @@ def _native_build_class(library):
             return [f for f in self.flags if not f.startswith('-std=')] + ['-std=c++17']
 
         def _trusted_compile(self, source, output, extra):
-            from swdb.certification import execute
-            command = [self.compiler, *self._std17(), *extra, '-c', str(source), '-o', str(output)]
-            result = execute(command, Path(str(output) + '.build.json'), timeout=180)
+            result = self.compile(source, output, self._std17(), extra)
             if result['returncode']:
                 raise Failure('trusted native certification process object failed to build; see ' + result['log'])
-            result['object'] = str(output)
-            result['object_sha256'] = artifacts.file_hash(output)
             return result
 
         def process_objects(self):
-            from swdb.certification import execute
             if 'process' not in self._trusted:
                 context = ['-include', str(library / CONTEXT), '-I' + str(library / FOLDER)]
                 objects = {
@@ -219,8 +185,7 @@ def _native_build_class(library):
                                                       context + [f'-DSWDB_NATIVE_FAULT_BATCH={self.fault_batch}']),
                 }
                 output = self.folder / 'swdb-evaluator'
-                link = execute([self.compiler, '-fopenmp', '-pthread', *[o['object'] for o in objects.values()],
-                                '-o', str(output)], Path(str(output) + '.link.json'), timeout=180)
+                link = self.link_objects([o['object'] for o in objects.values()], output, pthread=True)
                 if link['returncode']:
                     raise Failure('trusted native certification evaluator failed to link; see ' + link['log'])
                 client = self._trusted_compile(library / NATIVE_CLIENT, self.folder / 'client-v15.o',
@@ -231,11 +196,8 @@ def _native_build_class(library):
             return self._trusted['process']
 
         def link(self, candidate, fault, output):
-            from swdb.certification import execute
             process = self.process_objects()
-            command = [self.compiler, '-fopenmp', '-pthread', candidate['object'], process['client']['object'],
-                       '-o', str(output)]
-            result = execute(command, Path(str(output) + '.link.json'), timeout=180)
+            result = self.link_objects([candidate['object'], process['client']['object']], output, pthread=True)
             result.update(candidate_object_sha256=candidate.get('object_sha256'),
                           record_object_sha256=process['objects']['record.cc'],
                           seam_object_sha256=process['objects']['seams.cc'],
@@ -249,42 +211,28 @@ def _native_build_class(library):
 
 def _native_run(link, output, graph, vertex, log, threads, fault):
     """One native 1.5 run (the native plan line; the evaluator starts the candidate)."""
-    from swdb.certification import execute
-    from swdb.certification_blinding import CHANNEL_ENV, PLAN_ENV
     from swdb.certification_native import _plan_line
     nonce = secrets.token_hex(16)
-    record = record_path(log, nonce)
-    descriptor = os.open(record, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
-    plan_read, plan_write = os.pipe()
-    try:
-        os.write(plan_write, _plan_line(fault, nonce))
-        os.close(plan_write)
-        plan_write = None
-        result = execute([link['evaluator'], output, '-f', graph, '-r', vertex, '-n', '1', '-v'], log,
-                         threads=threads, extra_env={CHANNEL_ENV: str(descriptor), PLAN_ENV: str(plan_read)},
-                         pass_fds=(descriptor, plan_read))
-    finally:
-        os.close(descriptor)
-        os.close(plan_read)
-        if plan_write is not None:
-            os.close(plan_write)
-    result.update(record=str(record.resolve()), record_sha256=artifacts.file_hash(record),
-                  plan={'fault': fault, 'nonce': nonce}, evaluator_sha256=link['evaluator_sha256'])
+    result = common.run_blinded([link['evaluator'], output, *common.graph_argv(graph, vertex)],
+                                _plan_line(fault, nonce), nonce, fault, log, threads)
+    result['evaluator_sha256'] = link['evaluator_sha256']
     return result
 
 
-def certify_native(tree, library, folder, profile, plugin, *, rng=None):
+def certify_native(tree, library, folder, profile, plugin, *, rng=None, procedure=None):
     """A native-CPU contract under certify 1.5: the native 1.4 procedure, judge and attribution
     (``certification_native.certify_native_v14``) with the 1.5 process split. The profile's pinned 1.4
     prelude, record writer and seams are used unchanged; the client, the evaluator and the 1.5 driver
-    are pinned by the command's sources_sha256 (the profile is not edited)."""
+    are named by the command's source manifest (the profile is not edited)."""
     from swdb import certification_native as native
-    return native.certify_native_v14(tree, library, folder, profile, plugin, rng=rng,
+    from swdb import certification_procedures as procedures
+    procedure = procedure or procedures.procedure(procedures.NATIVE, '1.5')
+    return native.certify_native_v14(tree, library, folder, profile, plugin, rng=rng, procedure=procedure,
                                      build_class=_native_build_class(Path(library)), runner=_native_run,
-                                     driver=Path(library) / NATIVE_DRIVER, suffix='v15')
+                                     suffix='v15')
 
 
-# --- DX100 authored-directive rule (1.5; ticket 78, from ticket 75's review) -----------------------------
+# --- DX100 authored-directive rule (1.5 and later; ticket 78, from ticket 75's review) ---------------------
 
 _CONDITIONAL = re.compile(r'#\s*(if|ifdef|ifndef|elif|elifdef|elifndef)\b(.*)$')
 _DEFINITION = re.compile(r'#\s*(define|undef)\s+([A-Za-z_]\w*)')
@@ -297,17 +245,16 @@ SEAM_MACROS = ('compare_and_swap', 'QueueBuffer', 'SlidingQueue', '__dxc_session
 
 def knob_default_macros(contract):
     """The macros a DX100 rewrite may give a default with ``#ifndef M`` / ``#define M`` / ``#endif``:
-    each contract knob's campaign macro ``SWDB_KNOB_<NAME>`` and its short form ``SWDB_<NAME>``."""
-    from swdb.certification_legality import knob_macro
+    each contract knob's declared spellings (``SWDB_KNOB_<NAME>`` and ``SWDB_<NAME>``)."""
+    from swdb.certification_legality import knob_spellings
     names = set()
     for knob in (contract or {}).get('knobs') or []:
-        macro = knob_macro(knob['name'])
-        names |= {macro, 'SWDB_' + macro[len('SWDB_KNOB_'):]}
+        names |= set(knob_spellings(knob['name']))
     return names
 
 
 def directive_findings(original, candidate, contract):
-    """Findings [(line, token, why)] of the 1.5 DX100 directive rule on candidate-authored lines.
+    """Findings [(line, token, why)] of the DX100 directive rule (1.5 and later) on candidate-authored lines.
 
     Ticket 75's native rule (only ``#pragma omp`` may be authored) would refuse ticket 20, ticket 42
     and both a7 bests, which author knob defaults and a diagnostic block. The DX100 form keeps its
@@ -317,12 +264,8 @@ def directive_findings(original, candidate, contract):
       - ``#ifdef SWDB_DXC_DIAGNOSTIC`` (defined in neither certification nor target builds).
     Any other ``#if``/``#ifdef``/``#ifndef``/``#elif``, the token ``defined``, and ``#define`` or
     ``#undef`` of a seam macro are refused."""
-    import difflib
-    authored = set()
-    matcher = difflib.SequenceMatcher(None, original.splitlines(), candidate.splitlines(), autojunk=False)
-    for tag, _, _, j1, j2 in matcher.get_opcodes():
-        if tag in ('replace', 'insert'):
-            authored.update(range(j1 + 1, j2 + 1))
+    from swdb.certification_isolation import authored_lines
+    authored = authored_lines(original, candidate)
     lines = candidate.splitlines()
     knobs = knob_default_macros(contract)
     findings = []
@@ -349,10 +292,12 @@ def directive_findings(original, candidate, contract):
     return findings
 
 
-def refuse_directives(original, candidate, contract):
+def refuse_directives(original, candidate, contract, version='1.5'):
     from swdb.cli import UsageError
     findings = directive_findings(original, candidate, contract)
     if findings:
         shown = '; '.join(f'line {line} {token!r} ({why})' for line, token, why in findings[:5])
         more = f' and {len(findings) - 5} more' if len(findings) > 5 else ''
-        raise UsageError('candidate source refused by the harness scan (certify 1.5 directives): ' + shown + more)
+        # "harness scan": the legacy words campaign code classifies aborted certifications by.
+        raise UsageError(f'candidate source refused by the harness scan (certify {version} directives): '
+                         + shown + more)

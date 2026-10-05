@@ -1,7 +1,7 @@
 """Library-operation certification and body rules (tickets 49-51). Created 2026-10-03 ET.
 
 Original SWDB code. `swdb certify ENTRY --profile PROFILE` certifies a library operation
-(plain C++, never a hardware API) against its plain C++ reference semantics with the
+(plain C++, never a hardware interface) against its plain C++ reference semantics with the
 ported two-binary harness (`swdb.extensa.synthesis.certify`) and a certification profile
 (`swdb.extensa.profiles`). Every matrix cell and every negative control runs; a control
 counts as rejected only when it builds and fails its expected named check. When the
@@ -10,9 +10,9 @@ certification-only build; the timed-style builds never contain them.
 
 Updated: 2026-10-05 ET (ticket 77; agent-decided under Yan-Ru's delegation, revisable). Command
 1.1 (``swdb.library_operation_blinding``) is the default: verdicts come only from records a
-trusted driver writes on a harness-read pipe, the reference runs before any candidate build,
+trusted driver writes on an evaluator-read pipe, the reference runs before any candidate build,
 driver-fault controls run in the candidate's own binary under a blinded run plan, every control
-rejection is attributed, and a scan refuses harness symbols and I/O or process primitives in the
+rejection is attributed, and a scan refuses evaluator symbols and I/O or process primitives in the
 body, the candidate template and the control mutations. Command 1.0 (this module's two-binary
 harness, a control's abort classified from a printed line) stays selectable
 (``certify_entry(..., version='1.0')``, CLI ``--command-version 1.0``); its records keep their
@@ -24,6 +24,14 @@ trusted evaluator process (``library_operations/certification/v1_2/evaluator.cc`
 ``record.cc``) holds the record pipe, the plan, the case inputs and their private copies; the
 candidate binary (unit + ``runner.cc``) only maps the shared arena, runs the call and returns. 1.0 and
 1.1 stay selectable.
+
+Updated: 2026-10-05 ET (code-review fixes F1-F3, C10, ADR 0008; agent-decided under Yan-Ru's delegation,
+revisable): the versions come from the library-operation table of ``swdb.certification_procedures``,
+which raises on an unknown version and names the files each version reads (the records' source
+manifest; 1.1 and 1.2 now include the scan modules ``certification_isolation`` and
+``certification_faults``). New records also carry ``command.family``, ``command.library_operation_version``
+(so library-operation 1.2 is never read as candidate 1.2), the git commit, and ``evidence_basis:
+measured``: the runs execute plain C++ on the host CPU, not a model (earlier records say ``simulated``).
 """
 from __future__ import annotations
 
@@ -40,12 +48,15 @@ import subprocess
 import tempfile
 import uuid
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from swdb import artifacts, paths, workflow
+from swdb import certification_procedures as procedures
 from swdb.cli import Failure, UsageError
 
-VERSION = "1.2"   # ticket 78: the call in a separate candidate process
-VERSIONS = ("1.0", "1.1", "1.2")
+# The library-operation command family's default and versions (the version table's; ticket 78: 1.2).
+VERSION = procedures.DEFAULTS[procedures.LIBRARY_OPERATION]
+VERSIONS = tuple(procedures.PROCEDURES[procedures.LIBRARY_OPERATION])
 DX100_INCLUDE = re.compile(r'(?:#|%:)\s*include\s*[<"]([^>"]+)[>"]')
 DX100_NAMES = re.compile(r"(?i)(?:^|/)(?:maa[^/]*|.*dx100[^/]*|.*dxc_[^/]*|reference\.hpp)$")
 MAA_CALL = re.compile(r"\bmaa_\w*\s*\(")
@@ -236,18 +247,6 @@ def inputs(library, entry):
             "sizes": dict((test.get("input_set") or {}).get("sizes") or {})}
 
 
-def _source_digest(library_root, version="1.0"):
-    roots = [Path(__file__), *sorted((paths.HOME / "swdb/extensa").rglob("*.py"))]
-    if version != "1.0":
-        from swdb import library_operation_blinding
-        roots.append(Path(library_operation_blinding.__file__))
-    rows = [{"path": p.relative_to(paths.HOME).as_posix(), "sha256": artifacts.file_hash(p)} for p in roots]
-    if version != "1.0":
-        from swdb import library_operation_blinding
-        rows += library_operation_blinding.source_rows(library_root, version)
-    return artifacts.digest(rows)
-
-
 def _run_cell(family, header, target, folder, resolved, profile, seed, sanitize):
     from swdb.extensa.synthesis.certify import certify_backend
     drivers = folder / "drivers"
@@ -272,11 +271,20 @@ def _control_status(cells, expected):
     return "invalid", "rejected only by checks other than " + str(expected)
 
 
+def evaluate_procedure(procedure, resolved, profile, builds, folder, seed, library_root):
+    """The library-operation family's evaluator entry point: (matrix, controls, isolation or None)."""
+    if procedure.version == "1.0":
+        matrix, controls = _certify_1_0(resolved, profile, builds, folder, seed)
+        return matrix, controls, None
+    from swdb import library_operation_blinding
+    return library_operation_blinding.certify(resolved, profile, folder, seed, builds, library_root,
+                                              procedure=procedure)
+
+
 def certify_entry(store, library, entry_id, profile_path, runs_dir=None, seed=None, version=None):
     from swdb.extensa.profiles import ProfileError, check_against_entry, load_profile
-    version = version or VERSION
-    if version not in VERSIONS:
-        raise UsageError("library-operation certify command version must be one of " + ", ".join(VERSIONS))
+    procedure = procedures.procedure(procedures.LIBRARY_OPERATION, version)
+    version = procedure.version
     entry = library.get(entry_id)
     if entry is None or entry.get("kind") != "library_operation":
         raise UsageError("profile certification requires a library-operation entry")
@@ -292,20 +300,16 @@ def certify_entry(store, library, entry_id, profile_path, runs_dir=None, seed=No
     folder.mkdir(parents=True)
     content_sha256 = library.content_sha256(entry_id)
     dependencies = library.dependency_pins(entry_id)
-    command_hash = _source_digest(library.root, version)
+    fields, sources_before = procedures.command_fields(procedure, library.root)
     builds = targets(profile, [resolved["reference"].parent, resolved["body"].parent])
-    isolation = None
-    if version == "1.0":
-        matrix, controls = _certify_1_0(resolved, profile, builds, folder, seed)
-    else:
-        from swdb import library_operation_blinding
-        matrix, controls, isolation = library_operation_blinding.certify(resolved, profile, folder, seed, builds,
-                                                                         library.root, version=version)
+    matrix, controls, isolation = procedure.entry_point()(procedure, resolved, profile, builds, folder, seed,
+                                                          library.root)
     if resolved["probe"] and not any(c.get("check") == "harness_scan" for c in matrix):
         matrix.append(probe_cell(entry, resolved, builds, folder / "probe", profile, seed))
     verdict = ("certified" if matrix and all(c["status"] == "passed" for c in matrix)
                and controls and all(c["status"] == "rejected" for c in controls) else "failed")
-    if library.content_sha256(entry_id) != content_sha256 or _source_digest(library.root, version) != command_hash:
+    if (library.content_sha256(entry_id) != content_sha256
+            or not procedures.unchanged(sources_before, procedures.manifest(procedure, library.root))):
         raise Failure("library entry or certification sources changed during execution")
     # 2026-10-04 ET (final code review): the pinned body, reference, driver templates and control
     # mutations are hash-checked again after the run, not only before it.
@@ -314,8 +318,10 @@ def certify_entry(store, library, entry_id, profile_path, runs_dir=None, seed=No
             raise Failure("library entry or certification sources changed during execution")
     except (Failure, UsageError) as exc:
         raise Failure(f"pinned certification inputs changed during execution: {exc}") from None
-    command = {"version": version, "sources_sha256": command_hash, "kind": "library_operation_differential",
-               "profile": profile.to_record(), "seed": seed}
+    command = {"version": version, "sources_sha256": fields["sources_sha256"], "kind": "library_operation_differential",
+               "profile": profile.to_record(), "seed": seed,
+               **{key: fields[key] for key in ("family", "library_operation_version", "sources_match_version", "code",
+                                               "sources")}}
     if isolation is not None:
         command["isolation"] = isolation
     record = workflow.record(
@@ -324,7 +330,7 @@ def certify_entry(store, library, entry_id, profile_path, runs_dir=None, seed=No
         command=command,
         host={"hostname": socket.gethostname(), "system": platform.system(), "architecture": platform.machine(),
               "compilers": {b: t.spec.cc for b, t in builds.items()}},
-        matrix=matrix, negative_controls=controls, verdict=verdict, evidence_basis="simulated",
+        matrix=matrix, negative_controls=controls, verdict=verdict, evidence_basis=procedure.evidence_basis,
         evidence_kind="execution", created_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),
         raw_artifacts=[str(folder)])
     (folder / "certification.json").write_text(json.dumps(record, indent=2) + "\n")
@@ -427,6 +433,7 @@ def certify_cli(args):
                                                                      else args.profile + ".yaml")
     version = getattr(args, "command_version", None)
     if version is not None and version not in VERSIONS:
+        # Candidate-artifact labels (1.3-1.6) name another command family (C10).
         raise UsageError(f"library-operation certification has command versions {', '.join(VERSIONS)}, "
                          f"not {version}")
     record = certify_entry(store, library, args.entry_id, profile, runs_dir=args.runs_dir,
@@ -439,7 +446,8 @@ def certify_cli(args):
 
 # --- synthesized entries (ticket 49) -----------------------------------------------------
 
-MUTANT_CATEGORY = {"off_by_one": "index_bounds", "final_index_off_by_one": "index_bounds",
+# The control category of each synthesis negative-control variant (`extensa.synthesis.mutants`).
+CONTROL_CATEGORY = {"off_by_one": "index_bounds", "final_index_off_by_one": "index_bounds",
                    "gather_index_shift": "index_bounds", "off_by_one_dest": "index_bounds",
                    "reversed_iteration": "ordering", "transposed_layout": "ordering",
                    "arrays_reversed": "ordering", "stale_staging": "ordering",
@@ -448,12 +456,13 @@ MUTANT_CATEGORY = {"off_by_one": "index_bounds", "final_index_off_by_one": "inde
                    "assign_not_accumulate": "double_claim", "subtract_not_add": "double_claim",
                    "padding_overrun": "capacity", "inverse_direction": "ordering",
                    "skip_last_vertex": "dropped_operand"}
+MUTANT_CATEGORY = CONTROL_CATEGORY   # legacy name
 SYNTH_REFERENCE_SYMBOL = {"gather": "gather", "pack": "pack_gather", "regroup": "interleave",
                           "bin_drain": "bin_drain", "gather_stream": "gather_stream", "relabel": "relabel_apply"}
 
 
 def install_synthesized(library_root, family, header_text, *, origin, summary=""):
-    """Write a synthesized backend as a library-operation entry plus its profile.
+    """Write a synthesized library operation (a SynthBackend hook body) as an entry plus its profile.
 
     Returns (entry_id, folder, profile path). The caller certifies it and removes the
     files again if certification fails: an entry enters the experimental tier only
@@ -486,7 +495,7 @@ def install_synthesized(library_root, family, header_text, *, origin, summary=""
     for variant in variants_for(family):
         mutation = folder / f"control.{variant}.hh"
         mutation.write_text(mutant_text(family, variant))
-        category = MUTANT_CATEGORY.get(variant, "dropped_operand")
+        category = CONTROL_CATEGORY.get(variant, "dropped_operand")
         clauses.append({"id": f"equivalence.{variant}", "role": "postcondition",
                         "statement": f"The output equals the reference semantics bitwise; the {variant} defect fails.",
                         "natural_language_only": "bitwise equality with the reference is checked by the differential test",
@@ -497,7 +506,7 @@ def install_synthesized(library_root, family, header_text, *, origin, summary=""
     entry = {"id": entry_id, "kind": "library_operation",
              "provenance": {"origin": origin,
                             "license": "Apache-2.0 WITH LLVM-exception (ported harness; Q66 assumption)"},
-             "signature": sc.hook, "intent": summary or f"Synthesized {family} backend (SynthBackend hook).",
+             "signature": sc.hook, "intent": summary or f"Synthesized {family} library operation (SynthBackend hook).",
              "location": {"root": "library", "path": rel(body), "symbol": "SynthBackend"},
              "code_sha256": artifacts.file_hash(body),
              "reference_semantics": pin(reference, symbol=SYNTH_REFERENCE_SYMBOL[family]),
@@ -514,7 +523,7 @@ def install_synthesized(library_root, family, header_text, *, origin, summary=""
     profile_file = profiles / f"{entry_id}.yaml"
     profile_file.write_text(yamlio.dumps({
         "format": "swdb.certification-profile.v1", "id": f"profile.{entry_id}", "entry": entry_id,
-        "date": datetime.datetime.now().date().isoformat(),
+        "date": datetime.datetime.now(ZoneInfo("America/New_York")).date().isoformat(),   # Eastern (AGENTS.md)
         "matrix": {"builds": ["sanitized", "openmp"], "threads": 4, "n_cases": 6, "sizes": dict(sc.default_sizes)},
         "controls": controls, "required_categories": sorted({c["category"] for c in controls})}))
     return entry_id, folder, profile_file
