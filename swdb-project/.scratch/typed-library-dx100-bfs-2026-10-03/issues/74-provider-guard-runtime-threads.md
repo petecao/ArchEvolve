@@ -106,3 +106,5 @@ every poll, before the interpretation is read.
 Fix (commit `227a61d`): the test names one CPU outside the observer's lane in the plan, and the child sets
 exactly that CPU. The test now asserts that the guard's reason names that CPU, so a vacuous premise cannot pass
 again. The re-run on mbit10 is pending Yan-Ru's approval for remote writes (clone, lane job).
+
+- 2026-10-05 11:58 ET: verified on mbit10 at 434dc35 inside socket lane 0 (lease generation 461, record /data1/yanruj/EvolveSWDB_runs/guard-tests-t74b.lane.json): tests/test_provider_guard.py 15 passed. Scratch worktree tmp-guard-base and t74b.bundle removed with Yan-Ru's approval.
