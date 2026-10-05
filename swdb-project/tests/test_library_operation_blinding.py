@@ -27,6 +27,10 @@ def _library(tmp_path):
     shutil.copytree(REPO / "library" / "profiles", lib / "profiles")
     for folder in ("intrinsics", "lowerings", "rewrite_contracts"):
         (lib / folder).mkdir()
+    # Ticket 78: command 1.2 compiles against the certify 1.5 shared-arena layout.
+    arena = Path("dx100/certification/v1_5/arena.hpp")
+    (lib / arena.parent).mkdir(parents=True)
+    shutil.copy(REPO / "library" / arena, lib / arena)
     records = tmp_path / "records"
     records.mkdir()
     return lib, records
@@ -204,7 +208,7 @@ def test_plan_detecting_bypass_fails_1_1_and_never_sees_a_plan(tmp_path, monkeyp
 
 def test_seeded_entry_1_1_one_blinded_binary_reference_first_and_attributed_controls(tmp_path):
     lib, records = _library(tmp_path)
-    record = _certify(lib, records, tmp_path / "runs", *RELABEL, None)
+    record = _certify(lib, records, tmp_path / "runs", *RELABEL, "1.1")   # ticket 78: 1.2 is the default
     assert record["command"]["version"] == "1.1" and record["verdict"] == "certified"
     isolation = record["command"]["isolation"]
     assert isolation["reference"]["deleted_before_candidate_build"]
@@ -346,3 +350,20 @@ def test_the_attack_detector_sees_a_plan_that_is_not_drained(tmp_path):
         finally:
             os.close(read)
     assert seen == {None: "clean", "output_perturb": "fault"}
+
+
+def test_relabel_certifies_under_1_2_with_the_call_in_a_separate_process(tmp_path):
+    """Ticket 78: command 1.2 (the default) certifies the seeded entry; every run of the candidate
+    binary goes through the trusted evaluator, and every control is rejected, attributed."""
+    from swdb import library_operations
+    lib, records = _library(tmp_path)
+    record = _certify(lib, records, tmp_path / "runs", *RELABEL, None)
+    assert record["command"]["version"] == "1.2" == library_operations.VERSION
+    assert record["verdict"] == "certified", record["negative_controls"]
+    isolation = record["command"]["isolation"]
+    assert set(isolation["process_split"]) == {"evaluator", "candidate"}
+    for build in isolation["binaries"].values():
+        assert build["candidate"]["evaluator_sha256"] and "record_object_sha256" not in build["candidate"]
+    for control in record["negative_controls"]:
+        assert control["status"] == "rejected"
+        assert all(cell["attributed_runs"] == cell["runs"] or control["kind"] != "driver_fault" for cell in control["cells"])
