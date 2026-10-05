@@ -21,7 +21,8 @@ from swdb.cli import Failure
 from swdb.store import Record, Store
 
 import test_dx100_witness as bfs_fixture
-from test_bfs_protocol import _sg
+from testkit.bfs_protocol import _sg
+from testkit.toolchain import find_cxx
 
 ROOT = Path(__file__).resolve().parents[1]
 GRAPH = {"num_vertices": 6, "directed": True,
@@ -219,7 +220,7 @@ def test_bc_read_only_protocol_needs_no_race_companion(tmp_path, monkeypatch):
 
 
 def test_trusted_bc_gem5_driver_checks_returned_scores_natively(tmp_path):
-    compiler = shutil.which('clang++') or shutil.which('g++')
+    compiler = find_cxx()
     if not compiler:
         pytest.skip('C++ compiler unavailable')
     model = tmp_path / 'model'

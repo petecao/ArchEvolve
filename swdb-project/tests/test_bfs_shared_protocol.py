@@ -10,8 +10,7 @@ import datetime
 import pytest
 
 from test_bfs_aggregation import _aggregate, _digest, simulation_seed, simulation_setup  # noqa: F401
-from test_bfs_protocol import (protocol_seed, protocol_setup, proposal_setup, evaluation_setup,  # noqa: F401
-                               _payload, _command, _sim_settings, _model_identity_fixture, _hash)
+from testkit.bfs_protocol import _payload, _command, _sim_settings, _model_identity_fixture, _hash
 
 
 def test_execution_binds_named_shared_policy_only_when_role_identities_match(protocol_setup, tmp_path):

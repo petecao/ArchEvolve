@@ -1,4 +1,5 @@
-"""Exact pinned postprocessing recovery admission. Updated: 2026-10-03 ET.
+"""Exact pinned postprocessing recovery admission. Updated: 2026-10-05 ET (commit-pinned records).
+
 
 Test receipts are recreated in a temporary folder from published metadata.
 No raw artifact is copied, verified, simulated or represented as new execution.
@@ -13,6 +14,7 @@ import pytest
 from swdb import artifacts
 from swdb.cli import Failure
 from swdb.store import Store, Record
+from testkit.pinned import PRE_RECOVERY_COMMIT, pinned_folder
 from tools import typed_library_gem5_driver as driver
 
 TRACKER = driver.PROJECT/'.scratch/typed-library-dx100-bfs-2026-10-03'
@@ -24,14 +26,13 @@ def pre_recovery_records(tmp_path_factory):
 
     The recovery admission refuses any timed history beyond the first pair, and the real
     r1 execution later committed its own `.recovery.r1.` evaluations. The tests exercise
-    admission of that recovery, so they read a pinned copy without r1's own records
-    instead of the live store.
+    admission of that recovery, so they read the records as committed just before r1's
+    results (2026-10-05 ET, code review T4: commit-pinned by tree id, not the live store
+    minus r1, which any later timed record would break again).
     """
-    import shutil
-    target = tmp_path_factory.mktemp('pre-recovery') / 'records'
-    shutil.copytree(driver.PROJECT/'records', target,
-                    ignore=lambda folder, names: [n for n in names if '.recovery.r1.' in n])
-    return target
+    records = pinned_folder('records', tmp_path_factory.mktemp('pre-recovery'), commit=PRE_RECOVERY_COMMIT)
+    assert not [p for p in records.rglob('*') if '.recovery.r1.' in p.name]
+    return records
 
 
 @pytest.fixture

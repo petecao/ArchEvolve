@@ -1,10 +1,11 @@
 # BFS rewrite worker contract
 
-Navigation updated: 2026-09-30 (Eastern Time).
+Navigation updated: 2026-10-05 (Eastern Time).
 
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-30 (Eastern Time)
 Updated: 2026-10-05 (Eastern Time): split thread caps and lane CPU check (ticket 74)
+Updated: 2026-10-05 (Eastern Time): provider login, session lock and call outcomes (code review)
 
 The proposal producer or labeled test client selects the intent. The rewrite
 provider interprets that intent using the identified
@@ -61,6 +62,46 @@ together with any hard link or byte copy of it left in the provider home or work
 verified, before any login file is copied. A fixture command that resolves to an
 installed `codex` or `claude` CLI is refused.
 
+### Provider login, session lock and write-back
+
+Every guarded session (rewriting workspace, agent role, prompt-only) places its login
+through one call, `provider_login.start`. The source login is the provider's own file in
+its home: `$CODEX_HOME/auth.json` for Codex, `$CLAUDE_CONFIG_DIR/.credentials.json` for
+Claude; any other provider kind is refused. The session copy is created exclusively with
+mode 0600 (never through an existing file or link) in the session's fresh provider home.
+
+- **Session lock.** From the copy until its write-back, the session holds an exclusive
+  `flock` on `swdb-session.lock` in the provider home, so two sessions on one login never
+  overlap, across clones and processes. A waiting session polls every 0.2 s for up to
+  `SWDB_SESSION_LOCK_TIMEOUT_S` seconds (default 3600) and then fails before any provider call.
+- **Write-back.** Codex refreshes single-use OAuth tokens inside a session. When the session
+  ends, a changed copy that is still a well-formed login of the same account and login mode
+  is written back to the source atomically (temporary file, `fsync`, rename, directory
+  `fsync`) under the write-back lock `<login file>.swdb-lock` beside the source. A source
+  that changed during the session wins. A write-back failure is recorded in the receipt
+  and never blocks deleting the copy.
+- **Receipts** hold no token values: changed/written flags, reasons, and short hashes (the
+  first 16 hex digits of a SHA-256) named `*_short_hash`. Receipts and ledger rows written
+  before 2026-10-05 call the same values `*_sha256`; readers accept both names.
+- **Lab hosts** (agent-decided under Yan-Ru's delegation, 2026-10-05; revisable): nothing may be
+  written under `$HOME` on mbit10, and the session lock, the write-back lock and the refreshed
+  login are written in the provider home. On a lab host (`mbit10` or `mbit9` by host name,
+  or `SWDB_LAB_HOST=1`), `CODEX_HOME` / `CLAUDE_CONFIG_DIR` must be set and must not resolve to
+  or under `$HOME` (for example `/data1/yanruj/.codex`); otherwise the session stops as an
+  uncounted login failure before any lock or copy. Off lab hosts an unset variable still means
+  `~/.codex` / `~/.claude`.
+
+### Call outcomes
+
+One classifier, `provider_adapters.classify`, names the outcome of every provider call made
+by an Extensa campaign (its rewriting, test-generation, profiling and synthesis calls) and by
+the ticket 58 driver. A usage limit, provider capacity, guard runtime limit or login failure
+is an uncounted stop (`UncountedStop`, decision D7) and pauses or retries without charging the
+budget; a login failure is also read from the call's stderr (`token_invalidated`,
+`refresh_token_reused`). Any other failure is counted as a timeout, malformed output, guard or
+audit refusal, or plain failure. In ArchEvolve mode, a usage limit or capacity stop is recorded
+as `provider_unavailable` and does not consume a repair.
+
 Because Codex tool commands keep outer port-443 access, Codex sessions also refuse
 `io_uring_setup` and `MSG_FASTOPEN` sends in the inherited seccomp filter: those
 calls could open a connection without the `connect()` call the trace observes. The
@@ -76,8 +117,8 @@ directly parented by that original native process. Same-named copies and other
 helpers keep the timer. Since ticket 74 (2026-10-05) the tracer, the original CLI
 and that service form the provider runtime, capped at 64 threads; every other owned
 process (tool commands and their descendants, detached or not) shares the 16-thread
-cap. A runtime-cap overrun is recorded as a harness limit (`scope: runtime`), not as
-the model's work. All owned processes share the 32 GiB resident-memory cap, and every
+cap. A runtime-cap overrun is recorded as a guard runtime limit (`scope: runtime`), not
+as the model's work. All owned processes share the 32 GiB resident-memory cap, and every
 thread must stay on the lane's CPUs; the overall provider-call budget still applies. Only the first observed service instance is exempt; a tool shell that
 later execs the same binary keeps the timer. The thread, memory and size caps are
 polled every 0.1 s (`limit_enforcement` records how each is enforced); inner Claude

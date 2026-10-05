@@ -1,9 +1,8 @@
-"""Workspace/audit contracts via public submit and repair. Updated: 2026-09-30.
+"""Workspace/audit contracts via public submit and repair. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-30.
 
 Fixtures emulate both real CLI event formats; no real model is invoked.
 """
 
-import difflib
 import json
 import shlex
 import sys
@@ -12,43 +11,14 @@ from pathlib import Path
 import pytest
 import yaml
 
-from conftest import REPO
-from test_bfs_native import evaluation_setup, evaluate
+from testkit.bfs_native import evaluate
 
 
 @pytest.fixture
-def proposal_setup(records, tmp_path):
-    # Retain the real BFS contract, without unrelated historical evaluations.
-    for name in ("applications/gapbs.yaml", "kernels/gapbs-bfs.yaml", "implementations/gapbs-bfs-do.yaml",
-                 "machines/mbit10.yaml", "strategies/software_prefetch.yaml", "intrinsics/mm_prefetch.yaml"):
-        data = yaml.safe_load((REPO / "records" / name).read_text())
-        if data["kind"] == "implementation":
-            data["verification"] = {"status": "unchecked", "evidence": [], "scope": "Isolated workspace contract fixture."}
-        records.write(name, data)
-    runs = tmp_path / "runs"
-    result = records.swdb("source-snapshot", "gapbs-bfs-do", "--runs-dir", runs, "--id", "test-source", "--format", "json")
-    assert result.returncode == 0, result.stderr
-    snapshot = json.loads(result.stdout)
-    result = records.swdb("fixture-package", "test-source", "--id", "test-package", "--format", "json")
-    assert result.returncode == 0, result.stderr
-    original = (Path(snapshot["artifact"]["path"]) / "src/bfs.cc").read_text()
-    patch = "".join(difflib.unified_diff(original.splitlines(keepends=True),
-        original.replace("int alpha = 15", "int alpha = 14").splitlines(keepends=True),
-        fromfile="a/src/bfs.cc", tofile="b/src/bfs.cc"))
-
-    def request(**changes):
-        data = {"message_version": "1.0", "id": "test-proposal",
-                "producer": {"name": "workspace-test", "role": "sw", "test_client": True},
-                "profile_package": "test-package", "source_snapshot": "test-source",
-                "implementation": "gapbs-bfs-do", "source_sha256": snapshot["artifact"]["sha256"],
-                "intent": "Direction-switch parameter change, workspace contract fixture only.",
-                "regions": [snapshot["regions"][0]["id"]], "required_operations": [],
-                "constraints": {"editable_files": ["src/bfs.cc"], "preserve_correctness": True, "preserve_roi": True},
-                "payload": {"kind": "patch", "content": patch}, **changes}
-        path = tmp_path / f"{data['id']}.yaml"
-        path.write_text(yaml.safe_dump(data))
-        return path
-    return records, runs, snapshot, request
+def proposal_setup(workspace_proposal_setup):
+    """Local override (T1, 2026-10-05 ET): the shared `evaluation_setup` builds on these isolated
+    workspace records here, as when this module defined its own `proposal_setup`."""
+    return workspace_proposal_setup
 
 
 @pytest.fixture(params=["codex", "claude"])

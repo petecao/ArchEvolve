@@ -12,9 +12,8 @@ import pytest
 from swdb import bfs_native, bfs_protocol
 from swdb.cli import Failure
 from swdb.store import Store
-from test_bfs_protocol import _payload, _workload_request
-from test_bfs_native import evaluation_setup, evaluate
-from test_proposals import proposal_setup
+from testkit.bfs_protocol import _payload, _workload_request
+from testkit.bfs_native import evaluate
 
 
 def test_more_than_five_million_arcs_match_independent_streaming_parser(tmp_path):

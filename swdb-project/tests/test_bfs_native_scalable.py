@@ -18,48 +18,15 @@ from pathlib import Path
 
 import pytest
 
-from conftest import REPO, records as records_fixture
-from test_proposals import proposal_setup
-from test_bfs_native import evaluation_setup
-from test_bfs_protocol import _command, _payload, _settings, _sg, _workload_request
+from conftest import REPO, make_records
+from testkit.proposals import build_proposal_setup
+from testkit.bfs_native import build_evaluation_setup
+from testkit.bfs_protocol import _command, _payload, _settings, _sg, _workload_request
 from swdb import artifacts
 from swdb.bfs_native import verify_parents
+from testkit.bfs_native_scalable import COMPILER, FIXTURE_CANDIDATE, PROGRAM_V2, _bfs, _graphs, _rows
 
-COMPILER = shutil.which("c++") or shutil.which("clang++") or shutil.which("g++")
 pytestmark = pytest.mark.skipif(COMPILER is None, reason="C++ compiler unavailable")
-
-
-@pytest.fixture(scope="module")
-def verifier(tmp_path_factory):
-    binary = tmp_path_factory.mktemp("verifier") / "bfs-verify"
-    built = subprocess.run([COMPILER, "-std=c++11", "-O2", "-Wall", "-Wextra",
-                            str(REPO / "tools/bfs_native/bfs_verify.cc"), "-o", str(binary)],
-                           capture_output=True, text=True)
-    assert built.returncode == 0, built.stderr
-    return binary
-
-
-def _rows(graph):
-    rows = [set() for _ in range(graph["num_vertices"])]
-    for u, v in graph["edges"]:
-        if u != v:
-            rows[u].add(v)
-            if not graph["directed"]:
-                rows[v].add(u)
-    return [sorted(row) for row in rows]
-
-
-def _bfs(adjacency, source, reverse=False):
-    parent = [-1] * len(adjacency)
-    parent[source] = source
-    queue = deque([source])
-    while queue:
-        u = queue.popleft()
-        for v in (reversed(adjacency[u]) if reverse else adjacency[u]):
-            if parent[v] == -1:
-                parent[v] = u
-                queue.append(v)
-    return parent
 
 
 def _depths(adjacency, source):
@@ -82,21 +49,6 @@ def _compiled(binary, sg_path, width, source, parents, tmp_path):
                           capture_output=True, text=True)
     assert done.returncode == 0, done.stderr
     return json.loads(done.stdout)
-
-
-def _graphs():
-    rng = random.Random(20261004)
-    path = {"num_vertices": 6, "directed": False, "edges": [[i, i + 1] for i in range(5)]}
-    star = {"num_vertices": 50, "directed": False, "edges": [[0, i] for i in range(1, 50)]}
-    undirected = {"num_vertices": 200, "directed": False,
-                  "edges": [[rng.randrange(200), rng.randrange(200)] for _ in range(700)]}
-    directed = {"num_vertices": 150, "directed": True,
-                "edges": [[rng.randrange(150), rng.randrange(150)] for _ in range(450)]}
-    # Two components plus isolated vertices: unreachable vertices exist.
-    split = {"num_vertices": 40, "directed": False,
-             "edges": [[rng.randrange(15), rng.randrange(15)] for _ in range(40)]
-             + [[15 + rng.randrange(15), 15 + rng.randrange(15)] for _ in range(40)]}
-    return {"path": path, "star": star, "undirected": undirected, "directed": directed, "split": split}
 
 
 def _mutations(adjacency, source, parents, rng):
@@ -204,34 +156,6 @@ def test_compiled_verifier_refuses_malformed_inputs_without_a_verdict(verifier, 
     assert done.returncode == 3
 
 
-FIXTURE_CANDIDATE = r'''
-#include <cstdint>
-#include <iostream>
-#include <queue>
-#include <vector>
-using NodeID = int32_t;
-template<class T> using pvector = std::vector<T>;
-struct Graph {
-  int64_t n; NodeID **idx; NodeID *neigh; NodeID **inv; NodeID *ineigh;
-  Graph(int64_t n, NodeID **i, NodeID *e): n(n), idx(i), neigh(e), inv(nullptr), ineigh(nullptr) {}
-  Graph(int64_t n, NodeID **i, NodeID *e, NodeID **ii, NodeID *ie): n(n), idx(i), neigh(e), inv(ii), ineigh(ie) {}
-  ~Graph() { delete[] idx; delete[] neigh; delete[] inv; delete[] ineigh; }
-  int64_t num_nodes() const { return n; }
-};
-pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool) {
-  pvector<NodeID> p(g.num_nodes(), -1); p[source] = source;
-  std::queue<NodeID> q; q.push(source);
-  while (!q.empty()) { NodeID u = q.front(); q.pop();
-    for (NodeID *v = g.idx[u]; v != g.idx[u + 1]; ++v) if (p[*v] < 0) { p[*v] = u; q.push(*v); } }
-#ifdef SWDB_BROKEN
-  for (auto &x : p) if (x < 0) { x = source; break; }
-#endif
-  return p;
-}
-int main() { return 99; }
-'''
-
-
 def _driver(tmp_path, source, flags=(), compiler=None):
     wrapper = tmp_path / "driver.cc"
     template = (REPO / "tools/bfs_native/driver_scalable.cc.in").read_text()
@@ -307,36 +231,6 @@ def test_scalable_driver_builds_the_real_baseline_sources(verifier, tmp_path, ap
 
 # --- public evaluator path --------------------------------------------------------------
 
-PROGRAM_V2 = r'''#!/usr/bin/env python3
-import json, os, struct, sys
-from collections import deque
-from pathlib import Path
-mode = os.environ.get("SWDB_NATIVE_FIXTURE", "pass")
-raw = Path(sys.argv[1]).read_bytes()
-width, source = int(sys.argv[2]), int(sys.argv[3])
-out, parents_file = Path(sys.argv[4]), Path(sys.argv[5])
-f = "i" if width == 4 else "q"
-m, n = struct.unpack_from("<" + f * 2, raw, 1)
-base = 1 + 2 * width
-offsets = struct.unpack_from("<" + f * (n + 1), raw, base)
-targets = struct.unpack_from("<" + "i" * m, raw, base + (n + 1) * width)
-parent = [-1] * n
-parent[source] = source
-q = deque([source])
-while q:
-    u = q.popleft()
-    for v in targets[offsets[u]:offsets[u + 1]]:
-        if parent[v] == -1:
-            parent[v] = u
-            q.append(v)
-if mode == "unreachable_marked" and source == 0:
-    parent[n - 1] = source
-parents_file.write_bytes(struct.pack("<" + "i" * n, *parent))
-out.write_text(json.dumps({"format": "swdb.bfs.native.trial.v2", "source": source,
-    "configured_threads": int(os.environ["OMP_NUM_THREADS"]), "roi": "bfs.complete_call.v1",
-    "duration_s": 0.025, "num_vertices": n, "parents_encoding": "int32le", "parents_bytes": 4 * n}))
-'''
-
 
 def _v2_settings(base, workload):
     settings = _settings(base, workload)
@@ -354,8 +248,8 @@ def _v2_settings(base, workload):
 @pytest.fixture(scope="module")
 def v2_seed(tmp_path_factory):
     tmp = tmp_path_factory.mktemp("v2-seed")
-    records = records_fixture.__wrapped__(tmp)
-    setup = evaluation_setup.__wrapped__(proposal_setup.__wrapped__(records, tmp), tmp)
+    records = make_records(tmp)
+    setup = build_evaluation_setup(build_proposal_setup(records, tmp), tmp)
     _, runs, _, base = setup
     compiler = Path(base["build"]["compiler"])
     compiler.write_text("#!/usr/bin/env python3\nimport sys\nfrom pathlib import Path\n"

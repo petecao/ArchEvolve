@@ -1,5 +1,4 @@
-"""Safe record parsing is independent of optional LibYAML. Updated: 2026-09-25."""
-import importlib.util
+"""Safe record parsing is independent of optional LibYAML. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-25."""
 from pathlib import Path
 
 import pytest
@@ -7,6 +6,7 @@ import yaml
 
 from swdb import yamlio
 from swdb.store import record_files
+from testkit.toolchain import load_script
 
 
 def pure_python_module(monkeypatch):
@@ -14,9 +14,7 @@ def pure_python_module(monkeypatch):
     # dependency-only installation. Do not change the active store's loader.
     with monkeypatch.context() as patch:
         patch.delattr(yaml, 'CSafeLoader', raising=False)
-        spec = importlib.util.spec_from_file_location('yamlio_python_fixture', yamlio.__file__)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
+        module = load_script(yamlio.__file__, 'yamlio_python_fixture')
     return module
 
 

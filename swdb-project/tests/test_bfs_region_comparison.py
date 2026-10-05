@@ -7,9 +7,9 @@ import shutil
 from pathlib import Path
 
 import pytest
-from conftest import records as records_fixture
-from test_bfs_aggregation import simulation_seed, protocol_seed, _aggregate
-from test_bfs_protocol import _payload, _command
+from conftest import make_records
+from test_bfs_aggregation import simulation_seed, _aggregate  # noqa: F401 (fixture)
+from testkit.bfs_protocol import _payload, _command
 from swdb import artifacts, profile_package, workflow
 from swdb.dx100_witness import graph_verification_contract
 
@@ -117,7 +117,7 @@ def package_fixture(records, tmp, primary, collector, runtime, now, ns, zero_fun
 
 def _region_seed(simulation_seed, tmp_path_factory, zero_role=None):
     source, old, original = simulation_seed
-    tmp = tmp_path_factory.mktemp('regional-contract'); records = records_fixture.__wrapped__(tmp)
+    tmp = tmp_path_factory.mktemp('regional-contract'); records = make_records(tmp)
     shutil.copytree(source.path, records.path, dirs_exist_ok=True)
     runtime = tmp / 'runtime.hpp'; runtime.write_text('// Explicit diagnostic runtime fixture\n')
     wrapper = tmp / 'primary-driver.cc'; wrapper.write_text('// Explicit nonexecuted primary oracle wrapper fixture\n')

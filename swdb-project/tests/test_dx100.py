@@ -1,4 +1,4 @@
-"""Public DX100 adapter fixtures; never simulator acceptance. Updated: 2026-09-26."""
+"""Public DX100 adapter fixtures; never simulator acceptance. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-26."""
 
 import hashlib
 import json
@@ -115,7 +115,7 @@ def test_public_execution_rejects_unloadable_serialized_suffix_before_checkpoint
 
 @pytest.mark.parametrize('tamper', [False, True])
 def test_public_serialized_alias_preserves_registered_identity_and_checkpoint_reuse(case, records, tamper):
-    from test_bfs_protocol import _workload_request
+    from testkit.bfs_protocol import _workload_request
     data = execution_request(case)
     _, invoke, folder = case
     repository = Path(__file__).resolve().parents[1]

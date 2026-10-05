@@ -1,11 +1,11 @@
-"""Actual unfrozen simulator cell identity through the public API. Updated: 2026-09-26 ET."""
+"""Actual unfrozen simulator cell identity through the public API. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-26 ET."""
 import json
 from pathlib import Path
 
 import pytest
 import yaml
 
-from test_bfs_protocol import _workload_request
+from testkit.bfs_protocol import _workload_request
 from test_dx100 import case
 from test_dx100_v2 import v2_request
 

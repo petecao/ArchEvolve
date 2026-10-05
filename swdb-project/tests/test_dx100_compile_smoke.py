@@ -1,5 +1,4 @@
-"""Owned nested-process cleanup, without remote or simulator work. Updated: 2026-09-25."""
-import importlib.util
+"""Owned nested-process cleanup, without remote or simulator work. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-25."""
 import json
 import os
 from pathlib import Path
@@ -9,6 +8,7 @@ import sys
 import pytest
 
 from swdb import artifacts
+from testkit.toolchain import load_script
 
 
 @pytest.mark.parametrize('implementation,roi,modes,function,accelerated', [
@@ -19,9 +19,7 @@ from swdb import artifacts
 def test_compile_scope_selects_only_permitted_public_builds(
         tmp_path, monkeypatch, implementation, roi, modes, function, accelerated):
     script = Path(__file__).resolve().parents[1] / 'scripts/dx100_compile_smoke.py'
-    spec = importlib.util.spec_from_file_location('compile_scope_fixture', script)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    module = load_script(script, 'compile_scope_fixture')
     package = tmp_path / 'swdb'
     package.mkdir()
     (package / '__main__.py').write_text('''import json,pathlib,sys
@@ -70,9 +68,7 @@ else: raise SystemExit('unexpected public command')
 
 def test_driver_deadline_gracefully_reaps_nested_evaluator_child_and_retains_failure(tmp_path, monkeypatch):
     script = Path(__file__).resolve().parents[1] / 'scripts/dx100_compile_smoke.py'
-    spec = importlib.util.spec_from_file_location('compile_smoke_fixture', script)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    module = load_script(script, 'compile_smoke_fixture')
     package = tmp_path / 'swdb'
     package.mkdir()
     (package / '__main__.py').write_text('''import json,os,pathlib,signal,subprocess,sys,time

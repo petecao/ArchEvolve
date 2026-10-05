@@ -8,7 +8,6 @@ driver integration and BCVerifier reproduction only.
 
 import difflib
 import hashlib
-import importlib.util
 import json
 import random
 import shutil
@@ -21,7 +20,8 @@ import pytest
 import yaml
 
 from conftest import REPO
-from test_bfs_protocol import _workload_request, _payload, _command, _settings, _sg
+from testkit.bfs_protocol import _workload_request, _payload, _command, _settings, _sg
+from testkit.toolchain import find_cxx, load_script
 
 BC_PROGRAM = r'''#!/usr/bin/env python3
 import json, math, os, sys
@@ -215,9 +215,7 @@ def test_bc_workloads_reuse_registered_bfs_graphs(records, tmp_path):
     bfs = _workload_request(records, tmp_path, GRAPH, "bfs-graph")
     bfs.update(family="kronecker", sources=[0, 5])
     registered = _command(records, "register-workload", _payload(tmp_path, "bfs", bfs))
-    spec = importlib.util.spec_from_file_location("register_bc_workloads", REPO / "scripts/register_bc_workloads.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    module = load_script(REPO / "scripts/register_bc_workloads.py", "register_bc_workloads")
     from swdb.store import Store
     store = Store(records.path)
     vacuous = module.build_request(store, registered["id"], "bc-kronecker-fixture")
@@ -308,7 +306,7 @@ def _compile(compiler, source, tmp_path, flags, includes=()):
 
 
 def test_real_bc_driver_with_upstream_gapbs_passes_the_reproduced_bcverifier(tmp_path):
-    compiler = shutil.which("clang++") or shutil.which("g++")
+    compiler = find_cxx()
     if not compiler:
         pytest.skip("C++ compiler unavailable")
     built, binary = _compile(compiler, REPO / "apps/gapbs/src/bc.cc", tmp_path, ["-std=c++11", "-O2"])
@@ -326,9 +324,7 @@ def test_real_bc_driver_with_upstream_gapbs_passes_the_reproduced_bcverifier(tmp
 
 
 def _snapshot_module():
-    spec = importlib.util.spec_from_file_location("prepare_bc", REPO / "scripts/prepare_dx100_bc_scalar_snapshot.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    module = load_script(REPO / "scripts/prepare_dx100_bc_scalar_snapshot.py", "prepare_bc")
     return module
 
 

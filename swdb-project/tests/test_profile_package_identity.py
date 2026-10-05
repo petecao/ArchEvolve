@@ -7,8 +7,7 @@ import json
 
 import pytest
 
-from test_profile_packages import package_seed, package_setup, _assemble
-from test_proposals import proposal_setup
+from testkit.profile_packages import _assemble
 
 
 @pytest.mark.parametrize('fault', ['version', 'all-fields', 'complete-unsealed', 'execution-fixture'])

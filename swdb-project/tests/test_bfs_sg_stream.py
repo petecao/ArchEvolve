@@ -3,7 +3,6 @@
 Created 2026-09-25. Graphs are parser contract fixtures, not performance evidence.
 """
 
-import copy
 import hashlib
 import json
 import shutil
@@ -12,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from test_bfs_protocol import NORMALIZATION, _hash, _payload, _sg, _workload_request
+from testkit.bfs_protocol import NORMALIZATION, _hash, _payload, _workload_request
 
 
 pytestmark = pytest.mark.skipif(not (shutil.which("c++") or shutil.which("g++")), reason="C++ parser compiler unavailable")

@@ -1,4 +1,4 @@
-"""Compiler discovery and public diagnostic contracts. Updated 2026-09-26.
+"""Compiler discovery and public diagnostic contracts. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-26.
 
 Local toy compilation is integration evidence, not native BFS acceptance.
 """
@@ -12,11 +12,11 @@ import pytest
 import yaml
 
 from conftest import REPO
-from test_bfs_native import evaluation_setup, evaluate
-from test_proposals import proposal_setup
+from testkit.bfs_native import evaluate
 from swdb.bfs_discovery import discover, instrument
 from swdb.bfs_profiling import parse_callgrind, _discovery_settings
 from swdb.cli import Failure
+from testkit.toolchain import find_cxx
 
 
 def test_diagnostic_parent_hash_identifies_the_checked_bytes(tmp_path, monkeypatch):
@@ -118,7 +118,7 @@ unsigned Caller(unsigned n) { return NewlyIntroducedHelper(n); }
     driver=tmp_path/'driver.cc';output=tmp_path/'counters.json'
     driver.write_text(f'#define SWDB_REGION_COUNT {len(regions)}\n#include "{REPO}/tools/bfs_profile/runtime.hpp"\n'
         f'#include "{rewritten}"\nint main() {{ swdb_profile::start(); Caller(100); swdb_profile::stop(); swdb_profile::write("{output}"); }}\n')
-    compiler=shutil.which('clang++') or shutil.which('g++')
+    compiler=find_cxx()
     if not compiler: pytest.skip('C++ compiler unavailable')
     result=subprocess.run([compiler,'-std=c++11','-O2',str(driver),'-o',str(tmp_path/'program')],capture_output=True,text=True)
     assert result.returncode==0,result.stderr
@@ -153,7 +153,7 @@ struct ExcludedMember { template<class T> T method(T n){for(T i=0;i<n;++i){}retu
     driver = tmp_path/'driver.cc'; output=tmp_path/'counts.json'
     driver.write_text(f'#define SWDB_REGION_COUNT {len(regions)}\n#include "{REPO}/tools/bfs_profile/runtime.hpp"\n'
         f'#include "{rewritten}"\nint main(){{swdb_profile::start();int value=Caller();swdb_profile::stop();swdb_profile::write("{output}");return value==16?0:1;}}\n')
-    compiler=shutil.which('clang++') or shutil.which('g++')
+    compiler=find_cxx()
     if not compiler: pytest.skip('C++ compiler unavailable')
     compiled=subprocess.run([compiler,'-std=c++11','-O2',str(driver),'-o',str(tmp_path/'program')],capture_output=True,text=True)
     assert compiled.returncode==0,compiled.stderr
@@ -241,7 +241,7 @@ def test_pinned_dx100_complete_translation_unit_has_no_parser_errors(tmp_path):
     library, args = compiler_inventory()
     source = REPO/'apps/dx100/benchmarks/gapbs/src/bfs.cc'
     if not source.is_file(): pytest.skip('pinned DX100 checkout unavailable')
-    compiler = shutil.which('clang++') or shutil.which('g++')
+    compiler = find_cxx()
     if not compiler: pytest.skip('C++ compiler unavailable')
     probe = subprocess.run([compiler, '-dM', '-E', '-v', '-x', 'c++', '/dev/null'], capture_output=True, text=True, check=True)
     macro = tmp_path/'macros.log'; macro.write_text(probe.stdout+probe.stderr)
@@ -442,7 +442,7 @@ def test_public_legacy_native_hotspots_use_one_quantity_and_keep_unobserved_reco
 def test_public_compiled_toy_profile_and_fresh_rankings(records,tmp_path,monkeypatch):
     import socket
     library,parse_args=compiler_inventory()
-    compiler=shutil.which('clang++') or shutil.which('g++')
+    compiler=find_cxx()
     if not compiler: pytest.skip('C++ compiler unavailable')
     records.copy_repo('applications','kernels','implementations','machines')
     keep={'applications/gapbs.yaml','kernels/gapbs-bfs.yaml','implementations/gapbs-bfs-do.yaml','machines/mbit10.yaml'}

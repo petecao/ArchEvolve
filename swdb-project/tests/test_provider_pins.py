@@ -1,12 +1,11 @@
-"""Pinned adapters through public submission/repair. Updated 2026-10-03 ET."""
+"""Pinned adapters through public submission/repair. Updated: 2026-10-05 ET (shared tests/testkit); 2026-10-03 ET."""
 import copy
 import json
 import sys
 from pathlib import Path
 import pytest
 import yaml
-from test_proposals import proposal_setup
-from test_bfs_native import evaluation_setup, evaluate
+from testkit.bfs_native import evaluate
 from test_bfs_rewrite import patch_between
 
 @pytest.fixture

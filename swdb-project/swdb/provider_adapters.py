@@ -1,8 +1,14 @@
-"""Rewrite CLI adapters and immutable research settings. Updated 2026-10-03 ET.
+"""Rewrite CLI adapters and immutable research settings. Updated 2026-10-05 ET.
 
 The shared runner handles processes and retention; an adapter owns argv, transport,
 version discovery and final-response decoding. Fixtures can use the identical CLI
 contract without being classified as model-generated research evidence.
+
+2026-10-05 ET (code review P1; agent-decided under Yan-Ru's delegation; revisable): every
+provider-call stop that is not the model's work (usage limit, capacity, guard runtime limit,
+login) is an `UncountedStop` carrying its call outcome, and `classify` is the one classifier
+the Extensa campaign, its synthesis calls and the ticket 58 driver share. Before, the driver
+recorded a capacity stop as `usage_limit` and counted a guard runtime-limit stop as failed.
 """
 import json
 import os
@@ -28,7 +34,7 @@ USAGE_LIMIT = re.compile(
     r"usage[_ -]?limit|quota[_ -]?(?:exceeded|exhausted)|"
     r"(?:hit|reached|exceeded).*?(?:usage|chatgpt).*?limit|"
     r"(?:insufficient_quota|rate_limit_exceeded)|out of (?:usage|credits)", re.I)
-#: Ticket 73 (2026-10-05 ET): transient provider-side unavailability. Campaign a7's calls 4 and 5
+#: Ticket 73 (2026-10-05 ET): transient provider-side unavailability. Extensa campaign a7's calls 4 and 5
 #: ended with Codex's `{"type":"error","message":"Selected model is at capacity. ..."}` and were
 #: counted as failed rewrites. Like USAGE_LIMIT, this is read only from error fields and stderr.
 CAPACITY = re.compile(
@@ -37,7 +43,7 @@ CAPACITY = re.compile(
     r"stream disconnected before completion", re.I)
 
 
-def _codex_transport_schema(schema):
+def codex_transport_schema(schema):
     """Omit only unsupported array uniqueness on the wire, retaining local checks."""
     result = json.loads(json.dumps(schema))
     def visit(node):
@@ -61,19 +67,83 @@ def _codex_transport_schema(schema):
     return result
 
 
-class ProviderUnavailable(Failure):
-    """A provider entitlement is unavailable; this is not a failed rewrite."""
+#: The one login pattern (P1, 2026-10-05 ET). Codex reports an invalidated or reused OAuth refresh
+#: token only on stderr: 401 `token_invalidated` / `refresh_token_reused` (ticket 58, attempt a1).
+#: `classify` reads it from the exception text and the call folder's stderr.
+LOGIN = re.compile(r"login|not logged in|unauthori[sz]ed|authentication|credentials|token_invalidated|"
+                   r"refresh_token_reused", re.I)
+#: Codex takes its prompt as one argument; Linux caps one argv element at 128 KiB.
+PROMPT_ARGUMENT_LIMIT = 96 * 1024
+
+
+class UncountedStop(Failure):
+    """A provider call that stopped for a reason outside the model's work (decision D7).
+
+    The call is recorded with `counted: false` and is never charged as a failed rewrite.
+    `outcome` is the call-outcome value (`swdb.extensa.search.CallOutcome`) every caller records.
+    The four leaves below are siblings: none is a special case of another."""
+    outcome = None
+
+
+class ProviderUnavailable(UncountedStop):
+    """The provider cannot serve the call now (usage limit or capacity). ArchEvolve mode records
+    either as `provider_unavailable`, which does not consume a repair. Raise one of its leaves."""
+
+
+class UsageLimit(ProviderUnavailable):
+    """The account's usage limit or quota is spent; retry later."""
+    outcome = "usage_limit"
 
 
 class ProviderCapacity(ProviderUnavailable):
     """Ticket 73: the provider is transiently unavailable (model at capacity, overloaded, 5xx).
-    Not a failed rewrite and not a usage limit: a campaign backs off and retries, uncounted."""
+    Not a usage limit: an Extensa campaign backs off and retries, uncounted."""
+    outcome = "provider_capacity"
 
 
-class GuardInfrastructure(Failure):
-    """Ticket 74: the provider guard stopped the call only for the harness's own limit on the provider
-    runtime (for example Codex's startup thread burst), never for anything the model did. Not a
-    failed rewrite and not a provider entitlement: a campaign retries the call, uncounted."""
+class GuardInfrastructure(UncountedStop):
+    """Ticket 74: the provider guard stopped the call only for its own runtime limit on the provider
+    (for example Codex's startup thread burst), never for anything the model did. Not a provider
+    entitlement: an Extensa campaign retries the call, uncounted."""
+    outcome = "guard_infrastructure"
+
+
+class LoginRequired(UncountedStop):
+    """The provider login is missing, malformed, refused, or kept where a lab host forbids it
+    (`swdb.provider_login.provider_home`). The operator must log in; the run pauses, uncounted."""
+    outcome = "login"
+
+
+def classify(exc, call_folder=None, *, detailed=True):
+    """The call outcome (`swdb.extensa.search.CallOutcome`) of one provider call.
+
+    P1 (2026-10-05 ET): the one classifier for every provider call. None means the call completed.
+    An `UncountedStop` names its own outcome. Any other failure is a login failure when the login
+    pattern matches its text or the call folder's `stderr.txt`. With `detailed`, the rest is a
+    timeout, malformed output, a guard or audit refusal, or a plain failure, as the Extensa campaign
+    classified its calls since ticket 52; without it (a synthesis call, whose failure can also be the
+    synthesized entry's own validation or certification), the rest is a plain failure.
+    """
+    from swdb.extensa.search import CallOutcome
+    if exc is None:
+        return CallOutcome.COMPLETED
+    if isinstance(exc, UncountedStop) and exc.outcome:
+        return CallOutcome(exc.outcome)
+    text = str(exc)
+    stderr = Path(call_folder) / "stderr.txt" if call_folder is not None else None
+    if stderr is not None and stderr.is_file():
+        text += "\n" + stderr.read_text(errors="replace")
+    if LOGIN.search(text):
+        return CallOutcome.LOGIN
+    if not detailed:
+        return CallOutcome.FAILED
+    if "timed out" in text or "timeout" in text:
+        return CallOutcome.TIMEOUT
+    if "structured" in text or "JSON" in text:
+        return CallOutcome.MALFORMED_OUTPUT
+    if "guard" in text or "audit" in text:
+        return CallOutcome.GUARD_REFUSED
+    return CallOutcome.FAILED
 
 
 def events(path):
@@ -98,7 +168,7 @@ def check_usage(folder):
             pieces.append(json.dumps(event["error"]))
     text = "\n".join(pieces)
     if USAGE_LIMIT.search(text):
-        raise ProviderUnavailable("rewrite provider unavailable: usage limit reached; retry later")
+        raise UsageLimit("rewrite provider unavailable: usage limit reached; retry later")
     match = CAPACITY.search(text)
     if match:
         raise ProviderCapacity(f"rewrite provider temporarily unavailable ({match.group(0)}); retry later")
@@ -247,11 +317,12 @@ class CodexAdapter(Adapter):
         if not io_dir.is_dir():
             io_dir = Path(folder).resolve()
         schema_path = io_dir / "output-schema.json"
-        schema_path.write_text(json.dumps(_codex_transport_schema(schema)))
+        schema_path.write_text(json.dumps(codex_transport_schema(schema)))
         # Linux caps a single argv element at 128 KiB; fail clearly rather than
         # silently truncate a legacy prompt containing full source bodies.
-        if len(prompt.encode()) > 96 * 1024:
-            raise Failure("Codex provider prompt exceeds the 96 KiB argv limit; use a compact workspace request")
+        if len(prompt.encode()) > PROMPT_ARGUMENT_LIMIT:
+            raise Failure(f"Codex provider prompt exceeds the {PROMPT_ARGUMENT_LIMIT // 1024} KiB argv limit; "
+                          "use a compact workspace request")
         if config.get("workspace", True):
             prompt = ("Use direct local shell and edit tool calls. Do not use the JavaScript exec or wait "
                       "tools: their additional runtime exceeds this session's 16-thread budget. " + prompt)

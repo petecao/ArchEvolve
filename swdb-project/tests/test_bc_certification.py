@@ -6,7 +6,6 @@ functions; BC uses BCVerifier, the forward pass's per-level frontier sizes and a
 accelerated-chunk witness. Strict-layer runs are finite functional evidence only.
 """
 
-import importlib.util
 import shutil
 from pathlib import Path
 
@@ -18,14 +17,13 @@ from swdb.cli import Failure, UsageError
 from swdb.kernels import bc
 from swdb.library import Library
 from swdb.store import Store
+from testkit.toolchain import load_script, require_gcc_openmp as _gcc
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def _snapshot_module():
-    spec = importlib.util.spec_from_file_location('prepare_bc', ROOT / 'scripts/prepare_dx100_bc_scalar_snapshot.py')
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    module = load_script(ROOT / 'scripts/prepare_dx100_bc_scalar_snapshot.py', 'prepare_bc')
     return module
 
 
@@ -114,7 +112,7 @@ def test_derived_contract_citation_is_checked(tmp_path, change, message):
     assert any(message in str(problem) and 'bc_read_offload' in str(problem) for problem in problems), problems
 
 
-def test_bc_frontier_oracle_refuses_a_vacuous_source(tmp_path):
+def test_bc_reference_frontier_counts_refuse_a_vacuous_source(tmp_path):
     graph = tmp_path / 'two-level.sg'
     c.two_level_graph(graph)
     assert bc.frontier_oracle(graph, 0) == [1, 4200, 17000]
@@ -149,11 +147,6 @@ def test_bc_patch_matches_the_library_rewrite(tmp_path):
     assert set((ROOT / 'library/dx100/dxc_lowering.hpp').read_text().splitlines()) <= added
 
 
-def _gcc():
-    try:
-        return c.compiler()
-    except Failure:
-        pytest.skip('certification requires GCC with OpenMP')
 
 
 def test_bc_forward_pass_certifies_with_every_control_rejected(tmp_path):

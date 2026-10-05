@@ -4,7 +4,6 @@ import json
 from pathlib import Path
 import pytest
 import yaml
-from test_proposals import proposal_setup
 from test_bfs_rewrite import provider
 from swdb import artifacts, rewrite
 from swdb.cli import Failure

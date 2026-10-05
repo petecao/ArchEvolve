@@ -5,8 +5,7 @@ import json
 
 import pytest
 
-from test_bfs_protocol import _payload, _command, protocol_seed, protocol_setup
-from test_profile_packages import package_seed, package_setup
+from testkit.bfs_protocol import _payload, _command
 from swdb import artifacts, profile_package
 
 
@@ -211,7 +210,7 @@ def test_exit_zero_failure_requires_the_actual_verdict_producing_execution(packa
 
 @pytest.mark.parametrize('fault', ['a3-underflow', 'miscopied'])
 def test_historical_sealed_package_with_invalid_counts_is_rejected_without_erasing_it(package_setup, tmp_path, fault):
-    from test_profile_packages import _assemble, _callgrind_profile
+    from testkit.profile_packages import _assemble, _callgrind_profile
     records, request, evaluation, profile, _ = package_setup
     package = _assemble(records, tmp_path, request)
     _callgrind_profile(profile, tmp_path, 'a3-underflow' if fault == 'a3-underflow' else None)

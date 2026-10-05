@@ -1,4 +1,6 @@
 """The public acceptance report over the actual retained records. Created 2026-09-27 ET.
+Updated 2026-10-05 ET (code review T4): the records are read as committed at a pinned commit
+(`testkit.pinned`), not from the live checkout.
 
 These tests read the repository's real T18/T19 native evidence through the
 public `bfs-coverage` and `handoff-message` commands. Raw artifacts stay on
@@ -7,7 +9,6 @@ bindings only and must be reported as `remote_unverified`, never as verified.
 """
 
 import json
-import shutil
 import socket
 import subprocess
 import sys
@@ -16,6 +17,7 @@ import pytest
 import yaml
 
 from conftest import REPO, run_swdb
+from testkit.pinned import pinned_folder
 
 NATIVE_PROTOCOLS = ["bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3",
                     "bfs-native-one-thread-upstream-do-20260927.9d4b53fd41e79297"]
@@ -29,8 +31,7 @@ OFF_COLLECTING_HOST = pytest.mark.skipif(socket.gethostname().split(".")[0] == "
 
 
 def _copy(tmp_path):
-    shutil.copytree(REPO / "records", tmp_path / "records")
-    return tmp_path / "records"
+    return pinned_folder("records", tmp_path)
 
 
 def _report(records, tmp_path, name="report"):

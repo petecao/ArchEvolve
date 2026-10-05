@@ -1,4 +1,4 @@
-"""Existing candidate reuse through fresh public queries. Updated: 2026-09-26 ET.
+"""Existing candidate reuse through fresh public queries. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-26 ET.
 
 Fixture timings and provider metadata below are contract evidence only.
 """
@@ -10,25 +10,25 @@ from types import SimpleNamespace
 
 import pytest
 
-from conftest import records as records_fixture
+from conftest import make_records
+from testkit.proposals import build_proposal_setup
+from testkit.bfs_native import build_evaluation_setup
 from scripts import bfs_native_campaign as campaign
 from swdb import artifacts
 from swdb.cli import Failure
-from test_proposals import proposal_setup
-from test_bfs_native import evaluation_setup
 
 
 @pytest.fixture(scope='module')
 def reuse_seed(tmp_path_factory):
     folder = tmp_path_factory.mktemp('campaign-reuse-contract')
-    records = records_fixture.__wrapped__(folder)
-    return evaluation_setup.__wrapped__(proposal_setup.__wrapped__(records, folder), folder)
+    records = make_records(folder)
+    return build_evaluation_setup(build_proposal_setup(records, folder), folder)
 
 
 @pytest.fixture
 def reuse_case(reuse_seed, tmp_path, monkeypatch):
     seed, _, _, base = reuse_seed
-    records = records_fixture.__wrapped__(tmp_path)
+    records = make_records(tmp_path)
     shutil.copytree(seed.path, records.path, dirs_exist_ok=True)
     runs = tmp_path / 'campaign-runs'; runs.mkdir()
     args = SimpleNamespace(id='reuse-contract', protocol='fixture-policy', lane='fixture-lane',

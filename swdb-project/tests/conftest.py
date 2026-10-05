@@ -1,6 +1,12 @@
-"""Shared test helpers: every test drives `swdb` as a separate process."""
+"""Shared test helpers: every test drives `swdb` as a separate process.
 
-import contextlib
+Updated 2026-10-05 ET (code review T1, T6): fixtures shared by several test modules live in
+`tests/testkit/` modules registered below as plugins, so no test module imports another test
+module or calls a fixture through `__wrapped__`; plain builders (`make_records`,
+`testkit.proposals.build_proposal_setup`, ...) serve module-scoped seeds. The checkout guard
+fails the test and reports; it never deletes files from the real checkout.
+"""
+
 import copy
 import os
 import shutil
@@ -15,6 +21,11 @@ import yaml
 REPO = Path(__file__).resolve().parents[1]
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 DB_COMMANDS = {"build", "sql", "find", "implementations", "add", "profile"}
+
+pytest.register_assert_rewrite("testkit")
+pytest_plugins = ["testkit.proposals", "testkit.bfs_native", "testkit.bfs_protocol", "testkit.extensa",
+                  "testkit.extensa_targets", "testkit.bfs_native_scalable", "testkit.provider_workspace",
+                  "testkit.toolchain", "testkit.native_pilot", "testkit.profile_packages"]
 
 
 def run_swdb(*args, env=None, timeout=600):
@@ -42,12 +53,13 @@ def load_fixture(name):
         return copy.deepcopy(yaml.safe_load(fh))
 
 
-@pytest.fixture
-def records(tmp_path):
-    """An empty temporary records folder with helpers to write records into it."""
+def make_records(tmp_path):
+    """An empty records folder under `tmp_path` with helpers to write records into it.
+
+    The `records` fixture's builder; module-scoped seeds call it directly (T1, 2026-10-05 ET)."""
 
     class Records:
-        path = tmp_path / "records"
+        path = Path(tmp_path) / "records"
 
         def write(self, relpath, data):
             target = self.path / relpath
@@ -101,9 +113,16 @@ def records(tmp_path):
     return rec
 
 
+@pytest.fixture
+def records(tmp_path):
+    """An empty temporary records folder with helpers to write records into it."""
+    return make_records(tmp_path)
+
+
 # 2026-10-04 ET (final code review): the suite once left stray `records/*/fixture.*.yaml` files
 # in the real checkout. Every test now fails if it creates, changes or deletes a file under the
-# checkout's `records/` or `library/`; files it created are removed so the checkout stays clean.
+# checkout's `records/` or `library/`. 2026-10-05 ET (code review T6): the guard only reports;
+# it never deletes a file from the real checkout (a deletion there could hide or destroy work).
 GUARDED = ("records", "library")
 
 
@@ -121,17 +140,27 @@ def _checkout_files():
     return files
 
 
+def checkout_changes(before, after):
+    """{created, changed, deleted} paths between two `_checkout_files` snapshots (empty lists if none)."""
+    return {"created": sorted(set(after) - set(before)),
+            "changed": sorted(p for p in set(after) & set(before) if after[p] != before[p]),
+            "deleted": sorted(set(before) - set(after))}
+
+
+def checkout_report(changes):
+    """The failure text for a test that touched the checkout; None when it did not."""
+    if not any(changes.values()):
+        return None
+    shown = {kind: [os.path.relpath(p, REPO) for p in paths[:5]] for kind, paths in changes.items()}
+    return ("test wrote into the checkout's records/library (left in place for inspection; remove "
+            f"created files by hand): created={shown['created']} changed={shown['changed']} "
+            f"deleted={shown['deleted']}")
+
+
 @pytest.fixture(autouse=True)
 def checkout_records_unchanged():
     before = _checkout_files()
     yield
-    after = _checkout_files()
-    created = sorted(set(after) - set(before))
-    changed = sorted(p for p in set(after) & set(before) if after[p] != before[p])
-    deleted = sorted(set(before) - set(after))
-    for path in created:
-        with contextlib.suppress(OSError):
-            os.unlink(path)
-    if created or changed or deleted:
-        pytest.fail("test wrote into the checkout's records/library: "
-                    f"created={created[:5]} changed={changed[:5]} deleted={deleted[:5]}")
+    report = checkout_report(checkout_changes(before, _checkout_files()))
+    if report:
+        pytest.fail(report)

@@ -1,4 +1,4 @@
-"""Actual execution-grid aggregation contract through fresh CLI calls. Updated 2026-09-26.
+"""Actual execution-grid aggregation contract through fresh CLI calls. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-26.
 
 All timings and simulator-shaped records here are explicitly contract fixtures.
 """
@@ -10,8 +10,8 @@ import shutil
 
 import pytest
 
-from conftest import records as records_fixture
-from test_bfs_protocol import protocol_seed, _payload, _command, _model_identity_fixture
+from conftest import make_records
+from testkit.bfs_protocol import _payload, _command, _model_identity_fixture
 
 
 def _digest(value):
@@ -22,7 +22,7 @@ def _digest(value):
 def simulation_seed(protocol_seed, tmp_path_factory):
     original, workload, _, request, evaluations, _ = protocol_seed
     tmp = tmp_path_factory.mktemp("simulation-grid")
-    records = records_fixture.__wrapped__(tmp)
+    records = make_records(tmp)
     shutil.copytree(original.path, records.path, dirs_exist_ok=True)
     request = copy.deepcopy(request)
     request["id"] = "simulated-fixture-policy"

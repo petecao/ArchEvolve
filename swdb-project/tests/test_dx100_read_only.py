@@ -6,7 +6,7 @@ from types import SimpleNamespace
 import pytest
 import yaml
 
-from test_bfs_protocol import _workload_request
+from testkit.bfs_protocol import _workload_request
 from test_dx100 import case, reference
 from test_dx100_v2 import v2_request
 from swdb import dx100, dx100_coverage, read_only_checks

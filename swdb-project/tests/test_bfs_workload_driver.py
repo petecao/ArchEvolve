@@ -1,5 +1,4 @@
-"""Public registration verifies the campaign's SG widening. Updated 2026-09-25."""
-import importlib.util
+"""Public registration verifies the campaign's SG widening. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-25."""
 import json
 import os
 from pathlib import Path
@@ -11,13 +10,13 @@ import sys
 import pytest
 
 from conftest import REPO
-from test_bfs_protocol import _hash, _payload, _workload_request, _sg
+from testkit.bfs_protocol import _hash, _payload, _workload_request, _sg
+from testkit.toolchain import find_cxx, load_script
 
 
 @pytest.mark.parametrize('interruption', ['deadline', 'signal'])
 def test_generator_interrupt_reaps_nested_registration_and_retains_logs(tmp_path, monkeypatch, interruption):
-    spec=importlib.util.spec_from_file_location('workload_cleanup',REPO/'scripts/bfs_generate_workload.py')
-    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    module = load_script(REPO/'scripts/bfs_generate_workload.py', 'workload_cleanup')
     source=tmp_path/'apps/dx100/benchmarks/gapbs/src'
     source.mkdir(parents=True);(source/'converter.cc').write_text('// explicit compiler fixture\n')
     graph=_sg({'num_vertices':6,'directed':False,'edges':[[0,1],[1,2]]},4)
@@ -90,8 +89,7 @@ def test_generated_filenames_load_with_pinned_builder_and_source_picker(tmp_path
         flags += ['-I'+str(runtime/'include'),'-L'+str(runtime/'lib'),'-Wl,-rpath,'+str(runtime/'lib')]
     if compiler is None:
         pytest.skip('C++ compiler unavailable')
-    spec=importlib.util.spec_from_file_location('workload_driver',REPO/'scripts/bfs_generate_workload.py')
-    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    module = load_script(REPO/'scripts/bfs_generate_workload.py', 'workload_driver')
     path=module.serialized_paths(tmp_path)[0 if width==32 else 1]
     graph={'num_vertices':6,'directed':False,'edges':[[0,1],[1,2],[2,3]]}
     path.write_bytes(_sg(graph, width//8))
@@ -124,7 +122,7 @@ def test_generated_filenames_load_with_pinned_builder_and_source_picker(tmp_path
 
 def test_pinned_converter_enables_symmetrization_for_synthetic_inputs(tmp_path):
     """Exercise the actual parser: absence of -s is not directed generation."""
-    compiler=shutil.which('clang++') or shutil.which('g++')
+    compiler=find_cxx()
     if compiler is None:
         pytest.skip('C++ compiler unavailable')
     source=tmp_path/'parser.cc'
@@ -151,8 +149,7 @@ def test_widened_graph_has_the_same_loaded_adjacency(records,tmp_path,directed):
     records.copy_repo()
     graph={'num_vertices':6,'directed':directed,'edges':[[0,1],[0,2],[1,3],[2,3]]}
     request=_workload_request(records,tmp_path,graph)
-    spec=importlib.util.spec_from_file_location('workload_driver',REPO/'scripts/bfs_generate_workload.py')
-    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    module = load_script(REPO/'scripts/bfs_generate_workload.py', 'workload_driver')
     by_app={r.get('application'):r for r in request['representations']}
     source=Path(by_app['dx100-gapbs']['path'])
     target=tmp_path/'widened.sg64'
