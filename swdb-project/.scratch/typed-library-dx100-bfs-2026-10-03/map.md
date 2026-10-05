@@ -1,7 +1,7 @@
 # Map: Typed library and DX100 BFS rewrites in ArchEvolve and Extensa modes
 
 Created: 2026-10-03 02:28 ET
-Updated: 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review)
+Updated: 2026-10-04 21:50 ET (row 66 added; ticket 56 a5 result and 57 a7 audit pointers); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review)
 **Type:** ticket map
 **Status:** ready-for-agent
 **Spec:** [spec.md](spec.md)
@@ -109,6 +109,7 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 | 63 | [Scalable native BFS evaluator (v2) with a compiled structural verifier](issues/63-scalable-native-verifier.md) | resolved | — |  |
 | 64 | [Native scale-22 A/A pilot is unstable: protocol options](issues/64-native-scale22-pilot-unstable.md) | resolved | — |  |
 | 65 | [Range-loop convention, register operands and named-check campaign feedback](issues/65-range-loop-convention-and-named-check-feedback.md) | resolved | — |  |
+| 66 | [Native protocol after the isolation test: options for Yan-Ru](issues/66-native-protocol-after-isolation-test.md) | needs-info | — |  |
 
 ## Context pointers
 
@@ -224,3 +225,4 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - Ticket 65, completed 2026-10-04 ET: range-loop convention verified (last_i_reg 0, last_j_reg -1; Peter v1.1 §3.3, authors' MAA_functional.hpp, strict layer); non-normative usage notes in library/intrinsics/notes/ ship with the rewrite workspace (entries unchanged, so shared tiers stay); campaign feedback names the failing strict-layer check and its precondition. [65-range-loop-convention-and-named-check-feedback](issues/65-range-loop-convention-and-named-check-feedback.md).
 - Ticket 57 rerun a7, 2026-10-04 ET: with ticket 64 notes and named-check feedback, both classes reach certified gem5 candidates: kronecker 1.411 and uniform_random 1.553 simulated point ratios (gain, single graph per class); 8 iterations, 20 calls, 6.70 lane-h. [57-gem5-campaign-target](issues/57-gem5-campaign-target.md).
 - 2026-10-04 20:30 ET: ticket 57 a7 audit against the final code review fixes: no erratum. The leakage scan is clean, re-judged verdicts are unchanged, and both best candidates re-certify on the Mac. Gains stand. Open: forged_frontier false rejections. [57-gem5-campaign-target](issues/57-gem5-campaign-target.md), [audit](evaluation/a7-review-fix-audit-2026-10-04.json).
+- 2026-10-04 21:50 ET: ticket 56 closed `baseline_unstable` (Kronecker) by the pre-registered isolation test a5. The a5 pilot ran with node 0 free. Kronecker fork spread is 0.131 (fails); Kronecker upstream 0.008, uniform fork 0.084 and uniform upstream 0.012 pass. Uniform ran 4 iterations and stopped at plateau. Its two scalar candidates measured 1.284 and 1.318 against the fork, but both are `inconclusive` (spread 0.117 and 0.159). The review findings do not affect a5. Protocol options are in needs-info [66](issues/66-native-protocol-after-isolation-test.md). [56-native-campaign-target](issues/56-native-campaign-target.md), [evidence](evaluation/native-a5-isolation-2026-10-04.json).

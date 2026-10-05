@@ -1,7 +1,7 @@
 # 56 — Native-CPU Extensa campaign target for BFS
 
 Created: 2026-10-03
-Updated: 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
+Updated: 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 51, 53, 54, 55
@@ -133,3 +133,81 @@ Decision by the coordinating agent under Yan-Ru's delegation (agent-decided; rev
   - A class fails: it gets `baseline_unstable`; ticket 56 closes with that Answer; a needs-info ticket proposes
     protocol options to Yan-Ru.
 - **The result is reported whatever it shows. No further reruns.**
+
+### Result 2026-10-04 21:30 ET: isolation test a5. Kronecker is `baseline_unstable` and uniform is `inconclusive`. Ticket closed; follow-up [66](66-native-protocol-after-isolation-test.md)
+
+**Run.** Campaign `extensa-native-bfs-20261004-a5`:
+
+- Host: mbit10 node 1, entered through `socket_lane.sh`, lease generation 523.
+- Time: 18:04–20:24 ET (`2026-10-04T22:04:35Z`–`2026-10-05T00:24:23Z`).
+- Load: load1 1.0–2.4. Users: `yanruj` only, at start and at end.
+- Code: commit `aa245de` in `/data1/yanruj/ArchEvolve-native` (branch `t56-iso`).
+- Launch: a waiter checked node 0 every 15 min and started the run when a7 released node 0. Node 0
+  stayed released for every block. The adapter (`NativeAdapter.isolated`) enforces this, and the
+  pilot blocks record it at start and end.
+- Governor and turbo files: absent on this host.
+- Lane exit code: 1. This comes from the run script's last `pgrep` finding no codex process. The
+  campaign itself exited 0.
+
+**A/A pilot (pre-registered gate: every spread at most 0.1).** Max relative spread over the three
+sources, baseline side / candidate side, with a4 (other socket held by gem5 a7) beside it:
+
+| Class | Role | a5 spread (isolated) | a4 spread (gem5 on node 0) | a5 class result |
+|---|---|---|---|---|
+| Kronecker 22 | fork scalar TDStep | **0.131** (0.131/0.108/0.083 and 0.081/0.098/0.088) | 0.225 | `baseline_unstable` |
+| Kronecker 22 | upstream DO-BFS | 0.008 | 0.153 | |
+| Uniform 22 | fork scalar TDStep | 0.084 | 0.147 | passed |
+| Uniform 22 | upstream DO-BFS | 0.012 | 0.014 | |
+
+**Campaign.** One class failed the gate, so per the pre-registration Kronecker gets
+`baseline_unstable` and is not timed. The uniform class went straight on to full scope:
+
+- Stop: `plateau`. 4 iterations, 5 counted provider calls (setup 1 and 4 rewrites; no repair or
+  synthesis call).
+- Use: 2.29 lane-hours and 6.04 GB peak disk. Raw output is in `/data/...` because `/data1` had
+  40 GB free.
+
+| Class | Iterations | Best | Measured candidates (ratio vs fork scalar TDStep, 95% CI, max spread) | Upstream DO-BFS beside it | Verdict |
+|---|---:|---|---|---|---|
+| kronecker | 0 | none | not timed | — | `baseline_unstable`, single graph per class, measured |
+| uniform_random | 4 | none | it1.a0: 1.284 [1.270, 1.307], spread 0.117; it3.a0: 1.318 [1.291, 1.355], spread 0.159 | 0.127 and 0.133 (about 8× slower than upstream) | `inconclusive`, single graph per class, measured |
+
+- Both measured candidates are scalar edits without a contract (`uncertified`). Each comparison is
+  `inconclusive` only because a spread exceeds 0.1. There is no `gain`, so there is no best
+  candidate to re-certify.
+- Iteration 2's patch did not apply.
+- Iteration 4 named `operation.gather_staging_executor`, which is outside the campaign's contracts,
+  so it was refused as `provider_output_invalid`.
+
+**Answer to the pre-registered hypothesis.**
+
+- **Upstream DO-BFS.** With the other socket free, the pilot spreads fell from 0.153 to 0.008
+  (Kronecker) and stayed low (uniform, 0.012). This fits the hypothesis. But later in the same
+  isolated run, the uniform upstream baseline blocks of iterations 1 and 3 spread 0.132–0.136 on
+  every source. Upstream's two speed regimes therefore occur without any gem5 job on node 0.
+- **Fork scalar TDStep.** The spread shrank (0.225 to 0.131 and 0.147 to 0.084) but still fails on
+  Kronecker. In the uniform candidate blocks it reached 0.055–0.133 on the baseline side and
+  0.104–0.159 on the candidate side.
+- **Conclusion.** Other-socket isolation reduces the spread. It is not enough for the 0.1 range
+  gate at 10 repetitions on this host.
+
+**Review findings (a5 ran on pre-review code `aa245de`).** None affects a5:
+
+- Leakage scan of repaired patches (`d895705`): a5 made no repair call. Both measured patches also
+  pass the scan on the fixed code.
+- Synthesis usage-limit handling (`d895705`): there was no synthesis call.
+- The `certify` fail-open and the control matching (`f304e5c`, `8040609`): no candidate was
+  certified or reached certification.
+- `_evaluate` ignoring `approval.gem5_other_socket` (`f304e5c`): the approval was off in a5, and
+  the refusal path is the same without it.
+- The unfixed `int32_t` parent cast in the v2 driver: neither patch changes the parent element
+  type. The pilot timings are baseline-only.
+
+**Records.**
+
+- Summary `records/campaign_summaries/extensa-native-bfs-20261004-a5.summary.yaml` (team store). It
+  was copied from the host with matching sha256 `f82f0875…`.
+- Compact block evidence: [`evaluation/native-a5-isolation-2026-10-04.json`](../evaluation/native-a5-isolation-2026-10-04.json).
+
+**Closed** as `baseline_unstable` (Kronecker), per the pre-registration. No rerun was made. The
+protocol options for Yan-Ru are in needs-info ticket [66](66-native-protocol-after-isolation-test.md).
