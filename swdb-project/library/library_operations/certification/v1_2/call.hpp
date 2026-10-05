@@ -12,7 +12,7 @@
 #pragma once
 #include <atomic>
 #include <cstdint>
-#include "../../../dx100/certification/v1_5/arena.hpp"
+#include "arena.hpp"   // library/dx100/certification/v1_5 (on the include path)
 
 namespace swdb_lo_call {
 constexpr uint64_t MAGIC = 0x53574442434c3132ULL;   // "SWDBCL12"

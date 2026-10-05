@@ -27,10 +27,6 @@ def _library(tmp_path):
     shutil.copytree(REPO / "library" / "profiles", lib / "profiles")
     for folder in ("intrinsics", "lowerings", "rewrite_contracts"):
         (lib / folder).mkdir()
-    # Ticket 78: command 1.2 compiles against the certify 1.5 shared-arena layout.
-    arena = Path("dx100/certification/v1_5/arena.hpp")
-    (lib / arena.parent).mkdir(parents=True)
-    shutil.copy(REPO / "library" / arena, lib / arena)
     records = tmp_path / "records"
     records.mkdir()
     return lib, records

@@ -3,6 +3,7 @@
 Created: 2026-10-03 00:50 ET
 Updated: 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66)
 Updated: 2026-10-05 14:21 ET (ticket 77: library-operation certification 1.1, record verdicts and blinded driver faults)
+Updated: 2026-10-05 16:30 ET (ticket 78: certify 1.5 and library-operation command 1.2, record-keeping in a separate evaluator process)
 Updated: 2026-10-05 12:50 ET (ticket 76: certify 1.4, blinded controls and attributed rejections)
 Updated: 2026-10-04 22:40 ET (ticket 70: certification isolation, certify 1.3)
 Updated: 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's
@@ -613,6 +614,23 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   - Extensa feedback names a surviving control only as `negative_controls_not_rejected`.
   - Calibration and lowering certification still read printed lines; they run only pinned, trusted
     code, and calibration refuses candidate input.
+- **Evaluator process (certify 1.5 and library-operation command 1.2; ticket 78, 2026-10-05 ET; scope
+  decided by Yan-Ru 2026-10-05: an engineering refactor).** The defaults; 1.3 and 1.4 (candidate
+  artifacts, DX100 and native-CPU) and 1.0 and 1.1 (library operations) stay selectable, and older
+  records keep their meaning.
+  - A trusted evaluator process owns the record descriptor, the run plan, the fault logic, the
+    frontier ledger, the strict model's state and the witness counters, and writes every record from
+    its own state. It is linked from 1.4's unchanged record writer and seams (library operations:
+    1.1's record writer) plus the evaluator code.
+  - The candidate runs as the evaluator's child. Its C++ heap (and, for library operations, every
+    operand) lives in a shared arena mapped at one address in both processes; each seam and
+    strict-layer call is a request on the calling thread's slot. The child holds no record
+    descriptor and no plan.
+  - Procedure, record format, blinding, random order, judge, attribution rules and scan are 1.4's
+    (1.1's). Under 1.5 a DX100 memory region must lie in the shared heap, and authored conditional
+    directives are refused except contract-knob defaults and the `SWDB_DXC_DIAGNOSTIC` block.
+    Record files are named by the run's nonce.
+  - Out of scope (Yan-Ru, 2026-10-05): OS confinement of the candidate process and adversarial tests.
 - **Library operations (command 1.1; ticket 77, 2026-10-05 ET; agent-decided under Yan-Ru's
   delegation, revisable).** The default for `swdb certify ENTRY --profile P`; 1.0 stays selectable
   (`--command-version 1.0`) and its records keep their meaning.

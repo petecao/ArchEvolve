@@ -47,7 +47,8 @@ STRICT_MESSAGES = {
     "byte_offset_overflow": "an index times the element size reaches 2^32 bytes, or a row has a "
                             "negative or decreasing bound",
     "memory_region": "an access falls outside the arrays registered for the session",
-    "memory_region_registration": "a memory region was registered with an empty or reversed range",
+    "memory_region_registration": "a memory region was registered with an empty or reversed range, or "
+                                  "(certify 1.5) outside heap memory from operator new",
     "constant_uncovered_register": "__dxc_const_i32 overwrote a register that an operation not yet "
                                    "covered by __dxc_wait still reads",
     "read_before_wait": "a tile was read through __dxc_tile_pointer before __dxc_wait covered its producer",

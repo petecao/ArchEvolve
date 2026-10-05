@@ -78,7 +78,9 @@ FOLDER_1_2 = 'library_operations/certification/v1_2'
 EVALUATOR_SOURCE_1_2 = FOLDER_1_2 + '/evaluator.cc'
 RUNNER_SOURCE_1_2 = FOLDER_1_2 + '/runner.cc'
 CALL_HEADER_1_2 = FOLDER_1_2 + '/call.hpp'
-ARENA_HEADER = 'dx100/certification/v1_5/arena.hpp'
+# The certify 1.5 shared-arena layout, always this checkout's copy (evaluator infrastructure, not a
+# library entry; a library folder copied without dx100/ still builds command 1.2).
+ARENA_FOLDER = Path(__file__).resolve().parents[1] / 'library/dx100/certification/v1_5'
 RECORD_ENV, PLAN_ENV = 'SWDB_LO_RECORD_FD', 'SWDB_LO_PLAN_FD'
 RECORD_LIMIT = 64 * 1024 * 1024
 RUN_TIMEOUT = 300
@@ -177,7 +179,8 @@ class Toolchain:
             objects = []
             for source, name in ((RECORD_SOURCE, 'record'), (EVALUATOR_SOURCE_1_2, 'evaluator')):
                 output = self.folder / f'{name}-{label}-v12.o'
-                extra = [f'-DSWDB_LO_FAMILY_{FAMILY_MACRO[family]}'] if name == 'evaluator' else []
+                extra = ([f'-DSWDB_LO_FAMILY_{FAMILY_MACRO[family]}', '-I' + str(ARENA_FOLDER)]
+                         if name == 'evaluator' else [])
                 code = _execute([self.cc, *plain, *extra, '-c', self.library_root / source, '-o', output],
                                 str(output) + '.log')
                 if code:
@@ -197,7 +200,8 @@ class Toolchain:
             return self._trusted[(family, symbol)]
         if self.version == '1.2':
             driver = self.compile(self.library_root / RUNNER_SOURCE_1_2, self.folder / f'runner-{label}.o',
-                                  [f'-DSWDB_LO_FAMILY_{FAMILY_MACRO[family]}', f'-DSWDB_LO_RUN_SYMBOL={symbol}'])
+                                  [f'-DSWDB_LO_FAMILY_{FAMILY_MACRO[family]}', f'-DSWDB_LO_RUN_SYMBOL={symbol}',
+                                   '-I' + str(ARENA_FOLDER)])
             if not driver['ok']:
                 raise Failure('trusted library-operation runner failed to build; see ' + driver['log'])
             self._trusted[(family, symbol)] = (None, driver)
@@ -631,5 +635,9 @@ def source_rows(library_root, version=VERSION):
     """The trusted C++ sources of command 1.1 (or 1.2), for the command's sources digest."""
     root = Path(library_root)
     files = (RECORD_SOURCE, DRIVER_SOURCE) if version == '1.1' else (
-        RECORD_SOURCE, EVALUATOR_SOURCE_1_2, RUNNER_SOURCE_1_2, CALL_HEADER_1_2, ARENA_HEADER)
-    return [{'path': rel, 'sha256': artifacts.file_hash(root / rel)} for rel in files]
+        RECORD_SOURCE, EVALUATOR_SOURCE_1_2, RUNNER_SOURCE_1_2, CALL_HEADER_1_2)
+    rows = [{'path': rel, 'sha256': artifacts.file_hash(root / rel)} for rel in files]
+    if version != '1.1':
+        rows.append({'path': 'library/dx100/certification/v1_5/arena.hpp',
+                     'sha256': artifacts.file_hash(ARENA_FOLDER / 'arena.hpp')})
+    return rows
