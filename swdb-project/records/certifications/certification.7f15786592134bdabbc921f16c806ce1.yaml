@@ -1,0 +1,3306 @@
+kind: certification
+schema_version: '0.4'
+id: certification.7f15786592134bdabbc921f16c806ce1
+status: draft
+created: '2026-10-05'
+updated: '2026-10-05'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+entry:
+  id: contract.bfs_tdstep_frontier_staging
+  content_sha256: f0919f00a623b3da50681a7f14c5d0ec2bd06e75266d6ce3709e7200dc68ef6d
+dependencies: []
+command:
+  version: '1.4'
+  sources_sha256: 3c89c471a8711a246ae164fa4a5f47ab679f3984a085892cf3bc6523c3c843b4
+host:
+  hostname: YanRus-Mac-Studio.local
+  system: Darwin
+  architecture: arm64
+  compiler: /opt/homebrew/bin/g++-16
+matrix:
+- graph: kronecker-10
+  graph_sha256: c60f4d2efc4f70de4d54955cb0609a09197d17af0ef60c70e477747d5ba18e4b
+  source: 0
+  oracle_frontier_counts: [1, 3, 207, 661, 24]
+  build: o3
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  threads: 1
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/kronecker-10.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00002
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 3 elements
+      Starting TDStep: 207 elements
+      Starting TDStep: 661 elements
+      Starting TDStep: 24 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-kronecker-10-t1-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-f2fdb1cf4a4dcb640a1a4782d884f064.record
+    record_sha256: 734a05c3c80d6abd8b748fa147d38556ab0bafea66abe5cac98242c7d5b9c5d4
+    plan:
+      fault: null
+      nonce: f2fdb1cf4a4dcb640a1a4782d884f064
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: null
+    nonce: f2fdb1cf4a4dcb640a1a4782d884f064
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 896
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x10359a0d0'
+  schedule_order: 4
+- graph: kronecker-14
+  graph_sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+  source: 0
+  oracle_frontier_counts: [1, 6, 2269, 9757, 509, 1]
+  build: o3
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  threads: 1
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/kronecker-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00016
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 6 elements
+      Starting TDStep: 2269 elements
+      Starting TDStep: 9757 elements
+      Starting TDStep: 509 elements
+      Starting TDStep: 1 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-kronecker-14-t1-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-4ec160e62fb047fa24b632902c8f17a8.record
+    record_sha256: e58204da453e6f61393ba2021206aff631c775115d3bfe767b4155c548ad24fc
+    plan:
+      fault: null
+      nonce: 4ec160e62fb047fa24b632902c8f17a8
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: null
+    nonce: 4ec160e62fb047fa24b632902c8f17a8
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 12543
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x7bbafe4000'
+  schedule_order: 3
+- graph: kronecker-16
+  graph_sha256: 9f813f1c549f4affbd7e8108265c27d4d0c4c1fad73140dae97a5b99271e05f9
+  source: 0
+  oracle_frontier_counts: [1, 28, 10673, 34666, 1314, 6]
+  build: o3
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  threads: 1
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/kronecker-16.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00066
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 28 elements
+      Starting TDStep: 10673 elements
+      Starting TDStep: 34666 elements
+      Starting TDStep: 1314 elements
+      Starting TDStep: 6 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-kronecker-16-t1-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-c83d201556198bc4457b7dc5d1f0afaf.record
+    record_sha256: 7c416d1928e33d1b668e3acc57181ea8ea12e74bdd1a5116500cae6ed86169c8
+    plan:
+      fault: null
+      nonce: c83d201556198bc4457b7dc5d1f0afaf
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: null
+    nonce: c83d201556198bc4457b7dc5d1f0afaf
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 46688
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x7520edc000'
+  schedule_order: 14
+- graph: uniform-14
+  graph_sha256: f7021efd75859ee97a7b26275fd0fd90b3dcd0cc270c8cf81b8cdb6f2cb4d06d
+  source: 0
+  oracle_frontier_counts: [1, 30, 930, 12971, 2452]
+  build: o3
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  threads: 1
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/uniform-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00021
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 30 elements
+      Starting TDStep: 930 elements
+      Starting TDStep: 12971 elements
+      Starting TDStep: 2452 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-uniform-14-t1-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-af2baf02f06c62c61ab0903481303dbf.record
+    record_sha256: 40a16b196382448f3d7e165da0d853d5a44eb72eb9c686d6352023e0abc89c25
+    plan:
+      fault: null
+      nonce: af2baf02f06c62c61ab0903481303dbf
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: null
+    nonce: af2baf02f06c62c61ab0903481303dbf
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 16384
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x7568e4c000'
+  schedule_order: 8
+- graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  source: 0
+  oracle_frontier_counts: [1, 4200, 17000]
+  build: o3
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  threads: 1
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00008
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 4200 elements
+      Starting TDStep: 17000 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-two-level-degree-17000-t1-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-20b28dd57c7103d7798d76a5b1dfb063.record
+    record_sha256: abb518da9d7e8ae48a64ba053ecc459605e1d34a0bca381ed68b45e0c7418fb0
+    plan:
+      fault: null
+      nonce: 20b28dd57c7103d7798d76a5b1dfb063
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: null
+    nonce: 20b28dd57c7103d7798d76a5b1dfb063
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 21201
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x7668eb4000'
+  schedule_order: 1
+- graph: kronecker-10
+  graph_sha256: c60f4d2efc4f70de4d54955cb0609a09197d17af0ef60c70e477747d5ba18e4b
+  source: 0
+  oracle_frontier_counts: [1, 3, 207, 661, 24]
+  build: o3
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/kronecker-10.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00006
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 3 elements
+      Starting TDStep: 207 elements
+      Starting TDStep: 661 elements
+      Starting TDStep: 24 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-kronecker-10-t4-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-ad867dae7fa45aacfa56228be635e8e8.record
+    record_sha256: 2b12562d1b9b4add74ef69517943a5fa32e3d379faa273fea7d1352682023f42
+    plan:
+      fault: null
+      nonce: ad867dae7fa45aacfa56228be635e8e8
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: null
+    nonce: ad867dae7fa45aacfa56228be635e8e8
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 896
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x1051a2230'
+  schedule_order: 7
+- graph: kronecker-14
+  graph_sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+  source: 0
+  oracle_frontier_counts: [1, 6, 2269, 9757, 509, 1]
+  build: o3
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/kronecker-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00022
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 6 elements
+      Starting TDStep: 2269 elements
+      Starting TDStep: 9757 elements
+      Starting TDStep: 509 elements
+      Starting TDStep: 1 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-kronecker-14-t4-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-e87b53a7f5ed0cb53a7b84e7f58adef0.record
+    record_sha256: 2cc21e0e84c43f40972415e6e119b7b781cabe606f6e25c5017a0f6bb977a7ee
+    plan:
+      fault: null
+      nonce: e87b53a7f5ed0cb53a7b84e7f58adef0
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: null
+    nonce: e87b53a7f5ed0cb53a7b84e7f58adef0
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 12543
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x75b4fe4000'
+  schedule_order: 13
+- graph: kronecker-16
+  graph_sha256: 9f813f1c549f4affbd7e8108265c27d4d0c4c1fad73140dae97a5b99271e05f9
+  source: 0
+  oracle_frontier_counts: [1, 28, 10673, 34666, 1314, 6]
+  build: o3
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/kronecker-16.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00075
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 28 elements
+      Starting TDStep: 10673 elements
+      Starting TDStep: 34666 elements
+      Starting TDStep: 1314 elements
+      Starting TDStep: 6 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-kronecker-16-t4-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-bef5781082f53db3b69956866524e4e9.record
+    record_sha256: eceecbc2738c6f5423791346cad8d7c963c0ba835c9f148e6139f869ae1de7f7
+    plan:
+      fault: null
+      nonce: bef5781082f53db3b69956866524e4e9
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: null
+    nonce: bef5781082f53db3b69956866524e4e9
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 46688
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x792e244000'
+  schedule_order: 0
+- graph: uniform-14
+  graph_sha256: f7021efd75859ee97a7b26275fd0fd90b3dcd0cc270c8cf81b8cdb6f2cb4d06d
+  source: 0
+  oracle_frontier_counts: [1, 30, 930, 12971, 2452]
+  build: o3
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/uniform-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00028
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 30 elements
+      Starting TDStep: 930 elements
+      Starting TDStep: 12971 elements
+      Starting TDStep: 2452 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-uniform-14-t4-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-853a40a9731c05bf2fcd13b9da66ac04.record
+    record_sha256: f230193d78e4f80eeb38a35fb36613ccb27cf2f550030993a64af73472340ba4
+    plan:
+      fault: null
+      nonce: 853a40a9731c05bf2fcd13b9da66ac04
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: null
+    nonce: 853a40a9731c05bf2fcd13b9da66ac04
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 16384
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x7c16614000'
+  schedule_order: 5
+- graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  source: 0
+  oracle_frontier_counts: [1, 4200, 17000]
+  build: o3
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00016
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 4200 elements
+      Starting TDStep: 17000 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-two-level-degree-17000-t4-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-148c12e3ec63c14eb44fb81b82a5c3ee.record
+    record_sha256: 81244789509417caa6ea7c00baad712a66b29d0b37eecdc23c4538fec7d56147
+    plan:
+      fault: null
+      nonce: 148c12e3ec63c14eb44fb81b82a5c3ee
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: null
+    nonce: 148c12e3ec63c14eb44fb81b82a5c3ee
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 21201
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x7874e70000'
+  schedule_order: 10
+- graph: staging-tail-17
+  graph_sha256: 355d9e15a7b83e09c128a051db7fc9c2fa295217915c66f705019e1c2e3c09de
+  source: 0
+  oracle_frontier_counts: [1, 17, 17]
+  build: o3
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/staging-tail-17.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00009
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 17 elements
+      Starting TDStep: 17 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-staging-tail-17-t4-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-7b9ee0e1f34b59202e87038b4f610338.record
+    record_sha256: 55a401f70bbc382800fbe0bb127e1e80f2d3a46c314b75cdd6a86a9d48965b02
+    plan:
+      fault: null
+      nonce: 7b9ee0e1f34b59202e87038b4f610338
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: null
+    nonce: 7b9ee0e1f34b59202e87038b4f610338
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 35
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x101a961b0'
+  schedule_order: 11
+- graph: kronecker-10
+  graph_sha256: c60f4d2efc4f70de4d54955cb0609a09197d17af0ef60c70e477747d5ba18e4b
+  source: 0
+  oracle_frontier_counts: [1, 3, 207, 661, 24]
+  build: o1g
+  flags: [-std=c++11, -O1, -g, -fopenmp, -pthread, -DFUNC]
+  threads: 1
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/kronecker-10.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00002
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 3 elements
+      Starting TDStep: 207 elements
+      Starting TDStep: 661 elements
+      Starting TDStep: 24 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-kronecker-10-t1-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-9014c8e4e7d667b369a0df97741690a6.record
+    record_sha256: e0700353669fc4f2e9b6a66cc186cfdd87f93cfce69674ed2b1124cd851c1484
+    plan:
+      fault: null
+      nonce: 9014c8e4e7d667b369a0df97741690a6
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: null
+    nonce: 9014c8e4e7d667b369a0df97741690a6
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 896
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x1018f60d0'
+  schedule_order: 4
+- graph: kronecker-14
+  graph_sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+  source: 0
+  oracle_frontier_counts: [1, 6, 2269, 9757, 509, 1]
+  build: o1g
+  flags: [-std=c++11, -O1, -g, -fopenmp, -pthread, -DFUNC]
+  threads: 1
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/kronecker-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00020
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 6 elements
+      Starting TDStep: 2269 elements
+      Starting TDStep: 9757 elements
+      Starting TDStep: 509 elements
+      Starting TDStep: 1 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-kronecker-14-t1-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-44f642e1b91fc6224fe56a8e40251d01.record
+    record_sha256: 39b5a32f20eb39dd831468b1a5f2c42f9733f5004380d2eca9006895f68c79f5
+    plan:
+      fault: null
+      nonce: 44f642e1b91fc6224fe56a8e40251d01
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: null
+    nonce: 44f642e1b91fc6224fe56a8e40251d01
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 12543
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x7b637e4000'
+  schedule_order: 0
+- graph: kronecker-16
+  graph_sha256: 9f813f1c549f4affbd7e8108265c27d4d0c4c1fad73140dae97a5b99271e05f9
+  source: 0
+  oracle_frontier_counts: [1, 28, 10673, 34666, 1314, 6]
+  build: o1g
+  flags: [-std=c++11, -O1, -g, -fopenmp, -pthread, -DFUNC]
+  threads: 1
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/kronecker-16.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00072
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 28 elements
+      Starting TDStep: 10673 elements
+      Starting TDStep: 34666 elements
+      Starting TDStep: 1314 elements
+      Starting TDStep: 6 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-kronecker-16-t1-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-c2ad25b3c4d9b3b0346d1de3d3f0df2d.record
+    record_sha256: b679eae7fc9b7751cafe19b8bf1519117a836d381b422584c8ae2f3d05d51e29
+    plan:
+      fault: null
+      nonce: c2ad25b3c4d9b3b0346d1de3d3f0df2d
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: null
+    nonce: c2ad25b3c4d9b3b0346d1de3d3f0df2d
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 46688
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x77376dc000'
+  schedule_order: 14
+- graph: uniform-14
+  graph_sha256: f7021efd75859ee97a7b26275fd0fd90b3dcd0cc270c8cf81b8cdb6f2cb4d06d
+  source: 0
+  oracle_frontier_counts: [1, 30, 930, 12971, 2452]
+  build: o1g
+  flags: [-std=c++11, -O1, -g, -fopenmp, -pthread, -DFUNC]
+  threads: 1
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/uniform-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00022
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 30 elements
+      Starting TDStep: 930 elements
+      Starting TDStep: 12971 elements
+      Starting TDStep: 2452 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-uniform-14-t1-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-8f6d01ee7ab8f9c0ff8b18ef2e9072bc.record
+    record_sha256: afb4ce7916b0d826e11a04f126aee33381492d81c9569931f46914d16a7208f7
+    plan:
+      fault: null
+      nonce: 8f6d01ee7ab8f9c0ff8b18ef2e9072bc
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: null
+    nonce: 8f6d01ee7ab8f9c0ff8b18ef2e9072bc
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 16384
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x7ba564c000'
+  schedule_order: 9
+- graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  source: 0
+  oracle_frontier_counts: [1, 4200, 17000]
+  build: o1g
+  flags: [-std=c++11, -O1, -g, -fopenmp, -pthread, -DFUNC]
+  threads: 1
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00007
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 4200 elements
+      Starting TDStep: 17000 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-two-level-degree-17000-t1-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-77fb06c699fba17ab1bddcbdeaa8b933.record
+    record_sha256: 2435b95042e05278097f70d8624deee952c546e4b312eb03d048ef33874e3e8b
+    plan:
+      fault: null
+      nonce: 77fb06c699fba17ab1bddcbdeaa8b933
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: null
+    nonce: 77fb06c699fba17ab1bddcbdeaa8b933
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 21201
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x7b9b6b4000'
+  schedule_order: 10
+- graph: kronecker-10
+  graph_sha256: c60f4d2efc4f70de4d54955cb0609a09197d17af0ef60c70e477747d5ba18e4b
+  source: 0
+  oracle_frontier_counts: [1, 3, 207, 661, 24]
+  build: o1g
+  flags: [-std=c++11, -O1, -g, -fopenmp, -pthread, -DFUNC]
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/kronecker-10.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00006
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 3 elements
+      Starting TDStep: 207 elements
+      Starting TDStep: 661 elements
+      Starting TDStep: 24 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-kronecker-10-t4-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-769f816a58ef385bc7b865b21123bd8b.record
+    record_sha256: 5203c53526b2bea34f4daa2e16389470ee2e168f37f0d4805c294ec134f2c7be
+    plan:
+      fault: null
+      nonce: 769f816a58ef385bc7b865b21123bd8b
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: null
+    nonce: 769f816a58ef385bc7b865b21123bd8b
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 896
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x101296230'
+  schedule_order: 11
+- graph: kronecker-14
+  graph_sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+  source: 0
+  oracle_frontier_counts: [1, 6, 2269, 9757, 509, 1]
+  build: o1g
+  flags: [-std=c++11, -O1, -g, -fopenmp, -pthread, -DFUNC]
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/kronecker-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00024
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 6 elements
+      Starting TDStep: 2269 elements
+      Starting TDStep: 9757 elements
+      Starting TDStep: 509 elements
+      Starting TDStep: 1 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-kronecker-14-t4-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-6fefb4ba947908e82d0f7f3be7f0697c.record
+    record_sha256: ca7145d3c3c61fa88253ab847f87d246c47a295fade9873dcee35f5a8da00011
+    plan:
+      fault: null
+      nonce: 6fefb4ba947908e82d0f7f3be7f0697c
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: null
+    nonce: 6fefb4ba947908e82d0f7f3be7f0697c
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 12543
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x7c0b7e4000'
+  schedule_order: 13
+- graph: kronecker-16
+  graph_sha256: 9f813f1c549f4affbd7e8108265c27d4d0c4c1fad73140dae97a5b99271e05f9
+  source: 0
+  oracle_frontier_counts: [1, 28, 10673, 34666, 1314, 6]
+  build: o1g
+  flags: [-std=c++11, -O1, -g, -fopenmp, -pthread, -DFUNC]
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/kronecker-16.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00076
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 28 elements
+      Starting TDStep: 10673 elements
+      Starting TDStep: 34666 elements
+      Starting TDStep: 1314 elements
+      Starting TDStep: 6 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-kronecker-16-t4-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-61cadb28dc96d98f1d05af629450a34d.record
+    record_sha256: d6e7623e1f6287dbedf47ca55dd849537ad7bac5563580764992a8b0c8f44542
+    plan:
+      fault: null
+      nonce: 61cadb28dc96d98f1d05af629450a34d
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: null
+    nonce: 61cadb28dc96d98f1d05af629450a34d
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 46688
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x75936dc000'
+  schedule_order: 2
+- graph: uniform-14
+  graph_sha256: f7021efd75859ee97a7b26275fd0fd90b3dcd0cc270c8cf81b8cdb6f2cb4d06d
+  source: 0
+  oracle_frontier_counts: [1, 30, 930, 12971, 2452]
+  build: o1g
+  flags: [-std=c++11, -O1, -g, -fopenmp, -pthread, -DFUNC]
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/uniform-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00033
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 30 elements
+      Starting TDStep: 930 elements
+      Starting TDStep: 12971 elements
+      Starting TDStep: 2452 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-uniform-14-t4-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-06f7ea65d103c17ff705eb9248f34fae.record
+    record_sha256: 8c61c16e7706e14e7ebaf3ab16906b97141664a050d58207435cc1a67366ccd8
+    plan:
+      fault: null
+      nonce: 06f7ea65d103c17ff705eb9248f34fae
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: null
+    nonce: 06f7ea65d103c17ff705eb9248f34fae
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 16384
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x789364c000'
+  schedule_order: 3
+- graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  source: 0
+  oracle_frontier_counts: [1, 4200, 17000]
+  build: o1g
+  flags: [-std=c++11, -O1, -g, -fopenmp, -pthread, -DFUNC]
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00013
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 4200 elements
+      Starting TDStep: 17000 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-two-level-degree-17000-t4-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-07e63fc1a08a1f8c681bfdb205ef2d89.record
+    record_sha256: deb2d25ad349c0f177b4e16b483f1916e3b39e7be81db27df68582cb2d16ea7f
+    plan:
+      fault: null
+      nonce: 07e63fc1a08a1f8c681bfdb205ef2d89
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: null
+    nonce: 07e63fc1a08a1f8c681bfdb205ef2d89
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 21201
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x7aa1e18000'
+  schedule_order: 6
+- graph: staging-tail-17
+  graph_sha256: 355d9e15a7b83e09c128a051db7fc9c2fa295217915c66f705019e1c2e3c09de
+  source: 0
+  oracle_frontier_counts: [1, 17, 17]
+  build: o1g
+  flags: [-std=c++11, -O1, -g, -fopenmp, -pthread, -DFUNC]
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/staging-tail-17.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00007
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 17 elements
+      Starting TDStep: 17 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-staging-tail-17-t4-0.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-03d3fe51a8b2ac2d0d1964079705271c.record
+    record_sha256: 297fd3819786c516d4beef82f1cc0e5928ce0084f52e918d82dbc1887d64200a
+    plan:
+      fault: null
+      nonce: 03d3fe51a8b2ac2d0d1964079705271c
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: null
+    nonce: 03d3fe51a8b2ac2d0d1964079705271c
+  named_checks: []
+  observed_checks: []
+  result_check:
+    passed: true
+    reason: null
+    reachable_vertices: 35
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x1016ce2d0'
+  schedule_order: 12
+negative_controls:
+- id: claim_without_write
+  build: o3
+  threads: 4
+  expected_check: verifier
+  status: rejected
+  reason: verifier
+  graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  fault:
+    site: library_fault
+    plan: claim_without_write
+    delivery: run_plan
+    version: 1
+    attribution: lost_claim_left_unset
+    seam_source_sha256: 445f76a04e2013fd1fa2b577e53cd6e24e33a10da708a7d8a03fb9587f75b895
+  attribution:
+    attributed: true
+    rule: lost_claim_left_unset
+    vertex: 1
+    claimed_value: 0
+    returned: -1
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00014
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 4200 elements
+      Starting TDStep: 17000 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-claim_without_write.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-2db0c0c4819b1c6e95bee055b49b17b2.record
+    record_sha256: 176dd97e1be6b730aa0c0f85ba17da57e7aaaf65edb7f89ef746ee9be495497e
+    plan:
+      fault: claim_without_write
+      nonce: 2db0c0c4819b1c6e95bee055b49b17b2
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: claim_without_write
+    nonce: 2db0c0c4819b1c6e95bee055b49b17b2
+  named_checks: []
+  observed_checks: [verifier]
+  result_check:
+    passed: false
+    reason: reachable vertex 1 has no parent
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x7a06eb4000'
+  schedule_order: 2
+- id: partial_batch_dropped
+  build: o3
+  threads: 4
+  expected_check: frontier_size_equality
+  status: rejected
+  reason: verifier
+  graph: staging-tail-17
+  graph_sha256: 355d9e15a7b83e09c128a051db7fc9c2fa295217915c66f705019e1c2e3c09de
+  fault:
+    site: library_fault
+    plan: partial_batch_dropped
+    delivery: run_plan
+    version: 1
+    attribution: missing_child_of_hidden_vertex
+    seam_source_sha256: 445f76a04e2013fd1fa2b577e53cd6e24e33a10da708a7d8a03fb9587f75b895
+  attribution:
+    attributed: true
+    rule: missing_child_of_hidden_vertex
+    level: 2
+    hidden: [17]
+    missing_children: [34]
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/staging-tail-17.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00007
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 16 elements
+      Starting TDStep: 16 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-partial_batch_dropped.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-fa528b809784aadb71fa15c0092bec65.record
+    record_sha256: cbd3f529fb54a4af8d96632fe09c7c15e1eed7e11d382b6ffca6b7254aa84ba3
+    plan:
+      fault: partial_batch_dropped
+      nonce: fa528b809784aadb71fa15c0092bec65
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: partial_batch_dropped
+    nonce: fa528b809784aadb71fa15c0092bec65
+  named_checks: []
+  observed_checks: [frontier_size_equality, verifier]
+  result_check:
+    passed: false
+    reason: reachable vertex 34 has no parent
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x104fce1b0'
+  schedule_order: 6
+- id: stale_row_offset
+  build: o3
+  threads: 4
+  expected_check: verifier
+  status: rejected
+  reason: verifier
+  graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  fault:
+    site: library_fault
+    plan: stale_row_offset
+    delivery: run_plan
+    version: 1
+    attribution: parent_without_edge_from_stale_vertex
+    seam_source_sha256: 445f76a04e2013fd1fa2b577e53cd6e24e33a10da708a7d8a03fb9587f75b895
+  attribution:
+    attributed: true
+    rule: parent_without_edge_from_stale_vertex
+    vertex: 0
+    children_without_edge: [4201, 4202, 4203, 4204, 4205]
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00015
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 17000 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-stale_row_offset.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-d0320435e69d74377e36021881ce1017.record
+    record_sha256: 217b367660e4f521682c304e1ce07499adf03ffb8b8d1e1955957523d154525a
+    plan:
+      fault: stale_row_offset
+      nonce: d0320435e69d74377e36021881ce1017
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: stale_row_offset
+    nonce: d0320435e69d74377e36021881ce1017
+  named_checks: []
+  observed_checks: [frontier_size_equality, verifier]
+  result_check:
+    passed: false
+    reason: reachable vertex 1 has no parent
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x77b465c000'
+  schedule_order: 9
+- id: forged_frontier
+  build: o3
+  threads: 4
+  expected_check: duplicate_frontier
+  status: rejected
+  reason: frontier_size_equality
+  graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  fault:
+    site: library_fault
+    plan: forged_frontier
+    delivery: run_plan
+    version: 1
+    attribution: duplicate_is_forged_push
+    seam_source_sha256: 445f76a04e2013fd1fa2b577e53cd6e24e33a10da708a7d8a03fb9587f75b895
+  attribution:
+    attributed: true
+    rule: duplicate_is_forged_push
+    forged_duplicates:
+    - [1, 1]
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o.build.json
+    object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin.link.json
+    candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+    record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+    seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o3.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 88
+    stdout: |
+      Read Time:           0.00014
+      Initializing MAA
+      Starting TDStep: 1 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o3-forged_frontier.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-1c2c05b1837a23aff6039ae83cff1b78.record
+    record_sha256: e19dbc78b5d1e3b6bae4a1e0913fba559aa91bbd6787919b323cc9162979cf1a
+    plan:
+      fault: forged_frontier
+      nonce: 1c2c05b1837a23aff6039ae83cff1b78
+  candidate_object_sha256: 612a85307405052aa01dbd7d28a4ebb2bb7109cf0dba96fcf4fa0714123fca68
+  binary_sha256: 830e01d53f7cac47ad39ca1272c306f9b5ab6d192fedd8531bb1cb34a874cbfa
+  seam_object_sha256: 07f1bd3dda668d4d21df552a762503502148fb4decdd54bd6bc3fa04885b3aa9
+  record_object_sha256: c26a018bd8aa5e1daf7ad6a8c2646282945ed392634c2513baf7679c40e5e0d7
+  plan:
+    fault: forged_frontier
+    nonce: 1c2c05b1837a23aff6039ae83cff1b78
+  named_checks: [duplicate_frontier]
+  observed_checks: [duplicate_frontier, frontier_size_equality]
+  result_check: null
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x7a2caa0000'
+  schedule_order: 12
+- id: claim_without_write
+  build: o1g
+  threads: 4
+  expected_check: verifier
+  status: rejected
+  reason: verifier
+  graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  fault:
+    site: library_fault
+    plan: claim_without_write
+    delivery: run_plan
+    version: 1
+    attribution: lost_claim_left_unset
+    seam_source_sha256: 445f76a04e2013fd1fa2b577e53cd6e24e33a10da708a7d8a03fb9587f75b895
+  attribution:
+    attributed: true
+    rule: lost_claim_left_unset
+    vertex: 1
+    claimed_value: 0
+    returned: -1
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00012
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 4200 elements
+      Starting TDStep: 17000 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-claim_without_write.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-273904394c4029696b6e0841787f7d1a.record
+    record_sha256: 3dc0d967caf4003eed5d7caaaf596a4a7895903d4c44012b6b51b4b71a62a037
+    plan:
+      fault: claim_without_write
+      nonce: 273904394c4029696b6e0841787f7d1a
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: claim_without_write
+    nonce: 273904394c4029696b6e0841787f7d1a
+  named_checks: []
+  observed_checks: [verifier]
+  result_check:
+    passed: false
+    reason: reachable vertex 1 has no parent
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x78736b4000'
+  schedule_order: 1
+- id: partial_batch_dropped
+  build: o1g
+  threads: 4
+  expected_check: frontier_size_equality
+  status: rejected
+  reason: verifier
+  graph: staging-tail-17
+  graph_sha256: 355d9e15a7b83e09c128a051db7fc9c2fa295217915c66f705019e1c2e3c09de
+  fault:
+    site: library_fault
+    plan: partial_batch_dropped
+    delivery: run_plan
+    version: 1
+    attribution: missing_child_of_hidden_vertex
+    seam_source_sha256: 445f76a04e2013fd1fa2b577e53cd6e24e33a10da708a7d8a03fb9587f75b895
+  attribution:
+    attributed: true
+    rule: missing_child_of_hidden_vertex
+    level: 2
+    hidden: [17]
+    missing_children: [34]
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/staging-tail-17.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00009
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 16 elements
+      Starting TDStep: 16 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-partial_batch_dropped.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-0e1ac25021bf182578d281766339dc21.record
+    record_sha256: f33bc70e0fd2d6d4f54bae7c8a051563bd9177d63b14f908cd290e32009634f2
+    plan:
+      fault: partial_batch_dropped
+      nonce: 0e1ac25021bf182578d281766339dc21
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: partial_batch_dropped
+    nonce: 0e1ac25021bf182578d281766339dc21
+  named_checks: []
+  observed_checks: [frontier_size_equality, verifier]
+  result_check:
+    passed: false
+    reason: reachable vertex 34 has no parent
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x10503a1b0'
+  schedule_order: 7
+- id: stale_row_offset
+  build: o1g
+  threads: 4
+  expected_check: verifier
+  status: rejected
+  reason: verifier
+  graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  fault:
+    site: library_fault
+    plan: stale_row_offset
+    delivery: run_plan
+    version: 1
+    attribution: parent_without_edge_from_stale_vertex
+    seam_source_sha256: 445f76a04e2013fd1fa2b577e53cd6e24e33a10da708a7d8a03fb9587f75b895
+  attribution:
+    attributed: true
+    rule: parent_without_edge_from_stale_vertex
+    vertex: 0
+    children_without_edge: [4201, 4202, 4203, 4204, 4205]
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00017
+      Initializing MAA
+      Starting TDStep: 1 elements
+      Starting TDStep: 17000 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-stale_row_offset.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-e0d8b496b9e9cb87a426bc6144c34b35.record
+    record_sha256: ffa6ebddb918e457cede933708d0f0a84297d88c9a74d4439ad9d7f7f7e5988a
+    plan:
+      fault: stale_row_offset
+      nonce: e0d8b496b9e9cb87a426bc6144c34b35
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: stale_row_offset
+    nonce: e0d8b496b9e9cb87a426bc6144c34b35
+  named_checks: []
+  observed_checks: [frontier_size_equality, verifier]
+  result_check:
+    passed: false
+    reason: reachable vertex 1 has no parent
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x75efe5c000'
+  schedule_order: 5
+- id: forged_frontier
+  build: o1g
+  threads: 4
+  expected_check: duplicate_frontier
+  status: rejected
+  reason: frontier_size_equality
+  graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  fault:
+    site: library_fault
+    plan: forged_frontier
+    delivery: run_plan
+    version: 1
+    attribution: duplicate_is_forged_push
+    seam_source_sha256: 445f76a04e2013fd1fa2b577e53cd6e24e33a10da708a7d8a03fb9587f75b895
+  attribution:
+    attributed: true
+    rule: duplicate_is_forged_push
+    forged_duplicates:
+    - [1, 1]
+  compile:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -Dmain=swdb_candidate_main
+    - -iquote
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/API
+    - -I/private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/include
+    - -include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-ab1af00722940c423/swdb-project/library/native/certification/v1_4/prelude.hpp
+    - -c
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/source/benchmarks/gapbs/src/bfs.cc
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o.build.json
+    object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    object: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    source_sha256: 3a69ab72036df8e38da94a1170f264614503621cdb574cc01652c08d26a4316e
+  link:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -fopenmp
+    - -pthread
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/candidate-positive.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/record.o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14/seams-none.o
+    - -o
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin.link.json
+    candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+    record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+    seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+    fault_macro: null
+  run:
+    command:
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/bfs-o1g.v14.bin
+    - -f
+    - /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 88
+    stdout: |
+      Read Time:           0.00014
+      Initializing MAA
+      Starting TDStep: 1 elements
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/v14-o1g-forged_frontier.json
+    record: /private/tmp/claude-501/-Users-yanrujhou-CLionProjects-ArchEvolve/e8400c9a-cee1-41a5-8849-97385007ef13/scratchpad/runs-final/certify-b20f644b9d984a16aa9b64272ede24d7/run-6cecc222611bd34725773ec512c52ff2.record
+    record_sha256: 6b4fcc1a56deef437282c67589cbb52183b8e6f625aa61c6955aae559049d05f
+    plan:
+      fault: forged_frontier
+      nonce: 6cecc222611bd34725773ec512c52ff2
+  candidate_object_sha256: 8160f85e7b2ef90b97d47ec15d15d05f7884b00115b3a157804bf78675af39a3
+  binary_sha256: fc4549b9366944181c575e8d79f261f2f9548a03232c614ee544eca7e625620e
+  seam_object_sha256: b37685d6a3f09c6c38a9a02492cfb744e38d5c8898b611a5f2303bb63f1163c3
+  record_object_sha256: 7469283267633b093d33c117c64c7b9601e90aaebc49076ea822b98ece79dfb9
+  plan:
+    fault: forged_frontier
+    nonce: 6cecc222611bd34725773ec512c52ff2
+  named_checks: [duplicate_frontier]
+  observed_checks: [duplicate_frontier, frontier_size_equality]
+  result_check: null
+  record_problems: []
+  seam_witness:
+    problems: []
+    claim_base: '0x78316b4000'
+  schedule_order: 8
+verdict: certified
+evidence_basis: simulated
+evidence_kind: execution
+created_at: '2026-10-05T18:43:47.038784+00:00'
+candidate:
+  contract: contract.bfs_tdstep_frontier_staging
+  contract_sha256: f0919f00a623b3da50681a7f14c5d0ec2bd06e75266d6ce3709e7200dc68ef6d
+  tree_sha256: 7acca955a1f85a8563280d57b3d4e594bd0312393aeff946eda92f1577ad6ea3
+  snapshot: bfs-dx100-scalar-only-20260929-a1.source
+  changed_files: [benchmarks/gapbs/src/bfs.cc]
+  scan:
+    findings: 0
+    directives: 'only #pragma omp may be authored'
+  rewrite_scope:
+    file: benchmarks/gapbs/src/bfs.cc
+    function: void TDStep(
+  id: extensa-native-bfs-20261005-a8.it1.kronecker.a0
+  candidate_record:
+    record_sha256: adfa8ea59e79b79475cbf45b98350edf79cb68c5c333b3c40825f671f9cf4df8
+    mode: extensa
+    campaign: extensa-native-bfs-20261005-a8
+clause_controls:
+- clause: S1
+  control: partial_batch_dropped
+  check: frontier_size_equality
+  source: contract
+  observed_checks: [frontier_size_equality, verifier]
+  matched: true
+  enforceable: true
+- clause: S2
+  control: stale_row_offset
+  check: verifier
+  source: contract
+  observed_checks: [frontier_size_equality, verifier]
+  matched: true
+  enforceable: true
+- clause: C1
+  control: forged_frontier
+  check: duplicate_frontier
+  source: contract
+  observed_checks: [duplicate_frontier, frontier_size_equality]
+  matched: true
+  enforceable: true
+- clause: C2
+  control: claim_without_write
+  check: verifier
+  source: contract
+  observed_checks: [verifier]
+  matched: true
+  enforceable: true
+- clause: frontier_size_equality
+  control: partial_batch_dropped
+  check: frontier_size_equality
+  source: contract
+  observed_checks: [frontier_size_equality, verifier]
+  matched: true
+  enforceable: true
+- clause: once_enqueue
+  control: forged_frontier
+  check: duplicate_frontier
+  source: contract
+  observed_checks: [duplicate_frontier, frontier_size_equality]
+  matched: true
+  enforceable: true
+profile:
+  id: profile.native_bfs_tdstep
+  path: profiles/native_bfs_tdstep.yaml
+  sha256: ad5b76b8674a2289437b663b6c8aa5d15a1337596e4881819adc250d57b14a36
+  target: native_cpu
+  target_scope: pre-check executed on Darwin arm64; the target check is the evaluator compiled verifier
+    on every timed trial on mbit10 (x86_64)
+  schedule:
+  - build: o3
+    order: 0
+    kind: matrix
+    name: kronecker-16/t4/0
+  - build: o3
+    order: 1
+    kind: matrix
+    name: two-level-degree-17000/t1/0
+  - build: o3
+    order: 2
+    kind: control
+    name: claim_without_write
+  - build: o3
+    order: 3
+    kind: matrix
+    name: kronecker-14/t1/0
+  - build: o3
+    order: 4
+    kind: matrix
+    name: kronecker-10/t1/0
+  - build: o3
+    order: 5
+    kind: matrix
+    name: uniform-14/t4/0
+  - build: o3
+    order: 6
+    kind: control
+    name: partial_batch_dropped
+  - build: o3
+    order: 7
+    kind: matrix
+    name: kronecker-10/t4/0
+  - build: o3
+    order: 8
+    kind: matrix
+    name: uniform-14/t1/0
+  - build: o3
+    order: 9
+    kind: control
+    name: stale_row_offset
+  - build: o3
+    order: 10
+    kind: matrix
+    name: two-level-degree-17000/t4/0
+  - build: o3
+    order: 11
+    kind: matrix
+    name: staging-tail-17/t4/0
+  - build: o3
+    order: 12
+    kind: control
+    name: forged_frontier
+  - build: o3
+    order: 13
+    kind: matrix
+    name: kronecker-14/t4/0
+  - build: o3
+    order: 14
+    kind: matrix
+    name: kronecker-16/t1/0
+  - build: o1g
+    order: 0
+    kind: matrix
+    name: kronecker-14/t1/0
+  - build: o1g
+    order: 1
+    kind: control
+    name: claim_without_write
+  - build: o1g
+    order: 2
+    kind: matrix
+    name: kronecker-16/t4/0
+  - build: o1g
+    order: 3
+    kind: matrix
+    name: uniform-14/t4/0
+  - build: o1g
+    order: 4
+    kind: matrix
+    name: kronecker-10/t1/0
+  - build: o1g
+    order: 5
+    kind: control
+    name: stale_row_offset
+  - build: o1g
+    order: 6
+    kind: matrix
+    name: two-level-degree-17000/t4/0
+  - build: o1g
+    order: 7
+    kind: control
+    name: partial_batch_dropped
+  - build: o1g
+    order: 8
+    kind: control
+    name: forged_frontier
+  - build: o1g
+    order: 9
+    kind: matrix
+    name: uniform-14/t1/0
+  - build: o1g
+    order: 10
+    kind: matrix
+    name: two-level-degree-17000/t1/0
+  - build: o1g
+    order: 11
+    kind: matrix
+    name: kronecker-10/t4/0
+  - build: o1g
+    order: 12
+    kind: matrix
+    name: staging-tail-17/t4/0
+  - build: o1g
+    order: 13
+    kind: matrix
+    name: kronecker-14/t4/0
+  - build: o1g
+    order: 14
+    kind: matrix
+    name: kronecker-16/t1/0
