@@ -138,8 +138,10 @@ def plan_line(fault, nonce):
 def run(binary, graph, source, log, threads, fault=None):
     """One run: a fresh record file and a plan pipe; stdout and stderr are only logged."""
     from swdb.certification import execute
-    record = Path(str(log) + '.record')
     nonce = secrets.token_hex(16)
+    # Ticket 78 (from ticket 75's review): the record file is named by the nonce, not by the cell or
+    # control, so the descriptor's path does not name the fault; ``log`` keeps the mapping.
+    record = Path(log).parent / f'run-{nonce}.record'
     descriptor = os.open(record, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
     plan_read, plan_write = os.pipe()
     try:

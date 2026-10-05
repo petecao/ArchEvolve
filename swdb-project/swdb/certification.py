@@ -1127,6 +1127,11 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         # 1.4 also refuses descriptor reads, temporary files and frame introspection.
         from swdb.certification_isolation import refuse_scan_findings
         refuse_scan_findings(snapshot_text, (tree / plugin.certification_source).read_text(), version=version)
+        if version == '1.5':
+            # Ticket 78 (from ticket 75's review): authored code may not depend on whether it is a
+            # certification build (knob defaults and the diagnostic block excepted).
+            from swdb.certification_process import refuse_directives
+            refuse_directives(snapshot_text, (tree / plugin.certification_source).read_text(), entry)
         identity = {'contract': entry_id, 'contract_sha256': content_sha256,
                     'tree_sha256': artifacts.identify(tree)['sha256'], 'snapshot': snapshot_id, 'changed_files': changed_files}
         if candidate:

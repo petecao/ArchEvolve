@@ -25,6 +25,7 @@ the scan are 1.4's, unchanged (``certification_blinding``): only the build and t
 from __future__ import annotations
 
 import os
+import re
 import secrets
 from pathlib import Path
 
@@ -134,13 +135,19 @@ class Build:
         return result
 
 
+def record_path(log, nonce):
+    """A neutral record file name (ticket 78, from ticket 75's review): named by the run's nonce, not by
+    the cell or control, so no path the run can see names its fault. ``log`` keeps the mapping."""
+    return Path(log).parent / f'run-{nonce}.record'
+
+
 def run(link, graph, source, log, threads, fault=None):
     """One run: the evaluator gets the record descriptor and the plan pipe and starts the candidate
     binary as its child (only the shared arena is passed on); stdout and stderr are only logged."""
     from swdb.certification import execute
     from swdb.certification_blinding import CHANNEL_ENV, PLAN_ENV, plan_line
-    record = Path(str(log) + '.record')
     nonce = secrets.token_hex(16)
+    record = record_path(log, nonce)
     descriptor = os.open(record, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
     plan_read, plan_write = os.pipe()
     try:
@@ -246,7 +253,7 @@ def _native_run(link, output, graph, vertex, log, threads, fault):
     from swdb.certification_blinding import CHANNEL_ENV, PLAN_ENV
     from swdb.certification_native import _plan_line
     nonce = secrets.token_hex(16)
-    record = Path(log).parent / f'run-{nonce}.record'   # as ticket 75's native 1.4 runs
+    record = record_path(log, nonce)
     descriptor = os.open(record, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
     plan_read, plan_write = os.pipe()
     try:
@@ -275,3 +282,77 @@ def certify_native(tree, library, folder, profile, plugin, *, rng=None):
     return native.certify_native_v14(tree, library, folder, profile, plugin, rng=rng,
                                      build_class=_native_build_class(Path(library)), runner=_native_run,
                                      driver=Path(library) / NATIVE_DRIVER, suffix='v15')
+
+
+# --- DX100 authored-directive rule (1.5; ticket 78, from ticket 75's review) -----------------------------
+
+_CONDITIONAL = re.compile(r'#\s*(if|ifdef|ifndef|elif|elifdef|elifndef)\b(.*)$')
+_DEFINITION = re.compile(r'#\s*(define|undef)\s+([A-Za-z_]\w*)')
+# Names whose definition differs between a certification build and a target build: the 1.4/1.5
+# prelude's seam macros and the hooked intrinsics.
+SEAM_MACROS = ('compare_and_swap', 'QueueBuffer', 'SlidingQueue', '__dxc_session_begin', '__dxc_thread_context',
+               '__dxc_wait', '__dxc_gather', '__dxc_stream_load', '__dxc_range_loop', '__dxc_alu_scalar',
+               '__dxc_accelerated_chunk', 'main', 'DOBFS', 'Brandes')
+
+
+def knob_default_macros(contract):
+    """The macros a DX100 rewrite may give a default with ``#ifndef M`` / ``#define M`` / ``#endif``:
+    each contract knob's campaign macro ``SWDB_KNOB_<NAME>`` and its short form ``SWDB_<NAME>``."""
+    from swdb.certification_legality import knob_macro
+    names = set()
+    for knob in (contract or {}).get('knobs') or []:
+        macro = knob_macro(knob['name'])
+        names |= {macro, 'SWDB_' + macro[len('SWDB_KNOB_'):]}
+    return names
+
+
+def directive_findings(original, candidate, contract):
+    """Findings [(line, token, why)] of the 1.5 DX100 directive rule on candidate-authored lines.
+
+    Ticket 75's native rule (only ``#pragma omp`` may be authored) would refuse ticket 20, ticket 42
+    and both a7 bests, which author knob defaults and a diagnostic block. The DX100 form keeps its
+    intent: no authored code may depend on whether it is a certification build. An authored
+    conditional directive is allowed only as
+      - ``#ifndef M`` directly followed by ``#define M ...`` and ``#endif``, M a contract knob macro;
+      - ``#ifdef SWDB_DXC_DIAGNOSTIC`` (defined in neither certification nor target builds).
+    Any other ``#if``/``#ifdef``/``#ifndef``/``#elif``, the token ``defined``, and ``#define`` or
+    ``#undef`` of a seam macro are refused."""
+    import difflib
+    authored = set()
+    matcher = difflib.SequenceMatcher(None, original.splitlines(), candidate.splitlines(), autojunk=False)
+    for tag, _, _, j1, j2 in matcher.get_opcodes():
+        if tag in ('replace', 'insert'):
+            authored.update(range(j1 + 1, j2 + 1))
+    lines = candidate.splitlines()
+    knobs = knob_default_macros(contract)
+    findings = []
+    for number in sorted(authored):
+        text = lines[number - 1].strip()
+        if not text.startswith('#'):
+            continue
+        conditional = _CONDITIONAL.match(text)
+        definition = _DEFINITION.match(text)
+        if conditional:
+            kind, condition = conditional.group(1), conditional.group(2).split('//')[0].strip()
+            following = [lines[i].strip() for i in range(number, min(number + 2, len(lines)))]
+            knob_default = (kind == 'ifndef' and condition in knobs and len(following) == 2
+                            and re.match(r'#\s*define\s+' + re.escape(condition) + r'\b', following[0])
+                            and re.match(r'#\s*endif\b', following[1]))
+            diagnostic = kind == 'ifdef' and condition == 'SWDB_DXC_DIAGNOSTIC'
+            if not (knob_default or diagnostic):
+                findings.append((number, '#' + kind, 'conditional directive (only knob defaults and the '
+                                 'SWDB_DXC_DIAGNOSTIC block may be authored)'))
+        elif definition and definition.group(2) in SEAM_MACROS:
+            findings.append((number, definition.group(2), 'definition of a certification seam macro'))
+        elif re.search(r'\bdefined\b', text):
+            findings.append((number, 'defined', 'conditional on the build'))
+    return findings
+
+
+def refuse_directives(original, candidate, contract):
+    from swdb.cli import UsageError
+    findings = directive_findings(original, candidate, contract)
+    if findings:
+        shown = '; '.join(f'line {line} {token!r} ({why})' for line, token, why in findings[:5])
+        more = f' and {len(findings) - 5} more' if len(findings) > 5 else ''
+        raise UsageError('candidate source refused by the harness scan (certify 1.5 directives): ' + shown + more)
