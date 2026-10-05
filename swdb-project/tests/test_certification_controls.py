@@ -97,11 +97,11 @@ def test_every_bfs_control_is_a_library_fault_and_only_forged_frontier_edits_the
     assert set(kernels.BFS.certification_controls) == set(faults.LIBRARY_FAULTS)
     block = (ROOT / 'library' / faults.FAULT_FILE).read_text()
     for name, macro in faults.LIBRARY_FAULTS.items():
-        mutant = kernels.BFS.certification_control(source, name)
+        mutant = kernels.BFS.certification_control(source, name, counts=[1, 4200, 17000])
         assert mutant['fault'] == macro and f'defined({macro})' in block
         assert (mutant['source'] == source) == (name != 'forged_frontier')
-    forged = kernels.BFS.certification_control(source, 'forged_frontier')['source']
-    assert 'swdb_forged_counts[]={1,4200,17000}' in forged and 'swdb_certification_frontier(queue);' in forged
+    forged = kernels.BFS.certification_control(source, 'forged_frontier', counts=[1, 4200, 17000])['source']
+    assert 'swdb_forged_counts[3]={1,4200,17000}' in forged and 'swdb_certification_frontier(queue);' in forged
     # Spelling never decides whether a control exists.
     assert kernels.BFS.certification_control(reformatted(source), 'shared_context')['fault']
 
@@ -123,7 +123,7 @@ def test_token_matching_ignores_whitespace_and_comments_but_not_meaning():
     loose = instrumented.replace(bc.CPU_DEPTH, 'const NodeID fresh =\n   __atomic_load_n(&depths[v], __ATOMIC_RELAXED);')
     assert 'claimed?depth:hint' in bc.control(loose, 'stale_depth_hint')
     for name in bc.CONTROLS:
-        assert bc.control(instrumented, name) != instrumented or name in faults.LIBRARY_FAULTS
+        assert bc.control(instrumented, name, counts=[1, 2]) != instrumented or name in faults.LIBRARY_FAULTS
 
 
 def _bc_scalar():
@@ -238,3 +238,89 @@ def test_bc_l4_clause_gains_successor_bit_edge_index_and_path_count_controls():
     assert [(r['control'], r['source'], r['matched']) for r in rows] == [
         ('skipped_cas_recheck', 'contract', True), ('dropped_successor_bit', 'plugin', True),
         ('shifted_edge_index', 'plugin', True), ('shifted_path_count_source', 'plugin', True)]
+
+
+# --- 2026-10-04 ET: forged_frontier on graphs deeper than three levels (code review P3) ---------
+
+def _layered_graph(path, widths):
+    """Serialized directed CSR whose BFS levels from vertex 0 have exactly ``widths`` vertices."""
+    import struct
+    assert widths[0] == 1
+    starts = [sum(widths[:i]) for i in range(len(widths))]
+    nodes = sum(widths)
+    rows = [[] for _ in range(nodes)]
+    for level in range(len(widths) - 1):
+        for j in range(widths[level + 1]):
+            rows[starts[level] + j % widths[level]].append(starts[level + 1] + j)
+    inverse = [[] for _ in range(nodes)]
+    for u, row in enumerate(rows):
+        for v in row:
+            inverse[v].append(u)
+    with Path(path).open('wb') as stream:
+        stream.write(struct.pack('<Bii', 1, sum(map(len, rows)), nodes))
+        for adjacency in (rows, inverse):
+            offset = 0
+            stream.write(struct.pack('<i', offset))
+            for row in adjacency:
+                offset += len(row)
+                stream.write(struct.pack('<i', offset))
+            for row in adjacency:
+                if row:
+                    stream.write(struct.pack('<' + 'i' * len(row), *row))
+
+
+def test_forged_counts_table_holds_the_control_runs_own_counts_and_is_bounded():
+    block = faults.forged_counts_block([1, 2, 3, 4, 5, 100, 100])
+    assert 'swdb_forged_counts[7]={1,2,3,4,5,100,100}' in block and 'swdb_forged_level<7u' in block
+    source = 'x << queue.size() << " elements" y'
+    assert 'swdb_forged_count(queue.size())' in faults.library_control(source, 'forged_frontier', counts=[1])['source']
+    for counts in (None, [], [1, -1]):
+        with pytest.raises(Failure, match='oracle frontier counts'):
+            faults.library_control(source, 'forged_frontier', counts=counts)
+    assert faults.library_control(source, 'dropped_wait')['source'] == source   # other controls need no counts
+
+
+@pytest.mark.parametrize('widths,rejected', [([1, 2, 3, 4, 5, 6, 7, 2], False), ([1, 2, 3, 4, 5, 100, 100], True)],
+                         ids=['eight-levels-scalar', 'seven-levels-accelerated'])
+def test_forged_frontier_prints_every_level_of_a_deep_graph(tmp_path, widths, rejected):
+    """Before the fix the table was {1,4200,17000}: level four read past its end.
+
+    Eight scalar levels: the fault never fires (no accelerated chunk), the forged print shows the
+    oracle at every level, and the run passes. Seven levels with accelerated levels six and seven:
+    the duplicate push is caught by the trusted queue check (`duplicate_frontier`) after six
+    correctly forged prints.
+    """
+    try:
+        c.compiler()
+    except Failure:
+        pytest.skip('certification requires GCC with OpenMP')
+    graph = tmp_path / 'layered.sg'
+    _layered_graph(graph, widths)
+    counts = c.graph_oracle(graph, 0)
+    assert counts == widths and len(counts) > 3
+    folder = tmp_path / 'tree'
+    folder.mkdir()
+    tree, _ = c.materialize_snapshot(Store(ROOT / 'records'), c.DEFAULT_SNAPSHOT, folder)
+    c.apply_patch(tree, _patch(tmp_path, lambda s: s))
+    library = (ROOT / 'library').resolve()
+    mutant = kernels.BFS.certification_control(kernels.BFS.certification_instrument((tree / c.BFS).read_text()),
+                                               'forged_frontier', counts=counts)
+    (tree / c.BFS).write_text(mutant['source'])
+    (tree / c.HEADER).write_bytes(faults.fault_header((tree / c.HEADER).read_bytes(), library))
+    binary = tmp_path / 'bfs-forged'
+    build = c.compile_cpp(tree / c.BFS, binary, library, tile_size=1024, threads=4, tree=tree,
+                          defines=['-D' + mutant['fault']])
+    assert build['returncode'] == 0, build['stderr'][-2000:]
+    run = c.execute([binary, '-f', graph, '-r', 0, '-n', '1', '-v'], tmp_path / 'run.json')
+    printed = [int(n) for n in re.findall(r'Starting TDStep(?:MAA)?: (\d+) elements', run['stdout'])]
+    passed, _ = kernels.BFS.certification_judge(run, counts)
+    named = re.findall(r'SWDB_(?:STRICT_ASSERT|DIFFERENTIAL_MISMATCH|PRESERVATION_FAIL):([a-z_]+)',
+                       run['stdout'] + run['stderr'])
+    observed = c.observed_checks(run, counts, kernels.BFS.certification_judge, named)
+    status = c.control_status(kernels.BFS.certification_controls['forged_frontier'], observed, run, passed)
+    if rejected:
+        assert printed == counts[:len(printed)] and len(printed) == len(counts) - 1, printed
+        assert run['returncode'] == 88 and 'duplicate_frontier' in observed and status == 'rejected'
+    else:
+        assert printed == counts, printed
+        assert run['returncode'] == 0 and passed and status == 'survived'

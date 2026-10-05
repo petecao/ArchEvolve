@@ -1,6 +1,7 @@
 # Final code review, tickets 38–65
 
 Created: 2026-10-04 ET
+Updated: 2026-10-04 21:10 ET (forged-frontier P3 fixed in `ab98aeb`)
 
 **Range:** `58aff85..24da1d2` on `yanrujhou_main`, limited to `swdb-project/`. The fixes are
 on the review branch (worktree `agent-ae1e0bf9afef585df`), `2738a26..HEAD`. Nothing was pushed.
@@ -35,7 +36,7 @@ normative content of a library entry.
 | P3 | `swdb/certification.py:256` | A snapshot record's `source_derivation.script` named code that was executed. | `0e52ca6`: only `scripts/prepare_*_snapshot.py` |
 | P3 | `swdb/certification.py:320,708`, `library_operations.py:263` | Hard-coded `/private/tmp` (sandbox-denied; absent on Linux). | `63e6534`: `tempfile.gettempdir()` |
 | P3 | `tools/bfs_native/driver_scalable.cc.in:128` | The v2 driver casts `DOBFS`'s parents to `int32_t`. A candidate returning wider values could have out-of-range parents truncated into valid ones. | **Not fixed.** The template hash is pinned in frozen native protocols (`instrumentation.template_sha256`). This needs a new evaluator version: add a `static_assert` on the element type. |
-| P3 | `swdb/certification_faults.py:41` | The forged frontier counts are fixed to the source-0 oracle. | **Partly fixed** by `8040609`: the control now needs `duplicate_frontier`, so a non-zero source can no longer "reject" it through the forged print alone. With more than three levels, the read past the array end remains. |
+| P3 | `swdb/certification_faults.py:41` | The forged frontier counts are fixed to the source-0 oracle. | **Partly fixed** by `8040609`: the control now needs `duplicate_frontier`, so a non-zero source can no longer "reject" it through the forged print alone. With more than three levels, the read past the array end remained. **Fixed** 2026-10-04 21:10 ET in `ab98aeb`: the table holds the control run's own oracle counts and is bounded; regression tests on 7- and 8-level graphs; ticket 20 still certifies 10/10 with 16/16 controls rejected by their named checks. |
 | P3 | `swdb/annotation.py:21` | The profiling role uses `minLength`, `minItems` and `minimum`. Some strict-mode checkers refuse these. | **Not fixed** (not verified against the API). `strict_problems` checks object shape only. |
 
 These were seen and judged below the reporting bar, so they are not fixed:

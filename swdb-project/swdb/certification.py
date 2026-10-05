@@ -459,7 +459,7 @@ def judge_bfs(result, counts, *, calibrate=False, threshold=64):
     return True, 'all_checks_passed'
 
 
-def _rewrite_control(source, name, *, calibrate=False):
+def _rewrite_control(source, name, *, calibrate=False, counts=None):
     """Mutate actual candidate code; no fabricated runtime result fixtures."""
     if calibrate:
         if name == 'wrong_store_wait':
@@ -474,7 +474,7 @@ def _rewrite_control(source, name, *, calibrate=False):
     # Ticket 62 (2026-10-04 ET): candidate controls act at the library seam, never on
     # the candidate's spelling (swdb.certification_faults).
     from swdb.certification_faults import library_control
-    return library_control(source, name)
+    return library_control(source, name, counts=counts)
 
 
 def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrate=False, threshold=64, plugin=None):
@@ -537,7 +537,7 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
                 oracle_counts[graph_name] = plugin.certification_oracle(graph, plugin.control_source(sources))
             counts = oracle_counts[graph_name]
             mutant = (_rewrite_control(instrument_source(source, calibrate=True), name, calibrate=True) if calibrate
-                      else plugin.certification_control(plugin.certification_instrument(source), name))
+                      else plugin.certification_control(plugin.certification_instrument(source), name, counts=counts))
             if isinstance(mutant, str):
                 mutant = {'source': mutant, 'fault': None, 'site': 'calibration_source' if calibrate else 'candidate_tokens'}
             source_path.write_text(mutant['source'])

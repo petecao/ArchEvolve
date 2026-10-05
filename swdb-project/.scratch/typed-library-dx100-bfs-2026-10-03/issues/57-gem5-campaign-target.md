@@ -1,7 +1,7 @@
 # 57 — gem5 Extensa campaign target
 
 Created: 2026-10-03
-Updated: 2026-10-04 ET (a7 rerun with ticket 65); 2026-10-04 ET (a6 rerun with the ticket 62 certifier); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D2, D4, D7)
+Updated: 2026-10-04 20:30 ET (a7 audit against the final code review fixes; gains stand); 2026-10-04 ET (a7 rerun with ticket 65); 2026-10-04 ET (a6 rerun with the ticket 62 certifier); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D2, D4, D7)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 53, 54, 55 (29 resolved)
@@ -131,3 +131,44 @@ login before the coordinator's hold; no login failure was observed.
 - Caveats: each class used one graph and one source. The ratios are simulated gem5 point
   ratios (spread 0), not hardware evidence and not a general speedup claim.
 - Summary: `records/campaign_summaries/extensa-gem5-bfs-20261004-a7.summary.yaml` (team store).
+
+**Audit 2026-10-04 20:30 ET: a7 gains against the final code review fixes (no erratum needed).**
+
+a7 ran before three review fixes:
+
+- `d895705`: a repaired patch skipped the leakage scan.
+- `f304e5c`: campaign `certify` read a `failed` certificate with nothing named as `certified`.
+- `8040609`: a control counted as rejected on any failure, not only on its own named check.
+
+On the Mac, the a7 records were re-checked with the fixed code at `097eb0e`. The gem5 timings were
+not re-run.
+
+- **Leakage scan.** All 20 a7 candidate patches were scanned. This includes the best patch
+  `29ccf0255a69…`, which the best candidates of both classes share. No patch states an outcome.
+- **Fixed rules on the recorded runs.** All 21 a7 certificates were re-judged from their recorded
+  runs, and no verdict changed: 3 certified, 18 failed. Every failed certificate names its failing
+  checks, so no certificate failed open.
+- **Re-certification on the Mac.** Each best candidate's exact tree was rebuilt with `g++-16`; its
+  tree_sha256 equals the candidate record. Each tree was then certified with the fixed certifier:
+
+| Class | Best candidate | Mac re-certification | Matrix | Controls | Clause controls |
+|---|---|---|---|---|---|
+| kronecker | `it4.kronecker.a2` (tree `c8f4bf16…`) | `certified` | 10/10 | 16/16 rejected, each by its own check | every enforceable clause matched |
+| uniform_random | `it8.uniform_random.a1` (tree `d63c714a…`) | `certified` | 10/10 | 16/16 rejected, each by its own check | every enforceable clause matched |
+
+- **Verdict.** Both class verdicts stand. Kronecker is `gain` at 1.411 and uniform_random is `gain`
+  at 1.553. These are simulated point ratios on a single graph per class. The campaign summary is
+  unchanged.
+- **Not enforceable.** No run can report `knob_range` or `schedule_range`, so these clause checks are
+  not enforced. The review already reported this.
+- **Evidence.** [`evaluation/a7-review-fix-audit-2026-10-04.json`](../evaluation/a7-review-fix-audit-2026-10-04.json).
+- **New finding (open).** Six of the 18 failed certificates failed only because `forged_frontier`
+  survived at tile 16384.
+  - Cause: the fault pushes a duplicate only after an accelerated chunk has finished
+    (`swdb_dxc::chunks() > 0`). If a level's only chunk ends after all its pushes, the fault never
+    fires. That happens with a single 16,384-element chunk and threshold 64.
+  - Example: `it5.kronecker.a1` carries the best patch with `frontier_threshold` 64 and failed. The
+    certified copies use threshold 1.
+  - Effect: the control can reject a correct candidate. This is a false rejection, not a false
+    pass, so the certified results above are not affected.
+  - Changing when the fault fires changes a control, so that decision is Yan-Ru's.
