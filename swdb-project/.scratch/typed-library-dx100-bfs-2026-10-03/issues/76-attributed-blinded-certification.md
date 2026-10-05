@@ -1,7 +1,7 @@
 # 76 — Certify 1.4: blinded controls, attributed rejections, a trusted frontier ledger, aggregate feedback
 
 Created: 2026-10-05 12:13 ET (from the open items of ticket 70)
-Updated: 2026-10-05 13:25 ET (resolved)
+Updated: 2026-10-05 13:25 ET (resolved); 2026-10-05 14:21 ET (the open library-operation item is addressed by ticket 77)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** —

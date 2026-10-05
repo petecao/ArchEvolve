@@ -1079,8 +1079,11 @@ def register_cli(commands):
     sub.add_argument('--profile', help='certification profile (library operations)')
     sub.add_argument('--seed', type=int, help='fixed case seed (default: chosen after the candidate exists)')
     # Ticket 76 (2026-10-05 ET): candidate artifacts default to certify 1.4; 1.3 stays selectable.
-    sub.add_argument('--command-version', choices=VERSIONS, default=None,
-                     help='certify command version for candidate artifacts (default: the current version)')
+    # Ticket 77 (2026-10-05 ET): library operations (--profile) default to command 1.1; 1.0 selectable.
+    from swdb.library_operations import VERSIONS as LIBRARY_OPERATION_VERSIONS
+    sub.add_argument('--command-version', choices=(*LIBRARY_OPERATION_VERSIONS, *VERSIONS), default=None,
+                     help='certify command version: 1.3 or 1.4 for candidate artifacts, 1.0 or 1.1 for library '
+                          'operations with --profile (default: the current version of each)')
     return sub
 
 
