@@ -286,7 +286,7 @@ def scan(original, candidate, version='1.3'):
     """Findings [(line, token, why)] in candidate-authored lines (those not in the snapshot text).
 
     ``version`` '1.4' (ticket 76) refuses the larger primitive set :data:`PRIMITIVES_1_4`."""
-    primitives = PRIMITIVES_1_4 if version == '1.4' else PRIMITIVES
+    primitives = PRIMITIVES_1_4 if version in ('1.4', '1.5') else PRIMITIVES   # 1.5: ticket 78
     from swdb.certification_faults import tokens
     authored = set()
     matcher = difflib.SequenceMatcher(None, original.splitlines(), candidate.splitlines(), autojunk=False)

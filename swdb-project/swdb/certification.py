@@ -26,6 +26,7 @@ import struct
 import subprocess
 import uuid
 import tempfile
+import time
 from collections import deque
 
 from swdb import artifacts, paths, workflow
@@ -52,8 +53,14 @@ from swdb.store import Store
 # `certify(..., version='1.3')` (CLI `--command-version 1.3`) still runs 1.3 unchanged.
 # Lowering certification and calibration certify only evaluator-pinned trusted code (ticket 76) and
 # are unchanged.
-VERSION = '1.4'
-VERSIONS = ('1.3', '1.4')
+# 1.5 (2026-10-05 ET, ticket 78; scope decided by Yan-Ru 2026-10-05, engineering refactor): candidate
+# artifacts are certified by swdb.certification_process. The record writer, the run plan, the fault
+# logic, the frontier ledger and the strict model's state run in a trusted evaluator process; the
+# candidate runs as its child, with its C++ heap in a shared arena, and reaches every seam and
+# strict-layer call by a request to the evaluator. Procedure, record format, judge, attribution and
+# scan are 1.4's. Records of 1.4 and earlier keep their meaning; 1.3 and 1.4 stay selectable.
+VERSION = '1.5'
+VERSIONS = ('1.3', '1.4', '1.5')
 ROOT = paths.HOME
 BFS = 'benchmarks/gapbs/src/bfs.cc'
 HEADER = 'benchmarks/gapbs/src/swdb_dxc_lowering.hpp'
@@ -109,6 +116,7 @@ def compiler():
 
 def execute(command, log, *, cwd=None, threads=4, timeout=180, extra_env=None, pass_fds=()):
     environment = {**os.environ, 'OMP_NUM_THREADS': str(threads), 'OMP_DYNAMIC': 'FALSE', **(extra_env or {})}
+    started = time.monotonic()   # ticket 78: wall time of every command (overhead measurement)
     try:
         process = subprocess.run([str(x) for x in command], cwd=cwd, env=environment,
                                  capture_output=True, text=True, timeout=timeout, pass_fds=tuple(pass_fds))
@@ -118,6 +126,7 @@ def execute(command, log, *, cwd=None, threads=4, timeout=180, extra_env=None, p
         result = {'command': [str(x) for x in command], 'returncode': None,
                   'stdout': (exc.stdout or b'').decode() if isinstance(exc.stdout, bytes) else (exc.stdout or ''),
                   'stderr': (exc.stderr or b'').decode() if isinstance(exc.stderr, bytes) else (exc.stderr or ''), 'timeout': True}
+    result['seconds'] = round(time.monotonic() - started, 4)
     Path(log).write_text(json.dumps(result, indent=2) + '\n')
     result['log'] = str(Path(log).resolve())
     return result
@@ -579,8 +588,9 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
         if version == '1.3':
             return certify_candidate(tree, library, folder, tile_sizes, threads, sources, threshold=threshold,
                                      plugin=plugin or kernels.BFS, contract=contract)
-        from swdb import certification_blinding
-        matrix, controls, _schedule = certification_blinding.certify_candidate(
+        from swdb import certification_blinding, certification_process
+        certify_with = (certification_process if version == '1.5' else certification_blinding).certify_candidate
+        matrix, controls, _schedule = certify_with(
             tree, library, folder, tile_sizes, threads, sources, threshold=threshold, plugin=plugin or kernels.BFS,
             contract=contract)
         return matrix, controls
@@ -924,8 +934,9 @@ def source_digest(library_root):
     legality = Path(__file__).with_name('certification_legality.py')  # ticket 68
     isolation = Path(__file__).with_name('certification_isolation.py')  # ticket 70
     blinding = Path(__file__).with_name('certification_blinding.py')  # ticket 76
+    process = Path(__file__).with_name('certification_process.py')  # ticket 78
     files = sorted(p for p in (library_root / 'dx100').rglob('*') if p.is_file()) + [Path(__file__), faults, legality,
-                                                                                    isolation, blinding]
+                                                                                    isolation, blinding, process]
     return artifacts.digest([{'path': p.relative_to(library_root).as_posix() if library_root in p.parents else 'swdb/' + p.name,
                               'sha256': artifacts.file_hash(p)} for p in files])
 
@@ -948,7 +959,8 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
     if not calibrate and not entry_id:
         raise UsageError('certification requires an entry ID')
     # Ticket 76: 1.4 by default; 1.3 stays selectable for candidate artifacts (its records keep their
-    # meaning, and work in progress under 1.3 can be repeated exactly).
+    # meaning, and work in progress under 1.3 can be repeated exactly). Ticket 78: 1.5 by default;
+    # 1.3 and 1.4 stay selectable.
     version = version or VERSION
     if version not in VERSIONS:
         raise UsageError('certify command version must be one of ' + ', '.join(VERSIONS))
@@ -1079,10 +1091,11 @@ def register_cli(commands):
     sub.add_argument('--profile', help='certification profile (library operations)')
     sub.add_argument('--seed', type=int, help='fixed case seed (default: chosen after the candidate exists)')
     # Ticket 76 (2026-10-05 ET): candidate artifacts default to certify 1.4; 1.3 stays selectable.
+    # Ticket 78 (2026-10-05 ET): candidate artifacts default to certify 1.5; 1.3 and 1.4 selectable.
     # Ticket 77 (2026-10-05 ET): library operations (--profile) default to command 1.1; 1.0 selectable.
     from swdb.library_operations import VERSIONS as LIBRARY_OPERATION_VERSIONS
     sub.add_argument('--command-version', choices=(*LIBRARY_OPERATION_VERSIONS, *VERSIONS), default=None,
-                     help='certify command version: 1.3 or 1.4 for candidate artifacts, 1.0 or 1.1 for library '
+                     help='certify command version: 1.3, 1.4 or 1.5 for candidate artifacts, 1.0 or 1.1 for library '
                           'operations with --profile (default: the current version of each)')
     return sub
 
