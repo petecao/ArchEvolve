@@ -98,7 +98,7 @@ def test_gem5_campaign_feedback_and_repair_name_the_check_without_run_output(rep
     patch = inside_patch(base_source)
     answer = {"patch": patch, "contracts": [CONTRACT], "knobs": knob_rows({}), "unresolved": []}
     config = provider(repo_team, {"rewriting": [answer], "repair": [answer]})
-    monkeypatch.setattr("test_extensa_targets.fake_certify", lambda store, contract, **kw: failing_record())
+    monkeypatch.setattr("testkit.extensa_targets.fake_certify", lambda store, contract, **kw: failing_record())
     seen = []
     original = campaign.Campaign._call
 
