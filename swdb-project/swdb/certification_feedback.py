@@ -1,6 +1,8 @@
 """Name the check a campaign candidate failed, for the rewrite provider (ticket 64).
 
 Created: 2026-10-04 ET. Agent-decided under Yan-Ru's 2026-10-04 delegation; revisable.
+Updated: 2026-10-04 ET (ticket 70: certify 1.3 cells carry the strict names from the evaluator's
+record channel in `named_checks`; the run's output is read only for older records).
 
 Campaign a6 (ticket 57) told the provider only "Certification failed a named check": the strict
 layer's `range_bounds` stopped every edit, and the provider never learned which check. This module
@@ -57,7 +59,7 @@ STRICT_MESSAGES = {
 
 OTHER_MESSAGES = {
     "frontier_size_equality": "the per-step frontier sizes differ from the trusted scalar oracle",
-    "verifier": "the BFS verifier did not print PASS",
+    "verifier": "the kernel's returned result failed the evaluator's correctness check",
     "execution_witness": "the accelerated path did not run on a frontier at the threshold",
     "process_failure": "the program exited with an error and no named check",
     "timeout": "the run exceeded its time limit",
@@ -69,11 +71,21 @@ OTHER_MESSAGES = {
     "schedule_range": "an OpenMP worksharing-loop schedule clause is not static or dynamic with an "
                       "integer-constant chunk inside the contract's schedule_granularity range",
     "legality_check_invalid": "the source could not be preprocessed for the knob and schedule checks",
+    # Ticket 70 (2026-10-04 ET, certify 1.3).
+    "harness_scan": "the rewrite names an evaluator-internal symbol, a certification-build macro, or a "
+                    "file-descriptor, environment, loader or process primitive, which candidate code may not use",
+    "record_invalid": "the run's evaluator records were malformed",
 }
 
 
-def strict_names(run):
-    """The strict-layer check names one run printed (stdout and stderr), in order, unique."""
+def strict_names(run, named_checks=None):
+    """The strict-layer check names of one run, in order, unique.
+
+    Certify 1.3 (ticket 70) records them as the cell's ``named_checks``, from the evaluator's record
+    channel; older records only have the strict layer's own line in the run's output.
+    """
+    if named_checks is not None:
+        return [name for name in dict.fromkeys(named_checks) if name in STRICT_MESSAGES]
     if not isinstance(run, dict):
         return []
     text = (run.get("stdout") or "") + (run.get("stderr") or "")
@@ -90,7 +102,7 @@ def matrix_checks(record):
         if cell.get("status") == "passed":
             continue
         reason = cell.get("reason") or "matrix"
-        names = strict_names(cell.get("run")) if reason == STRICT_PREFIX else []
+        names = strict_names(cell.get("run"), cell.get("named_checks")) if reason == STRICT_PREFIX else []
         for name in ([f"{STRICT_PREFIX}:{n}" for n in names] or [reason]):
             if name not in counts:
                 order.append(name)

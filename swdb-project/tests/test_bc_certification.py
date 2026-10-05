@@ -1,4 +1,5 @@
 """BC certification instance and the derived BC contract. Created: 2026-10-03 ET (ticket 42).
+Updated: 2026-10-04 ET (ticket 70: certify 1.3 judges BC from the recorded scores and frontier windows).
 
 The candidate matrix and its pass rule are a kernel plug-in. BFS keeps its exact
 functions; BC uses BCVerifier, the forward pass's per-level frontier sizes and an
@@ -6,7 +7,6 @@ accelerated-chunk witness. Strict-layer runs are finite functional evidence only
 """
 
 import importlib.util
-import re
 import shutil
 from pathlib import Path
 
@@ -20,10 +20,6 @@ from swdb.library import Library
 from swdb.store import Store
 
 ROOT = Path(__file__).resolve().parents[1]
-
-
-def _result(stdout, returncode=0, stderr=''):
-    return {'stdout': stdout, 'stderr': stderr, 'returncode': returncode, 'timeout': False}
 
 
 def _snapshot_module():
@@ -41,24 +37,22 @@ def test_bfs_certification_plugin_keeps_its_exact_functions():
     plugin = kernels.BFS
     assert plugin.certification_source == c.BFS and plugin.certification_snapshot == c.DEFAULT_SNAPSHOT
     assert plugin.certification_controls is c._CONTROL_EXPECTED
-    output = 'Starting TDStep: 1 elements\nSWDB trusted_frontier=1\nVerification: PASS\n'
-    assert plugin.certification_judge(_result(output), [1]) == c.judge_bfs(_result(output), [1])
     assert plugin.control_source((3, 4)) == 3
+    # Ticket 70 (certify 1.3): each plug-in names its evaluator driver and out-of-process result check.
+    assert plugin.certification_driver == 'dx100/certification/bfs_driver.inc' and plugin.certification_result_kind == 'i32'
+    assert kernels.BC.certification_driver == 'dx100/certification/bc_driver.inc' and kernels.BC.certification_result_kind == 'f32'
 
 
-def test_bc_pass_rule_needs_bcverifier_frontier_sizes_and_the_accelerated_chunk_witness():
-    counts = [1, 64]
-    output = ('Starting PBFS: 1 elements\nSWDB trusted_frontier=1\nStarting PBFS: 64 elements\n'
-              'SWDB trusted_frontier=64\nSWDB accelerated_chunks=2\nVerification: PASS\n')
-    assert bc.judge(_result(output), counts) == (True, 'all_checks_passed')
-    assert bc.judge(_result(output.replace('PASS', 'FAIL')), counts) == (False, 'verifier')
-    assert bc.judge(_result(output.replace('PBFS: 64', 'PBFS: 63')), counts) == (False, 'frontier_size_equality')
-    assert bc.judge(_result(output.replace('trusted_frontier=64', 'trusted_frontier=65')), counts) == (False, 'frontier_size_equality')
-    assert bc.judge(_result(output.replace('accelerated_chunks=2', 'accelerated_chunks=0')), counts) == (False, 'execution_witness')
-    assert bc.judge(_result(output.replace('accelerated_chunks=2', 'accelerated_chunks=0')), counts, threshold=65)[0]
-    # BFS's frontier print never satisfies BC's rule.
-    assert bc.judge(_result(output.replace('PBFS', 'TDStep')), counts) == (False, 'frontier_size_equality')
-    assert bc.judge(_result(output, 88, 'SWDB_PRESERVATION_FAIL:duplicate_frontier'), counts) == (False, 'frontier_size_equality')
+def test_bc_result_check_is_bcverifiers_criterion_on_recorded_scores():
+    """Ticket 70: BC's verifier verdict comes from the recorded scores, never from a printed PASS."""
+    from swdb.bc_native import reference_scores
+    adjacency = [[1, 2], [3], [3], []]
+    reference, _ = reference_scores(adjacency, 0, 'float')
+    assert kernels.BC.certification_check_result(adjacency, 0, reference)['passed']
+    wrong = list(reference)
+    wrong[3] += 0.5
+    assert not kernels.BC.certification_check_result(adjacency, 0, wrong)['passed']
+    assert not kernels.BC.certification_check_result(adjacency, 0, reference[:-1])['passed']
 
 
 def test_bc_forward_pass_rewrite_replaces_only_the_scalar_pbfs():
@@ -74,7 +68,7 @@ def test_bc_forward_pass_rewrite_replaces_only_the_scalar_pbfs():
     instrumented = bc.instrument_source(source)
     assert 'swdb_certification_frontier(queue);' in instrumented and '#include "MAA.hpp"' not in instrumented
     for name in bc.CONTROLS:
-        assert bc.control(instrumented, name, counts=[1, 2]) != instrumented
+        assert bc.control(instrumented, name) != instrumented
     with pytest.raises(Failure):
         bc.instrument_source(source.replace(bc.FRONTIER_TEXT, 'std::cout << queue.size();'))
 
@@ -181,21 +175,28 @@ def test_bc_forward_pass_certifies_with_every_control_rejected(tmp_path):
 
 
 def test_strict_bc_candidate_passes_and_the_bc_l1_control_is_rejected(tmp_path):
+    """Ticket 70 (certify 1.3): built with the evaluator prelude and driver, judged from records."""
+    from swdb import certification_isolation as isolation
     _gcc()
     _, tree = _bc_tree(tmp_path)
     graph = tmp_path / 'two-level.sg'
     c.two_level_graph(graph)
     counts = bc.frontier_oracle(graph, 0)
     library = (ROOT / 'library').resolve()
+    driver = (library / kernels.BC.certification_driver).read_text()
     source = bc.instrument_source((tree / bc.BC_SOURCE).read_text())
+    build = isolation.CandidateBuild(tmp_path / 'objects', library, tree, tree / bc.BC_SOURCE, 1024, 4)
     outcomes = {}
     for name in (None, 'stale_depth_hint'):
-        (tree / bc.BC_SOURCE).write_text(source if name is None else bc.control(source, name))
+        text = (source if name is None else bc.control(source, name)) + driver
+        candidate = build.candidate_object(text, name or 'positive')
+        assert candidate['returncode'] == 0, candidate['stderr'][-2000:]
         binary = tmp_path / f'bc-{name}'
-        build = c.compile_cpp(tree / bc.BC_SOURCE, binary, library, tile_size=1024, threads=4, tree=tree)
-        assert build['returncode'] == 0, build['stderr'][-2000:]
-        run = c.execute([binary, '-f', graph, '-r', 0, '-n', '1', '-v'], tmp_path / f'{name}.json')
-        outcomes[name] = (run['returncode'], bc.judge(run, counts), re.findall(r'accelerated_chunks=(\d+)', run['stdout']))
-    assert outcomes[None][1] == (True, 'all_checks_passed') and int(outcomes[None][2][0]) > 0
-    # Reading the stale DX100 hint loses path counts; BCVerifier fails with a clean exit.
+        assert build.link(candidate, None, binary)['returncode'] == 0
+        run = isolation.run(binary, graph, 0, tmp_path / f'{name}.json', 4)
+        verdict = c.judge_run(kernels.BC, run, graph, 0, counts)
+        chunks = isolation.parse_records(run['record'], set())['chunks']
+        outcomes[name] = (run['returncode'], (verdict['passed'], verdict['reason']), chunks)
+    assert outcomes[None][1] == (True, 'all_checks_passed') and outcomes[None][2] > 0
+    # Reading the stale DX100 hint loses path counts; the recorded scores fail with a clean exit.
     assert outcomes['stale_depth_hint'][0] == 0 and outcomes['stale_depth_hint'][1] == (False, 'verifier')

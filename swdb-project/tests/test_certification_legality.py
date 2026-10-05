@@ -5,7 +5,6 @@ that uses the campaign knob interface with a static_assert certifies (its knob c
 by knob_range even though the out-of-range value also stops its build). A candidate with an
 out-of-range assignment or schedule is refused on the matrix by the named check.
 """
-import re
 from pathlib import Path
 
 import pytest
@@ -153,4 +152,5 @@ def test_out_of_range_schedule_is_refused_by_schedule_range(tmp_path, monkeypatc
     assert record['verdict'] == 'failed'
     assert {x['reason'] for x in record['matrix']} == {'schedule_range'}
     # The runs themselves pass: only the named structural check refuses the candidate.
-    assert all(re.search(r'Verification\s*:?\s*PASS', x['run']['stdout']) for x in record['matrix'])
+    # Ticket 70 (certify 1.3): the result check is recorded per cell, never read from printed output.
+    assert all(x['result_check']['passed'] and x['observed_checks'] == [] for x in record['matrix'])

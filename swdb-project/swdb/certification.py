@@ -6,6 +6,10 @@ Controls count only after compilation and a named runtime rejection.
 Ticket 42 (2026-10-03 ET): a candidate's matrix instance and pass rule come from
 the kernel plug-in named by its rewrite contract's correctness check
 (``swdb.kernels``). BFS keeps the functions below; BC adds its own.
+
+Ticket 70 (2026-10-04 ET, certify 1.3): candidate artifacts are certified by
+:func:`certify_candidate` with the isolation of ``swdb.certification_isolation``; no candidate
+verdict is read from printed output.
 """
 from __future__ import annotations
 
@@ -32,7 +36,14 @@ from swdb.store import Store
 # `fault.version`). Records with command version 1.0 used forged_frontier version 1.
 # 1.2 (2026-10-04 ET, ticket 68): knob_range and schedule_range checks and their controls
 # (swdb.certification_legality); records before 1.2 report neither.
-VERSION = '1.2'
+# 1.3 (2026-10-04 ET, ticket 70): candidate-artifact certification is isolated
+# (swdb.certification_isolation): every named check is computed out of process from evaluator
+# records on a harness-opened descriptor, the kernel's result comes from an evaluator-owned main,
+# faults live in a separately compiled object linked to one unchanged candidate object, and a
+# harness scan refuses candidate text naming harness symbols. Records before 1.3 read named checks
+# from stdout/stderr and selected faults with a macro in the candidate's translation unit; they
+# keep that meaning. Lowering certification and calibration are unchanged.
+VERSION = '1.3'
 ROOT = paths.HOME
 BFS = 'benchmarks/gapbs/src/bfs.cc'
 HEADER = 'benchmarks/gapbs/src/swdb_dxc_lowering.hpp'
@@ -59,7 +70,8 @@ CONTROLS = {
 FRONTIER_TEXT = 'std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;'
 AUTHOR_FRONTIER_TEXT = 'std::cout << "Starting TDStepMAA: " << queue.size() << " elements" << std::endl;'
 TRUSTED_FRONTIER = r'''
-// Evaluator-owned preservation check, inserted into a private build copy.
+// Evaluator-owned preservation check, inserted into a private build copy (calibration only since
+// certify 1.3; candidates record the window through library/dx100/certification/record.cc).
 template<class Queue> void swdb_certification_frontier(const Queue& queue) {
  std::set<int32_t> unique;
  for(size_t i=queue.shared_out_start;i<queue.shared_out_end;++i)
@@ -85,11 +97,11 @@ def compiler():
     raise Failure('certification requires GCC with OpenMP (set SWDB_CERTIFY_CXX)')
 
 
-def execute(command, log, *, cwd=None, threads=4, timeout=180):
-    environment = {**os.environ, 'OMP_NUM_THREADS': str(threads), 'OMP_DYNAMIC': 'FALSE'}
+def execute(command, log, *, cwd=None, threads=4, timeout=180, extra_env=None, pass_fds=()):
+    environment = {**os.environ, 'OMP_NUM_THREADS': str(threads), 'OMP_DYNAMIC': 'FALSE', **(extra_env or {})}
     try:
         process = subprocess.run([str(x) for x in command], cwd=cwd, env=environment,
-                                 capture_output=True, text=True, timeout=timeout)
+                                 capture_output=True, text=True, timeout=timeout, pass_fds=tuple(pass_fds))
         result = {'command': [str(x) for x in command], 'returncode': process.returncode,
                   'stdout': process.stdout, 'stderr': process.stderr, 'timeout': False}
     except subprocess.TimeoutExpired as exc:
@@ -469,6 +481,11 @@ def matrix_graphs(folder, library, threads):
 
 
 def instrument_source(source, *, calibrate=False):
+    """Insert the evaluator's frontier inspection before the protected frontier print.
+
+    Ticket 70 (certify 1.3): for a candidate the inspection only records the window
+    (``candidate_prelude.hpp``, forced in by the build); calibration keeps the 1.2 in-source check.
+    """
     statement = AUTHOR_FRONTIER_TEXT if calibrate else FRONTIER_TEXT
     if source.count(statement) != 1:
         raise Failure('BFS frontier logging statement differs from the protected exact text')
@@ -476,6 +493,8 @@ def instrument_source(source, *, calibrate=False):
     if source.count('bool BFSVerifier(') != 1:
         raise Failure('BFS correctness check is missing or ambiguous')
     source = source.replace(statement, 'swdb_certification_frontier(queue);\n        ' + statement)
+    if not calibrate:
+        return source
     if calibrate:
         consume = '#pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)'
         if len(re.findall('^' + re.escape(consume) + '$', source, re.MULTILINE)) != 1:
@@ -507,7 +526,7 @@ def judge_bfs(result, counts, *, calibrate=False, threshold=64):
     return True, 'all_checks_passed'
 
 
-def _rewrite_control(source, name, *, calibrate=False, counts=None):
+def _rewrite_control(source, name, *, calibrate=False):
     """Mutate actual candidate code; no fabricated runtime result fixtures."""
     if calibrate:
         if name == 'wrong_store_wait':
@@ -522,145 +541,234 @@ def _rewrite_control(source, name, *, calibrate=False, counts=None):
     # Ticket 62 (2026-10-04 ET): candidate controls act at the library seam, never on
     # the candidate's spelling (swdb.certification_faults).
     from swdb.certification_faults import library_control
-    return library_control(source, name, counts=counts)
+    return library_control(source, name)
 
 
 def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrate=False, threshold=64, plugin=None,
                 contract=None):
-    """Run the candidate matrix and its controls; the kernel plug-in supplies the instance.
+    """Run the matrix and its controls; the kernel plug-in supplies the instance.
 
-    Calibration is the BFS authors' reference and always uses the BFS functions.
-    Ticket 68 (2026-10-04 ET): with a ``contract`` whose clauses name knob_range or
-    schedule_range, every build is also checked by both (swdb.certification_legality), and the
-    certifier's two legality controls run beside the plug-in's.
+    Calibration is the BFS authors' reference and always uses the BFS functions and the 1.2
+    in-process checks (it certifies the authors' code, not a candidate). A candidate artifact is
+    certified by :func:`certify_candidate` (certify 1.3, ticket 70).
     """
     from swdb import kernels
-    from swdb import certification_legality as legality
-    plugin = plugin or kernels.BFS
-    legal = bool(contract) and not calibrate and legality.applies(contract)
-    if calibrate and plugin is not kernels.BFS:
+    if not calibrate:
+        return certify_candidate(tree, library, folder, tile_sizes, threads, sources, threshold=threshold,
+                                 plugin=plugin or kernels.BFS, contract=contract)
+    if plugin not in (None, kernels.BFS):
         raise Failure('calibration exists only for the BFS authors reference')
-    instrument = lambda text, **flags: instrument_source(text, **flags) if calibrate else plugin.certification_instrument(text)
-    judge = lambda run, counts: (judge_bfs(run, counts, calibrate=True, threshold=threshold) if calibrate
-                                 else plugin.certification_judge(run, counts, threshold=threshold))
+    plugin = kernels.BFS
+    judge = lambda run, counts: judge_bfs(run, counts, calibrate=True, threshold=threshold)
     graphs = matrix_graphs(folder, library, threads)
     source = (tree / plugin.certification_source).read_text()
-    if calibrate:
-        source = source.replace('wait_ready(tile3);', 'wait_ready(tile5);', 1)
-        source = source.replace('    return parent;\n}\n\nvoid PrintBFSStats', '    std::printf("SWDB strict_operations=%llu\\n",(unsigned long long)swdb_strict::operation_count());\n    return parent;\n}\n\nvoid PrintBFSStats', 1)
-        if 'SWDB strict_operations=' not in source:
-            # Exact authors code has a separate blank-line count across pinned ranges.
-            begin = source.index('pvector<NodeID> DOBFSMAA(')
-            end = source.index('void PrintBFSStats', begin)
-            section = source[begin:end]
-            section = section.replace('    return parent;', '    std::printf("SWDB strict_operations=%llu\\n",(unsigned long long)swdb_strict::operation_count());\n    return parent;', 1)
-            source = source[:begin] + section + source[end:]
+    source = source.replace('wait_ready(tile3);', 'wait_ready(tile5);', 1)
+    source = source.replace('    return parent;\n}\n\nvoid PrintBFSStats', '    std::printf("SWDB strict_operations=%llu\\n",(unsigned long long)swdb_strict::operation_count());\n    return parent;\n}\n\nvoid PrintBFSStats', 1)
+    if 'SWDB strict_operations=' not in source:
+        # Exact authors code has a separate blank-line count across pinned ranges.
+        begin = source.index('pvector<NodeID> DOBFSMAA(')
+        end = source.index('void PrintBFSStats', begin)
+        section = source[begin:end]
+        section = section.replace('    return parent;', '    std::printf("SWDB strict_operations=%llu\\n",(unsigned long long)swdb_strict::operation_count());\n    return parent;', 1)
+        source = source[:begin] + section + source[end:]
     matrix, controls = [], []
     source_path = tree / plugin.certification_source
-    header_path = tree / HEADER
     stem = plugin.binary_stem
+    expected = {'shared_context': {'thread_ownership_tile', 'thread_ownership_register'}, 'dropped_continuation': set(),
+                'oversized_chunk': {'tile_truncation'}, 'wrong_store_wait': {'read_before_wait'}}
     for size in tile_sizes:
-        instrumented = instrument(source, calibrate=calibrate)
-        source_path.write_text(instrumented)
+        source_path.write_text(instrument_source(source, calibrate=True))
         output = folder / f'{stem}-{size}'
-        static = (legality_checks(instrumented, source_path, f'{stem}-{size}', library, contract, folder,
-                                  tile_size=size, threads=threads, tree=tree, defines=[]) if legal else None)
-        static_failed, static_invalid = _legality_failures(static)
-        legality_field = {'legality_checks': static} if legal else {}
-        build = compile_cpp(source_path, output, library, tile_size=size, threads=threads, tree=tree,
-                            defines=['-DMAA'] if calibrate else [])
+        build = compile_cpp(source_path, output, library, tile_size=size, threads=threads, tree=tree, defines=['-DMAA'])
         if build['returncode'] != 0:
-            matrix.append({'tile_size': size, 'status': 'failed', 'reason': 'build failed', 'build': build,
-                           **legality_field})
+            matrix.append({'tile_size': size, 'status': 'failed', 'reason': 'build failed', 'build': build})
             continue
         for graph_name, graph in graphs:
             for source_vertex in sources:
                 counts = plugin.certification_oracle(graph, source_vertex)
                 run = execute([output, '-f', graph, '-r', source_vertex, '-n', '1', '-v'], folder / f'{graph_name}-{size}-{source_vertex}.json', threads=threads)
                 passed, reason = judge(run, counts)
+                matrix.append({'graph': graph_name, 'graph_sha256': artifacts.file_hash(graph), 'source': source_vertex,
+                               'oracle_frontier_counts': counts, 'tile_size': size, 'threads': threads,
+                               'status': 'passed' if passed else 'failed', 'reason': reason, 'build': build, 'run': run})
+        graph_name, graph = graphs[-1]
+        counts = plugin.certification_oracle(graph, plugin.control_source(sources))
+        for name in ('shared_context', 'dropped_continuation', 'oversized_chunk', 'wrong_store_wait'):
+            # Oversized chunk is specifically a 1,024-element build control.
+            if name == 'oversized_chunk' and size != 1024:
+                continue
+            source_path.write_text(_rewrite_control(instrument_source(source, calibrate=True), name, calibrate=True))
+            output_mutant = folder / f'{stem}-{size}-{name}'
+            control_build = compile_cpp(source_path, output_mutant, library, tile_size=size, threads=threads, tree=tree,
+                                        defines=['-DMAA'])
+            fault = {'site': 'calibration_source'}
+            if control_build['returncode']:
+                controls.append({'id': name, 'tile_size': size, 'status': 'invalid', 'reason': 'build failed',
+                                 'observed_checks': [], 'fault': fault, 'build': control_build})
+                continue
+            run = execute([output_mutant, '-f', graph, '-r', plugin.control_source(sources), '-n', '1', '-v'], folder / f'control-{size}-{name}.json', threads=threads)
+            passed, reason = judge(run, counts)
+            named = re.findall(r'SWDB_(?:STRICT_ASSERT|DIFFERENTIAL_MISMATCH|PRESERVATION_FAIL):([a-z_]+)', run['stdout'] + run['stderr'])
+            observed = observed_checks(run, counts, judge, named)
+            controls.append({'id': name, 'tile_size': size, 'status': control_status(expected[name], observed, run, passed),
+                             'reason': reason, 'named_checks': named, 'observed_checks': observed, 'graph': graph_name,
+                             'fault': fault, 'build': control_build, 'run': run})
+    source_path.write_text(source)  # This is a private build copy, never a vendored tree.
+    return matrix, controls
+
+
+def graph_adjacency(path):
+    """Out-neighbor lists of a serialized certification graph (the result checks' input, ticket 70)."""
+    data = Path(path).read_bytes()
+    if len(data) < 9 or data[0] not in (0, 1):
+        raise Failure('invalid certification graph')
+    edges, nodes = struct.unpack_from('<ii', data, 1)
+    if nodes <= 0 or edges < 0 or len(data) != 9 + (1 + data[0]) * ((nodes + 1) * 4 + edges * 4):
+        raise Failure('serialized graph size differs from CSR')
+    offsets = struct.unpack_from(f'<{nodes+1}i', data, 9)
+    neighbors = struct.unpack_from(f'<{edges}i', data, 9 + (nodes + 1) * 4)
+    if offsets[0] != 0 or offsets[-1] != edges or any(a > b for a, b in zip(offsets, offsets[1:])):
+        raise Failure('invalid graph offsets')
+    if any(v < 0 or v >= nodes for v in neighbors):
+        raise Failure('invalid graph neighbors')
+    return [list(neighbors[offsets[u]:offsets[u + 1]]) for u in range(nodes)]
+
+
+def judge_run(plugin, run, graph, vertex, counts, *, threshold=64, adjacency=None):
+    """Every check of one certify 1.3 run, from its evaluator records and the trusted oracles."""
+    from swdb import certification_isolation as isolation
+    from swdb.certification_feedback import STRICT_MESSAGES
+    adjacency = {} if adjacency is None else adjacency
+    if graph not in adjacency:
+        adjacency[graph] = graph_adjacency(graph)
+    parsed = isolation.parse_records(run['record'], set(STRICT_MESSAGES))
+    check = lambda values: plugin.certification_check_result(adjacency[graph], vertex, values)
+    return isolation.judge(run, parsed, counts, check_result=check, result_kind=plugin.certification_result_kind,
+                           threshold=threshold)
+
+
+def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, threshold=64, plugin, contract=None):
+    """Certify one candidate tree with certify 1.3's isolation (ticket 70, 2026-10-04 ET).
+
+    Per tile size, the instrumented candidate plus the evaluator's driver is compiled once into
+    one object with the evaluator prelude. The positive matrix and every library-fault control
+    link that same object with record.cc and seams.cc (no fault, or exactly one). Token and
+    legality controls change candidate text and get their own object, linked with no fault.
+    Every check comes from :func:`swdb.certification_isolation.judge` on the run's records.
+    Ticket 68's legality checks run as before.
+    """
+    from swdb import certification_isolation as isolation
+    from swdb import certification_legality as legality
+    from swdb.certification_faults import FAULT_VERSIONS, SEAM_FILE
+    legal = bool(contract) and legality.applies(contract)
+    graphs = matrix_graphs(folder, library, threads)
+    by_name = dict(graphs)
+    source_path = tree / plugin.certification_source
+    source = source_path.read_text()
+    driver = (library / plugin.certification_driver).read_text()
+    stem = plugin.binary_stem
+    adjacency = {}
+    judged = lambda run, graph, vertex, counts: judge_run(plugin, run, graph, vertex, counts, threshold=threshold,
+                                                          adjacency=adjacency)
+
+    def evidence(link, verdict):
+        return {'candidate_object_sha256': link['candidate_object_sha256'],
+                'seam_object_sha256': link['seam_object_sha256'], 'record_object_sha256': link['record_object_sha256'],
+                'named_checks': verdict['named_checks'], 'observed_checks': verdict['observed_checks'],
+                'result_check': verdict['result_check'], 'record_problems': verdict['record_problems']}
+
+    matrix, controls = [], []
+    for size in tile_sizes:
+        build = isolation.CandidateBuild(folder / f'{stem}-{size}.objects', library, tree, source_path, size, threads)
+        instrumented = plugin.certification_instrument(source) + driver
+        static = (legality_checks(instrumented, source_path, f'{stem}-{size}', library, contract, folder,
+                                  tile_size=size, threads=threads, tree=tree, defines=[]) if legal else None)
+        static_failed, static_invalid = _legality_failures(static)
+        legality_field = {'legality_checks': static} if legal else {}
+        output = folder / f'{stem}-{size}'
+        positive = build.candidate_object(instrumented, 'positive')
+        link = build.link(positive, None, output) if positive['returncode'] == 0 else positive
+        if link['returncode'] != 0:
+            matrix.append({'tile_size': size, 'status': 'failed', 'reason': 'build failed', 'build': positive,
+                           'link': link, **legality_field})
+            continue
+        for graph_name, graph in graphs:
+            for source_vertex in sources:
+                counts = plugin.certification_oracle(graph, source_vertex)
+                run = isolation.run(output, graph, source_vertex, folder / f'{graph_name}-{size}-{source_vertex}.json',
+                                    threads)
+                verdict = judged(run, graph, source_vertex, counts)
+                passed, reason = verdict['passed'], verdict['reason']
                 if static_failed or static_invalid:
                     # Ticket 68: an evaluator legality check names the failure before any run check.
                     passed, reason = False, static_failed[0] if static_failed else 'legality_check_invalid'
                 matrix.append({'graph': graph_name, 'graph_sha256': artifacts.file_hash(graph), 'source': source_vertex,
                                'oracle_frontier_counts': counts, 'tile_size': size, 'threads': threads,
-                               'status': 'passed' if passed else 'failed', 'reason': reason, 'build': build, 'run': run,
-                               **legality_field})
-        names = ['shared_context', 'dropped_continuation', 'oversized_chunk', 'wrong_store_wait'] if calibrate else list(plugin.certification_controls)
-        if legal:
-            names += list(legality.CONTROLS)  # ticket 68: certifier-owned, after the plug-in's
+                               'status': 'passed' if passed else 'failed', 'reason': reason, 'build': positive,
+                               'link': link, 'run': run, **evidence(link, verdict), **legality_field})
+        names = list(plugin.certification_controls) + (list(legality.CONTROLS) if legal else [])
         # A control runs on the last (two-level) graph unless its plug-in names another matrix
         # graph (2026-10-04 ET: BC's L4 path-count control needs unequal path counts).
-        control_graphs = {} if calibrate else (getattr(plugin, 'certification_control_graphs', None) or {})
-        by_name = dict(graphs)
+        control_graphs = getattr(plugin, 'certification_control_graphs', None) or {}
         oracle_counts = {}
+        vertex = plugin.control_source(sources)
         for name in names:
-            # Oversized chunk is specifically a 1,024-element build control.
-            if name == 'oversized_chunk' and size != 1024:
-                continue
             graph_name = control_graphs.get(name, graphs[-1][0])
             graph = by_name[graph_name]
             if graph_name not in oracle_counts:
-                oracle_counts[graph_name] = plugin.certification_oracle(graph, plugin.control_source(sources))
+                oracle_counts[graph_name] = plugin.certification_oracle(graph, vertex)
             counts = oracle_counts[graph_name]
-            if calibrate:
-                mutant = _rewrite_control(instrument_source(source, calibrate=True), name, calibrate=True)
-            elif name in legality.CONTROLS and legal:
+            if name in legality.CONTROLS and legal:
                 # Ticket 68: the knob assignment or schedule clause of the candidate's own source.
                 mutant = legality.control(source, name, contract)
-                mutant['source'] = plugin.certification_instrument(mutant['source'])
+                mutant['source'] = plugin.certification_instrument(mutant['source']) + driver
             else:
-                mutant = plugin.certification_control(plugin.certification_instrument(source), name, counts=counts)
-            if isinstance(mutant, str):
-                mutant = {'source': mutant, 'fault': None, 'site': 'calibration_source' if calibrate else 'candidate_tokens'}
-            source_path.write_text(mutant['source'])
-            output_mutant = folder / f'{stem}-{size}-{name}'
-            defines = ['-DMAA'] if calibrate else []
+                mutant = plugin.certification_control(plugin.certification_instrument(source), name)
+                if isinstance(mutant, str):
+                    mutant = {'source': mutant + driver, 'fault': None, 'site': 'candidate_tokens'}
+                else:
+                    mutant = {**mutant, 'source': mutant['source'] + driver}
             fault = {'site': mutant['site']}
             if mutant['fault']:
-                # Ticket 62: a private build copy of the checked canonical header gains the
-                # fault block; the candidate's own bytes are restored right after the build.
-                from swdb.certification_faults import FAULT_FILE, fault_header
-                header_bytes = header_path.read_bytes()
-                header_path.write_bytes(fault_header(header_bytes, library))
-                defines.append('-D' + mutant['fault'])
-                fault.update(macro=mutant['fault'], fault_block_sha256=artifacts.file_hash(library / FAULT_FILE),
-                             version=mutant.get('version', 1))
+                # A library fault never changes the candidate's text: the control links the positive
+                # object itself, and the fault macro reaches only the seam object.
+                if mutant['source'] != instrumented:
+                    raise Failure('library-fault control changed candidate text: ' + name)
+                candidate_object, control_static = positive, static
+                fault.update(macro=mutant['fault'], version=mutant.get('version', FAULT_VERSIONS.get(name, 1)),
+                             delivery='separate_object', seam_source_sha256=artifacts.file_hash(library / SEAM_FILE))
+            else:
+                control_static = (legality_checks(mutant['source'], source_path, f'{stem}-{size}-{name}', library,
+                                                  contract, folder, tile_size=size, threads=threads, tree=tree,
+                                                  defines=[]) if legal else None)
+                candidate_object = build.candidate_object(mutant['source'], name)
             expected_checks = plugin.certification_controls.get(name) or legality.CONTROLS.get(name, set())
-            try:
-                static = (legality_checks(mutant['source'], source_path, f'{stem}-{size}-{name}', library, contract,
-                                          folder, tile_size=size, threads=threads, tree=tree, defines=defines)
-                          if legal else None)
-                control_build = compile_cpp(source_path, output_mutant, library, tile_size=size, threads=threads, tree=tree,
-                                            defines=defines)
-            finally:
-                if mutant['fault']:
-                    header_path.write_bytes(header_bytes)
-            static_failed, _ = _legality_failures(static)
-            legality_field = {'legality_checks': static} if legal else {}
-            if control_build['returncode']:
+            static_failed, _ = _legality_failures(control_static)
+            legality_field = {'legality_checks': control_static} if legal else {}
+            output_mutant = folder / f'{stem}-{size}-{name}'
+            control_link = (build.link(candidate_object, mutant['fault'], output_mutant)
+                            if candidate_object['returncode'] == 0 else candidate_object)
+            if control_link['returncode']:
                 # Ticket 68: a build failure never rejects a control; an evaluator legality check that
                 # names the control's expected check does (e.g. a candidate static_assert on a knob
                 # also stops the build).
                 named_static = sorted(set(static_failed) & set(expected_checks))
                 controls.append({'id': name, 'tile_size': size, 'status': 'rejected' if named_static else 'invalid',
                                  'reason': named_static[0] if named_static else 'build failed',
-                                 'observed_checks': sorted(set(static_failed)), 'fault': fault, 'build': control_build,
-                                 **legality_field})
+                                 'observed_checks': sorted(set(static_failed)), 'fault': fault,
+                                 'build': candidate_object, 'link': control_link, **legality_field})
                 continue
-            run = execute([output_mutant, '-f', graph, '-r', plugin.control_source(sources), '-n', '1', '-v'], folder / f'control-{size}-{name}.json', threads=threads)
-            passed, reason = judge(run, counts)
-            named = re.findall(r'SWDB_(?:STRICT_ASSERT|DIFFERENTIAL_MISMATCH|PRESERVATION_FAIL):([a-z_]+)', run['stdout'] + run['stderr'])
-            if calibrate:
-                expected_checks = {'shared_context': {'thread_ownership_tile', 'thread_ownership_register'}, 'dropped_continuation': set(),
-                                   'oversized_chunk': {'tile_truncation'}, 'wrong_store_wait': {'read_before_wait'}}[name]
-            observed = observed_checks(run, counts, judge, named)
+            run = isolation.run(output_mutant, graph, vertex, folder / f'control-{size}-{name}.json', threads)
+            verdict = judged(run, graph, vertex, counts)
+            passed, reason = verdict['passed'], verdict['reason']
+            record = evidence(control_link, verdict)
             if static_failed:
-                observed = sorted(set(observed) | set(static_failed))
+                record['observed_checks'] = sorted(set(record['observed_checks']) | set(static_failed))
                 passed, reason = False, static_failed[0]
-            status = control_status(expected_checks, observed, run, passed)
-            controls.append({'id': name, 'tile_size': size, 'status': status, 'reason': reason,
-                             'named_checks': named, 'observed_checks': observed, 'graph': graph_name,
-                             'fault': fault, 'build': control_build, 'run': run, **legality_field})
+            controls.append({'id': name, 'tile_size': size,
+                             'status': control_status(expected_checks, record['observed_checks'], run, passed),
+                             'reason': reason, 'graph': graph_name, 'fault': fault, 'build': candidate_object,
+                             'link': control_link, 'run': run, **record, **legality_field})
     source_path.write_text(source)  # This is a private build copy, never a vendored tree.
     return matrix, controls
 
@@ -784,7 +892,9 @@ def check_candidate_scope(tree, snapshot, plugin=None):
 def source_digest(library_root):
     faults = Path(__file__).with_name('certification_faults.py')
     legality = Path(__file__).with_name('certification_legality.py')  # ticket 68
-    files = sorted(p for p in (library_root / 'dx100').rglob('*') if p.is_file()) + [Path(__file__), faults, legality]
+    isolation = Path(__file__).with_name('certification_isolation.py')  # ticket 70
+    files = sorted(p for p in (library_root / 'dx100').rglob('*') if p.is_file()) + [Path(__file__), faults, legality,
+                                                                                    isolation]
     return artifacts.digest([{'path': p.relative_to(library_root).as_posix() if library_root in p.parents else 'swdb/' + p.name,
                               'sha256': artifacts.file_hash(p)} for p in files])
 
@@ -841,9 +951,15 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
             artifacts.copy_snapshot(original, tree)
             snapshot_id = data.get('source_snapshot')
             original_snapshot = store.get(snapshot_id, 'source_snapshot')
+            if not original_snapshot:
+                raise Failure('candidate has no registered source snapshot')
+            (folder / 'snapshot').mkdir()
+            snapshot_tree, _ = materialize_snapshot(store, snapshot_id, folder / 'snapshot')
+            snapshot_text = (snapshot_tree / plugin.certification_source).read_text()
         else:
             tree, original_snapshot = materialize_snapshot(store, snapshot, folder)
             snapshot_id = snapshot
+            snapshot_text = (tree / plugin.certification_source).read_text()
             apply_patch(tree, patch)
         if not original_snapshot:
             raise Failure('candidate has no registered source snapshot')
@@ -852,6 +968,9 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         header = tree / HEADER
         if not header.is_file() or artifacts.file_hash(header) != artifacts.file_hash(library_root / 'dx100/dxc_lowering.hpp'):
             raise Failure('candidate must ship the byte-identical canonical lowering header')
+        # Ticket 70 (certify 1.3): candidate-authored text may not name harness symbols.
+        from swdb.certification_isolation import refuse_scan_findings
+        refuse_scan_findings(snapshot_text, (tree / plugin.certification_source).read_text())
         identity = {'contract': entry_id, 'contract_sha256': content_sha256,
                     'tree_sha256': artifacts.identify(tree)['sha256'], 'snapshot': snapshot_id, 'changed_files': changed_files}
         if candidate:

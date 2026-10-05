@@ -119,18 +119,15 @@ def test_calibration_witness_threshold_is_from_scalar_oracle():
     assert c.judge_bfs(result(output), counts, calibrate=True) == (False, 'execution_witness')
 
 
-def test_forged_frontier_control_prints_oracle_counts_but_trusted_queue_is_checked():
+def test_forged_frontier_control_is_a_pure_library_fault():
     scalar = c.peter_source(Store(ROOT / 'records').get(c.DEFAULT_SNAPSHOT)['regions'][0]['text'])
     instrumented = c.instrument_source(scalar)
-    control = c._rewrite_control(instrumented, 'forged_frontier', counts=[1, 4200, 17000])
-    # Ticket 62: the double enqueue is a library fault; only the protected print is edited.
-    # Ticket 67: version 2 duplicates the first queue push of the run.
+    control = c._rewrite_control(instrumented, 'forged_frontier')
+    # Ticket 62: the double enqueue is a library fault. Ticket 67: version 2 duplicates the first
+    # queue push of the run. Ticket 70 (certify 1.3): no verdict is read from printed output, so the
+    # protected print is no longer forged and the candidate text is unchanged.
     assert control['fault'] == 'SWDB_DXC_FAULT_FORGED_FRONTIER_V2' and control['version'] == 2
-    mutant = control['source']
-    assert 'swdb_forged_counts[3]={1,4200,17000}' in mutant
-    assert '<< swdb_forged_count(queue.size())' in mutant
-    assert 'swdb_certification_frontier(queue);' in mutant
-    assert 'queue.size()-1' not in mutant
+    assert control['source'] == instrumented and 'swdb_certification_frontier(queue);' in instrumented
 
 
 def test_bfs_counter_reset_precedes_the_once_per_call_runtime_guard():

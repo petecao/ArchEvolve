@@ -1,0 +1,740 @@
+{
+ "created": "2026-10-05 00:40 ET",
+ "ticket": 70,
+ "purpose": "Certification isolation (certify command 1.3): adversarial candidates under 1.2 and 1.3, and re-certification of ticket 20, ticket 42 (BC), both a7 bests and the other six rebuilt a7 trees. Mac strict functional certification; scratch stores, nothing persisted to records/.",
+ "decision": "agent-decided under Yan-Ru's 2026-10-04 delegation; revisable",
+ "code": {
+  "certify_1_2": "yanrujhou_main 1b76897 (git archive into a scratch tree)",
+  "certify_1_3": "worktree branch: re-certification at commit 401a232; the 1.3 attack runs used the working tree just before it (same judge and isolation), and the same three cases pass as tests/test_certification_isolation.py at 401a232"
+ },
+ "host": {
+  "system": "Darwin",
+  "architecture": "arm64",
+  "compiler": "/opt/homebrew/bin/g++-16"
+ },
+ "adversarial": [
+  {
+   "attack": "fake",
+   "certify_version": "1.2",
+   "certification": "certification.3e7aa3145a5944bd9938bf1112a79cff",
+   "verdict": "certified",
+   "matrix": "10/10",
+   "controls_rejected": "20/20",
+   "not_rejected": [],
+   "skipped_cas_recheck": [
+    [
+     16384,
+     "rejected",
+     [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ],
+     [
+      "duplicate_frontier",
+      "duplicate_frontier"
+     ]
+    ],
+    [
+     1024,
+     "rejected",
+     [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ],
+     [
+      "duplicate_frontier",
+      "duplicate_frontier"
+     ]
+    ]
+   ],
+   "patch_sha256": "fe7e53d954bebbc2d308233c5bad8cebc6d33e5041b4eb23a49bee5ad4de12db"
+  },
+  {
+   "attack": "fake",
+   "certify_version": "1.3",
+   "certification": "certification.a3cde362c59147df96f9920b52e28825",
+   "verdict": "failed",
+   "matrix": "10/10",
+   "controls_rejected": "18/20",
+   "not_rejected": [
+    [
+     "skipped_cas_recheck",
+     16384,
+     "invalid"
+    ],
+    [
+     "skipped_cas_recheck",
+     1024,
+     "invalid"
+    ]
+   ],
+   "skipped_cas_recheck": [
+    [
+     16384,
+     "invalid",
+     [],
+     []
+    ],
+    [
+     1024,
+     "invalid",
+     [],
+     []
+    ]
+   ],
+   "patch_sha256": "fe7e53d954bebbc2d308233c5bad8cebc6d33e5041b4eb23a49bee5ad4de12db"
+  },
+  {
+   "attack": "macro",
+   "certify_version": "1.2",
+   "certification": "certification.8a4f28f8000d4b38bfd0d78ba0bb5435",
+   "verdict": "certified",
+   "matrix": "10/10",
+   "controls_rejected": "20/20",
+   "not_rejected": [],
+   "skipped_cas_recheck": [
+    [
+     16384,
+     "rejected",
+     [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ],
+     [
+      "duplicate_frontier"
+     ]
+    ],
+    [
+     1024,
+     "rejected",
+     [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ],
+     [
+      "duplicate_frontier"
+     ]
+    ]
+   ],
+   "patch_sha256": "e15007442a77203be10792dacbea44cf7ca36d6f1f13fc11a0dad21c863260d5"
+  },
+  {
+   "attack": "macro",
+   "certify_version": "1.3",
+   "refused": "UsageError: candidate source refused by the harness scan (certify 1.3): line 117 'SWDB_DXC_FAULT_SKIPPED_CAS_RECHECK' (harness or fault symbol)"
+  },
+  {
+   "attack": "macro",
+   "certify_version": "1.3",
+   "certification": "certification.f706f3d369e549e4ae55b8663c94e9d3",
+   "verdict": "failed",
+   "matrix": "10/10",
+   "controls_rejected": "18/20",
+   "not_rejected": [
+    [
+     "skipped_cas_recheck",
+     16384,
+     "survived"
+    ],
+    [
+     "skipped_cas_recheck",
+     1024,
+     "survived"
+    ]
+   ],
+   "skipped_cas_recheck": [
+    [
+     16384,
+     "survived",
+     [],
+     []
+    ],
+    [
+     1024,
+     "survived",
+     [],
+     []
+    ]
+   ],
+   "patch_sha256": "e15007442a77203be10792dacbea44cf7ca36d6f1f13fc11a0dad21c863260d5"
+  }
+ ],
+ "adversarial_candidates": {
+  "fake": "ticket 20 patch; claim via __sync_bool_compare_and_swap (bypasses the L4 claim seam); at each TDStep it calls compare_and_swap on a scratch int with a wrong expected value and, if that succeeds (skipped_cas_recheck linked), prints a run-time-assembled \"SWDB_PRESERVATION_FAIL:duplicate_frontier\" and exits 88",
+  "macro": "ticket 20 patch; raw-builtin claim; pushes a deliberate duplicate under #if defined(SWDB_DXC_FAULT_SKIPPED_CAS_RECHECK)"
+ },
+ "recertification": [
+  {
+   "which": "t20",
+   "candidate": null,
+   "certification": "certification.d0f195fa83fc436fb34e5a1187fcca9a",
+   "verdict": "certified",
+   "command_version": "1.3",
+   "command_sources_sha256": "8c4c2436f2195005577ba00688bd9374e99f867bf2b30abe43a138dce972cfcf",
+   "contract": {
+    "id": "contract.bfs_read_offload",
+    "content_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51"
+   },
+   "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+   "matrix": "10/10",
+   "controls_rejected": "20/20",
+   "rejections": [
+    [
+     "chunk_off_by_one",
+     "tile_truncation"
+    ],
+    [
+     "dropped_continuation",
+     "frontier_size_equality,verifier"
+    ],
+    [
+     "dropped_wait",
+     "read_before_wait"
+    ],
+    [
+     "forged_frontier",
+     "duplicate_frontier,frontier_size_equality"
+    ],
+    [
+     "index_wrap",
+     "stream_bounds"
+    ],
+    [
+     "knob_out_of_range",
+     "knob_range"
+    ],
+    [
+     "read_before_wait",
+     "read_before_wait"
+    ],
+    [
+     "schedule_out_of_range",
+     "schedule_range"
+    ],
+    [
+     "shared_context",
+     "thread_ownership_register"
+    ],
+    [
+     "skipped_cas_recheck",
+     "duplicate_frontier,frontier_size_equality"
+    ]
+   ],
+   "not_rejected": [],
+   "positive_and_fault_objects_per_tile": {
+    "16384": [
+     "992d80f5a96c0a38cc841980fbf0eb79828c51a354fa9ca8b46b7963811b34fc"
+    ],
+    "1024": [
+     "6a973311a4419f21cfb0338c4b026671c9519eba6518502872eeca59fd1dde63"
+    ]
+   },
+   "clause_mismatches": [],
+   "seconds": 28.7
+  },
+  {
+   "which": "bc",
+   "candidate": null,
+   "certification": "certification.e6f046255d4e4a35b1f7e2e9a523b054",
+   "verdict": "certified",
+   "command_version": "1.3",
+   "command_sources_sha256": "8c4c2436f2195005577ba00688bd9374e99f867bf2b30abe43a138dce972cfcf",
+   "contract": {
+    "id": "contract.bc_read_offload",
+    "content_sha256": "969276431d9169701a5ff5862fc422e7578e54bf27419fb1d1d1ece63f90dc9a"
+   },
+   "tree_sha256": "d6f86eb6f33798ca43afa1b6cfdc462ebc6a5ffdebd3b2a7601082257dceb3b9",
+   "matrix": "10/10",
+   "controls_rejected": "28/28",
+   "rejections": [
+    [
+     "chunk_off_by_one",
+     "tile_truncation"
+    ],
+    [
+     "dropped_continuation",
+     "frontier_size_equality,verifier"
+    ],
+    [
+     "dropped_successor_bit",
+     "verifier"
+    ],
+    [
+     "dropped_wait",
+     "read_before_wait"
+    ],
+    [
+     "forged_frontier",
+     "duplicate_frontier,frontier_size_equality"
+    ],
+    [
+     "index_wrap",
+     "stream_bounds"
+    ],
+    [
+     "knob_out_of_range",
+     "knob_range"
+    ],
+    [
+     "read_before_wait",
+     "read_before_wait"
+    ],
+    [
+     "schedule_out_of_range",
+     "schedule_range"
+    ],
+    [
+     "shared_context",
+     "thread_ownership_register"
+    ],
+    [
+     "shifted_edge_index",
+     "verifier"
+    ],
+    [
+     "shifted_path_count_source",
+     "verifier"
+    ],
+    [
+     "skipped_cas_recheck",
+     "duplicate_frontier,frontier_size_equality"
+    ],
+    [
+     "stale_depth_hint",
+     "verifier"
+    ]
+   ],
+   "not_rejected": [],
+   "positive_and_fault_objects_per_tile": {
+    "16384": [
+     "3dcfbba95e52086385d06281c3b20508db42f37c5c8611d027eb0766fa673a1c"
+    ],
+    "1024": [
+     "1f2da71b46bb6e3b200eb1a3c84524762c1da7db4a6eb81f4b90d546a2ef42e4"
+    ]
+   },
+   "clause_mismatches": [],
+   "seconds": 41.2
+  },
+  {
+   "which": "best-kron",
+   "candidate": "extensa-gem5-bfs-20261004-a7.it4.kronecker.a2",
+   "certification": "certification.5a37994678b2410e8bd1e2a1e36a0a82",
+   "verdict": "certified",
+   "command_version": "1.3",
+   "command_sources_sha256": "8c4c2436f2195005577ba00688bd9374e99f867bf2b30abe43a138dce972cfcf",
+   "contract": {
+    "id": "contract.bfs_read_offload",
+    "content_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51"
+   },
+   "tree_sha256": "c8f4bf16b26ddf5ce243170ebebcfbe0cd4afa11be38c5de970461a955e3414c",
+   "matrix": "10/10",
+   "controls_rejected": "20/20",
+   "rejections": [
+    [
+     "chunk_off_by_one",
+     "tile_truncation"
+    ],
+    [
+     "dropped_continuation",
+     "frontier_size_equality,verifier"
+    ],
+    [
+     "dropped_wait",
+     "read_before_wait"
+    ],
+    [
+     "forged_frontier",
+     "duplicate_frontier,frontier_size_equality"
+    ],
+    [
+     "index_wrap",
+     "stream_bounds"
+    ],
+    [
+     "knob_out_of_range",
+     "knob_range"
+    ],
+    [
+     "read_before_wait",
+     "read_before_wait"
+    ],
+    [
+     "schedule_out_of_range",
+     "schedule_range"
+    ],
+    [
+     "shared_context",
+     "thread_ownership_register"
+    ],
+    [
+     "skipped_cas_recheck",
+     "duplicate_frontier,frontier_size_equality"
+    ]
+   ],
+   "not_rejected": [],
+   "positive_and_fault_objects_per_tile": {
+    "16384": [
+     "d2f4eb301894aad373147a20132b7796f9c821874ffdd0bcfa76ae4bb5dcff63"
+    ],
+    "1024": [
+     "07e8c92110e0ad0df82528ca3a949b4021be43ed16ea64be9364d00afc2b9a63"
+    ]
+   },
+   "clause_mismatches": [],
+   "seconds": 25.9
+  },
+  {
+   "which": "best-uni",
+   "candidate": "extensa-gem5-bfs-20261004-a7.it8.uniform_random.a1",
+   "certification": "certification.0506911fe295415cb7ab2df5667c36af",
+   "verdict": "certified",
+   "command_version": "1.3",
+   "command_sources_sha256": "8c4c2436f2195005577ba00688bd9374e99f867bf2b30abe43a138dce972cfcf",
+   "contract": {
+    "id": "contract.bfs_read_offload",
+    "content_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51"
+   },
+   "tree_sha256": "d63c714aacf820cfa8aceadbd802f3d8dd8833666bd3921c0b320b7be37f3e89",
+   "matrix": "10/10",
+   "controls_rejected": "20/20",
+   "rejections": [
+    [
+     "chunk_off_by_one",
+     "tile_truncation"
+    ],
+    [
+     "dropped_continuation",
+     "frontier_size_equality,verifier"
+    ],
+    [
+     "dropped_wait",
+     "read_before_wait"
+    ],
+    [
+     "forged_frontier",
+     "duplicate_frontier,frontier_size_equality"
+    ],
+    [
+     "index_wrap",
+     "stream_bounds"
+    ],
+    [
+     "knob_out_of_range",
+     "knob_range"
+    ],
+    [
+     "read_before_wait",
+     "read_before_wait"
+    ],
+    [
+     "schedule_out_of_range",
+     "schedule_range"
+    ],
+    [
+     "shared_context",
+     "thread_ownership_register"
+    ],
+    [
+     "skipped_cas_recheck",
+     "duplicate_frontier,frontier_size_equality"
+    ]
+   ],
+   "not_rejected": [],
+   "positive_and_fault_objects_per_tile": {
+    "16384": [
+     "0f97b1656ad84b740f1782433d3846d3fcc90e357a0122da84a3167be761c356"
+    ],
+    "1024": [
+     "5190772f5b829a934aaed8afc7dc90a685503a0aba046a7c6976c6c9976ff68d"
+    ]
+   },
+   "clause_mismatches": [],
+   "seconds": 22.1
+  },
+  {
+   "which": "it2.kronecker.a1",
+   "candidate": "extensa-gem5-bfs-20261004-a7.it2.kronecker.a1",
+   "certification": "certification.18f0db2cef214f5cbadae0cfc7e60452",
+   "verdict": "certified",
+   "command_version": "1.3",
+   "command_sources_sha256": "8c4c2436f2195005577ba00688bd9374e99f867bf2b30abe43a138dce972cfcf",
+   "contract": {
+    "id": "contract.bfs_read_offload",
+    "content_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51"
+   },
+   "tree_sha256": "d99547664a53f06546f49e77913662d9a67e349fbbc1ceea43ed4cc0fe5c376d",
+   "matrix": "10/10",
+   "controls_rejected": "20/20",
+   "rejections": [
+    [
+     "chunk_off_by_one",
+     "tile_truncation"
+    ],
+    [
+     "dropped_continuation",
+     "frontier_size_equality,verifier"
+    ],
+    [
+     "dropped_wait",
+     "read_before_wait"
+    ],
+    [
+     "forged_frontier",
+     "duplicate_frontier,frontier_size_equality"
+    ],
+    [
+     "index_wrap",
+     "stream_bounds"
+    ],
+    [
+     "knob_out_of_range",
+     "knob_range"
+    ],
+    [
+     "read_before_wait",
+     "read_before_wait"
+    ],
+    [
+     "schedule_out_of_range",
+     "schedule_range"
+    ],
+    [
+     "shared_context",
+     "thread_ownership_register"
+    ],
+    [
+     "skipped_cas_recheck",
+     "duplicate_frontier,frontier_size_equality"
+    ]
+   ],
+   "not_rejected": [],
+   "positive_and_fault_objects_per_tile": {
+    "16384": [
+     "fb263f63438d196fe12d001a357d027e80a896c4b265513e6524c7bc6d93d78d"
+    ],
+    "1024": [
+     "5d140917ec65814dbfe405f6a3244ebbb95eab61127a8ff181156ae81eced2ef"
+    ]
+   },
+   "clause_mismatches": [],
+   "seconds": 24.2
+  },
+  {
+   "which": "it3.kronecker.a1",
+   "candidate": "extensa-gem5-bfs-20261004-a7.it3.kronecker.a1",
+   "certification": "certification.422d8a9bd04f433da6a580de516f6d48",
+   "verdict": "certified",
+   "command_version": "1.3",
+   "command_sources_sha256": "8c4c2436f2195005577ba00688bd9374e99f867bf2b30abe43a138dce972cfcf",
+   "contract": {
+    "id": "contract.bfs_read_offload",
+    "content_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51"
+   },
+   "tree_sha256": "1475dcf368d6058f27c647a4cbae1cd650e54fac1c1ef452a0eb65d5e92a3482",
+   "matrix": "10/10",
+   "controls_rejected": "20/20",
+   "rejections": [
+    [
+     "chunk_off_by_one",
+     "tile_truncation"
+    ],
+    [
+     "dropped_continuation",
+     "frontier_size_equality,verifier"
+    ],
+    [
+     "dropped_wait",
+     "read_before_wait"
+    ],
+    [
+     "forged_frontier",
+     "duplicate_frontier,frontier_size_equality"
+    ],
+    [
+     "index_wrap",
+     "stream_bounds"
+    ],
+    [
+     "knob_out_of_range",
+     "knob_range"
+    ],
+    [
+     "read_before_wait",
+     "read_before_wait"
+    ],
+    [
+     "schedule_out_of_range",
+     "schedule_range"
+    ],
+    [
+     "shared_context",
+     "thread_ownership_register"
+    ],
+    [
+     "skipped_cas_recheck",
+     "duplicate_frontier,frontier_size_equality"
+    ]
+   ],
+   "not_rejected": [],
+   "positive_and_fault_objects_per_tile": {
+    "16384": [
+     "195d601a78ee68c6899e50e6590a138e19c58196330b4fa5d0fffed02bc22842"
+    ],
+    "1024": [
+     "902aa461ffb911b4ab32a63b0799bde8fe061aff97e533c2d324251c76658f41"
+    ]
+   },
+   "clause_mismatches": [],
+   "seconds": 21.7
+  },
+  {
+   "which": "it5.kronecker.a1",
+   "candidate": "extensa-gem5-bfs-20261004-a7.it5.kronecker.a1",
+   "certification": "certification.7aeef51db37849d88595e39ed3377c97",
+   "verdict": "certified",
+   "command_version": "1.3",
+   "command_sources_sha256": "8c4c2436f2195005577ba00688bd9374e99f867bf2b30abe43a138dce972cfcf",
+   "contract": {
+    "id": "contract.bfs_read_offload",
+    "content_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51"
+   },
+   "tree_sha256": "2e851fa12666357c9bb0ee0dae51b0f5fc2bcef87078fd2a3d35c75ff39043ea",
+   "matrix": "10/10",
+   "controls_rejected": "20/20",
+   "rejections": [
+    [
+     "chunk_off_by_one",
+     "tile_truncation"
+    ],
+    [
+     "dropped_continuation",
+     "frontier_size_equality,verifier"
+    ],
+    [
+     "dropped_wait",
+     "read_before_wait"
+    ],
+    [
+     "forged_frontier",
+     "duplicate_frontier,frontier_size_equality"
+    ],
+    [
+     "index_wrap",
+     "stream_bounds"
+    ],
+    [
+     "knob_out_of_range",
+     "knob_range"
+    ],
+    [
+     "read_before_wait",
+     "read_before_wait"
+    ],
+    [
+     "schedule_out_of_range",
+     "schedule_range"
+    ],
+    [
+     "shared_context",
+     "thread_ownership_register"
+    ],
+    [
+     "skipped_cas_recheck",
+     "duplicate_frontier,frontier_size_equality"
+    ]
+   ],
+   "not_rejected": [],
+   "positive_and_fault_objects_per_tile": {
+    "16384": [
+     "b70fcfcbf2d66b25845ab5970cfe8f5d3e543004ca9feb65f399889f2fad99f1"
+    ],
+    "1024": [
+     "43854dec297eae6a377323bb7e552c1c22e258664fdba0d0d48f1450fa11eac4"
+    ]
+   },
+   "clause_mismatches": [],
+   "seconds": 22.4
+  },
+  {
+   "which": "it5.kronecker.a2",
+   "candidate": "extensa-gem5-bfs-20261004-a7.it5.kronecker.a2",
+   "verdict": "refused",
+   "reason": "candidate source refused by the harness scan (certify 1.3): line 309 'SWDB_STRICT' (certification-build macro); line 316 'swdb_strict' (harness or fault symbol); line 318 'swdb_strict' (harness or fault symbol)"
+  },
+  {
+   "which": "it6.kronecker.a0",
+   "candidate": "extensa-gem5-bfs-20261004-a7.it6.kronecker.a0",
+   "verdict": "refused",
+   "reason": "candidate source refused by the harness scan (certify 1.3): line 159 'SWDB_STRICT' (certification-build macro); line 167 'SWDB_STRICT' (certification-build macro)"
+  },
+  {
+   "which": "it8.uniform_random.a0",
+   "candidate": "extensa-gem5-bfs-20261004-a7.it8.uniform_random.a0",
+   "certification": "certification.5be79355662941c09f9862598de2575d",
+   "verdict": "certified",
+   "command_version": "1.3",
+   "command_sources_sha256": "8c4c2436f2195005577ba00688bd9374e99f867bf2b30abe43a138dce972cfcf",
+   "contract": {
+    "id": "contract.bfs_read_offload",
+    "content_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51"
+   },
+   "tree_sha256": "1c5dbf7f01437ec0ab308bf7d30a715328f812d41ebb45fb96cb9e93b0a12305",
+   "matrix": "10/10",
+   "controls_rejected": "20/20",
+   "rejections": [
+    [
+     "chunk_off_by_one",
+     "tile_truncation"
+    ],
+    [
+     "dropped_continuation",
+     "frontier_size_equality,verifier"
+    ],
+    [
+     "dropped_wait",
+     "read_before_wait"
+    ],
+    [
+     "forged_frontier",
+     "duplicate_frontier,frontier_size_equality"
+    ],
+    [
+     "index_wrap",
+     "stream_bounds"
+    ],
+    [
+     "knob_out_of_range",
+     "knob_range"
+    ],
+    [
+     "read_before_wait",
+     "read_before_wait"
+    ],
+    [
+     "schedule_out_of_range",
+     "schedule_range"
+    ],
+    [
+     "shared_context",
+     "thread_ownership_register"
+    ],
+    [
+     "skipped_cas_recheck",
+     "duplicate_frontier,frontier_size_equality"
+    ]
+   ],
+   "not_rejected": [],
+   "positive_and_fault_objects_per_tile": {
+    "16384": [
+     "6099e5b75758695fac4ec72402eca6c7991ceb9d558706e2a54d920adb4873a3"
+    ],
+    "1024": [
+     "5804c8c819b0950441307765bb5175a40a49acd166f5e8928f91cec385e2fc6b"
+    ]
+   },
+   "clause_mismatches": [],
+   "seconds": 22.1
+  }
+ ]
+}

@@ -1,7 +1,7 @@
 # Typed library and content-bound certification
 
 Created: 2026-10-03 ET
-Updated: 2026-10-04 ET (control observed checks and clause comparison)
+Updated: 2026-10-04 ET (control observed checks and clause comparison; ticket 70 certification isolation)
 
 The `library/` folder holds normative YAML and buildable C++ outside the record store.
 `swdb validate` checks entry shapes, clause discharge modes, pinned files and the
@@ -46,6 +46,24 @@ records `clause_controls`: per contract clause, its `clause`, `control`, the cla
 `check`, `source` (`contract`, or `plugin` for a control the kernel plug-in adds to a
 clause), the run's `observed_checks`, `matched` and `enforceable` (false for a check name no
 run can report). An enforceable mismatch fails the verdict.
+
+Added 2026-10-04 ET (ticket 70, command version 1.3): candidate certification is isolated.
+- No candidate verdict is read from stdout or stderr. Each run writes evaluator records to a
+  descriptor the harness opened (`library/dx100/certification/record.cc`). The records hold the
+  strict-layer check names, each frontier window, the vector returned to an evaluator-owned
+  `main` (`*_driver.inc`) and the witness counters.
+- Every check is computed from those records out of process. Each run keeps `record` and
+  `record_sha256`; each cell and control keeps `named_checks`, `observed_checks` and
+  `result_check`.
+- The candidate is compiled once per tile size with a forced prelude (`candidate_prelude.hpp`)
+  whose library seams call `seams.cc`. Faults are compiled only into that separate object. Cells
+  and controls record `candidate_object_sha256` and `seam_object_sha256`. Library-fault controls
+  share the positive object and record `fault.delivery: separate_object`.
+- A harness scan refuses candidate-authored lines that name harness or fault symbols,
+  `SWDB_STRICT` or `FUNC`, descriptor, environment, loader or process primitives, or text that
+  imitates an evaluator line. The refusal is a usage error; campaigns report it as `harness_scan`.
+- Records with command versions before 1.3 keep their meaning: stdout/stderr checks, and fault
+  macros in the candidate's translation unit.
 
 `swdb get ENTRY_ID` prints normative content with derived tier and status. Review records
 bind a `target` content hash to a `reviewer`, `reviewed_at` and passing certification

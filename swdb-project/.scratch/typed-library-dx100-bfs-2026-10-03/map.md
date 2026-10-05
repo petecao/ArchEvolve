@@ -3,6 +3,7 @@
 Created: 2026-10-03 02:28 ET
 Updated: 2026-10-04 23:40 ET (row 72 resolved; ticket 72 pointer); 2026-10-04 21:50 ET (row 69 added; profiling role strict schema); 2026-10-04 21:40 ET (row 68 added; knob_range and schedule_range); 2026-10-04 21:10 ET (row 67 added; forged_frontier v2 and the a7 re-judgement); 2026-10-04 21:50 ET (row 66 added; ticket 56 a5 result and 57 a7 audit pointers); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review)
 Updated: 2026-10-04 23:10 ET (row 68 added; ticket 56 a6 pointer); 2026-10-04 21:35 ET (rows 66 resolved and 67 added; pointers for tickets 66 and 67); 2026-10-04 21:50 ET (row 66 added; ticket 56 a5 result and 57 a7 audit pointers); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review)
+Updated: 2026-10-05 00:40 ET (row 70 added; certification isolation, certify 1.3); 2026-10-04 21:50 ET (row 69 added; profiling role strict schema); 2026-10-04 21:40 ET (row 68 added; knob_range and schedule_range); 2026-10-04 21:10 ET (row 67 added; forged_frontier v2 and the a7 re-judgement); 2026-10-04 21:50 ET (row 66 added; ticket 56 a5 result and 57 a7 audit pointers); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review)
 **Type:** ticket map
 **Status:** ready-for-agent
 **Spec:** [spec.md](spec.md)
@@ -117,6 +118,7 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 | 66 | [Native protocol after the isolation test: options for Yan-Ru](issues/66-native-protocol-after-isolation-test.md) | resolved | — |  |
 | 71 | [Native evaluator v3: parent values checked at full width before narrowing](issues/71-native-evaluator-v3-parent-width.md) | resolved | — |  |
 | 72 | [Native upstream DO-BFS trials are two-level: options for Yan-Ru](issues/72-native-upstream-two-level-trials.md) | resolved | — |  |
+| 70 | [Certification isolation: verdicts the candidate cannot print, faults it cannot see](issues/70-certification-isolation.md) | resolved | — |  |
 
 ## Context pointers
 
@@ -240,3 +242,13 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - 2026-10-04 21:15 ET: ticket 71 resolved. Native evaluator `swdb.native.evaluator.scalable.v3`: compile-time integral parent type, saturating int32 narrowing (full-width verdicts), one retained parent copy per distinct vector; v2 unchanged. Closes the final code review's open P3. [71-native-evaluator-v3-parent-width](issues/71-native-evaluator-v3-parent-width.md).
 - 2026-10-04 23:10 ET: ticket 56 a6 addendum. Campaign extensa-native-bfs-20261004-a6 ran the pre-registered CI-width gate (mbit10 node 1, generation 524, 21:06-23:04 ET, commit ce42a45, node 0 free). Fork A/A widths pass (Kronecker 0.040, uniform 0.019); upstream A/A widths fail (0.125, 0.093) on two-level trials, so both classes are baseline_unstable: 0 iterations, 0 calls, 1.97 lane-h. No rerun. Options in needs-info [72](issues/72-native-upstream-two-level-trials.md). [56-native-campaign-target](issues/56-native-campaign-target.md), [evidence](evaluation/native-a6-ci-gate-2026-10-04.json).
 - 2026-10-04 23:30 ET: ticket 72 resolved (decision 23:15 ET, agent-decided under Yan-Ru's delegation; revisable; pre-registered 23:19 ET, commit 3147b31): speed rule `swdb.speed_rule.ci_width.v2` = v1 with the A/A pilot gated on the selection baseline (fork scalar TDStep) only; upstream DO-BFS reported beside each candidate with its own verdict and a per-side level mix (split at the largest adjacent ratio, two levels at 1.08 or more). a6 is not re-judged. Implemented in 8aea84f. [72-native-upstream-two-level-trials](issues/72-native-upstream-two-level-trials.md).
+- 2026-10-04 21:15 ET: ticket 71 resolved. Native evaluator `swdb.native.evaluator.scalable.v3`: compile-time integral parent type, saturating int32 narrowing (full-width verdicts), one retained parent copy per distinct vector; v2 unchanged. Closes the final code review's open P3. [67-native-evaluator-v3-parent-width](issues/71-native-evaluator-v3-parent-width.md).
+- 2026-10-04 23:10 ET: ticket 56 a6 addendum. Campaign extensa-native-bfs-20261004-a6 ran the pre-registered CI-width gate (mbit10 node 1, generation 524, 21:06-23:04 ET, commit ce42a45, node 0 free). Fork A/A widths pass (Kronecker 0.040, uniform 0.019); upstream A/A widths fail (0.125, 0.093) on two-level trials, so both classes are baseline_unstable: 0 iterations, 0 calls, 1.97 lane-h. No rerun. Options in needs-info [68](issues/72-native-upstream-two-level-trials.md). [56-native-campaign-target](issues/56-native-campaign-target.md), [evidence](evaluation/native-a6-ci-gate-2026-10-04.json).
+- 2026-10-05 00:40 ET: ticket 70 resolved (agent-decided under Yan-Ru's 2026-10-04 delegation; revisable). `swdb certify` 1.3 isolates candidate certification:
+  - Every named check is computed out of process from evaluator records on a harness-opened descriptor. An evaluator-owned `main` records the kernel's result.
+  - Faults live in a separately compiled seam object, linked to one unchanged candidate object.
+  - A harness scan refuses candidate text that names harness symbols.
+  - Two adversarial patches that certify under 1.2 are refused under 1.3.
+  - Ticket 20 (20/20), BC (28/28) and both a7 bests (20/20) re-certify. a7 `it5.kronecker.a2` and `it6.kronecker.a0` are now refused by the scan; neither is a best.
+  - Open: run-time seam probing, the frontier hook inside the candidate's function, and feedback that names controls.
+  - [70-certification-isolation](issues/70-certification-isolation.md), [evidence](evaluation/certification-isolation-2026-10-04.json).
