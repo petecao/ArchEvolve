@@ -7,13 +7,12 @@ registration refuses BC sources without an outgoing edge (see that module).
 
 Ticket 42 (2026-10-03 ET): the BC instance of candidate certification. The
 derived contract ``contract.bc_read_offload`` rewrites the forward pass (PBFS)
-with ``library/dx100/bc_read_offload.inc``. A matrix cell passes when BCVerifier
-prints PASS, the forward pass's per-level frontier prints and the evaluator's
-trusted queue inspection both equal the oracle's per-depth counts, and an
-accelerated chunk ran whenever a frontier reached the threshold.
+with ``library/dx100/bc_read_offload.inc``. A matrix cell passes when the scores the
+evaluator-owned driver records pass BCVerifier's criterion (``bc_native.verify_scores``), the
+recorded frontier windows have no duplicate and match the oracle's per-depth counts, and an
+accelerated chunk ran whenever a frontier reached the threshold (certify 1.3, ticket 70,
+2026-10-04 ET: all judged out of process from evaluator records; up to 1.2 from printed lines).
 """
-
-import re
 
 from swdb import artifacts, paths
 from swdb.bc_native import verify_scores
@@ -87,7 +86,8 @@ def forward_pass_source(scalar):
 
 
 def instrument_source(source):
-    from swdb.certification import TRUSTED_FRONTIER
+    """The evaluator's frontier inspection before the protected print (certify 1.3, ticket 70:
+    it only records the window; the declaration comes from the forced candidate prelude)."""
     from swdb.cli import Failure
     if source.count(FRONTIER_TEXT) != 1:
         raise Failure("BC forward-pass frontier logging statement differs from the protected exact text")
@@ -105,8 +105,7 @@ def instrument_source(source):
     # regions with the strict layer; unlike bfs.cc, DX100 bc.cc includes m5ops only
     # without FUNC, so the evaluator's build copy includes the certification stub.
     harness = "#ifdef GEM5\n#include <gem5/m5ops.h>\n#endif\n"
-    return ("#include <set>\n#include <cstdio>\n#include <cstdlib>\n#include <cstdint>\n" + harness
-            + TRUSTED_FRONTIER + source)
+    return harness + source
 
 
 def frontier_oracle(graph, source):
@@ -120,29 +119,7 @@ def frontier_oracle(graph, source):
     return counts
 
 
-def judge(result, counts, *, threshold=64):
-    output = result["stdout"]
-    if result["timeout"]:
-        return False, "timeout"
-    if "SWDB_STRICT_ASSERT:" in output + result["stderr"]:
-        return False, "strict_layer_assertion"
-    if "SWDB_PRESERVATION_FAIL:" in output + result["stderr"]:
-        return False, "frontier_size_equality"
-    if result["returncode"] != 0:
-        return False, "process_failure"
-    if not re.search(r"Verification\s*:?\s*PASS", output):
-        return False, "verifier"
-    observed = [int(n) for n in re.findall(r"Starting PBFS: (\d+) elements", output)]
-    trusted = [int(n) for n in re.findall(r"SWDB trusted_frontier=(\d+)", output)]
-    if observed != counts or trusted != counts:
-        return False, "frontier_size_equality"
-    witnesses = re.findall(r"SWDB accelerated_chunks=(\d+)", output)
-    if max(counts) >= threshold and (len(witnesses) != 1 or int(witnesses[0]) == 0):
-        return False, "execution_witness"
-    return True, "all_checks_passed"
-
-
-def control(source, name, *, counts=None):
+def control(source, name):
     """One negative control of the candidate (ticket 62, 2026-10-04 ET).
 
     The eight controls shared with BFS act at the library seam
@@ -152,7 +129,7 @@ def control(source, name, *, counts=None):
     from swdb.certification_faults import LIBRARY_FAULTS, library_control, replace_tokens
     from swdb.cli import Failure
     if name in LIBRARY_FAULTS:
-        return library_control(source, name, counts=counts)
+        return library_control(source, name)
     if name not in TOKEN_CONTROLS:
         raise Failure("unknown rewrite control")
     before, after = TOKEN_CONTROLS[name]
@@ -385,6 +362,8 @@ class BCPlugin(KernelPlugin):
     # Candidate certification (ticket 42).
     certification_source = BC_SOURCE
     certification_snapshot = "bc-dx100-scalar-only-20261003-a1.source"
+    certification_driver = "dx100/certification/bc_driver.inc"   # ticket 70
+    certification_result_kind = "f32"
     certification_controls = CONTROLS
     # On the two-level control graph every accelerated frontier vertex has path count 1, so a
     # wrong path-count source is invisible there; the Kronecker matrix graph has unequal counts.
@@ -404,11 +383,12 @@ class BCPlugin(KernelPlugin):
     def certification_oracle(self, graph, source):
         return frontier_oracle(graph, source)
 
-    def certification_judge(self, result, counts, *, threshold=64):
-        return judge(result, counts, threshold=threshold)
+    def certification_check_result(self, adjacency, source, values):
+        # Ticket 70: BCVerifier's criterion (evaluator reproduction) on the recorded scores.
+        return verify_scores(adjacency, source, values, "float")
 
-    def certification_control(self, source, name, *, counts=None):
-        return control(source, name, counts=counts)
+    def certification_control(self, source, name):
+        return control(source, name)
 
     def native_output_limit(self, vertices):
         # Up to 9 significant digits, sign, exponent and separator per score.

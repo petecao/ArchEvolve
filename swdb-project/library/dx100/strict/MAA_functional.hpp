@@ -1,4 +1,4 @@
-// Strict DX100 functional interface. Updated: 2026-10-03 ET.
+// Strict DX100 functional interface. Updated: 2026-10-04 ET (ticket 70: record channel hook).
 #pragma once
 #include <algorithm>
 #include <atomic>
@@ -25,9 +25,19 @@
 static_assert(TILE_SIZE > 0 && TILE_SIZE <= 65535, "DX100 tile size exceeds uint16 field");
 enum class Operation_t { ADD_OP, SUB_OP, MUL_OP, DIV_OP, MIN_OP, MAX_OP,
  AND_OP, OR_OP, XOR_OP, SHL_OP, SHR_OP, GT_OP, GTE_OP, LT_OP, LTE_OP, EQ_OP, NE_OP, MAX };
+#ifdef SWDB_CERT_RECORD
+// Candidate certification (certify 1.3, ticket 70, 2026-10-04 ET): a failed check is recorded on
+// the evaluator's record channel (library/dx100/certification/record.cc), the only place the
+// certifier reads it; the stderr line below is for people only.
+void swdb_cert_record_strict(const char *name);
+#endif
 namespace swdb_strict {
 inline void check(bool value, const char *name) {
- if (!value) { std::fprintf(stderr,"SWDB_STRICT_ASSERT:%s\n",name); std::fflush(stderr); std::_Exit(86); }
+ if (!value) {
+#ifdef SWDB_CERT_RECORD
+  swdb_cert_record_strict(name);
+#endif
+  std::fprintf(stderr,"SWDB_STRICT_ASSERT:%s\n",name); std::fflush(stderr); std::_Exit(86); }
 }
 struct Tile { std::vector<uint32_t> device, cpu; int owner; size_t writer; uint16_t size;
  Tile(): device(TILE_SIZE), cpu(TILE_SIZE), owner(-1), writer(0), size(0) {} };

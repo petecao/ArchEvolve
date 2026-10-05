@@ -108,6 +108,10 @@ class KernelPlugin:
     certification_source = None    # translation unit a certified candidate rewrites
     certification_snapshot = None  # registered scalar-only snapshot the rewrite starts from
     certification_controls = {}    # negative-control ID -> named checks that reject it
+    # Certify 1.3 (ticket 70, 2026-10-04 ET): the evaluator-owned main appended to every build
+    # (library-relative path), the kind of vector it records, and the out-of-process result check.
+    certification_driver = None
+    certification_result_kind = None   # "i32" or "f32"
 
     def certification_rewrite(self, scalar):
         """The library rewrite of the scalar translation unit (the deliverable patch)."""
@@ -121,15 +125,12 @@ class KernelPlugin:
         """Trusted per-level frontier counts for one serialized graph and source."""
         raise NotImplementedError
 
-    def certification_judge(self, result, counts, *, threshold=64):
-        """(passed, reason) for one matrix cell."""
+    def certification_check_result(self, adjacency, source, values):
+        """{passed, reason} of the kernel's recorded result vector (certify 1.3, ticket 70)."""
         raise NotImplementedError
 
-    def certification_control(self, source, name, *, counts=None):
-        """The candidate source with one named negative-control mutation.
-
-        ``counts``: the trusted oracle's frontier counts for the control's graph and source.
-        """
+    def certification_control(self, source, name):
+        """The candidate source with one named negative-control mutation, or a library fault."""
         raise NotImplementedError
 
     def control_source(self, sources):

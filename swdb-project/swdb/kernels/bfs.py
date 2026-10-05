@@ -86,6 +86,8 @@ class BFSPlugin(KernelPlugin):
     # Candidate certification (ticket 42): the exact BFS functions used before.
     certification_source = "benchmarks/gapbs/src/bfs.cc"
     certification_snapshot = "bfs-dx100-scalar-only-20260929-a1.source"
+    certification_driver = "dx100/certification/bfs_driver.inc"   # ticket 70
+    certification_result_kind = "i32"
 
     @property
     def certification_controls(self):
@@ -104,13 +106,14 @@ class BFSPlugin(KernelPlugin):
         from swdb.certification import graph_oracle
         return graph_oracle(graph, source)
 
-    def certification_judge(self, result, counts, *, threshold=64):
-        from swdb.certification import judge_bfs
-        return judge_bfs(result, counts, threshold=threshold)
+    def certification_check_result(self, adjacency, source, values):
+        # Ticket 70: the evaluator's structural BFS criterion on the recorded parent vector.
+        from swdb.bfs_native import verify_parents
+        return verify_parents(adjacency, source, values)
 
-    def certification_control(self, source, name, *, counts=None):
+    def certification_control(self, source, name):
         from swdb.certification import _rewrite_control
-        return _rewrite_control(source, name, counts=counts)
+        return _rewrite_control(source, name)
 
     def native_output_limit(self, vertices):
         return vertices * 24 + 4096
