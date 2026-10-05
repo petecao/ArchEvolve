@@ -85,15 +85,19 @@ def forward_pass_source(scalar):
     return source.replace(ending, "    __dxc_report();\n" + ending, 1)
 
 
-def instrument_source(source):
+def instrument_source(source, frontier_hook=True):
     """The evaluator's frontier inspection before the protected print (certify 1.3, ticket 70:
-    it only records the window; the declaration comes from the forced candidate prelude)."""
+    it only records the window; the declaration comes from the forced candidate prelude).
+
+    Ticket 76 (certify 1.4, 2026-10-05 ET): with ``frontier_hook=False`` nothing is inserted into
+    the candidate's function; the forced prelude's queue records each window at its slide."""
     from swdb.cli import Failure
     if source.count(FRONTIER_TEXT) != 1:
         raise Failure("BC forward-pass frontier logging statement differs from the protected exact text")
     if source.count("bool BCVerifier(") != 1:
         raise Failure("BC correctness check is missing or ambiguous")
-    source = source.replace(FRONTIER_TEXT, "swdb_certification_frontier(queue);\n        " + FRONTIER_TEXT)
+    if frontier_hook:
+        source = source.replace(FRONTIER_TEXT, "swdb_certification_frontier(queue);\n        " + FRONTIER_TEXT)
     # DX100 bc.cc includes the functional model's MAA.hpp directly (bfs.cc does
     # not); the strict layer's MAA_functional.hpp replaces both, so the private
     # build copy drops that include instead of mixing the two models.
@@ -363,6 +367,9 @@ class BCPlugin(KernelPlugin):
     certification_source = BC_SOURCE
     certification_snapshot = "bc-dx100-scalar-only-20261003-a1.source"
     certification_driver = "dx100/certification/bc_driver.inc"   # ticket 70
+    certification_driver_v14 = "dx100/certification/v1_4/bc_driver.inc"   # ticket 76
+    # Ticket 76: BC claims address PBFS's private depths array, which Brandes does not return.
+    certification_claims_address_result = False
     certification_result_kind = "f32"
     certification_controls = CONTROLS
     # On the two-level control graph every accelerated frontier vertex has path count 1, so a
@@ -377,8 +384,8 @@ class BCPlugin(KernelPlugin):
     def certification_rewrite(self, scalar):
         return forward_pass_source(scalar)
 
-    def certification_instrument(self, source):
-        return instrument_source(source)
+    def certification_instrument(self, source, frontier_hook=True):
+        return instrument_source(source, frontier_hook=frontier_hook)
 
     def certification_oracle(self, graph, source):
         return frontier_oracle(graph, source)

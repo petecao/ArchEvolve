@@ -1,6 +1,6 @@
 # ArchEvolve — Software Database
 
-Updated: 2026-10-03
+Updated: 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -368,8 +368,14 @@ _Avoid_: small files
 
 **Negative control**:
 A deliberately broken copy of code that a test must reject. A test that misses its
-negative controls is not trusted.
+negative controls is not trusted. A control counts as rejected only when the check that fires is
+attributable to the break itself, not to anything else the code under test does.
 _Avoid_: mutant (alone), fault injection
+
+**Seam witness**:
+Evidence, recorded by evaluator code at a library seam, that every vertex in a frontier was claimed
+and enqueued through the seams a rewrite contract requires. It shows structure, not correctness.
+_Avoid_: ledger (alone), coverage
 
 **Formal verifier**:
 A tool, such as CBMC or Z3, that proves or refutes a formal predicate about code within declared

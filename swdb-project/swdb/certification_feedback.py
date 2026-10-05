@@ -3,6 +3,9 @@
 Created: 2026-10-04 ET. Agent-decided under Yan-Ru's 2026-10-04 delegation; revisable.
 Updated: 2026-10-04 ET (ticket 70: certify 1.3 cells carry the strict names from the evaluator's
 record channel in `named_checks`; the run's output is read only for older records).
+Updated: 2026-10-05 ET (ticket 76: the provider sees surviving negative controls only as one aggregate
+category, `negative_controls_not_rejected`, never which control or how many; agent-decided under
+Yan-Ru's delegation, revisable).
 
 Campaign a6 (ticket 57) told the provider only "Certification failed a named check": the strict
 layer's `range_bounds` stopped every edit, and the provider never learned which check. This module
@@ -15,7 +18,8 @@ What reaches the provider:
   facts as Peter v1.1 section 3 and the library entries and usage notes the workspace already holds).
 
 What never reaches it: run output, graphs, timings, the strict-layer source, ticket 20's patch or
-the authors' accelerated code. The strict layer prints only the name, not operand values, so the
+the authors' accelerated code, and (ticket 76) which negative control survived: naming the surviving
+control tells an adaptive provider which faults exist and which one its rewrite evades. The strict layer prints only the name, not operand values, so the
 message states the precondition, not the observed value.
 """
 
@@ -75,7 +79,33 @@ OTHER_MESSAGES = {
     "harness_scan": "the rewrite names an evaluator-internal symbol, a certification-build macro, or a "
                     "file-descriptor, environment, loader or process primitive, which candidate code may not use",
     "record_invalid": "the run's evaluator records were malformed",
+    # Ticket 76 (2026-10-05 ET, certify 1.4).
+    "seam_witness": "a frontier vertex was not claimed by compare_and_swap on its own slot of one array and "
+                    "then pushed through the queue by the same thread, or a frontier window differs from the "
+                    "pushes made into it (contract clause L4)",
+    "negative_controls_not_rejected": "one or more negative controls were not rejected by the check each "
+                                      "names, so the matrix does not show the rewrite exercises those checks",
+    "negative_control_site": "the rewrite lacks a unique site for a token-matched negative control",
 }
+
+# Ticket 76: provider-facing names. Each surviving control (`control:<id>`) and each missing control
+# site (`negative_control_site:<id>`) becomes one aggregate category, named once.
+AGGREGATE = {"control": "negative_controls_not_rejected", "negative_control_site": "negative_control_site"}
+
+
+def public_checks(failed_checks):
+    """The failed-check names an Extensa provider may see (ticket 76), in first-seen order.
+
+    Matrix checks (strict-layer names, verifier, frontier sizes, seam witness, legality checks) keep
+    their names and come first: they describe the candidate's own positive runs. Which negative
+    control survived, and how many, is never named; the aggregate categories come last."""
+    named, aggregate = [], []
+    for check in failed_checks or []:
+        prefix = check.split(":", 1)[0] if ":" in check else None
+        target, name = (aggregate, AGGREGATE[prefix]) if prefix in AGGREGATE else (named, check)
+        if name not in target:
+            target.append(name)
+    return named + aggregate
 
 
 def strict_names(run, named_checks=None):

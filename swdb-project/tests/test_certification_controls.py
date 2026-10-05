@@ -184,9 +184,12 @@ def test_semantically_broken_rewrite_is_refused(tmp_path, monkeypatch):
 def test_rewrite_that_bypasses_the_claim_seam_is_refused_by_its_surviving_control(tmp_path, monkeypatch):
     record = _certify(tmp_path, monkeypatch, bypassed_claim)
     assert record['verdict'] == 'failed'
-    assert all(x['status'] == 'passed' for x in record['matrix'])
     survived = {name for name, _, status in _controls(record) if status != 'rejected'}
     assert survived == {'skipped_cas_recheck'}
+    # Ticket 76 (certify 1.4): the bypass also fails every positive cell by the seam witness (L4);
+    # under 1.3 only the surviving control refused it.
+    assert record['command']['version'] == '1.4'
+    assert {x['reason'] for x in record['matrix']} == {'seam_witness'}
 
 
 # --- 2026-10-04 ET: final code review (ticket 43 follow-ups) -----------------------------------

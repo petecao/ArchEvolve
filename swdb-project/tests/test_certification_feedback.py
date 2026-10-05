@@ -115,7 +115,15 @@ def test_gem5_campaign_feedback_and_repair_name_the_check_without_run_output(tea
     repairs = [s for s in seen if s["kind"] == "repair"]
     assert repairs
     report = json.loads(repairs[0]["files"]["CERTIFICATION.json"])
-    assert report["messages"][-1]["check"] == "strict_layer_assertion:range_bounds"
+    # Ticket 76 (2026-10-05 ET): matrix checks first; the surviving control (dropped_wait) reaches
+    # the provider only as the aggregate category, last; the campaign record keeps its name.
+    assert report["failed_checks"] == ["strict_layer_assertion:range_bounds", "negative_controls_not_rejected"]
+    assert [m["check"] for m in report["messages"]] == report["failed_checks"]
+    assert all("control:dropped_wait" in r["certification"]["failed_checks"] for r in rows)
+    assert not any("dropped_wait" in r["rejection"] for r in rows)
+    # (The contract file in the workspace lists every control; which one survived is never said.)
+    assert not any("dropped_wait" in s["files"].get(name, "") or "dropped_wait" in s["prompt"]
+                   for s in seen for name in ("FEEDBACK.json", "CERTIFICATION.json"))
     rewrites = [s for s in seen if s["kind"] == "rewriting"]
     assert "library/intrinsics/notes/dxc_range_loop.md" in rewrites[0]["files"]
     assert "`last_i_reg` = 0 and `last_j_reg` = -1" in rewrites[0]["prompt"]

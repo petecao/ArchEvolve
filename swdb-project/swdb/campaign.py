@@ -1112,20 +1112,22 @@ class Campaign:
                     feedback.append(S.Feedback("certified", "Certification passed.", {"class": cls}).to_dict())
                     break
                 # Ticket 64: name the failing check and its public precondition (never run output).
-                named = certification_feedback.explanation(outcome["failed_checks"])
+                # Ticket 76 (2026-10-05 ET): surviving controls reach the provider only as one
+                # aggregate category; the campaign record keeps the detailed names.
+                public = certification_feedback.public_checks(outcome["failed_checks"])
+                named = certification_feedback.explanation(public)
                 if attempt >= self.max_repairs:
-                    return reject("certification_failed", named, failed_checks=outcome["failed_checks"])
+                    return reject("certification_failed", named, failed_checks=public)
                 # 2026-10-04 ET: the repair workspace holds the failing patch, and the prompt names
                 # only the files present (the provider audit refuses reads outside them).
                 files = {**self._workspace(iteration), "CANDIDATE.patch": patch,
-                         "CERTIFICATION.json": json.dumps({"class": cls, "failed_checks": outcome["failed_checks"],
-                                                           "messages": certification_feedback.messages(
-                                                               outcome["failed_checks"])})}
+                         "CERTIFICATION.json": json.dumps({"class": cls, "failed_checks": public,
+                                                           "messages": certification_feedback.messages(public)})}
                 repaired = self._call("repair", files, "Repair: `CANDIDATE.patch` failed the certification checks "
                                       "named in `CERTIFICATION.json`; return a repaired patch.\n"
                                       + rewrite_prompt(self.cid, iteration, self.classes, files), row)
                 if repaired is None:
-                    return reject("certification_failed", named, failed_checks=outcome["failed_checks"])
+                    return reject("certification_failed", named, failed_checks=public)
                 attempt += 1
                 patch = repaired["patch"]
                 knobs = knobs_by_class(repaired).get(cls, knobs)
