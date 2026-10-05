@@ -4,6 +4,7 @@ Navigation updated: 2026-09-30 (Eastern Time).
 
 Created: 2026-09-25 (Eastern Time)
 Updated: 2026-09-30 (Eastern Time)
+Updated: 2026-10-05 (Eastern Time): split thread caps and lane CPU check (ticket 74)
 
 The proposal producer or labeled test client selects the intent. The rewrite
 provider interprets that intent using the identified
@@ -72,9 +73,12 @@ kernel start time, uses pidfds where available, and stops owned descendants befo
 the tracer. The 120-second tool timer excludes the tracer, recorded original CLI,
 and, for native Codex, the exact installed `codex-code-mode-host` sibling while
 directly parented by that original native process. Same-named copies and other
-helpers keep the timer. The original CLI and service both count toward the full
-16-thread and 32 GiB resident-memory caps; the overall provider-call budget still
-applies. Only the first observed service instance is exempt; a tool shell that
+helpers keep the timer. Since ticket 74 (2026-10-05) the tracer, the original CLI
+and that service form the provider runtime, capped at 64 threads; every other owned
+process (tool commands and their descendants, detached or not) shares the 16-thread
+cap. A runtime-cap overrun is recorded as a harness limit (`scope: runtime`), not as
+the model's work. All owned processes share the 32 GiB resident-memory cap, and every
+thread must stay on the lane's CPUs; the overall provider-call budget still applies. Only the first observed service instance is exempt; a tool shell that
 later execs the same binary keeps the timer. The thread, memory and size caps are
 polled every 0.1 s (`limit_enforcement` records how each is enforced); inner Claude
 tool commands also get a kernel address-space limit of 32 GiB. The 5 GiB size cap
@@ -187,8 +191,10 @@ or unsupported requirements produce an unresolved result.
 Operator-selected bounds are recorded before each provider call. Initial defaults
 are one generation attempt, at most two build/correctness repairs, 1200 seconds per
 provider call (at most 1800), and a 3600-second total provider budget. The guard
-limits the provider process tree, including its external `strace` launcher, to
-16 aggregate threads and 32 GiB of aggregate resident memory. Tool commands have
+limits the tool commands the provider starts to 16 threads, its own runtime (the
+external `strace` launcher, the CLI and its persistent service) to 64 threads, the
+whole tree to 32 GiB of aggregate resident memory, and every thread to the lane's
+CPUs (ticket 74). Tool commands have
 a 120-second limit, and the workspace has a 5 GiB limit. Resource excess rejects
 the attempt. Claude calls also carry a
 five-dollar API budget cap where supported by the configured account. Codex records

@@ -204,8 +204,11 @@
           "reason": {
             "enum": [
               "usage_limit",
-              "login"
-            ]
+              "login",
+              "provider_capacity",
+              "guard_infrastructure"
+            ],
+            "description": "Ticket 74 (2026-10-05 ET): a synthesis call at capacity (ticket 73) or stopped by the guard's own runtime limit also pauses."
           },
           "resumed_at": {
             "type": [

@@ -1,6 +1,6 @@
 """Role-specific inputs over the shared provider process, guard and audit.
 
-Updated: 2026-10-04 ET (ticket 69: strict-mode keyword check); 2026-10-04 (login write-back). Inputs are built by trusted SWDB callers, never copied by
+Updated: 2026-10-05 ET (ticket 74: harness-limit guard stops raise GuardInfrastructure); 2026-10-04 ET (ticket 69: strict-mode keyword check); 2026-10-04 (login write-back). Inputs are built by trusted SWDB callers, never copied by
 walking a repository. Each file is explicit; real invocations require mbit10.
 """
 
@@ -239,6 +239,13 @@ def run(role, files, prompt, config, folder, *, remaining_s=None):
         (workspace.folder/"audit.json").write_text(json.dumps(audit, indent=2))
         receipt.write_text(json.dumps(metadata, indent=2))
         (workspace.folder/"workspace.json").write_text(json.dumps(workspace.metadata, indent=2))
+    if error is not None:
+        # Ticket 74 (2026-10-05 ET): a guard stop caused only by the harness's own limit on the
+        # provider runtime is infrastructure, provided the audit found nothing else.
+        harness = provider_guard.harness_limit(workspace.folder)
+        if harness and all(v.get("code") == "resource_limit" for v in audit.get("violations", [])):
+            raise provider_adapters.GuardInfrastructure("provider guard stopped the call for its own limit: "
+                                                        + harness) from None
     if not audit["passed"] and ((workspace.folder/"stdout.txt").is_file() or error is None):
         raise Failure("provider role audit failed: " + "; ".join(audit["reasons"]))
     if error is not None:

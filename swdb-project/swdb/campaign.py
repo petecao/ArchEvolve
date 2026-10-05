@@ -66,6 +66,17 @@ CAPACITY_BACKOFF_S = (60, 120, 300, 600, 600, 600, 600)
 CAPACITY_WAIT_S = 3600
 
 
+#: Ticket 74 (2026-10-05 ET): a guard stop for the harness's own runtime limit is uncounted and retried
+#: after GUARD_RETRY_S, at most GUARD_RETRIES times per call; then the campaign stops `infrastructure_failure`.
+GUARD_RETRIES = 2
+GUARD_RETRY_S = 30
+
+
+def guard_retry_s():
+    """The wait before a retry; SWDB_GUARD_RETRY_S overrides it for tests."""
+    return float(os.environ.get("SWDB_GUARD_RETRY_S", GUARD_RETRY_S))
+
+
 def capacity_backoff():
     """The backoff schedule; SWDB_CAPACITY_BACKOFF_S (comma-separated seconds) overrides it for tests."""
     raw = os.environ.get("SWDB_CAPACITY_BACKOFF_S")
@@ -87,6 +98,10 @@ LOGIN = re.compile(r"login|not logged in|unauthori[sz]ed|authentication|credenti
 
 class _Capacity(Exception):
     """Ticket 73: one provider call met transient unavailability (handled inside `_call`)."""
+
+
+class _GuardInfrastructure(Exception):
+    """Ticket 74: the guard stopped one provider call for its own runtime limit (handled inside `_call`)."""
 
 
 class Paused(Exception):
@@ -737,11 +752,21 @@ class Campaign:
     # provider calls (D7) -------------------------------------------------------------------
     def _call(self, kind, files, prompt, iteration_row):
         """One provider call. Ticket 73: a provider at capacity is recorded uncounted and retried after
-        a backoff; past CAPACITY_WAIT_S of waiting the campaign stops `infrastructure_failure`."""
-        waited, schedule = 0.0, list(capacity_backoff())
+        a backoff; past CAPACITY_WAIT_S of waiting the campaign stops `infrastructure_failure`.
+        Ticket 74: a guard stop for the harness's own runtime limit is recorded uncounted and retried
+        at most GUARD_RETRIES times; then the campaign stops `infrastructure_failure`."""
+        waited, schedule, guard_stops = 0.0, list(capacity_backoff()), 0
         while True:
             try:
                 return self._call_once(kind, files, prompt, iteration_row)
+            except _GuardInfrastructure as stopped:
+                guard_stops += 1
+                if guard_stops > GUARD_RETRIES:
+                    raise Stop("infrastructure_failure", f"the provider guard stopped {guard_stops} consecutive "
+                               f"{kind} calls for its own runtime limit: {stopped}") from None
+                delay = guard_retry_s()
+                iteration_row["provider_calls"][-1]["retry_after_s"] = delay
+                time.sleep(delay)
             except _Capacity as capacity:
                 delay = schedule.pop(0) if schedule else None
                 if delay is None or waited + delay > CAPACITY_WAIT_S:
@@ -774,6 +799,8 @@ class Campaign:
             outcome, error = S.CallOutcome.PROVIDER_CAPACITY, exc
         except provider_adapters.ProviderUnavailable as exc:
             outcome, error = S.CallOutcome.USAGE_LIMIT, exc
+        except provider_adapters.GuardInfrastructure as exc:     # ticket 74
+            outcome, error = S.CallOutcome.GUARD_INFRASTRUCTURE, exc
         except Failure as exc:
             text = str(exc)
             stderr = folder / "stderr.txt"
@@ -796,6 +823,9 @@ class Campaign:
             "classification": meta.get("classification")})
         if outcome == S.CallOutcome.PROVIDER_CAPACITY:
             raise _Capacity(str(error))
+        if outcome == S.CallOutcome.GUARD_INFRASTRUCTURE:
+            iteration_row["provider_calls"][-1]["guard_reason"] = str(error)[:1000]
+            raise _GuardInfrastructure(str(error))
         if outcome in S.UNCOUNTED_CALL_OUTCOMES:
             raise Paused(outcome.value)
         if error is not None:
@@ -1160,7 +1190,10 @@ class Campaign:
                 # uncounted and pause the campaign; the family stays unsynthesized for the resume.
                 from swdb import provider_adapters
                 # Ticket 73: transient unavailability is uncounted too (it pauses here; a resume retries).
+                # Ticket 74: a guard stop for the harness's own runtime limit is uncounted (it pauses here).
                 outcome = (S.CallOutcome.PROVIDER_CAPACITY if isinstance(exc, provider_adapters.ProviderCapacity)
+                           else S.CallOutcome.GUARD_INFRASTRUCTURE
+                           if isinstance(exc, provider_adapters.GuardInfrastructure)
                            else S.CallOutcome.USAGE_LIMIT if isinstance(exc, provider_adapters.ProviderUnavailable)
                            else S.CallOutcome.LOGIN if LOGIN.search(str(exc)) else S.CallOutcome.FAILED)
                 result = {"state": "failed", "reason": str(exc)}
