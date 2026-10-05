@@ -2,6 +2,7 @@
 
 Created: 2026-10-03 (Eastern Time)
 Updated: 2026-10-04 (Eastern Time): site-finder fields (ticket 55); campaign isolation and gem5 approval fields
+Updated: 2026-10-04 21:40 (Eastern Time): `protocol.speed_rule` and evaluator v3 (tickets 66 and 67)
 
 Extensa mode (ADR 0009, ADR 0010; decisions in
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`) adds optional
@@ -82,6 +83,17 @@ lease is released, recorded per block) and `evaluator` (the native evaluator ver
 campaign's protocols pin). With `approval` field `gem5_other_socket` true, native blocks, pilot and
 iterations alike, run while another campaign's gem5 job holds the other socket; that lease
 is recorded per block.
+
+Added 2026-10-04 ET (tickets 66 and 67, decided by Yan-Ru): a native `protocol` may set
+`speed_rule` (`swdb.speed_rule.range.v1`, the default when absent, or
+`swdb.speed_rule.ci_width.v1`). Under the CI-width rule every frozen protocol carries
+`sampling.analysis: paired_repetition_circular_block_bootstrap.v1` with `sampling.block_length`
+and `profitability.gate` (`statistic: relative_ci_width.v1`, `maximum`) instead of
+`maximum_relative_spread`; the comparison's `confidence_interval` adds `block_length` and
+`relative_width`, and the summary's `pilot` adds `speed_rule`, `ci_by_class_and_role` and `gate`.
+It needs at least 8 repetitions and is refused for gem5. `evaluator` may also name
+`swdb.native.evaluator.scalable.v3` (saturating parent narrowing; trial format
+`swdb.bfs.native.trial.v3` with `parents_saturated`).
 
 `swdb validate` refuses a gem5 campaign with repetitions other than 1 or more than one
 source, a native campaign with fewer than 5 repetitions, `region_pairs: true`, another
