@@ -27,12 +27,12 @@ ALL = [(family, version) for family, table in procedures.PROCEDURES.items() for 
 # the behavior, re-declare the digest in the table and here and say why in the ticket.
 FROZEN = {
     ('candidate', '1.3'): 'adb57a16acb2af6ce3af92ffb7af4ae22ac1a83d5e5c3e9d187f3f35388f1011',
-    ('candidate', '1.4'): 'eedf012a9578cefff06a80de2efb2e60a561eb1288b0eadb9ce8b91da88fa162',
-    ('candidate', '1.5'): 'a8813825cd19feeff50cccd84d4eb25dc980ca33db3c7aee0adb05e1283944dc',
-    ('candidate', '1.6'): '5cd8b7afffa9490f1544b4c8f8c122f09175c5a00815008a367076633b68b928',
+    ('candidate', '1.4'): '98a697d62d23d9cdc37768da01cea8ba7b737c93dda9a1752493d28810039d0c',
+    ('candidate', '1.5'): 'eba9c0d2556e0bbe0dfa1a9d49385266f86500f6b6eb8e89aacc0aaadd638cda',
+    ('candidate', '1.6'): '114c6434430d21d0d93043588500d0c467f98def89762b3e6f7b9e8644e26ea3',
     ('native', '1.3'): '399799d84479d83249723a088c677ab526e218a2f1005afdb3ed02a0c14bb248',
-    ('native', '1.4'): '060b50a28f7fd4ccc5b1941e653da0e97546c6feb3ff7d7a41868363cf19df2c',
-    ('native', '1.5'): '7f0d9368c25281d2b880185d56c97d2cc8eef2f06b1db42f93684a3149bdf2f5',
+    ('native', '1.4'): '700d68f398f6d848dac56e2f68910e49f1e2ceab25c99c58ea47bcec8f81762f',
+    ('native', '1.5'): '642d2fe2bdb743f0d065b1f2bb00d2ff80db35257751f1ca15d2f25ab9ddeddd',
     ('library_operation', '1.0'): '7ffd0a8f3ff6e2fa0da4c966010c5a57a0378140a5a6c777c32fbcd4d3fa8dea',
     ('library_operation', '1.1'): 'f0a84509f5a3b3a44de86f479a2627ad6f61f9f786e29cb980789f1c6766c60e',
     ('library_operation', '1.2'): 'f3ca83e70284d9aae97296de7ee6013ceea28e3578fdeecd46869d4521254ef7',

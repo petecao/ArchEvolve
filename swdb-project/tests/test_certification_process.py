@@ -103,6 +103,8 @@ def test_t20_certifies_under_1_5_with_records_written_by_the_evaluator(tmp_path,
     assert {row['path'] for row in command['kernel_sources']} >= {'swdb/kernels/bfs.py'}
     assert 'library/dx100/certification/v1_5/evaluator.cc' in {row['path'] for row in command['sources']}
     assert set(command['code']) == {'git_commit', 'sources_differ_from_commit'}
+    # 2026-10-05 ET: the record is JSON (workflow.persist refused DX100 1.4-1.6 records with tuple evidence).
+    assert json.loads(json.dumps(record)) == record
     controls = record['negative_controls']
     assert all(x['status'] == 'rejected' for x in controls)
     faults = [x for x in controls if x['fault'].get('plan')]

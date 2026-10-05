@@ -40,6 +40,7 @@ share ``swdb.certification_common``; "ledger" became the seam-witness pairing. B
 """
 from __future__ import annotations
 
+import json
 import random
 import re
 import struct
@@ -560,7 +561,10 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
                 ok, attribution = attributed(job['fault'], parsed, verdict, verdict['_pairs'],
                                              set(expected_checks) or set(SEMANTIC_CHECKS),
                                              adjacency=graph_rows(job['graph']), source=job['vertex'])
-                record['attribution'] = {'attributed': ok, **attribution}
+                # Records are JSON: the evidence's (window, vertex) and (check, attribution) pairs become
+                # lists, as in the native path (2026-10-05 ET: tuples made DX100 1.4-1.6 records fail
+                # `workflow.persist` with "record changes during JSON serialization").
+                record['attribution'] = json.loads(json.dumps({'attributed': ok, **attribution}))
                 if status == 'rejected' and not ok:
                     status, reason = 'invalid', 'check_not_attributed_to_fault'
             done_controls.append((job['canonical'], {
