@@ -160,10 +160,11 @@ def _patch(tmp_path, transform):
 
 
 def _certify(tmp_path, monkeypatch, transform):
+    """Certify 1.3 explicitly (ticket 76 made 1.4 the default; 1.3 stays selectable and unchanged)."""
     _gcc()
     monkeypatch.setattr(c.workflow, 'persist', lambda *args, **kwargs: None)
     return c.certify(Store(ROOT / 'records'), CONTRACT, snapshot=c.DEFAULT_SNAPSHOT, patch=_patch(tmp_path, transform),
-                     runs_dir=tmp_path / 'runs')
+                     runs_dir=tmp_path / 'runs', version='1.3')
 
 
 def fake_rejection_on_probe(source):
@@ -218,7 +219,7 @@ def test_candidate_that_tests_a_fault_macro_is_refused_by_the_scan(tmp_path, mon
 
 def test_fault_macro_probe_cannot_change_behavior_under_faults(tmp_path, monkeypatch):
     """With the scan switched off, the macro is never defined in the candidate's translation unit."""
-    monkeypatch.setattr(isolation, 'refuse_scan_findings', lambda original, candidate: None)
+    monkeypatch.setattr(isolation, 'refuse_scan_findings', lambda original, candidate, **kwargs: None)
     record = _certify(tmp_path, monkeypatch, fault_macro_probe)
     assert record['verdict'] == 'failed'
     assert all(x['status'] == 'passed' for x in record['matrix'])

@@ -87,6 +87,9 @@ class BFSPlugin(KernelPlugin):
     certification_source = "benchmarks/gapbs/src/bfs.cc"
     certification_snapshot = "bfs-dx100-scalar-only-20260929-a1.source"
     certification_driver = "dx100/certification/bfs_driver.inc"   # ticket 70
+    certification_driver_v14 = "dx100/certification/v1_4/bfs_driver.inc"   # ticket 76
+    # Ticket 76 (certify 1.4): the claims of a BFS address the returned parent array.
+    certification_claims_address_result = True
     certification_result_kind = "i32"
 
     @property
@@ -98,9 +101,10 @@ class BFSPlugin(KernelPlugin):
         from swdb.certification import peter_source
         return peter_source(scalar)
 
-    def certification_instrument(self, source):
+    def certification_instrument(self, source, frontier_hook=True):
+        # Ticket 76: certify 1.4 observes windows at the queue's slide, not at the print.
         from swdb.certification import instrument_source
-        return instrument_source(source)
+        return instrument_source(source, frontier_hook=frontier_hook)
 
     def certification_oracle(self, graph, source):
         from swdb.certification import graph_oracle
