@@ -85,6 +85,23 @@
     "outcome": {
       "type": "object"
     },
+    "clause_controls": {
+      "description": "2026-10-04 ET: per contract clause, its negative control compared with the check the clause names.",
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "required": ["clause", "control", "check", "matched", "enforceable"],
+        "properties": {
+          "clause": {"type": "string"},
+          "control": {"type": "string"},
+          "check": {"type": "string"},
+          "source": {"enum": ["contract", "plugin"]},
+          "observed_checks": {"type": "array", "items": {"type": "string"}},
+          "matched": {"type": "boolean"},
+          "enforceable": {"type": "boolean"}
+        }
+      }
+    },
     "evidence_kind": {
       "enum": [
         "execution",

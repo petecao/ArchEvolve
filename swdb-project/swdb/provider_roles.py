@@ -43,11 +43,48 @@ ROLES = {
         "type": "object", "additionalProperties": False, "required": ["tests", "unresolved"],
         "properties": {"tests": {"type": "array", "items": FILE_SCHEMA},
                        "unresolved": {"type": "array", "items": {"type": "string"}}}}),
+    # 2026-10-04 ET (final code review): a free-form `entry` object fails the providers'
+    # strict structured-output check, so the entry has the fixed shape the prompt asks for.
     "synthesis": Role("synthesis", {
         "type": "object", "additionalProperties": False, "required": ["entry", "files", "unresolved"],
-        "properties": {"entry": {"type": "object"}, "files": {"type": "array", "items": FILE_SCHEMA},
+        "properties": {"entry": {"type": "object", "additionalProperties": False,
+                                 "required": ["name", "summary"],
+                                 "properties": {"name": {"type": "string"}, "summary": {"type": "string"}}},
+                       "files": {"type": "array", "items": FILE_SCHEMA},
                        "unresolved": {"type": "array", "items": {"type": "string"}}}}),
 }
+
+
+def strict_problems(schema, where="$"):
+    """Reasons a role output schema fails the providers' strict structured-output check.
+
+    Strict mode needs every object to close its shape: `additionalProperties: false`, a
+    nonempty `properties` mapping, and every property listed in `required`. Nested
+    properties, array items and composition branches are checked too.
+    """
+    problems = []
+    if not isinstance(schema, dict):
+        return problems
+    types = schema.get("type")
+    types = types if isinstance(types, list) else [types]
+    if "object" in types:
+        props = schema.get("properties")
+        if schema.get("additionalProperties") is not False:
+            problems.append(f"{where}: object without additionalProperties: false")
+        if not isinstance(props, dict) or not props:
+            problems.append(f"{where}: free-form object without properties")
+        elif set(schema.get("required", [])) != set(props):
+            problems.append(f"{where}: required must list every property")
+    for name, child in (schema.get("properties") or {}).items():
+        problems += strict_problems(child, f"{where}.{name}")
+    if isinstance(schema.get("items"), dict):
+        problems += strict_problems(schema["items"], f"{where}[]")
+    for key in ("anyOf", "allOf", "oneOf"):
+        for i, child in enumerate(schema.get(key, [])):
+            problems += strict_problems(child, f"{where}.{key}[{i}]")
+    for name, child in (schema.get("$defs") or {}).items():
+        problems += strict_problems(child, f"{where}.$defs.{name}")
+    return problems
 
 
 def project(value):

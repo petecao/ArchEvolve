@@ -143,6 +143,11 @@ def test_equal_rewrites_certify_with_every_control_rejected(tmp_path, monkeypatc
     assert len(record['negative_controls']) == 16
     assert all(status == 'rejected' for _, _, status in _controls(record)), _controls(record)
     assert all(x['fault']['site'] == 'library_fault' for x in record['negative_controls'])
+    # 2026-10-04 ET (final code review): every enforceable clause check was observed; the two
+    # clauses whose check names no run reports are recorded as not enforceable.
+    clauses = record['clause_controls']
+    assert all(r['matched'] for r in clauses if r['enforceable']), clauses
+    assert {r['clause'] for r in clauses if not r['enforceable']} == {'frontier_threshold', 'schedule'}
 
 
 def test_semantically_broken_rewrite_is_refused(tmp_path, monkeypatch):
@@ -157,3 +162,79 @@ def test_rewrite_that_bypasses_the_claim_seam_is_refused_by_its_surviving_contro
     assert all(x['status'] == 'passed' for x in record['matrix'])
     survived = {name for name, _, status in _controls(record) if status != 'rejected'}
     assert survived == {'skipped_cas_recheck'}
+
+
+# --- 2026-10-04 ET: final code review (ticket 43 follow-ups) -----------------------------------
+
+def _run(stdout='', stderr='', returncode=0, timeout=False):
+    return {'stdout': stdout, 'stderr': stderr, 'returncode': returncode, 'timeout': timeout}
+
+
+def _judge(run, counts):
+    return bc.judge(run, counts, threshold=64)
+
+
+def test_observed_checks_name_every_failed_check_not_only_the_first():
+    # Verifier FAIL and unequal frontier prints: the frontier check is observed behind the verifier.
+    run = _run('Starting PBFS: 1 elements\nStarting PBFS: 3 elements\nSWDB trusted_frontier=1\n'
+               'SWDB trusted_frontier=3\nVerification: FAIL\n')
+    assert c.observed_checks(run, [1, 4], _judge, []) == ['frontier_size_equality', 'verifier']
+    assert c.observed_checks(run, [1, 3], _judge, []) == ['verifier']
+    strict = _run(stderr='SWDB_STRICT_ASSERT:stream_bounds\n', returncode=134)
+    assert c.observed_checks(strict, [1], _judge, ['stream_bounds']) == ['stream_bounds']
+    duplicate = _run(stderr='SWDB_PRESERVATION_FAIL:duplicate_frontier\n', returncode=1)
+    assert c.observed_checks(duplicate, [1], _judge, ['duplicate_frontier']) == ['duplicate_frontier',
+                                                                                 'frontier_size_equality']
+
+
+def test_a_control_with_expected_named_checks_is_not_rejected_by_any_failure():
+    # Before: index_wrap (expected stream_bounds/byte_offset_overflow) counted as rejected on a
+    # plain verifier FAIL, so the strict check it exists to exercise was never shown to fire.
+    fail = _run('Verification: FAIL\n')
+    assert c.control_status({'stream_bounds', 'byte_offset_overflow'}, ['verifier'], fail, False) == 'invalid'
+    assert c.control_status({'stream_bounds'}, ['stream_bounds'], _run(returncode=134), False) == 'rejected'
+    assert c.control_status(set(), ['verifier'], fail, False) == 'rejected'
+    assert c.control_status(set(), ['verifier'], _run(returncode=139), False) == 'invalid'
+    assert c.control_status(set(), [], _run('Verification: PASS\n'), True) == 'survived'
+    assert c.control_status(set(), ['verifier'], _run(timeout=True), False) == 'invalid'
+
+
+def _contract(clauses):
+    return {'clauses': [{'id': cid, 'negative_control': {'id': control, 'check': check}}
+                        for cid, control, check in clauses]}
+
+
+def test_clause_controls_compare_each_clause_check_with_its_control_runs():
+    controls = [{'id': 'dropped_continuation', 'status': 'rejected', 'observed_checks': ['verifier']},
+                {'id': 'dropped_continuation', 'status': 'rejected',
+                 'observed_checks': ['frontier_size_equality', 'verifier']},
+                {'id': 'chunk_off_by_one', 'status': 'rejected', 'observed_checks': ['tile_truncation']}]
+    entry = _contract([('L1', 'dropped_continuation', 'frontier_size_equality'),
+                       ('chunk_size', 'chunk_off_by_one', 'tile_truncation'),
+                       ('frontier_threshold', 'chunk_off_by_one', 'knob_range'),
+                       ('L9', 'missing_control', 'verifier')])
+    rows = {r['clause']: r for r in c.clause_controls(entry, controls)}
+    assert not rows['L1']['matched'] and rows['L1']['enforceable']       # one tile size missed the check
+    assert rows['chunk_size']['matched']
+    assert not rows['frontier_threshold']['enforceable']                 # no run can report knob_range
+    assert not rows['L9']['matched'] and rows['L9']['enforceable']       # the control never ran
+    assert {r['source'] for r in rows.values()} == {'contract'}
+
+
+def test_bc_l4_clause_gains_successor_bit_edge_index_and_path_count_controls():
+    instrumented = bc.instrument_source(bc.forward_pass_source(_bc_scalar()))
+    for name, expected in [('dropped_successor_bit', '(void)edges[k];'),
+                           ('shifted_edge_index', '(edges[k]+1)%g.num_edges_directed()'),
+                           ('shifted_path_count_source', 'u=frontier[k==0?count-1:k-1]')]:
+        assert name in bc.CONTROLS and bc.CONTROLS[name] == set()
+        mutant = bc.control(instrumented, name)
+        assert expected in mutant and mutant != instrumented
+    entry = _contract([('L4', 'skipped_cas_recheck', 'duplicate_frontier')])
+    controls = [{'id': name, 'status': 'rejected', 'observed_checks': ['verifier']}
+                for name, _ in kernels.BC.certification_clause_controls['L4']]
+    controls.append({'id': 'skipped_cas_recheck', 'status': 'rejected',
+                     'observed_checks': ['duplicate_frontier', 'frontier_size_equality']})
+    rows = c.clause_controls(entry, controls, kernels.BC)
+    assert [(r['control'], r['source'], r['matched']) for r in rows] == [
+        ('skipped_cas_recheck', 'contract', True), ('dropped_successor_bit', 'plugin', True),
+        ('shifted_edge_index', 'plugin', True), ('shifted_path_count_source', 'plugin', True)]

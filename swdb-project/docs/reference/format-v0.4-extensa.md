@@ -1,7 +1,7 @@
 # Extensa-mode record fields (format 0.4 addition)
 
 Created: 2026-10-03 (Eastern Time)
-Updated: 2026-10-04 (Eastern Time): site-finder fields (ticket 55)
+Updated: 2026-10-04 (Eastern Time): site-finder fields (ticket 55); campaign isolation and gem5 approval fields
 
 Extensa mode (ADR 0009, ADR 0010; decisions in
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`) adds optional
@@ -75,6 +75,13 @@ or `query`: the query site finder, ticket 55), `provider` (`name`, `model`, `eff
 (`max_iterations`, `plateau_iterations`, `lane_hours`, `provider_calls_per_iteration`,
 `provider_calls_setup`, `disk_gb`, `lanes`, optional `max_repairs`), `runs_root` and an
 optional `approval` (`by`, `date`, `scope`, `raised_budgets`, `two_lanes`).
+
+Added 2026-10-04 ET (tickets 56 and 64; documented by the final code review): `protocol`
+may set `isolation` (`other_socket_free`: native blocks start only while the other socket's
+lease is released, recorded per block) and `evaluator` (the native evaluator version the
+campaign's protocols pin). With `approval` field `gem5_other_socket` true, native blocks, pilot and
+iterations alike, run while another campaign's gem5 job holds the other socket; that lease
+is recorded per block.
 
 `swdb validate` refuses a gem5 campaign with repetitions other than 1 or more than one
 source, a native campaign with fewer than 5 repetitions, `region_pairs: true`, another

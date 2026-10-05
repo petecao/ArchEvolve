@@ -18,9 +18,25 @@ from tools import typed_library_gem5_driver as driver
 TRACKER = driver.PROJECT/'.scratch/typed-library-dx100-bfs-2026-10-03'
 
 
+@pytest.fixture(scope='module')
+def pre_recovery_records(tmp_path_factory):
+    """The repository records as they were before recovery r1 ran (2026-10-04 ET).
+
+    The recovery admission refuses any timed history beyond the first pair, and the real
+    r1 execution later committed its own `.recovery.r1.` evaluations. The tests exercise
+    admission of that recovery, so they read a pinned copy without r1's own records
+    instead of the live store.
+    """
+    import shutil
+    target = tmp_path_factory.mktemp('pre-recovery') / 'records'
+    shutil.copytree(driver.PROJECT/'records', target,
+                    ignore=lambda folder, names: [n for n in names if '.recovery.r1.' in n])
+    return target
+
+
 @pytest.fixture
-def recovery_case(tmp_path, monkeypatch):
-    store = Store(driver.PROJECT/'records')
+def recovery_case(tmp_path, monkeypatch, pre_recovery_records):
+    store = Store(pre_recovery_records)
     manifest = json.loads((TRACKER/'evaluation/a2-aggregation-failure-summary.json').read_text())
     run = manifest['id']
     args = SimpleNamespace(id=run, recovery_id='r1', recovery_manifest=tmp_path/'manifest.json',

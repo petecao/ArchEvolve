@@ -20,6 +20,7 @@ import shutil
 import signal
 import socket
 import subprocess
+import tempfile
 import uuid
 from pathlib import Path
 
@@ -259,7 +260,7 @@ def certify_entry(store, library, entry_id, profile_path, runs_dir=None, seed=No
         raise Failure(f"certification refused: {exc}") from None
     resolved = inputs(library, entry)
     seed = secrets.randbits(32) if seed is None else int(seed)
-    base = artifacts.external_directory(runs_dir or "/private/tmp/swdb-certification")
+    base = artifacts.external_directory(runs_dir or Path(tempfile.gettempdir()) / "swdb-certification")
     folder = base / ("certify-" + uuid.uuid4().hex)
     folder.mkdir(parents=True)
     content_sha256 = library.content_sha256(entry_id)
@@ -294,6 +295,13 @@ def certify_entry(store, library, entry_id, profile_path, runs_dir=None, seed=No
                and controls and all(c["status"] == "rejected" for c in controls) else "failed")
     if library.content_sha256(entry_id) != content_sha256 or _source_digest(library.root) != command_hash:
         raise Failure("library entry or certification sources changed during execution")
+    # 2026-10-04 ET (final code review): the pinned body, reference, driver templates and control
+    # mutations are hash-checked again after the run, not only before it.
+    try:
+        if inputs(library, entry) != resolved:
+            raise Failure("library entry or certification sources changed during execution")
+    except (Failure, UsageError) as exc:
+        raise Failure(f"pinned certification inputs changed during execution: {exc}") from None
     record = workflow.record(
         "certification", "certification." + uuid.uuid4().hex,
         entry={"id": entry_id, "content_sha256": content_sha256}, dependencies=dependencies,
@@ -497,10 +505,14 @@ def synthesize(family, *, library_root, records, provider_config, runs, campaign
     runs = artifacts.external_directory(runs)
     session = runs / ("synthesis-" + uuid.uuid4().hex)
     calls = []
+    provider_errors = []
 
     def invoker(files, prompt):
         try:
             response, metadata = provider_roles.run("synthesis", files, prompt, config, session / "provider")
+        except Failure as exc:
+            provider_errors.append(exc)
+            raise
         finally:
             receipt = session / "provider" / "provider.json"
             meta = json.loads(receipt.read_text()) if receipt.is_file() else {}
@@ -511,6 +523,10 @@ def synthesize(family, *, library_root, records, provider_config, runs, campaign
     reference_dir = library_root / "library_operations" / "reference"
     target = CpuCompileTarget(dataclasses.replace(spec.target, flags=(*spec.target.flags, f"-I{reference_dir}")))
     outcome = run_synthesis(spec, contract, target, session / "synthesis", invoker=invoker)
+    if provider_errors:
+        # 2026-10-04 ET (final code review): a provider failure (usage limit, login, guard) is not a
+        # rejected synthesis; the caller classifies it (D7: usage-limit and login calls are uncounted).
+        raise provider_errors[0]
     result = {"family": family, "contract_sha256": contract_sha256(contract), "provider_calls": calls,
               "synthesis": {"ok": outcome.ok, "reason": outcome.reason[:1000]}, "entry": None, "certification": None}
     if not outcome.ok:

@@ -1,6 +1,7 @@
 # Map: Typed library and DX100 BFS rewrites in ArchEvolve and Extensa modes
 
 Created: 2026-10-03 02:28 ET
+Updated: 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review)
 **Type:** ticket map
 **Status:** ready-for-agent
 **Spec:** [spec.md](spec.md)
@@ -98,11 +99,16 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 | 53 | [Speed rule, per-class verdicts, selection and knob tuning](issues/53-speed-rule-and-selection.md) | resolved | 52 |  |
 | 54 | [Extensa campaign budgets and pruning](issues/54-campaign-budgets.md) | resolved | 08, 26, 52 |  |
 | 55 | [Query site finder](issues/55-query-site-finder.md) | resolved | 46, 52 |  |
-| 56 | [Native-CPU Extensa campaign target for BFS](issues/56-native-campaign-target.md) | ready-for-agent | 51, 53, 54, 55 | yes (granted) |
-| 57 | [gem5 Extensa campaign target](issues/57-gem5-campaign-target.md) | ready-for-agent | 29, 53, 54, 55 | yes (granted) |
-| 58 | ["Is the specification enough?" experiment](issues/58-spec-enough-experiment.md) | needs-info | Codex login on mbit10 (Yan-Ru); 07, 08, 20, 48 | yes (granted) |
-| 59 | [Send Peter the Extensa-mode design note](issues/59-send-peter-extensa-design.md) | ready-for-human | 47 |  |
+| 56 | [Native-CPU Extensa campaign target for BFS](issues/56-native-campaign-target.md) | resolved | 51, 53, 54, 55 | yes (granted) |
+| 57 | [gem5 Extensa campaign target](issues/57-gem5-campaign-target.md) | resolved | 53, 54, 55 (29 resolved) | yes (granted) |
+| 58 | ["Is the specification enough?" experiment](issues/58-spec-enough-experiment.md) | resolved | — (48, 07, 08, 20, 62 resolved) | yes (granted) |
+| 59 | [Send Peter the Extensa-mode design note](issues/59-send-peter-extensa-design.md) | ready-for-human | 47 (resolved) |  |
 | 60 | [Send Peter the "is the specification enough?" finding](issues/60-send-peter-spec-enough-finding.md) | ready-for-human | 58 |  |
+| 61 | [Native protocol for the scale-22 Extensa classes](issues/61-native-scale22-protocol.md) | resolved | — |  |
+| 62 | [Spelling-independent BFS certification controls for campaign rewrites](issues/62-spelling-independent-certification-controls.md) | resolved | — |  |
+| 63 | [Scalable native BFS evaluator (v2) with a compiled structural verifier](issues/63-scalable-native-verifier.md) | resolved | — |  |
+| 64 | [Native scale-22 A/A pilot is unstable: protocol options](issues/64-native-scale22-pilot-unstable.md) | resolved | — |  |
+| 65 | [Range-loop convention, register operands and named-check campaign feedback](issues/65-range-loop-convention-and-named-check-feedback.md) | resolved | — |  |
 
 ## Context pointers
 

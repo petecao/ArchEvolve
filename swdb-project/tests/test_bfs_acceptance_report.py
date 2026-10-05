@@ -51,7 +51,7 @@ def actual(tmp_path_factory):
 
 @OFF_COLLECTING_HOST
 def test_native_cells_report_real_ids_outcomes_and_unverified_raw_evidence(actual):
-    _, report = actual
+    records, report = actual
     cells = {row["cell"]: row for row in report["accounting"]["cells"]}
     assert set(cells) == {f"{c['starting_implementation']}/{c['route']}/{c['payload']}/{c['graph_family']}"
                           for c in report["matrix"]} and len(cells) == 8
@@ -64,7 +64,14 @@ def test_native_cells_report_real_ids_outcomes_and_unverified_raw_evidence(actua
         assert row["raw_verification"] == "remote_unverified"
     matrix = {f"{c['starting_implementation']}/{c['route']}/{c['payload']}/{c['graph_family']}": c for c in report["matrix"]}
     kronecker = matrix["dx100-bfs-scalar/supplied_code/patch/kronecker"]["summary"]
-    assert kronecker["completed_evaluations"] == [T18_KRONECKER + ".evaluation"]
+    # 2026-10-04 ET: later simulated (gem5) evaluations of the same source, payload and family
+    # also complete in this cell; the native evidence under the candidate protocols is T18's only.
+    def protocol(evaluation_id):
+        data = yaml.safe_load((records / "evaluations" / f"{evaluation_id}.yaml").read_text())
+        return data.get("request", {}).get("protocol"), data.get("context", {}).get("basis")
+    native = [e for e in kronecker["completed_evaluations"] if protocol(e)[0] in NATIVE_PROTOCOLS]
+    assert native == [T18_KRONECKER + ".evaluation"]
+    assert all(protocol(e)[1] == "simulated" for e in kronecker["completed_evaluations"] if e not in native)
     assert [row["id"] for row in kronecker["comparisons"]] == [T18_KRONECKER + ".comparison"]
     assert kronecker["comparisons"][0]["protocol"] == NATIVE_PROTOCOLS[0]
     # A qualified inconclusive comparison is never a gain, and nothing is externally verified here.

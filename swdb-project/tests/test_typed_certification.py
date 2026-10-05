@@ -393,3 +393,16 @@ def test_dependency_receipt_schema_preserves_history_and_checks_pins(dependencie
     if dependencies is not None:
         record['dependencies'] = dependencies
     assert Draft202012Validator(schema).is_valid(record) == valid
+
+
+@pytest.mark.parametrize('script', ['../tools/bfs_native/evil.py', 'tests/conftest.py',
+                                    'scripts/bfs_native_pilot.py', '/etc/passwd'])
+def test_snapshot_derivation_runs_only_a_checkout_preparation_script(tmp_path, script):
+    """2026-10-04 ET (final code review): a record field names code that is executed."""
+    from swdb.store import Record
+    store = Store(ROOT / 'records')
+    snapshot = json.loads(json.dumps(store.get(c.DEFAULT_SNAPSHOT, 'source_snapshot')))
+    snapshot['context']['source_derivation']['script'] = script
+    forged = Store(store.dir, indexed_records=[Record(snapshot['id'] + '.yaml', snapshot)])
+    with pytest.raises(Failure, match='source derivation script'):
+        c.materialize_snapshot(forged, c.DEFAULT_SNAPSHOT, tmp_path)

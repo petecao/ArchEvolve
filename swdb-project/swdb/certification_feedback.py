@@ -62,6 +62,7 @@ OTHER_MESSAGES = {
     "process_failure": "the program exited with an error and no named check",
     "timeout": "the run exceeded its time limit",
     "build failed": "the patched source did not compile",
+    "certification_failed": "certification failed without a named check (empty matrix or no negative controls)",
 }
 
 

@@ -1,6 +1,7 @@
 # Typed library and content-bound certification
 
 Created: 2026-10-03 ET
+Updated: 2026-10-04 ET (control observed checks and clause comparison)
 
 The `library/` folder holds normative YAML and buildable C++ outside the record store.
 `swdb validate` checks entry shapes, clause discharge modes, pinned files and the
@@ -37,6 +38,14 @@ Certification records bind `entry` (`id`, `content_sha256`), `dependencies`
 `host`, `matrix`, `negative_controls`, `verdict`, `evidence_basis`, `evidence_kind` and
 `created_at`. Positive cells and negative controls keep their build/run commands,
 outputs and reasons. The certification command is the producer of this evidence.
+
+Added 2026-10-04 ET (final code review): each negative-control run also records its
+`graph` and `observed_checks` (every check the run failed, not only the first reason). A
+control that expects named checks is rejected only by one of them. A candidate certification
+records `clause_controls`: per contract clause, its `clause`, `control`, the clause's named
+`check`, `source` (`contract`, or `plugin` for a control the kernel plug-in adds to a
+clause), the run's `observed_checks`, `matched` and `enforceable` (false for a check name no
+run can report). An enforceable mismatch fails the verdict.
 
 `swdb get ENTRY_ID` prints normative content with derived tier and status. Review records
 bind a `target` content hash to a `reviewer`, `reviewed_at` and passing certification

@@ -14,7 +14,7 @@ import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from swdb import artifacts
+from swdb import artifacts, provider_login
 from swdb.cli import Failure
 
 FINAL_SCHEMA = {"type": "object", "additionalProperties": False,
@@ -69,7 +69,7 @@ class Workspace:
         if self.login_copy is not None and "login_writeback" not in self.metadata:
             try:
                 self.metadata["login_writeback"] = self.login_copy.write_back()
-            except OSError as exc:     # never blocks deletion of the copy
+            except Exception as exc:   # never blocks deletion of the copy or the audit
                 self.metadata["login_writeback"] = {"written_back": False,
                                                     "reason": f"write-back failed: {type(exc).__name__}"}
         removed = []
@@ -86,7 +86,11 @@ class Workspace:
                             continue
                         state = path.stat()
                         same = (state.st_dev, state.st_ino) == (identity.st_dev, identity.st_ino)
-                        if same or state.st_size == len(content) and path.read_bytes() == content:
+                        # 2026-10-04 ET (final code review): also remove copies of the login as
+                        # it was handed over, even when the copy itself was later replaced.
+                        original = (self.login_copy is not None and state.st_size <= 1 << 20
+                                    and provider_login._sha(path.read_bytes()) == self.login_copy.snapshot_sha256)
+                        if same or original or state.st_size == len(content) and path.read_bytes() == content:
                             path.unlink()
                             removed.append(path.relative_to(self.folder).as_posix())
                     except FileNotFoundError:
