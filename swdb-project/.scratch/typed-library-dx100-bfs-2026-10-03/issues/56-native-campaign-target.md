@@ -1,7 +1,7 @@
 # 56 — Native-CPU Extensa campaign target for BFS
 
 Created: 2026-10-03
-Updated: 2026-10-05 03:15 ET (a7 erratum; a8 pre-registered); 2026-10-05 02:50 ET (a7 addendum: speed rule ci_width.v2, uniform no_gain at plateau, Kronecker baseline_unstable); 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
+Updated: 2026-10-05 10:00 ET (a8 result: uniform gain, uncertified; Kronecker inconclusive); 2026-10-05 03:15 ET (a7 erratum; a8 pre-registered); 2026-10-05 02:50 ET (a7 addendum: speed rule ci_width.v2, uniform no_gain at plateau, Kronecker baseline_unstable); 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 51, 53, 54, 55
@@ -346,3 +346,55 @@ Decision by the coordinating agent under Yan-Ru's delegation (agent-decided; rev
   may be fixed and restarted once. A stop for persistent provider capacity is reported as such.
 - **A class with a `gain`:** its best candidate is re-certified on the Mac with `swdb certify` 1.3 if it used a
   contract (verdict recorded beside the in-campaign one); a best without a contract is reported as `uncertified`.
+
+### Result 2026-10-05 10:00 ET: campaign a8. Uniform has a `gain` (uncertified); Kronecker is `inconclusive`
+
+**Run.** Campaign `extensa-native-bfs-20261005-a8`, as pre-registered above:
+
+- Host: mbit10 node 1 through `socket_lane.sh` (Memacc `76cca35`, equal to its origin), lease generation 526. The
+  node 0 and legacy leases were released at launch and at the start and end of every block.
+- Time: 03:19-09:56 ET (`07:19:01Z`-`13:56:23Z`). Load1 1.5-2.5. Users: `yanruj` only.
+- Code: commit `b45c56a` (branch `t56-a8`, from a git bundle). Runs root `/data/...`.
+- Lane exit code 1 comes from the run script's last `pgrep`; the campaign exited 0.
+
+**A/A pilot.** Both classes pass on the fork scalar TDStep (the only gating role):
+
+| Class | Role | Ratio [95% CI] | CI width / ratio | Gates? | Block passes? |
+|---|---|---|---|---|---|
+| Kronecker 22 | fork scalar TDStep | 0.999 [0.979, 1.006] | 0.027 | yes | yes |
+| Kronecker 22 | upstream DO-BFS | 1.001 [0.999, 1.001] | 0.002 | no | yes |
+| Uniform 22 | fork scalar TDStep | 0.999 [0.993, 1.018] | 0.025 | yes | yes |
+| Uniform 22 | upstream DO-BFS | 0.953 [0.914, 1.025] | 0.117 | no | no (reported only) |
+
+Upstream slow share in the pilot: Kronecker 0.00 / 0.32, uniform 0.43 / 0.48 (baseline / candidate side).
+
+**Campaign.**
+
+| It. | Outcome | Kronecker vs fork: ratio [CI], width, verdict | Uniform vs fork: ratio [CI], width, verdict |
+|---|---|---|---|
+| 1 | one uncertified scalar rewrite of TDStep (`it1.kronecker.a0`, no contract) | 1.345 [1.265, 1.364], 0.074, `inconclusive` | **1.457 [1.450, 1.472], 0.015, `gain`** |
+| 2 | rejected: named `operation.gather_staging_executor`, outside the campaign's contracts | — | — |
+| 3 | rejected: the patch did not apply | — | — |
+| 4 | the same artifact again (identical sha256), re-measured in new blocks | 1.299 [1.256, 1.331], 0.057, `inconclusive` | **1.450 [1.441, 1.464], 0.015, `gain`** |
+| 5 | the rewriting call was refused by the provider guard (see below) | — | — |
+
+- Against upstream DO-BFS the artifact is far slower (Kronecker 0.24-0.25, `inconclusive`; uniform 0.141, `no_gain`).
+- Stop: `plateau` after 5 iterations. 6 counted provider calls, 0 uncounted (no capacity event). 6.53 lane-hours,
+  0.89 GB peak disk.
+- **Per class:** uniform `gain`, best `it1.kronecker.a0` (level `uncertified`; selection baseline fork scalar
+  TDStep; upstream beside it 0.141, `no_gain`). Kronecker `inconclusive` (both of its measurements had a CI wider
+  than 0.05), no best. Label "single graph per class", measured.
+- **The best patch** stages frontier vertices of TDStep in batches of 16, keeps their IDs and row offsets in
+  aligned local arrays, uses an `SGOffset` edge index, and drops the redundant `parent[v] = u` after a successful
+  CAS. Its artifact sha256 is `7acca955…`. Every timed trial passed the compiled structural verifier v2.
+- **Re-certification with `swdb certify` 1.3: not applicable.** The best names no contract, so there is no library
+  entry to certify it against. It is reported as an **uncertified** gain, as pre-registered.
+- **Guard refusals counted.** Calls 1 (setup profiling) and 6 (iteration 5) stopped after about 1 s with "provider
+  resource limit exceeded: threads=17" and were counted as `guard_refused`. Iteration 5 was the fourth
+  non-improving iteration, so the plateau was reached through it. The uniform gain does not depend on it.
+- The ticket 73 workspace changes were in effect: no patch touched the protected verifier.
+
+Summary `records/campaign_summaries/extensa-native-bfs-20261005-a8.summary.yaml` (team store; sha256 `8e8e5099…` on
+host and Mac). Compact evidence:
+[`evaluation/native-a8-ci-gate-v2-2026-10-05.json`](../evaluation/native-a8-ci-gate-v2-2026-10-05.json). This was
+the last native run under `ci_width.v2`. No rerun.
