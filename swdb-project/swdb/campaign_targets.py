@@ -1,7 +1,9 @@
 """Real target adapters for `swdb campaign` (tickets 56 and 57).
 
 Created 2026-10-04 ET; ticket 63 (2026-10-04 ET): a native campaign that pins evaluator v2
-freezes protocols with that evaluator, its driver and its compiled verifier. Original SWDB code (design decisions D2-D4, D7, D9 and D10 of
+freezes protocols with that evaluator, its driver and its compiled verifier; tickets 66/67
+(2026-10-04 ET): the campaign's speed rule (range or CI-width gate) and evaluator v3 are frozen
+the same way. Original SWDB code (design decisions D2-D4, D7, D9 and D10 of
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`).
 
 An adapter turns the campaign loop's steps into the public SWDB evaluator commands, run
@@ -464,15 +466,17 @@ class NativeAdapter(TargetAdapter):
 
     def planned_bytes(self):
         # A v2 paired block keeps 60 small trial records plus gzip parent vectors
-        # (at most 16 MiB raw each at scale 22) and logs: well under 2 GiB.
-        from swdb.bfs_native_scalable import EVALUATOR_V2
-        return 2 * GIB if self.evaluator() == EVALUATOR_V2 else self.PLANNED_BYTES
+        # (at most 16 MiB raw each at scale 22) and logs: well under 2 GiB. A v3 block keeps
+        # one gzip copy per distinct parent vector (ticket 71), so 2 GiB stays an upper bound
+        # at 20 repetitions.
+        from swdb.bfs_native_scalable import is_scalable
+        return 2 * GIB if is_scalable(self.evaluator()) else self.PLANNED_BYTES
 
     def prepare(self):
         super().prepare()
         from swdb.bfs_native import MAX_DIRECTED_EDGES, MAX_VERTICES
         from swdb import bfs_native_scalable as scalable
-        if self.evaluator() == scalable.EVALUATOR_V2:
+        if scalable.is_scalable(self.evaluator()):
             MAX_VERTICES, MAX_DIRECTED_EDGES = scalable.MAX_VERTICES, scalable.MAX_DIRECTED_EDGES
         store = self._store()
         for row in self.campaign["workload_classes"]:
@@ -519,20 +523,24 @@ class NativeAdapter(TargetAdapter):
                 "OMP_NUM_THREADS": str(settings["threads"]), "OMP_DYNAMIC": "FALSE", "OMP_PROC_BIND": "close",
                 "OMP_PLACES": "cores", "OMP_THREAD_LIMIT": None, "OMP_WAIT_POLICY": None,
                 "GOMP_SPINCOUNT": None, "GOMP_CPU_AFFINITY": None}}
-            out["profitability"].update(minimum_speedup=settings["profitability"]["minimum_speedup"],
-                                        maximum_relative_spread=settings["profitability"]["maximum_relative_spread"])
+            # Ticket 66 (2026-10-04 ET): the campaign's speed rule (range, or the CI-width gate
+            # with its circular block analysis) is frozen into every role's protocol.
+            from swdb.campaign import apply_speed_rule
+            apply_speed_rule(out, settings)
             out["differences"] = {"software": [settings["differences"],
                                                f"Baseline role {role}: {ROLE_IMPLEMENTATION[role]} unchanged source."],
                                   "accelerator": [], "configuration": []}
             out["region_pairs"] = []
             from swdb import bfs_native_scalable as scalable
-            if self.evaluator() == scalable.EVALUATOR_V2:
+            if scalable.is_scalable(self.evaluator()):
                 # Ticket 63: new protocols pin evaluator v2, its driver and its compiled verifier.
-                out["evaluator"] = scalable.EVALUATOR_V2
+                # Ticket 71: or evaluator v3 (saturating parent narrowing) with the same verifier.
+                out["evaluator"] = self.evaluator()
                 out["correctness"]["verifier"] = scalable.VERIFIER_V2
                 for side in ("baseline", "candidate"):
-                    out["instrumentation"][side] = {"template_sha256": artifacts.file_hash(scalable.DRIVER_V2),
-                                                    "treatment": "included"}
+                    out["instrumentation"][side] = {
+                        "template_sha256": artifacts.file_hash(scalable.driver_for(self.evaluator())),
+                        "treatment": "included"}
             request = {"message_version": "1.0", "id": f"{self.cid}.protocol.{role}", "version": 1, "settings": out}
             code, record = self.runner("freeze-protocol", request, stage=f"freeze-{role}", timeout=600)
             if code or not record or record.get("kind") != "protocol":
@@ -610,7 +618,8 @@ class NativeAdapter(TargetAdapter):
         metrics = result["metrics"]
         spreads = [v for rows in metrics["relative_spread"].values() for v in rows.values()]
         return {"ratio": metrics["roi_speedup"], "lower": metrics["confidence_interval"]["lower"],
-                "upper": metrics["confidence_interval"]["upper"], "spreads": spreads}
+                "upper": metrics["confidence_interval"]["upper"], "spreads": spreads,
+                "ci_method": metrics["confidence_interval"].get("method")}
 
     def pilot(self, cls, role):
         """D3 A/A pilot: the baseline timed against itself with the full protocol."""
@@ -624,7 +633,9 @@ class NativeAdapter(TargetAdapter):
         if result is None:
             raise _stop("infrastructure_failure", f"A/A pilot {cls}/{role} failed: {reason}"[:1500])
         numbers = self._numbers(result)
-        return {"spread": max(numbers["spreads"]), "comparison": result["id"], "evaluations": evaluations,
+        # Ticket 66: the A/A ratio and CI travel with the block for the CI-width rule.
+        return {"spread": max(numbers["spreads"]), "ratio": numbers["ratio"], "lower": numbers["lower"],
+                "upper": numbers["upper"], "comparison": result["id"], "evaluations": evaluations,
                 "other_socket": other, "isolation": self.isolation_end(isolation)}
 
     #: Ticket 56 isolation test (2026-10-04 ET): bounded wait for a free other socket.

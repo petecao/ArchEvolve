@@ -1,7 +1,7 @@
 # 56 — Native-CPU Extensa campaign target for BFS
 
 Created: 2026-10-03
-Updated: 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
+Updated: 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 51, 53, 54, 55
@@ -211,3 +211,50 @@ sources, baseline side / candidate side, with a4 (other socket held by gem5 a7) 
 
 **Closed** as `baseline_unstable` (Kronecker), per the pre-registration. No rerun was made. The
 protocol options for Yan-Ru are in needs-info ticket [66](66-native-protocol-after-isolation-test.md).
+
+### Addendum 2026-10-04 23:10 ET: campaign a6 under the CI-width gate. Both classes are `baseline_unstable`; follow-up [72](72-native-upstream-two-level-trials.md)
+
+**Rule.** Ticket 66 was decided by Yan-Ru ("go with the recommendation") and its gate was pre-registered
+before this run (commit `84e44e1`): relative 95% CI width at most 0.05 from a circular block bootstrap over
+20 repetitions (blocks of 4), and an A/A interval strictly inside (1/1.05, 1.05). Candidates would have been
+timed with native evaluator v3 (ticket [71](71-native-evaluator-v3-parent-width.md)).
+
+**Run.** Campaign `extensa-native-bfs-20261004-a6` (`campaigns/extensa/extensa-native-bfs-20261004-a6.yaml`):
+
+- Host: mbit10 node 1 through `socket_lane.sh` (Memacc checkout `76cca35`, equal to its origin), lease
+  generation 524. The node 0 and legacy leases were released at launch and at the start and end of every
+  block.
+- Time: 21:06-23:04 ET (`2026-10-05T01:06:16Z`-`03:04:45Z`). Load1 1.3-2.3. Users: `yanruj` only.
+- Code: commit `ce42a45` in `/data1/yanruj/ArchEvolve-native` (branch `t56-a6`, from a git bundle).
+- Runs root `/data/...` (`/data1` had 40 GB free). Governor and turbo files: absent.
+- Lane exit code 1 comes from the run script's last `pgrep` (as in a5); the campaign exited 0.
+
+**A/A pilot (pre-registered gate).** Ratio, 95% CI, relative width; the old range statistic is shown only for
+comparison.
+
+| Class | Role | Ratio [95% CI] | CI width / ratio | Inside (0.952, 1.05)? | Range (old statistic) | Pass? |
+|---|---|---|---|---|---|---|
+| Kronecker 22 | fork scalar TDStep | 0.983 [0.968, 1.007] | 0.040 | yes | 0.131 | **pass** |
+| Kronecker 22 | upstream DO-BFS | 1.002 [0.927, 1.052] | 0.125 | no | 0.180 | **fail** |
+| Uniform 22 | fork scalar TDStep | 0.998 [0.991, 1.010] | 0.019 | yes | 0.103 | **pass** |
+| Uniform 22 | upstream DO-BFS | 0.999 [0.954, 1.047] | 0.093 | yes | 0.162 | **fail** |
+
+**Result.** A class passes only if both roles pass, so both classes are `baseline_unstable` and the campaign
+stopped with `baseline_unstable` before iteration 1: 0 iterations, 0 provider calls, 1.97 lane-hours, 0.33 GB
+peak disk (v3 kept 3 parent copies per side instead of 60). No candidate was timed, so there is no gain and
+nothing to re-certify. Summary `records/campaign_summaries/extensa-native-bfs-20261004-a6.summary.yaml`
+(team store; sha256 `1ba2a707…` on host and Mac). Compact evidence:
+[`evaluation/native-a6-ci-gate-2026-10-04.json`](../evaluation/native-a6-ci-gate-2026-10-04.json).
+
+**What the data show (descriptive, not verdicts).**
+
+- The fork scalar TDStep baseline, the selection baseline (Q61), now passes in both classes: widths 0.040 and
+  0.019, although its range spread (0.131 and 0.103) would fail the old gate.
+- Upstream DO-BFS fails because of its trial-level bimodality, not slow drift. On both sides of each A/A
+  block, every source's 20 times sit on two levels about 15% apart (Kronecker 135/159 ms, uniform 124/143
+  ms), with 7 to 12 of 20 trials on the slow level, switching every few repetitions. With the levels mixed
+  about half and half, each side's median falls on either level, so the per-source A/A ratio jumps to 0.87,
+  0.93, 1.08 or 1.15. Pairing cannot cancel this, because the two sides of a pair land on different levels
+  independently.
+- No rerun was made. The protocol question is Yan-Ru's: needs-info ticket
+  [72](72-native-upstream-two-level-trials.md).

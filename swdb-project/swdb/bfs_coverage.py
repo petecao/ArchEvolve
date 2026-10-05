@@ -377,11 +377,8 @@ def _comparison(store, comparison, allowed, mode=None):
         regions = protocol._region_comparisons(a, b, p["settings"], store, comparison.get("request", {}).get("region_packages"))
         if not profile_package._same(comparison.get("region_comparisons"), regions):
             reasons.append("recorded region ratios differ from their selected scope and attribution")
-        limit = p["settings"]["profitability"]["maximum_relative_spread"]
-        noisy = any(value > limit for rows in metrics["relative_spread"].values() for value in rows.values())
-        gain = not noisy and metrics["confidence_interval"]["lower"] > p["settings"]["profitability"]["minimum_speedup"]
-        expected_state = ("inconclusive" if noisy else "gain" if gain else
-                          "regression" if metrics["confidence_interval"]["upper"] < 1 else "no_gain")
+        # Ticket 66 (2026-10-04 ET): the frozen policy decides (range or CI-width gate).
+        expected_state, noisy, gain = protocol.decide(metrics, p["settings"]["profitability"])
         if comparison.get("decision", {}).get("state") != expected_state:
             reasons.append("recorded decision does not follow the frozen profitability policy")
         for key in ("confidence_interval", "relative_spread", "per_source_position_speedup"):
