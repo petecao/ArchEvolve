@@ -61,3 +61,18 @@ real strict build where the candidate passes and the BC-L1 control fails BCVerif
 - BC's L3 (depth gathers see no value older than initialization) stays assumed: BC has no
   race companion; BC-L1 makes the path-count test independent of the hint.
 - The runtime-guard fallback is the scalar forward pass for the whole BC call.
+
+## Addendum: a current committed BC certificate (2026-10-05 17:50 ET, spec review C22)
+
+Agent-decided under Yan-Ru's delegation; revisable. The committed BC certificate
+`certification.1e389a959ffb4ff9bfdcf4cea9eace06` is command 1.0 with 18 controls; the later
+re-certifications (28 controls after 8040609's L4 part controls and ticket 68's legality controls)
+existed only in `.scratch` evidence. Committed now, under the current default certify 1.6:
+`records/certifications/certification.1e424fce0b694628959f8275548e05b9.yaml`, contract
+`contract.bc_read_offload` content `96927643…`, tree `d6f86eb6…` (the ticket 42 patch on
+`bc-dx100-scalar-only-20261003-a1.source`): **certified**, 10/10 cells, 28/28 controls rejected by
+their named checks, 16/16 library faults attributed, every enforceable clause matched; knob values
+read from `SWDB_FRONTIER_THRESHOLD` (64) and `SWDB_CHUNK_SIZE` (tile size). The record carries code
+commit bb7673f (`sources_differ_from_commit: false`, `sources_match_version: true`). The 1.0 record
+and the review that cites it are unchanged; `swdb validate`: 546 records valid; the contract stays
+shared, evaluated on target.

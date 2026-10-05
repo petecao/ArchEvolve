@@ -1,6 +1,8 @@
 # ArchEvolve — Software Database
 
-Updated: 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection)
+Updated: 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review
+fixes: library fault, driver fault, certification evaluator process, certify command version, legacy
+identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -377,6 +379,30 @@ Evidence, recorded by evaluator code at a library seam, that every vertex in a f
 and enqueued through the seams a rewrite contract requires. It shows structure, not correctness.
 _Avoid_: ledger (alone), coverage
 
+**Library fault**:
+A negative control that acts inside a library seam the code under test calls (an intrinsic, the claim
+or the queue push), built into evaluator code the candidate cannot see, so the candidate's own text
+never changes.
+_Avoid_: mutant, fault injection, harness fault
+
+**Driver fault**:
+A negative control of library-operation certification that evaluator code applies after the library
+operation returns (one flipped input or output bit), run in the candidate's own binary under the same
+run plan as the positive cases.
+_Avoid_: mutant, perturbation (alone)
+
+**Certification evaluator process**:
+The trusted process that, in a certification run, holds the record channel, the run plan, the faults
+and the seam-witness events, starts the candidate as its child, and writes every record the verdict is
+computed from. The candidate reaches it only through shared memory requests.
+_Avoid_: harness, supervisor, sandbox
+
+**Certify command version**:
+The label of one frozen certification procedure within one command family (candidate artifacts on
+DX100, native-CPU contracts, library operations, lowerings and calibration). A behavior change gets a
+new label; the same label in two families names two procedures.
+_Avoid_: version (alone) when the family is not clear; certify level
+
 **Formal verifier**:
 A tool, such as CBMC or Z3, that proves or refutes a formal predicate about code within declared
 bounds.
@@ -403,4 +429,13 @@ _Avoid_: confidence, provenance (alone)
 How full the data fed to a kernel is (mostly zeros versus full; scattered versus
 clustered indices), independent of the storage format.
 _Avoid_: sparse format, dense format
+
+### Legacy identifiers
+
+Some stored names predate these terms and stay as written, because records, pins or other code read
+them; prose uses the glossary terms. The native candidate profile keys `harness` and `harness_v14`
+name evaluator files; `harness_scan` (check ID and campaign check), the `scan/harness` cell and the
+words "harness scan" in refusals name the evaluator scan; `oracle_frontier_counts` holds reference
+counts; persisted check and control IDs keep their spelling; "mutant" in ported Extensa synthesis code
+means negative control; "hardware API" in pinned library operation headers means hardware interface.
 

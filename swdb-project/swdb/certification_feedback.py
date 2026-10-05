@@ -63,7 +63,7 @@ STRICT_MESSAGES = {
 }
 
 OTHER_MESSAGES = {
-    "frontier_size_equality": "the per-step frontier sizes differ from the trusted scalar oracle",
+    "frontier_size_equality": "the per-step frontier sizes differ from the trusted scalar reference counts",
     "verifier": "the kernel's returned result failed the evaluator's correctness check",
     "execution_witness": "the accelerated path did not run on a frontier at the threshold",
     "process_failure": "the program exited with an error and no named check",

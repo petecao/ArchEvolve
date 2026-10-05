@@ -10,6 +10,12 @@ the kernel plug-in named by its rewrite contract's correctness check
 Ticket 70 (2026-10-04 ET, certify 1.3): candidate artifacts are certified by
 :func:`certify_candidate` with the isolation of ``swdb.certification_isolation``; no candidate
 verdict is read from printed output.
+
+Updated 2026-10-05 ET (code-review fixes F1-F5, F10, C10; agent-decided under Yan-Ru's delegation,
+revisable): every certify path takes its version's behavior from one frozen table per command family
+(``swdb.certification_procedures``), records the per-version source manifest, the git commit, the
+command family and the evidence basis of its path (ADR 0008: ``measured`` for native-CPU runs), and
+raises on an unknown version. Lowerings and calibration are their own family (version 1.1).
 """
 from __future__ import annotations
 
@@ -30,6 +36,8 @@ import time
 from collections import deque
 
 from swdb import artifacts, paths, workflow
+from swdb import certification_common as common
+from swdb import certification_procedures as procedures
 from swdb.cli import Failure, UsageError
 from swdb.store import Store
 
@@ -39,9 +47,9 @@ from swdb.store import Store
 # (swdb.certification_legality); records before 1.2 report neither.
 # 1.3 (2026-10-04 ET, ticket 70): candidate-artifact certification is isolated
 # (swdb.certification_isolation): every named check is computed out of process from evaluator
-# records on a harness-opened descriptor, the kernel's result comes from an evaluator-owned main,
+# records on an evaluator-opened descriptor, the kernel's result comes from an evaluator-owned main,
 # faults live in a separately compiled object linked to one unchanged candidate object, and a
-# harness scan refuses candidate text naming harness symbols. Records before 1.3 read named checks
+# evaluator scan refuses candidate text naming evaluator symbols. Records before 1.3 read named checks
 # from stdout/stderr and selected faults with a macro in the candidate's translation unit; they
 # keep that meaning. Lowering certification and calibration are unchanged.
 # 1.4 (2026-10-05 ET, ticket 76; agent-decided under Yan-Ru's delegation, revisable): candidate
@@ -57,19 +65,25 @@ from swdb.store import Store
 # contract that pins a native candidate profile (swdb.certification_native, library/native/). Under
 # version 1.3 it uses 1.3's isolation (one candidate object per build, one seam object per fault, a
 # frontier hook before DOBFS's protected print); under 1.4 it uses 1.4's blinding (one binary, a
-# blinded plan, random order, attributed rejections, the slide-window ledger and the seam witness).
+# blinded plan, random order, attributed rejections, the slide-window events and the seam witness).
 # certification.b7954f4df9dd4e228fb12437b845f190 was written on the ticket 75 branch before this merge,
 # when that branch numbered its 1.3-isolation native path "1.4"; its sources_sha256 06fe4cc5... names
 # that code. `--candidate-record` binds a snapshot-plus-patch certification to an Extensa candidate
 # record whose artifact sha256 equals the patched tree.
 # 1.5 (2026-10-05 ET, ticket 78; scope decided by Yan-Ru 2026-10-05, engineering refactor): candidate
 # artifacts are certified by swdb.certification_process. The record writer, the run plan, the fault
-# logic, the frontier ledger and the strict model's state run in a trusted evaluator process; the
+# logic, the seam-witness events and the strict model's state run in a trusted evaluator process; the
 # candidate runs as its child, with its C++ heap in a shared arena, and reaches every seam and
 # strict-layer call by a request to the evaluator. Procedure, record format, judge, attribution and
 # scan are 1.4's. Records of 1.4 and earlier keep their meaning; 1.3 and 1.4 stay selectable.
-VERSION = '1.5'
-VERSIONS = ('1.3', '1.4', '1.5')
+# 1.6 (2026-10-05 ET, code-review fixes C4, C24; agent-decided under Yan-Ru's delegation, revisable):
+# 1.5 with knob_range reading every declared spelling of a knob that the candidate uses (SWDB_KNOB_<NAME>
+# and SWDB_<NAME>; "unverified", never the contract default, when none is used) and the
+# schedule_out_of_range control also mutating _Pragma forms. 1.3-1.5 keep the ticket 68 rules.
+# The version table (one per command family, with each version's files and frozen digest) is
+# swdb.certification_procedures; VERSION and VERSIONS name the candidate family's default and versions.
+VERSION = procedures.DEFAULTS[procedures.CANDIDATE]
+VERSIONS = tuple(procedures.PROCEDURES[procedures.CANDIDATE])
 ROOT = paths.HOME
 BFS = 'benchmarks/gapbs/src/bfs.cc'
 HEADER = 'benchmarks/gapbs/src/swdb_dxc_lowering.hpp'
@@ -175,15 +189,18 @@ def preprocess_cpp(source, output, library, *, tile_size, threads, tree=None, de
     return execute(command, Path(str(output) + '.json'), timeout=180)
 
 
-def legality_checks(text, source_path, label, library, entry, folder, *, tile_size, threads, tree, defines):
+def legality_checks(text, source_path, label, library, entry, folder, *, tile_size, threads, tree, defines,
+                    rules='v1'):
     """knob_range and schedule_range on one private build copy (ticket 68, 2026-10-04 ET).
 
     The text is preprocessed exactly as its build would be, from a probe copy outside the tree
     (quoted includes resolve from the source's own directory), so the tree identity is untouched.
+    ``rules`` is the procedure's legality rule set (v2 from certify 1.6: every declared knob spelling).
     """
     from swdb import certification_legality as legality
+    candidate_text = text
     probe = (folder / f'{label}.legality.cc').resolve()
-    probe.write_text(legality.probe_source(text, entry))
+    probe.write_text(legality.probe_source(text, entry, rules=rules))
     output = folder / f'{label}.legality.ii'
     result = preprocess_cpp(probe, output, library, tile_size=tile_size, threads=threads, tree=tree,
                             defines=defines, quote_dir=source_path.parent)
@@ -191,7 +208,7 @@ def legality_checks(text, source_path, label, library, entry, folder, *, tile_si
         return [{'check': name, 'status': 'invalid', 'problems': ['preprocessing failed'], 'log': result['log']}
                 for name in legality.CHECKS]
     text = output.read_text()
-    knobs_ok, knob_problems, knobs = legality.knob_check(text, entry, tile_size)
+    knobs_ok, knob_problems, knobs = legality.knob_check(text, entry, tile_size, rules=rules, source=candidate_text)
     schedule_ok, schedule_problems, schedules = legality.schedule_check(text, entry, tile_size, str(probe))
     output.unlink()  # large; the probe source and the command log stay
     return [{'check': legality.KNOB_RANGE, 'status': 'passed' if knobs_ok else 'failed',
@@ -319,12 +336,12 @@ def certify_lowering(entry_id, library, folder, tile_sizes, threads):
                        'certification_inputs': inputs})
         for name, expected in CONTROLS[operation].items():
             # Each control gets its own built executable. A build failure can never reject a control.
-            mutant = folder / f'{operation}-{size}-{name}'
-            control_build = compile_cpp(driver, mutant, library, tile_size=size, threads=threads, defines=defines)
+            control_binary = folder / f'{operation}-{size}-{name}'
+            control_build = compile_cpp(driver, control_binary, library, tile_size=size, threads=threads, defines=defines)
             if control_build['returncode'] != 0:
                 controls.append({'id': name, 'tile_size': size, 'status': 'invalid', 'reason': 'build failed', 'build': control_build})
                 continue
-            run = execute([mutant, operation, name], mutant.with_suffix('.run.json'), threads=threads)
+            run = execute([control_binary, operation, name], control_binary.with_suffix('.run.json'), threads=threads)
             status, reason = rejection(run, expected)
             controls.append({'id': name, 'tile_size': size, 'status': status, 'reason': reason,
                              'expected_check': expected, 'build': control_build, 'run': run})
@@ -437,7 +454,8 @@ def create_peter_patch(store, output, library=None, plugin=None, temporary_root=
 
 
 def graph_oracle(path, source):
-    """Independent exact-depth counts from immutable normalized serialized CSR."""
+    """Independent exact-depth counts from immutable normalized serialized CSR: the reference
+    per-level frontier counts every candidate run is compared with."""
     data = Path(path).read_bytes()
     if len(data) < 9 or data[0] not in (0, 1):
         raise Failure('invalid certification graph')
@@ -527,7 +545,7 @@ def instrument_source(source, *, calibrate=False, frontier_hook=True):
     statement = AUTHOR_FRONTIER_TEXT if calibrate else FRONTIER_TEXT
     if source.count(statement) != 1:
         raise Failure('BFS frontier logging statement differs from the protected exact text')
-    # Protect the source kernel verifier and the standard harness's PASS rendering.
+    # Protect the source kernel verifier and the standard benchmark driver's PASS rendering.
     if source.count('bool BFSVerifier(') != 1:
         raise Failure('BFS correctness check is missing or ambiguous')
     if frontier_hook or calibrate:
@@ -584,24 +602,20 @@ def _rewrite_control(source, name, *, calibrate=False):
 
 
 def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrate=False, threshold=64, plugin=None,
-                contract=None, version=VERSION):
+                contract=None, version=None):
     """Run the matrix and its controls; the kernel plug-in supplies the instance.
 
     Calibration is the BFS authors' reference and always uses the BFS functions and the 1.2
     in-process checks (it certifies the authors' code, not a candidate). A candidate artifact is
-    certified by :func:`certify_candidate` (certify 1.3, ticket 70) or, from certify 1.4 (ticket 76),
-    by ``swdb.certification_blinding.certify_candidate``.
+    certified by the evaluator entry point of its version in the candidate version table
+    (``swdb.certification_procedures``; the default version when ``version`` is None).
     """
     from swdb import kernels
     if not calibrate:
-        if version == '1.3':
-            return certify_candidate(tree, library, folder, tile_sizes, threads, sources, threshold=threshold,
-                                     plugin=plugin or kernels.BFS, contract=contract)
-        from swdb import certification_blinding, certification_process
-        certify_with = (certification_process if version == '1.5' else certification_blinding).certify_candidate
-        matrix, controls, _schedule = certify_with(
+        procedure = procedures.procedure(procedures.CANDIDATE, version)
+        matrix, controls, _schedule = procedure.entry_point()(
             tree, library, folder, tile_sizes, threads, sources, threshold=threshold, plugin=plugin or kernels.BFS,
-            contract=contract)
+            contract=contract, procedure=procedure)
         return matrix, controls
     if plugin not in (None, kernels.BFS):
         raise Failure('calibration exists only for the BFS authors reference')
@@ -645,15 +659,15 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
             if name == 'oversized_chunk' and size != 1024:
                 continue
             source_path.write_text(_rewrite_control(instrument_source(source, calibrate=True), name, calibrate=True))
-            output_mutant = folder / f'{stem}-{size}-{name}'
-            control_build = compile_cpp(source_path, output_mutant, library, tile_size=size, threads=threads, tree=tree,
+            output_control = folder / f'{stem}-{size}-{name}'
+            control_build = compile_cpp(source_path, output_control, library, tile_size=size, threads=threads, tree=tree,
                                         defines=['-DMAA'])
             fault = {'site': 'calibration_source'}
             if control_build['returncode']:
                 controls.append({'id': name, 'tile_size': size, 'status': 'invalid', 'reason': 'build failed',
                                  'observed_checks': [], 'fault': fault, 'build': control_build})
                 continue
-            run = execute([output_mutant, '-f', graph, '-r', plugin.control_source(sources), '-n', '1', '-v'], folder / f'control-{size}-{name}.json', threads=threads)
+            run = execute([output_control, '-f', graph, '-r', plugin.control_source(sources), '-n', '1', '-v'], folder / f'control-{size}-{name}.json', threads=threads)
             passed, reason = judge(run, counts)
             named = re.findall(r'SWDB_(?:STRICT_ASSERT|DIFFERENTIAL_MISMATCH|PRESERVATION_FAIL):([a-z_]+)', run['stdout'] + run['stderr'])
             observed = observed_checks(run, counts, judge, named)
@@ -682,7 +696,7 @@ def graph_adjacency(path):
 
 
 def judge_run(plugin, run, graph, vertex, counts, *, threshold=64, adjacency=None):
-    """Every check of one certify 1.3 run, from its evaluator records and the trusted oracles."""
+    """Every check of one certify 1.3 run, from its evaluator records and the trusted reference counts."""
     from swdb import certification_isolation as isolation
     from swdb.certification_feedback import STRICT_MESSAGES
     adjacency = {} if adjacency is None else adjacency
@@ -694,7 +708,8 @@ def judge_run(plugin, run, graph, vertex, counts, *, threshold=64, adjacency=Non
                            threshold=threshold)
 
 
-def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, threshold=64, plugin, contract=None):
+def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, threshold=64, plugin, contract=None,
+                      procedure=None):
     """Certify one candidate tree with certify 1.3's isolation (ticket 70, 2026-10-04 ET).
 
     Per tile size, the instrumented candidate plus the evaluator's driver is compiled once into
@@ -702,34 +717,34 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
     link that same object with record.cc and seams.cc (no fault, or exactly one). Token and
     legality controls change candidate text and get their own object, linked with no fault.
     Every check comes from :func:`swdb.certification_isolation.judge` on the run's records.
-    Ticket 68's legality checks run as before.
+    Ticket 68's legality checks run as before. ``procedure`` is the version table's entry (candidate
+    1.3 when omitted); it names the driver and the legality rules. Returns (matrix, controls, None).
     """
     from swdb import certification_isolation as isolation
     from swdb import certification_legality as legality
     from swdb.certification_faults import FAULT_VERSIONS, SEAM_FILE
+    procedure = procedure or procedures.procedure(procedures.CANDIDATE, '1.3')
+    rules = procedure.legality
     legal = bool(contract) and legality.applies(contract)
     graphs = matrix_graphs(folder, library, threads)
     by_name = dict(graphs)
     source_path = tree / plugin.certification_source
     source = source_path.read_text()
-    driver = (library / plugin.certification_driver).read_text()
+    driver = procedure.driver_path(library, plugin).read_text()
     stem = plugin.binary_stem
     adjacency = {}
     judged = lambda run, graph, vertex, counts: judge_run(plugin, run, graph, vertex, counts, threshold=threshold,
                                                           adjacency=adjacency)
 
-    def evidence(link, verdict):
-        return {'candidate_object_sha256': link['candidate_object_sha256'],
-                'seam_object_sha256': link['seam_object_sha256'], 'record_object_sha256': link['record_object_sha256'],
-                'named_checks': verdict['named_checks'], 'observed_checks': verdict['observed_checks'],
-                'result_check': verdict['result_check'], 'record_problems': verdict['record_problems']}
+    def legality_of(text, label, size):
+        return (legality_checks(text, source_path, label, library, contract, folder, tile_size=size, threads=threads,
+                                tree=tree, defines=[], rules=rules) if legal else None)
 
     matrix, controls = [], []
     for size in tile_sizes:
         build = isolation.CandidateBuild(folder / f'{stem}-{size}.objects', library, tree, source_path, size, threads)
         instrumented = plugin.certification_instrument(source) + driver
-        static = (legality_checks(instrumented, source_path, f'{stem}-{size}', library, contract, folder,
-                                  tile_size=size, threads=threads, tree=tree, defines=[]) if legal else None)
+        static = legality_of(instrumented, f'{stem}-{size}', size)
         static_failed, static_invalid = _legality_failures(static)
         legality_field = {'legality_checks': static} if legal else {}
         output = folder / f'{stem}-{size}'
@@ -752,48 +767,46 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
                 matrix.append({'graph': graph_name, 'graph_sha256': artifacts.file_hash(graph), 'source': source_vertex,
                                'oracle_frontier_counts': counts, 'tile_size': size, 'threads': threads,
                                'status': 'passed' if passed else 'failed', 'reason': reason, 'build': positive,
-                               'link': link, 'run': run, **evidence(link, verdict), **legality_field})
+                               'link': link, 'run': run, **common.evidence(link, verdict), **legality_field})
         names = list(plugin.certification_controls) + (list(legality.CONTROLS) if legal else [])
         # A control runs on the last (two-level) graph unless its plug-in names another matrix
         # graph (2026-10-04 ET: BC's L4 path-count control needs unequal path counts).
         control_graphs = getattr(plugin, 'certification_control_graphs', None) or {}
-        oracle_counts = {}
+        reference_counts = {}
         vertex = plugin.control_source(sources)
         for name in names:
             graph_name = control_graphs.get(name, graphs[-1][0])
             graph = by_name[graph_name]
-            if graph_name not in oracle_counts:
-                oracle_counts[graph_name] = plugin.certification_oracle(graph, vertex)
-            counts = oracle_counts[graph_name]
+            if graph_name not in reference_counts:
+                reference_counts[graph_name] = plugin.certification_oracle(graph, vertex)
+            counts = reference_counts[graph_name]
             if name in legality.CONTROLS and legal:
                 # Ticket 68: the knob assignment or schedule clause of the candidate's own source.
-                mutant = legality.control(source, name, contract)
-                mutant['source'] = plugin.certification_instrument(mutant['source']) + driver
+                control = legality.control(source, name, contract, rules=rules)
+                control['source'] = plugin.certification_instrument(control['source']) + driver
             else:
-                mutant = plugin.certification_control(plugin.certification_instrument(source), name)
-                if isinstance(mutant, str):
-                    mutant = {'source': mutant + driver, 'fault': None, 'site': 'candidate_tokens'}
+                control = plugin.certification_control(plugin.certification_instrument(source), name)
+                if isinstance(control, str):
+                    control = {'source': control + driver, 'fault': None, 'site': 'candidate_tokens'}
                 else:
-                    mutant = {**mutant, 'source': mutant['source'] + driver}
-            fault = {'site': mutant['site']}
-            if mutant['fault']:
+                    control = {**control, 'source': control['source'] + driver}
+            fault = {'site': control['site']}
+            if control['fault']:
                 # A library fault never changes the candidate's text: the control links the positive
                 # object itself, and the fault macro reaches only the seam object.
-                if mutant['source'] != instrumented:
+                if control['source'] != instrumented:
                     raise Failure('library-fault control changed candidate text: ' + name)
                 candidate_object, control_static = positive, static
-                fault.update(macro=mutant['fault'], version=mutant.get('version', FAULT_VERSIONS.get(name, 1)),
+                fault.update(macro=control['fault'], version=control.get('version', FAULT_VERSIONS.get(name, 1)),
                              delivery='separate_object', seam_source_sha256=artifacts.file_hash(library / SEAM_FILE))
             else:
-                control_static = (legality_checks(mutant['source'], source_path, f'{stem}-{size}-{name}', library,
-                                                  contract, folder, tile_size=size, threads=threads, tree=tree,
-                                                  defines=[]) if legal else None)
-                candidate_object = build.candidate_object(mutant['source'], name)
+                control_static = legality_of(control['source'], f'{stem}-{size}-{name}', size)
+                candidate_object = build.candidate_object(control['source'], name)
             expected_checks = plugin.certification_controls.get(name) or legality.CONTROLS.get(name, set())
             static_failed, _ = _legality_failures(control_static)
             legality_field = {'legality_checks': control_static} if legal else {}
-            output_mutant = folder / f'{stem}-{size}-{name}'
-            control_link = (build.link(candidate_object, mutant['fault'], output_mutant)
+            output_control = folder / f'{stem}-{size}-{name}'
+            control_link = (build.link(candidate_object, control['fault'], output_control)
                             if candidate_object['returncode'] == 0 else candidate_object)
             if control_link['returncode']:
                 # Ticket 68: a build failure never rejects a control; an evaluator legality check that
@@ -805,10 +818,10 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
                                  'observed_checks': sorted(set(static_failed)), 'fault': fault,
                                  'build': candidate_object, 'link': control_link, **legality_field})
                 continue
-            run = isolation.run(output_mutant, graph, vertex, folder / f'control-{size}-{name}.json', threads)
+            run = isolation.run(output_control, graph, vertex, folder / f'control-{size}-{name}.json', threads)
             verdict = judged(run, graph, vertex, counts)
             passed, reason = verdict['passed'], verdict['reason']
-            record = evidence(control_link, verdict)
+            record = common.evidence(control_link, verdict)
             if static_failed:
                 record['observed_checks'] = sorted(set(record['observed_checks']) | set(static_failed))
                 passed, reason = False, static_failed[0]
@@ -817,11 +830,20 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
                              'reason': reason, 'graph': graph_name, 'fault': fault, 'build': candidate_object,
                              'link': control_link, 'run': run, **record, **legality_field})
     source_path.write_text(source)  # This is a private build copy, never a vendored tree.
-    return matrix, controls
+    return matrix, controls, None
+
+
+def evaluate_trusted(*, calibrate, entry_id, tree, library, folder, tile_sizes, threads, sources):
+    """The lowering-and-calibration family's evaluator entry point: (matrix, controls, None)."""
+    if calibrate:
+        matrix, controls = certify_bfs(tree, library, folder, tile_sizes, threads, sources, calibrate=True)
+    else:
+        matrix, controls = certify_lowering(entry_id, library, folder, tile_sizes, threads)
+    return matrix, controls, None
 
 
 SEMANTIC_CHECKS = {'verifier', 'frontier_size_equality', 'execution_witness'}
-# Ticket 76 (certify 1.4): the seam witness of contract clause L4, from the trusted ledger.
+# Ticket 76 (certify 1.4): the seam witness of contract clause L4, from the trusted slide-window events.
 SEAM_WITNESS = 'seam_witness'
 
 
@@ -938,20 +960,6 @@ def check_candidate_scope(tree, snapshot, plugin=None):
     return sorted(changed)
 
 
-def source_digest(library_root):
-    faults = Path(__file__).with_name('certification_faults.py')
-    legality = Path(__file__).with_name('certification_legality.py')  # ticket 68
-    isolation = Path(__file__).with_name('certification_isolation.py')  # ticket 70
-    native = Path(__file__).with_name('certification_native.py')  # ticket 75
-    blinding = Path(__file__).with_name('certification_blinding.py')  # ticket 76
-    process = Path(__file__).with_name('certification_process.py')  # ticket 78
-    files = (sorted(p for p in (library_root / 'dx100').rglob('*') if p.is_file())
-             + sorted(p for p in (library_root / 'native').rglob('*') if p.is_file())
-             + [Path(__file__), faults, legality, isolation, blinding, native, process])
-    return artifacts.digest([{'path': p.relative_to(library_root).as_posix() if library_root in p.parents else 'swdb/' + p.name,
-                              'sha256': artifacts.file_hash(p)} for p in files])
-
-
 def bind_candidate_record(path, snapshot_id, tree):
     """Ticket 75: the Extensa candidate record a snapshot-plus-patch tree reproduces, or a refusal.
 
@@ -975,11 +983,52 @@ def bind_candidate_record(path, snapshot_id, tree):
     return bound
 
 
+def _materialize_candidate(store, folder, *, candidate, snapshot, patch, rewritten):
+    """(tree, snapshot record, snapshot ID, snapshot text of the rewritten file) of a candidate input:
+    a registered candidate artifact, or a registered snapshot with a patch applied."""
+    if candidate:
+        data = store.get(candidate, 'candidate')
+        if not data:
+            raise UsageError('unknown candidate artifact')
+        original = artifacts.verify(data['artifact'])
+        tree = folder / 'source'
+        artifacts.copy_snapshot(original, tree)
+        snapshot_id = data.get('source_snapshot')
+        original_snapshot = store.get(snapshot_id, 'source_snapshot')
+        if not original_snapshot:
+            raise Failure('candidate has no registered source snapshot')
+        (folder / 'snapshot').mkdir()
+        snapshot_tree, _ = materialize_snapshot(store, snapshot_id, folder / 'snapshot')
+        snapshot_text = (snapshot_tree / rewritten).read_text()
+    else:
+        tree, original_snapshot = materialize_snapshot(store, snapshot, folder)
+        snapshot_id = snapshot
+        snapshot_text = (tree / rewritten).read_text()
+        apply_patch(tree, patch)
+    if not original_snapshot:
+        raise Failure('candidate has no registered source snapshot')
+    return tree, original_snapshot, snapshot_id, snapshot_text
+
+
+def _candidate_identity(entry_id, content_sha256, tree, snapshot_id, changed_files, *, candidate, candidate_record,
+                        **extra):
+    identity = {'contract': entry_id, 'contract_sha256': content_sha256,
+                'tree_sha256': artifacts.identify(tree)['sha256'], 'snapshot': snapshot_id,
+                'changed_files': changed_files, **extra}
+    if candidate:
+        identity['id'] = candidate
+    if candidate_record:
+        bound = bind_candidate_record(candidate_record, snapshot_id, tree)
+        identity.update(id=bound.pop('id'), candidate_record=bound)
+    return identity
+
+
 def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None,
             snapshot=None, patch=None, calibrate=False, tile_sizes=(16384, 1024), threads=4, sources=(0,),
             candidate_record=None, version=None):
     from swdb.library import Library
     from swdb import certification_native as native
+    from swdb import kernels
     library_root = Path(library or ROOT / 'library').resolve()
     catalog = Library(library_root, store=store)
     problems = catalog.validate()
@@ -997,17 +1046,16 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         raise UsageError('use --candidate or the paired --snapshot/--patch input')
     if not calibrate and not entry_id:
         raise UsageError('certification requires an entry ID')
-    # Ticket 76: 1.4 by default; 1.3 stays selectable for candidate artifacts (its records keep their
-    # meaning, and work in progress under 1.3 can be repeated exactly). Ticket 78: 1.5 by default;
-    # 1.3 and 1.4 stay selectable.
-    version = version or VERSION
-    if version not in VERSIONS:
-        raise UsageError('certify command version must be one of ' + ', '.join(VERSIONS))
-    # Ticket 76: calibration and lowering certification still read printed lines, so they must only
-    # ever run trusted code: the pinned authors' tree (calibration) or hash-pinned library files
-    # (lowerings). Neither takes candidate input.
+    # One frozen version table per command family (swdb.certification_procedures); an unknown or
+    # historic version raises here. Ticket 76: calibration and lowering certification read printed
+    # lines, so they only ever run trusted code: the pinned authors' tree (calibration) or hash-pinned
+    # library files (lowerings). Neither takes candidate input.
     if calibrate and (candidate or snapshot or patch):
         raise UsageError('calibration certifies only the pinned authors source; it takes no candidate input')
+    family = (procedures.LOWERING if calibrate else procedures.NATIVE if native_entry is not None
+              else procedures.CANDIDATE if candidate or snapshot else procedures.LOWERING)
+    procedure = procedures.procedure(family, version)
+    plugin = None
     if calibrate:
         entry_id = entry_id or 'calibration.dx100_authors_t17'
         content_sha256 = artifacts.digest({'source_tree': artifacts.identify(ROOT / 'apps/dx100')['sha256'], 'fix': 'wait_ready(tile3) -> wait_ready(tile5)', 'strict_layer': artifacts.identify(library_root / 'dx100/strict')['sha256']})
@@ -1018,134 +1066,89 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
             raise UsageError('unknown library entry: ' + entry_id)
         content_sha256 = catalog.content_sha256(entry_id)
         dependencies = catalog.dependency_pins(entry_id)
+        if family == procedures.NATIVE:
+            if not (candidate or snapshot):
+                raise UsageError('a native-CPU rewrite contract certifies a candidate artifact')
+            plugin = kernels.get(entry.get('correctness_check', {}).get('kernel'))
+            if plugin is None or plugin.certification_result_kind is None:
+                raise UsageError('rewrite contract correctness check names no kernel with a certification plug-in')
+        elif family == procedures.CANDIDATE:
+            if entry.get('kind') != 'rewrite_contract':
+                raise UsageError('candidate-artifact certification requires a rewrite contract')
+            plugin = kernels.get(entry.get('correctness_check', {}).get('kernel'))
+            if plugin is None or plugin.certification_source is None:
+                raise UsageError('rewrite contract correctness check names no kernel with a certification plug-in')
+        elif entry.get('kind') not in {'lowering', 'intrinsic', 'library_operation'}:
+            raise UsageError('entry requires a candidate artifact or a differential-test driver')
     base = artifacts.external_directory(runs_dir or Path(tempfile.gettempdir()) / 'swdb-certification')
     folder = base / ('certify-' + uuid.uuid4().hex)
     folder.mkdir()
     before = artifacts.identify(ROOT / 'apps/dx100')
-    command_hash = source_digest(library_root)
+    command, sources_before = procedures.command_fields(procedure, library_root, plugin)
     identity = None
+    native_schedule = None
     if calibrate:
         tree = folder / 'source'
         artifacts.copy_snapshot(ROOT / 'apps/dx100', tree)
-        matrix, controls = certify_bfs(tree, library_root, folder, tile_sizes, threads, sources, calibrate=True)
-    elif native_entry is not None:
-        # Ticket 75: a native-CPU contract; its pinned profile is the matrix (1.3 isolation or 1.4 blinding).
-        if not (candidate or snapshot):
-            raise UsageError('a native-CPU rewrite contract certifies a candidate artifact')
-        from swdb import kernels
-        plugin = kernels.get(entry.get('correctness_check', {}).get('kernel'))
-        if plugin is None or plugin.certification_result_kind is None:
-            raise UsageError('rewrite contract correctness check names no kernel with a certification plug-in')
+        matrix, controls, _ = procedure.entry_point()(calibrate=True, entry_id=entry_id, tree=tree, library=library_root,
+                                                      folder=folder, tile_sizes=tile_sizes, threads=threads,
+                                                      sources=sources)
+    elif family == procedures.NATIVE:
+        # Ticket 75: a native-CPU contract; its pinned profile is the matrix.
         profile = native.load_profile(catalog, entry)
-        if candidate:
-            data = store.get(candidate, 'candidate')
-            if not data:
-                raise UsageError('unknown candidate artifact')
-            original = artifacts.verify(data['artifact'])
-            tree = folder / 'source'
-            artifacts.copy_snapshot(original, tree)
-            snapshot_id = data.get('source_snapshot')
-            original_snapshot = store.get(snapshot_id, 'source_snapshot')
-            if not original_snapshot:
-                raise Failure('candidate has no registered source snapshot')
-            (folder / 'snapshot').mkdir()
-            snapshot_tree, _ = materialize_snapshot(store, snapshot_id, folder / 'snapshot')
-            snapshot_text = (snapshot_tree / profile['scope']['file']).read_text()
-        else:
-            tree, original_snapshot = materialize_snapshot(store, snapshot, folder)
-            snapshot_id = snapshot
-            snapshot_text = (tree / profile['scope']['file']).read_text()
-            apply_patch(tree, patch)
+        tree, original_snapshot, snapshot_id, snapshot_text = _materialize_candidate(
+            store, folder, candidate=candidate, snapshot=snapshot, patch=patch, rewritten=profile['scope']['file'])
         artifacts.check_protections(tree, original_snapshot['protections'])
         changed_files = native.check_scope(profile, tree, original_snapshot, snapshot_text)
         from swdb.certification_isolation import refuse_scan_findings, scan
         candidate_text = (tree / profile['scope']['file']).read_text()
-        refuse_scan_findings(snapshot_text, candidate_text, version, directives=True)
-        identity = {'contract': entry_id, 'contract_sha256': content_sha256,
-                    'tree_sha256': artifacts.identify(tree)['sha256'], 'snapshot': snapshot_id,
-                    'changed_files': changed_files,
-                    'scan': {'findings': len(scan(snapshot_text, candidate_text, version, directives=True)),
-                             'directives': 'only #pragma omp may be authored'},
-                    'rewrite_scope': {'file': profile['scope']['file'], 'function': profile['scope']['begin']}}
-        if candidate:
-            identity['id'] = candidate
-        if candidate_record:
-            bound = bind_candidate_record(candidate_record, snapshot_id, tree)
-            identity.update(id=bound.pop('id'), candidate_record=bound)
+        directives = procedure.directives == 'pragma_omp_only'
+        refuse_scan_findings(snapshot_text, candidate_text, version=procedure.version, directives=directives,
+                             primitives=procedure.scan_primitives)
+        identity = _candidate_identity(
+            entry_id, content_sha256, tree, snapshot_id, changed_files, candidate=candidate,
+            candidate_record=candidate_record,
+            scan={'findings': len(scan(snapshot_text, candidate_text, procedure.version, directives=directives,
+                                       primitives=procedure.scan_primitives)),
+                  'directives': 'only #pragma omp may be authored'},
+            rewrite_scope={'file': profile['scope']['file'], 'function': profile['scope']['begin']})
         if tuple(sources) != (0,):
             raise UsageError('a native-CPU profile pins its sources; --sources cannot override them')
-        native_schedule = None
-        if version == '1.3':
-            matrix, controls = native.certify_native(tree, library_root, folder, profile, plugin)
-        elif version == '1.5':
-            # Ticket 78: the native 1.4 procedure with the 1.5 process split.
-            from swdb import certification_process
-            matrix, controls, native_schedule = certification_process.certify_native(tree, library_root, folder,
-                                                                                     profile, plugin)
-        else:
-            matrix, controls, native_schedule = native.certify_native_v14(tree, library_root, folder, profile, plugin)
+        matrix, controls, native_schedule = procedure.entry_point()(tree, library_root, folder, profile, plugin,
+                                                                    procedure=procedure)
         native_profile = {'id': profile['data']['id'], 'path': str(profile['path'].relative_to(library_root)),
                           'sha256': profile['sha256'], 'target': 'native_cpu',
                           # Ticket 75 review: pre-check on the certifying host, not on the target machine.
                           'target_scope': f'pre-check executed on {platform.system()} {platform.machine()}; '
                                           'the target check is the evaluator compiled verifier on every timed '
                                           'trial on mbit10 (x86_64)'}
-    elif candidate or snapshot:
-        if entry.get('kind') != 'rewrite_contract':
-            raise UsageError('candidate-artifact certification requires a rewrite contract')
-        from swdb import kernels
-        plugin = kernels.get(entry.get('correctness_check', {}).get('kernel'))
-        if plugin is None or plugin.certification_source is None:
-            raise UsageError('rewrite contract correctness check names no kernel with a certification plug-in')
-        if candidate:
-            data = store.get(candidate, 'candidate')
-            if not data:
-                raise UsageError('unknown candidate artifact')
-            original = artifacts.verify(data['artifact'])
-            tree = folder / 'source'
-            artifacts.copy_snapshot(original, tree)
-            snapshot_id = data.get('source_snapshot')
-            original_snapshot = store.get(snapshot_id, 'source_snapshot')
-            if not original_snapshot:
-                raise Failure('candidate has no registered source snapshot')
-            (folder / 'snapshot').mkdir()
-            snapshot_tree, _ = materialize_snapshot(store, snapshot_id, folder / 'snapshot')
-            snapshot_text = (snapshot_tree / plugin.certification_source).read_text()
-        else:
-            tree, original_snapshot = materialize_snapshot(store, snapshot, folder)
-            snapshot_id = snapshot
-            snapshot_text = (tree / plugin.certification_source).read_text()
-            apply_patch(tree, patch)
-        if not original_snapshot:
-            raise Failure('candidate has no registered source snapshot')
+    elif family == procedures.CANDIDATE:
+        tree, original_snapshot, snapshot_id, snapshot_text = _materialize_candidate(
+            store, folder, candidate=candidate, snapshot=snapshot, patch=patch, rewritten=plugin.certification_source)
         artifacts.check_protections(tree, original_snapshot['protections'])
         changed_files = check_candidate_scope(tree, original_snapshot, plugin)
         header = tree / HEADER
         if not header.is_file() or artifacts.file_hash(header) != artifacts.file_hash(library_root / 'dx100/dxc_lowering.hpp'):
             raise Failure('candidate must ship the byte-identical canonical lowering header')
-        # Ticket 70 (certify 1.3): candidate-authored text may not name harness symbols. Ticket 76:
+        # Ticket 70 (certify 1.3): candidate-authored text may not name evaluator symbols. Ticket 76:
         # 1.4 also refuses descriptor reads, temporary files and frame introspection.
         from swdb.certification_isolation import refuse_scan_findings
-        refuse_scan_findings(snapshot_text, (tree / plugin.certification_source).read_text(), version=version)
-        if version == '1.5':
+        candidate_text = (tree / plugin.certification_source).read_text()
+        refuse_scan_findings(snapshot_text, candidate_text, version=procedure.version, primitives=procedure.scan_primitives)
+        if procedure.directives == 'dx100_knob_defaults':
             # Ticket 78 (from ticket 75's review): authored code may not depend on whether it is a
             # certification build (knob defaults and the diagnostic block excepted).
             from swdb.certification_process import refuse_directives
-            refuse_directives(snapshot_text, (tree / plugin.certification_source).read_text(), entry)
-        identity = {'contract': entry_id, 'contract_sha256': content_sha256,
-                    'tree_sha256': artifacts.identify(tree)['sha256'], 'snapshot': snapshot_id, 'changed_files': changed_files}
-        if candidate:
-            identity['id'] = candidate
-        if candidate_record:
-            bound = bind_candidate_record(candidate_record, snapshot_id, tree)
-            identity.update(id=bound.pop('id'), candidate_record=bound)
-        threshold = 64
-        matrix, controls = certify_bfs(tree, library_root, folder, tile_sizes, threads, sources, threshold=threshold,
-                                       plugin=plugin, contract=entry, version=version)
+            refuse_directives(snapshot_text, candidate_text, entry, procedure.version)
+        identity = _candidate_identity(entry_id, content_sha256, tree, snapshot_id, changed_files,
+                                       candidate=candidate, candidate_record=candidate_record)
+        matrix, controls, _schedule = procedure.entry_point()(
+            tree, library_root, folder, tile_sizes, threads, sources, threshold=64, plugin=plugin, contract=entry,
+            procedure=procedure)
     else:
-        if entry.get('kind') not in {'lowering', 'intrinsic', 'library_operation'}:
-            raise UsageError('entry requires a candidate artifact or a differential-test driver')
-        matrix, controls = certify_lowering(entry_id, library_root, folder, tile_sizes, threads)
+        matrix, controls, _ = procedure.entry_point()(calibrate=False, entry_id=entry_id, tree=None,
+                                                      library=library_root, folder=folder, tile_sizes=tile_sizes,
+                                                      threads=threads, sources=sources)
     if artifacts.identify(ROOT / 'apps/dx100') != before:
         raise Failure('vendored DX100 source changed during certification')
     if identity and artifacts.identify(tree)['sha256'] != identity['tree_sha256']:
@@ -1154,7 +1157,7 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
     clauses = clause_controls(entry, controls, plugin) if identity else None
     if clauses and any(row['enforceable'] and not row['matched'] for row in clauses):
         verdict = 'failed'
-    if source_digest(library_root) != command_hash:
+    if not procedures.unchanged(sources_before, procedures.manifest(procedure, library_root, plugin)):
         raise Failure('certification source files changed during execution; results are not bound to one source identity')
     if not calibrate:
         current_catalog = Library(library_root, store=store)
@@ -1170,9 +1173,9 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
     record = workflow.record('certification', 'certification.' + uuid.uuid4().hex,
         entry={'id': entry_id, 'content_sha256': content_sha256},
         dependencies=dependencies,
-        command={'version': version, 'sources_sha256': command_hash},
+        command=command,
         host={'hostname': socket.gethostname(), 'system': platform.system(), 'architecture': platform.machine(), 'compiler': compiler()},
-        matrix=matrix, negative_controls=controls, verdict=verdict, evidence_basis='simulated',
+        matrix=matrix, negative_controls=controls, verdict=verdict, evidence_basis=procedure.evidence_basis,
         evidence_kind='execution', created_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
     if identity:
         record['candidate'] = identity
@@ -1180,14 +1183,15 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
     if native_entry is not None:
         record['profile'] = native_profile  # ticket 75
         if native_schedule is not None:
-            record['profile']['schedule'] = native_schedule   # certify 1.4: the random run order
+            record['profile']['schedule'] = native_schedule   # certify 1.4 and later: the random run order
     (folder / 'certification.json').write_text(json.dumps(record, indent=2) + '\n')
     workflow.persist(store.dir, record, create=True)
     return record
 
 
 def register_cli(commands):
-    sub = commands.add_parser('certify', help='Certify typed DX100 lowerings or BFS candidate artifacts')
+    sub = commands.add_parser('certify', help='Certify a typed-library lowering, a library operation (--profile) or a '
+                                              'candidate artifact of a rewrite contract (DX100 or native-CPU)')
     sub.add_argument('entry_id', nargs='?')
     group = sub.add_mutually_exclusive_group()
     group.add_argument('--candidate')
@@ -1206,13 +1210,12 @@ def register_cli(commands):
     # Ticket 75 (2026-10-05 ET): bind a --snapshot/--patch run to an Extensa candidate record (read only).
     sub.add_argument('--candidate-record', type=Path,
                      help='candidate record file whose artifact the patched tree must reproduce')
-    # Ticket 76 (2026-10-05 ET): candidate artifacts default to certify 1.4; 1.3 stays selectable.
-    # Ticket 78 (2026-10-05 ET): candidate artifacts default to certify 1.5; 1.3 and 1.4 selectable.
-    # Ticket 77 (2026-10-05 ET): library operations (--profile) default to command 1.1; 1.0 selectable.
-    from swdb.library_operations import VERSIONS as LIBRARY_OPERATION_VERSIONS
-    sub.add_argument('--command-version', choices=(*LIBRARY_OPERATION_VERSIONS, *VERSIONS), default=None,
-                     help='certify command version: 1.3, 1.4 or 1.5 for candidate artifacts, 1.0 or 1.1 for library '
-                          'operations with --profile (default: the current version of each)')
+    # 2026-10-05 ET (code-review fixes F3, F4): each command family has its own version table
+    # (swdb.certification_procedures); the help text is generated from it.
+    families = ', '.join(f"{family.replace('_', ' ')} {'/'.join(table)} (default {procedures.DEFAULTS[family]})"
+                         for family, table in procedures.PROCEDURES.items())
+    sub.add_argument('--command-version', choices=procedures.all_versions(), default=None,
+                     help='certify command version of the entry\'s command family: ' + families)
     return sub
 
 

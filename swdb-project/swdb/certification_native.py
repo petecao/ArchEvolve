@@ -1,4 +1,4 @@
-"""Native-CPU candidate-artifact certification (certify 1.4). Created: 2026-10-05 ET (ticket 75).
+"""Native-CPU candidate-artifact certification (certify 1.3, 1.4, 1.5). Created: 2026-10-05 ET (ticket 75).
 
 Agent-decided under Yan-Ru's 2026-10-05 delegation; revisable.
 
@@ -19,10 +19,16 @@ build configuration with a forced prelude and an evaluator-owned ``main``; the p
 every control link that same object, and a fault macro reaches only the seam object. Every check is
 computed out of process from the evaluator records (``swdb.certification_isolation.judge``), with
 the native execution witness (claims and pushes through the contract's seams). The harness scan
-refuses candidate-authored lines that name harness symbols.
+refuses candidate-authored lines that name evaluator symbols.
 
 This is pre-check evidence on the certifying host (ADR 0008); the target correctness check stays
-the evaluator's compiled verifier on every timed trial on mbit10.
+the evaluator's compiled verifier on every timed trial on mbit10. The runs execute real code on the
+host CPU, so the records' ``evidence_basis`` is ``measured`` (from 2026-10-05; earlier records say
+``simulated``).
+
+Updated: 2026-10-05 ET (code-review fixes F3, F5): the driver and scan come from the version table
+(``swdb.certification_procedures``; the profile key ``harness`` is a legacy name for the evaluator
+files); builds, runs and evidence share ``swdb.certification_common``. Behavior unchanged.
 """
 from __future__ import annotations
 
@@ -30,6 +36,7 @@ import difflib
 from pathlib import Path
 
 from swdb import artifacts, yamlio
+from swdb import certification_common as common
 from swdb.cli import Failure, UsageError
 
 PROFILE_FORMAT = 'swdb.native-candidate-profile.v1'
@@ -155,7 +162,7 @@ def load_profile(catalog, entry):
         raise UsageError('native candidate profile controls differ from the contract negative_controls')
     scope = _closed(data['rewrite_scope'], {'file', 'begin', 'end'}, 'rewrite_scope')
     hook = _closed(data['instrumentation'], {'anchor', 'hook', 'hook_v14'}, 'instrumentation')
-    # Ticket 75 (merged after ticket 76): the certify 1.4 harness (one binary, blinded plan).
+    # Ticket 75 (merged after ticket 76): the certify 1.4 evaluator files (one binary, blinded plan).
     resolved_v14 = {}
     for name, item in _closed(data['harness_v14'], _HARNESS_FIELDS, 'harness_v14').items():
         try:
@@ -239,59 +246,37 @@ def instrument(profile, source):
 
 # --- builds --------------------------------------------------------------------------------------
 
-class NativeBuild:
+class NativeBuild(common.ObjectBuild):
     """The objects of one candidate tree at one build configuration (ticket 70's CandidateBuild shape)."""
 
     def __init__(self, folder, profile, tree, source_path, build, fault_batch, harness=None):
-        from swdb.certification import compiler
-        self.folder, self.profile, self.tree = Path(folder), profile, Path(tree)
+        self.profile, self.tree = profile, Path(tree)
         self.source_path, self.build = Path(source_path), build
-        self.folder.mkdir(parents=True, exist_ok=True)
-        self.compiler = compiler()
-        self.flags = list(build['flags'])
+        super().__init__(folder, build['flags'])
         self.includes = ['-I' + str(self.tree / 'benchmarks/API'), '-I' + str(self.tree / 'include')]
         self.fault_batch = fault_batch
-        self.harness = harness or profile['harness']   # 1.3 harness, or the 1.4 one (one seam object)
+        self.harness = harness or profile['harness']   # 1.3 evaluator files, or the 1.4 ones (one seam object)
         self._trusted = {}
 
-    def _compile(self, source, output, extra=()):
-        from swdb.certification import execute
-        command = [self.compiler, *self.flags, *extra, '-c', str(source), '-o', str(output)]
-        result = execute(command, Path(str(output) + '.build.json'), timeout=180)
-        if result['returncode'] == 0:
-            result['object_sha256'] = artifacts.file_hash(output)
-        return result
-
     def candidate_object(self, text, label):
-        self.source_path.write_text(text)
-        extra = ['-Dmain=swdb_candidate_main', '-iquote', str(self.source_path.parent), *self.includes,
-                 '-include', str(self.harness['prelude'])]
-        output = self.folder / f'candidate-{label}.o'
-        result = self._compile(self.source_path, output, extra)
-        result['object'] = str(output)
-        result['source_sha256'] = artifacts.digest(text)
-        return result
+        return self.compile_candidate(self.source_path, text, label, prelude=self.harness['prelude'],
+                                      includes=self.includes)
 
     def trusted_object(self, kind, fault=None):
         key = (kind, fault)
         if key not in self._trusted:
             source = self.harness['record' if kind == 'record' else 'seams']
             name = kind if kind == 'record' else 'seams-' + (fault or 'none').lower()
-            output = self.folder / f'{name}.o'
             extra = [f'-DSWDB_NATIVE_FAULT_BATCH={self.fault_batch}'] if kind == 'seams' else []
-            result = self._compile(source, output, extra + (['-D' + fault] if fault else []))
-            result['object'] = str(output)
+            result = self.compile(source, self.folder / f'{name}.o', extra=extra + (['-D' + fault] if fault else []))
             if result['returncode']:
                 raise Failure(f'trusted certification object failed to build ({name}); see ' + result['log'])
             self._trusted[key] = result
         return self._trusted[key]
 
     def link(self, candidate, fault, output):
-        from swdb.certification import execute
         record, seams = self.trusted_object('record'), self.trusted_object('seams', fault)
-        command = [self.compiler, '-fopenmp', '-pthread', candidate['object'], record['object'], seams['object'],
-                   '-o', str(output)]
-        result = execute(command, Path(str(output) + '.link.json'), timeout=180)
+        result = self.link_objects([candidate['object'], record['object'], seams['object']], output, pthread=True)
         result.update(candidate_object_sha256=candidate.get('object_sha256'),
                       record_object_sha256=record['object_sha256'], seam_object_sha256=seams['object_sha256'],
                       fault_macro=fault)
@@ -317,10 +302,13 @@ def judge_native(plugin, run, graph, vertex, counts, adjacency):
                            witness=witness_ok)
 
 
-def certify_native(tree, library, folder, profile, plugin, *, sources=None):
-    """Run the profile's matrix and controls on one candidate tree; returns (matrix, controls)."""
+def certify_native(tree, library, folder, profile, plugin, *, sources=None, procedure=None):
+    """Run the profile's matrix and controls on one candidate tree (native 1.3); returns
+    (matrix, controls, None). ``procedure`` is the version table's entry (native 1.3 when omitted)."""
     from swdb import certification as c
     from swdb import certification_isolation as isolation
+    from swdb import certification_procedures as procedures
+    procedure = procedure or procedures.procedure(procedures.NATIVE, '1.3')
     data = profile['data']
     matrix_spec = data['matrix']
     sources = list(sources or matrix_spec['sources'])
@@ -331,15 +319,10 @@ def certify_native(tree, library, folder, profile, plugin, *, sources=None):
     by_name['staging-tail-17'] = tail
     source_path = Path(tree) / data['rewrite_scope']['file']
     source = source_path.read_text()
-    driver = profile['harness']['driver'].read_text()
+    driver = procedure.driver_path(library, profile=profile).read_text()
     instrumented = instrument(profile, source) + driver
     adjacency = {}
-
-    def evidence(link, verdict):
-        return {'candidate_object_sha256': link['candidate_object_sha256'],
-                'seam_object_sha256': link['seam_object_sha256'], 'record_object_sha256': link['record_object_sha256'],
-                'named_checks': verdict['named_checks'], 'observed_checks': verdict['observed_checks'],
-                'result_check': verdict['result_check'], 'record_problems': verdict['record_problems']}
+    evidence = common.evidence
 
     matrix, controls = [], []
     for build_spec in matrix_spec['builds']:
@@ -371,8 +354,8 @@ def certify_native(tree, library, folder, profile, plugin, *, sources=None):
             graph_name = control.get('graph', matrix_spec['control_graph'])
             graph = by_name[graph_name]
             counts = plugin.certification_oracle(graph, vertex)
-            output_mutant = folder / f'bfs-{label}-{control["id"]}'
-            control_link = build.link(positive, control['macro'], output_mutant)
+            output_control = folder / f'bfs-{label}-{control["id"]}'
+            control_link = build.link(positive, control['macro'], output_control)
             fault = {'site': 'library_fault', 'macro': control['macro'], 'delivery': 'separate_object', 'version': 1,
                      'seam_source_sha256': artifacts.file_hash(profile['harness']['seams'])}
             expected = {control['expected_check']}
@@ -380,7 +363,7 @@ def certify_native(tree, library, folder, profile, plugin, *, sources=None):
                 controls.append({'id': control['id'], 'build': label, 'status': 'invalid', 'reason': 'build failed',
                                  'observed_checks': [], 'fault': fault, 'compile': positive, 'link': control_link})
                 continue
-            run = isolation.run(output_mutant, graph, vertex, folder / f'control-{label}-{control["id"]}.json', threads)
+            run = isolation.run(output_control, graph, vertex, folder / f'control-{label}-{control["id"]}.json', threads)
             verdict = judge_native(plugin, run, graph, vertex, counts, adjacency)
             record = evidence(control_link, verdict)
             controls.append({'id': control['id'], 'build': label, 'threads': threads, 'expected_check':
@@ -390,7 +373,7 @@ def certify_native(tree, library, folder, profile, plugin, *, sources=None):
                              'graph_sha256': artifacts.file_hash(graph), 'fault': fault, 'compile': positive,
                              'link': control_link, 'run': run, **record})
     source_path.write_text(source)  # a private build copy, never a vendored tree
-    return matrix, controls
+    return matrix, controls, None
 
 
 # --- certify 1.4 (blinded, attributed; ticket 76's mechanism for native-CPU contracts) ------------
@@ -411,45 +394,26 @@ def _plan_line(fault, nonce):
 
 
 def run_v14(binary, graph, source, log, threads, fault=None):
-    """One blinded run: a fresh record file and a plan pipe (ticket 76's descriptor layout)."""
-    import os
+    """One blinded run: a fresh nonce-named record file and a plan pipe (ticket 76's descriptor layout).
+    Ticket 75 review: the record file is named by the nonce, so the candidate cannot learn the fault
+    from the descriptor's path (the parent keeps the mapping in ``log``)."""
     import secrets
-    from swdb.certification import execute
-    from swdb.certification_blinding import CHANNEL_ENV, PLAN_ENV
     nonce = secrets.token_hex(16)
-    # Ticket 75 review: the record file is named by the nonce (the parent keeps the mapping in `log`),
-    # so the candidate cannot learn the fault from the descriptor's path.
-    record = Path(log).parent / f'run-{nonce}.record'
-    descriptor = os.open(record, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
-    plan_read, plan_write = os.pipe()
-    try:
-        os.write(plan_write, _plan_line(fault, nonce))
-        os.close(plan_write)
-        plan_write = None
-        result = execute([binary, '-f', graph, '-r', source, '-n', '1', '-v'], log, threads=threads,
-                         extra_env={CHANNEL_ENV: str(descriptor), PLAN_ENV: str(plan_read)},
-                         pass_fds=(descriptor, plan_read))
-    finally:
-        os.close(descriptor)
-        os.close(plan_read)
-        if plan_write is not None:
-            os.close(plan_write)
-    result.update(record=str(record.resolve()), record_sha256=artifacts.file_hash(record),
-                  plan={'fault': fault, 'nonce': nonce})
-    return result
+    return common.run_blinded([binary, *common.graph_argv(graph, source)], _plan_line(fault, nonce), nonce, fault,
+                              log, threads)
 
 
-def witness_v14(parsed, counts, book):
+def witness_v14(parsed, counts, pairs):
     """Native execution witness under 1.4: claims and pushes through the seams once BFS passes the source."""
     return len(counts) <= 1 or (bool(parsed.get('claims')) and bool(parsed.get('pushes')))
 
 
-def attributed_v14(fault, parsed, verdict, book, adjacency, source):
+def attributed_v14(fault, parsed, verdict, pairs, adjacency, source):
     """(attributed, evidence) of one native control run, from its trusted records alone."""
     from swdb import certification_blinding as blinding
     rule = ATTRIBUTION_V14[fault]
     if fault == 'forged_frontier':
-        return blinding.attributed(fault, parsed, verdict, book, {'duplicate_frontier'})
+        return blinding.attributed(fault, parsed, verdict, pairs, {'duplicate_frontier'})
     values = (parsed['result'] or {}).get('values') or []
     record = parsed['native_faults'].get({'claim_without_write': 'lost', 'partial_batch_dropped': 'hidden',
                                           'stale_row_offset': 'stale'}[fault])
@@ -484,13 +448,16 @@ def attributed_v14(fault, parsed, verdict, book, adjacency, source):
     return bool(hits), {'rule': rule, 'vertex': u, 'children_without_edge': hits[:5]}
 
 
-def certify_native_v14(tree, library, folder, profile, plugin, *, rng=None, build_class=None, runner=None,
-                       driver=None, suffix='v14'):
+def certify_native_v14(tree, library, folder, profile, plugin, *, rng=None, procedure=None, build_class=None,
+                       runner=None, suffix='v14'):
     """The profile's matrix and controls under certify 1.4: one binary per build, blinded plans, a random
-    order per build, attributed rejections, the slide-window ledger and the seam witness.
+    order per build, attributed rejections, the slide-window events and the seam witness.
 
-    Ticket 78 (certify 1.5): ``build_class``, ``runner``, ``driver`` and ``suffix`` select the process
-    split (``swdb.certification_process``); their defaults are 1.4's."""
+    ``procedure`` is the version table's entry (native 1.4 when omitted); it names the driver. Ticket 78
+    (certify 1.5): ``build_class``, ``runner`` and ``suffix`` select the process split
+    (``swdb.certification_process``)."""
+    from swdb import certification_procedures as procedures
+    procedure = procedure or procedures.procedure(procedures.NATIVE, '1.4')
     build_class = build_class or NativeBuild
     runner = runner or (lambda link, output, graph, vertex, log, threads, fault:
                         run_v14(output, graph, vertex, log, threads, fault=fault))
@@ -514,7 +481,7 @@ def certify_native_v14(tree, library, folder, profile, plugin, *, rng=None, buil
     if source.count(hook['anchor']) != 1 or source.count('bool BFSVerifier(') != 1:
         raise Failure('BFS frontier logging statement or correctness check differs from the protected text')
     instrumented = source.replace(hook['anchor'], hook['hook_v14'] + '\n        ' + hook['anchor'], 1) + \
-        Path(driver or harness['driver']).read_text()
+        procedure.driver_path(library, profile=profile).read_text()
     adjacency = {}
 
     def rows(graph):
@@ -559,14 +526,7 @@ def certify_native_v14(tree, library, folder, profile, plugin, *, rng=None, buil
             run = runner(link, output, job['graph'], job['vertex'], folder / f'{suffix}-{label}-{tag}.json',
                          job['threads'], job['fault'])
             parsed, verdict = judged(run, job['graph'], job['vertex'], counts)
-            evidence = {'candidate_object_sha256': link['candidate_object_sha256'], 'binary_sha256': binary_sha256,
-                        'seam_object_sha256': link['seam_object_sha256'],
-                        'record_object_sha256': link['record_object_sha256'], 'plan': run['plan'],
-                        'named_checks': verdict['named_checks'], 'observed_checks': verdict['observed_checks'],
-                        'result_check': verdict['result_check'], 'record_problems': verdict['record_problems'],
-                        'seam_witness': verdict['seam_witness'], 'schedule_order': order,
-                        **{key: link[key] for key in ('client_object_sha256', 'evaluator_sha256', 'process_split')
-                           if key in link}}
+            evidence = {**common.evidence(link, verdict, run, binary_sha256=binary_sha256), 'schedule_order': order}
             if job['kind'] == 'matrix':
                 done_matrix.append((job['canonical'], {
                     'graph': job['graph_name'], 'graph_sha256': artifacts.file_hash(job['graph']), 'source': job['vertex'],
@@ -577,7 +537,7 @@ def certify_native_v14(tree, library, folder, profile, plugin, *, rng=None, buil
             control = job['control']
             status = c.control_status({control['expected_check']}, verdict['observed_checks'], run, verdict['passed'])
             reason = verdict['reason']
-            ok, attribution = attributed_v14(job['fault'], parsed, verdict, verdict['_book'], rows(job['graph']),
+            ok, attribution = attributed_v14(job['fault'], parsed, verdict, verdict['_pairs'], rows(job['graph']),
                                              job['vertex'])
             import json
             attribution = json.loads(json.dumps(attribution))   # records are JSON (tuples become lists)
