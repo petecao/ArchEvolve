@@ -1,7 +1,7 @@
 # Map: Typed library and DX100 BFS rewrites in ArchEvolve and Extensa modes
 
 Created: 2026-10-03 02:28 ET
-Updated: 2026-10-04 21:50 ET (row 66 added; ticket 56 a5 result and 57 a7 audit pointers); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review)
+Updated: 2026-10-04 21:35 ET (rows 66 resolved and 67 added; pointers for tickets 66 and 67); 2026-10-04 21:50 ET (row 66 added; ticket 56 a5 result and 57 a7 audit pointers); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review)
 **Type:** ticket map
 **Status:** ready-for-agent
 **Spec:** [spec.md](spec.md)
@@ -109,7 +109,8 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 | 63 | [Scalable native BFS evaluator (v2) with a compiled structural verifier](issues/63-scalable-native-verifier.md) | resolved | — |  |
 | 64 | [Native scale-22 A/A pilot is unstable: protocol options](issues/64-native-scale22-pilot-unstable.md) | resolved | — |  |
 | 65 | [Range-loop convention, register operands and named-check campaign feedback](issues/65-range-loop-convention-and-named-check-feedback.md) | resolved | — |  |
-| 66 | [Native protocol after the isolation test: options for Yan-Ru](issues/66-native-protocol-after-isolation-test.md) | needs-info | — |  |
+| 66 | [Native protocol after the isolation test: options for Yan-Ru](issues/66-native-protocol-after-isolation-test.md) | resolved | — |  |
+| 67 | [Native evaluator v3: parent values checked at full width before narrowing](issues/67-native-evaluator-v3-parent-width.md) | resolved | — |  |
 
 ## Context pointers
 
@@ -226,3 +227,5 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 - Ticket 57 rerun a7, 2026-10-04 ET: with ticket 64 notes and named-check feedback, both classes reach certified gem5 candidates: kronecker 1.411 and uniform_random 1.553 simulated point ratios (gain, single graph per class); 8 iterations, 20 calls, 6.70 lane-h. [57-gem5-campaign-target](issues/57-gem5-campaign-target.md).
 - 2026-10-04 20:30 ET: ticket 57 a7 audit against the final code review fixes: no erratum. The leakage scan is clean, re-judged verdicts are unchanged, and both best candidates re-certify on the Mac. Gains stand. Open: forged_frontier false rejections. [57-gem5-campaign-target](issues/57-gem5-campaign-target.md), [audit](evaluation/a7-review-fix-audit-2026-10-04.json).
 - 2026-10-04 21:50 ET: ticket 56 closed `baseline_unstable` (Kronecker) by the pre-registered isolation test a5. The a5 pilot ran with node 0 free. Kronecker fork spread is 0.131 (fails); Kronecker upstream 0.008, uniform fork 0.084 and uniform upstream 0.012 pass. Uniform ran 4 iterations and stopped at plateau. Its two scalar candidates measured 1.284 and 1.318 against the fork, but both are `inconclusive` (spread 0.117 and 0.159). The review findings do not affect a5. Protocol options are in needs-info [66](issues/66-native-protocol-after-isolation-test.md). [56-native-campaign-target](issues/56-native-campaign-target.md), [evidence](evaluation/native-a5-isolation-2026-10-04.json).
+- 2026-10-04 20:55 ET: ticket 66 resolved as decided by Yan-Ru ("go with the recommendation"): native CI-width speed rule `swdb.speed_rule.ci_width.v1`, pre-registered before any run (commit 84e44e1). Relative 95% CI width at most 0.05 from a circular block bootstrap over 20 repetitions (blocks of 4, same indices for all sources and both sides, 2000 resamples, seed 20260925); A/A interval also inside (1/1.05, 1.05); a gain needs the same interval's lower bound strictly above 1.05. Old protocols and a5 keep the range rule. Implemented in ce42a45. [66-native-protocol-after-isolation-test](issues/66-native-protocol-after-isolation-test.md).
+- 2026-10-04 21:15 ET: ticket 67 resolved. Native evaluator `swdb.native.evaluator.scalable.v3`: compile-time integral parent type, saturating int32 narrowing (full-width verdicts), one retained parent copy per distinct vector; v2 unchanged. Closes the final code review's open P3. [67-native-evaluator-v3-parent-width](issues/67-native-evaluator-v3-parent-width.md).
