@@ -430,7 +430,10 @@ class TargetAdapter:
             except (Failure, UsageError) as exc:   # an aborted certification (e.g. scope, control site)
                 text = str(exc)
                 site = re.search(r"negative-control mutation site: (\w+)", text)
-                failed_checks.append(f"negative_control_site:{site[1]}" if site else "certification_aborted")
+                # Ticket 70 (2026-10-04 ET): the harness scan refuses candidate text naming harness symbols.
+                failed_checks.append(f"negative_control_site:{site[1]}" if site
+                                     else "harness_scan" if "refused by the harness scan" in text
+                                     else "certification_aborted")
                 records.append(None)
                 continue
             records.append(record["id"])

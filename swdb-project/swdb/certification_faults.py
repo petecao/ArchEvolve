@@ -2,6 +2,8 @@
 
 Updated: 2026-10-04 ET (ticket 67: ``forged_frontier`` version 2 fires on the first CPU
 queue push of the run, independent of tile size, threshold and chunk timing).
+Updated: 2026-10-04 ET (ticket 70, certify 1.3: faults moved to a separately compiled object;
+``forged_frontier`` no longer forges the protected frontier print).
 
 Agent-decided under Yan-Ru's 2026-10-04 delegation; revisable.
 
@@ -10,26 +12,30 @@ spelling, so a semantically equal rewrite written differently could not be certi
 Controls now attach to the library side:
 
 * Library faults. Each shared control is one fault in
-  ``library/dx100/faults/dxc_lowering_faults.hpp``. Certification appends that block to
-  a private build copy of the candidate's canonical lowering header (whose bytes it has
-  already checked) and selects the fault with one ``-DSWDB_DXC_FAULT_<ID>`` macro. The
-  fault acts where the candidate calls the DX100 intrinsics, the CPU claim primitive or
-  the queue push, so the candidate's text is never searched.
-* Protected-line edits. ``forged_frontier`` also forges the evaluator-protected frontier
-  print, whose exact text certification already requires.
+  ``library/dx100/certification/seams.cc``, a trusted object compiled apart from the candidate
+  with one ``-DSWDB_DXC_FAULT_<ID>`` macro (certify 1.3). The candidate's translation unit is
+  identical in every build and calls the seams through the evaluator prelude, so it cannot
+  observe which fault, if any, is linked. The fault acts where the candidate calls the DX100
+  intrinsics, the CPU claim primitive or the queue push, so the candidate's text is never searched.
+  (Certify 1.1-1.2 appended the fault block of ``library/dx100/faults/dxc_lowering_faults.hpp``
+  to a build copy of the candidate's header and defined the macro in the candidate's own
+  translation unit.)
 * Token-matched sites. A kernel control with no library seam (BC-L1 ``stale_depth_hint``)
   matches a C++ token sequence, insensitive to whitespace, line breaks and comments.
+
+Until certify 1.2, ``forged_frontier`` also forged the protected frontier print to the oracle's
+counts, so that only the trusted queue inspection could reject it. From 1.3 no verdict is read
+from printed output, so the print is left alone and the fault is a pure library fault.
 
 The pass rule and the control set are unchanged; only how a control reaches its site is.
 """
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
 from swdb.cli import Failure
 
-FAULT_FILE = 'dx100/faults/dxc_lowering_faults.hpp'  # relative to the library root
+SEAM_FILE = 'dx100/certification/seams.cc'  # relative to the library root (certify 1.3)
 LIBRARY_FAULTS = {
     'shared_context': 'SWDB_DXC_FAULT_SHARED_CONTEXT',
     'skipped_cas_recheck': 'SWDB_DXC_FAULT_SKIPPED_CAS_RECHECK',
@@ -43,55 +49,20 @@ LIBRARY_FAULTS = {
 # Control versions (ticket 67, 2026-10-04 ET). A control record without `fault.version` was
 # written with version 1. forged_frontier v1 fired only after an accelerated chunk finished, so
 # a correct candidate whose chunks never finished before a push could not kill it; v2 duplicates
-# the first queue push of the run. Old certificates keep their v1 meaning.
+# the first queue push of the run. Old certificates keep their v1 meaning. Ticket 70 moved the
+# faults' delivery (`fault.delivery: separate_object`), not their behavior, so versions stay.
 FAULT_VERSIONS = {name: 1 for name in LIBRARY_FAULTS}
 FAULT_VERSIONS['forged_frontier'] = 2
-FRONTIER_PRINT = '<< queue.size() << " elements"'
 
 
-def fault_header(canonical, library_root):
-    """The private control-build header: canonical bytes, then the fault block."""
-    block = (Path(library_root) / FAULT_FILE).read_bytes()
-    marker = b'\n// ---- swdb certification fault block (private build copy only) ----\n'
-    return canonical + (b'' if canonical.endswith(b'\n') else b'\n') + marker + block
+def library_control(source, name):
+    """A control that acts at the library seam: the unchanged source and its fault macro.
 
-
-def forged_counts_block(counts):
-    """The forged print's table: the control run's own oracle counts, read only within bounds.
-
-    2026-10-04 ET (final code review P3): the table was fixed to the two-level graph's
-    source-0 counts {1,4200,17000}, so a fourth level read past its end. It now holds the
-    oracle counts of the graph and source the control actually runs on. A level beyond the
-    oracle's depth prints the real queue size, which the judge then reports as a mismatch.
-    """
-    if not counts or any(type(n) is not int or n < 0 for n in counts):
-        raise Failure('forged_frontier needs the control run\'s oracle frontier counts')
-    values = ','.join(str(n) for n in counts)
-    return ('static unsigned swdb_forged_level=0;\n'
-            f'static const unsigned long long swdb_forged_counts[{len(counts)}]={{{values}}};\n'
-            'static unsigned long long swdb_forged_count(unsigned long long actual){\n'
-            f' if(swdb_forged_level<{len(counts)}u)return swdb_forged_counts[swdb_forged_level++];\n'
-            ' ++swdb_forged_level;return actual;\n}\n')
-
-
-def forge_frontier_print(source, counts):
-    """Print the oracle's counts on the protected frontier line instead of the queue size."""
-    if source.count(FRONTIER_PRINT) != 1:
-        raise Failure('protected frontier print is missing or ambiguous')
-    return forged_counts_block(counts) + source.replace(
-        FRONTIER_PRINT, '<< swdb_forged_count(queue.size()) << " elements"', 1)
-
-
-def library_control(source, name, *, counts=None):
-    """A control that acts at the library seam: the source (forged print only) and its fault macro.
-
-    ``counts`` are the trusted oracle's per-level frontier counts for the control's graph and
-    source; only ``forged_frontier`` uses them.
+    The macro is passed only to the seam object's compiler command (certify 1.3).
     """
     if name not in LIBRARY_FAULTS:
         raise Failure('unknown rewrite control')
-    mutated = forge_frontier_print(source, counts) if name == 'forged_frontier' else source
-    return {'source': mutated, 'fault': LIBRARY_FAULTS[name], 'site': 'library_fault',
+    return {'source': source, 'fault': LIBRARY_FAULTS[name], 'site': 'library_fault',
             'version': FAULT_VERSIONS[name]}
 
 
