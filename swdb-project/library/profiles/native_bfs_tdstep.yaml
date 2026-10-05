@@ -1,0 +1,84 @@
+# Native-CPU candidate certification profile (ticket 75). Created 2026-10-05 ET.
+# Agent-decided under Yan-Ru's 2026-10-05 delegation; revisable.
+# Read by `swdb certify` (1.4) through the pinning contract's `certification_profile`
+# (swdb/certification_native.py). Not a library-operation profile (swdb.certification-profile.v1).
+format: swdb.native-candidate-profile.v1
+id: profile.native_bfs_tdstep
+entry: contract.bfs_tdstep_frontier_staging
+date: '2026-10-05'
+target: native_cpu
+kernel: gapbs-bfs
+harness:
+  prelude:
+    path: native/certification/candidate_prelude.hpp
+    sha256: 9c06ffb1cfdc2b08bdcbf5f9507ae21c44410c8a84694ba9350f7941bfd5900d
+  record:
+    path: native/certification/record.cc
+    sha256: 8ae3d4b0cf5a30e4b778f6acfd04640c3f053b60f153abb7db2727486c74c660
+  seams:
+    path: native/certification/seams.cc
+    sha256: 9c97ccf70a1b072e996ad53a1231fa13d980ea1e17d7a3253778d306608c5dc4
+  driver:
+    path: dx100/certification/bfs_driver.inc
+    sha256: ad9a5a647614000a0716075e0a4d661df9453b5ff9365db9d239bd1b06416d3a
+matrix:
+  builds:
+  - id: o3
+    flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+    note: the build flags of the frozen native protocols (fork scalar TDStep, evaluator v3)
+  - id: o1g
+    flags: [-std=c++11, -O1, -g, -fopenmp, -pthread, -DFUNC]
+    note: a second code generation of the same source (no vectorized staging loops)
+  threads: [1, 4]
+  graphs: [kronecker-10, kronecker-14, kronecker-16, uniform-14, two-level-degree-17000]
+  sources: [0]
+  control_threads: 4
+  control_graph: two-level-degree-17000
+  fault_batch: 16
+controls:
+- id: claim_without_write
+  category: dropped_operand
+  macro: SWDB_NATIVE_FAULT_CLAIM_WITHOUT_WRITE
+  expected_check: verifier
+  emulates: the post-claim parent store removed although the claim primitive does not write (C2 violated)
+- id: partial_batch_dropped
+  category: dropped_operand
+  macro: SWDB_NATIVE_FAULT_PARTIAL_BATCH_DROPPED
+  expected_check: frontier_size_equality
+  graph: staging-tail-17
+  emulates: batch boundary off by one; in every step with more than 16 window positions the final partial batch
+    is never expanded while the full batches are (S1 violated). Acts on the step's inputs, so it shows the checks
+    catch the bug class for any candidate.
+- id: stale_row_offset
+  category: overlapping_pointer
+  macro: SWDB_NATIVE_FAULT_STALE_ROW_OFFSET
+  expected_check: verifier
+  emulates: a lane's staged row bounds come from another vertex (vertex u + 1) while it claims as u (S2 violated).
+    Acts on the step's inputs (the candidate must read the row offsets); it does not exercise the frame clause S3.
+    Filed as overlapping_pointer (the staged range overlaps another vertex's row) to meet the mandatory kind.
+- id: forged_frontier
+  category: double_claim
+  macro: SWDB_NATIVE_FAULT_FORGED_FRONTIER
+  expected_check: duplicate_frontier
+  emulates: a vertex enqueued twice (C1 and the once_enqueue obligation violated)
+required_categories: [double_claim, dropped_operand, overlapping_pointer]
+rewrite_scope:
+  file: benchmarks/gapbs/src/bfs.cc
+  begin: 'void TDStep('
+  end: "\nint64_t TDStep2("
+instrumentation:
+  anchor: 'std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;'
+  hook: 'swdb_certification_frontier(queue, VertexOffsetsOut);'
+execution_witness:
+  rule: claims_and_pushes_when_reached
+notes:
+- Every control is a fault in the separately compiled seam object; the positive matrix and all controls of one
+  build link the same candidate object (ticket 70 isolation).
+- Controls run from source 0 on the two-level graph, where each fault fires deterministically in the first step
+  (one frontier vertex), except partial_batch_dropped, which runs on staging-tail-17 (a 17-vertex second window in
+  push order 1..17, each with a unique leaf), so a true partial batch of one vertex is dropped after one full batch.
+- claim_without_write and forged_frontier act inside the seams the candidate calls (a candidate that bypasses them
+  leaves the control alive); partial_batch_dropped and stale_row_offset act on step inputs and show the checks'
+  sensitivity. S1 and S2 for a given candidate are discharged by the positive matrix (20 cells).
+- "Rewrite scope: the region between the markers must stay one function definition with the snapshot's signature,
+  and authored lines may hold no preprocessor directive other than '#pragma omp' (harness scan)."

@@ -201,7 +201,8 @@ def _controls(record):
 
 def test_candidate_that_fakes_rejection_lines_is_refused(tmp_path, monkeypatch):
     record = _certify(tmp_path, monkeypatch, fake_rejection_on_probe)
-    assert record['verdict'] == 'failed' and record['command']['version'] == '1.3'
+    # 2026-10-05 ET (ticket 75): command 1.4 adds the native path; DX100 isolation is 1.3's.
+    assert record['verdict'] == 'failed' and record['command']['version'] == c.VERSION
     assert all(x['status'] == 'passed' for x in record['matrix'])
     assert {name for name, _, status in _controls(record) if status != 'rejected'} == {'skipped_cas_recheck'}
     for control in (x for x in record['negative_controls'] if x['id'] == 'skipped_cas_recheck'):

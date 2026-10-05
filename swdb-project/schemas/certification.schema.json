@@ -103,6 +103,18 @@
         }
       }
     },
+    "profile": {
+      "description": "2026-10-05 ET (ticket 75, certify 1.4): the native candidate profile a native-CPU contract pins (id, path, sha256, target, target_scope).",
+      "type": "object",
+      "required": ["id", "path", "sha256", "target"],
+      "properties": {
+        "id": {"type": "string"},
+        "path": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "target": {"const": "native_cpu"},
+        "target_scope": {"type": "string"}
+      }
+    },
     "evidence_kind": {
       "enum": [
         "execution",

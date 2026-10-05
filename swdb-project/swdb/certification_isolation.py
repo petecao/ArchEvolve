@@ -147,7 +147,7 @@ _STRICT_NAME = re.compile(r'[a-z_]+')
 def parse_records(path, strict_names):
     """The evaluator records of one run. Anything malformed or unknown makes the run invalid."""
     parsed = {'begin': False, 'end': False, 'strict': [], 'frontier': [], 'result': None,
-              'chunks': None, 'operations': None, 'invalid': []}
+              'chunks': None, 'operations': None, 'claims': None, 'pushes': None, 'invalid': []}
     path = Path(path)
     if not path.is_file() or path.stat().st_size > RECORD_LIMIT:
         parsed['invalid'].append('record file missing or too large')
@@ -178,10 +178,15 @@ def parse_records(path, strict_names):
                 else:
                     values = [struct.unpack('<f', struct.pack('<I', int(v, 16)))[0] for v in fields[3:]]
                 parsed['result'] = {'kind': fields[1], 'values': values}
-            elif kind == 'witness' and len(fields) == 3 and parsed['chunks'] is None \
+            elif kind == 'witness' and len(fields) == 3 and parsed['chunks'] is None and parsed['claims'] is None \
                     and fields[1].startswith('chunks=') and fields[2].startswith('operations='):
                 parsed['chunks'] = int(fields[1][7:])
                 parsed['operations'] = int(fields[2][11:])
+            elif kind == 'witness' and len(fields) == 3 and parsed['claims'] is None and parsed['chunks'] is None \
+                    and fields[1].startswith('claims=') and fields[2].startswith('pushes='):
+                # Certify 1.4 (ticket 75): the native-CPU witness (library/native/certification/record.cc).
+                parsed['claims'] = int(fields[1][7:])
+                parsed['pushes'] = int(fields[2][7:])
             elif line == 'end' and not parsed['end']:
                 parsed['end'] = True
             else:
@@ -194,7 +199,7 @@ def parse_records(path, strict_names):
 SEMANTIC_CHECKS = ('verifier', 'frontier_size_equality', 'execution_witness')
 
 
-def judge(run_result, parsed, counts, *, check_result, result_kind, threshold=64):
+def judge(run_result, parsed, counts, *, check_result, result_kind, threshold=64, witness=None):
     """Every check of one run, computed from its evaluator records and the trusted oracles.
 
     Returns {passed, reason, observed_checks, named_checks, result_check}. ``reason`` keeps the
@@ -202,7 +207,14 @@ def judge(run_result, parsed, counts, *, check_result, result_kind, threshold=64
     verifier, frontier sizes, execution witness), with ``record_invalid`` for a malformed record.
     The semantic checks are evaluated only for a clean run (exit 0, begin and end recorded, no
     strict failure), each independently, so a later check is never hidden behind an earlier one.
+    ``witness`` (certify 1.4, ticket 75) replaces the DX100 execution-witness rule with a
+    predicate ``witness(parsed, counts) -> bool`` (the native rule counts seam claims and pushes).
     """
+    # Ticket 75 review: the witness line must be the form of the judged target (DX100 chunks and
+    # operations, or the native claims and pushes); the other form makes the record invalid.
+    other_form = parsed.get('claims') is not None if witness is None else parsed.get('chunks') is not None
+    if other_form:
+        parsed = {**parsed, 'invalid': list(parsed['invalid']) + ['witness record of another target']}
     strict = list(dict.fromkeys(parsed['strict']))
     windows = parsed['frontier']
     duplicate = any(len(set(window)) != len(window) for window in windows)
@@ -221,7 +233,10 @@ def judge(run_result, parsed, counts, *, check_result, result_kind, threshold=64
             observed.add('verifier')
         if [len(window) for window in windows] != list(counts):
             observed.add('frontier_size_equality')
-        if max(counts) >= threshold and not (parsed['chunks'] and parsed['operations']):
+        if witness is not None:
+            if not witness(parsed, counts):
+                observed.add('execution_witness')
+        elif max(counts) >= threshold and not (parsed['chunks'] and parsed['operations']):
             observed.add('execution_witness')
     if run_result['timeout']:
         reason = 'timeout'
@@ -243,7 +258,7 @@ def judge(run_result, parsed, counts, *, check_result, result_kind, threshold=64
 # --- harness scan ----------------------------------------------------------------------------------
 
 HARNESS_PREFIXES = ('swdb_strict', 'swdb_fault', 'swdb_seam', 'swdb_hooked', 'swdb_cert', 'swdb_trusted',
-                    'swdb_forged', 'swdb_record', 'SWDB_DXC_FAULT', 'SWDB_CERT')
+                    'swdb_forged', 'swdb_record', 'SWDB_DXC_FAULT', 'SWDB_CERT', 'SWDB_NATIVE')
 # Macros that tell a certification build from the target build.
 BUILD_IDENTITY = {'SWDB_STRICT', 'FUNC'}
 # Primitives that reach file descriptors, the environment, the loader or other processes.
@@ -266,8 +281,15 @@ def _literal_text(token):
     return re.sub(r'\\(.)', r'\1', body)
 
 
-def scan(original, candidate):
-    """Findings [(line, token, why)] in candidate-authored lines (those not in the snapshot text)."""
+def scan(original, candidate, *, directives=False):
+    """Findings [(line, token, why)] in candidate-authored lines (those not in the snapshot text).
+
+    ``directives`` (certify 1.4, ticket 75 review; native-CPU contracts): an authored preprocessor
+    directive other than ``#pragma omp`` is refused, and so is the token ``defined``. The seam macros
+    (``compare_and_swap``, ``QueueBuffer``) exist only in certification builds, so ``#ifndef
+    QueueBuffer`` would let a candidate run other code on the target. The DX100 rewrites author
+    ``#ifdef`` blocks of their own and keep the 1.3 scan.
+    """
     from swdb.certification_faults import tokens
     authored = set()
     matcher = difflib.SequenceMatcher(None, original.splitlines(), candidate.splitlines(), autojunk=False)
@@ -287,6 +309,12 @@ def scan(original, candidate):
                 findings.append((literal_line, marker, 'string imitates an evaluator line or path'))
         literal.clear()
 
+    if directives:
+        for number, text in enumerate(candidate.splitlines(), 1):
+            stripped = text.strip()
+            if number in authored and stripped.startswith('#') and not re.match(r'#\s*pragma\s+omp\b', stripped):
+                findings.append((number, stripped.split()[0] if stripped.split() else '#',
+                                 'preprocessor directive (only #pragma omp may be authored)'))
     for token, start, _ in tokens(candidate):
         line = line_of(start)
         if line not in authored:
@@ -304,6 +332,8 @@ def scan(original, candidate):
             continue
         if token.startswith(HARNESS_PREFIXES):
             findings.append((line, token, 'harness or fault symbol'))
+        elif directives and token == 'defined':
+            findings.append((line, token, 'preprocessor directive (only #pragma omp may be authored)'))
         elif token in BUILD_IDENTITY:
             findings.append((line, token, 'certification-build macro'))
         elif token in PRIMITIVES:
@@ -313,8 +343,8 @@ def scan(original, candidate):
     return findings
 
 
-def refuse_scan_findings(original, candidate):
-    findings = scan(original, candidate)
+def refuse_scan_findings(original, candidate, *, directives=False):
+    findings = scan(original, candidate, directives=directives)
     if findings:
         shown = '; '.join(f'line {line} {token!r} ({why})' for line, token, why in findings[:5])
         more = f' and {len(findings) - 5} more' if len(findings) > 5 else ''

@@ -43,7 +43,12 @@ from swdb.store import Store
 # harness scan refuses candidate text naming harness symbols. Records before 1.3 read named checks
 # from stdout/stderr and selected faults with a macro in the candidate's translation unit; they
 # keep that meaning. Lowering certification and calibration are unchanged.
-VERSION = '1.3'
+# 1.4 (2026-10-05 ET, ticket 75): native-CPU candidate certification for a rewrite contract that pins
+# a native candidate profile (swdb.certification_native): its own build matrix, seams and faults
+# (library/native/certification/), the same isolation as 1.3. `--candidate-record` binds a
+# snapshot-plus-patch certification to an Extensa candidate record whose artifact sha256 equals the
+# patched tree. DX100 certification, lowering certification and calibration are unchanged.
+VERSION = '1.4'
 ROOT = paths.HOME
 BFS = 'benchmarks/gapbs/src/bfs.cc'
 HEADER = 'benchmarks/gapbs/src/swdb_dxc_lowering.hpp'
@@ -893,21 +898,52 @@ def source_digest(library_root):
     faults = Path(__file__).with_name('certification_faults.py')
     legality = Path(__file__).with_name('certification_legality.py')  # ticket 68
     isolation = Path(__file__).with_name('certification_isolation.py')  # ticket 70
-    files = sorted(p for p in (library_root / 'dx100').rglob('*') if p.is_file()) + [Path(__file__), faults, legality,
-                                                                                    isolation]
+    native = Path(__file__).with_name('certification_native.py')  # ticket 75
+    files = (sorted(p for p in (library_root / 'dx100').rglob('*') if p.is_file())
+             + sorted(p for p in (library_root / 'native').rglob('*') if p.is_file())
+             + [Path(__file__), faults, legality, isolation, native])
     return artifacts.digest([{'path': p.relative_to(library_root).as_posix() if library_root in p.parents else 'swdb/' + p.name,
                               'sha256': artifacts.file_hash(p)} for p in files])
 
 
+def bind_candidate_record(path, snapshot_id, tree):
+    """Ticket 75: the Extensa candidate record a snapshot-plus-patch tree reproduces, or a refusal.
+
+    The record is read only (it stays in its campaign store); it binds only when its source snapshot
+    is the one certified and its artifact sha256 equals the patched tree's identity.
+    """
+    from swdb import yamlio
+    data = yamlio.load(Path(path))
+    if not isinstance(data, dict) or data.get('kind') != 'candidate' or not data.get('id'):
+        raise UsageError('--candidate-record must be a candidate record')
+    if data.get('source_snapshot') != snapshot_id:
+        raise UsageError('candidate record names another source snapshot: ' + str(data.get('source_snapshot')))
+    tree_sha256 = artifacts.identify(tree)['sha256']
+    if (data.get('artifact') or {}).get('sha256') != tree_sha256:
+        raise UsageError('patched tree differs from the candidate record artifact '
+                         f"({tree_sha256} != {(data.get('artifact') or {}).get('sha256')})")
+    bound = {'id': data['id'], 'record_sha256': artifacts.file_hash(Path(path))}
+    for key in ('mode', 'campaign'):
+        if data.get(key):
+            bound[key] = data[key]
+    return bound
+
+
 def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None,
-            snapshot=None, patch=None, calibrate=False, tile_sizes=(16384, 1024), threads=4, sources=(0,)):
+            snapshot=None, patch=None, calibrate=False, tile_sizes=(16384, 1024), threads=4, sources=(0,),
+            candidate_record=None):
     from swdb.library import Library
+    from swdb import certification_native as native
     library_root = Path(library or ROOT / 'library').resolve()
     catalog = Library(library_root, store=store)
     problems = catalog.validate()
     if problems:
         raise UsageError('typed library is invalid: ' + str(problems[0]))
-    if threads != 4 or tuple(sorted(set(tile_sizes))) != (1024, 16384):
+    native_entry = None if calibrate or not entry_id else catalog.get(entry_id)
+    native_entry = native_entry if native.is_native(native_entry) else None
+    if candidate_record and not (snapshot and patch):
+        raise UsageError('--candidate-record binds a --snapshot/--patch certification')
+    if native_entry is None and (threads != 4 or tuple(sorted(set(tile_sizes))) != (1024, 16384)):
         raise UsageError('DX100 certification requires the full matrix: tile sizes 16384,1024 and four threads')
     if not sources or any(type(s) is not int or s < 0 for s in sources):
         raise UsageError('sources must be nonnegative vertex IDs')
@@ -935,6 +971,59 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         tree = folder / 'source'
         artifacts.copy_snapshot(ROOT / 'apps/dx100', tree)
         matrix, controls = certify_bfs(tree, library_root, folder, tile_sizes, threads, sources, calibrate=True)
+    elif native_entry is not None:
+        # Ticket 75 (certify 1.4): a native-CPU contract; its pinned profile is the matrix.
+        if not (candidate or snapshot):
+            raise UsageError('a native-CPU rewrite contract certifies a candidate artifact')
+        from swdb import kernels
+        plugin = kernels.get(entry.get('correctness_check', {}).get('kernel'))
+        if plugin is None or plugin.certification_result_kind is None:
+            raise UsageError('rewrite contract correctness check names no kernel with a certification plug-in')
+        profile = native.load_profile(catalog, entry)
+        if candidate:
+            data = store.get(candidate, 'candidate')
+            if not data:
+                raise UsageError('unknown candidate artifact')
+            original = artifacts.verify(data['artifact'])
+            tree = folder / 'source'
+            artifacts.copy_snapshot(original, tree)
+            snapshot_id = data.get('source_snapshot')
+            original_snapshot = store.get(snapshot_id, 'source_snapshot')
+            if not original_snapshot:
+                raise Failure('candidate has no registered source snapshot')
+            (folder / 'snapshot').mkdir()
+            snapshot_tree, _ = materialize_snapshot(store, snapshot_id, folder / 'snapshot')
+            snapshot_text = (snapshot_tree / profile['scope']['file']).read_text()
+        else:
+            tree, original_snapshot = materialize_snapshot(store, snapshot, folder)
+            snapshot_id = snapshot
+            snapshot_text = (tree / profile['scope']['file']).read_text()
+            apply_patch(tree, patch)
+        artifacts.check_protections(tree, original_snapshot['protections'])
+        changed_files = native.check_scope(profile, tree, original_snapshot, snapshot_text)
+        from swdb.certification_isolation import refuse_scan_findings, scan
+        candidate_text = (tree / profile['scope']['file']).read_text()
+        refuse_scan_findings(snapshot_text, candidate_text, directives=True)
+        identity = {'contract': entry_id, 'contract_sha256': content_sha256,
+                    'tree_sha256': artifacts.identify(tree)['sha256'], 'snapshot': snapshot_id,
+                    'changed_files': changed_files,
+                    'scan': {'findings': len(scan(snapshot_text, candidate_text, directives=True)),
+                             'directives': 'only #pragma omp may be authored'},
+                    'rewrite_scope': {'file': profile['scope']['file'], 'function': profile['scope']['begin']}}
+        if candidate:
+            identity['id'] = candidate
+        if candidate_record:
+            bound = bind_candidate_record(candidate_record, snapshot_id, tree)
+            identity.update(id=bound.pop('id'), candidate_record=bound)
+        if tuple(sources) != (0,):
+            raise UsageError('a native-CPU profile pins its sources; --sources cannot override them')
+        matrix, controls = native.certify_native(tree, library_root, folder, profile, plugin)
+        native_profile = {'id': profile['data']['id'], 'path': str(profile['path'].relative_to(library_root)),
+                          'sha256': profile['sha256'], 'target': 'native_cpu',
+                          # Ticket 75 review: pre-check on the certifying host, not on the target machine.
+                          'target_scope': f'pre-check executed on {platform.system()} {platform.machine()}; '
+                                          'the target check is the evaluator compiled verifier on every timed '
+                                          'trial on mbit10 (x86_64)'}
     elif candidate or snapshot:
         if entry.get('kind') != 'rewrite_contract':
             raise UsageError('candidate-artifact certification requires a rewrite contract')
@@ -975,6 +1064,9 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
                     'tree_sha256': artifacts.identify(tree)['sha256'], 'snapshot': snapshot_id, 'changed_files': changed_files}
         if candidate:
             identity['id'] = candidate
+        if candidate_record:
+            bound = bind_candidate_record(candidate_record, snapshot_id, tree)
+            identity.update(id=bound.pop('id'), candidate_record=bound)
         threshold = 64
         matrix, controls = certify_bfs(tree, library_root, folder, tile_sizes, threads, sources, threshold=threshold,
                                        plugin=plugin, contract=entry)
@@ -1013,6 +1105,8 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
     if identity:
         record['candidate'] = identity
         record['clause_controls'] = clauses
+    if native_entry is not None:
+        record['profile'] = native_profile  # ticket 75
     (folder / 'certification.json').write_text(json.dumps(record, indent=2) + '\n')
     workflow.persist(store.dir, record, create=True)
     return record
@@ -1035,6 +1129,9 @@ def register_cli(commands):
     # Ticket 49 (2026-10-03 ET): library operations certify against a profile.
     sub.add_argument('--profile', help='certification profile (library operations)')
     sub.add_argument('--seed', type=int, help='fixed case seed (default: chosen after the candidate exists)')
+    # Ticket 75 (2026-10-05 ET): bind a --snapshot/--patch run to an Extensa candidate record (read only).
+    sub.add_argument('--candidate-record', type=Path,
+                     help='candidate record file whose artifact the patched tree must reproduce')
     return sub
 
 
@@ -1049,7 +1146,8 @@ def run_cli(args):
         raise UsageError('tile sizes and sources must be comma-separated integers') from None
     record = certify(Store(Path(args.records)), args.entry_id, runs_dir=args.runs_dir, library=args.library,
                      candidate=args.candidate, snapshot=args.snapshot, patch=args.patch, calibrate=args.calibrate,
-                     tile_sizes=sizes, threads=args.threads, sources=sources)
+                     tile_sizes=sizes, threads=args.threads, sources=sources,
+                     candidate_record=getattr(args, 'candidate_record', None))
     print(json.dumps({'id': record['id'], 'verdict': record['verdict'], 'matrix_cells': len(record['matrix']),
                       'negative_controls': len(record['negative_controls'])}, indent=2))
     return 0 if record['verdict'] == 'certified' else 1
