@@ -626,11 +626,11 @@ class Library:
                      or 'exit_witness' in c.get('continuation', {}) for c in checks))
         if v2:
             from swdb.cli import Failure
-            # A bounded simulator continuation can prove guest exit. Require
+            # A bounded simulator continuation can show guest exit. Require
             # its authoritative v2 validation, never an unbound completion flag
             # or a fallback to legacy normal-exit metadata after rejection.
             try:
-                plugin = kernels.by_gem5_checker(context.get('verifier')) or kernels.BFS
+                plugin = kernels.for_gem5_checker(context.get('verifier'), 'target witness')
                 plugin.validate_record_witness(evaluation, store=store)
                 completed = True
             except Failure:

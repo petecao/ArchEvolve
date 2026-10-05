@@ -61,7 +61,7 @@ def test_every_adapter_is_a_target_adapter_with_the_loop_hooks(tmp_path):
         (True, False, False, "measured")
     assert (gem5.HAS_PILOT, gem5.SHARED_BASELINE, gem5.POINT_RATIOS, gem5.EVIDENCE_BASIS) == \
         (False, True, True, "simulated")
-    for name in ("admit", "reference_files", "restore", "other_gem5", "workspace_region_lines", "protected_regions"):
+    for name in ("admit", "reference_files", "restore", "gem5_refusal", "workspace_region_lines", "protected_regions"):
         assert callable(getattr(FixtureAdapter, name))
     fx = tmp_path / "fixture.yaml"
     fx.write_text("format: swdb.extensa-campaign-fixture.v1\n")

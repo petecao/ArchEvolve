@@ -278,7 +278,7 @@ class TargetAdapter:
     def restore(self, state):
         """Rebuild in-memory state when a campaign resumes."""
 
-    def other_gem5(self):
+    def gem5_refusal(self):
         """A refusal when the other socket's lease is held by another Extensa campaign's gem5 job, else None.
 
         Ticket 64 (2026-10-04 ET): a campaign file may approve native blocks beside ANOTHER campaign's
@@ -330,8 +330,17 @@ class TargetAdapter:
         return self.host.preflight(self.runs, self.lane, storage_bytes=planned_bytes,
                                    memory_bytes=self.memory_bytes(step))
 
-    def _it(self, iteration):
+    def _iteration_tag(self, iteration):
         return f"it{iteration}" + (f"r{self.round}" if self.round else "")
+
+    # campaign-file lookups (code review S9, 2026-10-05 ET: one copy for every adapter) -------
+    def baseline(self, role):
+        """The baseline candidate of a baseline role."""
+        return next(b["candidate"] for b in self.campaign["baselines"] if b["role"] == role)
+
+    def _workload(self, cls):
+        """The workload of a workload class."""
+        return next(c["workload"] for c in self.campaign["workload_classes"] if c["class"] == cls)
 
     def _store(self):
         from swdb.store import Store
@@ -424,7 +433,7 @@ class TargetAdapter:
 
     def materialize(self, iteration, cls, patch, knobs, attempt, contracts=()):
         snapshot = self._get(SNAPSHOT, "source_snapshot")
-        rid = f"{self.cid}.{self._it(iteration)}.{cls}.a{attempt}"
+        rid = f"{self.cid}.{self._iteration_tag(iteration)}.{cls}.a{attempt}"
         tree = self.folder / "sources" / rid / "source"
         if tree.exists():
             shutil.rmtree(tree)
@@ -574,20 +583,21 @@ class NativeAdapter(TargetAdapter):
         from swdb.bfs_native_scalable import EVALUATOR_V1
         return self.campaign["protocol"].get("evaluator", EVALUATOR_V1)
 
+    def evaluator_path(self):
+        """The pinned evaluator version and what follows from it (code review S8)."""
+        from swdb.bfs_native_scalable import path_for
+        return path_for(self.evaluator())
+
     def planned_bytes(self):
         # A v2 paired block keeps 60 small trial records plus gzip parent vectors
         # (at most 16 MiB raw each at scale 22) and logs: well under 2 GiB. A v3 block keeps
         # one gzip copy per distinct parent vector (ticket 71), so 2 GiB stays an upper bound
         # at 20 repetitions.
-        from swdb.bfs_native_scalable import is_scalable
-        return 2 * GIB if is_scalable(self.evaluator()) else self.PLANNED_BYTES
+        return 2 * GIB if self.evaluator_path().scalable else self.PLANNED_BYTES
 
     def prepare(self):
         super().prepare()
-        from swdb.bfs_native import MAX_DIRECTED_EDGES, MAX_VERTICES
-        from swdb import bfs_native_scalable as scalable
-        if scalable.is_scalable(self.evaluator()):
-            MAX_VERTICES, MAX_DIRECTED_EDGES = scalable.MAX_VERTICES, scalable.MAX_DIRECTED_EDGES
+        MAX_VERTICES, MAX_DIRECTED_EDGES = self.evaluator_path().limits()
         store = self._store()
         for row in self.campaign["workload_classes"]:
             realized = store.get(row["workload"], "workload")["definition"]["realized"]
@@ -606,9 +616,6 @@ class NativeAdapter(TargetAdapter):
                 raise _stop("infrastructure_failure",
                             f"class {row['class']} workload {row['workload']} registers sources {requested}, "
                             f"not the campaign's {self.campaign['protocol']['sources']}")
-
-    def baseline(self, role):
-        return next(b["candidate"] for b in self.campaign["baselines"] if b["role"] == role)
 
     def freeze_protocol(self, settings):
         """One frozen native protocol per baseline role; the base-source one is the campaign's."""
@@ -642,14 +649,15 @@ class NativeAdapter(TargetAdapter):
                                   "accelerator": [], "configuration": []}
             out["region_pairs"] = []
             from swdb import bfs_native_scalable as scalable
-            if scalable.is_scalable(self.evaluator()):
+            path = self.evaluator_path()
+            if path.scalable:
                 # Ticket 63: new protocols pin evaluator v2, its driver and its compiled verifier.
                 # Ticket 71: or evaluator v3 (saturating parent narrowing) with the same verifier.
                 out["evaluator"] = self.evaluator()
                 out["correctness"]["verifier"] = scalable.VERIFIER_V2
                 for side in ("baseline", "candidate"):
                     out["instrumentation"][side] = {
-                        "template_sha256": artifacts.file_hash(scalable.driver_for(self.evaluator())),
+                        "template_sha256": artifacts.file_hash(path.driver),
                         "treatment": "included"}
             request = {"message_version": "1.0", "id": f"{self.cid}.protocol.{role}", "version": 1, "settings": out}
             code, record = self.runner("freeze-protocol", request, stage=f"freeze-{role}", timeout=600)
@@ -704,9 +712,6 @@ class NativeAdapter(TargetAdapter):
         """The class workload's registered (timed) sources (ticket 64)."""
         return list(self._get(self._workload(cls), "workload")["definition"]["sources"])
 
-    def _workload(self, cls):
-        return next(c["workload"] for c in self.campaign["workload_classes"] if c["class"] == cls)
-
     def _block(self, tag, candidate, role, cls, protocol=None):
         """One paired block (its own baseline evaluation) and its comparison."""
         protocol = protocol or self.protocols[role]
@@ -747,7 +752,7 @@ class NativeAdapter(TargetAdapter):
                 "build_failed" if "build" in (reason or "") else "evaluation_failed")
 
     @staticmethod
-    def _numbers(result):
+    def _comparison_row(result):
         """The comparison's numbers and the evaluator's verdict (`state`, used by the speed rule)."""
         metrics = result["metrics"]
         spreads = [v for rows in metrics["relative_spread"].values() for v in rows.values()]
@@ -759,15 +764,15 @@ class NativeAdapter(TargetAdapter):
     def pilot(self, cls, role):
         """D3 A/A pilot: the baseline timed against itself with the full protocol."""
         isolation = self.isolated()          # waits (bounded) when the campaign requires isolation
-        if self.other_gem5():
-            raise _stop("infrastructure_failure", self.other_gem5())
+        if self.gem5_refusal():
+            raise _stop("infrastructure_failure", self.gem5_refusal())
         tag = f"{self.cid}.pilot.{cls}.{role}"
         other = self.other_socket_lease()
         result, reason, evaluations = self._block(tag, self.baseline(role), role, cls,
                                                   getattr(self, "aa_protocols", {}).get(role))
         if result is None:
             raise _stop("infrastructure_failure", f"A/A pilot {cls}/{role} failed: {reason}"[:1500])
-        numbers = self._numbers(result)
+        numbers = self._comparison_row(result)
         # Ticket 66: the A/A ratio and CI travel with the block for the CI-width rule (the A/A gate is
         # the speed rule's own, not the evaluator's comparison verdict).
         return {"spread": max(numbers["spreads"]), "ratio": numbers["ratio"], "lower": numbers["lower"],
@@ -820,14 +825,14 @@ class NativeAdapter(TargetAdapter):
                 "load_average_at_end": list(os.getloadavg())}
 
     def compare(self, candidate, cls, role, iteration, attempt, baseline_evaluation=None):
-        tag = f"{self.cid}.{self._it(iteration)}.{cls}.a{attempt}.{role}"
+        tag = f"{self.cid}.{self._iteration_tag(iteration)}.{cls}.a{attempt}.{role}"
         isolation = self.isolated()
         other = self.other_socket_lease()
         result, reason, evaluations = self._block(tag, candidate["id"], role, cls)
         if result is None:
             kind = self._failure_kind(evaluations, reason)
             raise Refused(kind, f"Native evaluation against {role} did not complete.", [kind])
-        numbers = self._numbers(result)
+        numbers = self._comparison_row(result)
         return {"comparison": result["id"], **numbers, "evaluations": evaluations,
                 "baseline_evaluation": f"{tag}.baseline-eval", "other_socket": other,
                 "isolation": self.isolation_end(isolation), **self._level_mix(role, evaluations)}
@@ -945,10 +950,7 @@ class Gem5Adapter(TargetAdapter):
             return existing
         settings = self.protocol["settings"]
         role = "candidate" if accelerated else "baseline"
-        model = self._model()
-        request = {"message_version": "1.0", "id": rid, "machine": "mbit10",
-                   "hardware_target": settings["targets"][role]["id"], "model_root": model["context"]["model_root"],
-                   "build_evaluation": model["id"], "candidate": candidate_id, "function": TIMED_FUNCTION,
+        request = {**self._request_header(rid, role), "candidate": candidate_id, "function": TIMED_FUNCTION,
                    "accelerated": accelerated, "roi": settings["roi"], "parent_gather_diagnostic": diagnostic,
                    "budget": {"total_seconds": 600, "build_seconds": 300, "memory_gib": 4, "storage_gib": 1}}
         code, record = self.runner("dx100-compile", request, stage=f"{request['id']}", timeout=660,
@@ -971,14 +973,20 @@ class Gem5Adapter(TargetAdapter):
         from swdb.store import Store
         return workload_representation(Store(self.store_dir), workload, "dx100-gapbs")["representation"]
 
+    def _request_header(self, rid, role):
+        """The fields every gem5 request shares (code review S9): machine, the role's hardware target and
+        the protocol's model build."""
+        model = self._model()
+        return {"message_version": "1.0", "id": rid, "machine": self.campaign["machine"],
+                "hardware_target": self.protocol["settings"]["targets"][role]["id"],
+                "model_root": model["context"]["model_root"], "build_evaluation": model["id"]}
+
     def _execute(self, label, candidate_id, build, role, workload, *, companion=False):
         settings = self.protocol["settings"]
-        model = self._model()
         representation = self._representation(workload)
         configuration = settings["targets"][role]["configuration"]
-        request = {"message_version": "1.0", "id": f"{label}.evaluation", "machine": "mbit10",
-                   "hardware_target": settings["targets"][role]["id"], "model_root": model["context"]["model_root"],
-                   "build_evaluation": model["id"], "simulator": copy.deepcopy(settings["simulation_identity"]["simulator"]),
+        request = {**self._request_header(f"{label}.evaluation", role),
+                   "simulator": copy.deepcopy(settings["simulation_identity"]["simulator"]),
                    "candidate": candidate_id, "candidate_build": build["id"],
                    "binary": {"path": build["build"]["binary"], "sha256": build["build"]["binary_sha256"]},
                    "workload": {"id": workload, "source": 0,
@@ -1011,13 +1019,13 @@ class Gem5Adapter(TargetAdapter):
 
     def baseline_evaluation(self, cls, role):
         """One gem5 baseline evaluation per class serves every candidate artifact."""
-        baseline = next(b["candidate"] for b in self.campaign["baselines"] if b["role"] == role)
+        baseline = self.baseline(role)
         try:
             build = self._compile(baseline, "baseline.primary", False)
         except Refused as exc:
             raise _stop("infrastructure_failure", f"baseline guest build failed: {exc.explanation}") from None
         label = f"{self.cid}.baseline.{cls}"
-        workload = next(c["workload"] for c in self.campaign["workload_classes"] if c["class"] == cls)
+        workload = self._workload(cls)
         observed = self._execute(label, baseline, build, "baseline", workload)
         if not observed or observed.get("outcome", {}).get("state") != "complete" \
                 or observed.get("correctness", {}).get("state") != "passed":
@@ -1053,8 +1061,8 @@ class Gem5Adapter(TargetAdapter):
 
     def compare(self, candidate, cls, role, iteration, attempt, baseline_evaluation=None):
         jobs = self._companions(candidate["id"])
-        label = f"{self.cid}.{self._it(iteration)}.{cls}.a{attempt}"
-        workload = next(c["workload"] for c in self.campaign["workload_classes"] if c["class"] == cls)
+        label = f"{self.cid}.{self._iteration_tag(iteration)}.{cls}.a{attempt}"
+        workload = self._workload(cls)
         observed = self._execute(label, candidate["id"], jobs["primary"], "candidate", workload)
         if not observed or observed.get("outcome", {}).get("state") != "complete" \
                 or observed.get("correctness", {}).get("state") != "passed":

@@ -114,11 +114,13 @@ def instrument_source(source, frontier_hook=True):
 
 def frontier_oracle(graph, source):
     """Per-depth counts of the forward pass; refuses a source BCVerifier cannot check."""
-    from swdb.bfs_protocol import _sg_out_degrees
+    from swdb import sg_graph
     from swdb.certification import graph_oracle
     from swdb.cli import Failure
     counts = graph_oracle(graph, source)
-    if _sg_out_degrees({"path": str(graph), "format": "gapbs_sg32le"}, [source])[source] == 0:
+    # Certification graphs are DX100 GAPBS serializations (the scalar-only snapshot's loader).
+    if sg_graph.out_degrees({"path": str(graph), "format": sg_graph.application_format("dx100-gapbs")},
+                            [source])[source] == 0:
         raise Failure(f"BC certification source {source} has no outgoing edge; BCVerifier would be vacuous")
     return counts
 
@@ -304,8 +306,7 @@ class BCPlugin(KernelPlugin):
     source_paths = {"gapbs": "src/bc.cc", "dx100-gapbs": "benchmarks/gapbs/src/bc.cc"}
     verifier_symbol = "BCVerifier"
     statement_function = "PBFS"
-    # CountT per application source: float in DX100 bc.cc, double in upstream GAPBS.
-    count_types = {"dx100-gapbs": "float", "gapbs": "double"}
+    result_noun = "score"
 
     # gem5 side (ticket 44): BC's v2 completion witness and read-only execution case.
     gem5_roi = GEM5_ROI
@@ -325,13 +326,13 @@ class BCPlugin(KernelPlugin):
                                  "swdb/dx100_witness.py")
     frontier_text = FRONTIER_TEXT
     frontier_prefix = "Starting PBFS:"
-    read_only_rule_text = "S>=1,I>=1,R>=1,A=0,indirect_stores=0,I=3*R-S"
     race_companion = False  # BC's L3 stays assumed; no parent-gather race case
 
     def gem5_driver(self, source, model, function, diagnostic=None, **options):
-        # compile_candidate selects 8-byte offsets for upstream GAPBS (CountT double)
-        # and 4-byte offsets for DX100 GAPBS (CountT float).
-        options.setdefault("count_type", "double" if options.get("sg_offset_bytes", 8) == 8 else "float")
+        # compile_candidate selects the application's offset width; CountT follows from the
+        # same table (`swdb.sg_graph`: 8-byte upstream GAPBS double, 4-byte DX100 GAPBS float).
+        from swdb.sg_graph import count_type_for_offset_bytes
+        options.setdefault("count_type", count_type_for_offset_bytes(options.get("sg_offset_bytes", 8)))
         return gem5_driver(source, model, function, diagnostic, **options)
 
     def graph_verification_contract(self, application):
@@ -355,13 +356,6 @@ class BCPlugin(KernelPlugin):
     def validate_record_witness(self, evaluation, store=None):
         from swdb.bc_witness import validate_record_witness
         return validate_record_witness(evaluation, store=store)
-
-    def read_only_rule(self, stream, indirect, ranges, alu, stores):
-        # Forward-pass order (bc_read_offload.inc): per chunk one stream load,
-        # two row-bound gathers and a final empty range loop; per non-empty range
-        # tile three gathers (neighbors, frontier vertex, depth hint).
-        return (stream >= 1 and indirect >= 1 and ranges >= 1 and alu == stores == 0
-                and indirect == 3 * ranges - stream)
 
     # Candidate certification (ticket 42).
     certification_source = BC_SOURCE
@@ -398,16 +392,13 @@ class BCPlugin(KernelPlugin):
     def certification_control(self, source, name):
         return control(source, name)
 
-    def native_output_limit(self, vertices):
-        # Up to 9 significant digits, sign, exponent and separator per score.
-        return vertices * 24 + 4096
-
     def native_verifier_sha256(self):
         from swdb import bc_native
         return artifacts.file_hash(bc_native.__file__)
 
     def check_native_trial(self, adjacency, source, observed, application=None):
-        count_type = self.count_types.get(application)
+        from swdb.sg_graph import application_graph
+        count_type = (application_graph(application) or {}).get("bc_count_type")
         if count_type is None:
             return {"passed": False, "reason": f"BC application {application!r} has no known CountT for BCVerifier"}
         return verify_scores(adjacency, source, observed.get("scores"), count_type)

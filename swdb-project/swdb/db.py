@@ -114,7 +114,8 @@ def fingerprint(records_dir, library=None):
     return digest.hexdigest()
 
 
-def _meta(db_path):
+def meta(db_path):
+    """The built database's `meta` table ({} when unreadable); public since 2026-10-05 ET (code review F15)."""
     try:
         con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
         try:
@@ -131,11 +132,11 @@ def is_stale(records_dir, db_path, library=None):
     db_path = Path(db_path)
     if not db_path.exists():
         return True
-    meta = _meta(db_path)
-    return (meta.get("records_dir") != str(Path(records_dir).resolve())
-            or meta.get("library_dir") != str(library_dir(records_dir, library))
-            or meta.get("fingerprint") != fingerprint(records_dir, library)
-            or meta.get("builder") != BUILDER)
+    found = meta(db_path)
+    return (found.get("records_dir") != str(Path(records_dir).resolve())
+            or found.get("library_dir") != str(library_dir(records_dir, library))
+            or found.get("fingerprint") != fingerprint(records_dir, library)
+            or found.get("builder") != BUILDER)
 
 
 def _flag(value):

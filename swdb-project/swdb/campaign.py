@@ -4,13 +4,13 @@ Created 2026-10-03 ET. Original SWDB code (decisions D2-D10 of
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`); the
 loop accounting is the ported `swdb.extensa.search`.
 
-One campaign names one hardware target. Each iteration: a fixed region list, or with
+One Extensa campaign names one hardware target. Each iteration: a fixed region list, or with
 `regions: query` the query site finder (`swdb.site_finder`, ticket 55); one rewrite-role call that returns one patch with per-class knob
 values; one candidate artifact per workload class; certification (contracts) or the
 uncertified label (no contract); the evaluator through a target adapter; records
 tagged `mode: extensa` and `campaign`; selection per class (certification level first,
 then the evaluator's lower bound against the base-source baseline); outcome-free
-feedback. The campaign stops on its budgets (D6 stop reasons) and writes one
+feedback. The Extensa campaign stops on its budgets (D6 stop reasons) and writes one
 `campaign_summary` record to its own store and to the team store.
 
 `--fixture` selects the contract-fixture target adapter (`swdb.campaign_fixture`). Without it,
@@ -1027,7 +1027,7 @@ class Campaign:
             if not self.adapter.SHARED_BASELINE:
                 # 2026-10-04 ET (final code review): the adapter's check honors the campaign's
                 # approval.gem5_other_socket (ticket 64), exactly as the pilot does.
-                refusal = self.adapter.other_gem5()
+                refusal = self.adapter.gem5_refusal()
                 if refusal:
                     raise Stop("infrastructure_failure", refusal)
                 baseline_eval = None

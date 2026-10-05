@@ -535,7 +535,7 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
 - **Preservation obligation:** each discovered vertex is enqueued exactly once, checked by
   per-level frontier sizes. They come from DOBFS's existing `Starting TDStep: <n> elements` line,
   which the evaluator checks by exact text at build time like the verifier text, and are compared
-  with the per-depth vertex counts the evaluator's trusted oracle computes from the registered
+  with the per-depth vertex counts the evaluator's trusted frontier oracle computes from the registered
   graph and source. A negative control that double-enqueues while printing the expected sizes must
   be rejected.
 - **Execution witness.**
@@ -604,10 +604,10 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
     for the printed `PASS`.
   - The frontier inspection records each window. `duplicate_frontier` and the frontier sizes are
     judged out of process, as are the strict-layer check names and the witness counters.
-  - Records go to a descriptor the harness opens for each run.
+  - Records go to a descriptor the evaluator opens for each run.
   - Faults live in a separately compiled seam object. The candidate's object is the same for the
     positive matrix and every library-fault control.
-  - A harness scan refuses candidate-authored lines that name harness or fault symbols,
+  - The evaluator's scan (`harness_scan`) refuses candidate-authored lines that name evaluator or fault symbols,
     `SWDB_STRICT` or `FUNC`, descriptor, environment, loader or process primitives, or text that
     imitates an evaluator line.
   - `forged_frontier` no longer forges the print. Calibration and lowering certification are
@@ -652,7 +652,7 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   delegation, revisable).** The default for `swdb certify ENTRY --profile P`; 1.0 stays selectable
   (`--command-version 1.0`) and its records keep their meaning.
   - A trusted driver, compiled apart from the candidate, calls the adapter's entry and records the
-    frame check and the output on a pipe the harness reads. The output is compared with the plain
+    frame check and the output on a pipe the evaluator reads. The output is compared with the plain
     C++ reference's out of process. A run without `end`, with a wrong nonce or a nonzero exit has
     no named check.
   - The reference is built and run on every case before any candidate or control is compiled;
@@ -663,11 +663,11 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   - A driver fault is rejected only when the only changed byte or element is the one it flipped;
     a mutation control only by its expected check from records, on a case whose positive run
     passed.
-  - A scan refuses harness symbols and descriptor, environment, process, initializer, exit and
+  - A scan refuses evaluator symbols and descriptor, environment, process, initializer, exit and
     printing primitives in the body, candidate template and control mutations.
 - **Calibration** (`--calibrate`). Builds from the full DX100 source through the strict layer and
   runs the BFS matrix under its own pass rule: the verifier's PASS text; per-level frontier sizes,
-  read from the authors' `Starting TDStepMAA: <n> elements` lines, equal to the trusted oracle's;
+  read from the authors' `Starting TDStepMAA: <n> elements` lines, equal to the trusted frontier oracle's;
   no strict-layer assertion; and, in place of the accelerated-chunk rule, at least one DX100
   operation recorded by the strict layer on every graph whose scalar run has a level of more than
   four times 1,024 vertices (the authors' own acceleration switch).
@@ -680,7 +680,7 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
     whose accelerated frontier holds a vertex of degree above 16,384.
   - Tile sizes 16,384 and 1,024, four threads.
   - A candidate run passes only with the verifier's PASS text, per-level frontier sizes equal to
-    the trusted oracle's, and the accelerated-chunk count rule above. Parent arrays are never
+    the trusted frontier oracle's, and the accelerated-chunk count rule above. Parent arrays are never
     compared byte for byte.
 - **BFS-rewrite negative controls:** shared context (overlapping pointer); skipped
   compare-and-swap recheck (double claim); dropped continuation (dropped operand); chunk off by
@@ -746,7 +746,7 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   this rewrite never issues), on the coverage workload
   `bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e` (source 0, as in T17):
   1. The exact timed candidate binary passes the v2 verifier, and its per-level frontier sizes
-     equal the trusted oracle's per-depth counts.
+     equal the trusted frontier oracle's per-depth counts.
   2. The labeled diagnostic build of the same tree prints the probe counters: compare-and-swap
      failures with a negative hint must be above zero (the race happened), and L3 violations must
      be zero.
@@ -820,7 +820,7 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   - kernel-identity checks in workload registration and protocol validation;
   - native evaluation;
   - the gem5 and native build adapters (source path, protected verifier, trusted driver and its
-    oracle);
+    original-graph oracle);
   - the gem5 completion witness and the accelerator cases with their trace extractors;
   - region discovery and profiling.
 - **BFS stays the same.** Its behavior and existing records are unchanged.

@@ -107,7 +107,7 @@ class FixtureAdapter(TargetAdapter):
         from swdb.store import Store
         template = Store(self.store_dir).get(self.fx["templates"]["candidate"], "candidate")
         data = copy.deepcopy(template)
-        rid = f"{self.cid}.{self._it(iteration)}.{cls}.a{attempt}"
+        rid = f"{self.cid}.{self._iteration_tag(iteration)}.{cls}.a{attempt}"
         data.update(id=rid, kind="candidate", mode=MODE, campaign=self.cid)
         data["artifact"] = {**data["artifact"], "sha256": artifacts.digest({"patch": patch, "knobs": knobs,
                                                                                "class": cls})}
@@ -125,7 +125,7 @@ class FixtureAdapter(TargetAdapter):
         passed = outcome == "certified"
         failed_checks = [] if passed else list(self._iteration(iteration, cls).get("failed_checks") or ["verifier"])
         record = workflow.record(
-            "certification", f"certification.{self.cid}.{self._it(iteration)}.{cls}.a{attempt}", entry=pin,
+            "certification", f"certification.{self.cid}.{self._iteration_tag(iteration)}.{cls}.a{attempt}", entry=pin,
             dependencies=[], candidate={"id": candidate["id"], "contract": contract,
                                         "contract_sha256": pin["content_sha256"], "tree_sha256": candidate["sha256"]},
             command={"version": "fixture", "contracts": contracts, "test_inputs": len(tests or [])},
@@ -160,7 +160,7 @@ class FixtureAdapter(TargetAdapter):
 
     def baseline_evaluation(self, cls, role):
         """gem5: the fork's scalar TDStep is measured once per class."""
-        baseline = next(b["candidate"] for b in self.campaign["baselines"] if b["role"] == role)
+        baseline = self.baseline(role)
         return self._evaluation(f"{self.cid}.baseline.{cls}.{role}", baseline, role)
 
     def compare(self, candidate, cls, role, iteration, attempt, baseline_evaluation=None):
@@ -168,10 +168,10 @@ class FixtureAdapter(TargetAdapter):
         numbers = (self._iteration(iteration, cls).get("comparisons") or {}).get(role)
         if numbers is None:
             raise Stop("infrastructure_failure", f"fixture has no comparison for {cls}/{role}")
-        tag = f"{self.cid}.{self._it(iteration)}.{cls}.a{attempt}.{role}"
+        tag = f"{self.cid}.{self._iteration_tag(iteration)}.{cls}.a{attempt}.{role}"
         evaluations = [self._evaluation(f"{tag}.candidate-eval", candidate["id"], "candidate")]
         if baseline_evaluation is None:
-            baseline = next(b["candidate"] for b in self.campaign["baselines"] if b["role"] == role)
+            baseline = self.baseline(role)
             baseline_evaluation = self._evaluation(f"{tag}.baseline-eval", baseline, role)
             evaluations.append(baseline_evaluation)
         from swdb.store import Store

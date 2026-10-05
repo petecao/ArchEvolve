@@ -204,8 +204,8 @@ def validate_receipt(store, baseline, candidate, settings, *, verify_raw=True):
     require(len(pair["observations"]) == len(planned), "paired receipt has incomplete trial coverage")
     workload_id = baseline["context"]["workload"]["id"]
     from swdb import bfs_native_scalable as scalable
-    evaluator = scalable.evaluator_of_settings(settings)
-    v2 = scalable.is_scalable(evaluator)        # v2 or v3 (ticket 71)
+    path = scalable.path_for(scalable.evaluator_of_settings(settings))
+    v2 = path.scalable                           # v2 or v3 (ticket 71)
     if verify_raw and v2:
         # Ticket 63: v2 re-binds the registered SG file by hash; no Python adjacency.
         registered = _get(store, workload_id, "workload")
@@ -282,8 +282,8 @@ def validate_receipt(store, baseline, candidate, settings, *, verify_raw=True):
             require(raw_hash == observation["output_sha256"]
                     and artifacts.file_hash(binding["execution_log"]) == binding["execution_log_sha256"],
                     "paired raw execution evidence changed or is unavailable")
-            require(scalable.check_trial_record(raw, slot["source"], evaluation["context"]["threads"], observation["roi"],
-                                                evaluation["context"]["workload"]["num_vertices"], evaluator) is None
+            require(path.check_trial_record(raw, slot["source"], evaluation["context"]["threads"], observation["roi"],
+                                            evaluation["context"]["workload"]["num_vertices"]) is None
                     and type(raw.get("duration_s")) in (int, float) and raw["duration_s"] == observation["duration_s"],
                     "paired timing/context differs from its hash-bound raw output")
             checked = scalable.recheck_retained(evaluation, observation, check, slot["source"], graph_checked=True)
@@ -313,8 +313,8 @@ def validate_receipt(store, baseline, candidate, settings, *, verify_raw=True):
                 "paired timing/context differs from its hash-bound raw output")
         checked = plugin.check_native_trial(canonical["adjacency"], slot["source"], raw,
                                             application=evaluation["context"].get("application"))
-        require(checked["passed"], f"paired raw {'parent vector' if plugin is kernels.BFS else 'result'} failed independent "
-                f"{'structural ' if plugin is kernels.BFS else ''}verification: " + str(checked["reason"]))
+        require(checked["passed"], f"paired raw {plugin.result_noun} vector failed independent verification "
+                f"({plugin.native_verifier}): " + str(checked["reason"]))
         require(check.get("graph_sha256") == actual_workload["canonical_sha256"]
                 and all(check.get(key) == value for key, value in checked.items()),
                 "paired retained correctness differs from the independent raw-result check")

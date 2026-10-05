@@ -159,7 +159,8 @@ def check(data, folder, records, lane):
         (folder / (name + ".stderr")).write_text(run.stderr)
         passed = run.returncode == 0 and bool(re.search(r"Verification:\s+PASS", run.stdout))
         trials.append({"family": name, "argv": argv, "returncode": run.returncode, "passed": passed})
-    receipt = {"created": "2026-10-03", "classification": "native_correctness_smoke",
+    from swdb import writer
+    receipt = {"created": writer.today(), "classification": "native_correctness_smoke",
                "snapshot": data["id"], "source_sha256": data["artifact"]["sha256"],
                "bc_sha256": artifacts.file_hash(source / BC), "binary_sha256": artifacts.file_hash(binary),
                "build_argv": command, "lane": verified, "host": "mbit10", "threads": 4,
