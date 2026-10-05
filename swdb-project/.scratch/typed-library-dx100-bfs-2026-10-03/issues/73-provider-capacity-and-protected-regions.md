@@ -1,10 +1,10 @@
 # 73 — Provider capacity is an uncounted pause; the rewrite workspace names the protected verifier
 
 Created: 2026-10-05 02:50 ET (from campaign `extensa-native-bfs-20261004-a7`, ticket 56 addendum)
-Updated: 2026-10-05 03:15 ET (resolved)
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-05 03:15 ET (resolved)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; [design decisions](../extensa-design-2026-10-03.md) D7; [56](56-native-campaign-target.md), [72](72-native-upstream-two-level-trials.md)
 
 **What to build:** two harness fixes, agent-decided under Yan-Ru's delegation (revisable), requested by the

@@ -1,10 +1,10 @@
 # 68 — knob_range and schedule_range: make the contracts' named checks enforceable
 
 Created: 2026-10-04 21:35 ET (by the final code review, 2026-10-04, requested known issue 3)
-Updated: 2026-10-04 21:35 ET (resolved)
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-04 21:35 ET (resolved)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; [code review](../code-review-2026-10-04.md), [17](17-bfs-read-offload-contract.md), [42](42-bc-certification-and-derived-contract.md), [43](43-promote-bc-contract.md)
 
 **What to build:** `swdb certify` reports the two checks that both promoted contracts name but that no

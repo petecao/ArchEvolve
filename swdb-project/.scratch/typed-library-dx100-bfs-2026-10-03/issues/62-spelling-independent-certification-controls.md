@@ -1,10 +1,10 @@
 # 62 — Spelling-independent BFS certification controls for campaign rewrites
 
 Created: 2026-10-04 ET (by ticket 57)
-Updated: 2026-10-04 ET (resolved)
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-04 ET (resolved)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md`
 
 **What to build:** `swdb certify` can certify a provider-written BFS read-offload rewrite whose

@@ -1,10 +1,10 @@
 # 78 — Certify 1.5 and library-operation command 1.2: record-keeping in a separate evaluator process
 
 Created: 2026-10-05 15:50 ET (scope decided by Yan-Ru 2026-10-05; work started 14:40 ET)
-Updated: 2026-10-05 16:10 ET (resolved)
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-05 16:10 ET (resolved)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** 76, 77
 **Spec:** `../spec.md` (certification command, "Evaluator process" bullet); [70](70-certification-isolation.md), [75](75-certify-a8-frontier-staging.md), [76](76-attributed-blinded-certification.md), [77](77-library-operation-certification-records.md)
 
 **What to build:** an engineering refactor that moves certification record-keeping out of the

@@ -1,10 +1,10 @@
 # 77 — Library-operation certification 1.1: record verdicts, blinded driver faults, attributed controls
 
 Created: 2026-10-05 13:31 ET (from the open item of ticket 76)
-Updated: 2026-10-05 14:21 ET (resolved)
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-05 14:21 ET (resolved)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** 76
 **Spec:** `../spec.md` (certification command); [49](49-port-extensa-machinery.md), [50](50-library-operation-tracer.md), [51](51-seed-extensa-families.md), [70](70-certification-isolation.md), [76](76-attributed-blinded-certification.md)
 
 **What to build:** give library-operation certification (`swdb certify ENTRY --profile P`) the

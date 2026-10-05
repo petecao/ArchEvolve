@@ -1,10 +1,10 @@
 # 63 — Scalable native BFS evaluator (v2) with a compiled structural verifier
 
 Created: 2026-10-04 06:30 ET (by ticket 61's decision)
-Updated: 2026-10-04 08:15 ET (resolved)
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-04 08:15 ET (resolved)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; [design decisions](../extensa-design-2026-10-03.md) D3, D4; [61](61-native-scale22-protocol.md)
 
 **What to build:** The native evaluator can time and verify BFS on the scale-22 graphs of D4 without a

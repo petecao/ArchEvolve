@@ -1,10 +1,10 @@
 # 67 — forged_frontier v2: a control every correct rewrite can kill
 
 Created: 2026-10-04 21:05 ET (by the ticket 57 a7 audit)
-Updated: 2026-10-04 21:05 ET (resolved)
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-04 21:05 ET (resolved)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; [57](57-gem5-campaign-target.md), [62](62-spelling-independent-certification-controls.md)
 
 **What to build:** the `forged_frontier` negative control fires for every correct BFS or BC

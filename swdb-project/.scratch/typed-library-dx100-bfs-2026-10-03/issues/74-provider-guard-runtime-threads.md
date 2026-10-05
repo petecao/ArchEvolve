@@ -1,10 +1,10 @@
 # 74 — The guard's thread cap bounds the model's work; a stop for the harness's own limit is uncounted
 
 Created: 2026-10-05 10:15 ET (from campaign `extensa-native-bfs-20261005-a8`, ticket 56 a8 result)
-Updated: 2026-10-05 12:00 ET (cpu_escape test fixed; mbit10 re-run pending); 2026-10-05 10:45 ET (resolved)
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line, header: re-run done); 2026-10-05 12:00 ET (cpu_escape test fixed; mbit10 re-run done 11:58 ET, 15 passed); 2026-10-05 10:45 ET (resolved)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; [design decisions](../extensa-design-2026-10-03.md) D7; [07](07-role-based-provider-launcher.md),
 [54](54-campaign-budgets.md), [56](56-native-campaign-target.md), [73](73-provider-capacity-and-protected-regions.md);
 story 33 of `../../rewrite-provider-codex-2026-09-29/spec.md`
@@ -105,6 +105,7 @@ every poll, before the interpretation is read.
 
 Fix (commit `227a61d`): the test names one CPU outside the observer's lane in the plan, and the child sets
 exactly that CPU. The test now asserts that the guard's reason names that CPU, so a vacuous premise cannot pass
-again. The re-run on mbit10 is pending Yan-Ru's approval for remote writes (clone, lane job).
+again. The re-run on mbit10 was pending Yan-Ru's approval for remote writes (clone, lane job); it ran at
+11:58 ET (below).
 
 - 2026-10-05 11:58 ET: verified on mbit10 at 434dc35 inside socket lane 0 (lease generation 461, record /data1/yanruj/EvolveSWDB_runs/guard-tests-t74b.lane.json): tests/test_provider_guard.py 15 passed. Scratch worktree tmp-guard-base and t74b.bundle removed with Yan-Ru's approval.

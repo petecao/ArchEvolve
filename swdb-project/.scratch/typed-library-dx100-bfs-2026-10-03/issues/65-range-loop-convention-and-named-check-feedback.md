@@ -1,10 +1,10 @@
 # 65 — Range-loop convention, register operands and named-check campaign feedback
 
 Created: 2026-10-04 ET (by ticket 57 a6 and ticket 58 a3)
-Updated: 2026-10-04 ET (resolved)
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-04 ET (resolved)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md`
 
 **What to build:** A rewrite provider in an Extensa campaign is told the range-loop

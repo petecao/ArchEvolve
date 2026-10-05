@@ -1,11 +1,11 @@
 # 75 — Certify native a8's best: a TDStep frontier-staging contract, promotion and team re-evaluation
 
 Created: 2026-10-05 11:40 ET (from ticket 56's a8 result; Yan-Ru: "certify it", 2026-10-05)
-Updated: 2026-10-05 15:00 ET (resolved); 2026-10-05 12:25 ET (decisions revised after the independent review, before any
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-05 16:55 ET (legacy-lease audit, code review S13); 2026-10-05 15:00 ET (resolved); 2026-10-05 12:25 ET (decisions revised after the independent review, before any
 certification record or run)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** 56, 76
 **Spec:** `../spec.md`; [design decisions](../extensa-design-2026-10-03.md) D9; ADR 0007, 0008, 0010;
 [15](15-library-tiers-and-entry-promotion.md), [43](43-promote-bc-contract.md), [48](48-mode-tags-and-team-boundary.md),
 [51](51-seed-extensa-families.md), [56](56-native-campaign-target.md), [70](70-certification-isolation.md),
@@ -210,4 +210,13 @@ harness scan has 0 findings, and the rewrite scope holds (one function definitio
 - Kronecker for this artifact stays `inconclusive` (a8). No team re-evaluation was run for that class.
 - `source_digest` now includes `library/native/`, so DX100 `sources_sha256` values differ from ticket 76's
   `29f3bcab…`.
+
+## Addendum 2026-10-05 16:55 ET: legacy-lease audit (code review S13)
+
+The campaign adapter's isolation check ignored the legacy lease `mbit10-evaluation` (fixed in the code-review
+branch). This ticket's re-evaluation did not use that check: `t75_reeval.py` on mbit10 tested the kernel locks of
+the node 0 lease and the legacy lease (`Host.held`) at the start and end of both blocks, and every test found them
+not held (`evaluation/ticket75-certification-and-reevaluation-2026-10-05.json`, `legacy_held: false`). The legacy
+lease's metadata was last written 2026-09-12 00:49 ET (generation 77), so no `hostlock.sh` holder took it during
+the run either. The isolation recorded here stands. Audit details: ticket 56's addendum of the same time.
 

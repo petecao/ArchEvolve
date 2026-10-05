@@ -1,6 +1,21 @@
 # Implementation and evaluation progress
 
-Updated: 2026-10-03 19:36 ET.
+Updated: 2026-10-05 17:25 ET (current status of tickets 01–78; everything below "Status on 2026-10-03" is
+historical); 2026-10-03 19:36 ET.
+
+## Current status (2026-10-05 17:25 ET)
+
+- **Tickets 01–78:** 72 resolved, 5 ready-for-human, 1 wontfix (31). The ready-for-human ones are Yan-Ru's:
+  02 (Peter confirms the license), 30, 37, 59 and 60 (messages the agent drafted; Yan-Ru sends).
+- **Latest results.** Native campaign a8 (ticket 56): uniform `gain` 1.457 [1.450, 1.472], Kronecker
+  `inconclusive`. Its best is certified under contract `contract.bfs_tdstep_frontier_staging` and re-evaluated
+  under a team protocol: 1.454 [1.442, 1.464] on uniform22 (ticket 75). Certify 1.5 and library-operation
+  command 1.2 are the defaults (ticket 78).
+- **Awaiting Yan-Ru's ratification:** the rules and reviews decided by agents under delegation, listed in the
+  spec's "Awaiting ratification" section.
+- **Code review of tickets 38–78 (2026-10-05):** fixes on the review branch, not pushed; see the map's pointer.
+
+## Status on 2026-10-03 (historical)
 
 Standing approval covers related pushes, remote evaluations and necessary fixes. Communication with Josh, Peter and Eric is draft-only for the agent; Yan-Ru sends manually. Actual scalar/profile/preparation metadata and guarded annotation results are published on `yanrujhou_main` through `6c65bdfdcca83381ad09554fa1aabcb127768282` and read back locally. The earlier library-state correction was published and synchronized as `5943c9a3aa3a74fc55d1693b1e59bc4fe8a06f9a`; historical remote readback at 09:25 ET confirmed all21 shared/certified before the new actual companion executions. Current corrected local replay derives19 shared/evaluated-on-target and two shared/certified; the bounded-completion source correction is included in this checkpoint. Raw evidence stays remote. [Standing approval](approval-2026-10-03.md).
 

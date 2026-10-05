@@ -1,10 +1,10 @@
 # 72 — Native upstream DO-BFS trials are two-level: options for Yan-Ru
 
 Created: 2026-10-04 23:10 ET (by ticket 56, campaign `extensa-native-bfs-20261004-a6`)
-Updated: 2026-10-04 23:30 ET (resolved; implementation); 2026-10-04 23:19 ET (decided; rule pre-registered before any run, commit 3147b31)
-**Type:** decision
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: type task, Blocked by line); 2026-10-04 23:30 ET (resolved; implementation); 2026-10-04 23:19 ET (decided; rule pre-registered before any run, commit 3147b31)
+**Type:** task
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; [design decisions](../extensa-design-2026-10-03.md) D3; [56](56-native-campaign-target.md), [64](64-native-scale22-pilot-unstable.md), [66](66-native-protocol-after-isolation-test.md)
 
 **What to decide:** how the native Extensa campaign handles the upstream DO-BFS baseline, whose single trials
