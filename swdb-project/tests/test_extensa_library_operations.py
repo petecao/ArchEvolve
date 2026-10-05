@@ -1,7 +1,9 @@
 """Library operations seeded from Extensa certify end to end (tickets 50 and 51).
 
 Created: 2026-10-03 ET. Real host builds of tiny cases; certification records are
-written to temporary stores only.
+written to temporary stores only. Updated: 2026-10-05 ET (ticket 77): the default command is 1.1
+(driver-fault controls are recorded beside the entry's controls; the candidate binary is
+`<build>/candidate_bin`); the mid-run pin check is tested under both command versions.
 """
 
 import json
@@ -69,7 +71,7 @@ def test_seeded_entry_certifies_and_every_control_fails_its_named_check(tmp_path
 
 def test_pack_controls_are_the_three_named_defects(tmp_path):
     _result, record, *_ = _certify(tmp_path, "operation.pack_executor", "pack_executor")
-    checks = {c["id"]: c["expected_check"] for c in record["negative_controls"]}
+    checks = {c["id"]: c["expected_check"] for c in record["negative_controls"] if c["kind"] != "driver_fault"}
     assert checks == {"off_by_one_index": "differential_mismatch", "dropped_chain_level": "differential_mismatch",
                       "aliasing_write": "frame_violation"}
     probe = next(c for c in record["matrix"] if c["cell"] == "probe/contract")
@@ -84,7 +86,7 @@ def test_probes_are_in_the_certification_build_only(tmp_path):
     with pytest.raises(ValueError):
         assert_probe_free(Path(probe_binary))
     run_folder = Path(record["raw_artifacts"][0])
-    timed = run_folder / "openmp" / "positive" / "pack_cand_bin"
+    timed = run_folder / "openmp" / "candidate_bin"
     assert timed.is_file()
     assert_probe_free(timed)
 
@@ -145,10 +147,11 @@ def test_seeded_families_declare_origin_pattern_key_and_three_controls(name):
         assert f"class {variant}" not in body
 
 
-def test_a_pinned_input_changed_during_the_run_refuses_the_receipt(tmp_path, monkeypatch):
+@pytest.mark.parametrize("version", ["1.0", "1.1"])
+def test_a_pinned_input_changed_during_the_run_refuses_the_receipt(tmp_path, monkeypatch, version):
     """2026-10-04 ET (final code review): the reference semantics, driver templates and control
     mutations were hash-checked only before the run."""
-    from swdb import library_operations
+    from swdb import library_operation_blinding, library_operations
     from swdb.cli import Failure
     from swdb.library import Library
     from swdb.store import Store
@@ -156,16 +159,19 @@ def test_a_pinned_input_changed_during_the_run_refuses_the_receipt(tmp_path, mon
     library = Library(lib, Store(records))
     entry = library.get("operation.pack_executor")
     reference = library_operations.inputs(library, entry)["reference"]
-    real = library_operations._run_cell
+    module, name = ((library_operations, "_run_cell") if version == "1.0"
+                    else (library_operation_blinding, "run_binary"))
+    real = getattr(module, name)
 
     def tampering(*args, **kwargs):
         result = real(*args, **kwargs)
         reference.write_text(reference.read_text() + "\n// changed mid-run\n")
         return result
-    monkeypatch.setattr(library_operations, "_run_cell", tampering)
+    monkeypatch.setattr(module, name, tampering)
     with pytest.raises(Failure, match="pinned certification inputs changed during execution"):
         library_operations.certify_entry(Store(records), library, "operation.pack_executor",
-                                         lib / "profiles" / "pack_executor.yaml", runs_dir=tmp_path / "runs")
+                                         lib / "profiles" / "pack_executor.yaml", runs_dir=tmp_path / "runs",
+                                         version=version)
     assert not (records / "certifications").exists()
 
 

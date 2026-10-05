@@ -7,6 +7,16 @@ ported two-binary harness (`swdb.extensa.synthesis.certify`) and a certification
 counts as rejected only when it builds and fails its expected named check. When the
 entry declares a contract probe, one more cell compiles the ported runtime probes into a
 certification-only build; the timed-style builds never contain them.
+
+Updated: 2026-10-05 ET (ticket 77; agent-decided under Yan-Ru's delegation, revisable). Command
+1.1 (``swdb.library_operation_blinding``) is the default: verdicts come only from records a
+trusted driver writes on a harness-read pipe, the reference runs before any candidate build,
+driver-fault controls run in the candidate's own binary under a blinded run plan, every control
+rejection is attributed, and a scan refuses harness symbols and I/O or process primitives in the
+body, the candidate template and the control mutations. Command 1.0 (this module's two-binary
+harness, a control's abort classified from a printed line) stays selectable
+(``certify_entry(..., version='1.0')``, CLI ``--command-version 1.0``); its records keep their
+meaning.
 """
 from __future__ import annotations
 
@@ -27,7 +37,8 @@ from pathlib import Path
 from swdb import artifacts, paths, workflow
 from swdb.cli import Failure, UsageError
 
-VERSION = "1.0"
+VERSION = "1.1"
+VERSIONS = ("1.0", "1.1")
 DX100_INCLUDE = re.compile(r'(?:#|%:)\s*include\s*[<"]([^>"]+)[>"]')
 DX100_NAMES = re.compile(r"(?i)(?:^|/)(?:maa[^/]*|.*dx100[^/]*|.*dxc_[^/]*|reference\.hpp)$")
 MAA_CALL = re.compile(r"\bmaa_\w*\s*\(")
@@ -218,9 +229,15 @@ def inputs(library, entry):
             "sizes": dict((test.get("input_set") or {}).get("sizes") or {})}
 
 
-def _source_digest(library_root):
+def _source_digest(library_root, version="1.0"):
     roots = [Path(__file__), *sorted((paths.HOME / "swdb/extensa").rglob("*.py"))]
+    if version != "1.0":
+        from swdb import library_operation_blinding
+        roots.append(Path(library_operation_blinding.__file__))
     rows = [{"path": p.relative_to(paths.HOME).as_posix(), "sha256": artifacts.file_hash(p)} for p in roots]
+    if version != "1.0":
+        from swdb import library_operation_blinding
+        rows += library_operation_blinding.source_rows(library_root)
     return artifacts.digest(rows)
 
 
@@ -248,8 +265,11 @@ def _control_status(cells, expected):
     return "invalid", "rejected only by checks other than " + str(expected)
 
 
-def certify_entry(store, library, entry_id, profile_path, runs_dir=None, seed=None):
+def certify_entry(store, library, entry_id, profile_path, runs_dir=None, seed=None, version=None):
     from swdb.extensa.profiles import ProfileError, check_against_entry, load_profile
+    version = version or VERSION
+    if version not in VERSIONS:
+        raise UsageError("library-operation certify command version must be one of " + ", ".join(VERSIONS))
     entry = library.get(entry_id)
     if entry is None or entry.get("kind") != "library_operation":
         raise UsageError("profile certification requires a library-operation entry")
@@ -265,8 +285,48 @@ def certify_entry(store, library, entry_id, profile_path, runs_dir=None, seed=No
     folder.mkdir(parents=True)
     content_sha256 = library.content_sha256(entry_id)
     dependencies = library.dependency_pins(entry_id)
-    command_hash = _source_digest(library.root)
+    command_hash = _source_digest(library.root, version)
     builds = targets(profile, [resolved["reference"].parent, resolved["body"].parent])
+    isolation = None
+    if version == "1.0":
+        matrix, controls = _certify_1_0(resolved, profile, builds, folder, seed)
+    else:
+        from swdb import library_operation_blinding
+        matrix, controls, isolation = library_operation_blinding.certify(resolved, profile, folder, seed, builds,
+                                                                         library.root)
+    if resolved["probe"] and not any(c.get("check") == "harness_scan" for c in matrix):
+        matrix.append(probe_cell(entry, resolved, builds, folder / "probe", profile, seed))
+    verdict = ("certified" if matrix and all(c["status"] == "passed" for c in matrix)
+               and controls and all(c["status"] == "rejected" for c in controls) else "failed")
+    if library.content_sha256(entry_id) != content_sha256 or _source_digest(library.root, version) != command_hash:
+        raise Failure("library entry or certification sources changed during execution")
+    # 2026-10-04 ET (final code review): the pinned body, reference, driver templates and control
+    # mutations are hash-checked again after the run, not only before it.
+    try:
+        if inputs(library, entry) != resolved:
+            raise Failure("library entry or certification sources changed during execution")
+    except (Failure, UsageError) as exc:
+        raise Failure(f"pinned certification inputs changed during execution: {exc}") from None
+    command = {"version": version, "sources_sha256": command_hash, "kind": "library_operation_differential",
+               "profile": profile.to_record(), "seed": seed}
+    if isolation is not None:
+        command["isolation"] = isolation
+    record = workflow.record(
+        "certification", "certification." + uuid.uuid4().hex,
+        entry={"id": entry_id, "content_sha256": content_sha256}, dependencies=dependencies,
+        command=command,
+        host={"hostname": socket.gethostname(), "system": platform.system(), "architecture": platform.machine(),
+              "compilers": {b: t.spec.cc for b, t in builds.items()}},
+        matrix=matrix, negative_controls=controls, verdict=verdict, evidence_basis="simulated",
+        evidence_kind="execution", created_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        raw_artifacts=[str(folder)])
+    (folder / "certification.json").write_text(json.dumps(record, indent=2) + "\n")
+    workflow.persist(store.dir, record, create=True)
+    return record
+
+
+def _certify_1_0(resolved, profile, builds, folder, seed):
+    """Command 1.0 (tickets 49-51), unchanged: the ported two-binary harness per cell."""
     matrix, control_cells = [], {cid: [] for cid in resolved["controls"]}
     for build, target in builds.items():
         sanitize = build == "sanitized"
@@ -283,38 +343,13 @@ def certify_entry(store, library, entry_id, profile_path, runs_dir=None, seed=No
                      "invalid" if outcome.infrastructure_error or outcome.check == "build_failed" else "rejected")
             control_cells[cid].append({"build": build, "outcome": state, "check": outcome.check,
                                        "reason": outcome.reason[:500]})
-    if resolved["probe"]:
-        matrix.append(probe_cell(entry, resolved, builds, folder / "probe", profile, seed))
     controls = []
     for cid, control in resolved["controls"].items():
         status, reason = _control_status(control_cells[cid], control["check"])
         controls.append({"id": cid, "kind": control["kind"], "clause": control["clause"],
                          "expected_check": control["check"], "status": status, "reason": reason,
                          "cells": control_cells[cid]})
-    verdict = ("certified" if matrix and all(c["status"] == "passed" for c in matrix)
-               and controls and all(c["status"] == "rejected" for c in controls) else "failed")
-    if library.content_sha256(entry_id) != content_sha256 or _source_digest(library.root) != command_hash:
-        raise Failure("library entry or certification sources changed during execution")
-    # 2026-10-04 ET (final code review): the pinned body, reference, driver templates and control
-    # mutations are hash-checked again after the run, not only before it.
-    try:
-        if inputs(library, entry) != resolved:
-            raise Failure("library entry or certification sources changed during execution")
-    except (Failure, UsageError) as exc:
-        raise Failure(f"pinned certification inputs changed during execution: {exc}") from None
-    record = workflow.record(
-        "certification", "certification." + uuid.uuid4().hex,
-        entry={"id": entry_id, "content_sha256": content_sha256}, dependencies=dependencies,
-        command={"version": VERSION, "sources_sha256": command_hash, "kind": "library_operation_differential",
-                 "profile": profile.to_record(), "seed": seed},
-        host={"hostname": socket.gethostname(), "system": platform.system(), "architecture": platform.machine(),
-              "compilers": {b: t.spec.cc for b, t in builds.items()}},
-        matrix=matrix, negative_controls=controls, verdict=verdict, evidence_basis="simulated",
-        evidence_kind="execution", created_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),
-        raw_artifacts=[str(folder)])
-    (folder / "certification.json").write_text(json.dumps(record, indent=2) + "\n")
-    workflow.persist(store.dir, record, create=True)
-    return record
+    return matrix, controls
 
 
 # --- contract probe cell (certification build only) -----------------------------------
@@ -383,8 +418,12 @@ def certify_cli(args):
     if not profile.is_absolute() and not profile.exists():
         profile = library.root / "profiles" / (args.profile if args.profile.endswith(".yaml")
                                                                      else args.profile + ".yaml")
+    version = getattr(args, "command_version", None)
+    if version is not None and version not in VERSIONS:
+        raise UsageError(f"library-operation certification has command versions {', '.join(VERSIONS)}, "
+                         f"not {version}")
     record = certify_entry(store, library, args.entry_id, profile, runs_dir=args.runs_dir,
-                           seed=getattr(args, "seed", None))
+                           seed=getattr(args, "seed", None), version=version)
     print(json.dumps({"id": record["id"], "verdict": record["verdict"], "matrix_cells": len(record["matrix"]),
                       "negative_controls": len(record["negative_controls"]),
                       "controls": {c["id"]: c["status"] for c in record["negative_controls"]}}, indent=2))

@@ -2,6 +2,7 @@
 
 Created: 2026-10-03 00:50 ET
 Updated: 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66)
+Updated: 2026-10-05 14:40 ET (ticket 77: library-operation certification 1.1, record verdicts and blinded driver faults)
 Updated: 2026-10-05 12:50 ET (ticket 76: certify 1.4, blinded controls and attributed rejections)
 Updated: 2026-10-04 22:40 ET (ticket 70: certification isolation, certify 1.3)
 Updated: 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's
@@ -612,6 +613,23 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   - Extensa feedback names a surviving control only as `negative_controls_not_rejected`.
   - Calibration and lowering certification still read printed lines; they run only pinned, trusted
     code, and calibration refuses candidate input.
+- **Library operations (command 1.1; ticket 77, 2026-10-05 ET; agent-decided under Yan-Ru's
+  delegation, revisable).** The default for `swdb certify ENTRY --profile P`; 1.0 stays selectable
+  (`--command-version 1.0`) and its records keep their meaning.
+  - A trusted driver, compiled apart from the candidate, calls the adapter's entry and records the
+    frame check and the output on a pipe the harness reads. The output is compared with the plain
+    C++ reference's out of process. A run without `end`, with a wrong nonce or a nonzero exit has
+    no named check.
+  - The reference is built and run on every case before any candidate or control is compiled;
+    its binary and case folders are deleted first.
+  - Two driver-fault controls (`input_write`, `output_perturb`) run in the candidate's own binary
+    with a blinded 60-byte plan, in one random order with the positive cases and the mutation
+    controls of that build.
+  - A driver fault is rejected only when the only changed byte or element is the one it flipped;
+    a mutation control only by its expected check from records, on a case whose positive run
+    passed.
+  - A scan refuses harness symbols and descriptor, environment, process, initializer, exit and
+    printing primitives in the body, candidate template and control mutations.
 - **Calibration** (`--calibrate`). Builds from the full DX100 source through the strict layer and
   runs the BFS matrix under its own pass rule: the verifier's PASS text; per-level frontier sizes,
   read from the authors' `Starting TDStepMAA: <n> elements` lines, equal to the trusted oracle's;

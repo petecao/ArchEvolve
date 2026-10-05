@@ -57,8 +57,10 @@ D1's not-ported list is imported or copied (`tests/test_extensa_machinery.py` ch
 | `library/library_operations/drivers/{update_binning,vertex_relabel,regroup,gather_staging}_executor_cand.cpp.tmpl` | `AgenticRefiner/refiner/synthesis/drivers/{bin_drain,gather,regroup,gather_stream}_cand.cpp.tmpl` | drive the executor class |
 | `library/library_operations/drivers/relabel_{ref,cand,run}.cpp.tmpl` | `AgenticRefiner/refiner/synthesis/drivers/gather_{ref,cand,run}.cpp.tmpl` | SWDB addition adapted for relabeling |
 | `library/library_operations/controls/{update_binning,vertex_relabel,regroup,gather_staging}_executor.*.hh` | as the body they mutate | three negative controls per entry |
+| `library/library_operations/certification/v1_1/driver.cc` | `AgenticRefiner/refiner/synthesis/drivers/{pack,gather,regroup,bin_drain,gather_stream}_run.cpp.tmpl` | ticket 77 (2026-10-05 ET): trusted 1.1 driver; same arguments, inputs, canary and frame check; records instead of prints |
 
 ## Original SWDB files that use the port (not ported, no MemAcc header)
 
 `swdb/library_operations.py`, `swdb/extensa_boundary.py`, `swdb/campaign.py`,
-`library/library_operations/reference/movement_reference.hh`.
+`library/library_operations/reference/movement_reference.hh`; from ticket 77 (2026-10-05 ET)
+`swdb/library_operation_blinding.py` and `library/library_operations/certification/v1_1/record.cc`.
