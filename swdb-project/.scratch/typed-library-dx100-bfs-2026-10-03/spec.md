@@ -2,7 +2,7 @@
 
 Created: 2026-10-03 00:50 ET
 Updated: 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66)
-Updated: 2026-10-05 14:40 ET (ticket 77: library-operation certification 1.1, record verdicts and blinded driver faults)
+Updated: 2026-10-05 14:21 ET (ticket 77: library-operation certification 1.1, record verdicts and blinded driver faults)
 Updated: 2026-10-05 12:50 ET (ticket 76: certify 1.4, blinded controls and attributed rejections)
 Updated: 2026-10-04 22:40 ET (ticket 70: certification isolation, certify 1.3)
 Updated: 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's
