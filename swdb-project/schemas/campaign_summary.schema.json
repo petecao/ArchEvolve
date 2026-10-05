@@ -228,6 +228,10 @@
         "stopped_by_yanru"
       ]
     },
+    "interrupted_iteration": {
+      "type": "object",
+      "description": "Ticket 73 (2026-10-05 ET): the iteration a stop interrupted, with its provider calls; not a completed iteration."
+    },
     "stop_detail": {
       "type": [
         "string",

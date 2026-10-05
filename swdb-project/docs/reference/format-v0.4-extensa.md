@@ -3,6 +3,7 @@
 Created: 2026-10-03 (Eastern Time)
 Updated: 2026-10-04 (Eastern Time): site-finder fields (ticket 55); campaign isolation and gem5 approval fields
 Updated: 2026-10-04 21:30 (Eastern Time): `protocol.speed_rule` and evaluator v3 (tickets 66 and 67)
+Updated: 2026-10-05 03:20 (Eastern Time): provider capacity and protected regions (ticket 73)
 Updated: 2026-10-04 23:25 (Eastern Time): speed rule `swdb.speed_rule.ci_width.v2` (ticket 72)
 
 Extensa mode (ADR 0009, ADR 0010; decisions in
@@ -102,6 +103,11 @@ The summary's `pilot` adds `gating_roles`, a `gates` flag per role in `ci_by_cla
 `level_mix_by_class_and_role`; each upstream DO-BFS comparison row adds `level_mix` (per side: `slow_share`
 and `by_source_position` rows with `levels`, `slow_trials`, `trials`, `slow_share`, level medians and
 `level_ratio`). The level mix is reporting only.
+
+Added 2026-10-05 ET (ticket 73): a provider call at capacity is recorded with outcome `provider_capacity`,
+`counted: false` and its `backoff_s`; when a stop interrupts an iteration, the summary keeps that iteration's
+row as `interrupted_iteration`. The rewrite workspace adds `PROTECTED.json`, and REGIONS.json rows may carry
+`workspace` (`path`, `function`, `lines`).
 
 `swdb validate` refuses a gem5 campaign with repetitions other than 1 or more than one
 source, a native campaign with fewer than 5 repetitions, `region_pairs: true`, another

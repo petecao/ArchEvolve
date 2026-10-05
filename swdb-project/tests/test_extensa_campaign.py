@@ -146,9 +146,9 @@ print(json.dumps(item))
     return config
 
 
-def run(team, path, fixture, config, *extra, expect=0):
+def run(team, path, fixture, config, *extra, expect=0, env=None):
     result = run_swdb("campaign", path, "--records", team["records"], "--provider-config", config,
-                      "--fixture", fixture, "--format", "json", *extra)
+                      "--fixture", fixture, "--format", "json", *extra, env=env)
     assert result.returncode == expect, result.stderr + result.stdout
     return json.loads(result.stdout) if result.stdout.strip() else None
 

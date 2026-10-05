@@ -30,6 +30,7 @@ import copy
 import datetime
 import json
 import re
+import os
 import shutil
 import statistics
 import subprocess
@@ -59,6 +60,18 @@ CI_WIDTH_RULE = "swdb.speed_rule.ci_width.v1"
 CI_WIDTH_RULE_V2 = "swdb.speed_rule.ci_width.v2"
 CI_RULES = (CI_WIDTH_RULE, CI_WIDTH_RULE_V2)
 LEVEL_SPLIT_MIN_RATIO = 1.08   # ticket 72: two-level trials when the largest adjacent ratio is >= 1.08
+#: Ticket 73 (2026-10-05 ET): a provider at capacity is an uncounted D7 outcome. The call is retried
+#: after these waits (seconds); past the bounded total wait the campaign stops `infrastructure_failure`.
+CAPACITY_BACKOFF_S = (60, 120, 300, 600, 600, 600, 600)
+CAPACITY_WAIT_S = 3600
+
+
+def capacity_backoff():
+    """The backoff schedule; SWDB_CAPACITY_BACKOFF_S (comma-separated seconds) overrides it for tests."""
+    raw = os.environ.get("SWDB_CAPACITY_BACKOFF_S")
+    if raw is None:
+        return CAPACITY_BACKOFF_S
+    return tuple(float(x) for x in raw.split(",") if x.strip())
 CI_WIDTH_LIMIT = 0.05          # relative 95% CI width (upper - lower) / ratio must be <= 0.05
 CI_BLOCK_LENGTH = 4            # circular block bootstrap: 4 consecutive repetitions per block
 AA_EQUIVALENCE = 1.05          # an A/A CI must lie strictly inside (1/1.05, 1.05)
@@ -70,6 +83,10 @@ SPEC_BUDGETS = {"max_iterations": 8, "plateau_iterations": 4, "lane_hours": 24,
 DEFAULT_MAX_REPAIRS = 2        # D7: the ArchEvolve-mode repair limit
 EXTENSA_SOURCE = {"repository": "MaizeHPC/MemAcc", "commit": "af3d6d7f7a69a72facdc3b95b42e78c952f44a76"}
 LOGIN = re.compile(r"login|not logged in|unauthori[sz]ed|authentication|credentials", re.I)
+
+
+class _Capacity(Exception):
+    """Ticket 73: one provider call met transient unavailability (handled inside `_call`)."""
 
 
 class Paused(Exception):
@@ -413,6 +430,13 @@ def rewrite_prompt(campaign_id, iteration, classes, files):
         history.append(" " + ", ".join(f"`{f}`" for f in best) + " hold this campaign's current per-class best patches.")
     if "FEEDBACK.json" in files:
         history.append(" `FEEDBACK.json` holds the previous iteration's feedback.")
+    if "PROTECTED.json" in files:
+        # Ticket 73 (2026-10-05 ET): campaign a7's iteration 1 edited the protected verifier.
+        history.append(" `PROTECTED.json` lists protected evaluator regions (for example the `BFSVerifier` "
+                       "function of `bfs.cc`) by their lines in the workspace copy; a patch that touches any "
+                       "of them is rejected, so never edit them. In REGIONS.json, `source.lines` number the "
+                       "registered full-source revision; edit the region's function at its `workspace` lines "
+                       "in `source/`.")
     return REWRITE_PROMPT.format(campaign=campaign_id, iteration=iteration, classes=", ".join(classes),
                                  history="".join(history), files=", ".join(f"`{f}`" for f in sorted(files)))
 
@@ -712,6 +736,22 @@ class Campaign:
 
     # provider calls (D7) -------------------------------------------------------------------
     def _call(self, kind, files, prompt, iteration_row):
+        """One provider call. Ticket 73: a provider at capacity is recorded uncounted and retried after
+        a backoff; past CAPACITY_WAIT_S of waiting the campaign stops `infrastructure_failure`."""
+        waited, schedule = 0.0, list(capacity_backoff())
+        while True:
+            try:
+                return self._call_once(kind, files, prompt, iteration_row)
+            except _Capacity as capacity:
+                delay = schedule.pop(0) if schedule else None
+                if delay is None or waited + delay > CAPACITY_WAIT_S:
+                    raise Stop("infrastructure_failure",
+                               f"the provider stayed unavailable after {waited:.0f} s of backoff: {capacity}") from None
+                iteration_row["provider_calls"][-1]["backoff_s"] = delay
+                time.sleep(delay)
+                waited += delay
+
+    def _call_once(self, kind, files, prompt, iteration_row):
         from swdb import provider_adapters, provider_roles
         self._step("provider")
         total = self.budget.provider_calls_setup + self.budget.provider_calls_per_iteration * self.budget.max_iterations
@@ -730,6 +770,8 @@ class Campaign:
         outcome, response, error = S.CallOutcome.COMPLETED, None, None
         try:
             response, _meta = provider_roles.run(_roles()[kind], files, prompt, self.provider_config, folder)
+        except provider_adapters.ProviderCapacity as exc:
+            outcome, error = S.CallOutcome.PROVIDER_CAPACITY, exc
         except provider_adapters.ProviderUnavailable as exc:
             outcome, error = S.CallOutcome.USAGE_LIMIT, exc
         except Failure as exc:
@@ -752,6 +794,8 @@ class Campaign:
             "role": kind, "invocation": call.invocation, "outcome": outcome.value, "counted": call.counted,
             "model": meta.get("model") or provider["model"], "effort": meta.get("effort") or provider["effort"],
             "classification": meta.get("classification")})
+        if outcome == S.CallOutcome.PROVIDER_CAPACITY:
+            raise _Capacity(str(error))
         if outcome in S.UNCOUNTED_CALL_OUTCOMES:
             raise Paused(outcome.value)
         if error is not None:
@@ -902,7 +946,18 @@ class Campaign:
         if references and self.data["library"]["contracts"]:
             files.update({f"library/{name}": text for name, text in references().items()})
         regions = self.current_regions if self.query else self.data["regions"]
+        # Ticket 73 (2026-10-05 ET): workspace line spans for each region and the protected regions.
+        lines = getattr(self.adapter, "workspace_region_lines", None)
+        if lines is not None and regions:
+            regions = lines(regions)
         files["REGIONS.json"] = json.dumps({"regions": regions}, indent=2)
+        protected = getattr(self.adapter, "protected_regions", None)
+        if protected is not None:
+            rows = protected()
+            if rows:
+                files["PROTECTED.json"] = json.dumps({
+                    "note": ("Evaluator inputs. A patch that changes any of these is rejected before it is "
+                             "built. Never edit them."), "protected": rows}, indent=2)
         for cls, best in self.state["bests"].items():
             if best:
                 files[f"best/{cls}.patch"] = best["patch"]
@@ -1104,7 +1159,9 @@ class Campaign:
                 # 2026-10-04 ET (final code review): D7 — usage-limit and login failures are
                 # uncounted and pause the campaign; the family stays unsynthesized for the resume.
                 from swdb import provider_adapters
-                outcome = (S.CallOutcome.USAGE_LIMIT if isinstance(exc, provider_adapters.ProviderUnavailable)
+                # Ticket 73: transient unavailability is uncounted too (it pauses here; a resume retries).
+                outcome = (S.CallOutcome.PROVIDER_CAPACITY if isinstance(exc, provider_adapters.ProviderCapacity)
+                           else S.CallOutcome.USAGE_LIMIT if isinstance(exc, provider_adapters.ProviderUnavailable)
                            else S.CallOutcome.LOGIN if LOGIN.search(str(exc)) else S.CallOutcome.FAILED)
                 result = {"state": "failed", "reason": str(exc)}
             self._spent("synthesis", started)
@@ -1236,6 +1293,14 @@ class Campaign:
                     row["regions"] = self._regions(row)
                     try:
                         outcome = self._iteration(index, row)
+                    except Stop:
+                        # Ticket 73 (2026-10-05 ET): keep the interrupted iteration's calls (for example
+                        # uncounted provider-capacity retries) in the summary; it is not a completed iteration.
+                        row["ended"] = _now()
+                        for c in row["candidates"]:
+                            c.pop("_patch", None)
+                        self.state["interrupted_iteration"] = row
+                        raise
                     except Paused as pause:
                         self.ledger.record_iteration(S.IterationOutcome.PAUSED)
                         self.state["pauses"].append({"at": _now(), "reason": pause.reason, "resumed_at": None,
@@ -1367,6 +1432,8 @@ class Campaign:
             stop_detail=self.state.get("stop_detail"), artifacts=artifacts_list,
             retentions=list(self.state["retentions"]), library_entries=library_entries,
             site_finder=self.state.get("site_finder"))
+        if self.state.get("interrupted_iteration"):
+            record["interrupted_iteration"] = copy.deepcopy(self.state["interrupted_iteration"])
         record["mode"], record["campaign"] = "extensa", self.cid
         return record
 

@@ -441,6 +441,36 @@ def test_native_ci_width_v2_reports_upstream_level_mix_and_gates_on_the_fork_onl
     assert set(mix) == {"kronecker", "uniform_random"} and all(set(r) == {"upstream_do_bfs"} for r in mix.values())
     assert all(set(r["upstream_do_bfs"]) == {"baseline", "candidate"} for r in mix.values())
 
+
+def test_native_workspace_names_the_protected_verifier_and_region_lines(team, base_source):
+    """Ticket 73 (2026-10-05 ET): a7's iteration 1 edited BFSVerifier, whose lines the full-source region
+    numbers (240-243) point to in the scalar-only workspace copy. The workspace now has PROTECTED.json and
+    workspace line spans, and the refusal names the protected region."""
+    from swdb.campaign_targets import function_span
+    verifier = function_span(base_source, "BFSVerifier")
+    tdstep = function_span(base_source, "TDStep")
+    assert verifier[0] <= 240 <= verifier[1] and tdstep[1] < verifier[0]
+    lines = base_source.splitlines(keepends=True)
+    inside = next(i for i in range(verifier[0], verifier[1]) if "return false;" in lines[i])
+    edited = "".join(lines[:inside] + [lines[inside].replace("return false;", "return true;")] + lines[inside + 1:])
+    config = provider(team, {"rewriting": [{"patch": diff(base_source, edited), "contracts": [], "knobs": [],
+                                            "unresolved": []}]})
+    runner = FakeRunner({"pilot": 1.0, "fork_scalar_tdstep": 1.3, "upstream_do_bfs": 0.8})
+    loop, summary = run(team, native_campaign(team, max_iterations=1), config, runner, FakeHost())
+    workspaces = sorted((loop.folder / "provider").glob("*/workspace"))
+    rewriting = [w for w in workspaces if (w / "REGIONS.json").is_file()]
+    assert rewriting
+    protected = json.loads((rewriting[0] / "PROTECTED.json").read_text())["protected"]
+    row = next(r for r in protected if r["kind"] == "verifier")
+    assert row["function"] == "BFSVerifier" and row["path"] == f"source/{campaign_targets.BFS}"
+    assert row["lines"][0] <= verifier[0] < row["lines"][1] <= verifier[1]     # its comment header, then the body
+    regions = json.loads((rewriting[0] / "REGIONS.json").read_text())["regions"]
+    assert regions[0]["workspace"] == {"path": f"source/{campaign_targets.BFS}", "function": "TDStep",
+                                       "lines": list(tdstep)}
+    (candidate,) = [c for it in summary["iterations"] for c in it["candidates"]][:1]
+    assert candidate["level"] == "rejected" and "BFSVerifier" in candidate["rejection"]
+    assert "never to be edited" in candidate["rejection"]
+
 def test_native_blocks_refuse_while_a_gem5_campaign_holds_the_other_socket(team, base_source):
     config = provider(team, {})
     other = {"lease": "mbit10-evaluation-node1", "mode": "extensa", "target": "dx100_gem5",
