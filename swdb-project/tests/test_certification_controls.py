@@ -3,6 +3,9 @@
 Ticket 20's patch, a whitespace-reformatted copy and a structurally rewritten copy all
 certify with every control rejected; a semantically broken rewrite and a rewrite that
 bypasses the contract's claim primitive are refused.
+
+Updated: 2026-10-04 ET (ticket 67: forged_frontier v2; a rewrite that counts its chunks
+after their pushes certifies).
 """
 import re
 import types
@@ -57,6 +60,17 @@ def restructured(source):
     body = _replace(body, 'if(claimed){parent[v]=u;lqueue.push_back(v);}',
                     'if (claimed) {\n        parent[v] = u;  // redundant labeled store (L4)\n        lqueue.push_back(v);\n      }')
     return source[:start] + body + source[end:]
+
+
+def chunk_hook_after_pushes(source):
+    """Correct, but counts each accelerated chunk after its claims and pushes (campaign a7's shape).
+
+    Ticket 67: with threshold 64 and tile 16384 the two-level control graph's only pushing
+    accelerated level is one chunk, so forged_frontier v1 (fired only after a counted chunk)
+    never fired and this correct rewrite was rejected.
+    """
+    source = _replace(source, '    __dxc_accelerated_chunk();\n    for(;;){', '    for(;;){')
+    return _replace(source, '     }\n    }\n   }\n  }else{', '     }\n    }\n    __dxc_accelerated_chunk();\n   }\n  }else{')
 
 
 def skipped_recheck(source):
@@ -140,14 +154,30 @@ def test_equal_rewrites_certify_with_every_control_rejected(tmp_path, monkeypatc
     record = _certify(tmp_path, monkeypatch, transform)
     assert record['verdict'] == 'certified'
     assert len(record['matrix']) == 10 and all(x['status'] == 'passed' for x in record['matrix'])
-    assert len(record['negative_controls']) == 16
+    # Ticket 68 (2026-10-04 ET): 8 library faults and 2 legality controls at each tile size.
+    assert len(record['negative_controls']) == 20
     assert all(status == 'rejected' for _, _, status in _controls(record)), _controls(record)
-    assert all(x['fault']['site'] == 'library_fault' for x in record['negative_controls'])
-    # 2026-10-04 ET (final code review): every enforceable clause check was observed; the two
-    # clauses whose check names no run reports are recorded as not enforceable.
+    sites = {x['id']: x['fault']['site'] for x in record['negative_controls']}
+    assert sites.pop('knob_out_of_range') == 'knob_assignment' and sites.pop('schedule_out_of_range') == 'schedule_clause'
+    assert set(sites.values()) == {'library_fault'}
+    # 2026-10-04 ET (final code review): every enforceable clause check was observed. Ticket 68:
+    # knob_range and schedule_range are enforced through the certifier's controls; the contract's
+    # own controls for them cannot exercise them and are recorded as not enforceable.
     clauses = record['clause_controls']
     assert all(r['matched'] for r in clauses if r['enforceable']), clauses
     assert {r['clause'] for r in clauses if not r['enforceable']} == {'frontier_threshold', 'schedule'}
+    assert {(r['clause'], r['control']) for r in clauses if r['source'] == 'certifier' and r['matched']} == {
+        ('frontier_threshold', 'knob_out_of_range'), ('schedule', 'schedule_out_of_range')}
+
+
+def test_forged_frontier_v2_is_killed_when_chunks_are_counted_after_their_pushes(tmp_path, monkeypatch):
+    """Ticket 67 (2026-10-04 ET): a negative control must be killable by every correct rewrite."""
+    record = _certify(tmp_path, monkeypatch, chunk_hook_after_pushes)
+    assert record['verdict'] == 'certified', _controls(record)
+    forged = [x for x in record['negative_controls'] if x['id'] == 'forged_frontier']
+    assert [(x['tile_size'], x['status']) for x in forged] == [(16384, 'rejected'), (1024, 'rejected')]
+    assert all('duplicate_frontier' in x['observed_checks'] and x['fault']['version'] == 2 for x in forged)
+    assert record['command']['version'] == c.VERSION
 
 
 def test_semantically_broken_rewrite_is_refused(tmp_path, monkeypatch):
@@ -280,15 +310,15 @@ def test_forged_counts_table_holds_the_control_runs_own_counts_and_is_bounded():
     assert faults.library_control(source, 'dropped_wait')['source'] == source   # other controls need no counts
 
 
-@pytest.mark.parametrize('widths,rejected', [([1, 2, 3, 4, 5, 6, 7, 2], False), ([1, 2, 3, 4, 5, 100, 100], True)],
+@pytest.mark.parametrize('widths', [[1, 2, 3, 4, 5, 6, 7, 2], [1, 2, 3, 4, 5, 100, 100]],
                          ids=['eight-levels-scalar', 'seven-levels-accelerated'])
-def test_forged_frontier_prints_every_level_of_a_deep_graph(tmp_path, widths, rejected):
+def test_forged_frontier_prints_every_level_of_a_deep_graph(tmp_path, widths):
     """Before the fix the table was {1,4200,17000}: level four read past its end.
 
-    Eight scalar levels: the fault never fires (no accelerated chunk), the forged print shows the
-    oracle at every level, and the run passes. Seven levels with accelerated levels six and seven:
-    the duplicate push is caught by the trusted queue check (`duplicate_frontier`) after six
-    correctly forged prints.
+    Ticket 67 (2026-10-04 ET): forged_frontier v2 duplicates the first queue push of the run,
+    so it fires on both graphs, including eight scalar levels where v1 never fired (no
+    accelerated chunk). The duplicate lands in level 1's pushes and the trusted queue check
+    (`duplicate_frontier`) stops the run at level 1's window, after one forged print.
     """
     try:
         c.compiler()
@@ -318,9 +348,5 @@ def test_forged_frontier_prints_every_level_of_a_deep_graph(tmp_path, widths, re
                        run['stdout'] + run['stderr'])
     observed = c.observed_checks(run, counts, kernels.BFS.certification_judge, named)
     status = c.control_status(kernels.BFS.certification_controls['forged_frontier'], observed, run, passed)
-    if rejected:
-        assert printed == counts[:len(printed)] and len(printed) == len(counts) - 1, printed
-        assert run['returncode'] == 88 and 'duplicate_frontier' in observed and status == 'rejected'
-    else:
-        assert printed == counts, printed
-        assert run['returncode'] == 0 and passed and status == 'survived'
+    assert printed == counts[:1], printed
+    assert run['returncode'] == 88 and 'duplicate_frontier' in observed and status == 'rejected'

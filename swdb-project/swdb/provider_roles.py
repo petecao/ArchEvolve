@@ -1,6 +1,6 @@
 """Role-specific inputs over the shared provider process, guard and audit.
 
-Updated: 2026-10-04 (login write-back). Inputs are built by trusted SWDB callers, never copied by
+Updated: 2026-10-04 ET (ticket 69: strict-mode keyword check); 2026-10-04 (login write-back). Inputs are built by trusted SWDB callers, never copied by
 walking a repository. Each file is explicit; real invocations require mbit10.
 """
 
@@ -55,16 +55,37 @@ ROLES = {
 }
 
 
+# Schema keywords on the wire (ticket 69, 2026-10-04 ET; agent-decided under Yan-Ru's delegation,
+# revisable). Evidence from real Codex sessions (codex-cli 0.153.0, gpt-5.6-sol, strict output):
+# - refused: `uniqueItems` (annotation a2, 2026-10-03: "invalid_json_schema: uniqueItems is not
+#   permitted for index_provenance"). The Codex transport omits it; local validation keeps it.
+# - accepted: `minItems`, `minLength`, `minimum` and a type-less `enum` (annotation a3, completed
+#   2026-10-03 09:08 ET with wire schema sha256 3928d885d999..., byte-identical to the profiling
+#   role's current wire schema), and the shape keywords every campaign role used in a2-a7.
+# Any other keyword is reported as unverified, so a new keyword is checked before a real session.
+STRICT_ACCEPTED_KEYWORDS = frozenset({"type", "properties", "required", "additionalProperties", "items",
+                                      "enum", "minItems", "minLength", "minimum"})
+STRICT_REFUSED_KEYWORDS = frozenset({"uniqueItems"})
+_COMPOSITION = ("anyOf", "allOf", "oneOf", "$defs")
+
+
 def strict_problems(schema, where="$"):
     """Reasons a role output schema fails the providers' strict structured-output check.
 
     Strict mode needs every object to close its shape: `additionalProperties: false`, a
     nonempty `properties` mapping, and every property listed in `required`. Nested
     properties, array items and composition branches are checked too.
+    Ticket 69 (2026-10-04 ET): every keyword must be one strict mode was seen to accept. Check the
+    schema as sent: for Codex, `wire_schema` (after its transport).
     """
     problems = []
     if not isinstance(schema, dict):
         return problems
+    for keyword in sorted(set(schema) - STRICT_ACCEPTED_KEYWORDS - set(_COMPOSITION)):
+        if keyword in STRICT_REFUSED_KEYWORDS:
+            problems.append(f"{where}: keyword {keyword} is refused by strict mode")
+        else:
+            problems.append(f"{where}: keyword {keyword} is not verified against strict mode")
     types = schema.get("type")
     types = types if isinstance(types, list) else [types]
     if "object" in types:
@@ -85,6 +106,12 @@ def strict_problems(schema, where="$"):
     for name, child in (schema.get("$defs") or {}).items():
         problems += strict_problems(child, f"{where}.$defs.{name}")
     return problems
+
+
+def wire_schema(schema, kind="codex"):
+    """The output schema as the provider receives it (ticket 69). Codex drops `uniqueItems`;
+    Claude receives the schema unchanged (its strict-mode keyword support is not verified)."""
+    return provider_adapters._codex_transport_schema(schema) if kind == "codex" else schema
 
 
 def project(value):

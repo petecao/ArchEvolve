@@ -1,0 +1,331 @@
+{
+ "created": "2026-10-04 21:05 ET",
+ "ticket": 67,
+ "campaign": "extensa-gem5-bfs-20261004-a7",
+ "purpose": "Re-judge the six a7 candidates whose only certification failure was forged_frontier v1 surviving at tile 16384, with forged_frontier v2 (ticket 67). Mac strict functional certification only; no gem5 run.",
+ "decision": "agent-decided under Yan-Ru's 2026-10-04 delegation; revisable",
+ "code": "swdb-project at the ticket 67 commit (forged_frontier v2) (worktree branch, forged_frontier v2, certification command 1.1)",
+ "sources": {
+  "records": "/data/yanruj/EvolveSWDB_runs/extensa/extensa-gem5-bfs-20261004-a7/records (copied read-only to the Mac scratchpad)",
+  "candidate_trees": "rebuilt on the Mac from snapshot bfs-dx100-scalar-only-20260929-a1.source + the recorded diff (git apply --recount) + the proposal knob lines + canonical header; tree_sha256 equal to each candidate record",
+  "store": "scratch copy of swdb-project/records with the six candidate and proposal records added; not committed"
+ },
+ "host": {
+  "system": "Darwin",
+  "architecture": "arm64",
+  "compiler": "/opt/homebrew/bin/g++-16"
+ },
+ "mechanism_check": {
+  "rewrite": "ticket 20 patch with __dxc_accelerated_chunk() moved after each chunk's pushes (tests/test_certification_controls.py chunk_hook_after_pushes)",
+  "graph": "two-level control graph, source 0",
+  "results": {
+   "v1@16384": {
+    "status": "survived",
+    "observed": [],
+    "returncode": 0
+   },
+   "v1@1024": {
+    "status": "rejected",
+    "observed": [
+     "duplicate_frontier",
+     "frontier_size_equality"
+    ],
+    "returncode": 88
+   },
+   "v2@16384": {
+    "status": "rejected",
+    "observed": [
+     "duplicate_frontier",
+     "frontier_size_equality"
+    ],
+    "returncode": 88
+   },
+   "v2@1024": {
+    "status": "rejected",
+    "observed": [
+     "duplicate_frontier",
+     "frontier_size_equality"
+    ],
+    "returncode": 88
+   }
+  }
+ },
+ "rejudged": [
+  {
+   "candidate": "extensa-gem5-bfs-20261004-a7.it2.kronecker.a1",
+   "class": "kronecker",
+   "knobs": {
+    "frontier_threshold": 64
+   },
+   "diff_sha256": "8eb81dbb67b7c3eea78b5ab33a6d45ee4125b84e4fd9772c444aaefbc14173b2",
+   "tree_sha256": "d99547664a53f06546f49e77913662d9a67e349fbbc1ceea43ed4cc0fe5c376d",
+   "a7_certification": "certification.feb2a42325b74f2aa2935d7f5df8caf9",
+   "a7_verdict": "failed",
+   "a7_not_rejected": [
+    "forged_frontier@16384:survived"
+   ],
+   "mac_certification": "certification.db3969991850411c8d1926dbef472759",
+   "mac_verdict": "certified",
+   "command_version": "1.1",
+   "command_sources_sha256": "951e68e2ead3550567a3df4a3e64400e01680bd68b7ad80c8d66deb6b41248ab",
+   "contract_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51",
+   "matrix": "10/10",
+   "controls_rejected": "16/16",
+   "forged_frontier": [
+    {
+     "tile_size": 16384,
+     "status": "rejected",
+     "version": 2,
+     "observed_checks": [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ]
+    },
+    {
+     "tile_size": 1024,
+     "status": "rejected",
+     "version": 2,
+     "observed_checks": [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ]
+    }
+   ],
+   "enforceable_clause_mismatches": [],
+   "gem5_timing": null,
+   "selection": "certified, not timed"
+  },
+  {
+   "candidate": "extensa-gem5-bfs-20261004-a7.it3.kronecker.a1",
+   "class": "kronecker",
+   "knobs": {
+    "frontier_threshold": 64
+   },
+   "diff_sha256": "1cfac774df0d22eb537a8ed2cca3fa2501626e9e29a374b7115594b37e1101ea",
+   "tree_sha256": "1475dcf368d6058f27c647a4cbae1cd650e54fac1c1ef452a0eb65d5e92a3482",
+   "a7_certification": "certification.868dbc6aa80a40a5a2a0259370cdef22",
+   "a7_verdict": "failed",
+   "a7_not_rejected": [
+    "forged_frontier@16384:survived"
+   ],
+   "mac_certification": "certification.579ccff26373479cadc177869e52954a",
+   "mac_verdict": "certified",
+   "command_version": "1.1",
+   "command_sources_sha256": "951e68e2ead3550567a3df4a3e64400e01680bd68b7ad80c8d66deb6b41248ab",
+   "contract_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51",
+   "matrix": "10/10",
+   "controls_rejected": "16/16",
+   "forged_frontier": [
+    {
+     "tile_size": 16384,
+     "status": "rejected",
+     "version": 2,
+     "observed_checks": [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ]
+    },
+    {
+     "tile_size": 1024,
+     "status": "rejected",
+     "version": 2,
+     "observed_checks": [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ]
+    }
+   ],
+   "enforceable_clause_mismatches": [],
+   "gem5_timing": null,
+   "selection": "certified, not timed"
+  },
+  {
+   "candidate": "extensa-gem5-bfs-20261004-a7.it5.kronecker.a1",
+   "class": "kronecker",
+   "knobs": {
+    "frontier_threshold": 64
+   },
+   "diff_sha256": "29ccf0255a69a8cdf5c7630b43f7d6e514345d76083975ec843214ec89a94376",
+   "tree_sha256": "2e851fa12666357c9bb0ee0dae51b0f5fc2bcef87078fd2a3d35c75ff39043ea",
+   "a7_certification": "certification.fc06460a4d734875b45934003867cb0e",
+   "a7_verdict": "failed",
+   "a7_not_rejected": [
+    "forged_frontier@16384:survived"
+   ],
+   "mac_certification": "certification.06e656883af6451e872ca578389ea5a9",
+   "mac_verdict": "certified",
+   "command_version": "1.1",
+   "command_sources_sha256": "951e68e2ead3550567a3df4a3e64400e01680bd68b7ad80c8d66deb6b41248ab",
+   "contract_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51",
+   "matrix": "10/10",
+   "controls_rejected": "16/16",
+   "forged_frontier": [
+    {
+     "tile_size": 16384,
+     "status": "rejected",
+     "version": 2,
+     "observed_checks": [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ]
+    },
+    {
+     "tile_size": 1024,
+     "status": "rejected",
+     "version": 2,
+     "observed_checks": [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ]
+    }
+   ],
+   "enforceable_clause_mismatches": [],
+   "gem5_timing": null,
+   "selection": "certified, not timed"
+  },
+  {
+   "candidate": "extensa-gem5-bfs-20261004-a7.it5.kronecker.a2",
+   "class": "kronecker",
+   "knobs": {
+    "frontier_threshold": 64
+   },
+   "diff_sha256": "9f4c14b67e9112b33f6b9e75749e886e46a2ef17c76c994f37b7ef14418d46fb",
+   "tree_sha256": "9b5855d787460bc4eda3fbeebebb01a044458ede2eb7eff3af72cea537ddc5a6",
+   "a7_certification": "certification.3edc49cfe44d423187e32bc0b14ccfba",
+   "a7_verdict": "failed",
+   "a7_not_rejected": [
+    "forged_frontier@16384:survived"
+   ],
+   "mac_certification": "certification.90d9ae5ff2b44b34b38d6bc9942009bc",
+   "mac_verdict": "certified",
+   "command_version": "1.1",
+   "command_sources_sha256": "951e68e2ead3550567a3df4a3e64400e01680bd68b7ad80c8d66deb6b41248ab",
+   "contract_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51",
+   "matrix": "10/10",
+   "controls_rejected": "16/16",
+   "forged_frontier": [
+    {
+     "tile_size": 16384,
+     "status": "rejected",
+     "version": 2,
+     "observed_checks": [
+      "duplicate_frontier"
+     ]
+    },
+    {
+     "tile_size": 1024,
+     "status": "rejected",
+     "version": 2,
+     "observed_checks": [
+      "duplicate_frontier"
+     ]
+    }
+   ],
+   "enforceable_clause_mismatches": [],
+   "gem5_timing": null,
+   "selection": "certified, not timed"
+  },
+  {
+   "candidate": "extensa-gem5-bfs-20261004-a7.it6.kronecker.a0",
+   "class": "kronecker",
+   "knobs": {
+    "frontier_threshold": 64
+   },
+   "diff_sha256": "7c7015f7f3a6f20a65516375884a980e17e6d7b116e7666ea2acfb3f0366ed90",
+   "tree_sha256": "2c50f0974ba459e8e62a542a25b33792b4da248da948f7e1f76721d3a10ac1dc",
+   "a7_certification": "certification.10c2c401117a42d69cdceae54fba84f3",
+   "a7_verdict": "failed",
+   "a7_not_rejected": [
+    "forged_frontier@16384:survived"
+   ],
+   "mac_certification": "certification.be274dd7466f4218bff2e5c0142b24f4",
+   "mac_verdict": "certified",
+   "command_version": "1.1",
+   "command_sources_sha256": "951e68e2ead3550567a3df4a3e64400e01680bd68b7ad80c8d66deb6b41248ab",
+   "contract_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51",
+   "matrix": "10/10",
+   "controls_rejected": "16/16",
+   "forged_frontier": [
+    {
+     "tile_size": 16384,
+     "status": "rejected",
+     "version": 2,
+     "observed_checks": [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ]
+    },
+    {
+     "tile_size": 1024,
+     "status": "rejected",
+     "version": 2,
+     "observed_checks": [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ]
+    }
+   ],
+   "enforceable_clause_mismatches": [],
+   "gem5_timing": null,
+   "selection": "certified, not timed"
+  },
+  {
+   "candidate": "extensa-gem5-bfs-20261004-a7.it8.uniform_random.a0",
+   "class": "uniform_random",
+   "knobs": {
+    "frontier_threshold": 64
+   },
+   "diff_sha256": "29ccf0255a69a8cdf5c7630b43f7d6e514345d76083975ec843214ec89a94376",
+   "tree_sha256": "1c5dbf7f01437ec0ab308bf7d30a715328f812d41ebb45fb96cb9e93b0a12305",
+   "a7_certification": "certification.29672712bf354b04bf93f4983a53f57c",
+   "a7_verdict": "failed",
+   "a7_not_rejected": [
+    "forged_frontier@16384:survived"
+   ],
+   "mac_certification": "certification.4e7ed1b983f54900a89a3ae46b78577e",
+   "mac_verdict": "certified",
+   "command_version": "1.1",
+   "command_sources_sha256": "951e68e2ead3550567a3df4a3e64400e01680bd68b7ad80c8d66deb6b41248ab",
+   "contract_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51",
+   "matrix": "10/10",
+   "controls_rejected": "16/16",
+   "forged_frontier": [
+    {
+     "tile_size": 16384,
+     "status": "rejected",
+     "version": 2,
+     "observed_checks": [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ]
+    },
+    {
+     "tile_size": 1024,
+     "status": "rejected",
+     "version": 2,
+     "observed_checks": [
+      "duplicate_frontier",
+      "frontier_size_equality"
+     ]
+    }
+   ],
+   "enforceable_clause_mismatches": [],
+   "gem5_timing": null,
+   "selection": "certified, not timed"
+  }
+ ],
+ "selection": {
+  "rule": "certified before uncertified, then point ratio from the evaluator (ticket 53)",
+  "kronecker": {
+   "best": "extensa-gem5-bfs-20261004-a7.it4.kronecker.a2",
+   "ratio": 1.411,
+   "changed": false
+  },
+  "uniform_random": {
+   "best": "extensa-gem5-bfs-20261004-a7.it8.uniform_random.a1",
+   "ratio": 1.553,
+   "changed": false
+  },
+  "reason": "None of the six has a gem5 evaluation; ranking needs an evaluator result, so none can replace a timed certified best. Each is recorded as certified, not timed."
+ }
+}

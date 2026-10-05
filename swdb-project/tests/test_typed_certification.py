@@ -124,7 +124,8 @@ def test_forged_frontier_control_prints_oracle_counts_but_trusted_queue_is_check
     instrumented = c.instrument_source(scalar)
     control = c._rewrite_control(instrumented, 'forged_frontier', counts=[1, 4200, 17000])
     # Ticket 62: the double enqueue is a library fault; only the protected print is edited.
-    assert control['fault'] == 'SWDB_DXC_FAULT_FORGED_FRONTIER'
+    # Ticket 67: version 2 duplicates the first queue push of the run.
+    assert control['fault'] == 'SWDB_DXC_FAULT_FORGED_FRONTIER_V2' and control['version'] == 2
     mutant = control['source']
     assert 'swdb_forged_counts[3]={1,4200,17000}' in mutant
     assert '<< swdb_forged_count(queue.size())' in mutant

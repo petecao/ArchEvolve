@@ -1,7 +1,7 @@
 # Final code review, tickets 38–65
 
 Created: 2026-10-04 ET
-Updated: 2026-10-04 21:10 ET (forged-frontier P3 fixed in `ab98aeb`)
+Updated: 2026-10-04 21:40 ET (follow-ups: forged_frontier v2 in ticket 67, knob_range and schedule_range in ticket 68, profiling schema verified in ticket 69); 2026-10-04 21:10 ET (forged-frontier P3 fixed in `ab98aeb`)
 
 **Range:** `58aff85..24da1d2` on `yanrujhou_main`, limited to `swdb-project/`. The fixes are
 on the review branch (worktree `agent-ae1e0bf9afef585df`), `2738a26..HEAD`. Nothing was pushed.
@@ -97,8 +97,10 @@ These were seen and judged below the reporting bar, so they are not fixed:
 ## Open
 
 - **For Yan-Ru, contract wording:**
-  - The checks named by the `frontier_threshold` and `schedule` clauses do not exist.
+  - The checks named by the `frontier_threshold` and `schedule` clauses do not exist. Implemented
+    2026-10-04 in [68](issues/68-knob-range-and-schedule-range-checks.md), with no contract change.
+    The contract's control IDs for these clauses still cannot exercise the checks (wording, open).
   - The L4 part controls could be named in the contract.
 - **Native evaluator:** the v2 driver needs an element-type guard on the parents it returns. This
   requires a new evaluator version.
-- **Profiling role:** check its schema against the provider's strict mode.
+- **Profiling role:** check its schema against the provider's strict mode. Done 2026-10-04 in [69](issues/69-profiling-role-strict-schema.md): Codex accepted these exact bytes in annotation a3; no change was needed. The Claude path is unverified.

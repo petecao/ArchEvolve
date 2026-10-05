@@ -1,5 +1,8 @@
 """Spelling-independent rewrite negative controls (2026-10-04 ET, ticket 62).
 
+Updated: 2026-10-04 ET (ticket 67: ``forged_frontier`` version 2 fires on the first CPU
+queue push of the run, independent of tile size, threshold and chunk timing).
+
 Agent-decided under Yan-Ru's 2026-10-04 delegation; revisable.
 
 Before ticket 62 every rewrite control was an exact-text mutation of ticket 20's
@@ -35,8 +38,14 @@ LIBRARY_FAULTS = {
     'dropped_wait': 'SWDB_DXC_FAULT_DROPPED_WAIT',
     'read_before_wait': 'SWDB_DXC_FAULT_READ_BEFORE_WAIT',
     'index_wrap': 'SWDB_DXC_FAULT_INDEX_WRAP',
-    'forged_frontier': 'SWDB_DXC_FAULT_FORGED_FRONTIER',
+    'forged_frontier': 'SWDB_DXC_FAULT_FORGED_FRONTIER_V2',
 }
+# Control versions (ticket 67, 2026-10-04 ET). A control record without `fault.version` was
+# written with version 1. forged_frontier v1 fired only after an accelerated chunk finished, so
+# a correct candidate whose chunks never finished before a push could not kill it; v2 duplicates
+# the first queue push of the run. Old certificates keep their v1 meaning.
+FAULT_VERSIONS = {name: 1 for name in LIBRARY_FAULTS}
+FAULT_VERSIONS['forged_frontier'] = 2
 FRONTIER_PRINT = '<< queue.size() << " elements"'
 
 
@@ -82,7 +91,8 @@ def library_control(source, name, *, counts=None):
     if name not in LIBRARY_FAULTS:
         raise Failure('unknown rewrite control')
     mutated = forge_frontier_print(source, counts) if name == 'forged_frontier' else source
-    return {'source': mutated, 'fault': LIBRARY_FAULTS[name], 'site': 'library_fault'}
+    return {'source': mutated, 'fault': LIBRARY_FAULTS[name], 'site': 'library_fault',
+            'version': FAULT_VERSIONS[name]}
 
 
 # --- token-level site matching ------------------------------------------------
