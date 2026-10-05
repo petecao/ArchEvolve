@@ -171,3 +171,107 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
     return blinding.certify_candidate(tree, library, folder, tile_sizes, threads, sources, threshold=threshold,
                                       plugin=plugin, contract=contract, rng=rng, build_class=Build, runner=run_one,
                                       driver_attribute='certification_driver_v15', build_suffix='v15')
+
+
+# --- native-CPU contracts (ticket 75's path) under 1.5 -------------------------------------------------
+
+NATIVE_FOLDER = 'native/certification/v1_5'
+NATIVE_EVALUATOR = NATIVE_FOLDER + '/evaluator.cc'
+NATIVE_CLIENT = NATIVE_FOLDER + '/client.cc'
+NATIVE_DRIVER = 'dx100/certification/v1_5/bfs_driver.inc'
+
+
+def _native_build_class(library):
+    from swdb.certification_native import NativeBuild
+
+    class NativeProcessBuild(NativeBuild):
+        """A native build under 1.5: the candidate object with the unchanged native 1.4 prelude, linked
+        with the native client only; the evaluator from native 1.4 record.cc and seams.cc."""
+
+        def _std17(self):
+            return [f for f in self.flags if not f.startswith('-std=')] + ['-std=c++17']
+
+        def _trusted_compile(self, source, output, extra):
+            from swdb.certification import execute
+            command = [self.compiler, *self._std17(), *extra, '-c', str(source), '-o', str(output)]
+            result = execute(command, Path(str(output) + '.build.json'), timeout=180)
+            if result['returncode']:
+                raise Failure('trusted native certification process object failed to build; see ' + result['log'])
+            result['object'] = str(output)
+            result['object_sha256'] = artifacts.file_hash(output)
+            return result
+
+        def process_objects(self):
+            from swdb.certification import execute
+            if 'process' not in self._trusted:
+                context = ['-include', str(library / CONTEXT), '-I' + str(library / FOLDER)]
+                objects = {
+                    'evaluator.cc': self._trusted_compile(library / NATIVE_EVALUATOR, self.folder / 'evaluator-v15.o', context),
+                    'record.cc': self._trusted_compile(self.harness['record'], self.folder / 'record-evaluator-v15.o', context),
+                    'seams.cc': self._trusted_compile(self.harness['seams'], self.folder / 'seams-evaluator-v15.o',
+                                                      context + [f'-DSWDB_NATIVE_FAULT_BATCH={self.fault_batch}']),
+                }
+                output = self.folder / 'swdb-evaluator'
+                link = execute([self.compiler, '-fopenmp', '-pthread', *[o['object'] for o in objects.values()],
+                                '-o', str(output)], Path(str(output) + '.link.json'), timeout=180)
+                if link['returncode']:
+                    raise Failure('trusted native certification evaluator failed to link; see ' + link['log'])
+                client = self._trusted_compile(library / NATIVE_CLIENT, self.folder / 'client-v15.o',
+                                               ['-I' + str(library / FOLDER)])
+                self._trusted['process'] = {'evaluator': str(output), 'evaluator_sha256': artifacts.file_hash(output),
+                                            'objects': {k: v['object_sha256'] for k, v in objects.items()},
+                                            'client': client}
+            return self._trusted['process']
+
+        def link(self, candidate, fault, output):
+            from swdb.certification import execute
+            process = self.process_objects()
+            command = [self.compiler, '-fopenmp', '-pthread', candidate['object'], process['client']['object'],
+                       '-o', str(output)]
+            result = execute(command, Path(str(output) + '.link.json'), timeout=180)
+            result.update(candidate_object_sha256=candidate.get('object_sha256'),
+                          record_object_sha256=process['objects']['record.cc'],
+                          seam_object_sha256=process['objects']['seams.cc'],
+                          client_object_sha256=process['client']['object_sha256'],
+                          evaluator=process['evaluator'], evaluator_sha256=process['evaluator_sha256'],
+                          process_split=True, fault_macro=fault, binary=str(output))
+            return result
+
+    return NativeProcessBuild
+
+
+def _native_run(link, output, graph, vertex, log, threads, fault):
+    """One native 1.5 run (the native plan line; the evaluator starts the candidate)."""
+    from swdb.certification import execute
+    from swdb.certification_blinding import CHANNEL_ENV, PLAN_ENV
+    from swdb.certification_native import _plan_line
+    nonce = secrets.token_hex(16)
+    record = Path(log).parent / f'run-{nonce}.record'   # as ticket 75's native 1.4 runs
+    descriptor = os.open(record, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    plan_read, plan_write = os.pipe()
+    try:
+        os.write(plan_write, _plan_line(fault, nonce))
+        os.close(plan_write)
+        plan_write = None
+        result = execute([link['evaluator'], output, '-f', graph, '-r', vertex, '-n', '1', '-v'], log,
+                         threads=threads, extra_env={CHANNEL_ENV: str(descriptor), PLAN_ENV: str(plan_read)},
+                         pass_fds=(descriptor, plan_read))
+    finally:
+        os.close(descriptor)
+        os.close(plan_read)
+        if plan_write is not None:
+            os.close(plan_write)
+    result.update(record=str(record.resolve()), record_sha256=artifacts.file_hash(record),
+                  plan={'fault': fault, 'nonce': nonce}, evaluator_sha256=link['evaluator_sha256'])
+    return result
+
+
+def certify_native(tree, library, folder, profile, plugin, *, rng=None):
+    """A native-CPU contract under certify 1.5: the native 1.4 procedure, judge and attribution
+    (``certification_native.certify_native_v14``) with the 1.5 process split. The profile's pinned 1.4
+    prelude, record writer and seams are used unchanged; the client, the evaluator and the 1.5 driver
+    are pinned by the command's sources_sha256 (the profile is not edited)."""
+    from swdb import certification_native as native
+    return native.certify_native_v14(tree, library, folder, profile, plugin, rng=rng,
+                                     build_class=_native_build_class(Path(library)), runner=_native_run,
+                                     driver=Path(library) / NATIVE_DRIVER, suffix='v15')

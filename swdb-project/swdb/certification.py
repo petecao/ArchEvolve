@@ -1077,6 +1077,11 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         native_schedule = None
         if version == '1.3':
             matrix, controls = native.certify_native(tree, library_root, folder, profile, plugin)
+        elif version == '1.5':
+            # Ticket 78: the native 1.4 procedure with the 1.5 process split.
+            from swdb import certification_process
+            matrix, controls, native_schedule = certification_process.certify_native(tree, library_root, folder,
+                                                                                     profile, plugin)
         else:
             matrix, controls, native_schedule = native.certify_native_v14(tree, library_root, folder, profile, plugin)
         native_profile = {'id': profile['data']['id'], 'path': str(profile['path'].relative_to(library_root)),

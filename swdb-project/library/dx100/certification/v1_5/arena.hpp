@@ -35,8 +35,8 @@ constexpr size_t MAX_TILE_BYTES = 65535 * 4;           // the DX100 uint16 tile-
 constexpr size_t HEAP_OFFSET = TILE_WINDOW_OFFSET + MAX_TILES * MAX_TILE_BYTES;
 constexpr int SIZE_CLASSES = 40;
 
-// Operations a slot can carry. Seam operations mirror the 1.4 seams (seams.cc), strict-model
-// operations the strict layer's interface (strict/MAA_functional.hpp).
+// Operations a slot can carry. Seam operations mirror the 1.4 seams (DX100 and native-CPU seams.cc),
+// strict-model operations the strict layer's interface (strict/MAA_functional.hpp).
 enum Op : int32_t {
   SESSION_BEGIN = 1, THREAD_CONTEXT, WAIT, GATHER, STREAM_LOAD, RANGE_LOOP, ALU_SCALAR, CLAIM, PUSH,
   DIRECT_PUSH, SLIDE, RESET, CHUNK,
@@ -44,6 +44,7 @@ enum Op : int32_t {
   TILE_SIZE_OP, TILE_READY, WAIT_READY, SET_TILE_SIZE, SET_TILE_READY, MAA_STREAM_LOAD, MAA_INDIRECT_LOAD,
   MAA_RANGE_LOOP, MAA_ALU_SCALAR, MAA_STORE, STRICT_SESSION_BEGIN, CHECK_FAIL, OPERATION_COUNT,
   FINISH = 60,
+  NATIVE_SLIDE = 70, NATIVE_OFFSETS,   // the native-CPU seams (library/native/certification/v1_4)
 };
 
 // Reply codes of CLAIM: 0 not claimed, 1 claimed, 2 the slot is not in the shared arena (the
