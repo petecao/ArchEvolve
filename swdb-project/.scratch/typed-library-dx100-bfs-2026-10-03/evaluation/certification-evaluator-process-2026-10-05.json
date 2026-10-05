@@ -1,0 +1,1976 @@
+{
+ "created": "2026-10-05 ET",
+ "ticket": 78,
+ "purpose": "Certify 1.5 / library-operation 1.2 (record-keeping in a separate evaluator process): overhead against 1.4 / 1.1 and the correctness regression. Mac only; scratch stores, nothing persisted.",
+ "scope": "decided by Yan-Ru 2026-10-05: engineering refactor plus overhead measurement; OS confinement of the candidate and adversarial tests out of scope",
+ "code_commit": "d1f23cb37e448fe70d9a54aefe8001d02f07f711",
+ "host": {
+  "system": "Darwin",
+  "machine": "arm64",
+  "compiler": "/opt/homebrew/bin/g++-16",
+  "note": "the Mac was otherwise idle except for these runs; one run at a time"
+ },
+ "certifications": {
+  "t20": {
+   "1.4": {
+    "which": "t20",
+    "certification": "certification.f7b1e2a72247435cab1de90bba3c1c5a",
+    "verdict": "certified",
+    "command_version": "1.4",
+    "command_sources_sha256": "7e93615930dc680200ff960d2ddf868556e66259af394ba338572d4357e9687b",
+    "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+    "matrix": "10/10",
+    "matrix_reasons": [
+     "all_checks_passed"
+    ],
+    "seam_witness_problems": [],
+    "controls_rejected": "20/20",
+    "rejections": [
+     [
+      "chunk_off_by_one",
+      "tile_truncation",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "dropped_continuation",
+      "frontier_size_equality,verifier",
+      "missing_vertex_behind_lost_edge"
+     ],
+     [
+      "dropped_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "forged_frontier",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_is_forged_push"
+     ],
+     [
+      "index_wrap",
+      "stream_bounds",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "knob_out_of_range",
+      "knob_range",
+      "not_a_library_fault"
+     ],
+     [
+      "read_before_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "schedule_out_of_range",
+      "schedule_range",
+      "not_a_library_fault"
+     ],
+     [
+      "shared_context",
+      "thread_ownership_register",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "skipped_cas_recheck",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_after_forged_claim"
+     ]
+    ],
+    "library_fault_controls_attributed": "16/16",
+    "not_rejected": [],
+    "binaries_per_tile": {
+     "16384": 1,
+     "1024": 1
+    },
+    "clause_mismatches": [],
+    "run_seconds": {
+     "kronecker-10@16384/t4": 0.0139,
+     "kronecker-14@16384/t4": 0.0323,
+     "kronecker-16@16384/t4": 0.0967,
+     "uniform-14@16384/t4": 0.037,
+     "two-level-degree-17000@16384/t4": 0.1223,
+     "kronecker-10@1024/t4": 0.0128,
+     "kronecker-14@1024/t4": 0.0349,
+     "kronecker-16@1024/t4": 0.1244,
+     "uniform-14@1024/t4": 0.0433,
+     "two-level-degree-17000@1024/t4": 0.0165
+    },
+    "seconds": 20.1
+   },
+   "1.5": {
+    "which": "t20",
+    "certification": "certification.c806e2af25c6472a95aaa44b398a9015",
+    "verdict": "certified",
+    "command_version": "1.5",
+    "command_sources_sha256": "7e93615930dc680200ff960d2ddf868556e66259af394ba338572d4357e9687b",
+    "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+    "matrix": "10/10",
+    "matrix_reasons": [
+     "all_checks_passed"
+    ],
+    "seam_witness_problems": [],
+    "controls_rejected": "20/20",
+    "rejections": [
+     [
+      "chunk_off_by_one",
+      "tile_truncation",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "dropped_continuation",
+      "frontier_size_equality,verifier",
+      "missing_vertex_behind_lost_edge"
+     ],
+     [
+      "dropped_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "forged_frontier",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_is_forged_push"
+     ],
+     [
+      "index_wrap",
+      "stream_bounds",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "knob_out_of_range",
+      "knob_range",
+      "not_a_library_fault"
+     ],
+     [
+      "read_before_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "schedule_out_of_range",
+      "schedule_range",
+      "not_a_library_fault"
+     ],
+     [
+      "shared_context",
+      "thread_ownership_register",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "skipped_cas_recheck",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_after_forged_claim"
+     ]
+    ],
+    "library_fault_controls_attributed": "16/16",
+    "not_rejected": [],
+    "binaries_per_tile": {
+     "16384": 1,
+     "1024": 1
+    },
+    "clause_mismatches": [],
+    "run_seconds": {
+     "kronecker-10@16384/t4": 0.0343,
+     "kronecker-14@16384/t4": 0.1627,
+     "kronecker-16@16384/t4": 0.1116,
+     "uniform-14@16384/t4": 0.0566,
+     "two-level-degree-17000@16384/t4": 0.0449,
+     "kronecker-10@1024/t4": 0.1353,
+     "kronecker-14@1024/t4": 0.0587,
+     "kronecker-16@1024/t4": 0.1609,
+     "uniform-14@1024/t4": 0.0715,
+     "two-level-degree-17000@1024/t4": 0.0419
+    },
+    "seconds": 21.1
+   },
+   "same_rejections_and_attribution_rules": true,
+   "same_tree": true,
+   "certification_seconds_ratio": 1.05
+  },
+  "bc": {
+   "1.4": {
+    "which": "bc",
+    "certification": "certification.fef9f89c31ff412a8e3cf92c18c54ee0",
+    "verdict": "certified",
+    "command_version": "1.4",
+    "command_sources_sha256": "7e93615930dc680200ff960d2ddf868556e66259af394ba338572d4357e9687b",
+    "tree_sha256": "d6f86eb6f33798ca43afa1b6cfdc462ebc6a5ffdebd3b2a7601082257dceb3b9",
+    "matrix": "10/10",
+    "matrix_reasons": [
+     "all_checks_passed"
+    ],
+    "seam_witness_problems": [],
+    "controls_rejected": "28/28",
+    "rejections": [
+     [
+      "chunk_off_by_one",
+      "tile_truncation",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "dropped_continuation",
+      "frontier_size_equality,verifier",
+      "missing_vertex_behind_lost_edge"
+     ],
+     [
+      "dropped_successor_bit",
+      "verifier",
+      "not_a_library_fault"
+     ],
+     [
+      "dropped_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "forged_frontier",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_is_forged_push"
+     ],
+     [
+      "index_wrap",
+      "stream_bounds",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "knob_out_of_range",
+      "knob_range",
+      "not_a_library_fault"
+     ],
+     [
+      "read_before_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "schedule_out_of_range",
+      "schedule_range",
+      "not_a_library_fault"
+     ],
+     [
+      "shared_context",
+      "thread_ownership_register",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "shifted_edge_index",
+      "verifier",
+      "not_a_library_fault"
+     ],
+     [
+      "shifted_path_count_source",
+      "verifier",
+      "not_a_library_fault"
+     ],
+     [
+      "skipped_cas_recheck",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_after_forged_claim"
+     ],
+     [
+      "stale_depth_hint",
+      "verifier",
+      "not_a_library_fault"
+     ]
+    ],
+    "library_fault_controls_attributed": "16/16",
+    "not_rejected": [],
+    "binaries_per_tile": {
+     "16384": 1,
+     "1024": 1
+    },
+    "clause_mismatches": [],
+    "run_seconds": {
+     "kronecker-10@16384/t4": 0.0149,
+     "kronecker-14@16384/t4": 0.0416,
+     "kronecker-16@16384/t4": 0.242,
+     "uniform-14@16384/t4": 0.0461,
+     "two-level-degree-17000@16384/t4": 0.0206,
+     "kronecker-10@1024/t4": 0.014,
+     "kronecker-14@1024/t4": 0.0407,
+     "kronecker-16@1024/t4": 0.1384,
+     "uniform-14@1024/t4": 0.0504,
+     "two-level-degree-17000@1024/t4": 0.0198
+    },
+    "seconds": 38.2
+   },
+   "1.5": {
+    "which": "bc",
+    "certification": "certification.b77acdac80a942a5bbe7e8a2bfed1436",
+    "verdict": "certified",
+    "command_version": "1.5",
+    "command_sources_sha256": "7e93615930dc680200ff960d2ddf868556e66259af394ba338572d4357e9687b",
+    "tree_sha256": "d6f86eb6f33798ca43afa1b6cfdc462ebc6a5ffdebd3b2a7601082257dceb3b9",
+    "matrix": "10/10",
+    "matrix_reasons": [
+     "all_checks_passed"
+    ],
+    "seam_witness_problems": [],
+    "controls_rejected": "28/28",
+    "rejections": [
+     [
+      "chunk_off_by_one",
+      "tile_truncation",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "dropped_continuation",
+      "frontier_size_equality,verifier",
+      "missing_vertex_behind_lost_edge"
+     ],
+     [
+      "dropped_successor_bit",
+      "verifier",
+      "not_a_library_fault"
+     ],
+     [
+      "dropped_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "forged_frontier",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_is_forged_push"
+     ],
+     [
+      "index_wrap",
+      "stream_bounds",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "knob_out_of_range",
+      "knob_range",
+      "not_a_library_fault"
+     ],
+     [
+      "read_before_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "schedule_out_of_range",
+      "schedule_range",
+      "not_a_library_fault"
+     ],
+     [
+      "shared_context",
+      "thread_ownership_register",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "shifted_edge_index",
+      "verifier",
+      "not_a_library_fault"
+     ],
+     [
+      "shifted_path_count_source",
+      "verifier",
+      "not_a_library_fault"
+     ],
+     [
+      "skipped_cas_recheck",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_after_forged_claim"
+     ],
+     [
+      "stale_depth_hint",
+      "verifier",
+      "not_a_library_fault"
+     ]
+    ],
+    "library_fault_controls_attributed": "16/16",
+    "not_rejected": [],
+    "binaries_per_tile": {
+     "16384": 1,
+     "1024": 1
+    },
+    "clause_mismatches": [],
+    "run_seconds": {
+     "kronecker-10@16384/t4": 0.0393,
+     "kronecker-14@16384/t4": 0.0854,
+     "kronecker-16@16384/t4": 0.2141,
+     "uniform-14@16384/t4": 0.0846,
+     "two-level-degree-17000@16384/t4": 0.0516,
+     "kronecker-10@1024/t4": 0.0394,
+     "kronecker-14@1024/t4": 0.0846,
+     "kronecker-16@1024/t4": 0.2151,
+     "uniform-14@1024/t4": 0.0884,
+     "two-level-degree-17000@1024/t4": 0.0519
+    },
+    "seconds": 38.3
+   },
+   "same_rejections_and_attribution_rules": true,
+   "same_tree": true,
+   "certification_seconds_ratio": 1.0
+  },
+  "it4.kronecker.a2": {
+   "1.4": {
+    "which": "it4.kronecker.a2",
+    "certification": "certification.46821be1bada4d1bbc6a92127eb27ee5",
+    "verdict": "certified",
+    "command_version": "1.4",
+    "command_sources_sha256": "7e93615930dc680200ff960d2ddf868556e66259af394ba338572d4357e9687b",
+    "tree_sha256": "c8f4bf16b26ddf5ce243170ebebcfbe0cd4afa11be38c5de970461a955e3414c",
+    "matrix": "10/10",
+    "matrix_reasons": [
+     "all_checks_passed"
+    ],
+    "seam_witness_problems": [],
+    "controls_rejected": "20/20",
+    "rejections": [
+     [
+      "chunk_off_by_one",
+      "tile_truncation",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "dropped_continuation",
+      "frontier_size_equality,verifier",
+      "missing_vertex_behind_lost_edge"
+     ],
+     [
+      "dropped_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "forged_frontier",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_is_forged_push"
+     ],
+     [
+      "index_wrap",
+      "stream_bounds",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "knob_out_of_range",
+      "knob_range",
+      "not_a_library_fault"
+     ],
+     [
+      "read_before_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "schedule_out_of_range",
+      "schedule_range",
+      "not_a_library_fault"
+     ],
+     [
+      "shared_context",
+      "thread_ownership_register",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "skipped_cas_recheck",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_after_forged_claim"
+     ]
+    ],
+    "library_fault_controls_attributed": "16/16",
+    "not_rejected": [],
+    "binaries_per_tile": {
+     "16384": 1,
+     "1024": 1
+    },
+    "clause_mismatches": [],
+    "run_seconds": {
+     "kronecker-10@16384/t4": 0.1212,
+     "kronecker-14@16384/t4": 0.0319,
+     "kronecker-16@16384/t4": 0.0937,
+     "uniform-14@16384/t4": 0.0367,
+     "two-level-degree-17000@16384/t4": 0.0184,
+     "kronecker-10@1024/t4": 0.0127,
+     "kronecker-14@1024/t4": 0.0354,
+     "kronecker-16@1024/t4": 0.2402,
+     "uniform-14@1024/t4": 0.0429,
+     "two-level-degree-17000@1024/t4": 0.0177
+    },
+    "seconds": 17.6
+   },
+   "1.5": {
+    "which": "it4.kronecker.a2",
+    "certification": "certification.a8418ae17aae4783847dffa18ab34bb6",
+    "verdict": "certified",
+    "command_version": "1.5",
+    "command_sources_sha256": "7e93615930dc680200ff960d2ddf868556e66259af394ba338572d4357e9687b",
+    "tree_sha256": "c8f4bf16b26ddf5ce243170ebebcfbe0cd4afa11be38c5de970461a955e3414c",
+    "matrix": "10/10",
+    "matrix_reasons": [
+     "all_checks_passed"
+    ],
+    "seam_witness_problems": [],
+    "controls_rejected": "20/20",
+    "rejections": [
+     [
+      "chunk_off_by_one",
+      "tile_truncation",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "dropped_continuation",
+      "frontier_size_equality,verifier",
+      "missing_vertex_behind_lost_edge"
+     ],
+     [
+      "dropped_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "forged_frontier",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_is_forged_push"
+     ],
+     [
+      "index_wrap",
+      "stream_bounds",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "knob_out_of_range",
+      "knob_range",
+      "not_a_library_fault"
+     ],
+     [
+      "read_before_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "schedule_out_of_range",
+      "schedule_range",
+      "not_a_library_fault"
+     ],
+     [
+      "shared_context",
+      "thread_ownership_register",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "skipped_cas_recheck",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_after_forged_claim"
+     ]
+    ],
+    "library_fault_controls_attributed": "16/16",
+    "not_rejected": [],
+    "binaries_per_tile": {
+     "16384": 1,
+     "1024": 1
+    },
+    "clause_mismatches": [],
+    "run_seconds": {
+     "kronecker-10@16384/t4": 0.0366,
+     "kronecker-14@16384/t4": 0.0568,
+     "kronecker-16@16384/t4": 0.113,
+     "uniform-14@16384/t4": 0.0604,
+     "two-level-degree-17000@16384/t4": 0.0449,
+     "kronecker-10@1024/t4": 0.0377,
+     "kronecker-14@1024/t4": 0.0639,
+     "kronecker-16@1024/t4": 0.1644,
+     "uniform-14@1024/t4": 0.0769,
+     "two-level-degree-17000@1024/t4": 0.0486
+    },
+    "seconds": 20.5
+   },
+   "same_rejections_and_attribution_rules": true,
+   "same_tree": true,
+   "certification_seconds_ratio": 1.16
+  },
+  "it8.uniform_random.a1": {
+   "1.4": {
+    "which": "it8.uniform_random.a1",
+    "certification": "certification.41a22bafe76a45d08279b8bcbdd9f5fa",
+    "verdict": "certified",
+    "command_version": "1.4",
+    "command_sources_sha256": "7e93615930dc680200ff960d2ddf868556e66259af394ba338572d4357e9687b",
+    "tree_sha256": "d63c714aacf820cfa8aceadbd802f3d8dd8833666bd3921c0b320b7be37f3e89",
+    "matrix": "10/10",
+    "matrix_reasons": [
+     "all_checks_passed"
+    ],
+    "seam_witness_problems": [],
+    "controls_rejected": "20/20",
+    "rejections": [
+     [
+      "chunk_off_by_one",
+      "tile_truncation",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "dropped_continuation",
+      "frontier_size_equality,verifier",
+      "missing_vertex_behind_lost_edge"
+     ],
+     [
+      "dropped_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "forged_frontier",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_is_forged_push"
+     ],
+     [
+      "index_wrap",
+      "stream_bounds",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "knob_out_of_range",
+      "knob_range",
+      "not_a_library_fault"
+     ],
+     [
+      "read_before_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "schedule_out_of_range",
+      "schedule_range",
+      "not_a_library_fault"
+     ],
+     [
+      "shared_context",
+      "thread_ownership_register",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "skipped_cas_recheck",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_after_forged_claim"
+     ]
+    ],
+    "library_fault_controls_attributed": "16/16",
+    "not_rejected": [],
+    "binaries_per_tile": {
+     "16384": 1,
+     "1024": 1
+    },
+    "clause_mismatches": [],
+    "run_seconds": {
+     "kronecker-10@16384/t4": 0.0155,
+     "kronecker-14@16384/t4": 0.0349,
+     "kronecker-16@16384/t4": 0.0991,
+     "uniform-14@16384/t4": 0.0365,
+     "two-level-degree-17000@16384/t4": 0.0182,
+     "kronecker-10@1024/t4": 0.0127,
+     "kronecker-14@1024/t4": 0.0357,
+     "kronecker-16@1024/t4": 0.1238,
+     "uniform-14@1024/t4": 0.0442,
+     "two-level-degree-17000@1024/t4": 0.134
+    },
+    "seconds": 18.2
+   },
+   "1.5": {
+    "which": "it8.uniform_random.a1",
+    "certification": "certification.8bed7a05d27e423f8df92af6ae63c9a1",
+    "verdict": "certified",
+    "command_version": "1.5",
+    "command_sources_sha256": "7e93615930dc680200ff960d2ddf868556e66259af394ba338572d4357e9687b",
+    "tree_sha256": "d63c714aacf820cfa8aceadbd802f3d8dd8833666bd3921c0b320b7be37f3e89",
+    "matrix": "10/10",
+    "matrix_reasons": [
+     "all_checks_passed"
+    ],
+    "seam_witness_problems": [],
+    "controls_rejected": "20/20",
+    "rejections": [
+     [
+      "chunk_off_by_one",
+      "tile_truncation",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "dropped_continuation",
+      "frontier_size_equality,verifier",
+      "missing_vertex_behind_lost_edge"
+     ],
+     [
+      "dropped_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "forged_frontier",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_is_forged_push"
+     ],
+     [
+      "index_wrap",
+      "stream_bounds",
+      "strict_inside_faulted_call"
+     ],
+     [
+      "knob_out_of_range",
+      "knob_range",
+      "not_a_library_fault"
+     ],
+     [
+      "read_before_wait",
+      "read_before_wait",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "schedule_out_of_range",
+      "schedule_range",
+      "not_a_library_fault"
+     ],
+     [
+      "shared_context",
+      "thread_ownership_register",
+      "strict_on_faulted_thread"
+     ],
+     [
+      "skipped_cas_recheck",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_after_forged_claim"
+     ]
+    ],
+    "library_fault_controls_attributed": "16/16",
+    "not_rejected": [],
+    "binaries_per_tile": {
+     "16384": 1,
+     "1024": 1
+    },
+    "clause_mismatches": [],
+    "run_seconds": {
+     "kronecker-10@16384/t4": 0.0385,
+     "kronecker-14@16384/t4": 0.0604,
+     "kronecker-16@16384/t4": 0.119,
+     "uniform-14@16384/t4": 0.0586,
+     "two-level-degree-17000@16384/t4": 0.0426,
+     "kronecker-10@1024/t4": 0.0409,
+     "kronecker-14@1024/t4": 0.0705,
+     "kronecker-16@1024/t4": 0.1682,
+     "uniform-14@1024/t4": 0.0752,
+     "two-level-degree-17000@1024/t4": 0.2387
+    },
+    "seconds": 20.0
+   },
+   "same_rejections_and_attribution_rules": true,
+   "same_tree": true,
+   "certification_seconds_ratio": 1.1
+  },
+  "native": {
+   "1.4": {
+    "which": "native",
+    "certification": "certification.6dee44e677dc4a8e9affae27beb076c8",
+    "verdict": "certified",
+    "command_version": "1.4",
+    "command_sources_sha256": "7e93615930dc680200ff960d2ddf868556e66259af394ba338572d4357e9687b",
+    "tree_sha256": "7acca955a1f85a8563280d57b3d4e594bd0312393aeff946eda92f1577ad6ea3",
+    "matrix": "22/22",
+    "matrix_reasons": [
+     "all_checks_passed"
+    ],
+    "seam_witness_problems": [],
+    "controls_rejected": "8/8",
+    "rejections": [
+     [
+      "claim_without_write",
+      "verifier",
+      "lost_claim_left_unset"
+     ],
+     [
+      "forged_frontier",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_is_forged_push"
+     ],
+     [
+      "partial_batch_dropped",
+      "frontier_size_equality,verifier",
+      "missing_child_of_hidden_vertex"
+     ],
+     [
+      "stale_row_offset",
+      "frontier_size_equality,verifier",
+      "parent_without_edge_from_stale_vertex"
+     ]
+    ],
+    "library_fault_controls_attributed": "8/8",
+    "not_rejected": [],
+    "binaries_per_tile": {
+     "o3": 1,
+     "o1g": 1
+    },
+    "clause_mismatches": [],
+    "run_seconds": {
+     "kronecker-10@o3/t1": 0.0123,
+     "kronecker-14@o3/t1": 0.0148,
+     "kronecker-16@o3/t1": 0.0218,
+     "uniform-14@o3/t1": 0.0145,
+     "two-level-degree-17000@o3/t1": 0.0134,
+     "kronecker-10@o3/t4": 0.0112,
+     "kronecker-14@o3/t4": 0.0178,
+     "kronecker-16@o3/t4": 0.0357,
+     "uniform-14@o3/t4": 0.1353,
+     "two-level-degree-17000@o3/t4": 0.0152,
+     "staging-tail-17@o3/t4": 0.0109,
+     "kronecker-10@o1g/t1": 0.111,
+     "kronecker-14@o1g/t1": 0.0159,
+     "kronecker-16@o1g/t1": 0.0224,
+     "uniform-14@o1g/t1": 0.0147,
+     "two-level-degree-17000@o1g/t1": 0.0164,
+     "kronecker-10@o1g/t4": 0.0122,
+     "kronecker-14@o1g/t4": 0.0176,
+     "kronecker-16@o1g/t4": 0.0362,
+     "uniform-14@o1g/t4": 0.0211,
+     "two-level-degree-17000@o1g/t4": 0.0173,
+     "staging-tail-17@o1g/t4": 0.0117
+    },
+    "seconds": 13.2
+   },
+   "1.5": {
+    "which": "native",
+    "certification": "certification.41063cbaef894c4e8a55c0dc1d001b97",
+    "verdict": "certified",
+    "command_version": "1.5",
+    "command_sources_sha256": "7e93615930dc680200ff960d2ddf868556e66259af394ba338572d4357e9687b",
+    "tree_sha256": "7acca955a1f85a8563280d57b3d4e594bd0312393aeff946eda92f1577ad6ea3",
+    "matrix": "22/22",
+    "matrix_reasons": [
+     "all_checks_passed"
+    ],
+    "seam_witness_problems": [],
+    "controls_rejected": "8/8",
+    "rejections": [
+     [
+      "claim_without_write",
+      "verifier",
+      "lost_claim_left_unset"
+     ],
+     [
+      "forged_frontier",
+      "duplicate_frontier,frontier_size_equality",
+      "duplicate_is_forged_push"
+     ],
+     [
+      "partial_batch_dropped",
+      "frontier_size_equality,verifier",
+      "missing_child_of_hidden_vertex"
+     ],
+     [
+      "stale_row_offset",
+      "frontier_size_equality,verifier",
+      "parent_without_edge_from_stale_vertex"
+     ]
+    ],
+    "library_fault_controls_attributed": "8/8",
+    "not_rejected": [],
+    "binaries_per_tile": {
+     "o3": 1,
+     "o1g": 1
+    },
+    "clause_mismatches": [],
+    "run_seconds": {
+     "kronecker-10@o3/t1": 0.0318,
+     "kronecker-14@o3/t1": 0.0397,
+     "kronecker-16@o3/t1": 0.0563,
+     "uniform-14@o3/t1": 0.0408,
+     "two-level-degree-17000@o3/t1": 0.0362,
+     "kronecker-10@o3/t4": 0.0325,
+     "kronecker-14@o3/t4": 0.044,
+     "kronecker-16@o3/t4": 0.0664,
+     "uniform-14@o3/t4": 0.053,
+     "two-level-degree-17000@o3/t4": 0.0457,
+     "staging-tail-17@o3/t4": 0.2341,
+     "kronecker-10@o1g/t1": 0.0323,
+     "kronecker-14@o1g/t1": 0.038,
+     "kronecker-16@o1g/t1": 0.0551,
+     "uniform-14@o1g/t1": 0.0412,
+     "two-level-degree-17000@o1g/t1": 0.2587,
+     "kronecker-10@o1g/t4": 0.0339,
+     "kronecker-14@o1g/t4": 0.0402,
+     "kronecker-16@o1g/t4": 0.0663,
+     "uniform-14@o1g/t4": 0.0449,
+     "two-level-degree-17000@o1g/t4": 0.0396,
+     "staging-tail-17@o1g/t4": 0.0317
+    },
+    "seconds": 15.7
+   },
+   "same_rejections_and_attribution_rules": true,
+   "same_tree": true,
+   "certification_seconds_ratio": 1.19
+  }
+ },
+ "per_run_overhead": {
+  "t20": {
+   "method": "the same certified binaries and graphs, 10 alternating 1.4/1.5 runs per positive cell (source 0), wall time of the whole run including process start",
+   "rows": [
+    {
+     "graph": "kronecker-10",
+     "tile_size": 16384,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0116,
+     "median_seconds_1_5": 0.0338,
+     "ratio": 2.92,
+     "min_seconds_1_4": 0.0114,
+     "min_seconds_1_5": 0.0335,
+     "record_lines_1_5": 20
+    },
+    {
+     "graph": "kronecker-14",
+     "tile_size": 16384,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0317,
+     "median_seconds_1_5": 0.0526,
+     "ratio": 1.66,
+     "min_seconds_1_4": 0.0311,
+     "min_seconds_1_5": 0.0518,
+     "record_lines_1_5": 22
+    },
+    {
+     "graph": "kronecker-16",
+     "tile_size": 16384,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0991,
+     "median_seconds_1_5": 0.1168,
+     "ratio": 1.18,
+     "min_seconds_1_4": 0.0976,
+     "min_seconds_1_5": 0.1125,
+     "record_lines_1_5": 22
+    },
+    {
+     "graph": "uniform-14",
+     "tile_size": 16384,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0373,
+     "median_seconds_1_5": 0.0581,
+     "ratio": 1.56,
+     "min_seconds_1_4": 0.0363,
+     "min_seconds_1_5": 0.0571,
+     "record_lines_1_5": 20
+    },
+    {
+     "graph": "two-level-degree-17000",
+     "tile_size": 16384,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0161,
+     "median_seconds_1_5": 0.0429,
+     "ratio": 2.66,
+     "min_seconds_1_4": 0.0153,
+     "min_seconds_1_5": 0.0418,
+     "record_lines_1_5": 16
+    },
+    {
+     "graph": "kronecker-10",
+     "tile_size": 1024,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0108,
+     "median_seconds_1_5": 0.032,
+     "ratio": 2.96,
+     "min_seconds_1_4": 0.0106,
+     "min_seconds_1_5": 0.0308,
+     "record_lines_1_5": 20
+    },
+    {
+     "graph": "kronecker-14",
+     "tile_size": 1024,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.035,
+     "median_seconds_1_5": 0.0594,
+     "ratio": 1.7,
+     "min_seconds_1_4": 0.0338,
+     "min_seconds_1_5": 0.0572,
+     "record_lines_1_5": 22
+    },
+    {
+     "graph": "kronecker-16",
+     "tile_size": 1024,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.1267,
+     "median_seconds_1_5": 0.1615,
+     "ratio": 1.27,
+     "min_seconds_1_4": 0.1233,
+     "min_seconds_1_5": 0.1576,
+     "record_lines_1_5": 22
+    },
+    {
+     "graph": "uniform-14",
+     "tile_size": 1024,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0452,
+     "median_seconds_1_5": 0.0726,
+     "ratio": 1.61,
+     "min_seconds_1_4": 0.0435,
+     "min_seconds_1_5": 0.07,
+     "record_lines_1_5": 20
+    },
+    {
+     "graph": "two-level-degree-17000",
+     "tile_size": 1024,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0157,
+     "median_seconds_1_5": 0.0446,
+     "ratio": 2.84,
+     "min_seconds_1_4": 0.015,
+     "min_seconds_1_5": 0.0412,
+     "record_lines_1_5": 16
+    }
+   ]
+  },
+  "bc": {
+   "method": "the same certified binaries and graphs, 10 alternating 1.4/1.5 runs per positive cell (source 0), wall time of the whole run including process start",
+   "rows": [
+    {
+     "graph": "kronecker-10",
+     "tile_size": 16384,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0121,
+     "median_seconds_1_5": 0.0353,
+     "ratio": 2.92,
+     "min_seconds_1_4": 0.0118,
+     "min_seconds_1_5": 0.0337,
+     "record_lines_1_5": 19
+    },
+    {
+     "graph": "kronecker-14",
+     "tile_size": 16384,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0417,
+     "median_seconds_1_5": 0.0872,
+     "ratio": 2.09,
+     "min_seconds_1_4": 0.0414,
+     "min_seconds_1_5": 0.0814,
+     "record_lines_1_5": 21
+    },
+    {
+     "graph": "kronecker-16",
+     "tile_size": 16384,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.1309,
+     "median_seconds_1_5": 0.2383,
+     "ratio": 1.82,
+     "min_seconds_1_4": 0.1294,
+     "min_seconds_1_5": 0.2118,
+     "record_lines_1_5": 21
+    },
+    {
+     "graph": "uniform-14",
+     "tile_size": 16384,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0455,
+     "median_seconds_1_5": 0.0845,
+     "ratio": 1.86,
+     "min_seconds_1_4": 0.0442,
+     "min_seconds_1_5": 0.0803,
+     "record_lines_1_5": 19
+    },
+    {
+     "graph": "two-level-degree-17000",
+     "tile_size": 16384,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0197,
+     "median_seconds_1_5": 0.0524,
+     "ratio": 2.66,
+     "min_seconds_1_4": 0.0186,
+     "min_seconds_1_5": 0.0495,
+     "record_lines_1_5": 15
+    },
+    {
+     "graph": "kronecker-10",
+     "tile_size": 1024,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0116,
+     "median_seconds_1_5": 0.0336,
+     "ratio": 2.9,
+     "min_seconds_1_4": 0.0113,
+     "min_seconds_1_5": 0.0323,
+     "record_lines_1_5": 19
+    },
+    {
+     "graph": "kronecker-14",
+     "tile_size": 1024,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0397,
+     "median_seconds_1_5": 0.0819,
+     "ratio": 2.06,
+     "min_seconds_1_4": 0.0394,
+     "min_seconds_1_5": 0.0777,
+     "record_lines_1_5": 21
+    },
+    {
+     "graph": "kronecker-16",
+     "tile_size": 1024,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.1404,
+     "median_seconds_1_5": 0.217,
+     "ratio": 1.55,
+     "min_seconds_1_4": 0.1374,
+     "min_seconds_1_5": 0.2076,
+     "record_lines_1_5": 21
+    },
+    {
+     "graph": "uniform-14",
+     "tile_size": 1024,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0505,
+     "median_seconds_1_5": 0.0909,
+     "ratio": 1.8,
+     "min_seconds_1_4": 0.0498,
+     "min_seconds_1_5": 0.0874,
+     "record_lines_1_5": 19
+    },
+    {
+     "graph": "two-level-degree-17000",
+     "tile_size": 1024,
+     "repetitions": 10,
+     "median_seconds_1_4": 0.0178,
+     "median_seconds_1_5": 0.0505,
+     "ratio": 2.84,
+     "min_seconds_1_4": 0.0172,
+     "min_seconds_1_5": 0.047,
+     "record_lines_1_5": 15
+    }
+   ]
+  }
+ },
+ "library_operations": {
+  "operation.pack_executor": {
+   "1.1": {
+    "certification": "certification.e93d1660a6df46ed848f06327cd4efce",
+    "verdict": "certified",
+    "command_version": "1.1",
+    "sources_sha256": "c5c4d023a4e5f5820db1a9b52f4b1af09f9c53225416027dcba9abeadd955de1",
+    "seed": 1239874168,
+    "seconds": 13.3,
+    "matrix": {
+     "sanitized/differential": [
+      "passed",
+      null
+     ],
+     "openmp/differential": [
+      "passed",
+      null
+     ],
+     "probe/contract": [
+      "passed",
+      "contract_probe"
+     ]
+    },
+    "controls": {
+     "driver.input_write": [
+      "rejected",
+      "frame_violation",
+      [
+       12,
+       12
+      ],
+      [
+       12,
+       12
+      ]
+     ],
+     "driver.output_perturb": [
+      "rejected",
+      "differential_mismatch",
+      [
+       12,
+       12
+      ],
+      [
+       12,
+       12
+      ]
+     ],
+     "aliasing_write": [
+      "rejected",
+      "frame_violation",
+      [
+       12,
+       12
+      ],
+      [
+       12,
+       12
+      ]
+     ],
+     "off_by_one_index": [
+      "rejected",
+      "differential_mismatch",
+      [
+       6,
+       6
+      ],
+      [
+       12,
+       12
+      ]
+     ],
+     "dropped_chain_level": [
+      "rejected",
+      "differential_mismatch",
+      [
+       9,
+       9
+      ],
+      [
+       12,
+       12
+      ]
+     ]
+    },
+    "runs": 144
+   },
+   "1.2": {
+    "certification": "certification.e144dcdd5402409a91784d1fda31d7f9",
+    "verdict": "certified",
+    "command_version": "1.2",
+    "sources_sha256": "52cfbf0b733913533731cfd02cf0a3edd7f5af823777e4159fe00dc34bf8dc9b",
+    "seed": 1409116676,
+    "seconds": 16.0,
+    "matrix": {
+     "sanitized/differential": [
+      "passed",
+      null
+     ],
+     "openmp/differential": [
+      "passed",
+      null
+     ],
+     "probe/contract": [
+      "passed",
+      "contract_probe"
+     ]
+    },
+    "controls": {
+     "driver.input_write": [
+      "rejected",
+      "frame_violation",
+      [
+       12,
+       12
+      ],
+      [
+       12,
+       12
+      ]
+     ],
+     "driver.output_perturb": [
+      "rejected",
+      "differential_mismatch",
+      [
+       12,
+       12
+      ],
+      [
+       12,
+       12
+      ]
+     ],
+     "aliasing_write": [
+      "rejected",
+      "frame_violation",
+      [
+       12,
+       12
+      ],
+      [
+       12,
+       12
+      ]
+     ],
+     "off_by_one_index": [
+      "rejected",
+      "differential_mismatch",
+      [
+       6,
+       6
+      ],
+      [
+       12,
+       12
+      ]
+     ],
+     "dropped_chain_level": [
+      "rejected",
+      "differential_mismatch",
+      [
+       9,
+       9
+      ],
+      [
+       12,
+       12
+      ]
+     ]
+    },
+    "runs": 144
+   },
+   "certification_seconds_ratio": 1.2,
+   "same_control_outcomes": true
+  },
+  "operation.update_binning_executor": {
+   "1.1": {
+    "certification": "certification.ff1abd9ef1234345a0cf6414dc9b3c5d",
+    "verdict": "certified",
+    "command_version": "1.1",
+    "sources_sha256": "c5c4d023a4e5f5820db1a9b52f4b1af09f9c53225416027dcba9abeadd955de1",
+    "seed": 548708742,
+    "seconds": 10.5,
+    "matrix": {
+     "sanitized/differential": [
+      "passed",
+      null
+     ],
+     "openmp/differential": [
+      "passed",
+      null
+     ]
+    },
+    "controls": {
+     "driver.input_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "driver.output_perturb": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "dropped_last_record": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "double_drain": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "aliasing_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ]
+    },
+    "runs": 96
+   },
+   "1.2": {
+    "certification": "certification.64f7702f260346b68b85c5e58d6a1479",
+    "verdict": "certified",
+    "command_version": "1.2",
+    "sources_sha256": "52cfbf0b733913533731cfd02cf0a3edd7f5af823777e4159fe00dc34bf8dc9b",
+    "seed": 3158679461,
+    "seconds": 12.9,
+    "matrix": {
+     "sanitized/differential": [
+      "passed",
+      null
+     ],
+     "openmp/differential": [
+      "passed",
+      null
+     ]
+    },
+    "controls": {
+     "driver.input_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "driver.output_perturb": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "dropped_last_record": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "double_drain": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "aliasing_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ]
+    },
+    "runs": 96
+   },
+   "certification_seconds_ratio": 1.23,
+   "same_control_outcomes": true
+  },
+  "operation.vertex_relabel_executor": {
+   "1.1": {
+    "certification": "certification.aa4c8b3c4b824e4d82786426e4115819",
+    "verdict": "certified",
+    "command_version": "1.1",
+    "sources_sha256": "c5c4d023a4e5f5820db1a9b52f4b1af09f9c53225416027dcba9abeadd955de1",
+    "seed": 228209135,
+    "seconds": 9.9,
+    "matrix": {
+     "sanitized/differential": [
+      "passed",
+      null
+     ],
+     "openmp/differential": [
+      "passed",
+      null
+     ]
+    },
+    "controls": {
+     "driver.input_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "driver.output_perturb": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "inverse_direction": [
+      "rejected",
+      "differential_mismatch",
+      [
+       4,
+       4
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "skip_last_vertex": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "aliasing_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ]
+    },
+    "runs": 96
+   },
+   "1.2": {
+    "certification": "certification.8c65dfbfd4cd4184a04a53b9915949e2",
+    "verdict": "certified",
+    "command_version": "1.2",
+    "sources_sha256": "52cfbf0b733913533731cfd02cf0a3edd7f5af823777e4159fe00dc34bf8dc9b",
+    "seed": 1156140224,
+    "seconds": 12.4,
+    "matrix": {
+     "sanitized/differential": [
+      "passed",
+      null
+     ],
+     "openmp/differential": [
+      "passed",
+      null
+     ]
+    },
+    "controls": {
+     "driver.input_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "driver.output_perturb": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "inverse_direction": [
+      "rejected",
+      "differential_mismatch",
+      [
+       4,
+       4
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "skip_last_vertex": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "aliasing_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ]
+    },
+    "runs": 96
+   },
+   "certification_seconds_ratio": 1.25,
+   "same_control_outcomes": true
+  },
+  "operation.regroup_executor": {
+   "1.1": {
+    "certification": "certification.938dcd4351f94909b4621f848a65951a",
+    "verdict": "certified",
+    "command_version": "1.1",
+    "sources_sha256": "c5c4d023a4e5f5820db1a9b52f4b1af09f9c53225416027dcba9abeadd955de1",
+    "seed": 577546128,
+    "seconds": 10.0,
+    "matrix": {
+     "sanitized/differential": [
+      "passed",
+      null
+     ],
+     "openmp/differential": [
+      "passed",
+      null
+     ]
+    },
+    "controls": {
+     "driver.input_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "driver.output_perturb": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "transposed_layout": [
+      "rejected",
+      "differential_mismatch",
+      [
+       5,
+       5
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "dropped_last_array": [
+      "rejected",
+      "differential_mismatch",
+      [
+       5,
+       5
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "aliasing_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ]
+    },
+    "runs": 96
+   },
+   "1.2": {
+    "certification": "certification.42e34fbd8e6b443aa50f8e66fc7d4aa8",
+    "verdict": "certified",
+    "command_version": "1.2",
+    "sources_sha256": "52cfbf0b733913533731cfd02cf0a3edd7f5af823777e4159fe00dc34bf8dc9b",
+    "seed": 389035254,
+    "seconds": 12.5,
+    "matrix": {
+     "sanitized/differential": [
+      "passed",
+      null
+     ],
+     "openmp/differential": [
+      "passed",
+      null
+     ]
+    },
+    "controls": {
+     "driver.input_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "driver.output_perturb": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "transposed_layout": [
+      "rejected",
+      "differential_mismatch",
+      [
+       5,
+       5
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "dropped_last_array": [
+      "rejected",
+      "differential_mismatch",
+      [
+       5,
+       5
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "aliasing_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ]
+    },
+    "runs": 96
+   },
+   "certification_seconds_ratio": 1.25,
+   "same_control_outcomes": true
+  },
+  "operation.gather_staging_executor": {
+   "1.1": {
+    "certification": "certification.a7304328ca8b4a6ebe2c1af1cc5625bd",
+    "verdict": "certified",
+    "command_version": "1.1",
+    "sources_sha256": "c5c4d023a4e5f5820db1a9b52f4b1af09f9c53225416027dcba9abeadd955de1",
+    "seed": 2078583679,
+    "seconds": 9.1,
+    "matrix": {
+     "sanitized/differential": [
+      "passed",
+      null
+     ],
+     "openmp/differential": [
+      "passed",
+      null
+     ]
+    },
+    "controls": {
+     "driver.input_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "driver.output_perturb": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "partial_drain": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "index_shift": [
+      "rejected",
+      "differential_mismatch",
+      [
+       4,
+       4
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "aliasing_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ]
+    },
+    "runs": 96
+   },
+   "1.2": {
+    "certification": "certification.bfaaa895243146e7871c2ab411778b96",
+    "verdict": "certified",
+    "command_version": "1.2",
+    "sources_sha256": "52cfbf0b733913533731cfd02cf0a3edd7f5af823777e4159fe00dc34bf8dc9b",
+    "seed": 2315952630,
+    "seconds": 11.6,
+    "matrix": {
+     "sanitized/differential": [
+      "passed",
+      null
+     ],
+     "openmp/differential": [
+      "passed",
+      null
+     ]
+    },
+    "controls": {
+     "driver.input_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "driver.output_perturb": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "partial_drain": [
+      "rejected",
+      "differential_mismatch",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "index_shift": [
+      "rejected",
+      "differential_mismatch",
+      [
+       4,
+       4
+      ],
+      [
+       8,
+       8
+      ]
+     ],
+     "aliasing_write": [
+      "rejected",
+      "frame_violation",
+      [
+       8,
+       8
+      ],
+      [
+       8,
+       8
+      ]
+     ]
+    },
+    "runs": 96
+   },
+   "certification_seconds_ratio": 1.27,
+   "same_control_outcomes": true
+  }
+ }
+}
