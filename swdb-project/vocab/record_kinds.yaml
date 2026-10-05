@@ -1,6 +1,6 @@
 name: record_kinds
 description: The kinds of record the database holds; each has its own schema.
-# Updated: 2026-10-03 (Eastern Time).
+# Updated: 2026-10-05 (Eastern Time): review covers candidate promotion and attribution corrections.
 values:
   - value: application
     meaning: A program that contains kernels, from one source at one version.
@@ -51,7 +51,7 @@ values:
     meaning: Content-bound differential and candidate pre-check evidence with named negative controls.
 
   - value: review
-    meaning: A named reviewer admits one certified entry content hash to the shared tier.
+    meaning: A named reviewer admits one certified library entry content hash to the shared tier, promotes one Extensa candidate artifact to its team re-evaluation, or (an attribution correction) states who performed an earlier review.
 
   - value: campaign_summary
     meaning: One Extensa campaign's inputs, candidate artifacts, verdicts, budgets used and stop reason, written once at stop.

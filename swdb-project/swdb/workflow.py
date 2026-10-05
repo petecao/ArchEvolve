@@ -62,8 +62,12 @@ CREATION_TAGS = {}
 #: Tickets 56/57 (2026-10-04 ET): a public command that a real campaign target adapter runs
 #: as a child process inherits the campaign's tags through this variable (the campaign ID).
 EXTENSA_CAMPAIGN_ENV = "SWDB_EXTENSA_CAMPAIGN"
-if re.fullmatch(r"extensa-[a-z0-9][a-z0-9._-]*", os.environ.get(EXTENSA_CAMPAIGN_ENV, "")):
-    CREATION_TAGS.update(mode="extensa", campaign=os.environ[EXTENSA_CAMPAIGN_ENV])
+#: 2026-10-05 ET (code review): the variable must hold an ID of the one Extensa campaign-ID pattern
+#: (`schemas/envelope.schema.json` `$defs.extensa_campaign_id`), the pattern every tagged record must match.
+if os.environ.get(EXTENSA_CAMPAIGN_ENV):
+    from swdb.schemas import campaign_id_pattern
+    if re.fullmatch(campaign_id_pattern(), os.environ[EXTENSA_CAMPAIGN_ENV]):
+        CREATION_TAGS.update(mode="extensa", campaign=os.environ[EXTENSA_CAMPAIGN_ENV])
 
 
 def record(kind, rid, **fields):

@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 # Ported 2026-10-03 from MaizeHPC/MemAcc af3d6d7f7a69a72facdc3b95b42e78c952f44a76
 # Source: AgenticRefiner/refiner/synthesis/targets/base.py (unchanged logic)
+# 2026-10-05 ET (code review): docstring references to MemAcc's CUDA target, its spec and a MemAcc
+# document, none of which were ported (D1), removed.
 """WS-C synthesis — per-target harness protocol (build / sanitize / run seams)."""
 from __future__ import annotations
 
@@ -42,10 +44,9 @@ class TargetHarness:
         process group, and that whole group is best-effort SIGKILLed in
         `finally` -- after EVERY run, not only on timeout -- so a background
         process the target forked WITHOUT itself calling `setsid()` is
-        reaped together with it. This closes the residual
-        docs/backend-synthesis.md flags but does not fix: "a process trick
-        such as forking a detached background process that outlives its own
-        measured invocation and races a *later* case's `ref_dir`". A
+        reaped together with it. This closes a known residual: a process
+        trick such as forking a detached background process that outlives its
+        own measured invocation and races a *later* case's `ref_dir`. A
         candidate that calls `setsid()` itself detaches into a session this
         harness has no handle on and escapes this net entirely -- that
         residual still needs real OS-level process sandboxing (a restricted
@@ -96,10 +97,9 @@ class TargetHarness:
     def build_ref(self, sources: Sequence[Path], out_bin: Path, *,
                   sanitize: bool = False) -> BuildResult:
         """Build the TRUSTED REFERENCE binary. Defaults to build() so CPU
-        targets (neon/avx512) are unaffected. CudaTarget overrides this to a
-        plain CPU g++ build: the reference contains zero device code and never
-        touches nvcc, keeping the trusted side independent of the candidate's
-        toolchain (spec 2026-07-07 §3, item 1)."""
+        targets (neon/avx512) are unaffected. A target whose candidate needs
+        another toolchain overrides this, keeping the trusted side independent
+        of the candidate's toolchain."""
         return self.build(sources, out_bin, sanitize=sanitize)
 
     def sanitized_run(self, binary: Path, args: Sequence[str],
@@ -107,8 +107,6 @@ class TargetHarness:
                       timeout_s: int = 600) -> Tuple[int, str]:
         """Run the CANDIDATE binary under its sanitizer. Defaults to run() so
         CPU targets keep the ASan/UBSan-in-the-binary discipline (a plain run
-        whose exit code catches an ASan abort). CudaTarget overrides this to
-        wrap the run in compute-sanitizer memcheck+racecheck, since ASan cannot
-        see device memory (spec §3, item 2). Contract: (returncode, combined
+        whose exit code catches an ASan abort). Contract: (returncode, combined
         output); nonzero => the certify loop rejects the candidate."""
         return self.run(binary, args, cwd=cwd, timeout_s=timeout_s)

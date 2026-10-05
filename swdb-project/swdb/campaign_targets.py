@@ -5,9 +5,13 @@ freezes protocols with that evaluator, its driver and its compiled verifier; tic
 (2026-10-04 ET): the campaign's speed rule (range or CI-width gate) and evaluator v3 are frozen
 the same way. Original SWDB code (design decisions D2-D4, D7, D9 and D10 of
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`).
+Code review 2026-10-05 ET: an adapter answers every per-target question of the Extensa campaign loop
+(`HAS_PILOT`, `SHARED_BASELINE`, `POINT_RATIOS`, `EVIDENCE_BASIS`, `file_problems`); a comparison
+carries the evaluator's `decision.state` for the speed rule; the BFS names come from the kernel
+plug-in; the isolation check covers the legacy lease (S13); C++ lexing is `swdb.cpp_lexical`.
 
-An adapter turns the campaign loop's steps into the public SWDB evaluator commands, run
-as child processes against the campaign's own record store, with every record they create
+An adapter turns the Extensa campaign loop's steps into the public SWDB evaluator commands, run
+as child processes against the Extensa campaign's own record store, with every record they create
 tagged `mode: extensa` and `campaign` (``workflow.EXTENSA_CAMPAIGN_ENV``). The evaluator
 supplies every number (ADR 0010); an adapter never computes a ratio itself.
 
@@ -15,7 +19,7 @@ supplies every number (ADR 0010); an adapter never computes a ratio itself.
   baseline role (a frozen protocol names one baseline build). The A/A pilot times each
   baseline against itself on each class graph. Each candidate artifact gets its own
   paired block (`swdb evaluate-pair`) against each baseline, compared separately; the
-  campaign loop selects on the `base_source` comparison (Q61).
+  Extensa campaign loop selects on the `base_source` comparison (Q61).
 - ``Gem5Adapter`` (ticket 57, target ``dx100_gem5``): one frozen controlled-simulator
   protocol copied from ticket 29's read-offload freeze; one baseline evaluation per class
   serves every candidate artifact; point ratios. Before certification, each candidate's
@@ -42,13 +46,17 @@ import sys
 import time
 from pathlib import Path
 
-from swdb import artifacts, certification_feedback, paths, workflow
+from swdb import artifacts, certification_feedback, kernels, paths, workflow
 from swdb.cli import Failure, UsageError
+from swdb.cpp_lexical import body_spans, code_only, enclosing_function, function_span  # noqa: F401
+from swdb.extensa_boundary import MODE
 
-SNAPSHOT = "bfs-dx100-scalar-only-20260929-a1.source"
-BFS = "benchmarks/gapbs/src/bfs.cc"
+#: BFS names from the kernel plug-in (code review S1, 2026-10-05 ET): the scalar-only snapshot every
+#: candidate artifact starts from, its translation unit, and the timed function of `bfs.complete_call.v1`.
+SNAPSHOT = kernels.BFS.certification_snapshot
+BFS = kernels.BFS.certification_source
 HEADER = "benchmarks/gapbs/src/swdb_dxc_lowering.hpp"
-TIMED_FUNCTION = "DOBFS"          # bfs.complete_call.v1 times the whole DOBFS call
+TIMED_FUNCTION = kernels.BFS.native_function      # the ROI times the whole call
 GIB = 1024 ** 3
 #: Native D3 build flags; the evaluator appends -DFUNC for DX100-fork sources.
 NATIVE_FLAGS = ["-std=c++11", "-O3", "-Wall", "-fopenmp", "-pthread"]
@@ -64,7 +72,7 @@ VERIFICATION_MAX_TICKS = 10 ** 14
 POSTPROCESS_SECONDS = 3600
 
 
-from swdb.campaign import Refused, Stop  # noqa: E402  (the loop's refusal and stop types)
+from swdb.campaign import NATIVE_ORDER_SEED, Refused, Stop  # noqa: E402  (the loop's types)
 
 
 def _stop(reason, detail):
@@ -73,53 +81,20 @@ def _stop(reason, detail):
 
 # --- session begin inside the timed call (ticket 57) -----------------------------------
 
-_LEXICAL = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/')
-
-
-def _code_only(text):
-    """Blank comments and literals, keeping offsets, so braces and calls are lexical."""
-    text = re.sub(r"\\\r?\n", "  ", text)
-    return _LEXICAL.sub(lambda m: re.sub(r"[^\n]", " ", m.group()), text)
-
-
-def _bodies(code, function):
-    spans = []
-    for match in re.finditer(r"\b" + re.escape(function) + r"\s*\(", code):
-        depth, i = 0, match.end() - 1
-        while i < len(code):                 # the parameter list
-            depth += {"(": 1, ")": -1}.get(code[i], 0)
-            i += 1
-            if depth == 0:
-                break
-        rest = code[i:]
-        head = re.match(r"\s*(?:const\s*)?(?:noexcept\s*)?\{", rest)
-        if not head:
-            continue                          # a call or a declaration, not a definition
-        start = i + head.end() - 1
-        depth, j = 0, start
-        while j < len(code):
-            depth += {"{": 1, "}": -1}.get(code[j], 0)
-            if depth == 0:
-                break
-            j += 1
-        spans.append((start, j))
-    return spans
-
-
 def session_begin_problem(source, function=TIMED_FUNCTION):
     """None when every DX100 session begin is inside the timed function's body.
 
-    `bfs.complete_call.v1` times the whole call of `function`. A session begin anywhere
+    `bfs.complete_call.v1` (the plug-in's `native_roi`) times the whole call of `function`. A session begin anywhere
     else (a static initializer, `main`, a helper defined outside) runs outside the timed
     BFS call and is refused. The check is lexical and conservative: a helper that wraps
     the session begin is refused even when only the timed function calls it."""
-    code = _code_only(source)
+    code = code_only(source)
     calls = [m.start() for m in re.finditer(r"\b__dxc_session_begin\s*\(", code)]
     if not calls:
         return "the candidate never begins a DX100 session"
     if re.search(r"#\s*define\b[^\n]*\b__dxc_session_begin\b", code):
         return "a macro redefines __dxc_session_begin"
-    spans = _bodies(code, function)
+    spans = body_spans(code, function)
     if not spans:
         return f"the timed function {function} is not defined in the candidate"
     outside = [code.count("\n", 0, at) + 1 for at in calls if not any(a < at < b for a, b in spans)]
@@ -226,7 +201,7 @@ class Host:
             if marker.is_file():
                 data = json.loads(marker.read_text())
                 if Path(f"/proc/{data.get('pid')}").exists():
-                    row.update(mode="extensa", target=data.get("target"), campaign=data.get("campaign"))
+                    row.update(mode=MODE, target=data.get("target"), campaign=data.get("campaign"))
         return row
 
     def mark(self, runs_root, lane, campaign, target):
@@ -251,38 +226,20 @@ def _pin(data):
     return {"id": data["id"], "sha256": artifacts.digest(data)}
 
 
-def function_span(text, name):
-    """1-based (first, last) lines of the top-level definition of function `name`, or None.
-
-    Ticket 73 (2026-10-05 ET): a definition starts at column 0 and its body is the first balanced
-    brace block after it (enough for the GAPBS sources; comments and strings are not parsed)."""
-    lines = text.splitlines()
-    pattern = re.compile(r"^[A-Za-z_][\w:<>,\s\*&]*\b" + re.escape(name) + r"\s*\(")
-    for start, line in enumerate(lines):
-        if not pattern.match(line):
-            continue
-        depth, opened = 0, False
-        for end in range(start, len(lines)):
-            depth += lines[end].count("{") - lines[end].count("}")
-            opened = opened or "{" in lines[end]
-            if opened and depth <= 0:
-                return start + 1, end + 1
-            if not opened and lines[end].rstrip().endswith(";"):
-                break                       # a declaration, not a definition
-    return None
-
-
-def enclosing_function(text, line):
-    """Name of the top-level function whose definition spans 1-based `line`, or None."""
-    for match in re.finditer(r"^[A-Za-z_][\w:<>,\s\*&]*?\b([A-Za-z_]\w*)\s*\(", text, re.M):
-        span = function_span(text, match.group(1))
-        if span and span[0] <= line <= span[1]:
-            return match.group(1)
-    return None
-
-
 class TargetAdapter:
+    """What every target adapter answers for the Extensa campaign loop (code review 2026-10-05 ET:
+    the loop asks the adapter instead of switching on the target string)."""
+
     evidence_kind = "execution"
+    #: The campaign ID prefix is `extensa-<ID_KIND>-`.
+    ID_KIND = None
+    #: Runs a native A/A pilot before iteration 1 (D3).
+    HAS_PILOT = False
+    #: One baseline evaluation per workload class serves every candidate artifact (gem5, D2).
+    SHARED_BASELINE = False
+    #: Deterministic point ratios: lower = upper = ratio (gem5, Q63).
+    POINT_RATIOS = False
+    EVIDENCE_BASIS = "measured"
     #: Budgeted wall time per step (hours) for the lane-hour refusal before a step starts.
     STEP_BUDGET_HOURS = {"provider": 0.35, "certification": 0.5, "synthesis": 0.5, "evaluation": 1.0}
     PLANNED_BYTES = 2 * GIB
@@ -301,6 +258,40 @@ class TargetAdapter:
         self.released = 0
         self._lane = None
         self._artifacts = {}            # artifact sha256 -> candidate id (identical per-class artifacts)
+
+    @classmethod
+    def file_problems(cls, data):
+        """This target's rules for a campaign file (after the schema)."""
+        problems = []
+        if cls.ID_KIND and not data["id"].startswith(f"extensa-{cls.ID_KIND}-"):
+            problems.append(f"id: a {data['target']} campaign ID starts with extensa-{cls.ID_KIND}-")
+        return problems
+
+    # loop hooks with their default answers -------------------------------------------------
+    def admit(self, candidate, contracts):
+        """Refuse a candidate artifact the target cannot evaluate (raise Refused); default: admit."""
+
+    def reference_files(self):
+        """Read-only references shown to the provider when the campaign names contracts."""
+        return {}
+
+    def restore(self, state):
+        """Rebuild in-memory state when a campaign resumes."""
+
+    def other_gem5(self):
+        """A refusal when the other socket's lease is held by another Extensa campaign's gem5 job, else None.
+
+        Ticket 64 (2026-10-04 ET): a campaign file may approve native blocks beside ANOTHER campaign's
+        gem5 job (approval.gem5_other_socket); the other socket is then recorded with every block. A
+        gem5 job of this same campaign is always refused."""
+        lease = self.other_socket_lease()
+        approved = (self.campaign.get("approval") or {}).get("gem5_other_socket") is True
+        if lease and approved and lease.get("campaign") != self.cid:
+            return None
+        if lease and lease.get("mode") == MODE and lease.get("target") == "dx100_gem5":
+            return ("native timed blocks refuse to start while the other socket's lease is held by a gem5 job "
+                    f"of Extensa campaign {lease.get('campaign')}")
+        return None
 
     # host -------------------------------------------------------------------------------
     @property
@@ -491,7 +482,7 @@ class TargetAdapter:
             shutil.rmtree(tree.parent)
             return {"id": existing, "sha256": identity["sha256"], "reused": True}
         diff = patch_path.read_text()
-        tags = {"mode": "extensa", "campaign": self.cid}
+        tags = {"mode": MODE, "campaign": self.cid}
         # The rewrite call's patch for this class is the candidate's proposal (one per artifact).
         proposal = workflow.record(
             "proposal", f"{rid}.proposal",
@@ -530,7 +521,8 @@ class TargetAdapter:
             except (Failure, UsageError) as exc:   # an aborted certification (e.g. scope, control site)
                 text = str(exc)
                 site = re.search(r"negative-control mutation site: (\w+)", text)
-                # Ticket 70 (2026-10-04 ET): the harness scan refuses candidate text naming harness symbols.
+                # Ticket 70 (2026-10-04 ET): the certification evaluator's scan refuses candidate text naming
+                # its symbols (failed check `harness_scan`, a persisted name).
                 failed_checks.append(f"negative_control_site:{site[1]}" if site
                                      else "harness_scan" if "refused by the harness scan" in text
                                      else "certification_aborted")
@@ -558,6 +550,21 @@ class TargetAdapter:
 class NativeAdapter(TargetAdapter):
     STEP_BUDGET_HOURS = {"provider": 0.35, "certification": 0.5, "synthesis": 0.5, "evaluation": 0.75}
     PLANNED_BYTES = 6 * GIB
+    ID_KIND = "native"
+    HAS_PILOT = True
+
+    @classmethod
+    def file_problems(cls, data):
+        from swdb.campaign import CI_BLOCK_LENGTH, CI_RULES
+        problems, proto = super().file_problems(data), data["protocol"]
+        if proto["repetitions"] < 5:
+            problems.append("protocol.repetitions: a native campaign needs at least 5 paired repetitions")
+        if proto.get("speed_rule") in CI_RULES and proto["repetitions"] < 2 * CI_BLOCK_LENGTH:
+            problems.append(f"protocol.repetitions: the CI-width rule needs at least {2 * CI_BLOCK_LENGTH} "
+                            f"repetitions (blocks of {CI_BLOCK_LENGTH})")
+        if proto.get("isolation") and (data.get("approval") or {}).get("gem5_other_socket"):
+            problems.append("protocol.isolation: native only, and it excludes approval.gem5_other_socket")
+        return problems
 
     def roots(self):
         return super().roots() + list(NATIVE_TEMPLATES.values()) + list(ROLE_IMPLEMENTATION.values())
@@ -703,8 +710,9 @@ class NativeAdapter(TargetAdapter):
     def _block(self, tag, candidate, role, cls, protocol=None):
         """One paired block (its own baseline evaluation) and its comparison."""
         protocol = protocol or self.protocols[role]
-        pair = {"message_version": "1.0", "id": f"{tag}.pair", "collection": {"method": "native_paired.v1",
-                "order_seed": 20260926}, "budget": {"total_seconds": 7200},
+        from swdb.bfs_native_pair import METHOD
+        pair = {"message_version": "1.0", "id": f"{tag}.pair", "collection": {"method": METHOD,
+                "order_seed": NATIVE_ORDER_SEED}, "budget": {"total_seconds": 7200},
                 "baseline": self._member(f"{tag}.baseline-eval", self.baseline(role), role, cls, "baseline", protocol),
                 "candidate": self._member(f"{tag}.candidate-eval", candidate, role, cls, "candidate", protocol)}
         code, record = self.runner("evaluate-pair", pair, stage=f"{tag}.pair", timeout=7500,
@@ -721,13 +729,32 @@ class NativeAdapter(TargetAdapter):
                 [pair["baseline"]["id"], pair["candidate"]["id"]]
         return result, None, [pair["baseline"]["id"], pair["candidate"]["id"]]
 
+    #: Code review S15 (2026-10-05 ET): the stage a failed evaluation stopped in (its record's
+    #: `outcome.stage`) names the refusal; the reason text is only the fallback without a record.
+    FAILED_STAGE_KINDS = {"compiler_identity": "build_failed", "build": "build_failed", "build_reuse": "build_failed",
+                          "verifier_build": "build_failed", "correctness": "correctness_failed"}
+
+    def _failure_kind(self, evaluations, reason):
+        try:
+            store = self._store()
+            for rid in reversed(evaluations):           # the candidate side first
+                outcome = (store.get(rid, "evaluation") or {}).get("outcome") or {}
+                if outcome.get("state") not in {None, "complete"}:
+                    return self.FAILED_STAGE_KINDS.get(outcome.get("stage"), "evaluation_failed")
+        except Exception:                               # an unreadable store falls back to the reason
+            pass
+        return ("correctness_failed" if re.search(r"incorrect|verifier|parent", reason or "") else
+                "build_failed" if "build" in (reason or "") else "evaluation_failed")
+
     @staticmethod
     def _numbers(result):
+        """The comparison's numbers and the evaluator's verdict (`state`, used by the speed rule)."""
         metrics = result["metrics"]
         spreads = [v for rows in metrics["relative_spread"].values() for v in rows.values()]
         return {"ratio": metrics["roi_speedup"], "lower": metrics["confidence_interval"]["lower"],
                 "upper": metrics["confidence_interval"]["upper"], "spreads": spreads,
-                "ci_method": metrics["confidence_interval"].get("method")}
+                "ci_method": metrics["confidence_interval"].get("method"),
+                "state": (result.get("decision") or {}).get("state")}
 
     def pilot(self, cls, role):
         """D3 A/A pilot: the baseline timed against itself with the full protocol."""
@@ -741,7 +768,8 @@ class NativeAdapter(TargetAdapter):
         if result is None:
             raise _stop("infrastructure_failure", f"A/A pilot {cls}/{role} failed: {reason}"[:1500])
         numbers = self._numbers(result)
-        # Ticket 66: the A/A ratio and CI travel with the block for the CI-width rule.
+        # Ticket 66: the A/A ratio and CI travel with the block for the CI-width rule (the A/A gate is
+        # the speed rule's own, not the evaluator's comparison verdict).
         return {"spread": max(numbers["spreads"]), "ratio": numbers["ratio"], "lower": numbers["lower"],
                 "upper": numbers["upper"], "comparison": result["id"], "evaluations": evaluations,
                 "other_socket": other, "isolation": self.isolation_end(isolation),
@@ -791,27 +819,13 @@ class NativeAdapter(TargetAdapter):
         return {**start, "other_socket_at_end": "released" if lease is None else lease,
                 "load_average_at_end": list(os.getloadavg())}
 
-    def other_gem5(self):
-        lease = self.other_socket_lease()
-        # Ticket 64 (2026-10-04 ET): a campaign file may approve native blocks beside ANOTHER
-        # campaign's gem5 job (approval.gem5_other_socket); the other socket is then recorded
-        # with every block. A gem5 job of this same campaign is always refused.
-        approved = (self.campaign.get("approval") or {}).get("gem5_other_socket") is True
-        if lease and approved and lease.get("campaign") != self.cid:
-            return None
-        if lease and lease.get("mode") == "extensa" and lease.get("target") == "dx100_gem5":
-            return ("native timed blocks refuse to start while the other socket's lease is held by a gem5 job "
-                    f"of Extensa campaign {lease.get('campaign')}")
-        return None
-
     def compare(self, candidate, cls, role, iteration, attempt, baseline_evaluation=None):
         tag = f"{self.cid}.{self._it(iteration)}.{cls}.a{attempt}.{role}"
         isolation = self.isolated()
         other = self.other_socket_lease()
         result, reason, evaluations = self._block(tag, candidate["id"], role, cls)
         if result is None:
-            kind = "correctness_failed" if re.search(r"incorrect|verifier|parent", reason or "") else \
-                "build_failed" if "build" in (reason or "") else "evaluation_failed"
+            kind = self._failure_kind(evaluations, reason)
             raise Refused(kind, f"Native evaluation against {role} did not complete.", [kind])
         numbers = self._numbers(result)
         return {"comparison": result["id"], **numbers, "evaluations": evaluations,
@@ -824,6 +838,28 @@ class NativeAdapter(TargetAdapter):
 class Gem5Adapter(TargetAdapter):
     STEP_BUDGET_HOURS = {"provider": 0.35, "certification": 0.5, "synthesis": 0.5, "evaluation": 1.6}
     PLANNED_BYTES = GEM5_STORAGE_GIB * GIB
+    ID_KIND = "gem5"
+    SHARED_BASELINE = True
+    POINT_RATIOS = True
+    EVIDENCE_BASIS = "simulated"
+
+    @classmethod
+    def file_problems(cls, data):
+        from swdb.campaign import CI_RULES
+        problems, proto = super().file_problems(data), data["protocol"]
+        if proto["repetitions"] != 1:
+            problems.append("protocol.repetitions: a gem5 campaign runs exactly 1 repetition (point ratios)")
+        if len(proto["sources"]) != 1:
+            problems.append("protocol.sources: a gem5 campaign uses exactly one source")
+        if [b["role"] for b in data["baselines"]] != ["fork_scalar_tdstep"]:
+            problems.append("baselines: a gem5 campaign compares against fork_scalar_tdstep only")
+        if "evaluator" in proto:
+            problems.append("protocol.evaluator: names a native evaluator version; gem5 campaigns have none")
+        if proto.get("speed_rule") in CI_RULES:
+            problems.append("protocol.speed_rule: the CI-width rule is native only (gem5 reports point ratios)")
+        if proto.get("isolation"):
+            problems.append("protocol.isolation: native only, and it excludes approval.gem5_other_socket")
+        return problems
 
     def roots(self):
         template = self._team_get(GEM5_TEMPLATE, "protocol")
@@ -1040,7 +1076,8 @@ class Gem5Adapter(TargetAdapter):
             raise Refused("evaluation_failed", "The comparison rejected the retained evidence.", ["comparison"])
         ratio = result["metrics"]["roi_speedup"]
         return {"comparison": result["id"], "ratio": ratio, "lower": ratio, "upper": ratio, "spreads": [0.0],
-                "evaluations": [observed["id"]], "baseline_evaluation": baseline_evaluation}
+                "evaluations": [observed["id"]], "baseline_evaluation": baseline_evaluation,
+                "state": (result.get("decision") or {}).get("state")}
 
 
 ADAPTERS = {"native_cpu": NativeAdapter, "dx100_gem5": Gem5Adapter}

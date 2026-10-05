@@ -57,8 +57,7 @@
           "const": "extensa"
         },
         "campaign": {
-          "type": "string",
-          "pattern": "^extensa-(native|gem5)-bfs-[0-9]{8}-[a-z][0-9]+$"
+          "$ref": "#/$defs/extensa_campaign_id"
         }
       }
     },

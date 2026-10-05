@@ -21,6 +21,23 @@ class UnknownVocabulary(ValueError):
     pass
 
 
+_CAMPAIGN_ID = []
+
+
+def campaign_id_def(schema_dir=None):
+    """The envelope's `$defs.extensa_campaign_id` (the one Extensa campaign-ID pattern, 2026-10-05 ET)."""
+    if schema_dir is not None:
+        return copy.deepcopy(_read(schema_dir / "envelope.schema.json")["$defs"]["extensa_campaign_id"])
+    if not _CAMPAIGN_ID:
+        from swdb import paths
+        _CAMPAIGN_ID.append(_read(paths.SCHEMAS / "envelope.schema.json")["$defs"]["extensa_campaign_id"])
+    return copy.deepcopy(_CAMPAIGN_ID[0])
+
+
+def campaign_id_pattern():
+    return campaign_id_def()["pattern"]
+
+
 class SchemaSet:
     def __init__(self, schema_dir, vocabs, index=None):
         """index: {record ID: kind} used to resolve `x-ref`; None skips reference checks."""
