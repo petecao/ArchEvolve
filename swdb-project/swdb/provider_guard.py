@@ -1,4 +1,4 @@
-"""Linux Landlock boundary and external resource observation. Updated: 2026-09-30 ET.
+"""Linux Landlock boundary and external resource observation. Updated: 2026-10-05 ET (ticket 74).
 
 The standalone entry point imports only the standard library. It fails closed if
 ABI 4 is unavailable; the evaluator stays outside the confined process tree.
@@ -7,6 +7,9 @@ A native seccomp filter protects supervisor signal targets while preserving
 ordinary helper signals; this is not general hostile-process isolation.
 2026-09-30: Codex sessions, whose tool commands keep outer port-443 access, also
 refuse io_uring and TCP Fast Open sends, which the connect() trace cannot observe.
+2026-10-05 (ticket 74): tool commands and the provider runtime have separate thread
+caps, every owned thread must stay on the lane's CPUs, and an overrun of the runtime
+cap is recorded as a harness limit (`harness_limit`), not as the model's work.
 """
 import ctypes
 import errno
@@ -26,6 +29,105 @@ from pathlib import Path
 
 class GuardError(RuntimeError):
     pass
+
+
+#: Ticket 74 (2026-10-05 ET, agent-decided under Yan-Ru's delegation; revisable). Story 33's 16-thread
+#: cap bounds the work the model starts: tool commands and every descendant, including detached ones.
+#: The provider's own runtime (the external tracer, the original CLI and its exact persistent service)
+#: has a separate cap. Codex 0.153 alone reached 16 tasks at startup (12 tokio threads: its blocking
+#: pool grows on demand whatever TOKIO_WORKER_THREADS says; 2 inotify watchers), and with the code-mode
+#: host the runtime reached 20 including strace. 64 leaves more than 3x margin and still stops a runaway.
+TOOL_THREADS = 16
+RUNTIME_THREADS = 64
+RESOURCE_REASON = "provider resource limit exceeded"
+HARNESS_SCOPE = "runtime"
+
+
+def resource_scope(rows, runtime_keys, limits):
+    """Charge an owned-tree snapshot to the provider runtime or to the tool commands (ticket 74).
+
+    `rows` carry pid, start_time_ticks, threads and resident_bytes; `runtime_keys` are the kernel
+    keys of the tracer, the original CLI and its exact persistent service. Returns both totals, the
+    exceeded scope (`tools`, `runtime` or None) and its reason. Tools take precedence: a tool tree
+    over its cap, or tools pushing memory over the cap, is the model's own work."""
+    split = {side: {"threads": 0, "resident_bytes": 0, "processes": 0} for side in ("runtime", "tools")}
+    for row in rows:
+        side = split["runtime" if _kernel_key(row) in runtime_keys else "tools"]
+        side["threads"] += row["threads"]
+        side["resident_bytes"] += row["resident_bytes"]
+        side["processes"] += 1
+    runtime, tools = split["runtime"], split["tools"]
+    resident = runtime["resident_bytes"] + tools["resident_bytes"]
+    scope = None
+    if tools["threads"] > limits["threads"] or (resident > limits["memory_bytes"]
+                                                and runtime["resident_bytes"] <= limits["memory_bytes"]):
+        scope = "tools"
+    elif runtime["threads"] > limits["runtime_threads"] or runtime["resident_bytes"] > limits["memory_bytes"]:
+        scope = HARNESS_SCOPE
+    detail = (f"tool threads={tools['threads']} (limit {limits['threads']}), runtime threads="
+              f"{runtime['threads']} (limit {limits['runtime_threads']}), resident_bytes={resident}")
+    reason = (None if scope is None else f"{RESOURCE_REASON}: {detail}" if scope == "tools"
+              else f"{RESOURCE_REASON} by the provider runtime (harness limit, not model work): {detail}")
+    return {"scope": scope, "reason": reason, "runtime": runtime, "tools": tools}
+
+
+def harness_limit(folder):
+    """The guard's reason when it stopped this call only for its own limit on the provider runtime.
+
+    Ticket 74. Reads the observer-written receipts of one call folder (outside the provider's
+    Landlock write roots). Returns None unless every guard reason is a resource limit and the
+    overrun was not the model's tool work. A record from before ticket 74 (a flat process list
+    charged against one aggregate cap, as in campaign a8) is re-split with the current limits."""
+    folder = Path(folder)
+    try:
+        audit = json.loads((folder / "guard-audit.json").read_text())
+        record = json.loads((folder / "resource-overrun.json").read_text())
+    except (OSError, ValueError):
+        return None
+    if not isinstance(audit, dict):
+        return None
+    reasons = audit.get("reasons") or []
+    if audit.get("passed") is not False or not reasons or not all(
+            isinstance(r, str) and r.startswith(RESOURCE_REASON) for r in reasons):
+        return None
+    if isinstance(record, dict):
+        return record.get("reason") if record.get("scope") == HARNESS_SCOPE else None
+    if not isinstance(record, list):
+        return None
+    cleanup, provider = audit.get("process_cleanup") or {}, audit.get("original_provider") or {}
+    tracer = next(((row["pid"], row["start_time_ticks"]) for row in cleanup.get("processes_observed", [])
+                   if row.get("pid") == cleanup.get("tracer_pid")), None)
+    runtime_keys = {tracer, (provider.get("pid"), provider.get("start_time_ticks"))} - {None}
+    try:
+        verdict = resource_scope(record, runtime_keys, {"threads": TOOL_THREADS, "runtime_threads": RUNTIME_THREADS,
+                                                        "memory_bytes": 32 * 1024**3})
+    except (KeyError, TypeError):
+        return None
+    if verdict["scope"] == "tools":
+        return None
+    return f"{'; '.join(reasons)} (legacy aggregate cap; under ticket 74: {verdict['reason'] or 'within limits'})"
+
+
+def _cpu_list(text):
+    cpus = set()
+    for part in text.strip().split(","):
+        if part:
+            low, _, high = part.partition("-")
+            cpus.update(range(int(low), int(high or low) + 1))
+    return cpus
+
+
+def _task_cpus(pid):
+    """Every CPU any thread of this process may run on (per-thread masks can differ)."""
+    cpus = set()
+    for task in Path(f"/proc/{pid}/task").iterdir():
+        try:
+            match = re.search(r"^Cpus_allowed_list:\s*(\S+)", (task / "status").read_text(), re.M)
+        except OSError:
+            continue
+        if match:
+            cpus |= _cpu_list(match[1])
+    return cpus
 
 
 def _process_identity(pid):
@@ -365,8 +467,8 @@ def restrict(policy, inner=False):
         os.close(fd)
     resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
     # The observer verifies the full socket before launching. The provider uses
-    # one CPU within that socket; the full process tree still has a separate
-    # 16-thread cap, including idle runtime workers and the external tracer.
+    # one CPU within that socket; tool commands have a 16-thread cap and the
+    # provider runtime (tracer, CLI, persistent service) a 64-thread cap (ticket 74).
     if policy.get("execution_cpus"):
         os.sched_setaffinity(0, policy["execution_cpus"])
     # V8 and JavaScriptCore reserve large, mostly uncommitted address ranges.
@@ -499,15 +601,25 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                   "runtime_self_reads": ["maps", "cgroup", "stat", "statm", "status"],
                   "device_write_roots": ["/dev/null"],
                   "execution_cpus": sorted(os.sched_getaffinity(0))[:1],
+                  # Ticket 74: the observer's own (verified lane) affinity bounds every owned task.
+                  "lane_cpus": sorted(os.sched_getaffinity(0)),
                   "resource_scope": "provider process tree including its external strace launcher",
                   "write_roots": [str(workspace), str(home)], "tcp_connect_ports": [443],
                   "inner_tcp_connect_ports": [], "tcp_bind_ports": [],
                   "model_api": _api_addresses(kind) if not fixture else {"hosts": [], "addresses": []},
                   "login_path": str(login_path) if login_path else None,
-                  "limits": {"threads": 16, "memory_bytes": 32 * 1024**3,
+                  "limits": {"threads": TOOL_THREADS, "runtime_threads": RUNTIME_THREADS,
+                             "memory_bytes": 32 * 1024**3,
                              "command_seconds": 120, "workspace_bytes": 5 * 1024**3},
                   "limit_enforcement": {
-                      "threads": "observed: aggregate tree count polled every 0.1 s; attempt stopped on overrun",
+                      "threads": "observed: threads of tool commands and all their descendants (every owned "
+                                 "process except the tracer, the original CLI and its exact persistent service), "
+                                 "polled every 0.1 s; attempt stopped on overrun (ticket 74)",
+                      "runtime_threads": "observed: threads of the tracer, the original CLI and its exact "
+                                         "persistent service, polled every 0.1 s; an overrun is a harness "
+                                         "limit, recorded with scope 'runtime' (ticket 74)",
+                      "lane_cpus": "observed: every thread's allowed CPUs must stay inside the observer's lane "
+                                   "affinity, polled every 0.1 s (ticket 74)",
                       "memory_bytes": "observed: aggregate resident memory polled every 0.1 s; inner tool "
                                       "commands also get a kernel RLIMIT_AS of the same size",
                       "command_seconds": "observed wall-time watchdog for every tool process; inner tool "
@@ -517,7 +629,9 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                   "residual_risks": ["Landlock ABI 4 does not restrict UDP", "login copy readable during session",
                                      "supervisor filter covers listed native signal APIs, not general hostile-process isolation",
                                      "model API addresses are matched by IP; a shared CDN address cannot distinguish hosts",
-                                     "thread and memory caps are polled, so a burst can overshoot for one interval"],
+                                     "thread and memory caps are polled, so a burst can overshoot for one interval",
+                                     "lane CPU affinity is polled; a task can run outside the lane for one interval "
+                                     "before the attempt stops (ticket 74)"],
                   "command_network_wrapper": kind == "claude",
                   # Codex tool commands keep outer port-443 access (no shell
                   # prefix), so calls the connect() trace cannot see are refused.
@@ -564,6 +678,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
             env["CLAUDE_CODE_SHELL_PREFIX"] = str(prefix)
         reasons = []
         service = {}
+        peaks = {"runtime_threads": 0, "tool_threads": 0, "resident_bytes": 0}
         owned = _OwnedTree(policy)
 
         def wrap_command(argv):
@@ -581,31 +696,6 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
             except (GuardError, OSError, ValueError, KeyError, TypeError) as exc:
                 reasons.append("provider process ownership observation failed: " + str(exc))
                 raise Failure(reasons[-1]) from None
-            threads = sum(row["threads"] for row in table.values())
-            rss = sum(row["resident_bytes"] for row in table.values())
-            # Charge the external tracer as well as every provider descendant.
-            if threads > 16 or rss > policy["limits"]["memory_bytes"]:
-                details = []
-                for p in sorted(table):
-                    names = []
-                    try:
-                        for task in Path(f"/proc/{p}/task").iterdir():
-                            try:
-                                names.append((task / "comm").read_text().strip())
-                            except OSError:
-                                pass
-                    except OSError:
-                        pass
-                    details.append({"pid": p, "parent": table[p]["parent"],
-                                    "start_time_ticks": table[p]["start_time_ticks"],
-                                    "threads": table[p]["threads"],
-                                    "resident_bytes": table[p]["resident_bytes"], "tasks": names})
-                (folder / "resource-overrun.json").write_text(json.dumps(details, indent=2))
-                reasons.append(f"provider resource limit exceeded: threads={threads}, resident_bytes={rss}")
-                raise Failure(reasons[-1])
-            # Codex has no shell-prefix setting in the verified CLI. Its tool
-            # commands inherit the outer TCP policy; observe their wall time
-            # from outside that tree and stop the entire attempt on overrun.
             executables = {}
 
             def process_executable(pid):
@@ -626,6 +716,55 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                             key=lambda row: row["start_time_ticks"], default=None)
                 if first is not None:
                     service["key"] = _kernel_key(first)
+            # Ticket 74: the provider runtime (tracer, original CLI, its exact persistent service)
+            # and the tool commands the model starts are charged to separate thread caps; memory
+            # stays one aggregate cap. Until the handshake names the CLI it is charged as a tool.
+            service_key = service.get("key")
+            runtime_keys = {key for key in (owned.tracer, owned.provider, service_key) if key is not None}
+            verdict = resource_scope(table.values(), runtime_keys, policy["limits"])
+            peaks.update(runtime_threads=max(peaks["runtime_threads"], verdict["runtime"]["threads"]),
+                         tool_threads=max(peaks["tool_threads"], verdict["tools"]["threads"]),
+                         resident_bytes=max(peaks["resident_bytes"], verdict["runtime"]["resident_bytes"]
+                                            + verdict["tools"]["resident_bytes"]))
+            if verdict["scope"] is not None:
+                details = []
+                for p in sorted(table):
+                    names = []
+                    try:
+                        for task in Path(f"/proc/{p}/task").iterdir():
+                            try:
+                                names.append((task / "comm").read_text().strip())
+                            except OSError:
+                                pass
+                    except OSError:
+                        pass
+                    key = _kernel_key(table[p])
+                    details.append({"pid": p, "parent": table[p]["parent"],
+                                    "start_time_ticks": table[p]["start_time_ticks"],
+                                    "scope": ("tracer" if key == owned.tracer else "provider" if key == owned.provider
+                                              else "persistent_service" if key == service_key else "tool"),
+                                    "threads": table[p]["threads"],
+                                    "resident_bytes": table[p]["resident_bytes"], "tasks": names})
+                (folder / "resource-overrun.json").write_text(json.dumps({
+                    "format": "swdb.guard-overrun.v2", "scope": verdict["scope"], "reason": verdict["reason"],
+                    "limits": {name: policy["limits"][name] for name in ("threads", "runtime_threads", "memory_bytes")},
+                    "runtime": verdict["runtime"], "tools": verdict["tools"], "processes": details}, indent=2))
+                reasons.append(verdict["reason"])
+                raise Failure(reasons[-1])
+            # Ticket 74: lane confinement is about CPUs, not thread counts. A task that widens its
+            # affinity (taskset, numactl, OpenMP binding) beyond the lane stops the attempt.
+            lane_cpus = set(policy["lane_cpus"])
+            for pid in table:
+                try:
+                    outside = _task_cpus(pid) - lane_cpus
+                except OSError:
+                    continue
+                if outside:
+                    reasons.append(f"provider process {pid} may run outside the lane CPUs: {sorted(outside)[:8]}")
+                    raise Failure(reasons[-1])
+            # Codex has no shell-prefix setting in the verified CLI. Its tool
+            # commands inherit the outer TCP policy; observe their wall time
+            # from outside that tree and stop the entire attempt on overrun.
             for pid, row in table.items():
                 parent = row["parent"]
                 # The exact original child is the provider launcher. Native
@@ -697,6 +836,8 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
                             failures.append("provider outbound connection is outside the model API")
             result = {"passed": not failures, "reasons": sorted(set(failures)), "trace": str(trace),
                       "process_cleanup": owned.cleanup_result,
+                      # Ticket 74: observed maxima, the calibration record for the runtime cap.
+                      "resource_peaks": dict(peaks),
                       "supervisor_protection": owned.supervisor_protection,
                       "original_provider": ({"pid": owned.provider[0], "start_time_ticks": owned.provider[1]}
                                             if owned.provider else None)}
