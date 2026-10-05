@@ -636,7 +636,24 @@ class NativeAdapter(TargetAdapter):
         # Ticket 66: the A/A ratio and CI travel with the block for the CI-width rule.
         return {"spread": max(numbers["spreads"]), "ratio": numbers["ratio"], "lower": numbers["lower"],
                 "upper": numbers["upper"], "comparison": result["id"], "evaluations": evaluations,
-                "other_socket": other, "isolation": self.isolation_end(isolation)}
+                "other_socket": other, "isolation": self.isolation_end(isolation),
+                **self._level_mix(role, evaluations)}
+
+    #: Ticket 72 (2026-10-04 ET): the roles whose trials are classified by level (reporting only).
+    LEVEL_MIX_ROLES = ("upstream_do_bfs",)
+
+    def _level_mix(self, role, evaluations):
+        """Under speed rule ci_width.v2, the per-side level mix of an upstream block (reporting only)."""
+        from swdb.campaign import CI_WIDTH_RULE_V2, level_mix_of
+        if self.campaign["protocol"].get("speed_rule") != CI_WIDTH_RULE_V2 or role not in self.LEVEL_MIX_ROLES:
+            return {}
+        mix = {}
+        for side, rid in zip(("baseline", "candidate"), evaluations):
+            try:
+                mix[side] = level_mix_of(self._get(rid, "evaluation"))
+            except Exception as exc:          # reporting must never stop a campaign
+                mix[side] = {"unavailable": str(exc)[:200]}
+        return {"level_mix": mix}
 
     #: Ticket 56 isolation test (2026-10-04 ET): bounded wait for a free other socket.
     ISOLATION_WAIT_S = 2 * 3600
@@ -691,7 +708,7 @@ class NativeAdapter(TargetAdapter):
         numbers = self._numbers(result)
         return {"comparison": result["id"], **numbers, "evaluations": evaluations,
                 "baseline_evaluation": f"{tag}.baseline-eval", "other_socket": other,
-                "isolation": self.isolation_end(isolation)}
+                "isolation": self.isolation_end(isolation), **self._level_mix(role, evaluations)}
 
 
 # --- DX100 gem5 (ticket 57) -------------------------------------------------------------------------

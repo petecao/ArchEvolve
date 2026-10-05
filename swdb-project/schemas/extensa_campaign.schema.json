@@ -36,8 +36,8 @@
                       "description": "Native blocks start only while the other socket's lease is released; recorded per block (ticket 56 isolation test, 2026-10-04 ET)."},
         "evaluator": {"enum": ["swdb.native.evaluator.v1", "swdb.native.evaluator.scalable.v2", "swdb.native.evaluator.scalable.v3"],
                       "description": "Native evaluator version the campaign's protocols pin (ticket 63, 2026-10-04 ET; v3 ticket 67); absent means v1."},
-        "speed_rule": {"enum": ["swdb.speed_rule.range.v1", "swdb.speed_rule.ci_width.v1"],
-                       "description": "Native speed-rule version (ticket 66, 2026-10-04 ET, decided by Yan-Ru); absent means swdb.speed_rule.range.v1."}
+        "speed_rule": {"enum": ["swdb.speed_rule.range.v1", "swdb.speed_rule.ci_width.v1", "swdb.speed_rule.ci_width.v2"],
+                       "description": "Native speed-rule version (ticket 66, 2026-10-04 ET, decided by Yan-Ru; v2 ticket 72: the A/A pilot gates on base_source only); absent means swdb.speed_rule.range.v1."}
       }
     },
     "workload_classes": {

@@ -1,9 +1,9 @@
 # 72 — Native upstream DO-BFS trials are two-level: options for Yan-Ru
 
 Created: 2026-10-04 23:10 ET (by ticket 56, campaign `extensa-native-bfs-20261004-a6`)
-Updated: 2026-10-04 23:25 ET (decided; rule pre-registered before any run)
+Updated: 2026-10-04 23:30 ET (resolved; implementation); 2026-10-04 23:19 ET (decided; rule pre-registered before any run, commit 3147b31)
 **Type:** decision
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** —
 **Spec:** `../spec.md`; [design decisions](../extensa-design-2026-10-03.md) D3; [56](56-native-campaign-target.md), [64](64-native-scale22-pilot-unstable.md), [66](66-native-protocol-after-isolation-test.md)
 
@@ -45,7 +45,7 @@ newly pre-registered rule; a6 is never re-judged.
 
 ## Decision and pre-registration (written before any run under the new rule)
 
-**Decision 2026-10-04 23:20 ET**, agent-decided by the coordinating agent under Yan-Ru's delegation ("continue
+**Decision 2026-10-04 23:15 ET**, agent-decided by the coordinating agent under Yan-Ru's delegation ("continue
 working"; revisable): the recommendation, option 1 with option 3 as reporting.
 
 **Version.** New speed rule `swdb.speed_rule.ci_width.v2`, chosen in the campaign file
@@ -86,3 +86,22 @@ comparison: `inconclusive` if the width exceeds 0.05, else `gain` only if the lo
   `infrastructure_failure` before the first pilot block completes may be fixed and restarted once.
 - A class with a `gain`: if its best candidate used a contract, it is re-certified on the Mac with the current
   certifier (`swdb certify` 1.2 or later). A best without a contract is reported as `uncertified`.
+
+## Answer
+
+Resolved 2026-10-04 23:30 ET by the agent, implementing the 23:15 ET decision (not pushed).
+
+- `swdb/campaign.py`: `CI_WIDTH_RULE_V2` (`swdb.speed_rule.ci_width.v2`), `pilot_gating_roles` (v2: the
+  `base_source` role only; v1 and the range rule: every role), `level_mix` / `level_mix_of` (split at the
+  largest adjacent ratio, two levels when it is at least 1.08). The summary's `pilot` records `gating_roles`, a
+  `gates` flag per role, and `level_mix_by_class_and_role`; each upstream comparison row carries `level_mix`.
+  Frozen protocols under v2 are identical to v1's.
+- `swdb/campaign_targets.py`: `NativeAdapter` adds the per-side level mix to every upstream DO-BFS block (pilot
+  and candidate comparisons) under v2, read from the campaign store's evaluations; a read failure is recorded
+  as `unavailable` and never stops the campaign.
+- Campaign schema and `docs/reference/format-v0.4-extensa.md` admit v2.
+- Tests: `tests/test_ci_width_gate.py` (level mix on two-level and one-level data; v2 files admitted like v1;
+  fixture campaign where the upstream A/A fails but only the fork gates; v1 still gates on every role) and
+  `tests/test_extensa_targets.py` (v2 through `NativeAdapter`: fork-only gating, level mix on both upstream
+  blocks).
+- Campaign file `campaigns/extensa/extensa-native-bfs-20261004-a7.yaml` follows the pre-registration.

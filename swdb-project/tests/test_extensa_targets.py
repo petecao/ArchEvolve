@@ -423,6 +423,24 @@ def test_native_ci_width_rule_and_evaluator_v3_are_frozen_into_every_role_protoc
         and f["profitability"]["gate"] == {"statistic": "relative_ci_width.v1", "maximum": 0.05}
         and "maximum_relative_spread" not in f["profitability"] for f in freezes)
 
+
+def test_native_ci_width_v2_reports_upstream_level_mix_and_gates_on_the_fork_only(team, base_source):
+    """Ticket 72 (2026-10-04 ET): under ci_width.v2 an upstream A/A failure no longer stops a class; the
+    upstream blocks carry a level mix (here `unavailable`: the fake runner writes no evaluations)."""
+    from swdb import bfs_native_scalable as scalable
+    path = native_campaign(team, workloads=("bfs-20261004-kronecker22.3dc69be403db57e9",
+                                            "bfs-20261004-uniform22.facb16e6260c3a82"))
+    data = yaml.safe_load(path.read_text())
+    data["protocol"].update(evaluator=scalable.EVALUATOR_V3, speed_rule="swdb.speed_rule.ci_width.v2", repetitions=20)
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    runner, host = FakeRunner({"pilot": 1.0}, spreads={"pilot": 0.01}), FakeHost()
+    _, summary = run(team, path, provider(team, {}), runner, host)
+    pilot = summary["pilot"]
+    assert pilot["gating_roles"] == ["fork_scalar_tdstep"]
+    mix = pilot["level_mix_by_class_and_role"]
+    assert set(mix) == {"kronecker", "uniform_random"} and all(set(r) == {"upstream_do_bfs"} for r in mix.values())
+    assert all(set(r["upstream_do_bfs"]) == {"baseline", "candidate"} for r in mix.values())
+
 def test_native_blocks_refuse_while_a_gem5_campaign_holds_the_other_socket(team, base_source):
     config = provider(team, {})
     other = {"lease": "mbit10-evaluation-node1", "mode": "extensa", "target": "dx100_gem5",
