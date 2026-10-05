@@ -14,9 +14,8 @@ from swdb import campaign, campaign_targets, certification_feedback as F
 from swdb.extensa import search as S
 from swdb.library import Library
 from conftest import REPO
-from test_extensa_campaign import knob_rows, provider
-from test_extensa_targets import (CONTRACT, FakeHost, FakeRunner, base_source, gem5_campaign,  # noqa: F401
-                                  inside_patch, run, team, team_template)
+from testkit.extensa import knob_rows, provider
+from testkit.extensa_targets import CONTRACT, FakeHost, FakeRunner, gem5_campaign, inside_patch, run
 
 SECRET = "SWDB trusted_frontier=12345 graph=/data1/secret.sg"
 
@@ -95,10 +94,10 @@ def test_usage_notes_are_outside_the_normative_entries():
     assert not any(FORBIDDEN_SOURCE.search(n.read_text()) for n in notes)
 
 
-def test_gem5_campaign_feedback_and_repair_name_the_check_without_run_output(team, base_source, monkeypatch):
+def test_gem5_campaign_feedback_and_repair_name_the_check_without_run_output(repo_team, base_source, monkeypatch):
     patch = inside_patch(base_source)
     answer = {"patch": patch, "contracts": [CONTRACT], "knobs": knob_rows({}), "unresolved": []}
-    config = provider(team, {"rewriting": [answer], "repair": [answer]})
+    config = provider(repo_team, {"rewriting": [answer], "repair": [answer]})
     monkeypatch.setattr("test_extensa_targets.fake_certify", lambda store, contract, **kw: failing_record())
     seen = []
     original = campaign.Campaign._call
@@ -107,7 +106,7 @@ def test_gem5_campaign_feedback_and_repair_name_the_check_without_run_output(tea
         seen.append({"kind": kind, "files": dict(files), "prompt": prompt})
         return original(self, kind, files, prompt, row)
     monkeypatch.setattr(campaign.Campaign, "_call", spy)
-    _, summary = run(team, gem5_campaign(team, max_iterations=2), config, FakeRunner({}), FakeHost())
+    _, summary = run(repo_team, gem5_campaign(repo_team, max_iterations=2), config, FakeRunner({}), FakeHost())
     rows = [c for it in summary["iterations"] for c in it["candidates"]]
     assert rows and all(r["level"] == "rejected" for r in rows)
     assert all("range_bounds" in r["rejection"] and "last_i_reg = 0" in r["rejection"] for r in rows)

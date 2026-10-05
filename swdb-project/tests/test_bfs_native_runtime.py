@@ -10,10 +10,11 @@ from pathlib import Path
 
 import pytest
 
-from conftest import records as records_fixture
-from test_proposals import proposal_setup
-from test_bfs_native import PROGRAM, evaluation_setup
-from test_bfs_protocol import _command, _fixture_rebind, _payload, _settings, _workload_request
+from conftest import make_records
+from testkit.proposals import build_proposal_setup
+from testkit.bfs_native import build_evaluation_setup
+from testkit.bfs_native import PROGRAM
+from testkit.bfs_protocol import _command, _fixture_rebind, _payload, _settings, _workload_request
 from swdb import artifacts, bfs_native, bfs_protocol
 from swdb.cli import Failure
 
@@ -69,8 +70,8 @@ def test_valid_ascii_whitespace_and_case_preserve_exact_declared_spelling():
 @pytest.fixture(scope='module')
 def runtime_seed(tmp_path_factory):
     tmp = tmp_path_factory.mktemp('runtime-contract')
-    records = records_fixture.__wrapped__(tmp)
-    setup = evaluation_setup.__wrapped__(proposal_setup.__wrapped__(records, tmp), tmp)
+    records = make_records(tmp)
+    setup = build_evaluation_setup(build_proposal_setup(records, tmp), tmp)
     _, runs, _, base = setup
     program = PROGRAM.replace('out.write_text(json.dumps(data))',
         "data['received_runtime'] = {key: os.environ.get(key) for key in "

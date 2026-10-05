@@ -1,4 +1,4 @@
-"""Real local descendants; no lab or provider calls. Updated: 2026-09-26 ET."""
+"""Real local descendants; no lab or provider calls. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-26 ET."""
 import json
 import os
 from pathlib import Path
@@ -18,7 +18,6 @@ from swdb.dx100 import _terminate
 from swdb.processes import stop_group
 from test_bfs_campaign_cleanup import running, driver
 from test_dx100 import case
-from test_proposals import proposal_setup
 
 
 def program(folder, leader_exits):

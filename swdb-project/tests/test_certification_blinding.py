@@ -1,4 +1,4 @@
-"""Certify 1.4: blinded controls, attributed rejections, the trusted frontier ledger.
+"""Certify 1.4: blinded controls, attributed rejections, the trusted frontier seam witness.
 
 Created: 2026-10-05 ET (ticket 76). Agent-decided under Yan-Ru's delegation; revisable.
 
@@ -21,8 +21,9 @@ from swdb import certification_feedback as feedback
 from swdb import certification_isolation as isolation
 from swdb.certification_faults import LIBRARY_FAULTS
 from swdb.certification_feedback import STRICT_MESSAGES
-from swdb.cli import Failure, UsageError
+from swdb.cli import UsageError
 from swdb.store import Store
+from testkit.toolchain import require_gcc_openmp as _gcc
 
 ROOT = Path(__file__).resolve().parents[1]
 LIBRARY = (ROOT / 'library').resolve()
@@ -186,11 +187,6 @@ def test_provider_feedback_names_no_surviving_control():
 
 # --- full certifications ----------------------------------------------------------------------------------
 
-def _gcc():
-    try:
-        return c.compiler()
-    except Failure:
-        pytest.skip('certification requires GCC with OpenMP')
 
 
 def _replace(text, old, new):

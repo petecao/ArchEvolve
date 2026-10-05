@@ -7,10 +7,7 @@ per-role native protocols and paired blocks, the single gem5 baseline per class 
 dispatch preflight memory admission run for real.
 """
 
-import copy
-import difflib
 import json
-import shutil
 from argparse import Namespace
 from pathlib import Path
 
@@ -18,20 +15,17 @@ import pytest
 import yaml
 
 from conftest import REPO
-from swdb import artifacts, campaign, campaign_targets, certification
+from swdb import artifacts, campaign, campaign_targets
 from swdb.store import Store
-from test_extensa_campaign import knob_rows, provider
+from testkit.extensa import knob_rows, provider
+from testkit.extensa_targets import CONTRACT, FakeHost, FakeRunner, KRON18_S0, UNIFORM18_S0, common, diff, fake_certify, gem5_campaign, inside_patch, run, write_campaign
 
-CONTRACT = "contract.bfs_read_offload"
 GIB = 1024 ** 3
-KRON18_S0 = "bfs-20260928-kronecker18-s0.cf4283236c5cb50c"
-UNIFORM18_S0 = "bfs-20260928-uniform18-s0.8c7e69dfa516e53c"
 KRON18 = "bfs-20260925-kronecker18.48de8267ac2098d5"
 UNIFORM18 = "bfs-20260925-uniform18.cd2169a5c421baf7"
 UNIFORM22 = "bfs-20260925-uniform22.f23b09bb0c0601b5"
 FORK = "bfs-native-pilot-20260925-dx10018-a1.baseline"
 UPSTREAM = "bfs-native-pilot-20260925-upstream18-a2.baseline"
-GEM5_BASELINE = "typed-library-bfs-gem5-20261003-a2.baseline"
 
 
 # --- session begin inside the timed call -----------------------------------------------
@@ -65,36 +59,6 @@ def test_session_begin_outside_timed_call_is_refused(source, reason):
 
 # --- fixtures ------------------------------------------------------------------------------
 
-@pytest.fixture(scope="module")
-def base_source(tmp_path_factory):
-    folder = tmp_path_factory.mktemp("base")
-    tree, _ = certification.materialize_snapshot(Store(REPO / "records"), campaign_targets.SNAPSHOT, folder)
-    return (tree / campaign_targets.BFS).read_text()
-
-
-@pytest.fixture(scope="module")
-def team_template(tmp_path_factory):
-    root = tmp_path_factory.mktemp("team")
-    shutil.copytree(REPO / "records", root / "records")
-    return root / "records"
-
-
-@pytest.fixture
-def team(team_template, tmp_path):
-    shutil.copytree(team_template, tmp_path / "records")
-    return {"records": tmp_path / "records", "root": tmp_path}
-
-
-def diff(before, after):
-    path = campaign_targets.BFS
-    return "".join(difflib.unified_diff(before.splitlines(True), after.splitlines(True),
-                                        fromfile="a/" + path, tofile="b/" + path))
-
-
-def inside_patch(base):
-    return diff(base, base.replace("    init_MAA();\n    t.Start();",
-                                   "    init_MAA();\n    __dxc_session_begin();\n    t.Start();", 1))
-
 
 def outside_patch(base):
     return diff(base, "static int swdb_early = (__dxc_session_begin(), 0);\n" + base)
@@ -104,128 +68,15 @@ def native_patch(base):
     return diff(base, base + "// campaign fixture edit\n")
 
 
-class FakeHost:
-    def __init__(self, other=None):
-        self.preflights, self.other = [], other
-
-    def lane(self):
-        return "mbit10-evaluation-node0"
-
-    def other_socket_lease(self, lane, roots):
-        return self.other
-
-    def mark(self, *args):
-        pass
-
-    def unmark(self, *args):
-        pass
-
-    def preflight(self, runs_dir, lane, *, storage_bytes, memory_bytes):
-        self.preflights.append({"lane": lane, "storage_bytes": storage_bytes, "memory_bytes": memory_bytes})
-        return {"state": "admitted"}
-
-
-class FakeRunner:
-    """Answers each public evaluator command; numbers are fixture values, not evidence."""
-
-    def __init__(self, ratios, spreads=None):
-        self.calls, self.ratios, self.spreads = [], ratios, spreads or {}
-
-    def __call__(self, command, request=None, *, stage, extra=(), timeout=600):
-        self.calls.append({"command": command, "stage": stage, "request": copy.deepcopy(request)})
-        rid = request["id"]
-        if command == "freeze-protocol":
-            return 0, {"kind": "protocol", "id": rid + ".0123456789abcdef", "identity_sha256": "0" * 64,
-                       "settings": request["settings"]}
-        if command == "dx100-compile":
-            role = "candidate" if request["accelerated"] else "baseline"
-            build = copy.deepcopy(self.protocol_settings["builds"][role])
-            if request["parent_gather_diagnostic"]:
-                build["flags"] = build["flags"] + ["-DSWDB_DXC_DIAGNOSTIC"]
-            build.update(binary="/fixture/bfs", binary_sha256="1" * 64)
-            return 0, {"id": rid, "outcome": {"state": "complete"}, "build": build}
-        if command == "dx100-execute":
-            check = {"passed": True, "coverage": {c: {"state": "observed"}
-                                                  for c in ("read_only_executed", "full_tiles", "tail_tiles")}}
-            if request.get("protocol_companion"):
-                check["parent_gather_race"] = {"outcome": "observed"}
-            return 0, {"id": rid, "outcome": {"state": "complete"}, "correctness": {"state": "passed", "checks": [check]}}
-        if command == "aggregate-evaluations":
-            return 0, {"id": rid, "outcome": {"state": "complete"}}
-        if command == "evaluate-pair":
-            return 0, {"id": rid, "outcome": {"state": "complete"}}
-        if command == "compare-evaluations":
-            key = next(k for k in self.ratios if k in rid)
-            ratio = self.ratios[key]
-            spread = self.spreads.get(key, 0.03)
-            return 0, {"id": rid, "decision": {"state": "fixture_comparison"},
-                       "metrics": {"roi_speedup": ratio,
-                                   "confidence_interval": {"lower": ratio - 0.04, "upper": ratio + 0.04},
-                                   "relative_spread": {"baseline": {"0": spread}, "candidate": {"0": spread / 2}}}}
-        raise AssertionError(command)
-
-
-def fake_certify(store, contract, **kw):
-    return {"id": "certification.fixture." + kw["candidate"], "verdict": "certified", "matrix": [],
-            "negative_controls": []}
-
-
-def write_campaign(team, data):
-    folder = team["root"] / "campaigns" / "extensa"
-    folder.mkdir(parents=True, exist_ok=True)
-    path = folder / f"{data['id']}.yaml"
-    path.write_text(yaml.safe_dump(data, sort_keys=False))
-    return path
-
-
-def common(team, cid, target):
-    return {"format": "swdb.extensa-campaign.v1", "id": cid, "created": "2026-10-04 09:00 ET", "mode": "extensa",
-            "kernel": "gapbs-bfs", "target": target, "machine": "mbit10", "base_source": "fork_scalar_tdstep",
-            "label": "single graph per class", "regions": ["dx100-bfs-scalar/TDStep:240-243"],
-            "provider": {"name": "codex", "model": "gpt-5.6-sol", "effort": "xhigh"},
-            "budgets": {"max_iterations": 2, "plateau_iterations": 4, "lane_hours": 24,
-                        "provider_calls_per_iteration": 3, "provider_calls_setup": 1, "disk_gb": 20, "lanes": 1},
-            "runs_root": str(team["root"] / "runs"),
-            "approval": {"by": "Yan-Ru Jhou", "date": "2026-10-03", "scope": "fixture"}}
-
-
-def run(team, path, config, runner, host):
-    args = Namespace(file=path, records=team["records"], library=None, provider_config=config,
-                     runs_root=None, fixture=None, resume=False,
-                     adapter_options={"runner": runner, "host": host, "certify": fake_certify})
-    loop = campaign.Campaign(args)
-    if isinstance(loop.adapter, campaign_targets.Gem5Adapter):
-        original = loop.adapter.freeze_protocol
-
-        def freeze(settings):
-            result = original(settings)
-            runner.protocol_settings = loop.adapter.protocol["settings"]
-            return result
-        loop.adapter.freeze_protocol = freeze
-        loop.adapter._representation = lambda workload: {"path": f"/fixture/{workload}.sg", "sha256": "2" * 64}
-    return loop, loop.run()
-
-
 # --- gem5 (ticket 57) --------------------------------------------------------------------------
 
-def gem5_campaign(team, **budgets):
-    data = common(team, "extensa-gem5-bfs-20261004-f1", "dx100_gem5")
-    data.update(baselines=[{"role": "fork_scalar_tdstep", "candidate": GEM5_BASELINE}],
-                protocol={"roi": "bfs.complete_call.v1", "threads": 4, "repetitions": 1, "sources": [0],
-                          "region_pairs": False, "differences": "Extensa gem5 fixture campaign."},
-                workload_classes=[{"class": "kronecker", "workload": KRON18_S0},
-                                  {"class": "uniform_random", "workload": UNIFORM18_S0}],
-                library={"allowed_tiers": ["shared", "experimental"], "contracts": [CONTRACT]})
-    data["budgets"].update(budgets)
-    return write_campaign(team, data)
 
-
-def test_gem5_one_baseline_per_class_point_ratios_and_memory_admission(team, base_source):
+def test_gem5_one_baseline_per_class_point_ratios_and_memory_admission(repo_team, base_source):
     patch = inside_patch(base_source)
-    config = provider(team, {"rewriting": [{"patch": patch, "contracts": [CONTRACT],
+    config = provider(repo_team, {"rewriting": [{"patch": patch, "contracts": [CONTRACT],
                                             "knobs": knob_rows({"kronecker": {"frontier_threshold": 32}}), "unresolved": []}]})
     runner, host = FakeRunner({"kronecker": 1.4, "uniform_random": 1.02}), FakeHost()
-    loop, summary = run(team, gem5_campaign(team), config, runner, host)
+    loop, summary = run(repo_team, gem5_campaign(repo_team), config, runner, host)
     assert summary["stop_reason"] == "max_iterations" and summary["evidence_basis"] == "simulated"
     executes = [c for c in runner.calls if c["command"] == "dx100-execute"]
     baselines = [c for c in executes if c["request"]["protocol_role"] == "baseline"]
@@ -257,11 +108,11 @@ def test_gem5_one_baseline_per_class_point_ratios_and_memory_admission(team, bas
     assert store.get("extensa-gem5-bfs-20261004-f1.summary", "campaign_summary") is not None
 
 
-def test_gem5_session_begin_outside_is_refused_before_any_job(team, base_source):
-    config = provider(team, {"rewriting": [{"patch": outside_patch(base_source), "contracts": [CONTRACT],
+def test_gem5_session_begin_outside_is_refused_before_any_job(repo_team, base_source):
+    config = provider(repo_team, {"rewriting": [{"patch": outside_patch(base_source), "contracts": [CONTRACT],
                                             "knobs": [], "unresolved": []}]})
     runner, host = FakeRunner({"kronecker": 1.4, "uniform_random": 1.4}), FakeHost()
-    _, summary = run(team, gem5_campaign(team, max_iterations=1), config, runner, host)
+    _, summary = run(repo_team, gem5_campaign(repo_team, max_iterations=1), config, runner, host)
     rows = summary["iterations"][0]["candidates"]
     assert {r["level"] for r in rows} == {"rejected"}
     assert all("outside the timed DOBFS call" in r["rejection"] for r in rows)
@@ -270,19 +121,19 @@ def test_gem5_session_begin_outside_is_refused_before_any_job(team, base_source)
     assert {r["verdict"] for r in summary["per_class"]} == {"no_gain"}
 
 
-def test_gem5_edit_without_contract_is_refused(team, base_source):
-    config = provider(team, {"rewriting": [{"patch": inside_patch(base_source), "contracts": [],
+def test_gem5_edit_without_contract_is_refused(repo_team, base_source):
+    config = provider(repo_team, {"rewriting": [{"patch": inside_patch(base_source), "contracts": [],
                                             "knobs": [], "unresolved": []}]})
     runner = FakeRunner({"kronecker": 1.4, "uniform_random": 1.4})
-    _, summary = run(team, gem5_campaign(team, max_iterations=1), config, runner, FakeHost())
+    _, summary = run(repo_team, gem5_campaign(repo_team, max_iterations=1), config, runner, FakeHost())
     assert {r["level"] for r in summary["iterations"][0]["candidates"]} == {"rejected"}
     assert not [c for c in runner.calls if c["command"] == "dx100-execute"]
 
 
 # --- native CPU (ticket 56) ----------------------------------------------------------------------
 
-def native_campaign(team, workloads=(KRON18, UNIFORM18), **budgets):
-    data = common(team, "extensa-native-bfs-20261004-f1", "native_cpu")
+def native_campaign(repo_team, workloads=(KRON18, UNIFORM18), **budgets):
+    data = common(repo_team, "extensa-native-bfs-20261004-f1", "native_cpu")
     data.update(baselines=[{"role": "fork_scalar_tdstep", "candidate": FORK},
                            {"role": "upstream_do_bfs", "candidate": UPSTREAM}],
                 protocol={"roi": "bfs.complete_call.v1", "threads": 1, "repetitions": 10,
@@ -292,14 +143,14 @@ def native_campaign(team, workloads=(KRON18, UNIFORM18), **budgets):
                                   {"class": "uniform_random", "workload": workloads[1]}],
                 library={"allowed_tiers": ["shared", "experimental"], "contracts": []})
     data["budgets"].update(budgets)
-    return write_campaign(team, data)
+    return write_campaign(repo_team, data)
 
 
-def test_native_paired_blocks_against_both_baselines_select_on_fork(team, base_source):
-    config = provider(team, {"rewriting": [{"patch": native_patch(base_source), "contracts": [],
+def test_native_paired_blocks_against_both_baselines_select_on_fork(repo_team, base_source):
+    config = provider(repo_team, {"rewriting": [{"patch": native_patch(base_source), "contracts": [],
                                             "knobs": [], "unresolved": []}]})
     runner = FakeRunner({"pilot": 1.0, "fork_scalar_tdstep": 1.3, "upstream_do_bfs": 0.8})
-    _, summary = run(team, native_campaign(team, max_iterations=1), config, runner, FakeHost())
+    _, summary = run(repo_team, native_campaign(repo_team, max_iterations=1), config, runner, FakeHost())
     freezes = [c["request"] for c in runner.calls if c["command"] == "freeze-protocol"]
     assert [f["id"] for f in freezes] == ["extensa-native-bfs-20261004-f1.protocol.fork_scalar_tdstep",
                                           "extensa-native-bfs-20261004-f1.protocol.upstream_do_bfs",
@@ -335,23 +186,23 @@ def test_native_paired_blocks_against_both_baselines_select_on_fork(team, base_s
     assert summary["evidence_basis"] == "measured"
 
 
-def test_native_pilot_spread_stops_without_provider_call(team, base_source):
-    config = provider(team, {})
+def test_native_pilot_spread_stops_without_provider_call(repo_team, base_source):
+    config = provider(repo_team, {})
     runner = FakeRunner({"pilot": 1.0}, spreads={"pilot": 0.14})
-    _, summary = run(team, native_campaign(team), config, runner, FakeHost())
+    _, summary = run(repo_team, native_campaign(repo_team), config, runner, FakeHost())
     assert summary["stop_reason"] == "baseline_unstable"
     assert summary["budgets"]["used"]["provider_calls_counted"] == 0
-    assert not (team["root"] / "provider-log.jsonl").exists()
+    assert not (repo_team["root"] / "provider-log.jsonl").exists()
 
 
-def test_native_pilot_gate_is_per_class(team, base_source):
+def test_native_pilot_gate_is_per_class(repo_team, base_source):
     """Ticket 64 (2026-10-04 ET): an unstable class is not timed; the stable class continues."""
-    config = provider(team, {"rewriting": [{"patch": native_patch(base_source), "contracts": [],
+    config = provider(repo_team, {"rewriting": [{"patch": native_patch(base_source), "contracts": [],
                                             "knobs": [], "unresolved": []}]})
     runner = FakeRunner({"pilot.uniform_random": 1.0, "pilot.kronecker": 1.0,
                          "fork_scalar_tdstep": 1.3, "upstream_do_bfs": 0.8},
                         spreads={"pilot.uniform_random": 0.14})
-    _, summary = run(team, native_campaign(team, max_iterations=1), config, runner, FakeHost())
+    _, summary = run(repo_team, native_campaign(repo_team, max_iterations=1), config, runner, FakeHost())
     assert summary["stop_reason"] != "baseline_unstable"
     assert summary["pilot"]["unstable_classes"] == ["uniform_random"] and summary["pilot"]["passed"] is False
     blocks = [c["request"]["id"] for c in runner.calls
@@ -362,26 +213,26 @@ def test_native_pilot_gate_is_per_class(team, base_source):
     assert per_class["kronecker"]["verdict"] == "gain"
 
 
-def test_native_scale22_exceeds_the_native_evaluator_and_stops(team):
-    config = provider(team, {})
+def test_native_scale22_exceeds_the_native_evaluator_and_stops(repo_team):
+    config = provider(repo_team, {})
     runner = FakeRunner({"pilot": 1.0})
-    _, summary = run(team, native_campaign(team, workloads=(KRON18, UNIFORM22)), config, runner, FakeHost())
+    _, summary = run(repo_team, native_campaign(repo_team, workloads=(KRON18, UNIFORM22)), config, runner, FakeHost())
     assert summary["stop_reason"] == "infrastructure_failure"
     assert "exceeds the native evaluator's materialization limits" in summary["stop_detail"]
     assert not [c for c in runner.calls if c["command"] == "evaluate-pair"]
     assert summary["budgets"]["used"]["provider_calls_counted"] == 0
 
 
-def test_native_scale22_runs_under_evaluator_v2_protocols(team, base_source):
+def test_native_scale22_runs_under_evaluator_v2_protocols(repo_team, base_source):
     """Ticket 63 (2026-10-04 ET): a campaign pinning evaluator v2 admits D4's scale-22 graphs."""
     from swdb import bfs_native_scalable as scalable
-    path = native_campaign(team, workloads=("bfs-20261004-kronecker22.3dc69be403db57e9",
+    path = native_campaign(repo_team, workloads=("bfs-20261004-kronecker22.3dc69be403db57e9",
                                             "bfs-20261004-uniform22.facb16e6260c3a82"))
     data = yaml.safe_load(path.read_text())
     data["protocol"]["evaluator"] = scalable.EVALUATOR_V2
     path.write_text(yaml.safe_dump(data, sort_keys=False))
     runner, host = FakeRunner({"pilot": 1.0}, spreads={"pilot": 0.14}), FakeHost()
-    _, summary = run(team, path, provider(team, {}), runner, host)
+    _, summary = run(repo_team, path, provider(repo_team, {}), runner, host)
     assert summary["stop_reason"] == "baseline_unstable"        # reached the pilot, not a setup stop
     freezes = [c["request"]["settings"] for c in runner.calls if c["command"] == "freeze-protocol"]
     template = artifacts.file_hash(scalable.DRIVER_V2)
@@ -393,20 +244,19 @@ def test_native_scale22_runs_under_evaluator_v2_protocols(team, base_source):
     assert len([c for c in runner.calls if c["command"] == "evaluate-pair"]) == 4
 
 
-
-def test_native_ci_width_rule_and_evaluator_v3_are_frozen_into_every_role_protocol(team, base_source):
+def test_native_ci_width_rule_and_evaluator_v3_are_frozen_into_every_role_protocol(repo_team, base_source):
     """Tickets 66/67 (2026-10-04 ET): the campaign's CI-width speed rule (circular block analysis,
     gate 0.05, no range threshold) and evaluator v3 (its own driver) reach every frozen protocol;
     an A/A interval of relative width 0.08 fails the pilot in every class."""
     from swdb import bfs_native_scalable as scalable
     from swdb.bfs_protocol import ANALYSIS_CIRCULAR_BLOCK
-    path = native_campaign(team, workloads=("bfs-20261004-kronecker22.3dc69be403db57e9",
+    path = native_campaign(repo_team, workloads=("bfs-20261004-kronecker22.3dc69be403db57e9",
                                             "bfs-20261004-uniform22.facb16e6260c3a82"))
     data = yaml.safe_load(path.read_text())
     data["protocol"].update(evaluator=scalable.EVALUATOR_V3, speed_rule="swdb.speed_rule.ci_width.v1", repetitions=20)
     path.write_text(yaml.safe_dump(data, sort_keys=False))
     runner, host = FakeRunner({"pilot": 1.0}, spreads={"pilot": 0.01}), FakeHost()
-    _, summary = run(team, path, provider(team, {}), runner, host)
+    _, summary = run(repo_team, path, provider(repo_team, {}), runner, host)
     assert summary["stop_reason"] == "baseline_unstable"
     assert summary["stop_detail"] == "baseline A/A CI-width gate failed in every class"
     ci = summary["pilot"]["ci_by_class_and_role"]
@@ -424,17 +274,17 @@ def test_native_ci_width_rule_and_evaluator_v3_are_frozen_into_every_role_protoc
         and "maximum_relative_spread" not in f["profitability"] for f in freezes)
 
 
-def test_native_ci_width_v2_reports_upstream_level_mix_and_gates_on_the_fork_only(team, base_source):
+def test_native_ci_width_v2_reports_upstream_level_mix_and_gates_on_the_fork_only(repo_team, base_source):
     """Ticket 72 (2026-10-04 ET): under ci_width.v2 an upstream A/A failure no longer stops a class; the
     upstream blocks carry a level mix (here `unavailable`: the fake runner writes no evaluations)."""
     from swdb import bfs_native_scalable as scalable
-    path = native_campaign(team, workloads=("bfs-20261004-kronecker22.3dc69be403db57e9",
+    path = native_campaign(repo_team, workloads=("bfs-20261004-kronecker22.3dc69be403db57e9",
                                             "bfs-20261004-uniform22.facb16e6260c3a82"))
     data = yaml.safe_load(path.read_text())
     data["protocol"].update(evaluator=scalable.EVALUATOR_V3, speed_rule="swdb.speed_rule.ci_width.v2", repetitions=20)
     path.write_text(yaml.safe_dump(data, sort_keys=False))
     runner, host = FakeRunner({"pilot": 1.0}, spreads={"pilot": 0.01}), FakeHost()
-    _, summary = run(team, path, provider(team, {}), runner, host)
+    _, summary = run(repo_team, path, provider(repo_team, {}), runner, host)
     pilot = summary["pilot"]
     assert pilot["gating_roles"] == ["fork_scalar_tdstep"]
     mix = pilot["level_mix_by_class_and_role"]
@@ -442,7 +292,7 @@ def test_native_ci_width_v2_reports_upstream_level_mix_and_gates_on_the_fork_onl
     assert all(set(r["upstream_do_bfs"]) == {"baseline", "candidate"} for r in mix.values())
 
 
-def test_native_workspace_names_the_protected_verifier_and_region_lines(team, base_source):
+def test_native_workspace_names_the_protected_verifier_and_region_lines(repo_team, base_source):
     """Ticket 73 (2026-10-05 ET): a7's iteration 1 edited BFSVerifier, whose lines the full-source region
     numbers (240-243) point to in the scalar-only workspace copy. The workspace now has PROTECTED.json and
     workspace line spans, and the refusal names the protected region."""
@@ -453,10 +303,10 @@ def test_native_workspace_names_the_protected_verifier_and_region_lines(team, ba
     lines = base_source.splitlines(keepends=True)
     inside = next(i for i in range(verifier[0], verifier[1]) if "return false;" in lines[i])
     edited = "".join(lines[:inside] + [lines[inside].replace("return false;", "return true;")] + lines[inside + 1:])
-    config = provider(team, {"rewriting": [{"patch": diff(base_source, edited), "contracts": [], "knobs": [],
+    config = provider(repo_team, {"rewriting": [{"patch": diff(base_source, edited), "contracts": [], "knobs": [],
                                             "unresolved": []}]})
     runner = FakeRunner({"pilot": 1.0, "fork_scalar_tdstep": 1.3, "upstream_do_bfs": 0.8})
-    loop, summary = run(team, native_campaign(team, max_iterations=1), config, runner, FakeHost())
+    loop, summary = run(repo_team, native_campaign(repo_team, max_iterations=1), config, runner, FakeHost())
     workspaces = sorted((loop.folder / "provider").glob("*/workspace"))
     rewriting = [w for w in workspaces if (w / "REGIONS.json").is_file()]
     assert rewriting
@@ -471,46 +321,46 @@ def test_native_workspace_names_the_protected_verifier_and_region_lines(team, ba
     assert candidate["level"] == "rejected" and "BFSVerifier" in candidate["rejection"]
     assert "never to be edited" in candidate["rejection"]
 
-def test_native_blocks_refuse_while_a_gem5_campaign_holds_the_other_socket(team, base_source):
-    config = provider(team, {})
+def test_native_blocks_refuse_while_a_gem5_campaign_holds_the_other_socket(repo_team, base_source):
+    config = provider(repo_team, {})
     other = {"lease": "mbit10-evaluation-node1", "mode": "extensa", "target": "dx100_gem5",
              "campaign": "extensa-gem5-bfs-20261004-a1"}
     runner = FakeRunner({"pilot": 1.0})
-    _, summary = run(team, native_campaign(team), config, runner, FakeHost(other=other))
+    _, summary = run(repo_team, native_campaign(repo_team), config, runner, FakeHost(other=other))
     assert summary["stop_reason"] == "infrastructure_failure"
     assert "extensa-gem5-bfs-20261004-a1" in summary["stop_detail"]
     assert not [c for c in runner.calls if c["command"] == "evaluate-pair"]
 
 
-def test_approved_native_blocks_run_beside_another_campaigns_gem5_and_record_it(team, base_source):
+def test_approved_native_blocks_run_beside_another_campaigns_gem5_and_record_it(repo_team, base_source):
     """Ticket 64 (2026-10-04 ET): approval.gem5_other_socket admits it; the other socket is recorded."""
     other = {"lease": "mbit10-evaluation-node1", "mode": "extensa", "target": "dx100_gem5",
              "campaign": "extensa-gem5-bfs-20261004-a7"}
-    path = native_campaign(team)
+    path = native_campaign(repo_team)
     data = yaml.safe_load(path.read_text())
     data["approval"]["gem5_other_socket"] = True
     path.write_text(yaml.safe_dump(data, sort_keys=False))
     runner = FakeRunner({"pilot": 1.0}, spreads={"pilot": 0.14})
-    _, summary = run(team, path, provider(team, {}), runner, FakeHost(other=other))
+    _, summary = run(repo_team, path, provider(repo_team, {}), runner, FakeHost(other=other))
     assert summary["stop_reason"] == "baseline_unstable"         # the pilot ran; its gate decided
     assert len([c for c in runner.calls if c["command"] == "evaluate-pair"]) == 4
     recorded = summary["pilot"]["other_socket_by_class_and_role"]
     assert recorded["kronecker"]["fork_scalar_tdstep"]["campaign"] == "extensa-gem5-bfs-20261004-a7"
 
 
-def test_approved_beside_gem5_the_iteration_blocks_also_run(team, base_source):
+def test_approved_beside_gem5_the_iteration_blocks_also_run(repo_team, base_source):
     """2026-10-04 ET (final code review): the iteration's evaluation honored only the pilot's
     approval check; an approved campaign passed its pilot and then stopped at its first block."""
     other = {"lease": "mbit10-evaluation-node1", "mode": "extensa", "target": "dx100_gem5",
              "campaign": "extensa-gem5-bfs-20261004-a7"}
-    path = native_campaign(team, max_iterations=1)
+    path = native_campaign(repo_team, max_iterations=1)
     data = yaml.safe_load(path.read_text())
     data["approval"]["gem5_other_socket"] = True
     path.write_text(yaml.safe_dump(data, sort_keys=False))
-    config = provider(team, {"rewriting": [{"patch": native_patch(base_source), "contracts": [],
+    config = provider(repo_team, {"rewriting": [{"patch": native_patch(base_source), "contracts": [],
                                             "knobs": [], "unresolved": []}]})
     runner = FakeRunner({"pilot": 1.0, "fork_scalar_tdstep": 1.3, "upstream_do_bfs": 0.8})
-    _, summary = run(team, path, config, runner, FakeHost(other=other))
+    _, summary = run(repo_team, path, config, runner, FakeHost(other=other))
     assert summary["pilot"]["passed"] is True
     assert summary["stop_reason"] != "infrastructure_failure", summary.get("stop_detail")
     (it,) = summary["iterations"]
@@ -545,15 +395,15 @@ class SequenceHost(FakeHost):
         return None
 
 
-def test_isolated_native_blocks_wait_for_a_free_other_socket_and_record_it(team, base_source, monkeypatch):
+def test_isolated_native_blocks_wait_for_a_free_other_socket_and_record_it(repo_team, base_source, monkeypatch):
     """Ticket 56 isolation test (2026-10-04 ET): protocol.isolation waits, then records the state."""
     monkeypatch.setattr(campaign_targets.NativeAdapter, "ISOLATION_POLL_S", 0)
-    path = native_campaign(team)
+    path = native_campaign(repo_team)
     data = yaml.safe_load(path.read_text())
     data["protocol"]["isolation"] = "other_socket_free"
     path.write_text(yaml.safe_dump(data, sort_keys=False))
     runner, host = FakeRunner({"pilot": 1.0}, spreads={"pilot": 0.14}), SequenceHost(held=3)
-    _, summary = run(team, path, provider(team, {}), runner, host)
+    _, summary = run(repo_team, path, provider(repo_team, {}), runner, host)
     assert summary["stop_reason"] == "baseline_unstable"
     isolation = summary["pilot"]["isolation_by_class_and_role"]
     assert isolation["kronecker"]["fork_scalar_tdstep"]["other_socket"] == "released"
@@ -562,12 +412,12 @@ def test_isolated_native_blocks_wait_for_a_free_other_socket_and_record_it(team,
     assert any("protocol.isolation" in p for p in campaign.campaign_problems(data))
 
 
-def test_gem5_baselines_only_runs_no_provider_call_and_resume_reuses_them(team, base_source):
-    config = provider(team, {"rewriting": [{"patch": inside_patch(base_source), "contracts": [CONTRACT],
+def test_gem5_baselines_only_runs_no_provider_call_and_resume_reuses_them(repo_team, base_source):
+    config = provider(repo_team, {"rewriting": [{"patch": inside_patch(base_source), "contracts": [CONTRACT],
                                             "knobs": [], "unresolved": []}]})
     runner, host = FakeRunner({"kronecker": 1.4, "uniform_random": 1.02}), FakeHost()
-    path = gem5_campaign(team, max_iterations=1)
-    common_args = dict(file=path, records=team["records"], library=None, provider_config=config, runs_root=None,
+    path = gem5_campaign(repo_team, max_iterations=1)
+    common_args = dict(file=path, records=repo_team["records"], library=None, provider_config=config, runs_root=None,
                        fixture=None, adapter_options={"runner": runner, "host": host, "certify": fake_certify})
 
     def loop(**extra):
@@ -585,7 +435,7 @@ def test_gem5_baselines_only_runs_no_provider_call_and_resume_reuses_them(team, 
     prepared = loop(resume=False, baselines_only=True).run()
     assert prepared["state"] == "prepared"
     assert set(prepared["baselines"]) == {"kronecker/fork_scalar_tdstep", "uniform_random/fork_scalar_tdstep"}
-    assert not (team["root"] / "provider-log.jsonl").exists()
+    assert not (repo_team["root"] / "provider-log.jsonl").exists()
     assert len([c for c in runner.calls if c["command"] == "dx100-execute"]) == 2
     resumed = loop(resume=True)
     resumed.adapter.protocol = runner.protocol          # the fixture freeze kept no protocol record

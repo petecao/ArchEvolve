@@ -1,4 +1,5 @@
 """First-evaluation command admission and immutable request plans. 2026-10-03 ET.
+Updated 2026-10-05 ET (code review P15: the shared operator frame and budgets).
 
 These do not execute gem5 or produce target evidence. The driver's public
 entry point has no fixture option and must refuse the local Mac before writes.
@@ -77,6 +78,36 @@ def test_public_driver_refuses_mac_before_creating_any_raw_output(tmp_path, monk
         driver.main(['--stage', 'prepare', '--id', 'first-evaluation-fixture', '--runs-dir', str(runs),
                      '--profile-package', 'package-fixture', '--approval-reference', 'fixture authorization'])
     assert not runs.exists()
+
+
+@pytest.mark.parametrize('name', ['typed', 'bc'])
+def test_gem5_drivers_refuse_raw_output_inside_the_checkout_before_creating_it(tmp_path, monkeypatch, name):
+    """P15 (2026-10-05 ET): the BC driver had lost this refusal; both drivers now share run_driver.
+
+    Every earlier check is satisfied by fixtures (host name, lane, record root, an approved run root
+    that is the checkout itself), so only the checkout refusal can stop the run."""
+    from tools import bc_gem5_driver
+    module = driver if name == 'typed' else bc_gem5_driver
+    monkeypatch.setattr(module.socket, 'gethostname', lambda: 'mbit10')
+    monkeypatch.setattr(driver.provider_guard, 'verified_lane', lambda: 'mbit10-evaluation-node0 (fixture)')
+    monkeypatch.setattr(driver, 'RECORDS_ROOT', tmp_path)
+    monkeypatch.setattr(driver.dispatch_preflight, 'PRIMARY', driver.PROJECT)
+    runs = driver.PROJECT/'raw-output-inside-checkout-fixture'
+    argv = ['--stage', 'prepare', '--id', 'checkout-guard-fixture', '--runs-dir', str(runs),
+            '--records', str(tmp_path/'records'), '--approval-reference', 'fixture authorization']
+    if name == 'typed':
+        argv += ['--profile-package', 'package-fixture']
+    with pytest.raises(Failure, match='raw output cannot be inside the checkout'):
+        module.main(argv)
+    assert not runs.exists()
+
+
+def test_gem5_driver_budgets_are_the_named_constants():
+    """P15 (2026-10-05 ET): the BC and typed drivers request the same named build/simulator budgets."""
+    assert driver.COMPILE_BUDGET == {'total_seconds': 600, 'build_seconds': 300, 'memory_gib': 4, 'storage_gib': 1}
+    assert driver.TIMED_SECONDS == {'total_seconds': 9000, 'checkpoint_seconds': 1800, 'run_seconds': 7140}
+    assert driver.COMPANION_SECONDS == {'total_seconds': 3600, 'checkpoint_seconds': 600, 'run_seconds': 2940}
+    assert driver.COMMAND_GRACE_SECONDS == 60
 
 
 def test_timed_stage_never_dispatches_after_inconclusive_l3(monkeypatch, tmp_path):
@@ -206,7 +237,7 @@ def test_timed_postprocessing_has_a_separate_bound_for_real_trace_revalidation(
         'l3_outcome': 'observed', 'timed_admitted': True,
         'companion_evaluations': companions, 'acceptance': acceptance})
     monkeypatch.setattr(driver.read_only_checks, 'companion_acceptance', lambda *args: acceptance)
-    monkeypatch.setattr(driver.provider_guard, '_lane', lambda: lane)
+    monkeypatch.setattr(driver.provider_guard, 'verified_lane', lambda: lane)
     monkeypatch.setattr(driver, 'lease_snapshot', lambda lane: [])
     monkeypatch.setattr(driver, '_require_valid', lambda path: source_store)
     monkeypatch.setattr(driver.library.Library, 'state', lambda *args: {'tier': 'shared', 'status': 'certified'})

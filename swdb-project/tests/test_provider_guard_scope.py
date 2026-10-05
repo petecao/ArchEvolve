@@ -1,9 +1,11 @@
 """The guard's thread caps follow what they protect (ticket 74). Created 2026-10-05 ET.
+Updated 2026-10-05 ET (code review: `guard_runtime_limit`, LIMITS, the shared CPU-list parser, and
+the fixture provider's `replay` hook instead of patching its program text).
 
 Replays native campaign a8's calls 1 (setup profiling) and 6 (iteration 5): the guard stopped Codex
 after about 0.5 s with "threads=17" (strace 1 + Codex 16: 12 tokio threads, 2 inotify watchers,
-main, codex-main) and the campaign counted both. The provider runtime and the tool commands the
-model starts now have separate caps, and a stop for the harness's own runtime cap is an uncounted
+main, codex-main) and the Extensa campaign counted both. The provider runtime and the tool commands
+the model starts now have separate caps, and a stop for the guard's own runtime limit is an uncounted
 infrastructure pause. Runs on the Mac: the a8 receipts are byte copies, and the fixture provider
 replays them into its call folder exactly where the observer wrote them on mbit10.
 """
@@ -15,11 +17,9 @@ import shutil
 import pytest
 
 from conftest import REPO
-from swdb import provider_adapters, provider_guard, provider_roles
+from swdb import profile, provider_adapters, provider_guard, provider_roles
 from swdb.extensa import search as S
-from test_extensa_campaign import (campaign_file, campaign_store, fixture_file, log, provider, rewrite,  # noqa: F401
-                                   run, team, team_seed)
-from test_bfs_protocol import protocol_seed  # noqa: F401
+from testkit.extensa import campaign_file, fixture_file, log, provider, replay, rewrite, run
 
 FIXTURES = REPO / "tests" / "fixtures" / "provider_guard_a8"
 A8_SHA256 = {
@@ -28,8 +28,7 @@ A8_SHA256 = {
     "a8-call6.resource-overrun.json": "8449345d004a0bb79650190c96d51580386dcd79415863b8b68d71094ecd7cc4",
     "a8-call6.guard-audit.json": "6995e804ef22dabd086c567e0a50dd4d50be0973c87971a23f8219c8991a454d",
 }
-LIMITS = {"threads": provider_guard.TOOL_THREADS, "runtime_threads": provider_guard.RUNTIME_THREADS,
-          "memory_bytes": 32 * 1024**3}
+LIMITS = provider_guard.LIMITS
 
 
 def _a8(call):
@@ -73,8 +72,8 @@ def test_a8_tree_was_the_codex_runtime_alone_and_fits_the_new_caps(call):
 
 
 @pytest.mark.parametrize("call", ["call1", "call6"])
-def test_a8_guard_stops_classify_as_harness_limits(tmp_path, call):
-    reason = provider_guard.harness_limit(_call_folder(tmp_path, call))
+def test_a8_guard_stops_classify_as_guard_runtime_limits(tmp_path, call):
+    reason = provider_guard.guard_runtime_limit(_call_folder(tmp_path, call))
     assert reason and "threads=17" in reason and "legacy aggregate cap" in reason and "within limits" in reason
 
 
@@ -86,7 +85,8 @@ def test_tool_work_over_its_cap_is_the_models_and_takes_precedence():
     runaway = provider_guard.resource_scope([tracer, _row(11, 64), tool], keys, LIMITS)
     assert runaway["scope"] == "tools"                                     # both over: the tools decide
     runtime = provider_guard.resource_scope([tracer, _row(11, 64), _row(12, 3)], keys, LIMITS)
-    assert runtime["scope"] == "runtime" and "harness limit" in runtime["reason"]
+    assert runtime["scope"] == provider_guard.RUNTIME_SCOPE == "runtime"      # the persisted value is unchanged
+    assert "guard runtime limit" in runtime["reason"]
     assert runtime["reason"].startswith(provider_guard.RESOURCE_REASON)
 
 
@@ -113,25 +113,26 @@ def _write(folder, audit, record):
     return folder
 
 
-def test_harness_limit_refuses_anything_but_a_runtime_only_stop(tmp_path):
+def test_guard_runtime_limit_refuses_anything_but_a_runtime_only_stop(tmp_path):
     rows, audit = _a8("call1")
-    assert provider_guard.harness_limit(tmp_path) is None                                   # no receipts
+    assert provider_guard.guard_runtime_limit(tmp_path) is None                                   # no receipts
     # A legacy record whose tool processes were over the tool cap is the model's work.
     tool = {**rows[1], "pid": 999, "start_time_ticks": 1, "threads": 18, "tasks": ["python"] * 18}
-    assert provider_guard.harness_limit(_write(tmp_path / "a", audit, rows + [tool])) is None
+    assert provider_guard.guard_runtime_limit(_write(tmp_path / "a", audit, rows + [tool])) is None
     # Any other guard reason (network, cleanup) keeps the call counted.
     other = {**audit, "reasons": audit["reasons"] + ["provider outbound connection is outside the model API"]}
-    assert provider_guard.harness_limit(_write(tmp_path / "b", other, rows)) is None
-    assert provider_guard.harness_limit(_write(tmp_path / "c", {**audit, "passed": True}, rows)) is None
+    assert provider_guard.guard_runtime_limit(_write(tmp_path / "b", other, rows)) is None
+    assert provider_guard.guard_runtime_limit(_write(tmp_path / "c", {**audit, "passed": True}, rows)) is None
     v2 = {"format": "swdb.guard-overrun.v2", "scope": "tools", "reason": audit["reasons"][0]}
-    assert provider_guard.harness_limit(_write(tmp_path / "d", audit, v2)) is None
-    harness = {**v2, "scope": "runtime", "reason": "provider resource limit exceeded by the provider runtime"}
-    assert provider_guard.harness_limit(_write(tmp_path / "e", audit, harness)) == harness["reason"]
+    assert provider_guard.guard_runtime_limit(_write(tmp_path / "d", audit, v2)) is None
+    runtime = {**v2, "scope": "runtime", "reason": "provider resource limit exceeded by the provider runtime"}
+    assert provider_guard.guard_runtime_limit(_write(tmp_path / "e", audit, runtime)) == runtime["reason"]
 
 
-def test_cpu_lists_parse_ranges():
-    assert provider_guard._cpu_list("1,3-5,32-33\n") == {1, 3, 4, 5, 32, 33}
-    assert provider_guard._cpu_list("") == set()
+def test_the_lane_cpu_check_parses_kernel_cpu_lists_with_the_profile_parser():
+    # J4 (2026-10-05 ET): `_task_cpus` reuses the profile's parser instead of a second copy.
+    assert profile._cpu_set("1,3-5,32-33\n") == {1, 3, 4, 5, 32, 33}
+    assert profile._cpu_set("") == set()
 
 
 def test_guard_infrastructure_is_an_uncounted_call_outcome():
@@ -141,27 +142,23 @@ def test_guard_infrastructure_is_an_uncounted_call_outcome():
 
 # --- the role and the campaign ------------------------------------------------------------
 
-REPLAY = """if item in ('guard_a8_call1', 'guard_a8_call6'):
-    import shutil
-    call = item.rsplit('_', 1)[1]
-    for kind in ('resource-overrun.json', 'guard-audit.json'):
-        shutil.copyfile({fixtures!r} + '/a8-' + call + '.' + kind, Path('..') / kind)
-    sys.stderr.write('Reading additional input from stdin...'); sys.exit(1)
-if item == 'login':"""
+def _a8_stop(call):
+    """Replays one a8 call's guard receipts into its call folder (where the observer wrote them on
+    mbit10) and exits 1, as the stopped CLI did."""
+    return replay(stderr="Reading additional input from stdin...",
+                  call_files={kind: FIXTURES / f"a8-{call}.{kind}" for kind in ("resource-overrun.json", "guard-audit.json")})
 
 
-def _replay_provider(team, plan):
-    """The campaign fixture provider; a `guard_a8_*` item replays that a8 call's guard receipts into
-    its call folder (where the observer wrote them on mbit10) and exits 1, as the stopped CLI did."""
-    config = provider(team, plan)
-    program = team["root"] / "provider.py"
-    program.write_text(program.read_text().replace("if item == 'login':", REPLAY.format(fixtures=str(FIXTURES)), 1))
-    return config
+def _replay_provider(campaign_team, plan):
+    """The campaign fixture provider; a `guard_a8_*` plan item becomes that a8 call's replay."""
+    return provider(campaign_team, {role: [_a8_stop(item.rsplit("_", 1)[1]) if isinstance(item, str)
+                                           and item.startswith("guard_a8_") else item for item in items]
+                                    for role, items in plan.items()})
 
 
-def test_role_run_raises_guard_infrastructure_for_the_a8_stop(team, tmp_path):
+def test_role_run_raises_guard_infrastructure_for_the_a8_stop(campaign_team, tmp_path):
     from swdb import rewrite as rewrite_module
-    config = rewrite_module.configuration(_replay_provider(team, {"profiling": ["guard_a8_call1"]}))
+    config = rewrite_module.configuration(_replay_provider(campaign_team, {"profiling": ["guard_a8_call1"]}))
     with pytest.raises(provider_adapters.GuardInfrastructure, match="threads=17"):
         provider_roles.run(provider_roles.Role("extensa_profiling", {
             "type": "object", "additionalProperties": False, "required": ["notes"],
@@ -169,11 +166,11 @@ def test_role_run_raises_guard_infrastructure_for_the_a8_stop(team, tmp_path):
             {"source/bfs.cc": "int main() { return 0; }\n"}, "Profile.", config, tmp_path / "call1")
 
 
-def test_campaign_retries_the_a8_guard_stops_uncounted_and_continues(team):
-    config = _replay_provider(team, {"profiling": ["guard_a8_call1", {"notes": ["fixture"]}],
+def test_campaign_retries_the_a8_guard_stops_uncounted_and_continues(campaign_team):
+    config = _replay_provider(campaign_team, {"profiling": ["guard_a8_call1", {"notes": ["fixture"]}],
                                      "rewriting": ["guard_a8_call6", rewrite()]})
-    path = campaign_file(team, budgets={"max_iterations": 1})
-    summary = run(team, path, fixture_file(team), config, env={"SWDB_GUARD_RETRY_S": "0"})
+    path = campaign_file(campaign_team, budgets={"max_iterations": 1})
+    summary = run(campaign_team, path, fixture_file(campaign_team), config, env={"SWDB_GUARD_RETRY_S": "0"})
     (iteration,) = summary["iterations"]
     calls = [c for c in iteration["provider_calls"] if c["role"] == "rewriting"]
     assert [c["outcome"] for c in calls] == ["guard_infrastructure", "completed"]
@@ -181,7 +178,7 @@ def test_campaign_retries_the_a8_guard_stops_uncounted_and_continues(team):
     assert calls[0]["retry_after_s"] == 0 and "threads=17" in calls[0]["guard_reason"]
     used = summary["budgets"]["used"]
     assert used["provider_calls_uncounted"] == 2                         # setup call 1 and iteration call 6
-    roles = [entry["role"] for entry in log(team)]
+    roles = [entry["role"] for entry in log(campaign_team)]
     assert roles.count("profiling") == 2 and roles.count("rewriting") == 2
     # Every invocation but the two replayed guard stops is counted (their retries included).
     assert used["provider_calls_counted"] == len(roles) - 2
@@ -189,10 +186,10 @@ def test_campaign_retries_the_a8_guard_stops_uncounted_and_continues(team):
     assert iteration["candidates"]                                       # the retried call produced a candidate
 
 
-def test_persistent_guard_stops_end_the_campaign_as_infrastructure_failure(team):
-    config = _replay_provider(team, {"rewriting": ["guard_a8_call6"]})
-    path = campaign_file(team, budgets={"max_iterations": 3})
-    summary = run(team, path, fixture_file(team), config, env={"SWDB_GUARD_RETRY_S": "0"})
+def test_persistent_guard_stops_end_the_campaign_as_infrastructure_failure(campaign_team):
+    config = _replay_provider(campaign_team, {"rewriting": ["guard_a8_call6"]})
+    path = campaign_file(campaign_team, budgets={"max_iterations": 3})
+    summary = run(campaign_team, path, fixture_file(campaign_team), config, env={"SWDB_GUARD_RETRY_S": "0"})
     assert summary["stop_reason"] == "infrastructure_failure"
     assert "stopped 3 consecutive rewriting calls for its own runtime limit" in summary["stop_detail"]
     assert summary["iterations"] == []

@@ -10,7 +10,6 @@ from pathlib import Path
 import pytest
 import yaml
 
-from test_proposals import proposal_setup
 from swdb import rewrite
 from swdb.cli import Failure
 

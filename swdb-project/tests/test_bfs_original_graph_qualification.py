@@ -1,4 +1,5 @@
-"""Legacy graph-oracle evidence stays retrievable, never qualified. Updated: 2026-09-26."""
+"""Legacy original-graph check evidence stays retrievable, never qualified. Updated: 2026-10-05
+(glossary: no "oracle"; recorded IDs keep their names)."""
 
 import copy
 import json
@@ -8,7 +9,7 @@ import pytest
 from swdb import artifacts, bfs_protocol
 from swdb.cli import Failure
 from swdb.dx100_witness import graph_verification_contract
-from test_bfs_protocol import protocol_seed, protocol_setup, _command, _payload
+from testkit.bfs_protocol import _command, _payload
 
 
 def _dx100_metadata(evaluation, *, legacy):
@@ -40,7 +41,7 @@ def test_public_legacy_complete_call_remains_retrievable_but_comparator_rejects(
     assert 'original-adjacency checker treatment' in str(result['decision']['reasons'])
 
 
-def test_aggregate_cannot_hide_legacy_component_behind_new_oracle_metadata(protocol_setup, tmp_path):
+def test_aggregate_cannot_hide_legacy_component_behind_new_graph_check_metadata(protocol_setup, tmp_path):
     records, _, _, _, evaluations, request = protocol_setup
     component = _dx100_metadata(evaluations['candidate'], legacy=False)
     component['id'] = 'fixture-new-oracle-component'

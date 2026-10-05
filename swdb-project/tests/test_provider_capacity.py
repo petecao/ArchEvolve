@@ -1,23 +1,21 @@
 """Provider capacity is an uncounted D7 outcome (ticket 73). Created 2026-10-05 ET.
+Updated 2026-10-05 ET (code review T2: the fixture provider replays a7 through `replay`, not by
+patching its program text).
 
 Classifies the raw Codex streams of native campaign a7's calls 4 and 5 ("Selected model is at
-capacity"), which the harness had counted as failed rewrites. A campaign retries such a call after a
-backoff, records it uncounted, and stops `infrastructure_failure` when capacity persists.
+capacity"), which the Extensa campaign had counted as failed rewrites. A campaign retries such a
+call after a backoff, records it uncounted, and stops `infrastructure_failure` when capacity persists.
 """
 
 import hashlib
 import json
-import shutil
-from pathlib import Path
 
 import pytest
 
 from conftest import REPO
 from swdb import provider_adapters
 from swdb.extensa import search as S
-from test_extensa_campaign import (campaign_file, campaign_store, fixture_file, log, provider, rewrite,  # noqa: F401
-                                   run, team, team_seed)
-from test_bfs_protocol import protocol_seed  # noqa: F401
+from testkit.extensa import campaign_file, fixture_file, provider, replay, rewrite, run
 
 FIXTURES = REPO / "tests" / "fixtures" / "provider_capacity"
 A7_SHA256 = {"a7-call4.stdout.txt": "62c80ca14897b92bdb3604cafc0f18d5fb3a77575844a0ede896c5b1711f2828",
@@ -66,21 +64,18 @@ def test_capacity_is_an_uncounted_call_outcome():
     assert S.CallOutcome.PROVIDER_CAPACITY in S.UNCOUNTED_CALL_OUTCOMES
 
 
-def _capacity_provider(team, rewriting):
-    """The campaign fixture provider, whose `capacity` items replay a7 call 4's raw stream."""
-    config = provider(team, {"rewriting": rewriting})
-    program = team["root"] / "provider.py"
-    stream = (FIXTURES / "a7-call4.stdout.txt").read_text()
-    program.write_text(program.read_text().replace(
-        "if item == 'login':",
-        f"if item == 'capacity':\n    sys.stdout.write({stream!r}); sys.exit(1)\nif item == 'login':", 1))
-    return config
+#: a7 call 4's raw stream, replayed by the campaign fixture provider (exit 1, as the stopped CLI did).
+CAPACITY = replay(stdout=FIXTURES / "a7-call4.stdout.txt")
 
 
-def test_campaign_retries_a_capacity_call_uncounted_and_continues(team):
-    config = _capacity_provider(team, ["capacity", "capacity", rewrite()])
-    path = campaign_file(team, budgets={"max_iterations": 1})
-    summary = run(team, path, fixture_file(team), config, env={"SWDB_CAPACITY_BACKOFF_S": "0,0,0"})
+def _capacity_provider(campaign_team, rewriting):
+    return provider(campaign_team, {"rewriting": [CAPACITY if item == "capacity" else item for item in rewriting]})
+
+
+def test_campaign_retries_a_capacity_call_uncounted_and_continues(campaign_team):
+    config = _capacity_provider(campaign_team, ["capacity", "capacity", rewrite()])
+    path = campaign_file(campaign_team, budgets={"max_iterations": 1})
+    summary = run(campaign_team, path, fixture_file(campaign_team), config, env={"SWDB_CAPACITY_BACKOFF_S": "0,0,0"})
     (iteration,) = summary["iterations"]
     calls = [c for c in iteration["provider_calls"] if c["role"] == "rewriting"]
     assert [c["outcome"] for c in calls] == ["provider_capacity", "provider_capacity", "completed"]
@@ -91,10 +86,10 @@ def test_campaign_retries_a_capacity_call_uncounted_and_continues(team):
     assert iteration["candidates"]                                    # the retried call produced a candidate
 
 
-def test_persistent_capacity_stops_the_campaign_as_infrastructure_failure(team):
-    config = _capacity_provider(team, ["capacity"])
-    path = campaign_file(team, budgets={"max_iterations": 3})
-    summary = run(team, path, fixture_file(team), config, env={"SWDB_CAPACITY_BACKOFF_S": "0,0"})
+def test_persistent_capacity_stops_the_campaign_as_infrastructure_failure(campaign_team):
+    config = _capacity_provider(campaign_team, ["capacity"])
+    path = campaign_file(campaign_team, budgets={"max_iterations": 3})
+    summary = run(campaign_team, path, fixture_file(campaign_team), config, env={"SWDB_CAPACITY_BACKOFF_S": "0,0"})
     assert summary["stop_reason"] == "infrastructure_failure"
     assert "stayed unavailable" in summary["stop_detail"]
     assert summary["iterations"] == []                                  # no iteration completed

@@ -16,9 +16,10 @@ from swdb import certification as c
 from swdb import certification_isolation as isolation
 from swdb import certification_native as native
 from swdb.certification_feedback import STRICT_MESSAGES
-from swdb.cli import Failure, UsageError
+from swdb.cli import UsageError
 from swdb.library import Library
 from swdb.store import Store
+from testkit.toolchain import require_gcc_openmp as _gcc
 
 ROOT = Path(__file__).resolve().parents[1]
 LIBRARY = ROOT / 'library'
@@ -34,11 +35,6 @@ BOUNDS = """                staged_begin[lane] = offsets[u];
                 staged_end[lane] = offsets[u + 1];"""
 
 
-def _gcc():
-    try:
-        return c.compiler()
-    except Failure:
-        pytest.skip('certification requires GCC with OpenMP')
 
 
 def _variant(tmp_path, transform, name='variant.patch'):

@@ -17,8 +17,9 @@ from swdb import certification_isolation as isolation
 from swdb import kernels
 from swdb.certification_faults import LIBRARY_FAULTS
 from swdb.certification_feedback import STRICT_MESSAGES
-from swdb.cli import Failure, UsageError
+from swdb.cli import UsageError
 from swdb.store import Store
+from testkit.toolchain import require_gcc_openmp as _gcc
 
 ROOT = Path(__file__).resolve().parents[1]
 LIBRARY = (ROOT / 'library').resolve()
@@ -33,11 +34,6 @@ def _replace(text, old, new):
     return text.replace(old, new, 1)
 
 
-def _gcc():
-    try:
-        return c.compiler()
-    except Failure:
-        pytest.skip('certification requires GCC with OpenMP')
 
 
 # --- records and the out-of-process judge -------------------------------------------------------

@@ -1,4 +1,4 @@
-"""Prospective coordinator contracts; fixtures are not BFS evidence. Updated 2026-09-27 ET."""
+"""Prospective coordinator contracts; fixtures are not BFS evidence. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-27 ET."""
 import copy
 from datetime import datetime, timedelta
 import hashlib
@@ -12,7 +12,7 @@ from types import SimpleNamespace
 import pytest
 
 from conftest import REPO
-from test_profile_packages import package_seed, package_setup, _assemble
+from testkit.profile_packages import _assemble
 from swdb.store import Store
 from scripts import bfs_simulator_batch as batch
 from scripts import bfs_dx100_coverage_a2 as coverage_a2

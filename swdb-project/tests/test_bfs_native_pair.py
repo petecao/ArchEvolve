@@ -1,4 +1,4 @@
-"""Public native paired collection contracts; fixture evidence only. Updated: 2026-09-26."""
+"""Public native paired collection contracts; fixture evidence only. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-26."""
 
 import copy
 import json
@@ -7,10 +7,11 @@ from pathlib import Path
 
 import pytest
 
-from conftest import records as records_fixture
-from test_proposals import proposal_setup
-from test_bfs_native import PROGRAM, evaluation_setup
-from test_bfs_protocol import _command, _payload, _settings, _workload_request
+from conftest import make_records
+from testkit.proposals import build_proposal_setup
+from testkit.bfs_native import build_evaluation_setup
+from testkit.bfs_native import PROGRAM
+from testkit.bfs_protocol import _command, _payload, _settings, _workload_request
 from swdb import artifacts
 
 
@@ -24,8 +25,8 @@ def _collect(records, runs, tmp, request, *, success=True, env=None):
 @pytest.fixture(scope="module")
 def paired_seed(tmp_path_factory):
     tmp = tmp_path_factory.mktemp("paired-seed")
-    records = records_fixture.__wrapped__(tmp)
-    setup = evaluation_setup.__wrapped__(proposal_setup.__wrapped__(records, tmp), tmp)
+    records = make_records(tmp)
+    setup = build_evaluation_setup(build_proposal_setup(records, tmp), tmp)
     _, runs, _, base = setup
     compiler = Path(base["build"]["compiler"])
     # Opposing source effects cancel only when the SAME repetition blocks are

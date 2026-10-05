@@ -1,6 +1,5 @@
-"""Simulator orchestration selection guards; no simulator evidence. Updated: 2026-09-26."""
+"""Simulator orchestration selection guards; no simulator evidence. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-26."""
 import copy
-import importlib.util
 import json
 from pathlib import Path
 import sys
@@ -11,15 +10,14 @@ import pytest
 from conftest import REPO
 from swdb import artifacts, bfs_protocol
 from swdb.cli import Failure
+from testkit.toolchain import load_script
 
 
 @pytest.fixture
 def selection(tmp_path, monkeypatch):
     # This client imports the sibling bounded-build helper when run as a script.
     monkeypatch.syspath_prepend(str(REPO / 'scripts'))
-    spec = importlib.util.spec_from_file_location('simulator_series', REPO / 'scripts/bfs_simulator_series.py')
-    client = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(client)
+    client = load_script(REPO / 'scripts/bfs_simulator_series.py', 'simulator_series')
     pinned = tmp_path / 'pinned'; pinned.mkdir()
     (pinned / 'bfs.cc').write_text('int fixture_bfs(){return 0;}\n')
     expected = artifacts.identify(pinned)

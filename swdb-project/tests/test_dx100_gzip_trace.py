@@ -170,7 +170,7 @@ def test_public_profile_package_and_query_reopen_full_debug_stream(case, records
     """Real CLI collection/assembly, with explicit fixture source and synthetic gem5."""
     import yaml
     from swdb import workflow, profile_package
-    from test_bfs_protocol import _workload_request
+    from testkit.bfs_protocol import _workload_request
     from conftest import REPO
     request=gzip_request(case);_,invoke,folder=case
     records.copy_repo('applications')

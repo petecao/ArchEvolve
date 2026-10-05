@@ -1,7 +1,7 @@
-"""Preparation defect reproduction; fixture bindings only. Updated 2026-09-27 ET."""
+"""Preparation defect reproduction; fixture bindings only. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-27 ET."""
 import copy
 import pytest
-from test_bfs_protocol import protocol_seed, protocol_setup, proposal_setup, evaluation_setup, _sim_settings, _model_identity_fixture, _hash, _command, _payload
+from testkit.bfs_protocol import _sim_settings, _model_identity_fixture, _hash, _command, _payload
 
 def test_runtime_repair_needs_new_frozen_instrumentation(protocol_setup, tmp_path):
     from swdb import artifacts, bfs_protocol

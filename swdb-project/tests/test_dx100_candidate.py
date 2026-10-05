@@ -1,8 +1,7 @@
-"""Candidate compilation and trusted driver contracts. Updated: 2026-09-26."""
+"""Candidate compilation and trusted driver contracts. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-26."""
 
 import json
 from pathlib import Path
-import shutil
 import subprocess
 import sys
 
@@ -12,6 +11,7 @@ import yaml
 from swdb import artifacts, workflow
 from swdb.dx100_candidate import driver, _protect_model_headers
 from test_dx100 import case, reference, execution_request
+from testkit.toolchain import find_cxx
 
 
 def test_pinned_header_shadow_guard_does_not_reserve_repository_metadata_names(tmp_path):
@@ -124,7 +124,7 @@ def test_public_candidate_compile_preserves_source_binary_receipt_and_rejects_dr
 
 
 def _reject_frozen_configuration_mismatch(case, records, compiled):
-    from test_bfs_protocol import _workload_request
+    from testkit.bfs_protocol import _workload_request
     from swdb.dx100 import _configuration
     _, invoke, folder = case
     graph = {'num_vertices': 3, 'directed': True, 'edges': [[0, 1], [1, 2]]}
@@ -178,7 +178,7 @@ def _reject_frozen_configuration_mismatch(case, records, compiled):
 @pytest.mark.parametrize("parents,passes", [("0,0,1", True), ("0,9,1", False), ("0,0", False)])
 @pytest.mark.parametrize('diagnostic', [False, True])
 def test_generated_driver_checks_bounds_before_verifier_and_fingerprints_returned_parents(tmp_path, parents, passes, diagnostic):
-    compiler = shutil.which("clang++") or shutil.which("g++")
+    compiler = find_cxx()
     if compiler is None:
         pytest.skip("C++ compiler unavailable for trusted driver contract")
     model = tmp_path / "model"
@@ -206,7 +206,7 @@ int main(int,char**) {return 0;}
     binary = tmp_path / "driver"
     result = subprocess.run([compiler, "-std=c++11", str(generated), "-o", str(binary)], capture_output=True, text=True, timeout=30)
     assert result.returncode == 0, result.stderr
-    from test_bfs_protocol import _sg
+    from testkit.bfs_protocol import _sg
     graph = tmp_path / 'graph.sg'
     graph.write_bytes(_sg({'num_vertices': 3, 'directed': False, 'edges': [[0, 1], [1, 2]]}, 8))
     run = subprocess.run([str(binary), '-f', str(graph), '-r', '0'], capture_output=True, text=True, timeout=5)

@@ -1,4 +1,4 @@
-"""Public bounded rewrite and repair contracts. Updated: 2026-09-29."""
+"""Public bounded rewrite and repair contracts. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-29."""
 
 import difflib
 import json
@@ -8,8 +8,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from test_proposals import proposal_setup
-from test_bfs_native import evaluation_setup, evaluate
+from testkit.bfs_native import evaluate
 from test_dx100 import case
 
 

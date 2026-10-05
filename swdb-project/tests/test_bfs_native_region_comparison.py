@@ -1,6 +1,6 @@
 """Native package comparisons using actual collected shapes and synthetic counters.
 
-Updated: 2026-09-26. These fixtures never establish empirical performance.
+Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-26. These fixtures never establish empirical performance.
 """
 import copy
 import datetime
@@ -12,8 +12,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from conftest import REPO, records as records_fixture
-from test_bfs_protocol import protocol_seed, _command, _fixture_rebind, _payload
+from conftest import REPO, make_records
+from testkit.bfs_protocol import _command, _fixture_rebind, _payload
 from swdb import artifacts, bfs_discovery, bfs_profiling, profile_package, workflow, yamlio
 
 
@@ -103,7 +103,7 @@ def diagnostic_fixture(records, tmp, primary, template, runtime, ns):
 @pytest.fixture(scope='module')
 def native_seed(protocol_seed, tmp_path_factory):
     old_records, _, old_protocol, _, evaluations, comparison = protocol_seed
-    tmp = tmp_path_factory.mktemp('native-regional'); records = records_fixture.__wrapped__(tmp)
+    tmp = tmp_path_factory.mktemp('native-regional'); records = make_records(tmp)
     shutil.copytree(old_records.path, records.path, dirs_exist_ok=True)
     template = yamlio.load(ACTUAL)
     assert len(template['regions']) == 24

@@ -13,7 +13,6 @@ from conftest import REPO
 from scripts import bfs_freeze_pilot as publisher, bfs_native_campaign as campaign
 from scripts import bfs_simulator_batch as batch, bfs_simulator_series as series
 from swdb import artifacts
-from test_bfs_protocol import protocol_seed
 
 
 @pytest.fixture
