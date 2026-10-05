@@ -1,6 +1,7 @@
 # Two modes, same evaluator
 
 Date: 2026-10-03 ET
+Updated: 2026-10-05 ET (scope line)
 Status: proposed
 
 Extends ADR 0006 from rewrite providers to every agent role.
@@ -9,4 +10,4 @@ ArchEvolve and Extensa modes share the evaluator, records, typed library and pro
 
 ## Scope and authority
 
-Implementation follows the authorized tickets [01–37](../../.scratch/typed-library-dx100-bfs-2026-10-03/map.md). This proposed record does not assert Yan-Ru accepted the ADR or sent the team note. Human review and communication receipts remain separate.
+Implementation follows the authorized tickets of the [typed-library map](../../.scratch/typed-library-dx100-bfs-2026-10-03/map.md): 01–37 at first, then 38–78 (updated 2026-10-05 ET; the map lists each ticket and its decision). This proposed record does not assert Yan-Ru accepted the ADR or sent the team note. Human review and communication receipts remain separate.
