@@ -100,7 +100,8 @@ RESOURCE_PROGRAM = '''import ctypes, json, os, platform, shutil, signal, sys, th
 from pathlib import Path
 if "--version" in sys.argv:
  print("resource-guard-fixture-1"); raise SystemExit(0)
-mode = json.loads(Path(sys.argv[1]).read_text())["mode"]
+plan = json.loads(Path(sys.argv[1]).read_text())
+mode = plan["mode"]
 pidfile = Path("build/resource-pid.json")
 pidfile.write_text(json.dumps({"provider": os.getpid()}))
 print(json.dumps({"type":"item.completed", "item":{"type":"command_execution", "command":"local resource fixture probe", "exit_code":0, "aggregated_output":"started:"+mode}}), flush=True)
@@ -118,8 +119,15 @@ elif mode == "runtime_threads":
   threading.Thread(target=gate.wait, daemon=True).start()
 elif mode == "cpu_escape":
  # A tool process widening its affinity beyond the lane (as taskset or numactl would).
+ # The CPUs come from the plan: under Landlock os.cpu_count() cannot read the host's CPU
+ # list and falls back to this process's one-CPU affinity, so no escape would happen.
  if os.fork() == 0:
-  os.sched_setaffinity(0, range(os.cpu_count()))
+  try:
+   os.sched_setaffinity(0, plan["escape_cpus"])
+   observed = sorted(os.sched_getaffinity(0))
+  except OSError as error:
+   observed = "error:" + str(error.errno)
+  Path("build/cpu-escape.json").write_text(json.dumps({"pid": os.getpid(), "affinity": observed}))
   time.sleep(30); os._exit(0)
 elif mode == "workspace":
  # Two sparse files cross the actual aggregate 5 GiB allowance without
@@ -223,7 +231,9 @@ def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_pat
     records, runs, _, request = proposal_setup
     program, plan = tmp_path / "resource-fixture.py", tmp_path / "resource-plan.json"
     program.write_text(RESOURCE_PROGRAM)
-    plan.write_text(json.dumps({"mode": mode}))
+    lane = set(os.sched_getaffinity(0))
+    escape = sorted(set(range(os.cpu_count())) - lane)[:1]     # one CPU outside the lane; the child only sleeps
+    plan.write_text(json.dumps({"mode": mode, "escape_cpus": escape}))
     config = tmp_path / "resource-config.yaml"
     config.write_text(yaml.safe_dump({"kind":"external_fixture", "emulates":"codex", "workspace":True,
         "command":[sys.executable, str(program), str(plan)], "timeout_s":150, "total_seconds":180}))
@@ -242,6 +252,12 @@ def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_pat
     else:
         assert meta["host_wall_s"] < 10, "fixture reached its own completion instead of being stopped by the guard"
     violations = meta["audit"]["violations"]
+    if mode == "cpu_escape":
+        # The premise held: the guard observed the tool's affinity on the CPU outside the lane.
+        assert any(f"lane CPUs: {escape}" in r for r in meta["guard_result"]["reasons"]), meta["guard_result"]
+        report = Path(meta["workspace_manifest"]["root"]) / "build/cpu-escape.json"
+        if report.exists():                     # written right after the call, unless the guard was faster
+            assert json.loads(report.read_text())["affinity"] == escape
     code = "guard_violation" if mode == "cpu_escape" else "resource_limit"
     assert any(v["code"] == code and reason in v["reason"] for v in violations)
     assert not any(v["code"] == "outbound_connection" for v in violations)
