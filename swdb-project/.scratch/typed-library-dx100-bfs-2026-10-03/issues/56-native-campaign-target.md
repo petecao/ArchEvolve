@@ -1,7 +1,7 @@
 # 56 — Native-CPU Extensa campaign target for BFS
 
 Created: 2026-10-03
-Updated: 2026-10-05 03:20 ET (a7 erratum; a8 pre-registered); 2026-10-05 02:50 ET (a7 addendum: speed rule ci_width.v2, uniform no_gain at plateau, Kronecker baseline_unstable); 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
+Updated: 2026-10-05 03:15 ET (a7 erratum; a8 pre-registered); 2026-10-05 02:50 ET (a7 addendum: speed rule ci_width.v2, uniform no_gain at plateau, Kronecker baseline_unstable); 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 51, 53, 54, 55
@@ -312,7 +312,7 @@ Summary `records/campaign_summaries/extensa-native-bfs-20261004-a7.summary.yaml`
 on host and Mac). Compact evidence:
 [`evaluation/native-a7-ci-gate-v2-2026-10-05.json`](../evaluation/native-a7-ci-gate-v2-2026-10-05.json).
 
-**Erratum 2026-10-05 03:20 ET (ticket [73](73-provider-capacity-and-protected-regions.md)).** a7's plateau was
+**Erratum 2026-10-05 03:15 ET (ticket [73](73-provider-capacity-and-protected-regions.md)).** a7's plateau was
 reached partly through two miscounted calls. Calls 4 and 5 failed because Codex was at capacity, a provider-side
 outage. Under D7 they should have been uncounted pauses, not counted failed rewrites ending iterations 3 and 4
 as `provider_output_invalid`. Uniform's `no_gain` is therefore **budget-contaminated**: the campaign spent two
@@ -320,7 +320,10 @@ of its four plateau iterations without a rewrite. Its measured comparison (itera
 a7 records and summary are left unedited. Iteration 1's rejection is also explained: REGIONS.json numbered the
 full fork source, and its lines 240-241 fall inside `BFSVerifier` in the scalar-only workspace copy (ticket 73).
 
-### Pre-registration 2026-10-05 03:20 ET: native campaign a8 (written before the run)
+### Pre-registration 2026-10-05 03:15 ET: native campaign a8 (written before the run)
+
+(Committed in `b45c56a` at 03:18 ET; a8 started at 03:19 ET. The campaign file's own comment says 03:20 ET,
+written ahead of the clock; the commit time is authoritative.)
 
 Decision by the coordinating agent under Yan-Ru's delegation (agent-decided; revisable).
 

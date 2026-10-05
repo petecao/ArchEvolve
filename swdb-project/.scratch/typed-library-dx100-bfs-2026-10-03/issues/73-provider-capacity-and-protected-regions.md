@@ -1,7 +1,7 @@
 # 73 — Provider capacity is an uncounted pause; the rewrite workspace names the protected verifier
 
 Created: 2026-10-05 02:50 ET (from campaign `extensa-native-bfs-20261004-a7`, ticket 56 addendum)
-Updated: 2026-10-05 03:20 ET (resolved)
+Updated: 2026-10-05 03:15 ET (resolved)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** —
@@ -41,7 +41,7 @@ coordinating agent on 2026-10-05.
 
 ## Answer
 
-Resolved 2026-10-05 03:20 ET by the agent (worktree branch, not pushed).
+Resolved 2026-10-05 03:15 ET by the agent (worktree branch, not pushed).
 
 - `swdb/provider_adapters.py`: `CAPACITY` pattern and `ProviderCapacity(ProviderUnavailable)`, raised by
   `check_usage` after the usage-limit check.
