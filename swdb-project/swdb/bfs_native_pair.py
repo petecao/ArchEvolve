@@ -2,6 +2,7 @@
 
 2026-10-03 ET (ticket 38): raw rechecks use the evaluation's kernel plug-in.
 2026-10-04 ET (ticket 63): evaluator v2 receipts recheck raw output with the compiled verifier.
+2026-10-04 ET (ticket 67): evaluator v3 receipts take the same path with the v3 trial format.
 """
 
 import copy
@@ -203,7 +204,8 @@ def validate_receipt(store, baseline, candidate, settings, *, verify_raw=True):
     require(len(pair["observations"]) == len(planned), "paired receipt has incomplete trial coverage")
     workload_id = baseline["context"]["workload"]["id"]
     from swdb import bfs_native_scalable as scalable
-    v2 = scalable.evaluator_of_settings(settings) == scalable.EVALUATOR_V2
+    evaluator = scalable.evaluator_of_settings(settings)
+    v2 = scalable.is_scalable(evaluator)        # v2 or v3 (ticket 67)
     if verify_raw and v2:
         # Ticket 63: v2 re-binds the registered SG file by hash; no Python adjacency.
         registered = _get(store, workload_id, "workload")
@@ -281,7 +283,7 @@ def validate_receipt(store, baseline, candidate, settings, *, verify_raw=True):
                     and artifacts.file_hash(binding["execution_log"]) == binding["execution_log_sha256"],
                     "paired raw execution evidence changed or is unavailable")
             require(scalable.check_trial_record(raw, slot["source"], evaluation["context"]["threads"], observation["roi"],
-                                                evaluation["context"]["workload"]["num_vertices"]) is None
+                                                evaluation["context"]["workload"]["num_vertices"], evaluator) is None
                     and type(raw.get("duration_s")) in (int, float) and raw["duration_s"] == observation["duration_s"],
                     "paired timing/context differs from its hash-bound raw output")
             checked = scalable.recheck_retained(evaluation, observation, check, slot["source"], graph_checked=True)

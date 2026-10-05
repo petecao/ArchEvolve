@@ -16,7 +16,10 @@ feedback. The campaign stops on its budgets (D6 stop reasons) and writes one
 `--fixture` selects the contract-fixture target adapter. Without it, the campaign's
 target selects a real adapter from `swdb.campaign_targets`: native CPU (ticket 56) or DX100
 gem5 (ticket 57), updated 2026-10-04 ET. Ticket 63 (2026-10-04 ET): a native campaign file
-may pin `protocol.evaluator` (native evaluator v2 for the scale-22 graphs).
+may pin `protocol.evaluator` (native evaluator v2 for the scale-22 graphs). Ticket 66
+(2026-10-04 ET, decided by Yan-Ru): a native campaign file may set `protocol.speed_rule:
+swdb.speed_rule.ci_width.v1` (a relative bootstrap CI-width gate for the A/A pilot and every
+candidate block, from the same CI as the 1.05 lower bound); files without it keep the range rule.
 """
 from __future__ import annotations
 
@@ -44,6 +47,14 @@ FORMAT = "swdb.extensa-campaign.v1"
 LABEL = "single graph per class"
 GAIN_THRESHOLD = 1.05          # strict: a gain needs lower > 1.05
 SPREAD_LIMIT = 0.1             # every spread must be <= 0.1
+#: Native speed-rule versions (ticket 66, decided by Yan-Ru 2026-10-04). A campaign file without
+#: `protocol.speed_rule` keeps the range rule; protocols frozen under it keep their meaning.
+RANGE_RULE = "swdb.speed_rule.range.v1"
+CI_WIDTH_RULE = "swdb.speed_rule.ci_width.v1"
+CI_WIDTH_LIMIT = 0.05          # relative 95% CI width (upper - lower) / ratio must be <= 0.05
+CI_BLOCK_LENGTH = 4            # circular block bootstrap: 4 consecutive repetitions per block
+AA_EQUIVALENCE = 1.05          # an A/A CI must lie strictly inside (1/1.05, 1.05)
+CI_BOOTSTRAP_SEED = 20260925   # 2000 resamples, 95% percentile interval (the evaluator's policy)
 #: The spec's budget defaults (D5). A campaign may exceed one only with an approval
 #: entry naming it. These are limits for validation, never values the loop assumes.
 SPEC_BUDGETS = {"max_iterations": 8, "plateau_iterations": 4, "lane_hours": 24,
@@ -107,6 +118,12 @@ def campaign_problems(data):
             problems.append("protocol.evaluator: names a native evaluator version; gem5 campaigns have none")
     elif proto["repetitions"] < 5:
         problems.append("protocol.repetitions: a native campaign needs at least 5 paired repetitions")
+    if proto.get("speed_rule") == CI_WIDTH_RULE:
+        if target != "native_cpu":
+            problems.append("protocol.speed_rule: the CI-width rule is native only (gem5 reports point ratios)")
+        elif proto["repetitions"] < 2 * CI_BLOCK_LENGTH:
+            problems.append(f"protocol.repetitions: the CI-width rule needs at least {2 * CI_BLOCK_LENGTH} "
+                            f"repetitions (blocks of {CI_BLOCK_LENGTH})")
     if proto.get("isolation") and (target != "native_cpu" or (data.get("approval") or {}).get("gem5_other_socket")):
         problems.append("protocol.isolation: native only, and it excludes approval.gem5_other_socket")
     if proto["region_pairs"]:
@@ -177,27 +194,81 @@ def validate_campaign_dir(records_dir):
 
 # --- protocol and speed rule (ticket 53) -------------------------------------------------
 
+def speed_rule(campaign):
+    """The campaign's native speed-rule version (absent: the range rule)."""
+    return campaign["protocol"].get("speed_rule", RANGE_RULE)
+
+
 def protocol_settings(campaign):
     """The campaign-level frozen settings every adapter freezes into one protocol."""
     proto = campaign["protocol"]
+    if speed_rule(campaign) == CI_WIDTH_RULE:
+        profitability = {"minimum_speedup": GAIN_THRESHOLD, "speed_rule": CI_WIDTH_RULE,
+                         "gate": {"statistic": "relative_ci_width.v1", "maximum": CI_WIDTH_LIMIT},
+                         "block_length": CI_BLOCK_LENGTH, "aa_equivalence": AA_EQUIVALENCE,
+                         "rule": "relative 95% CI width at most the gate; then the lower bound of the same CI "
+                                 "strictly above the minimum"}
+    else:
+        profitability = {"minimum_speedup": GAIN_THRESHOLD, "maximum_relative_spread": SPREAD_LIMIT,
+                         "rule": "lower bound strictly above the minimum; every spread at most the maximum"}
     return {"target": campaign["target"], "roi": proto["roi"], "threads": proto["threads"],
             "repetitions": proto["repetitions"], "sources": list(proto["sources"]), "region_pairs": [],
             "differences": proto["differences"],
             "evidence_basis": "simulated" if campaign["target"] == "dx100_gem5" else "measured",
-            "profitability": {"minimum_speedup": GAIN_THRESHOLD, "maximum_relative_spread": SPREAD_LIMIT,
-                              "rule": "lower bound strictly above the minimum; every spread at most the maximum"},
+            "profitability": profitability,
             "workloads": {c["class"]: c["workload"] for c in campaign["workload_classes"]}}
 
 
-def speed_verdict(comparison, target):
+def apply_speed_rule(frozen, settings):
+    """Write the campaign's speed rule into a native protocol's frozen settings (ticket 66).
+
+    The range rule sets `maximum_relative_spread`; the CI-width rule sets the circular block
+    analysis, its block length and `profitability.gate`, and removes `maximum_relative_spread`."""
+    profitability = settings["profitability"]
+    frozen["profitability"]["minimum_speedup"] = profitability["minimum_speedup"]
+    if profitability.get("speed_rule") != CI_WIDTH_RULE:
+        frozen["profitability"]["maximum_relative_spread"] = profitability["maximum_relative_spread"]
+        return frozen
+    from swdb.bfs_protocol import ANALYSIS_CIRCULAR_BLOCK
+    frozen["profitability"].pop("maximum_relative_spread", None)
+    frozen["profitability"]["gate"] = dict(profitability["gate"])
+    frozen["profitability"]["bootstrap_seed"] = CI_BOOTSTRAP_SEED    # pre-registered (ticket 66)
+    frozen["sampling"].setdefault("collection", {"method": "native_paired.v1", "order_seed": 20260926})
+    frozen["sampling"]["analysis"] = ANALYSIS_CIRCULAR_BLOCK
+    frozen["sampling"]["block_length"] = profitability["block_length"]
+    return frozen
+
+
+def relative_ci_width(comparison):
+    """(upper - lower) / ratio of one native comparison."""
+    return (comparison["upper"] - comparison["lower"]) / comparison["ratio"]
+
+
+def speed_verdict(comparison, target, rule=RANGE_RULE):
     """`gain`, `no_gain` or `inconclusive` under the campaign speed rule.
 
-    gem5 comparisons are deterministic point ratios: lower = upper = ratio, no spread."""
+    gem5 comparisons are deterministic point ratios: lower = upper = ratio, no spread.
+    Native range rule: any spread above 0.1 is inconclusive. Native CI-width rule (ticket 66):
+    a relative CI width above 0.05 is inconclusive. Otherwise a gain needs lower > 1.05."""
     if target == "dx100_gem5":
         return "gain" if comparison["ratio"] > GAIN_THRESHOLD else "no_gain"
-    if any(s > SPREAD_LIMIT for s in comparison["spreads"]):
+    if rule == CI_WIDTH_RULE:
+        if relative_ci_width(comparison) > CI_WIDTH_LIMIT:
+            return "inconclusive"
+    elif any(s > SPREAD_LIMIT for s in comparison["spreads"]):
         return "inconclusive"
     return "gain" if comparison["lower"] > GAIN_THRESHOLD else "no_gain"
+
+
+def pilot_passes(block, rule=RANGE_RULE):
+    """One A/A pilot block under the campaign's speed rule.
+
+    Range rule: spread at most 0.1. CI-width rule (ticket 66): relative CI width at most 0.05
+    and the CI strictly inside (1/1.05, 1.05)."""
+    if rule != CI_WIDTH_RULE:
+        return block["spread"] <= SPREAD_LIMIT
+    return (relative_ci_width(block) <= CI_WIDTH_LIMIT
+            and 1 / AA_EQUIVALENCE < block["lower"] and block["upper"] < AA_EQUIVALENCE)
 
 
 LEVEL_RANK = {"certified": 2, "uncertified": 1}
@@ -361,7 +432,7 @@ class FixtureAdapter:
         frozen["threads"] = settings["threads"]
         frozen["roi"] = settings["roi"]
         frozen["region_pairs"] = []
-        frozen["profitability"].update(minimum_speedup=GAIN_THRESHOLD, maximum_relative_spread=SPREAD_LIMIT)
+        apply_speed_rule(frozen, settings)
         frozen["differences"]["software"] = list(frozen["differences"]["software"]) + [settings["differences"]]
         request = self.folder / "protocol-request.yaml"
         request.write_text(yamlio.dumps({"message_version": "1.0", "id": f"{self.cid}-protocol", "version": 1,
@@ -375,7 +446,11 @@ class FixtureAdapter:
         return row.get(cls) or {}
 
     def pilot(self, cls, role):
-        return {"spread": float(self.fx["pilot"][cls][role])}
+        row = self.fx["pilot"][cls][role]
+        if isinstance(row, dict):              # ticket 66: an A/A ratio and CI for the CI-width rule
+            return {"spread": float(row.get("spread", 0.0)), "ratio": float(row["ratio"]),
+                    "lower": float(row["lower"]), "upper": float(row["upper"])}
+        return {"spread": float(row)}
 
     # artifacts -----------------------------------------------------------------------
     def materialize(self, iteration, cls, patch, knobs, attempt, contracts=()):
@@ -654,27 +729,42 @@ class Campaign:
         self.state["setup_done"] = True
 
     def _pilot(self):
-        """Native A/A pilot (D3): a class with any spread above 0.1 is not timed.
+        """Native A/A pilot (D3): a class with a failing A/A block is not timed.
 
         Ticket 64 (2026-10-04 ET, agent-decided under Yan-Ru's delegation; revisable): the gate
         applies per class. An unstable class stops as `baseline_unstable` for that class only;
         the campaign stops with `baseline_unstable` only when every class is unstable. The
-        threshold is unchanged and never loosened inside a campaign."""
-        spreads = {}
+        threshold is unchanged and never loosened inside a campaign.
+
+        Ticket 66 (2026-10-04 ET, decided by Yan-Ru): under the CI-width rule a block fails when
+        its relative CI width exceeds 0.05 or its CI leaves (1/1.05, 1.05); spreads are recorded
+        as description only."""
+        rule = speed_rule(self.data)
+        spreads, intervals, failed = {}, {}, {}
         for cls in self.classes:
             for role in self.roles:
                 self._step("evaluation", job=True)
                 started = time.monotonic()
                 block = self.adapter.pilot(cls, role)
                 spreads.setdefault(cls, {})[role] = block["spread"]
+                if rule == CI_WIDTH_RULE:
+                    intervals.setdefault(cls, {})[role] = {
+                        "ratio": block["ratio"], "lower": block["lower"], "upper": block["upper"],
+                        "relative_width": relative_ci_width(block), "passed": pilot_passes(block, rule)}
+                if not pilot_passes(block, rule):
+                    failed.setdefault(cls, []).append(role)
                 if block.get("other_socket") is not None:
                     self.state.setdefault("pilot_other_socket", {}).setdefault(cls, {})[role] = block["other_socket"]
                 if block.get("isolation") is not None:
                     self.state.setdefault("pilot_isolation", {}).setdefault(cls, {})[role] = block["isolation"]
                 self._spent("evaluation", started)
-        unstable = [cls for cls in self.classes if any(s > SPREAD_LIMIT for s in spreads[cls].values())]
+        unstable = [cls for cls in self.classes if failed.get(cls)]
         self.state["pilot"] = {"spreads_by_class_and_role": spreads, "passed": not unstable,
                                "unstable_classes": unstable}
+        if rule == CI_WIDTH_RULE:
+            self.state["pilot"].update(speed_rule=rule, ci_by_class_and_role=intervals,
+                                       gate={"maximum_relative_ci_width": CI_WIDTH_LIMIT,
+                                             "aa_interval": [1 / AA_EQUIVALENCE, AA_EQUIVALENCE]})
         if self.state.get("pilot_other_socket"):
             self.state["pilot"]["other_socket_by_class_and_role"] = self.state["pilot_other_socket"]
         if self.state.get("pilot_isolation"):
@@ -682,7 +772,8 @@ class Campaign:
         self._apply_pilot()
         if not self.classes:
             self.ledger.terminate(S.StopReason.BASELINE_UNSTABLE)
-            self.state["stop_detail"] = "baseline A/A spread exceeds 0.1 in every class"
+            self.state["stop_detail"] = ("baseline A/A CI-width gate failed in every class" if rule == CI_WIDTH_RULE
+                                         else "baseline A/A spread exceeds 0.1 in every class")
 
     def _apply_pilot(self):
         """Time only the classes whose A/A pilot passed (also after a resume)."""
@@ -1004,11 +1095,15 @@ class Campaign:
             started = time.monotonic()
             result = self.adapter.compare(candidate, cls, role, iteration, attempt, baseline_evaluation=baseline_eval)
             self._spent("evaluation", started)
-            verdict = speed_verdict(result, target)
-            entry["comparisons"].append({"baseline_role": role, "comparison": result["comparison"],
-                                         "ratio": result["ratio"], "lower": result["lower"],
-                                         "spread": max(result["spreads"]), "verdict": verdict,
-                                         "baseline_evaluation": result["baseline_evaluation"]})
+            rule = speed_rule(self.data)
+            verdict = speed_verdict(result, target, rule)
+            row = {"baseline_role": role, "comparison": result["comparison"],
+                   "ratio": result["ratio"], "lower": result["lower"],
+                   "spread": max(result["spreads"]), "verdict": verdict,
+                   "baseline_evaluation": result["baseline_evaluation"]}
+            if target == "native_cpu" and rule == CI_WIDTH_RULE:
+                row.update(upper=result["upper"], relative_ci_width=relative_ci_width(result))
+            entry["comparisons"].append(row)
             self._prune(result["evaluations"])
 
     def _prune(self, evaluation_ids):

@@ -9,6 +9,13 @@ binding per protocol; aggregation and comparison select the binding they use.
 
 2026-10-03 ET (ticket 38): workload registration and protocol validation accept
 any kernel with an evaluator plug-in (``swdb.kernels``), BFS first.
+
+2026-10-04 ET (ticket 66, decided by Yan-Ru): a native paired protocol may freeze the
+analysis ``paired_repetition_circular_block_bootstrap.v1`` (``sampling.block_length``) with
+the gate ``profitability.gate = {statistic: relative_ci_width.v1, maximum}``: a comparison is
+inconclusive when (upper - lower) / ratio exceeds the maximum, instead of when a per-source
+range spread exceeds ``maximum_relative_spread``. Protocols without the gate keep the range
+rule and the repetition bootstrap; nothing frozen before changes meaning.
 """
 
 import copy
@@ -655,15 +662,33 @@ def _validate_settings(settings, store, *, require_simulation_identity=False):
     policy = settings.get("profitability")
     _fail(isinstance(policy, dict), "profitability policy is required")
     _positive(policy.get("minimum_speedup"), "minimum_speedup", 1)
-    _positive(policy.get("maximum_relative_spread"), "maximum_relative_spread")
+    gate = policy.get("gate")
+    if gate is None:
+        _positive(policy.get("maximum_relative_spread"), "maximum_relative_spread")
+    else:
+        # Ticket 66 (2026-10-04 ET): the CI-width gate replaces the range spread gate.
+        _fail(isinstance(gate, dict) and set(gate) == {"statistic", "maximum"} and gate["statistic"] == CI_WIDTH_GATE
+              and type(gate["maximum"]) in (int, float) and 0 < gate["maximum"] < 1,
+              f"profitability.gate must be {{statistic: {CI_WIDTH_GATE}, maximum in (0, 1)}}")
+        _fail("maximum_relative_spread" not in policy,
+              "a CI-width gate protocol has no maximum_relative_spread (spreads are descriptive)")
+        _fail(mode == "native" and sampling.get("analysis") == ANALYSIS_CIRCULAR_BLOCK,
+              f"the CI-width gate requires native paired sampling with {ANALYSIS_CIRCULAR_BLOCK}")
     _fail(policy.get("confidence") == 0.95 and policy.get("bootstrap_resamples") == 2000,
           "supported confidence policy is the 95 percent interval with 2000 bootstrap resamples")
     _integer(policy.get("bootstrap_seed"), "bootstrap_seed", 0)
     collection = sampling.get("collection")
     analysis = sampling.get("analysis")
+    if analysis == ANALYSIS_CIRCULAR_BLOCK:
+        length = sampling.get("block_length")
+        _fail(type(length) is int and 1 <= length <= sampling["repetitions"] // 2,
+              "sampling.block_length must be an integer from 1 to half the repetitions")
+    else:
+        _fail("block_length" not in sampling, f"sampling.block_length applies only to {ANALYSIS_CIRCULAR_BLOCK}")
     if collection is not None or analysis is not None:
         from swdb.bfs_native_pair import ANALYSIS, collection_policy
-        _fail(mode == "native" and analysis == ANALYSIS, "paired sampling requires its versioned native block analysis")
+        _fail(mode == "native" and analysis in (ANALYSIS, ANALYSIS_CIRCULAR_BLOCK),
+              "paired sampling requires its versioned native block analysis")
         collection_policy(collection)
         _fail(policy["minimum_speedup"] == 1.05 and policy["bootstrap_seed"] == 20260925,
               "paired profitability retains the 1.05 floor and seed 20260925")
@@ -786,8 +811,8 @@ def validate_protocol_for_evaluation(store, request, candidate, actual_build=Non
     _fail(wid in protocol["workload_identities"], "workload is outside the frozen protocol")
     workload = _get(store, wid, "workload")
     _fail(verify_immutable(workload) == protocol["workload_identities"][wid], "frozen workload changed")
-    from swdb.bfs_native_scalable import EVALUATOR_V2, evaluator_of_settings
-    if evaluator_of_settings(settings) == EVALUATOR_V2:
+    from swdb.bfs_native_scalable import evaluator_of_settings, is_scalable
+    if is_scalable(evaluator_of_settings(settings)):
         # Ticket 63: v2 binds the registered workload (immutable, frozen identity above);
         # its SG input is hash-bound to that registration before every trial.
         _fail(set(workload_request) == {"id"}, "evaluator v2 protocols evaluate registered workloads only")
@@ -1265,6 +1290,42 @@ def _geomean(values):
     return math.exp(statistics.mean(math.log(value) for value in values))
 
 
+#: Ticket 66 (2026-10-04 ET): circular block bootstrap over repetitions in collection order.
+ANALYSIS_CIRCULAR_BLOCK = "paired_repetition_circular_block_bootstrap.v1"
+CI_WIDTH_GATE = "relative_ci_width.v1"
+
+
+def circular_block_indices(rng, count, length):
+    """One circular-block resample of repetition indices 0..count-1 (Politis and Romano 1992).
+
+    ceil(count / length) start indices are drawn uniformly; each contributes `length`
+    consecutive repetitions (mod count); the sequence is cut to `count` indices."""
+    indices = []
+    while len(indices) < count:
+        start = rng.randrange(count)
+        indices.extend((start + offset) % count for offset in range(length))
+    return indices[:count]
+
+
+def decide(metrics, profitability):
+    """(state, noisy, gain) of an empirical comparison under its frozen profitability policy.
+
+    Range rule (protocols without a gate): any per-source spread above
+    `maximum_relative_spread` is inconclusive. CI-width rule (ticket 66): a relative CI width
+    above `gate.maximum` is inconclusive. Otherwise a gain needs the lower bound strictly above
+    `minimum_speedup` (the same interval), and an upper bound below 1 is a regression."""
+    interval = metrics["confidence_interval"]
+    gate = profitability.get("gate")
+    if gate is not None:
+        noisy = interval["relative_width"] > gate["maximum"]
+    else:
+        limit = profitability["maximum_relative_spread"]
+        noisy = any(value > limit for rows in metrics["relative_spread"].values() for value in rows.values())
+    gain = not noisy and interval["lower"] > profitability["minimum_speedup"]
+    state = "inconclusive" if noisy else "gain" if gain else "regression" if interval["upper"] < 1 else "no_gain"
+    return state, noisy, gain
+
+
 def _statistics(baseline, candidate, policy, sampling=None):
     ratios = {position: statistics.median(baseline[position]) / statistics.median(candidate[position]) for position in baseline}
     for ratio in ratios.values():
@@ -1275,14 +1336,20 @@ def _statistics(baseline, candidate, policy, sampling=None):
           "timing spread exceeds representable numeric range")
     rng = random.Random(policy["bootstrap_seed"])
     draws = []
-    paired = sampling is not None and sampling.get("analysis") == "paired_repetition_block_bootstrap.v1"
+    analysis = sampling.get("analysis") if sampling is not None else None
+    circular = analysis == ANALYSIS_CIRCULAR_BLOCK
+    paired = circular or analysis == "paired_repetition_block_bootstrap.v1"
     count = len(next(iter(baseline.values())))
     if paired:
         _fail(all(len(values) == count for role in (baseline, candidate) for values in role.values()),
               "paired bootstrap requires complete equal repetition blocks")
+    length = sampling.get("block_length") if circular else None
+    if circular:
+        _fail(type(length) is int and 1 <= length <= count, "circular block bootstrap needs a block length within the repetitions")
     for _ in range(policy["bootstrap_resamples"]):
         resampled = []
-        blocks = rng.choices(range(count), k=count) if paired else None
+        blocks = (circular_block_indices(rng, count, length) if circular else
+                  rng.choices(range(count), k=count) if paired else None)
         for position in baseline:
             a, b = baseline[position], candidate[position]
             aa, bb = ([a[index] for index in blocks], [b[index] for index in blocks]) if paired else (
@@ -1291,11 +1358,16 @@ def _statistics(baseline, candidate, policy, sampling=None):
         draws.append(_geomean(resampled))
     draws.sort()
     lower, upper = draws[49], draws[1949]
-    return {"roi_speedup": _geomean(ratios.values()),
+    point = _geomean(ratios.values())
+    interval = {"confidence": 0.95, "lower": lower, "upper": upper,
+                "method": "paired_repetition_block_bootstrap.v1" if paired and not circular else
+                    "independent per-source bootstrap of median ratios", "resamples": 2000}
+    if circular:
+        # Ticket 66: only the new analysis adds these keys, so older comparisons stay identical.
+        interval.update(method=ANALYSIS_CIRCULAR_BLOCK, block_length=length, relative_width=(upper - lower) / point)
+    return {"roi_speedup": point,
             "per_source_position_speedup": {str(position): ratio for position, ratio in ratios.items()},
-            "confidence_interval": {"confidence": 0.95, "lower": lower, "upper": upper,
-                                    "method": "paired_repetition_block_bootstrap.v1" if paired else
-                                        "independent per-source bootstrap of median ratios", "resamples": 2000},
+            "confidence_interval": interval,
             "relative_spread": {role: {str(position): value for position, value in rows.items()}
                                 for role, rows in spreads.items()}}
 
@@ -1385,12 +1457,11 @@ def compare_evaluations(args):
             data["decision"] = {"state": "fixture_comparison", "reasons": ["Contract fixture durations are not empirical performance evidence."]}
             data["metrics"]["fixture_ratio"] = data["metrics"].pop("roi_speedup")
         else:
-            limit = protocol["settings"]["profitability"]["maximum_relative_spread"]
-            noisy = any(value > limit for values in data["metrics"]["relative_spread"].values() for value in values.values())
-            interval = data["metrics"]["confidence_interval"]
-            gain = interval["lower"] > protocol["settings"]["profitability"]["minimum_speedup"]
-            state = "inconclusive" if noisy else "gain" if gain else "regression" if interval["upper"] < 1 else "no_gain"
-            data["decision"] = {"state": state, "reasons": ["Timing spread exceeds the frozen threshold."] if noisy else []}
+            profitability = protocol["settings"]["profitability"]
+            state, noisy, _ = decide(data["metrics"], profitability)
+            reason = ("The relative confidence-interval width exceeds the frozen gate." if profitability.get("gate")
+                      else "Timing spread exceeds the frozen threshold.")
+            data["decision"] = {"state": state, "reasons": [reason] if noisy else []}
             data["gain_claim"] = state == "gain"
     except (Failure, KeyError, TypeError, ValueError, OverflowError, OSError) as exc:
         data["decision"] = {"state": "rejected", "reasons": [str(exc)]}

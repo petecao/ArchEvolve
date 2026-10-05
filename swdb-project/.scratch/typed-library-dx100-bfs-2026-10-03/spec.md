@@ -4,6 +4,7 @@ Created: 2026-10-03 00:50 ET
 Updated: 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66)
 Updated: 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's
 2026-10-03 delegation and revisable; see [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md))
+Updated: 2026-10-04 21:05 ET (ticket 66: native CI-width speed rule, decided by Yan-Ru)
 **Type:** spec
 **Status:** ready-for-agent
 **Blocked by:** ticket 03 (ADRs 0007–0011 and the archevolve-handoff tracker updates), which
@@ -813,6 +814,12 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   - Native CPU uses paired repetition blocks of 10 repetitions, sources `[0, 1234, 7777]`, 1
     thread. An A/A baseline pilot first stops the campaign (`baseline_unstable`) if any spread
     exceeds 0.1 (D3).
+  - Added 2026-10-04 ET (ticket 66, decided by Yan-Ru): a native campaign may instead name speed
+    rule `swdb.speed_rule.ci_width.v1`. Its blocks have 20 repetitions and a circular block
+    bootstrap over repetitions (blocks of 4). The A/A pilot and every candidate comparison are
+    gated on the relative width of the same 95% interval, at most 0.05, instead of the spread; an
+    A/A interval must also lie inside (1/1.05, 1.05). A gain still needs the lower bound strictly
+    above 1.05. Protocols and campaigns without it keep the rule above.
 - **Workload classes.** A class is a graph generator family: Kronecker and uniform for now, with a
   high-input-density family later, native only. Each class gets its own verdict and its own best
   candidate artifact; there is no cross-class average and no held-out graph. Results are labeled

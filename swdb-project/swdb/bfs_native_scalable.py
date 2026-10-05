@@ -32,6 +32,19 @@ Limits (memory-bounded, sized for scale 22): at most 2^23 = 8,388,608 vertices,
 candidate's BFS: (n+1)*8 + m*4 bytes (about 0.55 GB at scale 22, doubled for a directed
 graph); verifier heap about 9 bytes per vertex (about 38 MB at scale 22); both map the SG
 file read-only.
+
+Evaluator v3 (``EVALUATOR_V3``, ticket 67, 2026-10-04 ET) closes the final code review's open
+P3: the v2 driver narrows each returned parent with ``static_cast<int32_t>``, so a candidate
+returning a wider element type could have an out-of-range parent truncated into a valid one.
+The v3 driver (``tools/bfs_native/driver_scalable_v3.cc.in``) requires an integral element type
+of at most 64 bits at compile time and narrows by saturation: a value outside int32 becomes
+INT32_MAX or INT32_MIN. Because every graph has at most 2^23 vertices, such a value is out of
+range at full width, and its saturated form gets the same verdict and reason from the compiled
+verifier as a full-width check would. It records the count in ``parents_saturated``
+(trial format ``swdb.bfs.native.trial.v3``). v3 also stores one gzip copy per distinct
+verified parent vector in an evaluation (content-addressed by raw SHA-256; a single-thread BFS
+returns the same vector on every repetition of a source). The verifier, its criterion and the
+ROI are v2's. v2 and every protocol that pins it are unchanged.
 """
 
 import gzip
@@ -49,11 +62,17 @@ from swdb.cli import Failure
 
 EVALUATOR_V1 = "swdb.native.evaluator.v1"
 EVALUATOR_V2 = "swdb.native.evaluator.scalable.v2"
-EVALUATORS = (EVALUATOR_V1, EVALUATOR_V2)
+EVALUATOR_V3 = "swdb.native.evaluator.scalable.v3"
+EVALUATORS = (EVALUATOR_V1, EVALUATOR_V2, EVALUATOR_V3)
+SCALABLE = (EVALUATOR_V2, EVALUATOR_V3)
 VERIFIER_V1 = "swdb.bfs.structural.v1"
 VERIFIER_V2 = "swdb.bfs.structural.compiled.v2"
 TRIAL_FORMAT_V2 = "swdb.bfs.native.trial.v2"
+TRIAL_FORMAT_V3 = "swdb.bfs.native.trial.v3"
 DRIVER_V2 = paths.HOME / "tools" / "bfs_native" / "driver_scalable.cc.in"
+DRIVER_V3 = paths.HOME / "tools" / "bfs_native" / "driver_scalable_v3.cc.in"
+DRIVERS = {EVALUATOR_V2: DRIVER_V2, EVALUATOR_V3: DRIVER_V3}
+TRIAL_FORMATS = {EVALUATOR_V2: TRIAL_FORMAT_V2, EVALUATOR_V3: TRIAL_FORMAT_V3}
 VERIFIER_SOURCE = paths.HOME / "tools" / "bfs_native" / "bfs_verify.cc"
 VERIFIER_FLAGS = ["-std=c++11", "-O2"]
 MAX_VERTICES = 2 ** 23
@@ -73,17 +92,27 @@ def evaluator_of_settings(settings):
     return settings.get("evaluator", EVALUATOR_V1) if isinstance(settings, dict) else EVALUATOR_V1
 
 
+def is_scalable(evaluator):
+    """Evaluators v2 and v3 share the mmap SG path and the compiled verifier."""
+    return evaluator in SCALABLE
+
+
+def driver_for(evaluator):
+    return DRIVERS[evaluator]
+
+
 def validate_settings(settings, plugin):
-    """Bind evaluator and verifier versions to each other (new protocols only use v2 pairs)."""
+    """Bind evaluator and verifier versions to each other (scalable evaluators pin verifier v2)."""
     evaluator = evaluator_of_settings(settings)
     verifier = settings.get("correctness", {}).get("verifier") if isinstance(settings.get("correctness"), dict) else None
     _fail(evaluator in EVALUATORS, f"unsupported native evaluator {evaluator!r}")
     if "evaluator" in settings:
         _fail(settings.get("mode") == "native", "settings.evaluator applies only to native protocols")
-    if evaluator == EVALUATOR_V2 or verifier == VERIFIER_V2:
-        _fail(settings.get("mode") == "native" and evaluator == EVALUATOR_V2 and verifier == VERIFIER_V2
+    if is_scalable(evaluator) or verifier == VERIFIER_V2:
+        _fail(settings.get("mode") == "native" and is_scalable(evaluator) and verifier == VERIFIER_V2
               and getattr(plugin, "native_scalable_verifier", None) == VERIFIER_V2,
-              f"{EVALUATOR_V2} and {VERIFIER_V2} are pinned together, for native BFS protocols only")
+              f"{evaluator if is_scalable(evaluator) else EVALUATOR_V2} and {VERIFIER_V2} are pinned together, "
+              "for native BFS protocols only")
     return evaluator
 
 
@@ -180,10 +209,13 @@ def run_verifier(binary, graph_input, source, parents, timeout):
     return verdict
 
 
-def check_trial_record(observed, source, threads, roi, vertices):
+def check_trial_record(observed, source, threads, roi, vertices, evaluator=EVALUATOR_V2):
     """Shape checks of the small JSON trial record (reason or None)."""
-    if observed.get("format") != TRIAL_FORMAT_V2:
+    if observed.get("format") != TRIAL_FORMATS[evaluator]:
         return "missing_observation", "native trial output has the wrong format"
+    if evaluator == EVALUATOR_V3 and (type(observed.get("parents_saturated")) is not int
+                                      or not 0 <= observed["parents_saturated"] <= vertices):
+        return "missing_observation", "native trial output lacks its saturated-parent count"
     if (type(observed.get("source")) is not int or observed["source"] != source or observed.get("roi") != roi
             or type(observed.get("configured_threads")) is not int or observed["configured_threads"] != threads):
         return "incompatible", "native output source, ROI, or configured threads differ from request"
@@ -193,16 +225,28 @@ def check_trial_record(observed, source, threads, roi, vertices):
     return None
 
 
-def compress_parents(path):
-    """Keep the exact parent bytes gzip-compressed; returns (gz path, raw sha256, gz sha256)."""
+def compress_parents(path, retained=None):
+    """Keep the exact parent bytes gzip-compressed; returns (gz path, raw sha256, gz sha256).
+
+    With ``retained`` (evaluator v3: a per-evaluation mapping raw sha256 -> (gz path, gz sha256)),
+    a vector whose raw bytes were already kept reuses that copy and the new file is removed."""
     path = Path(path)
     raw_hash = artifacts.file_hash(path)
+    if retained is not None and raw_hash in retained:
+        kept, kept_hash = retained[raw_hash]
+        _fail(Path(kept).is_file() and artifacts.file_hash(kept) == kept_hash,
+              "retained parent vector changed before reuse")
+        path.unlink()
+        return Path(kept), raw_hash, kept_hash
     target = path.with_name(path.name + ".gz")
     with path.open("rb") as source, open(target, "xb") as sink:
         with gzip.GzipFile(filename="", mode="wb", fileobj=sink, compresslevel=6, mtime=0) as stream:
             shutil.copyfileobj(source, stream, 1024 * 1024)
     path.unlink()
-    return target, raw_hash, artifacts.file_hash(target)
+    gz_hash = artifacts.file_hash(target)
+    if retained is not None:
+        retained[raw_hash] = (str(target), gz_hash)
+    return target, raw_hash, gz_hash
 
 
 def expand_parents(gz_path, expected_sha256, directory):

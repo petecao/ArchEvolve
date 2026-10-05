@@ -8,6 +8,8 @@ independent result check come from the candidate kernel's plug-in
 ``swdb.native.evaluator.scalable.v2`` takes the scalable BFS path of
 ``swdb.bfs_native_scalable`` (mmap SG driver, compiled verifier). Everything else,
 including every v1 protocol and record, keeps this module's v1 behavior.
+2026-10-04 ET (ticket 67): ``swdb.native.evaluator.scalable.v3`` takes the same path with
+the v3 driver (saturating parent narrowing) and one retained copy per distinct parent vector.
 """
 
 import copy
@@ -564,10 +566,11 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
         if request["roi"] != plugin.native_roi:
             raise Failure(f"native {plugin.name} evaluation only supports the protected ROI {plugin.native_roi}")
         evaluator = scalable.request_evaluator(store, request)
-        v2 = evaluator == scalable.EVALUATOR_V2
+        v2 = scalable.is_scalable(evaluator)        # v2 or v3: the scalable path
         if v2 and getattr(plugin, "native_scalable_verifier", None) != scalable.VERIFIER_V2:
-            raise Failure(f"{scalable.EVALUATOR_V2} supports the BFS kernel only")
-        driver_template = scalable.DRIVER_V2 if v2 else plugin.native_driver
+            raise Failure(f"{evaluator} supports the BFS kernel only")
+        driver_template = scalable.driver_for(evaluator) if v2 else plugin.native_driver
+        retained_parents = {} if evaluator == scalable.EVALUATOR_V3 else None
         data.update(candidate=candidate["id"],
                     source_snapshot=candidate["source_snapshot"], implementation=candidate["implementation"])
         if candidate.get("proposal"):
@@ -767,7 +770,8 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
                 session.begin("correctness", repetition=repetition, source_position=position, source=source)
                 if v2:
                     observed, output_hash = json_observation(output, scalable.TRIAL_RECORD_LIMIT, "trial record")
-                    problem = scalable.check_trial_record(observed, source, threads, plugin.native_roi, vertices)
+                    problem = scalable.check_trial_record(observed, source, threads, plugin.native_roi, vertices,
+                                                          evaluator)
                     if problem:
                         raise StageFailure(*problem)
                 else:
@@ -804,7 +808,7 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
                                                   parents_path, max(1.0, min(budget["run_seconds"] * 5, session.remaining())))
                     if artifacts.file_hash(parents_path) != parents_hash:
                         raise Failure("parent vector changed during verification")
-                    retained, raw_hash, gz_hash = scalable.compress_parents(parents_path)
+                    retained, raw_hash, gz_hash = scalable.compress_parents(parents_path, retained_parents)
                     observation.update(parents_output=str(retained), parents_sha256=raw_hash, parents_gzip_sha256=gz_hash)
                     check["parents_sha256"] = raw_hash
                 else:

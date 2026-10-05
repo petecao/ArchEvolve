@@ -393,6 +393,36 @@ def test_native_scale22_runs_under_evaluator_v2_protocols(team, base_source):
     assert len([c for c in runner.calls if c["command"] == "evaluate-pair"]) == 4
 
 
+
+def test_native_ci_width_rule_and_evaluator_v3_are_frozen_into_every_role_protocol(team, base_source):
+    """Tickets 66/67 (2026-10-04 ET): the campaign's CI-width speed rule (circular block analysis,
+    gate 0.05, no range threshold) and evaluator v3 (its own driver) reach every frozen protocol;
+    an A/A interval of relative width 0.08 fails the pilot in every class."""
+    from swdb import bfs_native_scalable as scalable
+    from swdb.bfs_protocol import ANALYSIS_CIRCULAR_BLOCK
+    path = native_campaign(team, workloads=("bfs-20261004-kronecker22.3dc69be403db57e9",
+                                            "bfs-20261004-uniform22.facb16e6260c3a82"))
+    data = yaml.safe_load(path.read_text())
+    data["protocol"].update(evaluator=scalable.EVALUATOR_V3, speed_rule="swdb.speed_rule.ci_width.v1", repetitions=20)
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    runner, host = FakeRunner({"pilot": 1.0}, spreads={"pilot": 0.01}), FakeHost()
+    _, summary = run(team, path, provider(team, {}), runner, host)
+    assert summary["stop_reason"] == "baseline_unstable"
+    assert summary["stop_detail"] == "baseline A/A CI-width gate failed in every class"
+    ci = summary["pilot"]["ci_by_class_and_role"]
+    assert all(row["relative_width"] == pytest.approx(0.08) and row["passed"] is False
+               for roles in ci.values() for row in roles.values())
+    freezes = [c["request"]["settings"] for c in runner.calls if c["command"] == "freeze-protocol"]
+    template = artifacts.file_hash(scalable.DRIVER_V3)
+    assert len(freezes) == 3 and all(
+        f["evaluator"] == scalable.EVALUATOR_V3 and f["correctness"]["verifier"] == scalable.VERIFIER_V2
+        and all(f["instrumentation"][side] == {"template_sha256": template, "treatment": "included"}
+                for side in ("baseline", "candidate"))
+        and f["sampling"]["analysis"] == ANALYSIS_CIRCULAR_BLOCK and f["sampling"]["block_length"] == 4
+        and f["sampling"]["repetitions"] == 20
+        and f["profitability"]["gate"] == {"statistic": "relative_ci_width.v1", "maximum": 0.05}
+        and "maximum_relative_spread" not in f["profitability"] for f in freezes)
+
 def test_native_blocks_refuse_while_a_gem5_campaign_holds_the_other_socket(team, base_source):
     config = provider(team, {})
     other = {"lease": "mbit10-evaluation-node1", "mode": "extensa", "target": "dx100_gem5",
