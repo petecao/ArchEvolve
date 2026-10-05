@@ -115,7 +115,7 @@ plug-ins and feedback, 266 passed. Changed 1.3-era tests: the isolation tests no
 `version='1.3'`; the claim-bypass control test also expects `seam_witness` on every 1.4 cell; the
 feedback test expects the aggregate category.
 
-**Re-certification (1.4, sources_sha256 29f3bcab…, Mac, scratch stores, not committed).**
+**Re-certification (1.4, sources_sha256 29f3bcab…, equal to commit c2fb788, Mac, scratch stores, not committed).**
 
 | Input | Certification | Matrix | Controls rejected by own check | Library faults attributed |
 |---|---|---|---|---|
