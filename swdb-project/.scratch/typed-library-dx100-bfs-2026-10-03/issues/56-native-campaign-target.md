@@ -1,7 +1,7 @@
 # 56 — Native-CPU Extensa campaign target for BFS
 
 Created: 2026-10-03
-Updated: 2026-10-05 15:00 ET (a8 addendum: best certified and re-evaluated, ticket 75); 2026-10-05 10:45 ET (a8 erratum, ticket 74); 2026-10-05 10:00 ET (a8 result: uniform gain, uncertified; Kronecker inconclusive); 2026-10-05 03:15 ET (a7 erratum; a8 pre-registered); 2026-10-05 02:50 ET (a7 addendum: speed rule ci_width.v2, uniform no_gain at plateau, Kronecker baseline_unstable); 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
+Updated: 2026-10-05 16:55 ET (legacy-lease audit of a5–a8, code review S13; a8 A/A re-draw disclosed); 2026-10-05 15:00 ET (a8 addendum: best certified and re-evaluated, ticket 75); 2026-10-05 10:45 ET (a8 erratum, ticket 74); 2026-10-05 10:00 ET (a8 result: uniform gain, uncertified; Kronecker inconclusive); 2026-10-05 03:15 ET (a7 erratum; a8 pre-registered); 2026-10-05 02:50 ET (a7 addendum: speed rule ci_width.v2, uniform no_gain at plateau, Kronecker baseline_unstable); 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 51, 53, 54, 55
@@ -415,4 +415,38 @@ under team protocol `bfs-native-scale22-ci-team-20261005` (a8's fork settings, C
 [1.442, 1.464]** against the fork scalar TDStep (width 0.015, `gain`; A/A 0.996 [0.989, 1.001]). This replicates
 a8's 1.457 and 1.450. The upstream DO-BFS comparison was not re-timed (a8: 0.141). Label "single graph per class",
 measured.
+
+### Addendum 2026-10-05 16:55 ET: legacy-lease audit of the isolated runs (code review S13)
+
+**Defect.** `Host.other_socket_lease` in `swdb/campaign_targets.py` checked only the other socket's lease. The
+legacy whole-host lease `mbit10-evaluation` occupies a socket without excluding a socket lease (MemAcc ADR 0010),
+so `isolation: other_socket_free` could report the other socket free while a legacy-lease job held it. Fixed in
+the code-review branch: the check covers the other socket's lease and the legacy lease (regression tests in
+`tests/test_extensa_targets.py`).
+
+**Audit (read-only, mbit10, 2026-10-05 16:41 ET).** The legacy lease's metadata
+(`/data1/yanruj/lact-host-lease/mbit10-evaluation.meta.json`) was last written 2026-09-12 00:49 ET: generation 77,
+acquired 2026-09-11 21:35 ET, released 2026-09-12 00:49 ET (the file's mtime agrees). `hostlock.sh` rewrites that
+file at every acquisition, heartbeat and release, so no `hostlock.sh` holder took the legacy lease between
+2026-09-12 and the audit, a window that covers every run below. No kernel lock was held on it at audit time.
+
+| Run | Window (ET) | Legacy lease, as recorded at the time | Where |
+|---|---|---|---|
+| a5 | 2026-10-04 18:04–20:24 | released at start and end (metadata state) | environment record in the compact evidence |
+| a6 | 2026-10-04 21:06–23:04 | released at launch (metadata state) | `extensa-native-bfs-20261004-a6-waiter.log` |
+| a7 | 2026-10-04 23:33 – 10-05 02:43 | released at launch (metadata state) | `extensa-native-bfs-20261004-a7-waiter.log` |
+| a8 | 2026-10-05 03:19–09:56 | released at launch (metadata state) | `extensa-native-bfs-20261005-a8-waiter.log` |
+| ticket 75 re-evaluation | 2026-10-05 12:30–14:51 | not held (kernel lock test) at the start and end of both blocks | `t75_reeval.py`; ticket 75 |
+
+- **Correction.** The a6, a7 and a8 results above say the legacy lease was "released at launch and at the start and
+  end of every block". Only the launch check covered it (the waiter read the metadata); the per-block check
+  covered node 0 only. The records and summaries are left unedited.
+- **Result.** No block of a5–a8 ran while a `hostlock.sh` holder had the legacy lease. **Isolation caveat:** for
+  a5–a8 the per-block legacy state rests on the lease metadata, not on a kernel-lock test, so a process that took
+  the lock without `hostlock.sh` would not be visible. Nothing indicates one did. No rerun.
+
+**Disclosure (spec review C21, 2026-10-05 16:55 ET).** a8 re-drew the Kronecker A/A pilot that failed in a7 (fork
+scalar TDStep width 0.055) and passed it (0.027). a8 was pre-registered because of a7's infrastructure defect (the
+miscounted capacity calls, ticket 73), not because of that pilot outcome, and its pre-registration said a fresh
+pilot would run. Still, Kronecker's a8 verdict comes from a second draw of a gate that had failed once.
 

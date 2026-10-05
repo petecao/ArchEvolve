@@ -545,6 +545,69 @@ class SequenceHost(FakeHost):
         return None
 
 
+@pytest.fixture
+def lease_root(tmp_path, monkeypatch):
+    root = tmp_path / "leases"
+    root.mkdir()
+    for name in ("mbit10-evaluation", "mbit10-evaluation-node0", "mbit10-evaluation-node1"):
+        (root / f"{name}.lease").write_text("")
+    monkeypatch.setenv("LACT_LEASE_ROOT", str(root))
+    return root
+
+
+def hold(root, name):
+    import fcntl
+    stream = (root / f"{name}.lease").open("r")
+    fcntl.flock(stream.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+    return stream
+
+
+@pytest.mark.parametrize("lane, others", [
+    ("mbit10-evaluation-node1", ["mbit10-evaluation-node0", "mbit10-evaluation"]),
+    ("mbit10-evaluation-node0", ["mbit10-evaluation-node1", "mbit10-evaluation"])])
+def test_other_socket_leases_include_the_legacy_lease(lane, others):
+    """Code review S13 (2026-10-05 ET): a held legacy lease occupies a socket (MemAcc ADR 0010)."""
+    assert campaign_targets.Host.other_socket_leases(lane) == others
+
+
+def test_held_legacy_lease_means_the_other_socket_is_not_free(lease_root, tmp_path):
+    host = campaign_targets.Host()
+    assert host.other_socket_lease("mbit10-evaluation-node1", [str(tmp_path)]) is None
+    legacy = hold(lease_root, "mbit10-evaluation")
+    try:
+        row = host.other_socket_lease("mbit10-evaluation-node1", [str(tmp_path)])
+        assert row == {"lease": "mbit10-evaluation", "mode": None, "target": None, "campaign": None}
+        node0 = hold(lease_root, "mbit10-evaluation-node0")
+        try:
+            row = host.other_socket_lease("mbit10-evaluation-node1", [str(tmp_path)])
+            assert row["lease"] == "mbit10-evaluation-node0" and row["also_held"] == ["mbit10-evaluation"]
+        finally:
+            node0.close()
+    finally:
+        legacy.close()
+    # Its own lane's lease never counts as the other socket.
+    own = hold(lease_root, "mbit10-evaluation-node1")
+    try:
+        assert host.other_socket_lease("mbit10-evaluation-node1", [str(tmp_path)]) is None
+    finally:
+        own.close()
+
+
+def test_isolated_block_waits_while_only_the_legacy_lease_is_held(lease_root, tmp_path, monkeypatch):
+    """With `isolation: other_socket_free`, a held legacy lease alone keeps a native block waiting."""
+    monkeypatch.setattr(campaign_targets.NativeAdapter, "ISOLATION_WAIT_S", 0)
+    adapter = campaign_targets.NativeAdapter.__new__(campaign_targets.NativeAdapter)
+    adapter.campaign = {"protocol": {"isolation": "other_socket_free"}, "runs_root": str(tmp_path)}
+    adapter.host, adapter._lane = campaign_targets.Host(), "mbit10-evaluation-node1"
+    assert adapter.isolated()["other_socket"] == "released"
+    legacy = hold(lease_root, "mbit10-evaluation")
+    try:
+        with pytest.raises(campaign.Stop, match="mbit10-evaluation"):
+            adapter.isolated()
+    finally:
+        legacy.close()
+
+
 def test_isolated_native_blocks_wait_for_a_free_other_socket_and_record_it(team, base_source, monkeypatch):
     """Ticket 56 isolation test (2026-10-04 ET): protocol.isolation waits, then records the state."""
     monkeypatch.setattr(campaign_targets.NativeAdapter, "ISOLATION_POLL_S", 0)

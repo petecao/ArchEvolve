@@ -174,15 +174,18 @@ class Runner:
 
 
 class Host:
-    """The lane this campaign runs in, the other socket's lease and the dispatch preflight."""
+    """The lane this campaign runs in, the leases on the other socket and the dispatch preflight."""
 
-    LEASES = Path(os.environ.get("LACT_LEASE_ROOT", "/data1/yanruj/lact-host-lease"))
+    @property
+    def LEASES(self):                   # read at call time (LACT_LEASE_ROOT, `swdb.paths`)
+        return paths.lease_root()
 
     def lane(self):
         from swdb import provider_guard
         return provider_guard._lane().split(" ", 1)[0]
 
     def held(self, name):
+        """True while some process holds the lease's kernel lock (the lock, not its metadata)."""
         path = self.LEASES / f"{name}.lease"
         if not path.is_file():
             return False
@@ -197,13 +200,27 @@ class Host:
     def marker_root(self, runs_root):
         return Path(runs_root) / "extensa" / "active-lanes"
 
+    @staticmethod
+    def other_socket_leases(lane):
+        """The leases that can occupy the other socket of `lane`: that socket's lease and the legacy
+        whole-host lease (`mbit10-evaluation`), which occupies a socket without excluding a socket
+        lease (MemAcc ADR 0010). Code review S13 (2026-10-05 ET): the legacy lease was not checked."""
+        match = re.fullmatch(r"(.+)-node([01])", lane or "")
+        if not match:
+            raise Failure(f"not a socket lane: {lane!r}")
+        legacy, node = match[1], int(match[2])
+        return [f"{legacy}-node{1 - node}", legacy]
+
     def other_socket_lease(self, lane, runs_roots):
-        """The other socket's lease when held, with the Extensa campaign marker if one runs there."""
-        node = lane[-1]
-        other = lane[:-1] + ("1" if node == "0" else "0")
-        if not self.held(other):
+        """The first held lease on the other socket (None when every one is released), with the
+        Extensa campaign marker if a campaign runs in the other socket lane."""
+        held = [name for name in self.other_socket_leases(lane) if self.held(name)]
+        if not held:
             return None
+        other = held[0]
         row = {"lease": other, "mode": None, "target": None, "campaign": None}
+        if len(held) > 1:
+            row["also_held"] = held[1:]
         for root in runs_roots:
             marker = self.marker_root(root) / f"{other}.json"
             if marker.is_file():
@@ -302,7 +319,7 @@ class TargetAdapter:
             self.host.unmark(self.campaign["runs_root"], self._lane)
 
     def other_socket_lease(self):
-        roots = {self.campaign["runs_root"], "/data1/yanruj/EvolveSWDB_runs", "/data/yanruj/EvolveSWDB_runs"}
+        roots = {str(self.campaign["runs_root"]), *map(str, paths.RUN_ROOTS)}
         return self.host.other_socket_lease(self.lane, sorted(roots))
 
     def step_hours(self, step):
@@ -666,10 +683,15 @@ class NativeAdapter(TargetAdapter):
                 "sources": self._sources(cls), "roi": self.campaign["protocol"]["roi"],
                 "target_configuration": {"lane": self.lane},
                 "workload": {"id": self._workload(cls)}, "comparison_baseline": ROLE_IMPLEMENTATION[role],
-                "build": {"compiler": "/usr/bin/g++", "flags": list(NATIVE_FLAGS)},
+                "build": {"compiler": self._compiler(role, side), "flags": list(NATIVE_FLAGS)},
                 "budget": {"build_seconds": 300, "run_seconds": 120, "total_seconds": 7200},
-                "build_directory": str(Path("/data1/yanruj/EvolveSWDB_builds") / self.cid / rid)
+                "build_directory": str(paths.BUILD_ROOT / self.cid / rid)
                 if socket.gethostname().split(".")[0] == "mbit10" else str(self.folder / "builds" / rid)}
+
+    def _compiler(self, role, side):
+        """The compiler the role's frozen protocol names (copied from its template; code review
+        2026-10-05 ET: never a literal path here). The evaluator refuses any other compiler."""
+        return self._get(NATIVE_TEMPLATES[role], "protocol")["settings"]["builds"][side]["compiler"]
 
     def _sources(self, cls):
         """The class workload's registered (timed) sources (ticket 64)."""
