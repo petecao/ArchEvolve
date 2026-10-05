@@ -1,7 +1,7 @@
 # Typed library and content-bound certification
 
 Created: 2026-10-03 ET
-Updated: 2026-10-04 ET (control observed checks and clause comparison; ticket 70 certification isolation)
+Updated: 2026-10-05 ET (ticket 75 native-CPU certification under command 1.3 and 1.4); 2026-10-04 ET (control observed checks and clause comparison; ticket 70 certification isolation)
 
 The `library/` folder holds normative YAML and buildable C++ outside the record store.
 `swdb validate` checks entry shapes, clause discharge modes, pinned files and the
@@ -64,6 +64,42 @@ Added 2026-10-04 ET (ticket 70, command version 1.3): candidate certification is
   imitates an evaluator line. The refusal is a usage error; campaigns report it as `harness_scan`.
 - Records with command versions before 1.3 keep their meaning: stdout/stderr checks, and fault
   macros in the candidate's translation unit.
+
+Added 2026-10-05 ET (ticket 75, command versions 1.3 and 1.4): native-CPU candidate certification.
+- A rewrite contract that pins `certification_profile` (format `swdb.native-candidate-profile.v1`,
+  for example `library/profiles/native_bfs_tdstep.yaml`) is certified by
+  `swdb/certification_native.py` instead of the DX100 matrix. The profile names the build
+  configurations (the frozen native protocol's `-O3` flags and `-O1 -g`), thread counts, the five
+  certification graphs plus any control-only graph (each also gets a positive cell), the rewrite
+  scope (one function definition) and the controls.
+- `--command-version 1.3` uses 1.3's isolation: one candidate object per build, an evaluator-owned
+  `main`, records on a harness descriptor, one seam object per fault
+  (`library/native/certification/seams.cc`), and an evaluator hook before DOBFS's protected frontier
+  print that records each window and may apply one step-input fault.
+- 1.4 (the default) uses ticket 76's mechanism (`library/native/certification/v1_4/`): one binary
+  per build holding every fault, a blinded 43-byte run plan on a pipe, a random run order recorded
+  in `profile.schedule`, record files named by the run's nonce, windows from the slide-window
+  ledger, the seam witness on every positive cell, and a control rejected only when attributed to
+  its fault (`lost_claim_left_unset`, `missing_child_of_hidden_vertex`,
+  `parent_without_edge_from_stale_vertex`, `duplicate_is_forged_push`). The evaluator call inserted
+  into DOBFS (outside the rewrite scope) only hands the row offsets to trusted code.
+- The native seams are `compare_and_swap`, `QueueBuffer::push_back` (and, under 1.4,
+  `SlidingQueue`); the execution witness is `witness claims=<c> pushes=<p>` (both above zero once
+  BFS passes the source). A witness line of the other target's form makes a record invalid.
+- Before any build, certify refuses a change outside the scope function, a scope region that is not
+  exactly one function definition with the snapshot's signature, and (harness scan with
+  `directives`) any authored preprocessor directive other than `#pragma omp` or the token `defined`:
+  the seam macros exist only in certification builds, so a directive could tell them apart. Native
+  profiles pin their sources (`--sources` is refused).
+- Cells record `build`, `flags` and `threads`; the record carries `profile` (`id`, `path`, `sha256`,
+  `target: native_cpu`, `target_scope`).
+- `--candidate-record FILE` (with `--snapshot`/`--patch`) binds the run to an Extensa candidate
+  record read in place: its source snapshot must match and its artifact sha256 must equal the
+  patched tree's. The record's `candidate.id` is then that candidate, so `swdb candidate-level`
+  derives its level from this certification.
+- `certification.b7954f4df9dd4e228fb12437b845f190` was written before ticket 75 merged ticket 76;
+  its command version reads 1.4 but it ran the 1.3-isolation native path (sources_sha256
+  `06fe4cc5…`).
 
 `swdb get ENTRY_ID` prints normative content with derived tier and status. Review records
 bind a `target` content hash to a `reviewer`, `reviewed_at` and passing certification

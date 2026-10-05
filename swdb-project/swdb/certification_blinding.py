@@ -71,6 +71,10 @@ ATTRIBUTION = {
 }
 
 
+#: Ticket 75 (2026-10-05 ET): fault records of the native-CPU seams (``fault <kind> <thread> <n> <values>``).
+NATIVE_FAULT_RECORDS = ('lost', 'hidden', 'stale')
+
+
 # --- build and run -----------------------------------------------------------------------------------
 
 class Build:
@@ -184,7 +188,8 @@ def parse_records(path, strict_names):
     """The certify 1.4 records of one run. Anything malformed or unknown makes the run invalid."""
     parsed = {'begin': False, 'end': False, 'nonce': None, 'source': None, 'strict': [], 'faults': [],
               'continuation_lost': [], 'queues': {}, 'epochs': [], 'windows': [], 'result': None,
-              'result_base': None, 'chunks': None, 'operations': None, 'invalid': []}
+              'result_base': None, 'chunks': None, 'operations': None, 'claims': None, 'pushes': None,
+              'native_faults': {}, 'invalid': []}
     path = Path(path)
     if not path.is_file() or path.stat().st_size > RECORD_LIMIT:
         parsed['invalid'].append('record file missing or too large')
@@ -217,6 +222,13 @@ def parse_records(path, strict_names):
                     and int(fields[3]) == len(fields) - 4:
                 parsed['faults'].append(('continuation', int(fields[2])))
                 parsed['continuation_lost'].extend(int(v) for v in fields[4:])
+            elif kind == 'fault' and len(fields) >= 4 and fields[1] in NATIVE_FAULT_RECORDS \
+                    and int(fields[3]) == len(fields) - 4 \
+                    and (fields[1] == 'hidden' or fields[1] not in parsed['native_faults']):
+                # Ticket 75: where a native-CPU fault acted (library/native/certification/v1_4/seams.cc);
+                # `hidden` lines (one per step with a dropped tail) accumulate.
+                parsed['faults'].append((fields[1], int(fields[2])))
+                parsed['native_faults'].setdefault(fields[1], []).extend(int(v) for v in fields[4:])
             elif kind == 'queue' and len(fields) == 3 and int(fields[1]) == len(parsed['queues']) \
                     and _HEX.fullmatch(fields[2]):
                 parsed['queues'][int(fields[1])] = int(fields[2], 16)
@@ -236,7 +248,12 @@ def parse_records(path, strict_names):
                 parsed['result'] = {'kind': fields[1], 'values': values}
             elif kind == 'result_base' and len(fields) == 3 and parsed['result_base'] is None and _HEX.fullmatch(fields[1]):
                 parsed['result_base'] = (int(fields[1], 16), int(fields[2]))
-            elif kind == 'witness' and len(fields) == 3 and parsed['chunks'] is None \
+            elif kind == 'witness' and len(fields) == 3 and parsed['claims'] is None and parsed['chunks'] is None \
+                    and fields[1].startswith('claims=') and fields[2].startswith('pushes='):
+                # Ticket 75: the native-CPU execution witness.
+                parsed['claims'] = int(fields[1][7:])
+                parsed['pushes'] = int(fields[2][7:])
+            elif kind == 'witness' and len(fields) == 3 and parsed['chunks'] is None and parsed['claims'] is None \
                     and fields[1].startswith('chunks=') and fields[2].startswith('operations='):
                 parsed['chunks'] = int(fields[1][7:])
                 parsed['operations'] = int(fields[2][11:])
@@ -393,18 +410,24 @@ SEMANTIC_CHECKS = ('verifier', 'frontier_size_equality', 'seam_witness', 'execut
 
 
 def judge(run_result, parsed, counts, *, check_result, result_kind, source, threshold=64,
-          claims_address_result=False):
+          claims_address_result=False, witness=None):
     """Every check of one certify 1.4 run, from its records and the trusted oracles.
 
     The order of reasons is 1.3's (timeout, strict layer, duplicate frontier, invalid record,
     process failure, verifier, frontier sizes, execution witness) with ``seam_witness`` before the
     execution witness. A run whose plan nonce is missing or different is ``record_invalid``; so is a
     run without a fault whose records show one.
+
+    ``witness`` (ticket 75, native-CPU contracts) replaces the DX100 execution witness with a
+    predicate ``witness(parsed, counts, book) -> bool``; a witness line of the other target's form
+    then makes the record invalid.
     """
     plan = run_result.get('plan') or {}
     invalid = list(parsed['invalid'])
     if parsed['nonce'] != plan.get('nonce'):
         invalid.append('plan nonce missing or different')
+    if (witness is None and parsed.get('claims') is not None) or (witness is not None and parsed['chunks'] is not None):
+        invalid.append('witness record of another target')
     if parsed['source'] not in (None, source):
         invalid.append('source record differs from the run')
     if plan.get('fault') is None and (parsed['faults'] or any(
@@ -437,8 +460,11 @@ def judge(run_result, parsed, counts, *, check_result, result_kind, source, thre
             book['problems'].append('no result_base record')
         if book['problems']:
             observed.add('seam_witness')
-        if max(counts) >= threshold and not (parsed['chunks'] and parsed['operations']
-                                             and gathers_from(parsed, book['base'], threshold)):
+        if witness is not None:
+            if not witness(parsed, counts, book):
+                observed.add('execution_witness')
+        elif max(counts) >= threshold and not (parsed['chunks'] and parsed['operations']
+                                               and gathers_from(parsed, book['base'], threshold)):
             observed.add('execution_witness')
     if run_result['timeout']:
         reason = 'timeout'

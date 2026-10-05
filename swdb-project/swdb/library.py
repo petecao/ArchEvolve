@@ -288,6 +288,12 @@ class Library:
             for strategy in data.get('strategies',[]):
                 if self.store and not self.store.get(strategy,'strategy'):
                     error('strategies','unknown strategy record')
+            if kind == 'rewrite_contract' and 'certification_profile' in data:
+                # Ticket 75 (2026-10-05 ET): a native-CPU contract pins its candidate profile (certify 1.4).
+                try:
+                    self._pin(data['certification_profile'])
+                except (KeyError, TypeError, ValueError, OSError) as exc:
+                    error('certification_profile', str(exc))
             if kind == 'rewrite_contract':
                 keys = data.get('pattern_key')
                 if not isinstance(keys, list) or not keys:
