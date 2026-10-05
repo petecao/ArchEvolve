@@ -154,14 +154,20 @@ def test_equal_rewrites_certify_with_every_control_rejected(tmp_path, monkeypatc
     record = _certify(tmp_path, monkeypatch, transform)
     assert record['verdict'] == 'certified'
     assert len(record['matrix']) == 10 and all(x['status'] == 'passed' for x in record['matrix'])
-    assert len(record['negative_controls']) == 16
+    # Ticket 68 (2026-10-04 ET): 8 library faults and 2 legality controls at each tile size.
+    assert len(record['negative_controls']) == 20
     assert all(status == 'rejected' for _, _, status in _controls(record)), _controls(record)
-    assert all(x['fault']['site'] == 'library_fault' for x in record['negative_controls'])
-    # 2026-10-04 ET (final code review): every enforceable clause check was observed; the two
-    # clauses whose check names no run reports are recorded as not enforceable.
+    sites = {x['id']: x['fault']['site'] for x in record['negative_controls']}
+    assert sites.pop('knob_out_of_range') == 'knob_assignment' and sites.pop('schedule_out_of_range') == 'schedule_clause'
+    assert set(sites.values()) == {'library_fault'}
+    # 2026-10-04 ET (final code review): every enforceable clause check was observed. Ticket 68:
+    # knob_range and schedule_range are enforced through the certifier's controls; the contract's
+    # own controls for them cannot exercise them and are recorded as not enforceable.
     clauses = record['clause_controls']
     assert all(r['matched'] for r in clauses if r['enforceable']), clauses
     assert {r['clause'] for r in clauses if not r['enforceable']} == {'frontier_threshold', 'schedule'}
+    assert {(r['clause'], r['control']) for r in clauses if r['source'] == 'certifier' and r['matched']} == {
+        ('frontier_threshold', 'knob_out_of_range'), ('schedule', 'schedule_out_of_range')}
 
 
 def test_forged_frontier_v2_is_killed_when_chunks_are_counted_after_their_pushes(tmp_path, monkeypatch):

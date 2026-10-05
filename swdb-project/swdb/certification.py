@@ -30,7 +30,9 @@ from swdb.store import Store
 
 # 1.1 (2026-10-04 ET, ticket 67): forged_frontier control version 2 (control records carry
 # `fault.version`). Records with command version 1.0 used forged_frontier version 1.
-VERSION = '1.1'
+# 1.2 (2026-10-04 ET, ticket 68): knob_range and schedule_range checks and their controls
+# (swdb.certification_legality); records before 1.2 report neither.
+VERSION = '1.2'
 ROOT = paths.HOME
 BFS = 'benchmarks/gapbs/src/bfs.cc'
 HEADER = 'benchmarks/gapbs/src/swdb_dxc_lowering.hpp'
@@ -119,6 +121,50 @@ def compile_cpp(source, output, library, *, tile_size, threads, tree=None, defin
                '-I' + str(model / 'benchmarks/API'), '-I' + str(model / 'include'),
                *defines, str(source), '-o', str(output)]
     return execute(command, output.with_suffix('.build.json'), timeout=180)
+
+
+def preprocess_cpp(source, output, library, *, tile_size, threads, tree=None, defines=(), quote_dir=None):
+    """The compile_cpp command with -E: the preprocessed text the build would compile (ticket 68)."""
+    model = tree or ROOT / 'apps/dx100'
+    command = [compiler(), '-std=c++11', '-E', '-fopenmp', '-DFUNC', '-DGEM5',
+               f'-DTILE_SIZE={tile_size}', f'-DNUM_CORES={threads}',
+               *(['-iquote', str(quote_dir)] if quote_dir else []),
+               '-I' + str(library / 'dx100/strict'), '-I' + str(library / 'dx100'),
+               '-I' + str(model / 'benchmarks/API'), '-I' + str(model / 'include'),
+               *defines, str(source), '-o', str(output)]
+    return execute(command, Path(str(output) + '.json'), timeout=180)
+
+
+def legality_checks(text, source_path, label, library, entry, folder, *, tile_size, threads, tree, defines):
+    """knob_range and schedule_range on one private build copy (ticket 68, 2026-10-04 ET).
+
+    The text is preprocessed exactly as its build would be, from a probe copy outside the tree
+    (quoted includes resolve from the source's own directory), so the tree identity is untouched.
+    """
+    from swdb import certification_legality as legality
+    probe = (folder / f'{label}.legality.cc').resolve()
+    probe.write_text(legality.probe_source(text, entry))
+    output = folder / f'{label}.legality.ii'
+    result = preprocess_cpp(probe, output, library, tile_size=tile_size, threads=threads, tree=tree,
+                            defines=defines, quote_dir=source_path.parent)
+    if result['returncode']:
+        return [{'check': name, 'status': 'invalid', 'problems': ['preprocessing failed'], 'log': result['log']}
+                for name in legality.CHECKS]
+    text = output.read_text()
+    knobs_ok, knob_problems, knobs = legality.knob_check(text, entry, tile_size)
+    schedule_ok, schedule_problems, schedules = legality.schedule_check(text, entry, tile_size, str(probe))
+    output.unlink()  # large; the probe source and the command log stay
+    return [{'check': legality.KNOB_RANGE, 'status': 'passed' if knobs_ok else 'failed',
+             'problems': knob_problems, 'knobs': knobs},
+            {'check': legality.SCHEDULE_RANGE, 'status': 'passed' if schedule_ok else 'failed',
+             'problems': schedule_problems, 'schedules': schedules}]
+
+
+def _legality_failures(static):
+    """(failed check names, any invalid) of one build's legality checks."""
+    static = static or []
+    return ([s['check'] for s in static if s['status'] == 'failed'],
+            any(s['status'] == 'invalid' for s in static))
 
 
 def operation_of(entry_id):
@@ -479,13 +525,19 @@ def _rewrite_control(source, name, *, calibrate=False, counts=None):
     return library_control(source, name, counts=counts)
 
 
-def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrate=False, threshold=64, plugin=None):
+def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrate=False, threshold=64, plugin=None,
+                contract=None):
     """Run the candidate matrix and its controls; the kernel plug-in supplies the instance.
 
     Calibration is the BFS authors' reference and always uses the BFS functions.
+    Ticket 68 (2026-10-04 ET): with a ``contract`` whose clauses name knob_range or
+    schedule_range, every build is also checked by both (swdb.certification_legality), and the
+    certifier's two legality controls run beside the plug-in's.
     """
     from swdb import kernels
+    from swdb import certification_legality as legality
     plugin = plugin or kernels.BFS
+    legal = bool(contract) and not calibrate and legality.applies(contract)
     if calibrate and plugin is not kernels.BFS:
         raise Failure('calibration exists only for the BFS authors reference')
     instrument = lambda text, **flags: instrument_source(text, **flags) if calibrate else plugin.certification_instrument(text)
@@ -508,22 +560,34 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
     header_path = tree / HEADER
     stem = plugin.binary_stem
     for size in tile_sizes:
-        source_path.write_text(instrument(source, calibrate=calibrate))
+        instrumented = instrument(source, calibrate=calibrate)
+        source_path.write_text(instrumented)
         output = folder / f'{stem}-{size}'
+        static = (legality_checks(instrumented, source_path, f'{stem}-{size}', library, contract, folder,
+                                  tile_size=size, threads=threads, tree=tree, defines=[]) if legal else None)
+        static_failed, static_invalid = _legality_failures(static)
+        legality_field = {'legality_checks': static} if legal else {}
         build = compile_cpp(source_path, output, library, tile_size=size, threads=threads, tree=tree,
                             defines=['-DMAA'] if calibrate else [])
         if build['returncode'] != 0:
-            matrix.append({'tile_size': size, 'status': 'failed', 'reason': 'build failed', 'build': build})
+            matrix.append({'tile_size': size, 'status': 'failed', 'reason': 'build failed', 'build': build,
+                           **legality_field})
             continue
         for graph_name, graph in graphs:
             for source_vertex in sources:
                 counts = plugin.certification_oracle(graph, source_vertex)
                 run = execute([output, '-f', graph, '-r', source_vertex, '-n', '1', '-v'], folder / f'{graph_name}-{size}-{source_vertex}.json', threads=threads)
                 passed, reason = judge(run, counts)
+                if static_failed or static_invalid:
+                    # Ticket 68: an evaluator legality check names the failure before any run check.
+                    passed, reason = False, static_failed[0] if static_failed else 'legality_check_invalid'
                 matrix.append({'graph': graph_name, 'graph_sha256': artifacts.file_hash(graph), 'source': source_vertex,
                                'oracle_frontier_counts': counts, 'tile_size': size, 'threads': threads,
-                               'status': 'passed' if passed else 'failed', 'reason': reason, 'build': build, 'run': run})
+                               'status': 'passed' if passed else 'failed', 'reason': reason, 'build': build, 'run': run,
+                               **legality_field})
         names = ['shared_context', 'dropped_continuation', 'oversized_chunk', 'wrong_store_wait'] if calibrate else list(plugin.certification_controls)
+        if legal:
+            names += list(legality.CONTROLS)  # ticket 68: certifier-owned, after the plug-in's
         # A control runs on the last (two-level) graph unless its plug-in names another matrix
         # graph (2026-10-04 ET: BC's L4 path-count control needs unequal path counts).
         control_graphs = {} if calibrate else (getattr(plugin, 'certification_control_graphs', None) or {})
@@ -538,8 +602,14 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
             if graph_name not in oracle_counts:
                 oracle_counts[graph_name] = plugin.certification_oracle(graph, plugin.control_source(sources))
             counts = oracle_counts[graph_name]
-            mutant = (_rewrite_control(instrument_source(source, calibrate=True), name, calibrate=True) if calibrate
-                      else plugin.certification_control(plugin.certification_instrument(source), name, counts=counts))
+            if calibrate:
+                mutant = _rewrite_control(instrument_source(source, calibrate=True), name, calibrate=True)
+            elif name in legality.CONTROLS and legal:
+                # Ticket 68: the knob assignment or schedule clause of the candidate's own source.
+                mutant = legality.control(source, name, contract)
+                mutant['source'] = plugin.certification_instrument(mutant['source'])
+            else:
+                mutant = plugin.certification_control(plugin.certification_instrument(source), name, counts=counts)
             if isinstance(mutant, str):
                 mutant = {'source': mutant, 'fault': None, 'site': 'calibration_source' if calibrate else 'candidate_tokens'}
             source_path.write_text(mutant['source'])
@@ -555,28 +625,42 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
                 defines.append('-D' + mutant['fault'])
                 fault.update(macro=mutant['fault'], fault_block_sha256=artifacts.file_hash(library / FAULT_FILE),
                              version=mutant.get('version', 1))
+            expected_checks = plugin.certification_controls.get(name) or legality.CONTROLS.get(name, set())
             try:
+                static = (legality_checks(mutant['source'], source_path, f'{stem}-{size}-{name}', library, contract,
+                                          folder, tile_size=size, threads=threads, tree=tree, defines=defines)
+                          if legal else None)
                 control_build = compile_cpp(source_path, output_mutant, library, tile_size=size, threads=threads, tree=tree,
                                             defines=defines)
             finally:
                 if mutant['fault']:
                     header_path.write_bytes(header_bytes)
+            static_failed, _ = _legality_failures(static)
+            legality_field = {'legality_checks': static} if legal else {}
             if control_build['returncode']:
-                controls.append({'id': name, 'tile_size': size, 'status': 'invalid', 'reason': 'build failed',
-                                 'fault': fault, 'build': control_build})
+                # Ticket 68: a build failure never rejects a control; an evaluator legality check that
+                # names the control's expected check does (e.g. a candidate static_assert on a knob
+                # also stops the build).
+                named_static = sorted(set(static_failed) & set(expected_checks))
+                controls.append({'id': name, 'tile_size': size, 'status': 'rejected' if named_static else 'invalid',
+                                 'reason': named_static[0] if named_static else 'build failed',
+                                 'observed_checks': sorted(set(static_failed)), 'fault': fault, 'build': control_build,
+                                 **legality_field})
                 continue
             run = execute([output_mutant, '-f', graph, '-r', plugin.control_source(sources), '-n', '1', '-v'], folder / f'control-{size}-{name}.json', threads=threads)
             passed, reason = judge(run, counts)
             named = re.findall(r'SWDB_(?:STRICT_ASSERT|DIFFERENTIAL_MISMATCH|PRESERVATION_FAIL):([a-z_]+)', run['stdout'] + run['stderr'])
-            expected_checks = plugin.certification_controls.get(name, set())
             if calibrate:
                 expected_checks = {'shared_context': {'thread_ownership_tile', 'thread_ownership_register'}, 'dropped_continuation': set(),
                                    'oversized_chunk': {'tile_truncation'}, 'wrong_store_wait': {'read_before_wait'}}[name]
             observed = observed_checks(run, counts, judge, named)
+            if static_failed:
+                observed = sorted(set(observed) | set(static_failed))
+                passed, reason = False, static_failed[0]
             status = control_status(expected_checks, observed, run, passed)
             controls.append({'id': name, 'tile_size': size, 'status': status, 'reason': reason,
                              'named_checks': named, 'observed_checks': observed, 'graph': graph_name,
-                             'fault': fault, 'build': control_build, 'run': run})
+                             'fault': fault, 'build': control_build, 'run': run, **legality_field})
     source_path.write_text(source)  # This is a private build copy, never a vendored tree.
     return matrix, controls
 
@@ -624,9 +708,13 @@ def control_status(expected_checks, observed, run, passed):
 
 
 def producible_checks():
-    """Check names a certification run can report (named SWDB_* checks and semantic checks)."""
+    """Check names a certification run can report (named SWDB_* checks and semantic checks).
+
+    Ticket 68 (2026-10-04 ET): plus the evaluator's legality checks knob_range and schedule_range.
+    """
     from swdb.certification_feedback import STRICT_MESSAGES
-    return set(STRICT_MESSAGES) | SEMANTIC_CHECKS | {'duplicate_frontier'}
+    from swdb.certification_legality import CHECKS
+    return set(STRICT_MESSAGES) | SEMANTIC_CHECKS | {'duplicate_frontier'} | set(CHECKS)
 
 
 def clause_controls(entry, controls, plugin=None):
@@ -639,8 +727,10 @@ def clause_controls(entry, controls, plugin=None):
     A plug-in may add controls to a clause (`certification_clause_controls`, source `plugin`),
     e.g. BC's L4 parts that the contract's single control does not exercise.
     """
+    from swdb import certification_legality as legality
     producible = producible_checks()
     extra = getattr(plugin, 'certification_clause_controls', None) or {}
+    legal = legality.applies(entry)
     rows = []
     for clause in entry.get('clauses') or []:
         control = clause.get('negative_control') or {}
@@ -648,13 +738,23 @@ def clause_controls(entry, controls, plugin=None):
         if control.get('id') not in (None, 'none') and control.get('check'):
             pairs.append((control['id'], control['check'], 'contract'))
         pairs += [(cid, check, 'plugin') for cid, check in extra.get(clause.get('id'), ())]
+        # Ticket 68 (2026-10-04 ET): knob_range and schedule_range are exercised by the certifier's
+        # own legality controls; the contract's control for them changes no knob assignment or
+        # schedule clause, so that pair cannot be matched (a contract wording issue for Yan-Ru).
+        if legal and control.get('check') in legality.CHECKS:
+            pairs.append((legality.CHECK_CONTROL[control['check']], control['check'], 'certifier'))
         for cid, check, origin in pairs:
             runs = [c for c in controls if c['id'] == cid]
             seen = sorted(set().union(*(c.get('observed_checks') or [] for c in runs))) if runs else []
             matched = bool(runs) and all(c['status'] == 'rejected' and check in (c.get('observed_checks') or [])
                                          for c in runs)
-            rows.append({'clause': clause.get('id'), 'control': cid, 'check': check, 'source': origin,
-                         'observed_checks': seen, 'matched': matched, 'enforceable': check in producible})
+            row = {'clause': clause.get('id'), 'control': cid, 'check': check, 'source': origin,
+                   'observed_checks': seen, 'matched': matched, 'enforceable': check in producible}
+            if check in legality.CHECKS and cid != legality.CHECK_CONTROL[check]:
+                row.update(enforceable=False, reason='control_cannot_exercise_check')
+            elif not row['enforceable']:
+                row['reason'] = 'no_run_reports_check'
+            rows.append(row)
     return rows
 
 
@@ -683,7 +783,8 @@ def check_candidate_scope(tree, snapshot, plugin=None):
 
 def source_digest(library_root):
     faults = Path(__file__).with_name('certification_faults.py')
-    files = sorted(p for p in (library_root / 'dx100').rglob('*') if p.is_file()) + [Path(__file__), faults]
+    legality = Path(__file__).with_name('certification_legality.py')  # ticket 68
+    files = sorted(p for p in (library_root / 'dx100').rglob('*') if p.is_file()) + [Path(__file__), faults, legality]
     return artifacts.digest([{'path': p.relative_to(library_root).as_posix() if library_root in p.parents else 'swdb/' + p.name,
                               'sha256': artifacts.file_hash(p)} for p in files])
 
@@ -757,7 +858,7 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
             identity['id'] = candidate
         threshold = 64
         matrix, controls = certify_bfs(tree, library_root, folder, tile_sizes, threads, sources, threshold=threshold,
-                                       plugin=plugin)
+                                       plugin=plugin, contract=entry)
     else:
         if entry.get('kind') not in {'lowering', 'intrinsic', 'library_operation'}:
             raise UsageError('entry requires a candidate artifact or a differential-test driver')

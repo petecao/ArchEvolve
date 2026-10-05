@@ -95,7 +95,8 @@
           "clause": {"type": "string"},
           "control": {"type": "string"},
           "check": {"type": "string"},
-          "source": {"enum": ["contract", "plugin"]},
+          "source": {"enum": ["contract", "plugin", "certifier"], "description": "2026-10-04 ET (ticket 68): certifier rows enforce knob_range and schedule_range through the certifier's own controls."},
+          "reason": {"enum": ["no_run_reports_check", "control_cannot_exercise_check"], "description": "Why a row is not enforceable (ticket 68)."},
           "observed_checks": {"type": "array", "items": {"type": "string"}},
           "matched": {"type": "boolean"},
           "enforceable": {"type": "boolean"}

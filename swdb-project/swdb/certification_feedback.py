@@ -63,6 +63,12 @@ OTHER_MESSAGES = {
     "timeout": "the run exceeded its time limit",
     "build failed": "the patched source did not compile",
     "certification_failed": "certification failed without a named check (empty matrix or no negative controls)",
+    # Ticket 68 (2026-10-04 ET): the evaluator's legality checks on the preprocessed source.
+    "knob_range": "a knob assignment SWDB_KNOB_<NAME> is not an integer constant inside the contract's "
+                  "declared range (or not one of its choices)",
+    "schedule_range": "an OpenMP worksharing-loop schedule clause is not static or dynamic with an "
+                      "integer-constant chunk inside the contract's schedule_granularity range",
+    "legality_check_invalid": "the source could not be preprocessed for the knob and schedule checks",
 }
 
 
