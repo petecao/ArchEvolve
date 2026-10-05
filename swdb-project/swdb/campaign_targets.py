@@ -234,6 +234,36 @@ def _pin(data):
     return {"id": data["id"], "sha256": artifacts.digest(data)}
 
 
+def function_span(text, name):
+    """1-based (first, last) lines of the top-level definition of function `name`, or None.
+
+    Ticket 73 (2026-10-05 ET): a definition starts at column 0 and its body is the first balanced
+    brace block after it (enough for the GAPBS sources; comments and strings are not parsed)."""
+    lines = text.splitlines()
+    pattern = re.compile(r"^[A-Za-z_][\w:<>,\s\*&]*\b" + re.escape(name) + r"\s*\(")
+    for start, line in enumerate(lines):
+        if not pattern.match(line):
+            continue
+        depth, opened = 0, False
+        for end in range(start, len(lines)):
+            depth += lines[end].count("{") - lines[end].count("}")
+            opened = opened or "{" in lines[end]
+            if opened and depth <= 0:
+                return start + 1, end + 1
+            if not opened and lines[end].rstrip().endswith(";"):
+                break                       # a declaration, not a definition
+    return None
+
+
+def enclosing_function(text, line):
+    """Name of the top-level function whose definition spans 1-based `line`, or None."""
+    for match in re.finditer(r"^[A-Za-z_][\w:<>,\s\*&]*?\b([A-Za-z_]\w*)\s*\(", text, re.M):
+        span = function_span(text, match.group(1))
+        if span and span[0] <= line <= span[1]:
+            return match.group(1)
+    return None
+
+
 class TargetAdapter:
     evidence_kind = "execution"
     #: Budgeted wall time per step (hours) for the lane-hour refusal before a step starts.
@@ -339,6 +369,47 @@ class TargetAdapter:
     def source_files(self):
         return {BFS: (self._base_tree() / BFS).read_text()}
 
+    def protected_regions(self):
+        """Ticket 73 (2026-10-05 ET): the snapshot's protected evaluator inputs in workspace coordinates.
+
+        Campaign a7's iteration 1 edited `BFSVerifier` (the protected verifier region) and was rejected.
+        Each verifier fragment is located in the workspace copy (`source/<path>`, 1-based lines)."""
+        snapshot = self._get(SNAPSHOT, "source_snapshot")
+        rows = []
+        for guard in snapshot.get("protections", []):
+            row = {"path": f"source/{guard['path']}", "kind": guard["kind"]}
+            if guard["kind"] == "verifier":
+                text = (self._base_tree() / guard["path"]).read_text(errors="replace")
+                at = text.find(guard["text"])
+                if at >= 0:
+                    first = text.count("\n", 0, at) + 1
+                    last = first + guard["text"].rstrip("\n").count("\n")
+                    function = next((name for line in range(first, last + 1)
+                                     for name in [enclosing_function(text, line)] if name), None)
+                    row.update(lines=[first, last], function=function)
+            elif guard["kind"] == "file":
+                row["note"] = "the whole file"
+            else:
+                row["note"] = "its ROI calls (" + ", ".join(guard.get("calls", [])) + ")"
+            rows.append(row)
+        return rows
+
+    def workspace_region_lines(self, regions):
+        """Ticket 73: REGIONS.json line numbers name the registered revision of the full fork source; the
+        workspace copy (the scalar-only snapshot) numbers its lines differently. Add the function each
+        region names and its span in the workspace copy."""
+        text = (self._base_tree() / BFS).read_text(errors="replace")
+        out = []
+        for region in regions:
+            rid = region.get("id", "") if isinstance(region, dict) else str(region)
+            name = rid.split("/")[-1].split(":")[0]
+            span = function_span(text, name) if re.fullmatch(r"[A-Za-z_]\w*", name or "") else None
+            if span:
+                region = dict(region) if isinstance(region, dict) else {"id": rid}
+                region["workspace"] = {"path": f"source/{BFS}", "function": name, "lines": list(span)}
+            out.append(region)
+        return out
+
     # candidate artifacts ------------------------------------------------------------------
     def needs_header(self, contracts):
         return False
@@ -384,7 +455,19 @@ class TargetAdapter:
         try:
             artifacts.check_protections(tree, snapshot["protections"])
         except Failure as exc:
-            raise Refused("correctness_failed", f"The patch changes a protected region: {str(exc)[:200]}") from None
+            # Ticket 73: name the protected region in workspace coordinates (see PROTECTED.json).
+            named = ""
+            try:
+                regions = [r for r in self.protected_regions() if r.get("lines")]
+                named = "; ".join(f"{r['path']} lines {r['lines'][0]}-{r['lines'][1]}"
+                                  + (f" (function {r['function']})" if r.get("function") else "")
+                                  for r in regions)
+            except Exception:
+                named = ""
+            message = f"The patch changes a protected region: {str(exc)[:200]}"
+            if named:
+                message += f". Protected and never to be edited: {named[:300]}"
+            raise Refused("correctness_failed", message) from None
         identity = artifacts.identify(tree)
         if identity["sha256"] in self._artifacts:
             existing = self._artifacts[identity["sha256"]]

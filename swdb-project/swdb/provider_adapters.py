@@ -28,6 +28,13 @@ USAGE_LIMIT = re.compile(
     r"usage[_ -]?limit|quota[_ -]?(?:exceeded|exhausted)|"
     r"(?:hit|reached|exceeded).*?(?:usage|chatgpt).*?limit|"
     r"(?:insufficient_quota|rate_limit_exceeded)|out of (?:usage|credits)", re.I)
+#: Ticket 73 (2026-10-05 ET): transient provider-side unavailability. Campaign a7's calls 4 and 5
+#: ended with Codex's `{"type":"error","message":"Selected model is at capacity. ..."}` and were
+#: counted as failed rewrites. Like USAGE_LIMIT, this is read only from error fields and stderr.
+CAPACITY = re.compile(
+    r"at capacity|\boverloaded|server[_ ]is[_ ]busy|temporarily unavailable|service[_ ]unavailable|"
+    r"bad gateway|gateway time-?out|(?:status|http|code)\D{0,12}(?:502|503|504|529)\b|"
+    r"stream disconnected before completion", re.I)
 
 
 def _codex_transport_schema(schema):
@@ -58,6 +65,11 @@ class ProviderUnavailable(Failure):
     """A provider entitlement is unavailable; this is not a failed rewrite."""
 
 
+class ProviderCapacity(ProviderUnavailable):
+    """Ticket 73: the provider is transiently unavailable (model at capacity, overloaded, 5xx).
+    Not a failed rewrite and not a usage limit: a campaign backs off and retries, uncounted."""
+
+
 def events(path):
     for line in Path(path).read_text(errors="replace").splitlines():
         try:
@@ -78,8 +90,12 @@ def check_usage(folder):
             pieces.append(json.dumps(event))
         elif event.get("error"):
             pieces.append(json.dumps(event["error"]))
-    if USAGE_LIMIT.search("\n".join(pieces)):
+    text = "\n".join(pieces)
+    if USAGE_LIMIT.search(text):
         raise ProviderUnavailable("rewrite provider unavailable: usage limit reached; retry later")
+    match = CAPACITY.search(text)
+    if match:
+        raise ProviderCapacity(f"rewrite provider temporarily unavailable ({match.group(0)}); retry later")
 
 
 class Adapter:

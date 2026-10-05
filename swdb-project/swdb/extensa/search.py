@@ -76,9 +76,11 @@ class CallOutcome(str, Enum):
     FAILED = "failed"
     USAGE_LIMIT = "usage_limit"
     LOGIN = "login"
+    #: SWDB addition, ticket 73 (2026-10-05 ET): transient provider-side unavailability (D7, uncounted).
+    PROVIDER_CAPACITY = "provider_capacity"
 
 
-UNCOUNTED_CALL_OUTCOMES = frozenset({CallOutcome.USAGE_LIMIT, CallOutcome.LOGIN})
+UNCOUNTED_CALL_OUTCOMES = frozenset({CallOutcome.USAGE_LIMIT, CallOutcome.LOGIN, CallOutcome.PROVIDER_CAPACITY})
 
 BUDGET_KEYS = ("max_iterations", "plateau_iterations", "lane_hours", "provider_calls_per_iteration",
                "provider_calls_setup", "disk_gb", "lanes")
