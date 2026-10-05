@@ -484,9 +484,16 @@ def attributed_v14(fault, parsed, verdict, book, adjacency, source):
     return bool(hits), {'rule': rule, 'vertex': u, 'children_without_edge': hits[:5]}
 
 
-def certify_native_v14(tree, library, folder, profile, plugin, *, rng=None):
+def certify_native_v14(tree, library, folder, profile, plugin, *, rng=None, build_class=None, runner=None,
+                       driver=None, suffix='v14'):
     """The profile's matrix and controls under certify 1.4: one binary per build, blinded plans, a random
-    order per build, attributed rejections, the slide-window ledger and the seam witness."""
+    order per build, attributed rejections, the slide-window ledger and the seam witness.
+
+    Ticket 78 (certify 1.5): ``build_class``, ``runner``, ``driver`` and ``suffix`` select the process
+    split (``swdb.certification_process``); their defaults are 1.4's."""
+    build_class = build_class or NativeBuild
+    runner = runner or (lambda link, output, graph, vertex, log, threads, fault:
+                        run_v14(output, graph, vertex, log, threads, fault=fault))
     import random
     from swdb import certification as c
     from swdb import certification_blinding as blinding
@@ -507,7 +514,7 @@ def certify_native_v14(tree, library, folder, profile, plugin, *, rng=None):
     if source.count(hook['anchor']) != 1 or source.count('bool BFSVerifier(') != 1:
         raise Failure('BFS frontier logging statement or correctness check differs from the protected text')
     instrumented = source.replace(hook['anchor'], hook['hook_v14'] + '\n        ' + hook['anchor'], 1) + \
-        harness['driver'].read_text()
+        Path(driver or harness['driver']).read_text()
     adjacency = {}
 
     def rows(graph):
@@ -525,10 +532,10 @@ def certify_native_v14(tree, library, folder, profile, plugin, *, rng=None):
     matrix, controls, schedule = [], [], []
     for build_spec in spec['builds']:
         label = build_spec['id']
-        build = NativeBuild(folder / f'bfs-{label}.v14', profile, tree, source_path, build_spec, spec['fault_batch'],
-                            harness=harness)
+        build = build_class(folder / f'bfs-{label}.{suffix}', profile, tree, source_path, build_spec,
+                            spec['fault_batch'], harness=harness)
         positive = build.candidate_object(instrumented, 'positive')
-        output = folder / f'bfs-{label}.v14.bin'
+        output = folder / f'bfs-{label}.{suffix}.bin'
         link = build.link(positive, None, output) if positive['returncode'] == 0 else positive
         if link['returncode'] != 0:
             matrix.append({'build': label, 'status': 'failed', 'reason': 'build failed', 'compile': positive, 'link': link})
@@ -549,15 +556,17 @@ def certify_native_v14(tree, library, folder, profile, plugin, *, rng=None):
                              'name': job['fault'] or f"{job['graph_name']}/t{job['threads']}/{job['vertex']}"})
             counts = plugin.certification_oracle(job['graph'], job['vertex'])
             tag = job['fault'] or f"{job['graph_name']}-t{job['threads']}-{job['vertex']}"
-            run = run_v14(output, job['graph'], job['vertex'], folder / f'v14-{label}-{tag}.json', job['threads'],
-                          fault=job['fault'])
+            run = runner(link, output, job['graph'], job['vertex'], folder / f'{suffix}-{label}-{tag}.json',
+                         job['threads'], job['fault'])
             parsed, verdict = judged(run, job['graph'], job['vertex'], counts)
             evidence = {'candidate_object_sha256': link['candidate_object_sha256'], 'binary_sha256': binary_sha256,
                         'seam_object_sha256': link['seam_object_sha256'],
                         'record_object_sha256': link['record_object_sha256'], 'plan': run['plan'],
                         'named_checks': verdict['named_checks'], 'observed_checks': verdict['observed_checks'],
                         'result_check': verdict['result_check'], 'record_problems': verdict['record_problems'],
-                        'seam_witness': verdict['seam_witness'], 'schedule_order': order}
+                        'seam_witness': verdict['seam_witness'], 'schedule_order': order,
+                        **{key: link[key] for key in ('client_object_sha256', 'evaluator_sha256', 'process_split')
+                           if key in link}}
             if job['kind'] == 'matrix':
                 done_matrix.append((job['canonical'], {
                     'graph': job['graph_name'], 'graph_sha256': artifacts.file_hash(job['graph']), 'source': job['vertex'],

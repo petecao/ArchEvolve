@@ -17,6 +17,13 @@ body, the candidate template and the control mutations. Command 1.0 (this module
 harness, a control's abort classified from a printed line) stays selectable
 (``certify_entry(..., version='1.0')``, CLI ``--command-version 1.0``); its records keep their
 meaning.
+
+Updated: 2026-10-05 ET (ticket 78; scope decided by Yan-Ru 2026-10-05). Command 1.2 is the default:
+1.1's procedure, records, judge and attribution, with the call in a separate candidate process. A
+trusted evaluator process (``library_operations/certification/v1_2/evaluator.cc`` with 1.1's
+``record.cc``) holds the record pipe, the plan, the case inputs and their private copies; the
+candidate binary (unit + ``runner.cc``) only maps the shared arena, runs the call and returns. 1.0 and
+1.1 stay selectable.
 """
 from __future__ import annotations
 
@@ -37,8 +44,8 @@ from pathlib import Path
 from swdb import artifacts, paths, workflow
 from swdb.cli import Failure, UsageError
 
-VERSION = "1.1"
-VERSIONS = ("1.0", "1.1")
+VERSION = "1.2"   # ticket 78: the call in a separate candidate process
+VERSIONS = ("1.0", "1.1", "1.2")
 DX100_INCLUDE = re.compile(r'(?:#|%:)\s*include\s*[<"]([^>"]+)[>"]')
 DX100_NAMES = re.compile(r"(?i)(?:^|/)(?:maa[^/]*|.*dx100[^/]*|.*dxc_[^/]*|reference\.hpp)$")
 MAA_CALL = re.compile(r"\bmaa_\w*\s*\(")
@@ -237,7 +244,7 @@ def _source_digest(library_root, version="1.0"):
     rows = [{"path": p.relative_to(paths.HOME).as_posix(), "sha256": artifacts.file_hash(p)} for p in roots]
     if version != "1.0":
         from swdb import library_operation_blinding
-        rows += library_operation_blinding.source_rows(library_root)
+        rows += library_operation_blinding.source_rows(library_root, version)
     return artifacts.digest(rows)
 
 
@@ -293,7 +300,7 @@ def certify_entry(store, library, entry_id, profile_path, runs_dir=None, seed=No
     else:
         from swdb import library_operation_blinding
         matrix, controls, isolation = library_operation_blinding.certify(resolved, profile, folder, seed, builds,
-                                                                         library.root)
+                                                                         library.root, version=version)
     if resolved["probe"] and not any(c.get("check") == "harness_scan" for c in matrix):
         matrix.append(probe_cell(entry, resolved, builds, folder / "probe", profile, seed))
     verdict = ("certified" if matrix and all(c["status"] == "passed" for c in matrix)

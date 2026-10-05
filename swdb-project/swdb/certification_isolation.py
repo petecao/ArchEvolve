@@ -308,7 +308,7 @@ def scan(original, candidate, version='1.3', *, directives=False):
     ``#ifndef QueueBuffer`` would let a candidate run other code on the target. The DX100 rewrites
     author ``#ifdef`` blocks of their own and keep the scan without it.
     """
-    primitives = PRIMITIVES_1_4 if version == '1.4' else PRIMITIVES
+    primitives = PRIMITIVES_1_4 if version in ('1.4', '1.5') else PRIMITIVES   # 1.5: ticket 78
     from swdb.certification_faults import tokens
     authored = set()
     matcher = difflib.SequenceMatcher(None, original.splitlines(), candidate.splitlines(), autojunk=False)

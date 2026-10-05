@@ -88,6 +88,7 @@ class BFSPlugin(KernelPlugin):
     certification_snapshot = "bfs-dx100-scalar-only-20260929-a1.source"
     certification_driver = "dx100/certification/bfs_driver.inc"   # ticket 70
     certification_driver_v14 = "dx100/certification/v1_4/bfs_driver.inc"   # ticket 76
+    certification_driver_v15 = "dx100/certification/v1_5/bfs_driver.inc"   # ticket 78
     # Ticket 76 (certify 1.4): the claims of a BFS address the returned parent array.
     certification_claims_address_result = True
     certification_result_kind = "i32"

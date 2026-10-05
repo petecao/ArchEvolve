@@ -138,8 +138,10 @@ def plan_line(fault, nonce):
 def run(binary, graph, source, log, threads, fault=None):
     """One run: a fresh record file and a plan pipe; stdout and stderr are only logged."""
     from swdb.certification import execute
-    record = Path(str(log) + '.record')
     nonce = secrets.token_hex(16)
+    # Ticket 78 (from ticket 75's review): the record file is named by the nonce, not by the cell or
+    # control, so the descriptor's path does not name the fault; ``log`` keeps the mapping.
+    record = Path(log).parent / f'run-{nonce}.record'
     descriptor = os.open(record, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
     plan_read, plan_write = os.pipe()
     try:
@@ -487,14 +489,20 @@ def judge(run_result, parsed, counts, *, check_result, result_kind, source, thre
 # --- certification ------------------------------------------------------------------------------------------
 
 def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, threshold=64, plugin, contract=None,
-                      rng=None):
+                      rng=None, build_class=None, runner=None, driver_attribute='certification_driver_v14',
+                      build_suffix='v14'):
     """Certify one candidate tree with certify 1.4 (ticket 76, 2026-10-05 ET).
 
     Per tile size: one candidate object (prelude 1.4) linked once with record.cc and seams.cc; the
     positive matrix and every library-fault control run that binary with a blinded plan, in a random
     order shared with the token and legality controls. Every check comes from :func:`judge`; a
     library-fault control is rejected only when its check is attributable (:func:`attributed`).
+
+    Ticket 78 (certify 1.5): ``build_class``, ``runner``, ``driver_attribute`` and ``build_suffix``
+    select the 1.5 process split (``swdb.certification_process``); their defaults are 1.4's.
     """
+    build_class = build_class or Build
+    runner = runner or run_one
     from swdb import certification as base
     from swdb import certification_legality as legality
     from swdb.certification_faults import FAULT_VERSIONS, LIBRARY_FAULTS
@@ -505,7 +513,7 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
     by_name = dict(graphs)
     source_path = tree / plugin.certification_source
     source = source_path.read_text()
-    driver = (library / plugin.certification_driver_v14).read_text()
+    driver = (library / getattr(plugin, driver_attribute)).read_text()
     stem = plugin.binary_stem
     claims_address_result = bool(getattr(plugin, 'certification_claims_address_result', False))
     adjacency = {}
@@ -530,11 +538,12 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
                 'seam_object_sha256': link['seam_object_sha256'], 'record_object_sha256': link['record_object_sha256'],
                 'plan': run['plan'], 'named_checks': verdict['named_checks'],
                 'observed_checks': verdict['observed_checks'], 'result_check': verdict['result_check'],
-                'record_problems': verdict['record_problems'], 'seam_witness': verdict['seam_witness']}
+                'record_problems': verdict['record_problems'], 'seam_witness': verdict['seam_witness'],
+                **{key: link[key] for key in ('client_object_sha256', 'evaluator_sha256', 'process_split') if key in link}}
 
     matrix, controls, schedule = [], [], []
     for size in tile_sizes:
-        build = Build(folder / f'{stem}-{size}.v14', library, tree, source_path, size, threads)
+        build = build_class(folder / f'{stem}-{size}.{build_suffix}', library, tree, source_path, size, threads)
         instrumented = instrument(source)
         static = (base.legality_checks(instrumented, source_path, f'{stem}-{size}', library, contract, folder,
                                        tile_size=size, threads=threads, tree=tree, defines=[]) if legal else None)
@@ -594,7 +603,7 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
                              'name': job.get('name') or f"{job['graph_name']}/{job['vertex']}"})
             if job['kind'] == 'matrix':
                 counts = plugin.certification_oracle(job['graph'], job['vertex'])
-                run = run_one(job, folder / f"{job['graph_name']}-{size}-{job['vertex']}.json", threads)
+                run = runner(job, folder / f"{job['graph_name']}-{size}-{job['vertex']}.json", threads)
                 parsed, verdict = judged(run, job['graph'], job['vertex'], counts)
                 passed, reason = verdict['passed'], verdict['reason']
                 if static_failed or static_invalid:
@@ -617,7 +626,7 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
                                  'build': job['candidate'], 'link': job['link'], 'schedule_order': order,
                                  **control_legality}))
                 continue
-            run = run_one(job, folder / f'control-{size}-{name}.json', threads)
+            run = runner(job, folder / f'control-{size}-{name}.json', threads)
             parsed, verdict = judged(run, job['graph'], job['vertex'], counts)
             passed, reason = verdict['passed'], verdict['reason']
             record = evidence(job['link'], run, verdict)

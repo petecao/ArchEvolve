@@ -188,7 +188,7 @@ def test_rewrite_that_bypasses_the_claim_seam_is_refused_by_its_surviving_contro
     assert survived == {'skipped_cas_recheck'}
     # Ticket 76 (certify 1.4): the bypass also fails every positive cell by the seam witness (L4);
     # under 1.3 only the surviving control refused it.
-    assert record['command']['version'] == '1.4'
+    assert record['command']['version'] == '1.5'   # ticket 78: the default; 1.4's seam witness, unchanged
     assert {x['reason'] for x in record['matrix']} == {'seam_witness'}
 
 

@@ -69,6 +69,18 @@ VERSION = '1.1'
 FOLDER = 'library_operations/certification/v1_1'
 RECORD_SOURCE = FOLDER + '/record.cc'
 DRIVER_SOURCE = FOLDER + '/driver.cc'
+# Command 1.2 (ticket 78, 2026-10-05 ET): the same procedure, records and judge with the call in a
+# separate candidate process. The trusted evaluator (v1_2/evaluator.cc linked with the unchanged 1.1
+# record.cc) reads the case, places the operands in the certify 1.5 shared arena, starts the candidate
+# binary (the candidate's unit + v1_2/runner.cc) and checks the frame and records the output from its
+# own view after the call. The candidate process holds no record pipe and no plan.
+FOLDER_1_2 = 'library_operations/certification/v1_2'
+EVALUATOR_SOURCE_1_2 = FOLDER_1_2 + '/evaluator.cc'
+RUNNER_SOURCE_1_2 = FOLDER_1_2 + '/runner.cc'
+CALL_HEADER_1_2 = FOLDER_1_2 + '/call.hpp'
+# The certify 1.5 shared-arena layout, always this checkout's copy (evaluator infrastructure, not a
+# library entry; a library folder copied without dx100/ still builds command 1.2).
+ARENA_FOLDER = Path(__file__).resolve().parents[1] / 'library/dx100/certification/v1_5'
 RECORD_ENV, PLAN_ENV = 'SWDB_LO_RECORD_FD', 'SWDB_LO_PLAN_FD'
 RECORD_LIMIT = 64 * 1024 * 1024
 RUN_TIMEOUT = 300
@@ -133,7 +145,7 @@ def _execute(command, log):
 class Toolchain:
     """One build of the profile (sanitized or openmp): compiler, flags, run environment."""
 
-    def __init__(self, name, target, folder, library_root):
+    def __init__(self, name, target, folder, library_root, version=VERSION):
         from swdb.extensa.synthesis.targets.cpu_like import _SANITIZE_FLAGS
         self.name, self.target, self.library_root = name, target, Path(library_root)
         self.folder = Path(folder)
@@ -142,6 +154,7 @@ class Toolchain:
         self.cc = target.spec.cc
         self.flags = [*target.spec.flags, *(_SANITIZE_FLAGS if self.sanitize else [])]
         self._trusted = {}
+        self.version = version
         self.env = {k: v for k, v in os.environ.items() if k not in (RECORD_ENV, PLAN_ENV)}
         threads = getattr(target, 'threads', None)
         if threads is not None:
@@ -157,10 +170,42 @@ class Toolchain:
         return {'ok': code == 0, 'binary': str(output), 'log': str(output) + '.log',
                 'sha256': artifacts.file_hash(output) if code == 0 else None}
 
+    def evaluator(self, family, label):
+        """Command 1.2: the family's evaluator binary (evaluator.cc + 1.1 record.cc), built without the
+        sanitizer flags (it runs no candidate code); a failure is infrastructure."""
+        key = ('evaluator', family)
+        if key not in self._trusted:
+            plain = [f for f in self.target.spec.flags if not f.startswith('-std=')] + ['-std=c++17']
+            objects = []
+            for source, name in ((RECORD_SOURCE, 'record'), (EVALUATOR_SOURCE_1_2, 'evaluator')):
+                output = self.folder / f'{name}-{label}-v12.o'
+                extra = ([f'-DSWDB_LO_FAMILY_{FAMILY_MACRO[family]}', '-I' + str(ARENA_FOLDER)]
+                         if name == 'evaluator' else [])
+                code = _execute([self.cc, *plain, *extra, '-c', self.library_root / source, '-o', output],
+                                str(output) + '.log')
+                if code:
+                    raise Failure('trusted library-operation evaluator failed to build; see ' + str(output) + '.log')
+                objects.append(str(output))
+            binary = self.folder / f'evaluator-{label}-v12'
+            code = _execute([self.cc, *plain, *objects, '-o', binary], str(binary) + '.log')
+            if code:
+                raise Failure('trusted library-operation evaluator failed to link; see ' + str(binary) + '.log')
+            self._trusted[key] = {'binary': str(binary), 'sha256': artifacts.file_hash(binary)}
+        return self._trusted[key]
+
     def trusted(self, family, symbol, label):
-        """record.o and the family driver for one entry symbol; a failure is infrastructure."""
+        """record.o and the family driver for one entry symbol; a failure is infrastructure.
+        Command 1.2: the runner object in place of the driver, and no record object."""
         if (family, symbol) in self._trusted:
             return self._trusted[(family, symbol)]
+        if self.version == '1.2':
+            driver = self.compile(self.library_root / RUNNER_SOURCE_1_2, self.folder / f'runner-{label}.o',
+                                  [f'-DSWDB_LO_FAMILY_{FAMILY_MACRO[family]}', f'-DSWDB_LO_RUN_SYMBOL={symbol}',
+                                   '-I' + str(ARENA_FOLDER)])
+            if not driver['ok']:
+                raise Failure('trusted library-operation runner failed to build; see ' + driver['log'])
+            self._trusted[(family, symbol)] = (None, driver)
+            return None, driver
         record = self.compile(self.library_root / RECORD_SOURCE, self.folder / f'record-{label}.o')
         driver = self.compile(self.library_root / DRIVER_SOURCE, self.folder / f'driver-{label}.o',
                               [f'-DSWDB_LO_FAMILY_{FAMILY_MACRO[family]}', f'-DSWDB_LO_RUN_SYMBOL={symbol}'])
@@ -188,9 +233,16 @@ def build_binary(toolchain, family, symbol, unit, output, label):
     unit_object = toolchain.compile(unit, Path(output).with_suffix('.o'))
     if not unit_object['ok']:
         return {'ok': False, 'check': 'build_failed', 'log': unit_object['log']}
-    linked = toolchain.link([record['object'], driver['object'], unit_object['object']], output)
-    linked.update(record_object_sha256=record['sha256'], driver_object_sha256=driver['sha256'],
-                  unit_object_sha256=unit_object['sha256'])
+    if toolchain.version == '1.2':
+        # Ticket 78: the candidate binary is the unit and the runner; the evaluator is separate.
+        evaluator = toolchain.evaluator(family, label)
+        linked = toolchain.link([driver['object'], unit_object['object']], output)
+        linked.update(runner_object_sha256=driver['sha256'], unit_object_sha256=unit_object['sha256'],
+                      evaluator=evaluator['binary'], evaluator_sha256=evaluator['sha256'], process_split=True)
+    else:
+        linked = toolchain.link([record['object'], driver['object'], unit_object['object']], output)
+        linked.update(record_object_sha256=record['sha256'], driver_object_sha256=driver['sha256'],
+                      unit_object_sha256=unit_object['sha256'])
     if not linked['ok']:
         linked['check'] = 'build_failed'
     return linked
@@ -203,6 +255,14 @@ def plan_line(fault, seed, nonce):
     line = f'plan 1 {FAULT_INDEX[fault]:02d} {seed:016x} {nonce}\n'.encode('ascii')
     assert len(line) == 60
     return line
+
+
+def launch(built, argv):
+    """(program, arguments) of one run: the binary itself (1.1), or its evaluator with the candidate
+    binary as the first argument (1.2, ticket 78)."""
+    if built.get('evaluator'):
+        return built['evaluator'], [built['binary'], *argv]
+    return built['binary'], list(argv)
 
 
 def run_binary(binary, argv, env, fault, seed, log, timeout=RUN_TIMEOUT):
@@ -372,8 +432,9 @@ def fault_attributed(judgement):
 
 # --- certification -----------------------------------------------------------------------------------
 
-def certify(resolved, profile, folder, seed, builds, library_root):
-    """Matrix cells, negative controls and the isolation summary of one 1.1 certification."""
+def certify(resolved, profile, folder, seed, builds, library_root, version=VERSION):
+    """Matrix cells, negative controls and the isolation summary of one 1.1 (or, ticket 78, 1.2)
+    certification. 1.2 differs only in where the call runs (``launch``, ``Toolchain.evaluator``)."""
     from swdb.extensa.synthesis.certify import (family_and_shape, resolve_sizes, scan_candidate_header,
                                                 scan_candidate_includes)
     folder = Path(folder)
@@ -383,10 +444,10 @@ def certify(resolved, profile, folder, seed, builds, library_root):
     sources = {'body': resolved['body'], 'candidate_template': resolved['candidate_template'],
                **{f'control:{cid}': c['path'] for cid, c in resolved['controls'].items()}}
     findings = scan_sources(sources)
-    isolation = {'version': VERSION, 'scan': {'sources': sorted(sources), 'findings': findings}}
+    isolation = {'version': version, 'scan': {'sources': sorted(sources), 'findings': findings}}
     if findings:
         cell = {'cell': 'scan/harness', 'status': 'failed', 'check': 'harness_scan',
-                'reason': 'library-operation source refused by the harness scan (command 1.1): '
+                'reason': f'library-operation source refused by the harness scan (command {version}): '
                           + '; '.join(f"{label} line {f[0]['line']} {f[0]['token']!r}" for label, f in findings.items())}
         return [cell], [], isolation
     header_problems = {}
@@ -406,7 +467,7 @@ def certify(resolved, profile, folder, seed, builds, library_root):
 
     # 1. The reference, first and alone: outputs kept here, binary and folders deleted.
     ref_name = 'sanitized' if 'sanitized' in builds else next(iter(builds))
-    ref_tool = Toolchain(ref_name, builds[ref_name], folder / 'reference', library_root)
+    ref_tool = Toolchain(ref_name, builds[ref_name], folder / 'reference', library_root, version)
     ref_unit = render_unit(folder / 'reference' / 'unit', resolved['reference_template'], resolved['reference'],
                            '{{REFERENCE_HEADER}}')
     ref_binary = build_binary(ref_tool, family, ref_symbol, ref_unit, folder / 'reference' / 'reference_bin', 'ref')
@@ -416,7 +477,7 @@ def certify(resolved, profile, folder, seed, builds, library_root):
     for c, case in enumerate(cases):
         case_dir = folder / 'reference' / 'cases' / secrets.token_hex(8)
         sc.write_case(case_dir, case)
-        run = run_binary(ref_binary['binary'], sc.argv(sizes, case, case_dir), ref_tool.env, None, 0,
+        run = run_binary(*launch(ref_binary, sc.argv(sizes, case, case_dir)), ref_tool.env, None, 0,
                          folder / 'reference' / f'case-{c}.log')
         parsed = parse_record(run['record'])
         if (run['returncode'] or not parsed['end'] or parsed['invalid'] or parsed['violations']
@@ -433,7 +494,7 @@ def certify(resolved, profile, folder, seed, builds, library_root):
     # 2. Every binary of every build, before any candidate code runs.
     plans, binaries = {}, {}
     for name, target in builds.items():
-        tool = Toolchain(name, target, folder / name, library_root)
+        tool = Toolchain(name, target, folder / name, library_root, version)
         bins = {}
         if 'body' in header_problems:
             bins['candidate'] = {'ok': False, 'check': header_problems['body'][0], 'log': header_problems['body'][1]}
@@ -474,7 +535,7 @@ def certify(resolved, profile, folder, seed, builds, library_root):
                 continue
             case_dir = folder / 'runs' / secrets.token_hex(8)
             sc.write_case(case_dir, cases[c])
-            run = run_binary(built['binary'], sc.argv(sizes, cases[c], case_dir), tool.env, fault,
+            run = run_binary(*launch(built, sc.argv(sizes, cases[c], case_dir)), tool.env, fault,
                              secrets.randbits(63), case_dir / 'run.log')
             verdict = judge(run, expected_bytes, reference[c])
             verdict.pop('_differing', None)
@@ -554,16 +615,29 @@ def certify(resolved, profile, folder, seed, builds, library_root):
     isolation.update({
         'reference': reference_summary,
         'binaries': {name: {label: {k: b.get(k) for k in ('sha256', 'record_object_sha256', 'driver_object_sha256',
-                                                           'unit_object_sha256')}
+                                                           'unit_object_sha256', 'runner_object_sha256',
+                                                           'evaluator_sha256') if k in b}
                             for label, b in bins.items()} for name, bins in binaries.items()},
         'delivery': {'positive_and_driver_faults': 'one_binary_blinded_plan',
                      'mutation_controls': 'separate_binary_without_candidate'},
         'order': 'SystemRandom per build over positive cases, driver faults and mutation controls',
         'runs': len(runs), 'runs_file': str(runs_file), 'runs_sha256': artifacts.file_hash(runs_file)})
+    if version == '1.2':
+        isolation['process_split'] = {
+            'evaluator': 'evaluator.cc + 1.1 record.cc: case inputs, private input copies, driver fault, frame '
+                         'check and records; no candidate code',
+            'candidate': 'unit + runner.cc: operands copied from the shared arena into its own heap, one call, '
+                         'output and inputs copied back; no record pipe, no plan'}
     return matrix, controls, isolation
 
 
-def source_rows(library_root):
-    """The trusted C++ sources of command 1.1, for the command's sources digest."""
+def source_rows(library_root, version=VERSION):
+    """The trusted C++ sources of command 1.1 (or 1.2), for the command's sources digest."""
     root = Path(library_root)
-    return [{'path': rel, 'sha256': artifacts.file_hash(root / rel)} for rel in (RECORD_SOURCE, DRIVER_SOURCE)]
+    files = (RECORD_SOURCE, DRIVER_SOURCE) if version == '1.1' else (
+        RECORD_SOURCE, EVALUATOR_SOURCE_1_2, RUNNER_SOURCE_1_2, CALL_HEADER_1_2)
+    rows = [{'path': rel, 'sha256': artifacts.file_hash(root / rel)} for rel in files]
+    if version != '1.1':
+        rows.append({'path': 'library/dx100/certification/v1_5/arena.hpp',
+                     'sha256': artifacts.file_hash(ARENA_FOLDER / 'arena.hpp')})
+    return rows
