@@ -1,7 +1,7 @@
 # 78 — Certify 1.5 and library-operation command 1.2: record-keeping in a separate evaluator process
 
 Created: 2026-10-05 15:50 ET (scope decided by Yan-Ru 2026-10-05; work started 14:40 ET)
-Updated: 2026-10-05 16:10 ET (resolved)
+Updated: 2026-10-05 16:10 ET (resolved); 2026-10-05 18:20 ET (code-review fixes addendum)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** —
@@ -174,3 +174,93 @@ New in 1.5: a DX100 region outside the arena heap is refused; a 4-byte claim out
 runs locally, unrecorded and unfaulted; `malloc` memory is invisible to the evaluator.
 
 - 2026-10-05 16:12 ET: verified on Linux (mbit10, socket lane 0, lease generation 462, b728afe): tests/test_certification_process.py + tests/test_library_operation_blinding.py 38 passed.
+
+## Addendum: code-review fixes (2026-10-05 18:20 ET)
+
+Yan-Ru asked for the review findings to be addressed properly and delegated the decisions; every
+choice below is agent-decided under that delegation, revisable. Mac only, not pushed, no mbit10. Code
+commits on the worktree branch: 000e85f (code and tests), 4fc80c5 (glossary, READMEs, control drift
+test), bb7673f (JSON attribution evidence), 4164ce2 (BC record). No pinned file, persisted check ID,
+record key or old record was changed.
+
+**Fixed.**
+- **Version tables (F3/F2, F10).** `swdb/certification_procedures.py` holds one frozen
+  `{version: CertifyProcedure}` table per command family: candidate artifacts on DX100 (1.3-1.6),
+  native-CPU contracts (1.3-1.5), library operations (1.0-1.2), lowerings and calibration (1.1). Each
+  entry names the evaluator entry point, the scan primitive set, the directive rule, the driver, the
+  legality rules, the evidence basis and the files the version reads. `procedure()` raises on an
+  unknown or historic version; the version if-cascades are gone. Kernel plug-ins declare
+  `certification_drivers = {version: path}`; `certification_driver`, `_v14` and `_v15` stay as aliases.
+- **Per-version source manifests and the commit (F1/F2).** `command.sources_sha256` now digests only
+  the files that version reads (plus a row for its table entry); `command.sources` lists them,
+  `command.kernel_sources` the kernel plug-in and its result check. Library-operation 1.1/1.2 now
+  include the scan modules `certification_isolation.py` and `certification_faults.py`; every candidate
+  version includes `certification_feedback.py`. New records carry `command.code` (git commit, and
+  whether the version's files differ from it), `command.family` and `command.sources_match_version`
+  (the code that ran is the frozen content of its label). Schema updated; old records unchanged.
+- **Version labels (C10, drift).** New library-operation records also carry
+  `command.library_operation_version`. `classify()` maps any old record to its procedure through
+  `HISTORIC` and `LEGACY_ALIASES` (family, label, `sources_sha256`, computed from each commit's own
+  code): `b7954f4d` is native 1.3; DX100 1.4 records from c2fb788 to 9e267fd used cell-named record
+  files; 1.5 prototype records lack the directive rule (details in the [ticket 76 addendum](76-attributed-blinded-certification.md)).
+  Lowering and calibration records were labeled with the candidate version of the day (1.0); they are
+  now their own family at 1.1 (the calibration control rule changed on 2026-10-04 in 8040609). Going
+  forward any behavior change gets a new version: `tests/test_certification_procedures.py` freezes each
+  version's manifest digest and fails when its files change without a table change.
+- **Certify 1.6, the new default (spec review C4, C24).** Knob spellings and `_Pragma` controls; 1.3-1.5
+  keep the ticket 68 rules. See the [ticket 68 erratum](68-knob-range-and-schedule-range-checks.md).
+- **Evidence basis (ADR 0008).** New native-CPU and library-operation records say `measured`; DX100,
+  lowering and calibration records stay `simulated`. Old records keep `simulated`.
+- **Shared code (F5).** `swdb/certification_common.py`: one build base (compile, candidate object,
+  link), `run_with_plan(argv, plan_bytes)`, the record line, result and witness parsers, the reason
+  order, and one evidence builder; `_materialize_candidate` and `_candidate_identity` in
+  `certification.py`. Compile command lines and verdicts are unchanged (below).
+- **Persistence defect found on the way.** DX100 1.4-1.6 control records carried tuples in their
+  attribution evidence, which `workflow.persist` refuses; every earlier DX100 1.4/1.5 run was in a
+  scratch store or a test with persistence stubbed. Fixed in bb7673f (the native path already did this).
+- **Drift tests (F6, F7).** Frozen sha256 of the unpinned DX100 files 1.3 and 1.4 read (including the
+  strict layer); every library-operation control stays within 3 hunks and 8 changed lines of its
+  operation header (`tests/test_library_operation_controls.py`). Controls stay whole copies.
+- **Text (F4, F12-F14, F11).** CLI help generated from the tables (it named only 1.0/1.1 for library
+  operations); README and schema descriptions current; unused `VERSION` constants of the blinding,
+  process and library-operation blinding modules and stale defaults (driver attribute, build suffix,
+  1.1 toolchain default, source rows) removed; "judgment"; glossary entries for library fault, driver
+  fault, certification evaluator process and certify command version, plus a legacy-identifier note;
+  "ledger", "oracle", "mutant" and "harness" replaced in prose and internal names (aliases kept where
+  other code reads them); "hardware API" became "hardware interface" in `library_operations.py` (the
+  pinned headers keep their text); the synthesized-entry profile date is Eastern; a README describes
+  every certification folder (`library/dx100/certification/README.md`).
+- **BC record (C22).** `certification.1e424fce0b694628959f8275548e05b9` (1.6, certified, 28/28) is
+  committed; see the [ticket 42 addendum](42-bc-certification-and-derived-contract.md).
+
+**Re-certification (Mac, g++-16; before = 03b9d3b, after = bb7673f; nothing persisted).** Evidence:
+[`evaluation/certification-review-fixes-2026-10-05.json`](../evaluation/certification-review-fixes-2026-10-05.json).
+
+| Input | Versions | Verdict before/after | Matrix, controls, clause rows, compile commands |
+|---|---|---|---|
+| Ticket 20 | 1.3, 1.4, 1.5 | certified / certified | identical |
+| Ticket 42 (BC) | 1.3, 1.4, 1.5 | certified / certified | identical |
+| a7 `it4.kronecker.a2`, `it8.uniform_random.a1` | 1.3, 1.4, 1.5 | certified / certified | identical |
+| Ticket 75 native contract | 1.3, 1.4, 1.5 | certified / certified | identical; evidence basis now `measured` |
+| Five library operations | 1.0, 1.1, 1.2 | certified / certified | identical; evidence basis now `measured` |
+| The four DX100 inputs | 1.6 (new) | certified | equal to 1.5 except the knob rows (ticket 68 erratum) |
+
+30 of 30 before/after pairs are identical in verdict, matrix cells, controls (status, reason, observed
+and named checks, attribution rule and outcome, fault fields), clause rows and normalized compile
+commands. The native runs also equal the committed `certification.f5b8f6a7…` (1.3) and
+`certification.7f157865…` (1.4) control and matrix outcomes, and `b7954f4d…`'s controls equal native 1.3
+(its matrix had 20 cells, before the 22-cell profile content).
+
+**Not changed, on purpose.**
+- No old version is retired. Candidate 1.3 (DX100) and library-operation 1.0 and 1.1 can be retired
+  once records carry the commit field (from now on they do) and nothing needs to repeat a record made
+  without it.
+- Certify 1.3-1.5 keep the knob_range defect of ticket 68's rules (old records keep their meaning; 1.6
+  is the default).
+- The shared 1.5 cores stay under `library/dx100/certification/v1_5/`: moving them would change the
+  compile commands of frozen versions (README).
+- Persisted names stay: `harness`/`harness_v14` profile keys, `harness_scan`, the "harness scan" refusal
+  text (campaign code matches it), `oracle_frontier_counts`, check and control IDs, the synthesis
+  prompt's "backend".
+
+**Tests (Mac).** full suite in 8 parallel partitions (separate TMPDIR and basetemp, at 4164ce2): 4,331 passed, 38 skipped, 4 failed. The 4: two format-document checks (the new schema fields were undocumented; now in docs/reference/bfs-typed-library.md), one frozen-pin check that counted the new BC record's source manifest as a pin (test corrected), one 15 s CLI timeout under the 8-way load (test_bfs_t17_diagnostic_build, passes alone). After the fixes those files pass (test_format_doc and test_bfs_t17_diagnostic_build 33, test_certification_procedures and test_format_doc 55).

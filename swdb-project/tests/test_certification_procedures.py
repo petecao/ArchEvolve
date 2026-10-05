@@ -219,7 +219,14 @@ def test_unpinned_dx100_1_3_and_1_4_files_are_unchanged():
     """F6: "1.3 runs unchanged": the unpinned files certify 1.3 and 1.4 read keep their bytes."""
     found = {rel: hashlib.sha256((LIBRARY / rel).read_bytes()).hexdigest() for rel in UNPINNED_DX100_1_3_1_4}
     assert found == UNPINNED_DX100_1_3_1_4
-    pinned_text = ''.join(p.read_text() for p in [*LIBRARY.rglob('*.yaml'), *(ROOT / 'records/certifications').glob('*.yaml')])
+    # Pins live in library entries and profiles, and in certificates outside their source manifests
+    # (`command.sources` lists every file a run read; that is provenance, not a pin).
+    texts = [p.read_text() for p in LIBRARY.rglob('*.yaml')]
+    for path in (ROOT / 'records/certifications').glob('*.yaml'):
+        record = yaml.safe_load(path.read_text())
+        command = {k: v for k, v in (record.get('command') or {}).items() if k not in ('sources', 'kernel_sources')}
+        texts.append(yaml.safe_dump({**record, 'command': command}))
+    pinned_text = ''.join(texts)
     assert not any(digest in pinned_text for digest in found.values()), 'a listed file is pinned after all'
 
 

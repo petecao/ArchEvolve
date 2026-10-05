@@ -1,7 +1,7 @@
 # Typed library and content-bound certification
 
 Created: 2026-10-03 ET
-Updated: 2026-10-05 ET (ticket 75 native-CPU certification under command 1.3 and 1.4); 2026-10-04 ET (control observed checks and clause comparison; ticket 70 certification isolation)
+Updated: 2026-10-05 ET (certification version tables, record identity fields, evidence basis); 2026-10-05 ET (ticket 75 native-CPU certification under command 1.3 and 1.4); 2026-10-04 ET (control observed checks and clause comparison; ticket 70 certification isolation)
 
 The `library/` folder holds normative YAML and buildable C++ outside the record store.
 `swdb validate` checks entry shapes, clause discharge modes, pinned files and the
@@ -100,6 +100,25 @@ Added 2026-10-05 ET (ticket 75, command versions 1.3 and 1.4): native-CPU candid
 - `certification.b7954f4df9dd4e228fb12437b845f190` was written before ticket 75 merged ticket 76;
   its command version reads 1.4 but it ran the 1.3-isolation native path (sources_sha256
   `06fe4cc5…`).
+
+Added 2026-10-05 ET (certification code-review fixes): command versions belong to command
+families, each with its own frozen version table (`swdb/certification_procedures.py`): candidate
+artifacts on DX100 (1.3-1.6, default 1.6), native-CPU contracts (1.3-1.5), library operations
+(1.0-1.2) and lowerings with calibration (1.1). An unknown version is refused. New certification
+records add to `command`:
+- `family` (`candidate`, `native`, `library_operation` or `lowering_calibration`), and for library
+  operations `library_operation_version`, so a library-operation label is never read as a candidate
+  label;
+- `sources`, the per-version manifest (`path`, `sha256` of each file the version reads, plus its
+  table-entry row), whose digest is `sources_sha256`; `kernel_sources`, the kernel plug-in and its
+  result check, recorded beside it;
+- `sources_match_version`, true when that digest equals the version's frozen digest;
+- `code` (`git_commit`, `sources_differ_from_commit`).
+`evidence_basis` is `measured` for native-CPU and library-operation runs (real code on the host CPU)
+and `simulated` for functional-model runs (ADR 0008); earlier records say `simulated` on every path.
+Older records carry none of these fields; `swdb.certification_procedures.classify` names the
+procedure each one ran, including the labels that drifted (the native record above; DX100 1.4
+records before 93a2a94, which named record files by cell).
 
 `swdb get ENTRY_ID` prints normative content with derived tier and status. Review records
 bind a `target` content hash to a `reviewer`, `reviewed_at` and passing certification
