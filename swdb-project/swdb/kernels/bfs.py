@@ -86,9 +86,15 @@ class BFSPlugin(KernelPlugin):
     # Candidate certification (ticket 42): the exact BFS functions used before.
     certification_source = "benchmarks/gapbs/src/bfs.cc"
     certification_snapshot = "bfs-dx100-scalar-only-20260929-a1.source"
-    certification_driver = "dx100/certification/bfs_driver.inc"   # ticket 70
-    certification_driver_v14 = "dx100/certification/v1_4/bfs_driver.inc"   # ticket 76
-    certification_driver_v15 = "dx100/certification/v1_5/bfs_driver.inc"   # ticket 78
+    # The evaluator-owned driver (`main`) of each candidate certify version (2026-10-05 ET, review fix F10;
+    # library-relative). The per-version attributes below are the earlier names, kept as aliases.
+    certification_drivers = {"1.3": "dx100/certification/bfs_driver.inc",          # ticket 70
+                             "1.4": "dx100/certification/v1_4/bfs_driver.inc",     # ticket 76
+                             "1.5": "dx100/certification/v1_5/bfs_driver.inc",     # ticket 78
+                             "1.6": "dx100/certification/v1_5/bfs_driver.inc"}
+    certification_driver = certification_drivers["1.3"]
+    certification_driver_v14 = certification_drivers["1.4"]
+    certification_driver_v15 = certification_drivers["1.5"]
     # Ticket 76 (certify 1.4): the claims of a BFS address the returned parent array.
     certification_claims_address_result = True
     certification_result_kind = "i32"

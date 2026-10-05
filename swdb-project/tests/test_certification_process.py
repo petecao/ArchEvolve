@@ -97,6 +97,12 @@ def test_t20_certifies_under_1_5_with_records_written_by_the_evaluator(tmp_path,
     record = _certify(tmp_path, monkeypatch, 'contract.bfs_read_offload', c.DEFAULT_SNAPSHOT,
                       LIBRARY / 'dx100/peter-section5.patch')
     assert record['verdict'] == 'certified' and record['command']['version'] == '1.5'
+    # 2026-10-05 ET (review fixes F1/F2, C10): the family, the per-version manifest and the commit.
+    command = record['command']
+    assert record['evidence_basis'] == 'simulated' and command['family'] == 'candidate'
+    assert {row['path'] for row in command['kernel_sources']} >= {'swdb/kernels/bfs.py'}
+    assert 'library/dx100/certification/v1_5/evaluator.cc' in {row['path'] for row in command['sources']}
+    assert set(command['code']) == {'git_commit', 'sources_differ_from_commit'}
     controls = record['negative_controls']
     assert all(x['status'] == 'rejected' for x in controls)
     faults = [x for x in controls if x['fault'].get('plan')]
@@ -123,6 +129,8 @@ def test_the_native_contract_certifies_under_1_5(tmp_path, monkeypatch):
     record = _certify(tmp_path, monkeypatch, 'contract.bfs_tdstep_frontier_staging', c.DEFAULT_SNAPSHOT,
                       LIBRARY / 'native/bfs-tdstep-frontier-staging.patch')
     assert record['verdict'] == 'certified' and record['command']['version'] == '1.5'
+    # 2026-10-05 ET (ADR 0008, review fixes): real code on the host CPU is measured, not simulated.
+    assert record['evidence_basis'] == 'measured' and record['command']['family'] == 'native'
     assert all(x['status'] == 'passed' for x in record['matrix'])
     assert all(x['status'] == 'rejected' and x['attribution']['attributed'] for x in record['negative_controls'])
     assert all(x['process_split'] is True for x in record['matrix'] + record['negative_controls'])

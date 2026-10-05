@@ -22,33 +22,35 @@ one process and names what cannot:
    dropped continuation removed. A candidate that probes a seam and then misbehaves on purpose
    gains nothing: its deliberate failure is not the fault's, and the fault's own effect, if it
    amplifies it, is exactly what an honest candidate shows.
-3. **Seam witness, frontier ledger.** Windows are read by trusted code from the queue object at each
-   slide (the frontier inspection no longer runs in the candidate's function). Every positive run
-   must show, from the same records, contract clause L4 directly: one frontier queue; each window
-   equals the pushes made into it since the previous slide; every pushed vertex but the source was
-   claimed by the pushing thread through the claim seam at ``base + 4 * vertex`` with one ``base``
-   per run (for BFS, the returned parent array); and the DX100 gathered from that array whenever a
-   frontier reached the threshold. Bypassing the claim or push seam therefore fails the positive
-   matrix (``seam_witness``), whatever the controls do.
+3. **Seam witness.** Windows are read by trusted code from the queue object at each slide (the
+   frontier inspection no longer runs in the candidate's function). Every positive run must show,
+   from the same records, contract clause L4 directly (:func:`seam_witness_pairs`): one frontier
+   queue; each window equals the pushes made into it since the previous slide; every pushed vertex
+   but the source was claimed by the pushing thread through the claim seam at ``base + 4 * vertex``
+   with one ``base`` per run (for BFS, the returned parent array); and the DX100 gathered from that
+   array whenever a frontier reached the threshold. Bypassing the claim or push seam therefore fails
+   the positive matrix (``seam_witness``), whatever the controls do.
 
 Residual threats are stated in ticket 76 (in-process memory introspection; data flow from DX100
 tiles into claims is not traced).
+
+Updated: 2026-10-05 ET (code-review fixes F3, F5): the driver, the scan and the legality rules come
+from the version table (``swdb.certification_procedures``); builds, runs, record reading and evidence
+share ``swdb.certification_common``; "ledger" became the seam-witness pairing. Behavior unchanged.
 """
 from __future__ import annotations
 
-import os
 import random
 import re
-import secrets
 import struct
 from collections import Counter, defaultdict, deque
 from pathlib import Path
 
 from swdb import artifacts
+from swdb import certification_common as common
 from swdb.cli import Failure
 
-VERSION = '1.4'
-CHANNEL_ENV, PLAN_ENV = 'SWDB_CERT_RECORD_FD', 'SWDB_CERT_PLAN_FD'
+CHANNEL_ENV, PLAN_ENV = common.CHANNEL_ENV, common.PLAN_ENV
 FOLDER = 'dx100/certification/v1_4'
 PRELUDE = FOLDER + '/prelude.hpp'
 RECORD_SOURCE = FOLDER + '/record.cc'
@@ -77,51 +79,31 @@ NATIVE_FAULT_RECORDS = ('lost', 'hidden', 'stale')
 
 # --- build and run -----------------------------------------------------------------------------------
 
-class Build:
+class Build(common.ObjectBuild):
     """Objects and binaries of one candidate tree at one tile size (certify 1.4)."""
 
     def __init__(self, folder, library, tree, source_path, tile_size, threads):
-        from swdb.certification import compiler
         from swdb.certification_isolation import _flags
-        self.folder, self.library, self.tree = Path(folder), Path(library), Path(tree)
+        self.library, self.tree = Path(library), Path(tree)
         self.source_path, self.tile_size, self.threads = Path(source_path), tile_size, threads
-        self.folder.mkdir(parents=True, exist_ok=True)
-        self.compiler = compiler()
-        self.flags = _flags(self.library, self.tree, tile_size, threads)
+        super().__init__(folder, _flags(self.library, self.tree, tile_size, threads))
         self._trusted = {}
 
-    def _compile(self, source, output, extra=()):
-        from swdb.certification import execute
-        command = [self.compiler, *self.flags, *extra, '-c', str(source), '-o', str(output)]
-        result = execute(command, Path(str(output) + '.build.json'), timeout=180)
-        if result['returncode'] == 0:
-            result['object_sha256'] = artifacts.file_hash(output)
-        result['object'] = str(output)
-        return result
-
     def candidate_object(self, text, label):
-        self.source_path.write_text(text)
-        extra = ['-Dmain=swdb_candidate_main', '-iquote', str(self.source_path.parent),
-                 '-include', str(self.library / PRELUDE)]
-        result = self._compile(self.source_path, self.folder / f'candidate-{label}.o', extra)
-        result['source_sha256'] = artifacts.digest(text)
-        return result
+        return self.compile_candidate(self.source_path, text, label, prelude=self.library / PRELUDE)
 
     def trusted_object(self, kind):
         if kind not in self._trusted:
             source = self.library / (RECORD_SOURCE if kind == 'record' else SEAM_SOURCE)
-            result = self._compile(source, self.folder / f'{kind}-v14.o')
+            result = self.compile(source, self.folder / f'{kind}-v14.o')
             if result['returncode']:
                 raise Failure(f'trusted certification object failed to build ({kind}); see ' + result['log'])
             self._trusted[kind] = result
         return self._trusted[kind]
 
     def link(self, candidate, output):
-        from swdb.certification import execute
         record, seams = self.trusted_object('record'), self.trusted_object('seams')
-        command = [self.compiler, '-fopenmp', candidate['object'], record['object'], seams['object'],
-                   '-o', str(output)]
-        result = execute(command, Path(str(output) + '.link.json'), timeout=180)
+        result = self.link_objects([candidate['object'], record['object'], seams['object']], output)
         result.update(candidate_object_sha256=candidate.get('object_sha256'),
                       record_object_sha256=record['object_sha256'], seam_object_sha256=seams['object_sha256'],
                       binary=str(output), binary_sha256=artifacts.file_hash(output) if result['returncode'] == 0 else None)
@@ -136,29 +118,11 @@ def plan_line(fault, nonce):
 
 
 def run(binary, graph, source, log, threads, fault=None):
-    """One run: a fresh record file and a plan pipe; stdout and stderr are only logged."""
-    from swdb.certification import execute
+    """One run: a fresh, nonce-named record file and a plan pipe; stdout and stderr are only logged."""
+    import secrets
     nonce = secrets.token_hex(16)
-    # Ticket 78 (from ticket 75's review): the record file is named by the nonce, not by the cell or
-    # control, so the descriptor's path does not name the fault; ``log`` keeps the mapping.
-    record = Path(log).parent / f'run-{nonce}.record'
-    descriptor = os.open(record, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
-    plan_read, plan_write = os.pipe()
-    try:
-        os.write(plan_write, plan_line(fault, nonce))
-        os.close(plan_write)
-        plan_write = None
-        result = execute([binary, '-f', graph, '-r', source, '-n', '1', '-v'], log, threads=threads,
-                         extra_env={CHANNEL_ENV: str(descriptor), PLAN_ENV: str(plan_read)},
-                         pass_fds=(descriptor, plan_read))
-    finally:
-        os.close(descriptor)
-        os.close(plan_read)
-        if plan_write is not None:
-            os.close(plan_write)
-    result.update(record=str(record.resolve()), record_sha256=artifacts.file_hash(record),
-                  plan={'fault': fault, 'nonce': nonce})
-    return result
+    return common.run_blinded([binary, *common.graph_argv(graph, source)], plan_line(fault, nonce), nonce, fault,
+                              log, threads)
 
 
 # --- records -------------------------------------------------------------------------------------------
@@ -192,21 +156,8 @@ def parse_records(path, strict_names):
               'continuation_lost': [], 'queues': {}, 'epochs': [], 'windows': [], 'result': None,
               'result_base': None, 'chunks': None, 'operations': None, 'claims': None, 'pushes': None,
               'native_faults': {}, 'invalid': []}
-    path = Path(path)
-    if not path.is_file() or path.stat().st_size > RECORD_LIMIT:
-        parsed['invalid'].append('record file missing or too large')
-        return parsed
-    lines = path.read_bytes().split(b'\n')
-    if lines and lines[-1] == b'':
-        lines.pop()
     pending_epoch = None
-    for number, raw in enumerate(lines, 1):
-        try:
-            line = raw.decode('ascii')
-        except UnicodeDecodeError:
-            parsed['invalid'].append(f'line {number}: not ASCII')
-            continue
-        fields = line.split(' ')
+    for number, line, fields in common.record_lines(path, RECORD_LIMIT, parsed['invalid']):
         kind = fields[0]
         try:
             if line == 'begin 2' and number == 1:
@@ -241,24 +192,12 @@ def parse_records(path, strict_names):
                 parsed['epochs'].append(pending_epoch[1])
                 parsed['windows'].append((pending_epoch[0], [int(v) for v in fields[3:]]))
                 pending_epoch = None
-            elif kind == 'result' and len(fields) >= 3 and parsed['result'] is None \
-                    and int(fields[2]) == len(fields) - 3 and fields[1] in ('i32', 'f32'):
-                if fields[1] == 'i32':
-                    values = [int(v) for v in fields[3:]]
-                else:
-                    values = [struct.unpack('<f', struct.pack('<I', int(v, 16)))[0] for v in fields[3:]]
-                parsed['result'] = {'kind': fields[1], 'values': values}
+            elif kind == 'result' and common.parse_result(fields, parsed):
+                pass
             elif kind == 'result_base' and len(fields) == 3 and parsed['result_base'] is None and _HEX.fullmatch(fields[1]):
                 parsed['result_base'] = (int(fields[1], 16), int(fields[2]))
-            elif kind == 'witness' and len(fields) == 3 and parsed['claims'] is None and parsed['chunks'] is None \
-                    and fields[1].startswith('claims=') and fields[2].startswith('pushes='):
-                # Ticket 75: the native-CPU execution witness.
-                parsed['claims'] = int(fields[1][7:])
-                parsed['pushes'] = int(fields[2][7:])
-            elif kind == 'witness' and len(fields) == 3 and parsed['chunks'] is None and parsed['claims'] is None \
-                    and fields[1].startswith('chunks=') and fields[2].startswith('operations='):
-                parsed['chunks'] = int(fields[1][7:])
-                parsed['operations'] = int(fields[2][11:])
+            elif kind == 'witness' and common.parse_witness(fields, parsed):
+                pass   # DX100 chunks/operations, or (ticket 75) the native-CPU claims/pushes
             elif line == 'end' and not parsed['end'] and pending_epoch is None:
                 parsed['end'] = True
             else:
@@ -277,8 +216,8 @@ def parse_records(path, strict_names):
 
 # --- seam witness (contract clause L4) ---------------------------------------------------------------
 
-def ledger(parsed, source, *, result_base=None):
-    """Pair pushes with claims and windows with pushes, from the records alone.
+def seam_witness_pairs(parsed, source, *, result_base=None):
+    """Pair pushes with claims and windows with pushes, from the records alone (the seam witness).
 
     Returns {'problems', 'base', 'queue', 'paired_forged', 'forged_pushes'}. ``paired_forged`` lists
     (window index, vertex) for pushes paired with a forged claim; ``forged_pushes`` (window index,
@@ -372,22 +311,22 @@ def level_sets(adjacency, source):
     return levels
 
 
-def attributed(fault, parsed, verdict, book, expected, *, adjacency=None, source=None):
-    """(attributed, evidence) for one library-fault control run."""
+def attributed(fault, parsed, verdict, pairs, expected, *, adjacency=None, source=None):
+    """(attributed, evidence) for one library-fault control run (``pairs``: :func:`seam_witness_pairs`)."""
     rule = ATTRIBUTION[fault]
     windows = [w for _, w in parsed['windows']]
     duplicated = {i: {v for v, n in Counter(w).items() if n > 1} for i, w in enumerate(windows)}
     if rule == 'duplicate_after_forged_claim':
-        hits = sorted({(i, v) for i, v in book['paired_forged'] if v in duplicated.get(i, ())})
+        hits = sorted({(i, v) for i, v in pairs['paired_forged'] if v in duplicated.get(i, ())})
         return bool(hits), {'rule': rule, 'duplicates_after_forged_claims': hits[:5]}
     if rule == 'duplicate_is_forged_push':
-        hits = sorted({(i, v) for i, v in book['forged_pushes'] if v in duplicated.get(i, ())})
+        hits = sorted({(i, v) for i, v in pairs['forged_pushes'] if v in duplicated.get(i, ())})
         return bool(hits), {'rule': rule, 'forged_duplicates': hits[:5]}
     if rule in ('strict_inside_faulted_call', 'strict_on_faulted_thread'):
         floor = 2 if rule == 'strict_inside_faulted_call' else 1
         hits = [name for name, attribution in parsed['strict'] if attribution >= floor and name in expected]
         return bool(hits), {'rule': rule, 'strict': parsed['strict'][:5]}
-    # missing_vertex_behind_lost_edge: the first level whose window differs from the oracle's level
+    # missing_vertex_behind_lost_edge: the first level whose window differs from the reference level
     # misses a vertex that is the head of an edge the dropped continuation removed.
     lost = set(parsed['continuation_lost'])
     if not lost or adjacency is None:
@@ -413,7 +352,7 @@ SEMANTIC_CHECKS = ('verifier', 'frontier_size_equality', 'seam_witness', 'execut
 
 def judge(run_result, parsed, counts, *, check_result, result_kind, source, threshold=64,
           claims_address_result=False, witness=None):
-    """Every check of one certify 1.4 run, from its records and the trusted oracles.
+    """Every check of one certify 1.4 run, from its records and the trusted reference counts.
 
     The order of reasons is 1.3's (timeout, strict layer, duplicate frontier, invalid record,
     process failure, verifier, frontier sizes, execution witness) with ``seam_witness`` before the
@@ -421,8 +360,8 @@ def judge(run_result, parsed, counts, *, check_result, result_kind, source, thre
     run without a fault whose records show one.
 
     ``witness`` (ticket 75, native-CPU contracts) replaces the DX100 execution witness with a
-    predicate ``witness(parsed, counts, book) -> bool``; a witness line of the other target's form
-    then makes the record invalid.
+    predicate ``witness(parsed, counts, pairs) -> bool``; a witness line of the other target's form
+    then makes the record invalid. The seam-witness pairing is returned as ``_pairs`` (not recorded).
     """
     plan = run_result.get('plan') or {}
     invalid = list(parsed['invalid'])
@@ -442,15 +381,11 @@ def judge(run_result, parsed, counts, *, check_result, result_kind, source, thre
     observed = set(named) | ({'frontier_size_equality'} if duplicate else set())
     clean = (not run_result['timeout'] and run_result['returncode'] == 0 and parsed['begin'] and parsed['end']
              and not strict and not invalid)
-    result_check, book = None, None
+    result_check = None
     result_base = parsed['result_base'][0] if claims_address_result and parsed['result_base'] else None
-    book = ledger(parsed, source, result_base=result_base)
+    pairs = seam_witness_pairs(parsed, source, result_base=result_base)
     if clean:
-        result = parsed['result']
-        if result is None or result['kind'] != result_kind:
-            result_check = {'passed': False, 'reason': 'no result record of kind ' + result_kind}
-        else:
-            result_check = check_result(result['values'])
+        result_check = common.result_check(parsed, result_kind, check_result)
         if not result_check['passed']:
             observed.add('verifier')
         sizes = [len(w) for w in windows]
@@ -459,38 +394,28 @@ def judge(run_result, parsed, counts, *, check_result, result_kind, source, thre
         if sizes != list(counts):
             observed.add('frontier_size_equality')
         if claims_address_result and parsed['result_base'] is None:
-            book['problems'].append('no result_base record')
-        if book['problems']:
+            pairs['problems'].append('no result_base record')
+        if pairs['problems']:
             observed.add('seam_witness')
         if witness is not None:
-            if not witness(parsed, counts, book):
+            if not witness(parsed, counts, pairs):
                 observed.add('execution_witness')
         elif max(counts) >= threshold and not (parsed['chunks'] and parsed['operations']
-                                               and gathers_from(parsed, book['base'], threshold)):
+                                               and gathers_from(parsed, pairs['base'], threshold)):
             observed.add('execution_witness')
-    if run_result['timeout']:
-        reason = 'timeout'
-    elif strict:
-        reason = 'strict_layer_assertion'
-    elif duplicate:
-        reason = 'frontier_size_equality'
-    elif invalid:
-        reason = 'record_invalid'
-    elif not clean:
-        reason = 'process_failure'
-    else:
-        reason = next((name for name in SEMANTIC_CHECKS if name in observed), 'all_checks_passed')
+    reason = common.first_reason(run_result, strict=strict, duplicate=duplicate, invalid=invalid, clean=clean,
+                                 observed=observed, semantic_checks=SEMANTIC_CHECKS)
     return {'passed': reason == 'all_checks_passed', 'reason': reason, 'observed_checks': sorted(observed),
             'named_checks': named, 'result_check': result_check, 'record_problems': invalid[:5],
-            'seam_witness': {'problems': book['problems'][:5], 'claim_base': hex(book['base']) if book['base'] is not None else None},
-            '_book': book}
+            'seam_witness': {'problems': pairs['problems'][:5],
+                             'claim_base': hex(pairs['base']) if pairs['base'] is not None else None},
+            '_pairs': pairs}
 
 
 # --- certification ------------------------------------------------------------------------------------------
 
 def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, threshold=64, plugin, contract=None,
-                      rng=None, build_class=None, runner=None, driver_attribute='certification_driver_v14',
-                      build_suffix='v14'):
+                      rng=None, procedure=None, build_class=None, runner=None, build_suffix='v14'):
     """Certify one candidate tree with certify 1.4 (ticket 76, 2026-10-05 ET).
 
     Per tile size: one candidate object (prelude 1.4) linked once with record.cc and seams.cc; the
@@ -498,22 +423,26 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
     order shared with the token and legality controls. Every check comes from :func:`judge`; a
     library-fault control is rejected only when its check is attributable (:func:`attributed`).
 
-    Ticket 78 (certify 1.5): ``build_class``, ``runner``, ``driver_attribute`` and ``build_suffix``
-    select the 1.5 process split (``swdb.certification_process``); their defaults are 1.4's.
+    ``procedure`` (the version table's entry; candidate 1.4 when omitted) names the driver and the
+    legality rules. Ticket 78 (certify 1.5 and later): ``build_class``, ``runner`` and ``build_suffix``
+    select the process split (``swdb.certification_process``). Returns (matrix, controls, schedule).
     """
-    build_class = build_class or Build
-    runner = runner or run_one
     from swdb import certification as base
     from swdb import certification_legality as legality
+    from swdb import certification_procedures as procedures
     from swdb.certification_faults import FAULT_VERSIONS, LIBRARY_FAULTS
     from swdb.certification_feedback import STRICT_MESSAGES
+    procedure = procedure or procedures.procedure(procedures.CANDIDATE, '1.4')
+    build_class = build_class or Build
+    runner = runner or run_one
     rng = rng or random.SystemRandom()
     legal = bool(contract) and legality.applies(contract)
+    rules = procedure.legality
     graphs = base.matrix_graphs(folder, library, threads)
     by_name = dict(graphs)
     source_path = tree / plugin.certification_source
     source = source_path.read_text()
-    driver = (library / getattr(plugin, driver_attribute)).read_text()
+    driver = procedure.driver_path(library, plugin).read_text()
     stem = plugin.binary_stem
     claims_address_result = bool(getattr(plugin, 'certification_claims_address_result', False))
     adjacency = {}
@@ -533,20 +462,15 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
                         source=vertex, threshold=threshold, claims_address_result=claims_address_result)
         return parsed, verdict
 
-    def evidence(link, run, verdict):
-        return {'candidate_object_sha256': link['candidate_object_sha256'], 'binary_sha256': link['binary_sha256'],
-                'seam_object_sha256': link['seam_object_sha256'], 'record_object_sha256': link['record_object_sha256'],
-                'plan': run['plan'], 'named_checks': verdict['named_checks'],
-                'observed_checks': verdict['observed_checks'], 'result_check': verdict['result_check'],
-                'record_problems': verdict['record_problems'], 'seam_witness': verdict['seam_witness'],
-                **{key: link[key] for key in ('client_object_sha256', 'evaluator_sha256', 'process_split') if key in link}}
+    def legality_of(text, label, size):
+        return (base.legality_checks(text, source_path, label, library, contract, folder, tile_size=size,
+                                     threads=threads, tree=tree, defines=[], rules=rules) if legal else None)
 
     matrix, controls, schedule = [], [], []
     for size in tile_sizes:
         build = build_class(folder / f'{stem}-{size}.{build_suffix}', library, tree, source_path, size, threads)
         instrumented = instrument(source)
-        static = (base.legality_checks(instrumented, source_path, f'{stem}-{size}', library, contract, folder,
-                                       tile_size=size, threads=threads, tree=tree, defines=[]) if legal else None)
+        static = legality_of(instrumented, f'{stem}-{size}', size)
         static_failed, static_invalid = base._legality_failures(static)
         legality_field = {'legality_checks': static} if legal else {}
         output = folder / f'{stem}-{size}'
@@ -556,7 +480,7 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
             matrix.append({'tile_size': size, 'status': 'failed', 'reason': 'build failed', 'build': positive,
                            'link': link, **legality_field})
             continue
-        jobs = []      # (kind, name or (graph, vertex), binary link, fault, graph name, graph, vertex)
+        jobs = []      # matrix cells and controls of this tile size, in canonical order
         for graph_name, graph in graphs:
             for vertex in sources:
                 jobs.append({'kind': 'matrix', 'graph_name': graph_name, 'graph': graph, 'vertex': vertex,
@@ -569,29 +493,27 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
             job = {'kind': 'control', 'name': name, 'graph_name': graph_name, 'graph': by_name[graph_name],
                    'vertex': vertex}
             if name in legality.CONTROLS and legal:
-                mutant = legality.control(source, name, contract)
-                mutant['source'] = instrument(mutant['source'])
+                control = legality.control(source, name, contract, rules=rules)
+                control['source'] = instrument(control['source'])
             else:
-                mutant = plugin.certification_control(plugin.certification_instrument(source, frontier_hook=False), name)
-                if isinstance(mutant, str):
-                    mutant = {'source': mutant + driver, 'fault': None, 'site': 'candidate_tokens'}
+                control = plugin.certification_control(plugin.certification_instrument(source, frontier_hook=False), name)
+                if isinstance(control, str):
+                    control = {'source': control + driver, 'fault': None, 'site': 'candidate_tokens'}
                 else:
-                    mutant = {**mutant, 'source': mutant['source'] + driver}
-            fault = {'site': mutant['site']}
-            if mutant['fault']:
-                if mutant['source'] != instrumented or name not in LIBRARY_FAULTS:
+                    control = {**control, 'source': control['source'] + driver}
+            fault = {'site': control['site']}
+            if control['fault']:
+                if control['source'] != instrumented or name not in LIBRARY_FAULTS:
                     raise Failure('library-fault control changed candidate text: ' + name)
-                fault.update(macro=None, plan=name, version=mutant.get('version', FAULT_VERSIONS.get(name, 1)),
+                fault.update(macro=None, plan=name, version=control.get('version', FAULT_VERSIONS.get(name, 1)),
                              delivery='run_plan', attribution=ATTRIBUTION[name])
                 job.update(link=link, fault=name, candidate=positive, static=static)
             else:
-                control_static = (base.legality_checks(mutant['source'], source_path, f'{stem}-{size}-{name}', library,
-                                                       contract, folder, tile_size=size, threads=threads, tree=tree,
-                                                       defines=[]) if legal else None)
-                candidate_object = build.candidate_object(mutant['source'], name)
-                mutant_link = (build.link(candidate_object, folder / f'{stem}-{size}-{name}')
-                               if candidate_object['returncode'] == 0 else candidate_object)
-                job.update(link=mutant_link, fault=None, candidate=candidate_object, static=control_static)
+                control_static = legality_of(control['source'], f'{stem}-{size}-{name}', size)
+                candidate_object = build.candidate_object(control['source'], name)
+                control_link = (build.link(candidate_object, folder / f'{stem}-{size}-{name}')
+                                if candidate_object['returncode'] == 0 else candidate_object)
+                job.update(link=control_link, fault=None, candidate=candidate_object, static=control_static)
             job['fault_record'] = fault
             jobs.append(job)
         for canonical, job in enumerate(jobs):
@@ -612,7 +534,7 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
                                'source': job['vertex'], 'oracle_frontier_counts': counts, 'tile_size': size,
                                'threads': threads, 'status': 'passed' if passed else 'failed', 'reason': reason,
                                'build': positive, 'link': link, 'run': run, 'schedule_order': order,
-                               **evidence(link, run, verdict), **legality_field}))
+                               **common.evidence(link, verdict, run), **legality_field}))
                 continue
             name, counts = job['name'], plugin.certification_oracle(job['graph'], job['vertex'])
             expected_checks = plugin.certification_controls.get(name) or legality.CONTROLS.get(name, set())
@@ -629,13 +551,13 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
             run = runner(job, folder / f'control-{size}-{name}.json', threads)
             parsed, verdict = judged(run, job['graph'], job['vertex'], counts)
             passed, reason = verdict['passed'], verdict['reason']
-            record = evidence(job['link'], run, verdict)
+            record = common.evidence(job['link'], verdict, run)
             if control_failed:
                 record['observed_checks'] = sorted(set(record['observed_checks']) | set(control_failed))
                 passed, reason = False, control_failed[0]
             status = base.control_status(expected_checks, record['observed_checks'], run, passed)
             if job['fault']:
-                ok, attribution = attributed(job['fault'], parsed, verdict, verdict['_book'],
+                ok, attribution = attributed(job['fault'], parsed, verdict, verdict['_pairs'],
                                              set(expected_checks) or set(SEMANTIC_CHECKS),
                                              adjacency=graph_rows(job['graph']), source=job['vertex'])
                 record['attribution'] = {'attributed': ok, **attribution}

@@ -111,7 +111,7 @@ def test_plan_lines_have_one_length_for_every_fault():
 def _attributed(tmp_path, fault, lines, expected, adjacency=None):
     parsed = _parse(tmp_path, lines)
     verdict = _judge(_run(fault), parsed)
-    return blinding.attributed(fault, parsed, verdict, verdict['_book'], expected, adjacency=adjacency, source=0)[0]
+    return blinding.attributed(fault, parsed, verdict, verdict['_pairs'], expected, adjacency=adjacency, source=0)[0]
 
 
 def test_a_duplicate_counts_for_the_claim_fault_only_behind_a_forged_claim(tmp_path):
@@ -141,7 +141,7 @@ def test_strict_failures_count_only_where_the_fault_acted(tmp_path, fault, attri
     parsed = _parse(tmp_path, lines)
     verdict = _judge(_run(fault, returncode=86), parsed)
     assert verdict['reason'] == 'strict_layer_assertion'
-    assert blinding.attributed(fault, parsed, verdict, verdict['_book'], {name})[0] is expected
+    assert blinding.attributed(fault, parsed, verdict, verdict['_pairs'], {name})[0] is expected
 
 
 def test_a_dropped_continuation_counts_only_for_vertices_behind_lost_edges(tmp_path):

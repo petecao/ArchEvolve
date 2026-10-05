@@ -38,6 +38,24 @@ The contract's own clause controls for these checks (`chunk_off_by_one` -> `knob
 cannot exercise these checks. ``swdb.certification.clause_controls`` records those two pairs as not
 enforceable (reason ``control_cannot_exercise_check``) and enforces each clause through the
 certifier's control above. The pairing in the contract is a wording issue left to Yan-Ru.
+
+Updated: 2026-10-05 ET (code-review fixes C4, C24; rules ``v2``, certify 1.6; agent-decided under
+Yan-Ru's delegation, revisable). Rules ``v1`` (certify 1.3-1.5) probed only ``SWDB_KNOB_<NAME>``. The
+promoted DX100 patches (ticket 20, ticket 42) spell their knobs ``SWDB_FRONTIER_THRESHOLD`` and
+``SWDB_CHUNK_SIZE``, so v1 recorded ``contract_default`` (64) for them whatever the patch assigned: a
+threshold of 0 passed. Rules v2:
+
+* every declared spelling of a knob (:func:`knob_spellings`: ``SWDB_KNOB_<NAME>`` and ``SWDB_<NAME>``) is
+  probed, and the value comes from the spellings the candidate's code uses (a spelling that appears
+  only in its own ``#ifndef``/``#define``/``#undef`` is not used);
+* a knob whose spellings the candidate does not use is recorded ``unverified`` (never the contract
+  default); for the knob whose clause names ``knob_range`` that fails the check, since nothing else
+  discharges the clause;
+* used spellings with different values fail the check;
+* ``knob_out_of_range`` sets every spelling the candidate uses (the ``SWDB_KNOB_<NAME>`` spelling when
+  it uses none), so the control changes the value the candidate actually reads;
+* ``schedule_out_of_range`` also mutates ``_Pragma("omp ... for ...")`` operators; a candidate that
+  writes its worksharing loops only with ``_Pragma`` no longer aborts the certification.
 """
 from __future__ import annotations
 
@@ -56,6 +74,12 @@ KNOB_BLOCK = '// swdb campaign knob values for workload class'
 CONTROL_BLOCK = '// swdb certification control knob_out_of_range (evaluator-owned)'
 PROBE = 'swdb_knob_probe_begin {name} ( {macro} ) swdb_knob_probe_end'
 _PROBE = re.compile(r'swdb_knob_probe_begin (\w+) \((.*?)\) swdb_knob_probe_end', re.DOTALL)
+# Rules v2 (certify 1.6): one probe per declared spelling, labeled by its position (never by the
+# spelling itself, which the preprocessor would expand).
+PROBE_V2 = 'swdb_knob_probe_begin {name} swdb_knob_spelling_{index} ( {macro} ) swdb_knob_probe_end'
+_PROBE_V2 = re.compile(r'swdb_knob_probe_begin (\w+) swdb_knob_spelling_(\d+) \((.*?)\) swdb_knob_probe_end',
+                       re.DOTALL)
+RULES = ('v1', 'v2')
 SCHEDULE_KINDS_MODIFIERS = {'monotonic', 'nonmonotonic', 'simd'}
 _DIRECTIVE_WORDS = {'parallel', 'for', 'simd', 'distribute', 'teams', 'target', 'taskloop', 'loop'}
 
@@ -63,6 +87,33 @@ _DIRECTIVE_WORDS = {'parallel', 'for', 'simd', 'distribute', 'teams', 'target', 
 def knob_macro(name):
     """The campaign knob interface: `SWDB_KNOB_<NAME IN UPPER CASE>` (swdb.campaign_targets)."""
     return 'SWDB_KNOB_' + re.sub(r'[^A-Za-z0-9_]', '_', str(name)).upper()
+
+
+def knob_spellings(name):
+    """The declared spellings of a contract knob: the campaign interface ``SWDB_KNOB_<NAME>`` and the
+    short form ``SWDB_<NAME>`` that the promoted DX100 patches use (Peter v1.1 section 5)."""
+    macro = knob_macro(name)
+    return (macro, 'SWDB_' + macro[len('SWDB_KNOB_'):])
+
+
+def used_spellings(source, spellings):
+    """The spellings the source's code uses: everywhere except a directive that tests, defines or removes
+    that very spelling (``#ifdef``/``#ifndef``/``#undef`` X, the name of ``#define`` X, ``defined(X)``)."""
+    wanted = set(spellings)
+    text = re.sub(r'//[^\n]*|/\*.*?\*/', ' ', source, flags=re.DOTALL)
+    text = re.sub(r'\\\n', ' ', text)
+    used = set()
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith('swdb_knob_probe_begin') or re.match(r'#\s*(ifdef|ifndef|undef)\b', stripped):
+            continue
+        definition = re.match(r'#\s*define\s+\w+(.*)', stripped)
+        if definition:
+            stripped = definition.group(1)
+        elif stripped.startswith('#'):
+            stripped = re.sub(r'\bdefined\s*\(?\s*\w+\s*\)?', ' ', stripped)
+        used |= set(re.findall(r'[A-Za-z_]\w*', stripped)) & wanted
+    return used
 
 
 def applies(entry):
@@ -170,9 +221,14 @@ def evaluate(text):
 
 
 # --- the checks ------------------------------------------------------------------------------
-def probe_source(source, entry):
-    """The source with one probe line per declared knob appended (preprocessed, never compiled)."""
-    lines = [PROBE.format(name=knob['name'], macro=knob_macro(knob['name'])) for knob in entry.get('knobs') or []]
+def probe_source(source, entry, rules='v1'):
+    """The source with probe lines appended (preprocessed, never compiled): one per declared knob (v1),
+    or one per declared spelling of each knob (v2)."""
+    if rules == 'v1':
+        lines = [PROBE.format(name=knob['name'], macro=knob_macro(knob['name'])) for knob in entry.get('knobs') or []]
+    else:
+        lines = [PROBE_V2.format(name=knob['name'], index=index, macro=macro)
+                 for knob in entry.get('knobs') or [] for index, macro in enumerate(knob_spellings(knob['name']))]
     return source + ('' if source.endswith('\n') else '\n') + '\n'.join(lines) + '\n'
 
 
@@ -234,8 +290,13 @@ def _worksharing(pragma):
     return 'for' in directive
 
 
-def knob_check(preprocessed, entry, tile_size):
-    """(passed, problems, knobs) for knob_range on one preprocessed probe source."""
+def knob_check(preprocessed, entry, tile_size, rules='v1', source=None):
+    """(passed, problems, knobs) for knob_range on one preprocessed probe source.
+
+    Rules v2 (certify 1.6) also need the candidate's own text (``source``) to tell which spellings
+    its code uses."""
+    if rules != 'v1':
+        return _knob_check_v2(preprocessed, entry, tile_size, source or '')
     found = {m.group(1): m.group(2).strip() for m in _PROBE.finditer(preprocessed)}
     problems, knobs = [], []
     for knob in entry.get('knobs') or []:
@@ -260,6 +321,58 @@ def knob_check(preprocessed, entry, tile_size):
         knobs.append({'name': name, 'macro': macro, 'value': value, 'source': 'assignment'})
         if not _in_range(value, bounds):
             problems.append(f'{name}: {macro} = {expansion[:60]!r} is outside {bounds}')
+    return not problems, problems, knobs
+
+
+def _value(expansion, bounds):
+    """(value, error) of one knob expansion: an identifier for a choices knob, else an integer constant."""
+    if 'choices' in bounds:
+        return (expansion if re.fullmatch(r'[A-Za-z_]\w*', expansion) else None), None
+    try:
+        return evaluate(expansion), None
+    except ValueError as exc:
+        return None, exc
+
+
+def _knob_check_v2(preprocessed, entry, tile_size, source):
+    found = {(m.group(1), int(m.group(2))): m.group(3).strip() for m in _PROBE_V2.finditer(preprocessed)}
+    problems, knobs = [], []
+    for knob in entry.get('knobs') or []:
+        name, spellings = knob['name'], knob_spellings(knob['name'])
+        bounds = _bounds(knob, tile_size)
+        enforced = clause_check(entry, knob.get('legality_clause')) == KNOB_RANGE
+        expansions = [found.get((name, index)) for index in range(len(spellings))]
+        if any(expansion is None for expansion in expansions):
+            problems.append(f'{name}: knob probe missing from the preprocessed source')
+            continue
+        used = [macro for macro in spellings if macro in used_spellings(source, spellings)]
+        defined = {macro: expansion for macro, expansion in zip(spellings, expansions)
+                   if macro in used and expansion != macro}
+        row = {'name': name, 'macro': None, 'spellings': list(spellings), 'used': used, 'value': None,
+               'source': 'unverified'}
+        knobs.append(row)
+        if not used or len(defined) != len(used):
+            if enforced:
+                problems.append(f'{name}: no assignment of {" or ".join(spellings)} is used by the candidate'
+                                if not used else
+                                f'{name}: {", ".join(m for m in used if m not in defined)} is used but not defined '
+                                'at the end of the translation unit')
+            continue
+        values = {}
+        for macro, expansion in defined.items():
+            value, error = _value(expansion, bounds)
+            if error is not None:
+                problems.append(f'{name}: {macro} = {expansion[:60]!r} is {error}')
+            values[macro] = value
+        if len(set(map(repr, values.values()))) > 1:
+            problems.append(f'{name}: the used spellings disagree ({values})')
+            continue
+        macro = used[0]
+        row.update(macro=macro, value=values[macro], source='assignment')
+        if values[macro] is None:
+            continue
+        if not _in_range(values[macro], bounds):
+            problems.append(f'{name}: {macro} = {defined[macro][:60]!r} is outside {bounds}')
     return not problems, problems, knobs
 
 
@@ -301,30 +414,52 @@ def schedule_check(preprocessed, entry, tile_size, main):
 
 
 # --- negative controls -----------------------------------------------------------------------
-def knob_control(source, entry):
-    """The source with the knob_range knob's assignment set one below its minimum."""
+def knob_control(source, entry, rules='v1'):
+    """The source with the knob_range knob's assignment set one below its minimum.
+
+    Rules v1 set ``SWDB_KNOB_<NAME>``; rules v2 set every declared spelling the candidate uses (that
+    spelling when it uses none)."""
     knob = next((k for k in entry.get('knobs') or []
                  if clause_check(entry, k.get('legality_clause')) == KNOB_RANGE
                  and type((k.get('range') or {}).get('min')) is int), None)
     if knob is None:
         raise Failure('candidate source lacks a unique negative-control mutation site: knob_out_of_range')
-    macro, value = knob_macro(knob['name']), knob['range']['min'] - 1
-    line = f'#define {macro} {value}'
+    value = knob['range']['min'] - 1
+    macros = [knob_macro(knob['name'])]
+    if rules != 'v1':
+        spellings = knob_spellings(knob['name'])
+        macros = [m for m in spellings if m in used_spellings(source, spellings)] or macros
+    lines_out = [f'#define {macro} {value}' for macro in macros]
     lines = source.split('\n')
     if lines and lines[0].startswith(KNOB_BLOCK):
+        prefix = '#define SWDB_KNOB_' if rules == 'v1' else '#define SWDB_'
         end = 1
-        while end < len(lines) and lines[end].startswith('#define SWDB_KNOB_'):
+        while end < len(lines) and lines[end].startswith(prefix):
             end += 1
-        block = [l for l in lines[1:end] if not re.match(r'#define ' + macro + r'\b', l)]
-        return '\n'.join([lines[0], *block, line, *lines[end:]])
-    return CONTROL_BLOCK + '\n' + line + '\n' + source
+        block = [l for l in lines[1:end] if not any(re.match(r'#define ' + macro + r'\b', l) for macro in macros)]
+        return '\n'.join([lines[0], *block, *lines_out, *lines[end:]])
+    return CONTROL_BLOCK + '\n' + '\n'.join(lines_out) + '\n' + source
 
 
 _PRAGMA_LINE = re.compile(r'^([ \t]*#[ \t]*pragma[ \t]+omp\b[^\n]*)$', re.MULTILINE)
+_PRAGMA_OPERATOR = re.compile(r'_Pragma\s*\(\s*"((?:\\.|[^"\\])*)"\s*\)')
 
 
-def schedule_control(source):
-    """The source with schedule(guided) on every `#pragma omp ... for` line."""
+def _guided(line):
+    """One `#pragma omp ... for` line with its schedule clause replaced by, or extended with, schedule(guided)."""
+    clause = _clause(line, 'schedule')
+    if clause is None:
+        comment = line.find('//')
+        head, tail = (line, '') if comment < 0 else (line[:comment], line[comment:])
+        return head.rstrip() + ' schedule(guided)' + (' ' + tail if tail else '')
+    start = re.search(r'\bschedule\s*\(', line).start()
+    end = line.index(clause, start) + len(clause) + 1
+    return line[:start] + 'schedule(guided)' + line[end:]
+
+
+def schedule_control(source, rules='v1'):
+    """The source with schedule(guided) on every `#pragma omp ... for` line and, from rules v2 (C24),
+    in every `_Pragma("omp ... for ...")` operator."""
     count = [0]
 
     def mutate(match):
@@ -332,25 +467,28 @@ def schedule_control(source):
         if not _worksharing(line) or line.rstrip().endswith('\\'):
             return line
         count[0] += 1
-        clause = _clause(line, 'schedule')
-        if clause is None:
-            comment = line.find('//')
-            head, tail = (line, '') if comment < 0 else (line[:comment], line[comment:])
-            return head.rstrip() + ' schedule(guided)' + (' ' + tail if tail else '')
-        start = re.search(r'\bschedule\s*\(', line).start()
-        end = line.index(clause, start) + len(clause) + 1
-        return line[:start] + 'schedule(guided)' + line[end:]
+        return _guided(line)
+
+    def operator(match):
+        content = match.group(1)
+        line = '#pragma ' + content
+        if not re.match(r'\s*#\s*pragma\s+omp\b', line) or not _worksharing(line):
+            return match.group(0)
+        count[0] += 1
+        return '_Pragma("' + _guided(line)[len('#pragma '):] + '")'
 
     mutated = _PRAGMA_LINE.sub(mutate, source)
+    if rules != 'v1':
+        mutated = _PRAGMA_OPERATOR.sub(operator, mutated)
     if not count[0]:
         raise Failure('candidate source lacks a unique negative-control mutation site: schedule_out_of_range')
     return mutated
 
 
-def control(source, name, entry):
+def control(source, name, entry, rules='v1'):
     """A certifier-owned control: the mutated candidate source (before instrumentation)."""
     if name == 'knob_out_of_range':
-        return {'source': knob_control(source, entry), 'fault': None, 'site': 'knob_assignment'}
+        return {'source': knob_control(source, entry, rules), 'fault': None, 'site': 'knob_assignment'}
     if name == 'schedule_out_of_range':
-        return {'source': schedule_control(source), 'fault': None, 'site': 'schedule_clause'}
+        return {'source': schedule_control(source, rules), 'fault': None, 'site': 'schedule_clause'}
     raise Failure('unknown rewrite control')

@@ -10,10 +10,10 @@ the certifier classified a control's abort from that printed line. A candidate c
 steps (write its own output file and exit before the frame check), and an agent-authored control
 could print the rejection line instead of containing the defect. Command 1.1 closes this:
 
-1. **Verdicts from harness-owned records.** A trusted driver (``library_operations/certification/
+1. **Verdicts from evaluator-owned records.** A trusted driver (``library_operations/certification/
    v1_1/driver.cc``), compiled separately from the candidate, calls the candidate adapter's
    ``extern "C"`` entry and then, in trusted code, records the frame check and the output buffer on
-   a record pipe the harness reads (``record.cc``). The record must end with ``end`` and echo the
+   a record pipe the evaluator reads (``record.cc``). The record must end with ``end`` and echo the
    run plan's nonce, and the process must exit 0. Python compares the recorded output byte for
    byte with the plain C++ reference's output. Stdout and stderr are logged and never parsed.
 2. **Reference out of the candidate's reach.** The reference binary is built and run on every case
@@ -34,10 +34,10 @@ could print the rejection line instead of containing the defect. Command 1.1 clo
    no candidate code) is rejected only when its expected check is computed from its records and
    the positive run of the same case passed, so the check is attributable to the mutation, the
    only code that differs; a control that prints a rejection line instead is ``invalid``.
-5. **Harness scan (defense in depth).** The body, the entry's candidate template and every control
-   mutation are scanned before any build for harness symbols, descriptor, environment, loader and
+5. **Evaluator scan (defense in depth).** The body, the entry's candidate template and every control
+   mutation are scanned before any build for evaluator symbols, descriptor, environment, loader and
    process primitives, initializer and exit hooks, and printing. A finding fails the certification
-   (matrix cell ``scan/harness``).
+   (matrix cell ``scan/harness`` and check ``harness_scan``: legacy names, kept in records).
 
 Residual (in-process, as ticket 76 R1): candidate code shares the address space with the trusted
 driver and record object; pointer arithmetic or descriptor scanning can reach the record pipe or
@@ -46,6 +46,10 @@ candidate in a process holding no evaluator descriptor, with the driver exchangi
 shared memory, under a syscall filter. The contract-probe cell is unchanged from 1.0: its verdict
 file is written by trusted probe code in the candidate's process, and its predicates bind only the
 trusted adapter's operands.
+
+Updated: 2026-10-05 ET (code-review fixes F3, F4, F13): the version (1.1 or 1.2), its process split and
+its scan primitives come from the version table (``swdb.certification_procedures``); the stale module
+default ``VERSION = '1.1'`` and the per-module source rows are gone (the table's manifest replaces them).
 """
 from __future__ import annotations
 
@@ -65,7 +69,6 @@ from pathlib import Path
 from swdb import artifacts
 from swdb.cli import Failure
 
-VERSION = '1.1'
 FOLDER = 'library_operations/certification/v1_1'
 RECORD_SOURCE = FOLDER + '/record.cc'
 DRIVER_SOURCE = FOLDER + '/driver.cc'
@@ -95,7 +98,8 @@ CHECK_ORDER = ('frame_violation', 'malformed_output', 'differential_mismatch')
 
 # Scan additions for library-operation sources (ticket 77). A body moves data; it has no reason to
 # install initializers or exit hooks, print, end the process, or find its own executable.
-LO_HARNESS_PREFIXES = ('swdb_lo', 'SWDB_LO')
+LO_EVALUATOR_PREFIXES = ('swdb_lo', 'SWDB_LO')
+LO_HARNESS_PREFIXES = LO_EVALUATOR_PREFIXES   # legacy name
 LO_PRIMITIVES = {
     'constructor', 'destructor', 'init_priority', 'atexit', 'at_quick_exit', 'quick_exit', '_exit', '_Exit',
     'exit', 'abort', 'raise', 'kill', 'printf', 'fprintf', 'vprintf', 'vfprintf', 'puts', 'fputs', 'putchar',
@@ -107,28 +111,30 @@ LO_PRIMITIVES = {
 
 # --- scan --------------------------------------------------------------------------------------------
 
-def scan_text(text):
-    """Findings [(line, token, why)] in one library-operation source (every line is authored)."""
+def scan_text(text, primitives=None):
+    """Findings [(line, token, why)] in one library-operation source (every line is authored).
+
+    ``primitives`` is the procedure's scan set (the version table's; certify 1.4's set when omitted)."""
     from swdb.certification_faults import tokens
-    from swdb.certification_isolation import scan
-    findings = list(scan('', text, '1.4'))
+    from swdb.certification_isolation import PRIMITIVES_1_4, scan
+    findings = list(scan('', text, primitives=PRIMITIVES_1_4 if primitives is None else primitives))
     starts = [0] + [m.end() for m in re.finditer('\n', text)]
     for token, start, _ in tokens(text):
         if not re.fullmatch(r'[A-Za-z_]\w*', token):
             continue
         line = bisect.bisect_right(starts, start)
-        if token.startswith(LO_HARNESS_PREFIXES):
-            findings.append((line, token, 'library-operation harness symbol'))
+        if token.startswith(LO_EVALUATOR_PREFIXES):
+            findings.append((line, token, 'library-operation evaluator symbol'))
         elif token in LO_PRIMITIVES:
             findings.append((line, token, 'initializer, exit, printing or process primitive'))
     return sorted(set(findings))
 
 
-def scan_sources(sources):
+def scan_sources(sources, primitives=None):
     """{label: [findings]} for every source with a finding (body, candidate template, controls)."""
     found = {}
     for label, path in sources.items():
-        hits = scan_text(Path(path).read_text(errors='ignore'))
+        hits = scan_text(Path(path).read_text(errors='ignore'), primitives)
         if hits:
             found[label] = [{'line': line, 'token': token, 'why': why} for line, token, why in hits[:10]]
     return found
@@ -145,7 +151,7 @@ def _execute(command, log):
 class Toolchain:
     """One build of the profile (sanitized or openmp): compiler, flags, run environment."""
 
-    def __init__(self, name, target, folder, library_root, version=VERSION):
+    def __init__(self, name, target, folder, library_root, process_split):
         from swdb.extensa.synthesis.targets.cpu_like import _SANITIZE_FLAGS
         self.name, self.target, self.library_root = name, target, Path(library_root)
         self.folder = Path(folder)
@@ -154,7 +160,7 @@ class Toolchain:
         self.cc = target.spec.cc
         self.flags = [*target.spec.flags, *(_SANITIZE_FLAGS if self.sanitize else [])]
         self._trusted = {}
-        self.version = version
+        self.process_split = process_split
         self.env = {k: v for k, v in os.environ.items() if k not in (RECORD_ENV, PLAN_ENV)}
         threads = getattr(target, 'threads', None)
         if threads is not None:
@@ -195,10 +201,10 @@ class Toolchain:
 
     def trusted(self, family, symbol, label):
         """record.o and the family driver for one entry symbol; a failure is infrastructure.
-        Command 1.2: the runner object in place of the driver, and no record object."""
+        Command 1.2 (the process split): the runner object in place of the driver, and no record object."""
         if (family, symbol) in self._trusted:
             return self._trusted[(family, symbol)]
-        if self.version == '1.2':
+        if self.process_split:
             driver = self.compile(self.library_root / RUNNER_SOURCE_1_2, self.folder / f'runner-{label}.o',
                                   [f'-DSWDB_LO_FAMILY_{FAMILY_MACRO[family]}', f'-DSWDB_LO_RUN_SYMBOL={symbol}',
                                    '-I' + str(ARENA_FOLDER)])
@@ -233,7 +239,7 @@ def build_binary(toolchain, family, symbol, unit, output, label):
     unit_object = toolchain.compile(unit, Path(output).with_suffix('.o'))
     if not unit_object['ok']:
         return {'ok': False, 'check': 'build_failed', 'log': unit_object['log']}
-    if toolchain.version == '1.2':
+    if toolchain.process_split:
         # Ticket 78: the candidate binary is the unit and the runner; the evaluator is separate.
         evaluator = toolchain.evaluator(family, label)
         linked = toolchain.link([driver['object'], unit_object['object']], output)
@@ -266,7 +272,7 @@ def launch(built, argv):
 
 
 def run_binary(binary, argv, env, fault, seed, log, timeout=RUN_TIMEOUT):
-    """One run: a record pipe the harness drains, a plan pipe, a fresh session; output only logged."""
+    """One run: a record pipe the evaluator drains, a plan pipe, a fresh session; output only logged."""
     nonce = secrets.token_hex(16)
     record_read, record_write = os.pipe()
     plan_read, plan_write = os.pipe()
@@ -418,32 +424,34 @@ def judge(run, expected_bytes, reference):
     return out
 
 
-def fault_attributed(judgement):
+def fault_attributed(verdict):
     """Ticket 77: the driver fault's own check fired exactly where the fault acted."""
-    fault = judgement.get('fault')
+    fault = verdict.get('fault')
     if not fault:
         return False
     if fault[0] == 'input_write':
-        return (judgement['check'] == 'frame_violation' and judgement['violations'] == [(fault[1], fault[2], 1)]
-                and judgement['mismatch_elements'] == 0)
-    return (judgement['check'] == 'differential_mismatch' and not judgement['violations']
-            and judgement['mismatch_elements'] == 1 and judgement['first_mismatch'] == fault[1])
+        return (verdict['check'] == 'frame_violation' and verdict['violations'] == [(fault[1], fault[2], 1)]
+                and verdict['mismatch_elements'] == 0)
+    return (verdict['check'] == 'differential_mismatch' and not verdict['violations']
+            and verdict['mismatch_elements'] == 1 and verdict['first_mismatch'] == fault[1])
 
 
 # --- certification -----------------------------------------------------------------------------------
 
-def certify(resolved, profile, folder, seed, builds, library_root, version=VERSION):
+def certify(resolved, profile, folder, seed, builds, library_root, *, procedure):
     """Matrix cells, negative controls and the isolation summary of one 1.1 (or, ticket 78, 1.2)
-    certification. 1.2 differs only in where the call runs (``launch``, ``Toolchain.evaluator``)."""
+    certification. ``procedure`` is the version table's entry; 1.2 differs only in where the call runs
+    (``procedure.process_split``: ``launch``, ``Toolchain.evaluator``)."""
     from swdb.extensa.synthesis.certify import (family_and_shape, resolve_sizes, scan_candidate_header,
                                                 scan_candidate_includes)
     folder = Path(folder)
+    version, split = procedure.version, procedure.process_split
     family = resolved['family']
     _fam, sc = family_and_shape(family)
     sizes = resolve_sizes(sc, {**resolved['sizes'], **dict(profile.sizes)})
     sources = {'body': resolved['body'], 'candidate_template': resolved['candidate_template'],
                **{f'control:{cid}': c['path'] for cid, c in resolved['controls'].items()}}
-    findings = scan_sources(sources)
+    findings = scan_sources(sources, procedure.scan_primitives)
     isolation = {'version': version, 'scan': {'sources': sorted(sources), 'findings': findings}}
     if findings:
         cell = {'cell': 'scan/harness', 'status': 'failed', 'check': 'harness_scan',
@@ -467,7 +475,7 @@ def certify(resolved, profile, folder, seed, builds, library_root, version=VERSI
 
     # 1. The reference, first and alone: outputs kept here, binary and folders deleted.
     ref_name = 'sanitized' if 'sanitized' in builds else next(iter(builds))
-    ref_tool = Toolchain(ref_name, builds[ref_name], folder / 'reference', library_root, version)
+    ref_tool = Toolchain(ref_name, builds[ref_name], folder / 'reference', library_root, split)
     ref_unit = render_unit(folder / 'reference' / 'unit', resolved['reference_template'], resolved['reference'],
                            '{{REFERENCE_HEADER}}')
     ref_binary = build_binary(ref_tool, family, ref_symbol, ref_unit, folder / 'reference' / 'reference_bin', 'ref')
@@ -494,7 +502,7 @@ def certify(resolved, profile, folder, seed, builds, library_root, version=VERSI
     # 2. Every binary of every build, before any candidate code runs.
     plans, binaries = {}, {}
     for name, target in builds.items():
-        tool = Toolchain(name, target, folder / name, library_root, version)
+        tool = Toolchain(name, target, folder / name, library_root, split)
         bins = {}
         if 'body' in header_problems:
             bins['candidate'] = {'ok': False, 'check': header_problems['body'][0], 'log': header_problems['body'][1]}
@@ -542,7 +550,7 @@ def certify(resolved, profile, folder, seed, builds, library_root, version=VERSI
             runs.append({**row, **verdict, 'binary_sha256': built['sha256'], 'nonce': run['nonce'],
                          'record_sha256': run['record_sha256'], 'folder': str(case_dir)})
 
-    # 4. Judgement.
+    # 4. Verdicts.
     def positive_passed(build, case):
         return any(r['kind'] == 'positive' and r['build'] == build and r['case'] == case and r['check'] == 'passed'
                    for r in runs)
@@ -622,22 +630,10 @@ def certify(resolved, profile, folder, seed, builds, library_root, version=VERSI
                      'mutation_controls': 'separate_binary_without_candidate'},
         'order': 'SystemRandom per build over positive cases, driver faults and mutation controls',
         'runs': len(runs), 'runs_file': str(runs_file), 'runs_sha256': artifacts.file_hash(runs_file)})
-    if version == '1.2':
+    if split:
         isolation['process_split'] = {
             'evaluator': 'evaluator.cc + 1.1 record.cc: case inputs, private input copies, driver fault, frame '
                          'check and records; no candidate code',
             'candidate': 'unit + runner.cc: operands copied from the shared arena into its own heap, one call, '
                          'output and inputs copied back; no record pipe, no plan'}
     return matrix, controls, isolation
-
-
-def source_rows(library_root, version=VERSION):
-    """The trusted C++ sources of command 1.1 (or 1.2), for the command's sources digest."""
-    root = Path(library_root)
-    files = (RECORD_SOURCE, DRIVER_SOURCE) if version == '1.1' else (
-        RECORD_SOURCE, EVALUATOR_SOURCE_1_2, RUNNER_SOURCE_1_2, CALL_HEADER_1_2)
-    rows = [{'path': rel, 'sha256': artifacts.file_hash(root / rel)} for rel in files]
-    if version != '1.1':
-        rows.append({'path': 'library/dx100/certification/v1_5/arena.hpp',
-                     'sha256': artifacts.file_hash(ARENA_FOLDER / 'arena.hpp')})
-    return rows

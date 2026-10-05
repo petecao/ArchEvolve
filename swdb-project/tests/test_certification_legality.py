@@ -154,3 +154,128 @@ def test_out_of_range_schedule_is_refused_by_schedule_range(tmp_path, monkeypatc
     # The runs themselves pass: only the named structural check refuses the candidate.
     # Ticket 70 (certify 1.3): the result check is recorded per cell, never read from printed output.
     assert all(x['result_check']['passed'] and x['observed_checks'] == [] for x in record['matrix'])
+
+
+# --- rules v2 (certify 1.6; 2026-10-05 ET review fixes C4 and C24) ------------------------------------
+
+T20_KNOBS = ('#ifndef SWDB_FRONTIER_THRESHOLD\n#define SWDB_FRONTIER_THRESHOLD 64\n#endif\n'
+             '#ifndef SWDB_CHUNK_SIZE\n#define SWDB_CHUNK_SIZE TILE_SIZE\n#endif\n'
+             'bool a = queue.size()>=SWDB_FRONTIER_THRESHOLD; size_t b = SWDB_CHUNK_SIZE;\n')
+
+
+def _probe_v2(source, expansions, tile_size=1024):
+    """knob_check v2 on a probe text whose spellings expand as given (unexpanded when absent)."""
+    entry = _entry()
+    text = ''.join(f'swdb_knob_probe_begin {k["name"]} swdb_knob_spelling_{i} ( {expansions.get(m, m)} ) '
+                   'swdb_knob_probe_end\n'
+                   for k in entry['knobs'] for i, m in enumerate(legality.knob_spellings(k['name'])))
+    return legality.knob_check(text, entry, tile_size, rules='v2', source=source)
+
+
+def _rows(knobs):
+    return {k['name']: (k['value'], k['source'], k['macro']) for k in knobs}
+
+
+def test_v2_reads_the_spelling_the_promoted_patches_use():
+    ok, problems, knobs = _probe_v2(T20_KNOBS, {'SWDB_FRONTIER_THRESHOLD': '64', 'SWDB_CHUNK_SIZE': '1024'})
+    assert ok, problems
+    assert _rows(knobs) == {'frontier_threshold': (64, 'assignment', 'SWDB_FRONTIER_THRESHOLD'),
+                            'chunk_size': (1024, 'assignment', 'SWDB_CHUNK_SIZE'),
+                            'schedule': (None, 'unverified', None),
+                            'schedule_granularity': (None, 'unverified', None)}
+
+
+def test_a_threshold_of_zero_is_rejected_by_knob_range():
+    """C4: ticket 20's spelling with a threshold of 0. Rules v1 (certify 1.3-1.5) probed only
+    SWDB_KNOB_FRONTIER_THRESHOLD and recorded the contract default 64; v2 reads the 0."""
+    source = T20_KNOBS.replace('SWDB_FRONTIER_THRESHOLD 64', 'SWDB_FRONTIER_THRESHOLD 0')
+    ok, problems, knobs = _probe_v2(source, {'SWDB_FRONTIER_THRESHOLD': '0', 'SWDB_CHUNK_SIZE': '1024'})
+    assert not ok and len(problems) == 1 and 'SWDB_FRONTIER_THRESHOLD' in problems[0]
+    assert _rows(knobs)['frontier_threshold'] == (0, 'assignment', 'SWDB_FRONTIER_THRESHOLD')
+    v1_ok, _, v1_knobs = _probe({})   # the v1 probe of the same candidate never sees the short spelling
+    assert v1_ok and _rows(v1_knobs)['frontier_threshold'] == (64, 'contract_default', 'SWDB_KNOB_FRONTIER_THRESHOLD')
+
+
+def test_a_knob_the_candidate_does_not_use_is_unverified_never_the_default():
+    ok, problems, knobs = _probe_v2('int x = 0;\n', {})
+    assert {name: row[1] for name, row in _rows(knobs).items()} == dict.fromkeys(
+        ('frontier_threshold', 'chunk_size', 'schedule', 'schedule_granularity'), 'unverified')
+    # Only the knob whose clause names knob_range must be verified.
+    assert not ok and len(problems) == 1 and problems[0].startswith('frontier_threshold: no assignment')
+
+
+def test_used_spellings_must_agree_and_unused_defaults_do_not_count():
+    both = T20_KNOBS + 'bool c = queue.size()>=SWDB_KNOB_FRONTIER_THRESHOLD;\n'
+    ok, problems, _ = _probe_v2(both, {'SWDB_FRONTIER_THRESHOLD': '64', 'SWDB_KNOB_FRONTIER_THRESHOLD': '1',
+                                       'SWDB_CHUNK_SIZE': '1024'})
+    assert not ok and 'disagree' in problems[0]
+    # A short-form default the code never reads (the campaign knob interface is read) does not count.
+    interface = ('#define SWDB_KNOB_FRONTIER_THRESHOLD 1\n#ifndef SWDB_FRONTIER_THRESHOLD\n'
+                 '#define SWDB_FRONTIER_THRESHOLD 64\n#endif\nbool c = n >= SWDB_KNOB_FRONTIER_THRESHOLD;\n')
+    ok, problems, knobs = _probe_v2(interface, {'SWDB_FRONTIER_THRESHOLD': '64', 'SWDB_KNOB_FRONTIER_THRESHOLD': '1'})
+    assert ok, problems
+    assert _rows(knobs)['frontier_threshold'] == (1, 'assignment', 'SWDB_KNOB_FRONTIER_THRESHOLD')
+
+
+def test_used_spellings_skip_guards_definitions_and_comments():
+    spellings = legality.knob_spellings('frontier_threshold')
+    text = ('#ifndef SWDB_FRONTIER_THRESHOLD\n#define SWDB_FRONTIER_THRESHOLD 64\n#endif\n'
+            '#if defined(SWDB_KNOB_FRONTIER_THRESHOLD)\n#endif\n// SWDB_KNOB_FRONTIER_THRESHOLD\n')
+    assert legality.used_spellings(text, spellings) == set()
+    assert legality.used_spellings(text + '#define T SWDB_FRONTIER_THRESHOLD\n', spellings) == {'SWDB_FRONTIER_THRESHOLD'}
+    assert legality.used_spellings(text + 'static_assert(SWDB_KNOB_FRONTIER_THRESHOLD > 0, "");\n', spellings) == \
+        {'SWDB_KNOB_FRONTIER_THRESHOLD'}
+
+
+def test_v2_knob_control_sets_the_spelling_the_candidate_reads():
+    entry = _entry()
+    assert legality.knob_control(T20_KNOBS, entry, 'v2') == (
+        legality.CONTROL_BLOCK + '\n#define SWDB_FRONTIER_THRESHOLD 0\n' + T20_KNOBS)
+    campaign = ('// swdb campaign knob values for workload class kronecker\n'
+                '#define SWDB_KNOB_FRONTIER_THRESHOLD 1\n#include <x>\nint t = SWDB_KNOB_FRONTIER_THRESHOLD;\n')
+    assert legality.knob_control(campaign, entry, 'v2') == campaign.replace('THRESHOLD 1', 'THRESHOLD 0')
+    # v1 (certify 1.3-1.5) is unchanged: it sets SWDB_KNOB_<NAME>, which ticket 20's code never reads.
+    assert legality.knob_control(T20_KNOBS, entry) == (
+        legality.CONTROL_BLOCK + '\n#define SWDB_KNOB_FRONTIER_THRESHOLD 0\n' + T20_KNOBS)
+
+
+def test_schedule_control_v2_also_mutates_pragma_operators():
+    """C24: a candidate that writes its worksharing loops only with _Pragma no longer aborts."""
+    source = ('_Pragma("omp parallel")\n{\n  _Pragma ( "omp for schedule(dynamic, 1) nowait" )\n'
+              '  for (int i = 0; i < n; ++i) {}\n}\n#define LOOP _Pragma("omp parallel for")\n_Pragma("omp barrier")\n')
+    with pytest.raises(Failure, match='mutation site: schedule_out_of_range'):
+        legality.schedule_control(source)
+    assert legality.schedule_control(source, 'v2') == source.replace(
+        '_Pragma ( "omp for schedule(dynamic, 1) nowait" )', '_Pragma("omp for schedule(guided) nowait")').replace(
+        '_Pragma("omp parallel for")', '_Pragma("omp parallel for schedule(guided)")')
+    mixed = '#pragma omp for schedule(static)\n' + source
+    assert legality.schedule_control(mixed, 'v2').count('schedule(guided)') == 3
+
+
+def zero_threshold(source):
+    """Ticket 20's rewrite with its frontier threshold default set to 0 (outside the contract's 1..2^31-1)."""
+    return _replace(source, '#define SWDB_FRONTIER_THRESHOLD 64', '#define SWDB_FRONTIER_THRESHOLD 0')
+
+
+def pragma_operators(source):
+    """Ticket 20's rewrite with both of its worksharing loops (in TDStep) written as _Pragma operators."""
+    start = source.index('void TDStep(')
+    end = source.index('\nint64_t TDStep2(', start)
+    region = _replace(source[start:end], '#pragma omp for schedule(dynamic,1)', '_Pragma("omp for schedule(dynamic,1)")')
+    region = _replace(region, '#pragma omp for nowait', '_Pragma("omp for nowait")')
+    return source[:start] + region + source[end:]
+
+
+def test_a_zero_threshold_is_refused_by_knob_range_under_1_6(tmp_path, monkeypatch):
+    record = _certify(tmp_path, monkeypatch, zero_threshold)
+    assert record['command']['version'] == '1.6' and record['verdict'] == 'failed'
+    assert {x['reason'] for x in record['matrix']} == {'knob_range'}
+    knob = {k['name']: k for k in record['matrix'][0]['legality_checks'][0]['knobs']}['frontier_threshold']
+    assert (knob['value'], knob['source'], knob['macro']) == (0, 'assignment', 'SWDB_FRONTIER_THRESHOLD')
+
+
+def test_a_pragma_operator_candidate_certifies_under_1_6(tmp_path, monkeypatch):
+    record = _certify(tmp_path, monkeypatch, pragma_operators)
+    assert record['verdict'] == 'certified', _controls(record)
+    schedule = [x for x in record['negative_controls'] if x['id'] == 'schedule_out_of_range']
+    assert len(schedule) == 2 and all(x['status'] == 'rejected' and x['reason'] == 'schedule_range' for x in schedule)

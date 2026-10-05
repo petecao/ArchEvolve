@@ -110,6 +110,10 @@ class KernelPlugin:
     certification_controls = {}    # negative-control ID -> named checks that reject it
     # Certify 1.3 (ticket 70, 2026-10-04 ET): the evaluator-owned main appended to every build
     # (library-relative path), the kind of vector it records, and the out-of-process result check.
+    # 2026-10-05 ET (review fix F10): `certification_drivers` maps each candidate certify version to its
+    # driver; the version table (swdb.certification_procedures) reads it. `certification_driver` (1.3)
+    # and the `_v14`/`_v15` attributes of the BFS and BC plug-ins are its earlier names.
+    certification_drivers = {}
     certification_driver = None
     certification_result_kind = None   # "i32" or "f32"
 
