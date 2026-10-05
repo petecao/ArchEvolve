@@ -1,0 +1,109 @@
+kind: protocol
+schema_version: '0.4'
+id: bfs-native-scale22-ci-team-20261005-reeval-uniform-random-bb0f642780c4.2e33442a1cf31c02
+status: draft
+created: '2026-10-05'
+updated: '2026-10-05'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+requested_id: bfs-native-scale22-ci-team-20261005-reeval-uniform-random-bb0f642780c4
+version: 1
+supersedes: null
+invalidated_comparisons: []
+settings:
+  mode: native
+  kernel: gapbs-bfs
+  targets:
+    baseline:
+      id: mbit10
+      machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+      configuration:
+        lane: mbit10-evaluation-node1
+    candidate:
+      id: mbit10
+      machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+      configuration:
+        lane: mbit10-evaluation-node1
+  builds:
+    baseline:
+      compiler: /usr/bin/g++
+      compiler_version:
+      - g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+      - Copyright (C) 2023 Free Software Foundation, Inc.
+      flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+      adapter: dx100_scalar_func
+    candidate:
+      compiler: /usr/bin/g++
+      compiler_version:
+      - g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+      - Copyright (C) 2023 Free Software Foundation, Inc.
+      flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+      adapter: dx100_scalar_func
+  instrumentation:
+    baseline:
+      template_sha256: 78b665777d2896de3990eebc7e83fd2a9da8c79bcb3106d72f5e7d6fabed75bb
+      treatment: included
+    candidate:
+      template_sha256: 78b665777d2896de3990eebc7e83fd2a9da8c79bcb3106d72f5e7d6fabed75bb
+      treatment: included
+  correctness:
+    coverage: every_timed_trial
+    verifier: swdb.bfs.structural.compiled.v2
+    required_cases: []
+  sampling:
+    repetitions: 20
+    warmups: 0
+    aggregation: geomean_source_median_ratio
+    collection:
+      method: native_paired.v1
+      order_seed: 20260926
+    analysis: paired_repetition_circular_block_bootstrap.v1
+    block_length: 4
+  profitability:
+    minimum_speedup: 1.05
+    confidence: 0.95
+    bootstrap_resamples: 2000
+    bootstrap_seed: 20260925
+    gate:
+      statistic: relative_ci_width.v1
+      maximum: 0.05
+  region_pairs: []
+  workloads:
+  - bfs-20261004-uniform22.2f83a134a6bef789
+  threads: 1
+  roi: bfs.complete_call.v1
+  native_runtime:
+    version: 1
+    environment:
+      OMP_NUM_THREADS: '1'
+      OMP_DYNAMIC: 'FALSE'
+      OMP_PROC_BIND: close
+      OMP_PLACES: cores
+      OMP_THREAD_LIMIT: null
+      OMP_WAIT_POLICY: null
+      GOMP_SPINCOUNT: null
+      GOMP_CPU_AFFINITY: null
+  differences:
+    software:
+    - 'Team protocol (ArchEvolve mode, ticket 75, 2026-10-05 ET): native BFS at scale 22 under the CI-width
+      rule, with exactly the settings of Extensa campaign a8''s frozen fork_scalar_tdstep protocol (identity
+      bd9a7dd22ba1b90d), untagged. Candidate side: an explicit source rewrite evaluated after this freeze.'
+    - 'Baseline role fork_scalar_tdstep: dx100-bfs-scalar unchanged source.'
+    - Team re-evaluation of Extensa candidate artifact extensa-native-bfs-20261005-a8.it1.kronecker.a0
+      (campaign extensa-native-bfs-20261005-a8), workload class uniform_random only.
+    accelerator: []
+    configuration: []
+  evaluator: swdb.native.evaluator.scalable.v3
+workload_identities:
+  bfs-20261004-uniform22.2f83a134a6bef789: 2f83a134a6bef7897844e467e91351929e8d323b951d32c20789406adae8bd30
+frozen_at: '2026-10-05T16:30:08.618637+00:00'
+state: frozen
+identity_sha256: 2e33442a1cf31c0231e14ed9d2a664d4ab6b4ab2a20c518a54f6be5dec3466a9

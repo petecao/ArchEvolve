@@ -1,7 +1,7 @@
 # 56 — Native-CPU Extensa campaign target for BFS
 
 Created: 2026-10-03
-Updated: 2026-10-05 10:45 ET (a8 erratum, ticket 74); 2026-10-05 10:00 ET (a8 result: uniform gain, uncertified; Kronecker inconclusive); 2026-10-05 03:15 ET (a7 erratum; a8 pre-registered); 2026-10-05 02:50 ET (a7 addendum: speed rule ci_width.v2, uniform no_gain at plateau, Kronecker baseline_unstable); 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
+Updated: 2026-10-05 15:00 ET (a8 addendum: best certified and re-evaluated, ticket 75); 2026-10-05 10:45 ET (a8 erratum, ticket 74); 2026-10-05 10:00 ET (a8 result: uniform gain, uncertified; Kronecker inconclusive); 2026-10-05 03:15 ET (a7 erratum; a8 pre-registered); 2026-10-05 02:50 ET (a7 addendum: speed rule ci_width.v2, uniform no_gain at plateau, Kronecker baseline_unstable); 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 51, 53, 54, 55
@@ -406,3 +406,13 @@ tokio threads). Under D7 neither was a real attempt, and both should have been u
 with the call retried. Iteration 5 instead ended without a rewrite and completed the 4-iteration plateau, so the
 stop is partly **infrastructure-driven**. Uniform's measured `gain` (iterations 1 and 4) and Kronecker's
 `inconclusive` stand as measured. The a8 records and summary are left unedited.
+
+**Addendum 2026-10-05 15:00 ET (ticket [75](75-certify-a8-frontier-staging.md)).** a8's uniform best `it1.kronecker.a0` is now
+**certified**: contract `contract.bfs_tdstep_frontier_staging` (frontier staging plus post-claim store
+elimination) certifies the exact a8 tree (`7acca955…`) under certify 1.3 and 1.4 (22/22 cells, 8/8 controls, every
+1.4 rejection attributed) and is shared. After candidate promotion (ticket 48), its team re-evaluation on uniform22
+under team protocol `bfs-native-scale22-ci-team-20261005` (a8's fork settings, CI-width rule) measured **1.454
+[1.442, 1.464]** against the fork scalar TDStep (width 0.015, `gain`; A/A 0.996 [0.989, 1.001]). This replicates
+a8's 1.457 and 1.450. The upstream DO-BFS comparison was not re-timed (a8: 0.141). Label "single graph per class",
+measured.
+
