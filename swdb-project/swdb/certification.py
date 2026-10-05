@@ -28,7 +28,9 @@ from swdb import artifacts, paths, workflow
 from swdb.cli import Failure, UsageError
 from swdb.store import Store
 
-VERSION = '1.0'
+# 1.1 (2026-10-04 ET, ticket 67): forged_frontier control version 2 (control records carry
+# `fault.version`). Records with command version 1.0 used forged_frontier version 1.
+VERSION = '1.1'
 ROOT = paths.HOME
 BFS = 'benchmarks/gapbs/src/bfs.cc'
 HEADER = 'benchmarks/gapbs/src/swdb_dxc_lowering.hpp'
@@ -551,7 +553,8 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
                 header_bytes = header_path.read_bytes()
                 header_path.write_bytes(fault_header(header_bytes, library))
                 defines.append('-D' + mutant['fault'])
-                fault.update(macro=mutant['fault'], fault_block_sha256=artifacts.file_hash(library / FAULT_FILE))
+                fault.update(macro=mutant['fault'], fault_block_sha256=artifacts.file_hash(library / FAULT_FILE),
+                             version=mutant.get('version', 1))
             try:
                 control_build = compile_cpp(source_path, output_mutant, library, tile_size=size, threads=threads, tree=tree,
                                             defines=defines)

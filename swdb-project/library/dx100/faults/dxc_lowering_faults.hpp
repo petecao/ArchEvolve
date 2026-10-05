@@ -1,4 +1,5 @@
 // DX100 certification fault injection. Created: 2026-10-04 ET (ticket 62).
+// Updated: 2026-10-04 ET (ticket 67: forged_frontier version 2).
 //
 // `swdb certify` appends this block to a PRIVATE build copy of the canonical lowering
 // header for one rewrite negative control, and selects exactly one fault with
@@ -17,7 +18,7 @@
 #if (defined(SWDB_DXC_FAULT_SHARED_CONTEXT) + defined(SWDB_DXC_FAULT_SKIPPED_CAS_RECHECK) + \
      defined(SWDB_DXC_FAULT_DROPPED_CONTINUATION) + defined(SWDB_DXC_FAULT_CHUNK_OFF_BY_ONE) + \
      defined(SWDB_DXC_FAULT_DROPPED_WAIT) + defined(SWDB_DXC_FAULT_READ_BEFORE_WAIT) + \
-     defined(SWDB_DXC_FAULT_INDEX_WRAP) + defined(SWDB_DXC_FAULT_FORGED_FRONTIER)) != 1
+     defined(SWDB_DXC_FAULT_INDEX_WRAP) + defined(SWDB_DXC_FAULT_FORGED_FRONTIER_V2)) != 1
 #error "select exactly one DX100 certification fault"
 #endif
 #include <climits>
@@ -26,13 +27,14 @@
 namespace swdb_fault {
 inline std::atomic<bool>&context_made(){static std::atomic<bool>v(false);return v;}
 inline dxc_context&first_context(){static dxc_context c;return c;}
-inline std::atomic<bool>&forged(){static std::atomic<bool>v(false);return v;}
+// Set once per process by forged_frontier v2; session_begin never resets it.
+inline std::atomic<bool>&forged_once(){static std::atomic<bool>v(false);return v;}
 inline std::atomic<unsigned>&skipped_rechecks(){static std::atomic<unsigned>v(0);return v;}
 inline unsigned&range_calls(int thread){static unsigned v[256];return v[thread&255];}
 inline bool&gathered(int tile){static bool v[NUM_TILES];return v[tile>=0&&tile<NUM_TILES?tile:0];}
 inline void session_begin(){
  __dxc_session_begin();
- context_made()=false;forged()=false;skipped_rechecks()=0;
+ context_made()=false;skipped_rechecks()=0;
  for(int t=0;t<256;++t)range_calls(t)=0;
  for(int t=0;t<NUM_TILES;++t)gathered(t)=false;
 }
@@ -98,16 +100,22 @@ template<class T>inline bool swdb_fault_compare_and_swap(T&x,const T&old_val,con
  return compare_and_swap(x,old_val,new_val);
 #endif
 }
-// forged_frontier: after an accelerated chunk ran, one claimed vertex is pushed twice.
-// The evaluator also forges the protected frontier print to the oracle's counts, so
-// only its trusted queue inspection can reject this control.
+// forged_frontier, version 2 (ticket 67): the first CPU queue push of the run is pushed
+// twice, whatever the tile size, frontier threshold or chunk timing, so every candidate
+// that pushes through the contract's queue seam (clause L4) fires it. The evaluator also
+// forges the protected frontier print to the oracle's counts, so only its trusted queue
+// inspection (`duplicate_frontier`) can reject this control.
+// Version 1 (macro SWDB_DXC_FAULT_FORGED_FRONTIER, certificates written before ticket 67)
+// pushed twice only after an accelerated chunk had finished. When a level's only chunk
+// finished after all of that level's pushes, it never fired, and a correct candidate was
+// rejected (campaign a7: tile 16384, frontier threshold 64).
 template<typename T>class swdb_fault_QueueBuffer:public QueueBuffer<T>{
 public:
  explicit swdb_fault_QueueBuffer(SlidingQueue<T>&master,size_t given_size=16384):QueueBuffer<T>(master,given_size){}
  void push_back(T to_add){
   QueueBuffer<T>::push_back(to_add);
-#if defined(SWDB_DXC_FAULT_FORGED_FRONTIER)
-  if(swdb_dxc::chunks().load()>0&&!swdb_fault::forged().exchange(true))QueueBuffer<T>::push_back(to_add);
+#if defined(SWDB_DXC_FAULT_FORGED_FRONTIER_V2)
+  if(!swdb_fault::forged_once().exchange(true))QueueBuffer<T>::push_back(to_add);
 #endif
  }
 };

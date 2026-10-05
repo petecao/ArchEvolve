@@ -1,7 +1,7 @@
 # 57 — gem5 Extensa campaign target
 
 Created: 2026-10-03
-Updated: 2026-10-04 20:30 ET (a7 audit against the final code review fixes; gains stand); 2026-10-04 ET (a7 rerun with ticket 65); 2026-10-04 ET (a6 rerun with the ticket 62 certifier); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D2, D4, D7)
+Updated: 2026-10-04 21:05 ET (addendum: a7 re-judged with forged_frontier v2, ticket 67); 2026-10-04 20:30 ET (a7 audit against the final code review fixes; gains stand); 2026-10-04 ET (a7 rerun with ticket 65); 2026-10-04 ET (a6 rerun with the ticket 62 certifier); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D2, D4, D7)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 53, 54, 55 (29 resolved)
@@ -172,3 +172,35 @@ not re-run.
   - Effect: the control can reject a correct candidate. This is a false rejection, not a false
     pass, so the certified results above are not affected.
   - Changing when the fault fires changes a control, so that decision is Yan-Ru's.
+
+**Addendum 2026-10-04 21:05 ET: a7 re-judged with forged_frontier v2 (ticket 67).**
+Agent-decided under Yan-Ru's 2026-10-04 delegation; revisable.
+
+[Ticket 67](67-forged-frontier-control-v2.md) replaced the fault. Version 2 duplicates the first CPU
+queue push of the run, whatever the chunk timing. The six affected trees were rebuilt on the Mac and
+certified again, with no simulation. Each tree is snapshot + recorded diff + knob lines + canonical
+header, and each tree_sha256 equals its candidate record.
+
+| Candidate | Class | Knobs | a7 verdict | Mac certification (v2) | Selection |
+|---|---|---|---|---|---|
+| `it2.kronecker.a1` | kronecker | threshold 64 | failed | `certified` (`certification.db3969991850411c8d1926dbef472759`) | certified, not timed |
+| `it3.kronecker.a1` | kronecker | threshold 64 | failed | `certified` (`certification.579ccff26373479cadc177869e52954a`) | certified, not timed |
+| `it5.kronecker.a1` | kronecker | threshold 64 | failed | `certified` (`certification.06e656883af6451e872ca578389ea5a9`) | certified, not timed |
+| `it5.kronecker.a2` | kronecker | threshold 64 | failed | `certified` (`certification.90d9ae5ff2b44b34b38d6bc9942009bc`) | certified, not timed |
+| `it6.kronecker.a0` | kronecker | threshold 64 | failed | `certified` (`certification.be274dd7466f4218bff2e5c0142b24f4`) | certified, not timed |
+| `it8.uniform_random.a0` | uniform_random | threshold 64 | failed | `certified` (`certification.4e7ed1b983f54900a89a3ae46b78577e`) | certified, not timed |
+
+- Each certification has 10/10 cells and 16/16 controls rejected by their own checks.
+  `forged_frontier` is rejected at both tile sizes by `duplicate_frontier`, and every enforceable
+  clause is matched. The records are in a scratch records copy and are not committed.
+- **Selection is unchanged.** The speed rule ranks certified candidates by evaluator point ratio,
+  and none of the six has a gem5 evaluation, so none can replace a timed best. Kronecker stays
+  `it4.kronecker.a2` at 1.411, and uniform_random stays `it8.uniform_random.a1` at 1.553. The
+  campaign summary is unchanged.
+- **What a7 lost.** Six certifiable threshold-64 candidates were never timed.
+  - `it5.kronecker.a1` and `it8.uniform_random.a0` carry the best patch `29ccf0255a69…` with
+    threshold 64.
+  - The campaign feedback named `forged_frontier` as surviving, which may have steered later
+    rewrites toward threshold 1.
+  - Whether threshold 64 is faster is unknown. Finding out needs a gem5 run.
+- Evidence: [`evaluation/a7-forged-frontier-v2-rejudge-2026-10-04.json`](../evaluation/a7-forged-frontier-v2-rejudge-2026-10-04.json).
