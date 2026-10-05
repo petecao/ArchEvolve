@@ -570,6 +570,8 @@ def certify_native_v14(tree, library, folder, profile, plugin, *, rng=None):
             reason = verdict['reason']
             ok, attribution = attributed_v14(job['fault'], parsed, verdict, verdict['_book'], rows(job['graph']),
                                              job['vertex'])
+            import json
+            attribution = json.loads(json.dumps(attribution))   # records are JSON (tuples become lists)
             if status == 'rejected' and not ok:
                 status, reason = 'invalid', 'check_not_attributed_to_fault'
             done_controls.append((job['canonical'], {

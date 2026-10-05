@@ -171,6 +171,7 @@ def test_candidate_record_must_match_the_patched_tree(tmp_path, monkeypatch):
 def test_exact_a8_tree_certifies_with_every_control_rejected_by_its_check(tmp_path, monkeypatch, version):
     record = _certify(tmp_path, monkeypatch, PATCH, candidate_record=_candidate_record(tmp_path), version=version)
     assert record['verdict'] == 'certified' and record['command']['version'] == version
+    assert json.loads(json.dumps(record)) == record   # persistable: the writer refuses non-JSON records
     assert record['candidate']['tree_sha256'] == A8_ARTIFACT
     assert record['candidate']['id'] == 'extensa-native-bfs-20261005-a8.it1.kronecker.a0'
     assert record['candidate']['scan']['findings'] == 0
