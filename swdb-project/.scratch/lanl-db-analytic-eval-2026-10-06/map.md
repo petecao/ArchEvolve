@@ -20,7 +20,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
-| 04 | [First runnable version: estimate a streaming loop on the mbit10 CPU](issues/04-first-runnable-estimate.md) | ready-for-agent | 01 | 1.5–2 days |
+| 04 | [First runnable version: estimate a streaming loop on the mbit10 CPU](issues/04-first-runnable-estimate.md) | resolved | 01 | 1.5–2 days |
 | 05 | [Indirect accesses and the BFS baseline on the CPU](issues/05-indirect-and-bfs-baseline.md) | ready-for-agent | 04 | 1.5–2 days |
 | 06 | [Estimate protocols and the gem5 refusal](issues/06-estimate-protocols-and-gem5-refusal.md) | ready-for-agent | 04 | 3–4 h |
 | 07 | [Measured mbit10 parameters](issues/07-measured-mbit10-parameters.md) | ready-for-agent | 04 | 2–3 h plus about 1 h of lane time (mbit10) |
@@ -63,3 +63,5 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 - 2026-10-06 16:11 ET: the 24 layer-by-layer tickets 02–25 were replaced by 22 vertical slices (02–23), approved by Yan-Ru; the first runnable version is [04](issues/04-first-runnable-estimate.md).
 
 - 2026-10-06 ET: ticket [03](issues/03-crosswalk-v0.md) resolved: [crosswalk v0](../../docs/compatibility/lanl-crosswalk-v0.yaml), [format](../../docs/compatibility/README.md), and [source/test evidence](crosswalk-v0-verification.md). Every mapping remains unverified until LANL grants schema access.
+
+- 2026-10-06 ET: ticket [04](issues/04-first-runnable-estimate.md) resolved: LLVM source counting and streaming estimates, [portable format and commands](../../docs/reference/format-v0.4-analytic.md); implementation `191fd8d`, 101-pass/1-skip regression batch plus the static-distribution test. Application/protocol binding remains explicit work for 05–06; measured mbit10 parameters for 07.
