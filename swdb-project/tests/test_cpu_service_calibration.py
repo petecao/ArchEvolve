@@ -99,3 +99,31 @@ def test_portable_clock_receipt_binds_separate_source_normalized_call_counts(rec
     assert len(proof['characterization_sha256']) == 6
     assert data['context']['instrumented_timer'] is False
     assert data['evidence_kind'] == 'fixture'
+
+
+def test_service_runner_records_explicit_fixture_target_and_rejects_native_on_wrong_host(records, tmp_path):
+    output = tmp_path / 'fixture-target'
+    result = run_swdb('cpu-service-calibrate', '--records', records.path, '--output', output,
+        '--machine', 'fixture.target', '--fixture', '--repetitions', '3', '--min-trial-s', '.002', '--max-wall-s', '60')
+    assert result.returncode == 0, result.stdout + result.stderr
+    receipt = json.loads((output / 'receipt.json').read_text())
+    assert receipt['machine'] == 'fixture.target' and receipt['evidence_kind'] == 'fixture'
+    refused = run_swdb('cpu-service-calibrate', '--records', records.path,
+        '--output', tmp_path / 'native-refused', '--machine', 'fixture.target', '--lane', '0')
+    assert refused.returncode != 0 and not (tmp_path / 'native-refused').exists()
+
+
+def test_count_only_service_receipt_contains_no_elapsed_calibration(records, tmp_path, llvm22):
+    records.copy_repo()
+    output = tmp_path / 'count-only'
+    result = run_swdb('cpu-service-calibrate', '--records', records.path, '--output', output,
+        '--fixture', '--llvm-bin', llvm22, '--count-only', '--max-wall-s', '120')
+    assert result.returncode == 0, result.stdout + result.stderr
+    data = json.loads((output / 'count-proof.json').read_text())
+    assert data['format'] == 'swdb.cpu-service-count-only.v1'
+    assert data['timings_collected'] is False and 'services' not in data
+    assert data['count_proof']['service_validation_points'] == [[32,32], [64,64], [96,96]]
+    assert not (output / 'receipt.json').exists() and not (output / 'partial-trials.json').exists()
+    refused = run_swdb('import-cpu-service-calibration', '--records', records.path,
+        '--receipt', output / 'count-proof.json', '--id', 'fixture.counts.never.rate', '--fixture')
+    assert refused.returncode != 0

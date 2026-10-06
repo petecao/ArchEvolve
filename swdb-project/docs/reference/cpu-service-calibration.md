@@ -16,8 +16,11 @@ are capped at11, wall time at900s and output at25MiB. The runner currently requi
 `--fixture`, so its host timings cannot become native calibration.
 
 The importer admits only an explicitly labeled fixture with
-`--fixture`; its parameter basis is `reported`. Native import remains refused until
-matching compiler/runtime and socket-lane evidence is implemented. Adding
+`--fixture`; its parameter basis is `reported`. Native clock import requires actual Linux/x86_64 LLVM22 timing on the registered
+machine, a verified socket lane, clean committed source, a physical core, hash-bound
+loaded C/C++ libraries, at least 7 repetitions and 0.05s paired pilot durations.
+Counts and timed work use the identical shared header. Governor/turbo paths are
+recorded as null when unavailable; no settings are changed. Adding
 `--llvm-bin` runs six separate LLVM22 source-normalized-v2 count points against
 the same shared service body:32/64/96 service iterations and matched drivers. The
 clock numerator must be exactly one opaque ABI call per service iteration and
@@ -50,3 +53,9 @@ under host/serial-T1 scope; supported opaque service costs are additive. Full
 site/count coverage clears that call only after a known service result. Zero
 executions need no rate, counted callee bodies receive no second charge, and
 unsupported length/lifecycle selectors or missing rates remain unknown.
+
+`--count-only --llvm-bin ...` creates `count-proof.json` in the external raw folder
+with `timings_collected: false`; it emits no elapsed trials or service rates. The
+importer refuses this distinct `swdb.cpu-service-count-only.v1` format. Native
+count-only execution retains the same verified lane, clean source and loaded ABI
+identities, and is independent of application development/holdout timings.
