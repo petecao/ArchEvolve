@@ -10,7 +10,7 @@ from swdb.cli import Failure
 from swdb.store import Store
 
 
-def prepare(args, output):
+def environment(args, output):
     if args.fixture:
         return None
     machine = Store(args.records).get(args.machine, 'machine')
@@ -20,8 +20,8 @@ def prepare(args, output):
             raise Failure('native --lane requires an exact registered socket lease name: ' + ', '.join(sorted(names)))
     if platform.system() != 'Linux' or platform.machine() != 'x86_64':
         raise Failure('native service calibration requires its registered Linux x86_64 target')
-    if not args.llvm_bin or args.min_trial_s < .05 or args.repetitions < 7:
-        raise Failure('native service calibration requires LLVM22, >=0.05s trials and >=7 repetitions')
+    if not args.llvm_bin:
+        raise Failure('native CPU evidence requires LLVM22')
     if not machine or socket.gethostname().split('.')[0] != machine['hostname']:
         raise Failure('native service calibration must run on its registered machine')
     from swdb.profile import _verified_lane
@@ -38,6 +38,13 @@ def prepare(args, output):
         raise Failure('native service raw output needs at least 20GiB free')
     return {'lane': lane, 'cpus': cpus[:1], 'machine_sha256': artifacts.digest(machine),
         'system': 'Linux', 'start_state': _host_state(), 'free_disk_bytes': free}
+
+
+def prepare(args, output):
+    context = environment(args, output)
+    if context and (args.min_trial_s < .05 or args.repetitions < 7):
+        raise Failure('native service calibration requires >=0.05s trials and >=7 repetitions')
+    return context
 
 
 def loaded_libraries(binary, command):

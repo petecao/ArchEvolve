@@ -12,11 +12,9 @@ The portable runner times an independent clock-call loop and a matched driver. I
 uses a pilot to select bounded work, alternates measurement order, retains every
 trial, and consumes returned checksums outside timing. Compilation, pilot and
 trials share the wall budget. Raw output stays outside the project; repetitions
-are capped at11, wall time at900s and output at25MiB. The runner currently requires
-`--fixture`, so its host timings cannot become native calibration.
+are capped at11, wall time at900s and output at25MiB. Portable contract runs require `--fixture`; actual native admission is checked separately.
 
-The importer admits only an explicitly labeled fixture with
-`--fixture`; its parameter basis is `reported`. Native clock import requires actual Linux/x86_64 LLVM22 timing on the registered
+An explicitly labeled fixture requires `--fixture` and keeps parameter basis `reported`. Native clock import requires actual Linux/x86_64 LLVM22 timing on the registered
 machine, a verified socket lane, clean committed source, a physical core, hash-bound
 loaded C/C++ libraries, at least 7 repetitions and 0.05s paired pilot durations.
 Counts and timed work use the identical shared header. Governor/turbo paths are

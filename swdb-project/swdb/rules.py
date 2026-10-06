@@ -76,6 +76,12 @@ def check(record, ctx):
     elif kind == "cpu_calibration":
         from swdb.cpu_calibration_records import validate_record
         yield from validate_record(record, ctx)
+    elif kind == "cpu_error_band":
+        from swdb.cpu_error_band import validate_record
+        yield from validate_record(record, ctx)
+    elif kind == "cpu_native_validation":
+        from swdb import cpu_native_validation
+        yield from cpu_native_validation.validate_record(record, ctx)
     elif kind == "cpu_service_calibration":
         from swdb.cpu_service_calibration import validate_record
         yield from validate_record(record, ctx)

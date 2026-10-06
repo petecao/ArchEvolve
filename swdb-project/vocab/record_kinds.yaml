@@ -68,3 +68,8 @@ values:
 
   - value: cpu_service_calibration
     meaning: Independently timed native service and paired driver trials with scoped event denominators and provenance.
+
+  - value: cpu_error_band
+    meaning: Frozen empirical CPU error evidence or explicit missing-cost failure.
+  - value: cpu_native_validation
+    meaning: Separate matched original-driver ArchEvolve CPU validation with independently checked five-call timing; never CPU selection.
