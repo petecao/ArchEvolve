@@ -76,7 +76,21 @@
     },
     "workload_identities": {
       "type": "object",
-      "minProperties": 1,
+      "minProperties": 0,
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "input_identities": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "source_identities": {
+      "type": "object",
       "additionalProperties": {
         "type": "string",
         "pattern": "^[0-9a-f]{64}$"
@@ -97,5 +111,36 @@
     "frozen_at",
     "state",
     "workload_identities"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "settings": {
+            "properties": {
+              "mode": {
+                "const": "estimated"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "input_identities",
+          "source_identities"
+        ]
+      },
+      "else": {
+        "properties": {
+          "workload_identities": {
+            "minProperties": 1
+          }
+        }
+      }
+    }
   ]
 }

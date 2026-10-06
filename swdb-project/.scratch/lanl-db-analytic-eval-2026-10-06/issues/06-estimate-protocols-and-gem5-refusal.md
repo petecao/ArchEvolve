@@ -2,7 +2,7 @@
 
 Created: 2026-10-06
 **Type:** slice
-**Status:** in-progress (Codex, `codex/lanl-ticket06`; base `86b2a9a`)
+**Status:** claimed (Codex, `codex/lanl-ticket06`; base `86b2a9a`)
 **Blocked by:** 04
 **Spec:** `../spec.md`
 **Time estimate:** 3–4 h

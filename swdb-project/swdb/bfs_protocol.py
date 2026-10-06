@@ -165,6 +165,7 @@ def _representation(rep, normalization, parser=None, allow_streaming=True):
 def _identity_payload(data):
     fields = ["requested_id", "version", "supersedes", "invalidated_comparisons"]
     fields += ["definition"] if data["kind"] == "workload" else ["settings", "workload_identities", "frozen_at", "state"]
+    fields += [key for key in ("input_identities", "source_identities") if key in data]
     return {key: data[key] for key in fields}
 
 
@@ -186,7 +187,11 @@ def validate_record(record, ctx):
                       and other.data.get("version") == record.data.get("version") for other in ctx.store.of_kind(record.kind)),
               "immutable logical name/version already exists; use a new version with supersedes")
         if record.kind == "protocol":
-            _validate_settings(record.data["settings"], ctx.store)
+            if record.data["settings"].get("mode") == "estimated":
+                from swdb.estimate_protocol import validate_frozen
+                validate_frozen(record.data, ctx.store)
+            else:
+                _validate_settings(record.data["settings"], ctx.store)
             for wid, digest in record.data["workload_identities"].items():
                 _fail(verify_immutable(_get(ctx.store, wid, "workload")) == digest, "frozen workload identity changed")
     except (Failure, KeyError, TypeError, ValueError) as exc:
@@ -682,6 +687,11 @@ def freeze_protocol(args):
     request = _request(args)
     store = _require_valid(args.records)
     settings = copy.deepcopy(request.get("settings"))
+    from swdb.archevolve import require_team_safe
+    require_team_safe(store, settings, command="freeze-protocol")
+    if isinstance(settings, dict) and settings.get("mode") == "estimated":
+        from swdb.estimate_protocol import freeze
+        return freeze(args, request, store)
     if isinstance(settings, dict) and settings.get("mode") == "native":
         for target in settings.get("targets", {}).values():
             if isinstance(target, dict):

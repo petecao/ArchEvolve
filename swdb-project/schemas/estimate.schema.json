@@ -77,7 +77,8 @@
       "$ref": "#/$defs/id"
     },
     "protocol": {
-      "$ref": "#/$defs/id"
+      "$ref": "#/$defs/id",
+      "x-ref": "protocol"
     },
     "regions": {
       "type": "array",
@@ -284,6 +285,14 @@
     },
     "binding": {
       "type": "object"
+    },
+    "protocol_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "estimator_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
     }
   },
   "required": [
@@ -313,6 +322,8 @@
     "llm_parameters",
     "evidence_kind",
     "scope",
-    "binding"
+    "binding",
+    "protocol_sha256",
+    "estimator_sha256"
   ]
 }
