@@ -18,7 +18,7 @@ Created: 2026-10-06
 
 ## Comments
 
-2026-10-06 ET: Claimed on `codex/lanl-ticket 07`, based exactly on integration `86b2a9a`. Public seams: CPU measurement runner and calibration import/target-description commands; copied-store fixture checks. Parent owns mbit10 dispatch; real receipts and hash-bound estimate rerun are required for resolution.
+2026-10-06 ET: Claimed on `codex/lanl-ticket07`, based exactly on integration `86b2a9a`. Public seams: CPU measurement runner and calibration import/target-description commands; copied-store fixture checks. Parent owns mbit10 dispatch; real receipts and hash-bound estimate rerun are required for resolution.
 
 2026-10-06 ET: Runnable source checks: 7 public runner/import tests passed before the merge-access correction; a bounded local LLVM 22 fixture completed all four count curves (integer `26*n+8`, FP `8*n+5`, branch `5*n+3`, atomic `n`) and 12 native fixture cells within 16 MiB raw output. Those rates remain fixture/reported. Source review then corrected merge payload counts to `4*N-2` (two comparison reads, selected-head reread, output write; final tail read/write) and made ranged begin/end offsets explicit. Real mbit10 receipt and canonical-hash fixture rerun remain pending parent dispatch. [Commands and conventions](../../../docs/reference/cpu-calibration.md).
 
@@ -34,10 +34,10 @@ immutable native provenance; source is `97f5f19`/`40435a9`, typed binding `3b00e
 
 | Evaluation | Socket / evidence | Result |
 |---|---|---|
-| Native primary a1 | node0 generation467; [receipt](../evidence/cpu-calibration-mbit10-20261006-a1.json) | 80 cells ×7 trials; unsaturated T1/2/4/8 remain unknown |
-| Preregistered a2 | node0 generation468; [preregistration](../evidence/cpu-chain-extension-preregistration-20261006-a2.md), [receipt](../evidence/cpu-calibration-mbit10-20261006-a2.json) | 75 cells ×7 trials; all five T values admit the unchanged plateau criterion |
-| Final v2 numerator proof | node0 generation472; [receipt](../evidence/cpu-count-equivalence-mbit10-20261006-a2.json) | Twelve count points unchanged under corrected `cda8f2d`; no timing rerun |
-| Typed binding + T1 fixture | node0 generation473; [receipt](../evidence/bound-calibration-fixture-mbit10-20261006-a1.json) | Exit0; 584 records valid; target/protocol/Python-bundle hashes verified |
+| Native primary a1 | node0 generation 467; [receipt](../evidence/cpu-calibration-mbit10-20261006-a1.json) | 80 cells × 7 trials; unsaturated T1/2/4/8 remain unknown |
+| Preregistered a2 | node0 generation 468; [preregistration](../evidence/cpu-chain-extension-preregistration-20261006-a2.md), [receipt](../evidence/cpu-calibration-mbit10-20261006-a2.json) | 75 cells × 7 trials; all five T values admit the unchanged plateau criterion |
+| Final v2 numerator proof | node0 generation 472; [receipt](../evidence/cpu-count-equivalence-mbit10-20261006-a2.json) | Twelve count points unchanged under corrected `cda8f2d`; no timing rerun |
+| Typed binding + T1 fixture | node0 generation 473; [receipt](../evidence/bound-calibration-fixture-mbit10-20261006-a1.json) | Exit 0; 584 records valid; target/protocol/Python-bundle hashes verified |
 
 Each dispatch used an isolated clean Git source, socket lease, NUMA/core binding,
 preflight load/free-disk check and explicit unavailable governor/turbo metadata.
@@ -58,7 +58,7 @@ with known estimated seconds `2.2471697927392882e-08`. The combined source is
 This rerun remains `contract_fixture`, not CPU accuracy validation.
 
 Verification: 14 public calibration tests passed, 14 shared query/protocol checks
-passed, and the combined05/07 compatibility batch passed 7. Receipt canonical
+passed, and the combined 05/07 compatibility batch passed 7. Receipt canonical
 identity, 17 exact file hashes, 5 canonical target hashes, 10 original byte strings
 and frozen T1 snapshot/protocol/bundle checks passed locally after Git transfer;
 local `swdb validate` also passed 584 records. Latest integration `8ad4a00` is merged
