@@ -35,3 +35,9 @@ Dynamic extent slice: six logical requests were unresolved (RED); checked target
 size multiplication admitted the 129-byte runtime alloca (GREEN: 2 passed, 6.62 s).
 The normalized fixture contains explicit stacksave/stackrestore and fixed-array lifetime
 start/end; callbacks retire only matching frame-owned allocation identities.
+
+ABI referent slice: actual libomp microtask execution produced one unresolved four-byte
+global-thread-id load (RED). Its ABI view now covers that logical request and one view-relative
+line; full allocation lifetime/page facts remain null with `bounded_view_not_full_allocation`
+(GREEN: 3 passed, 10.81 s). Full allocations take precedence and keep their own lifetimes.
+The shared insertion preserves the tested command-guard foundation at `93b09f4`.

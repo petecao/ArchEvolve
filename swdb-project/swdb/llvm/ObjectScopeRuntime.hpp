@@ -21,6 +21,7 @@ extern "C" uint64_t __swdb_object_scope_enter() {
   if(observerEntered)return 0;ObserverScope observer;
   std::lock_guard<std::mutex> lock(counts().mutex);
   if(swdb_scopes::frames.size()>=swdb_live::budget()){counts().registry.object_budget_exhausted=true;return 0;}
+  counts().registry.scope_enabled=true;
   uint64_t token=swdb_scopes::next_token++;
   swdb_scopes::frames.push_back({token,1,{}});return token;
 }
@@ -28,7 +29,7 @@ extern "C" void __swdb_object_scope_alloc(uint64_t token,uint64_t base,uint64_t 
   if(observerEntered || !token)return;ObserverScope observer;
   std::lock_guard<std::mutex> lock(counts().mutex);
   auto *frame=swdb_scopes::find(token);if(!frame)return;
-  counts().registry.allocate(base,bytes,known);
+  counts().registry.allocate(base,bytes,known,1);
   auto it=counts().registry.objects.find(base);
   if(it!=counts().registry.objects.end())frame->objects[base]={it->second.id,frame->next_serial++};
 }
@@ -54,5 +55,11 @@ extern "C" void __swdb_object_scope_leave(uint64_t token) {
   std::lock_guard<std::mutex> lock(counts().mutex);
   auto &frames=swdb_scopes::frames;
   if(frames.empty() || frames.back().token!=token)return;
-  swdb_scopes::retire(frames.back());frames.pop_back();
+  swdb_scopes::retire(frames.back());counts().registry.retire_views(token);frames.pop_back();
+}
+
+extern "C" void __swdb_object_scope_view(uint64_t token,uint64_t base,uint64_t bytes) {
+  if(observerEntered || !token)return;ObserverScope observer;
+  std::lock_guard<std::mutex> lock(counts().mutex);
+  if(swdb_scopes::find(token))counts().registry.view(token,base,bytes);
 }

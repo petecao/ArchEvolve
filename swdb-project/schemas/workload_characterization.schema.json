@@ -1150,6 +1150,30 @@
             "assumption_sha256": {
               "type": "string",
               "pattern": "^[a-f0-9]{64}$"
+            },
+            "object_scope_counts": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "full_allocation_requests": {
+                  "$ref": "#/$defs/fact"
+                },
+                "bounded_view_requests": {
+                  "$ref": "#/$defs/fact"
+                },
+                "unresolved_requests": {
+                  "$ref": "#/$defs/fact"
+                },
+                "bounded_view_line_union": {
+                  "$ref": "#/$defs/fact"
+                }
+              },
+              "required": [
+                "full_allocation_requests",
+                "bounded_view_requests",
+                "unresolved_requests",
+                "bounded_view_line_union"
+              ]
             }
           },
           "required": [

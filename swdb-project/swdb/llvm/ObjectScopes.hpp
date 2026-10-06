@@ -10,6 +10,11 @@ inline void instrumentObjectScopes(Module &M) {
   auto retire=M.getOrInsertFunction("__swdb_object_scope_retire",Type::getVoidTy(C),u64,u64);
   auto mark=M.getOrInsertFunction("__swdb_object_scope_mark",u64,u64);
   auto restore=M.getOrInsertFunction("__swdb_object_scope_restore",Type::getVoidTy(C),u64,u64);
+  auto view=M.getOrInsertFunction("__swdb_object_scope_view",Type::getVoidTy(C),u64,u64,u64);
+  std::set<Function *> microtasks;
+  for(Function &F:M)for(Instruction &I:instructions(F))if(auto *call=dyn_cast<CallBase>(&I))
+    if(auto *callee=call->getCalledFunction();callee && callee->getName()=="__kmpc_fork_call" && call->arg_size()>=3)
+      if(auto *task=dyn_cast<Function>(call->getArgOperand(2)->stripPointerCasts()))microtasks.insert(task);
   for(Function &F:M) {
     if(F.isDeclaration() || F.getName().starts_with("__swdb_") || !F.getSubprogram())continue;
     SmallVector<AllocaInst *,16> allocas;SmallVector<Instruction *,8> exits;
@@ -30,6 +35,8 @@ inline void instrumentObjectScopes(Module &M) {
     }
     SmallPtrSet<Instruction *,32> original;for(Instruction &I:instructions(F))original.insert(&I);
     IRBuilder<> entry(&*F.getEntryBlock().getFirstInsertionPt());auto *frame=entry.CreateCall(enter);
+    if(microtasks.count(&F) && F.arg_size()>=2 && F.getArg(0)->getType()->isPointerTy() && F.getArg(1)->getType()->isPointerTy())
+      for(unsigned i=0;i<2;++i)entry.CreateCall(view,{frame,entry.CreatePtrToInt(F.getArg(i),u64),entry.getInt64(4)});
     auto registerAlloca=[&](AllocaInst *A,Instruction *at) {
       auto size=M.getDataLayout().getTypeAllocSize(A->getAllocatedType());IRBuilder<> B(at);
       Value *bytes=B.getInt64(0),*known=B.getInt32(0);
