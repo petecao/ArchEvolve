@@ -587,6 +587,50 @@
         "host_counting_policy": {
           "const": "exclusive_host_outside_guarded_functional_commands"
         },
+        "normative_bindings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "format",
+            "records",
+            "library_entries",
+            "compiled_views"
+          ],
+          "properties": {
+            "format": {
+              "const": "swdb.functional-source-bindings.v1"
+            },
+            "records": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "library_entries": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "compiled_views": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "intrinsic",
+                  "intrinsic_sha256",
+                  "source_view_sha256",
+                  "source",
+                  "backend",
+                  "compile_defines",
+                  "evidence_scope"
+                ]
+              }
+            }
+          }
+        },
         "object_scope_contract": {
           "type": "object",
           "additionalProperties": false,
@@ -1307,6 +1351,7 @@
                         "root": {
                           "enum": [
                             "library",
+                            "project",
                             "repository"
                           ]
                         },
@@ -1325,7 +1370,10 @@
                       ]
                     },
                     "memory_base_argument": {
-                      "type": "integer",
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
                       "minimum": 0
                     },
                     "active_elements_argument": {
@@ -1373,7 +1421,6 @@
               },
               "target_access_sources": {
                 "type": "array",
-                "minItems": 1,
                 "items": {
                   "$ref": "#/$defs/semantic_source"
                 }
@@ -1383,6 +1430,23 @@
                 "items": {
                   "$ref": "#/$defs/semantic_source"
                 }
+              },
+              "memory_effect": {
+                "enum": [
+                  "read",
+                  "none"
+                ]
+              },
+              "active_elements_policy": {
+                "enum": [
+                  "operand_argument",
+                  "observed_target_reads",
+                  "not_applicable"
+                ]
+              },
+              "target_reads_per_active_element": {
+                "type": "integer",
+                "minimum": 1
               }
             },
             "required": [
@@ -1511,6 +1575,7 @@
             "root": {
               "enum": [
                 "library",
+                "project",
                 "repository"
               ]
             },
@@ -1726,6 +1791,68 @@
         },
         "useful_bytes": {
           "$ref": "#/$defs/logical_work_count"
+        },
+        "functional_bookkeeping": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "accesses",
+            "operation_counts",
+            "opaque_calls"
+          ],
+          "properties": {
+            "accesses": {
+              "$ref": "#/$defs/count"
+            },
+            "operation_counts": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "integer",
+                "floating_point",
+                "branch",
+                "atomic"
+              ],
+              "properties": {
+                "integer": {
+                  "$ref": "#/$defs/count"
+                },
+                "floating_point": {
+                  "$ref": "#/$defs/count"
+                },
+                "branch": {
+                  "$ref": "#/$defs/count"
+                },
+                "atomic": {
+                  "$ref": "#/$defs/count"
+                }
+              }
+            },
+            "opaque_calls": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "site",
+                  "name",
+                  "execution_count"
+                ],
+                "properties": {
+                  "site": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "execution_count": {
+                    "$ref": "#/$defs/count"
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "required": [

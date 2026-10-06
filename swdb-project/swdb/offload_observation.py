@@ -16,6 +16,16 @@ def payload_problems(target):
     request=observation['request_policy']['transaction_bytes']
     if request is not None and (type(request) is not int or request<1 or request&(request-1)):
         problems.append('transaction_bytes must be a positive power of two or null')
+    for command in observation['commands']:
+        none=command.get('memory_effect','read')=='none'
+        if none:
+            if command['target_access_sources'] or any(alias['memory_base_argument'] is not None for alias in command['aliases']):
+                problems.append('no-memory command requires no target source or memory operand')
+            if command.get('active_elements_policy')!='not_applicable':problems.append('no-memory active-element scope must be not_applicable')
+        elif not command['target_access_sources'] or any(alias['memory_base_argument'] is None for alias in command['aliases']):
+            problems.append('read command requires target access source and memory operand')
+        if command.get('active_elements_policy')=='observed_target_reads' and not command.get('target_reads_per_active_element'):
+            problems.append('observed-target active elements require explicit reads-per-element relation')
     layout=target.get('dram_address_layout')
     if layout is not None:
         occupied=set()
@@ -33,12 +43,16 @@ def payload_problems(target):
     return problems
 
 
-def prepare(store,target,source,*,fixture=False):
+def prepare(store,target,source,*,fixture=False,compile_flags=()):
     observation=target.get('functional_observation')
     if not observation:raise Failure('live target counting requires functional_observation')
     problems=payload_problems(target)
     if problems:raise Failure('functional observation: '+'; '.join(problems))
+    bindings={'format':'swdb.functional-source-bindings.v1','records':{},'library_entries':{},'compiled_views':[]}
     if not fixture:
+        from swdb.intrinsic_source_views import require_compiled_view,source_file
+        from swdb.library import Library
+        library=Library(paths.HOME/'library',store)
         # A fabricated debug filename cannot redirect a binding into shipped code.
         # Registered artifact/source protection supplies the enclosing source proof.
         if re.search(r'^\s*#\s*(?:line\b|[0-9]+)',source.read_text(),re.M):
@@ -47,19 +61,36 @@ def prepare(store,target,source,*,fixture=False):
             intrinsic=store.get(command['intrinsic'],'intrinsic')
             if not intrinsic or not set(command['hardware_operations'])<=set(intrinsic.get('hardware_operations',[])):
                 raise Failure('functional command lacks its resolvable normative intrinsic/operation binding: '+command['intrinsic'])
+            if (command.get('memory_effect','read')=='none')!=(intrinsic.get('memory_kind')=='none'):
+                raise Failure('functional command memory effect differs from normative intrinsic')
+            proof=require_compiled_view(intrinsic,compile_flags)
+            bindings['compiled_views'].append(proof)
+            bindings['records'][intrinsic['id']]=artifacts.digest(intrinsic)
             for operation in command['hardware_operations']:
-                if store.get(operation,'hardware_operation') is None:
-                    raise Failure('functional hardware operation is unavailable: '+operation)
+                record=store.get(operation,'operation')
+                if record is None:raise Failure('functional hardware operation is unavailable: '+operation)
+                bindings['records'][operation]=artifacts.digest(record)
+            view=intrinsic['source_view']
+            if not any(alias['role']=='command' and alias.get('source')==view['source']
+                and alias.get('debug_name','').split('<')[0]==intrinsic['name'] for alias in command['aliases']):
+                raise Failure('functional command primary alias differs from exact intrinsic source_view')
             for alias in command['aliases']+command['target_access_sources']+command['bookkeeping_access_sources']:
                 reference=alias.get('source')
                 if not reference:raise Failure('functional aliases require pinned shipped source references')
-                root={'library':paths.LIBRARY,'repository':paths.ROOT}.get(reference['root'])
-                if root is None:raise Failure('functional alias source root unsupported')
-                file=(root/reference['path']).resolve()
-                if not file.is_relative_to(root.resolve()) or not file.is_file() or artifacts.file_hash(file)!=alias['source_sha256'] or reference['sha256']!=alias['source_sha256']:
+                file=source_file(reference)
+                if reference['sha256']!=alias['source_sha256']:
                     raise Failure('functional alias shipped source hash differs: '+reference['path'])
                 if re.search(r'^\s*#\s*(?:line\b|[0-9]+)',file.read_text(),re.M):
                     raise Failure('functional alias source refuses explicit debug #line overrides')
+            entry=intrinsic.get('library_entry',{})
+            item=library.get(entry.get('id'))
+            if item is None or item.get('intrinsic_record')!=intrinsic['id'] or item.get('hardware_operations')!=intrinsic['hardware_operations'] or library.content_sha256(entry['id'])!=entry.get('content_sha256'):
+                raise Failure('functional source_view requires its exact normative library entry')
+            file=library.files[entry['id']]
+            if file.resolve()!=(paths.HOME/artifacts.relative_path(entry.get('path',''))).resolve():
+                raise Failure('functional source_view library entry path differs')
+            bindings['library_entries'][entry['id']]=entry['content_sha256']
+            for pin in library.dependency_pins(entry['id']):bindings['library_entries'][pin['id']]=pin['content_sha256']
     env={}
     request=observation['request_policy']
     env['SWDB_LOGICAL_TRANSACTION_BYTES']=str(request['transaction_bytes'] or 0)
@@ -75,7 +106,8 @@ def prepare(store,target,source,*,fixture=False):
         'layout_sha256':artifacts.digest(layout),
         'request_policy_sha256':artifacts.digest(request),
         'placement_assumption_sha256':artifacts.digest(observation['placement']),
-        'window_policy_sha256':artifacts.digest(observation['window']), 'environment':env}
+        'window_policy_sha256':artifacts.digest(observation['window']), 'environment':env,
+        'normative_bindings':None if fixture else bindings}
 
 
 def merge(regions,static,counts,contract,scope):
@@ -87,17 +119,26 @@ def merge(regions,static,counts,contract,scope):
     fact=lambda v,basis='measured':{'value':v,'basis':'unknown' if v is None else basis,'scope':scope}
     def key(site):return str(site['site'])+':'+str(site['region_index'])
     by_region={region['id']:region for region in regions}
+    call_inventory={call['site']:call for call in static.get('unmodeled_calls',[])}
     for site in static.get('semantic_sites',[]):
         region=by_region[site['region']]
         observed=dynamic.get(key(site),{})
         command=command_specs[site['descriptor']]
         value=observed.get('executions',0)
+        active=None if observed.get('active_unknown') else observed.get('active_elements',0)
+        if command.get('active_elements_policy')=='observed_target_reads':
+            reads=observed.get('useful_accesses',0);relation=command['target_reads_per_active_element']
+            active=None if observed.get('unknown_target') or reads%relation else reads//relation
         region['accelerator_calls'].append({'site':site['site'],'event':command['event'],
             'intrinsic':command['intrinsic'],'hardware_operations':command['hardware_operations'],
-            'execution_count':fact(value),'active_elements':fact(None if observed.get('active_unknown') else observed.get('active_elements',0)),
+            'execution_count':fact(value),'active_elements':fact(active),
             'useful_accesses':fact(None if observed.get('unknown_target') else observed.get('useful_accesses',0)),
             'useful_bytes':fact(None if observed.get('unknown_target') else observed.get('useful_bytes',0)),
             'accounting_domain':'offload','observation_method':'pre_inline_guarded_source_access',
+                        'functional_bookkeeping':{'accesses':fact(observed.get('bookkeeping_accesses',0)),
+                'operation_counts':{name:fact(observed.get('bookkeeping_ops',[0,0,0,0])[i]) for i,name in enumerate(('integer','floating_point','branch','atomic'))},
+                'opaque_calls':[{'site':int(site),'name':call_inventory.get(int(site),{}).get('name','unresolved'),
+                    'execution_count':fact(n)} for site,n in observed.get('opaque_calls',{}).items()]},
             'missing':observed.get('missing',[])})
     target_hash=contract['target_description_sha256']
     for region in regions:
@@ -154,3 +195,30 @@ def count_problems(data):
                     fact=row[name]
                     if fact['value'] is None and fact['basis']!='unknown':yield location,'null logical fact must retain unknown basis'
                 if row['state']=='complete' and row['missing']:yield location,'complete logical counts cannot have missing scope'
+
+
+def binding_problems(data,store):
+    """Verify outcome-free normative identities independently of a counted payload label."""
+    contract=data.get('observation_contract',{})
+    pins=contract.get('normative_bindings')
+    if pins is None:return []  # Historical/fixture receipts keep their original contract.
+    from swdb.intrinsic_source_views import require_compiled_view
+    from swdb.library import Library
+    library=Library(paths.HOME/'library',store);issues=[]
+    commands=contract.get('functional_observation',{}).get('commands',[])
+    required={c['intrinsic'] for c in commands}|{op for c in commands for op in c['hardware_operations']}
+    if set(pins['records'])!=required:issues.append('functional normative record pin coverage differs')
+    for rid,digest in pins['records'].items():
+        record=store.get(rid)
+        if record is None or artifacts.digest(record)!=digest:issues.append('functional normative record changed: '+rid)
+    for rid,digest in pins['library_entries'].items():
+        if library.get(rid) is None or library.content_sha256(rid)!=digest:issues.append('functional normative library entry changed: '+rid)
+    flags=data['source']['build_flags']+data['toolchain'].get('compiler_flags',[])
+    if len(pins['compiled_views'])!=len(commands):issues.append('functional compiled view coverage differs')
+    for proof in pins['compiled_views']:
+        intrinsic=store.get(proof.get('intrinsic'),'intrinsic')
+        if intrinsic is None:continue
+        try:
+            if proof!=require_compiled_view(intrinsic,flags):issues.append('functional compiled source_view differs: '+intrinsic['id'])
+        except Failure as exc:issues.append(str(exc))
+    return issues
