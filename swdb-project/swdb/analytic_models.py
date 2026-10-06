@@ -184,17 +184,32 @@ def memory_service_scenario(region, mechanism, *, context=None):
     return _cpu_model('memory_service_scenario', region, mechanism, context=context)
 
 
+def reorder_window_rows(region,mechanism,*,context=None):
+    from swdb.analytic_offload_models import reorder_window_rows as implementation
+    return implementation(region,mechanism,context=context)
+
+
+def fetch_queue(region,mechanism,*,context=None):
+    from swdb.analytic_offload_models import fetch_queue as implementation
+    return implementation(region,mechanism,context=context)
+
+
+def tile_staging(region,mechanism,*,context=None):
+    from swdb.analytic_offload_models import tile_staging as implementation
+    return implementation(region,mechanism,context=context)
+
+
 MODELS = {'compute_throughput':compute_throughput,'streaming_bandwidth':streaming_bandwidth,
           'requests_in_flight_latency':requests_in_flight_latency,'cache_fit':cache_fit,
           'offload_setup':offload_setup,'native_service_costs':native_service_costs,
-          'memory_service_scenario':memory_service_scenario}
+          'memory_service_scenario':memory_service_scenario,'reorder_window_rows':reorder_window_rows,'fetch_queue':fetch_queue,'tile_staging':tile_staging}
 
 
 def evaluate(region,mechanism,models=(),target_threads=1, *, context=None):
     implementation=MODELS.get(mechanism['model'])
     if implementation is None:
         return bound(mechanism['model'],None,'unsupported mechanism model',mechanism['parameters'],['mechanism_model.'+mechanism['model']])
-    if mechanism['model'] in {'offload_setup','native_service_costs','memory_service_scenario'}:
+    if mechanism['model'] in {'offload_setup','native_service_costs','memory_service_scenario','reorder_window_rows','fetch_queue','tile_staging'}:
         return implementation(region,mechanism,context=context)
     if mechanism.get('selector'):
         return bound(mechanism['model'],None,'unsupported selector for established mechanism',mechanism['parameters'],

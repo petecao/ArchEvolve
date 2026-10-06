@@ -90,7 +90,7 @@ an opaque call cost. Registered C++11 source flags also apply to the runtime.
 
 Optional `observation_contract.native_runtime` seals the actual counted process's
 loaded-image inventory, available file hashes, Clang binary/version, and only
-OMP/KMP/GOMP settings plus library search paths from its execution environment.
+OMP/KMP/GOMP/MALLOC settings plus library, interposer and allocator controls from its launch environment. A sealed `swdb.native-environment.v1` scope lists prefixes and exact variable names; exact controls retain an explicit null when unset, and omitted prefix variables mean unset under that declared scope. Old receipts without the declaration cannot prove the expanded scope.
 This is the instrumented count binary's identity; it does not certify a separate
 native timing binary. A library unavailable as a regular file (for example a
 macOS shared-cache image) keeps its hash null and a named missing fact. Historical
@@ -101,3 +101,44 @@ weak-ODR helpers linked from the instrumented application can therefore serve th
 runtime without recursing into its locked counters or charging observer work.
 The guard affects that observer thread only; other application workers retain
 normal accounting. The counted contract names this isolation policy.
+
+Generic offload resource models consume only the requested target-description
+hash's `swdb.logical-address-counts.v1` entry at `derived_logical_transactions`
+level. Selectors declare `domain: offload`; unsupported selectors remain unknown.
+`reorder_window_rows` applies row-group miss/hit service divided by effective
+memory parallelism. `fetch_queue` takes the maximum of admission service and the
+capacity/latency lower bound. `tile_staging` divides dynamic semantic staged
+bytes by staging rate. These resource bounds compete; semantic issue/setup
+remains additive. Known zero work needs no unused parameters. Unknown work or a
+wrong target hash keeps the bound and total null. None measures physical queue
+occupancy, row-buffer behavior, bus traffic, or asynchronous execution.
+
+
+## Live functional command observations
+
+Updated: 2026-10-06 ET. A target optionally declares
+`swdb.functional-observation.v1`: exact command/backend aliases, intrinsic and
+operation IDs, source hashes, operand bindings, target-access producers and
+bookkeeping source functions. Production references pin shipped files. Commands
+are bound before inlining; access roles use the original debug subprogram plus
+its file hash after normalization. A same-array reference check cannot inflate
+target traffic. Unmatched target access roles remain unknown. Explicit debug
+`#line` overrides are refused for production bindings.
+
+Thread-local guards deduplicate only declared nested backend aliases. They clear
+on normal and Itanium unwind paths. A bounded shadow depth suppresses deeper
+unsupported observations until those frames leave; unknown scope survives in
+the receipt. Observer scaffolding is tagged and excluded from source work. Signed
+negative active extents are unknown. Offload-only regions remain in trial records.
+
+Target reads expand to declared transaction lines and close independent fixed
+logical windows, including incomplete tails. Window state is bounded; exhaustion
+keeps supported request totals while affected row/coalescing facts become null.
+Placement is explicitly allocation-lifetime-relative and inferred. Its hash,
+layout hash, request policy hash and window hash bind each target-specific count.
+Addresses, access sequences and decoded rows stay in process memory. This does
+not establish physical placement, hardware traffic, row state or scheduling.
+
+The native fixture suite hand-checks alias deduplication, straddling byte ranges,
+partial windows, missing objects/windows, row/nesting budgets, reference-check
+attribution and unwind restoration. Fixture evidence remains `contract_fixture`.

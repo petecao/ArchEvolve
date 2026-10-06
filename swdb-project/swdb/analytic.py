@@ -54,7 +54,7 @@ def register_cli(commands):
     sub.add_argument('--timeout-s', type=float, default=600)
     sub.add_argument('--fixture', action='store_true', help='label a hand-counted contract fixture, never application evidence')
     sub.add_argument('--state-budget', type=int, default=524288, help='maximum transient logical observation entries; overflow preserves named unknowns')
-    sub.add_argument('--target-description', help='reserved live counting input; target-specific stream counters follow in ticket 05')
+    sub.add_argument('--target-description', help='frozen description for generic functional-command and allocation-relative logical window counts')
     sub.add_argument('--format', choices=['yaml', 'json'], default='yaml')
     sub.set_defaults(analytic_handler=characterize)
     sub = commands.add_parser('estimate', help='compose mechanism bounds from a characterization and target description')
@@ -139,7 +139,7 @@ def _uncovered_call(call):
         'no_runtime_operation', 'source_normalized_operations')
 
 
-def _counted_regions(static, counts, count_scope="per_run"):
+def _counted_regions(static, counts, count_scope="per_run", observation_contract=None):
     regions = []
     for r in static['regions']:
         ops = counts['operations'].get(str(r['index']), [0, 0, 0, 0])
@@ -235,6 +235,9 @@ def _counted_regions(static, counts, count_scope="per_run"):
                     'scope':count_scope,'missing':(['call_length'] if unknown_lengths else [])+
                         (['free_allocation_lifetime'] if unknown_free else [])})
             region['call_shape_counts']={'format':'swdb.call-shape-counts.v1','scope':count_scope,'calls':shaped}
+    if observation_contract:
+        from swdb.offload_observation import merge
+        merge(regions,static,counts,observation_contract,count_scope)
     return regions, calls
 
 
@@ -268,8 +271,13 @@ def characterize(args):
         raise Failure('--state-budget must be positive')
     if args.timeout_s <= 0:
         raise Failure('--timeout-s must be positive')
+    live_contract=None
     if args.target_description:
-        raise Failure('this streaming slice has no target-specific address-stream mechanism; omit --target-description')
+        from swdb.offload_observation import prepare
+        from swdb.archevolve import require_team_safe
+        requested_target=_load(store,args.target_description,'target_description')
+        require_team_safe(store,requested_target,command='characterize')
+        live_contract=prepare(store,requested_target,source,fixture=args.fixture)
     # The counting command never mutates source or evaluator files. It only emits IR and
     # a separate counted binary. Flags governing the build still enter the recorded identity.
     forbidden = ('-o', '-emit-llvm', '-fpass-plugin', '-Xclang', '-flto', '-g0')
@@ -301,6 +309,8 @@ def characterize(args):
         args.region_map = output / 'regions.json'
         args.region_map.write_text(json.dumps(adapter['mapping']))
         source_identity.update(adapter['identity'])
+    command_contract=output/'functional-observation.json'
+    if live_contract:command_contract.write_text(json.dumps(live_contract))
     plugin = output / 'Characterize.so'
     llvm_flags = shlex.split(_run([llvm / 'llvm-config', '--cxxflags', '--ldflags']).stdout)
     shared_probe = _run([llvm / 'llvm-config', '--link-shared', '--libs', 'core', 'passes', 'analysis', 'support', '--system-libs'], check=False)
@@ -330,10 +340,17 @@ def characterize(args):
     if adapter:
         gate_env = dict(os.environ, SWDB_ROI_PATH=adapter['roi_path'], SWDB_ROI_LINE=str(adapter['roi_line']))
         _run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-bind-roi', raw, '-o', bound_ir], env=gate_env, timeout=args.timeout_s)
+    analysis_input=bound_ir if adapter else raw
+    if live_contract:
+        command_ir=output/'commands.bc'
+        command_env=dict(os.environ,SWDB_FUNCTIONAL_OBSERVATION=str(command_contract))
+        _run([llvm/'opt','-load-pass-plugin='+str(plugin),'-passes=swdb-bind-commands',analysis_input,'-o',command_ir],env=command_env,timeout=args.timeout_s)
+        analysis_input=command_ir
     pipeline_version = args.counting_pipeline or ('source-normalized-v2' if adapter else 'source-normalized-v1')
     pipeline = PIPELINES[pipeline_version]
-    _run([llvm / 'opt', '-passes=' + pipeline, bound_ir if adapter else raw, '-o', normalized], timeout=args.timeout_s)
+    _run([llvm / 'opt', '-passes=' + pipeline, analysis_input, '-o', normalized], timeout=args.timeout_s)
     env = dict(os.environ)
+    if live_contract:env['SWDB_FUNCTIONAL_OBSERVATION']=str(command_contract)
     env['SWDB_SUBJECT'] = subject
     env['SWDB_COUNT_FUNCTION'] = args.function or ''
     env['SWDB_REGION_MAP'] = str(args.region_map.resolve()) if args.region_map else ''
@@ -353,6 +370,7 @@ def characterize(args):
     env['SWDB_ROI_GATED'] = '1' if adapter else '0'
     env['SWDB_STATE_BUDGET'] = str(args.state_budget)
     env['SWDB_COUNTS_OUTPUT'] = str(output / 'counts.json')
+    if live_contract:env.update(live_contract['environment'])
     executed = _run([binary, *args.run_arg], env=env, timeout=args.timeout_s)
     (output / 'stdout.txt').write_text(executed.stdout)
     (output / 'stderr.txt').write_text(executed.stderr)
@@ -364,16 +382,16 @@ def characterize(args):
         raise Failure(f'counted native run did not produce valid counts: {exc}') from None
     if not static['regions']:
         raise Failure('no source regions matched the requested function/debug information')
-    regions, calls = _counted_regions(static, counts)
+    regions, calls = _counted_regions(static, counts,observation_contract=live_contract)
     trials = []
     if counts.get('trials') or adapter:
         if adapter and len(counts.get('trials', [])) != args.trials:
             raise Failure('counted run lacks the registered trial sequence')
         for index, observed in enumerate(counts['trials']):
-            trial_regions, trial_calls = _counted_regions(static, observed, count_scope='per_trial')
+            trial_regions, trial_calls = _counted_regions(static, observed, count_scope='per_trial',observation_contract=live_contract)
             called_regions = {c['region'] for c in trial_calls if c['execution_count']['value']}
             trials.append({'position': index, 'sources': observed.get('sources', []),
-                'regions': [r for r in trial_regions if any(v['value'] for v in r['operation_counts'].values()) or any(a['element_count']['value'] for a in r['access_patterns']) or r['dynamic_counts']['loop_iterations']['value'] or r['id'] in called_regions],
+                'regions': [r for r in trial_regions if any(v['value'] for v in r['operation_counts'].values()) or any(a['element_count']['value'] for a in r['access_patterns']) or r['dynamic_counts']['loop_iterations']['value'] or r['id'] in called_regions or any(c['execution_count']['value'] for c in r['accelerator_calls'])],
                 'unmodeled_calls': [c for c in trial_calls if c['execution_count']['value']]})
         if adapter and any(len(t['sources']) != 1 for t in trials):
             raise Failure('counted trial lacks its exact GAPBS source selection')
@@ -421,12 +439,19 @@ def characterize(args):
         native_libraries[key] = {'path': str(library), 'sha256': library_hash}
     if not native_libraries:
         native_missing.append('process_loaded_images')
-    native_environment = {name: value for name, value in sorted(env.items())
-        if name.startswith(('OMP_', 'KMP_', 'GOMP_'))
-        or name in ('LD_LIBRARY_PATH', 'DYLD_LIBRARY_PATH')}
+    environment_prefixes=['OMP_','KMP_','GOMP_','MALLOC_']
+    environment_exact=['LD_LIBRARY_PATH','DYLD_LIBRARY_PATH','DYLD_INSERT_LIBRARIES',
+        'LD_PRELOAD','LD_AUDIT','GLIBC_TUNABLES','MALLOC_ARENA_MAX','MALLOC_ARENA_TEST',
+        'MALLOC_CHECK_','MALLOC_PERTURB_','MALLOC_MMAP_THRESHOLD_','MALLOC_TRIM_THRESHOLD_',
+        'MALLOC_TOP_PAD_','MALLOC_MMAP_MAX_']
+    native_environment={name:value for name,value in sorted(env.items())
+        if name.startswith(tuple(environment_prefixes)) or name in environment_exact}
+    for name in environment_exact:native_environment.setdefault(name,None)
+    environment_scope={'format':'swdb.native-environment.v1','prefixes':environment_prefixes,
+        'exact_variables':environment_exact,'absence_semantics':'null_or_absent_is_unset_under_declared_scope'}
     native_runtime = {'compiler_version': _run([llvm / 'clang++', '--version']).stdout.strip(),
         'compiler_sha256': _sha((llvm / 'clang++').resolve()),
-        'environment': native_environment, 'loaded_libraries': native_libraries,
+        'environment': native_environment,'environment_scope':environment_scope, 'loaded_libraries': native_libraries,
         'observation_method': 'process_loaded_images', 'scope': 'counted_instrumented_binary',
         'missing': native_missing}
     if 'memory_service_counts' in counts:
@@ -439,7 +464,19 @@ def characterize(args):
             'physical_residency_known':False,'native_runtime':native_runtime,
             'observer_isolation':'thread_local_reentrancy_guard',
             'runtime_bundle_sha256':artifacts.digest({name:_sha(llvm_src/name)
-                for name in ('CountingRuntime.cpp','LiveObjects.hpp')})}
+                for name in ('CountingRuntime.cpp','LiveObjects.hpp','LogicalCommands.hpp')})}
+    if live_contract:
+        command_specs=live_contract['functional_observation']['commands']
+        observed_descriptors={site['descriptor'] for site in static.get('semantic_sites',[])}
+        semantic_missing=counts.get('semantic_missing',[])
+        if observed_descriptors!=set(range(len(command_specs))):semantic_missing=semantic_missing+['semantic_command_binding']
+        record['observation_contract'].update(level='functional_semantic_access',
+            functional_observation=live_contract['functional_observation'],
+            requested_target_description_sha256=live_contract['target_description_sha256'],
+            dram_address_layout=live_contract['dram_address_layout'],
+            host_counting_policy='exclusive_host_outside_guarded_functional_commands',
+            observer_bundle_sha256=artifacts.digest({name:_sha(llvm_src/name) for name in ('Characterize.cpp','SemanticCommands.hpp')}),
+            semantic_commands={'complete':not semantic_missing,'event_ids':[command['event'] for command in command_specs],'missing':semantic_missing})
     if trials:
         record['trials'] = trials
     if adapter:
@@ -607,6 +644,8 @@ def _payload_problems(data):
                 if value is not None and (not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value) or value < 0):
                     yield f'{group}[{i}]', 'work counts must be finite nonnegative numbers or null'
     elif kind == 'target_description':
+        from swdb.offload_observation import payload_problems
+        for message in payload_problems(data):yield 'functional_observation',message
         for i, mechanism in enumerate(data['mechanisms']):
             for name, fact in mechanism['parameters'].items():
                 value = fact['value']

@@ -13,6 +13,7 @@
 #include <vector>
 #include <thread>
 #include "LiveObjects.hpp"
+#include "LogicalCommands.hpp"
 #ifdef __APPLE__
 #include <mach-o/dyld.h>
 #elif defined(__linux__)
@@ -79,6 +80,10 @@ struct CallShape {
 struct Counts {
   std::mutex mutex;
   swdb_live::Registry registry;
+  swdb_logical::Config logical;
+  std::map<std::pair<uint32_t,uint32_t>,swdb_logical::Totals> commands;
+  std::set<std::string> semantic_missing;
+  uint64_t logical_entries=0,command_depth=0;
   std::atomic<bool> active;
   std::map<uint32_t,uint64_t> trips,calls,sizes;
   std::map<uint32_t,CallShape> call_shapes;
@@ -91,7 +96,7 @@ struct Counts {
   std::vector<uint64_t> sources;
   std::vector<std::string> trials;
   Counts():active(!(std::getenv("SWDB_ROI_GATED") && std::string(std::getenv("SWDB_ROI_GATED"))=="1")){}
-  void clear(){registry.begin();call_shapes.clear();call_shape_entries=0;trips.clear();calls.clear();sizes.clear();ops.clear();accesses.clear();footprints.clear();sources.clear();active_workers.clear();team_sizes.clear();thread_ids.clear();}
+  void clear(){commands.clear();semantic_missing.clear();if(command_depth)semantic_missing.insert("command_crosses_roi");registry.begin();call_shapes.clear();call_shape_entries=0;trips.clear();calls.clear();sizes.clear();ops.clear();accesses.clear();footprints.clear();sources.clear();active_workers.clear();team_sizes.clear();thread_ids.clear();}
   void observe(uint32_t region){
     auto token=thread_ids.emplace(std::this_thread::get_id(),thread_ids.size()).first->second;
     active_workers[region].insert(token);team_sizes[region].insert(workers());
@@ -121,7 +126,10 @@ struct Counts {
       for(auto item:{std::make_pair("known_length_bins",&shape.lengths),std::make_pair("allocation_lifetime_size_bins",&shape.lifetimes)}){
         out<<",\""<<item.first<<"\":[";bool sep=false;for(auto &bin:*item.second){if(sep)out<<',';sep=true;out<<"{\"bytes\":"<<bin.first<<",\"executions\":"<<bin.second<<'}';}out<<']';
       }out<<'}';
-    }out<<"}}";return out.str();
+    }out<<"},\"semantic_commands\":{";first=true;
+    for(auto &command:commands){if(!first)out<<',';first=false;out<<'"'<<command.first.first<<':'<<command.first.second<<"\":"<<command.second.json();}
+    out<<"},\"semantic_missing\":[";first=true;for(auto &name:semantic_missing){if(!first)out<<',';first=false;out<<'"'<<name<<'"';}
+    out<<"]}";return out.str();
   }
   ~Counts(){ObserverScope isolation;const char *path=std::getenv("SWDB_COUNTS_OUTPUT");if(!path)return;
     std::ofstream out(path);std::string root=trials.empty()?snapshot():trials.front();root.pop_back();out<<root<<",\"trials\":[";
@@ -130,7 +138,7 @@ struct Counts {
 };
 Counts &counts(){static Counts value;return value;}
 extern "C" void __swdb_begin(){if(observerEntered)return;ObserverScope isolation;auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);c.clear();c.active=true;}
-extern "C" void __swdb_end(){if(observerEntered)return;ObserverScope isolation;auto &c=counts();c.active=false;std::lock_guard<std::mutex> lock(c.mutex);c.trials.push_back(c.snapshot());}
+extern "C" void __swdb_end(){if(observerEntered)return;ObserverScope isolation;auto &c=counts();c.active=false;std::lock_guard<std::mutex> lock(c.mutex);if(c.command_depth)c.semantic_missing.insert("command_crosses_roi");c.trials.push_back(c.snapshot());}
 extern "C" void __swdb_source(uint64_t source){if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.sources.push_back(source);}
 extern "C" void __swdb_trip(uint32_t region,uint64_t n){if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.trips[region]+=n;if(n)c.observe(region);}
 extern "C" void __swdb_op(uint32_t region,uint32_t kind,uint64_t n){if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.ops[region][kind]+=n;c.observe(region);}
@@ -167,4 +175,63 @@ extern "C" void __swdb_call_v2(uint32_t site,uint64_t size,uint32_t known,uint32
     else add(shape.lifetimes,it->second.size,shape.unknown_free_lifetimes);
   } else if(known)add(shape.lengths,size,shape.unknown_lengths);
   else ++shape.unknown_lengths;
+}
+
+extern "C" void __swdb_command_enter(uint32_t descriptor,uint32_t site,uint32_t region,uint64_t pointer,uint32_t alias,uint64_t active,uint32_t active_known){
+  if(observerEntered)return;ObserverScope isolation;auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);
+  swdb_logical::Frame frame;frame.site=site;frame.descriptor=descriptor;frame.region=region;frame.pointer=pointer;
+  auto *object=c.registry.resolve(pointer,1);
+  if(object){frame.object=object->id;frame.base=object->base;frame.extent=object->size;}
+  auto *parent=swdb_logical::current();frame.alias=alias && parent && parent->descriptor==descriptor && ((frame.object && parent->object==frame.object) || (!frame.object && parent->pointer==pointer));
+  if(swdb_logical::suppressed_depth || swdb_logical::frames.size()>=128){++swdb_logical::suppressed_depth;c.semantic_missing.insert("command_nesting_state_budget");return;}
+  swdb_logical::frames.push_back(std::move(frame));
+  if(!swdb_logical::frames.back().alias){++c.command_depth;
+    if(c.active){auto &total=c.commands[{site,region}];total.descriptor=descriptor;total.region=region;++total.executions;c.observe(region);
+      if(active_known)swdb_logical::add(total.active_elements,active,total);else ++total.active_unknown;
+    }
+  }
+}
+extern "C" void __swdb_command_leave(uint32_t site,uint32_t unwound){
+  if(observerEntered)return;ObserverScope isolation;auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);
+  if(swdb_logical::suppressed_depth){--swdb_logical::suppressed_depth;return;}
+  auto &frames=swdb_logical::frames;size_t index=frames.size();while(index && frames[index-1].site!=site)--index;
+  if(!index){c.semantic_missing.insert("unmatched_command_leave");return;}
+  while(frames.size()>=index){auto &frame=frames.back();
+    if(!frame.alias){auto &total=c.commands[{frame.site,frame.region}];swdb_logical::close(frame,total,c.logical_entries,c.logical);
+      if(unwound){total.missing.insert("command_unwind");total.requests_complete=false;total.rows_complete=false;}
+      --c.command_depth;
+    }frames.pop_back();
+  }
+}
+extern "C" void __swdb_domain_trip(uint32_t region,uint64_t n,uint32_t host){
+  if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);
+  if(swdb_logical::suppressed_depth || swdb_logical::current())return;if(!host){if(c.command_depth)c.semantic_missing.insert("domain_context_propagation");return;}
+  c.trips[region]+=n;if(n)c.observe(region);
+}
+extern "C" void __swdb_domain_op(uint32_t region,uint32_t kind,uint64_t n,uint32_t host){
+  if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);
+  if(swdb_logical::suppressed_depth)return;
+  if(auto *frame=swdb_logical::current()){c.commands[{frame->site,frame->region}].bookkeeping_ops[kind]+=n;return;}
+  if(!host){if(c.command_depth)c.semantic_missing.insert("domain_context_propagation");return;}
+  c.ops[region][kind]+=n;c.observe(region);
+}
+extern "C" void __swdb_domain_access(uint32_t site,uint32_t region,uint64_t address,uint64_t n,uint64_t width,uint32_t update,uint32_t host,uint64_t target_roles,uint64_t bookkeeping_roles){
+  if(observerEntered)return;ObserverScope isolation;auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);
+  if(swdb_logical::suppressed_depth)return;
+  if(auto *frame=swdb_logical::current()){
+    if(c.active)swdb_logical::observe(*frame,c.commands[{frame->site,frame->region}],address,n,width,update,c.registry,c.logical_entries,c.logical,target_roles,bookkeeping_roles);return;
+  }
+  if(!host){if(c.active && c.command_depth)c.semantic_missing.insert("domain_context_propagation");return;}
+  c.registry.observe(region,address,n,width,update,c.active);if(c.active)recordAccess(c,site,region,address,n,width);
+}
+extern "C" void __swdb_domain_call(uint32_t site,uint64_t size,uint32_t known,uint32_t region,uint64_t pointer,uint32_t action,uint32_t host,uint32_t body){
+  if(observerEntered)return;
+  {ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);
+    if(swdb_logical::suppressed_depth)return;
+    if(auto *frame=swdb_logical::current()){
+      if(!body){auto &total=c.commands[{frame->site,frame->region}];total.opaque_calls[site]++;total.missing.insert("functional_callee_count_coverage");total.requests_complete=false;total.rows_complete=false;total.unknown_target=true;}return;
+    }
+    if(!host){if(c.command_depth)c.semantic_missing.insert("domain_context_propagation");return;}
+  }
+  __swdb_call_v2(site,size,known,region,pointer,action);
 }
