@@ -852,4 +852,6 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
         if session:
             session.kill()
             session.restore_handlers()
+    from swdb.cpu_pairing import paired_estimate
+    data["paired_estimate"] = paired_estimate(store, data, request)
     return workflow.persist(args.records, data, getattr(args, "db", None))

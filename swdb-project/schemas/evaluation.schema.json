@@ -262,6 +262,63 @@
           "sha256"
         ]
       }
+    },
+    "paired_estimate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.cpu-paired-estimate.v1"
+        },
+        "basis": {
+          "const": "estimated"
+        },
+        "state": {
+          "enum": [
+            "known",
+            "unavailable",
+            "excluded"
+          ]
+        },
+        "seconds": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "estimate": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "native_timing_decides": {
+          "const": true
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "format",
+        "basis",
+        "state",
+        "seconds",
+        "estimate",
+        "native_timing_decides",
+        "missing",
+        "reason"
+      ]
     }
   },
   "required": [
