@@ -1,6 +1,7 @@
 # LANL main database: preparation notes
 
 Date: 2026-10-06 (Eastern Time)
+Updated: 2026-10-06 ET (ticket 03: versioned crosswalk v0 and validation command)
 Status: notes only. Nobody has contacted LANL, and we have no access to their database or repository.
 Source: the LANL slides in the ArchEvolve overview deck dated 10/6/2026 (slides 7–12), and the
 team meeting notes in `docs/meeting-2026-09-24.md` at the ArchEvolve root (branch `yanrujhou_main`).
@@ -52,6 +53,25 @@ Later questions:
 - Do they plan an evaluator, and in what form?
 
 ## 4. Draft mapping (unverified: built from slide pictures only)
+
+The versioned, machine-readable draft is
+[lanl-crosswalk-v0.yaml](../../docs/compatibility/lanl-crosswalk-v0.yaml), with its
+[small schema](../../schemas/compatibility/main_crosswalk.schema.json) and
+[format and validation instructions](../../docs/compatibility/README.md).
+It covers the ten table labels and visible field descriptions in slides 8–9 with
+25 mapping rows, plus 19 separable extension concepts. Every row is `unverified`
+and cites slide 8 or 9. Labels are separate from SQL identifiers: unseen identifiers
+stay null, and an empty destination list explicitly means no counterpart.
+
+The original overview PDF was inspected read-only; the crosswalk pins its filename,
+date and SHA-256. This draft does not claim coverage of fields absent from the slides
+or verified absence of extension concepts from LANL's unseen schema.
+
+From `swdb-project/`, check it with:
+
+```sh
+python -m swdb validate --crosswalk docs/compatibility/lanl-crosswalk-v0.yaml
+```
 
 | LANL table | SWDB record kind | Gap |
 |---|---|---|
