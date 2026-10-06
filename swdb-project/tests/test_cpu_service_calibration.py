@@ -81,3 +81,21 @@ def test_portable_service_runner_is_bounded_and_imports_only_as_fixture(records,
     excessive = run_swdb('cpu-service-calibrate', '--records', records.path,
         '--output', tmp_path / 'unbounded', '--fixture', '--max-wall-s', '901')
     assert excessive.returncode != 0 and not (tmp_path / 'unbounded').exists()
+
+
+def test_portable_clock_receipt_binds_separate_source_normalized_call_counts(records, tmp_path, llvm22):
+    records.copy_repo()
+    output = tmp_path / 'counted-service'
+    result = run_swdb('cpu-service-calibrate', '--records', records.path, '--output', output,
+        '--fixture', '--llvm-bin', llvm22, '--repetitions', '3', '--min-trial-s', '.002',
+        '--max-wall-s', '120')
+    assert result.returncode == 0, result.stdout + result.stderr
+    data = json.loads((output / 'receipt.json').read_text())
+    proof = data['services'][0]['denominator']['proof']
+    assert proof['pipeline']['version'] == 'source-normalized-v2'
+    assert proof['service_validation_points'] == [[32, 32], [64, 64], [96, 96]]
+    assert proof['driver_validation_points'] == [[32, 0], [64, 0], [96, 0]]
+    assert proof['source_sha256'] == data['context']['source_sha256']['CpuServiceWork.h']
+    assert len(proof['characterization_sha256']) == 6
+    assert data['context']['instrumented_timer'] is False
+    assert data['evidence_kind'] == 'fixture'

@@ -30,6 +30,8 @@ def register_cli(commands):
     run.add_argument('--output', type=Path, required=True)
     run.add_argument('--fixture', action='store_true')
     run.add_argument('--compiler', default='c++')
+    run.add_argument('--llvm-bin', type=Path, help='separate LLVM22 source-normalized-v2 service/driver count proof')
+    run.add_argument('--toolchain-flag', action='append', default=[])
     run.add_argument('--repetitions', type=int, default=7)
     run.add_argument('--min-trial-s', type=float, default=.05)
     run.add_argument('--max-wall-s', type=float, default=900)
@@ -138,14 +140,19 @@ def calibrate(args):
             raise Failure('service timing reached its wall budget')
         return _command(argv, timeout=remaining)
     source = Path(__file__).parent / 'native'
-    for name in ('CpuServiceTimer.cpp', 'CpuServiceWork.h'):
+    for name in ('CpuServiceTimer.cpp', 'CpuServiceWork.h', 'CpuServiceCount.cpp'):
         shutil.copy2(source / name, output / name)
     binary = output / 'service-timer'
-    flags = ['-O3', '-std=c++17']
-    compiler = command([args.compiler, '--version']).stdout.strip()
-    build = command([args.compiler, *flags, output / 'CpuServiceTimer.cpp', '-o', binary])
+    flags = ['-O3', '-std=c++17', *args.toolchain_flag]
+    compiler_path = args.llvm_bin / 'clang++' if args.llvm_bin else args.compiler
+    compiler = command([compiler_path, '--version']).stdout.strip()
+    build = command([compiler_path, *flags, output / 'CpuServiceTimer.cpp', '-o', binary])
     (output / 'build.stdout').write_text(build.stdout)
     (output / 'build.stderr').write_text(build.stderr)
+    proof = None
+    if args.llvm_bin:
+        from swdb.cpu_service_counts import clock_proof
+        proof = clock_proof(args.records, output, args.llvm_bin, args.toolchain_flag, command)
     n = 128
     while True:
         pilot = json.loads(command([binary, n, 'service_first']).stdout)
@@ -175,7 +182,7 @@ def calibrate(args):
             'scope': {'worker_scope': 'serial', 'cache_state': 'warm',
                 'runtime': 'current C++ standard library; portable contract only'},
             'denominator': {'level': 'source_normalized_work', 'basis': 'reported',
-                'proof': 'Portable clock-loop construction; separate native counting proof is required.'},
+                'proof': proof or 'Portable clock-loop construction; separate native counting proof is required.'},
             'trials': trials}]}
     if sum(p.stat().st_size for p in output.rglob('*') if p.is_file()) > 25 * 1024**2:
         raise Failure('service raw output reached its 25MiB cap')

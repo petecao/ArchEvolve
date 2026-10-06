@@ -17,7 +17,13 @@ are capped at11, wall time at900s and output at25MiB. The runner currently requi
 
 The importer admits only an explicitly labeled fixture with
 `--fixture`; its parameter basis is `reported`. Native import remains refused until
-matching source-count, compiler/runtime and socket-lane evidence is implemented.
+matching compiler/runtime and socket-lane evidence is implemented. Adding
+`--llvm-bin` runs six separate LLVM22 source-normalized-v2 count points against
+the same shared service body:32/64/96 service iterations and matched drivers. The
+clock numerator must be exactly one opaque ABI call per service iteration and
+zero in the driver. The receipt retains the actual ABI name, pipeline, shared
+header and count-driver hashes, observer hashes and all six characterization
+hashes. These instrumented runs never supply elapsed calibration values.
 The receipt format is `swdb.cpu-service-calibration.v1`, with `machine`, `threads`,
 `context`, `settings.repetitions`, `services[]` and canonical `identity_sha256`.
 Each service names its unit, event definition, execution scope and denominator,
