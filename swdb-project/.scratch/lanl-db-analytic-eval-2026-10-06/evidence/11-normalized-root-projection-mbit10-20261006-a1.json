@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-06 19:31 ET",
+  "format": "swdb.lanl-native-root-projection-export.v1",
+  "execution": {
+    "format": "swdb.lanl-native-root-projection-execution.v1",
+    "date": "2026-10-06 19:30 ET",
+    "source_commit": "30f425b5275765c7ccdb5115ab8bb00f8b5f5e98",
+    "count_source_commit": "eb1b2419f03c09d4ccbd97286fa7d1109f3f495b",
+    "timings_collected": false,
+    "evidence_scope": "Address-free static normalized LLVM root facts; no application evaluation or cost inference.",
+    "host": "mbit10",
+    "load": [
+      1.36376953125,
+      1.64892578125,
+      1.64208984375
+    ],
+    "disk_free_bytes": {
+      "/data1": 27905335296,
+      "/data": 60762746880
+    },
+    "compiler_sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113",
+    "projector_source_sha256": "8a8d1d13a9ae21623e8473c235e060a2137c307e15e0abb878f0af714bc30e48",
+    "selector_sha256": "2ed94f13f5ae9d30fece64df3a74504319acb25b9ffa281f1e7f9ea0aa361216",
+    "projector_binary_sha256": "5e8cd407380b318496d58e2ea987102287c88bebef50c5c69dcc697dab1cba0b",
+    "results": [
+      {
+        "kernel": "bc",
+        "input_sha256": {
+          "normalized.bc": "8c15ca5a8491f0e2d394abb0122cb9b3039327b179720d6bb058ef0b79ab6acf",
+          "source.json": "00a4d6af06c67c3f26f9914090e1752a8a9fac39c9f7790e16bce87b6905c943"
+        },
+        "output_sha256": "7f961d853c2af55c523a10cbeada472d02a4aa11e924e996f966e171c35adaf9",
+        "output_bytes": 130746
+      },
+      {
+        "kernel": "bfs",
+        "input_sha256": {
+          "normalized.bc": "a65f27c06439fbf5212d2ec42bf0647e8b3538ebe2382bec52e31fdf05e3126a",
+          "source.json": "1e743800d737bd1688b6b94a9494c3fd7746ba5105ad423d3eb8659cca0734ae"
+        },
+        "output_sha256": "2c4a5bd34d8724565bb643c64732b8231e32b4e34530e6ffdc3b8367253ee8f7",
+        "output_bytes": 89779
+      }
+    ],
+    "all_inputs_byte_identical": true
+  },
+  "socket_lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/lanl-native-root-projection-20261006-a1/run.sh"
+    ],
+    "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+    "ended_utc": "2026-10-06T23:30:12Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "lanl-native-root-projection-20261006-a1",
+    "lease_generation": 532,
+    "lease_name": "mbit10-evaluation-node1",
+    "load1_at_start": 1.22,
+    "load1_max": 32,
+    "node": 1,
+    "numa_memory_policy": "bind:1",
+    "numactl": "--cpunodebind=1 --membind=1",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-06T23:30:06Z"
+  },
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-native-root-projection-20261006-a1",
+  "started": "2026-10-06T23:30:06.241448+00:00",
+  "completed": "2026-10-06T23:30:12Z",
+  "exit_code": 0,
+  "projections": {
+    "bfs": {
+      "all_sites_cross_checked": true,
+      "enumerated_access_sites": 4436,
+      "enumerated_call_sites": 1319,
+      "selected_access_sites": 58,
+      "selected_bulk_call_sites": 7,
+      "root_classes": {
+        "argument": 18,
+        "alloca": 19,
+        "loaded_pointer": 8,
+        "phi_pointer": 1
+      },
+      "output_sha256": "2c4a5bd34d8724565bb643c64732b8231e32b4e34530e6ffdc3b8367253ee8f7",
+      "output_bytes": 89779,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-bfs-normalized-root-projection-mbit10-20261006-a1.json"
+    },
+    "bc": {
+      "all_sites_cross_checked": true,
+      "enumerated_access_sites": 5551,
+      "enumerated_call_sites": 1441,
+      "selected_access_sites": 88,
+      "selected_bulk_call_sites": 6,
+      "root_classes": {
+        "argument": 21,
+        "alloca": 27,
+        "phi_pointer": 3,
+        "loaded_pointer": 7,
+        "call_result": 1,
+        "unsupported_pointer_producer": 1
+      },
+      "output_sha256": "7f961d853c2af55c523a10cbeada472d02a4aa11e924e996f966e171c35adaf9",
+      "output_bytes": 130746,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-bc-normalized-root-projection-mbit10-20261006-a1.json"
+    }
+  },
+  "raw_ir_and_binary_retained_remote": true,
+  "identity_sha256": "27651edf0f45001986a3e5bcae7c6e7862d7c7edffa1915dff81006ff202309d"
+}
