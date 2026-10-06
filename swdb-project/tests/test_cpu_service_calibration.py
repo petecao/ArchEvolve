@@ -1,0 +1,62 @@
+"""Native service calibration through public commands. Created: 2026-10-06 ET."""
+import hashlib
+import json
+
+import pytest
+
+from conftest import run_swdb
+
+
+def save_receipt(tmp_path, data):
+    data['identity_sha256'] = hashlib.sha256(json.dumps(data, sort_keys=True,
+        separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+    path = tmp_path / 'service-receipt.json'
+    path.write_text(json.dumps(data))
+    return path
+
+
+def fixture_receipt():
+    return {'format': 'swdb.cpu-service-calibration.v1', 'evidence_kind': 'fixture',
+        'machine': 'mbit10', 'threads': 1,
+        'context': {'compiler_version': 'hand fixture', 'architecture': 'fixture'},
+        'settings': {'repetitions': 3},
+        'services': [{'id': 'clock.now', 'unit': 'seconds/call',
+            'event_definition': 'One system_clock::now call; hand fixture only.',
+            'scope': {'worker_scope': 'serial', 'cache_state': 'warm'},
+            'denominator': {'level': 'source_normalized_work', 'basis': 'reported',
+                'proof': 'Hand-computed fixture, not native count evidence.'},
+            'trials': [{'events': 10, 'gross_seconds': seconds, 'driver_seconds': 1.0,
+                'order': order} for seconds, order in [(2.0, 'service_first'),
+                    (2.2, 'driver_first'), (1.8, 'service_first')]]}]}
+
+
+def test_import_service_fixture_retains_paired_trials_and_reported_cost(records, tmp_path):
+    result = run_swdb('import-cpu-service-calibration', '--records', records.path,
+        '--receipt', save_receipt(tmp_path, fixture_receipt()), '--id', 'fixture.clock.cost',
+        '--fixture', '--format', 'json')
+    assert result.returncode == 0, result.stdout + result.stderr
+    data = json.loads(result.stdout)
+    assert data['kind'] == 'cpu_service_calibration' and data['evidence_kind'] == 'fixture'
+    service = data['services'][0]
+    assert service['parameter'] == {'value': .1, 'basis': 'reported',
+        'source': 'Service calibration fixture.clock.cost; clock.now; paired elapsed/work trials.',
+        'unit': 'seconds/call'}
+    assert service['seconds_per_event']['spread'] == pytest.approx(.04)
+    assert service['seconds_per_event']['repetitions'] == 3
+    assert [t['driver_seconds'] for t in service['trials']] == [1.0, 1.0, 1.0]
+    checked = run_swdb('validate', '--records', records.path)
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+
+
+def test_unresolved_paired_subtraction_keeps_unknown_cost_without_clamping(records, tmp_path):
+    data = fixture_receipt()
+    for trial, gross in zip(data['services'][0]['trials'], [.9, 1.2, 1.0]):
+        trial['gross_seconds'] = gross
+    result = run_swdb('import-cpu-service-calibration', '--records', records.path,
+        '--receipt', save_receipt(tmp_path, data), '--id', 'fixture.unresolved.cost',
+        '--fixture', '--format', 'json')
+    assert result.returncode == 0, result.stdout + result.stderr
+    service = json.loads(result.stdout)['services'][0]
+    assert service['parameter']['value'] is None and service['parameter']['basis'] == 'unknown'
+    assert service['seconds_per_event']['min'] == pytest.approx(-.01)
+    assert 'subtraction' in service['missing'][0]

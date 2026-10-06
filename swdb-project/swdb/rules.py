@@ -76,6 +76,9 @@ def check(record, ctx):
     elif kind == "cpu_calibration":
         from swdb.cpu_calibration_records import validate_record
         yield from validate_record(record, ctx)
+    elif kind == "cpu_service_calibration":
+        from swdb.cpu_service_calibration import validate_record
+        yield from validate_record(record, ctx)
     elif kind == "kernel":
         yield from _kernel(record, ctx)
     elif kind == "implementation":
