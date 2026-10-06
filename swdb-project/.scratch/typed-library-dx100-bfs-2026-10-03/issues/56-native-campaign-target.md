@@ -1,7 +1,7 @@
 # 56 — Native-CPU Extensa campaign target for BFS
 
 Created: 2026-10-03
-Updated: 2026-10-05 16:55 ET (legacy-lease audit of a5–a8, code review S13; a8 A/A re-draw disclosed); 2026-10-05 15:00 ET (a8 addendum: best certified and re-evaluated, ticket 75); 2026-10-05 10:45 ET (a8 erratum, ticket 74); 2026-10-05 10:00 ET (a8 result: uniform gain, uncertified; Kronecker inconclusive); 2026-10-05 03:15 ET (a7 erratum; a8 pre-registered); 2026-10-05 02:50 ET (a7 addendum: speed rule ci_width.v2, uniform no_gain at plateau, Kronecker baseline_unstable); 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
+Updated: 2026-10-05 22:30 ET (note: a8's uniform best is named after the Kronecker class, ticket 80); 2026-10-05 16:55 ET (legacy-lease audit of a5–a8, code review S13; a8 A/A re-draw disclosed); 2026-10-05 15:00 ET (a8 addendum: best certified and re-evaluated, ticket 75); 2026-10-05 10:45 ET (a8 erratum, ticket 74); 2026-10-05 10:00 ET (a8 result: uniform gain, uncertified; Kronecker inconclusive); 2026-10-05 03:15 ET (a7 erratum; a8 pre-registered); 2026-10-05 02:50 ET (a7 addendum: speed rule ci_width.v2, uniform no_gain at plateau, Kronecker baseline_unstable); 2026-10-04 23:10 ET (a6 addendum: CI-width gate pilot, both classes baseline_unstable, follow-up 72); 2026-10-04 21:30 ET (isolation test a5 result; closed baseline_unstable for Kronecker, follow-up 66); 2026-10-04 12:40 ET (isolation test pre-registered); 2026-10-04 12:15 ET (campaign a4, Answer update); 2026-10-04 10:55 ET (evaluator v2 pilot, Answer update); 2026-10-04 ET (resolved); 2026-10-03 ET (revised by ticket 47; [design decisions](../extensa-design-2026-10-03.md) D3, D4, D9)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 51, 53, 54, 55
@@ -449,4 +449,13 @@ file at every acquisition, heartbeat and release, so no `hostlock.sh` holder too
 scalar TDStep width 0.055) and passed it (0.027). a8 was pre-registered because of a7's infrastructure defect (the
 miscounted capacity calls, ticket 73), not because of that pilot outcome, and its pre-registration said a fresh
 pilot would run. Still, Kronecker's a8 verdict comes from a second draw of a gate that had failed once.
+
+**Note 2026-10-05 22:30 ET: a8's uniform best is named after the Kronecker class (ticket
+[80](80-spec-review-campaign-fixes.md), spec review C19).** In iteration 1 both classes produced the same tree
+(`7acca955…`; the patch set no per-class knob), and the harness then reused the first class's candidate ID for the
+second class. So a8's **uniform** best is recorded as `extensa-native-bfs-20261005-a8.it1.kronecker.a0`, and the
+uniform comparisons, its certifications (ticket 75), its promotion and its team re-evaluation all cite that ID. The
+Kronecker verdict (`inconclusive`) and the uniform verdict (`gain`) are separate comparisons of the same artifact;
+no measurement changes. The records stand as written. From ticket 80 on, a campaign writes one candidate record per
+class (the second pointing to the shared tree), so a class's best is named after its class.
 

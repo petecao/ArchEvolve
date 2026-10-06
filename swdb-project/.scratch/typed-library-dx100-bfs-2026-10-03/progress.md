@@ -1,13 +1,19 @@
 # Implementation and evaluation progress
 
-Updated: 2026-10-05 17:25 ET (current status of tickets 01–79; everything below "Status on 2026-10-03" is
-historical); 2026-10-03 19:36 ET.
+Updated: 2026-10-06 00:25 ET (ticket 80 resolved; tickets 01–80); 2026-10-05 17:25 ET (current status of
+tickets 01–79; everything below "Status on 2026-10-03" is historical); 2026-10-03 19:36 ET.
 
-## Current status (2026-10-05 17:25 ET)
+## Current status (2026-10-06 00:25 ET)
 
-- **Tickets 01–79:** 72 resolved, 6 ready-for-human, 1 wontfix (31). The ready-for-human ones are Yan-Ru's:
+- **Tickets 01–80:** 73 resolved, 6 ready-for-human, 1 wontfix (31). The ready-for-human ones are Yan-Ru's:
   02 (Peter confirms the license), 30, 37, 59 and 60 (messages the agent drafted; Yan-Ru sends) and 79
   (ratify certify 1.5's behavior changes).
+- **Ticket 80 (2026-10-06 00:25 ET, worktree branch, not pushed; Mac only; full suite 4,429 passed, 38 skipped):** the remaining spec-review findings on the
+  Extensa campaign loop. gem5 baselines and provider waits count toward lane-hours; no unwired test-generation
+  call; companion runs and class baselines are pruned; `base_source` must be the fork's scalar TDStep; library
+  operations stay out of REGIONS.json; new BC records carry BC labels and no race result; `swdb campaign-export`
+  copies a candidate artifact's closure to the team store; one candidate record per class. The judgment calls
+  are in the spec's "Awaiting ratification" table.
 - **Latest results.** Native campaign a8 (ticket 56): uniform `gain` 1.457 [1.450, 1.472], Kronecker
   `inconclusive`. Its best is certified under contract `contract.bfs_tdstep_frontier_staging` and re-evaluated
   under a team protocol: 1.454 [1.442, 1.464] on uniform22 (ticket 75). Certify 1.5 and library-operation

@@ -7,6 +7,7 @@ Updated: 2026-10-05 03:15 (Eastern Time): provider capacity and protected region
 Updated: 2026-10-05 10:45 (Eastern Time): guard stops for the harness's own runtime limit (ticket 74)
 Updated: 2026-10-04 23:25 (Eastern Time): speed rule `swdb.speed_rule.ci_width.v2` (ticket 72)
 Updated: 2026-10-05 17:50 (Eastern Time): review attribution and corrections; promotion currency (spec review C1, C3, C9, C18)
+Updated: 2026-10-05 22:30 (Eastern Time): campaign budgets, pruning, regions, per-class candidate records and `swdb campaign-export` (ticket 80)
 
 Extensa mode (ADR 0009, ADR 0010; decisions in
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`) adds optional
@@ -144,6 +145,42 @@ row as `interrupted_iteration`. The rewrite workspace adds `PROTECTED.json`, and
 Added 2026-10-05 ET (ticket 74): a provider call the guard stopped only for its own provider-runtime thread cap
 is recorded with outcome `guard_infrastructure`, `counted: false`, `retry_after_s` and `guard_reason`; after two
 retries the campaign stops `infrastructure_failure`. A synthesis call so stopped pauses with that reason.
+
+Added 2026-10-05 22:30 ET (ticket 80, spec review; agent-decided under Yan-Ru's delegation, revisable):
+
+- **Waits are lane time (C6).** A capacity backoff or guard retry wait is charged to `lane_hours` (it runs inside
+  the socket lease); `budgets.used.provider_wait_hours` is that part. A wait that would pass the cap is not started:
+  the campaign stops `lane_hours`. The calls stay uncounted.
+- **gem5 baselines are charged (C5).** A class baseline evaluated inside an iteration is charged and checked like a
+  `--baselines-only` one.
+- **No test-generation call (C7).** Until a certify command version takes generated differential-test inputs, no
+  `independent_test_generation` call is made or charged; an iteration's `skipped_calls` rows (`role`, `contracts`,
+  `reason`) record the first use of each contract.
+- **Library operations stay out of REGIONS.json (C15).** The iteration's `site_finder` adds `excluded` (`entry`,
+  `kind`, `region`, `reason`): each library-operation application the site finder found and the provider was not
+  offered. The region itself is still offered (an edit there without a contract is uncertified).
+- **Pruning (C8).** Each gem5 comparison prunes its companion runs with the observed run; the per-class gem5
+  baselines are pruned when the campaign stops, and a native A/A block's runs after the block. A team claim keeps them.
+- **One candidate record per class (C19).** When two classes produce the same tree, the second class gets its own
+  candidate record whose `artifact` is the first class's tree, with `extensions.shared_tree` (`candidate`, `path`,
+  `note`) naming it; the duplicate tree is removed. The same tree again in the same class reuses that class's ID.
+- **Base source (C14).** `swdb validate` refuses a `base_source` other than `fork_scalar_tdstep`: every adapter
+  builds candidates from the fork's scalar-only snapshot.
+
+## Exporting a campaign's candidate artifacts (ticket 80, 2026-10-05 ET)
+
+`swdb campaign-export CAMPAIGN_FILE --candidate ID [--candidate ID ...] [--claims] [--dry-run] [--records TEAM]
+[--runs-root ROOT]` copies records from the campaign store (`<runs root>/extensa/<campaign>/records/`) into the
+team store, byte for byte, tags kept. For each named candidate artifact (listed in the campaign summary, not
+rejected): the candidate, every certification bound to it, every evaluation of it (with aggregates over them),
+every comparison, evaluation pair or certification that cites them, the retention records of every exported
+evaluation, and the closure of all of these. Team claims of the campaign that cite an exported record come along
+with their closure (`--claims`: every team claim of the campaign). The sha256 of each source file is checked on
+the written file; a record already in the team store must be byte-identical, or nothing is written; the team store
+is validated with the new records first. The result (format `swdb.campaign-export.v1`) lists every record as
+`copied`, `present` or `would_copy` (dry run), each candidate's derived level and current promotion, and is also
+written as a receipt under `<campaign folder>/exports/`. Exporting precedes `swdb promote`; the team boundary keeps
+refusing the exported records until the promotion and its team re-evaluation exist.
 
 `swdb validate` refuses a gem5 campaign with repetitions other than 1 or more than one
 source, a native campaign with fewer than 5 repetitions, `region_pairs: true`, another

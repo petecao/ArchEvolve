@@ -1,7 +1,7 @@
 # Map: Typed library and DX100 BFS rewrites in ArchEvolve and Extensa modes
 
 Created: 2026-10-03 02:28 ET
-Updated: 2026-10-05 22:00 ET (code-review closing pointer: test totals, deliberate non-changes); 2026-10-05 18:35 ET (row 79; code-review and spec-review pointer); 2026-10-05 18:20 ET (certification code-review fixes pointer: version tables, certify 1.6, BC record); 2026-10-05 17:20 ET (code review: one Updated line; row 66 deduplicated, row 70 in order, row 77 added; link pointers for tickets 01–36); 2026-10-05 16:10 ET (row 78; certify 1.5 and library-operation 1.2, evaluator process); 2026-10-05 15:00 ET (row 75; ticket 56 a8 addendum); 2026-10-05 13:25 ET (row 76; certify 1.4); 2026-10-05 10:45 ET (row 74; a8 erratum pointer); 2026-10-05 10:00 ET (ticket 56 a8 pointer); 2026-10-05 03:15 ET (row 73; a7 erratum and a8 pre-registration pointers); 2026-10-05 02:50 ET (ticket 56 a7 pointer); 2026-10-05 00:40 ET (row 70 added; certification isolation, certify 1.3); 2026-10-04 23:40 ET (row 72 resolved; ticket 72 pointer); 2026-10-04 23:10 ET (row 68 added; ticket 56 a6 pointer); 2026-10-04 21:50 ET (row 69 added; profiling role strict schema); 2026-10-04 21:50 ET (row 66 added; ticket 56 a5 result and 57 a7 audit pointers); 2026-10-04 21:40 ET (row 68 added; knob_range and schedule_range); 2026-10-04 21:35 ET (rows 66 resolved and 67 added; pointers for tickets 66 and 67); 2026-10-04 21:10 ET (row 67 added; forged_frontier v2 and the a7 re-judgement); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review) 2026-10-04 23:10 ET (row 68 added; ticket 56 a6 pointer); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review) 2026-10-05 00:40 ET (row 70 added; certification isolation, certify 1.3)
+Updated: 2026-10-06 00:25 ET (row 80 and its pointer: spec-review campaign fixes); 2026-10-05 22:00 ET (code-review closing pointer: test totals, deliberate non-changes); 2026-10-05 18:35 ET (row 79; code-review and spec-review pointer); 2026-10-05 18:20 ET (certification code-review fixes pointer: version tables, certify 1.6, BC record); 2026-10-05 17:20 ET (code review: one Updated line; row 66 deduplicated, row 70 in order, row 77 added; link pointers for tickets 01–36); 2026-10-05 16:10 ET (row 78; certify 1.5 and library-operation 1.2, evaluator process); 2026-10-05 15:00 ET (row 75; ticket 56 a8 addendum); 2026-10-05 13:25 ET (row 76; certify 1.4); 2026-10-05 10:45 ET (row 74; a8 erratum pointer); 2026-10-05 10:00 ET (ticket 56 a8 pointer); 2026-10-05 03:15 ET (row 73; a7 erratum and a8 pre-registration pointers); 2026-10-05 02:50 ET (ticket 56 a7 pointer); 2026-10-05 00:40 ET (row 70 added; certification isolation, certify 1.3); 2026-10-04 23:40 ET (row 72 resolved; ticket 72 pointer); 2026-10-04 23:10 ET (row 68 added; ticket 56 a6 pointer); 2026-10-04 21:50 ET (row 69 added; profiling role strict schema); 2026-10-04 21:50 ET (row 66 added; ticket 56 a5 result and 57 a7 audit pointers); 2026-10-04 21:40 ET (row 68 added; knob_range and schedule_range); 2026-10-04 21:35 ET (rows 66 resolved and 67 added; pointers for tickets 66 and 67); 2026-10-04 21:10 ET (row 67 added; forged_frontier v2 and the a7 re-judgement); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review) 2026-10-04 23:10 ET (row 68 added; ticket 56 a6 pointer); 2026-10-04 ET (ticket rows 56–65 synced with the ticket files by the final code review) 2026-10-05 00:40 ET (row 70 added; certification isolation, certify 1.3)
 **Type:** ticket map
 **Status:** ready-for-agent
 **Spec:** [spec.md](spec.md)
@@ -123,6 +123,7 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
 | 77 | [Library-operation certification 1.1: record verdicts, blinded driver faults, attributed controls](issues/77-library-operation-certification-records.md) | resolved | 76 |  |
 | 78 | [Certify 1.5 and library-operation command 1.2: record-keeping in a separate evaluator process](issues/78-certification-evaluator-process.md) | resolved | 76, 77 |  |
 | 79 | [Certify 1.5 behavior changes made inside ticket 78 (commit 93a2a94): awaiting ratification](issues/79-certify-1-5-behavior-changes.md) | ready-for-human | — |  |
+| 80 | [Spec-review fixes: Extensa campaign budgets, pruning and export](issues/80-spec-review-campaign-fixes.md) | resolved | — |  |
 
 ## Context pointers
 
@@ -290,4 +291,13 @@ Decisions: [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md) (agent-d
   are unchanged; persisted texts and IDs (`harness_scan`, coverage `limits` text) unchanged; the
   `harness`/`oracle` wording in hash-pinned profile and contract YAML is legacy text; splitting `campaign.py` and
   `swdb/extensa/probes.py` is left as a follow-up.
+- 2026-10-06 00:25 ET: ticket 80 resolved (spec review C5–C8, C14–C17, C19; agent-decided under Yan-Ru's delegation;
+  revisable; worktree branch, not pushed). gem5 class baselines and provider waits count toward lane-hours (waits are
+  charged, not released: the `socket_lane.sh` lease lives as long as the process); no test-generation call until a
+  certify version takes its inputs; gem5 companion runs pruned after their comparison and class baselines at stop;
+  `base_source` must be `fork_scalar_tdstep`; library operations kept out of REGIONS.json (`site_finder.excluded`);
+  new BC gem5 records carry BC labels (`context.coverage_labels`) and no race result; `swdb campaign-export` copies a
+  candidate artifact's closure to the team store; one candidate record per class (a8 naming noted in
+  [56](issues/56-native-campaign-target.md)). Full suite: 4,429 passed, 38 skipped, 0 failed (4 partitions).
+  [80-spec-review-campaign-fixes](issues/80-spec-review-campaign-fixes.md).
 
