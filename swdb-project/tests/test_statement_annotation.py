@@ -1,6 +1,6 @@
 """Statement claims, independent simulated ranks and provider-role fixtures.
 
-Updated: 2026-10-03. Fixtures never constitute real-provider or lab evidence.
+Updated: 2026-10-05 ET (shared tests/testkit); 2026-10-03. Fixtures never constitute real-provider or lab evidence.
 """
 
 import copy
@@ -17,7 +17,6 @@ from swdb.bfs_profiling import parse_callgrind_lines, _tdstep_source
 from swdb.cli import Failure
 from swdb.schemas import SchemaSet
 from swdb import paths, vocab
-from test_provider_workspace import proposal_setup
 
 
 def small_source(tmp_path, count=7):
@@ -210,7 +209,7 @@ def test_role_inputs_and_lane_refusal_precede_workspace(tmp_path,monkeypatch):
         with pytest.raises(Failure):
             provider_roles.prepare(role,{name:content},tmp_path/'blocked',{'kind':'external_fixture'})
     from swdb import provider_guard
-    monkeypatch.setattr(provider_guard,'_lane',lambda: (_ for _ in ()).throw(provider_guard.GuardError('mbit10 lane required')))
+    monkeypatch.setattr(provider_guard,'verified_lane',lambda: (_ for _ in ()).throw(provider_guard.GuardError('mbit10 lane required')))
     with pytest.raises(Failure,match='mbit10 lane'):
         provider_roles.run(role,{'code.cc':'source'},'read',{'kind':'codex'},tmp_path/'real')
     assert not (tmp_path/'real').exists()
@@ -273,8 +272,8 @@ def test_agent_claim_schema_accepts_only_claim_bases(tmp_path):
 
 
 @pytest.mark.parametrize('kind',['codex','claude'])
-def test_annotate_fixture_role_through_public_cli(proposal_setup,tmp_path,kind):
-    records,runs,source,_=proposal_setup
+def test_annotate_fixture_role_through_public_cli(workspace_proposal_setup,tmp_path,kind):
+    records,runs,source,_=workspace_proposal_setup
     impl=records.read('implementations/gapbs-bfs-do.yaml')
     file=Path(source['artifact']['path'])/'src/bfs.cc'
     lines=file.read_text().splitlines()

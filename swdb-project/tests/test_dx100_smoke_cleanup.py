@@ -1,5 +1,4 @@
-"""Driver interruption preserves evidence and reaps nested jobs. Updated: 2026-09-25 ET."""
-import importlib.util
+"""Driver interruption preserves evidence and reaps nested jobs. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-25 ET."""
 import json
 import os
 from pathlib import Path
@@ -10,15 +9,14 @@ import sys
 import pytest
 
 from swdb import artifacts
+from testkit.toolchain import load_script
 
 
 @pytest.mark.parametrize('name', ['dx100_smoke', 'dx100_candidate_smoke'])
 @pytest.mark.parametrize('interruption', ['deadline', 'signal'])
 def test_smoke_reaps_nested_evaluator_and_preserves_failure(tmp_path, monkeypatch, name, interruption):
     script = Path(__file__).resolve().parents[1] / 'scripts' / (name + '.py')
-    spec = importlib.util.spec_from_file_location(name + '_fixture', script)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    module = load_script(script, name + '_fixture')
     package = tmp_path / 'swdb'
     package.mkdir()
     (package / '__main__.py').write_text('''import json,os,pathlib,signal,subprocess,sys,time

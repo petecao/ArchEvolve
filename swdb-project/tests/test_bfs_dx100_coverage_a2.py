@@ -15,7 +15,7 @@ import pytest
 from scripts import bfs_dx100_coverage_a2 as case
 from swdb import artifacts
 from test_bfs_dx100_coverage_execution import compiled_fixture, coverage_fixture, write_ref
-from test_bfs_native_one_thread_pilot import reader_fixture
+from testkit.native_pilot import build_reader_fixture
 
 
 def plan():
@@ -84,7 +84,7 @@ def test_original_outer_clock_must_fit_the_fixed_window(monkeypatch,fault):
 
 
 def native_fixture(tmp_path,monkeypatch):
-    receipt,native_plan,store,reference=reader_fixture.__wrapped__(tmp_path,monkeypatch)
+    receipt,native_plan,store,reference=build_reader_fixture(tmp_path,monkeypatch)
     fixed=plan()['native']; begin=case.stamp(receipt['started']);end=case.stamp(receipt['finished'])
     runtime={'root':str(tmp_path),'repository_commit':fixed['commit'],'files':{'fixture_only':True},
              'python':write_ref(tmp_path/'python','fixture Python identity')}

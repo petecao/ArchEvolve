@@ -14,7 +14,6 @@ import pytest
 import yaml
 
 from swdb import provider_guard
-from test_provider_workspace import proposal_setup
 
 pytestmark = pytest.mark.skipif(sys.platform != "linux", reason="Landlock ABI 4 checks require Linux")
 
@@ -40,8 +39,8 @@ def test_standalone_probe_uses_registered_fixture_and_owned_cleanup(tmp_path):
 @pytest.mark.parametrize("probe,blocked", [("inside_read", False), ("outside_read", True),
                                          ("outside_write", True), ("outside_tcp", True),
                                          ("allowed_tcp", False)])
-def test_guard_confines_actual_fixture_syscalls(proposal_setup, tmp_path, probe, blocked):
-    records, runs, snapshot, request = proposal_setup
+def test_guard_confines_actual_fixture_syscalls(workspace_proposal_setup, tmp_path, probe, blocked):
+    records, runs, snapshot, request = workspace_proposal_setup
     program = tmp_path / "guard-fixture.py"
     plan = tmp_path / "guard-plan.json"
     outside = records.path / "implementations/gapbs-bfs-do.yaml"
@@ -113,7 +112,7 @@ if mode == "threads":
    threading.Thread(target=gate.wait, daemon=True).start()
   time.sleep(30); os._exit(0)
 elif mode == "runtime_threads":
- # The provider runtime itself over its 64-thread cap: a harness limit, not tool work.
+ # The provider runtime itself over its 64-thread cap: a guard runtime limit, not tool work.
  gate = threading.Event()
  for number in range(64):
   threading.Thread(target=gate.wait, daemon=True).start()
@@ -225,10 +224,10 @@ print(json.dumps({"type":"turn.completed"}), flush=True)
     ("workspace", "provider workspace exceeds"),
     ("command_timeout", "provider tool command exceeds the 120 s wall-time limit"),
 ])
-def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_path, mode, reason):
+def test_public_submit_enforces_actual_resource_overruns(workspace_proposal_setup, tmp_path, mode, reason):
     if mode == "cpu_escape" and set(os.sched_getaffinity(0)) == set(range(os.cpu_count())):
         pytest.skip("run inside socket_lane.sh: the observer's affinity is every CPU")
-    records, runs, _, request = proposal_setup
+    records, runs, _, request = workspace_proposal_setup
     program, plan = tmp_path / "resource-fixture.py", tmp_path / "resource-plan.json"
     program.write_text(RESOURCE_PROGRAM)
     lane = set(os.sched_getaffinity(0))
@@ -315,11 +314,11 @@ def test_public_submit_enforces_actual_resource_overruns(proposal_setup, tmp_pat
     if mode in {"threads", "orphan_threads", "supervisor_signals"}:
         measured = next(r for r in meta["guard_result"]["reasons"] if reason in r)
         assert int(re.search(r"tool threads=(\d+)", measured)[1]) > 16
-        assert provider_guard.harness_limit(Path(meta["audit"]["raw_log"]["path"]).parent) is None
+        assert provider_guard.guard_runtime_limit(Path(meta["audit"]["raw_log"]["path"]).parent) is None
     elif mode == "runtime_threads":
         measured = next(r for r in meta["guard_result"]["reasons"] if reason in r)
         assert int(re.search(r"runtime threads=(\d+)", measured)[1]) > 64
-        assert provider_guard.harness_limit(Path(meta["audit"]["raw_log"]["path"]).parent) == measured
+        assert provider_guard.guard_runtime_limit(Path(meta["audit"]["raw_log"]["path"]).parent) == measured
     elif mode == "workspace":
         growth = [workspace / "build" / name for name in ("resource-growth-a.bin", "resource-growth-b.bin")]
         assert sum(p.stat().st_size for p in growth) == 6*1024**3
@@ -357,9 +356,9 @@ print(json.dumps({"type":"turn.completed"}), flush=True)
 
 
 @pytest.mark.parametrize("probe", ["io_uring", "tcp_fastopen"])
-def test_codex_guard_refuses_untraced_network_syscalls(proposal_setup, tmp_path, probe):
+def test_codex_guard_refuses_untraced_network_syscalls(workspace_proposal_setup, tmp_path, probe):
     """Calls the connect() trace cannot see are refused for Codex-shaped sessions."""
-    records, runs, _, request = proposal_setup
+    records, runs, _, request = workspace_proposal_setup
     program, plan = tmp_path / "untraced.py", tmp_path / "untraced-plan.json"
     program.write_text(UNTRACED_PROGRAM)
     plan.write_text(json.dumps({"probe": probe}))

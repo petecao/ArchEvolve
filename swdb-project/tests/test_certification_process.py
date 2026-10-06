@@ -15,8 +15,9 @@ from swdb import certification as c
 from swdb import certification_blinding as blinding
 from swdb import certification_process as process
 from swdb.certification_faults import LIBRARY_FAULTS
-from swdb.cli import Failure, UsageError
+from swdb.cli import UsageError
 from swdb.store import Store
+from testkit.toolchain import require_gcc_openmp as _gcc
 
 ROOT = Path(__file__).resolve().parents[1]
 LIBRARY = (ROOT / 'library').resolve()
@@ -73,11 +74,6 @@ def test_record_files_are_named_by_nonce_only(tmp_path):
 
 # --- builds and full certifications -----------------------------------------------------------------------
 
-def _gcc():
-    try:
-        return c.compiler()
-    except Failure:
-        pytest.skip('certification requires GCC with OpenMP')
 
 
 def test_the_client_interface_shadows_only_the_strict_model():

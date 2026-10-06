@@ -11,9 +11,8 @@ import json
 import pytest
 
 from conftest import REPO
-from test_proposals import proposal_setup  # noqa: F401  (fixture)
-from test_bfs_native import evaluation_setup, evaluate  # noqa: F401  (fixture)
-from test_bfs_protocol import _workload_request, _payload, _settings, _command
+from testkit.bfs_native import evaluate
+from testkit.bfs_protocol import _workload_request, _payload, _settings, _command
 
 
 def _hash(path):

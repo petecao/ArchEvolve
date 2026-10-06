@@ -1,4 +1,4 @@
-"""Paired public coverage and retained-receipt guards. Updated: 2026-09-26 ET.
+"""Paired public coverage and retained-receipt guards. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-26 ET.
 
 All executions use the existing external compiler contract fixture. These
 observations establish message/evidence behavior, never empirical performance.
@@ -8,7 +8,7 @@ import copy
 import pytest
 
 from test_bfs_native_pair import paired_seed, paired_setup
-from test_bfs_protocol import _command, _payload
+from testkit.bfs_protocol import _command, _payload
 from swdb import artifacts, bfs_coverage
 from swdb.store import Store
 

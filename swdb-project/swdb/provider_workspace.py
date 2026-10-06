@@ -1,7 +1,9 @@
-"""Derived provider workspaces and source diffs. Updated: 2026-10-04 (login write-back).
+"""Derived provider workspaces and source diffs. Updated: 2026-10-05 ET (code review P7, J5).
 
 Trusted source and evaluator inputs are never writable provider inputs. Workspace
-edits are converted to a patch and pass the ordinary candidate protection path.
+edits are converted to a patch and pass the ordinary candidate-artifact protection path.
+The session's login file is placed by `provider_login.start` and written back by
+`Copy.write_back_safely`, the same calls the agent roles and prompt-only sessions use.
 """
 
 import copy
@@ -14,7 +16,7 @@ import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from swdb import artifacts, provider_login
+from swdb import artifacts, provider_guard, provider_login
 from swdb.cli import Failure
 
 FINAL_SCHEMA = {"type": "object", "additionalProperties": False,
@@ -22,7 +24,9 @@ FINAL_SCHEMA = {"type": "object", "additionalProperties": False,
                 "properties": {"interpretation": {"type": "string"},
                                "unresolved": {"type": "array", "items": {"type": "string"}}}}
 CONTEXT_DIR = ".swdb-context"
-WORKSPACE_LIMIT = 5 * 1024 ** 3
+WORKSPACE_LIMIT = provider_guard.WORKSPACE_BYTES
+#: Files larger than this are never compared with the login copy during cleanup.
+LOGIN_COPY_SCAN_BYTES = 1 << 20
 GENERATED_SUFFIXES = {".o", ".a", ".so", ".dylib", ".pyc", ".gcda", ".gcno", ".d", ".obj", ".pdb"}
 GENERATED_DIRS = {"build", "dist", "__pycache__", ".pytest_cache", "CMakeFiles"}
 HIDDEN_DIRS = {".git", ".codex", ".claude", ".agents", "records", "inputs", "workloads",
@@ -67,11 +71,7 @@ class Workspace:
                 self.login_copy.release()  # ticket 62: the session lock never outlives cleanup
             return
         if self.login_copy is not None and "login_writeback" not in self.metadata:
-            try:
-                self.metadata["login_writeback"] = self.login_copy.write_back()
-            except Exception as exc:   # never blocks deletion of the copy or the audit
-                self.metadata["login_writeback"] = {"written_back": False,
-                                                    "reason": f"write-back failed: {type(exc).__name__}"}
+            self.metadata["login_writeback"] = self.login_copy.write_back_safely()
         removed = []
         try:
             identity = self.login_path.stat()
@@ -88,8 +88,9 @@ class Workspace:
                         same = (state.st_dev, state.st_ino) == (identity.st_dev, identity.st_ino)
                         # 2026-10-04 ET (final code review): also remove copies of the login as
                         # it was handed over, even when the copy itself was later replaced.
-                        original = (self.login_copy is not None and state.st_size <= 1 << 20
-                                    and provider_login._sha(path.read_bytes()) == self.login_copy.snapshot_sha256)
+                        original = (self.login_copy is not None and state.st_size <= LOGIN_COPY_SCAN_BYTES
+                                    and provider_login.short_hash(path.read_bytes())
+                                    == self.login_copy.snapshot_short_hash)
                         if same or original or state.st_size == len(content) and path.read_bytes() == content:
                             path.unlink()
                             removed.append(path.relative_to(self.folder).as_posix())
@@ -102,7 +103,7 @@ class Workspace:
             self.login_copy.release()
 
 
-def _safe_name(name):
+def safe_name(name):
     canonical = artifacts.relative_path(name)
     if canonical != name or name == "." or not isinstance(name, str):
         raise Failure(f"provider workspace path is not canonical: {name!r}")
@@ -143,7 +144,7 @@ def prepare(request, source, package, store, output_dir, config):
     if not isinstance(extras, list) or any(not isinstance(name, str) for name in extras):
         raise Failure("proposal visible_files must be a list of source paths")
     for name in extras:
-        _safe_name(name)
+        safe_name(name)
         if name not in source_names:
             raise Failure(f"named provider file is absent from the source snapshot: {name}")
     hidden = {name for name in source_names if any(p in HIDDEN_DIRS for p in Path(name).parts)
@@ -151,13 +152,13 @@ def prepare(request, source, package, store, output_dir, config):
     evaluator = source.get("context", {}).get("evaluator", {})
     verifier = (evaluator.get("verifier") or {}).get("code") or {}
     if verifier.get("root") == "application" and not verifier.get("lines"):
-        hidden.add(_safe_name(verifier["path"]))
+        hidden.add(safe_name(verifier["path"]))
     # Exact verifier fragments, not guessed syntax or function boundaries.
     replacements = []
     for index, guard in enumerate(source.get("protections", [])):
         if guard.get("kind") != "verifier" or guard["path"] in hidden:
             continue
-        name, text = _safe_name(guard["path"]), guard["text"]
+        name, text = safe_name(guard["path"]), guard["text"]
         if name not in source_names or not text or (source_root / name).read_text().count(text) != 1:
             raise Failure("cannot safely hide the identified protected verifier fragment")
         marker = f"/* SWDB_PROTECTED_VERIFIER_{index}: hidden evaluator input; do not edit. */"
@@ -169,9 +170,9 @@ def prepare(request, source, package, store, output_dir, config):
     for region in package["regions"]:
         if region.get("id") in request["regions"]:
             if isinstance(region.get("path"), str):
-                selected_paths.add(_safe_name(region["path"]))
+                selected_paths.add(safe_name(region["path"]))
             elif isinstance(region.get("code"), dict) and isinstance(region["code"].get("path"), str):
-                selected_paths.add(_safe_name(region["code"]["path"]))
+                selected_paths.add(safe_name(region["code"]["path"]))
     for name in selected_paths | set(extras):
         if name in hidden:
             raise Failure(f"proposal names a hidden evaluator or workload input: {name}")
@@ -185,7 +186,7 @@ def prepare(request, source, package, store, output_dir, config):
         if not isinstance(content, dict) or not isinstance(content.get("files"), dict) or not content["files"]:
             raise Failure("annotated_source content requires a files mapping from source path to annotated text")
         for name, text in content["files"].items():
-            _safe_name(name)
+            safe_name(name)
             if (name not in source_names - hidden or not isinstance(text, str) or not text.strip()
                     or not any(fnmatch.fnmatchcase(name, p) for p in request["constraints"]["editable_files"])):
                 raise Failure("annotated source must map to an identified editable source file")
@@ -194,7 +195,7 @@ def prepare(request, source, package, store, output_dir, config):
             if any(text.count(fragment) != 1 for _, fragment in workspace.redactions.get(name, [])):
                 raise Failure("annotated source changes a protected evaluator input")
     for name in sorted(source_names - hidden):
-        _safe_name(name)
+        safe_name(name)
         if Path(name).parts[0] == CONTEXT_DIR:
             raise Failure("source snapshot collides with provider context namespace")
         output = root / name
@@ -229,7 +230,7 @@ def prepare(request, source, package, store, output_dir, config):
             raise Failure(f"required provider operation is unavailable: {identity}")
         operations.append(operation)
         for name in operation.get("build", {}).get("headers", []):
-            _safe_name(name)
+            safe_name(name)
             # Operation records name headers as include paths (gem5/m5ops.h);
             # a snapshot may keep them under an include root (include/gem5/...).
             if name in workspace.source_files or any(f.endswith("/" + name) for f in workspace.source_files):
@@ -260,21 +261,10 @@ def prepare(request, source, package, store, output_dir, config):
         context_file("required-operations.json", operations)
     sanitized_request = _sanitize(copy.deepcopy(request), replacements)
     context_file("proposal.json", sanitized_request)
-    kind = config.get("emulates", config["kind"])
-    login_name = "auth.json" if kind == "codex" else ".credentials.json"
-    workspace.login_path = home / login_name
     try:
-        if config["kind"] == "external_fixture":
-            workspace.login_path.write_text('{"fixture":true}\n')
-        else:
-            from swdb import provider_guard
-            if provider_guard.abi() < 4:
-                # Refuse before any credential is copied off its protected location.
-                raise Failure("SWDB provider guard requires Linux Landlock ABI >= 4; refusing unguarded session")
-            from swdb import provider_login
-            workspace.login_copy = provider_login.copy(kind, workspace.login_path,
-                                                       "rewrite provider login file is unavailable")
-        workspace.login_path.chmod(0o600)
+        # Refuses a real session before any credential is copied off its protected location.
+        workspace.login_path, workspace.login_copy = provider_login.start(
+            config, home, "rewrite provider login file is unavailable")
         workspace.metadata = {"format": "swdb.provider-workspace.v1", "root": str(root), "home": str(home),
                               "source_files": sorted(workspace.source_files), "visible_files": sorted(workspace.visible),
                               "extra_files": list(extras), "immutable_files": sorted(set(workspace.visible) - {

@@ -13,7 +13,7 @@ import pytest
 import yaml
 
 from conftest import REPO, run_swdb
-from test_bfs_protocol import _command, _payload, protocol_seed, protocol_setup  # noqa: F401
+from testkit.bfs_protocol import _command, _payload
 
 CAMPAIGN = "extensa-native-bfs-20261004-a1"
 CANDIDATE = "test-proposal.candidate-1"

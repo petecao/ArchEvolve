@@ -5,7 +5,6 @@ one completed series whose primaries also bind a second matching protocol. No
 simulator, measurement, or empirical claim is produced here.
 """
 import copy
-import importlib.util
 from types import SimpleNamespace
 
 import pytest
@@ -14,13 +13,13 @@ from scripts import bfs_simulator_batch as batch
 from swdb import artifacts, bfs_protocol
 from test_bfs_simulator_batch import admission
 from test_bfs_simulator_batch_admission import admit, completed, immutable, reseal  # noqa: F401
+from testkit.toolchain import load_script
 
 RECIPE = batch.ROOT/'.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t16-reference-b1'
 
 
 def finalize():
-    spec = importlib.util.spec_from_file_location('t16_finalize', RECIPE/'finalize.py')
-    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    module = load_script(RECIPE/'finalize.py', 't16_finalize')
     return module
 
 

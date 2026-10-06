@@ -1,21 +1,12 @@
-"""Independent arithmetic for the reviewed NUMA gate. Updated: 2026-09-25."""
+"""Independent arithmetic for the reviewed NUMA gate. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-25."""
 from pathlib import Path
 import runpy
 
 import pytest
+from testkit.native_pilot import node, zone
 
 capacity = runpy.run_path(str(Path(__file__).resolve().parents[1] / 'scripts/dx100_capacity.py'))['capacity']
 GIB = 1024 * 1024
-
-
-def node(free, file=0, slab=0, dirty=0):
-    values = {'MemFree': free, 'Active(file)': file, 'Inactive(file)': 0,
-              'Dirty': dirty, 'Writeback': 0, 'SReclaimable': slab}
-    return '\n'.join(f'Node 1 {key}: {value} kB' for key, value in values.items())
-
-
-def zone(low=0, high=0, protection=0):
-    return f'Node 1, zone Normal\n low {low}\n high {high}\n managed 16511103\n protection: (0, 0, {protection})\n'
 
 
 def test_recorded_node_values_produce_exact_discounted_estimate():

@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Ticket 45 driver: one small BC gem5 run that reuses the derived contract.
 
-Created: 2026-10-03 ET. Updated: 2026-10-04 ET (--attempt for a fresh timed attempt). Runs on mbit10 inside one verified socket lane, through
+Created: 2026-10-03 ET. Updated: 2026-10-05 ET (code review P15: the shared operator frame
+`run_driver`, which restores the refusal of a raw-output folder inside the checkout, and the
+shared named budgets); 2026-10-04 ET (--attempt for a fresh timed attempt). Runs on mbit10
+inside one verified socket lane, through
 public SWDB commands only. Stage ``prepare`` registers the BC workload on an
 existing BFS graph (source 0), retains the full-source scalar BC baseline and a
 labeled contract-fixture package for the scalar-only snapshot, freezes an
@@ -12,8 +15,8 @@ candidate once each with the BC v2 completion witness; the candidate must also
 pass the read-only execution case. It then forms one-replay aggregates and the
 comparison (a simulated point ratio for one graph and one source).
 
-Shared mechanics (lease checks, bounded public commands, receipts) come from
-``tools/typed_library_gem5_driver.py``. No provider runs, nothing is promoted,
+Shared mechanics (the operator frame, lease checks, bounded public commands, receipts,
+budgets) come from ``tools/typed_library_gem5_driver.py``. No provider runs, nothing is promoted,
 no raw output is copied. Each failed attempt keeps its records and logs.
 """
 import argparse
@@ -22,19 +25,17 @@ import json
 import os
 from pathlib import Path
 import re
-import signal
 import socket
-import subprocess
 import sys
 
 PROJECT = Path(os.environ.get('SWDB_PROJECT', Path(__file__).resolve().parents[1])).resolve()
 sys.path.insert(0, str(PROJECT))
 
-from swdb import artifacts, dispatch_preflight, host_observation, kernels, library, provider_guard  # noqa: E402
+from swdb import artifacts, kernels, library, provider_guard  # noqa: E402
 from swdb.cli import Failure, _require_valid  # noqa: E402
-from tools.typed_library_profile_driver import now, save  # noqa: E402
-from tools.typed_library_gem5_driver import (POSTPROCESS_TIMEOUT_SECONDS, VERIFICATION_MAX_TICKS,  # noqa: E402
-                                             get, lease_snapshot, need, public, reference)
+from tools.typed_library_gem5_driver import (COMMAND_GRACE_SECONDS, COMPILE_BUDGET, POSTPROCESS_TIMEOUT_SECONDS,  # noqa: E402
+                                             TIMED_SECONDS, VERIFICATION_MAX_TICKS, get, need, public, reference,
+                                             run_driver)
 
 FORMAT = 'swdb.bc-gem5-driver.v1'
 BFS_PROTOCOL = 'typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0'
@@ -183,8 +184,8 @@ def prepare_stage(args, folder, lane, environment):
             'hardware_target': settings['targets']['candidate' if accelerated else 'baseline']['id'],
             'model_root': model['context']['model_root'], 'build_evaluation': model['id'],
             'candidate': selected['id'], 'function': 'Brandes', 'accelerated': accelerated, 'roi': settings['roi'],
-            'budget': {'total_seconds': 600, 'build_seconds': 300, 'memory_gib': PREPARE_MEMORY_GIB, 'storage_gib': 1}},
-            lane=lane, timeout=660, environment=environment)
+            'budget': {**COMPILE_BUDGET, 'memory_gib': PREPARE_MEMORY_GIB}},
+            lane=lane, timeout=COMPILE_BUDGET['total_seconds']+COMMAND_GRACE_SECONDS, environment=environment)
         need(compiled.get('evidence_kind') == 'execution' and compiled['outcome']['state'] == 'complete',
              'compiler did not produce real completed evidence')
         expected = settings['builds']['candidate' if accelerated else 'baseline']
@@ -242,10 +243,9 @@ def timed_stage(args, folder, lane, environment):
             'verification': {'checker': BC.gem5_witness_checker, 'max_ticks': VERIFICATION_MAX_TICKS,
                              'coverage': role == 'candidate', 'post_roi_trace': 'SyscallBase',
                              'trace_transport': 'gem5-gzip.v1', 'read_only': role == 'candidate'},
-            'budget': {'total_seconds': 9000, 'checkpoint_seconds': 1800, 'run_seconds': 7140,
-                       'memory_gib': args.memory_gib, 'storage_gib': args.storage_gib}}
+            'budget': {**TIMED_SECONDS, 'memory_gib': args.memory_gib, 'storage_gib': args.storage_gib}}
         observed = public(args, folder, 'dx100-execute', label+'.'+role, request, lane=lane,
-                          timeout=request['budget']['total_seconds']+60, environment=environment,
+                          timeout=request['budget']['total_seconds']+COMMAND_GRACE_SECONDS, environment=environment,
                           allow_failed_evaluation=True)
         executions[role] = observed
         need(observed['outcome']['state'] == 'complete' and observed['correctness']['state'] == 'passed',
@@ -290,54 +290,11 @@ def main(argv=None):
     need(not args.attempt or (args.stage == 'timed' and re.fullmatch(r'[a-z0-9]+', args.attempt)),
          'an attempt label applies to the timed stage only')
     need(args.approval_reference.strip(), 'an explicit operator approval reference is required')
-    lane = provider_guard._lane()
-    args.runs_dir, args.records = args.runs_dir.resolve(), args.records.resolve()
-    need(args.records.is_relative_to('/data1/yanruj'), 'record checkout requires mbit10 /data1/yanruj storage')
-    need(any(args.runs_dir.is_relative_to(base) for base in (dispatch_preflight.PRIMARY, dispatch_preflight.SECONDARY)),
-         'raw output requires one of the two approved EvolveSWDB run roots')
-    folder = artifacts.external_directory(args.runs_dir)/(args.id+'.driver-'+args.stage+('-'+args.attempt if args.attempt else ''))
-    folder.mkdir(exist_ok=False)
-    receipt = {'format': FORMAT, 'id': args.id, 'stage': args.stage, 'state': 'running', 'started': now(),
-               'approval_reference': args.approval_reference, 'authoring_session': args.authoring_session,
-               'host': socket.gethostname(), 'lane': lane, 'basis': 'simulated', 'gain_claim': False,
-               'memory_gib': args.memory_gib, 'storage_gib': args.storage_gib, 'attempt': args.attempt,
-               'driver_sha256': artifacts.file_hash(__file__), 'project': str(PROJECT)}
-    receipt_path = folder/'driver.json'
-    save(receipt_path, receipt)
-
-    def interrupted(signum, frame):
-        raise InterruptedError('driver interrupted by signal '+str(signum))
-    previous = {signum: signal.signal(signum, interrupted) for signum in (signal.SIGINT, signal.SIGTERM)}
-    try:
-        receipt['leases'] = lease_snapshot(lane)
-        receipt['host_observation'] = host_observation.capture(folder, PROJECT)
-        git = lambda *a: subprocess.check_output(['git', *a], cwd=PROJECT, text=True, timeout=30).strip()
-        receipt['runtime_commit'] = git('rev-parse', 'HEAD')
-        receipt['runtime_branch'] = git('branch', '--show-current')
-        receipt['tracked_changes'] = git('status', '--short', '--untracked-files=no').splitlines()
-        need(receipt['runtime_branch'] == 'yanrujhou_main', 'driver requires the approved yanrujhou_main branch')
-        memory_gib, storage_gib = ((PREPARE_MEMORY_GIB, 4) if args.stage == 'prepare'
-                                   else (args.memory_gib, args.storage_gib))
-        receipt['preflight'] = dispatch_preflight.check(args.runs_dir, lane,
-            storage_bytes=storage_gib*dispatch_preflight.GIB, memory_bytes=memory_gib*dispatch_preflight.GIB)
-        save(receipt_path, receipt)
-        temporary = folder/'tmp'
-        temporary.mkdir()
-        environment = {**os.environ, 'TMPDIR': str(temporary), 'MAKEFLAGS': '-j1', 'CMAKE_BUILD_PARALLEL_LEVEL': '1',
-                       'OMP_THREAD_LIMIT': '4', 'OMP_WAIT_POLICY': 'PASSIVE', 'GOMP_SPINCOUNT': '0'}
-        environment.pop('GOMP_CPU_AFFINITY', None)
-        stage = prepare_stage if args.stage == 'prepare' else timed_stage
-        receipt['result'] = stage(args, folder, lane, environment)
-        receipt.update(state='complete', finished=now())
-    except BaseException as error:
-        receipt.update(state='failed', finished=now(), reason=str(error))
-        raise
-    finally:
-        save(receipt_path, receipt)
-        for signum, handler in previous.items():
-            signal.signal(signum, handler)
-    print(json.dumps(receipt, indent=2))
-    return 0
+    budgets = (PREPARE_MEMORY_GIB, 4) if args.stage == 'prepare' else (args.memory_gib, args.storage_gib)
+    return run_driver(args, fmt=FORMAT, project=PROJECT, driver_file=__file__,
+                      stages={'prepare': prepare_stage, 'timed': timed_stage},
+                      folder_name=args.id+'.driver-'+args.stage+('-'+args.attempt if args.attempt else ''),
+                      budgets=budgets, receipt_fields={'attempt': args.attempt, 'project': str(PROJECT)})
 
 
 if __name__ == '__main__':

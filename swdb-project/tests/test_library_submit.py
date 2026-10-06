@@ -1,4 +1,5 @@
 """Public proposal 1.1 library gates and actual tree reproduction, 2026-10-03 ET.
+Updated 2026-10-05 ET (code review T4: the tree reproduction reads commit-pinned records and library).
 
 Temporary execution-envelope receipts below are clearly marked synthetic test
 doubles. They test gate branches, and never represent execution or real promotion.
@@ -12,8 +13,7 @@ import shutil
 import pytest
 import yaml
 
-from conftest import REPO
-from test_proposals import proposal_setup
+from testkit.pinned import pinned_folder
 from test_typed_library import entry as contract_entry
 from swdb import artifacts
 from swdb.library import Library
@@ -326,11 +326,13 @@ def test_shipped_lowering_path_must_be_new(library_submit):
 
 
 def test_actual_dx100_submit_reproduces_the_certified_tree(records, tmp_path):
-    """Actual delivery bytes/proposal flow; review state remains an explicit test fixture."""
+    """Actual delivery bytes/proposal flow; review state remains an explicit test fixture.
+
+    2026-10-05 ET (code review T4): the records and library are read as committed at a pinned
+    commit (`testkit.pinned`), so a later certification or evaluation record cannot move them."""
     from swdb import certification
-    records.copy_repo()
-    root = records.path.parent / 'library'
-    shutil.copytree(REPO / 'library', root)
+    shutil.copytree(pinned_folder('records', tmp_path / 'pinned'), records.path, dirs_exist_ok=True)
+    root = pinned_folder('library', records.path.parent)
     store = Store(records.path)
     source_folder = tmp_path / 'dx100-reconstruction'; source_folder.mkdir()
     tree, source = certification.materialize_snapshot(store, certification.DEFAULT_SNAPSHOT, source_folder)
@@ -350,7 +352,7 @@ def test_actual_dx100_submit_reproduces_the_certified_tree(records, tmp_path):
         assert library.state(entry_id)['status'] in {'certified', 'evaluated_on_target'}
         receipt(records, entry_id, library.content_sha256(entry_id))
     lowerings = sorted(entry_id for entry_id in dependencies if library.get(entry_id)['kind'] == 'lowering')
-    patch = (REPO / 'library/dx100/peter-section5.patch').read_text()
+    patch = (root / 'dx100/peter-section5.patch').read_text()
     data = {
         'message_version': '1.1', 'id': 'dx100-library-tree-reproduction',
         'producer': {'name': 'fixture-dx100-authoring-session', 'role': 'sw', 'test_client': True},

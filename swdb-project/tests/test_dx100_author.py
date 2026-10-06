@@ -1,16 +1,16 @@
-"""Actual C++ author-ROI wrapper contract; not simulator evidence. Updated: 2026-09-25."""
+"""Actual C++ author-ROI wrapper contract; not simulator evidence. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-25."""
 import json
 from pathlib import Path
-import shutil
 import subprocess
 
 import pytest
 
 from swdb.dx100_author import driver
+from testkit.toolchain import find_cxx
 
 
 def test_author_events_remain_and_pre_roi_scope_is_not_full_call_time(tmp_path):
-    compiler = shutil.which('clang++') or shutil.which('g++')
+    compiler = find_cxx()
     if not compiler:
         pytest.skip('C++ compiler unavailable')
     model = tmp_path / 'model'

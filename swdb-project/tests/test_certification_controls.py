@@ -21,6 +21,7 @@ from swdb import kernels
 from swdb.cli import Failure
 from swdb.kernels import bc
 from swdb.store import Store
+from testkit.toolchain import load_script
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTRACT = 'contract.bfs_read_offload'
@@ -136,10 +137,8 @@ def test_token_matching_ignores_whitespace_and_comments_but_not_meaning():
 
 
 def _bc_scalar():
-    import importlib.util
-    spec = importlib.util.spec_from_file_location('prepare_bc', ROOT / 'scripts/prepare_dx100_bc_scalar_snapshot.py')
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    pass
+    module = load_script(ROOT / 'scripts/prepare_dx100_bc_scalar_snapshot.py', 'prepare_bc')
     return module.scalar_source((ROOT / 'apps/dx100' / bc.BC_SOURCE).read_text())
 
 

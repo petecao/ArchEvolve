@@ -1,7 +1,10 @@
 """Role-specific inputs over the shared provider process, guard and audit.
 
-Updated: 2026-10-05 ET (ticket 74: harness-limit guard stops raise GuardInfrastructure); 2026-10-04 ET (ticket 69: strict-mode keyword check); 2026-10-04 (login write-back). Inputs are built by trusted SWDB callers, never copied by
-walking a repository. Each file is explicit; real invocations require mbit10.
+Updated: 2026-10-05 ET (code review: login via provider_login.start, public checked_inputs and
+verified_lane); 2026-10-05 ET (ticket 74: guard runtime-limit stops raise GuardInfrastructure);
+2026-10-04 ET (ticket 69: strict-mode keyword check); 2026-10-04 (login write-back). Inputs are
+built by trusted SWDB callers, never copied by walking a repository. Each file is explicit; real
+invocations require mbit10.
 """
 
 import copy
@@ -61,7 +64,7 @@ ROLES = {
 #   permitted for index_provenance"). The Codex transport omits it; local validation keeps it.
 # - accepted: `minItems`, `minLength`, `minimum` and a type-less `enum` (annotation a3, completed
 #   2026-10-03 09:08 ET with wire schema sha256 3928d885d999..., byte-identical to the profiling
-#   role's current wire schema), and the shape keywords every campaign role used in a2-a7.
+#   role's current wire schema), and the shape keywords every Extensa campaign role used in a2-a7.
 # Any other keyword is reported as unverified, so a new keyword is checked before a real session.
 STRICT_ACCEPTED_KEYWORDS = frozenset({"type", "properties", "required", "additionalProperties", "items",
                                       "enum", "minItems", "minLength", "minimum"})
@@ -111,7 +114,7 @@ def strict_problems(schema, where="$"):
 def wire_schema(schema, kind="codex"):
     """The output schema as the provider receives it (ticket 69). Codex drops `uniqueItems`;
     Claude receives the schema unchanged (its strict-mode keyword support is not verified)."""
-    return provider_adapters._codex_transport_schema(schema) if kind == "codex" else schema
+    return provider_adapters.codex_transport_schema(schema) if kind == "codex" else schema
 
 
 def project(value):
@@ -123,18 +126,20 @@ def project(value):
     return copy.deepcopy(value)
 
 
-def _inputs(files):
+def checked_inputs(files):
+    """The role's explicit input files after the hidden-material checks; refused inputs raise
+    before any call opens (public since 2026-10-05 ET, J5: the ticket 58 driver checks first)."""
     if not isinstance(files, dict) or not files:
         raise Failure("agent role workspace input must be a nonempty explicit files mapping")
     result = {}
     total = 0
     for name, text in files.items():
-        provider_workspace._safe_name(name)
+        provider_workspace.safe_name(name)
         parts = Path(name).parts
         if (any(p in provider_workspace.HIDDEN_DIRS for p in parts)
                 or Path(name).name in provider_workspace.INSTRUCTION_FILES
                 or Path(name).suffix.lower() in {".csr", ".graph", ".sg", ".bin", ".so", ".dylib"}):
-            raise Failure("agent role input names hidden evaluator, workload or candidate material: " + name)
+            raise Failure("agent role input names hidden evaluator, workload or candidate-artifact material: " + name)
         if not isinstance(text, str) or "\0" in text or FORBIDDEN_SOURCE.search(text):
             raise Failure("agent role inputs must be text without authors' accelerated code: " + name)
         if Path(name).suffix == ".json":
@@ -152,7 +157,7 @@ def _inputs(files):
 
 
 def prepare(role, files, folder, config):
-    files = _inputs(files)
+    files = checked_inputs(files)
     folder = Path(folder).resolve()
     folder.mkdir(parents=True, exist_ok=False)
     root, home = folder / "workspace", folder / "provider-home"
@@ -163,17 +168,9 @@ def prepare(role, files, folder, config):
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(content)
         workspace.visible[name] = artifacts.file_hash(target)
-    kind = config.get("emulates", config["kind"])
-    workspace.login_path = home / provider_login.login_name(kind)
     try:
-        if config["kind"] == "external_fixture":
-            workspace.login_path.write_text('{"fixture":true}\n')
-        else:
-            if provider_guard.abi() < 4:
-                raise Failure("SWDB provider guard requires Linux Landlock ABI >= 4")
-            workspace.login_copy = provider_login.copy(kind, workspace.login_path,
-                                                       "agent role provider login file is unavailable")
-        workspace.login_path.chmod(0o600)
+        workspace.login_path, workspace.login_copy = provider_login.start(
+            config, home, "agent role provider login file is unavailable")
         workspace.metadata = {"format": "swdb.provider-role-workspace.v1", "role": role.name,
             "root": str(root), "home": str(home), "read_only": role.read_only,
             "source_files": [], "visible_files": sorted(files), "immutable_files": sorted(files),
@@ -205,7 +202,7 @@ def run(role, files, prompt, config, folder, *, remaining_s=None):
     lane = None
     if config["kind"] != "external_fixture":
         try:
-            lane = provider_guard._lane()
+            lane = provider_guard.verified_lane()
         except provider_guard.GuardError as error:
             raise Failure(str(error)) from None
     workspace = prepare(role, files, folder, config)
@@ -240,12 +237,12 @@ def run(role, files, prompt, config, folder, *, remaining_s=None):
         receipt.write_text(json.dumps(metadata, indent=2))
         (workspace.folder/"workspace.json").write_text(json.dumps(workspace.metadata, indent=2))
     if error is not None:
-        # Ticket 74 (2026-10-05 ET): a guard stop caused only by the harness's own limit on the
-        # provider runtime is infrastructure, provided the audit found nothing else.
-        harness = provider_guard.harness_limit(workspace.folder)
-        if harness and all(v.get("code") == "resource_limit" for v in audit.get("violations", [])):
+        # Ticket 74 (2026-10-05 ET): a guard stop caused only by the guard's own runtime limit on
+        # the provider is infrastructure, provided the audit found nothing else.
+        runtime_limit = provider_guard.guard_runtime_limit(workspace.folder)
+        if runtime_limit and all(v.get("code") == "resource_limit" for v in audit.get("violations", [])):
             raise provider_adapters.GuardInfrastructure("provider guard stopped the call for its own limit: "
-                                                        + harness) from None
+                                                        + runtime_limit) from None
     if not audit["passed"] and ((workspace.folder/"stdout.txt").is_file() or error is None):
         raise Failure("provider role audit failed: " + "; ".join(audit["reasons"]))
     if error is not None:
@@ -257,7 +254,7 @@ def rewriting(config, request, source, package, store, folder, **kwargs):
     """Existing rewriting input builder and output contract remain authoritative."""
     if config["kind"] != "external_fixture":
         try:
-            provider_guard._lane()
+            provider_guard.verified_lane()
         except provider_guard.GuardError as error:
             raise Failure(str(error)) from None
     metadata = {}

@@ -34,7 +34,6 @@ from __future__ import annotations
 import contextlib
 import copy
 import json
-import re
 import os
 import statistics
 import subprocess
@@ -100,7 +99,8 @@ SPEC_BUDGETS = {"max_iterations": 8, "plateau_iterations": 4, "lane_hours": 24,
                 "provider_calls_per_iteration": 3, "provider_calls_setup": 1, "disk_gb": 20, "lanes": 1}
 DEFAULT_MAX_REPAIRS = 2        # D7: the ArchEvolve-mode repair limit
 EXTENSA_SOURCE = {"repository": "MaizeHPC/MemAcc", "commit": "af3d6d7f7a69a72facdc3b95b42e78c952f44a76"}
-LOGIN = re.compile(r"login|not logged in|unauthori[sz]ed|authentication|credentials", re.I)
+# 2026-10-05 ET (code review P1): provider-call outcomes, including the one login pattern, come from
+# `swdb.provider_adapters.classify`, shared with the ticket 58 driver.
 
 
 class _Capacity(Exception):
@@ -627,21 +627,10 @@ class Campaign:
         outcome, response, error = S.CallOutcome.COMPLETED, None, None
         try:
             response, _meta = provider_roles.run(_roles()[kind], files, prompt, self.provider_config, folder)
-        except provider_adapters.ProviderCapacity as exc:
-            outcome, error = S.CallOutcome.PROVIDER_CAPACITY, exc
-        except provider_adapters.ProviderUnavailable as exc:
-            outcome, error = S.CallOutcome.USAGE_LIMIT, exc
-        except provider_adapters.GuardInfrastructure as exc:     # ticket 74
-            outcome, error = S.CallOutcome.GUARD_INFRASTRUCTURE, exc
         except Failure as exc:
-            text = str(exc)
-            stderr = folder / "stderr.txt"
-            text += stderr.read_text(errors="replace") if stderr.is_file() else ""
-            outcome = (S.CallOutcome.LOGIN if LOGIN.search(text) else
-                       S.CallOutcome.TIMEOUT if "timed out" in text or "timeout" in text else
-                       S.CallOutcome.MALFORMED_OUTPUT if "structured" in text or "JSON" in text else
-                       S.CallOutcome.GUARD_REFUSED if "guard" in text or "audit" in text else S.CallOutcome.FAILED)
-            error = exc
+            # P1 (2026-10-05 ET): the one classifier; uncounted stops (usage limit, capacity, guard
+            # runtime limit, login) name their own outcome.
+            outcome, error = provider_adapters.classify(exc, folder), exc
         self._spent("provider", started)
         self.ledger.close_call(call, outcome)
         meta = {}
@@ -1002,12 +991,9 @@ class Campaign:
                 # uncounted and pause the campaign; the family stays unsynthesized for the resume.
                 from swdb import provider_adapters
                 # Ticket 73: transient unavailability is uncounted too (it pauses here; a resume retries).
-                # Ticket 74: a guard stop for the harness's own runtime limit is uncounted (it pauses here).
-                outcome = (S.CallOutcome.PROVIDER_CAPACITY if isinstance(exc, provider_adapters.ProviderCapacity)
-                           else S.CallOutcome.GUARD_INFRASTRUCTURE
-                           if isinstance(exc, provider_adapters.GuardInfrastructure)
-                           else S.CallOutcome.USAGE_LIMIT if isinstance(exc, provider_adapters.ProviderUnavailable)
-                           else S.CallOutcome.LOGIN if LOGIN.search(str(exc)) else S.CallOutcome.FAILED)
+                # Ticket 74: a guard stop for its own runtime limit is uncounted (it pauses here).
+                # P1 (2026-10-05 ET): the same classifier as every other provider call.
+                outcome = provider_adapters.classify(exc, detailed=False)
                 result = {"state": "failed", "reason": str(exc)}
             self._spent("synthesis", started)
             self.ledger.close_call(call, outcome)

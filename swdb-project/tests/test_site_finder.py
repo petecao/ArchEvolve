@@ -3,6 +3,8 @@
 Created: 2026-10-04 ET. The fixture team store holds the repository's DX100 scalar BFS
 implementation (statements index from ticket 35) and, where a test says so, legality facts
 recorded as statement annotation facts. The library is the repository's, read only.
+Updated 2026-10-05 ET (code review T4): the implementation, application and kernel records are
+read as committed at a pinned commit (`testkit.pinned`), not from the live checkout.
 """
 
 import json
@@ -14,9 +16,8 @@ import yaml
 from conftest import REPO, run_swdb
 from swdb import db, site_finder
 from swdb.library_operations import pattern_key_problems
-from test_bfs_protocol import protocol_seed  # noqa: F401
-from test_extensa_campaign import (campaign_file, campaign_store, fixture_file, provider, rewrite,  # noqa: F401
-                                   team, team_seed)
+from testkit.extensa import campaign_file, campaign_store, fixture_file, provider, rewrite
+from testkit.pinned import pinned_folder
 
 READ = "contract.bfs_read_offload"
 BC = "contract.bc_read_offload"
@@ -35,33 +36,39 @@ def implementation_path(records):
     return records / "implementations" / f"{IMPL}.yaml"
 
 
-def copy_without_facts(records):
+@pytest.fixture(scope="module")
+def source_records(tmp_path_factory):
+    """The repository records at the pinned evidence commit (ticket 57's legality facts included)."""
+    return pinned_folder("records", tmp_path_factory.mktemp("pinned"))
+
+
+def copy_without_facts(records, source):
     """The scalar TDStep implementation without its recorded facts (each test records its own).
 
     Updated 2026-10-04 ET: ticket 57 recorded the real legality facts in the repository."""
-    data = yaml.safe_load((REPO / "records" / "implementations" / f"{IMPL}.yaml").read_text())
+    data = yaml.safe_load((source / "implementations" / f"{IMPL}.yaml").read_text())
     for row in data["extensions"]["statements"]["annotations"]:
         row.pop("annotation_facts", None)
     implementation_path(records).write_text(yaml.safe_dump(data, sort_keys=False))
 
 
-def bfs_records(root):
+def bfs_records(root, source):
     """A records folder with the BFS application, kernel and the scalar TDStep implementation."""
     records = root / "records"
     for folder in ("applications", "kernels"):
-        shutil.copytree(REPO / "records" / folder, records / folder, dirs_exist_ok=True)
+        shutil.copytree(source / folder, records / folder, dirs_exist_ok=True)
     (records / "implementations").mkdir(parents=True, exist_ok=True)
-    copy_without_facts(records)
+    copy_without_facts(records, source)
     return records
 
 
-def test_recorded_repository_facts_apply_the_read_offload_contract(tmp_path):
+def test_recorded_repository_facts_apply_the_read_offload_contract(tmp_path, source_records):
     """Ticket 57: the repository's evidence-cited legality facts select the gem5 region."""
     records = tmp_path / "records"
     for folder in ("applications", "kernels"):
-        shutil.copytree(REPO / "records" / folder, records / folder, dirs_exist_ok=True)
+        shutil.copytree(source_records / folder, records / folder, dirs_exist_ok=True)
     (records / "implementations").mkdir(parents=True, exist_ok=True)
-    shutil.copy(REPO / "records" / "implementations" / f"{IMPL}.yaml", implementation_path(records))
+    shutil.copy(source_records / "implementations" / f"{IMPL}.yaml", implementation_path(records))
     result = find(tmp_path, records, campaign("dx100_gem5"))
     assert [r["id"] for r in result["regions"]] == [READ_REGION]
     data = yaml.safe_load(implementation_path(records).read_text())
@@ -95,8 +102,8 @@ def find(tmp_path, records, data):
 
 
 @pytest.fixture
-def records(tmp_path):
-    return bfs_records(tmp_path)
+def records(tmp_path, source_records):
+    return bfs_records(tmp_path, source_records)
 
 
 # --- gem5: the read-offload region ---------------------------------------------------------
@@ -255,17 +262,17 @@ def test_pattern_keys_must_be_chains():
 
 # --- `swdb campaign` with `regions: query` --------------------------------------------------
 
-def add_bfs_implementation(team, facts):
-    copy_without_facts(team["records"])
+def add_bfs_implementation(campaign_team, facts, source):
+    copy_without_facts(campaign_team["records"], source)
     if facts:
-        record_facts(team["records"], facts)
+        record_facts(campaign_team["records"], facts)
 
 
-def test_campaign_with_query_regions_records_why(team):
-    add_bfs_implementation(team, all_true())
-    path = campaign_file(team, cid="extensa-gem5-bfs-20261004-a1", target="dx100_gem5", regions="query")
-    result = run_swdb("campaign", path, "--records", team["records"], "--provider-config", provider(team, {}),
-                      "--fixture", fixture_file(team), "--format", "json")
+def test_campaign_with_query_regions_records_why(campaign_team, source_records):
+    add_bfs_implementation(campaign_team, all_true(), source_records)
+    path = campaign_file(campaign_team, cid="extensa-gem5-bfs-20261004-a1", target="dx100_gem5", regions="query")
+    result = run_swdb("campaign", path, "--records", campaign_team["records"], "--provider-config", provider(campaign_team, {}),
+                      "--fixture", fixture_file(campaign_team), "--format", "json")
     assert result.returncode == 0, result.stderr + result.stdout
     summary = json.loads(result.stdout)
     assert summary["site_finder"]["query_sha256"] == site_finder.QUERY_SHA256
@@ -277,21 +284,21 @@ def test_campaign_with_query_regions_records_why(team):
     assert app["contract"] == READ and region["why"]["statements"][-1] == "bfs-td-parent-read"
     assert it["site_finder"]["query_sha256"] == site_finder.QUERY_SHA256
     assert all(c["level"] == "certified" for c in it["candidates"])
-    store = campaign_store(team, "extensa-gem5-bfs-20261004-a1")
-    for folder in (store, team["records"]):
+    store = campaign_store(campaign_team, "extensa-gem5-bfs-20261004-a1")
+    for folder in (store, campaign_team["records"]):
         checked = run_swdb("validate", "--records", folder)
         assert checked.returncode == 0, checked.stderr
     workspace = json.loads((store.parent / "state.json").read_text())
     assert workspace["site_finder"]["query_sha256"] == site_finder.QUERY_SHA256
 
 
-def test_campaign_rejects_a_contract_the_site_finder_did_not_apply(team):
-    add_bfs_implementation(team, all_true())
-    config = provider(team, {"rewriting": [rewrite(contracts=(BC,))]})
-    path = campaign_file(team, cid="extensa-gem5-bfs-20261004-a1", target="dx100_gem5", regions="query",
+def test_campaign_rejects_a_contract_the_site_finder_did_not_apply(campaign_team, source_records):
+    add_bfs_implementation(campaign_team, all_true(), source_records)
+    config = provider(campaign_team, {"rewriting": [rewrite(contracts=(BC,))]})
+    path = campaign_file(campaign_team, cid="extensa-gem5-bfs-20261004-a1", target="dx100_gem5", regions="query",
                          library={"allowed_tiers": ["shared", "experimental"], "contracts": [READ, BC]})
-    result = run_swdb("campaign", path, "--records", team["records"], "--provider-config", config,
-                      "--fixture", fixture_file(team), "--format", "json")
+    result = run_swdb("campaign", path, "--records", campaign_team["records"], "--provider-config", config,
+                      "--fixture", fixture_file(campaign_team), "--format", "json")
     assert result.returncode == 0, result.stderr + result.stdout
     (it,) = json.loads(result.stdout)["iterations"]
     assert all(c["level"] == "rejected" and "applies to no region the site finder chose" in c["rejection"]
@@ -299,11 +306,11 @@ def test_campaign_rejects_a_contract_the_site_finder_did_not_apply(team):
     assert any("BC-L1: no recorded fact" in r["reason"] for r in it["site_finder"]["rejected"])
 
 
-def test_campaign_refuses_when_the_query_chooses_no_region(team):
-    add_bfs_implementation(team, {k: v for k, v in all_true().items() if k != "L4"})
-    path = campaign_file(team, cid="extensa-gem5-bfs-20261004-a1", target="dx100_gem5", regions="query")
-    result = run_swdb("campaign", path, "--records", team["records"], "--provider-config", provider(team, {}),
-                      "--fixture", fixture_file(team), "--format", "json")
+def test_campaign_refuses_when_the_query_chooses_no_region(campaign_team, source_records):
+    add_bfs_implementation(campaign_team, {k: v for k, v in all_true().items() if k != "L4"}, source_records)
+    path = campaign_file(campaign_team, cid="extensa-gem5-bfs-20261004-a1", target="dx100_gem5", regions="query")
+    result = run_swdb("campaign", path, "--records", campaign_team["records"], "--provider-config", provider(campaign_team, {}),
+                      "--fixture", fixture_file(campaign_team), "--format", "json")
     assert result.returncode != 0
     assert "regions: query chose no region" in result.stderr and "L4: no recorded fact" in result.stderr
-    assert not (team["root"] / "provider-log.jsonl").exists()
+    assert not (campaign_team["root"] / "provider-log.jsonl").exists()

@@ -1,4 +1,4 @@
-"""Compiled original-graph oracle regressions. Updated: 2026-09-26.
+"""Compiled original-graph tree-check regressions. Updated: 2026-10-05 (glossary: no "oracle").
 
 The local m5 stubs test C++ wrapper semantics, never simulator performance.
 """
@@ -13,7 +13,8 @@ import pytest
 from swdb import artifacts
 from swdb.bfs_native import _protect_driver_macros, verify_parents
 from swdb.dx100_candidate import driver
-from test_bfs_protocol import _sg
+from testkit.bfs_protocol import _sg
+from testkit.toolchain import find_cxx
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,7 +45,7 @@ def _real_source(tmp_path, body):
 
 
 def _compile(tmp_path, source_root, source, *, width=8):
-    compiler = shutil.which('clang++') or shutil.which('g++')
+    compiler = find_cxx()
     if not compiler:
         pytest.skip('C++ compiler unavailable')
     model = tmp_path / 'model'
@@ -105,7 +106,7 @@ def test_graph_mutation_cannot_redefine_original_correctness(tmp_path):
     ('''pvector<NodeID> parent(g.num_nodes(), -1); parent[0]=0; parent[1]=0; parent[2]=0; parent[3]=2; return parent;''',
      {'num_vertices': 4, 'directed': True, 'edges': [[0, 1], [0, 2], [1, 3]]}, 0, False),
 ])
-def test_independent_oracle_accepts_valid_trees_and_rejects_wrong_structure(tmp_path, width, body, graph, source_id, passes):
+def test_independent_tree_check_accepts_valid_trees_and_rejects_wrong_structure(tmp_path, width, body, graph, source_id, passes):
     root, source = _real_source(tmp_path, body)
     binary = _compile(tmp_path, root, source, width=width)
     path = tmp_path / 'original.sg'

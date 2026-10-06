@@ -62,7 +62,7 @@ def test_independent_two_level_graph_has_required_frontier_and_depth(tmp_path):
     assert c.graph_oracle(graph, 1) == [1, 17000]
 
 
-def test_frontier_oracle_rejects_invalid_graph_before_traversal(tmp_path):
+def test_reference_frontier_counts_reject_an_invalid_graph_before_traversal(tmp_path):
     graph = tmp_path / 'bad.sg'
     graph.write_bytes(b'\x01' + b'\0' * 8)
     with pytest.raises(Failure, match='invalid graph size'):
@@ -112,7 +112,7 @@ def test_candidate_logging_is_protected_before_build():
         c.instrument_source('bool BFSVerifier(){}')
 
 
-def test_calibration_witness_threshold_is_from_scalar_oracle():
+def test_calibration_witness_threshold_is_from_the_scalar_reference_counts():
     counts = [1, 4200]
     output = ''.join(f'Starting TDStepMAA: {n} elements\nSWDB trusted_frontier={n}\n' for n in counts)
     output += 'Verification: PASS\nSWDB strict_operations=0\n'

@@ -18,11 +18,11 @@ from pathlib import Path
 
 import pytest
 
-from conftest import REPO, records as records_fixture
-from test_bfs_native import evaluation_setup
-from test_bfs_native_scalable import COMPILER, FIXTURE_CANDIDATE, PROGRAM_V2, _bfs, _graphs, _rows, verifier  # noqa: F401
-from test_bfs_protocol import _command, _payload, _settings, _sg, _workload_request
-from test_proposals import proposal_setup
+from conftest import REPO, make_records
+from testkit.proposals import build_proposal_setup
+from testkit.bfs_native import build_evaluation_setup
+from testkit.bfs_native_scalable import COMPILER, FIXTURE_CANDIDATE, PROGRAM_V2, _bfs, _graphs, _rows
+from testkit.bfs_protocol import _command, _payload, _settings, _sg, _workload_request
 from swdb import artifacts
 from swdb import bfs_native_scalable as scalable
 from swdb.bfs_native import verify_parents
@@ -188,8 +188,8 @@ PROGRAM_V3 = PROGRAM_V2.replace('"format": "swdb.bfs.native.trial.v2"', '"format
 def v3_seed(tmp_path_factory):
     assert PROGRAM_V3 != PROGRAM_V2 and "parents_saturated" in PROGRAM_V3
     tmp = tmp_path_factory.mktemp("v3-seed")
-    records = records_fixture.__wrapped__(tmp)
-    setup = evaluation_setup.__wrapped__(proposal_setup.__wrapped__(records, tmp), tmp)
+    records = make_records(tmp)
+    setup = build_evaluation_setup(build_proposal_setup(records, tmp), tmp)
     _, runs, _, base = setup
     compiler = Path(base["build"]["compiler"])
     compiler.write_text("#!/usr/bin/env python3\nimport sys\nfrom pathlib import Path\n"

@@ -19,6 +19,7 @@ from swdb.extensa import probes as P
 from swdb.extensa import search as S
 from swdb.extensa.synthesis import mutants
 from swdb.extensa.synthesis.shape_classes import SHAPE_CLASSES
+from testkit.toolchain import find_cxx
 
 BUDGETS = {"max_iterations": 8, "plateau_iterations": 4, "lane_hours": 24, "provider_calls_per_iteration": 3,
            "provider_calls_setup": 1, "disk_gb": 20, "lanes": 1}
@@ -142,8 +143,6 @@ BINDING = {"operation.fixture_gather": {"idx": {"expr": "idx.data()", "len": "n"
                                         "out": {"expr": "out.data()", "len": "n"}}}
 
 
-def _cxx():
-    return shutil.which("clang++") or shutil.which("g++")
 
 
 def _probe(tmp_path, origin):
@@ -155,7 +154,7 @@ def _probe(tmp_path, origin):
     text, report = P.splice_probes(PROGRAM, probe.probes, probe.globals)
     assert report[0][2]
     (tmp_path / "cert.cc").write_text(text)
-    built = subprocess.run([_cxx(), *P.probe_build_flags(), str(tmp_path / "cert.cc"), "-o", str(tmp_path / "cert")],
+    built = subprocess.run([find_cxx(), *P.probe_build_flags(), str(tmp_path / "cert.cc"), "-o", str(tmp_path / "cert")],
                            capture_output=True, text=True)
     assert built.returncode == 0, built.stderr
     return plan, probe, verdict
@@ -187,7 +186,7 @@ def test_provider_bindings_are_model_bound_and_never_certify(tmp_path):
 def test_timed_build_of_the_same_program_contains_no_probe_symbol(tmp_path):
     _probe(tmp_path, "contract_operand")
     (tmp_path / "timed.cc").write_text(PROGRAM)
-    subprocess.run([_cxx(), "-std=c++11", "-O2", str(tmp_path / "timed.cc"), "-o", str(tmp_path / "timed")], check=True)
+    subprocess.run([find_cxx(), "-std=c++11", "-O2", str(tmp_path / "timed.cc"), "-o", str(tmp_path / "timed")], check=True)
     P.assert_probe_free(tmp_path / "timed")
     with pytest.raises(ValueError, match="contract-probe"):
         P.assert_probe_free(tmp_path / "cert")
@@ -254,7 +253,7 @@ def test_fixture_synthesis_certifies_and_enters_the_experimental_tier(tmp_path):
     assert validated.returncode == 0, validated.stderr
 
 
-def test_fixture_mutant_is_rejected_and_never_installed(tmp_path):
+def test_fixture_control_is_rejected_and_never_installed(tmp_path):
     lib, records, result = _synthesize(tmp_path, mutants.mutant_text("gather", "off_by_one"))
     assert result["state"] == "rejected" and result["certification"]["verdict"] == "failed"
     assert not (lib / "library_operations" / "synthesized").exists() or \
@@ -283,7 +282,7 @@ def test_mutation_gate_accepts_a_killing_test_and_rejects_a_toothless_one(tmp_pa
     from swdb.extensa.synthesis.testgen_backend import run_testgen_gate
     backend = tmp_path / "backend.hh"
     backend.write_text(GOOD_GATHER)
-    target = CpuCompileTarget(TargetSpec("t", "x", _cxx(), ("-std=c++11",)))
+    target = CpuCompileTarget(TargetSpec("t", "x", find_cxx(), ("-std=c++11",)))
     killing = ("#include \"synth_backend.hh\"\n#include <cstdio>\nint main(){double s[4]={1,2,3,4};int i[3]={3,0,3};"
                "double o[3];SynthBackend::gather<double,int>(o,s,i,3,4);"
                "if(o[0]!=4||o[1]!=1||o[2]!=4)return 1;std::puts(\"SYNTH_TEST_OK\");return 0;}\n")

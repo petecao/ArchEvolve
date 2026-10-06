@@ -1,11 +1,11 @@
-"""Public strategy queries retain packages but expose stale evidence. Updated: 2026-09-27."""
+"""Public strategy queries retain packages but expose stale evidence. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-27."""
 
 import json
 from pathlib import Path
 
 import pytest
 
-from test_profile_packages import package_seed, package_setup, _assemble, _callgrind_profile
+from testkit.profile_packages import _assemble, _callgrind_profile
 
 
 @pytest.mark.parametrize('fault', [None, 'audit', 'raw-changed', 'raw-unavailable'])

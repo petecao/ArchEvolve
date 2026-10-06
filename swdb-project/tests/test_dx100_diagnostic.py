@@ -1,17 +1,17 @@
-"""Simulated interval accounting contracts; not gem5 acceptance. Updated: 2026-09-25."""
+"""Simulated interval accounting contracts; not gem5 acceptance. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-25."""
 import json
 from pathlib import Path
-import shutil
 import subprocess
 
 import pytest
 
 from swdb.cli import Failure
 from swdb.dx100_diagnostic import counters
+from testkit.toolchain import find_cxx
 
 
 def test_simulated_nested_guards_report_inclusive_and_exclusive_elapsed(tmp_path):
-    compiler = shutil.which('clang++') or shutil.which('g++')
+    compiler = find_cxx()
     if not compiler:
         pytest.skip('C++ compiler unavailable')
     runtime = Path(__file__).resolve().parents[1] / 'tools/bfs_profile/gem5_runtime.hpp'

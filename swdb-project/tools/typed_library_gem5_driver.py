@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Bounded tickets 28/29 driver for an operator-approved mbit10 socket lane.
 
-Updated: 2026-10-03 ET. Stages are prepare, companion, timed. This command
-does not dispatch remotely, run a provider, promote entries, copy raw output,
+Updated: 2026-10-05 ET (code review P15: `run_driver`, the operator frame shared with the BC
+gem5 driver, and named build/simulator budgets). Stages are prepare, companion, timed. This
+command does not dispatch remotely, run a provider, promote entries, copy raw output,
 or edit historical protocols. Each failed attempt keeps its records and logs.
 """
 import argparse
@@ -40,6 +41,15 @@ VERIFICATION_MAX_TICKS = 10**14
 # public evidence checks need a separate bound; simulator budgets stay fixed.
 POSTPROCESS_TIMEOUT_SECONDS = 3600
 RECOVERY_FORMAT = 'swdb.typed-library-gem5-aggregation-failure-summary.v1'
+#: P15 (2026-10-05 ET): the guest-build and simulator budgets of every gem5 driver request, and
+#: the grace a public command gets beyond its request's own total budget.
+COMPILE_BUDGET = {'total_seconds': 600, 'build_seconds': 300, 'memory_gib': PREPARE_MEMORY_GIB, 'storage_gib': 1}
+TIMED_SECONDS = {'total_seconds': 9000, 'checkpoint_seconds': 1800, 'run_seconds': 7140}
+COMPANION_SECONDS = {'total_seconds': 3600, 'checkpoint_seconds': 600, 'run_seconds': 2940}
+COMMAND_GRACE_SECONDS = 60
+GIT_TIMEOUT_SECONDS = 30
+#: The record checkout a real driver run must use (mbit10 storage, never $HOME).
+RECORDS_ROOT = Path('/data1/yanruj')
 
 
 def stage_budgets(args):
@@ -172,7 +182,7 @@ def lease_snapshot(lane):
 
 def public(args, folder, command, stage, request=None, *, lane=None, timeout=300,
            environment=None, extra=(), allow_failed_evaluation=False):
-    verified = provider_guard._lane()
+    verified = provider_guard.verified_lane()
     need(lane is None or verified == lane, 'socket lane receipt changed during the driver')
     lease_snapshot(verified)
     argv = _cli(args, command)
@@ -280,10 +290,9 @@ def prepare_stage(args, folder, lane, environment):
             'model_root': model['context']['model_root'], 'build_evaluation': model['id'],
             'candidate': selected['id'], 'function': 'DOBFS', 'accelerated': accelerated,
             'roi': settings['roi'], 'parent_gather_diagnostic': diagnostic,
-            'budget': {'total_seconds': 600, 'build_seconds': 300,
-                       'memory_gib': PREPARE_MEMORY_GIB, 'storage_gib': 1}}
-        compiled = public(args, folder, 'dx100-compile', 'compile-'+name, compile_request,
-                          lane=lane, timeout=660, environment=environment)
+            'budget': dict(COMPILE_BUDGET)}
+        compiled = public(args, folder, 'dx100-compile', 'compile-'+name, compile_request, lane=lane,
+                          timeout=COMPILE_BUDGET['total_seconds']+COMMAND_GRACE_SECONDS, environment=environment)
         need(compiled.get('evidence_kind') == 'execution' and compiled['outcome']['state'] == 'complete',
              'compiler did not produce real completed evidence')
         expected = settings['builds']['candidate' if accelerated else 'baseline']
@@ -365,9 +374,7 @@ def execution_request(args, store, rows, role, workload_id, label, *, companion=
         'verification': {'checker': 'dx100.bfs.verifier.v2', 'max_ticks': VERIFICATION_MAX_TICKS,
                          'coverage': role == 'candidate', 'post_roi_trace': 'SyscallBase',
                          'trace_transport': 'gem5-gzip.v1', 'read_only': role == 'candidate'},
-        'budget': {'total_seconds': 3600 if companion else 9000,
-                   'checkpoint_seconds': 600 if companion else 1800,
-                   'run_seconds': 2940 if companion else 7140,
+        'budget': {**(COMPANION_SECONDS if companion else TIMED_SECONDS),
                    'memory_gib': args.memory_gib, 'storage_gib': args.storage_gib}}
     if companion:
         request['protocol_companion'] = 'parent_gather_race'
@@ -382,7 +389,7 @@ def companion_stage(args, folder, lane, environment):
         request = execution_request(args, store, rows, 'candidate', COVERAGE, 'companion.'+name,
                                     companion=True, diagnostic=name == 'diagnostic')
         observed = public(args, folder, 'dx100-execute', 'companion-'+name, request, lane=lane,
-                          timeout=request['budget']['total_seconds']+60, environment=environment,
+                          timeout=request['budget']['total_seconds']+COMMAND_GRACE_SECONDS, environment=environment,
                           allow_failed_evaluation=True)
         executions[name] = observed
     diagnostic = executions['diagnostic']
@@ -493,7 +500,8 @@ def timed_recovery(args, store, rows, folder):
              and command.get('command') == argv and command.get('state') == 'complete'
              and command.get('returncode') == 0 and command.get('output') == {
                  'path': str(original/(stage+'.json')), 'sha256': entry['output']['sha256']}
-             and command.get('timeout_seconds') == (300 if aggregate else planned['budget']['total_seconds']+60)
+             and command.get('timeout_seconds') == (300 if aggregate
+                                                    else planned['budget']['total_seconds']+COMMAND_GRACE_SECONDS)
              and reference(output) == reference(observed) == entry['record']
              and artifacts.digest(observed.get('request')) == artifacts.digest(planned)
              and observed.get('evidence_kind') == 'execution'
@@ -545,7 +553,7 @@ def timed_stage(args, folder, lane, environment):
             request = execution_request(args, store, rows, role, wid, label)
             observed = (recovery['reused'][original_label] if recovery and index == 0 else
                         public(args, folder, 'dx100-execute', label, request, lane=lane,
-                              timeout=request['budget']['total_seconds']+60, environment=environment,
+                              timeout=request['budget']['total_seconds']+COMMAND_GRACE_SECONDS, environment=environment,
                               allow_failed_evaluation=True))
             need(observed['outcome']['state'] == 'complete' and observed['correctness']['state'] == 'passed',
                  f'{label} failed its verifier; retained evaluation {observed["id"]}')
@@ -624,37 +632,50 @@ def main(argv=None):
          'timed recovery requires a fresh ID, manifest and exact SHA-256 together')
     need(args.approval_reference.strip(), 'an explicit operator approval reference is required')
     need(args.stage != 'prepare' or args.profile_package, 'prepare requires --profile-package from ticket 27')
-    lane = provider_guard._lane()
-    args.runs_dir = args.runs_dir.resolve()
-    args.records = args.records.resolve()
-    need(args.records.is_relative_to('/data1/yanruj'), 'record checkout requires mbit10 /data1/yanruj storage')
+    suffix = '-'+args.recovery_id if args.recovery_id else ''
+    return run_driver(args, fmt=FORMAT, project=PROJECT, driver_file=__file__,
+                      stages={'prepare': prepare_stage, 'companion': companion_stage, 'timed': timed_stage},
+                      folder_name=args.id+'.driver-'+args.stage+suffix, budgets=stage_budgets(args),
+                      receipt_fields={'recovery_id': args.recovery_id,
+                                      'recovery_manifest_sha256': args.recovery_sha256})
+
+
+def run_driver(args, *, fmt, project, driver_file, stages, folder_name, budgets, receipt_fields):
+    """The operator frame every gem5 driver shares (P15, 2026-10-05 ET).
+
+    Verifies the socket lane, the record checkout under RECORDS_ROOT, and a raw-output folder
+    inside an approved EvolveSWDB run root and outside the checkout; then writes the receipt,
+    snapshots the leases, the host and the checkout (branch yanrujhou_main), admits the stage's
+    (memory GiB, storage GiB) budget, runs the stage under a bounded environment and finalizes
+    the receipt whatever happens. Nothing is created before every path check passes."""
+    lane = provider_guard.verified_lane()
+    args.runs_dir, args.records = args.runs_dir.resolve(), args.records.resolve()
+    need(args.records.is_relative_to(RECORDS_ROOT), f'record checkout requires mbit10 {RECORDS_ROOT} storage')
     need(any(args.runs_dir.is_relative_to(base) for base in (dispatch_preflight.PRIMARY, dispatch_preflight.SECONDARY)),
          'raw output requires one of the two approved EvolveSWDB run roots')
-    need(not args.runs_dir.is_relative_to(PROJECT), 'raw output cannot be inside the checkout')
-    suffix = '-'+args.recovery_id if args.recovery_id else ''
-    folder = artifacts.external_directory(args.runs_dir)/(args.id+'.driver-'+args.stage+suffix)
+    need(not args.runs_dir.is_relative_to(Path(project).resolve()), 'raw output cannot be inside the checkout')
+    folder = artifacts.external_directory(args.runs_dir)/folder_name
     folder.mkdir(exist_ok=False)
-    receipt = {'format': FORMAT, 'id': args.id, 'stage': args.stage, 'state': 'running', 'started': now(),
+    receipt = {'format': fmt, 'id': args.id, 'stage': args.stage, 'state': 'running', 'started': now(),
         'approval_reference': args.approval_reference, 'authoring_session': args.authoring_session,
         'host': socket.gethostname(), 'lane': lane, 'basis': 'simulated', 'gain_claim': False,
-        'recovery_id': args.recovery_id, 'recovery_manifest_sha256': args.recovery_sha256,
-        'memory_gib': args.memory_gib, 'storage_gib': args.storage_gib, 'driver_sha256': artifacts.file_hash(__file__)}
+        **receipt_fields, 'memory_gib': args.memory_gib, 'storage_gib': args.storage_gib,
+        'driver_sha256': artifacts.file_hash(driver_file)}
     receipt_path = folder/'driver.json'
     save(receipt_path, receipt)
     def interrupted(signum, frame):
         raise InterruptedError('driver interrupted by signal '+str(signum))
     previous = {signum: signal.signal(signum, interrupted) for signum in (signal.SIGINT, signal.SIGTERM)}
+    git = lambda *a: subprocess.check_output(['git', *a], cwd=project, text=True,  # noqa: E731
+                                             timeout=GIT_TIMEOUT_SECONDS).strip()
     try:
         receipt['leases'] = lease_snapshot(lane)
-        receipt['host_observation'] = host_observation.capture(folder, PROJECT)
-        receipt['runtime_commit'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=PROJECT,
-                                                          text=True, timeout=30).strip()
-        receipt['runtime_branch'] = subprocess.check_output(['git', 'branch', '--show-current'], cwd=PROJECT,
-                                                          text=True, timeout=30).strip()
-        receipt['tracked_changes'] = subprocess.check_output(['git', 'status', '--short', '--untracked-files=no'],
-                                                            cwd=PROJECT, text=True, timeout=30).splitlines()
+        receipt['host_observation'] = host_observation.capture(folder, project)
+        receipt['runtime_commit'] = git('rev-parse', 'HEAD')
+        receipt['runtime_branch'] = git('branch', '--show-current')
+        receipt['tracked_changes'] = git('status', '--short', '--untracked-files=no').splitlines()
         need(receipt['runtime_branch'] == 'yanrujhou_main', 'driver requires the approved yanrujhou_main branch')
-        memory_gib, storage_gib = stage_budgets(args)
+        memory_gib, storage_gib = budgets
         receipt['preflight'] = dispatch_preflight.check(args.runs_dir, lane,
             storage_bytes=storage_gib*dispatch_preflight.GIB,
             memory_bytes=memory_gib*dispatch_preflight.GIB)
@@ -663,7 +684,6 @@ def main(argv=None):
         environment = {**os.environ, 'TMPDIR': str(temporary), 'MAKEFLAGS': '-j1', 'CMAKE_BUILD_PARALLEL_LEVEL': '1',
                        'OMP_THREAD_LIMIT': '4', 'OMP_WAIT_POLICY': 'PASSIVE', 'GOMP_SPINCOUNT': '0'}
         environment.pop('GOMP_CPU_AFFINITY', None)
-        stages = {'prepare': prepare_stage, 'companion': companion_stage, 'timed': timed_stage}
         receipt['result'] = stages[args.stage](args, folder, lane, environment)
         receipt.update(state='complete', finished=now())
     except BaseException as error:
