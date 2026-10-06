@@ -1,7 +1,7 @@
 # Spec: Typed library and DX100 BFS rewrites from intrinsic specifications, in ArchEvolve and Extensa modes
 
 Created: 2026-10-03 00:50 ET
-Updated: 2026-10-05 22:30 ET (ticket 80, spec review C5–C8, C14–C17, C19: dated notes on campaign budgets, test generation, pruning, base source, REGIONS.json, BC labels, export and per-class candidate records; one "Awaiting ratification" row); 2026-10-05 18:10 ET (code review and spec review: dated notes for the decisions tickets 56–78 changed (speed rule, per-class gate, native graphs and evaluator, pauses, certify versions, named checks, promotion and review attribution); "Awaiting ratification" section; ADR 0012; header merged); 2026-10-05 16:30 ET (ticket 78: certify 1.5 and library-operation command 1.2, record-keeping in a separate evaluator process); 2026-10-05 14:21 ET (ticket 77: library-operation certification 1.1, record verdicts and blinded driver faults); 2026-10-05 12:50 ET (ticket 76: certify 1.4, blinded controls and attributed rejections); 2026-10-04 22:40 ET (ticket 70: certification isolation, certify 1.3); 2026-10-04 21:05 ET (ticket 66: native CI-width speed rule, decided by Yan-Ru); 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66); 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's 2026-10-03 delegation and revisable; see [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md))
+Updated: 2026-10-06 00:25 ET (Yan-Ru ratified every row of "Awaiting ratification", now "Ratified decisions"); 2026-10-05 22:30 ET (ticket 80, spec review C5–C8, C14–C17, C19: dated notes on campaign budgets, test generation, pruning, base source, REGIONS.json, BC labels, export and per-class candidate records; one "Awaiting ratification" row); 2026-10-05 18:10 ET (code review and spec review: dated notes for the decisions tickets 56–78 changed (speed rule, per-class gate, native graphs and evaluator, pauses, certify versions, named checks, promotion and review attribution); "Awaiting ratification" section; ADR 0012; header merged); 2026-10-05 16:30 ET (ticket 78: certify 1.5 and library-operation command 1.2, record-keeping in a separate evaluator process); 2026-10-05 14:21 ET (ticket 77: library-operation certification 1.1, record verdicts and blinded driver faults); 2026-10-05 12:50 ET (ticket 76: certify 1.4, blinded controls and attributed rejections); 2026-10-04 22:40 ET (ticket 70: certification isolation, certify 1.3); 2026-10-04 21:05 ET (ticket 66: native CI-width speed rule, decided by Yan-Ru); 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66); 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's 2026-10-03 delegation and revisable; see [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md))
 **Type:** spec
 **Status:** ready-for-agent
 **Blocked by:** None — can start immediately (ticket 03, ADRs 0007–0011 and the archevolve-handoff
@@ -10,11 +10,11 @@ Owner: Yan-Ru Jhou
 Decision records: ADR 0001–0006 (existing); ADR 0007–0011 (written by ticket 03, see "Decision
 records" under Implementation Decisions); ADR 0012 (the native CI-width speed rule, 2026-10-05)
 
-## Awaiting ratification (2026-10-05 18:10 ET)
+## Ratified decisions (listed 2026-10-05 18:10 ET; ratified 2026-10-06 00:25 ET)
 
-Rules loosened or added, and reviews performed, by agents under Yan-Ru's delegation. Each is
-**agent-decided under delegation; awaiting ratification**. The code and records follow them until
-Yan-Ru ratifies or reverses each one.
+Rules loosened or added, and reviews performed, by agents under Yan-Ru's delegation. Each was
+**agent-decided under delegation**; Yan-Ru ratified all of them on 2026-10-06 00:25 ET ("ratify all").
+The code and records follow them.
 
 | Item | What changed | Ticket |
 |---|---|---|

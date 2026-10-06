@@ -258,3 +258,4 @@ The 1.5 run folder (builds, logs, control outputs) was a Mac scratch folder and 
 the record was written, as for the earlier Mac certifications; the record keeps the compact cell and control
 evidence and the hashes.
 
+- 2026-10-06 00:25 ET: **Ratified by Yan-Ru, 2026-10-06 00:25 ET** ("ratify all" in chat): every row of the spec's "Awaiting ratification" table is accepted as decided; the code and records stay as they are.

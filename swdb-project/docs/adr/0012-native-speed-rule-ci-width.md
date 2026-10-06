@@ -59,3 +59,5 @@ Implemented in tickets 66, 71, 72 and 64 of the
 [typed-library map](../../.scratch/typed-library-dx100-bfs-2026-10-03/map.md); the speed-rule code is
 `swdb/campaign.py` and `swdb/bfs_protocol.py`. Ratification status is tracked in the spec's
 "Awaiting ratification" section. This proposed record does not assert that Yan-Ru accepted it.
+
+2026-10-06 00:25 ET: Yan-Ru ratified this rule (ci_width.v1/v2, the per-class A/A gate and `approval.gem5_other_socket`); it is no longer awaiting ratification.

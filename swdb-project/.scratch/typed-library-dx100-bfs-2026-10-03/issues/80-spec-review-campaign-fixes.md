@@ -77,3 +77,5 @@ scratch folder and deleted afterwards: **4,429 passed, 38 skipped, 0 failed** (4
 `site_finder.QUERY` and its recorded sha256 are unchanged; no certify version changed; `competing_score_updates` is
 not added to the protocol accelerator cases (BC protocols do not require it); hash-pinned `swdb/dx100_witness.py`
 untouched; export copies records only, never raw run output; no lane release mid-wait (see C6).
+
+- 2026-10-06 00:25 ET: **Ratified by Yan-Ru, 2026-10-06 00:25 ET** ("ratify all" in chat): every row of the spec's "Awaiting ratification" table is accepted as decided; the code and records stay as they are.

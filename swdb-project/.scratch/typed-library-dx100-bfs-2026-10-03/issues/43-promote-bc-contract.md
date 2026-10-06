@@ -44,3 +44,4 @@ Resolved 2026-10-03 23:31 ET. Agent-reviewed and promoted under Yan-Ru's 2026-10
   hashed content, so editing it would change the content sha256 and void the certification and review. It is
   to be corrected at the next revision of the contract.
 
+- 2026-10-06 00:25 ET: **Ratified by Yan-Ru, 2026-10-06 00:25 ET** ("ratify all" in chat): every row of the spec's "Awaiting ratification" table is accepted as decided; the code and records stay as they are.

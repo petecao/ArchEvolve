@@ -1,8 +1,8 @@
-# 79 — Certify 1.5 behavior changes made inside ticket 78 (commit 93a2a94): awaiting ratification
+# 79 — Certify 1.5 behavior changes made inside ticket 78 (commit 93a2a94): ratified
 
 Created: 2026-10-05 18:25 ET (by the spec review of tickets 38–78, finding C13)
 **Type:** task
-**Status:** ready-for-human
+**Status:** resolved
 **Blocked by:** None — can start immediately
 **Spec:** `../spec.md` ("Awaiting ratification"; certification command, "Evaluator process");
 [75](75-certify-a8-frontier-staging.md), [76](76-attributed-blinded-certification.md),
@@ -42,3 +42,7 @@ Tests: `tests/test_certification_process.py` (added in the same commit).
 
 - 2026-10-05 18:25 ET: created by the code-review agent from spec review C13; listed in the spec's
   "Awaiting ratification" section.
+
+## Answer
+
+**Ratified by Yan-Ru, 2026-10-06 00:25 ET** ("ratify all" in chat): every row of the spec's "Awaiting ratification" table is accepted as decided; the code and records stay as they are. Both changes stay part of certify 1.5 (nonce-named record files also for 1.4), and the DX100 directive rule keeps its two exceptions (contract knob defaults and the `SWDB_DXC_DIAGNOSTIC` block). No new command version is needed.
