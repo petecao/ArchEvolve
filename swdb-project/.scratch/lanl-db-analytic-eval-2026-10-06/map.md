@@ -21,9 +21,9 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
 | 04 | [First runnable version: estimate a streaming loop on the mbit10 CPU](issues/04-first-runnable-estimate.md) | resolved | 01 | 1.5–2 days |
-| 05 | [Indirect accesses and the BFS baseline on the CPU](issues/05-indirect-and-bfs-baseline.md) | ready-for-agent | 04 | 1.5–2 days |
+| 05 | [Indirect accesses and the BFS baseline on the CPU](issues/05-indirect-and-bfs-baseline.md) | resolved | 04 | 1.5–2 days |
 | 06 | [Estimate protocols and the gem5 refusal](issues/06-estimate-protocols-and-gem5-refusal.md) | resolved | 04 | 3–4 h |
-| 07 | [Measured mbit10 parameters](issues/07-measured-mbit10-parameters.md) | ready-for-agent | 04 | 2–3 h plus about 1 h of lane time (mbit10) |
+| 07 | [Measured mbit10 parameters](issues/07-measured-mbit10-parameters.md) | claimed | 04 | 2–3 h plus about 1 h of lane time (mbit10) |
 | 08 | [Peter's feature reports as an input](issues/08-peter-feature-reports-input.md) | ready-for-agent | 05 | 3–4 h |
 
 ## C. DX100 and ArchEvolve mode
@@ -78,3 +78,13 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   at estimate execution, and recursive ADR 0013 refusals. Source `c3633cf`, merged
   integration tip `9ccf710`; final 41-pass focused batch plus the public claim refusal,
   553 historical records valid, and Extensa/LLVM broad regression evidence in the ticket.
+
+
+- 2026-10-06 ET: [ticket 05](issues/05-indirect-and-bfs-baseline.md#answer) resolved.
+  Registered g16 BFS/BC counts and frozen estimates retain five trials each, 27/31
+  observed per-region reports, all 129/165 unmapped loops, and explicit reasons for
+  **0/13 and 0/20 direct handwritten matches**. Whole-call seconds/ratios remain
+  unknown for unsupported runtime/memory/worker-rate costs; no CPU agreement is
+  claimed. Sources `cda8f2d` (counts) / `b5acc909` (estimates), actual metadata
+  `68df1dd`, final 584-record validation and 7-test combined compatibility evidence
+  are linked from the Answer and [runbook](evidence/05-registered-counting-runbook.md).

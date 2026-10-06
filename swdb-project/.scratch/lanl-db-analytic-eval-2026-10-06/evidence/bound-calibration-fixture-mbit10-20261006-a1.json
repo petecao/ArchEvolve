@@ -1,0 +1,187 @@
+{
+  "format": "swdb.bound-native-calibration-fixture-compact-receipt.v1",
+  "source_commit": "b5acc909ef9df813352004e88633fac4db4b55e7",
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1",
+  "raw_transferred": false,
+  "evidence_kind": "native_calibration_plus_contract_fixture",
+  "accuracy_validation": false,
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=60",
+      "1200",
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/job.sh"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-06T22:01:24Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl-bound-estimates-20261006-a1",
+    "lease_generation": 473,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 1.03,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-06T21:52:50Z"
+  },
+  "verification": {
+    "target_id": "mbit10.cpu.lanl20261006a2.v2.t1",
+    "target_description_sha256": "a5d6c34b6d1d4be0c90a3ade95f9941ae64c9b5e76270aa26889db8cf8a499d2",
+    "protocol_id": "lanl.bound-v2.fixture.20261006.b48d17424e89d461",
+    "protocol_sha256": "b48d17424e89d461c9e25e089cf91e195956798dc9962cb7987537772eee6ce0",
+    "estimator_sha256": "645fc669120506b9d87aa32859d72aac928cb6a8e419d48ddc9e54a258595017",
+    "evidence_kind": "contract_fixture",
+    "fixture_seconds_estimated": 2.2471697927392882e-08,
+    "accuracy_validation": false,
+    "original_native_targets_unchanged": true,
+    "applications": [
+      {
+        "kernel": "bfs",
+        "seconds": null,
+        "target_sha256": "0a7b3143000e6f805f20192e6b5c1ea11a74c1d61b7994dd19f718486750b88e",
+        "protocol_sha256": "fe3608feddadc0492beef6d9226fabdc2a188f7c208102633164f3a12d68960f"
+      },
+      {
+        "kernel": "bc",
+        "seconds": null,
+        "target_sha256": "0a7b3143000e6f805f20192e6b5c1ea11a74c1d61b7994dd19f718486750b88e",
+        "protocol_sha256": "c9f75f1d64afca1d1ba14ddffa74c19036373a795d1780e62112ce69d1f3e57f"
+      }
+    ]
+  },
+  "target_versions": [
+    {
+      "id": "mbit10.cpu.lanl20261006a2.v2.t1",
+      "version": "ed801927d3f6c8db87a14bf0d02d4e00256281d85c45ebd26ef226ea166f79fb",
+      "threads": 1,
+      "sha256": "a5d6c34b6d1d4be0c90a3ade95f9941ae64c9b5e76270aa26889db8cf8a499d2",
+      "calibration_sources": [
+        "mbit10.cpu.lanl20261006a2.v2.calibration.t1"
+      ]
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006a2.v2.t2",
+      "version": "c1fa5ca6c606dd0317972a6415d921b07e12a37fdccfb20b0ae00b22044ff058",
+      "threads": 2,
+      "sha256": "3ca42c40c4a5ed8c82983da2bfe3091e44805f58376e13827dd6c43233e54d89",
+      "calibration_sources": [
+        "mbit10.cpu.lanl20261006a2.v2.calibration.t2"
+      ]
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006a2.v2.t4",
+      "version": "13948d96e86c1185d8fb27981c07a897ac6fad7dc322a605e2ff230e47f2429d",
+      "threads": 4,
+      "sha256": "0a7b3143000e6f805f20192e6b5c1ea11a74c1d61b7994dd19f718486750b88e",
+      "calibration_sources": [
+        "mbit10.cpu.lanl20261006a2.v2.calibration.t4"
+      ]
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006a2.v2.t8",
+      "version": "72ea9dbb00476e83b902ec526b644ac24749b1504a298d67dfdce96d0b9b0a5a",
+      "threads": 8,
+      "sha256": "075d2458b0a58466d795f54676e1d0bb7981c556db43a86a0e1588f754219213",
+      "calibration_sources": [
+        "mbit10.cpu.lanl20261006a2.v2.calibration.t8"
+      ]
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006a2.v2.t16",
+      "version": "beb1e38fa5ad3b3bd4c1dffef19f467d26455580c54286166e03fa2a2ed210ff",
+      "threads": 16,
+      "sha256": "54387490280207246c81712db2f7a058798d87e20d36163cd4d2a1222e838661",
+      "calibration_sources": [
+        "mbit10.cpu.lanl20261006a2.v2.calibration.t16"
+      ]
+    }
+  ],
+  "fixture": {
+    "characterization": "fixture.lanl.measured-v2.stream.t1",
+    "estimate": "lanl.bound-v2.fixture.20261006.estimate",
+    "seconds": 2.2471697927392882e-08,
+    "target_description_sha256": "a5d6c34b6d1d4be0c90a3ade95f9941ae64c9b5e76270aa26889db8cf8a499d2",
+    "protocol": "lanl.bound-v2.fixture.20261006.b48d17424e89d461",
+    "protocol_sha256": "b48d17424e89d461c9e25e089cf91e195956798dc9962cb7987537772eee6ce0",
+    "estimator_sha256": "645fc669120506b9d87aa32859d72aac928cb6a8e419d48ddc9e54a258595017"
+  },
+  "new_records": [
+    {
+      "path": "cpu_calibrations/mbit10.cpu.lanl20261006a2.v2.calibration.t1.yaml",
+      "file_sha256": "fd95878be52b0afbda584e8f6c5a3c3e55c9c6052634851353affb5aa0b2eb9b"
+    },
+    {
+      "path": "cpu_calibrations/mbit10.cpu.lanl20261006a2.v2.calibration.t16.yaml",
+      "file_sha256": "3461d1ed6ad5768a6a39c5009293faac83fb3a1475dcdd435f037dd43f63e76a"
+    },
+    {
+      "path": "cpu_calibrations/mbit10.cpu.lanl20261006a2.v2.calibration.t2.yaml",
+      "file_sha256": "299af4383c3b20158a619c190b8c1e346a06ed480f16e3d1b02c7817a0b6716a"
+    },
+    {
+      "path": "cpu_calibrations/mbit10.cpu.lanl20261006a2.v2.calibration.t4.yaml",
+      "file_sha256": "3955429c0808f143c38c29f91d22e9e78400ecb2a4c728dbdc14974b88c4ee28"
+    },
+    {
+      "path": "cpu_calibrations/mbit10.cpu.lanl20261006a2.v2.calibration.t8.yaml",
+      "file_sha256": "366ab79f53fb000e8e5a55bc8e2b788615e1c1c1270962fc9ac7f6d531cc73e7"
+    },
+    {
+      "path": "estimates/lanl.bound-v2.bc.20261006.estimate.yaml",
+      "file_sha256": "f372916bbde00178b71eb20f4038194ee7128a0ccfb48ea0cda007ae468c1f69"
+    },
+    {
+      "path": "estimates/lanl.bound-v2.bfs.20261006.estimate.yaml",
+      "file_sha256": "b8a048c47b47b8e7c093b833d46a77df46aec588d175a5fbfb66c772d28a43a2"
+    },
+    {
+      "path": "estimates/lanl.bound-v2.fixture.20261006.estimate.yaml",
+      "file_sha256": "db744b523bd583e1f5a62575cdf21fbea1f59642a3f9970fe33abf152f5c96fd"
+    },
+    {
+      "path": "protocols/lanl.bound-v2.bc.20261006.c9f75f1d64afca1d.yaml",
+      "file_sha256": "b6e08291bf995f88e11fa9d1990c72436cee90359b1b556904c03134af3dad4b"
+    },
+    {
+      "path": "protocols/lanl.bound-v2.bfs.20261006.fe3608feddadc049.yaml",
+      "file_sha256": "2fc82fc5957be19345bd6ad7986d2c95a05bc00ec51b488dac74b34b5ef3c20e"
+    },
+    {
+      "path": "protocols/lanl.bound-v2.fixture.20261006.b48d17424e89d461.yaml",
+      "file_sha256": "2e75f839faef68d589e393e8313b3b18794bbad99fa1937e3a7c53e5a7724ac3"
+    },
+    {
+      "path": "target_descriptions/mbit10.cpu.lanl20261006a2.v2.t1.yaml",
+      "file_sha256": "b40ef641cb538c5d56cc61ac65ded57afd6b2d74a4ab8b119c1ad784b9aab013"
+    },
+    {
+      "path": "target_descriptions/mbit10.cpu.lanl20261006a2.v2.t16.yaml",
+      "file_sha256": "fedf46a9c20a23335c34a03e772bba93b7ad1ab0083c5151c56aee81166da47e"
+    },
+    {
+      "path": "target_descriptions/mbit10.cpu.lanl20261006a2.v2.t2.yaml",
+      "file_sha256": "af4a95f1bb88e098fc29d9c0f244dd5e3c3f9bc19c388f30cfea42254338361a"
+    },
+    {
+      "path": "target_descriptions/mbit10.cpu.lanl20261006a2.v2.t4.yaml",
+      "file_sha256": "4fa2e34149f2c8cb73768d6a7d4a9b3c3dacb9ecc581ca29c3ee9c1d6570fcc1"
+    },
+    {
+      "path": "target_descriptions/mbit10.cpu.lanl20261006a2.v2.t8.yaml",
+      "file_sha256": "f0e6819f91d26e017acb20c68b5e24fba8f01c5102c7e561d5a6af87c9577ebf"
+    },
+    {
+      "path": "workload_characterizations/fixture.lanl.measured-v2.stream.t1.yaml",
+      "file_sha256": "34455ccb6ac9b29cb53cd901e9aa3fc28bb1e3f07772814c4bc9f36277b5a178"
+    }
+  ],
+  "validation": "OK: 584 record(s) valid",
+  "identity_sha256": "1ffc69ffc12722ccfa1d331a02d69f0958b22962267b1ba1b79f60990fba6767"
+}

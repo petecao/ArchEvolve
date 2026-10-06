@@ -9,6 +9,9 @@ import json
 import math
 import os
 import platform
+import re
+import statistics
+import copy
 import shlex
 import shutil
 import socket
@@ -22,16 +25,21 @@ from swdb.store import Store
 
 VERSION = 'swdb.analytic.v1'
 CLASSES = ('integer', 'floating_point', 'branch', 'atomic')
+PIPELINES = {'source-normalized-v1': 'mem2reg,loop-simplify',
+             'source-normalized-v2': 'function(sroa,mem2reg),cgscc(inline),function(loop-simplify)'}
 
 
 def register_cli(commands):
     sub = commands.add_parser('characterize', help='count source-normalized LLVM operations and accesses in one native run')
     sub.add_argument('--records', type=Path, default=paths.RECORDS)
-    sub.add_argument('--source', type=Path, required=True, help='one buildable C/C++ translation unit with its protected driver')
+    sub.add_argument('--source', type=Path, help='one buildable C/C++ translation unit with its protected driver')
     subject = sub.add_mutually_exclusive_group(required=True)
     subject.add_argument('--implementation')
     subject.add_argument('--candidate')
     sub.add_argument('--input', required=True)
+    sub.add_argument('--adapter', choices=['registered-gapbs'], help='verify registered GAPBS source/input/trial-lambda binding')
+    sub.add_argument('--counting-pipeline', choices=tuple(PIPELINES), help='fixed source normalization recipe; fixtures default v1, registered adapter requires v2')
+    sub.add_argument('--trials', type=int, default=5, help='registered GAPBS trial count; preserve each invocation separately')
     sub.add_argument('--roi', help='declared timing ROI identity; recorded but not verified by this slice')
     sub.add_argument('--threads', type=int, default=1, help='explicit counted workload thread configuration')
     sub.add_argument('--id', required=True)
@@ -125,6 +133,72 @@ def _load(store, ref, kind):
     return data
 
 
+def _uncovered_call(call):
+    return not call.get('body_counted', False) and call.get('cost_accounting', 'opaque_callee') not in (
+        'no_runtime_operation', 'source_normalized_operations')
+
+
+def _counted_regions(static, counts):
+    regions = []
+    for r in static['regions']:
+        ops = counts['operations'].get(str(r['index']), [0, 0, 0, 0])
+        accesses = []
+        for a in static['accesses']:
+            if a['region_index'] != r['index']:
+                continue
+            dynamic = counts['accesses'].get(str(a['site']), {'elements': 0, 'bytes': 0, 'address_span_bytes': 0})
+            accesses.append({'id': 'access.' + str(a['site']),
+                'source_location': {'function': a['function'], 'line': a['line'], 'column': a['column'], 'path': a.get('path',''), 'llvm_function': a.get('llvm_function','')},
+                'address_shape': _fact(None if a['address_shape'] == 'unknown' else a['address_shape'], 'code_reading'),
+                'stride_bytes': _fact(a['stride_bytes'], 'code_reading'), 'element_bytes': a['element_bytes'],
+                'update_kind': a['update_kind'], 'read_write': a.get('read_write',False), 'element_count': _count(dynamic['elements']),
+                'bytes_accessed': _count(dynamic['bytes']),
+                'observed_address_span_bytes': _fact(dynamic['address_span_bytes'], 'measured'),
+                'observed_unique_bytes': _fact(dynamic.get('unique_bytes', 0), 'measured'),
+                'address_expression': a['address_expression'], 'ir_lanes': a['ir_lanes']})
+        regions.append({'id': r['id'], 'source_location': {'function': r['function'], 'line': r['line'], 'path': r.get('path',''), 'llvm_function': r.get('llvm_function','')},
+            'active_workers': _fact(counts.get('active_workers',{}).get(str(r['index']),0), 'measured'),
+            'mapped': r['mapped'], 'kind': 'loop' if r['is_loop'] else 'serial_remainder',
+            'access_patterns': accesses, 'operation_counts': {name: _count(ops[i]) for i, name in enumerate(CLASSES)},
+            'dynamic_counts': {'loop_iterations': _count(counts['trips'].get(str(r['index']), 0)) if r['is_loop'] else _count(None, 'unknown')},
+            'footprint_bytes': _fact(counts.get('footprints', {}).get(str(r['index']), 0), 'measured', note='Live union of virtual byte ranges in this exclusive IR region; addresses are never persisted.'),
+            'accelerator_calls': [], 'address_stream_counts': {}})
+    # Several source loops may map to one existing region; aggregate their counters,
+    # while static_analysis.loops retains each loop's identity and source location.
+    combined = {}
+    worker_tokens = {}
+    team_sizes = {}
+    for r in static['regions']:
+        worker_tokens.setdefault(r['id'],set()).update(counts.get('worker_tokens',{}).get(str(r['index']),[]))
+        team_sizes.setdefault(r['id'],set()).update(counts.get('team_sizes',{}).get(str(r['index']),[]))
+    for region in regions:
+        if region['id'] not in combined:
+            combined[region['id']] = region
+        else:
+            previous = combined[region['id']]
+            previous['access_patterns'].extend(region['access_patterns'])
+            previous['footprint_bytes']['value'] = max(previous['footprint_bytes']['value'],region['footprint_bytes']['value'])
+            previous['active_workers']['value'] = max(previous['active_workers']['value'],region['active_workers']['value'])
+            for key in CLASSES:
+                previous['operation_counts'][key]['value'] += region['operation_counts'][key]['value']
+            previous['dynamic_counts']['loop_iterations'] = _count(None, 'unknown')
+            previous['dynamic_counts']['loop_iterations']['note'] = 'Several lowered LLVM loops share this source region; unique source-loop iterations are not inferred by summing them.'
+    regions = list(combined.values())
+    for region in regions:
+        if 'worker_tokens' in counts:
+            region['active_workers']['value'] = len(worker_tokens[region['id']])
+        region['worker_context'] = {'team_sizes': sorted(team_sizes[region['id']]),
+            'measurement': 'Distinct executing workers per exclusive region within one trial; team sizes are context, not an active-worker multiplier.'}
+    calls = []
+    for original in static['unmodeled_calls']:
+        called = dict(original)
+        called['execution_count'] = _count(counts.get('calls', {}).get(str(called['site']), 0))
+        called['size_bytes'] = _fact(counts.get('call_size_bytes', {}).get(str(called['site'])), 'measured')
+        calls.append(called)
+    return regions, calls
+
+
+
 def characterize(args):
     store = Store(args.records)
     subject = args.candidate or args.implementation
@@ -133,6 +207,18 @@ def characterize(args):
         raise Failure(f'{kind} {subject!r} does not exist')
     if store.get(args.input, 'input') is None and store.get(args.input, 'workload') is None:
         raise Failure(f'input/workload {args.input!r} does not exist')
+    subject_record = store.get(subject, kind)
+    input_record = store.get(args.input, 'input') or store.get(args.input, 'workload')
+    adapter = None
+    if args.adapter:
+        from swdb import analytic_binding
+        adapter = analytic_binding.prepare(store, args, subject_record, input_record)
+        args.source = adapter['source']
+        args.roi = adapter['roi']
+        args.build_flag = adapter['flags']
+        args.run_arg = adapter['run']
+    if args.source is None:
+        raise Failure('--source is required without a registered adapter')
     source = args.source.resolve()
     if not source.is_file():
         raise Failure(f'source does not exist: {source}')
@@ -169,6 +255,10 @@ def characterize(args):
     input_record = store.get(args.input, 'input') or store.get(args.input, 'workload')
     flags = list(args.build_flag)
     toolchain_flags = list(args.toolchain_flag)
+    if adapter:
+        args.region_map = output / 'regions.json'
+        args.region_map.write_text(json.dumps(adapter['mapping']))
+        source_identity.update(adapter['identity'])
     plugin = output / 'Characterize.so'
     llvm_flags = shlex.split(_run([llvm / 'llvm-config', '--cxxflags', '--ldflags']).stdout)
     shared_probe = _run([llvm / 'llvm-config', '--link-shared', '--libs', 'core', 'passes', 'analysis', 'support', '--system-libs'], check=False)
@@ -193,8 +283,16 @@ def characterize(args):
     instrumented = output / 'instrumented.bc'
     _run([*base, '-o', optimized], timeout=args.timeout_s)
     _run([*base, '-Xclang', '-disable-llvm-passes', '-o', raw], timeout=args.timeout_s)
-    _run([llvm / 'opt', '-passes=mem2reg,loop-simplify', raw, '-o', normalized], timeout=args.timeout_s)
+    # Adapter boundary hooks are inserted before helper inlining, preserving the exact source call.
+    bound_ir = output / 'bound.bc'
+    if adapter:
+        gate_env = dict(os.environ, SWDB_ROI_PATH=adapter['roi_path'], SWDB_ROI_LINE=str(adapter['roi_line']))
+        _run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-bind-roi', raw, '-o', bound_ir], env=gate_env, timeout=args.timeout_s)
+    pipeline_version = args.counting_pipeline or ('source-normalized-v2' if adapter else 'source-normalized-v1')
+    pipeline = PIPELINES[pipeline_version]
+    _run([llvm / 'opt', '-passes=' + pipeline, bound_ir if adapter else raw, '-o', normalized], timeout=args.timeout_s)
     env = dict(os.environ)
+    env['SWDB_SUBJECT'] = subject
     env['SWDB_COUNT_FUNCTION'] = args.function or ''
     env['SWDB_REGION_MAP'] = str(args.region_map.resolve()) if args.region_map else ''
     env['SWDB_ANALYSIS_OUTPUT'] = str(output / 'optimized.json')
@@ -209,6 +307,8 @@ def characterize(args):
     for name in ('LD_LIBRARY_PATH', 'DYLD_LIBRARY_PATH'):
         env[name] = os.pathsep.join(run_library_paths + ([env[name]] if env.get(name) else []))
     env['OMP_NUM_THREADS'] = str(args.threads)
+    env['OMP_DYNAMIC'] = 'FALSE'
+    env['SWDB_ROI_GATED'] = '1' if adapter else '0'
     env['SWDB_COUNTS_OUTPUT'] = str(output / 'counts.json')
     executed = _run([binary, *args.run_arg], env=env, timeout=args.timeout_s)
     (output / 'stdout.txt').write_text(executed.stdout)
@@ -221,74 +321,87 @@ def characterize(args):
         raise Failure(f'counted native run did not produce valid counts: {exc}') from None
     if not static['regions']:
         raise Failure('no source regions matched the requested function/debug information')
-    regions = []
-    for r in static['regions']:
-        ops = counts['operations'].get(str(r['index']), [0, 0, 0, 0])
-        accesses = []
-        for a in static['accesses']:
-            if a['region_index'] != r['index']:
-                continue
-            dynamic = counts['accesses'].get(str(a['site']), {'elements': 0, 'bytes': 0, 'address_span_bytes': 0})
-            accesses.append({'id': 'access.' + str(a['site']),
-                'source_location': {'function': a['function'], 'line': a['line'], 'column': a['column']},
-                'address_shape': _fact(None if a['address_shape'] == 'unknown' else a['address_shape'], 'code_reading'),
-                'stride_bytes': _fact(a['stride_bytes'], 'code_reading'), 'element_bytes': a['element_bytes'],
-                'update_kind': a['update_kind'], 'element_count': _count(dynamic['elements']),
-                'bytes_accessed': _count(dynamic['bytes']),
-                'observed_address_span_bytes': _fact(dynamic['address_span_bytes'], 'measured'),
-                'address_expression': a['address_expression'], 'ir_lanes': a['ir_lanes']})
-        regions.append({'id': r['id'], 'source_location': {'function': r['function'], 'line': r['line']},
-            'mapped': r['mapped'], 'kind': 'loop' if r['is_loop'] else 'serial_remainder',
-            'access_patterns': accesses, 'operation_counts': {name: _count(ops[i]) for i, name in enumerate(CLASSES)},
-            'dynamic_counts': {'loop_iterations': _count(counts['trips'].get(str(r['index']), 0)) if r['is_loop'] else _count(None, 'unknown')},
-            'footprint_bytes': _fact(None, 'unknown', note='Address spans are observed per access; aliasing and distinct-byte union are not established.'),
-            'accelerator_calls': [], 'address_stream_counts': {}})
-    # Several source loops may map to one existing region; aggregate their counters,
-    # while static_analysis.loops retains each loop's identity and source location.
-    combined = {}
-    for region in regions:
-        if region['id'] not in combined:
-            combined[region['id']] = region
-        else:
-            previous = combined[region['id']]
-            previous['access_patterns'].extend(region['access_patterns'])
-            for key in CLASSES:
-                previous['operation_counts'][key]['value'] += region['operation_counts'][key]['value']
-            previous['dynamic_counts']['loop_iterations']['value'] += region['dynamic_counts']['loop_iterations']['value']
-    regions = list(combined.values())
-    for called in static['unmodeled_calls']:
-        called['execution_count'] = _count(counts.get('calls', {}).get(str(called['site']), 0))
+    regions, calls = _counted_regions(static, counts)
+    trials = []
+    if adapter:
+        if len(counts.get('trials', [])) != args.trials:
+            raise Failure('counted run lacks the registered trial sequence')
+        for index, observed in enumerate(counts['trials']):
+            trial_regions, trial_calls = _counted_regions(static, observed)
+            called_regions = {c['region'] for c in trial_calls if c['execution_count']['value']}
+            trials.append({'position': index, 'sources': observed.get('sources', []),
+                'regions': [r for r in trial_regions if any(v['value'] for v in r['operation_counts'].values()) or any(a['element_count']['value'] for a in r['access_patterns']) or r['dynamic_counts']['loop_iterations']['value'] or r['id'] in called_regions],
+                'unmodeled_calls': [c for c in trial_calls if c['execution_count']['value']]})
+        if any(len(t['sources']) != 1 for t in trials):
+            raise Failure('counted trial lacks its exact GAPBS source selection')
     record = _envelope('workload_characterization', args.id,
         'LLVM 22 static pass plus one IR-instrumented native count run; no timing measurement.')
     record.update({'format': 'swdb.workload-characterization.v1',
         'subject': {'kind': kind, 'id': subject}, 'input': args.input,
         'source': {'path': str(source), 'sha256': _sha(source), 'build_flags': flags,
                    'run_arguments': list(args.run_arg), 'protected_driver': 'unchanged; separately compiled instrumentation'},
-        'binding': {'state': 'fixture' if args.fixture else 'unverified',
+        'binding': {'state': 'verified' if adapter else 'fixture' if args.fixture else 'unverified',
             'subject_source_identity': source_identity, 'input_record_sha256': artifacts.digest(input_record),
             'roi': args.roi, 'threads': args.threads,
             'run_arguments_sha256': artifacts.digest(list(args.run_arg)),
             'note': 'Source/input/ROI binding to a registered subject is not certified by an arbitrary supplied translation-unit SHA; application evidence needs the registered-source/protocol adapter.'},
         'host': {'machine': socket.gethostname(), 'architecture': platform.machine(), 'system': platform.platform()},
         'toolchain': {'llvm_version': version, 'llvm_bin': str(llvm), 'compiler_flags': toolchain_flags, 'plugin_linkage': plugin_linkage, 'run_library_paths': run_library_paths},
-        'counting': {'level': 'source_normalized_ir', 'passes': ['mem2reg', 'loop-simplify'],
+        'counting': {'level': 'source_normalized_ir', 'passes': [pipeline],
+            'pipeline_version': pipeline_version,
+            'summary': 'per_trial_then_median_time' if adapter else 'single_run',
             'native_runs': 1, 'basis': 'measured', 'vector_multiplicity': 'instrumented before vectorization and unrolling; existing fixed vectors counted by lane',
-            'operation_definition': 'Normalized IR arithmetic/comparison operations; FMA counts two floating-point operations, branches count terminator executions; address and cast instructions excluded.',
+            'operation_definition': 'Normalized IR arithmetic/comparison operations; FMA counts two floating-point operations; checked integer arithmetic counts the result and overflow predicate (two per lane); branches count terminator executions; optimizer hints, address and cast instructions excluded.',
             'loop_definition': 'Body entries when the header condition chooses inside/outside; header entries for other loop shapes.',
             'binary_sha256': _sha(binary), 'counts_sha256': _sha(output / 'counts.json'), 'output_directory': str(output)},
         'static_analysis': {'basis': 'code_reading', 'source_ir_sha256': _sha(normalized), 'optimized_ir_sha256': _sha(optimized),
             'loops': static['loops'], 'optimized_facts': optimized_facts,
             'mapping_note': 'Optimized loops/accesses are reported separately; optimized vector/unroll/call elimination is never used as a source count multiplier.'},
-        'coverage': {'scope': 'function' if args.function else 'translation_unit',
-            'function': args.function, 'whole_timed_call': None,
+        'coverage': {'scope': 'registered_trial_lambda' if adapter else 'function' if args.function else 'translation_unit',
+            'function': args.function, 'whole_timed_call': True if adapter else None,
             'count_coverage': 'normalized instructions in selected debug functions; indirect callees and other translation units are not claimed',
-            'missing_costs': sorted({c['name'] for c in static['unmodeled_calls'] if c['execution_count']['value']}),
-            'missing_counts': ['callee bodies outside selected debug functions and other translation units'] if any(c['execution_count']['value'] for c in static['unmodeled_calls']) else []},
-        'regions': regions, 'unmapped_loops': [r['id'] for r in regions if not r['mapped']],
-        'unmodeled_calls': static['unmodeled_calls'], 'evidence_kind': 'contract_fixture' if args.fixture else 'execution'})
+            'missing_costs': sorted({c['name'] for c in calls + [c for t in trials for c in t['unmodeled_calls']] if c['execution_count']['value'] and _uncovered_call(c)}),
+            'missing_counts': ['callee bodies outside selected debug functions and other translation units'] if any(c['execution_count']['value'] and _uncovered_call(c) for c in calls + [c for t in trials for c in t['unmodeled_calls']]) else []},
+        'regions': regions, 'unmapped_loops': [r['id'] for r in regions if r['kind'] == 'loop' and not r['mapped']],
+        'unmodeled_calls': calls, 'evidence_kind': 'contract_fixture' if args.fixture else 'execution'})
+    if adapter:
+        record['trials'] = trials
+        record['binding']['note'] = 'Registered source excerpts, input generator and original timed kernel lambda verified; each trial and SourcePicker selection retained.'
+        record['coverage']['ambiguous_helper_loops'] = adapter['ambiguous_helper_loops']
+        record['pattern_comparison'] = analytic_binding.compare_patterns(subject_record, regions, adapter['ambiguous_helper_loops'], adapter['mapping']['regions'])
+        graph = re.search(r'Graph has ([0-9]+) nodes and ([0-9]+) (un)?directed edges', executed.stdout)
+        if not graph:
+            raise Failure('registered counting run lacks graph identity')
+        observed_graph = {'num_nodes': int(graph[1]), 'reported_edges': int(graph[2]), 'directed': graph[3] is None}
+        record['binding']['execution_receipt'] = analytic_binding.execution_receipt(record, observed_graph, llvm_src / 'Characterize.cpp', llvm_src / 'CountingRuntime.cpp')
+        problems = analytic_binding.verify_binding(record, store, require_available=True)
+        if problems:
+            raise Failure('registered execution binding failed: ' + '; '.join(problems))
     record['identity_sha256'] = artifacts.digest(record)
     writer.commit(args.records, new=[record])
     return record
+
+
+def _estimate_regions(source_regions, source_calls, target):
+    from swdb import analytic_models
+
+    # Models are bounds, not a fitted timing. Preserve unknowns in composition.
+    regions = []
+    for region in source_regions:
+        bounds = [analytic_models.evaluate(region, mechanism, [m['model'] for m in target['mechanisms']], target['threads']) for mechanism in target['mechanisms']]
+        called = [c for c in source_calls
+                  if c.get('region') == region['id'] and c.get('execution_count', {}).get('value') != 0 and _uncovered_call(c)]
+        if called:
+            bounds.append(analytic_models.bound('unmodeled_calls', None, 'sum(call execution count * call cost)',
+                {'calls': called}, ['call_cost.' + c['name'] for c in called]))
+        unknown = any(b['seconds'] is None for b in bounds)
+        seconds = None if unknown else max((b['seconds'] for b in bounds), default=0.0)
+        limiting = None if unknown else max(bounds, key=lambda b: b['seconds'])['model']
+        regions.append({'id': region['id'], 'seconds': seconds, 'basis': 'estimated',
+            'bounds': bounds, 'overheads': [], 'limiting_bound': limiting,
+            'state': 'unknown' if unknown else 'known'})
+    seconds = None if any(r['seconds'] is None for r in regions) else sum(r['seconds'] for r in regions)
+    return regions, seconds
 
 
 def estimate(args):
@@ -302,22 +415,32 @@ def estimate(args):
     protocol = bind(store, args.protocol, characterization, target)
     if target['threads'] != characterization['binding']['threads']:
         raise Failure('target thread count differs from the counted workload thread identity')
-    # Models are bounds, not a fitted timing. Preserve unknowns in composition.
-    regions = []
-    for region in characterization['regions']:
-        bounds = [analytic_models.evaluate(region, mechanism) for mechanism in target['mechanisms']]
-        called = [c for c in characterization['unmodeled_calls']
-                  if c.get('region') == region['id'] and c.get('execution_count', {}).get('value') != 0]
-        if called:
-            bounds.append(analytic_models.bound('unmodeled_calls', None, 'sum(call execution count * call cost)',
-                {'calls': called}, ['call_cost.' + c['name'] for c in called]))
-        unknown = any(b['seconds'] is None for b in bounds)
-        seconds = None if unknown else max((b['seconds'] for b in bounds), default=0.0)
-        limiting = None if unknown else max(bounds, key=lambda b: b['seconds'])['model']
-        regions.append({'id': region['id'], 'seconds': seconds, 'basis': 'estimated',
-            'bounds': bounds, 'overheads': [], 'limiting_bound': limiting,
-            'state': 'unknown' if unknown else 'known'})
-    seconds = None if any(r['seconds'] is None for r in regions) else sum(r['seconds'] for r in regions)
+    regions, seconds = _estimate_regions(characterization['regions'], characterization['unmodeled_calls'], target)
+    trial_estimates=[]
+    for trial in characterization.get('trials',[]):
+        rows,total=_estimate_regions(trial['regions'],trial['unmodeled_calls'],target)
+        trial_estimates.append({'position':trial['position'],'sources':trial['sources'],'regions':rows,'seconds':total})
+    if trial_estimates:
+        seconds=None if any(t['seconds'] is None for t in trial_estimates) else statistics.median(t['seconds'] for t in trial_estimates)
+        lookups=[{r['id']:r for r in t['regions']} for t in trial_estimates]
+        for row in regions:
+            sequence=[index.get(row['id']) for index in lookups]
+            values=[r['seconds'] if r else 0. for r in sequence]
+            row['seconds']=None if any(v is None for v in values) else statistics.median(values)
+            row['state']='unknown' if row['seconds'] is None else 'known'
+            templates={b['model']:b for b in row['bounds']}
+            for r in sequence:
+                if r:
+                    for b in r['bounds']:templates.setdefault(b['model'],copy.deepcopy(b))
+            row['bounds']=list(templates.values())
+            for bound in row['bounds']:
+                bs=[next((b for b in r['bounds'] if b['model']==bound['model']),None) if r else None for r in sequence]
+                values=[b['seconds'] if b else 0. for b in bs]
+                bound['seconds']=None if any(v is None for v in values) else statistics.median(values)
+                bound['state']='unknown' if bound['seconds'] is None else 'known'
+                bound['missing']=sorted({m for b in bs if b for m in b['missing']})
+                bound['notes']=list(bound.get('notes',[]))+['Per-region bound summary is the median across independent trial estimates.']
+            row['limiting_bound']=None if row['seconds'] is None else max(row['bounds'],key=lambda b:b['seconds'])['model']
     record = _envelope('estimate', args.id, 'Analytic mechanism bounds from compiler/counting facts and frozen target parameters; no target timing.')
     record.update({'format': 'swdb.estimate.v1', 'basis': 'estimated', 'estimator_version': VERSION,
         'estimator_sha256': protocol['settings']['estimator_sha256'],
@@ -334,6 +457,10 @@ def estimate(args):
         'scope': characterization.get('coverage', {'scope': 'counted source regions', 'unmapped_loops': characterization['unmapped_loops']}),
         'notes': ['No validated error band exists in this slice; the verdict remains within_error.',
                   'Total is the sum of region maxima and serial remainder. Any required unknown makes its region and total unknown.']})
+    if trial_estimates:
+        record['trials'] = trial_estimates
+        record['summary'] = 'median_whole_call_seconds'
+        record['notes'].append('Estimate each trial by summing exclusive region maxima; the reported total is the median whole-call trial time. Per-region medians are diagnostic and do not generally sum to that median.')
     if args.baseline:
         baseline = _load(store, args.baseline, 'estimate')
         require_team_safe(store, baseline, command='estimate')
@@ -362,13 +489,16 @@ def _payload_problems(data):
         ids = [r['id'] for r in data['regions']]
         if len(set(ids)) != len(ids):
             yield 'regions', 'region IDs must be unique after loop aggregation'
-        for i, region in enumerate(data['regions']):
+        groups=[('regions',data['regions'])]+[(f'trials[{i}].regions',trial.get('regions',[])) for i,trial in enumerate(data.get('trials',[]))]
+        for group, rows in groups:
+          for i, region in enumerate(rows):
             counts = list(region['operation_counts'].values()) + list(region['dynamic_counts'].values())
-            counts += [a[k] for a in region['access_patterns'] for k in ('element_count', 'bytes_accessed')]
+            counts += [region['footprint_bytes']] + ([region['active_workers']] if 'active_workers' in region else [])
+            counts += [a[k] for a in region['access_patterns'] for k in ('element_count', 'bytes_accessed', 'observed_address_span_bytes','observed_unique_bytes') if k in a]
             for count in counts:
                 value = count.get('value')
                 if value is not None and (not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value) or value < 0):
-                    yield f'regions[{i}]', 'work counts must be finite nonnegative numbers or null'
+                    yield f'{group}[{i}]', 'work counts must be finite nonnegative numbers or null'
     elif kind == 'target_description':
         for i, mechanism in enumerate(data['mechanisms']):
             for name, fact in mechanism['parameters'].items():
@@ -405,6 +535,10 @@ def validate_record(record, ctx):
     from swdb.problems import Problem
     for field, reason in _payload_problems(record.data):
         yield Problem(record.rel, field, reason)
+    if record.kind == 'workload_characterization' and record.data.get('binding', {}).get('state') == 'verified':
+        from swdb import analytic_binding
+        for reason in analytic_binding.verify_binding(record.data, ctx.store):
+            yield Problem(record.rel, 'binding', reason)
     if record.kind == 'estimate':
         characterization = ctx.store.get(record.data['characterization'], 'workload_characterization')
         if characterization is not None and artifacts.digest(characterization) != record.data['characterization_sha256']:

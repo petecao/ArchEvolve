@@ -252,6 +252,8 @@ def main(argv=None):
 
     from swdb import analytic
     analytic.register_cli(commands)
+    from swdb import cpu_calibration
+    cpu_calibration.register_cli(commands)
 
     from swdb import archevolve
     archevolve.register_cli(commands)
@@ -283,6 +285,9 @@ def _dispatch(args):
         raise UsageError(f"records folder not found: {records}")
     if hasattr(args, "analytic_handler"):
         _emit(args.analytic_handler(args), args.format)
+        return 0
+    if hasattr(args, "cpu_calibration_handler"):
+        _emit(args.cpu_calibration_handler(args), args.format)
         return 0
     if hasattr(args, "_annotation_handler"):
         _emit(args._annotation_handler(args), args.format)

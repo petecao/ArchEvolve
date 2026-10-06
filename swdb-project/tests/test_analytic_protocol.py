@@ -151,8 +151,8 @@ def test_estimate_uses_frozen_protocol_and_preserves_fixture_state(team, tmp_pat
     ({'state': 'verified'}, 'verified registered-source'),
 ])
 def test_estimate_refuses_count_binding_mismatch(team, tmp_path, binding, message):
-    fixture_characterization(team, **binding)
     protocol = frozen(team, tmp_path)
+    fixture_characterization(team, **binding)
     result = estimate(team, tmp_path, protocol)
     assert result.returncode == 1 and message.lower() in result.stderr.lower(), result.stderr
     assert not (team / 'estimates/fixture.estimate.yaml').exists()
