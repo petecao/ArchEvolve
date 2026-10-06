@@ -1,0 +1,96 @@
+{
+  "completed_at": "2026-10-06T23:35:50Z",
+  "environment": {
+    "cpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           46 bits physical, 57 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  64\nOn-line CPU(s) list:                     0-63\nVendor ID:                               GenuineIntel\nModel name:                              Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz\nCPU family:                              6\nModel:                                   106\nThread(s) per core:                      2\nCore(s) per socket:                      16\nSocket(s):                               2\nStepping:                                6\nBogoMIPS:                                5800.00\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 intel_ppin ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect wbnoinvd dtherm ida arat pln pts vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid fsrm md_clear pconfig flush_l1d arch_capabilities\nVirtualization:                          VT-x\nL1d cache:                               1.5 MiB (32 instances)\nL1i cache:                               1 MiB (32 instances)\nL2 cache:                                40 MiB (32 instances)\nL3 cache:                                48 MiB (2 instances)\nNUMA node(s):                            2\nNUMA node0 CPU(s):                       0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62\nNUMA node1 CPU(s):                       1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63\nVulnerability Gather data sampling:      Mitigation; Microcode\nVulnerability Indirect target selection: Mitigation; Aligned branch/return thunks\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Mitigation; Clear CPU buffers; SMT vulnerable\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Not affected\n",
+    "created": "2026-10-06 19:31 ET",
+    "disk_free_bytes": {
+      "/data": 60643823616,
+      "/data1": 27726827520
+    },
+    "environment": {
+      "GLIBC_TUNABLES": null,
+      "LD_LIBRARY_PATH": null,
+      "LD_PRELOAD": null,
+      "OMP_DYNAMIC": "FALSE",
+      "OMP_NUM_THREADS": "1",
+      "OMP_PLACES": "cores",
+      "OMP_PROC_BIND": "close"
+    },
+    "evidence_scope": "Independent LLVM22 allocator count proof only; no elapsed calibration or application performance.",
+    "governor": null,
+    "host": "mbit10",
+    "load": [
+      1.2021484375,
+      1.5322265625,
+      1.6015625
+    ],
+    "no_turbo": null,
+    "numa": "available: 2 nodes (0-1)\nnode 0 cpus: 0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62\nnode 0 size: 63849 MB\nnode 0 free: 21069 MB\nnode 1 cpus: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47 49 51 53 55 57 59 61 63\nnode 1 size: 64496 MB\nnode 1 free: 1799 MB\nnode distances:\nnode   0   1 \n  0:  10  20 \n  1:  20  10 \n",
+    "perf_event_paranoid": "4",
+    "source_commit": "b9dabf361b429f0c07717f1891573f5d5f31b1ab",
+    "system": "Linux mbit10 6.8.0-136-generic #136-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 21:53:05 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+    "threads": 1,
+    "users": "yanruj   pts/0        2026-10-06 19:31 (tmux(359742).%693)\n"
+  },
+  "evidence_scope": "Independent constructed exact allocator ABI/event-size proof; no elapsed rates or application accuracy.",
+  "exit_code": 0,
+  "export_policy": "Only compact proof and context. Raw IR, binaries, count streams and logs remain on mbit10.",
+  "format": "swdb.allocator-count-proof-export.v1",
+  "identity_sha256": "461603edb4f4387d9224e62879f32992539d730dcd7eb27636b725f8f3979488",
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-counts-20261006-a2/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-06T23:35:50Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "lanl-analytic-allocator-counts-20261006-a2",
+      "lease_generation": 479,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 1.2,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-06T23:31:28Z"
+    }
+  },
+  "output_bytes": 43276800,
+  "preregistered_budget": {
+    "count_build_budget_mib": 64,
+    "date": "2026-10-06 ET",
+    "matrix_unchanged": true,
+    "prior_attempt_preserved": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-counts-20261006-a1",
+    "reason": "32 independently retained count points include a Linux Characterize.so each; observed partial build footprint exceeded the prior25MiB cap. No numerical criterion changes.",
+    "source_commit": "b9dabf361b429f0c07717f1891573f5d5f31b1ab",
+    "timed_data_budget_mib": 25,
+    "timings_collected": false
+  },
+  "prior_failed_attempt": {
+    "elapsed_receipt_present": false,
+    "exit_code": 1,
+    "final_proof_present": false,
+    "preserved": true,
+    "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-counts-20261006-a1",
+    "reason": "Preregistered 25 MiB build-artifact guard stopped before complete proof; new 64 MiB counted-build budget, unchanged 25 MiB timed-data budget.",
+    "run_id": "lanl-analytic-allocator-counts-20261006-a1"
+  },
+  "proof": {
+    "bytes": 17010,
+    "file_sha256": "7458cf42747ea8ac56d8e5129cdba48878e8ab6e5ddd1221abf37b82a024a73f",
+    "identity_sha256": "ea0254781364e735b0bdf9f98a1ba27da050bbd3cf1adf63d87c7583dcdba6b3",
+    "point_count": 32,
+    "relative_path": "11-allocator-count-proof-mbit10-20261006-a2.json"
+  },
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-counts-20261006-a2",
+  "run_id": "lanl-analytic-allocator-counts-20261006-a2",
+  "source_clean": true,
+  "source_commit": "b9dabf361b429f0c07717f1891573f5d5f31b1ab",
+  "started_at": "2026-10-06T23:31:28.189815+00:00"
+}
