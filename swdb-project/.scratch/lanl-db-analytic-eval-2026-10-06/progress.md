@@ -1,6 +1,6 @@
 # Implementation progress
 
-Updated: 2026-10-06 16:46 ET
+Updated: 2026-10-06 16:48 ET
 
 Integration: `codex/lanl-analytic-eval`; review base: `2c50e5fb8671e08050921bee06920f92fd153bdd` (`yanrujhou_main`). Yan-Ru amended startup settings commit `fb842a8` to this replacement during startup. Owned branches are rebased so the removed IDE files stay removed. Final delivery merges and pushes `yanrujhou_main`.
 
@@ -32,3 +32,5 @@ Requested30min heartbeat `lanl-analytic-evaluator-progress` ACTIVE. Inspect tick
 2026-10-06 16:35 ET: ticket03 merged at `b36cb58`:25slide-grounded mappings/19extensions, all unverified;553records valid;139regression tests passed/1existing skip; merged smoke9passed. Tickets02/04 finishing necessary regression checks. Baseline query/validation/campaign checks95passed. Both socket and legacy leases released16:32ET; load1.16, `/data1`28GiB/`/data`59GiB free; preserve unrelated node1CPU process. Official Linux LLVM22 uses static `opt` with exported LLVM symbols, so plugin linking must support that distribution as well as Mac shared LLVM; ticket04 implements the choice before remote load verification. Remote OpenMP runtime is `lib/x86_64-unknown-linux-gnu/libomp.so`. Existing DX100 source/build available at `/data1/yanruj/DX100-bfs-e4fc4af` (commit `e4fc4afdf894f295442cef3604667a469fab8e62`); do not reuse historical timings as blind evidence.
 
 2026-10-06 16:46 ET: first three slices fast-forwarded/pushed to `yanrujhou_main` at `86b2a9af732555b2ac2071a2afaf38062d920293` and remote Git source synchronized. Review remains pending after the entire assigned set. Primary remote clone has no owned evaluation running except the current smoke; preserve untracked retention lock. Remote smokea1 stopped before counting because governor file absent (lane0g465,exit1,lease released); preserved. New smokea2 runs under node0/tmux `swdb-lanl-llvm-smoke-20261006-a2`,1200s timeout, raw `/data/yanruj/EvolveSWDB_runs/lanl-analytic-llvm-smoke-20261006-a2`, leaseg466. It explicitly records unavailable controls; fixture labels/rates are artificial plumbing evidence, not measured CPU performance. Read exit-code/completed/summary and lease before subsequent source sync. Next30min status table due17:12ET; last table16:42ET. All agents responsive.
+
+2026-10-06 16:48 ET: remote smokea2 passed16:47ET, node0g466/exit0/released.555records valid. LLVM22 host-symbol plugin path verified natively; compact receipt `evidence/llvm22-mbit10-smoke-20261006-a2.json`. Both governor and intel_pstate/no_turbo control files are unavailable; capture explicitly reports that state. Preserve faileda1 preflight. Remote source may now be updated after a fresh lease/process check.
