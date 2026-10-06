@@ -262,13 +262,36 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
           auto called=callee->getName();
           if (called.starts_with("llvm.fmuladd") || called.starts_with("llvm.fma")) { category=1; amount=2; }
           else if (!called.starts_with("__swdb_") && !called.starts_with("llvm.lifetime.") && !called.starts_with("llvm.dbg.") && called!="llvm.assume") {
+            bool hint=false,checked=false;std::string reference;
+            switch(callee->getIntrinsicID()) {
+              case Intrinsic::expect:case Intrinsic::expect_with_probability:
+                hint=true;reference="https://llvm.org/docs/LangRef.html#llvm-expect-intrinsic";break;
+              case Intrinsic::experimental_noalias_scope_decl:
+                hint=true;reference="https://llvm.org/docs/LangRef.html#llvm-experimental-noalias-scope-decl-intrinsic";break;
+              case Intrinsic::sadd_with_overflow:case Intrinsic::uadd_with_overflow:
+              case Intrinsic::ssub_with_overflow:case Intrinsic::usub_with_overflow:
+              case Intrinsic::smul_with_overflow:case Intrinsic::umul_with_overflow:
+                checked=true;category=0;amount=2; // arithmetic result plus overflow predicate, not two machine instructions
+                if(auto *VT=dyn_cast<FixedVectorType>(CB->getArgOperand(0)->getType()))lanes=VT->getNumElements();
+                if(isa<ScalableVectorType>(CB->getArgOperand(0)->getType()))report_fatal_error("scalable checked arithmetic needs a source multiplicity model");
+                reference="https://llvm.org/docs/LangRef.html#arithmetic-with-overflow-intrinsics";break;
+              default:break;
+            }
             bool body=!callee->isDeclaration() && callee->getSubprogram() && (selected.empty() || selected==owner(*callee,M) || selected==called);
-            Value *size=nullptr;std::string event="external_call";
+            Value *size=nullptr;std::string event=hint?"compiler_annotation":checked?"compiler_arithmetic":"external_call";
             if(auto *mem=dyn_cast<MemIntrinsic>(CB)){size=mem->getLength();event="bulk_memory";}
             else if((called=="malloc" || called.starts_with("_Znwm") || called.starts_with("_Znam")) && CB->arg_size()){size=CB->getArgOperand(0);event="allocation";}
             else if(called.starts_with("__kmpc_") || called.starts_with("GOMP_"))event="openmp";
-            callRows.push_back(json::Object{{"site",int64_t(callSite)},{"region",regions[rid].id},{"name",called.str()},
-              {"line",int64_t(I.getDebugLoc() ? I.getDebugLoc().getLine() : 0)},{"event",event},{"body_counted",body}});
+            json::Object callRow{{"site",int64_t(callSite)},{"region",regions[rid].id},{"name",called.str()},
+              {"line",int64_t(I.getDebugLoc() ? I.getDebugLoc().getLine() : 0)},{"event",event},{"body_counted",body},
+              {"cost_accounting",hint?"no_runtime_operation":checked?"source_normalized_operations":body?"counted_body":"opaque_callee"}};
+            if(hint || checked) {
+              callRow["semantics_reference"]=reference;
+              callRow["operations_per_execution"]=int64_t(checked?amount*lanes:0);
+              callRow["operation_class"]=checked?json::Value("integer"):json::Value(nullptr);
+              callRow["semantics_note"]=hint?"Optimizer hint or alias-scope metadata; no runtime operation is added.":"One logical arithmetic operation and one overflow predicate per lane; machine lowering cost is not inferred.";
+            }
+            callRows.push_back(std::move(callRow));
             calls.push_back({&I,callSite++,size,size!=nullptr,rid});
           }
         } else {

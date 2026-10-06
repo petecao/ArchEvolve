@@ -143,3 +143,43 @@ def test_registered_adapter_refuses_v1_pipeline(tmp_path):
         '--counting-pipeline','source-normalized-v1','--id','invalid.pipeline')
     assert result.returncode==1
     assert 'requires source-normalized-v2' in result.stderr
+
+
+def test_intrinsic_semantics_cover_hints_and_checked_arithmetic_only(tmp_path,llvm22):
+    records=tmp_path/'records'
+    shutil.copytree(REPO/'records',records)
+    result=run_swdb('characterize','--records',records,'--source',REPO/'tests/fixtures/analytic/intrinsics.cpp',
+        '--implementation','gapbs-bfs-do','--input','kron-g16-k16','--function','intrinsic_math',
+        '--counting-pipeline','source-normalized-v2','--fixture','--id','fixture.intrinsics','--llvm-bin',llvm22,
+        '--output',tmp_path/'counted','--format','json')
+    assert result.returncode==0,result.stderr+result.stdout
+    data=json.loads(result.stdout)
+    called=[c for c in data['unmodeled_calls'] if c['execution_count']['value']]
+    hints=[c for c in called if c.get('event')=='compiler_annotation']
+    assert any(c['name'].startswith('llvm.expect.') for c in hints)
+    assert all(c['cost_accounting']=='no_runtime_operation' and c['operations_per_execution']==0 for c in hints)
+    arithmetic=next(c for c in called if c['name']=='llvm.umul.with.overflow.i64')
+    assert arithmetic['cost_accounting']=='source_normalized_operations'
+    assert arithmetic['operation_class']=='integer' and arithmetic['operations_per_execution']==2
+    assert arithmetic['execution_count']['value']==2
+    assert sum(r['operation_counts']['integer']['value'] for r in data['regions'])==9
+    assert all(c['name'] not in data['coverage']['missing_costs'] for c in hints+[arithmetic])
+    assert next(c for c in called if c['name']=='puts')['execution_count']['value']==2
+    assert 'puts' in data['coverage']['missing_costs']
+
+
+def test_noalias_declaration_is_retained_as_a_cost_free_annotation(tmp_path,llvm22):
+    records=tmp_path/'records'
+    shutil.copytree(REPO/'records',records)
+    result=run_swdb('characterize','--records',records,'--source',REPO/'tests/fixtures/analytic/noalias.ll',
+        '--implementation','gapbs-bfs-do','--input','kron-g16-k16','--function','metadata_hint',
+        '--counting-pipeline','source-normalized-v2','--fixture','--id','fixture.noalias','--llvm-bin',llvm22,
+        '--output',tmp_path/'counted','--format','json')
+    assert result.returncode==0,result.stderr+result.stdout
+    data=json.loads(result.stdout)
+    called=next(c for c in data['unmodeled_calls'] if c['name']=='llvm.experimental.noalias.scope.decl')
+    assert called['execution_count']['value']==1
+    assert called['event']=='compiler_annotation' and called['cost_accounting']=='no_runtime_operation'
+    assert called['operations_per_execution']==0
+    assert sum(r['operation_counts']['integer']['value'] for r in data['regions'])==0
+    assert data['coverage']['missing_costs']==[] and data['coverage']['missing_counts']==[]

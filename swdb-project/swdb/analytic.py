@@ -133,6 +133,11 @@ def _load(store, ref, kind):
     return data
 
 
+def _uncovered_call(call):
+    return not call.get('body_counted', False) and call.get('cost_accounting', 'opaque_callee') not in (
+        'no_runtime_operation', 'source_normalized_operations')
+
+
 def _counted_regions(static, counts):
     regions = []
     for r in static['regions']:
@@ -346,7 +351,7 @@ def characterize(args):
             'pipeline_version': pipeline_version,
             'summary': 'per_trial_then_median_time' if adapter else 'single_run',
             'native_runs': 1, 'basis': 'measured', 'vector_multiplicity': 'instrumented before vectorization and unrolling; existing fixed vectors counted by lane',
-            'operation_definition': 'Normalized IR arithmetic/comparison operations; FMA counts two floating-point operations, branches count terminator executions; address and cast instructions excluded.',
+            'operation_definition': 'Normalized IR arithmetic/comparison operations; FMA counts two floating-point operations; checked integer arithmetic counts the result and overflow predicate (two per lane); branches count terminator executions; optimizer hints, address and cast instructions excluded.',
             'loop_definition': 'Body entries when the header condition chooses inside/outside; header entries for other loop shapes.',
             'binary_sha256': _sha(binary), 'counts_sha256': _sha(output / 'counts.json'), 'output_directory': str(output)},
         'static_analysis': {'basis': 'code_reading', 'source_ir_sha256': _sha(normalized), 'optimized_ir_sha256': _sha(optimized),
@@ -355,8 +360,8 @@ def characterize(args):
         'coverage': {'scope': 'registered_trial_lambda' if adapter else 'function' if args.function else 'translation_unit',
             'function': args.function, 'whole_timed_call': True if adapter else None,
             'count_coverage': 'normalized instructions in selected debug functions; indirect callees and other translation units are not claimed',
-            'missing_costs': sorted({c['name'] for c in calls + [c for t in trials for c in t['unmodeled_calls']] if c['execution_count']['value'] and not c.get('body_counted', False)}),
-            'missing_counts': ['callee bodies outside selected debug functions and other translation units'] if any(c['execution_count']['value'] and not c.get('body_counted', False) for c in calls + [c for t in trials for c in t['unmodeled_calls']]) else []},
+            'missing_costs': sorted({c['name'] for c in calls + [c for t in trials for c in t['unmodeled_calls']] if c['execution_count']['value'] and _uncovered_call(c)}),
+            'missing_counts': ['callee bodies outside selected debug functions and other translation units'] if any(c['execution_count']['value'] and _uncovered_call(c) for c in calls + [c for t in trials for c in t['unmodeled_calls']]) else []},
         'regions': regions, 'unmapped_loops': [r['id'] for r in regions if r['kind'] == 'loop' and not r['mapped']],
         'unmodeled_calls': calls, 'evidence_kind': 'contract_fixture' if args.fixture else 'execution'})
     if adapter:
@@ -385,7 +390,7 @@ def _estimate_regions(source_regions, source_calls, target):
     for region in source_regions:
         bounds = [analytic_models.evaluate(region, mechanism, [m['model'] for m in target['mechanisms']], target['threads']) for mechanism in target['mechanisms']]
         called = [c for c in source_calls
-                  if c.get('region') == region['id'] and c.get('execution_count', {}).get('value') != 0 and not c.get('body_counted',False)]
+                  if c.get('region') == region['id'] and c.get('execution_count', {}).get('value') != 0 and _uncovered_call(c)]
         if called:
             bounds.append(analytic_models.bound('unmodeled_calls', None, 'sum(call execution count * call cost)',
                 {'calls': called}, ['call_cost.' + c['name'] for c in called]))

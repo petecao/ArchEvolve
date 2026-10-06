@@ -1,6 +1,7 @@
 # Ticket 05 registered counting handoff
 
-Updated: 2026-10-06 ET. State: commands prepared; remote application evidence pending.
+Updated: 2026-10-06 ET. State: original mbit10 BFS/BC counts passed; corrected counts
+and per-region analytic reports pending.
 
 Run from the Git-synced checkout's `swdb-project/`. Copy authoritative `records/` into
 `/data1/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/records` first. Keep raw
@@ -55,3 +56,40 @@ characterization ID. Unknown totals and byte sizes remain null; a known partial 
 subtotal is labeled separately. Zero-only region IDs and the full unmapped-loop list
 remain represented, alongside every observed per-region bound and trial's executed
 call inventory. This helper does not certify pairing with historical native timings.
+
+`characterization.trials[].executed_calls` retains both external and emitted counted
+call bodies, distinguished by `body_counted`. Counts/sizes are grouped per name, event
+and region, with each original call site's count, size and line retained. Filter
+`body_counted == false` with `cost_accounting == opaque_callee` for currently uncovered
+external costs. Compiler annotation/arithmetic events retain their explicit semantic
+accounting and execution counts. Distinct workers are
+observed over one trial; they do not measure instantaneous or time-weighted concurrency
+across changing frontier sweeps.
+
+
+## Corrected intrinsic accounting receipt (a2)
+
+The immutable a1 executions used counting source `67f1b3b` and are retained at
+`origin/codex/lanl-registered-count-evidence` (`5d0fbdb`). Both g16 baseline runs
+passed with five sources/trials and all handwritten comparisons. Their original
+LLVM hint/checked-arithmetic accounting is not rewritten. The corrected plugin
+records annotation events without runtime operation costs and counts checked
+arithmetic explicitly; new runs require new IDs, binary/count/plugin hashes and
+new output folders.
+
+Parent dispatch commands from the corrected Git-synced source, after copying
+current records and creating only the two parent output folders:
+
+```sh
+python3 -m swdb characterize --records /data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/records --adapter registered-gapbs --implementation gapbs-bfs-do --input kron-g16-k16 --threads 4 --trials 5 --llvm-bin /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 --run-library-path /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu --timeout-s 1800 --output /data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bfs/counted --id bfs.kron-g16.t4.characterization.a2 --format json > /data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bfs/characterization.json
+python3 -m swdb characterize --records /data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/records --adapter registered-gapbs --implementation gapbs-bc-brandes --input kron-g16-k16 --threads 4 --trials 5 --llvm-bin /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 --run-library-path /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu --timeout-s 1800 --output /data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bc/counted --id bc.kron-g16.t4.characterization.a2 --format json > /data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bc/characterization.json
+```
+
+Freeze separate estimated protocols for BFS and BC against the merged measured T4
+target description: `mode: estimated`, `estimator_version: swdb.analytic.v1`,
+`roi: gapbs.trial_lambda.v1`, `threads: 4`, `inputs: [kron-g16-k16]`, and the matching
+implementation in `sources`. `input_run_arguments.kron-g16-k16` is exactly
+`['-g', '16', '-k', '16', '-n', '5']` for BFS, with `['-i', '1']` appended for BC.
+The freeze persists the target snapshot/hash, calibration closure and implementation
+bundle hash. After estimate/validate, the compact helper emits per-trial/per-region
+costs and exact executed-call/worker inventories. All unsupported costs remain null.

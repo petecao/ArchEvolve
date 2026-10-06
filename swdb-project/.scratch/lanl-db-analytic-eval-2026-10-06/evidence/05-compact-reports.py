@@ -24,17 +24,18 @@ def inventory(calls):
     for call in calls:
         if call['execution_count']['value'] == 0:
             continue
-        groups[(call['name'], call.get('event', 'external_call'), call.get('body_counted', False))].append(call)
+        groups[(call['name'], call.get('event', 'external_call'), call.get('body_counted', False), call.get('cost_accounting','opaque_callee'), call['region'])].append(call)
     result = []
-    for (name, event, body_counted), rows in sorted(groups.items()):
+    for (name, event, body_counted, accounting, region), rows in sorted(groups.items()):
         counts = [row['execution_count']['value'] for row in rows]
         sizes = [row['size_bytes']['value'] for row in rows]
-        result.append({'name': name, 'event': event, 'body_counted': body_counted,
+        result.append({'name': name, 'event': event, 'body_counted': body_counted, 'cost_accounting': accounting,
             'execution_count': None if any(n is None for n in counts) else sum(counts),
             'size_bytes': None if any(n is None for n in sizes) else sum(sizes),
             'known_size_bytes_partial': sum(n for n in sizes if n is not None),
             'unknown_size_sites': sum(n is None for n in sizes),
-            'regions': sorted({row['region'] for row in rows})})
+            'region': region, 'sites': [{'site': row.get('site'), 'line': row.get('line'), 'cost_accounting': row.get('cost_accounting','opaque_callee'),
+                'execution_count': row['execution_count']['value'], 'size_bytes': row['size_bytes']['value']} for row in rows]})
     return result
 
 
@@ -57,9 +58,15 @@ def region_report(region):
             for bound in region['bounds']]}
 
 
+def read_record(path):
+    # JSON scientific notation has JSON numeric semantics, even where YAML 1.1
+    # would parse a coefficient such as 1e-09 as text. All reads use the boundary.
+    return json.loads(access.read_record_bytes(path)) if path.suffix == '.json' else access.read_record(path)
+
+
 def application(characterization_path, estimate_path):
-    source = access.read_record(characterization_path)
-    estimated = access.read_record(estimate_path)
+    source = read_record(characterization_path)
+    estimated = read_record(estimate_path)
     if estimated['characterization'] != source['id']:
         raise ValueError('estimate refers to a different characterization')
     if source['binding']['state'] != 'verified' or source['evidence_kind'] != 'execution':
@@ -84,7 +91,7 @@ def application(characterization_path, estimate_path):
             'coverage': source['coverage'], 'pattern_comparison': source['pattern_comparison'],
             'unmapped_loops': source['unmapped_loops'], 'static_region_count': len(source['regions']),
             'trials': [{'position': trial['position'], 'sources': trial['sources'],
-                'region_count': len(trial['regions']), 'executed_external_calls': inventory(trial['unmodeled_calls']),
+                'region_count': len(trial['regions']), 'executed_calls': inventory(trial['unmodeled_calls']),
                 'workers': [{'id': region['id'], 'active_workers': region.get('active_workers'),
                     'worker_context': region.get('worker_context')} for region in trial['regions']]}
                 for trial in trials]},
@@ -92,7 +99,8 @@ def application(characterization_path, estimate_path):
             'protocol': estimated['protocol'], 'protocol_sha256': estimated.get('protocol_sha256'),
             'target_description': estimated['target_description'],
             'target_description_sha256': estimated['target_description_sha256'],
-            'estimator_version': estimated['estimator_version'], 'threads': estimated['threads'],
+            'estimator_version': estimated['estimator_version'], 'estimator_sha256': estimated.get('estimator_sha256'),
+            'threads': estimated['threads'],
             'seconds': estimated['seconds'], 'ratio': estimated['ratio'], 'summary': estimated.get('summary'),
             'regions': rows, 'zero_only_region_ids': [region['id'] for region in estimated['regions']
                 if region['id'] not in selected],

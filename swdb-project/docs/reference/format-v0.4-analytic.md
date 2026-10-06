@@ -351,3 +351,18 @@ application runs. Registered adapters require v2 and refuse v1. This allows shar
 calibration kernels to test v2 numerator equivalence without silently counting v1.
 A trial region with executed calls is retained even if it has no arithmetic, memory
 access or loop-entry events, so a call-only required cost cannot disappear.
+
+LLVM `expect` hints return their supplied value, and `experimental.noalias.scope.decl`
+marks alias-scope metadata. Their executed source events use `compiler_annotation` /
+`no_runtime_operation` accounting. They add no opaque callee cost. Checked signed or
+unsigned add/subtract/multiply intrinsics use `compiler_arithmetic` /
+`source_normalized_operations`: one arithmetic result plus one overflow predicate per
+lane. These are logical normalized operations, rather than a claim of two machine
+instructions. Each event retains its execution count, classification and the
+[LLVM language semantics reference](https://llvm.org/docs/LangRef.html#arithmetic-with-overflow-intrinsics).
+The [expect](https://llvm.org/docs/LangRef.html#llvm-expect-intrinsic) and
+[alias-scope](https://llvm.org/docs/LangRef.html#llvm-experimental-noalias-scope-decl-intrinsic)
+definitions govern the zero-operation annotations. Genuine allocation, OpenMP, clock
+and bulk-memory calls keep their costs unknown until an applicable model covers them.
+Older receipts retain their original accounting; a changed plugin requires a new
+counted execution and characterization ID.
