@@ -58,15 +58,9 @@ def region_report(region):
             for bound in region['bounds']]}
 
 
-def read_record(path):
-    # JSON scientific notation has JSON numeric semantics, even where YAML 1.1
-    # would parse a coefficient such as 1e-09 as text. All reads use the boundary.
-    return json.loads(access.read_record_bytes(path)) if path.suffix == '.json' else access.read_record(path)
-
-
 def application(characterization_path, estimate_path):
-    source = read_record(characterization_path)
-    estimated = read_record(estimate_path)
+    source = access.read_record(characterization_path)
+    estimated = access.read_record(estimate_path)
     if estimated['characterization'] != source['id']:
         raise ValueError('estimate refers to a different characterization')
     if source['binding']['state'] != 'verified' or source['evidence_kind'] != 'execution':

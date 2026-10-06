@@ -21,7 +21,7 @@ PLURAL = {"application": "applications", "kernel": "kernels", "implementation": 
           "region_profile": "region_profiles", "evaluation_pair": "evaluation_pairs",
           "retention": "retentions", "team_claim": "team_claims", "certification": "certifications", "review": "reviews",
           "campaign_summary": "campaign_summaries", "workload_characterization": "workload_characterizations",
-          "target_description": "target_descriptions", "estimate": "estimates"}
+          "target_description": "target_descriptions", "estimate": "estimates", "cpu_calibration": "cpu_calibrations"}
 
 
 @dataclass

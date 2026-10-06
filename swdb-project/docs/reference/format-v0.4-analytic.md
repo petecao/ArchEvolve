@@ -119,6 +119,9 @@ and [pass-writing documentation](https://llvm.org/docs/WritingAnLLVMNewPMPass.ht
 
 ## Target description v1
 
+The [native CPU calibration commands](cpu-calibration.md) measure separate per-T
+constructed-work rates and import immutable descriptions with trial spread.
+
 A target description is a record with `kind: target_description`,
 `format: swdb.target-description.v1`, envelope fields, `version`, `target`, `threads`,
 `estimator_variant` (`team` or `research`), `calibration_sources`,
@@ -366,3 +369,9 @@ definitions govern the zero-operation annotations. Genuine allocation, OpenMP, c
 and bulk-memory calls keep their costs unknown until an applicable model covers them.
 Older receipts retain their original accounting; a changed plugin requires a new
 counted execution and characterization ID.
+
+Updated 2026-10-06 ET: CPU calibration imports also create typed, hash-bound
+`cpu_calibration` provenance records (`swdb.cpu-calibration-record.v1`).
+Fresh target-description versions list their resolvable IDs in `calibration_sources`;
+freeze pins those dependencies recursively. [CPU calibration commands and lineage](cpu-calibration.md)
+describe conversion of legacy explanatory citations without changing old records.
