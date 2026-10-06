@@ -86,7 +86,7 @@ all four operations at each selected bin.
 
 One batch has at most65536 events and64MiB of live requested payload. A timed
 pair has at most16777216 events, seven alternating-order repetitions,900s wall
-budget and25MiB raw budget. Timed payload is untouched; the cap describes
+budget,64MiB counted-build budget and a separate25MiB timed-data budget. Timed payload is untouched; the cap describes
 requested live payload, not measured RSS. The gross pilot selects a batch count
 with25% duration margin; native admission requires every gross repetition to
 reach50ms. Each paired driver duration is retained even when shorter than50ms.
@@ -142,3 +142,21 @@ Keep node1 idle during elapsed calibration. Raw binaries, IR and logs stay remot
 only the typed service record and compact receipt metadata enter Git. Application
 accuracy remains unsupported until every executed memory/runtime service and the
 matched original-driver timing scope are admitted independently.
+
+### Allocator count-build budget preregistration (2026-10-06 ET)
+
+The first native count-only attempt at source00c03f3 stopped safely after
+26,312,382B of build evidence crossed the original25MiB guard. Linux produces
+about1,064,400B per point, dominated by894,368B `Characterize.so` files; all32
+points therefore require about34.1MB before compact proof metadata. The failed
+a1 folder remains preserved and supplies no numerator or elapsed receipt.
+
+The a2 contract assigns **64MiB to counted build artifacts** and preserves the
+separate **25MiB timed-data cap**. All32 points, exact ABIs, observed byte/lifetime
+bins, source identities, timing criteria and20-cell matrix stay unchanged.
+`--count-build-cap-mib` can lower the build limit to exercise a fail-closed check;
+it cannot exceed64. Every file is budgeted: top-level pilot/partial-trial/receipt
+data uses the timed budget; every other file uses the build budget. A failure
+retains partial sealed point records and emits no admitted proof/timing receipt.
+Final JSON receipt sizes are checked before publication too. This change neither pools a1
+with a2 nor removes duplicate sealed compiler artifacts.

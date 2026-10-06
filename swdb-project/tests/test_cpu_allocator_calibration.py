@@ -18,6 +18,8 @@ def test_allocator_runner_retains_split_exact_size_costs_and_bounded_payload(rec
     assert {s['scope']['operation'] for s in raw['services']} == {
         'new_array', 'delete_array', 'new_scalar', 'delete_scalar'}
     assert raw['settings']['live_payload_cap_bytes'] == 64 * 1024**2
+    assert raw['settings']['count_build_cap_bytes'] == 64 * 1024**2
+    assert raw['settings']['timed_data_cap_bytes'] == 25 * 1024**2
     for service in raw['services']:
         assert service['scope']['transfer_basis'] == 'inferred'
         assert service['scope']['allocator_regime'] == 'fresh_process_repeated_allocate_free_batches'
@@ -58,3 +60,19 @@ def test_allocator_count_only_binds_exact_abis_and_never_collects_elapsed(record
     assert {p['event_abi'] for p in points} == {'_Znam', '_ZdaPv', '_Znwm', '_ZdlPv'}
     assert all(p['event_size_bins'] == [{'bytes':8, 'events':p['events']}] for p in points if p['invoke'])
     assert all(p['event_size_bins'] == [] for p in points if not p['invoke'])
+
+
+
+def test_count_build_budget_fails_closed_preserves_sealed_points_and_never_raises_timed_cap(records, tmp_path, llvm22):
+    records.copy_repo('applications','kernels','implementations','inputs','machines',
+        'profiles','hardware_configs','strategies')
+    output=tmp_path/'small-build-budget'
+    result=run_swdb('cpu-service-calibrate','--records',records.path,'--service-group','allocator',
+        '--size','8','--fixture','--llvm-bin',llvm22,'--count-only',
+        '--count-build-cap-mib','1','--max-wall-s','120','--output',output)
+    assert result.returncode!=0 and 'count-build artifacts exceed' in result.stderr
+    assert list((output/'count-records/workload_characterizations').glob('*.yaml'))
+    assert not (output/'count-proof.json').exists() and not (output/'receipt.json').exists()
+    refused=run_swdb('cpu-service-calibrate','--records',records.path,'--service-group','allocator',
+        '--fixture','--count-build-cap-mib','65','--output',tmp_path/'too-large-build-budget')
+    assert refused.returncode!=0 and not (tmp_path/'too-large-build-budget').exists()

@@ -26,6 +26,7 @@ ABI = ('_Znam', '_ZdaPv', '_Znwm', '_ZdlPv')
 SOURCES = ('CpuAllocatorWork.h', 'CpuAllocatorTimer.cpp', 'CpuAllocatorCount.cpp')
 SIZES = (8,16,32,64,128,8192,65536,227416,262144,524288)
 PAYLOAD_CAP, EVENT_CAP, RAW_CAP = 64 * 1024**2, 16777216, 25 * 1024**2
+COUNT_CAP = 64 * 1024**2
 REGIME = 'fresh_process_repeated_allocate_free_batches'
 CONTROL_SCOPE = 'GLIBC_TUNABLES,MALLOC_*,LD_PRELOAD,LD_AUDIT,library_search'
 PIPELINE = {'version':'source-normalized-v2', 'passes':['function(sroa,mem2reg),cgscc(inline),function(loop-simplify)']}
@@ -36,9 +37,19 @@ def controls():
         k in {'GLIBC_TUNABLES','LD_PRELOAD','LD_AUDIT','LD_LIBRARY_PATH','DYLD_LIBRARY_PATH'}}
 
 
-def raw_budget(output):
-    if sum(p.stat().st_size for p in output.rglob('*') if p.is_file()) > RAW_CAP:
-        raise Failure('allocator raw output exceeds25MiB')
+def raw_budget(output, count_cap, *, add_build=0, add_timed=0):
+    build, timed = add_build, add_timed
+    for p in output.rglob('*'):
+        if not p.is_file(): continue
+        size = p.stat().st_size
+        if p.parent==output and (p.name in {'partial-trials.json','receipt.json'} or p.name.startswith('pilot-')):
+            timed += size
+        else:
+            build += size
+    if build > count_cap:
+        raise Failure('allocator count-build artifacts exceed their explicit budget; partial sealed artifacts retained')
+    if timed > RAW_CAP:
+        raise Failure('allocator timed data exceeds25MiB; partial evidence retained')
 
 
 def count_proof(args, output, command):
@@ -88,7 +99,7 @@ def count_proof(args, output, command):
                         raise Failure('allocator observed size/lifetime bins differ from the constructed event')
                     rows.append({'event_size_bins':bins, 'operation':name,'size_bytes':size,'invoke':invoke,'events':n,
                         'opaque_events':observed,'event_abi':ABI[op],'characterization_sha256':artifacts.digest(data)})
-                    raw_budget(output)
+                    raw_budget(output, args.count_build_cap_mib * 1024**2)
     root=Path(__file__).parent
     return {'format':'swdb.cpu-allocator-count-proof.v1','pipeline':PIPELINE,'points':rows,
         'source_sha256':artifacts.file_hash(output/SOURCES[0]),'count_driver_sha256':artifacts.file_hash(output/SOURCES[2]),
@@ -97,6 +108,8 @@ def count_proof(args, output, command):
 
 
 def calibrate(args):
+    if type(args.count_build_cap_mib) is not int or not 1<=args.count_build_cap_mib<=64:
+        raise Failure('allocator count-build cap must be1–64MiB; timed data cap stays25MiB')
     sizes=sorted(set(args.size or SIZES))
     if not sizes or len(sizes)>10 or any(type(s) is not int or not 0<s<=1048576 for s in sizes):
         raise Failure('allocator sizes require at most10 positive exact bins <=1MiB')
@@ -150,9 +163,12 @@ def calibrate(args):
     if args.count_only:
         unchanged()
         raw={'format':'swdb.cpu-allocator-count-only.v1','evidence_kind':'fixture' if args.fixture else 'native_count_only',
+            'budgets':{'count_build_cap_bytes':args.count_build_cap_mib * 1024**2,'timed_data_cap_bytes':RAW_CAP},
             'timings_collected':False,'machine':args.machine,'threads':1,'context':context,'count_proof':proof,'sizes':sizes}
         raw['identity_sha256']=identity(raw)
-        (output/'count-proof.json').write_text(json.dumps(raw,indent=2))
+        payload=json.dumps(raw,indent=2)
+        raw_budget(output,args.count_build_cap_mib * 1024**2,add_build=len(payload.encode()))
+        (output/'count-proof.json').write_text(payload)
         return {'count_proof':str(output/'count-proof.json'),'timings_collected':False,'identity_sha256':raw['identity_sha256']}
     def timer(size,n,batches,op,order):
         argv=[binary,size,n,batches,op,order]
@@ -179,20 +195,22 @@ def calibrate(args):
                 'denominator':{'level':'source_normalized_work','basis':'measured' if proof else 'reported',
                     'proof':proof or 'Portable shared-source construction only; no native count proof.'},'trials':trials})
             (output/'partial-trials.json').write_text(json.dumps(services,indent=2))
-            raw_budget(output)
+            raw_budget(output, args.count_build_cap_mib * 1024**2)
     raw={'format':'swdb.cpu-service-calibration.v1','evidence_kind':'fixture' if args.fixture else 'native',
         'machine':args.machine,'threads':1,'context':context,'settings':{'group':'allocator_v1',
             'repetitions':args.repetitions,'min_trial_s':args.min_trial_s,'trial_resolution_scope':'gross_aggregate_only; paired driver retained',
             'max_wall_s':args.max_wall_s,'live_payload_cap_bytes':PAYLOAD_CAP,'batch_event_cap':65536,
-            'event_cap':EVENT_CAP,'raw_output_cap_bytes':RAW_CAP,'sizes':sizes,
+            'event_cap':EVENT_CAP,'timed_data_cap_bytes':RAW_CAP,'count_build_cap_bytes':args.count_build_cap_mib * 1024**2,'sizes':sizes,
             'cells':[{'operation':NAMES[op],'size_bytes':size} for op,size in cells]},'services':services}
     if native:
         unchanged()
         context['end_state']=_host_state()
         validate(raw)
-    raw_budget(output)
+    raw_budget(output, args.count_build_cap_mib * 1024**2)
     raw['identity_sha256']=identity(raw)
-    (output/'receipt.json').write_text(json.dumps(raw,indent=2))
+    payload=json.dumps(raw,indent=2)
+    raw_budget(output,args.count_build_cap_mib * 1024**2,add_timed=len(payload.encode()))
+    (output/'receipt.json').write_text(payload)
     return {'receipt':str(output/'receipt.json'),'receipt_sha256':raw['identity_sha256'],'evidence_kind':raw['evidence_kind'],'services':len(services)}
 
 
@@ -206,7 +224,7 @@ def validate(raw):
     require(c.get('instrumented_timer') is False and re.search(r'clang version 22\.',c.get('compiler_version','')),'uninstrumented LLVM22 missing')
     require(c['flags'][:2]==['-O3','-std=c++11'] and all(f.startswith(('--gcc-install-dir=','--gcc-toolchain=','--sysroot=','-resource-dir=','-stdlib=')) for f in c['flags'][2:]),'work flags differ')
     require(7<=s['repetitions']<=11 and .05<=s['min_trial_s']<=.2 and 0<s['max_wall_s']<=900,'sampling/budget differs')
-    require(s['live_payload_cap_bytes']==PAYLOAD_CAP and s['event_cap']==EVENT_CAP and s['batch_event_cap']==65536 and s['raw_output_cap_bytes']==RAW_CAP,'construction caps differ')
+    require(s['live_payload_cap_bytes']==PAYLOAD_CAP and s['event_cap']==EVENT_CAP and s['batch_event_cap']==65536 and s['timed_data_cap_bytes']==RAW_CAP and 1024**2<=s['count_build_cap_bytes']<=COUNT_CAP,'construction caps differ')
     require(set(c['source_sha256'])==set(SOURCES) and all(re.fullmatch('[0-9a-f]{64}',str(v)) for v in c['source_sha256'].values()),'shared source identities missing')
     require(all(re.fullmatch('[0-9a-f]{64}',str(c.get(k))) for k in ('binary_sha256','machine_sha256')),'machine/binary identity missing')
     libs=c.get('loaded_libraries',{})
