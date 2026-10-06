@@ -125,3 +125,32 @@ comes from its fixed source recipe when the earlier receipt omitted that field.
 Identical coefficients establish this constructed-work numerator equivalence only;
 changed coefficients require a new target version using unchanged native timings
 and explicit lineage. Raw count outputs stay remote; only compact metadata enters Git.
+
+
+Calibration imports now write `cpu_calibration` records and list their resolvable
+IDs in `calibration_sources`. The typed record retains the receipt hash, native
+backend/evidence class, exact compiler/source/lane context, balanced elapsed/work
+trials, spread, compute-count proofs and inference premises. Its canonical content
+identity and frozen protocol dependency hash make later metadata changes detectable.
+Human-readable explanations remain in provenance and each parameter's `source`.
+
+For an older immutable description whose calibration citation was explanatory text,
+create a fresh binding instead of editing it:
+
+```sh
+python3 -m swdb bind-cpu-calibration --records "$COPIED_RECORDS" \
+  --target-description mbit10.cpu.lanl20261006a2.t4 \
+  --id-prefix mbit10.cpu.lanl20261006a2.bound \
+  --count-equivalence .scratch/lanl-db-analytic-eval-2026-10-06/evidence/cpu-count-equivalence-mbit10-20261006-a1.json
+```
+
+Repeat `--target-description` for other T values from the same intended version.
+The new target version pins typed evidence and retains the original receipt and
+canonical target hash as lineage. It preserves every native elapsed/work trial,
+corrects the compute logical-footprint metadata with the original fields retained
+in lineage, and applies the independently counted v2 numerators. A count-only proof
+can cover another receipt only when shared source, compiler/architecture, old
+validation points and coefficients match exactly; this never pools native timings.
+Changed numerators recompute constructed-work rates from the unchanged trials in a
+fresh version. Original a1/a2 descriptions stay unchanged. The public freeze must
+resolve and pin the new calibration record; the ADR 0013 guard is retained.

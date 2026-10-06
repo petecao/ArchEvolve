@@ -49,6 +49,15 @@ def register_cli(commands):
     sub.add_argument('--fixture', action='store_true', help='explicitly admit a hand fixture; it never becomes measured evidence')
     sub.add_argument('--format', choices=['yaml', 'json'], default='json')
     sub.set_defaults(cpu_calibration_handler=import_receipt)
+    sub = commands.add_parser('bind-cpu-calibration', help='derive fresh descriptions with typed calibration dependencies; old descriptions remain immutable')
+    sub.add_argument('--records', type=Path, default=paths.RECORDS)
+    sub.add_argument('--target-description', action='append', required=True)
+    sub.add_argument('--id-prefix', required=True)
+    sub.add_argument('--count-equivalence', type=Path, help='compact clean Linux count-only pipeline proof')
+    sub.add_argument('--fixture', action='store_true')
+    sub.add_argument('--format', choices=['yaml', 'json'], default='json')
+    from swdb.cpu_calibration_records import bind
+    sub.set_defaults(cpu_calibration_handler=bind)
 
 
 def stats(values):
@@ -148,7 +157,8 @@ def import_receipt(args):
                 'seconds': stats([t['seconds'] for t in trials]),
                 'useful_bytes_per_s': stats([t['useful_bytes'] / t['seconds'] for t in trials]),
                 'helper_bytes_per_s': stats([t['helper_bytes'] / t['seconds'] for t in trials]),
-                'footprint_bytes': cell.get('footprint_bytes'), 'scope': cell.get('scope'),
+                'footprint_bytes': cell.get('footprint_bytes'),
+                'requested_working_set_bytes': cell.get('requested_working_set_bytes', cell.get('footprint_bytes')), 'scope': cell.get('scope'),
                 'source_access_derivation': cell.get('source_access_derivation'), 'trials': trials}
             category = cell['shape'].removeprefix('compute_')
             numerator = data['compute_counts'].get(category)
@@ -225,8 +235,10 @@ def import_receipt(args):
                           'Source-normalized constructed compute work is not physical instruction issue throughput.',
                           'Indirect payload rates include address/helper work in elapsed time; helper byte counts are separate.']}}}
         descriptions.append(record)
-    writer.commit(args.records, new=descriptions)
-    return {'descriptions': descriptions, 'receipt_sha256': identity}
+    from swdb.cpu_calibration_records import attach, commit
+    evidence = [attach(target, args.id_prefix) for target in descriptions]
+    commit(args.records, descriptions, evidence, args.command)
+    return {'descriptions': descriptions, 'calibrations': evidence, 'receipt_sha256': identity}
 
 
 SHAPES = ('stream', 'single_valued_indirect', 'ranged_indirect', 'data_dependent_merge',

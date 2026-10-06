@@ -257,3 +257,120 @@ def test_import_bad_receipt_is_readable_failure_without_writes(records, tmp_path
         assert 'Traceback' not in result.stderr
         assert 'calibration receipt' in result.stderr
         assert not list(records.path.rglob('bad.parse*.yaml'))
+
+
+def test_bind_measured_description_pins_typed_calibration_without_rewriting_source(tmp_path):
+    import shutil
+    import yaml
+    from conftest import REPO
+    records = tmp_path / 'records'
+    shutil.copytree(REPO / 'records', records)
+    old = records / 'target_descriptions/mbit10.cpu.lanl20261006a2.t4.yaml'
+    before = old.read_bytes()
+    result = run_swdb('bind-cpu-calibration', '--records', records,
+        '--target-description', 'mbit10.cpu.lanl20261006a2.t4',
+        '--id-prefix', 'fixture.bound.native', '--format', 'json')
+    assert result.returncode == 0, result.stdout + result.stderr
+    target = json.loads(result.stdout)['descriptions'][0]
+    calibration_id = target['calibration_sources'][0]
+    evidence = yaml.safe_load((records / 'cpu_calibrations' / (calibration_id + '.yaml')).read_text())
+    assert evidence['kind'] == 'cpu_calibration' and evidence['evidence_kind'] == 'native'
+    assert evidence['receipt_sha256'] == target['extensions']['cpu_calibration']['receipt_sha256']
+    assert evidence['threads'] == 4
+    assert evidence['series'] and all(s['seconds']['repetitions'] == 7 for s in evidence['series'])
+    assert evidence['identity_sha256'] == hashlib.sha256(json.dumps(
+        {k:v for k,v in evidence.items() if k != 'identity_sha256'}, sort_keys=True,
+        separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+    original = yaml.safe_load(before)
+    assert old.read_bytes() == before and target['version'] != original['version']
+    assert target['mechanisms'] == original['mechanisms']
+    freeze = tmp_path / 'freeze.yaml'
+    freeze.write_text(yaml.safe_dump({'message_version': '1.0', 'id': 'fixture.measured.t4',
+        'version': 1, 'settings': {'mode': 'estimated', 'estimator_version': 'swdb.analytic.v1',
+        'target_description': target['id'], 'inputs': ['kron-g16-k16'],
+        'roi': 'fixture.stream.v1', 'threads': 4}}, sort_keys=False))
+    frozen = run_swdb('freeze-protocol', freeze, '--records', records, '--format', 'json')
+    assert frozen.returncode == 0, frozen.stdout + frozen.stderr
+    protocol = json.loads(frozen.stdout)
+    assert protocol['settings']['target_description']['snapshot'] == target
+    assert calibration_id in protocol['settings']['dependency_identities']
+    evidence['series'][0]['trials'][0]['seconds'] *= 2
+    (records / 'cpu_calibrations' / (calibration_id + '.yaml')).write_text(yaml.safe_dump(evidence, sort_keys=False))
+    invalid = run_swdb('validate', '--records', records)
+    assert invalid.returncode != 0 and 'identity_sha256' in invalid.stdout + invalid.stderr
+
+
+def test_bind_count_equivalence_preserves_measured_trials_and_versions_numerators(tmp_path):
+    import shutil
+    import yaml
+    from conftest import REPO
+    records = tmp_path / 'records'
+    shutil.copytree(REPO / 'records', records)
+    source = records / 'target_descriptions/mbit10.cpu.lanl20261006a2.t4.yaml'
+    original_bytes = source.read_bytes()
+    original = yaml.safe_load(original_bytes)
+    proof = REPO / '.scratch/lanl-db-analytic-eval-2026-10-06/evidence/cpu-count-equivalence-mbit10-20261006-a1.json'
+    result = run_swdb('bind-cpu-calibration', '--records', records,
+        '--target-description', original['id'], '--id-prefix', 'fixture.bound.counted',
+        '--count-equivalence', proof, '--format', 'json')
+    assert result.returncode == 0, result.stdout + result.stderr
+    data = json.loads(result.stdout)
+    target, evidence = data['descriptions'][0], data['calibrations'][0]
+    before = original['extensions']['cpu_calibration']
+    after = target['extensions']['cpu_calibration']
+    assert source.read_bytes() == original_bytes
+    assert [s['trials'] for s in before['series']] == [s['trials'] for s in after['series']]
+    assert all(c['pipeline']['version'] == 'source-normalized-v2' for c in after['compute_counts'].values())
+    assert evidence['lineage']['original_compute_counts'] == before['compute_counts']
+    assert evidence['source_count_equivalence']['timings_rerun'] is False
+    assert evidence['source_count_equivalence']['previous_receipt_sha256'] != evidence['receipt_sha256']
+    old = next(m['parameters'] for m in original['mechanisms'] if m['model'] == 'compute_throughput')
+    new = next(m['parameters'] for m in target['mechanisms'] if m['model'] == 'compute_throughput')
+    assert {k:v['value'] for k,v in old.items()} == {k:v['value'] for k,v in new.items()}
+    corrupt = json.loads(proof.read_text())
+    corrupt['equivalence']['source_sha256'] = '0' * 64
+    corrupt['equivalence']['identity_sha256'] = hashlib.sha256(json.dumps(
+        {k:v for k,v in corrupt['equivalence'].items() if k != 'identity_sha256'}, sort_keys=True,
+        separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+    corrupt['identity_sha256'] = hashlib.sha256(json.dumps(
+        {k:v for k,v in corrupt.items() if k != 'identity_sha256'}, sort_keys=True,
+        separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+    bad = tmp_path / 'bad-equivalence.json'
+    bad.write_text(json.dumps(corrupt))
+    rejected = run_swdb('bind-cpu-calibration', '--records', records,
+        '--target-description', original['id'], '--id-prefix', 'fixture.bad.counted',
+        '--count-equivalence', bad)
+    assert rejected.returncode != 0 and 'shared source differ' in rejected.stderr
+    assert not list((records / 'cpu_calibrations').glob('fixture.bad.*'))
+
+
+def test_bind_rejects_empty_or_malformed_count_proof_before_writing(tmp_path):
+    import shutil
+    from conftest import REPO
+    records = tmp_path / 'records'
+    shutil.copytree(REPO / 'records', records)
+    for n, text in enumerate(('{}', '[]', 'null', '{')):
+        proof = tmp_path / f'bad-{n}.json'
+        proof.write_text(text)
+        result = run_swdb('bind-cpu-calibration', '--records', records,
+            '--target-description', 'mbit10.cpu.lanl20261006a2.t4',
+            '--id-prefix', 'fixture.bad.proof' + str(n), '--count-equivalence', proof)
+        assert result.returncode != 0 and 'Traceback' not in result.stderr
+        assert not list((records / 'cpu_calibrations').glob('fixture.bad.proof*'))
+
+
+def test_bind_cannot_discard_a_resolved_gem5_calibration_dependency(tmp_path):
+    import shutil
+    import yaml
+    from conftest import REPO
+    records = tmp_path / 'records'
+    shutil.copytree(REPO / 'records', records)
+    path = records / 'target_descriptions/mbit10.cpu.lanl20261006a2.t4.yaml'
+    target = yaml.safe_load(path.read_text())
+    target['calibration_sources'] = ['bfs-dx100-smoke-20260925-a6']
+    path.write_text(yaml.safe_dump(target, sort_keys=False))
+    result = run_swdb('bind-cpu-calibration', '--records', records,
+        '--target-description', target['id'], '--id-prefix', 'fixture.bad.gem5')
+    assert result.returncode != 0 and 'ADR 0013' in result.stderr
+    assert 'bfs-dx100-smoke-20260925-a6' in result.stderr
+    assert not list((records / 'cpu_calibrations').glob('fixture.bad.gem5*'))

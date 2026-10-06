@@ -239,3 +239,9 @@ Envelope and portable fields: `architecture`, `atomic`, `branch`, `characterizat
 Binding keys are `state`, `subject_source_identity`, `input_record_sha256`, `roi`, `threads`, `run_arguments_sha256` and `note`. The first slice emits fixture or unverified state; verified state is reserved for a registered-source/protocol adapter.
 
 Compiler distributions with a shared LLVM library link the pass against it; static LLVM distributions load the pass against `opt` host symbols, avoiding a duplicate static LLVM registry. `plugin_linkage` records this choice. Repeatable `--run-library-path` supplies native library folders (such as libomp): each enters link search, binary RPATH and runtime library search, and is retained as `run_library_paths`.
+
+Updated 2026-10-06 ET: CPU calibration imports also create typed, hash-bound
+`cpu_calibration` provenance records (`swdb.cpu-calibration-record.v1`).
+Fresh target-description versions list their resolvable IDs in `calibration_sources`;
+freeze pins those dependencies recursively. [CPU calibration commands and lineage](cpu-calibration.md)
+describe conversion of legacy explanatory citations without changing old records.
