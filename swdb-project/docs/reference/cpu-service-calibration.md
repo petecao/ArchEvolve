@@ -212,3 +212,38 @@ The model composes as a mechanism bound with compute, avoiding a second additive
 charge for the same constructed instructions. Native rates are pending independent
 counted service/driver and elapsed receipts; the public hand fixtures are reported
 contracts only.
+
+### Preregistered clock a2 control refresh
+
+The historical `e71ed828` clock record retains its original bytes and measured
+trials. It declares no allocator/interposer environment scope, so the fresh
+binding path leaves its interposer compatibility unknown. Clock a2 repeats the
+same `CpuServiceWork.h`/timer/count helper, six 32/64/96 service/driver proof
+points, seven alternating paired trials, 134217728-event cap, and 0.05s minimum
+for both gross and driver durations. It adds only an explicit actual MALLOC_/
+GLIBC/LD_PRELOAD/LD_AUDIT/library-search snapshot with null absence semantics.
+The newly captured controls are not backfilled into the earlier record. Nonnull
+interposers remain unsupported for transfer until their execution scope is proven.
+The library-search paths are retained, while binding compares actual critical
+C/C++ library hashes; differing unused search paths do not establish a mismatch.
+
+Both sockets must be idle for this native elapsed refresh. Use a clean immutable
+Git checkout and a new external raw directory; all earlier raw directories stay
+preserved. The named socket lease is still verified from live OS/lease state.
+
+```sh
+python3 -m swdb cpu-service-calibrate --records "$SWDB_RAW_RECORDS" \
+  --machine mbit10 --lane mbit10-evaluation-node0 \
+  --llvm-bin "$SWDB_CPU_LLVM" \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \
+  --output "$SWDB_SERVICE_CLOCK_A2_RAW" \
+  --repetitions 7 --min-trial-s .05 --max-wall-s 600 --format json
+python3 -m swdb import-cpu-service-calibration --records "$SWDB_RAW_RECORDS" \
+  --receipt "$SWDB_SERVICE_CLOCK_A2_RAW/receipt.json" \
+  --id mbit10.cpu.lanl20261006.service.clock.a2 --format json
+python3 -m swdb validate --records "$SWDB_RAW_RECORDS"
+```
+
+Use a 900s outer containment timeout and retain the runner's process-group signal
+cleanup. Export only the typed compact record and receipt metadata through Git;
+this refresh remains independent service calibration, not application accuracy.

@@ -64,6 +64,7 @@ def test_native_cost_with_unproven_workload_runtime_stays_unknown(records,tmp_pa
     assert data['mechanisms'][-1]['parameters']['service_0']['basis']=='unknown'
     reasons=data['extensions']['cpu_services_binding']['compatibility'][0]['missing']
     assert 'service_compiler_identity' in reasons and 'service_runtime.libc.so' in reasons
+    assert 'service_interposer_control_absence_scope' in reasons
     assert actual['services'][0]['parameter']['basis']=='measured'
 
 

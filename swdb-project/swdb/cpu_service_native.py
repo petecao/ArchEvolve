@@ -65,6 +65,9 @@ def validate(raw):
         from swdb.cpu_allocator_calibration import validate
         return validate(raw)
     context, settings = raw['context'], raw['settings']
+    if 'control_environment_scope' in context or 'control_environment' in context:
+        from swdb.cpu_service_controls import valid
+        if not valid(context):raise Failure('native clock control declaration differs')
     def require(condition, reason):
         if not condition:
             raise Failure(reason)

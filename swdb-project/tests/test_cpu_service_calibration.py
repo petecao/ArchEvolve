@@ -139,3 +139,20 @@ def test_service_lane_claim_requires_exact_registered_name_without_bypassing_liv
     assert 'exact registered socket lease name' not in matching.stderr
     assert matching.returncode != 0  # Portable fixture has neither native host nor live leased scope.
     assert not (tmp_path / 'wrong-lane').exists() and not (tmp_path / 'matching-lane').exists()
+
+
+def test_clock_receipt_declares_actual_allocator_and_interposer_controls(records,tmp_path,monkeypatch):
+    monkeypatch.setenv('GLIBC_TUNABLES','glibc.malloc.tcache_count=5')
+    monkeypatch.setenv('MALLOC_ARENA_MAX','3')
+    monkeypatch.delenv('LD_PRELOAD',raising=False);monkeypatch.delenv('LD_AUDIT',raising=False)
+    output=tmp_path/'controlled-clock'
+    result=run_swdb('cpu-service-calibrate','--records',records.path,'--output',output,
+        '--fixture','--repetitions','3','--min-trial-s','.002','--max-wall-s','60')
+    assert result.returncode==0,result.stderr+result.stdout
+    context=json.loads((output/'receipt.json').read_text())['context']
+    assert context['control_environment']['GLIBC_TUNABLES']=='glibc.malloc.tcache_count=5'
+    assert context['control_environment']['MALLOC_ARENA_MAX']=='3'
+    assert context['control_environment']['LD_PRELOAD'] is None and context['control_environment']['LD_AUDIT'] is None
+    scope=context['control_environment_scope']
+    assert 'MALLOC_' in scope['prefixes'] and 'LD_PRELOAD' in scope['exact_variables']
+    assert scope['absence_semantics']=='null_or_absent_is_unset_under_declared_scope'

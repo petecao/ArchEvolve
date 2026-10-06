@@ -136,6 +136,7 @@ def calibrate(args):
     if args.size or args.count_build_cap_mib != 64:
         raise Failure('--size and --count-build-cap-mib apply to the allocator service group')
     from swdb.cpu_calibration import _command
+    from swdb.cpu_service_controls import snapshot
     if not 3 <= args.repetitions <= 11 or not math.isfinite(args.max_wall_s) or not 0 < args.max_wall_s <= 900 or not math.isfinite(args.min_trial_s) or not 0 < args.min_trial_s <= .2:
         raise Failure('service timing exceeds repetitions 3–11, wall 900s or per-trial 0.2s caps')
     output = args.output.resolve()
@@ -182,7 +183,7 @@ def calibrate(args):
         context = {'compiler_version': compiler, 'flags': flags,
             'host': socket.gethostname(), 'architecture': platform.machine(),
             'source_sha256': {name: artifacts.file_hash(output / name) for name in ('CpuServiceTimer.cpp', 'CpuServiceWork.h', 'CpuServiceCount.cpp')},
-            'binary_sha256': artifacts.file_hash(binary), 'binary_executed': False}
+            'binary_sha256': artifacts.file_hash(binary), 'binary_executed': False, **snapshot()}
         if native_context:
             if command([*git, 'rev-parse', 'HEAD']).stdout.strip() != native_context['commit'] or command([*git, 'status', '--porcelain']).stdout:
                 raise Failure('native service source changed during count proof')
@@ -218,7 +219,7 @@ def calibrate(args):
         'context': {'compiler_version': compiler, 'flags': flags,
             'host': socket.gethostname(), 'architecture': platform.machine(),
             'source_sha256': {name: artifacts.file_hash(output / name) for name in ('CpuServiceTimer.cpp', 'CpuServiceWork.h', 'CpuServiceCount.cpp')},
-            'binary_sha256': artifacts.file_hash(binary), 'instrumented_timer': False},
+            'binary_sha256': artifacts.file_hash(binary), 'instrumented_timer': False, **snapshot()},
         'settings': {'repetitions': args.repetitions, 'min_trial_s': args.min_trial_s,
             'max_wall_s': args.max_wall_s, 'resident_payload_bytes': 0,
             'raw_output_cap_bytes': 25 * 1024**2, 'iteration_cap': 134217728},

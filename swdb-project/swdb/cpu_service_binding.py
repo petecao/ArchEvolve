@@ -41,6 +41,16 @@ def _compatibility(target, char, calibration, service, fixture):
         observed=_library_hashes(native.get('loaded_libraries',{}),prefix)
         measured=_library_hashes(context.get('loaded_libraries',{}),prefix)
         if not observed or None in observed or observed!=measured:missing.append('service_runtime.'+prefix)
+    declaration=native.get('environment_scope',{})
+    actual=native.get('environment',{})
+    measured=context.get('control_environment',context.get('allocator_environment',{}))
+    from swdb.cpu_service_controls import valid
+    measured_scope=valid(context) or context.get('allocator_environment_scope')=='GLIBC_TUNABLES,MALLOC_*,LD_PRELOAD,LD_AUDIT,library_search'
+    interposers=('LD_PRELOAD','LD_AUDIT')
+    if not measured_scope or not set(interposers)<=set(declaration.get('exact_variables',[])):
+        missing.append('service_interposer_control_absence_scope')
+    elif any(actual.get(k)!=measured.get(k) or actual.get(k) is not None for k in interposers):
+        missing.append('service_interposer_controls_unsupported')
     if service.get('scope',{}).get('allocator_regime'):
         exact_controls=('GLIBC_TUNABLES','LD_PRELOAD','LD_AUDIT','LD_LIBRARY_PATH','DYLD_LIBRARY_PATH')
         declared=native.get('environment_scope',{})
