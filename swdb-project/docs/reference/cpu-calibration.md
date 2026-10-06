@@ -69,7 +69,7 @@ this reference latency is an assumption. Every parameter retains its basis and
 source. Per-trial elapsed/rate spread stays in `extensions.cpu_calibration`.
 Shape-specific bandwidth rates stay there until a model explicitly consumes them.
 
-Caps: T≤16; C≤32; 3–11 repetitions; active large footprint≤512 MiB;
+Caps: T≤16; C≤128 (default sweep ends at32); 3–11 repetitions; active large footprint≤512 MiB;
 cache footprint≤16 MiB; constructed resident storage≤1.5 GiB; raw output≤50 MiB;
 wall budget≤1800 seconds. Timeout terminates the subprocess group. Partial trials
 stay in the external folder; a failed run yields no importable complete receipt.
@@ -83,3 +83,10 @@ those results as native measured evidence is rejected. After a real run, import
 into copied records, validate them, and rerun the T=1 analytic fixture. Verify the
 estimate's `target_description_sha256` against the canonical description digest.
 A fixture rerun proves immutable hash binding, not a CPU error band.
+
+
+The preregistered second run extends the pointer sweep to C=1,16,32,64,128 under
+the same total footprint and unchanged plateau criterion. It uses a fresh run/version
+and a900-second wall budget. The first run's unknown parameters remain unchanged;
+no timings from different contexts are pooled. See the campaign's compact evidence
+and chain-extension preregistration for the observed rationale.

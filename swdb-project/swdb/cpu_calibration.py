@@ -14,6 +14,8 @@ import sys
 import time
 from pathlib import Path
 
+from yaml import YAMLError
+
 from swdb import access, artifacts, paths, writer
 from swdb.cli import Failure
 from swdb.store import Store
@@ -59,6 +61,8 @@ def _fact(value, basis, source, unit):
 
 
 def _validate_receipt(data, fixture):
+    if not isinstance(data, dict):
+        raise Failure('calibration receipt must be a mapping')
     try:
         identity = data.get('identity_sha256')
         if identity != artifacts.digest({k: v for k, v in data.items() if k != 'identity_sha256'}):
@@ -122,13 +126,16 @@ def _validate_receipt(data, fixture):
                 required |= {(t, 'pointer_chase', c) for c in settings['chains']}
                 if not required <= seen or set(data['compute_counts']) != {'integer', 'floating_point', 'branch', 'atomic'}:
                     raise Failure('native calibration matrix/counts are incomplete')
-    except (KeyError, TypeError, ValueError, OverflowError) as exc:
+    except (KeyError, TypeError, ValueError, OverflowError, AttributeError, IndexError) as exc:
         raise Failure(f'invalid calibration receipt: {exc}') from None
     return identity
 
 
 def import_receipt(args):
-    data = access.read_record(args.receipt)
+    try:
+        data = access.read_record(args.receipt)
+    except (OSError, ValueError, YAMLError) as exc:
+        raise Failure(f'cannot read calibration receipt: {exc}') from None
     identity = _validate_receipt(data, args.fixture)
     basis = 'reported' if data['evidence_kind'] == 'fixture' else 'measured'
     descriptions = []
@@ -371,7 +378,7 @@ def _compute_counts(args, output, remaining):
     source = Path(__file__).with_name('native') / 'CpuCount.cpp'
     result = {}
     for category in ('integer', 'floating_point', 'branch', 'atomic'):
-        points, receipts = [], []
+        points, receipts, pipelines = [], [], []
         for n in (32, 64, 96):
             command = [sys.executable, '-m', 'swdb', 'characterize', '--records', count_records,
                 '--source', source, '--implementation', 'gapbs-bfs-do', '--input', 'kron-g16-k16',
@@ -385,12 +392,16 @@ def _compute_counts(args, output, remaining):
             data = json.loads(_command(command, remaining()).stdout)
             count = sum(r['operation_counts'][category]['value'] for r in data['regions'])
             points.append([n, count]); receipts.append(artifacts.digest(data))
+            pipelines.append({'version': data['counting'].get('pipeline_version', 'source-normalized-v1'),
+                'passes': data['counting']['passes']})
             _raw_budget(output)
         slope = (points[1][1] - points[0][1]) / 32
         intercept = points[0][1] - 32 * slope
         if slope <= 0 or slope != int(slope) or points[2][1] != 96 * slope + intercept:
             raise Failure(f'compute {category} source-normalized count is not a verified positive affine function')
-        result[category] = {'level': 'source_normalized_ir', 'per_iteration': int(slope),
+        if any(p != pipelines[0] for p in pipelines):
+            raise Failure('compute count points mix normalization pipelines')
+        result[category] = {'level': 'source_normalized_ir', 'pipeline': pipelines[0], 'per_iteration': int(slope),
             'per_invocation': int(intercept), 'validation_points': points,
             'characterization_sha256': receipts,
             'source_sha256': artifacts.file_hash(source.with_name('CpuWork.h')),
@@ -401,7 +412,7 @@ def _compute_counts(args, output, remaining):
 
 def calibrate(args):
     threads = _list(args.threads, (1, 2, 4, 8, 16), 'threads')
-    chains = _list(args.chains, (1, 2, 4, 8, 16, 32), 'chains')
+    chains = _list(args.chains, (1, 2, 4, 8, 16, 32, 64, 128), 'chains')
     if not 3 <= args.repetitions <= 11:
         raise Failure('repetitions must be in [3,11]')
     if not 1024 <= args.working_set_bytes <= 512 * 1024**2:

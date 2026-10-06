@@ -224,3 +224,31 @@ def test_merge_rate_counts_repeated_head_read_source_accesses(records, tmp_path)
     assert merge['passes'] == 1
     assert all(t['iterations'] == 128 and t['accesses'] == 510 and
                t['useful_bytes'] == 2040 for t in merge['trials'])
+
+
+def test_extended_chain_sweep_keeps_footprint_and_rejects_unbounded_chain_count(records, tmp_path):
+    output = tmp_path / 'extended'
+    result = run_swdb('cpu-calibrate', '--records', records.path, '--output', output,
+        '--fixture', '--threads', '1', '--chains', '1,16,32,64,128',
+        '--working-set-bytes', '65536', '--cache-bytes', '32768', '--repetitions', '3',
+        '--min-trial-s', '0.001', '--max-wall-s', '60')
+    assert result.returncode == 0, result.stdout + result.stderr
+    data = json.loads((output / 'receipt.json').read_text())
+    pointer = [c for c in data['cells'] if c['shape'] == 'pointer_chase']
+    assert [c['chains'] for c in pointer] == [1, 16, 32, 64, 128]
+    assert all(c['footprint_bytes'] == 65536 for c in pointer)
+    too_many = run_swdb('cpu-calibrate', '--records', records.path, '--output', tmp_path / 'bad-256',
+                        '--fixture', '--chains', '1,256')
+    assert too_many.returncode != 0 and not (tmp_path / 'bad-256').exists()
+
+
+def test_import_bad_receipt_is_readable_failure_without_writes(records, tmp_path):
+    for index, text in enumerate(('{broken', '[]')):
+        path = tmp_path / f'bad-{index}.json'
+        path.write_text(text)
+        result = run_swdb('import-cpu-calibration', '--records', records.path, '--receipt', path,
+                          '--id-prefix', 'bad.parse', '--fixture')
+        assert result.returncode != 0
+        assert 'Traceback' not in result.stderr
+        assert 'calibration receipt' in result.stderr
+        assert not list(records.path.rglob('bad.parse*.yaml'))
