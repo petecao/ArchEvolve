@@ -209,3 +209,18 @@ def test_import_preserves_json_scientific_numbers(records, tmp_path):
     assert result.returncode == 0, result.stdout + result.stderr
     description = json.loads(result.stdout)['descriptions'][0]
     assert description['mechanisms'][1]['parameters']['bytes_per_s']['value'] == 64000000.0
+
+
+def test_merge_rate_counts_repeated_head_read_source_accesses(records, tmp_path):
+    output = tmp_path / 'merge-count'
+    result = run_swdb('cpu-calibrate', '--records', records.path, '--output', output,
+        '--fixture', '--threads', '1', '--chains', '1', '--working-set-bytes', '1024',
+        '--cache-bytes', '1024', '--repetitions', '3', '--min-trial-s', '0.000000001')
+    assert result.returncode == 0, result.stdout + result.stderr
+    data = json.loads((output / 'receipt.json').read_text())
+    merge = next(c for c in data['cells'] if c['shape'] == 'data_dependent_merge')
+    # 128 merged outputs:127 comparisons each read two heads, reread the chosen
+    # head and write it; one tail element reads and writes once:127*4+2=510.
+    assert merge['passes'] == 1
+    assert all(t['iterations'] == 128 and t['accesses'] == 510 and
+               t['useful_bytes'] == 2040 for t in merge['trials'])

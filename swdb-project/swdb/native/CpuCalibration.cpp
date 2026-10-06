@@ -86,8 +86,10 @@ static Work kernel(Data &d, const std::string &s, uint64_t passes, int chains, u
         loads=n*passes;
     } else if(s=="ranged_indirect") {
         // Offset-defined fixed-fanout 16; indices remain random, helper work is retained.
-        for(uint64_t p=0;p<passes;++p) for(uint64_t row=0;row<n/16;++row)
-            for(uint64_t i=d.offsets[row];i<d.offsets[row+1];++i) sum+=d.a[d.index[i]];
+        for(uint64_t p=0;p<passes;++p) for(uint64_t row=0;row<n/16;++row) {
+            uint64_t begin=d.offsets[row], end=d.offsets[row+1];
+            for(uint64_t i=begin;i<end;++i) sum+=d.a[d.index[i]];
+        }
         loads=n*passes;
     } else if(s=="data_dependent_merge") {
         for(uint64_t p=0;p<passes;++p) {
@@ -99,7 +101,7 @@ static Work kernel(Data &d, const std::string &s, uint64_t passes, int chains, u
             while(j<n/2) d.out[k++]=d.b[j++];
             std::atomic_signal_fence(std::memory_order_seq_cst);
         }
-        loads=(3*n-1)*passes; sum=d.out[n-1];
+        loads=(4*n-2)*passes; sum=d.out[n-1];
     } else {
         for(uint64_t p=0;p<passes;++p) {
             for(uint64_t i=0;i<n;++i) d.b[i]=d.a[i]*2+1;

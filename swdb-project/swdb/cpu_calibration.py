@@ -141,7 +141,8 @@ def import_receipt(args):
                 'seconds': stats([t['seconds'] for t in trials]),
                 'useful_bytes_per_s': stats([t['useful_bytes'] / t['seconds'] for t in trials]),
                 'helper_bytes_per_s': stats([t['helper_bytes'] / t['seconds'] for t in trials]),
-                'footprint_bytes': cell.get('footprint_bytes'), 'scope': cell.get('scope'), 'trials': trials}
+                'footprint_bytes': cell.get('footprint_bytes'), 'scope': cell.get('scope'),
+                'source_access_derivation': cell.get('source_access_derivation'), 'trials': trials}
             category = cell['shape'].removeprefix('compute_')
             numerator = data['compute_counts'].get(category)
             if cell['shape'].startswith('compute_') and numerator:
@@ -473,6 +474,8 @@ def calibrate(args):
             cell = {'threads': t, 'shape': shape, 'chains': c, 'footprint_bytes': footprint,
                 'scope': 'partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only pass fence for repeated stores',
                 'sampling_scope': 'single cold pass after untimed eviction; minimum-duration exemption' if shape == 'cache_cold_stream' else 'full-partition passes, frozen after pilot',
+                'source_access_derivation': 'per worker/pass: N output elements; N-1 compare/select steps each read 2 heads, reread 1 selected head, write 1 output; final tail reads/writes once: 4*N-2 accesses, 4 bytes each' if shape == 'data_dependent_merge' else
+                    'payload source-element accesses only; index/offset helper elements separate; checksum/control bookkeeping excluded',
                 'eviction_bytes': eviction if shape == 'cache_cold_stream' else 0, **result}
             cells.append(cell)
             (output / 'partial.json').write_text(json.dumps({'context': context, 'cells': cells}, indent=2, allow_nan=False))

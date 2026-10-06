@@ -31,7 +31,13 @@ fixed-fanout-16 ranged indirect reads, data-dependent merge, warm cache stream,
 single cold cache stream, and 1–32 independent pointer chains. Pointer nodes are
 64 bytes apart but contribute **8 useful bytes/load**. Indirect payload bytes and
 index/offset helper bytes are separate; elapsed includes helper work. Merge counts
-executed head reads and output writes, not just unique input footprint. Stream
+executed head reads and output writes, not just unique input footprint. For N
+merged outputs, N−1 compare/select steps each read two heads, reread the selected
+head and write it; the last tail element reads/writes once: `4*N−2` source accesses
+per worker/pass, 4 useful bytes each. Optimized reuse of a loaded head does not
+change the source-element convention. Checksum/control bookkeeping is excluded
+from the payload numerator. Ranged offsets are loaded once into begin/end values
+per row, retaining two 8-byte offset elements plus 16 4-byte indices as helpers. Stream
 counts one 4-byte read and one 4-byte write per element. A compiler-only pass fence
 retains repeated stream/merge stores; it emits no hardware memory fence.
 
