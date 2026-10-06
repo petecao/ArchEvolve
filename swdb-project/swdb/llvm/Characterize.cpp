@@ -7,6 +7,7 @@
 #include "llvm/IR/DebugInfoMetadata.h"
 #include "llvm/IR/InstIterator.h"
 #include "llvm/IR/IntrinsicInst.h"
+#include "llvm/Transforms/Utils/BasicBlockUtils.h"
 #include "llvm/ADT/SmallPtrSet.h"
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Plugins/PassPlugin.h"
@@ -121,8 +122,25 @@ std::string owner(Function &F,Module &M) {
   return F.getSubprogram()?F.getSubprogram()->getName().str():symbol.str();
 }
 std::string safe(std::string s){for(char &c:s)if(!std::isalnum(static_cast<unsigned char>(c)) && c!='_' && c!='.' && c!='-' && c!='/')c='_';return s;}
+// Exact standard Itanium allocation ABIs. Placement allocation/deallocation does
+// not obtain/release backing storage and must not alter its lifetime namespace.
+bool heapAllocation(StringRef name) {
+  for(auto supported:{"malloc","calloc","realloc","_Znwm","_Znam",
+      "_ZnwmRKSt9nothrow_t","_ZnamRKSt9nothrow_t","_ZnwmSt11align_val_t","_ZnamSt11align_val_t",
+      "_ZnwmSt11align_val_tRKSt9nothrow_t","_ZnamSt11align_val_tRKSt9nothrow_t"})
+    if(name==supported)return true;
+  return false;
+}
+bool heapRelease(StringRef name) {
+  for(auto supported:{"free","_ZdlPv","_ZdaPv","_ZdlPvm","_ZdaPvm",
+      "_ZdlPvRKSt9nothrow_t","_ZdaPvRKSt9nothrow_t","_ZdlPvSt11align_val_t","_ZdaPvSt11align_val_t",
+      "_ZdlPvmSt11align_val_t","_ZdaPvmSt11align_val_t",
+      "_ZdlPvSt11align_val_tRKSt9nothrow_t","_ZdaPvSt11align_val_tRKSt9nothrow_t"})
+    if(name==supported)return true;
+  return false;
+}
 struct Region { std::string id, function; unsigned line=0; Loop *loop=nullptr; bool mapped=false; std::string file,symbol; };
-struct Access { Instruction *inst; Value *ptr; unsigned site, region, bytes, lanes; bool write; };
+struct Access { Instruction *inst; Value *ptr; unsigned site, region, bytes, lanes; bool write; unsigned update; };
 struct Op { Instruction *inst; unsigned region, category, amount; };
 struct Call { Instruction *inst; unsigned site; Value *size=nullptr; bool known=false; unsigned region=0; };
 
@@ -248,7 +266,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
           {"update_kind",update},{"read_write",readWrite},{"address_shape",shape},
           {"stride_bytes",std::move(stride)},{"element_bytes",int64_t(bytes)},
           {"ir_lanes",int64_t(lanes)},{"address_expression",scevText(S)}};
-        accessRows.push_back(std::move(row)); accesses.push_back({&I,ptr,site++,rid,bytes,lanes,write});
+        accessRows.push_back(std::move(row)); accesses.push_back({&I,ptr,site++,rid,bytes,lanes,write,update=="read"?0u:update=="write" && !readWrite?1u:update=="add-update"?2u:update=="compare-and-swap"?3u:update=="min-max-update"?4u:5u});
       }
       unsigned category=99, amount=1, lanes=1;
       if (auto *VT=dyn_cast<FixedVectorType>(I.getType())) lanes=VT->getNumElements();
@@ -280,7 +298,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
             bool body=!callee->isDeclaration() && callee->getSubprogram() && (selected.empty() || selected==owner(*callee,M) || selected==called);
             Value *size=nullptr;std::string event=hint?"compiler_annotation":checked?"compiler_arithmetic":"external_call";
             if(auto *mem=dyn_cast<MemIntrinsic>(CB)){size=mem->getLength();event="bulk_memory";}
-            else if((called=="malloc" || called.starts_with("_Znwm") || called.starts_with("_Znam")) && CB->arg_size()){size=CB->getArgOperand(0);event="allocation";}
+            else if((heapAllocation(called) && called!="calloc" && called!="realloc") && CB->arg_size()){size=CB->getArgOperand(0);event="allocation";}
             else if(called.starts_with("__kmpc_") || called.starts_with("GOMP_"))event="openmp";
             json::Object callRow{{"site",int64_t(callSite)},{"region",regions[rid].id},{"name",called.str()},
               {"line",int64_t(I.getDebugLoc() ? I.getDebugLoc().getLine() : 0)},{"event",event},{"body_counted",body},
@@ -317,7 +335,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
   auto tripFn=M.getOrInsertFunction("__swdb_trip",Type::getVoidTy(C),u32,u64);
   auto opFn=M.getOrInsertFunction("__swdb_op",Type::getVoidTy(C),u32,u32,u64);
   auto callFn=M.getOrInsertFunction("__swdb_call",Type::getVoidTy(C),u32,u64,u32,u32);
-  auto accessFn=M.getOrInsertFunction("__swdb_access",Type::getVoidTy(C),u32,u32,u64,u64,u64);
+  auto accessFn=M.getOrInsertFunction("__swdb_access_v2",Type::getVoidTy(C),u32,u32,u64,u64,u64,u32);
   for (unsigned i=0;i<regions.size();++i) if (auto *L=regions[i].loop) {
     auto *term=L->getHeader()->getTerminator(); IRBuilder<> B(term); Value *n=B.getInt64(1);
     if (auto *br=dyn_cast<BranchInst>(term); br && br->isConditional()) {
@@ -330,7 +348,36 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
   for (auto &call:calls) { IRBuilder<> B(call.inst); B.CreateCall(callFn,{B.getInt32(call.site),call.size?B.CreateZExtOrTrunc(call.size,u64):B.getInt64(0),B.getInt32(call.known?1:0),B.getInt32(call.region)}); }
   std::map<std::string,unsigned> canonical;
   for(unsigned i=0;i<regions.size();++i)canonical.emplace(regions[i].id,i);
-  for (auto &a:accesses) { IRBuilder<> B(a.inst); B.CreateCall(accessFn,{B.getInt32(a.site),B.getInt32(canonical.at(regions[a.region].id)),B.CreatePtrToInt(a.ptr,u64),B.getInt64(a.lanes),B.getInt64(a.bytes)}); }
+  for (auto &a:accesses) { IRBuilder<> B(a.inst); B.CreateCall(accessFn,{B.getInt32(a.site),B.getInt32(canonical.at(regions[a.region].id)),B.CreatePtrToInt(a.ptr,u64),B.getInt64(a.lanes),B.getInt64(a.bytes),B.getInt32(a.update)}); }
+  // Object metadata is process-wide even when a source function/ROI is selected.
+  auto allocFn=M.getOrInsertFunction("__swdb_allocate",Type::getVoidTy(C),u64,u64,u32);
+  auto freeFn=M.getOrInsertFunction("__swdb_release",Type::getVoidTy(C),u64);
+  auto reallocFn=M.getOrInsertFunction("__swdb_reallocate",Type::getVoidTy(C),u64,u64,u64,u32);
+  std::vector<CallBase *> allocationCalls;
+  for(Function &F:M)if(!F.isDeclaration() && !F.getName().starts_with("__swdb_"))
+    for(Instruction &I:instructions(F))if(auto *call=dyn_cast<CallBase>(&I))if(auto *callee=call->getCalledFunction()) {
+      auto name=callee->getName();
+      if(heapAllocation(name) || heapRelease(name))allocationCalls.push_back(call);
+    }
+  for(auto *call:allocationCalls){
+    auto name=call->getCalledFunction()->getName();
+    if(heapRelease(name)) {
+      IRBuilder<> B(call);B.CreateCall(freeFn,{B.CreatePtrToInt(call->getArgOperand(0),u64)});continue;
+    }
+    if(!call->getType()->isPointerTy() || (isa<CallInst>(call) && cast<CallInst>(call)->isMustTailCall()))continue;
+    Instruction *after=nullptr;
+    if(auto *invoke=dyn_cast<InvokeInst>(call))after=&*SplitEdge(invoke->getParent(),invoke->getNormalDest())->getFirstInsertionPt();
+    else after=call->getNextNode();
+    IRBuilder<> B(after);Value *size=nullptr,*known=B.getInt32(1);
+    if(name=="calloc") {
+      auto mul=M.getOrInsertFunction("llvm.umul.with.overflow.i64",StructType::get(u64,B.getInt1Ty()),u64,u64);
+      auto product=B.CreateCall(mul,{B.CreateZExtOrTrunc(call->getArgOperand(0),u64),B.CreateZExtOrTrunc(call->getArgOperand(1),u64)});
+      size=B.CreateExtractValue(product,0);known=B.CreateZExt(B.CreateNot(B.CreateExtractValue(product,1)),u32);
+    } else size=B.CreateZExtOrTrunc(call->getArgOperand(name=="realloc"?1:0),u64);
+    Value *address=B.CreatePtrToInt(call,u64);
+    if(name=="realloc")B.CreateCall(reallocFn,{B.CreatePtrToInt(call->getArgOperand(0),u64),address,size,known});
+    else B.CreateCall(allocFn,{address,size,known});
+  }
   return PreservedAnalyses::none();
 }
 };

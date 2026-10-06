@@ -39,3 +39,42 @@ Changing the Python implementation bundle requires a fresh frozen protocol.
 Historical records still validate against their historical snapshots and hashes.
 All artificial test counts/rates retain `contract_fixture` evidence and fixture
 binding; none is application or measured hardware evidence.
+
+## Optional live object facts
+
+Updated: 2026-10-06 ET. `swdb.live-count-context.v1` / `swdb.access.v2` adds
+`observation_contract` and `memory_service_counts` optionally. Old records and
+counted-payload hashes keep their original definition when these fields are absent.
+The optional contract and all region/trial facts enter the registered count seal.
+The runtime bundle digest includes both CountingRuntime.cpp and LiveObjects.hpp.
+
+The process registry observes supported standard C/Itanium heap allocator calls
+throughout the translation unit. It survives ROI resets; free/reallocation ends a
+lifetime, and interior aliases retain its base/extent. Exact allocator ABIs exclude
+placement-new/delete aliases. Opaque allocator bodies and unregistered stack/global
+objects remain unknown. Runtime code is compiled separately without instrumentation.
+
+`--state-budget` caps the object registry, persistent logical page state and each
+trial's service sufficient sets. Existing virtual footprints compact overlapping
+intervals and have the same declared interval cap. Overflow preserves known useful
+request/byte work but marks affected unions/pages null with a named missing reason.
+No address, base, access sequence, or decoded row list is serialized.
+
+`region.memory_service_counts` has format `swdb.memory-service-counts.v1`, scoped
+`per_run` or `per_trial`, method `source_normalized_ir_allocation_relative`, state,
+missing reasons, and an assumption hash. `requests_by_update_kind` maps read/write/
+RMW kinds to `[{element_bytes, requests: {value,basis,scope}}]`. Useful bytes,
+lifetime line union, logical first-read/write pages, pre/in-ROI allocation pages,
+and unknown-object request count use ordinary fact wrappers.
+
+Lines are a declared logical 64-byte reporting convention; pages are logical 4096-byte
+allocation-relative units. First access means first access **observed by the selected
+normalized source observer**, including its observed pre-ROI accesses. Opaque
+initialization, physical residency and native minor faults are unobserved. These
+source accesses can be eliminated or hoisted by native optimization; they are never
+physical CPU misses or measured hardware transactions. Fresh-page/residency cost
+scenarios require separate assumptions and evidence.
+
+Manual begin/end fixture calls retain independent trials with their original fixture
+binding. Registered GAPBS source/input/ROI rules are unchanged. Aggregate and trial
+regions share one strict schema; missing optional fields mean unobserved, not zero.

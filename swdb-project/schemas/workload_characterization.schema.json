@@ -214,6 +214,9 @@
         },
         "summary": {
           "type": "string"
+        },
+        "observation_format": {
+          "const": "swdb.live-count-context.v1"
         }
       },
       "required": [
@@ -269,228 +272,7 @@
     "regions": {
       "type": "array",
       "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "string",
-            "minLength": 1,
-            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]*$"
-          },
-          "source_location": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "function": {
-                "type": "string"
-              },
-              "line": {
-                "type": "integer",
-                "minimum": 0
-              },
-              "column": {
-                "type": "integer",
-                "minimum": 0
-              },
-              "path": {
-                "type": "string"
-              },
-              "llvm_function": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "function",
-              "line"
-            ]
-          },
-          "mapped": {
-            "type": "boolean"
-          },
-          "kind": {
-            "enum": [
-              "loop",
-              "serial_remainder"
-            ]
-          },
-          "access_patterns": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "id": {
-                  "$ref": "#/$defs/id"
-                },
-                "source_location": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "properties": {
-                    "function": {
-                      "type": "string"
-                    },
-                    "line": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "column": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "path": {
-                      "type": "string"
-                    },
-                    "llvm_function": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "function",
-                    "line"
-                  ]
-                },
-                "address_shape": {
-                  "$ref": "#/$defs/fact"
-                },
-                "stride_bytes": {
-                  "$ref": "#/$defs/fact"
-                },
-                "element_bytes": {
-                  "type": "integer",
-                  "minimum": 1
-                },
-                "update_kind": {
-                  "enum": [
-                    "read",
-                    "write",
-                    "add-update",
-                    "compare-and-swap",
-                    "min-max-update",
-                    "arbitrary"
-                  ]
-                },
-                "element_count": {
-                  "$ref": "#/$defs/count"
-                },
-                "bytes_accessed": {
-                  "$ref": "#/$defs/count"
-                },
-                "observed_address_span_bytes": {
-                  "$ref": "#/$defs/fact"
-                },
-                "address_expression": {
-                  "type": "string"
-                },
-                "ir_lanes": {
-                  "type": "integer",
-                  "minimum": 1
-                },
-                "observed_unique_bytes": {
-                  "$ref": "#/$defs/fact"
-                },
-                "read_write": {
-                  "type": "boolean"
-                }
-              },
-              "required": [
-                "id",
-                "source_location",
-                "address_shape",
-                "stride_bytes",
-                "element_bytes",
-                "update_kind",
-                "element_count",
-                "bytes_accessed",
-                "observed_address_span_bytes",
-                "address_expression",
-                "ir_lanes"
-              ]
-            }
-          },
-          "operation_counts": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "integer": {
-                "$ref": "#/$defs/count"
-              },
-              "floating_point": {
-                "$ref": "#/$defs/count"
-              },
-              "branch": {
-                "$ref": "#/$defs/count"
-              },
-              "atomic": {
-                "$ref": "#/$defs/count"
-              }
-            },
-            "required": [
-              "integer",
-              "floating_point",
-              "branch",
-              "atomic"
-            ]
-          },
-          "dynamic_counts": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "loop_iterations": {
-                "$ref": "#/$defs/count"
-              }
-            },
-            "required": [
-              "loop_iterations"
-            ]
-          },
-          "footprint_bytes": {
-            "$ref": "#/$defs/fact"
-          },
-          "accelerator_calls": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "address_stream_counts": {
-            "type": "object"
-          },
-          "active_workers": {
-            "$ref": "#/$defs/fact"
-          },
-          "worker_context": {
-            "type": "object",
-            "properties": {
-              "team_sizes": {
-                "type": "array",
-                "items": {
-                  "type": "integer",
-                  "minimum": 1
-                }
-              },
-              "measurement": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "team_sizes",
-              "measurement"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "required": [
-          "id",
-          "source_location",
-          "mapped",
-          "kind",
-          "access_patterns",
-          "operation_counts",
-          "dynamic_counts",
-          "footprint_bytes",
-          "accelerator_calls",
-          "address_stream_counts"
-        ]
+        "$ref": "#/$defs/observed_region"
       }
     },
     "unmapped_loops": {
@@ -569,7 +351,39 @@
     "trials": {
       "type": "array",
       "items": {
-        "type": "object"
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "position": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/observed_region"
+            }
+          },
+          "unmodeled_calls": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "position",
+          "sources",
+          "regions",
+          "unmodeled_calls"
+        ]
       }
     },
     "pattern_comparison": {
@@ -577,6 +391,59 @@
       "items": {
         "type": "object"
       }
+    },
+    "observation_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.live-count-context.v1"
+        },
+        "level": {
+          "enum": [
+            "source_normalized_ir",
+            "functional_semantic_access"
+          ]
+        },
+        "abi": {
+          "const": "swdb.access.v2"
+        },
+        "line_bytes": {
+          "const": 64
+        },
+        "page_bytes": {
+          "const": 4096
+        },
+        "state_budget": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "object_scope": {
+          "type": "string"
+        },
+        "first_access_scope": {
+          "type": "string"
+        },
+        "physical_residency_known": {
+          "const": false
+        },
+        "runtime_bundle_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "format",
+        "level",
+        "abi",
+        "line_bytes",
+        "page_bytes",
+        "state_budget",
+        "object_scope",
+        "first_access_scope",
+        "physical_residency_known",
+        "runtime_bundle_sha256"
+      ]
     }
   },
   "required": [
@@ -597,5 +464,437 @@
     "identity_sha256",
     "coverage",
     "binding"
-  ]
+  ],
+  "$defs": {
+    "observed_region": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]*$"
+        },
+        "source_location": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "function": {
+              "type": "string"
+            },
+            "line": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "column": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "path": {
+              "type": "string"
+            },
+            "llvm_function": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "function",
+            "line"
+          ]
+        },
+        "mapped": {
+          "type": "boolean"
+        },
+        "kind": {
+          "enum": [
+            "loop",
+            "serial_remainder"
+          ]
+        },
+        "access_patterns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/id"
+              },
+              "source_location": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "function": {
+                    "type": "string"
+                  },
+                  "line": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "column": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "llvm_function": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "function",
+                  "line"
+                ]
+              },
+              "address_shape": {
+                "$ref": "#/$defs/fact"
+              },
+              "stride_bytes": {
+                "$ref": "#/$defs/fact"
+              },
+              "element_bytes": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "update_kind": {
+                "enum": [
+                  "read",
+                  "write",
+                  "add-update",
+                  "compare-and-swap",
+                  "min-max-update",
+                  "arbitrary"
+                ]
+              },
+              "element_count": {
+                "$ref": "#/$defs/count"
+              },
+              "bytes_accessed": {
+                "$ref": "#/$defs/count"
+              },
+              "observed_address_span_bytes": {
+                "$ref": "#/$defs/fact"
+              },
+              "address_expression": {
+                "type": "string"
+              },
+              "ir_lanes": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "observed_unique_bytes": {
+                "$ref": "#/$defs/fact"
+              },
+              "read_write": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "source_location",
+              "address_shape",
+              "stride_bytes",
+              "element_bytes",
+              "update_kind",
+              "element_count",
+              "bytes_accessed",
+              "observed_address_span_bytes",
+              "address_expression",
+              "ir_lanes"
+            ]
+          }
+        },
+        "operation_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "integer": {
+              "$ref": "#/$defs/count"
+            },
+            "floating_point": {
+              "$ref": "#/$defs/count"
+            },
+            "branch": {
+              "$ref": "#/$defs/count"
+            },
+            "atomic": {
+              "$ref": "#/$defs/count"
+            }
+          },
+          "required": [
+            "integer",
+            "floating_point",
+            "branch",
+            "atomic"
+          ]
+        },
+        "dynamic_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "loop_iterations": {
+              "$ref": "#/$defs/count"
+            }
+          },
+          "required": [
+            "loop_iterations"
+          ]
+        },
+        "footprint_bytes": {
+          "$ref": "#/$defs/fact"
+        },
+        "accelerator_calls": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "address_stream_counts": {
+          "type": "object"
+        },
+        "active_workers": {
+          "$ref": "#/$defs/fact"
+        },
+        "worker_context": {
+          "type": "object",
+          "properties": {
+            "team_sizes": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "measurement": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "team_sizes",
+            "measurement"
+          ],
+          "additionalProperties": false
+        },
+        "memory_service_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "format": {
+              "const": "swdb.memory-service-counts.v1"
+            },
+            "scope": {
+              "enum": [
+                "per_run",
+                "per_trial"
+              ]
+            },
+            "observation_method": {
+              "const": "source_normalized_ir_allocation_relative"
+            },
+            "state": {
+              "enum": [
+                "known",
+                "partial",
+                "unknown"
+              ]
+            },
+            "requests_by_update_kind": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "read": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "element_bytes": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "requests": {
+                        "$ref": "#/$defs/count"
+                      }
+                    },
+                    "required": [
+                      "element_bytes",
+                      "requests"
+                    ]
+                  }
+                },
+                "write": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "element_bytes": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "requests": {
+                        "$ref": "#/$defs/count"
+                      }
+                    },
+                    "required": [
+                      "element_bytes",
+                      "requests"
+                    ]
+                  }
+                },
+                "add-update": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "element_bytes": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "requests": {
+                        "$ref": "#/$defs/count"
+                      }
+                    },
+                    "required": [
+                      "element_bytes",
+                      "requests"
+                    ]
+                  }
+                },
+                "compare-and-swap": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "element_bytes": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "requests": {
+                        "$ref": "#/$defs/count"
+                      }
+                    },
+                    "required": [
+                      "element_bytes",
+                      "requests"
+                    ]
+                  }
+                },
+                "min-max-update": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "element_bytes": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "requests": {
+                        "$ref": "#/$defs/count"
+                      }
+                    },
+                    "required": [
+                      "element_bytes",
+                      "requests"
+                    ]
+                  }
+                },
+                "arbitrary": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "element_bytes": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "requests": {
+                        "$ref": "#/$defs/count"
+                      }
+                    },
+                    "required": [
+                      "element_bytes",
+                      "requests"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "read",
+                "write",
+                "add-update",
+                "compare-and-swap",
+                "min-max-update",
+                "arbitrary"
+              ]
+            },
+            "useful_bytes": {
+              "$ref": "#/$defs/fact"
+            },
+            "lifetime_line_union": {
+              "$ref": "#/$defs/fact"
+            },
+            "logical_first_read_pages": {
+              "$ref": "#/$defs/fact"
+            },
+            "logical_first_write_pages": {
+              "$ref": "#/$defs/fact"
+            },
+            "pre_roi_allocation_pages": {
+              "$ref": "#/$defs/fact"
+            },
+            "in_roi_allocation_pages": {
+              "$ref": "#/$defs/fact"
+            },
+            "unknown_object_requests": {
+              "$ref": "#/$defs/fact"
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "assumption_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "format",
+            "scope",
+            "observation_method",
+            "state",
+            "requests_by_update_kind",
+            "useful_bytes",
+            "lifetime_line_union",
+            "logical_first_read_pages",
+            "logical_first_write_pages",
+            "pre_roi_allocation_pages",
+            "in_roi_allocation_pages",
+            "unknown_object_requests",
+            "missing",
+            "assumption_sha256"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "source_location",
+        "mapped",
+        "kind",
+        "access_patterns",
+        "operation_counts",
+        "dynamic_counts",
+        "footprint_bytes",
+        "accelerator_calls",
+        "address_stream_counts"
+      ]
+    }
+  }
 }
