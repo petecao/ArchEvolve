@@ -1,6 +1,6 @@
 # Implementation progress
 
-Updated: 2026-10-06 19:10 ET
+Updated: 2026-10-06 19:18 ET
 
 Integration: `codex/lanl-analytic-eval`; review base: `2c50e5fb8671e08050921bee06920f92fd153bdd` (`yanrujhou_main`). Yan-Ru amended startup settings commit `fb842a8` to this replacement during startup. Owned branches are rebased so the removed IDE files stay removed. Final delivery merges and pushes `yanrujhou_main`.
 
@@ -13,7 +13,7 @@ Agent assignments: tickets 02–14, 16–17. Human gates 15, 18, 21 stay human-o
 | 06 | `/root/ticket04` | `codex/lanl-ticket06` | Resolved and merged7c51ee1;41 focused plus real claim1 and integrated7 passed;553 historical valid |
 | 07 | `/root/ticket03` | `codex/lanl-ticket07` | Resolved cee740a; merged8e2156a; measured fixture, typed calibration and provenance checks passed |
 | 08 | `/root/ticket02` | `codex/lanl-ticket08` | Resolved bcaa238; merged c109994; 15 public acceptance cases and 2 merged protocol smokes passed |
-| 09 | `/root/ticket04` | `codex/lanl-ticket09` | Claimed in implementer branch; observer fix1f67c76 and generic mechanismsade2d2c tested; live command/row binding active; fresh strict candidate run active node1g530 |
+| 09 | `/root/ticket04` | `codex/lanl-ticket09` | Claimed in implementer branch; observer fix1f67c76 and generic mechanismsade2d2c tested; live command/row binding active; fresh source prepared; strict launcher parse failure retained; command repair active |
 | 11 | `/root/ticket03` | `codex/lanl-ticket11` | Claimed; independent clock calibration and fresh BFS/BC T1 counts passed; service gaps and error-band admission active before native timing |
 
 Managed worktrees: `/Users/yanrujhou/.codex/worktrees/lanl-*/ArchEvolve`. Parent owns integration. Inspect liveness before reassigning. File writes and Git metadata there need sandbox escalation, covered by the user's implementation authorization.
@@ -98,3 +98,9 @@ Exact allocator/copy/free bins and all5 opaque-call inventories now guide indepe
 Fresh canonical DX100 source+strict1.6 job ACTIVE19:09:39ET,node1g530,tmux swdb-lanl-functional-bfs-source-20261006-a1,raw /data/yanruj/EvolveSWDB_runs/lanl-functional-bfs-source-20261006-a1. Clean immutable /data1/yanruj/ArchEvolve-lanl-functional-20261006 at121177d;900s source preparation,2400s strict certification,3500s process/3600s outer. New prefixbfs-functional-read-offload-20261006-a1; intended candidate tree991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1, BFS093c56b91837122380fd5e66766c92947e5f1c5194dd4c038936bc28934864dc, canonicalheader7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c. Both16384/1024 tiles with four workers perrun; fresh positive cells/attributed negative controls must pass before finite functional-target claim. Fixture profile/source-only metadata stays separate from actual certification and future count receipt. No DX performance or simulator output.
 
 Fresh preflight19:08ET: wrapper matches fetched MemAcc yanrujhou_main, allthreeleases released before dispatch, load1.38, /data1free26.58GiB and/datafree57.16GiB; unrelated Quicksilver process preserved. Node1 now owns functional job; node0 free. Hold elapsed CPU calibrations until node1 releases. Estimator/mechanism code for14's unchanged-code check will use a final DXBFS reference after generic09/10/11 model code stabilizes.
+
+2026-10-06 19:18 ET: functional a1 source preparation passed; source receipt retains expected canonical candidate/header/procedure pins and fixture-only profile. Strict certification stopped before evaluation at19:13:04ET (node1g530exit2/released): generated argv included unsupported `--format json`. Preserve a1 and its parser log.02 owns a tested public-parser repair; parent will run a distinct strict retry receipt against the same fresh unverified candidate. Both lanes and legacy released at19:15ET, load1.37; /data1about27GiB and/dataabout57GiB free. Raw source/counts/IR/logs remain remote. No DX correctness or performance claim yet.
+
+09 live logical command slice passed7 public native cases22.90s, including widened requests, final tails, bounded row state, alias deduplication, unwind cleanup and reference-checker target-array rereads excluded from semantic command traffic by source-role pins. Runtime compatibility and sealed allocator/interposer control scope are active. Old counted contexts cannot establish absent allocator environment controls retrospectively.11 paired native-output slice passed108.88s; selection remains timing-based, missing estimate admission explicit, Extensa refused before team estimate consumption. New/delete independent calibration is count-proof-first; application timing remains held.
+
+02 source audit independently reconciles all50 dominant region/trial unknown totals with wrapper/local source sites. Parent obtains an address-free root projection from the exact normalized IR, not separately optimized diagnostic numbering. Full allocation extent/lifetime must remain distinct from a scoped typed ABI referent view; a4B libomp microtask argument view does not prove the runtime allocation size or physical residency. Generic extensions require alias/overlap and scoped-retirement contracts and retain unknown accesses outside their supported view.
