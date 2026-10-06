@@ -375,3 +375,9 @@ Updated 2026-10-06 ET: CPU calibration imports also create typed, hash-bound
 Fresh target-description versions list their resolvable IDs in `calibration_sources`;
 freeze pins those dependencies recursively. [CPU calibration commands and lineage](cpu-calibration.md)
 describe conversion of legacy explanatory citations without changing old records.
+
+Updated 2026-10-06 ET: optional `reported_inputs[]` stores sanitized, hash-bound
+feature reports with basis `reported`. Existing count fields, native binding and
+receipts remain unchanged. [Reported feature input commands, field mapping and
+conflicts](feature-report-inputs.md) explain the supplied BFS reports, unresolved
+source/array scope, units and timing/PMU sanitization.

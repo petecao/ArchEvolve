@@ -614,7 +614,9 @@
         "base_characterization",
         "features",
         "conflicts",
-        "redactions"
+        "redactions",
+        "scope",
+        "array_aliases"
       ],
       "properties": {
         "basis": {
@@ -627,7 +629,8 @@
             "sha256",
             "filename_version",
             "schema_version",
-            "sanitized_sha256"
+            "sanitized_sha256",
+            "sanitizer_version"
           ],
           "properties": {
             "path": {
@@ -649,6 +652,9 @@
             "sanitized_sha256": {
               "type": "string",
               "pattern": "^[a-f0-9]{64}$"
+            },
+            "sanitizer_version": {
+              "const": "swdb.feature-report-sanitizer.v1"
             }
           },
           "additionalProperties": false
@@ -684,6 +690,65 @@
           "items": {
             "type": "object"
           }
+        },
+        "scope": {
+          "type": "object"
+        },
+        "array_aliases": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "methodology": {
+          "$ref": "#/$defs/reported_document"
+        },
+        "methodology_text": {
+          "$ref": "#/$defs/reported_document"
+        },
+        "manifest": {
+          "$ref": "#/$defs/reported_document"
+        }
+      }
+    },
+    "reported_document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "sanitized_sha256",
+        "sanitizer_version",
+        "features",
+        "redactions",
+        "basis"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "sanitized_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "sanitizer_version": {
+          "const": "swdb.feature-report-sanitizer.v1"
+        },
+        "features": {
+          "type": "object"
+        },
+        "redactions": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "basis": {
+          "const": "reported"
         }
       }
     }

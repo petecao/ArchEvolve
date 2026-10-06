@@ -24,7 +24,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 05 | [Indirect accesses and the BFS baseline on the CPU](issues/05-indirect-and-bfs-baseline.md) | resolved | 04 | 1.5–2 days |
 | 06 | [Estimate protocols and the gem5 refusal](issues/06-estimate-protocols-and-gem5-refusal.md) | resolved | 04 | 3–4 h |
 | 07 | [Measured mbit10 parameters](issues/07-measured-mbit10-parameters.md) | resolved | 04 | 2–3 h plus about 1 h of lane time (mbit10) |
-| 08 | [Peter's feature reports as an input](issues/08-peter-feature-reports-input.md) | claimed | 05 | 3–4 h |
+| 08 | [Peter's feature reports as an input](issues/08-peter-feature-reports-input.md) | resolved | 05 | 3–4 h |
 
 ## C. DX100 and ArchEvolve mode
 
@@ -96,3 +96,12 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   All 584 records validate; old 10 measured target bytes/native trials are unchanged.
   [CPU calibration contract](../../docs/reference/cpu-calibration.md) records caps,
   units, plateau premises and cache/service limits. No CPU error-band claim.
+
+- 2026-10-06 ET: [ticket 08](issues/08-peter-feature-reports-input.md#answer) resolved:
+  both supplied BFS v1.2 filenames import with content schema 1.1 and basis
+  `reported`; the [field table and command](../../docs/reference/feature-report-inputs.md)
+  preserve native vocabulary and unresolved source/array/unit scope. Actual
+  sparse/dense imports retain all five native BFS a2 trials/receipts, list 17/13
+  conflicts, and validate with 579 records. The [compact receipt](evidence/08-reported-input-imports-20261006.json)
+  separates original import and final-source hashes; final 15 public tests and
+  canonical 584-record validation passed. No native unknown cost is promoted.
