@@ -437,6 +437,7 @@ def characterize(args):
             'object_scope':'translation_unit_allocator_calls',
             'first_access_scope':'first observed access in selected normalized source functions; opaque initialization is not observed',
             'physical_residency_known':False,'native_runtime':native_runtime,
+            'observer_isolation':'thread_local_reentrancy_guard',
             'runtime_bundle_sha256':artifacts.digest({name:_sha(llvm_src/name)
                 for name in ('CountingRuntime.cpp','LiveObjects.hpp')})}
     if trials:
