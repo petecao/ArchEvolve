@@ -43,3 +43,10 @@ held-out input after implementation, independent calibration and development wid
 freeze. Historical GCC/libgomp baselines and candidate artifacts stay in honest
 estimate/exclusion reports. Missing cost, memory-state or observation scope remains
 unknown. Native CPU timing continues to decide CPU evaluations.
+
+`native_service_costs` consumes exact region-filtered call site counts through the
+shared composition API. Descriptions select ABI names and seconds/call parameters
+under host/serial-T1 scope; supported opaque service costs are additive. Full
+site/count coverage clears that call only after a known service result. Zero
+executions need no rate, counted callee bodies receive no second charge, and
+unsupported length/lifecycle selectors or missing rates remain unknown.
