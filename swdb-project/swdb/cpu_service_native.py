@@ -13,11 +13,15 @@ from swdb.store import Store
 def prepare(args, output):
     if args.fixture:
         return None
+    machine = Store(args.records).get(args.machine, 'machine')
+    if machine and machine.get('lane_required') and args.lane is not None:
+        names = {machine['hostname'] + '-evaluation-node' + str(node['node']) for node in machine['numa_nodes']}
+        if args.lane not in names:
+            raise Failure('native --lane requires an exact registered socket lease name: ' + ', '.join(sorted(names)))
     if platform.system() != 'Linux' or platform.machine() != 'x86_64':
         raise Failure('native service calibration requires its registered Linux x86_64 target')
     if not args.llvm_bin or args.min_trial_s < .05 or args.repetitions < 7:
         raise Failure('native service calibration requires LLVM22, >=0.05s trials and >=7 repetitions')
-    machine = Store(args.records).get(args.machine, 'machine')
     if not machine or socket.gethostname().split('.')[0] != machine['hostname']:
         raise Failure('native service calibration must run on its registered machine')
     from swdb.profile import _verified_lane

@@ -127,3 +127,15 @@ def test_count_only_service_receipt_contains_no_elapsed_calibration(records, tmp
     refused = run_swdb('import-cpu-service-calibration', '--records', records.path,
         '--receipt', output / 'count-proof.json', '--id', 'fixture.counts.never.rate', '--fixture')
     assert refused.returncode != 0
+
+
+def test_service_lane_claim_requires_exact_registered_name_without_bypassing_live_guard(records, tmp_path):
+    records.copy_repo('machines')
+    wrong = run_swdb('cpu-service-calibrate', '--records', records.path, '--output', tmp_path / 'wrong-lane',
+        '--machine', 'mbit10', '--lane', '0')
+    assert wrong.returncode != 0 and 'exact registered socket lease name' in wrong.stderr
+    matching = run_swdb('cpu-service-calibrate', '--records', records.path, '--output', tmp_path / 'matching-lane',
+        '--machine', 'mbit10', '--lane', 'mbit10-evaluation-node0')
+    assert 'exact registered socket lease name' not in matching.stderr
+    assert matching.returncode != 0  # Portable fixture has neither native host nor live leased scope.
+    assert not (tmp_path / 'wrong-lane').exists() and not (tmp_path / 'matching-lane').exists()

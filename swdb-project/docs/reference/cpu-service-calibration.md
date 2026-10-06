@@ -59,3 +59,19 @@ with `timings_collected: false`; it emits no elapsed trials or service rates. Th
 importer refuses this distinct `swdb.cpu-service-count-only.v1` format. Native
 count-only execution retains the same verified lane, clean source and loaded ABI
 identities, and is independent of application development/holdout timings.
+
+Native count-only command inside the parent-owned node0 socket lane:
+
+```sh
+python3 -m swdb cpu-service-calibrate --records records --machine mbit10 \
+  --lane mbit10-evaluation-node0 --count-only --max-wall-s 600 \
+  --llvm-bin /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \
+  --output "$NEW_EXTERNAL_COUNT_FOLDER" --format json
+```
+
+`--lane` is the exact lease-name claim, not a NUMA index. The numeric `0` claim
+stopped the first remote attempt before any proof; that attempt supplies no
+count/timing evidence. The corrected named lease still requires the real ancestor,
+CPU affinity, memory bind policy and held lease checks; a matching string alone
+does not authorize native execution. Use outer timeout900s and raw data mounts.

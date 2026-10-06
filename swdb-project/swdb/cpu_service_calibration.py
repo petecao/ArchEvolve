@@ -32,7 +32,7 @@ def register_cli(commands):
     run.add_argument('--count-only', action='store_true', help='emit ABI/count proof only; no elapsed calibration')
     run.add_argument('--compiler', default='c++')
     run.add_argument('--machine', default='mbit10')
-    run.add_argument('--lane')
+    run.add_argument('--lane', help='exact socket lease-name claim, e.g. mbit10-evaluation-node0; verified from live OS/lease state')
     run.add_argument('--llvm-bin', type=Path, help='separate LLVM22 source-normalized-v2 service/driver count proof')
     run.add_argument('--toolchain-flag', action='append', default=[])
     run.add_argument('--repetitions', type=int, default=7)
