@@ -254,3 +254,7 @@ summary, reuses the derived protocol and the request `reeval-9534c5107d8c-c1e45d
 comparison `t75-reeval-20261005.candidate.uniform_random.comparison` still admits the candidate. No run was
 repeated on mbit10.
 
+The 1.5 run folder (builds, logs, control outputs) was a Mac scratch folder and was removed for disk space after
+the record was written, as for the earlier Mac certifications; the record keeps the compact cell and control
+evidence and the hashes.
+
