@@ -43,3 +43,15 @@ plain `lib/` does not contain it. Parent may dispatch raw output through the aut
 `/data` overflow symlink/volume instead of the illustrative `/data1` prefix above.
 The shared fixture numerator rerun must explicitly pass
 `--counting-pipeline source-normalized-v2`; registered runs always use v2.
+
+Compact receipt helper (read-only, shared SWDB record-access boundary):
+
+```sh
+PYTHONPATH=. python3 .scratch/lanl-db-analytic-eval-2026-10-06/evidence/05-compact-reports.py --characterization /raw/bfs-characterization.json --estimate /raw/bfs-estimate.json --characterization /raw/bc-characterization.json --estimate /raw/bc-estimate.json --source-commit COUNTING_GIT_SHA --validate-log /raw/validate.log > /raw/05-compact-reports.json
+```
+
+Replace `/raw` with the parent's actual dispatch folder. Each estimate must match its
+characterization ID. Unknown totals and byte sizes remain null; a known partial byte
+subtotal is labeled separately. Zero-only region IDs and the full unmapped-loop list
+remain represented, alongside every observed per-region bound and trial's executed
+call inventory. This helper does not certify pairing with historical native timings.
