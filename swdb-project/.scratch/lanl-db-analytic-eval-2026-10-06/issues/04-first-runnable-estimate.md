@@ -46,3 +46,5 @@ Validation through confirmed public seams:
 | Whitespace/diff consistency | `git diff --check` passed |
 
 Remote measurements, the full BFS adapter and frozen estimate protocols belong to the unblocked tickets 05–07. No SSH, push or mbit10 measurement was performed by this implementer.
+
+2026-10-06 16:48 ET: parent verified the merged source on mbit10 with official LinuxLLVM22.1.8/static-opt exported-symbol loading. Native hand counts17iterations/34FP/17reads/17writes and artificial bounds2.125scompute/4.25sstream matched;555copied-store records validate. Node0g466,exit0,lease released. [Compact receipt](../evidence/llvm22-mbit10-smoke-20261006-a2.json); raw stays remote. This is contract-fixture plumbing evidence; the artificial rates are not CPU measurements. The priora1 preflight-only failure (missing governor control file) is retained separately.
