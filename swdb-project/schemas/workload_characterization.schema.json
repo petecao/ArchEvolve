@@ -1747,6 +1747,68 @@
         },
         "useful_bytes": {
           "$ref": "#/$defs/logical_work_count"
+        },
+        "functional_bookkeeping": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "accesses",
+            "operation_counts",
+            "opaque_calls"
+          ],
+          "properties": {
+            "accesses": {
+              "$ref": "#/$defs/count"
+            },
+            "operation_counts": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "integer",
+                "floating_point",
+                "branch",
+                "atomic"
+              ],
+              "properties": {
+                "integer": {
+                  "$ref": "#/$defs/count"
+                },
+                "floating_point": {
+                  "$ref": "#/$defs/count"
+                },
+                "branch": {
+                  "$ref": "#/$defs/count"
+                },
+                "atomic": {
+                  "$ref": "#/$defs/count"
+                }
+              }
+            },
+            "opaque_calls": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "site",
+                  "name",
+                  "execution_count"
+                ],
+                "properties": {
+                  "site": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "execution_count": {
+                    "$ref": "#/$defs/count"
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "required": [

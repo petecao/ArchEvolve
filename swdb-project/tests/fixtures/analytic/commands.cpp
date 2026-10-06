@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cstdint>
 #include <cstring>
+#include <cstdio>
 extern "C" void __swdb_begin();
 extern "C" void __swdb_end();
 extern "C" __attribute__((noinline)) void fixture_backend(unsigned char *base,int n){
@@ -10,6 +11,9 @@ extern "C" __attribute__((noinline)) void fixture_backend(unsigned char *base,in
   for(int i=0;i<n;++i){uint32_t value;std::memcpy(&value,base+i*64,sizeof(value));checksum+=value;}
 }
 extern "C" __attribute__((noinline)) void fixture_check(unsigned char *base,int n){
+#ifdef FIXTURE_BOOKKEEPING_EXTERNAL
+  std::puts("fixture bookkeeping only");
+#endif
   volatile uint32_t checksum=0;
   for(int i=0;i<n;++i){uint32_t value;std::memcpy(&value,base+i*64,sizeof(value));checksum+=value;}
 }

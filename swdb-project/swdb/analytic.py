@@ -498,14 +498,17 @@ def characterize(args):
     return record
 
 
-def _estimate_regions(source_regions, source_calls, target, observation_contract=None):
+def _estimate_regions(source_regions, source_calls, target, observation_contract=None, *, characterization=None):
     from swdb import analytic_models
 
+    characterization_sha256=artifacts.digest(characterization) if characterization else None
     regions = []
     for region in source_regions:
         called = [c for c in source_calls if c.get('region') == region['id']]
         context = {'target_description_sha256': artifacts.digest(target),
             'configured_threads': target['threads'], 'observation_contract': observation_contract,
+            'characterization_id': characterization['id'] if characterization else None,
+            'characterization_sha256': characterization_sha256,
             'selected_domain': None, 'composition_contract': target.get('composition_contract'),
             'source_calls': called}
         bounds, overheads = [], []
@@ -551,7 +554,7 @@ def estimate(args):
     protocol = bind(store, args.protocol, characterization, target)
     if target['threads'] != characterization['binding']['threads']:
         raise Failure('target thread count differs from the counted workload thread identity')
-    regions, seconds = _estimate_regions(characterization['regions'], characterization['unmodeled_calls'], target, characterization.get('observation_contract'))
+    regions, seconds = _estimate_regions(characterization['regions'], characterization['unmodeled_calls'], target, characterization.get('observation_contract'),characterization=characterization)
     trial_estimates=[]
     for trial in characterization.get('trials',[]):
         rows,total=_estimate_regions(trial['regions'],trial['unmodeled_calls'],target,characterization.get('observation_contract'))

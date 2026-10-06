@@ -169,3 +169,12 @@ def test_proven_no_application_memory_setup_is_excluded_but_counted_as_event(rec
     assert sum(c['bookkeeping_accesses'] for c in raw['semantic_commands'].values())>=8
     assert any(a['source_location']['function']=='main' and a['update_kind']=='write' and a['element_count']['value'] for r in data['regions'] for a in r['access_patterns'])
     assert records.validate().returncode==0
+
+
+def test_pinned_bookkeeping_helper_opaque_calls_do_not_contaminate_target_reads(records,tmp_path,llvm22):
+    data,target_hash=characterize_command(records,tmp_path,llvm22,extra=('--build-flag=-DFIXTURE_BOOKKEEPING_EXTERNAL',))
+    assert sum(r['address_stream_counts'][target_hash]['line_requests']['value'] for r in data['regions'])==6
+    raw=json.loads((tmp_path/'counted/counts.json').read_text())
+    assert sum(sum(c['opaque_calls'].values()) for c in raw['semantic_commands'].values())==1
+    assert not any(c['missing'] for c in raw['semantic_commands'].values())
+    assert sum(c['execution_count']['value'] for r in data['regions'] for event in r['accelerator_calls'] for c in event['functional_bookkeeping']['opaque_calls'])==1

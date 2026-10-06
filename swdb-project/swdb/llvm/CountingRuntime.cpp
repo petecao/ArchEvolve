@@ -224,12 +224,12 @@ extern "C" void __swdb_domain_access(uint32_t site,uint32_t region,uint64_t addr
   if(!host){if(c.active && c.command_depth)c.semantic_missing.insert("domain_context_propagation");return;}
   c.registry.observe(region,address,n,width,update,c.active);if(c.active)recordAccess(c,site,region,address,n,width);
 }
-extern "C" void __swdb_domain_call(uint32_t site,uint64_t size,uint32_t known,uint32_t region,uint64_t pointer,uint32_t action,uint32_t host,uint32_t body){
+extern "C" void __swdb_domain_call(uint32_t site,uint64_t size,uint32_t known,uint32_t region,uint64_t pointer,uint32_t action,uint32_t host,uint32_t body,uint64_t target_roles,uint64_t bookkeeping_roles){
   if(observerEntered)return;
   {ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);
     if(swdb_logical::suppressed_depth)return;
     if(auto *frame=swdb_logical::current()){
-      if(!body){auto &total=c.commands[{frame->site,frame->region}];total.opaque_calls[site]++;if(!frame->memory)return;total.missing.insert("functional_callee_count_coverage");total.requests_complete=false;total.rows_complete=false;total.unknown_target=true;}return;
+      if(!body){auto &total=c.commands[{frame->site,frame->region}];total.opaque_calls[site]++;if(!frame->memory || (bookkeeping_roles&(uint64_t(1)<<frame->descriptor)))return;total.missing.insert("functional_callee_count_coverage");total.requests_complete=false;total.rows_complete=false;total.unknown_target=true;}return;
     }
     if(!host){if(c.command_depth)c.semantic_missing.insert("domain_context_propagation");return;}
   }

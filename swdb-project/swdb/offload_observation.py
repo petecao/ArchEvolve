@@ -119,6 +119,7 @@ def merge(regions,static,counts,contract,scope):
     fact=lambda v,basis='measured':{'value':v,'basis':'unknown' if v is None else basis,'scope':scope}
     def key(site):return str(site['site'])+':'+str(site['region_index'])
     by_region={region['id']:region for region in regions}
+    call_inventory={call['site']:call for call in static.get('unmodeled_calls',[])}
     for site in static.get('semantic_sites',[]):
         region=by_region[site['region']]
         observed=dynamic.get(key(site),{})
@@ -134,6 +135,10 @@ def merge(regions,static,counts,contract,scope):
             'useful_accesses':fact(None if observed.get('unknown_target') else observed.get('useful_accesses',0)),
             'useful_bytes':fact(None if observed.get('unknown_target') else observed.get('useful_bytes',0)),
             'accounting_domain':'offload','observation_method':'pre_inline_guarded_source_access',
+                        'functional_bookkeeping':{'accesses':fact(observed.get('bookkeeping_accesses',0)),
+                'operation_counts':{name:fact(observed.get('bookkeeping_ops',[0,0,0,0])[i]) for i,name in enumerate(('integer','floating_point','branch','atomic'))},
+                'opaque_calls':[{'site':int(site),'name':call_inventory.get(int(site),{}).get('name','unresolved'),
+                    'execution_count':fact(n)} for site,n in observed.get('opaque_calls',{}).items()]},
             'missing':observed.get('missing',[])})
     target_hash=contract['target_description_sha256']
     for region in regions:
