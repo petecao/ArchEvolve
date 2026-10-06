@@ -22,7 +22,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 |---|---|---|---|---|
 | 04 | [First runnable version: estimate a streaming loop on the mbit10 CPU](issues/04-first-runnable-estimate.md) | resolved | 01 | 1.5–2 days |
 | 05 | [Indirect accesses and the BFS baseline on the CPU](issues/05-indirect-and-bfs-baseline.md) | ready-for-agent | 04 | 1.5–2 days |
-| 06 | [Estimate protocols and the gem5 refusal](issues/06-estimate-protocols-and-gem5-refusal.md) | ready-for-agent | 04 | 3–4 h |
+| 06 | [Estimate protocols and the gem5 refusal](issues/06-estimate-protocols-and-gem5-refusal.md) | resolved | 04 | 3–4 h |
 | 07 | [Measured mbit10 parameters](issues/07-measured-mbit10-parameters.md) | claimed | 04 | 2–3 h plus about 1 h of lane time (mbit10) |
 | 08 | [Peter's feature reports as an input](issues/08-peter-feature-reports-input.md) | ready-for-agent | 05 | 3–4 h |
 
@@ -72,3 +72,9 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   one existing data-dependent skip, and one live-source fingerprint artifact; the
   exact affected case passed in a fresh process (1 passed).
 - 2026-10-06 ET: ticket [04](issues/04-first-runnable-estimate.md) resolved: LLVM source counting and streaming estimates, [portable format and commands](../../docs/reference/format-v0.4-analytic.md); implementation `191fd8d`, 101-pass/1-skip regression batch plus the static-distribution test. Application/protocol binding remains explicit work for 05–06; measured mbit10 parameters for 07.
+
+- 2026-10-06 ET: [ticket 06](issues/06-estimate-protocols-and-gem5-refusal.md#answer) resolved:
+  portable implementation/target/dependency/input/source freezes, verified binding
+  at estimate execution, and recursive ADR 0013 refusals. Source `c3633cf`, merged
+  integration tip `9ccf710`; final 41-pass focused batch plus the public claim refusal,
+  553 historical records valid, and Extensa/LLVM broad regression evidence in the ticket.
