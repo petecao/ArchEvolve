@@ -101,3 +101,14 @@ weak-ODR helpers linked from the instrumented application can therefore serve th
 runtime without recursing into its locked counters or charging observer work.
 The guard affects that observer thread only; other application workers retain
 normal accounting. The counted contract names this isolation policy.
+
+Generic offload resource models consume only the requested target-description
+hash's `swdb.logical-address-counts.v1` entry at `derived_logical_transactions`
+level. Selectors declare `domain: offload`; unsupported selectors remain unknown.
+`reorder_window_rows` applies row-group miss/hit service divided by effective
+memory parallelism. `fetch_queue` takes the maximum of admission service and the
+capacity/latency lower bound. `tile_staging` divides dynamic semantic staged
+bytes by staging rate. These resource bounds compete; semantic issue/setup
+remains additive. Known zero work needs no unused parameters. Unknown work or a
+wrong target hash keeps the bound and total null. None measures physical queue
+occupancy, row-buffer behavior, bus traffic, or asynchronous execution.
