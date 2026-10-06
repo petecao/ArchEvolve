@@ -179,3 +179,110 @@ Envelope and portable fields: `architecture`, `atomic`, `branch`, `characterizat
 Binding keys are `state`, `subject_source_identity`, `input_record_sha256`, `roi`, `threads`, `run_arguments_sha256` and `note`. The first slice emits fixture or unverified state; verified state is reserved for a registered-source/protocol adapter.
 
 Compiler distributions with a shared LLVM library link the pass against it; static LLVM distributions load the pass against `opt` host symbols, avoiding a duplicate static LLVM registry. `plugin_linkage` records this choice. Repeatable `--run-library-path` supplies native library folders (such as libomp): each enters link search, binary RPATH and runtime library search, and is retained as `run_library_paths`.
+
+## Registered GAPBS trials and indirect memory bounds
+
+Updated: 2026-10-06 ET (ticket 05).
+
+Use `--adapter registered-gapbs` for the registered `gapbs-bfs-do` or
+`gapbs-bc-brandes` baseline. The adapter resolves the registered translation unit,
+checks its authoritative source excerpts, derives compiler flags and graph arguments,
+and inserts LLVM counter gates around the original `BenchmarkKernel` `kernel(g)` call.
+The source and evaluator files stay unchanged. This ROI is `gapbs.trial_lambda.v1`:
+it includes BFS's source picker and the complete kernel call. It differs from a
+protected native driver that times only `DOBFS` or `Brandes`.
+
+```sh
+python -m swdb characterize --records /path/to/copied/records \
+  --adapter registered-gapbs --implementation gapbs-bfs-do --input kron-g16-k16 \
+  --threads 4 --trials 5 --llvm-bin /path/to/LLVM-22/bin \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \
+  --run-library-path /path/to/LLVM-22/lib --timeout-s 1800 \
+  --output /path/to/new/bfs-counting --id bfs.kron-g16.t4.characterization --format json
+```
+
+The same command with `--implementation gapbs-bc-brandes` counts BC. Its adapter
+also fixes `-i 1`, matching the registered baseline's default source iteration count.
+The generator arguments come from the input record; source, run, function and build
+flag overrides are refused. Compiler selection flags can select installed headers and
+libraries, but cannot replace source macros or the driver.
+
+The registered counting pipeline is frozen as `source-normalized-v2`:
+`function(sroa,mem2reg),cgscc(inline),function(loop-simplify)`. ROI gates and source-picker
+observations are inserted before helper inlining. Counting still precedes vectorization
+and unrolling. The original deterministic source picker advances between trials.
+`trials` retains each invocation's position, selected source, executed exclusive regions
+and calls. The top-level inventory uses trial zero's counters and retains every static
+unmapped loop, including unexecuted loops. Sparse trial observations omit only proved
+zero-work regions; they do not drop those loops from the inventory.
+
+An estimate composes each trial separately, sums its exclusive region bounds and serial
+remainder, then takes the median of whole-call times. Per-region median summaries are
+shown for inspection; they generally do not sum to the whole-call median. Five trials'
+counts are never summed and paired with the median of five timing observations. Any
+unknown required cost in any trial keeps the total and ratio unknown.
+
+Source paths and debug context map outlined workers and source helpers to existing
+profile-package region IDs when their byte range, function and source-text hash still
+match the current registered source. The catalog loop identity remains in the binding
+map. The registered BFS/BC records currently have no site-finder statement annotations;
+a loop without an existing profile region uses its qualified catalog identity.
+Generated IDs include the subject and an LLVM function
+qualifier, preventing collisions between functions or implementations. A shared header
+helper, such as BC's several `pvector::fill` call sites, remains unmapped when its logical
+instance cannot be proved. Multiple lowered loops that share one source region keep
+exclusive access/operation counts and a byte union; their source-loop iteration count
+stays unknown rather than summing compiler scheduling loops. `pattern_comparison`
+reports every handwritten access pattern, observed shape/update kinds and an explicit
+reason for each mismatch. A matching individual address site does not prove a complete
+multi-step chain or the handwritten update's legality.
+
+The pass recognizes `single_valued_indirect`, `ranged_indirect`, `pointer_chase` and
+`data_dependent_merge` from SSA dependencies and ScalarEvolution. A varying loaded index,
+a loaded range boundary, a load feeding its address recurrence, and a data-selected
+pointer merge provide distinct evidence. Opaque calls or unresolved dependencies stay
+unknown. `constant` describes a proved invariant address and is supplementary to the
+formal access-pattern vocabulary.
+
+`observed_unique_bytes` is the live union of virtual byte ranges for one address site;
+`footprint_bytes` is the union for an exclusive region. Repeated addresses and overlapping
+reads/writes are counted once in this footprint. Only byte totals and spans are saved;
+addresses stay in process memory. These are neither physical DRAM row counts nor cache
+miss measurements. Atomic RMW and compare-and-swap instructions retain their memory
+operand, width, update kind and `read_write` flag. Their useful operand bytes do not
+establish cache-line or bus traffic.
+
+| Mechanism | Parameters | Convention |
+|---|---|---|
+| `requests_in_flight_latency` | `dependent_latency_s` (`seconds/load`), `effective_requests_per_thread` (`requests/thread`) | Non-stream requests × latency / (observed active workers × effective requests per worker). A pointer-chase recurrence caps overlap at one request per executing worker. |
+| `cache_fit` | `capacity_bytes` (`bytes`), `bytes_per_s` (`bytes/s`), `cold_bytes_per_s` (`bytes/s`) | If the virtual byte footprint fits, charge distinct first-touch useful bytes at the cold rate and remaining useful bytes at the cache rate. |
+
+Requested threads do not multiply a serial region's concurrency: `active_workers` is
+the distinct executing worker count in an exclusive region within one trial.
+`worker_context.team_sizes` records OpenMP team sizes separately; a sparse single-worker
+branch in a four-worker team has one active worker. Compute, stream and cache rates measured with
+all configured workers active apply only when that same active worker count and team
+context are observed.
+A serial or partially active region needs an independently measured rate; its bound
+remains unknown rather than dividing an aggregate rate by the requested thread count.
+Requests in flight are an effective inferred
+parameter, not measured physical MSHR occupancy. The cache model assumes a cold start
+per trial and ideal capacity; fit does not prove residency, conflicts or first-touch
+misses. Unknown rates/counts/footprints, or a footprint outside its supported cache
+capacity, keep the required bound unknown. Zero work needs no rate. Streaming bandwidth
+covers stream sites; a declared latency/cache model covers other sites, avoiding a
+spurious requirement that an indirect address also be a stream.
+
+Every executed external call keeps its name, event class, count and known size in
+`unmodeled_calls`. Bulk-memory intrinsics, allocation and OpenMP runtime calls are
+explicit events. Calls whose selected emitted bodies are counted are marked
+`body_counted`; external bodies keep missing counts and costs. An operation rate does
+not cover an unknown external-call cost. These events are inputs for later mechanism
+models, not zero-time assumptions.
+
+A verified binding needs a `swdb.registered-count-receipt.v1` execution receipt. It pins
+registered source/input/arguments/ROI, trial identity, LLVM and normalized pipeline,
+source/binary/count hashes, and the extracted counted payload. Merely changing
+`binding.state` to `verified` is refused. Fresh execution verifies available registered
+source and raw artifacts. Historical validation checks the compact receipt and available
+registered source, without fetching or requiring a remote raw-output directory.

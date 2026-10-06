@@ -2,7 +2,7 @@
 
 Created: 2026-10-06
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 04
 **Spec:** `../spec.md`
 **Time estimate:** 1.5–2 days
@@ -15,3 +15,10 @@ Created: 2026-10-06
 - [ ] One fixture kernel per indirect address shape, with hand-computed answers.
 - [ ] Loops that map to no region are listed, never dropped.
 - [ ] Estimates for `gapbs-bfs-do` and the BC baseline, each with a per-region report.
+
+Claimed: 2026-10-06 ET by Codex ticket 05 worker, branch `codex/lanl-ticket05`; base `86b2a9a`.
+
+Implementation status: 2026-10-06 ET — indirect hand fixtures, registered per-trial
+BFS/BC binding and composable memory models implemented. Compact remote command
+context: `../evidence/05-registered-counting-runbook.md`. Acceptance remains pending
+the actual small-Kronecker mbit10 per-region estimates and pattern-comparison receipts.

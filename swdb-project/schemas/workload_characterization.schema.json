@@ -208,6 +208,12 @@
         },
         "output_directory": {
           "type": "string"
+        },
+        "pipeline_version": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
         }
       },
       "required": [
@@ -267,7 +273,9 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "$ref": "#/$defs/id"
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]*$"
           },
           "source_location": {
             "type": "object",
@@ -283,6 +291,12 @@
               "column": {
                 "type": "integer",
                 "minimum": 0
+              },
+              "path": {
+                "type": "string"
+              },
+              "llvm_function": {
+                "type": "string"
               }
             },
             "required": [
@@ -322,6 +336,12 @@
                     "column": {
                       "type": "integer",
                       "minimum": 0
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "llvm_function": {
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -344,7 +364,9 @@
                     "read",
                     "write",
                     "add-update",
-                    "compare-and-swap"
+                    "compare-and-swap",
+                    "min-max-update",
+                    "arbitrary"
                   ]
                 },
                 "element_count": {
@@ -362,6 +384,12 @@
                 "ir_lanes": {
                   "type": "integer",
                   "minimum": 1
+                },
+                "observed_unique_bytes": {
+                  "$ref": "#/$defs/fact"
+                },
+                "read_write": {
+                  "type": "boolean"
                 }
               },
               "required": [
@@ -426,6 +454,29 @@
           },
           "address_stream_counts": {
             "type": "object"
+          },
+          "active_workers": {
+            "$ref": "#/$defs/fact"
+          },
+          "worker_context": {
+            "type": "object",
+            "properties": {
+              "team_sizes": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "measurement": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "team_sizes",
+              "measurement"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -445,7 +496,9 @@
     "unmapped_loops": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/id"
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]*$"
       }
     },
     "unmodeled_calls": {
@@ -511,6 +564,18 @@
         "note": {
           "type": "string"
         }
+      }
+    },
+    "trials": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "pattern_comparison": {
+      "type": "array",
+      "items": {
+        "type": "object"
       }
     }
   },
