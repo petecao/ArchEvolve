@@ -6,12 +6,17 @@ exact returned scores with the trusted original-graph oracle and requires a
 bounded syscall-trace witness that the guest called ``exit_group(0)``.
 
 ``swdb/dx100_witness.py`` is frozen (protocols pin its sha256) and names only
-BFS. This module applies the same v2 rules to BC identities instead of copying
-them: it checks the BC-specific parts itself (checker, protected score result,
-original-adjacency treatment, exact output bytes) and runs the BFS validator on
-a translated copy of the evaluation for every kernel-agnostic rule (execution
-binding, ROI seal, runtime helpers, continuation, trace witness and artifacts).
-The syscall-trace parser and ROI-seal serializer are kernel-agnostic and shared.
+BFS. This module checks the BC-specific parts itself (checker, protected score
+result, original-adjacency treatment, exact output bytes) and runs the BFS
+validator on a translated copy of the evaluation for every kernel-agnostic rule
+(execution binding, ROI seal, runtime helpers, continuation, trace witness and
+artifacts). The syscall-trace parser and ROI-seal serializer are shared.
+
+Not everything is shared (docstring corrected 2026-10-05 ET, code review S6): the
+protected-output reader (`_output_evidence`), the output and artifact re-checks
+(`_verify_output`, `_verify_artifacts`) and the graph-verification contract are
+adapted copies of `dx100_witness`'s, because the frozen versions parse only BFS
+result lines and name the BFS contract.
 """
 
 import copy
@@ -23,6 +28,7 @@ import stat
 from pathlib import Path
 
 from swdb import dx100_witness as w
+from swdb.sg_graph import application_graph
 
 CHECKER = "dx100.bc.verifier.v2"
 ROI = "bc.complete_call.v1"
@@ -32,15 +38,16 @@ FINGERPRINT = "noncryptographic FNV-1a over little-endian IEEE single score bits
 
 def graph_verification_contract(application):
     """Stable BC treatment identity shared by compilation, dispatch and evidence."""
-    w._need(application in {"gapbs", "dx100-gapbs"}, "unsupported original graph application")
+    row = application_graph(application)
+    w._need(row is not None, "unsupported original graph application")
     return {"contract": "swdb.bc.original-adjacency.v1",
-            "input_format": "gapbs.sg64" if application == "gapbs" else "gapbs.sg32",
+            "input_format": row["input_format"],
             "byte_order": "little",
             "adjacency": "outgoing CSR from exact registered serialized input",
             "maximum_extra_bytes": 2147483648,
             "preload": "before checkpoint and ROI",
             "verification": "after ROI on exact returned score buffer; serial Brandes in the source's float types",
-            "count_type": "double" if application == "gapbs" else "float",
+            "count_type": row["bc_count_type"],
             "allocation": "oracle adjacency before ROI; Brandes work arrays in the post-ROI continuation"}
 
 

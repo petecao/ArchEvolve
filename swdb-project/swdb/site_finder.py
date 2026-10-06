@@ -1,7 +1,8 @@
 """The query site finder (ticket 55): regions chosen by one SQL query, with recorded reasons.
 
 Created 2026-10-04 ET. Original SWDB code (spec "Site finder"; design decision D7: the site
-finder is a query and costs no provider call). It reads only the SQLite index (ADR 0002,
+finder is a query and costs no provider call). Updated 2026-10-05 ET: `swdb.db.meta` is public;
+the statement-fact prefix `legality:` lives only in `QUERY` (its sha256 is recorded). It reads only the SQLite index (ADR 0002,
 ticket 46): `access_patterns`, `steps`, `statements`, `statement_steps`, `statement_facts`,
 `library_entries`, `library_dependencies`, `library_clauses`, `library_pattern_keys` and
 `library_pattern_key_steps`. It never reads library YAML.
@@ -9,8 +10,8 @@ ticket 46): `access_patterns`, `steps`, `statements`, `statement_steps`, `statem
 Decision procedure (the summary records `QUERY`'s sha256 and `FORMAT`; `assemble` is a pure
 function of the query's rows, so the same database gives the same ordered region list):
 
-1. Eligible entries: rewrite contracts named by the campaign and every library operation,
-   in an allowed tier, with a pattern key, and bound to the campaign's target. An entry is
+1. Eligible entries: rewrite contracts named by the Extensa campaign and every library operation,
+   in an allowed tier, with a pattern key, and bound to the Extensa campaign's target. An entry is
    bound to `native_cpu` when its dependency closure has no lowering (no hardware interface);
    to `dx100_gem5` when it has a lowering and every lowering uses a DX100 interface.
 2. Key-pattern match (ADR 0003): key pattern k of entry E matches access pattern P of the
@@ -40,7 +41,6 @@ from collections import defaultdict
 from pathlib import Path
 
 FORMAT = "swdb.site-finder.v1"
-FACT_PREFIX = "legality:"
 
 #: Hardware interfaces a target's lowerings may use; an empty list means plain CPU code only.
 TARGET_INTERFACES = {"native_cpu": [], "dx100_gem5": ["dx100-mmio"]}
@@ -129,7 +129,7 @@ QUERY_SHA256 = hashlib.sha256(QUERY.encode()).hexdigest()
 
 
 def parameters(campaign):
-    """The query parameters a campaign file fixes (D5 fields only)."""
+    """The query parameters an Extensa campaign file fixes (D5 fields only)."""
     target = campaign["target"]
     if target not in TARGET_INTERFACES:
         raise ValueError(f"no site-finder target binding for {target!r}")
@@ -157,7 +157,7 @@ def find(records_dir, campaign, *, library=None, db_path):
         db.build(records_dir, db_path, library)
     params = parameters(campaign)
     result = assemble(run_query(db_path, params))
-    meta = dict(db._meta(db_path))
+    meta = dict(db.meta(db_path))
     return {"format": FORMAT, "query_sha256": QUERY_SHA256, "parameters": params,
             "database": {"fingerprint": meta.get("fingerprint"), "builder": meta.get("builder")}, **result}
 
@@ -287,7 +287,7 @@ def _why(application):
 
 
 def region_rows(result):
-    """The campaign summary's `regions` rows: ID, one-line reason, and the structured why."""
+    """The Extensa campaign summary's `regions` rows: ID, one-line reason, and the structured why."""
     return [{"id": r["id"], "reason": r["reason"],
              "why": {"query_sha256": result["query_sha256"], "statements": r["statements"],
                      "source": r["source"],

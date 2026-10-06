@@ -286,8 +286,8 @@ def compile_candidate(args):
         plugin = kernels.require((implementation or {}).get('kernel'), 'gem5 candidate compilation')
         if not author_diagnostic and roi != plugin.gem5_roi:
             raise Failure(f"{plugin.name} primary candidates require the {plugin.gem5_roi} complete-call ROI")
-        if author_diagnostic and plugin is not kernels.BFS:
-            raise Failure("author traversal diagnostics exist only for the BFS reference")
+        if author_diagnostic and not plugin.author_diagnostics:
+            raise Failure(f"{plugin.name} has no author traversal diagnostics (only the BFS reference does)")
         expected_function = original.get('context', {}).get('function', implementation.get('function'))
         if function != expected_function:
             raise Failure(f'selected {plugin.name} function differs from the identified source implementation')
@@ -297,7 +297,7 @@ def compile_candidate(args):
         artifacts.check_protections(source_root, candidate["protections"])
         if author_diagnostic:
             if (candidate.get('artifact_role') != 'source_baseline' or original['application'] != 'dx100-gapbs'
-                    or function not in {'DOBFS', 'DOBFSMAA'} or request['accelerated'] != (function == 'DOBFSMAA')):
+                    or function not in plugin.gem5_functions or request['accelerated'] != (function != plugin.native_function)):
                 raise Failure('author diagnostic requires the unchanged identified DX100 source baseline and selected author function')
             for entry in candidate['artifact']['files']:
                 if Path(entry['path']).suffix in {'.h', '.hpp', '.cc', '.cpp', '.c', '.S'}:
@@ -308,7 +308,8 @@ def compile_candidate(args):
         source = source_root / source_path
         if not source.is_file():
             raise Failure(f"candidate {plugin.name} translation unit is missing")
-        sg_offset_bytes = 8 if original['application'] == 'gapbs' else 4
+        from swdb.sg_graph import application_offset_bytes
+        sg_offset_bytes = application_offset_bytes(original['application'])
         driver_text = plugin.gem5_driver(source, model, function, sg_offset_bytes=sg_offset_bytes,
                                          trusted_graph=not author_diagnostic)
         _protect_driver_macros(candidate, source_root, extra_text=driver_text)

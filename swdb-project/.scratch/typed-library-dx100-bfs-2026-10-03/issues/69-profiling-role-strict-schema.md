@@ -1,10 +1,10 @@
 # 69 — Profiling role schema against the providers' strict mode
 
 Created: 2026-10-04 21:15 ET (by the final code review, 2026-10-04, P3 `swdb/annotation.py:21`)
-Updated: 2026-10-04 21:15 ET (resolved)
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-04 21:15 ET (resolved)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; [code review](../code-review-2026-10-04.md), [36](36-annotate-and-score.md)
 
 **What to build:** the profiling role's output schema is checked against the same strict-mode

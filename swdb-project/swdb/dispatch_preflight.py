@@ -1,15 +1,15 @@
-"""Read-only disk and NUMA-node admission. Updated: 2026-10-03 ET."""
+"""Read-only disk and NUMA-node admission. Updated: 2026-10-05 ET (run roots from `swdb.paths`)."""
 import datetime
 import os
 from pathlib import Path
 import re
 
+from swdb import paths
 from swdb.cli import Failure
 
 GIB = 1024 ** 3
 RESERVE = 20 * GIB
-PRIMARY = Path('/data1/yanruj/EvolveSWDB_runs')
-SECONDARY = Path('/data/yanruj/EvolveSWDB_runs')
+PRIMARY, SECONDARY = paths.RUN_ROOTS
 MEMORY_RESERVE = 4 * GIB
 MEMORY_STATS = ('MemTotal', 'MemFree', 'Inactive(file)', 'Mapped', 'Shmem',
                 'Dirty', 'Writeback', 'Unevictable')

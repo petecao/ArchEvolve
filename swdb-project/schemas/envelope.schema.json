@@ -95,9 +95,8 @@
       "x-reason": "mode is extensa or absent (ArchEvolve mode)"
     },
     "campaign": {
-      "type": "string",
-      "pattern": "^extensa-(native|gem5)-bfs-[0-9]{8}-[a-z][0-9]+$",
-      "x-reason": "campaign must be an Extensa campaign ID extensa-(native|gem5)-bfs-YYYYMMDD-<letter><n>"
+      "$ref": "#/$defs/extensa_campaign_id",
+      "description": "Extensa campaign ID tag set when the record is created; absent means ArchEvolve mode."
     }
   },
   "required": [
@@ -160,7 +159,7 @@
           "mode"
         ],
         "x-required-reasons": {
-          "mode": "campaign is allowed only on mode: extensa records"
+          "mode": "an Extensa campaign tag is allowed only on mode: extensa records"
         }
       }
     }
@@ -450,6 +449,12 @@
           }
         }
       ]
+    },
+    "extensa_campaign_id": {
+      "type": "string",
+      "pattern": "^extensa-(native|gem5)-bfs-[0-9]{8}-[a-z][0-9]+$",
+      "x-reason": "campaign must be an Extensa campaign ID extensa-(native|gem5)-bfs-YYYYMMDD-<letter><n>",
+      "description": "The one Extensa campaign-ID pattern (2026-10-05 ET): record tags, review origins, campaign files (`swdb.campaign`) and the child-process tag (`swdb.workflow`) all use it."
     }
   }
 }

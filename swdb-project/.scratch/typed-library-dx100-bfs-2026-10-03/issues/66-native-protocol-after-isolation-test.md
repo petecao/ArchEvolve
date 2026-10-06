@@ -1,12 +1,12 @@
 # 66 — Native protocol after the isolation test: options for Yan-Ru
 
 Created: 2026-10-04 21:45 ET (by ticket 56, campaign `extensa-native-bfs-20261004-a5`)
-Updated: 2026-10-04 20:55 ET (resolved as decided by Yan-Ru; gate pre-registered before any run). The
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: type task, Blocked by line); 2026-10-04 20:55 ET (resolved as decided by Yan-Ru; gate pre-registered before any run). The
 earlier "21:45 ET" stamps on this ticket and ticket 56 were ahead of the clock; mbit10 and the Mac read
 20:47 ET when this update began.
-**Type:** decision
+**Type:** task
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; [design decisions](../extensa-design-2026-10-03.md) D3, D4; [56](56-native-campaign-target.md), [64](64-native-scale22-pilot-unstable.md)
 
 **What to decide:** how the native Extensa BFS campaign gates timing noise. D3's range gate (every

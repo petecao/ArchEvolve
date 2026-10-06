@@ -19,6 +19,14 @@ from swdb.store import PLURAL, Record, Store, canonical_path
 from swdb.validate import _validate_store
 
 
+def now():
+    """The current UTC time as an ISO 8601 string (record timestamps such as `reviewed_at`).
+
+    Added 2026-10-05 ET (code review F20): the one helper the campaign, promotion and protocol
+    modules share; `swdb/bfs_native.py` keeps its own copy (its file hash is a verifier identity)."""
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
 def today():
     """Today's date in Eastern Time (the repo's date convention)."""
     try:

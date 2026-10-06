@@ -1,22 +1,28 @@
 # Spec: Typed library and DX100 BFS rewrites from intrinsic specifications, in ArchEvolve and Extensa modes
 
 Created: 2026-10-03 00:50 ET
-Updated: 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66)
-Updated: 2026-10-05 14:21 ET (ticket 77: library-operation certification 1.1, record verdicts and blinded driver faults)
-Updated: 2026-10-05 16:30 ET (ticket 78: certify 1.5 and library-operation command 1.2, record-keeping in a separate evaluator process)
-Updated: 2026-10-05 12:50 ET (ticket 76: certify 1.4, blinded controls and attributed rejections)
-Updated: 2026-10-04 22:40 ET (ticket 70: certification isolation, certify 1.3)
-Updated: 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's
-2026-10-03 delegation and revisable; see [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md))
-Updated: 2026-10-04 21:05 ET (ticket 66: native CI-width speed rule, decided by Yan-Ru)
+Updated: 2026-10-05 18:10 ET (code review and spec review: dated notes for the decisions tickets 56–78 changed (speed rule, per-class gate, native graphs and evaluator, pauses, certify versions, named checks, promotion and review attribution); "Awaiting ratification" section; ADR 0012; header merged); 2026-10-05 16:30 ET (ticket 78: certify 1.5 and library-operation command 1.2, record-keeping in a separate evaluator process); 2026-10-05 14:21 ET (ticket 77: library-operation certification 1.1, record verdicts and blinded driver faults); 2026-10-05 12:50 ET (ticket 76: certify 1.4, blinded controls and attributed rejections); 2026-10-04 22:40 ET (ticket 70: certification isolation, certify 1.3); 2026-10-04 21:05 ET (ticket 66: native CI-width speed rule, decided by Yan-Ru); 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66); 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's 2026-10-03 delegation and revisable; see [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md))
 **Type:** spec
 **Status:** ready-for-agent
-**Blocked by:** ticket 03 (ADRs 0007–0011 and the archevolve-handoff tracker updates), which
-needs Yan-Ru's approval. The glossary, this spec, its map and its tickets were committed on
-2026-10-03. The Extensa-mode design session (ticket 47) was resolved on 2026-10-03.
+**Blocked by:** None — can start immediately (ticket 03, ADRs 0007–0011 and the archevolve-handoff
+tracker updates, resolved 2026-10-03; the Extensa-mode design session, ticket 47, resolved 2026-10-03).
 Owner: Yan-Ru Jhou
 Decision records: ADR 0001–0006 (existing); ADR 0007–0011 (written by ticket 03, see "Decision
-records" under Implementation Decisions)
+records" under Implementation Decisions); ADR 0012 (the native CI-width speed rule, 2026-10-05)
+
+## Awaiting ratification (2026-10-05 18:10 ET)
+
+Rules loosened or added, and reviews performed, by agents under Yan-Ru's delegation. Each is
+**agent-decided under delegation; awaiting ratification**. The code and records follow them until
+Yan-Ru ratifies or reverses each one.
+
+| Item | What changed | Ticket |
+|---|---|---|
+| Speed rule `ci_width.v2` (C2) | The native A/A pilot gates only on the selection baseline (`base_source`); upstream DO-BFS is reported, never gating. The v1 statistic's parameters (bootstrap, blocks of 4, seed, 20 repetitions) were also fixed by the agent under Yan-Ru's "go with the recommendation". | [72](issues/72-native-upstream-two-level-trials.md), [66](issues/66-native-protocol-after-isolation-test.md), ADR 0012 |
+| `approval.gem5_other_socket` (C11) | A campaign file may admit native timed blocks beside another campaign's gem5 job on the other socket (recorded per block), against D2's "never overlap". | [64](issues/64-native-scale22-pilot-unstable.md) |
+| Per-class A/A gate (C12) | A failing class gets `baseline_unstable` and is not timed; the campaign stops only when every class fails (D3 stopped the whole campaign). | [64](issues/64-native-scale22-pilot-unstable.md), ADR 0012 |
+| Certify 1.5 behavior changes of commit `93a2a94` (C13) | Nonce-named DX100 record files (1.4 and 1.5) and the DX100 authored-directive rule (1.5), added inside a ticket scoped as a refactor. | [79](issues/79-certify-1-5-behavior-changes.md) |
+| Agent reviews and promotions (C1) | `contract.bc_read_offload` (ticket 43), `contract.bfs_tdstep_frontier_staging` (ticket 75) and the a8 candidate artifact (ticket 75; re-promoted 2026-10-05 with its native certify 1.5 record) were reviewed and promoted by agents. Their records now say so (attribution corrections). | [43](issues/43-promote-bc-contract.md), [75](issues/75-certify-a8-frontier-staging.md) |
 
 ## Problem Statement
 
@@ -409,6 +415,8 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   clause shapes, and checks every formal half in its language (grammar predicates parse; pinned
   references resolve and match their sha256). The predicate grammar module is ported with this
   validator, ahead of Extensa mode (details under "Extensa mode").
+  - 2026-10-05 note: the JSON schema exists since ticket 46 (`schemas/library/library_entry.schema.json`);
+    `swdb validate` runs it together with the language checks.
 - **Offload effect.** It has two fields: the access-pattern steps moved off the core, and the
   hardware-operation record IDs they move to. A new strategy record, DX100 read offload, uses it,
   and the BFS rewrite contract realizes it.
@@ -527,7 +535,7 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
 - **Preservation obligation:** each discovered vertex is enqueued exactly once, checked by
   per-level frontier sizes. They come from DOBFS's existing `Starting TDStep: <n> elements` line,
   which the evaluator checks by exact text at build time like the verifier text, and are compared
-  with the per-depth vertex counts the evaluator's trusted oracle computes from the registered
+  with the per-depth vertex counts the evaluator's trusted frontier oracle computes from the registered
   graph and source. A negative control that double-enqueues while printing the expected sizes must
   be rejected.
 - **Execution witness.**
@@ -556,7 +564,16 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
 
 ### Certification command and other interfaces
 
-- **`swdb certify ENTRY_ID [--candidate CANDIDATE_ID | --snapshot SNAPSHOT_ID --patch FILE] [--calibrate] [--tile-sizes 16384,1024] [--threads 4] [--sources 0] [--runs-dir DIR]`**
+- **`swdb certify ENTRY_ID [--candidate CANDIDATE_ID | --snapshot SNAPSHOT_ID --patch FILE [--candidate-record FILE]] [--profile PROFILE] [--command-version V] [--calibrate] [--tile-sizes 16384,1024] [--threads 4] [--sources 0] [--runs-dir DIR]`**
+  - 2026-10-05 note: `--command-version` selects an older command (candidate artifacts 1.3, 1.4, 1.5,
+    default 1.5; library operations 1.0, 1.1, 1.2, default 1.2; tickets 70, 76, 77, 78). `--profile`
+    certifies a library operation by its certification profile (ticket 50). `--candidate-record`
+    binds the certification to an existing Extensa candidate record whose artifact sha256 equals the
+    patched tree (ticket 75). A rewrite contract that pins a `certification_profile` for the native
+    CPU (`library/profiles/native_bfs_tdstep.yaml`) is certified by `swdb/certification_native.py`:
+    `-O3` and `-O1 -g` builds, threads 1 and 4, the profile's five graphs, source 0 only (`--sources`
+    cannot override it), a rewrite-scope check before any build and the same isolation, blinding and
+    evaluator process as the DX100 path (ticket 75).
   - Without a candidate, it certifies a lowering or library operation by its differential-test
     driver against reference semantics. With `--candidate` or `--snapshot`/`--patch`, ENTRY_ID is
     the rewrite contract the code applies, and it certifies the candidate artifact by the kernel's
@@ -587,10 +604,10 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
     for the printed `PASS`.
   - The frontier inspection records each window. `duplicate_frontier` and the frontier sizes are
     judged out of process, as are the strict-layer check names and the witness counters.
-  - Records go to a descriptor the harness opens for each run.
+  - Records go to a descriptor the evaluator opens for each run.
   - Faults live in a separately compiled seam object. The candidate's object is the same for the
     positive matrix and every library-fault control.
-  - A harness scan refuses candidate-authored lines that name harness or fault symbols,
+  - The evaluator's scan (`harness_scan`) refuses candidate-authored lines that name evaluator or fault symbols,
     `SWDB_STRICT` or `FUNC`, descriptor, environment, loader or process primitives, or text that
     imitates an evaluator line.
   - `forged_frontier` no longer forges the print. Calibration and lowering certification are
@@ -635,7 +652,7 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   delegation, revisable).** The default for `swdb certify ENTRY --profile P`; 1.0 stays selectable
   (`--command-version 1.0`) and its records keep their meaning.
   - A trusted driver, compiled apart from the candidate, calls the adapter's entry and records the
-    frame check and the output on a pipe the harness reads. The output is compared with the plain
+    frame check and the output on a pipe the evaluator reads. The output is compared with the plain
     C++ reference's out of process. A run without `end`, with a wrong nonce or a nonzero exit has
     no named check.
   - The reference is built and run on every case before any candidate or control is compiled;
@@ -646,11 +663,11 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   - A driver fault is rejected only when the only changed byte or element is the one it flipped;
     a mutation control only by its expected check from records, on a case whose positive run
     passed.
-  - A scan refuses harness symbols and descriptor, environment, process, initializer, exit and
+  - A scan refuses evaluator symbols and descriptor, environment, process, initializer, exit and
     printing primitives in the body, candidate template and control mutations.
 - **Calibration** (`--calibrate`). Builds from the full DX100 source through the strict layer and
   runs the BFS matrix under its own pass rule: the verifier's PASS text; per-level frontier sizes,
-  read from the authors' `Starting TDStepMAA: <n> elements` lines, equal to the trusted oracle's;
+  read from the authors' `Starting TDStepMAA: <n> elements` lines, equal to the trusted frontier oracle's;
   no strict-layer assertion; and, in place of the accelerated-chunk rule, at least one DX100
   operation recorded by the strict layer on every graph whose scalar run has a level of more than
   four times 1,024 vertices (the authors' own acceleration switch).
@@ -663,17 +680,34 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
     whose accelerated frontier holds a vertex of degree above 16,384.
   - Tile sizes 16,384 and 1,024, four threads.
   - A candidate run passes only with the verifier's PASS text, per-level frontier sizes equal to
-    the trusted oracle's, and the accelerated-chunk count rule above. Parent arrays are never
+    the trusted frontier oracle's, and the accelerated-chunk count rule above. Parent arrays are never
     compared byte for byte.
 - **BFS-rewrite negative controls:** shared context (overlapping pointer); skipped
   compare-and-swap recheck (double claim); dropped continuation (dropped operand); chunk off by
   one; dropped wait; read before wait; 32-bit index wrap; forged frontier print (double-enqueues
   while printing the expected sizes).
+  - 2026-10-05 note (ticket 67): `forged_frontier` is fault version 2 since command 1.1: the first CPU
+    queue push of the run is pushed twice (version 1 survived correct rewrites that count chunks
+    after their pushes). Records of command 1.0 keep version 1.
+- **Named checks (2026-10-05 note).** Besides the verifier, frontier-size equality, the
+  accelerated-chunk count and the strict-layer assertions, a control or cell can now fail these
+  named checks: `duplicate_frontier` (a vertex twice in one frontier window; required for
+  `forged_frontier` since the 2026-10-04 code review), `knob_range` and `schedule_range` (a contract's
+  knob or schedule outside its declared range, ticket 68) and `seam_witness` (certify 1.4, ticket 76).
+  A candidate refused before any build by the scan of certify 1.3 reports `harness_scan` (ticket 70).
+  Extensa feedback names surviving controls only as `negative_controls_not_rejected` (ticket 76).
 - **Other new commands:**
   - `swdb promote ID` writes a review record (reviewer, date, target ID and content sha256) for a
     library entry, whose derived tier becomes shared, or for an Extensa candidate artifact.
     Promotion of library entries is needed before the first ArchEvolve-mode submit that cites
     them; promotion of candidate artifacts comes with Extensa mode.
+    - 2026-10-05 notes (spec review C1, C3, C18; agent-decided under delegation, revisable): a review
+      states who performed it (`--performed-by agent` with `--delegated-by`, `--delegation`,
+      `--review-document`; absent means human), and `swdb correct-review` records an attribution
+      correction without rewriting the earlier review. A candidate promotion cites only certifications
+      of the contract's current content under a named command version, refuses a superseded team
+      protocol, and stops counting once its cited certifications are no longer current. A failed
+      certification derives `rejected` only under the newest command version for the current content.
   - `swdb claim RECORD_ID... --audience NAMES` records one team claim citing one or more records;
     `swdb claim --release EVALUATION_ID` records Yan-Ru's decision that no team claim will cite a
     run.
@@ -712,7 +746,7 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   this rewrite never issues), on the coverage workload
   `bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e` (source 0, as in T17):
   1. The exact timed candidate binary passes the v2 verifier, and its per-level frontier sizes
-     equal the trusted oracle's per-depth counts.
+     equal the trusted frontier oracle's per-depth counts.
   2. The labeled diagnostic build of the same tree prints the probe counters: compare-and-swap
      failures with a negative hint must be above zero (the race happened), and L3 violations must
      be zero.
@@ -786,19 +820,22 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   - kernel-identity checks in workload registration and protocol validation;
   - native evaluation;
   - the gem5 and native build adapters (source path, protected verifier, trusted driver and its
-    oracle);
+    original-graph oracle);
   - the gem5 completion witness and the accelerator cases with their trace extractors;
   - region discovery and profiling.
 - **BFS stays the same.** Its behavior and existing records are unchanged.
 - **BC** (kernel `gapbs-bc`, correctness check BCVerifier) is the second kernel. It gets a
   scalar-only snapshot that removes the authors' accelerated BC code, Kronecker and uniform
   workloads, native evaluation, a gem5 completion witness like BFS's v2, and protocols.
+  - 2026-10-05 note (tickets 44, 45): BC has no parent-gather race case. Its L3 stays assumed, so BC
+    read-only protocols require no race companion.
 - **Contract reuse.** A derived BC contract (new ID, citing the BFS contract) targets BC's
   forward-pass region. It adds BC-L1: the path-count test reads the depth on the CPU after the
   compare-and-swap, never the DX100 hint. BC's correctness check still covers the whole
   computation.
 - **Library indexing.** Library entries get a JSON schema and SQLite tables once BC reuses them,
   together with a statements index; the database's staleness check then covers the library folder.
+  Done in ticket 46 (2026-10-03).
 
 ### Profiling agent
 
@@ -893,6 +930,24 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
     gated on the relative width of the same 95% interval, at most 0.05, instead of the spread; an
     A/A interval must also lie inside (1/1.05, 1.05). A gain still needs the lower bound strictly
     above 1.05. Protocols and campaigns without it keep the rule above.
+  - 2026-10-05 notes (ADR 0012; agent-decided under delegation, awaiting ratification where marked):
+    - Speed rule `swdb.speed_rule.ci_width.v2` (ticket 72, awaiting ratification) is v1 with the A/A
+      pilot gating only on the selection baseline (`base_source`); upstream DO-BFS gets its own verdict
+      and a per-side level mix, reported only. Native runs a6–a8 and ticket 75's team re-evaluation used
+      20 repetitions.
+    - The A/A gate is per workload class (ticket 64, awaiting ratification): a failing class gets
+      `baseline_unstable` and is not timed; the campaign stops only when every class fails.
+    - A native campaign freezes one protocol per baseline role (`<campaign>.protocol.<role>`); a role
+      whose two builds differ also gets an A/A protocol `<role>.aa` with the baseline build on both
+      sides (tickets 56, 63).
+    - Native evaluator `swdb.native.evaluator.scalable.v2` (ticket 63: mmap SG driver and the compiled
+      structural verifier `swdb.bfs.structural.compiled.v2`, for the scale-22 graphs) and v3 (ticket
+      71: parents checked at full width before narrowing). A campaign file pins it as
+      `protocol.evaluator`; absent means v1.
+    - A campaign file may set `protocol.isolation: other_socket_free`: every native block starts only
+      while the other socket's lease and the legacy lease are released (bounded wait), recorded at the
+      start and end of the block (ticket 56; the legacy lease is checked since the 2026-10-05 code
+      review).
 - **Workload classes.** A class is a graph generator family: Kronecker and uniform for now, with a
   high-input-density family later, native only. Each class gets its own verdict and its own best
   candidate artifact; there is no cross-class average and no held-out graph. Results are labeled
@@ -900,6 +955,11 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   only if needed. The graphs are:
   - native CPU: Kronecker scale 22 and `bfs-20260925-uniform22.f23b09bb0c0601b5`, both with edge
     factor 16;
+    - 2026-10-05 note (tickets 56, 64): the registered native graphs are
+      `bfs-20261004-kronecker22.0b2b1e1555d0a1e8` (converter `e4fc4af`, `-g 22 -k 16`) and
+      `bfs-20261004-uniform22.2f83a134a6bef789` (the f23b09bb graph files with D3's sources). A
+      registration records its source policy: Kronecker source 7777 has out-degree 0, so it is replaced
+      by 7778 (requested 0, 1234, 7777; timed 0, 1234, 7778); uniform keeps 0, 1234, 7777.
   - gem5: `bfs-20260928-kronecker18-s0.cf4283236c5cb50c` and
     `bfs-20260928-uniform18-s0.8c7e69dfa516e53c`, source 0 (D4).
 - **Selection.** Certification level first (certified, then uncertified), then the evaluator's
@@ -912,6 +972,9 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   contracts; synthesize experimental library entries. Edits that use no contract are kept; they
   have no certification record, so they derive as uncertified, and the summary lists them that
   way.
+  - 2026-10-05 note (ticket 57): on gem5, an edit without a contract is refused
+    (`evaluation_failed`, check `required_accelerator_cases`): the frozen read-offload protocol
+    requires the read-only accelerator case, which only a DX100 contract edit can execute.
 - **Budgets:**
   - at most 8 iterations, stopping after 4 iterations in which no class's best improved in the
     selection order (a higher certification level, or the same level with a higher lower bound);
@@ -924,6 +987,14 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
     job of any Extensa campaign (D2).
   - The provider-call cap is 3 per iteration plus 1 setup call (the profiling agent), so a
     campaign makes at most 25 counted calls (D7).
+  - 2026-10-05 notes (tickets 73, 74; agent-decided under delegation, revisable): a provider at
+    capacity (`provider_capacity`) is an uncounted outcome retried after a backoff (60 s up to 600 s,
+    at most 1 h in total), then the campaign stops `infrastructure_failure`. A guard stop for the
+    evaluator's own runtime limit (`guard_infrastructure`) is uncounted and retried after 30 s, at most
+    twice per call, then stops `infrastructure_failure`. The guard caps the threads of the model's tool
+    commands at 16 and those of the provider's own runtime (tracer, CLI, service) at 64, separately
+    (ticket 74). Both are pause reasons in the
+    campaign summary.
 - **Targets.** BFS only for now: native CPU against both baselines, and DX100 in gem5 against the
   fork's scalar TDStep.
 - **Site finder.** A query over the SQLite access-pattern and step tables, a new statements index,
@@ -967,6 +1038,9 @@ fixes only build or correctness failures, and a valid regression never triggers 
   command outcomes and the records written, never on internal functions. Fixtures keep
   `evidence_kind: contract_fixture` and are never real evidence.
 - **One seam.** All tests go through the `swdb` command line, including the new commands.
+  - Debt (2026-10-05 code review): since ticket 38 many tests call module functions directly
+    (campaign target adapters with fixture runners, certification internals, kernel plug-ins, the
+    lease check). They are kept, not converted; new workflow-level behavior still gets a CLI test.
 - **Repository gates.** Every new record kind is registered in the record-kind vocabulary and the
   store's kind list, and every new schema field is documented in the format reference, so the
   format-document and format-version tests stay green.
@@ -1074,6 +1148,9 @@ fixes only build or correctness failures, and a valid regression never triggers 
   **Decided, pending Peter (Q66):** ported Extensa files carry Apache-2.0 WITH LLVM-exception,
   matching MemAcc's LICENSE. Peter confirms it or names another license before any file is
   ported, since ArchEvolve has no license.
+  - 2026-10-05 note: superseded by decision D11 (ticket 47, 2026-10-03): files were ported under
+    the accepted assumption, and ticket 02 (Peter's answer) blocks no ticket. If Peter names another
+    license, the ported files' SPDX headers change.
 - **Pins.** Josh's package for the first entries:
   `runs/bfs-maple-comparison-v0.1/case-01/handoffs/candidate-02/intrinsic-draft.yaml`, sha256
   `01f05bdc517922a082a10c9e28d8f1501c92892ba06a1e5298a60e7cc5d0bf30`, hardware candidate

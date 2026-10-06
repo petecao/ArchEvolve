@@ -1,10 +1,10 @@
 # 64 — Native scale-22 A/A pilot is unstable: protocol options
 
 Created: 2026-10-04 10:50 ET (by ticket 56, campaign `extensa-native-bfs-20261004-a3`)
-Updated: 2026-10-04 11:20 ET (resolved as a decision and implemented)
-**Type:** decision
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: type task, Blocked by line); 2026-10-04 11:20 ET (resolved as a decision and implemented)
+**Type:** task
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; [design decisions](../extensa-design-2026-10-03.md) D3, D4; [61](61-native-scale22-protocol.md), [63](63-scalable-native-verifier.md)
 
 **What to decide:** a new native protocol for the Extensa BFS campaign. D3's A/A gate stopped the campaign

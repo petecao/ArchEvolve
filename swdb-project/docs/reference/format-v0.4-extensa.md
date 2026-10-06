@@ -6,6 +6,7 @@ Updated: 2026-10-04 21:30 (Eastern Time): `protocol.speed_rule` and evaluator v3
 Updated: 2026-10-05 03:15 (Eastern Time): provider capacity and protected regions (ticket 73)
 Updated: 2026-10-05 10:45 (Eastern Time): guard stops for the harness's own runtime limit (ticket 74)
 Updated: 2026-10-04 23:25 (Eastern Time): speed rule `swdb.speed_rule.ci_width.v2` (ticket 72)
+Updated: 2026-10-05 17:50 (Eastern Time): review attribution and corrections; promotion currency (spec review C1, C3, C9, C18)
 
 Extensa mode (ADR 0009, ADR 0010; decisions in
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`) adds optional
@@ -63,6 +64,36 @@ records Yan-Ru's review of an Extensa candidate artifact. The review record has:
   Each request cites the campaign, candidate, review and team protocol under `origin`.
 
 A failed (rejected) candidate artifact is never promoted.
+
+Added 2026-10-05 (Eastern Time), spec review C3/C18/C9:
+
+- `swdb promote` cites only certifications of the contract's **current content** that name a
+  numbered command version (for example `1.4`), and refuses a candidate whose certifications are
+  all for superseded content. A review whose cited certifications are no longer current stops
+  counting as a promotion (it stays valid as history).
+- It refuses a team protocol that another protocol `supersedes`.
+- The derived certification level counts, per contract, only the certifications of the current
+  contract content under the newest command version: a failure under an older command (for example
+  `forged_frontier` v1 before command 1.1) no longer derives `rejected` once a newer command certifies.
+
+## Who performed a review (spec review C1, 2026-10-05 Eastern Time)
+
+Every review record (library entry or candidate) may say who did the reviewing. `reviewer` stays
+the maintainer on whose authority the review counts (ADR 0007).
+
+- `performed_by`: `human` or `agent`; absent means `human` (every record before 2026-10-05).
+- `delegated_by`, `delegation`, `review_document`: required for `agent`: the delegating maintainer,
+  what was delegated and when, and the repository path of the written review. An agent review's
+  provenance is `agent_run`, never `human_report`. `review_document` may also accompany a human review.
+- `swdb promote ... --performed-by agent --delegated-by "Yan-Ru Jhou" --delegation TEXT
+  --review-document PATH` writes them.
+
+An **attribution correction** fixes the attribution of an earlier review without rewriting it
+(`swdb correct-review REVIEW --recorded-by NAME --reason TEXT` plus the options above). It is a
+review record with `target_kind: review`, a `target` pinning the corrected review (its ID and the
+sha256 of its canonical JSON), `evidence` naming exactly that review, and `attribution` (the four
+fields above). `swdb get` of a library entry and `swdb candidate-level` report the attribution of
+the current review, corrected when a correction exists.
 
 ## Campaign files (ticket 52)
 

@@ -1,9 +1,14 @@
 """Kernel plug-ins for the evaluator. Created: 2026-10-03 ET (ticket 38).
 
+Updated 2026-10-05 ET (code review S3-S5): plug-ins name their result (`result_noun`) and whether
+author diagnostics exist; the read-only instruction-mix rule and the native output bound shared by
+BFS and BC live here; `for_gem5_checker` resolves a checker to its plug-in (no silent BFS default);
+the unused base `frontier_oracle` is gone.
+
 The evaluator's kernel-specific parts live behind one plug-in per kernel
 record. A plug-in names the kernel's protected entry point, ROI, trusted
-drivers, independent result checks (oracles), region-discovery anchors and
-gem5 completion and execution-witness rules. Workflow modules select a plug-in
+drivers, independent result checks (each kernel's trusted reference check), region-discovery
+anchors and gem5 completion and execution-witness rules. Workflow modules select a plug-in
 from the kernel record they already resolve (implementation, workload or
 protocol), or from a retained checker ID when they revalidate old evidence.
 
@@ -21,8 +26,8 @@ class KernelPlugin:
 
     Native side (ticket 38): workload/protocol identity, native evaluation,
     the native build adapter, native pairs, region discovery and profiling.
-    gem5 side (ticket 39): gem5 build adapter driver and oracle, verifier
-    binding, completion witness, accelerator cases and their extractors.
+    gem5 side (ticket 39): gem5 build adapter driver and its original-graph oracle,
+    verifier binding, completion witness, accelerator cases and their extractors.
     """
 
     kernel = None             # kernel record ID
@@ -40,8 +45,10 @@ class KernelPlugin:
     source_paths = {}         # application -> translation-unit path
     verifier_symbol = None    # protected kernel verifier in the source
     statement_function = None  # function whose statements are profiled per line
+    result_noun = None        # what the timed call returns, in messages ("parent", "score")
+    author_diagnostics = False  # the authors' accelerated reference has traversal diagnostics (BFS)
 
-    # gem5 side (ticket 39): build adapter driver/oracle, verifier binding,
+    # gem5 side (ticket 39): build adapter driver and original-graph oracle, verifier binding,
     # completion witness, accelerator cases and their trace extractors.
     gem5_roi = None               # complete-call ROI of the trusted gem5 driver
     gem5_checkers = frozenset()   # accepted post-ROI checker identities
@@ -83,25 +90,16 @@ class KernelPlugin:
         raise NotImplementedError
 
     def read_only_rule(self, stream, indirect, ranges, alu, stores):
-        """Exact instruction-mix rule of the read-only execution case."""
-        return False
+        """Exact instruction-mix rule of the read-only execution case.
 
-    read_only_rule_text = None
+        Both read offloads (BFS TDStep, Peter section 5 order; BC's forward pass,
+        `bc_read_offload.inc`) issue per chunk one stream load, two row-bound gathers and a
+        final empty range loop, and per non-empty range tile three gathers (moved from both
+        plug-ins, code review S5, 2026-10-05 ET)."""
+        return (stream >= 1 and indirect >= 1 and ranges >= 1 and alu == stores == 0
+                and indirect == 3 * ranges - stream)
 
-    def frontier_oracle(self, adjacency, source):
-        """Per-depth discovered-vertex counts from the trusted adjacency."""
-        from collections import Counter, deque
-        depth = [-1] * len(adjacency)
-        depth[source] = 0
-        queue = deque([source])
-        while queue:
-            u = queue.popleft()
-            for v in adjacency[u]:
-                if depth[v] == -1:
-                    depth[v] = depth[u] + 1
-                    queue.append(v)
-        counts = Counter(value for value in depth if value >= 0)
-        return [counts[level] for level in range(max(counts) + 1)]
+    read_only_rule_text = "S>=1,I>=1,R>=1,A=0,indirect_stores=0,I=3*R-S"
 
     # Candidate certification (ticket 42): the matrix instance and pass rule of a
     # rewrite contract whose correctness check names this kernel.
@@ -149,7 +147,9 @@ class KernelPlugin:
                 and candidate["context"].get("function", implementation["function"]) == function)
 
     def native_output_limit(self, vertices):
-        raise NotImplementedError
+        """Bound on one native trial's text output: up to 24 bytes per result value plus a header
+        (shared by BFS parents and BC scores, code review S5)."""
+        return vertices * 24 + 4096
 
     def native_verifier_sha256(self):
         raise NotImplementedError
@@ -216,6 +216,19 @@ def by_native_roi(roi):
 def by_gem5_checker(checker):
     """The plug-in that owns a post-ROI checker identity, or None."""
     return next((plugin for plugin in _REGISTRY.values() if checker in plugin.gem5_checkers), None)
+
+
+def for_gem5_checker(checker, purpose="gem5 verification"):
+    """The plug-in that owns a post-ROI checker; an unknown checker is refused.
+
+    Code review S3 (2026-10-05 ET): no silent BFS default. Records written before the kernel seam
+    carry no checker at all; that absence, and only that, means BFS (the only kernel then)."""
+    if checker is None:
+        return _REGISTRY["gapbs-bfs"]
+    plugin = by_gem5_checker(checker)
+    if plugin is None:
+        raise Failure(f"{purpose}: no kernel plug-in owns checker {checker!r}")
+    return plugin
 
 
 def by_gem5_roi(roi):

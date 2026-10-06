@@ -1,10 +1,10 @@
 # 70 — Certification isolation: verdicts the candidate cannot print, faults it cannot see
 
 Created: 2026-10-04 22:05 ET (from the open finding of ticket 67)
-Updated: 2026-10-05 13:25 ET (the open items are addressed by ticket 76, certify 1.4); 2026-10-05 00:40 ET (resolved)
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-05 13:25 ET (the open items are addressed by ticket 76, certify 1.4); 2026-10-05 00:40 ET (resolved)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md` (certification command, isolation bullet); [67](67-forged-frontier-control-v2.md), [62](62-spelling-independent-certification-controls.md), [68](68-knob-range-and-schedule-range-checks.md)
 
 **What to build:** `swdb certify` takes every named-check verdict of a candidate-artifact

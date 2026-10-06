@@ -1,6 +1,7 @@
 """Public, durable proposal workflow. Source changes never imply correctness.
 
-Updated: 2026-09-30 (the proposal provider block describes one attempt); 2026-09-29
+Updated: 2026-10-05 ET (`swdb get` of a library entry reports who performed its current review,
+spec review C1); 2026-09-30 (the proposal provider block describes one attempt); 2026-09-29
 (pinned repair identity and unavailable-provider retries); 2026-09-28 (patch headers
 parsed outside hunk bodies only). YAML records remain authoritative; raw artifacts are external.
 """
@@ -61,8 +62,12 @@ CREATION_TAGS = {}
 #: Tickets 56/57 (2026-10-04 ET): a public command that a real campaign target adapter runs
 #: as a child process inherits the campaign's tags through this variable (the campaign ID).
 EXTENSA_CAMPAIGN_ENV = "SWDB_EXTENSA_CAMPAIGN"
-if re.fullmatch(r"extensa-[a-z0-9][a-z0-9._-]*", os.environ.get(EXTENSA_CAMPAIGN_ENV, "")):
-    CREATION_TAGS.update(mode="extensa", campaign=os.environ[EXTENSA_CAMPAIGN_ENV])
+#: 2026-10-05 ET (code review): the variable must hold an ID of the one Extensa campaign-ID pattern
+#: (`schemas/envelope.schema.json` `$defs.extensa_campaign_id`), the pattern every tagged record must match.
+if os.environ.get(EXTENSA_CAMPAIGN_ENV):
+    from swdb.schemas import campaign_id_pattern
+    if re.fullmatch(campaign_id_pattern(), os.environ[EXTENSA_CAMPAIGN_ENV]):
+        CREATION_TAGS.update(mode="extensa", campaign=os.environ[EXTENSA_CAMPAIGN_ENV])
 
 
 def record(kind, rid, **fields):
@@ -169,7 +174,12 @@ def get_record(args):
             problems = library.validate()
             if problems:
                 raise Failure('library validation failed: ' + '; '.join(str(p) for p in problems[:5]))
-            return {**entry, "content_sha256": library.content_sha256(args.id), **library.state(args.id)}
+            from swdb.library import review_attribution
+            reviews = library.current_reviews(args.id)
+            review = ({"id": reviews[-1]["id"], "attribution": review_attribution(store, reviews[-1])}
+                      if reviews else None)
+            return {**entry, "content_sha256": library.content_sha256(args.id), **library.state(args.id),
+                    "review": review}
         raise Failure(f"record {args.id!r} does not exist")
     if getattr(args, "chain", False):
         seen = {}

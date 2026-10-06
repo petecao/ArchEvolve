@@ -126,8 +126,8 @@ def workspace_input(implementation, source, profiles=()):
         text, _ = _source_text(source, path)
         # Balanced lexical braces find this source function only, with comments
         # and strings removed for the brace count. No verifier/main is exposed.
-        tokens = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/')
-        scrubbed = tokens.sub(lambda m: "".join("\n" if c == "\n" else " " for c in m.group()), text)
+        from swdb.cpp_lexical import LEXICAL      # the one C++ lexical pattern (2026-10-05 ET)
+        scrubbed = LEXICAL.sub(lambda m: "".join("\n" if c == "\n" else " " for c in m.group()), text)
         signatures = list(re.finditer(r"\b" + re.escape(function) + r"\s*\([^;{}]*\)\s*\{", scrubbed))
         if len(signatures) == 1:
             signature = signatures[0]

@@ -1,6 +1,7 @@
 # Extensa port provenance
 
 Date: 2026-10-03 ET
+Updated: 2026-10-05 ET (code review: wording kept on purpose; unused rollback helpers noted)
 
 Source: `MaizeHPC/MemAcc` commit `af3d6d7f7a69a72facdc3b95b42e78c952f44a76`, read only from
 the local checkout. License: `Apache-2.0 WITH LLVM-exception` (MemAcc `LICENSE`), under the
@@ -12,6 +13,16 @@ Scope: decision D1 of
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`. Each file
 carries an SPDX header and a provenance header naming its MemAcc source path. Nothing on
 D1's not-ported list is imported or copied (`tests/test_extensa_machinery.py` checks).
+
+Upstream wording is kept on purpose in ported files whose logic is unchanged (for example
+"oracle", "harness" or "campaign" used alone), so they stay comparable with their MemAcc source;
+SWDB's own prose follows `CONTEXT.md`.
+
+`plan_rollback` and `apply_rollback` in `swdb/extensa/search.py` are ported from
+`refiner/a5/search.py` but no SWDB code calls them (only `tests/test_extensa_machinery.py`): an
+Extensa campaign rebuilds each candidate artifact from the snapshot instead of rolling a worktree
+back. They are kept, unchanged, until a caller needs them or a cleanup ticket removes them
+(noted 2026-10-05, spec review C25).
 
 ## Ported files (ticket 49)
 

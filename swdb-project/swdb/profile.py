@@ -405,7 +405,7 @@ def _verified_lane(machine, claimed):
     if policy != f"bind:{node}":
         refuse(f"memory policy is {policy or 'unknown'!r}, not bind:{node}")
     lease = f"{machine['hostname']}-evaluation-node{node}"
-    root = Path(os.environ.get("LACT_LEASE_ROOT", "/data1/yanruj/lact-host-lease"))
+    root = paths.lease_root()
     try:
         held_file = os.readlink(f"/proc/{lane_pid}/fd/9")
     except OSError:

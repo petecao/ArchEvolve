@@ -54,7 +54,8 @@ def output_schema(config):
 
 def require_code_change(before, after):
     """Reject annotation-only copies while preserving strings in the comparison."""
-    tokens = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/|\S')
+    from swdb.cpp_lexical import LEXICAL          # the one C++ lexical pattern (2026-10-05 ET)
+    tokens = re.compile(LEXICAL.pattern + r'|\S')
     def code(root):
         result = {}
         for entry in artifacts.identify(root)["files"]:

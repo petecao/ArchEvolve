@@ -29,6 +29,8 @@ class BFSPlugin(KernelPlugin):
     source_paths = {"gapbs": "src/bfs.cc", "dx100-gapbs": "benchmarks/gapbs/src/bfs.cc"}
     verifier_symbol = "BFSVerifier"
     statement_function = "TDStep"
+    result_noun = "parent"
+    author_diagnostics = True  # the authors' DOBFSMAA traversal ROI (`dx100_candidate.AUTHOR_ROI`)
 
     # gem5 side (ticket 39): the values the gem5 adapters used before the seam.
     gem5_roi = "bfs.complete_call.v1"
@@ -44,7 +46,6 @@ class BFSPlugin(KernelPlugin):
                                 "before traversal validation")
     frontier_text = 'std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;'
     frontier_prefix = "Starting TDStep:"
-    read_only_rule_text = "S>=1,I>=1,R>=1,A=0,indirect_stores=0,I=3*R-S"
     race_companion = True  # ticket 44: the L3 parent-gather race companion is BFS-specific
 
     def gem5_driver(self, source, model, function, diagnostic=None, **options):
@@ -76,12 +77,6 @@ class BFSPlugin(KernelPlugin):
     def validate_record_witness(self, evaluation, store=None):
         from swdb.dx100_witness import validate_record_witness
         return validate_record_witness(evaluation, store=store)
-
-    def read_only_rule(self, stream, indirect, ranges, alu, stores):
-        # Peter section 5 order: per chunk one stream load, two row-bound gathers
-        # and a final empty range loop; per non-empty range tile three gathers.
-        return (stream >= 1 and indirect >= 1 and ranges >= 1 and alu == stores == 0
-                and indirect == 3 * ranges - stream)
 
     # Candidate certification (ticket 42): the exact BFS functions used before.
     certification_source = "benchmarks/gapbs/src/bfs.cc"
@@ -125,9 +120,6 @@ class BFSPlugin(KernelPlugin):
     def certification_control(self, source, name):
         from swdb.certification import _rewrite_control
         return _rewrite_control(source, name)
-
-    def native_output_limit(self, vertices):
-        return vertices * 24 + 4096
 
     def native_verifier_sha256(self):
         from swdb import bfs_native

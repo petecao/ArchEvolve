@@ -385,7 +385,7 @@ def _correctness(session, request, result_folder, log, completed):
     """Retain sealed ROI and explicit post-ROI verdict, even after interruption."""
     data = session.data
     checker = request['verification']['checker']
-    plugin = kernels.by_gem5_checker(checker) or kernels.BFS
+    plugin = kernels.for_gem5_checker(checker, 'gem5 correctness')
     witnessed = checker == plugin.gem5_witness_checker
     seal_path = result_folder / "roi-seal.json"
     if not seal_path.is_file():
@@ -648,7 +648,7 @@ def execute(args):
             if position >= len(registered['sources']) or registered['sources'][position] != source:
                 raise Failure('protocol_trial source_position differs from the registered workload source')
             data['context']['protocol_trial'] = {'source_position': position, 'repetition': repetition}
-        source_file = root / "benchmarks/gapbs/src/bfs.cc"
+        source_file = root / kernels.BFS.source_paths["dx100-gapbs"]     # the authors' BFS (code review S1)
         if source_file.is_file():
             data["context"]["timed_source"] = {"path": str(source_file),
                 "sha256": artifacts.file_hash(source_file), "model_revision": REVISION}
@@ -762,14 +762,14 @@ def execute(args):
                 raise Failure('verification.trace_transport must be gem5-gzip.v1 when present')
             _integer(verify["max_ticks"], "verification.max_ticks", maximum=10**15)
             if not compiled:
-                source_file = root / "benchmarks/gapbs/src/bfs.cc"
+                source_file = root / kernels.BFS.source_paths["dx100-gapbs"]
                 harness = root / "benchmarks/gapbs/src/benchmark.h"
                 if not source_file.is_file() or not harness.is_file():
                     raise Failure("timed BFS/verifier source identity is missing")
                 data["context"].update(
                     timed_source={"path": str(source_file), "sha256": artifacts.file_hash(source_file), "model_revision": REVISION},
                     verifier_source={"path": str(source_file), "sha256": artifacts.file_hash(source_file),
-                        "symbol": "BFSVerifier", "lines": [463, 508],
+                        "symbol": kernels.BFS.verifier_symbol, "lines": [463, 508],
                         "harness": {"path": str(harness), "sha256": artifacts.file_hash(harness)}})
             observer = paths.HOME / 'scripts/dx100_host_memory.py'
             if witnessed:

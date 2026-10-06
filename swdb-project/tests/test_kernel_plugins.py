@@ -111,3 +111,53 @@ def test_gem5_seam_selects_bfs_by_checker_and_keeps_its_rules():
     assert accelerator_cases(check) == {"read_only_executed"}
     observed["indirect"] = 8
     assert accelerator_cases(check) == set()
+
+
+# --- code review 2026-10-05 ET: plug-in attributes, shared rules, one graph table ------------------
+
+def test_plugins_name_their_result_and_share_the_read_only_rule():
+    from swdb import kernels
+    assert (kernels.BFS.result_noun, kernels.BC.result_noun) == ("parent", "score")
+    assert kernels.BFS.author_diagnostics and not kernels.BC.author_diagnostics
+    # S5: one read-only rule and output bound, inherited by both plug-ins.
+    for plugin in (kernels.BFS, kernels.BC):
+        assert type(plugin).read_only_rule is kernels.KernelPlugin.read_only_rule
+        assert type(plugin).native_output_limit is kernels.KernelPlugin.native_output_limit
+        assert plugin.read_only_rule_text == "S>=1,I>=1,R>=1,A=0,indirect_stores=0,I=3*R-S"
+        assert plugin.native_output_limit(10) == 10 * 24 + 4096
+        assert plugin.read_only_rule(2, 7, 3, 0, 0) and not plugin.read_only_rule(2, 8, 3, 0, 0)
+    assert not hasattr(kernels.KernelPlugin, "frontier_oracle")          # S4: the dead base method
+
+
+def test_gem5_checker_resolution_refuses_unknown_checkers():
+    from swdb import kernels
+    from swdb.cli import Failure
+    assert kernels.for_gem5_checker("dx100.bc.verifier.v2") is kernels.BC
+    assert kernels.for_gem5_checker(None) is kernels.BFS        # records from before the kernel seam
+    with pytest.raises(Failure, match="no kernel plug-in owns checker"):
+        kernels.for_gem5_checker("dx100.tc.verifier.v1")
+
+
+def test_one_application_graph_table_keeps_the_emitted_contracts():
+    """F11: application -> format -> offset width -> CountT lives in swdb.sg_graph; the BC witness
+    contract and the BFS evaluator's choices are the values they had before."""
+    from swdb import bc_witness, bfs_protocol, bfs_native_scalable, kernels, sg_graph
+    assert bc_witness.graph_verification_contract("gapbs")["input_format"] == "gapbs.sg64"
+    assert bc_witness.graph_verification_contract("gapbs")["count_type"] == "double"
+    assert bc_witness.graph_verification_contract("dx100-gapbs")["input_format"] == "gapbs.sg32"
+    assert bc_witness.graph_verification_contract("dx100-gapbs")["count_type"] == "float"
+    assert sg_graph.application_offset_bytes("gapbs") == 8 and sg_graph.application_offset_bytes("dx100-gapbs") == 4
+    assert sg_graph.count_type_for_offset_bytes(8) == "double" and sg_graph.count_type_for_offset_bytes(4) == "float"
+    assert bfs_native_scalable.SG_FORMATS == {"gapbs_sg32le": 4, "gapbs_sg64le": 8}
+    assert bfs_protocol._sg_out_degrees is sg_graph.out_degrees
+    check = kernels.BC.check_native_trial([[1], []], 0, {"scores": [0.0, 0.0]}, application="unknown")
+    assert check["passed"] is False and "CountT" in check["reason"]
+
+
+def test_evaluator_path_answers_what_follows_from_the_version():
+    from swdb import bfs_native, bfs_native_scalable as scalable
+    v1, v3 = scalable.path_for(scalable.EVALUATOR_V1), scalable.path_for(scalable.EVALUATOR_V3)
+    assert not v1.scalable and v1.limits() == (bfs_native.MAX_VERTICES, bfs_native.MAX_DIRECTED_EDGES)
+    assert v3.scalable and v3.keeps_distinct_parents and v3.driver == scalable.DRIVER_V3
+    assert v3.limits() == (scalable.MAX_VERTICES, scalable.MAX_DIRECTED_EDGES)
+

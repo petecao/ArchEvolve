@@ -1,8 +1,6 @@
 # ArchEvolve — Software Database
 
-Updated: 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review
-fixes: library fault, driver fault, certification evaluator process, certify command version, legacy
-identifiers)
+Updated: 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -324,6 +322,12 @@ _Avoid_: parent implementation (unless it is the selected comparator)
 A declared computational region whose execution duration is the subject of a
 performance comparison.
 _Avoid_: whole-invocation time (unless the declared boundaries coincide)
+
+**A/A pilot**:
+A paired block that times a baseline implementation against itself under the full frozen protocol,
+once per workload class before any candidate artifact is timed. Its ratio must be indistinguishable from
+1 under the speed rule; a workload class whose gating A/A pilot fails is not timed.
+_Avoid_: calibration run, dry run, warm-up
 
 **Workload class**:
 A family of workloads made by one graph generator, such as Kronecker or uniform random.

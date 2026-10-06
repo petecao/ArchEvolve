@@ -4,44 +4,49 @@ Created 2026-10-03 ET. Original SWDB code (decisions D2-D10 of
 `.scratch/typed-library-dx100-bfs-2026-10-03/extensa-design-2026-10-03.md`); the
 loop accounting is the ported `swdb.extensa.search`.
 
-One campaign names one hardware target. Each iteration: a fixed region list, or with
+One Extensa campaign names one hardware target. Each iteration: a fixed region list, or with
 `regions: query` the query site finder (`swdb.site_finder`, ticket 55); one rewrite-role call that returns one patch with per-class knob
 values; one candidate artifact per workload class; certification (contracts) or the
 uncertified label (no contract); the evaluator through a target adapter; records
 tagged `mode: extensa` and `campaign`; selection per class (certification level first,
 then the evaluator's lower bound against the base-source baseline); outcome-free
-feedback. The campaign stops on its budgets (D6 stop reasons) and writes one
+feedback. The Extensa campaign stops on its budgets (D6 stop reasons) and writes one
 `campaign_summary` record to its own store and to the team store.
 
-`--fixture` selects the contract-fixture target adapter. Without it, the campaign's
-target selects a real adapter from `swdb.campaign_targets`: native CPU (ticket 56) or DX100
-gem5 (ticket 57), updated 2026-10-04 ET. Ticket 63 (2026-10-04 ET): a native campaign file
+`--fixture` selects the contract-fixture target adapter (`swdb.campaign_fixture`). Without it,
+the Extensa campaign's target selects a real adapter from `swdb.campaign_targets`: native CPU
+(ticket 56) or DX100 gem5 (ticket 57), updated 2026-10-04 ET. Ticket 63 (2026-10-04 ET): a native campaign file
 may pin `protocol.evaluator` (native evaluator v2 for the scale-22 graphs). Ticket 66
 (2026-10-04 ET, decided by Yan-Ru): a native campaign file may set `protocol.speed_rule:
 swdb.speed_rule.ci_width.v1` (a relative bootstrap CI-width gate for the A/A pilot and every
 candidate block, from the same CI as the 1.05 lower bound); files without it keep the range rule.
 Ticket 72 (2026-10-04 ET): `swdb.speed_rule.ci_width.v2` is v1 with the A/A pilot gated on the
 `base_source` role only, and a reported level mix of upstream DO-BFS trials.
+
+Code review 2026-10-05 ET: `SpeedRule` is the one place the speed rule lives (frozen settings,
+verdict, A/A gate); a real target's verdict is the evaluator's `decision.state` (F1). The adapters
+answer every per-target question (pilot, shared baseline, evidence basis, campaign-file rules), so
+the loop has no target-string switches; the contract-fixture adapter is a `TargetAdapter` in
+`swdb.campaign_fixture` (F13). Knob ranges are checked by `swdb.library.knob_problem`.
 """
 from __future__ import annotations
 
 import contextlib
 import copy
-import datetime
 import json
 import os
-import shutil
 import statistics
 import subprocess
 import time
-from argparse import Namespace
 from pathlib import Path
 
 import yaml
 from jsonschema import Draft202012Validator
 
-from swdb import artifacts, certification_feedback, paths, workflow, yamlio
+from swdb import artifacts, certification_feedback, paths, workflow, writer, yamlio
+from swdb.bfs_protocol import CI_WIDTH_GATE
 from swdb.cli import Failure, UsageError
+from swdb.extensa_boundary import MODE
 from swdb.extensa import search as S
 from swdb.extensa.leakage import scan_patch_additions
 from swdb.problems import Problem
@@ -86,6 +91,8 @@ CI_WIDTH_LIMIT = 0.05          # relative 95% CI width (upper - lower) / ratio m
 CI_BLOCK_LENGTH = 4            # circular block bootstrap: 4 consecutive repetitions per block
 AA_EQUIVALENCE = 1.05          # an A/A CI must lie strictly inside (1/1.05, 1.05)
 CI_BOOTSTRAP_SEED = 20260925   # 2000 resamples, 95% percentile interval (the evaluator's policy)
+#: The native paired collection every Extensa native block uses (D3; order seed pre-registered).
+NATIVE_ORDER_SEED = 20260926
 #: The spec's budget defaults (D5). A campaign may exceed one only with an approval
 #: entry naming it. These are limits for validation, never values the loop assumes.
 SPEC_BUDGETS = {"max_iterations": 8, "plateau_iterations": 4, "lane_hours": 24,
@@ -125,14 +132,17 @@ class Stop(Exception):
         self.detail = detail
 
 
-def _now():
-    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+_now = writer.now      # code review F20 (2026-10-05 ET): the one timestamp helper
 
 
 # --- campaign file (D5) ----------------------------------------------------------------
 
 def _schema():
-    return json.loads((paths.SCHEMAS / "extensa_campaign.schema.json").read_text())
+    """The campaign-file schema with the envelope's Extensa campaign-ID definition (one pattern)."""
+    from swdb.schemas import campaign_id_def
+    schema = json.loads((paths.SCHEMAS / "extensa_campaign.schema.json").read_text())
+    schema.setdefault("$defs", {})["extensa_campaign_id"] = campaign_id_def(paths.SCHEMAS)
+    return schema
 
 
 def campaign_problems(data):
@@ -143,29 +153,10 @@ def campaign_problems(data):
                 for e in Draft202012Validator(_schema()).iter_errors(data)]
     if problems:
         return problems
+    from swdb import campaign_targets
+    from swdb.library import authorized_reviewer
     target, proto = data["target"], data["protocol"]
-    kind = "native" if target == "native_cpu" else "gem5"
-    if not data["id"].startswith(f"extensa-{kind}-"):
-        problems.append(f"id: a {target} campaign ID starts with extensa-{kind}-")
-    if target == "dx100_gem5":
-        if proto["repetitions"] != 1:
-            problems.append("protocol.repetitions: a gem5 campaign runs exactly 1 repetition (point ratios)")
-        if len(proto["sources"]) != 1:
-            problems.append("protocol.sources: a gem5 campaign uses exactly one source")
-        if [b["role"] for b in data["baselines"]] != ["fork_scalar_tdstep"]:
-            problems.append("baselines: a gem5 campaign compares against fork_scalar_tdstep only")
-        if "evaluator" in proto:
-            problems.append("protocol.evaluator: names a native evaluator version; gem5 campaigns have none")
-    elif proto["repetitions"] < 5:
-        problems.append("protocol.repetitions: a native campaign needs at least 5 paired repetitions")
-    if proto.get("speed_rule") in CI_RULES:
-        if target != "native_cpu":
-            problems.append("protocol.speed_rule: the CI-width rule is native only (gem5 reports point ratios)")
-        elif proto["repetitions"] < 2 * CI_BLOCK_LENGTH:
-            problems.append(f"protocol.repetitions: the CI-width rule needs at least {2 * CI_BLOCK_LENGTH} "
-                            f"repetitions (blocks of {CI_BLOCK_LENGTH})")
-    if proto.get("isolation") and (target != "native_cpu" or (data.get("approval") or {}).get("gem5_other_socket")):
-        problems.append("protocol.isolation: native only, and it excludes approval.gem5_other_socket")
+    problems += campaign_targets.ADAPTERS[target].file_problems(data)
     if proto["region_pairs"]:
         problems.append("protocol.region_pairs: Extensa protocols have no region pairs")
     if data["label"] != LABEL:
@@ -188,8 +179,8 @@ def campaign_problems(data):
                             "without an approval entry naming it")
     if data["budgets"]["lanes"] == 2 and not approval.get("two_lanes"):
         problems.append("budgets.lanes: two lanes require an approval entry (two_lanes: true)")
-    if approval and approval.get("by") not in {"Yan-Ru Jhou", "yanrujhou"}:
-        problems.append("approval.by: campaign approvals are Yan-Ru Jhou's")
+    if approval and not authorized_reviewer(approval.get("by")):
+        problems.append("approval.by: Extensa campaign approvals are Yan-Ru Jhou's")
     return problems
 
 
@@ -234,75 +225,133 @@ def validate_campaign_dir(records_dir):
 
 # --- protocol and speed rule (ticket 53) -------------------------------------------------
 
+class SpeedRule:
+    """The Extensa campaign's speed rule: its frozen settings, a comparison's verdict and the A/A gate.
+
+    Code review F1 (2026-10-05 ET): one object instead of copies of the evaluator's decision. A real
+    target's comparison carries the evaluator's `decision.state` (`swdb.bfs_protocol.decide` under the
+    protocol this rule froze); that state is the verdict, with `regression` read as `no_gain`. A
+    contract-fixture comparison (`fixture_comparison`, numbers from the fixture file) is judged from
+    its numbers by the same rule. `profitability()` and `apply()` are byte-identical to the
+    functions they replace: they feed frozen protocol identities."""
+
+    VERDICTS = {"gain": "gain", "no_gain": "no_gain", "inconclusive": "inconclusive", "regression": "no_gain"}
+
+    def __init__(self, name=RANGE_RULE, point_ratios=False):
+        self.name, self.point_ratios = name, point_ratios
+
+    @classmethod
+    def of(cls, campaign):
+        from swdb.campaign_targets import ADAPTERS
+        return cls(campaign["protocol"].get("speed_rule", RANGE_RULE), ADAPTERS[campaign["target"]].POINT_RATIOS)
+
+    @property
+    def ci(self):
+        """True for the CI-width rules (ticket 66, 72)."""
+        return self.name in CI_RULES
+
+    @property
+    def reports_ci_width(self):
+        """A comparison row carries its upper bound and relative CI width (native CI-width rule)."""
+        return self.ci and not self.point_ratios
+
+    def profitability(self):
+        """The campaign-level profitability settings every adapter freezes."""
+        if self.ci:
+            return {"minimum_speedup": GAIN_THRESHOLD, "speed_rule": self.name,
+                    "gate": {"statistic": CI_WIDTH_GATE, "maximum": CI_WIDTH_LIMIT},
+                    "block_length": CI_BLOCK_LENGTH, "aa_equivalence": AA_EQUIVALENCE,
+                    "rule": "relative 95% CI width at most the gate; then the lower bound of the same CI "
+                            "strictly above the minimum"}
+        return {"minimum_speedup": GAIN_THRESHOLD, "maximum_relative_spread": SPREAD_LIMIT,
+                "rule": "lower bound strictly above the minimum; every spread at most the maximum"}
+
+    @staticmethod
+    def apply(frozen, settings):
+        """Write the campaign's speed rule into a native protocol's frozen settings (ticket 66).
+
+        The range rule sets `maximum_relative_spread`; the CI-width rule sets the circular block
+        analysis, its block length and `profitability.gate`, and removes `maximum_relative_spread`."""
+        profitability = settings["profitability"]
+        frozen["profitability"]["minimum_speedup"] = profitability["minimum_speedup"]
+        if profitability.get("speed_rule") not in CI_RULES:
+            frozen["profitability"]["maximum_relative_spread"] = profitability["maximum_relative_spread"]
+            return frozen
+        from swdb.bfs_native_pair import METHOD
+        from swdb.bfs_protocol import ANALYSIS_CIRCULAR_BLOCK
+        frozen["profitability"].pop("maximum_relative_spread", None)
+        frozen["profitability"]["gate"] = dict(profitability["gate"])
+        frozen["profitability"]["bootstrap_seed"] = CI_BOOTSTRAP_SEED    # pre-registered (ticket 66)
+        frozen["sampling"].setdefault("collection", {"method": METHOD, "order_seed": NATIVE_ORDER_SEED})
+        frozen["sampling"]["analysis"] = ANALYSIS_CIRCULAR_BLOCK
+        frozen["sampling"]["block_length"] = profitability["block_length"]
+        return frozen
+
+    @staticmethod
+    def relative_width(comparison):
+        """(upper - lower) / ratio of one comparison."""
+        return (comparison["upper"] - comparison["lower"]) / comparison["ratio"]
+
+    def verdict(self, comparison):
+        """`gain`, `no_gain` or `inconclusive`: the evaluator's state, or the rule on fixture numbers."""
+        state = comparison.get("state")
+        if state in self.VERDICTS:
+            return self.VERDICTS[state]
+        if self.point_ratios:
+            return "gain" if comparison["ratio"] > GAIN_THRESHOLD else "no_gain"
+        if self.ci:
+            if self.relative_width(comparison) > CI_WIDTH_LIMIT:
+                return "inconclusive"
+        elif any(s > SPREAD_LIMIT for s in comparison["spreads"]):
+            return "inconclusive"
+        return "gain" if comparison["lower"] > GAIN_THRESHOLD else "no_gain"
+
+    def pilot_passes(self, block):
+        """One A/A block: range rule, spread at most 0.1; CI-width rule (ticket 66), relative CI width at
+        most 0.05 and the CI strictly inside (1/1.05, 1.05)."""
+        if not self.ci:
+            return block["spread"] <= SPREAD_LIMIT
+        return (self.relative_width(block) <= CI_WIDTH_LIMIT
+                and 1 / AA_EQUIVALENCE < block["lower"] and block["upper"] < AA_EQUIVALENCE)
+
+    def gating_roles(self, roles, base_source):
+        """Roles whose A/A block gates a class: every role, or (ci_width.v2, ticket 72) the selection baseline."""
+        return [base_source] if self.name == CI_WIDTH_RULE_V2 else list(roles)
+
+
 def speed_rule(campaign):
-    """The campaign's native speed-rule version (absent: the range rule)."""
+    """The Extensa campaign's native speed-rule version (absent: the range rule)."""
     return campaign["protocol"].get("speed_rule", RANGE_RULE)
 
 
 def protocol_settings(campaign):
     """The campaign-level frozen settings every adapter freezes into one protocol."""
+    from swdb.campaign_targets import ADAPTERS
     proto = campaign["protocol"]
-    if speed_rule(campaign) in CI_RULES:
-        profitability = {"minimum_speedup": GAIN_THRESHOLD, "speed_rule": speed_rule(campaign),
-                         "gate": {"statistic": "relative_ci_width.v1", "maximum": CI_WIDTH_LIMIT},
-                         "block_length": CI_BLOCK_LENGTH, "aa_equivalence": AA_EQUIVALENCE,
-                         "rule": "relative 95% CI width at most the gate; then the lower bound of the same CI "
-                                 "strictly above the minimum"}
-    else:
-        profitability = {"minimum_speedup": GAIN_THRESHOLD, "maximum_relative_spread": SPREAD_LIMIT,
-                         "rule": "lower bound strictly above the minimum; every spread at most the maximum"}
     return {"target": campaign["target"], "roi": proto["roi"], "threads": proto["threads"],
             "repetitions": proto["repetitions"], "sources": list(proto["sources"]), "region_pairs": [],
             "differences": proto["differences"],
-            "evidence_basis": "simulated" if campaign["target"] == "dx100_gem5" else "measured",
-            "profitability": profitability,
+            "evidence_basis": ADAPTERS[campaign["target"]].EVIDENCE_BASIS,
+            "profitability": SpeedRule.of(campaign).profitability(),
             "workloads": {c["class"]: c["workload"] for c in campaign["workload_classes"]}}
 
 
-def apply_speed_rule(frozen, settings):
-    """Write the campaign's speed rule into a native protocol's frozen settings (ticket 66).
-
-    The range rule sets `maximum_relative_spread`; the CI-width rule sets the circular block
-    analysis, its block length and `profitability.gate`, and removes `maximum_relative_spread`."""
-    profitability = settings["profitability"]
-    frozen["profitability"]["minimum_speedup"] = profitability["minimum_speedup"]
-    if profitability.get("speed_rule") not in CI_RULES:
-        frozen["profitability"]["maximum_relative_spread"] = profitability["maximum_relative_spread"]
-        return frozen
-    from swdb.bfs_protocol import ANALYSIS_CIRCULAR_BLOCK
-    frozen["profitability"].pop("maximum_relative_spread", None)
-    frozen["profitability"]["gate"] = dict(profitability["gate"])
-    frozen["profitability"]["bootstrap_seed"] = CI_BOOTSTRAP_SEED    # pre-registered (ticket 66)
-    frozen["sampling"].setdefault("collection", {"method": "native_paired.v1", "order_seed": 20260926})
-    frozen["sampling"]["analysis"] = ANALYSIS_CIRCULAR_BLOCK
-    frozen["sampling"]["block_length"] = profitability["block_length"]
-    return frozen
-
-
-def relative_ci_width(comparison):
-    """(upper - lower) / ratio of one native comparison."""
-    return (comparison["upper"] - comparison["lower"]) / comparison["ratio"]
+# Module-level forms of the SpeedRule methods (kept for callers and tests).
+apply_speed_rule = SpeedRule.apply
+relative_ci_width = SpeedRule.relative_width
 
 
 def speed_verdict(comparison, target, rule=RANGE_RULE):
-    """`gain`, `no_gain` or `inconclusive` under the campaign speed rule.
-
-    gem5 comparisons are deterministic point ratios: lower = upper = ratio, no spread.
-    Native range rule: any spread above 0.1 is inconclusive. Native CI-width rule (ticket 66):
-    a relative CI width above 0.05 is inconclusive. Otherwise a gain needs lower > 1.05."""
-    if target == "dx100_gem5":
-        return "gain" if comparison["ratio"] > GAIN_THRESHOLD else "no_gain"
-    if rule in CI_RULES:
-        if relative_ci_width(comparison) > CI_WIDTH_LIMIT:
-            return "inconclusive"
-    elif any(s > SPREAD_LIMIT for s in comparison["spreads"]):
-        return "inconclusive"
-    return "gain" if comparison["lower"] > GAIN_THRESHOLD else "no_gain"
+    from swdb.campaign_targets import ADAPTERS
+    return SpeedRule(rule, ADAPTERS[target].POINT_RATIOS).verdict(comparison)
 
 
 def pilot_gating_roles(rule, roles, base_source):
-    """Roles whose A/A block gates a class: every role, or (ci_width.v2, ticket 72) the selection baseline."""
-    return [base_source] if rule == CI_WIDTH_RULE_V2 else list(roles)
+    return SpeedRule(rule).gating_roles(roles, base_source)
+
+
+def pilot_passes(block, rule=RANGE_RULE):
+    return SpeedRule(rule).pilot_passes(block)
 
 
 def level_mix(times):
@@ -332,17 +381,6 @@ def level_mix_of(evaluation):
     total = sum(v["trials"] for v in sources.values())
     return {"by_source_position": sources,
             "slow_share": (sum(v["slow_trials"] for v in sources.values()) / total) if total else 0.0}
-
-
-def pilot_passes(block, rule=RANGE_RULE):
-    """One A/A pilot block under the campaign's speed rule.
-
-    Range rule: spread at most 0.1. CI-width rule (ticket 66): relative CI width at most 0.05
-    and the CI strictly inside (1/1.05, 1.05)."""
-    if rule not in CI_RULES:
-        return block["spread"] <= SPREAD_LIMIT
-    return (relative_ci_width(block) <= CI_WIDTH_LIMIT
-            and 1 / AA_EQUIVALENCE < block["lower"] and block["upper"] < AA_EQUIVALENCE)
 
 
 LEVEL_RANK = {"certified": 2, "uncertified": 1}
@@ -456,214 +494,6 @@ def rewrite_prompt(campaign_id, iteration, classes, files):
                                  history="".join(history), files=", ".join(f"`{f}`" for f in sorted(files)))
 
 
-# --- the contract-fixture target adapter ---------------------------------------------------
-
-class FixtureAdapter:
-    """Contract fixture standing in for a target evaluator (tickets 56/57 add real ones).
-
-    Records are cloned from team-store templates and labeled `contract_fixture`; numbers
-    come from the fixture file and are never performance evidence."""
-
-    evidence_kind = "contract_fixture"
-
-    def __init__(self, fixture_path, campaign, team_records, store_dir, folder):
-        self.fx = yamlio.load(Path(fixture_path))
-        if not isinstance(self.fx, dict) or self.fx.get("format") != "swdb.extensa-campaign-fixture.v1":
-            raise UsageError("fixture file must have format swdb.extensa-campaign-fixture.v1")
-        self.campaign, self.team, self.store_dir, self.folder = campaign, Path(team_records), Path(store_dir), Path(folder)
-        self.cid = campaign["id"]
-        self.released = 0
-        self.round = 0          # retries of an iteration after a pause get fresh record IDs
-
-    def _it(self, iteration):
-        return f"it{iteration}" + (f"r{self.round}" if self.round else "")
-
-    # setup ---------------------------------------------------------------------------
-    def prepare(self):
-        """Copy the team inputs (untagged) the campaign reads into its own store."""
-        from swdb.extensa_boundary import closure
-        from swdb.store import Store
-        team = Store(self.team)
-        roots = [b["candidate"] for b in self.campaign["baselines"]]
-        roots += [c["workload"] for c in self.campaign["workload_classes"]]
-        roots += [self.campaign["machine"], *self.fx["templates"].values()]
-        missing = [rid for rid in roots if rid not in team.by_id]
-        if missing:
-            raise Failure("team store lacks campaign inputs: " + ", ".join(missing))
-        for rid in sorted(closure(team, roots)):
-            record = team.by_id[rid]
-            target = self.store_dir / record.rel
-            if not target.exists():
-                target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy(self.team / record.rel, target)
-
-    def source_files(self):
-        return dict(self.fx["source_files"])
-
-    def freeze_protocol(self, settings):
-        from swdb import bfs_protocol
-        from swdb.store import Store
-        template = Store(self.store_dir).get(self.fx["templates"]["protocol"], "protocol")
-        frozen = copy.deepcopy(template["settings"])
-        frozen["workloads"] = list(settings["workloads"].values())
-        if not (settings["target"] == "dx100_gem5" and frozen.get("mode") == "native"):
-            # A native fixture template cannot freeze gem5's single run; the campaign-level
-            # settings (one run, source 0) stay in the summary for the fixture case.
-            frozen["sampling"]["repetitions"] = settings["repetitions"]
-        frozen["threads"] = settings["threads"]
-        frozen["roi"] = settings["roi"]
-        frozen["region_pairs"] = []
-        apply_speed_rule(frozen, settings)
-        frozen["differences"]["software"] = list(frozen["differences"]["software"]) + [settings["differences"]]
-        request = self.folder / "protocol-request.yaml"
-        request.write_text(yamlio.dumps({"message_version": "1.0", "id": f"{self.cid}-protocol", "version": 1,
-                                         "settings": frozen}))
-        record = bfs_protocol.freeze_protocol(Namespace(file=request, records=self.store_dir, db=None))
-        return {"id": record["id"], "identity_sha256": record["identity_sha256"], "settings": settings}
-
-    def _iteration(self, iteration, cls):
-        rows = self.fx.get("iterations") or []
-        row = rows[min(iteration, len(rows)) - 1] if rows else {}
-        return row.get(cls) or {}
-
-    def pilot(self, cls, role):
-        row = self.fx["pilot"][cls][role]
-        if isinstance(row, dict):              # ticket 66: an A/A ratio and CI for the CI-width rule
-            return {"spread": float(row.get("spread", 0.0)), "ratio": float(row["ratio"]),
-                    "lower": float(row["lower"]), "upper": float(row["upper"])}
-        return {"spread": float(row)}
-
-    # artifacts -----------------------------------------------------------------------
-    def materialize(self, iteration, cls, patch, knobs, attempt, contracts=()):
-        from swdb.store import Store
-        template = Store(self.store_dir).get(self.fx["templates"]["candidate"], "candidate")
-        data = copy.deepcopy(template)
-        rid = f"{self.cid}.{self._it(iteration)}.{cls}.a{attempt}"
-        data.update(id=rid, kind="candidate", mode="extensa", campaign=self.cid)
-        data["artifact"] = {**data["artifact"], "sha256": artifacts.digest({"patch": patch, "knobs": knobs,
-                                                                               "class": cls})}
-        data.setdefault("notes", []).append(f"Contract fixture candidate artifact for class {cls}; knobs {knobs}.")
-        workflow.persist(self.store_dir, _fresh(data), create=True)
-        return {"id": rid, "sha256": data["artifact"]["sha256"]}
-
-    def certify(self, candidate, contracts, iteration, cls, attempt, tests=None):
-        from swdb.library import Library
-        outcomes = self._iteration(iteration, cls).get("certification") or ["certified"]
-        outcome = outcomes[min(attempt, len(outcomes) - 1)]
-        library = Library()
-        contract = contracts[0]
-        pin = {"id": contract, "content_sha256": library.content_sha256(contract)}
-        passed = outcome == "certified"
-        failed_checks = [] if passed else list(self._iteration(iteration, cls).get("failed_checks") or ["verifier"])
-        record = workflow.record(
-            "certification", f"certification.{self.cid}.{self._it(iteration)}.{cls}.a{attempt}", entry=pin,
-            dependencies=[], candidate={"id": candidate["id"], "contract": contract,
-                                        "contract_sha256": pin["content_sha256"], "tree_sha256": candidate["sha256"]},
-            command={"version": "fixture", "contracts": contracts, "test_inputs": len(tests or [])},
-            host={"hostname": "contract-fixture"},
-            matrix=[{"cell": "fixture", "status": "passed" if passed else "failed",
-                     "failed_checks": failed_checks}],
-            negative_controls=[{"id": "fixture_control", "status": "rejected"}],
-            verdict="certified" if passed else "failed", evidence_basis="simulated",
-            evidence_kind="contract_fixture", created_at=_now())
-        workflow.persist(self.store_dir, record, create=True)
-        return {"record": record["id"], "outcome": "certified" if passed else "failed",
-                "failed_checks": failed_checks}
-
-    def _evaluation(self, rid, candidate_id, role):
-        from swdb.store import Store
-        template = Store(self.store_dir).get(self.fx["templates"]["evaluation"], "evaluation")
-        data = copy.deepcopy(template)
-        run = self.folder / "runs" / rid
-        (run / "cpt.1").mkdir(parents=True, exist_ok=True)
-        size = int(self.fx.get("run_bytes", 4096))
-        (run / "debug.trace.gz").write_bytes(b"t" * size)
-        (run / "cpt.1" / "payload.bin").write_bytes(b"c" * size)
-        (run / "correctness.json").write_text(json.dumps({"fixture": True, "role": role}))
-        data.update(id=rid, candidate=candidate_id, evidence_kind="contract_fixture", gain_claim=False,
-                    raw_artifacts=[{"kind": "dx100_execute", "path": str(run)}], mode="extensa", campaign=self.cid)
-        workflow.persist(self.store_dir, _fresh(data), create=True)
-        if any(marker in rid for marker in self.fx.get("claim_runs") or []):
-            claim = workflow.record("team_claim", f"claim.{rid}", action="claim", records=[rid],
-                                    audience=["fixture"], recorded_at=_now())
-            workflow.persist(self.store_dir, claim, create=True)
-        return rid
-
-    def baseline_evaluation(self, cls, role):
-        """gem5: the fork's scalar TDStep is measured once per class."""
-        baseline = next(b["candidate"] for b in self.campaign["baselines"] if b["role"] == role)
-        return self._evaluation(f"{self.cid}.baseline.{cls}.{role}", baseline, role)
-
-    def compare(self, candidate, cls, role, iteration, attempt, baseline_evaluation=None):
-        """Native: a paired block (its own baseline evaluation); gem5: cite the class baseline."""
-        numbers = (self._iteration(iteration, cls).get("comparisons") or {}).get(role)
-        if numbers is None:
-            raise Stop("infrastructure_failure", f"fixture has no comparison for {cls}/{role}")
-        tag = f"{self.cid}.{self._it(iteration)}.{cls}.a{attempt}.{role}"
-        evaluations = [self._evaluation(f"{tag}.candidate-eval", candidate["id"], "candidate")]
-        if baseline_evaluation is None:
-            baseline = next(b["candidate"] for b in self.campaign["baselines"] if b["role"] == role)
-            baseline_evaluation = self._evaluation(f"{tag}.baseline-eval", baseline, role)
-            evaluations.append(baseline_evaluation)
-        from swdb.store import Store
-        template = Store(self.store_dir).get(self.fx["templates"]["comparison"], "comparison_result")
-        data = copy.deepcopy(template)
-        ratio = float(numbers["ratio"])
-        if self.campaign["target"] == "dx100_gem5":
-            lower = upper = ratio
-            spreads = [0.0]
-        else:
-            lower, upper = float(numbers["lower"]), float(numbers.get("upper", numbers["lower"]))
-            spreads = [float(s) for s in (numbers["spreads"] if "spreads" in numbers else [numbers["spread"]])]
-        rid = f"{tag}.comparison"
-        data.update(id=rid, protocol=self.protocol_id, baseline_evaluation=baseline_evaluation,
-                    candidate_evaluation=evaluations[0], evidence_kind="contract_fixture", gain_claim=False,
-                    mode="extensa", campaign=self.cid,
-                    decision={"state": "fixture_comparison",
-                              "reasons": ["Contract fixture numbers are not performance evidence."]},
-                    metrics={"fixture_ratio": ratio, "confidence_interval": {"lower": lower, "upper": upper},
-                             "relative_spread": {"fixture": {"max": max(spreads)}}})
-        data["request"] = {**data.get("request", {}), "id": rid, "protocol": self.protocol_id,
-                           "baseline_evaluation": baseline_evaluation, "candidate_evaluation": evaluations[0]}
-        data.pop("protocol_sha256", None)
-        workflow.persist(self.store_dir, _fresh(data), create=True)
-        return {"comparison": rid, "ratio": ratio, "lower": lower, "upper": upper, "spreads": spreads,
-                "evaluations": evaluations, "baseline_evaluation": baseline_evaluation}
-
-    # budgets and host ----------------------------------------------------------------------
-    def step_hours(self, step):
-        return float((self.fx.get("step_hours") or {}).get(step, 0.0))
-
-    def step_budget_hours(self, step):
-        return float((self.fx.get("step_budget_hours") or {}).get(step, self.step_hours(step)))
-
-    def planned_bytes(self):
-        return 2 * int(self.fx.get("run_bytes", 4096))
-
-    def other_socket_lease(self):
-        return self.fx.get("other_socket_lease")
-
-    def preflight(self, planned_bytes, step=None):
-        from swdb import dispatch_preflight
-        observation = self.fx.get("preflight")
-        if observation is None:
-            return None
-        return dispatch_preflight.check(self.folder, "mbit10-evaluation-node1", storage_bytes=planned_bytes,
-                                        memory_bytes=0, observation={**observation, "memory_node": 1})
-
-    def release_lane(self):
-        self.released += 1
-
-
-def _fresh(data):
-    """A cloned template is a new record: fresh envelope dates and a fixture provenance."""
-    data["created"] = data["updated"] = workflow.writer.today()
-    data["status"] = "draft"
-    data["provenance"] = [{"id": "campaign-fixture", "kind": "agent_run",
-                           "description": "Contract-fixture record written by swdb campaign.", "uri": None}]
-    return data
-
-
 # --- the loop --------------------------------------------------------------------------------
 
 class Campaign:
@@ -688,7 +518,9 @@ class Campaign:
         self.provider_config = rewrite.configuration(Path(args.provider_config))
         self.query = self.data["regions"] == "query"
         self.applied_contracts = None     # query mode: contracts the site finder applied this iteration
+        self.rule = SpeedRule.of(self.data)
         if args.fixture:
+            from swdb.campaign_fixture import FixtureAdapter
             self.adapter = FixtureAdapter(args.fixture, self.data, self.team, self.store_dir, self.folder)
         else:
             # Tickets 56/57 (2026-10-04 ET): the campaign's target selects its real adapter.
@@ -716,7 +548,7 @@ class Campaign:
     def _tags(self):
         previous = dict(workflow.CREATION_TAGS)
         workflow.CREATION_TAGS.clear()
-        workflow.CREATION_TAGS.update(mode="extensa", campaign=self.cid)
+        workflow.CREATION_TAGS.update(mode=MODE, campaign=self.cid)
         try:
             yield
         finally:
@@ -844,8 +676,8 @@ class Campaign:
         Ticket 66 (2026-10-04 ET, decided by Yan-Ru): under the CI-width rule a block fails when
         its relative CI width exceeds 0.05 or its CI leaves (1/1.05, 1.05); spreads are recorded
         as description only."""
-        rule = speed_rule(self.data)
-        gating = pilot_gating_roles(rule, self.roles, self.data["base_source"])
+        rule = self.rule
+        gating = rule.gating_roles(self.roles, self.data["base_source"])
         spreads, intervals, failed, mixes = {}, {}, {}, {}
         for cls in self.classes:
             for role in self.roles:
@@ -853,14 +685,14 @@ class Campaign:
                 started = time.monotonic()
                 block = self.adapter.pilot(cls, role)
                 spreads.setdefault(cls, {})[role] = block["spread"]
-                if rule in CI_RULES:
+                if rule.ci:
                     intervals.setdefault(cls, {})[role] = {
                         "ratio": block["ratio"], "lower": block["lower"], "upper": block["upper"],
-                        "relative_width": relative_ci_width(block), "passed": pilot_passes(block, rule),
+                        "relative_width": rule.relative_width(block), "passed": rule.pilot_passes(block),
                         "gates": role in gating}
                 if block.get("level_mix") is not None:
                     mixes.setdefault(cls, {})[role] = block["level_mix"]
-                if role in gating and not pilot_passes(block, rule):
+                if role in gating and not rule.pilot_passes(block):
                     failed.setdefault(cls, []).append(role)
                 if block.get("other_socket") is not None:
                     self.state.setdefault("pilot_other_socket", {}).setdefault(cls, {})[role] = block["other_socket"]
@@ -870,8 +702,8 @@ class Campaign:
         unstable = [cls for cls in self.classes if failed.get(cls)]
         self.state["pilot"] = {"spreads_by_class_and_role": spreads, "passed": not unstable,
                                "unstable_classes": unstable}
-        if rule in CI_RULES:
-            self.state["pilot"].update(speed_rule=rule, ci_by_class_and_role=intervals,
+        if rule.ci:
+            self.state["pilot"].update(speed_rule=rule.name, ci_by_class_and_role=intervals,
                                        gate={"maximum_relative_ci_width": CI_WIDTH_LIMIT,
                                              "aa_interval": [1 / AA_EQUIVALENCE, AA_EQUIVALENCE]},
                                        gating_roles=gating)
@@ -884,7 +716,7 @@ class Campaign:
         self._apply_pilot()
         if not self.classes:
             self.ledger.terminate(S.StopReason.BASELINE_UNSTABLE)
-            self.state["stop_detail"] = ("baseline A/A CI-width gate failed in every class" if rule in CI_RULES
+            self.state["stop_detail"] = ("baseline A/A CI-width gate failed in every class" if rule.ci
                                          else "baseline A/A spread exceeds 0.1 in every class")
 
     def _apply_pilot(self):
@@ -961,22 +793,18 @@ class Campaign:
                     note = ipath.parent / "notes" / (ipath.stem + ".md")
                     if note.is_file():
                         files[f"library/intrinsics/notes/{note.name}"] = note.read_text()
-        references = getattr(self.adapter, "reference_files", None)
-        if references and self.data["library"]["contracts"]:
-            files.update({f"library/{name}": text for name, text in references().items()})
+        if self.data["library"]["contracts"]:
+            files.update({f"library/{name}": text for name, text in self.adapter.reference_files().items()})
         regions = self.current_regions if self.query else self.data["regions"]
         # Ticket 73 (2026-10-05 ET): workspace line spans for each region and the protected regions.
-        lines = getattr(self.adapter, "workspace_region_lines", None)
-        if lines is not None and regions:
-            regions = lines(regions)
+        if regions:
+            regions = self.adapter.workspace_region_lines(regions)
         files["REGIONS.json"] = json.dumps({"regions": regions}, indent=2)
-        protected = getattr(self.adapter, "protected_regions", None)
-        if protected is not None:
-            rows = protected()
-            if rows:
-                files["PROTECTED.json"] = json.dumps({
-                    "note": ("Evaluator inputs. A patch that changes any of these is rejected before it is "
-                             "built. Never edit them."), "protected": rows}, indent=2)
+        rows = self.adapter.protected_regions()
+        if rows:
+            files["PROTECTED.json"] = json.dumps({
+                "note": ("Evaluator inputs. A patch that changes any of these is rejected before it is "
+                         "built. Never edit them."), "protected": rows}, indent=2)
         for cls, best in self.state["bests"].items():
             if best:
                 files[f"best/{cls}.patch"] = best["patch"]
@@ -985,23 +813,8 @@ class Campaign:
         return files
 
     def _knob_problem(self, contracts, knobs):
-        from swdb.library import Library
-        library = Library(self.library_root)
-        declared = {}
-        for cid in contracts:
-            for knob in (library.get(cid) or {}).get("knobs", []):
-                declared[knob.get("name")] = knob
-        for name, value in (knobs or {}).items():
-            knob = declared.get(name)
-            if knob is None:
-                return f"knob {name} is not declared by the contracts used"
-            bounds = knob.get("range") or {}
-            if "choices" in bounds:
-                if value not in bounds["choices"]:
-                    return f"knob {name}={value!r} is outside its declared choices"
-            elif type(value) not in (int, float) or not bounds.get("min", value) <= value <= bounds.get("max", value):
-                return f"knob {name}={value!r} is outside its declared range"
-        return None
+        from swdb.library import Library, knob_problem
+        return knob_problem(Library(self.library_root), contracts, knobs)
 
     def _contract_tier_problem(self, contracts):
         from swdb.library import Library
@@ -1078,9 +891,7 @@ class Campaign:
         attempt = 0
         candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts)
         entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
-        admit = getattr(self.adapter, "admit", None)
-        if admit:
-            admit(candidate, contracts)
+        self.adapter.admit(candidate, contracts)
         if not contracts:
             entry["level"] = "uncertified"
             feedback.append(S.Feedback("uncertified_edit", "The edit used no rewrite contract.",
@@ -1130,8 +941,7 @@ class Campaign:
                     return reject("knob_out_of_range", problem)
                 candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts)
                 entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
-                if admit:
-                    admit(candidate, contracts)
+                self.adapter.admit(candidate, contracts)
         self._evaluate(iteration, cls, candidate, attempt, entry)
         selection = next((c for c in entry["comparisons"] if c["baseline_role"] == self.data["base_source"]), None)
         if selection:
@@ -1197,20 +1007,13 @@ class Campaign:
                                                  "tier": result.get("tier")}
 
     def _evaluate(self, iteration, cls, candidate, attempt, entry):
-        target = self.data["target"]
+        rule = self.rule
         for role in self.roles:
             self._step("evaluation", job=True)
-            if target == "native_cpu":
+            if not self.adapter.SHARED_BASELINE:
                 # 2026-10-04 ET (final code review): the adapter's check honors the campaign's
                 # approval.gem5_other_socket (ticket 64), exactly as the pilot does.
-                other_gem5 = getattr(self.adapter, "other_gem5", None)
-                if other_gem5 is not None:
-                    refusal = other_gem5()
-                else:
-                    lease = self.adapter.other_socket_lease()
-                    refusal = (lease and lease.get("mode") == "extensa" and lease.get("target") == "dx100_gem5"
-                               and "native timed blocks refuse to start while the other socket's lease is held "
-                               f"by a gem5 job of Extensa campaign {lease.get('campaign')}")
+                refusal = self.adapter.gem5_refusal()
                 if refusal:
                     raise Stop("infrastructure_failure", refusal)
                 baseline_eval = None
@@ -1222,14 +1025,13 @@ class Campaign:
             started = time.monotonic()
             result = self.adapter.compare(candidate, cls, role, iteration, attempt, baseline_evaluation=baseline_eval)
             self._spent("evaluation", started)
-            rule = speed_rule(self.data)
-            verdict = speed_verdict(result, target, rule)
+            verdict = rule.verdict(result)
             row = {"baseline_role": role, "comparison": result["comparison"],
                    "ratio": result["ratio"], "lower": result["lower"],
                    "spread": max(result["spreads"]), "verdict": verdict,
                    "baseline_evaluation": result["baseline_evaluation"]}
-            if target == "native_cpu" and rule in CI_RULES:
-                row.update(upper=result["upper"], relative_ci_width=relative_ci_width(result))
+            if rule.reports_ci_width:
+                row.update(upper=result["upper"], relative_ci_width=rule.relative_width(result))
             if result.get("level_mix") is not None:
                 row["level_mix"] = result["level_mix"]
             entry["comparisons"].append(row)
@@ -1294,11 +1096,10 @@ class Campaign:
                 if not self.state["setup_done"]:
                     self._setup()
                 self.adapter.protocol_id = self.state["protocol"]["id"]
-                if hasattr(self.adapter, "restore"):
-                    self.adapter.restore(self.state)
-                if self.data["target"] == "native_cpu" and self.state["pilot"] is None:
+                self.adapter.restore(self.state)
+                if self.adapter.HAS_PILOT and self.state["pilot"] is None:
                     self._pilot()
-                elif self.data["target"] == "native_cpu":
+                elif self.adapter.HAS_PILOT:
                     self._apply_pilot()
                 if getattr(self.args, "baselines_only", False) and self.ledger.stop()[0] is None:
                     return self._baselines_only()
@@ -1356,7 +1157,7 @@ class Campaign:
         On gem5 this evaluates the one baseline per class that serves every candidate, so a
         campaign can do its baseline work while the provider login is in use elsewhere. A
         later `--resume` continues with the setup provider call and iteration 1."""
-        if self.data["target"] == "dx100_gem5":
+        if self.adapter.SHARED_BASELINE:
             for cls in self.classes:
                 for role in self.roles:
                     key = f"{cls}/{role}"
@@ -1455,7 +1256,7 @@ class Campaign:
             site_finder=self.state.get("site_finder"))
         if self.state.get("interrupted_iteration"):
             record["interrupted_iteration"] = copy.deepcopy(self.state["interrupted_iteration"])
-        record["mode"], record["campaign"] = "extensa", self.cid
+        record["mode"], record["campaign"] = MODE, self.cid
         return record
 
 
@@ -1472,7 +1273,7 @@ def run_cli(args):
 
 
 def register_cli(commands, paths_module):
-    sub = commands.add_parser("campaign", help="run an Extensa campaign (contract-fixture adapter only)",
+    sub = commands.add_parser("campaign", help="run an Extensa campaign on its target (or the contract-fixture adapter)",
                               description="run one Extensa campaign file: budgets, certification-first "
                                           "selection and a campaign_summary record (decisions D2-D10)")
     sub.add_argument("file", type=Path)

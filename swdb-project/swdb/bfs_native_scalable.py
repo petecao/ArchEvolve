@@ -24,8 +24,8 @@ an unprotocoled request that names it. It differs only outside the ROI:
   SHA-256 is retained) so a paired receipt can be re-verified from raw output.
 
 The SG file is bound to its registration by SHA-256 before every trial. Registration
-proved it loads the registered canonical adjacency (``sg_identity.cc``, exact mmap CSR
-and transpose membership), so the hash binding carries that proof.
+checked that it loads the registered canonical adjacency (``sg_identity.cc``, exact mmap CSR
+and transpose membership), so the hash binding carries that check.
 
 Limits (memory-bounded, sized for scale 22): at most 2^23 = 8,388,608 vertices,
 2^28 = 268,435,456 directed edges, and a 3 GiB SG file. Driver heap outside the
@@ -59,6 +59,7 @@ from pathlib import Path
 
 from swdb import artifacts, paths
 from swdb.cli import Failure
+from swdb.sg_graph import FORMAT_OFFSET_BYTES
 
 EVALUATOR_V1 = "swdb.native.evaluator.v1"
 EVALUATOR_V2 = "swdb.native.evaluator.scalable.v2"
@@ -79,7 +80,7 @@ MAX_VERTICES = 2 ** 23
 MAX_DIRECTED_EDGES = 2 ** 28
 MAX_SG_BYTES = 3 * 1024 ** 3
 TRIAL_RECORD_LIMIT = 4096
-SG_FORMATS = {"gapbs_sg32le": 4, "gapbs_sg64le": 8}
+SG_FORMATS = FORMAT_OFFSET_BYTES      # code review F11 (2026-10-05 ET): one table, `swdb.sg_graph`
 
 
 def _fail(condition, message):
@@ -99,6 +100,47 @@ def is_scalable(evaluator):
 
 def driver_for(evaluator):
     return DRIVERS[evaluator]
+
+
+class EvaluatorPath:
+    """One native evaluator version and what follows from it (code review S8, 2026-10-05 ET).
+
+    The campaign adapters and the paired-receipt checker ask this object instead of comparing
+    evaluator strings; `swdb/bfs_native.py` keeps calling the module functions below (its file hash
+    is the BFS v1 verifier identity)."""
+
+    def __init__(self, evaluator):
+        _fail(evaluator in EVALUATORS, f"unsupported native evaluator {evaluator!r}")
+        self.id = evaluator
+
+    @property
+    def scalable(self):
+        """v2 and v3 share the mmap SG path and the compiled verifier."""
+        return self.id in SCALABLE
+
+    @property
+    def driver(self):
+        return DRIVERS.get(self.id)
+
+    @property
+    def keeps_distinct_parents(self):
+        """v3 keeps one gzip copy per distinct parent vector (ticket 71)."""
+        return self.id == EVALUATOR_V3
+
+    def limits(self):
+        """(max vertices, max directed edges) the evaluator materializes."""
+        if self.scalable:
+            return MAX_VERTICES, MAX_DIRECTED_EDGES
+        from swdb.bfs_native import MAX_DIRECTED_EDGES as v1_edges, MAX_VERTICES as v1_vertices
+        return v1_vertices, v1_edges
+
+    def check_trial_record(self, observed, source, threads, roi, vertices):
+        """The one trial-record check of a scalable evaluator (reason or None)."""
+        return check_trial_record(observed, source, threads, roi, vertices, evaluator=self.id)
+
+
+def path_for(evaluator):
+    return EvaluatorPath(evaluator)
 
 
 def validate_settings(settings, plugin):

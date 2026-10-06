@@ -1,4 +1,4 @@
-"""Stable serialized-input aliases for the pinned loader. Updated: 2026-09-25."""
+"""Stable serialized-input aliases for the pinned loader. Updated: 2026-10-05 ET (formats from `swdb.sg_graph`)."""
 import errno
 import os
 from pathlib import Path
@@ -20,9 +20,10 @@ def resolve(session, runs, original, application, registered):
     source = Path(original['path'])
     if source.suffix == '.sg':
         return source, None
-    expected = {'gapbs': 'gapbs_sg64le', 'dx100-gapbs': 'gapbs_sg32le'}
-    if (not registered or application not in expected
-            or registered['representation']['format'] != expected[application]):
+    from swdb.sg_graph import application_format
+    expected = application_format(application)
+    if (not registered or expected is None
+            or registered['representation']['format'] != expected):
         raise Failure('non-.sg inputs require a registered serialized SG representation for the selected application')
     directory = Path(runs).resolve() / 'dx100-loader-inputs'
     directory.mkdir(exist_ok=True)
@@ -68,7 +69,7 @@ def resolve(session, runs, original, application, registered):
             finally:
                 pending.unlink(missing_ok=True)
     details = {'format': 'swdb.dx100.loader-input.v1', 'application': application,
-        'serialization': expected[application], 'original': dict(original), 'alias': reference,
+        'serialization': expected, 'original': dict(original), 'alias': reference,
         'provenance': provenance}
     # Preserve the attempted alias and any allocation in a failed stage too.
     session.data['context']['loader_input'] = details

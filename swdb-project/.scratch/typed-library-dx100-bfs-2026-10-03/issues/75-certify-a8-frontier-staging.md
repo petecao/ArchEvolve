@@ -1,11 +1,11 @@
 # 75 — Certify native a8's best: a TDStep frontier-staging contract, promotion and team re-evaluation
 
 Created: 2026-10-05 11:40 ET (from ticket 56's a8 result; Yan-Ru: "certify it", 2026-10-05)
-Updated: 2026-10-05 15:00 ET (resolved); 2026-10-05 12:25 ET (decisions revised after the independent review, before any
+Updated: 2026-10-05 19:20 ET (addendum: native certify 1.5 record and re-promotion citing it); 2026-10-05 18:30 ET (addendum: review attribution and re-promotion, spec review C1, C3); 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-05 16:55 ET (legacy-lease audit, code review S13); 2026-10-05 15:00 ET (resolved); 2026-10-05 12:25 ET (decisions revised after the independent review, before any
 certification record or run)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** 56, 76
 **Spec:** `../spec.md`; [design decisions](../extensa-design-2026-10-03.md) D9; ADR 0007, 0008, 0010;
 [15](15-library-tiers-and-entry-promotion.md), [43](43-promote-bc-contract.md), [48](48-mode-tags-and-team-boundary.md),
 [51](51-seed-extensa-families.md), [56](56-native-campaign-target.md), [70](70-certification-isolation.md),
@@ -210,4 +210,51 @@ harness scan has 0 findings, and the rewrite scope holds (one function definitio
 - Kronecker for this artifact stays `inconclusive` (a8). No team re-evaluation was run for that class.
 - `source_digest` now includes `library/native/`, so DX100 `sources_sha256` values differ from ticket 76's
   `29f3bcab…`.
+
+## Addendum 2026-10-05 16:55 ET: legacy-lease audit (code review S13)
+
+The campaign adapter's isolation check ignored the legacy lease `mbit10-evaluation` (fixed in the code-review
+branch). This ticket's re-evaluation did not use that check: `t75_reeval.py` on mbit10 tested the kernel locks of
+the node 0 lease and the legacy lease (`Host.held`) at the start and end of both blocks, and every test found them
+not held (`evaluation/ticket75-certification-and-reevaluation-2026-10-05.json`, `legacy_held: false`). The legacy
+lease's metadata was last written 2026-09-12 00:49 ET (generation 77), so no `hostlock.sh` holder took it during
+the run either. The isolation recorded here stands. Audit details: ticket 56's addendum of the same time.
+
+## Addendum 2026-10-05 18:30 ET: review attribution and re-promotion (spec review C1, C3)
+
+- **Attribution.** The contract reviews `review.contract.bfs_tdstep_frontier_staging.a8452cbb68ab` and
+  `.92527fd3e03f` and the candidate review `review.extensa-native-bfs-20261005-a8.it1.kronecker.a0.95a37f742399`
+  were performed by agents under Yan-Ru's 2026-10-05 delegation, but name Yan-Ru as reviewer with provenance
+  `human_report`. They are unchanged; attribution corrections (`review.correction.<review>.*`, one each) state
+  the agent review, the delegation and the review document, and the readers report them.
+- **Stale evidence.** The candidate review cited `certification.b7954f4d…`, labeled 1.4 but run on the
+  1.3-isolation path for contract content `dcaf63ec…`, not the current `f0919f00…`. Under the corrected rule (a
+  promotion cites a passing certification of the current contract content with a named command version), that
+  review no longer counts as the promotion. The candidate was promoted again through the attributed path
+  (`--performed-by agent`): `review.extensa-native-bfs-20261005-a8.it1.kronecker.a0.1657514d8e7d` cites
+  `certification.7f15786592134bdabbc921f16c806ce1` (1.4, content `f0919f00…`) and the a8 summary. It reuses the
+  derived protocol `…-reeval-uniform-random-bb0f642780c4.2e33442a1cf31c02` and the request
+  `reeval-9534c5107d8c-c1e45d3b` already run, so the re-evaluation comparison
+  `t75-reeval-20261005.candidate.uniform_random.comparison` still admits the candidate. No run was repeated.
+- Listed in the spec's "Awaiting ratification" section.
+
+## Addendum 2026-10-05 19:20 ET: native certify 1.5 record; re-promotion cites it
+
+After the certification fixes merged (fix B, `5a9583c`: per-family procedure tables; native-CPU contracts run
+1.3–1.5, default 1.5), the exact a8 tree was certified again on the Mac under the current native command:
+`certification.ac33f5548c154caba9adbf0e4abb8925`, command 1.5 (family `native`, sources match the frozen version,
+commit `b156044`, no local changes), contract content `f0919f00…`, **certified**: 22/22 cells, 8/8 controls
+rejected, evidence basis `measured`. It is bound to the a8 candidate by `--candidate-record`.
+
+Under the derived-level rule (newest command version for the current contract content), this record is the one
+that counts, so the 18:30 ET re-promotion (`…1657514d8e7d`, citing the 1.4 record) no longer counts as the
+promotion. The candidate was promoted again through the attributed path: `review.extensa-native-bfs-20261005-a8.
+it1.kronecker.a0.c12ddfdf5c1b` (performed by an agent under Yan-Ru's delegation) cites the 1.5 record and the a8
+summary, reuses the derived protocol and the request `reeval-9534c5107d8c-c1e45d3b`, and the re-evaluation
+comparison `t75-reeval-20261005.candidate.uniform_random.comparison` still admits the candidate. No run was
+repeated on mbit10.
+
+The 1.5 run folder (builds, logs, control outputs) was a Mac scratch folder and was removed for disk space after
+the record was written, as for the earlier Mac certifications; the record keeps the compact cell and control
+evidence and the hashes.
 

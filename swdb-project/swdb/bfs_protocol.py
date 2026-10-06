@@ -27,10 +27,10 @@ import random
 import re
 import statistics
 import struct
-from bisect import bisect_left
 from pathlib import Path
 
-from swdb import artifacts, kernels, workflow
+from swdb import artifacts, kernels, workflow, writer
+from swdb import sg_graph
 from swdb.cli import Failure, _require_valid
 from swdb.problems import Problem
 
@@ -41,8 +41,7 @@ MAX_VERTICES = 2_000_000
 MAX_FILE_BYTES = 512 * 1024 * 1024
 
 
-def _now():
-    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+_now = writer.now      # code review F20 (2026-10-05 ET): the one timestamp helper
 
 
 def _fail(condition, message):
@@ -93,41 +92,9 @@ def _canonical(graph):
 
 
 def _sg_graph(raw, width, edge_limit=None):
-    """Read the actual unweighted GAPBS binary format, including inverse CSR."""
-    offset_format = "i" if width == 4 else "q"
-    _fail(len(raw) >= 1 + 2 * width and raw[0] in (0, 1), "invalid SG header")
-    directed = bool(raw[0])
-    m, n = struct.unpack_from("<" + offset_format * 2, raw, 1)
-    _fail(0 < n <= MAX_VERTICES and 0 <= m <= (MAX_EDGES if edge_limit is None else edge_limit),
-          "SG dimensions exceed parser limits")
-    block_bytes = (n + 1) * width + m * 4
-    _fail(len(raw) == 1 + 2 * width + block_bytes * (2 if directed else 1), "truncated or trailing SG data")
-
-    def csr(position):
-        offsets = [item[0] for item in struct.iter_unpack("<" + offset_format, raw[position:position + (n+1)*width])]
-        position += (n + 1) * width
-        _fail(offsets[0] == 0 and offsets[-1] == m and all(0 <= a <= b <= m for a, b in zip(offsets, offsets[1:])),
-              "invalid SG CSR offsets")
-        rows = [[item[0] for item in struct.iter_unpack("<i", memoryview(raw)[position+offsets[u]*4:position+offsets[u+1]*4])]
-                for u in range(n)]
-        for u, row in enumerate(rows):
-            _fail(all(0 <= v < n and v != u for v in row), "SG neighbor is outside graph or a self loop")
-            _fail(all(a < b for a, b in zip(row, row[1:])), "SG adjacency must already be sorted and deduplicated")
-        return rows
-
-    position = 1 + 2 * width
-    outgoing = csr(position)
-    if directed:
-        incoming = csr(position + block_bytes)
-        # Both CSR blocks have exactly m distinct arcs. Membership therefore
-        # proves inverse equivalence without constructing another edge list.
-        for v, row in enumerate(incoming):
-            for u in row:
-                at = bisect_left(outgoing[u], v)
-                _fail(at < len(outgoing[u]) and outgoing[u][at] == v,
-                      "SG inverse adjacency does not match outgoing edges")
-    return {"num_vertices": n, "directed": directed,
-            "adjacency": outgoing}
+    """`swdb.sg_graph.read_graph` under this module's limits (read at call time; tests lower them)."""
+    return sg_graph.read_graph(raw, width, max_vertices=MAX_VERTICES,
+                               max_edges=MAX_EDGES if edge_limit is None else edge_limit)
 
 
 def _representation(rep, normalization, parser=None, allow_streaming=True):
@@ -143,8 +110,8 @@ def _representation(rep, normalization, parser=None, allow_streaming=True):
     kind = rep.get("format")
     _fail(normalization == NORMALIZATION, "unsupported graph normalization; use the declared simple-graph policy")
     description = {key: rep[key] for key in ("id", "path", "sha256", "format", "application") if key in rep}
-    if kind in {"gapbs_sg32le", "gapbs_sg64le"}:
-        width = 4 if kind == "gapbs_sg32le" else 8
+    if kind in sg_graph.FORMAT_OFFSET_BYTES:
+        width = sg_graph.FORMAT_OFFSET_BYTES[kind]
         with path.open("rb") as handle:
             header = handle.read(1 + width*2)
         dimensions = struct.unpack_from("<" + ("i" if width == 4 else "q")*2, header, 1) if len(header) == 1+width*2 else (0, 0)
@@ -163,8 +130,8 @@ def _representation(rep, normalization, parser=None, allow_streaming=True):
     raw = path.read_bytes()
     _fail(hashlib.sha256(raw).hexdigest() == actual, "representation changed during materialization")
     try:
-        if kind in {"gapbs_sg32le", "gapbs_sg64le"}:
-            graph = _sg_graph(raw, 4 if kind == "gapbs_sg32le" else 8, edge_limit)
+        if kind in sg_graph.FORMAT_OFFSET_BYTES:
+            graph = _sg_graph(raw, sg_graph.FORMAT_OFFSET_BYTES[kind], edge_limit)
         elif kind == "json_graph":
             graph = json.loads(raw)
         elif kind == "edge_list":
@@ -184,7 +151,7 @@ def _representation(rep, normalization, parser=None, allow_streaming=True):
             raise Failure(f"unsupported graph representation {kind!r}")
     except (ValueError, UnicodeError, struct.error) as exc:
         raise Failure(f"invalid graph representation: {exc}") from None
-    if kind not in {"gapbs_sg32le", "gapbs_sg64le"}:
+    if kind not in sg_graph.FORMAT_OFFSET_BYTES:
         _fail(isinstance(graph, dict) and isinstance(graph.get("edges"), list)
               and len(graph["edges"]) <= MAX_EDGES, "graph exceeds the parser edge limit or has no edge list")
     canonical = _canonical(graph)
@@ -257,23 +224,7 @@ def _save_immutable(args, request, kind, **fields):
     return workflow.persist(args.records, data, getattr(args, "db", None), create=True)
 
 
-def _sg_out_degrees(row, sources):
-    """Out-degrees of the requested sources read from a verified SG file's CSR offsets."""
-    width = 4 if row["format"] == "gapbs_sg32le" else 8
-    offset_format = "<" + ("i" if width == 4 else "q")
-    degrees = {}
-    with Path(row["path"]).open("rb") as handle:
-        header = handle.read(1 + 2 * width)
-        _fail(len(header) == 1 + 2 * width, "invalid SG header")
-        _, n = struct.unpack_from(offset_format[0] + offset_format[1] * 2, header, 1)
-        for source in sources:
-            _fail(0 <= source < n, "source vertex is outside the graph")
-            handle.seek(1 + 2 * width + source * width)
-            pair = handle.read(2 * width)
-            _fail(len(pair) == 2 * width, "truncated SG offsets")
-            first, last = struct.unpack(offset_format[0] + offset_format[1] * 2, pair)
-            degrees[source] = last - first
-    return degrees
+_sg_out_degrees = sg_graph.out_degrees      # code review S14 (2026-10-05 ET): public in swdb.sg_graph
 
 
 #: Ticket 64 (2026-10-04 ET): GAPBS SourcePicker never returns a source with out-degree 0.
@@ -327,7 +278,7 @@ def register_workload(args):
     for rep in representations:
         canonical, row = _representation(rep, request["normalization"], request.get("parser"))
         _get(store, rep.get("application"), "application")
-        expected_format = {"gapbs": "gapbs_sg64le", "dx100-gapbs": "gapbs_sg32le"}.get(rep["application"])
+        expected_format = sg_graph.application_format(rep["application"])
         if row["format"].startswith("gapbs_sg") and expected_format:
             _fail(row["format"] == expected_format, "serialized offset width conflicts with the application's loader")
         _fail(row["id"] not in ids, "representation IDs must be unique")
@@ -394,7 +345,7 @@ def workload_representation(store, workload_id, application):
     verify_immutable(data)
     definition = data["definition"]
     matches = [rep for rep in definition["representations"] if rep.get("application") == application
-               and rep["format"] in {"gapbs_sg32le", "gapbs_sg64le"}]
+               and rep["format"] in sg_graph.FORMAT_OFFSET_BYTES]
     _fail(len(matches) == 1, "workload needs exactly one serialized representation for the selected application")
     rep = matches[0]
     path = Path(rep["path"])
@@ -510,7 +461,7 @@ def accelerator_cases(check):
                 and all(positive(units.get(unit)) for unit in ("S", "I", "R", "A")))
     readonly = coverage.get('read_only_executed', {})
     # Ticket 39 (2026-10-03 ET): the read-only rule belongs to the checker's kernel plug-in.
-    plugin = kernels.by_gem5_checker(check.get('checker')) or kernels.BFS
+    plugin = kernels.for_gem5_checker(check.get('checker'), 'the read-only accelerator case')
     read_only = (isinstance(readonly, dict) and readonly.get('state') == 'observed'
         and all(type(readonly.get(key)) is int for key in ('stream', 'indirect', 'range', 'alu', 'indirect_stores'))
         and plugin.read_only_rule(readonly['stream'], readonly['indirect'], readonly['range'],

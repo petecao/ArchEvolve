@@ -1,10 +1,10 @@
 # 76 — Certify 1.4: blinded controls, attributed rejections, a trusted frontier ledger, aggregate feedback
 
 Created: 2026-10-05 12:13 ET (from the open items of ticket 70)
-Updated: 2026-10-05 13:25 ET (resolved); 2026-10-05 14:21 ET (the open library-operation item is addressed by ticket 77); 2026-10-05 17:45 ET (version-label drift addendum)
+Updated: 2026-10-05 17:45 ET (version-label drift addendum); 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-05 14:21 ET (the open library-operation item is addressed by ticket 77); 2026-10-05 13:25 ET (resolved)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** 70
 **Spec:** `../spec.md` (certification command, "Blinding and attribution" bullet); [70](70-certification-isolation.md), [67](67-forged-frontier-control-v2.md), [65](65-range-loop-convention-and-named-check-feedback.md)
 
 **What to build:** close, as far as one process allows, the four items ticket 70 left open, and

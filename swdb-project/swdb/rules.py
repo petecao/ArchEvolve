@@ -83,6 +83,9 @@ def check(record, ctx):
     elif kind == "review" and data.get("target_kind") == "candidate":
         from swdb.extensa_boundary import validate_review
         yield from validate_review(record, ctx)
+    elif kind == "review" and data.get("target_kind") == "review":
+        from swdb.library import validate_correction     # spec review C1 (2026-10-05 ET)
+        yield from validate_correction(record, ctx)
     elif kind in {"certification", "review"}:
         from swdb.library import validate_record
         yield from validate_record(record, ctx)

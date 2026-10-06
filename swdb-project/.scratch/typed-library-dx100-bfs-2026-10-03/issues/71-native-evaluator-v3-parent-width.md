@@ -1,10 +1,10 @@
 # 71 — Native evaluator v3: parent values are checked at full width before narrowing
 
 Created: 2026-10-04 20:55 ET (from the final code review's open P3, [code review](../code-review-2026-10-04.md))
-Updated: 2026-10-04 21:15 ET (resolved, commit ce42a45)
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: Blocked by line); 2026-10-04 21:15 ET (resolved, commit ce42a45)
 **Type:** slice
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; [63](63-scalable-native-verifier.md), [66](66-native-protocol-after-isolation-test.md)
 
 **What to build:** A native evaluator version whose driver can never turn an out-of-range parent of a

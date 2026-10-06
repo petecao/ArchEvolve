@@ -1,10 +1,10 @@
 # 61 — Native protocol for the scale-22 Extensa classes
 
 Created: 2026-10-04 ET (by ticket 56)
-Updated: 2026-10-04 06:30 ET (resolved as a decision)
-**Type:** decision
+Updated: 2026-10-05 17:20 ET (tracker hygiene, code review: type task, Blocked by line); 2026-10-04 06:30 ET (resolved as a decision)
+**Type:** task
 **Status:** resolved
-**Blocked by:** —
+**Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; [design decisions](../extensa-design-2026-10-03.md) D3, D4
 
 **What to decide:** how a native Extensa campaign can time BFS on the scale-22 graphs D4 chose.

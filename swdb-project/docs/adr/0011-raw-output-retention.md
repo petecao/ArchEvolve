@@ -1,6 +1,7 @@
 # Raw-output retention
 
 Date: 2026-10-03 ET
+Updated: 2026-10-05 ET (scope line)
 Status: proposed
 
 Extends the immutable evidence policy of ADR 0002 and the evaluator workflow.
@@ -9,4 +10,4 @@ Compact correctness, witness-chain, region-report and companion evidence stays. 
 
 ## Scope and authority
 
-Implementation follows the authorized tickets [01–37](../../.scratch/typed-library-dx100-bfs-2026-10-03/map.md). This proposed record does not assert Yan-Ru accepted the ADR or sent the team note. Human review and communication receipts remain separate.
+Implementation follows the authorized tickets of the [typed-library map](../../.scratch/typed-library-dx100-bfs-2026-10-03/map.md): 01–37 at first, then 38–78 (updated 2026-10-05 ET; the map lists each ticket and its decision). This proposed record does not assert Yan-Ru accepted the ADR or sent the team note. Human review and communication receipts remain separate.
