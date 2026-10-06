@@ -90,3 +90,38 @@ the same total footprint and unchanged plateau criterion. It uses a fresh run/ve
 and a900-second wall budget. The first run's unknown parameters remain unchanged;
 no timings from different contexts are pooled. See the campaign's compact evidence
 and chain-extension preregistration for the observed rationale.
+
+
+The 2026-10-06 a1/a2 receipts' compute `footprint_bytes` field records the requested
+working-set budget, not an allocated payload. Their integer/FP/branch functions
+use scalar state; atomic uses one private 8-byte word per worker. That field was
+never a compute-rate numerator or cache bound. Those immutable receipts and target
+versions are preserved. New receipts retain `requested_working_set_bytes` and set
+compute `footprint_bytes` to zero, or `8*T` for the atomic word; register/stack/runtime
+allocation is outside this logical-payload field. Memory-kernel footprints keep
+the declared partition budget and their explicit helper-byte scope.
+
+After integrating the workload's fixed source-normalized-v2 pipeline, compare all
+12 compute count points without rerunning native timings:
+
+```sh
+python3 scripts/mbit10/cpu_count_equivalence.py \
+  --runtime "$COUNT_WORKTREE/swdb-project" \
+  --source "$CALIBRATION_WORKTREE/swdb-project/swdb/native/CpuCount.cpp" \
+  --records records \
+  --previous .scratch/lanl-db-analytic-eval-2026-10-06/evidence/cpu-calibration-mbit10-20261006-a1.json \
+  --output "$RUN/count-equivalence" \
+  --llvm-bin /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13
+```
+
+The counting runtime must be a clean version that exposes the public
+`--counting-pipeline source-normalized-v2` seam. The shared header must match the
+old counted/timed source hash. The helper runs only the 32/64/96-point public
+characterizations, with a 900-second wall budget, per-point timeout, 50 MiB raw cap
+and child-group cleanup. It retains original/new pipeline IDs/passes, coefficients,
+validation points and characterization hashes. Original a1 pipeline identification
+comes from its fixed source recipe when the earlier receipt omitted that field.
+Identical coefficients establish this constructed-work numerator equivalence only;
+changed coefficients require a new target version using unchanged native timings
+and explicit lineage. Raw count outputs stay remote; only compact metadata enters Git.

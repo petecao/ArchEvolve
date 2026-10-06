@@ -482,9 +482,14 @@ def calibrate(args):
             command = [binary, shape, t, footprint, c, args.repetitions, args.min_trial_s, args.seed,
                        ','.join(map(str, cpus[:t])), eviction]
             result = json.loads(_command(command, remaining()).stdout)
-            cell = {'threads': t, 'shape': shape, 'chains': c, 'footprint_bytes': footprint,
-                'scope': 'partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only pass fence for repeated stores',
-                'sampling_scope': 'single cold pass after untimed eviction; minimum-duration exemption' if shape == 'cache_cold_stream' else 'full-partition passes, frozen after pilot',
+            compute = shape.startswith('compute_')
+            cell = {'threads': t, 'shape': shape, 'chains': c,
+                'requested_working_set_bytes': footprint,
+                'footprint_bytes': (8 * t if shape == 'compute_atomic' else 0) if compute else footprint,
+                'scope': 'scalar state; no payload arrays; uncontended atomic uses one private 8-byte word per worker' if compute else
+                    'partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only pass fence for repeated stores',
+                'sampling_scope': 'one shared compute function invocation per worker; iterations frozen after pilot' if compute else
+                    'single cold pass after untimed eviction; minimum-duration exemption' if shape == 'cache_cold_stream' else 'full-partition passes, frozen after pilot',
                 'source_access_derivation': 'per worker/pass: N output elements; N-1 compare/select steps each read 2 heads, reread 1 selected head, write 1 output; final tail reads/writes once: 4*N-2 accesses, 4 bytes each' if shape == 'data_dependent_merge' else
                     'payload source-element accesses only; index/offset helper elements separate; checksum/control bookkeeping excluded',
                 'eviction_bytes': eviction if shape == 'cache_cold_stream' else 0, **result}

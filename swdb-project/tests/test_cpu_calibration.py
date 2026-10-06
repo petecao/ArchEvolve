@@ -63,6 +63,11 @@ def test_runner_bounds_native_work_and_fixture_never_claims_measurement(tmp_path
         'data_dependent_merge', 'cache_stream', 'compute_integer', 'compute_floating_point',
         'compute_branch', 'compute_atomic'}
     assert all(len(c['trials']) == 3 for c in data['cells'])
+    compute = [c for c in data['cells'] if c['shape'].startswith('compute_')]
+    assert all(c['footprint_bytes'] == (8 * c['threads'] if c['shape'] == 'compute_atomic' else 0)
+               for c in compute)
+    assert all(c['requested_working_set_bytes'] == 65536 for c in compute)
+    assert all('scalar state' in c['scope'] for c in compute)
     assert all(t['seconds'] > 0 and len(t['worker_iterations']) == c['threads']
                for c in data['cells'] for t in c['trials'])
     imported = run_swdb('import-cpu-calibration', '--records', records.path, '--receipt',
