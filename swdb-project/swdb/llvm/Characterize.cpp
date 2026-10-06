@@ -7,7 +7,10 @@
 #include "llvm/IR/DebugInfoMetadata.h"
 #include "llvm/IR/InstIterator.h"
 #include "llvm/IR/IntrinsicInst.h"
+#include "llvm/Transforms/Utils/BasicBlockUtils.h"
 #include "llvm/ADT/SmallPtrSet.h"
+#include "llvm/ADT/StringExtras.h"
+#include "llvm/Support/SHA256.h"
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Plugins/PassPlugin.h"
 #include "llvm/Support/JSON.h"
@@ -19,6 +22,7 @@
 #include <cctype>
 #include <cstdlib>
 #include <map>
+#include <set>
 using namespace llvm;
 
 namespace {
@@ -121,10 +125,29 @@ std::string owner(Function &F,Module &M) {
   return F.getSubprogram()?F.getSubprogram()->getName().str():symbol.str();
 }
 std::string safe(std::string s){for(char &c:s)if(!std::isalnum(static_cast<unsigned char>(c)) && c!='_' && c!='.' && c!='-' && c!='/')c='_';return s;}
-struct Region { std::string id, function; unsigned line=0; Loop *loop=nullptr; bool mapped=false; std::string file,symbol; };
-struct Access { Instruction *inst; Value *ptr; unsigned site, region, bytes, lanes; bool write; };
+// Exact standard Itanium allocation ABIs. Placement allocation/deallocation does
+// not obtain/release backing storage and must not alter its lifetime namespace.
+bool heapAllocation(StringRef name) {
+  for(auto supported:{"malloc","calloc","realloc","_Znwm","_Znam",
+      "_ZnwmRKSt9nothrow_t","_ZnamRKSt9nothrow_t","_ZnwmSt11align_val_t","_ZnamSt11align_val_t",
+      "_ZnwmSt11align_val_tRKSt9nothrow_t","_ZnamSt11align_val_tRKSt9nothrow_t"})
+    if(name==supported)return true;
+  return false;
+}
+bool heapRelease(StringRef name) {
+  for(auto supported:{"free","_ZdlPv","_ZdaPv","_ZdlPvm","_ZdaPvm",
+      "_ZdlPvRKSt9nothrow_t","_ZdaPvRKSt9nothrow_t","_ZdlPvSt11align_val_t","_ZdaPvSt11align_val_t",
+      "_ZdlPvmSt11align_val_t","_ZdaPvmSt11align_val_t",
+      "_ZdlPvSt11align_val_tRKSt9nothrow_t","_ZdaPvSt11align_val_tRKSt9nothrow_t"})
+    if(name==supported)return true;
+  return false;
+}
+struct Region { std::string id, function; unsigned line=0; Loop *loop=nullptr; bool mapped=false; std::string file,symbol; bool host_selected=true; };
+struct Access { Instruction *inst; Value *ptr; unsigned site, region, bytes, lanes; bool write; unsigned update; };
 struct Op { Instruction *inst; unsigned region, category, amount; };
-struct Call { Instruction *inst; unsigned site; Value *size=nullptr; bool known=false; unsigned region=0; };
+struct Call { Instruction *inst; unsigned site; Value *size=nullptr; bool known=false; unsigned region=0; Value *factor=nullptr,*pointer=nullptr; unsigned action=0; bool semantic_body=false; };
+
+#include "SemanticCommands.hpp"
 
 class BindROI : public PassInfoMixin<BindROI> {
 public:
@@ -172,6 +195,9 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
   std::vector<Op> operations;
   std::vector<Call> calls;
   json::Array accessRows, loopRows, callRows;
+  std::vector<std::pair<CallBase *,unsigned>> semanticSites;
+  bool semantic=!env("SWDB_FUNCTIONAL_OBSERVATION").empty();
+  CommandAccessRoles sourceRoles(semantic);
   std::map<Loop *, unsigned> loopIDs;
   const DataLayout &DL=M.getDataLayout();
   unsigned site=0, callSite=0;
@@ -180,10 +206,12 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
     auto *SP=F.getSubprogram();
     std::string name=owner(F,M);
     auto selected=env("SWDB_COUNT_FUNCTION");
-    if (!selected.empty() && selected!=name && selected!=F.getName()) continue;
+    bool hostSelected=selected.empty() || selected==name || selected==F.getName();
+    if (!hostSelected && !semantic) continue;
     if (!SP) continue; // never silently attribute runtime/compiler helpers
     unsigned serial=regions.size();
     regions.push_back({safe(env("SWDB_SUBJECT"))+"/serial."+qualified(F.getName()),name,SP->getLine(),nullptr,true,path(SP->getFile()),F.getName().str()});
+    regions.back().host_selected=hostSelected;
     auto &LI=FAM.getResult<LoopAnalysis>(F);
     auto &SE=FAM.getResult<ScalarEvolutionAnalysis>(F);
     std::vector<Loop *> loops;
@@ -209,7 +237,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
           id=r->getString("id")->str(); mapped=true;
         }
       }
-      unsigned rid=regions.size(); regions.push_back({id,name,line,L,mapped,loopPath,F.getName().str()}); loopIDs[L]=rid;
+      unsigned rid=regions.size(); regions.push_back({id,name,line,L,mapped,loopPath,F.getName().str()}); loopIDs[L]=rid;regions.back().host_selected=hostSelected;
       const SCEV *trip=SE.getBackedgeTakenCount(L);
       json::Object row{{"region",id},{"function",name},{"line",int64_t(line)},
         {"path",loopPath},{"llvm_function",F.getName().str()},{"depth",int64_t(L->getLoopDepth())},{"mapped",mapped},
@@ -219,6 +247,10 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
       loopRows.push_back(std::move(row));
     }
     for (Instruction &I:instructions(F)) {
+      if(I.getMetadata("swdb.observer")){
+        if(auto *CB=dyn_cast<CallBase>(&I))if(CB->getCalledFunction() && CB->getCalledFunction()->getName()=="__swdb_command_enter")semanticSites.emplace_back(CB,LI.getLoopFor(I.getParent())?loopIDs.at(LI.getLoopFor(I.getParent())):serial);
+        continue;
+      }
       if (isa<DbgInfoIntrinsic>(&I) || isa<PHINode>(&I) || isa<AllocaInst>(&I)) continue;
       unsigned rid=LI.getLoopFor(I.getParent()) ? loopIDs.at(LI.getLoopFor(I.getParent())) : serial;
       Value *ptr=nullptr; Type *T=nullptr; bool write=false;
@@ -248,7 +280,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
           {"update_kind",update},{"read_write",readWrite},{"address_shape",shape},
           {"stride_bytes",std::move(stride)},{"element_bytes",int64_t(bytes)},
           {"ir_lanes",int64_t(lanes)},{"address_expression",scevText(S)}};
-        accessRows.push_back(std::move(row)); accesses.push_back({&I,ptr,site++,rid,bytes,lanes,write});
+        accessRows.push_back(std::move(row)); accesses.push_back({&I,ptr,site++,rid,bytes,lanes,write,update=="read"?0u:update=="write" && !readWrite?1u:update=="add-update"?2u:update=="compare-and-swap"?3u:update=="min-max-update"?4u:5u});
       }
       unsigned category=99, amount=1, lanes=1;
       if (auto *VT=dyn_cast<FixedVectorType>(I.getType())) lanes=VT->getNumElements();
@@ -260,6 +292,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
       if (auto *CB=dyn_cast<CallBase>(&I)) {
         if (auto *callee=CB->getCalledFunction()) {
           auto called=callee->getName();
+          if(called=="__swdb_command_enter")semanticSites.emplace_back(CB,rid);
           if (called.starts_with("llvm.fmuladd") || called.starts_with("llvm.fma")) { category=1; amount=2; }
           else if (!called.starts_with("__swdb_") && !called.starts_with("llvm.lifetime.") && !called.starts_with("llvm.dbg.") && called!="llvm.assume") {
             bool hint=false,checked=false;std::string reference;
@@ -280,7 +313,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
             bool body=!callee->isDeclaration() && callee->getSubprogram() && (selected.empty() || selected==owner(*callee,M) || selected==called);
             Value *size=nullptr;std::string event=hint?"compiler_annotation":checked?"compiler_arithmetic":"external_call";
             if(auto *mem=dyn_cast<MemIntrinsic>(CB)){size=mem->getLength();event="bulk_memory";}
-            else if((called=="malloc" || called.starts_with("_Znwm") || called.starts_with("_Znam")) && CB->arg_size()){size=CB->getArgOperand(0);event="allocation";}
+            else if((heapAllocation(called) && called!="calloc" && called!="realloc") && CB->arg_size()){size=CB->getArgOperand(0);event="allocation";}
             else if(called.starts_with("__kmpc_") || called.starts_with("GOMP_"))event="openmp";
             json::Object callRow{{"site",int64_t(callSite)},{"region",regions[rid].id},{"name",called.str()},
               {"line",int64_t(I.getDebugLoc() ? I.getDebugLoc().getLine() : 0)},{"event",event},{"body_counted",body},
@@ -292,7 +325,15 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
               callRow["semantics_note"]=hint?"Optimizer hint or alias-scope metadata; no runtime operation is added.":"One logical arithmetic operation and one overflow predicate per lane; machine lowering cost is not inferred.";
             }
             callRows.push_back(std::move(callRow));
-            calls.push_back({&I,callSite++,size,size!=nullptr,rid});
+            Call observed{&I,callSite++,size,size!=nullptr,rid};
+            observed.semantic_body=hint || checked || (!callee->isDeclaration() && callee->getSubprogram());
+            if(heapRelease(called)){observed.pointer=CB->getArgOperand(0);observed.action=2;}
+            else if(heapAllocation(called)){
+              observed.action=called=="realloc"?3:1;
+              if(called=="calloc"){observed.size=CB->getArgOperand(0);observed.factor=CB->getArgOperand(1);observed.known=true;}
+              if(called=="realloc"){observed.size=CB->getArgOperand(1);observed.pointer=CB->getArgOperand(0);observed.known=true;}
+            }
+            calls.push_back(observed);
           }
         } else {
           callRows.push_back(json::Object{{"site",int64_t(callSite)},{"region",regions[rid].id},{"name","indirect-call"},{"line",0}});
@@ -307,30 +348,76 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
     auto &r=regions[i]; regionRows.push_back(json::Object{{"index",int64_t(i)},{"id",r.id},
       {"function",r.function},{"path",r.file},{"llvm_function",r.symbol},{"line",int64_t(r.line)},{"is_loop",bool(r.loop)},{"mapped",r.mapped}});
   }
-  json::Object result{{"regions",std::move(regionRows)},{"loops",std::move(loopRows)},
+  std::map<std::string,unsigned> canonical;
+  for(unsigned i=0;i<regions.size();++i)canonical.emplace(regions[i].id,i);
+  json::Array semanticRows;std::set<std::pair<unsigned,unsigned>> semanticSeen;
+  for(auto entry:semanticSites){auto *call=entry.first;unsigned rid=canonical.at(regions[entry.second].id);
+    unsigned site=cast<ConstantInt>(call->getArgOperand(1))->getZExtValue();
+    call->setArgOperand(2,ConstantInt::get(Type::getInt32Ty(M.getContext()),rid));
+    if(semanticSeen.emplace(site,rid).second)semanticRows.push_back(json::Object{{"site",int64_t(site)},{"region",regions[rid].id},{"region_index",int64_t(rid)},
+      {"descriptor",int64_t(cast<ConstantInt>(call->getArgOperand(0))->getZExtValue())}});
+  }
+  json::Object result{{"semantic_sites",std::move(semanticRows)},{"regions",std::move(regionRows)},{"loops",std::move(loopRows)},
     {"accesses",std::move(accessRows)},{"unmodeled_calls",std::move(callRows)}};
   auto out=env("SWDB_ANALYSIS_OUTPUT"); if (out.empty()) report_fatal_error("SWDB_ANALYSIS_OUTPUT missing");
   std::error_code ec; raw_fd_ostream OS(out,ec); if (ec) report_fatal_error("cannot write static analysis");
   OS<<formatv("{0:2}",json::Value(std::move(result)))<<"\n";
   if (env("SWDB_INSTRUMENT")!="1") return PreservedAnalyses::all();
   LLVMContext &C=M.getContext(); auto *u64=Type::getInt64Ty(C), *u32=Type::getInt32Ty(C);
-  auto tripFn=M.getOrInsertFunction("__swdb_trip",Type::getVoidTy(C),u32,u64);
-  auto opFn=M.getOrInsertFunction("__swdb_op",Type::getVoidTy(C),u32,u32,u64);
-  auto callFn=M.getOrInsertFunction("__swdb_call",Type::getVoidTy(C),u32,u64,u32,u32);
-  auto accessFn=M.getOrInsertFunction("__swdb_access",Type::getVoidTy(C),u32,u32,u64,u64,u64);
+  auto tripFn=semantic?M.getOrInsertFunction("__swdb_domain_trip",Type::getVoidTy(C),u32,u64,u32):M.getOrInsertFunction("__swdb_trip",Type::getVoidTy(C),u32,u64);
+  auto opFn=semantic?M.getOrInsertFunction("__swdb_domain_op",Type::getVoidTy(C),u32,u32,u64,u32):M.getOrInsertFunction("__swdb_op",Type::getVoidTy(C),u32,u32,u64);
+  auto callFn=semantic?M.getOrInsertFunction("__swdb_domain_call",Type::getVoidTy(C),u32,u64,u32,u32,u64,u32,u32,u32):M.getOrInsertFunction("__swdb_call_v2",Type::getVoidTy(C),u32,u64,u32,u32,u64,u32);
+  auto accessFn=semantic?M.getOrInsertFunction("__swdb_domain_access",Type::getVoidTy(C),u32,u32,u64,u64,u64,u32,u32,u64,u64):M.getOrInsertFunction("__swdb_access_v2",Type::getVoidTy(C),u32,u32,u64,u64,u64,u32);
   for (unsigned i=0;i<regions.size();++i) if (auto *L=regions[i].loop) {
     auto *term=L->getHeader()->getTerminator(); IRBuilder<> B(term); Value *n=B.getInt64(1);
     if (auto *br=dyn_cast<BranchInst>(term); br && br->isConditional()) {
       bool a=L->contains(br->getSuccessor(0)), b=L->contains(br->getSuccessor(1));
       if (a!=b) n=B.CreateZExt(a ? br->getCondition() : B.CreateNot(br->getCondition()),u64);
     }
-    B.CreateCall(tripFn,{B.getInt32(i),n});
+    SmallVector<Value *,3> values{B.getInt32(i),n};if(semantic)values.push_back(B.getInt32(regions[i].host_selected));B.CreateCall(tripFn,values);
   }
-  for (auto &op:operations) { IRBuilder<> B(op.inst); B.CreateCall(opFn,{B.getInt32(op.region),B.getInt32(op.category),B.getInt64(op.amount)}); }
-  for (auto &call:calls) { IRBuilder<> B(call.inst); B.CreateCall(callFn,{B.getInt32(call.site),call.size?B.CreateZExtOrTrunc(call.size,u64):B.getInt64(0),B.getInt32(call.known?1:0),B.getInt32(call.region)}); }
-  std::map<std::string,unsigned> canonical;
-  for(unsigned i=0;i<regions.size();++i)canonical.emplace(regions[i].id,i);
-  for (auto &a:accesses) { IRBuilder<> B(a.inst); B.CreateCall(accessFn,{B.getInt32(a.site),B.getInt32(canonical.at(regions[a.region].id)),B.CreatePtrToInt(a.ptr,u64),B.getInt64(a.lanes),B.getInt64(a.bytes)}); }
+  for (auto &op:operations) { IRBuilder<> B(op.inst); SmallVector<Value *,4> values{B.getInt32(op.region),B.getInt32(op.category),B.getInt64(op.amount)};if(semantic)values.push_back(B.getInt32(regions[op.region].host_selected));B.CreateCall(opFn,values); }
+  for(auto &call:calls){
+    IRBuilder<> B(call.inst);Value *size=call.size?B.CreateZExtOrTrunc(call.size,u64):B.getInt64(0),*known=B.getInt32(call.known?1:0);
+    if(call.factor){
+      auto mul=M.getOrInsertFunction("llvm.umul.with.overflow.i64",StructType::get(u64,B.getInt1Ty()),u64,u64);
+      auto product=B.CreateCall(mul,{size,B.CreateZExtOrTrunc(call.factor,u64)});
+      size=B.CreateExtractValue(product,0);known=B.CreateZExt(B.CreateNot(B.CreateExtractValue(product,1)),u32);
+    }
+    SmallVector<Value *,8> values{B.getInt32(call.site),size,known,B.getInt32(call.region),
+        call.pointer?B.CreatePtrToInt(call.pointer,u64):B.getInt64(0),B.getInt32(call.action)};
+    if(semantic){values.push_back(B.getInt32(regions[call.region].host_selected));values.push_back(B.getInt32(call.semantic_body));}B.CreateCall(callFn,values);
+  }
+  for (auto &a:accesses) { IRBuilder<> B(a.inst);SmallVector<Value *,7> values{B.getInt32(a.site),B.getInt32(canonical.at(regions[a.region].id)),B.CreatePtrToInt(a.ptr,u64),B.getInt64(a.lanes),B.getInt64(a.bytes),B.getInt32(a.update)};if(semantic){values.push_back(B.getInt32(regions[a.region].host_selected));auto roles=sourceRoles.get(*a.inst);values.push_back(B.getInt64(roles.first));values.push_back(B.getInt64(roles.second));}B.CreateCall(accessFn,values); }
+  // Object metadata is process-wide even when a source function/ROI is selected.
+  auto allocFn=M.getOrInsertFunction("__swdb_allocate",Type::getVoidTy(C),u64,u64,u32);
+  auto freeFn=M.getOrInsertFunction("__swdb_release",Type::getVoidTy(C),u64);
+  auto reallocFn=M.getOrInsertFunction("__swdb_reallocate",Type::getVoidTy(C),u64,u64,u64,u32);
+  std::vector<CallBase *> allocationCalls;
+  for(Function &F:M)if(!F.isDeclaration() && !F.getName().starts_with("__swdb_"))
+    for(Instruction &I:instructions(F))if(auto *call=dyn_cast<CallBase>(&I))if(auto *callee=call->getCalledFunction()) {
+      auto name=callee->getName();
+      if(heapAllocation(name) || heapRelease(name))allocationCalls.push_back(call);
+    }
+  for(auto *call:allocationCalls){
+    auto name=call->getCalledFunction()->getName();
+    if(heapRelease(name)) {
+      IRBuilder<> B(call);B.CreateCall(freeFn,{B.CreatePtrToInt(call->getArgOperand(0),u64)});continue;
+    }
+    if(!call->getType()->isPointerTy() || (isa<CallInst>(call) && cast<CallInst>(call)->isMustTailCall()))continue;
+    Instruction *after=nullptr;
+    if(auto *invoke=dyn_cast<InvokeInst>(call))after=&*SplitEdge(invoke->getParent(),invoke->getNormalDest())->getFirstInsertionPt();
+    else after=call->getNextNode();
+    IRBuilder<> B(after);Value *size=nullptr,*known=B.getInt32(1);
+    if(name=="calloc") {
+      auto mul=M.getOrInsertFunction("llvm.umul.with.overflow.i64",StructType::get(u64,B.getInt1Ty()),u64,u64);
+      auto product=B.CreateCall(mul,{B.CreateZExtOrTrunc(call->getArgOperand(0),u64),B.CreateZExtOrTrunc(call->getArgOperand(1),u64)});
+      size=B.CreateExtractValue(product,0);known=B.CreateZExt(B.CreateNot(B.CreateExtractValue(product,1)),u32);
+    } else size=B.CreateZExtOrTrunc(call->getArgOperand(name=="realloc"?1:0),u64);
+    Value *address=B.CreatePtrToInt(call,u64);
+    if(name=="realloc")B.CreateCall(reallocFn,{B.CreatePtrToInt(call->getArgOperand(0),u64),address,size,known});
+    else B.CreateCall(allocFn,{address,size,known});
+  }
   return PreservedAnalyses::none();
 }
 };
@@ -338,6 +425,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
 extern "C" LLVM_ATTRIBUTE_WEAK PassPluginLibraryInfo llvmGetPassPluginInfo() {
   return {LLVM_PLUGIN_API_VERSION,"SWDBCharacterize","1.0",[](PassBuilder &PB) {
     PB.registerPipelineParsingCallback([](StringRef name, ModulePassManager &MPM, ArrayRef<PassBuilder::PipelineElement>) {
+      if(name=="swdb-bind-commands"){MPM.addPass(BindCommands());return true;}
       if(name=="swdb-bind-roi"){MPM.addPass(BindROI());return true;}
       if (name!="swdb-characterize") return false; MPM.addPass(Characterize()); return true;
     });

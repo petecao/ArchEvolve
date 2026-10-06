@@ -2,7 +2,7 @@
 
 Created: 2026-10-06
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 05
 **Spec:** `../spec.md`
 **Time estimate:** 1.5–2 days

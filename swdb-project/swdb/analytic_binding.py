@@ -127,8 +127,12 @@ def compare_patterns(subject,regions,ambiguous=(),mapping=()):
 
 
 def counted_payload(record):
-    return {'regions':record['regions'],'trials':record.get('trials',[]),
+    payload={'regions':record['regions'],'trials':record.get('trials',[]),
         'unmodeled_calls':record['unmodeled_calls']}
+    if 'observation_contract' in record:
+        payload['observation_contract']=record['observation_contract']
+        payload['observation_format']=record['counting'].get('observation_format')
+    return payload
 
 
 def execution_receipt(record,graph,plugin_source,runtime_source):
