@@ -1,8 +1,8 @@
 # ArchEvolve — hardware exploration prototype
 
-The active target is the **DX100-modified GAP BFS**, using Peter's v1.2 sparse and fully connected reports. Eric's [hardware evidence catalog](docs/hardware-catalog-handoff.md) is the default hardware knowledge input: seven source/version/configuration records, 39 operations and 46 located claims. Data revision 0.1.3 adds MAPLE from Eric's selected ISCA 2022 paper.
+The active target is the **DX100-modified GAP BFS**, using Peter's v1.2 sparse and fully connected reports. Eric's [hardware evidence catalog](docs/hardware-catalog-handoff.md) is the default hardware knowledge input: **10 source/version/configuration/mapping records, 46 operations and 132 located claims** (data revision **0.1.10**). TMU, COBRA and AXI-Pack are scoped mapping records, not generic gather replacements.
 
-Local work for this task lives in `/Users/jvgrewal/Desktop/ArchEvolve`. Run commands from the repository root.
+The [current mechanism handoff](docs/mechanism-handoff-2026-10-06/README.md) explains scheduling, grouping, response association, credits, completion and unresolved implementation details. It includes a small executable association scaffold; no cycle model, RTL or target-performance validation is implied.
 
 ## Current offline forward path
 
@@ -17,13 +17,14 @@ python3 -m venv .venv
 .venv/bin/python -m unittest discover -s tests -v
 ```
 
-The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 0.1.3); `--catalog` may be omitted. The received feature files still use schema 1.1 despite being report revision v1.2.
+The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 0.1.10); `--catalog` may be omitted. The received feature files still use schema 1.1 despite being report revision v1.2.
 
 ## Results and handoff
 
 - **[Peter's intrinsic handoff](docs/peter-intrinsics-handoff.md)**: current images, operation contracts, and source requirements.
 - **[MAPLE/DX100 handoff](docs/maple-dx100-handoff.md)**: the selected second fetcher, known internal mechanisms, diagrams and typed/mapping gaps.
-- [Latest focused BFS comparison](runs/bfs-maple-comparison-v0.1/README.md).
+- [Validated v0.1.9 mechanism-rich BFS comparison](runs/bfs-mechanisms-v0.1.9/README.md).
+- [Earlier focused BFS comparison](runs/bfs-maple-comparison-v0.1/README.md).
 - **[October 1 candidate packages](runs/bfs-intrinsic-handoff-v0.1/README.md)**: high-level intrinsic descriptions, structured drafts, explicitly grouped source context and same-request comparisons.
 - [Proposed shared handoff format](docs/intrinsic-handoff-format.md) and [implementation plan](docs/october-01-implementation-plan.md).
 - [Run overview](runs/bfs-hardware-v0.1/README.md).

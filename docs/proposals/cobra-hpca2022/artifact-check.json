@@ -1,0 +1,33 @@
+{
+  "checked_at_utc": "2026-10-04T02:09:10.379326+00:00",
+  "method": "Bounded two web searches and three primary-page inspections; no artifact/source downloads.",
+  "queries": [
+    "\"Improving Locality of Irregular Updates with Hardware Assisted Propagation Blocking\" source code artifact",
+    "\"Vignesh Balaji\" \"COBRA\" github Sniper"
+  ],
+  "pages": [
+    {
+      "url": "https://bvignesh.github.io/",
+      "locator": "HPCA2022 publication entry",
+      "observation": "preprint/slides/teaser/talk links; no COBRA code link at entry"
+    },
+    {
+      "url": "https://research.nvidia.com/publication/2022-04_improving-locality-irregular-updates-hardware-assisted-propagation-blocking",
+      "locator": "Uploaded Files / External Links",
+      "observation": "Published Manuscript and IEEE link; no runnable source linked"
+    },
+    {
+      "url": "https://brandonlucia.com/",
+      "locator": "Graph Processing publication entry",
+      "observation": "paper/slides links; no COBRA artifact established"
+    }
+  ],
+  "finding": "No public runnable COBRA implementation located in this bounded inspection; not proof of absence.",
+  "reported_only": [
+    "Modified Sniper OoO/binupdate model",
+    "Pin-based cache simulator",
+    "DES eviction-buffer sizing model",
+    "CACTI cache timing/area estimates"
+  ],
+  "scaffolding": "Paper-backed structure only: Fig. 7 slot insertion, Fig. 8 FIFO drain, Fig. 9 memory-bin offsets, \u00a7V.E partial flush. No source file, commit, Sniper version or executable entry point authenticated."
+}

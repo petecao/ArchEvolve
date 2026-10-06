@@ -1,0 +1,259 @@
+{
+  "pipeline_version": "offline-0.3",
+  "backend": "offline_evidence_lookup",
+  "llm_calls": 0,
+  "evaluation_performed": false,
+  "run_id": "4aef41912da756ec1288281f66cfe6ba58db0eb98f8fb42adf05f007e87a5f70",
+  "identity": {
+    "inputs": [
+      "379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3",
+      "1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750"
+    ],
+    "catalog_sha256": "39603c232003a110dd43d9e28a250d7bc67da0c801fedb7250c2dbc2b45af04d",
+    "max_candidates": 4,
+    "code_sha256": "6f2e7edca4aad0f106453f586af35d85691cf69f6419fbe76080ca86699e9688",
+    "reference": {
+      "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+      "element_bytes": {
+        "VertexOffsets": 4,
+        "parent": 4,
+        "queue.shared": 4,
+        "g.out_neighbors_": 4
+      },
+      "evidence": "examples/bfs.source-observations.yaml",
+      "basis": "recorded_manual_source_review"
+    },
+    "methodology_sha256": "c1dc5b86c68c5bd0c16eab522b57690ba3131af70d3f5ed78c6f909fe0ac2d9a",
+    "source_context_sha256": "4abf18a26cb638f5243887cefcdf54fac45492ea9eeb4db5e2cbc5695560abac",
+    "comparison_design_ids": [
+      "dx100-artifact-e4fc4af",
+      "maple-isca2022"
+    ],
+    "focus_design_ids": [
+      "dx100-artifact-e4fc4af",
+      "maple-isca2022"
+    ]
+  },
+  "catalog_ref": "catalog/hardware-v0.1.yaml",
+  "catalog_revision": "0.1.9",
+  "cases": [
+    {
+      "case_id": "gapbs_bfs_top_down_step",
+      "folder": "case-01",
+      "input_ref": "examples/received/bfs-sparse.features.v1.2.yaml",
+      "input_sha256": "379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3",
+      "selected_entries": [
+        "cpu-baseline",
+        "dx100-artifact-e4fc4af:read_execute",
+        "maple-isca2022:read_assist",
+        "maple-isca2022:read_execute"
+      ],
+      "issues": [
+        {
+          "id": "raw-profile-missing",
+          "severity": "needs_clarification",
+          "message": "Profiling provenance is supplied and retained as reported context. Raw artifacts, exact collection/ROI boundaries and cross-trial correspondence remain unverified; no measurements were reproduced locally.",
+          "fields": [
+            "profiling_provenance",
+            "hardware_performance_profile",
+            "indirect_access_distances"
+          ],
+          "affects": [
+            "performance_claims"
+          ]
+        },
+        {
+          "id": "frontier-profile-scope",
+          "severity": "interpretation_resolved",
+          "message": "The reported per-level scope is preserved separately from the command/counter context. No counter values are apportioned to levels, and no level means are aggregated across trials.",
+          "fields": [
+            "frontier_evolution_profile",
+            "hardware_performance_profile"
+          ],
+          "affects": [
+            "measurement_scope"
+          ]
+        },
+        {
+          "id": "frontier-distance-no-pairs",
+          "severity": "interpretation_resolved",
+          "message": "A frontier with fewer than two entries has no adjacent pairs. The reported mean remains in the raw section, but its analysis value is null rather than a measured zero-distance observation.",
+          "fields": [
+            "frontier_evolution_profile.levels"
+          ],
+          "affects": [
+            "distance_interpretation"
+          ]
+        },
+        {
+          "id": "locality-not-hit-rate",
+          "severity": "interpretation_resolved",
+          "message": "Peter's instrumentation measures adjacent-index proximity, not same cache-line/page membership or cache-hit rates. Values are relabeled descriptively and remain outside selection rules.",
+          "fields": [
+            "indirect_access_distances.VertexOffsets.statistics.spatial_locality_distribution",
+            "indirect_access_distances.parent.statistics.spatial_locality_distribution"
+          ],
+          "affects": [
+            "performance_claims",
+            "hardware_priority"
+          ]
+        },
+        {
+          "id": "footprint-not-working-set",
+          "severity": "interpretation_resolved",
+          "message": "Peter confirmed capacity-based array footprints. Exact bytes and decimal/binary conversions are derived separately; active tile/phase working sets remain unknown and do not fix storage parameters.",
+          "fields": [
+            "working_set"
+          ],
+          "affects": [
+            "storage_sizing"
+          ]
+        },
+        {
+          "id": "multiple-scales",
+          "severity": "needs_clarification",
+          "message": "This report includes several graph scales without binding each statistic to a run. Do not transfer values between scales.",
+          "fields": [
+            "working_set.scale_examples",
+            "indirect_access_distances"
+          ],
+          "affects": [
+            "measurement_scope"
+          ]
+        },
+        {
+          "id": "statement-locations-missing",
+          "severity": "needs_clarification",
+          "message": "Array-level features are usable for exploratory retrieval; exact statement IDs and profiled-source locations are still absent.",
+          "fields": [
+            "memory_streams",
+            "kernel.source_file"
+          ],
+          "affects": [
+            "intrinsic_placement"
+          ]
+        },
+        {
+          "id": "pair-sequence-scope",
+          "severity": "interpretation_resolved",
+          "message": "The snippets enumerate adjacent positions within frontiers/rows, excluding segment transitions and thread interleaving; they do not establish a global hardware-access trace. VertexOffsets: adjacent_positions_within_each_frontier; parent: adjacent_neighbors_within_each_vertex_row",
+          "fields": [
+            "indirect_access_distances"
+          ],
+          "affects": [
+            "stride_scope",
+            "reuse_interpretation"
+          ]
+        },
+        {
+          "id": "footprint-unit-inconsistency",
+          "severity": "needs_clarification",
+          "message": "Some reported footprints do not use the claimed binary conversion. Original numbers are preserved; exact byte-derived values are separate.",
+          "details": [
+            "small_scale_g18.parent_footprint_mb=1.05 matches decimal conversion; explanation claims binary.",
+            "small_scale_g18.offsets_footprint_mb=1.05 matches decimal conversion; explanation claims binary.",
+            "small_scale_g18.neighbors_footprint_mb=30.44 matches decimal conversion; explanation claims binary.",
+            "large_scale_g24.parent_footprint_mb=67.11 matches decimal conversion; explanation claims binary.",
+            "large_scale_g24.offsets_footprint_mb=67.11 matches decimal conversion; explanation claims binary.",
+            "large_scale_g24.neighbors_footprint_mb=2083.01 matches decimal conversion; explanation claims binary."
+          ],
+          "fields": [
+            "working_set"
+          ],
+          "affects": [
+            "footprint_units"
+          ]
+        }
+      ],
+      "hardware_request_sha256": "5a383aa67a853ea1518a67828ec6684cb0ae234bef3df2c7a3ce677ab104f198"
+    },
+    {
+      "case_id": "gapbs_bfs_top_down_step_fully_connected",
+      "folder": "case-02",
+      "input_ref": "examples/received/bfs-fully-connected.features.v1.2.yaml",
+      "input_sha256": "1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750",
+      "selected_entries": [
+        "cpu-baseline",
+        "dx100-artifact-e4fc4af:read_execute",
+        "maple-isca2022:read_assist",
+        "maple-isca2022:read_execute"
+      ],
+      "issues": [
+        {
+          "id": "raw-profile-missing",
+          "severity": "needs_clarification",
+          "message": "Received values are reported; raw profiling logs, build flags, dataset identity and per-run scope have not been bound/verified by this prototype.",
+          "fields": [
+            "profiling_provenance",
+            "hardware_performance_profile",
+            "indirect_access_distances"
+          ],
+          "affects": [
+            "performance_claims"
+          ]
+        },
+        {
+          "id": "phase-specific-cas",
+          "severity": "needs_clarification",
+          "message": "Retain conditional CAS for the kernel. A reported zero-execution second phase does not remove the discovery-phase update.",
+          "fields": [
+            "operations.rmw_operation.execution_frequency"
+          ],
+          "affects": [
+            "phase_specialization",
+            "correctness"
+          ]
+        },
+        {
+          "id": "locality-not-hit-rate",
+          "severity": "interpretation_resolved",
+          "message": "Peter's instrumentation measures adjacent-index proximity, not same cache-line/page membership or cache-hit rates. Values are relabeled descriptively and remain outside selection rules.",
+          "fields": [
+            "indirect_access_distances.VertexOffsets.statistics.spatial_locality_distribution",
+            "indirect_access_distances.parent.statistics.spatial_locality_distribution"
+          ],
+          "affects": [
+            "performance_claims",
+            "hardware_priority"
+          ]
+        },
+        {
+          "id": "footprint-not-working-set",
+          "severity": "interpretation_resolved",
+          "message": "Peter confirmed capacity-based array footprints. Exact bytes and decimal/binary conversions are derived separately; active tile/phase working sets remain unknown and do not fix storage parameters.",
+          "fields": [
+            "working_set"
+          ],
+          "affects": [
+            "storage_sizing"
+          ]
+        },
+        {
+          "id": "statement-locations-missing",
+          "severity": "needs_clarification",
+          "message": "Array-level features are usable for exploratory retrieval; exact statement IDs and profiled-source locations are still absent.",
+          "fields": [
+            "memory_streams",
+            "kernel.source_file"
+          ],
+          "affects": [
+            "intrinsic_placement"
+          ]
+        },
+        {
+          "id": "pair-sequence-scope",
+          "severity": "interpretation_resolved",
+          "message": "The snippets enumerate adjacent positions within frontiers/rows, excluding segment transitions and thread interleaving; they do not establish a global hardware-access trace. VertexOffsets: adjacent_positions_within_each_frontier; parent: adjacent_neighbors_within_each_vertex_row",
+          "fields": [
+            "indirect_access_distances"
+          ],
+          "affects": [
+            "stride_scope",
+            "reuse_interpretation"
+          ]
+        }
+      ],
+      "hardware_request_sha256": "bccb8aa5e05f40ccd746394519a79bc3c8f68d6d5881be29acd5ff513f4c9eed"
+    }
+  ]
+}

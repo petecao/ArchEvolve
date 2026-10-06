@@ -1,0 +1,86 @@
+{
+  "format": "drt-provenance-v1",
+  "sources": {
+    "tactile-paper": {
+      "title": "Accelerating Sparse Data Orchestration via Dynamic Reflexive Tiling",
+      "authors": [
+        "Toluwanimi O. Odemuyiwa",
+        "Hadi Asghari-Moghaddam",
+        "Michael Pellauer",
+        "Kartik Hegde",
+        "Po-An Tsai",
+        "Neal Crago",
+        "Aamer Jaleel",
+        "John D. Owens",
+        "Edgar Solomonik",
+        "Joel S. Emer",
+        "Christopher W. Fletcher"
+      ],
+      "venue": "ASPLOS2023 Volume 3",
+      "year": 2023,
+      "doi": "10.1145/3582016.3582064",
+      "url": "https://doi.org/10.1145/3582016.3582064",
+      "download_url": "https://www.nealcrago.com/wp-content/uploads/TACTile_ASPLOS2023.pdf",
+      "retrieved_at": "2026-09-30T03:54:51.086721+00:00",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/tactile.pdf",
+      "sha256": "e3df45525aeafcfffd7e8b79696f2b6ff844a9a9480cef1f0723284d3eff1dd8",
+      "bytes": 1657169,
+      "pages": 15,
+      "document_type": "author-hosted publication PDF",
+      "locator_basis": "PDF page 1 = proceedings page 18; PDF pages 4\u20139 = proceedings pages 21\u201326"
+    },
+    "drt-readme": {
+      "repository": "https://github.com/FPSG-UIUC/DRT",
+      "commit": "dc8023a27057b6568cc66ab9e1b506092f79c559",
+      "source_path": "README.md",
+      "url": "https://raw.githubusercontent.com/FPSG-UIUC/DRT/dc8023a27057b6568cc66ab9e1b506092f79c559/README.md",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/drt-artifact-README.md",
+      "sha256": "acdf007740c819784f9e10bb048d26377d51de73884fbf89a251ee95e4f3b517",
+      "bytes": 4998,
+      "retrieved_at": "2026-09-30T04:06:47.637254+00:00",
+      "document_type": "pinned public simulator source",
+      "edition_limit": "Public revision not authenticated as the ASPLOS2023 evaluated revision."
+    },
+    "drt-scheduler": {
+      "repository": "https://github.com/FPSG-UIUC/DRT",
+      "commit": "dc8023a27057b6568cc66ab9e1b506092f79c559",
+      "source_path": "src/scheduler_8.cpp",
+      "url": "https://raw.githubusercontent.com/FPSG-UIUC/DRT/dc8023a27057b6568cc66ab9e1b506092f79c559/src/scheduler_8.cpp",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/drt-artifact-src_scheduler_8.cpp",
+      "sha256": "291e7e9e7623e20d1404792113b5503998893ae48ce381ce11725dec162989e1",
+      "bytes": 81186,
+      "retrieved_at": "2026-09-30T04:06:47.873637+00:00",
+      "document_type": "pinned public simulator source",
+      "edition_limit": "Public revision not authenticated as the ASPLOS2023 evaluated revision."
+    }
+  },
+  "handoff_files": [
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/README.md",
+      "sha256": "d6239cdaa1db1fb54cb57c3fb16358deb56d8ec2adbbfc4fb498d0f7b8b8d9c6"
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/records.json",
+      "sha256": "8ba3d6b7814cdac629e33fab0c888b220b7650a040cb706481eb94e706a9af00"
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/sources.json",
+      "sha256": "c11dbe1b1d70d521d278c9a7fbc2e6ee3562f782fc7542c505ce6eccb2247819"
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/artifacts.json",
+      "sha256": "32d840dcc5c2cb4f439254e95fe71b89d67bf1b961e64a2b284d1799cccbca5e"
+    }
+  ],
+  "new_download_bytes": 0,
+  "download_budget_bytes": 16777216,
+  "disk_floor_bytes": 17179869184,
+  "inspection": "Re-extracted exact primary PDF with pdftotext -layout to /tmp/drt-primary.txt; inspected PDF pp4\u20139/11 and pinned README/scheduler functions. No full text/PDF copied into repository.",
+  "publisher_metadata": {
+    "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/metadata/tactile-crossref.json",
+    "sha256": "aa2646a9cbe06e36a4ee193c197b7a8e4c217d8e89d76a620adfb35816f196a0",
+    "bytes": 13136,
+    "url": "https://api.crossref.org/works/10.1145/3582016.3582064",
+    "document_type": "cached raw Crossref metadata; reused, not freshly retrieved"
+  }
+}

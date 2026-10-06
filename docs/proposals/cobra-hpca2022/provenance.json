@@ -1,0 +1,159 @@
+{
+  "inspection_time_utc": "2026-10-04T02:09:10.372924+00:00",
+  "sources": [
+    {
+      "id": "cobra-pdf",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/cobra.pdf",
+      "bytes": 1083944,
+      "sha256": "4028d0f2742286ae436e15a9536a0181091563b4e0a7d69b41fe197eb85683e5"
+    },
+    {
+      "id": "cobra-text",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/cobra.txt",
+      "bytes": 131282,
+      "sha256": "9febbe08a364bf2c667e2925068b8bfc017245151bf75127c2ec0b293cbb4e2b"
+    },
+    {
+      "id": "cobra-crossref",
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/metadata/cobra-crossref.json",
+      "bytes": 9689,
+      "sha256": "988f9ecee2d53bed3e1b6422d77f35b2e81210e0b7d5cff1df8e2913f9bd2334"
+    }
+  ],
+  "prior_retrieval": {
+    "id": "cobra",
+    "url": "https://bvignesh.github.io/papers/COBRA-HPCA22.pdf",
+    "kind": "pdf",
+    "retrieved_at": "2026-09-30T03:42:23.390854+00:00",
+    "http_status": 200,
+    "final_url": "https://bvignesh.github.io/papers/COBRA-HPCA22.pdf",
+    "status": "retrieved",
+    "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/cobra.pdf",
+    "sha256": "4028d0f2742286ae436e15a9536a0181091563b4e0a7d69b41fe197eb85683e5",
+    "bytes": 1083944,
+    "duplicate_of": null,
+    "pages": 15,
+    "text_path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/cobra.txt",
+    "text_sha256": "9febbe08a364bf2c667e2925068b8bfc017245151bf75127c2ec0b293cbb4e2b",
+    "title": "Improving Locality of Irregular Updates with Hardware Assisted Propagation Blocking",
+    "authors": [
+      "Vignesh Balaji",
+      "Brandon Lucia"
+    ],
+    "venue": "HPCA",
+    "conference_year": 2022,
+    "doi": "10.1109/HPCA53966.2022.00047",
+    "canonical_url": "https://doi.org/10.1109/HPCA53966.2022.00047",
+    "edition_note": "Author-hosted paper; DOI discovery metadata.",
+    "publication_date_or_year": "2022",
+    "date_note": "Preprint date for arXiv editions; year-only where exact publication date not independently resolved; never crawler date.",
+    "publisher_metadata": {
+      "url": "https://api.crossref.org/works/10.1109/hpca53966.2022.00047",
+      "sha256": "988f9ecee2d53bed3e1b6422d77f35b2e81210e0b7d5cff1df8e2913f9bd2334",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/cobra-crossref.json",
+      "title": [
+        "Improving Locality of Irregular Updates with Hardware Assisted Propagation Blocking"
+      ],
+      "subtitle": [],
+      "authors": [
+        {
+          "given": "Vignesh",
+          "family": "Balaji",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "NVIDIA"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Brandon",
+          "family": "Lucia",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Carnegie Mellon University"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "pages": "543-557",
+      "published": {
+        "date-parts": [
+          [
+            2022,
+            4
+          ]
+        ]
+      }
+    },
+    "document_type": "primary_paper_PDF",
+    "read_scope": "Selected interface/architecture sections in contracts."
+  },
+  "handoff_files": [
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/README.md",
+      "bytes": 18927,
+      "sha256": "d6239cdaa1db1fb54cb57c3fb16358deb56d8ec2adbbfc4fb498d0f7b8b8d9c6"
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/sources.json",
+      "bytes": 16475,
+      "sha256": "c11dbe1b1d70d521d278c9a7fbc2e6ee3562f782fc7542c505ce6eccb2247819"
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/records.json",
+      "bytes": 10297,
+      "sha256": "8ba3d6b7814cdac629e33fab0c888b220b7650a040cb706481eb94e706a9af00"
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/artifacts.json",
+      "bytes": 1791,
+      "sha256": "32d840dcc5c2cb4f439254e95fe71b89d67bf1b961e64a2b284d1799cccbca5e"
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/validation.json",
+      "bytes": 1038,
+      "sha256": "d2ff06e49c8a37fa27cb7449920ba59786fa8332976f29e0cb4bc634fa34e91e"
+    }
+  ],
+  "schema_files": [
+    {
+      "path": "/data1/nier/worktrees/codex-sessions/cobra-record-proposal-20261003-220453-89c0c478/ArchEvolve/archevolve/hardware_catalog.py",
+      "bytes": 24055,
+      "sha256": "c585bb3cf99a018b44eb4b4d77e2d826da5d6469287afec77b80365f7221a623"
+    },
+    {
+      "path": "/data1/nier/worktrees/codex-sessions/cobra-record-proposal-20261003-220453-89c0c478/ArchEvolve/docs/hardware-catalog-format.md",
+      "bytes": 6780,
+      "sha256": "689de04a5a124d898fdd217ada95562c204776a225b69135df0c4b89551a9291"
+    },
+    {
+      "path": "/data1/nier/worktrees/codex-sessions/cobra-record-proposal-20261003-220453-89c0c478/ArchEvolve/catalog/hardware-v0.1.yaml",
+      "bytes": 224114,
+      "sha256": "c17f7dc4463949035e66333e8e524055ca15a4cc36cc7641fb936f30c8df94d5"
+    },
+    {
+      "path": "/data1/nier/worktrees/codex-sessions/cobra-record-proposal-20261003-220453-89c0c478/ArchEvolve/docs/proposals/drt-asplos2023/admission-decision.md",
+      "bytes": 1548,
+      "sha256": "931ba7fb310d76618513e6459f1323d89dfc130ac75ab7323848ab60843abcc8"
+    }
+  ],
+  "new_download_bytes": 0,
+  "download_budget_bytes": 16777216,
+  "disk_floor_bytes": 17179869184,
+  "pdf_redistributed": false,
+  "edition_note": "Author-hosted exact bytes independently checked; no DOI printed in this PDF. Title/authors match publisher Crossref HPCA metadata. Older arXiv 2020 and later TOCS version not substituted."
+}

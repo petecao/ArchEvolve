@@ -1,0 +1,98 @@
+{
+  "format": "drt-independent-review-validation-v1",
+  "proposal_commit": "8d0d3c09e85ef647c896e913aafc73a2f60bb76f",
+  "verdict": "approve_research_retention_defer_v0",
+  "research_schema": {
+    "valid": true,
+    "records": 1,
+    "claims": 15,
+    "required_unknowns": [
+      "coherent-cpu-binding",
+      "dirty-output-visibility",
+      "evaluated-revision",
+      "numeric-correctness",
+      "response-association",
+      "tile-pointer-reuse",
+      "zero-admission-fallback"
+    ]
+  },
+  "source_checks": [
+    {
+      "id": "tactile-paper",
+      "sha256": "e3df45525aeafcfffd7e8b79696f2b6ff844a9a9480cef1f0723284d3eff1dd8",
+      "bytes": 1657169
+    },
+    {
+      "id": "drt-readme",
+      "sha256": "acdf007740c819784f9e10bb048d26377d51de73884fbf89a251ee95e4f3b517",
+      "bytes": 4998
+    },
+    {
+      "id": "drt-scheduler",
+      "sha256": "291e7e9e7623e20d1404792113b5503998893ae48ce381ce11725dec162989e1",
+      "bytes": 81186
+    },
+    {
+      "id": "src/llb_mem.cpp",
+      "sha256": "e1699d64bc73e9c40f27e7f8daa20bd1fbdbd3b6caa19cd1ab48620037e04144",
+      "bytes": 4478
+    },
+    {
+      "id": "src/SpMSpM_TACTile_twoInp.cpp",
+      "sha256": "276c337aca102100438f4b5d95390520a75e31fa54be5514d34e6c4c9cfb7f23",
+      "bytes": 6018
+    },
+    {
+      "id": "src/parameters.h",
+      "sha256": "3f174bc559c4380cc9e74056776adee71303d2fd776ee85f976ed85824a78131",
+      "bytes": 23514
+    }
+  ],
+  "primary_pdf_identity_verified": true,
+  "publisher_metadata_verified": true,
+  "unchanged_proposal_files": [
+    {
+      "path": "docs/proposals/drt-asplos2023/README.md",
+      "sha256": "ac52c9745e85a42b685ad0a03ec0f32fd5c74cf8a38ea3a3d3afc77a75610cc6"
+    },
+    {
+      "path": "docs/proposals/drt-asplos2023/proposal.json",
+      "sha256": "91fef4eff80fe535112b44184029511c45167250c6bfdd3767f5d9f45615b799"
+    },
+    {
+      "path": "docs/proposals/drt-asplos2023/provenance.json",
+      "sha256": "9a23451f9968b8bfb9b2756ffb4286dc96300836423139103bbfa164f2961a87"
+    },
+    {
+      "path": "docs/proposals/drt-asplos2023/validate_proposal.py",
+      "sha256": "40e2d2acdf6f40a74b7a23d0c0201203f3f4df627dfcbaaae0a618807a6d345c"
+    },
+    {
+      "path": "docs/proposals/drt-asplos2023/validation.json",
+      "sha256": "c482aad922b402b290a139e8ff28399a34ac198c9eeb68fdf6b924abcc0a3890"
+    }
+  ],
+  "production_catalog_sha256": "c17f7dc4463949035e66333e8e524055ca15a4cc36cc7641fb936f30c8df94d5",
+  "producer_query_checks_reused": {
+    "validation_sha256": "c482aad922b402b290a139e8ff28399a34ac198c9eeb68fdf6b924abcc0a3890",
+    "proposal_queries": 21,
+    "unchanged_existing_queries": 88,
+    "fresh_rerun": false
+  },
+  "additional_source_files": 3,
+  "new_download_bytes": 34010,
+  "source_boundary_checks": "Manual conditional path inspection: non-ideal adaptive repartition, total/per-tensor limits, post-compute output eviction and first-row zero-admission advancement. No C++ or numeric helper execution.",
+  "unknowns_retained": [
+    "consumer-release",
+    "dirty-output-visibility",
+    "tile-pointer-lifetime",
+    "response-association",
+    "cpu-coherent-binding",
+    "numeric-correctness",
+    "evaluated-revision",
+    "capacity-constructor-and-setters",
+    "effective-parser-settings",
+    "zero-admission-progress"
+  ],
+  "scope": "Provenance/schema/source review only; no hardware certification."
+}

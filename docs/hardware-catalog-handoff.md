@@ -2,11 +2,11 @@
 
 Eric supplies the hardware knowledge. Josh owns architecture selection/composition and its implementation; Peter derives the software specification; Yan-Ru rewrites the benchmark.
 
-The catalog is now the offline pipeline's default. Data revision 0.1.3 includes Eric's selected MAPLE second-fetcher paper and source-reviewed internal mechanism annotations. The [MAPLE/DX100 handoff](maple-dx100-handoff.md) is the latest comparison; implementations and hardware performance remain unverified.
+The catalog is now the offline pipeline's default. Data revision 0.1.10 contains ten records and 46 operations, including scoped TMU, COBRA and AXI-Pack mappings. The [current internal-mechanism handoff](mechanism-handoff-2026-10-06/README.md) includes the expanded MAPLE contract and an executable association scaffold. Implementations and hardware performance remain unverified.
 
 ## What is here
 
-- [catalog/hardware-v0.1.yaml](../catalog/hardware-v0.1.yaml): seven source-scoped records covering DX100 paper/artifact, two Terminus configurations, Prodigy, a SpZip mapping and MAPLE; 39 operations.
+- [catalog/hardware-v0.1.yaml](../catalog/hardware-v0.1.yaml): ten source-scoped records covering DX100 paper/artifact, two Terminus configurations, Prodigy, SpZip, MAPLE, TMU, COBRA and AXI-Pack; 46 operations.
 - [Field reference](hardware-catalog-format.md): input, output, operation support, requirements, parameters and evidence fields.
 - [Source evidence](hardware-catalog-evidence.md): paper/artifact distinctions and limitations.
 - `archevolve/hardware_catalog.py`: optional validation/inspection/query interface. Direct YAML loading is also supported.
@@ -32,6 +32,6 @@ A query returns relevant source-backed capabilities and unresolved conditions. A
 
 ## Scope of tonight's prototype
 
-The catalog describes existing design/version/configuration operations. It is not an exhaustive survey, a simulator generator, or a composable hardware building-block library. MAPLE is now represented; MAD, IMPICA, HATS and other important families remain possible future coverage. Reusable mechanisms and compatibility constraints are still needed for general composition; these seven records are grounded examples, not the only architectures the agent may propose.
+The catalog describes existing design/version/configuration operations. It is not an exhaustive survey, a simulator generator, or a composable hardware building-block library. MAPLE is now represented; MAD, IMPICA, HATS and other important families remain possible future coverage. Reusable mechanisms and compatibility constraints are still needed for general composition; these ten records are grounded examples, not the only architectures the agent may propose.
 
 Suggested integration: read this YAML as hardware knowledge alongside Peter's features. Josh decides how to retrieve/use it and how to realize a candidate; keep its source editions, support status and unresolved requirements attached. No coupling to Eric's separate offline demo is required.

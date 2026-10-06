@@ -1,0 +1,54 @@
+                 "I[%d] SoA/JIT claimed duplicate active A line 0x%lx\n",
+                 my_indirect_id, physical_addr);
+        *context = SoaJitContext();
+        context->aPaddr = addr;
+        context->generation = soa_jit_generation;
+        context->nextOffset = head;
+        context->issueOffset = head;
+        context->remaining = words;
+        context->state = SoaJitContextState::AwaitARead;
+        observeSoaJitResultPipeline();
+        const size_t context_index = std::distance(
+            soa_jit_contexts.begin(), context);
+        soa_jit_context_high_water = std::max<uint64_t>(
+            soa_jit_context_high_water,
+            soaJitActiveContextCount());
+        soa_jit_a_read_issues++;
+        recordReorderSurvivalIssue(physical_addr);
+        createReadPacket(physical_addr, rowtable_latency);
+        DPRINTF(MAAVirtualTrace,
+                "event=soa_jit_a_read_issue schema=1 unit=%d "
+                "operation_tick=%lu generation=%lu addr=0x%lx "
+                "head=%d aliases=%d contexts=%lu active_limit=%d\n",
+                my_indirect_id, my_decode_start_tick, soa_jit_generation,
+                physical_addr, head, words, soaJitActiveContextCount(),
+                soa_jit_active_contexts);
+        if (soa_jit_a_read_issues == 1) {
+            DPRINTF(MAAOperationSummary,
+                    "event=soa_jit_a_read_issue schema=1 unit=%d "
+                    "operation_tick=%lu generation=%lu addr=0x%lx "
+                    "head=%d aliases=%d contexts=%lu active_limit=%d\n",
+                    my_indirect_id, my_decode_start_tick, soa_jit_generation,
+                    physical_addr, head, words, soaJitActiveContextCount(),
+                    soa_jit_active_contexts);
+        }
+        if (soa_jit_pre_a_value_lookahead)
+            fillSoaJitLookahead(context_index);
+        return true;
+    }
+    if (my_fill_finished) {
+        panic_if(soa_jit_retry_valid ||
+                     soa_jit_next_source_ordinal !=
+                         static_cast<uint64_t>(my_max),
+                 "I[%d] SoA/JIT final rows claimed before exact source "
+                 "closure (%lu/%d retry=%d)\n",
+                 my_indirect_id, soa_jit_next_source_ordinal, my_max,
+                 soa_jit_retry_valid);
+        soa_jit_all_rows_claimed = true;
+        DPRINTF(MAAVirtualTrace,
+                "event=soa_jit_all_rows_claimed schema=1 unit=%d "
+                "operation_tick=%lu generation=%lu cursor=%d "
+                "selected=%lu rejected=%lu epoch_drains=%lu\n",
+                my_indirect_id, my_decode_start_tick, soa_jit_generation,
+                my_i, soa_jit_selected, soa_jit_predicate_rejected,
+                soa_jit_epoch_drains);

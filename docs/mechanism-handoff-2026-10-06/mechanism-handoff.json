@@ -1,0 +1,817 @@
+{
+  "status": "proposal_only",
+  "base_commit": "5f420867d46e417ecf1d5c269730e83224a11793",
+  "identity": {
+    "artifact_revision": "742a22d2ed336880f6c15fa6cda72fdcec54a717",
+    "doi": "10.1145/3470496.3527400",
+    "evidence_commit": "063d1ecdb9e2bae6cbf62cf9030b503366fc38b5",
+    "paper_edition": "cached_author_conference_manuscript_revision_date_unknown",
+    "source_grounding_sha256": "a43da684b7773d24dd4f4ec9d0661fae7db5f8adf8d69005198cf84960dbdae0",
+    "title": "Tiny but Mighty: Designing and Realizing Scalable Latency Tolerance for Manycore SoCs",
+    "venue": "ISCA",
+    "year": 2022
+  },
+  "machine_fields": [
+    {
+      "field": "comparison_domain",
+      "basis": "explicit_restriction",
+      "claims": [
+        "P5",
+        "A6"
+      ],
+      "value": {
+        "duplicates": "preserve_occurrences",
+        "input": "published_immutable_A_B_epoch",
+        "mappings": "stable_legal",
+        "ranges_per_queue": 1,
+        "rebind": "known_count_consume_plus_CPU_effect_completion_and_deployment_quiescence"
+      },
+      "links": [
+        {
+          "claim_id": "P5",
+          "catalogue_claim_id": "integration-maple-P5",
+          "locator": "\u00a73.6",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=7",
+          "span_or_page_hashes": {
+            "7": "52c229045414cd00d6ebaa9b2abc5496fc38de8db6e7a93b87d3f937cf84b375"
+          }
+        },
+        {
+          "claim_id": "A6",
+          "catalogue_claim_id": "integration-maple-A6",
+          "locator": [
+            541,
+            560
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/dcp_chunk_req.v#L541-L560",
+          "span_or_page_hashes": "7a374996a2a33fde4363a6caeab7e2894feaa729d74127895e077e377ae5d64e"
+        }
+      ],
+      "catalogue_annotation": {
+        "id": "integration-maple-comparison_domain",
+        "kind": "other",
+        "status": "unknown",
+        "description": null,
+        "claim_refs": []
+      },
+      "scope": "Explicit consumer restrictions and unknowns are not described hardware support."
+    },
+    {
+      "field": "completion",
+      "basis": "source_with_limit",
+      "claims": [
+        "P1",
+        "P5",
+        "A3",
+        "A6"
+      ],
+      "value": {
+        "CLOSE": "endpoint_disconnect_not_universal_drain",
+        "command_ACK": "not_value_ready",
+        "internal_LIMA_pointer_ACK": "individual_CPU_ACK_suppressed"
+      },
+      "links": [
+        {
+          "claim_id": "P1",
+          "catalogue_claim_id": "integration-maple-P1",
+          "locator": "\u00a73.1; Fig3 steps1\u20136 and A\u2013C",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=4",
+          "span_or_page_hashes": {
+            "4": "5de5e20ed7fcdfb264caa546ab19953ba936fa3232efcb8c86ff166c7917fe0e",
+            "5": "1453d402f11de812b512a85ea9fbfb038826ee6eb969464800f1dd28851be9c1"
+          }
+        },
+        {
+          "claim_id": "P5",
+          "catalogue_claim_id": "integration-maple-P5",
+          "locator": "\u00a73.6",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=7",
+          "span_or_page_hashes": {
+            "7": "52c229045414cd00d6ebaa9b2abc5496fc38de8db6e7a93b87d3f937cf84b375"
+          }
+        },
+        {
+          "claim_id": "A3",
+          "catalogue_claim_id": "integration-maple-A3",
+          "locator": [
+            232,
+            641
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/maple.sv#L232-L641",
+          "span_or_page_hashes": "7f4fa048d5773f4abd96db0b582d857d335660fe71bf9f8854a3cc6e6e31f6b5"
+        },
+        {
+          "claim_id": "A6",
+          "catalogue_claim_id": "integration-maple-A6",
+          "locator": [
+            541,
+            560
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/dcp_chunk_req.v#L541-L560",
+          "span_or_page_hashes": "7a374996a2a33fde4363a6caeab7e2894feaa729d74127895e077e377ae5d64e"
+        }
+      ],
+      "catalogue_annotation": {
+        "id": "integration-maple-completion",
+        "kind": "completion",
+        "status": "described",
+        "description": "completion: {\"CLOSE\": \"endpoint_disconnect_not_universal_drain\", \"command_ACK\": \"not_value_ready\", \"internal_LIMA_pointer_ACK\": \"individual_CPU_ACK_suppressed\"}; basis=source_with_limit; source-scoped, no operation-support widening",
+        "claim_refs": [
+          "integration-maple-P1",
+          "integration-maple-P5",
+          "integration-maple-A3",
+          "integration-maple-A6"
+        ]
+      },
+      "scope": "Paper/code source fact with retained limit; not hardware or timing validation."
+    },
+    {
+      "field": "credit",
+      "basis": "source_plus_consumer_obligation",
+      "claims": [
+        "P1",
+        "A2",
+        "A3"
+      ],
+      "value": {
+        "CPU_final_effect": "separate_obligation",
+        "release": "consume_capture_dequeue",
+        "reserve": "owns_not_ready"
+      },
+      "links": [
+        {
+          "claim_id": "P1",
+          "catalogue_claim_id": "integration-maple-P1",
+          "locator": "\u00a73.1; Fig3 steps1\u20136 and A\u2013C",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=4",
+          "span_or_page_hashes": {
+            "4": "5de5e20ed7fcdfb264caa546ab19953ba936fa3232efcb8c86ff166c7917fe0e",
+            "5": "1453d402f11de812b512a85ea9fbfb038826ee6eb969464800f1dd28851be9c1"
+          }
+        },
+        {
+          "claim_id": "A2",
+          "catalogue_claim_id": "integration-maple-A2",
+          "locator": [
+            279,
+            389
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/dcp_fifo_ctrl.v#L279-L389",
+          "span_or_page_hashes": "ad3f699d4f06ce50dbc25204971a5a8a14332420a0c98223bab22b7d9b16ba42"
+        },
+        {
+          "claim_id": "A3",
+          "catalogue_claim_id": "integration-maple-A3",
+          "locator": [
+            232,
+            641
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/maple.sv#L232-L641",
+          "span_or_page_hashes": "7f4fa048d5773f4abd96db0b582d857d335660fe71bf9f8854a3cc6e6e31f6b5"
+        }
+      ],
+      "catalogue_annotation": {
+        "id": "integration-maple-credit",
+        "kind": "buffering",
+        "status": "described",
+        "description": "credit: {\"CPU_final_effect\": \"separate_obligation\", \"release\": \"consume_capture_dequeue\", \"reserve\": \"owns_not_ready\"}; basis=source_plus_consumer_obligation; source-scoped, no operation-support widening",
+        "claim_refs": [
+          "integration-maple-P1",
+          "integration-maple-A2",
+          "integration-maple-A3"
+        ]
+      },
+      "scope": "Paper/code source fact with retained limit; not hardware or timing validation."
+    },
+    {
+      "field": "grouping",
+      "basis": "source_plus_explicit_unknown",
+      "claims": [
+        "P3",
+        "A5"
+      ],
+      "value": {
+        "final_A_address_sort": "not_established",
+        "final_A_duplicate_merge": "unknown",
+        "index": "B_spatial_chunks"
+      },
+      "links": [
+        {
+          "claim_id": "P3",
+          "catalogue_claim_id": "integration-maple-P3",
+          "locator": "\u00a73.4; Fig6",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=6",
+          "span_or_page_hashes": {
+            "6": "4bc2f09190bc643818073e693df6e4e952434eb3afa724dc88bf1c1add9fa475"
+          }
+        },
+        {
+          "claim_id": "A5",
+          "catalogue_claim_id": "integration-maple-A5",
+          "locator": [
+            120,
+            522
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/dcp_chunk_req.v#L120-L522",
+          "span_or_page_hashes": "ed73635ee103814305a925227ac32cd39a5e5db36f316a220cde4fdb3d569620"
+        }
+      ],
+      "catalogue_annotation": {
+        "id": "integration-maple-grouping",
+        "kind": "buffering",
+        "status": "described",
+        "description": "grouping: {\"final_A_address_sort\": \"not_established\", \"final_A_duplicate_merge\": \"unknown\", \"index\": \"B_spatial_chunks\"}; basis=source_plus_explicit_unknown; source-scoped, no operation-support widening",
+        "claim_refs": [
+          "integration-maple-P3",
+          "integration-maple-A5"
+        ]
+      },
+      "scope": "Paper/code source fact with retained limit; not hardware or timing validation."
+    },
+    {
+      "field": "interface",
+      "basis": "source",
+      "claims": [
+        "P1",
+        "P2",
+        "A1b"
+      ],
+      "value": {
+        "consumer": "MMIO_CONSUME",
+        "delivery": "queue_operand",
+        "producer": "bounded_range_submission"
+      },
+      "links": [
+        {
+          "claim_id": "P1",
+          "catalogue_claim_id": "integration-maple-P1",
+          "locator": "\u00a73.1; Fig3 steps1\u20136 and A\u2013C",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=4",
+          "span_or_page_hashes": {
+            "4": "5de5e20ed7fcdfb264caa546ab19953ba936fa3232efcb8c86ff166c7917fe0e",
+            "5": "1453d402f11de812b512a85ea9fbfb038826ee6eb969464800f1dd28851be9c1"
+          }
+        },
+        {
+          "claim_id": "P2",
+          "catalogue_claim_id": "integration-maple-P2",
+          "locator": "\u00a73.2; Fig4",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=5",
+          "span_or_page_hashes": {
+            "5": "1453d402f11de812b512a85ea9fbfb038826ee6eb969464800f1dd28851be9c1"
+          }
+        },
+        {
+          "claim_id": "A1b",
+          "catalogue_claim_id": "integration-maple-A1b",
+          "locator": [
+            276,
+            407
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/api/dcp_maple.h#L276-L407",
+          "span_or_page_hashes": "f4a3ae7d49d2edac5be7dacda42fb23cfb092fd100efc72f112b09cb82818c6b"
+        }
+      ],
+      "catalogue_annotation": {
+        "id": "integration-maple-interface",
+        "kind": "other",
+        "status": "described",
+        "description": "interface: {\"consumer\": \"MMIO_CONSUME\", \"delivery\": \"queue_operand\", \"producer\": \"bounded_range_submission\"}; basis=source; source-scoped, no operation-support widening",
+        "claim_refs": [
+          "integration-maple-P1",
+          "integration-maple-P2",
+          "integration-maple-A1b"
+        ]
+      },
+      "scope": "Paper/code source fact with retained limit; not hardware or timing validation."
+    },
+    {
+      "field": "memory_routes",
+      "basis": "source_with_limit",
+      "claims": [
+        "P1",
+        "P5"
+      ],
+      "value": {
+        "choices": [
+          "coherent_LLC",
+          "direct_DRAM"
+        ],
+        "later_queue_value_coherence": "not_guaranteed"
+      },
+      "links": [
+        {
+          "claim_id": "P1",
+          "catalogue_claim_id": "integration-maple-P1",
+          "locator": "\u00a73.1; Fig3 steps1\u20136 and A\u2013C",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=4",
+          "span_or_page_hashes": {
+            "4": "5de5e20ed7fcdfb264caa546ab19953ba936fa3232efcb8c86ff166c7917fe0e",
+            "5": "1453d402f11de812b512a85ea9fbfb038826ee6eb969464800f1dd28851be9c1"
+          }
+        },
+        {
+          "claim_id": "P5",
+          "catalogue_claim_id": "integration-maple-P5",
+          "locator": "\u00a73.6",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=7",
+          "span_or_page_hashes": {
+            "7": "52c229045414cd00d6ebaa9b2abc5496fc38de8db6e7a93b87d3f937cf84b375"
+          }
+        }
+      ],
+      "catalogue_annotation": {
+        "id": "integration-maple-memory_routes",
+        "kind": "other",
+        "status": "described",
+        "description": "memory_routes: {\"choices\": [\"coherent_LLC\", \"direct_DRAM\"], \"later_queue_value_coherence\": \"not_guaranteed\"}; basis=source_with_limit; source-scoped, no operation-support widening",
+        "claim_refs": [
+          "integration-maple-P1",
+          "integration-maple-P5"
+        ]
+      },
+      "scope": "Paper/code source fact with retained limit; not hardware or timing validation."
+    },
+    {
+      "field": "operation",
+      "basis": "source",
+      "claims": [
+        "P2",
+        "A1",
+        "A1b"
+      ],
+      "value": {
+        "consumer_arithmetic": "CPU",
+        "expression": "A[B[i]]",
+        "kind": "required_LIMA_PRODUCE"
+      },
+      "links": [
+        {
+          "claim_id": "P2",
+          "catalogue_claim_id": "integration-maple-P2",
+          "locator": "\u00a73.2; Fig4",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=5",
+          "span_or_page_hashes": {
+            "5": "1453d402f11de812b512a85ea9fbfb038826ee6eb969464800f1dd28851be9c1"
+          }
+        },
+        {
+          "claim_id": "A1",
+          "catalogue_claim_id": "integration-maple-A1",
+          "locator": [
+            64,
+            119
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/api/dcp_maple.h#L64-L119",
+          "span_or_page_hashes": "4d020d14f61d6b9638350c18c1660ed87f4004c8bb4fff68efc055fcbf91c300"
+        },
+        {
+          "claim_id": "A1b",
+          "catalogue_claim_id": "integration-maple-A1b",
+          "locator": [
+            276,
+            407
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/api/dcp_maple.h#L276-L407",
+          "span_or_page_hashes": "f4a3ae7d49d2edac5be7dacda42fb23cfb092fd100efc72f112b09cb82818c6b"
+        }
+      ],
+      "catalogue_annotation": {
+        "id": "integration-maple-operation",
+        "kind": "other",
+        "status": "described",
+        "description": "operation: {\"consumer_arithmetic\": \"CPU\", \"expression\": \"A[B[i]]\", \"kind\": \"required_LIMA_PRODUCE\"}; basis=source; source-scoped, no operation-support widening",
+        "claim_refs": [
+          "integration-maple-P2",
+          "integration-maple-A1",
+          "integration-maple-A1b"
+        ]
+      },
+      "scope": "Paper/code source fact with retained limit; not hardware or timing validation."
+    },
+    {
+      "field": "response",
+      "basis": "source",
+      "claims": [
+        "P1",
+        "A2",
+        "A4"
+      ],
+      "value": {
+        "arrival": "may_be_out_of_order",
+        "association": "reserved_slot_transaction_id",
+        "delivery": "per_queue_valid_head_FIFO",
+        "global_queue_order": "not_claimed"
+      },
+      "links": [
+        {
+          "claim_id": "P1",
+          "catalogue_claim_id": "integration-maple-P1",
+          "locator": "\u00a73.1; Fig3 steps1\u20136 and A\u2013C",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=4",
+          "span_or_page_hashes": {
+            "4": "5de5e20ed7fcdfb264caa546ab19953ba936fa3232efcb8c86ff166c7917fe0e",
+            "5": "1453d402f11de812b512a85ea9fbfb038826ee6eb969464800f1dd28851be9c1"
+          }
+        },
+        {
+          "claim_id": "A2",
+          "catalogue_claim_id": "integration-maple-A2",
+          "locator": [
+            279,
+            389
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/dcp_fifo_ctrl.v#L279-L389",
+          "span_or_page_hashes": "ad3f699d4f06ce50dbc25204971a5a8a14332420a0c98223bab22b7d9b16ba42"
+        },
+        {
+          "claim_id": "A4",
+          "catalogue_claim_id": "integration-maple-A4",
+          "locator": [
+            920,
+            988
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/dcp_pipe.sv#L920-L988",
+          "span_or_page_hashes": "37c453c451b7009ff20b29a8a180c1660d4fbf971b346d6cf3fc1d6251dc0a20"
+        }
+      ],
+      "catalogue_annotation": {
+        "id": "integration-maple-response",
+        "kind": "reordering",
+        "status": "described",
+        "description": "response: {\"arrival\": \"may_be_out_of_order\", \"association\": \"reserved_slot_transaction_id\", \"delivery\": \"per_queue_valid_head_FIFO\", \"global_queue_order\": \"not_claimed\"}; basis=source; source-scoped, no operation-support widening",
+        "claim_refs": [
+          "integration-maple-P1",
+          "integration-maple-A2",
+          "integration-maple-A4"
+        ]
+      },
+      "scope": "Paper/code source fact with retained limit; not hardware or timing validation."
+    },
+    {
+      "field": "scheduling",
+      "basis": "supplemental_source_with_limit",
+      "claims": [
+        "A3",
+        "A5"
+      ],
+      "value": {
+        "arbitration": "eligible_queue_round_robin_in_inspected_paths",
+        "global_fairness": "not_proven"
+      },
+      "links": [
+        {
+          "claim_id": "A3",
+          "catalogue_claim_id": "integration-maple-A3",
+          "locator": [
+            232,
+            641
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/maple.sv#L232-L641",
+          "span_or_page_hashes": "7f4fa048d5773f4abd96db0b582d857d335660fe71bf9f8854a3cc6e6e31f6b5"
+        },
+        {
+          "claim_id": "A5",
+          "catalogue_claim_id": "integration-maple-A5",
+          "locator": [
+            120,
+            522
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/dcp_chunk_req.v#L120-L522",
+          "span_or_page_hashes": "ed73635ee103814305a925227ac32cd39a5e5db36f316a220cde4fdb3d569620"
+        }
+      ],
+      "catalogue_annotation": {
+        "id": "integration-maple-scheduling",
+        "kind": "issue_policy",
+        "status": "described",
+        "description": "scheduling: {\"arbitration\": \"eligible_queue_round_robin_in_inspected_paths\", \"global_fairness\": \"not_proven\"}; basis=supplemental_source_with_limit; source-scoped, no operation-support widening",
+        "claim_refs": [
+          "integration-maple-A3",
+          "integration-maple-A5"
+        ]
+      },
+      "scope": "Paper/code source fact with retained limit; not hardware or timing validation."
+    },
+    {
+      "field": "state",
+      "basis": "source",
+      "claims": [
+        "P3",
+        "A2",
+        "A5",
+        "A6"
+      ],
+      "value": {
+        "capacity": "configuration_specific_finite",
+        "range_admission": "unlimited_unestablished",
+        "storage": "partitioned_circular_reserved_valid_FIFO"
+      },
+      "links": [
+        {
+          "claim_id": "P3",
+          "catalogue_claim_id": "integration-maple-P3",
+          "locator": "\u00a73.4; Fig6",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=6",
+          "span_or_page_hashes": {
+            "6": "4bc2f09190bc643818073e693df6e4e952434eb3afa724dc88bf1c1add9fa475"
+          }
+        },
+        {
+          "claim_id": "A2",
+          "catalogue_claim_id": "integration-maple-A2",
+          "locator": [
+            279,
+            389
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/dcp_fifo_ctrl.v#L279-L389",
+          "span_or_page_hashes": "ad3f699d4f06ce50dbc25204971a5a8a14332420a0c98223bab22b7d9b16ba42"
+        },
+        {
+          "claim_id": "A5",
+          "catalogue_claim_id": "integration-maple-A5",
+          "locator": [
+            120,
+            522
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/dcp_chunk_req.v#L120-L522",
+          "span_or_page_hashes": "ed73635ee103814305a925227ac32cd39a5e5db36f316a220cde4fdb3d569620"
+        },
+        {
+          "claim_id": "A6",
+          "catalogue_claim_id": "integration-maple-A6",
+          "locator": [
+            541,
+            560
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/dcp_chunk_req.v#L541-L560",
+          "span_or_page_hashes": "7a374996a2a33fde4363a6caeab7e2894feaa729d74127895e077e377ae5d64e"
+        }
+      ],
+      "catalogue_annotation": {
+        "id": "integration-maple-state",
+        "kind": "buffering",
+        "status": "described",
+        "description": "state: {\"capacity\": \"configuration_specific_finite\", \"range_admission\": \"unlimited_unestablished\", \"storage\": \"partitioned_circular_reserved_valid_FIFO\"}; basis=source; source-scoped, no operation-support widening",
+        "claim_refs": [
+          "integration-maple-P3",
+          "integration-maple-A2",
+          "integration-maple-A5",
+          "integration-maple-A6"
+        ]
+      },
+      "scope": "Paper/code source fact with retained limit; not hardware or timing validation."
+    },
+    {
+      "field": "translations",
+      "basis": "source_with_limit",
+      "claims": [
+        "P4"
+      ],
+      "value": {
+        "fault_shootdown_integration": "deployment_required",
+        "local_TLB_PTW": "described"
+      },
+      "links": [
+        {
+          "claim_id": "P4",
+          "catalogue_claim_id": "integration-maple-P4",
+          "locator": "\u00a73.5",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=7",
+          "span_or_page_hashes": {
+            "7": "52c229045414cd00d6ebaa9b2abc5496fc38de8db6e7a93b87d3f937cf84b375"
+          }
+        }
+      ],
+      "catalogue_annotation": {
+        "id": "integration-maple-translations",
+        "kind": "other",
+        "status": "described",
+        "description": "translations: {\"fault_shootdown_integration\": \"deployment_required\", \"local_TLB_PTW\": \"described\"}; basis=source_with_limit; source-scoped, no operation-support widening",
+        "claim_refs": [
+          "integration-maple-P4"
+        ]
+      },
+      "scope": "Paper/code source fact with retained limit; not hardware or timing validation."
+    },
+    {
+      "field": "unknowns",
+      "basis": "source_limit",
+      "claims": [
+        "P3",
+        "P5",
+        "A6"
+      ],
+      "value": [
+        "instantiated_sizes",
+        "final_A_merge_policy",
+        "full_system_fairness",
+        "fault_reset_drain",
+        "multi_range_admission",
+        "calibrated_latency"
+      ],
+      "links": [
+        {
+          "claim_id": "P3",
+          "catalogue_claim_id": "integration-maple-P3",
+          "locator": "\u00a73.4; Fig6",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=6",
+          "span_or_page_hashes": {
+            "6": "4bc2f09190bc643818073e693df6e4e952434eb3afa724dc88bf1c1add9fa475"
+          }
+        },
+        {
+          "claim_id": "P5",
+          "catalogue_claim_id": "integration-maple-P5",
+          "locator": "\u00a73.6",
+          "url": "https://jbalkind.github.io/docs/isca2022_maple.pdf#page=7",
+          "span_or_page_hashes": {
+            "7": "52c229045414cd00d6ebaa9b2abc5496fc38de8db6e7a93b87d3f937cf84b375"
+          }
+        },
+        {
+          "claim_id": "A6",
+          "catalogue_claim_id": "integration-maple-A6",
+          "locator": [
+            541,
+            560
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/dcp_chunk_req.v#L541-L560",
+          "span_or_page_hashes": "7a374996a2a33fde4363a6caeab7e2894feaa729d74127895e077e377ae5d64e"
+        }
+      ],
+      "catalogue_annotation": {
+        "id": "integration-maple-unknowns",
+        "kind": "other",
+        "status": "unknown",
+        "description": null,
+        "claim_refs": []
+      },
+      "scope": "Explicit consumer restrictions and unknowns are not described hardware support."
+    },
+    {
+      "field": "width",
+      "basis": "supplemental_source",
+      "claims": [
+        "A3",
+        "A5"
+      ],
+      "value": {
+        "executable_illustration_bytes": 4,
+        "inspected_payload_bytes": [
+          4,
+          8
+        ]
+      },
+      "links": [
+        {
+          "claim_id": "A3",
+          "catalogue_claim_id": "integration-maple-A3",
+          "locator": [
+            232,
+            641
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/maple.sv#L232-L641",
+          "span_or_page_hashes": "7f4fa048d5773f4abd96db0b582d857d335660fe71bf9f8854a3cc6e6e31f6b5"
+        },
+        {
+          "claim_id": "A5",
+          "catalogue_claim_id": "integration-maple-A5",
+          "locator": [
+            120,
+            522
+          ],
+          "url": "https://github.com/PrincetonUniversity/maple/blob/742a22d2ed336880f6c15fa6cda72fdcec54a717/rtl/dcp_chunk_req.v#L120-L522",
+          "span_or_page_hashes": "ed73635ee103814305a925227ac32cd39a5e5db36f316a220cde4fdb3d569620"
+        }
+      ],
+      "catalogue_annotation": {
+        "id": "integration-maple-width",
+        "kind": "other",
+        "status": "described",
+        "description": "width: {\"executable_illustration_bytes\": 4, \"inspected_payload_bytes\": [4, 8]}; basis=supplemental_source; source-scoped, no operation-support widening",
+        "claim_refs": [
+          "integration-maple-A3",
+          "integration-maple-A5"
+        ]
+      },
+      "scope": "Paper/code source fact with retained limit; not hardware or timing validation."
+    }
+  ],
+  "scaffold_reference": "examples/mechanism-scaffolds/finite_gather.py",
+  "scaffold_sha256": "5ced5f119968d9d1d9172ca9b69e0aeb6a6dd58cf0500d4cf7550e20ad7afe5d",
+  "DX_source_grounding": [
+    {
+      "path": "src/mem/MAA/Tables.cc",
+      "sha256": "56e68b1ab719381e447cf0e5b47359ba447be22f421bf57e61a588f447e28aa9",
+      "line_ranges": [
+        [
+          147,
+          172
+        ],
+        [
+          369,
+          395
+        ]
+      ],
+      "claim": "Offset slots retain itr/wid/pass and next link; same-line aliases append to existing chain",
+      "source_commit": "e921b245bb107290cf688fd2e1269e88a86f8aea",
+      "selected_source_snapshots": [
+        {
+          "original_lines": [
+            147,
+            172
+          ],
+          "snapshot_path": "docs/mechanism-handoff-2026-10-06/source-evidence/Tables.cc.L147-172.txt",
+          "snapshot_sha256": "c118e279cb98db5fda5320997f34412db36d0505da6a333c08823b8acfa4e15c"
+        },
+        {
+          "original_lines": [
+            369,
+            395
+          ],
+          "snapshot_path": "docs/mechanism-handoff-2026-10-06/source-evidence/Tables.cc.L369-395.txt",
+          "snapshot_sha256": "908a3fe1eeacbbd08e491c080471cece48263a38e271432e8165881d326f2319"
+        }
+      ]
+    },
+    {
+      "path": "src/mem/MAA/StreamAccess.cc",
+      "sha256": "0f14940fb858e97f31d38ba1293e9426c80e7fa9405d8691e3bd434992ce1831",
+      "line_ranges": [
+        [
+          441,
+          462
+        ]
+      ],
+      "claim": "Channel/table retry precedes successful admission; retry earns no entry credit",
+      "source_commit": "e921b245bb107290cf688fd2e1269e88a86f8aea",
+      "selected_source_snapshots": [
+        {
+          "original_lines": [
+            441,
+            462
+          ],
+          "snapshot_path": "docs/mechanism-handoff-2026-10-06/source-evidence/StreamAccess.cc.L441-462.txt",
+          "snapshot_sha256": "41021750736edb9b58fdb56398ed1a90c0df46f196728ac9e11708adb4fb7e89"
+        }
+      ]
+    },
+    {
+      "path": "src/mem/MAA/SPD.hh",
+      "sha256": "42325cb653eed2f44381afcaee11ad10a95dc56665408c9acabfa681af8de557",
+      "line_ranges": [
+        [
+          43,
+          64
+        ]
+      ],
+      "claim": "word4/8 and visible paired tiles guarded; physical element capacity distinct from logical capacity",
+      "source_commit": "e921b245bb107290cf688fd2e1269e88a86f8aea",
+      "selected_source_snapshots": [
+        {
+          "original_lines": [
+            43,
+            64
+          ],
+          "snapshot_path": "docs/mechanism-handoff-2026-10-06/source-evidence/SPD.hh.L43-64.txt",
+          "snapshot_sha256": "7b84f1fa1ad8fb795d957cbb5b7e36bff182fe0d2752cf17d9b7d678d020c576"
+        }
+      ]
+    },
+    {
+      "path": "src/mem/MAA/IndirectAccess.cc",
+      "sha256": "a324cec613756d41e26596cfb0c0b71a81acb91122b3711c72dddfc18343d3cf",
+      "line_ranges": [
+        [
+          5500,
+          5553
+        ]
+      ],
+      "claim": "SoAJIT per-line context holds nextOffset, generation, remaining; final all-rows-claimed requires exact source closure",
+      "source_commit": "e921b245bb107290cf688fd2e1269e88a86f8aea",
+      "selected_source_snapshots": [
+        {
+          "original_lines": [
+            5500,
+            5553
+          ],
+          "snapshot_path": "docs/mechanism-handoff-2026-10-06/source-evidence/IndirectAccess.cc.L5500-5553.txt",
+          "snapshot_sha256": "4a02351a43cf6450f2850832636ab2041541a8d044e7379b410973d0cebbfa87"
+        }
+      ]
+    }
+  ],
+  "claims": {
+    "hardware_runtime_acceptance": false,
+    "paper_RTL_equivalence": false,
+    "measured_performance": false,
+    "matcher_capability_widening": false,
+    "current_e766_equivalence": false
+  },
+  "scaffold_policies_not_hardware_guarantees": [
+    "all admission before issue",
+    "DX credits retained until ACK",
+    "monotonic abstract token identity"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "rows": [
+    {
+      "dimension": "Scheduling",
+      "MAPLE": "Eligible-queue round robin in inspected supplemental paths; global fairness unknown.",
+      "DX100_scoped_source_or_scaffold": "Caller chooses line issue order in the finite scaffold; actual scheduler/fairness not established.",
+      "MAPLE_field": "scheduling",
+      "fact_scope": "V reviewed source742a22d and W scoped source; never e4fc/e766/RTL/performance equivalence"
+    },
+    {
+      "dimension": "Request grouping",
+      "MAPLE": "LIMA walks B spatial chunks; final A sort/dedup/merge unknown.",
+      "DX100_scoped_source_or_scaffold": "Scoped Tables source appends same-line logical aliases with itr/wid/pass; no global FIFO.",
+      "MAPLE_field": "grouping",
+      "fact_scope": "V reviewed source742a22d and W scoped source; never e4fc/e766/RTL/performance equivalence"
+    },
+    {
+      "dimension": "Response association",
+      "MAPLE": "Reserved-slot transaction identity; out-of-order placement, valid FIFO-head delivery per queue.",
+      "DX100_scoped_source_or_scaffold": "Line response fans out through the logical offset chain; each word/ordinal remains distinct.",
+      "MAPLE_field": "response",
+      "fact_scope": "V reviewed source742a22d and W scoped source; never e4fc/e766/RTL/performance equivalence"
+    },
+    {
+      "dimension": "Credits",
+      "MAPLE": "Reservation owns space but is not readiness; dequeue/capture frees queue storage before later CPU effects.",
+      "DX100_scoped_source_or_scaffold": "Separate line/offset limits and retry admission; ACK-retained credits are scaffold policy, not ordinary DX release.",
+      "MAPLE_field": "credit",
+      "fact_scope": "V reviewed source742a22d and W scoped source; never e4fc/e766/RTL/performance equivalence"
+    },
+    {
+      "dimension": "Completion",
+      "MAPLE": "Command ACK is not value readiness; CLOSE disconnects and is not a universal drain.",
+      "DX100_scoped_source_or_scaffold": "Exact admitted-domain/response/ACK closure is the finite model; publication/coherence/CPU visibility require actual source/runtime binding.",
+      "MAPLE_field": "completion",
+      "fact_scope": "V reviewed source742a22d and W scoped source; never e4fc/e766/RTL/performance equivalence"
+    },
+    {
+      "dimension": "Reuse",
+      "MAPLE": "Immutable A/B epoch and stable legal mappings; fault/reset/drain/rebind obligations remain deployment-dependent.",
+      "DX100_scoped_source_or_scaffold": "Generations and remaining offsets are scoped source state; no universal cancellation/reuse/coherence certificate.",
+      "MAPLE_field": "comparison_domain",
+      "fact_scope": "V reviewed source742a22d and W scoped source; never e4fc/e766/RTL/performance equivalence"
+    }
+  ]
+}

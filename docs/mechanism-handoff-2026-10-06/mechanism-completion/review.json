@@ -1,0 +1,30 @@
+{
+  "scope": "SOURCE_GROUNDED_LOCAL_PROPOSAL_ONLY",
+  "base_revision": "5f420867d46e417ecf1d5c269730e83224a11793",
+  "base_sha256": "392b829e451d284e0b76fa1c0d038e8a060e62179a00395fea82ad6818a13a7e",
+  "status": "PINNED_LOADER_VALID_AND_FOUR_NEW_REPRESENTATION_TESTS_PASS",
+  "new_test_methods": 4,
+  "tests_rc": 0,
+  "command": "python3 -m unittest discover -s experiments/analysis/catalog_internal_mechanism_completion_2026_10_06 -p test_proposal.py -v",
+  "old_research_or_test_suites_replayed": false,
+  "base_counts": {
+    "designs": 10,
+    "claims": 119
+  },
+  "candidate_counts": {
+    "designs": 10,
+    "claims": 120
+  },
+  "addition_counts": {
+    "TMU": 16,
+    "COBRA": 2,
+    "AXIPack": 1,
+    "new_located_claims": 1
+  },
+  "old_operations_interfaces_requirements_params_unchanged": true,
+  "no_shared_write": true,
+  "no_push": true,
+  "no_runtime_or_RTL_or_measurement_claim": true,
+  "early_proposal_sha256": "49ef20e654ab0781e1344849140976ba2d8961b1e90bfc0fe41a522f595c0bf5",
+  "post_hook": "Python import/formatting and candidate YAML presentation only; formatted candidate passed exact pinned loader; no old research/tests/model evidence replay."
+}

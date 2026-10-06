@@ -1,0 +1,81 @@
+[
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "before_kinds": [],
+    "after_kinds": [
+      "buffering",
+      "coalescing",
+      "completion",
+      "dependency_tracking",
+      "issue_policy",
+      "other",
+      "reordering"
+    ],
+    "existing_mechanisms_preserved": true,
+    "added_ids": [
+      "tu-circular-stream-storage",
+      "lane-shared-queue-allocation",
+      "operand-event-double-buffer",
+      "physical-request-coalescing",
+      "serialized-callback-construction",
+      "hierarchical-cacheline-arbiter",
+      "parent-valid-stream-dependencies",
+      "active-lane-head-and-lockstep",
+      "cpu-owned-spmv-callback-pipeline",
+      "row-event-and-full-chunk-delivery",
+      "private-cache-translation-route",
+      "quiesce-context-state",
+      "evaluated-resource-reference-only",
+      "physical-response-tag-association",
+      "host-chunk-ready-consumed-finalpartial-abi",
+      "concrete-operand-width-and-register-encoding"
+    ],
+    "operations_types_requirements_parameters_unchanged": true
+  },
+  {
+    "design_id": "cobra-hpca2022-tuple-binning",
+    "before_kinds": [
+      "buffering",
+      "completion",
+      "issue_policy",
+      "reordering"
+    ],
+    "after_kinds": [
+      "buffering",
+      "coalescing",
+      "completion",
+      "dependency_tracking",
+      "issue_policy",
+      "reordering"
+    ],
+    "existing_mechanisms_preserved": true,
+    "added_ids": [
+      "bin-phase-initialization-dependencies",
+      "memory-request-duplicate-coalescing"
+    ],
+    "operations_types_requirements_parameters_unchanged": true
+  },
+  {
+    "design_id": "axi-pack-date2024-sell-required-l2-gather",
+    "before_kinds": [
+      "buffering",
+      "coalescing",
+      "completion",
+      "dependency_tracking",
+      "reordering"
+    ],
+    "after_kinds": [
+      "buffering",
+      "coalescing",
+      "completion",
+      "dependency_tracking",
+      "issue_policy",
+      "reordering"
+    ],
+    "existing_mechanisms_preserved": true,
+    "added_ids": [
+      "single-cshr-wide-request-issue"
+    ],
+    "operations_types_requirements_parameters_unchanged": true
+  }
+]
