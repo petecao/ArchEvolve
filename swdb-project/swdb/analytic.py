@@ -37,7 +37,8 @@ def register_cli(commands):
     subject.add_argument('--implementation')
     subject.add_argument('--candidate')
     sub.add_argument('--input', required=True)
-    sub.add_argument('--adapter', choices=['registered-gapbs'], help='verify registered GAPBS source/input/trial-lambda binding')
+    sub.add_argument('--adapter', choices=['registered-gapbs','registered-functional'], help='verify registered GAPBS source/input/trial-lambda binding')
+    sub.add_argument('--source-snapshot', help='immutable baseline snapshot for registered-functional; candidates pin their own snapshot')
     sub.add_argument('--counting-pipeline', choices=tuple(PIPELINES), help='fixed source normalization recipe; fixtures default v1, registered adapter requires v2')
     sub.add_argument('--trials', type=int, default=5, help='registered GAPBS trial count; preserve each invocation separately')
     sub.add_argument('--roi', help='declared timing ROI identity; recorded but not verified by this slice')
@@ -253,6 +254,8 @@ def characterize(args):
     subject_record = store.get(subject, kind)
     input_record = store.get(args.input, 'input') or store.get(args.input, 'workload')
     adapter = None
+    if args.source_snapshot and args.adapter!='registered-functional':
+        raise Failure('--source-snapshot requires registered-functional')
     if args.adapter:
         from swdb import analytic_binding
         adapter = analytic_binding.prepare(store, args, subject_record, input_record)
@@ -296,7 +299,7 @@ def characterize(args):
             'candidate_artifact_sha256': subject_record['artifact']['sha256'],
             'candidate_diff_sha256': subject_record.get('diff_sha256')})
         if not args.fixture:
-            artifact_root = artifacts.verify(subject_record['artifact'])
+            artifact_root = adapter['artifact_root'] if adapter and 'artifact_root' in adapter else artifacts.verify(subject_record['artifact'])
             artifacts.check_protections(artifact_root, subject_record['protections'])
     else:
         context = store.source_context(subject_record)
@@ -393,7 +396,7 @@ def characterize(args):
             trials.append({'position': index, 'sources': observed.get('sources', []),
                 'regions': [r for r in trial_regions if any(v['value'] for v in r['operation_counts'].values()) or any(a['element_count']['value'] for a in r['access_patterns']) or r['dynamic_counts']['loop_iterations']['value'] or r['id'] in called_regions or any(c['execution_count']['value'] for c in r['accelerator_calls'])],
                 'unmodeled_calls': [c for c in trial_calls if c['execution_count']['value']]})
-        if adapter and any(len(t['sources']) != 1 for t in trials):
+        if adapter and adapter['identity'].get('source_selection','source_picker')=='source_picker' and any(len(t['sources']) != 1 for t in trials):
             raise Failure('counted trial lacks its exact GAPBS source selection')
     record = _envelope('workload_characterization', args.id,
         'LLVM 22 static pass plus one IR-instrumented native count run; no timing measurement.')
@@ -484,7 +487,7 @@ def characterize(args):
     if adapter:
         record['binding']['note'] = 'Registered source excerpts, input generator and original timed kernel lambda verified; each trial and SourcePicker selection retained.'
         record['coverage']['ambiguous_helper_loops'] = adapter['ambiguous_helper_loops']
-        record['pattern_comparison'] = analytic_binding.compare_patterns(subject_record, regions, adapter['ambiguous_helper_loops'], adapter['mapping']['regions'])
+        record['pattern_comparison'] = [] if args.adapter=='registered-functional' else analytic_binding.compare_patterns(subject_record, regions, adapter['ambiguous_helper_loops'], adapter['mapping']['regions'])
         graph = re.search(r'Graph has ([0-9]+) nodes and ([0-9]+) (un)?directed edges', executed.stdout)
         if not graph:
             raise Failure('registered counting run lacks graph identity')
