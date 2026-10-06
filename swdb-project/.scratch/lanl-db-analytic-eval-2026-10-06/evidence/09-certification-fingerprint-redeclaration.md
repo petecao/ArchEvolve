@@ -8,4 +8,4 @@ A full manifest-source comparison from the frozen baseline `000e85f` to prep bas
 
 No evaluator C++, driver, strict header, legality rule, procedure definition or control-plan source changed. Their unchanged content was inspected across every family. Thus the table and test re-declare only these eight manifest digests under the documented behavior-preserving-refactor policy. No historical certification record, source pin, normative entry or library-operation digest is rewritten.
 
-The fresh functional BFS recipe uses the current candidate default 1.6, including knob spelling and `_Pragma` controls, with both tile sizes 16384 and 1024 and all four thread counts. Certification remains pending parent-owned execution on mbit10; these declarations are provenance repair, not new execution evidence.
+The fresh functional BFS recipe uses the current candidate default 1.6, including knob spelling and `_Pragma` controls, with both tile sizes 16384 and 1024 and four worker threads in each run. Certification remains pending parent-owned execution on mbit10; these declarations are provenance repair, not new execution evidence.

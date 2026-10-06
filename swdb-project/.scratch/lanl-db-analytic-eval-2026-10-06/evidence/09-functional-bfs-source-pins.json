@@ -1,0 +1,121 @@
+{
+  "date": "2026-10-06 ET",
+  "canonical_source": {
+    "id": "bfs-dx100-scalar-only-20260929-a1.source",
+    "record_sha256": "672b3882a738eed3cf4a558cc43bef7fff72c552ddf578602a75d7f985d3bc9c",
+    "artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+    "protections_sha256": "f8794171718e89617d74f6351d7ba4b72a4ded83c5d6218721464ecb22b9455c",
+    "bfs_sha256": "e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3"
+  },
+  "library": {
+    "contract": {
+      "id": "contract.bfs_read_offload",
+      "content_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51"
+    },
+    "entries": [
+      {
+        "id": "intrinsic.dxc_const_i32",
+        "content_sha256": "d321f3c5d234afa7a41121f923a6e0a0edef51015c4f7ebe3cbe463c0a92950f"
+      },
+      {
+        "id": "intrinsic.dxc_gather",
+        "content_sha256": "f1a54734b19e5223a1b2b11b91d177913ecda7296ce45592acb91412b4c6609d"
+      },
+      {
+        "id": "intrinsic.dxc_range_loop",
+        "content_sha256": "dd2abc9caac3f39254ffa28d254b8308b95f73b496b1fb9a40bb8f570da54f57"
+      },
+      {
+        "id": "intrinsic.dxc_session_begin",
+        "content_sha256": "69f444bf9d4800ebb4b1b29d45496b3cc2f0f49ea404bba4a65ec5343439de91"
+      },
+      {
+        "id": "intrinsic.dxc_stream_load",
+        "content_sha256": "2deb4038416c9950ab524497a10071c69b5b295f87659d43d0ec24a8313fe79c"
+      },
+      {
+        "id": "intrinsic.dxc_thread_context",
+        "content_sha256": "9a25951c2ee114ff9e1c5265c2da5452bf3f8c5f850c36afeb157b00be0e8e88"
+      },
+      {
+        "id": "intrinsic.dxc_tile_pointer",
+        "content_sha256": "c276531e321c1fdfd12f6730d91e1351e5a864a0214931452e29bae78b10d20e"
+      },
+      {
+        "id": "intrinsic.dxc_tile_size",
+        "content_sha256": "8072dc02828ab0b865a11bd063b96b7412de71f435a450c1cb156e793f957c06"
+      },
+      {
+        "id": "intrinsic.dxc_wait",
+        "content_sha256": "e349a9c69489091c35d5cb3654cae16b0b5361f8706fd4c4f21052756cc815de"
+      },
+      {
+        "id": "lowering.dxc_const_i32.dx100-mmio.1.0-e4fc4af",
+        "content_sha256": "e4916a2ec1bbb672ce27b6c4ef52a10a38e19458c914d09bb9e0c0969eea5bcf"
+      },
+      {
+        "id": "lowering.dxc_gather.dx100-mmio.1.0-e4fc4af",
+        "content_sha256": "3ad324abd6d51613450786e617deafad181831cb82be867ae479968374a2a8f9"
+      },
+      {
+        "id": "lowering.dxc_range_loop.dx100-mmio.1.0-e4fc4af",
+        "content_sha256": "683c4ecb61a61ea24de68930b11b40bc8a987465d3ec39cf6e1330af6b2a3831"
+      },
+      {
+        "id": "lowering.dxc_session_begin.dx100-mmio.1.0-e4fc4af",
+        "content_sha256": "8584f0c4b2358692e6f76be3d653ee461baa8addaab8a9fd15788a3382984569"
+      },
+      {
+        "id": "lowering.dxc_stream_load.dx100-mmio.1.0-e4fc4af",
+        "content_sha256": "bfd124d6ce44b13ab96c3f4bb1d8b640aca4ade018ef007138004abc9b5f5f53"
+      },
+      {
+        "id": "lowering.dxc_thread_context.dx100-mmio.1.0-e4fc4af",
+        "content_sha256": "3dd51312fd5d6bc55939b475163bb881ccfc0b68335b060d24a16d12b48dff3e"
+      },
+      {
+        "id": "lowering.dxc_tile_pointer.dx100-mmio.1.0-e4fc4af",
+        "content_sha256": "842531eb06ab38e5c79eecceaf36b536d690d2c2be580f94949b727429c8b7dc"
+      },
+      {
+        "id": "lowering.dxc_tile_size.dx100-mmio.1.0-e4fc4af",
+        "content_sha256": "91a183168d5adb02cf9ee7eefbbeb396615dec36d4b8ec0ebce88c0c42c5b323"
+      },
+      {
+        "id": "lowering.dxc_wait.dx100-mmio.1.0-e4fc4af",
+        "content_sha256": "d0cda6d52b5a86f3d53f8c4af12be8a8eac3c64fdcd37244ed35d70735acaae2"
+      }
+    ],
+    "shipped_files": [
+      {
+        "path": "benchmarks/gapbs/src/swdb_dxc_lowering.hpp",
+        "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c",
+        "lowerings": [
+          "lowering.dxc_const_i32.dx100-mmio.1.0-e4fc4af",
+          "lowering.dxc_gather.dx100-mmio.1.0-e4fc4af",
+          "lowering.dxc_range_loop.dx100-mmio.1.0-e4fc4af",
+          "lowering.dxc_session_begin.dx100-mmio.1.0-e4fc4af",
+          "lowering.dxc_stream_load.dx100-mmio.1.0-e4fc4af",
+          "lowering.dxc_thread_context.dx100-mmio.1.0-e4fc4af",
+          "lowering.dxc_tile_pointer.dx100-mmio.1.0-e4fc4af",
+          "lowering.dxc_tile_size.dx100-mmio.1.0-e4fc4af",
+          "lowering.dxc_wait.dx100-mmio.1.0-e4fc4af"
+        ]
+      }
+    ]
+  },
+  "read_offload_body_sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef",
+  "certification": {
+    "family": "candidate",
+    "version": "1.6",
+    "sources_sha256": "309d9cd5140bbb5bf87408ed5f1a4fba40271275704294003be8444829f61311",
+    "tile_sizes": [
+      16384,
+      1024
+    ],
+    "max_threads": 4,
+    "sources": [
+      0
+    ]
+  }
+}
