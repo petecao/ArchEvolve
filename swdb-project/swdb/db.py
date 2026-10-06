@@ -1,7 +1,8 @@
 """The SQLite database, generated from the records (ADR 0002) and never committed.
 
 `build` deletes the file and recreates every table from the YAML records, so the database
-cannot drift from them. Tables are documented in docs/database.md.
+cannot drift from them. Tables are documented in docs/reference/database.md.
+Updated: 2026-10-06 ET: all connections are owned by swdb.access (ADR 0014).
 """
 
 import hashlib
@@ -11,6 +12,7 @@ import sqlite3
 import time
 from pathlib import Path
 
+from swdb import access
 from swdb.store import Record, Store, record_files
 from swdb.strategy import SEMANTIC_FIELDS, entry, pattern_outcome
 
@@ -117,11 +119,7 @@ def fingerprint(records_dir, library=None):
 def meta(db_path):
     """The built database's `meta` table ({} when unreadable); public since 2026-10-05 ET (code review F15)."""
     try:
-        con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
-        try:
-            return dict(con.execute("SELECT key, value FROM meta"))
-        finally:
-            con.close()
+        return {row["key"]: row["value"] for row in access.query(db_path, "SELECT key, value FROM meta")}
     except sqlite3.Error:
         return {}
 
@@ -160,7 +158,7 @@ def build(records_dir, db_path, library=None):
     tmp = db_path.with_name(f".{db_path.name}.{os.getpid()}.tmp")   # unique per process; renamed at the end
     if tmp.exists():
         tmp.unlink()
-    con = sqlite3.connect(tmp)
+    con = access.create_index(tmp)
     con.executescript(SCHEMA)
     con.executemany("INSERT INTO meta VALUES (?, ?)", [("records_dir", str(Path(records_dir).resolve())),
                                                        ("library_dir", str(library_dir(records_dir, library))),
@@ -340,9 +338,7 @@ def pattern_class(pattern):
 
 
 def _connect(db_path):
-    con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
-    con.row_factory = sqlite3.Row
-    return con
+    return access.open_index(db_path)
 
 
 def sql(db_path, query):

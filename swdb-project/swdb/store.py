@@ -1,16 +1,14 @@
-"""The record store: the only module that reads record files.
+"""The record store: ID lookup and reference resolution over the access layer.
 
 It loads every record under a records folder, indexes them by ID, and resolves
 references between them. Records refer to each other by ID, never by file path.
+Updated: 2026-10-06 ET (ADR 0014 access boundary).
 """
 
 from dataclasses import dataclass
-import json
-import os
-
 import yaml
 
-from swdb import yamlio
+from swdb import access, yamlio  # yamlio remains available to existing parse-cache callers
 from swdb.problems import Problem
 
 PLURAL = {"application": "applications", "kernel": "kernels", "implementation": "implementations",
@@ -144,48 +142,11 @@ def canonical_path(kind, record_id):
     return f"{PLURAL[kind]}/{record_id}.yaml"
 
 
-# Per-process parse cache (2026-09-27 ET). A long-lived writer such as the paired
-# native collector persists several times per trial, and every persist reloads
-# the whole folder. Unchanged files are served from their canonical JSON text,
-# keyed by the file's inode, size, and modification/change times observed both
-# before and after parsing. Callers always receive fresh objects. Records that
-# do not survive a JSON round trip unchanged are never cached.
-_PARSED = {}
-_PARSED_LIMIT = 256 * 1024**2
-_parsed_bytes = 0
-
-
-def _stamp(path):
-    st = os.stat(path)
-    return st.st_ino, st.st_size, st.st_mtime_ns, st.st_ctime_ns
-
-
 def _parse(path):
-    global _parsed_bytes
-    name = os.path.abspath(path)
-    before = _stamp(path)
-    cached = _PARSED.get(name)
-    if cached is not None and cached[0] == before:
-        return json.loads(cached[1])
-    data = yamlio.load(path)
-    try:
-        text = json.dumps(data, allow_nan=False)
-        cacheable = json.loads(text) == data and _stamp(path) == before
-    except (TypeError, ValueError, RecursionError):
-        cacheable = False
-    if cacheable:
-        if _parsed_bytes + len(text) > _PARSED_LIMIT:
-            _PARSED.clear(); _parsed_bytes = 0
-        previous = _PARSED.pop(name, None)
-        if previous is not None:
-            _parsed_bytes -= len(previous[1])
-        _PARSED[name] = (before, text); _parsed_bytes += len(text)
-    return data
+    """Compatibility wrapper; record parsing is owned by the access layer."""
+    return access.read_record(path)
 
 
 def record_files(records_dir):
-    """Every .yaml/.yml file under records_dir, skipping hidden files and folders."""
-    for path in sorted(records_dir.rglob("*")):
-        rel = path.relative_to(records_dir)
-        if path.is_file() and path.suffix in {".yaml", ".yml"} and not any(p.startswith(".") for p in rel.parts):
-            yield path, rel.as_posix()
+    """Compatibility wrapper for the access layer's sorted record discovery."""
+    yield from access.record_files(records_dir)

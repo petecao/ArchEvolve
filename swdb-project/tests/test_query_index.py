@@ -1,4 +1,4 @@
-"""Public queries use one freshness-checked SQLite snapshot, 2026-09-27 ET."""
+"""Public queries use one freshness-checked SQLite snapshot. Updated: 2026-10-06 ET."""
 import copy
 import json
 from pathlib import Path
@@ -81,4 +81,15 @@ def test_coverage_query_uses_selected_index(records,tmp_path):
     result=run_swdb('bfs-coverage',request,'--records',records.path,'--db',selected,'--format','json')
     assert result.returncode==0,result.stderr
     assert json.loads(result.stdout)['acceptance']=='incomplete'
+    assert selected.is_file() and not db.default_path(records.path).exists()
+
+
+def test_selected_index_path_preserves_uri_reserved_characters(records, tmp_path):
+    """A caller-selected POSIX filename is used literally by every query reader."""
+    application(records)
+    selected = tmp_path / 'catalog?# %.sqlite'
+    result = run_swdb('get', 'fixture-app', '--records', records.path,
+                      '--db', selected, '--format', 'json')
+    assert result.returncode == 0, result.stderr
+    assert json.loads(result.stdout)['name'] == 'before'
     assert selected.is_file() and not db.default_path(records.path).exists()

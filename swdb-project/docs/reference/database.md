@@ -6,6 +6,8 @@ Updated: 2026-10-03 (Eastern Time): typed-library and statements tables (ticket 
 
 Updated: 2026-10-04 (Eastern Time): statement facts and pattern-key tables for the query site finder (ticket 55).
 
+Updated: 2026-10-06 (Eastern Time): one record/index access interface (analytic-evaluation ticket 02).
+
 Run commands inside `ArchEvolve/swdb-project/`. [The database builder](../../swdb/db.py)
 writes `build/swdb.sqlite` beside `records/` by default (another records folder
 `X` gets `build/swdb-X.sqlite`). It recreates every table in a temporary file,
@@ -28,7 +30,7 @@ valid.
 Record loading uses PyYAML's safe LibYAML parser when that optional extension is
 installed, with the Python safe parser as a fallback. Both preserve dates as text
 and reject repeated mapping keys; neither constructs Python objects from YAML.
-[The store](../../swdb/store.py) caches unchanged files' JSON text within one
+[The access layer](../../swdb/access.py) caches unchanged files' JSON text within one
 process, keyed by inode, size, modification time, and change time. Each load
 returns fresh objects; records that change during parsing or cannot round-trip
 through JSON are not cached. [Cache tests](../../tests/test_store_parse_cache.py)
@@ -40,6 +42,37 @@ Run your own SQL with `swdb sql "<query>" [--format json]`, or open the file wit
 are stored as JSON text, so `true`, `false`, and `null` stay distinct: compare with
 `= 'true'`, `= 'false'`, or `= 'null'`, and check the matching `_basis` column
 (`unknown` never means false).
+
+## Record and query access interface
+
+[`swdb.access`](../../swdb/access.py) is the I/O boundary shared by the
+[record store](../../swdb/store.py), database queries, and the site finder. The
+store keeps ID lookup and reference resolution; query modules keep their SQL and
+result formatting. Record imports, candidate-record binding, and campaign export
+also use this boundary.
+
+| Function | Contract |
+|---|---|
+| `record_files(records_dir)` | Sorted `(absolute or caller-relative path, relative record path)` pairs for visible YAML files; hidden files and directories are skipped. |
+| `read_record(path)` | Safe YAML data as a fresh object; unchanged files may use the process cache. YAML and I/O errors propagate to the caller's existing diagnostics. |
+| `read_record_bytes(path)`, `record_hash(path)` | Exact source bytes and their SHA-256 for byte-preserving export; no YAML normalization. |
+| `open_index(db_path)` | Read-only query session with dictionary-addressable rows; the caller closes it after the snapshot. A missing file is not created. Filenames are URI-encoded before opening. |
+| `query(db_path, statement, parameters=())` | One SQL result as dictionaries, with positional or named bound parameters; the session always closes. |
+| `create_index(db_path)` | Writable connection used only by the builder for its temporary generated research index. |
+
+The existing `Store`, `db.sql`, `db.query_store`, and query-command signatures stay
+available. `store.record_files` delegates to the same boundary, and `db.sqlite3`
+remains available to callers that catch its errors. Validation, freshness checks,
+and snapshot assembly keep their existing order. Only this access layer opens
+the generated database.
+
+A future main-database adapter belongs behind this interface (ADR 0014). It must
+preserve record IDs, safe read behavior, snapshot lifetime, and the documented
+research query relations, either by translating queries or by exposing a
+read-only projection through the crosswalk. The actual main schema is still
+unverified; this refactor supplies the boundary without assuming that schema.
+Contributions to the main database must use its ingest inputs, and
+`create_index` must never open the main database for writing.
 
 ## Tables
 

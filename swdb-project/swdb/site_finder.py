@@ -1,6 +1,7 @@
 """The query site finder (ticket 55): regions chosen by one SQL query, with recorded reasons.
 
-Created 2026-10-04 ET. Original SWDB code (spec "Site finder"; design decision D7: the site
+Created 2026-10-04 ET. Updated 2026-10-06 ET: query I/O goes through swdb.access.
+Original SWDB code (spec "Site finder"; design decision D7: the site
 finder is a query and costs no provider call). Updated 2026-10-05 ET: `swdb.db.meta` is public;
 the statement-fact prefix `legality:` lives only in `QUERY` (its sha256 is recorded). It reads only the SQLite index (ADR 0002,
 ticket 46): `access_patterns`, `steps`, `statements`, `statement_steps`, `statement_facts`,
@@ -39,6 +40,8 @@ import hashlib
 import json
 from collections import defaultdict
 from pathlib import Path
+
+from swdb import access
 
 FORMAT = "swdb.site-finder.v1"
 
@@ -139,15 +142,9 @@ def parameters(campaign):
 
 
 def run_query(db_path, params):
-    import sqlite3
-    con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
-    con.row_factory = sqlite3.Row
-    try:
-        bound = {"kernel": params["kernel"], "interfaces": json.dumps(params["interfaces"]),
-                 "tiers": json.dumps(params["tiers"]), "contracts": json.dumps(params["contracts"])}
-        return [dict(row) for row in con.execute(QUERY, bound)]
-    finally:
-        con.close()
+    bound = {"kernel": params["kernel"], "interfaces": json.dumps(params["interfaces"]),
+             "tiers": json.dumps(params["tiers"]), "contracts": json.dumps(params["contracts"])}
+    return access.query(db_path, QUERY, bound)
 
 
 def find(records_dir, campaign, *, library=None, db_path):

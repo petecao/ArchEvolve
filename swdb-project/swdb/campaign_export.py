@@ -1,5 +1,6 @@
 """`swdb campaign-export CAMPAIGN_FILE`: copy candidate artifacts and team claims from an Extensa campaign's
 record store into the team store. Created 2026-10-05 ET (ticket 80, spec review C17). Original SWDB code.
+Updated: 2026-10-06 ET (record reads use the shared access layer).
 
 The spec's "Records" rule: an Extensa campaign's records stay in its own store on mbit10; only the summary,
 promoted candidate artifacts and team claims with their evidence are copied into the team store, tags kept.
@@ -27,7 +28,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from swdb import artifacts
+from swdb import access, artifacts
 from swdb.cli import Failure, UsageError
 
 FORMAT = "swdb.campaign-export.v1"
@@ -100,7 +101,6 @@ def export(campaign_file, team, *, runs_root=None, candidates=(), all_claims=Fal
     from swdb.cli import _require_valid
     from swdb.store import Record, Store
     from swdb.validate import _validate_store
-    from swdb import yamlio
     if not candidates and not all_claims:
         raise UsageError("name at least one --candidate, or --claims")
     campaign, store_dir = _campaign_store(campaign_file, runs_root)
@@ -114,21 +114,21 @@ def export(campaign_file, team, *, runs_root=None, candidates=(), all_claims=Fal
         for rid in planned["records"]:
             record = source.by_id[rid]
             path = store_dir / record.rel
-            raw = path.read_bytes()
-            digest = artifacts.file_hash(path)
+            raw = access.read_record_bytes(path)
+            digest = access.record_hash(path)
             row = {"id": rid, "kind": record.kind, "path": record.rel, "sha256": digest,
                    "mode": record.data.get("mode"), "campaign": record.data.get("campaign")}
             present = target.by_id.get(rid)
             if present is not None:
                 existing = team / present.rel
-                if present.rel != record.rel or artifacts.file_hash(existing) != digest:
+                if present.rel != record.rel or access.record_hash(existing) != digest:
                     raise Failure(f"{rid} is already in the team store with other bytes ({present.rel}); "
                                   "nothing written")
                 rows.append({**row, "action": "present"})
                 continue
             if (team / record.rel).exists():
                 raise Failure(f"{record.rel} already exists in the team store; nothing written")
-            data = yamlio.load(path)
+            data = access.read_record(path)
             if data != record.data:
                 raise Failure(f"{record.rel} changed while the export read it; nothing written")
             extra.append(Record(record.rel, data))
@@ -145,11 +145,11 @@ def export(campaign_file, team, *, runs_root=None, candidates=(), all_claims=Fal
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 tmp = destination.with_suffix(destination.suffix + ".tmp")
                 tmp.write_bytes(raw)
-                if artifacts.file_hash(tmp) != digest:
+                if access.record_hash(tmp) != digest:
                     tmp.unlink()
                     raise Failure(f"{rel}: the written bytes differ from the campaign store's (sha256); stopped")
                 tmp.replace(destination)
-                if artifacts.file_hash(destination) != digest:
+                if access.record_hash(destination) != digest:
                     raise Failure(f"{rel}: sha256 changed after the copy; stopped")
     from swdb.extensa_boundary import promotion
     promoted = {}

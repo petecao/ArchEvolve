@@ -2,6 +2,7 @@
 
 This is finite strict-functional evidence, never target timing or a formal proof.
 Controls count only after compilation and a named runtime rejection.
+Updated: 2026-10-06 ET (record reads use the shared access layer).
 
 Ticket 42 (2026-10-03 ET): a candidate's matrix instance and pass rule come from
 the kernel plug-in named by its rewrite contract's correctness check
@@ -966,8 +967,8 @@ def bind_candidate_record(path, snapshot_id, tree):
     The record is read only (it stays in its campaign store); it binds only when its source snapshot
     is the one certified and its artifact sha256 equals the patched tree's identity.
     """
-    from swdb import yamlio
-    data = yamlio.load(Path(path))
+    from swdb import access
+    data = access.read_record(Path(path))
     if not isinstance(data, dict) or data.get('kind') != 'candidate' or not data.get('id'):
         raise UsageError('--candidate-record must be a candidate record')
     if data.get('source_snapshot') != snapshot_id:
@@ -976,7 +977,7 @@ def bind_candidate_record(path, snapshot_id, tree):
     if (data.get('artifact') or {}).get('sha256') != tree_sha256:
         raise UsageError('patched tree differs from the candidate record artifact '
                          f"({tree_sha256} != {(data.get('artifact') or {}).get('sha256')})")
-    bound = {'id': data['id'], 'record_sha256': artifacts.file_hash(Path(path))}
+    bound = {'id': data['id'], 'record_sha256': access.record_hash(Path(path))}
     for key in ('mode', 'campaign'):
         if data.get(key):
             bound[key] = data[key]
