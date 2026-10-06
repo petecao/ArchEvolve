@@ -75,6 +75,20 @@ CAPACITY_WAIT_S = 3600
 GUARD_RETRIES = 2
 GUARD_RETRY_S = 30
 
+#: Ticket 80 (C7, 2026-10-05 ET): the independent test-generation role's inputs reach no certify version yet,
+#: so the campaign makes (and charges) no test-generation call until one accepts them.
+TEST_GENERATION_WIRED = False
+TEST_GENERATION_REASON = ("no certify command version accepts generated differential-test inputs yet; the call "
+                          "is not made and not charged until one does (ticket 80)")
+#: Ticket 80 (C15, 2026-10-05 ET; agent-decided under Yan-Ru's delegation, revisable): site-finder entry kinds
+#: kept out of REGIONS.json, with the reason recorded in the iteration's `site_finder.excluded`. Native campaign
+#: a8's iteration 2 named `operation.gather_staging_executor` from REGIONS.json and was refused.
+EXCLUDED_ENTRY_KINDS = {
+    "library_operation": ("library operations are not yet usable in candidate artifacts: no target adapter puts "
+                          "their headers in the rewrite workspace or the candidate build, and a candidate may name "
+                          "only the campaign's rewrite contracts; excluded from REGIONS.json until supported "
+                          "(ticket 80)")}
+
 
 def guard_retry_s():
     """The wait before a retry; SWDB_GUARD_RETRY_S overrides it for tests."""
@@ -598,15 +612,31 @@ class Campaign:
                                f"{kind} calls for its own runtime limit: {stopped}") from None
                 delay = guard_retry_s()
                 iteration_row["provider_calls"][-1]["retry_after_s"] = delay
-                time.sleep(delay)
+                self._wait(delay, "guard retry wait")
             except _Capacity as capacity:
                 delay = schedule.pop(0) if schedule else None
                 if delay is None or waited + delay > CAPACITY_WAIT_S:
                     raise Stop("infrastructure_failure",
                                f"the provider stayed unavailable after {waited:.0f} s of backoff: {capacity}") from None
                 iteration_row["provider_calls"][-1]["backoff_s"] = delay
-                time.sleep(delay)
+                self._wait(delay, "capacity backoff")
                 waited += delay
+
+    def _wait(self, seconds, why):
+        """Ticket 80 (C6, 2026-10-05 ET; agent-decided under Yan-Ru's delegation, revisable): a provider wait
+        (capacity backoff, guard retry) is lane time and is charged to the lane-hour cap.
+
+        The socket lease belongs to the `socket_lane.sh` wrapper for the whole life of the campaign process,
+        so a wait inside the process cannot release it; only a pause (the process exits) does. The waits stay
+        uncounted as provider calls and iterations (D7). A wait that would exceed the cap is not started: the
+        campaign stops `lane_hours`."""
+        if self.state["lane_hours"] + seconds / 3600 > self.budget.lane_hours:
+            raise Stop("lane_hours", f"the {why} of {seconds:.0f} s would exceed {self.budget.lane_hours} lane-hours")
+        started = time.monotonic()
+        time.sleep(seconds)
+        hours = (time.monotonic() - started) / 3600
+        self.state["lane_hours"] += hours
+        self.state["provider_wait_hours"] = self.state.get("provider_wait_hours", 0.0) + hours
 
     def _call_once(self, kind, files, prompt, iteration_row):
         from swdb import provider_adapters, provider_roles
@@ -699,6 +729,8 @@ class Campaign:
                 if block.get("isolation") is not None:
                     self.state.setdefault("pilot_isolation", {}).setdefault(cls, {})[role] = block["isolation"]
                 self._spent("evaluation", started)
+                # Ticket 80 (C8): an A/A block's runs are compared runs; prune their bulky output (ADR 0011).
+                self._prune(block.get("evaluations") or [])
         unstable = [cls for cls in self.classes if failed.get(cls)]
         self.state["pilot"] = {"spreads_by_class_and_role": spreads, "passed": not unstable,
                                "unstable_classes": unstable}
@@ -758,9 +790,15 @@ class Campaign:
         if not result["regions"]:
             raise Stop("infrastructure_failure", "the site finder chose no region: " + "; ".join(
                 f"{r['entry']}: {r['reason']}" for r in result["rejected"])[:2000])
+        # Ticket 80 (C15): only entry kinds a candidate artifact can apply reach REGIONS.json; the others are
+        # recorded with their reason. The region itself stays (an edit there without a contract is uncertified).
+        row["site_finder"]["excluded"] = [
+            {"entry": a["entry"], "kind": a["kind"], "region": r["id"], "reason": EXCLUDED_ENTRY_KINDS[a["kind"]]}
+            for r in result["regions"] for a in r["applications"] if a["kind"] in EXCLUDED_ENTRY_KINDS]
         self.current_regions = [{"id": r["id"], "source": r["source"], "statements": r["statements"],
                                  "applications": [{"entry": a["entry"], "contract": a["contract"], "kind": a["kind"]}
-                                                  for a in r["applications"]]} for r in result["regions"]]
+                                                  for a in r["applications"] if a["kind"] not in EXCLUDED_ENTRY_KINDS]}
+                                for r in result["regions"]]
         self.applied_contracts = {a["contract"] for r in result["regions"] for a in r["applications"] if a["contract"]}
         return site_finder.region_rows(result)
 
@@ -953,7 +991,21 @@ class Campaign:
         return entry
 
     def _test_generation(self, contracts, row):
-        """D7: one independent test-generation call per contract per campaign, at first use."""
+        """D7: one independent test-generation call per contract per campaign, at first use.
+
+        Ticket 80 (C7, 2026-10-05 ET; agent-decided under Yan-Ru's delegation, revisable): no certify command
+        version takes extra differential-test inputs (each version's matrix is frozen in
+        `swdb.certification_procedures`), so a generated input could never reach certification. Until a
+        certify version accepts them, the call is not made and nothing is charged; the first use of each
+        contract is recorded under the iteration's `skipped_calls`."""
+        if not TEST_GENERATION_WIRED:
+            skipped = self.state.setdefault("test_generation_skipped", [])
+            new = [cid for cid in contracts if cid not in skipped]
+            if new:
+                skipped.extend(new)
+                row.setdefault("skipped_calls", []).append(
+                    {"role": "independent_test_generation", "contracts": new, "reason": TEST_GENERATION_REASON})
+            return []
         tests = []
         for cid in contracts:
             if cid in self.state["tested_contracts"]:
@@ -1020,7 +1072,13 @@ class Campaign:
             else:
                 key = f"{cls}/{role}"
                 if key not in self.state["baselines"]:
+                    # Ticket 80 (C5, 2026-10-05 ET): the class's one gem5 baseline evaluation is a job of its
+                    # own, charged to the lane-hour cap exactly as `--baselines-only` charges it; the candidate's
+                    # comparison is then checked as the next job.
+                    started = time.monotonic()
                     self.state["baselines"][key] = self.adapter.baseline_evaluation(cls, role)
+                    self._spent("evaluation", started)
+                    self._step("evaluation", job=True)
                 baseline_eval = self.state["baselines"][key]
             started = time.monotonic()
             result = self.adapter.compare(candidate, cls, role, iteration, attempt, baseline_evaluation=baseline_eval)
@@ -1188,9 +1246,28 @@ class Campaign:
             row["source_policy"] = definition["source_policy"]
         return row
 
+    def _prune_baselines(self):
+        """Ticket 80 (C8, 2026-10-05 ET): a shared per-class baseline (gem5) serves every comparison of the
+        campaign, so its bulky output is pruned when the campaign stops, never earlier, unless a team claim cites
+        it (ADR 0011). An aggregate's component runs are pruned with it. A paused campaign keeps them."""
+        if not self.state["baselines"]:
+            return
+        from swdb import retention
+        from swdb.store import Store
+        try:
+            store = Store(self.store_dir)
+            ids = set()
+            for eid in self.state["baselines"].values():
+                ids |= {eid} | retention.execution_ids(store, eid)
+            self._prune(sorted(ids))
+        except (Failure, OSError) as exc:        # the summary is written whatever pruning does
+            note = f"baseline pruning at stop failed: {type(exc).__name__}: {exc}"[:1000]
+            self.state["stop_detail"] = "; ".join(filter(None, [self.state.get("stop_detail"), note]))
+
     def _finish(self):
         from swdb import writer
         self.adapter.release_lane()
+        self._prune_baselines()
         reason = self.ledger.stop()[0] or S.StopReason.MAX_ITERATIONS
         summary = self.summary(reason)
         workflow.persist(self.store_dir, copy.deepcopy(summary), create=True)
@@ -1227,6 +1304,9 @@ class Campaign:
                 "provider_calls_counted": self.ledger.counted_calls,
                 "provider_calls_uncounted": self.ledger.uncounted_calls,
                 "disk_gb_peak": round(max(self.state.get("disk_bytes_peak", 0), _du(self.folder)) / 1e9, 6)}
+        if self.state.get("provider_wait_hours"):
+            # Ticket 80 (C6): the part of `lane_hours` spent waiting on capacity backoffs and guard retries.
+            used["provider_wait_hours"] = round(self.state["provider_wait_hours"], 6)
         artifacts_list = []
         for row in self.state["iterations"]:
             for c in row["candidates"]:
@@ -1288,3 +1368,6 @@ def register_cli(commands, paths_module):
                      help="run setup and the per-class gem5 baselines (no provider call), then pause")
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
     sub.set_defaults(extensa_handler=run_cli)
+    # Ticket 80 (C17, 2026-10-05 ET): copy candidate artifacts and team claims to the team store.
+    from swdb import campaign_export
+    campaign_export.register_cli(commands, paths_module)

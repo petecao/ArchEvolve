@@ -16,7 +16,7 @@ import yaml
 from conftest import REPO, run_swdb
 from swdb import db, site_finder
 from swdb.library_operations import pattern_key_problems
-from testkit.extensa import campaign_file, campaign_store, fixture_file, provider, rewrite
+from testkit.extensa import campaign_file, campaign_store, fixture_file, log, provider, rewrite
 from testkit.pinned import pinned_folder
 
 READ = "contract.bfs_read_offload"
@@ -290,6 +290,31 @@ def test_campaign_with_query_regions_records_why(campaign_team, source_records):
         assert checked.returncode == 0, checked.stderr
     workspace = json.loads((store.parent / "state.json").read_text())
     assert workspace["site_finder"]["query_sha256"] == site_finder.QUERY_SHA256
+
+
+def test_native_campaign_keeps_library_operations_out_of_regions_json_with_a_reason(campaign_team, source_records):
+    """Ticket 80 (C15, 2026-10-05 ET): native a8's iteration 2 named a library operation offered in REGIONS.json and
+    was refused. Library operations stay out of REGIONS.json until candidates can use them; the region stays."""
+    add_bfs_implementation(campaign_team, None, source_records)
+    config = provider(campaign_team, {"rewriting": [rewrite(contracts=())]})
+    path = campaign_file(campaign_team, regions="query", budgets={"provider_calls_setup": 0},
+                         library={"allowed_tiers": ["shared", "experimental"], "contracts": []})
+    result = run_swdb("campaign", path, "--records", campaign_team["records"], "--provider-config", config,
+                      "--fixture", fixture_file(campaign_team), "--format", "json")
+    assert result.returncode == 0, result.stderr + result.stdout
+    (it,) = json.loads(result.stdout)["iterations"]
+    # the site finder's own record is unchanged: it chose the regions because library operations match there
+    assert sorted(r["id"] for r in it["regions"]) == [f"{IMPL}/TDStep:240-241", f"{IMPL}/TDStep:241-241"]
+    assert {a["kind"] for r in it["regions"] for a in r["why"]["applications"]} == {"library_operation"}
+    excluded = it["site_finder"]["excluded"]
+    assert sorted(e["entry"] for e in excluded) == ["operation.gather_staging_executor", "operation.regroup_executor"]
+    assert all("not yet usable in candidate artifacts" in e["reason"] for e in excluded)
+    (call,) = [entry for entry in log(campaign_team) if entry["role"] == "rewriting"]
+    offered = call["regions"]["regions"]
+    assert sorted(r["id"] for r in offered) == [f"{IMPL}/TDStep:240-241", f"{IMPL}/TDStep:241-241"]
+    assert all(r["applications"] == [] for r in offered)
+    assert "operation." not in json.dumps(call["regions"])
+    assert all(c["level"] == "uncertified" for c in it["candidates"])
 
 
 def test_campaign_rejects_a_contract_the_site_finder_did_not_apply(campaign_team, source_records):

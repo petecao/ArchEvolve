@@ -482,11 +482,17 @@ def _correctness(session, request, result_folder, log, completed):
             and verdicts[0]['line'] < completion_times[0]['line'] < completion_times[1]['line'])
     state = "failed" if explicit_failure else "passed" if valid else "unverified"
     from swdb.dx100_coverage import observe
-    from swdb.dx100_coverage import TRACE_NAME, TRANSPORT
+    from swdb.dx100_coverage import TRACE_NAME, TRANSPORT, labels_version
     trace = result_folder / TRACE_NAME if request['verification'].get('trace_transport') == TRANSPORT else None
+    # Ticket 80 (C16, 2026-10-05 ET): a new record of a kernel whose result is not BFS's parent array (BC) takes its
+    # coverage labels from the plug-in and records which labels it used; BFS records are unchanged.
+    label_version = labels_version(plugin)
+    if label_version is not None:
+        data['context']['coverage_labels'] = label_version
     coverage = observe(log, interval_values, request["configuration"]["tile_elements"],
                        trace=trace, deadline=session.deadline,
-                       read_only=request['verification'].get('read_only', False), plugin=plugin)
+                       read_only=request['verification'].get('read_only', False), plugin=plugin,
+                       label_version=label_version)
     if trace is not None:
         data['context']['debug_trace'] = coverage['debug_trace']
     trace_ends = coverage["completed_trace_units"]
@@ -517,7 +523,9 @@ def _correctness(session, request, result_folder, log, completed):
         from swdb.read_only_checks import observe_output
         store = _require_valid(session.args.records)
         check = data['correctness']['checks'][0]
-        check.update(observe_output(log, store, request['workload']['id'], data['context']['source'], plugin))
+        # Ticket 80 (C16): a kernel without the race companion (BC) records no parent-gather race result.
+        check.update(observe_output(log, store, request['workload']['id'], data['context']['source'], plugin,
+                                    race=plugin.race_companion))
         from swdb.read_only_checks import validate_frontier
         try:
             validate_frontier(data, check, store)
@@ -530,10 +538,12 @@ def _correctness(session, request, result_folder, log, completed):
             valid = False
             check['reason'] = str(exc)
         report = result_folder / 'read-only-coverage.json'
-        report.write_text(json.dumps({'format': 'swdb.dx100.read-only-coverage.v1', 'evaluation': data['id'],
+        coverage_report = {'format': 'swdb.dx100.read-only-coverage.v1', 'evaluation': data['id'],
             'binary_sha256': data['build']['binary_sha256'], 'graph_sha256': check['graph_sha256'],
-            'coverage': check['coverage'], 'frontier_sizes': check['frontier_sizes'],
-            'parent_gather_race': check['parent_gather_race']}, sort_keys=True, indent=2) + '\n')
+            'coverage': check['coverage'], 'frontier_sizes': check['frontier_sizes']}
+        if 'parent_gather_race' in check:
+            coverage_report['parent_gather_race'] = check['parent_gather_race']
+        report.write_text(json.dumps(coverage_report, sort_keys=True, indent=2) + '\n')
         data['context']['coverage_report'] = {'path': str(report), 'sha256': artifacts.file_hash(report)}
     if witnessed and valid and not explicit_failure:
         try:

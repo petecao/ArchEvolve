@@ -243,6 +243,11 @@ class TargetAdapter:
     #: Budgeted wall time per step (hours) for the lane-hour refusal before a step starts.
     STEP_BUDGET_HOURS = {"provider": 0.35, "certification": 0.5, "synthesis": 0.5, "evaluation": 1.0}
     PLANNED_BYTES = 2 * GIB
+    #: Ticket 80 (C14, 2026-10-05 ET): the baseline roles a candidate artifact can be built from. Every adapter
+    #: builds candidates from the fork's scalar-only snapshot (`SNAPSHOT`), so the selection baseline the
+    #: provider rewrites must be the fork's scalar TDStep until another base source is supported (D9 allowed
+    #: `upstream_do_bfs` "later"; no adapter builds it).
+    BASE_SOURCES = ("fork_scalar_tdstep",)
 
     def __init__(self, campaign, team_records, store_dir, folder, library_root, *, runner=None, host=None,
                  certify=None):
@@ -257,7 +262,8 @@ class TargetAdapter:
         self.protocol_id = None
         self.released = 0
         self._lane = None
-        self._artifacts = {}            # artifact sha256 -> candidate id (identical per-class artifacts)
+        self._artifacts = {}            # (class, artifact sha256) -> candidate id (ticket 80, C19)
+        self._trees = {}                # artifact sha256 -> the first candidate id and tree path holding it
 
     @classmethod
     def file_problems(cls, data):
@@ -265,6 +271,10 @@ class TargetAdapter:
         problems = []
         if cls.ID_KIND and not data["id"].startswith(f"extensa-{cls.ID_KIND}-"):
             problems.append(f"id: a {data['target']} campaign ID starts with extensa-{cls.ID_KIND}-")
+        if data["base_source"] not in cls.BASE_SOURCES:
+            problems.append(f"base_source: candidate artifacts are built from the scalar-only snapshot {SNAPSHOT} "
+                            f"(the fork's scalar TDStep); base_source must be one of {', '.join(cls.BASE_SOURCES)} "
+                            "until another base source is supported")
         return problems
 
     # loop hooks with their default answers -------------------------------------------------
@@ -486,10 +496,23 @@ class TargetAdapter:
                 message += f". Protected and never to be edited: {named[:300]}"
             raise Refused("correctness_failed", message) from None
         identity = artifacts.identify(tree)
-        if identity["sha256"] in self._artifacts:
-            existing = self._artifacts[identity["sha256"]]
+        # Ticket 80 (C19, 2026-10-05 ET; agent-decided under Yan-Ru's delegation, revisable): one candidate
+        # artifact record per workload class. The same tree again in the same class is that class's candidate
+        # artifact; the same tree in another class gets its own record pointing to the shared tree (the copy is
+        # removed), so a class's best is always named after its class. Campaigns before ticket 80 reused the first
+        # class's ID across classes (native a8's uniform best is `...it1.kronecker.a0`); their records stand.
+        existing = self._artifacts.get((cls, identity["sha256"]))
+        if existing:
             shutil.rmtree(tree.parent)
             return {"id": existing, "sha256": identity["sha256"], "reused": True}
+        shared = self._trees.get(identity["sha256"])
+        extensions = None
+        if shared:
+            shutil.rmtree(tree)
+            identity = {**identity, "path": shared["path"]}
+            extensions = {"shared_tree": {"candidate": shared["id"], "path": shared["path"],
+                                          "note": "Identical tree of another workload class's candidate artifact; "
+                                                  "one record per class (ticket 80)."}}
         diff = patch_path.read_text()
         tags = {"mode": MODE, "campaign": self.cid}
         # The rewrite call's patch for this class is the candidate's proposal (one per artifact).
@@ -511,10 +534,13 @@ class TargetAdapter:
                                diff_sha256=artifacts.digest(diff), state="unverified",
                                protections=copy.deepcopy(snapshot["protections"]),
                                context=copy.deepcopy(snapshot["context"]), **tags)
+        if extensions:
+            data["extensions"] = extensions
         from swdb import db, writer
         writer.commit(self.store_dir, new=[proposal, data])
         db.build(self.store_dir, db.default_path(self.store_dir))
-        self._artifacts[identity["sha256"]] = rid
+        self._artifacts[(cls, identity["sha256"])] = rid
+        self._trees.setdefault(identity["sha256"], {"id": rid, "path": data["artifact"]["path"]})
         return {"id": rid, "sha256": identity["sha256"]}
 
     def certify(self, candidate, contracts, iteration, cls, attempt, tests=None):
@@ -1083,8 +1109,11 @@ class Gem5Adapter(TargetAdapter):
         if not result or result.get("decision", {}).get("state") in {None, "rejected"}:
             raise Refused("evaluation_failed", "The comparison rejected the retained evidence.", ["comparison"])
         ratio = result["metrics"]["roi_speedup"]
+        # Ticket 80 (C8, 2026-10-05 ET): the companion runs this comparison accepted are compared runs too, so
+        # the loop prunes their bulky output right after it (ADR 0011). The class baseline is pruned at stop.
         return {"comparison": result["id"], "ratio": ratio, "lower": ratio, "upper": ratio, "spreads": [0.0],
-                "evaluations": [observed["id"]], "baseline_evaluation": baseline_evaluation,
+                "evaluations": [observed["id"], *(jobs["companions"][name] for name in sorted(jobs["companions"]))],
+                "baseline_evaluation": baseline_evaluation,
                 "state": (result.get("decision") or {}).get("state")}
 
 

@@ -1,7 +1,7 @@
 # Spec: Typed library and DX100 BFS rewrites from intrinsic specifications, in ArchEvolve and Extensa modes
 
 Created: 2026-10-03 00:50 ET
-Updated: 2026-10-05 18:10 ET (code review and spec review: dated notes for the decisions tickets 56–78 changed (speed rule, per-class gate, native graphs and evaluator, pauses, certify versions, named checks, promotion and review attribution); "Awaiting ratification" section; ADR 0012; header merged); 2026-10-05 16:30 ET (ticket 78: certify 1.5 and library-operation command 1.2, record-keeping in a separate evaluator process); 2026-10-05 14:21 ET (ticket 77: library-operation certification 1.1, record verdicts and blinded driver faults); 2026-10-05 12:50 ET (ticket 76: certify 1.4, blinded controls and attributed rejections); 2026-10-04 22:40 ET (ticket 70: certification isolation, certify 1.3); 2026-10-04 21:05 ET (ticket 66: native CI-width speed rule, decided by Yan-Ru); 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66); 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's 2026-10-03 delegation and revisable; see [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md))
+Updated: 2026-10-05 22:30 ET (ticket 80, spec review C5–C8, C14–C17, C19: dated notes on campaign budgets, test generation, pruning, base source, REGIONS.json, BC labels, export and per-class candidate records; one "Awaiting ratification" row); 2026-10-05 18:10 ET (code review and spec review: dated notes for the decisions tickets 56–78 changed (speed rule, per-class gate, native graphs and evaluator, pauses, certify versions, named checks, promotion and review attribution); "Awaiting ratification" section; ADR 0012; header merged); 2026-10-05 16:30 ET (ticket 78: certify 1.5 and library-operation command 1.2, record-keeping in a separate evaluator process); 2026-10-05 14:21 ET (ticket 77: library-operation certification 1.1, record verdicts and blinded driver faults); 2026-10-05 12:50 ET (ticket 76: certify 1.4, blinded controls and attributed rejections); 2026-10-04 22:40 ET (ticket 70: certification isolation, certify 1.3); 2026-10-04 21:05 ET (ticket 66: native CI-width speed rule, decided by Yan-Ru); 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66); 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's 2026-10-03 delegation and revisable; see [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md))
 **Type:** spec
 **Status:** ready-for-agent
 **Blocked by:** None — can start immediately (ticket 03, ADRs 0007–0011 and the archevolve-handoff
@@ -22,6 +22,7 @@ Yan-Ru ratifies or reverses each one.
 | `approval.gem5_other_socket` (C11) | A campaign file may admit native timed blocks beside another campaign's gem5 job on the other socket (recorded per block), against D2's "never overlap". | [64](issues/64-native-scale22-pilot-unstable.md) |
 | Per-class A/A gate (C12) | A failing class gets `baseline_unstable` and is not timed; the campaign stops only when every class fails (D3 stopped the whole campaign). | [64](issues/64-native-scale22-pilot-unstable.md), ADR 0012 |
 | Certify 1.5 behavior changes of commit `93a2a94` (C13) | Nonce-named DX100 record files (1.4 and 1.5) and the DX100 authored-directive rule (1.5), added inside a ticket scoped as a refactor. | [79](issues/79-certify-1-5-behavior-changes.md) |
+| Campaign loop decisions (C6, C7, C14, C15, C19) | Provider waits are charged to lane-hours instead of releasing the lane; no test-generation call until certify takes its inputs; `base_source` must be `fork_scalar_tdstep`; library operations kept out of REGIONS.json; one candidate record per class. Also C5, C8, C16, C17 (fixes to the spec as written). | [80](issues/80-spec-review-campaign-fixes.md) |
 | Agent reviews and promotions (C1) | `contract.bc_read_offload` (ticket 43), `contract.bfs_tdstep_frontier_staging` (ticket 75) and the a8 candidate artifact (ticket 75; re-promoted 2026-10-05 with its native certify 1.5 record) were reviewed and promoted by agents. Their records now say so (attribution corrections). | [43](issues/43-promote-bc-contract.md), [75](issues/75-certify-a8-frontier-staging.md) |
 
 ## Problem Statement
@@ -793,6 +794,10 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   them or `swdb claim --release` records that none will.
 - **Extensa-mode runs** have their bulky raw output pruned right after their comparison is
   recorded, unless a team claim cites them.
+  - 2026-10-05 22:30 ET note (ticket 80, spec review C8): a gem5 comparison's compared runs include its
+    parent-gather companion runs, so they are pruned with the observed run. A gem5 class baseline serves every
+    comparison of its Extensa campaign, so it is pruned when the campaign stops (not when it pauses), with its
+    component runs. A native A/A block's runs are pruned after the block. A team claim keeps any of them.
 - **Retroactive cleanup.** The dry-run lists every file under the run roots with its size, class
   (bulky, compact or input) and every record that references its path in any field. Files
   referenced by a workload, source snapshot, build receipt or frozen protocol are inputs and are
@@ -829,6 +834,11 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   workloads, native evaluation, a gem5 completion witness like BFS's v2, and protocols.
   - 2026-10-05 note (tickets 44, 45): BC has no parent-gather race case. Its L3 stays assumed, so BC
     read-only protocols require no race companion.
+  - 2026-10-05 22:30 ET note (ticket 80, spec review C16; agent-decided under delegation, revisable): new BC
+    gem5 execution records take their coverage labels from the kernel plug-in (`competing_score_updates`,
+    `score_storage`, recorded as `context.coverage_labels`) and carry no `parent_gather_race`. Existing BC
+    records keep the BFS labels and their `inconclusive` race result and revalidate unchanged; BFS records are
+    unchanged.
 - **Contract reuse.** A derived BC contract (new ID, citing the BFS contract) targets BC's
   forward-pass region. It adds BC-L1: the path-count test reads the depth on the CPU after the
   compare-and-swap, never the DX100 hint. BC's correctness check still covers the whole
@@ -890,6 +900,11 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   profiling. Site finding is a query first; a coding-agent site finder comes with a second kernel.
   Every role runs on mbit10 in a lane with Codex `gpt-5.6-sol` at effort `xhigh` by default, or
   Claude `claude-sonnet-5-5` at effort `high`, and each invocation records its settings.
+  - 2026-10-05 22:30 ET note (ticket 80, spec review C7; agent-decided under delegation, revisable): no certify
+    command version takes extra differential-test inputs (each version's matrix is frozen), so a generated input
+    could never reach certification. Until a certify version accepts them, an Extensa campaign makes no
+    independent test-generation call and charges none; the iteration's `skipped_calls` records it. Wiring the
+    inputs in is a new certify version (a behavior change), left for a later ticket.
 - **Extensa campaign** (`swdb campaign CAMPAIGN_FILE`). The file names one hardware target
   (D2), the workload classes with their graph, the allowed tier and contracts, and the budgets.
   Its format is `swdb.extensa-campaign.v1` YAML under `campaigns/extensa/` (D5). Each iteration
@@ -995,11 +1010,31 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
     commands at 16 and those of the provider's own runtime (tracer, CLI, service) at 64, separately
     (ticket 74). Both are pause reasons in the
     campaign summary.
+  - 2026-10-05 22:30 ET notes (ticket 80, spec review C5, C6; agent-decided under delegation, revisable):
+    - The lane-hour cap counts every gem5 class baseline evaluation, including one first needed inside an
+      iteration (before, only `--baselines-only` charged it).
+    - **Capacity backoffs and guard retry waits are charged, not released.** The socket lease belongs to the
+      `socket_lane.sh` wrapper for the life of the campaign process, so a wait inside the process cannot release
+      the lane; only a pause, which ends the process, does (usage limit and login keep doing that). Releasing for
+      every backoff would turn a one-minute capacity blip into a manual resume of an unattended campaign. So the
+      wait (at most 48 min of backoff, 60 s of guard retries per call) is lane time: it counts toward the
+      lane-hour cap (`budgets.used.provider_wait_hours` shows it), a wait that would pass the cap stops the
+      campaign `lane_hours` without waiting, and the call stays uncounted and the iteration is not ended.
 - **Targets.** BFS only for now: native CPU against both baselines, and DX100 in gem5 against the
   fork's scalar TDStep.
+  - 2026-10-05 22:30 ET note (ticket 80, spec review C14): every adapter builds candidate artifacts from the fork's
+    scalar-only snapshot, so `swdb validate` refuses a `base_source` other than `fork_scalar_tdstep` (design D9's
+    "a later campaign may set `base_source: upstream_do_bfs`" needs an adapter that builds from upstream first).
 - **Site finder.** A query over the SQLite access-pattern and step tables, a new statements index,
   and the indexed contract pattern keys. It is built after library indexing exists, so it never
   reads library YAML directly.
+  - 2026-10-05 22:30 ET note (ticket 80, spec review C15; agent-decided under delegation, revisable): no target
+    adapter puts a library operation's header into the rewrite workspace or the candidate build, and a candidate
+    may name only the campaign's rewrite contracts, so every library-operation application the site finder offered
+    was refused (native a8, iteration 2). Until candidates can use them, library-operation applications are kept
+    out of REGIONS.json and recorded under the iteration's `site_finder.excluded` with that reason; the site
+    finder's query and its region record are unchanged, and the region is still offered for an edit without a
+    contract (uncertified).
 - **Library seed.** Extensa's packing, binning, relabeling, regrouping and gather-staging entries
   enter the experimental tier with their Extensa source commit and path as origin and SPDX and
   provenance headers on their C++ bodies. Each gets a plain C++ reference semantics, a
@@ -1012,6 +1047,18 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   artifacts, and team claims with their evidence are copied into the team record store, tags kept.
   New library entries are committed to the library folder in the experimental tier, with their
   Extensa campaign as origin.
+  - 2026-10-05 22:30 ET notes (ticket 80, spec review C17, C19; agent-decided under delegation, revisable):
+    - `swdb campaign-export CAMPAIGN_FILE --candidate ID [--claims] [--dry-run]` does the copy: the candidate
+      artifact's record closure (candidate, proposal, certifications, evaluations, the comparisons and pairs
+      citing them, their retention records) and the team claims citing it, byte for byte with sha256 checks,
+      tags kept; a record already in the team store must be byte-identical or nothing is written. It is the step
+      before `swdb promote` (ticket 75 did it by hand); the team boundary keeps refusing the exported records
+      until promotion and the team re-evaluation exist. A rejected candidate artifact is never exported.
+    - New campaigns write one candidate artifact record per workload class. When two classes produce the same
+      tree, the second class's record points to the first class's tree (`extensions.shared_tree`), so each class's
+      best is named after its class. Records of earlier campaigns stand: native a8's uniform best is
+      `extensa-native-bfs-20261005-a8.it1.kronecker.a0` (ticket 56). On gem5 each class's record gets its own guest
+      builds and parent-gather companions, because a comparison accepts only companions of its own candidate.
 - **Team boundary.** Team-protocol comparisons, handoffs and coverage reports refuse or skip
   Extensa records unless promoted. ArchEvolve-mode submit refuses experimental-tier entries. Loop
   failures stay local; promoted candidate artifacts and deliberate findings go to Josh through the

@@ -129,6 +129,7 @@ def test_knob_outside_its_range_rejects_that_class_without_a_provider_call(campa
     assert by["kronecker"]["level"] == "rejected" and by["kronecker"]["certification"] is None
     assert by["uniform_random"]["level"] == "certified"
     assert "knob_out_of_range" in it["feedback_reasons"]
-    assert [c["role"] for c in it["provider_calls"]] == ["rewriting", "independent_test_generation"]
+    # Ticket 80 (C7): the test-generation call is skipped (uncharged) until certify accepts its inputs.
+    assert [c["role"] for c in it["provider_calls"]] == ["rewriting"]
 
 

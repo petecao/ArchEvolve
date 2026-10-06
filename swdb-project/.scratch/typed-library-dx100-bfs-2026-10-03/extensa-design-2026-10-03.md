@@ -1,6 +1,7 @@
 # Extensa-mode design decisions (ticket 47)
 
 Created: 2026-10-03 ET
+Updated: 2026-10-05 22:30 ET (ticket 80 revisions to D7, D9 and D10)
 **Type:** design decisions
 **Status:** decided
 **Ticket:** [47](issues/47-extensa-design-session.md)
@@ -252,6 +253,10 @@ retentions: [<retention record id>]
 - **The profiling agent.** It runs once before iteration 1 and is charged to a separate setup allowance of 1 call. The site finder is a query and costs no calls.
 - **Uncounted failures.** A usage-limit or login failure is recorded with `counted: false`. It pauses the campaign and releases the lane, and the iteration is retried from its start after resume. Any other provider failure (timeout, malformed output, guard refusal) is counted.
 - **Worst case.** A campaign makes at most 1 + 3 × 8 = 25 counted calls.
+- **Revision 2026-10-05 22:30 ET (ticket 80; agent-decided under delegation, revisable).** No independent
+  test-generation call is made, and none is charged, until a certify command version accepts its inputs (none
+  does). A capacity backoff or guard retry wait (tickets 73, 74) stays uncounted but is charged to the lane-hour
+  cap, since the lane stays held during it; a wait past the cap stops the campaign `lane_hours`.
 
 ## D8 — What the rewrite workspace may hold
 
@@ -265,11 +270,15 @@ retentions: [<retention record id>]
 - The acceptance native campaign (ticket 56) rewrites the fork's scalar TDStep, the same region the DX100 work targets. Selection uses the scalar-TDStep comparison (Q61).
 - Upstream direction-optimizing BFS is timed in its own paired block for every candidate and reported next to it, so a native gain over the slower top-down-only baseline is never shown alone.
 - A later campaign may set `base_source: upstream_do_bfs`. Its selection then uses that baseline.
+  - Revision 2026-10-05 22:30 ET (ticket 80): only once an adapter builds candidate artifacts from upstream DO-BFS.
+    Until then `swdb validate` refuses any `base_source` other than `fork_scalar_tdstep`.
 
 ## D10 — Campaign record store
 
 - Records for a campaign go to `<runs root>/extensa/<campaign-id>/records/` on mbit10. They use the same record layout as the team store, with mode and campaign tags set at creation. They are kept and never pruned.
 - Bulky raw output under `<runs root>/extensa/<campaign-id>/runs/` is pruned right after each comparison, with a retention record, unless a team claim cites it (ADR 0011).
+  - Revision 2026-10-05 22:30 ET (ticket 80): a gem5 comparison's companion runs are pruned with it; the gem5
+    class baselines, which serve every comparison, are pruned when the campaign stops.
 - The disk cap counts everything under `<runs root>/extensa/<campaign-id>/`.
 
 ## D11 — License assumption (Q66)
