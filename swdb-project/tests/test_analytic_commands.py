@@ -9,7 +9,7 @@ from conftest import REPO,run_swdb
 from testkit.analytic import digest,target_description
 
 
-def characterize_command(records,tmp_path,llvm22,*,window=4,transaction=64,producer='fixture_backend',extra=()):
+def characterize_command(records,tmp_path,llvm22,*,window=4,transaction=64,producer='fixture_backend',setup=False,extra=()):
     records.add_stub()
     source=REPO/'tests/fixtures/analytic/commands.cpp'
     path=target_description(tmp_path);target=yaml.safe_load(path.read_text());target['target']='testhost'
@@ -26,6 +26,13 @@ def characterize_command(records,tmp_path,llvm22,*,window=4,transaction=64,produ
         'placement':{'policy':'isolated_row_aligned_allocations','basis':'inferred','physical_placement_known':False},
         'window':{'policy':'logical_fixed_requests_per_command_worker','requests':window,'basis':'inferred',
             'source':'Hand-worked fixture convention, not physical queue capacity.'}}
+    if setup:
+        target['functional_observation']['commands'].append({'event':'fixture.setup',
+            'intrinsic':'fixture.intrinsic.setup','hardware_operations':['fixture.operation.setup'],
+            'memory_effect':'none','active_elements_policy':'not_applicable',
+            'target_access_sources':[],'bookkeeping_access_sources':[],
+            'aliases':[{'symbol':'fixture_setup','source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
+                'memory_base_argument':None,'role':'command'}]})
     path.write_text(yaml.safe_dump(target,sort_keys=False))
     result=run_swdb('characterize','--records',records.path,'--source',source,
         '--implementation','stub-impl','--input','tiny-sym','--function','main',
@@ -150,3 +157,24 @@ def test_window_policy_hash_tamper_is_refused_at_aggregate_and_trial_scope(recor
     records.write('workload_characterizations/fixture.command.yaml',data)
     result=records.validate()
     assert result.returncode==1 and 'window_policy_sha256' in result.stdout+result.stderr
+
+
+def test_proven_no_application_memory_setup_is_excluded_but_counted_as_event(records,tmp_path,llvm22):
+    data,target_hash=characterize_command(records,tmp_path,llvm22,setup=True,extra=('--run-arg','setup'))
+    calls=[c for r in data['regions'] for c in r['accelerator_calls'] if c['execution_count']['value']]
+    assert len(calls)==1 and calls[0]['event']=='fixture.setup' and calls[0]['execution_count']['value']==1
+    assert calls[0]['active_elements']['value']==0 and calls[0]['useful_bytes']['value']==0
+    assert all(r['address_stream_counts'][target_hash]['line_requests']['value']==0 for r in data['regions'])
+    raw=json.loads((tmp_path/'counted/counts.json').read_text())
+    assert sum(c['bookkeeping_accesses'] for c in raw['semantic_commands'].values())>=8
+    assert any(a['source_location']['function']=='main' and a['update_kind']=='write' and a['element_count']['value'] for r in data['regions'] for a in r['access_patterns'])
+    assert records.validate().returncode==0
+
+
+def test_pinned_bookkeeping_helper_opaque_calls_do_not_contaminate_target_reads(records,tmp_path,llvm22):
+    data,target_hash=characterize_command(records,tmp_path,llvm22,extra=('--build-flag=-DFIXTURE_BOOKKEEPING_EXTERNAL',))
+    assert sum(r['address_stream_counts'][target_hash]['line_requests']['value'] for r in data['regions'])==6
+    raw=json.loads((tmp_path/'counted/counts.json').read_text())
+    assert sum(sum(c['opaque_calls'].values()) for c in raw['semantic_commands'].values())==1
+    assert not any(c['missing'] for c in raw['semantic_commands'].values())
+    assert sum(c['execution_count']['value'] for r in data['regions'] for event in r['accelerator_calls'] for c in event['functional_bookkeeping']['opaque_calls'])==1

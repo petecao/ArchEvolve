@@ -45,7 +45,7 @@ struct Totals {
   }
 };
 struct Frame {
-  uint32_t site=0,descriptor=0,region=0;uint64_t object=0,pointer=0,base=0,extent=0,expanded=0;bool alias=false;
+  uint32_t site=0,descriptor=0,region=0;uint64_t object=0,pointer=0,base=0,extent=0,expanded=0;bool alias=false,memory=true;
   std::set<std::pair<uint64_t,uint64_t>> lines;
   std::set<std::array<uint64_t,6>> rows;
 };
@@ -60,6 +60,7 @@ inline void close(Frame &frame,Totals &total,uint64_t &entries,const Config &con
 }
 inline void observe(Frame &frame,Totals &total,uint64_t address,uint64_t n,uint64_t width,uint32_t update,
                     swdb_live::Registry &registry,uint64_t &entries,const Config &config,uint64_t target_roles,uint64_t bookkeeping_roles){
+  if(!frame.memory){total.bookkeeping_accesses+=n;return;}
   uint64_t bit=uint64_t(1)<<frame.descriptor;
   if(bookkeeping_roles&bit){total.bookkeeping_accesses+=n;return;}
   if(!(target_roles&bit)){

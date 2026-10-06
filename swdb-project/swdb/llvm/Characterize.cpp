@@ -366,7 +366,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
   LLVMContext &C=M.getContext(); auto *u64=Type::getInt64Ty(C), *u32=Type::getInt32Ty(C);
   auto tripFn=semantic?M.getOrInsertFunction("__swdb_domain_trip",Type::getVoidTy(C),u32,u64,u32):M.getOrInsertFunction("__swdb_trip",Type::getVoidTy(C),u32,u64);
   auto opFn=semantic?M.getOrInsertFunction("__swdb_domain_op",Type::getVoidTy(C),u32,u32,u64,u32):M.getOrInsertFunction("__swdb_op",Type::getVoidTy(C),u32,u32,u64);
-  auto callFn=semantic?M.getOrInsertFunction("__swdb_domain_call",Type::getVoidTy(C),u32,u64,u32,u32,u64,u32,u32,u32):M.getOrInsertFunction("__swdb_call_v2",Type::getVoidTy(C),u32,u64,u32,u32,u64,u32);
+  auto callFn=semantic?M.getOrInsertFunction("__swdb_domain_call",Type::getVoidTy(C),u32,u64,u32,u32,u64,u32,u32,u32,u64,u64):M.getOrInsertFunction("__swdb_call_v2",Type::getVoidTy(C),u32,u64,u32,u32,u64,u32);
   auto accessFn=semantic?M.getOrInsertFunction("__swdb_domain_access",Type::getVoidTy(C),u32,u32,u64,u64,u64,u32,u32,u64,u64):M.getOrInsertFunction("__swdb_access_v2",Type::getVoidTy(C),u32,u32,u64,u64,u64,u32);
   for (unsigned i=0;i<regions.size();++i) if (auto *L=regions[i].loop) {
     auto *term=L->getHeader()->getTerminator(); IRBuilder<> B(term); Value *n=B.getInt64(1);
@@ -386,7 +386,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
     }
     SmallVector<Value *,8> values{B.getInt32(call.site),size,known,B.getInt32(call.region),
         call.pointer?B.CreatePtrToInt(call.pointer,u64):B.getInt64(0),B.getInt32(call.action)};
-    if(semantic){values.push_back(B.getInt32(regions[call.region].host_selected));values.push_back(B.getInt32(call.semantic_body));}B.CreateCall(callFn,values);
+    if(semantic){values.push_back(B.getInt32(regions[call.region].host_selected));values.push_back(B.getInt32(call.semantic_body));auto roles=sourceRoles.get(*call.inst);values.push_back(B.getInt64(roles.first));values.push_back(B.getInt64(roles.second));}B.CreateCall(callFn,values);
   }
   for (auto &a:accesses) { IRBuilder<> B(a.inst);SmallVector<Value *,7> values{B.getInt32(a.site),B.getInt32(canonical.at(regions[a.region].id)),B.CreatePtrToInt(a.ptr,u64),B.getInt64(a.lanes),B.getInt64(a.bytes),B.getInt32(a.update)};if(semantic){values.push_back(B.getInt32(regions[a.region].host_selected));auto roles=sourceRoles.get(*a.inst);values.push_back(B.getInt64(roles.first));values.push_back(B.getInt64(roles.second));}B.CreateCall(accessFn,values); }
   // Object metadata is process-wide even when a source function/ROI is selected.
