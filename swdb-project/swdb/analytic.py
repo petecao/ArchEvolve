@@ -60,7 +60,7 @@ def register_cli(commands):
     sub.add_argument('--records', type=Path, default=paths.RECORDS)
     sub.add_argument('--characterization', required=True, help='record ID or YAML/JSON file')
     sub.add_argument('--target-description', required=True, help='record ID or YAML/JSON file')
-    sub.add_argument('--protocol', required=True, help='estimate protocol identity; frozen protocol checks follow in ticket 06')
+    sub.add_argument('--protocol', required=True, help='persisted frozen estimate protocol ID')
     sub.add_argument('--baseline', help='explicit baseline estimate record ID or YAML/JSON file')
     sub.add_argument('--id', required=True)
     sub.add_argument('--format', choices=['yaml', 'json'], default='yaml')
@@ -94,8 +94,9 @@ def _llvm_bin(requested):
 
 
 def _envelope(kind, record_id, description):
+    from swdb import workflow
     return {'kind': kind, 'schema_version': '0.4', 'id': record_id, 'status': 'draft',
-            'created': writer.today(), 'updated': writer.today(),
+            'created': writer.today(), 'updated': writer.today(), **workflow.CREATION_TAGS,
             'provenance': [{'id': 'analytic', 'kind': 'measurement', 'description': description, 'uri': None}]}
 
 
@@ -378,6 +379,7 @@ def characterize(args):
 
 def _estimate_regions(source_regions, source_calls, target):
     from swdb import analytic_models
+
     # Models are bounds, not a fitted timing. Preserve unknowns in composition.
     regions = []
     for region in source_regions:
@@ -402,6 +404,10 @@ def estimate(args):
     store = Store(args.records)
     characterization = _load(store, args.characterization, 'workload_characterization')
     target = _load(store, args.target_description, 'target_description')
+    from swdb.archevolve import require_team_safe
+    from swdb.estimate_protocol import bind
+    require_team_safe(store, characterization, target, args.protocol, command='estimate')
+    protocol = bind(store, args.protocol, characterization, target)
     if target['threads'] != characterization['binding']['threads']:
         raise Failure('target thread count differs from the counted workload thread identity')
     regions, seconds = _estimate_regions(characterization['regions'], characterization['unmodeled_calls'], target)
@@ -432,6 +438,8 @@ def estimate(args):
             row['limiting_bound']=None if row['seconds'] is None else max(row['bounds'],key=lambda b:b['seconds'])['model']
     record = _envelope('estimate', args.id, 'Analytic mechanism bounds from compiler/counting facts and frozen target parameters; no target timing.')
     record.update({'format': 'swdb.estimate.v1', 'basis': 'estimated', 'estimator_version': VERSION,
+        'estimator_sha256': protocol['settings']['estimator_sha256'],
+        'protocol_sha256': protocol['identity_sha256'],
         'estimator_variant': target['estimator_variant'], 'calibration_sources': target['calibration_sources'],
         'characterization': characterization['id'], 'characterization_sha256': artifacts.digest(characterization),
         'target_description': target['id'], 'target_description_sha256': artifacts.digest(target),
@@ -450,7 +458,8 @@ def estimate(args):
         record['notes'].append('Estimate each trial by summing exclusive region maxima; the reported total is the median whole-call trial time. Per-region medians are diagnostic and do not generally sum to that median.')
     if args.baseline:
         baseline = _load(store, args.baseline, 'estimate')
-        required = ('input', 'target_description_sha256', 'protocol', 'threads', 'evidence_kind')
+        require_team_safe(store, baseline, command='estimate')
+        required = ('input', 'target_description_sha256', 'protocol', 'protocol_sha256', 'estimator_version', 'estimator_sha256', 'threads', 'evidence_kind')
         if any(baseline.get(k) != record.get(k) for k in required):
             raise Failure('baseline estimate input, target description, protocol, threads or evidence kind differs')
         record['baseline'] = {'id': baseline['id'], 'sha256': artifacts.digest(baseline)}
@@ -529,3 +538,12 @@ def validate_record(record, ctx):
         characterization = ctx.store.get(record.data['characterization'], 'workload_characterization')
         if characterization is not None and artifacts.digest(characterization) != record.data['characterization_sha256']:
             yield Problem(record.rel, 'characterization_sha256', 'characterization record differs from the estimate input hash')
+
+        protocol = ctx.store.get(record.data['protocol'], 'protocol')
+        if protocol is None:
+            yield Problem(record.rel, 'protocol', 'frozen estimate protocol is missing')
+        elif (record.data['protocol_sha256'] != protocol['identity_sha256']
+              or record.data['estimator_version'] != protocol['settings'].get('estimator_version')
+              or record.data['estimator_sha256'] != protocol['settings'].get('estimator_sha256')
+              or record.data['target_description_sha256'] != protocol['settings'].get('target_description', {}).get('sha256')):
+            yield Problem(record.rel, 'protocol_sha256', 'estimate identities differ from their frozen protocol')

@@ -295,6 +295,14 @@
     },
     "summary": {
       "type": "string"
+    },
+    "protocol_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "estimator_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
     }
   },
   "required": [
@@ -324,6 +332,8 @@
     "llm_parameters",
     "evidence_kind",
     "scope",
-    "binding"
+    "binding",
+    "protocol_sha256",
+    "estimator_sha256"
   ]
 }

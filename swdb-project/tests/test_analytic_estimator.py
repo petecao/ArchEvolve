@@ -45,7 +45,7 @@ def characterization(copied_records, tmp_path, llvm22, n=8):
     result = run_swdb('characterize', '--records', copied_records,
         '--source', fixture / 'stream.cpp', '--implementation', 'gapbs-bfs-do',
         '--input', 'kron-g16-k16', '--region-map', fixture / 'regions.json',
-        '--function', 'stream', '--run-arg', str(n), '--id', 'fixture.characterization',
+        '--function', 'stream', '--roi', 'fixture.stream.v1', '--run-arg', str(n), '--id', 'fixture.characterization',
         '--llvm-bin', llvm22, '--output', tmp_path / 'counted', '--fixture', '--format', 'json')
     assert result.returncode == 0, result.stderr + result.stdout
     return json.loads(result.stdout)
@@ -86,11 +86,22 @@ def target_description(tmp_path, bandwidth=32.0):
     return path
 
 
+def freeze_protocol(records, tmp_path):
+    file = tmp_path / 'freeze.yaml'
+    file.write_text(yaml.safe_dump({'message_version': '1.0', 'id': 'fixture.estimate.protocol', 'version': 1,
+        'settings': {'mode': 'estimated', 'estimator_version': 'swdb.analytic.v1',
+            'target_description': str(tmp_path / 'target.yaml'), 'inputs': ['kron-g16-k16'],
+            'roi': 'fixture.stream.v1', 'threads': 1}}, sort_keys=False))
+    result = run_swdb('freeze-protocol', file, '--records', records, '--format', 'json')
+    assert result.returncode == 0, result.stderr + result.stdout
+    return json.loads(result.stdout)['id']
+
+
 def test_estimate_reports_hand_computed_bounds(copied_records, tmp_path, llvm22):
     characterization(copied_records, tmp_path, llvm22)
     result = run_swdb('estimate', '--records', copied_records,
         '--characterization', 'fixture.characterization', '--target-description', target_description(tmp_path),
-        '--protocol', 'fixture.estimate.protocol', '--id', 'fixture.estimate', '--format', 'json')
+        '--protocol', freeze_protocol(copied_records, tmp_path), '--id', 'fixture.estimate', '--format', 'json')
     assert result.returncode == 0, result.stderr + result.stdout
     estimate = json.loads(result.stdout)
     region = next(r for r in estimate['regions'] if r['id'] == 'fixture.stream')
@@ -107,7 +118,7 @@ def test_unknown_bandwidth_preserves_known_compute_bound_and_null_total(copied_r
     characterization(copied_records, tmp_path, llvm22)
     result = run_swdb('estimate', '--records', copied_records,
         '--characterization', 'fixture.characterization', '--target-description', target_description(tmp_path, bandwidth=None),
-        '--protocol', 'fixture.estimate.protocol', '--id', 'fixture.unknown', '--format', 'json')
+        '--protocol', freeze_protocol(copied_records, tmp_path), '--id', 'fixture.unknown', '--format', 'json')
     assert result.returncode == 0, result.stderr + result.stdout
     estimate = json.loads(result.stdout)
     region = next(r for r in estimate['regions'] if r['id'] == 'fixture.stream')
@@ -140,7 +151,7 @@ def test_characterize_zero_trip_loop_does_not_count_a_phantom_iteration(copied_r
 def test_characterize_retains_executed_unmodeled_calls(copied_records, tmp_path, llvm22):
     result = run_swdb('characterize', '--records', copied_records,
         '--source', REPO / 'tests/fixtures/analytic/calls.cpp', '--implementation', 'gapbs-bfs-do',
-        '--input', 'kron-g16-k16', '--function', 'call_scope', '--id', 'fixture.calls',
+        '--input', 'kron-g16-k16', '--function', 'call_scope', '--roi', 'fixture.stream.v1', '--id', 'fixture.calls',
         '--llvm-bin', llvm22, '--output', tmp_path / 'counted', '--fixture', '--format', 'json')
     assert result.returncode == 0, result.stderr + result.stdout
     char = json.loads(result.stdout)
@@ -149,7 +160,7 @@ def test_characterize_retains_executed_unmodeled_calls(copied_records, tmp_path,
     assert char['unmapped_loops']
     estimate = run_swdb('estimate', '--records', copied_records,
         '--characterization', 'fixture.calls', '--target-description', target_description(tmp_path),
-        '--protocol', 'fixture.estimate.protocol', '--id', 'fixture.calls.estimate', '--format', 'json')
+        '--protocol', freeze_protocol(copied_records, tmp_path), '--id', 'fixture.calls.estimate', '--format', 'json')
     assert estimate.returncode == 0, estimate.stderr + estimate.stdout
     assert json.loads(estimate.stdout)['seconds'] is None
 

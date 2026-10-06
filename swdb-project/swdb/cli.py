@@ -253,9 +253,13 @@ def main(argv=None):
     from swdb import analytic
     analytic.register_cli(commands)
 
+    from swdb import archevolve
+    archevolve.register_cli(commands)
     args = parser.parse_args(argv)
     try:
-        return _dispatch(args)
+        with archevolve.command_mode(args):
+            archevolve.guard_cli(args)
+            return _dispatch(args)
     except UsageError as exc:
         print(f"swdb: {exc}", file=sys.stderr)
         return 2
@@ -437,9 +441,10 @@ def _dispatch(args):
         return _emit(view.workload_view(records, args.implementation, args.input, args.machine, args.profile),
                      args.format)
     if args.command == "add":
-        from swdb import writer
+        from swdb import writer, workflow
 
-        written = writer.add(records, args.file, agent=args.agent, agent_name=args.agent_name)
+        written = writer.add(records, args.file, agent=args.agent, agent_name=args.agent_name,
+                             creation_tags=workflow.CREATION_TAGS)
         info = db.build(records, db_path)
         print(f"OK: wrote {written}; rebuilt {db_path} ({info['records']} records)")
         return 0

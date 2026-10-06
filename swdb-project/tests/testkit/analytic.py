@@ -31,3 +31,18 @@ def target_description(tmp_path, bandwidth=32.0):
     path = tmp_path / 'target.yaml'
     path.write_text(yaml.safe_dump(target, sort_keys=False))
     return path
+
+
+def freeze_protocol(records, tmp_path, target, *, roi, threads=1, input_id='kron-g16-k16', arguments=None):
+    """Freeze through the public command; fixture protocols are isolated copied-store data."""
+    import json
+    from conftest import run_swdb
+    settings={'mode':'estimated','estimator_version':'swdb.analytic.v1',
+        'target_description':str(target),'inputs':[input_id],'roi':roi,'threads':threads}
+    if arguments is not None:settings['input_run_arguments']={input_id:arguments}
+    file=tmp_path/'freeze.yaml'
+    file.write_text(yaml.safe_dump({'message_version':'1.0','id':'fixture.estimate.protocol',
+        'version':1,'settings':settings},sort_keys=False))
+    result=run_swdb('freeze-protocol',file,'--records',records,'--format','json')
+    assert result.returncode==0,result.stderr+result.stdout
+    return json.loads(result.stdout)['id']

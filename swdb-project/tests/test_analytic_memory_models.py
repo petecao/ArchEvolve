@@ -5,7 +5,7 @@ import shutil
 import pytest
 import yaml
 from conftest import REPO,run_swdb
-from testkit.analytic import target_description
+from testkit.analytic import target_description,freeze_protocol
 
 
 def gather_case(tmp_path,llvm22,latency=0.5,threads=1):
@@ -13,7 +13,7 @@ def gather_case(tmp_path,llvm22,latency=0.5,threads=1):
     shutil.copytree(REPO/'records',records)
     result=run_swdb('characterize','--records',records,'--source',REPO/'tests/fixtures/analytic/indirect.cpp',
         '--implementation','gapbs-bfs-do','--input','kron-g16-k16','--function','gather',
-        '--run-arg','gather','--threads',str(threads),'--fixture','--id','fixture.gather','--llvm-bin',llvm22,
+        '--roi','fixture.gather.v1','--run-arg','gather','--threads',str(threads),'--fixture','--id','fixture.gather','--llvm-bin',llvm22,
         '--output',tmp_path/'counted','--format','json')
     assert result.returncode==0,result.stderr+result.stdout
     target=target_description(tmp_path,bandwidth=16)
@@ -28,7 +28,7 @@ def gather_case(tmp_path,llvm22,latency=0.5,threads=1):
             'bytes_per_s':fact(2,'bytes/s'),'cold_bytes_per_s':fact(7,'bytes/s')}}]
     target.write_text(yaml.safe_dump(data,sort_keys=False))
     estimate=run_swdb('estimate','--records',records,'--characterization','fixture.gather',
-        '--target-description',target,'--protocol','fixture.estimate.protocol','--id','fixture.memory.estimate','--format','json')
+        '--target-description',target,'--protocol',freeze_protocol(records,tmp_path,target,roi='fixture.gather.v1',threads=threads,arguments=['gather']),'--id','fixture.memory.estimate','--format','json')
     assert estimate.returncode==0,estimate.stderr+estimate.stdout
     return records,json.loads(estimate.stdout)
 

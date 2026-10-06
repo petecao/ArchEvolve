@@ -52,7 +52,7 @@ def mark_agent(data, agent_name):
     return data
 
 
-def add(records_dir, file, agent=False, agent_name="agent"):
+def add(records_dir, file, agent=False, agent_name="agent", *, creation_tags=None):
     try:
         data = access.read_record(Path(file))
     except (OSError, yaml.YAMLError) as exc:
@@ -63,6 +63,10 @@ def add(records_dir, file, agent=False, agent_name="agent"):
         raise Failure("sealed workload/protocol records must be created through register-workload/freeze-protocol")
     if data["kind"] == "profile_package" and (data.get("completeness") != "fixture" or "package_version" in data):
         raise Failure("assembled profile packages must be created through profile-package; raw add accepts explicit fixtures only")
+    for key, value in (creation_tags or {}).items():
+        if key in data and data[key] != value:
+            raise Failure(f"record {data['id']!r} conflicts with creation tag {key!r}")
+        data[key] = value
     if agent:
         mark_agent(data, agent_name)
     return commit(records_dir, new=[data])[0]

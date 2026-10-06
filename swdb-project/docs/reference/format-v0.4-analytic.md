@@ -17,14 +17,18 @@ command failure; compiler-dependent tests skip. On an Apple Silicon Mac, for exa
 ```sh
 python -m swdb characterize --records /path/to/copied/records \
   --source tests/fixtures/analytic/stream.cpp --implementation gapbs-bfs-do \
-  --input kron-g16-k16 --function stream \
+  --input kron-g16-k16 --function stream --roi fixture.stream.v1 \
   --region-map tests/fixtures/analytic/regions.json --run-arg 8 \
   --llvm-bin /opt/homebrew/opt/llvm/bin --output /path/to/new/counting-folder \
   --fixture --id fixture.characterization --format json
 
+# Freeze the request below and use the full returned content-addressed ID.
+python -m swdb freeze-protocol /path/to/freeze.yaml \
+  --records /path/to/copied/records --format json
+
 python -m swdb estimate --records /path/to/copied/records \
   --characterization fixture.characterization --target-description /path/to/target.yaml \
-  --protocol fixture.estimate.protocol --id fixture.estimate --format json
+  --protocol fixture.estimate.protocol.<returned-hash> --id fixture.estimate --format json
 ```
 
 The fixture label matters: its implementation/input IDs are placeholders and its numeric
@@ -160,9 +164,62 @@ bounds remain visible.
 An optional `--baseline` names an explicit estimate. Its input, target-description hash,
 protocol, thread count and evidence kind must match. The ratio is baseline seconds /
 candidate seconds; it stays null without known positive candidate time. Until a validated
-error band is supplied, the verdict is `within_error`. The first slice does not freeze
-protocols, validate hardware-target correctness, establish a CPU error band or calibrate
-against gem5; those operations belong to their separate tickets.
+error band is supplied, the verdict is `within_error`. Hardware-target correctness and
+CPU error bands remain separate operations; ArchEvolve never calibrates against gem5.
+
+## Frozen estimate protocols and the team boundary
+
+The public `freeze-protocol` request uses the existing immutable protocol envelope:
+
+```yaml
+message_version: "1.0"
+id: fixture.estimate.protocol
+version: 1
+settings:
+  mode: estimated
+  estimator_version: swdb.analytic.v1
+  target_description: /path/to/target.yaml
+  inputs: [kron-g16-k16]
+  roi: fixture.stream.v1
+  threads: 1
+  input_run_arguments:
+    kron-g16-k16: ["8"]  # exact counted arguments, keyed by input
+  sources: [gapbs-bfs-do]  # optional explicit source record pins
+```
+
+Freeze replaces `target_description` with `{id, sha256, snapshot}`. It records
+`input_identities` for input/workload records and `source_identities` for optional
+implementation/candidate/source-snapshot records. `dependency_identities` pins every
+stored record reachable from the target description, including calibration records
+and inspected source/configuration records; mutation requires a fresh freeze. `workload_identities` is empty for
+an estimate protocol; historical timed protocols retain their registered workloads.
+The frozen `estimator_sha256` covers the portable SWDB Python source bundle using
+relative paths and content hashes. This conservative bundle includes supporting SWDB
+code as well as mechanism models: any implementation change requires a fresh protocol.
+Changing the label alone cannot reuse a freeze after code changes. Counts separately
+retain the compiler pass, runtime, source and count receipt identities.
+
+Estimate execution verifies the current bundle/version, target snapshot, input hash,
+`input_run_arguments`, source subject, ROI and threads. Per-input run arguments are
+required for application evidence; optional for fixtures, and verified when present. An estimate records `protocol_sha256` and
+`estimator_sha256` alongside the frozen protocol ID. An arbitrary source characterization
+with binding `unverified` cannot become application evidence. Explicit fixtures retain
+`binding.state: fixture` and `evidence_kind: contract_fixture`. Historical validation
+checks frozen record integrity without requiring old source bundles to be installed.
+
+New ArchEvolve operations default to the team policy from
+[ADR 0013](../adr/0013-archevolve-mode-estimates-speed.md): they recursively refuse gem5
+backend targets, gem5 execution/calibration dependencies, research estimator variants,
+and Extensa estimate/protocol records. Refusals name ADR 0013 and the offending record
+or dependency chain, before dispatch or persistence. Calibration dependencies must
+resolve to records. A `code_reading` parameter may cite a pinned simulator source
+configuration (D18); that allowance never admits an execution record as code reading.
+Existing simulator records remain valid history.
+
+An Extensa campaign keeps its inherited creation tags and existing gem5/timing path.
+Explicit public use supplies `--mode extensa --campaign <valid-campaign-id>`; both tags
+are attached at creation. `--mode archevolve` applies team policy even under an inherited
+campaign environment. This boundary changes no simulator adapter or timing-selection rule.
 
 ## Remaining record fields
 
