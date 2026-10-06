@@ -382,23 +382,40 @@ def characterize(args):
     return record
 
 
-def _estimate_regions(source_regions, source_calls, target):
+def _estimate_regions(source_regions, source_calls, target, observation_contract=None):
     from swdb import analytic_models
 
-    # Models are bounds, not a fitted timing. Preserve unknowns in composition.
     regions = []
     for region in source_regions:
-        bounds = [analytic_models.evaluate(region, mechanism, [m['model'] for m in target['mechanisms']], target['threads']) for mechanism in target['mechanisms']]
-        called = [c for c in source_calls
-                  if c.get('region') == region['id'] and c.get('execution_count', {}).get('value') != 0 and _uncovered_call(c)]
-        if called:
-            bounds.append(analytic_models.bound('unmodeled_calls', None, 'sum(call execution count * call cost)',
-                {'calls': called}, ['call_cost.' + c['name'] for c in called]))
-        unknown = any(b['seconds'] is None for b in bounds)
-        seconds = None if unknown else max((b['seconds'] for b in bounds), default=0.0)
-        limiting = None if unknown else max(bounds, key=lambda b: b['seconds'])['model']
+        called = [c for c in source_calls if c.get('region') == region['id']]
+        context = {'target_description_sha256': artifacts.digest(target),
+            'configured_threads': target['threads'], 'observation_contract': observation_contract,
+            'selected_domain': None, 'composition_contract': target.get('composition_contract'),
+            'source_calls': called}
+        bounds, overheads = [], []
+        covered = set()
+        for mechanism in target['mechanisms']:
+            result = analytic_models.evaluate(region, mechanism,
+                [m['model'] for m in target['mechanisms']], target['threads'], context=context)
+            (overheads if mechanism.get('accounting', 'resource_bound') == 'additive_overhead' else bounds).append(result)
+            if result['seconds'] is not None:
+                for claim in result['inputs'].get('covered_calls', []):
+                    for call in called:
+                        count = call.get('execution_count', {}).get('value')
+                        if (claim.get('site') == call.get('site') and type(count) is int
+                            and count >= 0 and claim.get('execution_count') == count):
+                            covered.add(call['site'])
+        uncovered = [c for c in called if c.get('execution_count', {}).get('value') != 0
+                     and _uncovered_call(c) and c.get('site') not in covered]
+        if uncovered:
+            bounds.append(analytic_models.bound('unmodeled_calls', None,
+                'sum(call execution count * call cost)', {'calls': uncovered},
+                ['call_cost.' + c['name'] for c in uncovered]))
+        unknown = any(b['seconds'] is None for b in bounds + overheads)
+        seconds = None if unknown else max((b['seconds'] for b in bounds), default=0.) + sum(b['seconds'] for b in overheads)
+        limiting = None if unknown or not bounds else max(bounds, key=lambda b: b['seconds'])['model']
         regions.append({'id': region['id'], 'seconds': seconds, 'basis': 'estimated',
-            'bounds': bounds, 'overheads': [], 'limiting_bound': limiting,
+            'bounds': bounds, 'overheads': overheads, 'limiting_bound': limiting,
             'state': 'unknown' if unknown else 'known'})
     seconds = None if any(r['seconds'] is None for r in regions) else sum(r['seconds'] for r in regions)
     return regions, seconds
@@ -415,10 +432,10 @@ def estimate(args):
     protocol = bind(store, args.protocol, characterization, target)
     if target['threads'] != characterization['binding']['threads']:
         raise Failure('target thread count differs from the counted workload thread identity')
-    regions, seconds = _estimate_regions(characterization['regions'], characterization['unmodeled_calls'], target)
+    regions, seconds = _estimate_regions(characterization['regions'], characterization['unmodeled_calls'], target, characterization.get('observation_contract'))
     trial_estimates=[]
     for trial in characterization.get('trials',[]):
-        rows,total=_estimate_regions(trial['regions'],trial['unmodeled_calls'],target)
+        rows,total=_estimate_regions(trial['regions'],trial['unmodeled_calls'],target,characterization.get('observation_contract'))
         trial_estimates.append({'position':trial['position'],'sources':trial['sources'],'regions':rows,'seconds':total})
     if trial_estimates:
         seconds=None if any(t['seconds'] is None for t in trial_estimates) else statistics.median(t['seconds'] for t in trial_estimates)
@@ -428,19 +445,20 @@ def estimate(args):
             values=[r['seconds'] if r else 0. for r in sequence]
             row['seconds']=None if any(v is None for v in values) else statistics.median(values)
             row['state']='unknown' if row['seconds'] is None else 'known'
-            templates={b['model']:b for b in row['bounds']}
-            for r in sequence:
-                if r:
-                    for b in r['bounds']:templates.setdefault(b['model'],copy.deepcopy(b))
-            row['bounds']=list(templates.values())
-            for bound in row['bounds']:
-                bs=[next((b for b in r['bounds'] if b['model']==bound['model']),None) if r else None for r in sequence]
-                values=[b['seconds'] if b else 0. for b in bs]
-                bound['seconds']=None if any(v is None for v in values) else statistics.median(values)
-                bound['state']='unknown' if bound['seconds'] is None else 'known'
-                bound['missing']=sorted({m for b in bs if b for m in b['missing']})
-                bound['notes']=list(bound.get('notes',[]))+['Per-region bound summary is the median across independent trial estimates.']
-            row['limiting_bound']=None if row['seconds'] is None else max(row['bounds'],key=lambda b:b['seconds'])['model']
+            for field in ('bounds', 'overheads'):
+                templates={b['model']:b for b in row[field]}
+                for r in sequence:
+                    if r:
+                        for b in r[field]:templates.setdefault(b['model'],copy.deepcopy(b))
+                row[field]=list(templates.values())
+                for bound in row[field]:
+                    bs=[next((b for b in r[field] if b['model']==bound['model']),None) if r else None for r in sequence]
+                    values=[b['seconds'] if b else 0. for b in bs]
+                    bound['seconds']=None if any(v is None for v in values) else statistics.median(values)
+                    bound['state']='unknown' if bound['seconds'] is None else 'known'
+                    bound['missing']=sorted({m for b in bs if b for m in b['missing']})
+                    bound['notes']=list(bound.get('notes',[]))+['Per-region component summary is the median across independent trial estimates.']
+            row['limiting_bound']=None if row['seconds'] is None or not row['bounds'] else max(row['bounds'],key=lambda b:b['seconds'])['model']
     record = _envelope('estimate', args.id, 'Analytic mechanism bounds from compiler/counting facts and frozen target parameters; no target timing.')
     record.update({'format': 'swdb.estimate.v1', 'basis': 'estimated', 'estimator_version': VERSION,
         'estimator_sha256': protocol['settings']['estimator_sha256'],
@@ -456,7 +474,7 @@ def estimate(args):
         'binding': characterization['binding'],
         'scope': characterization.get('coverage', {'scope': 'counted source regions', 'unmapped_loops': characterization['unmapped_loops']}),
         'notes': ['No validated error band exists in this slice; the verdict remains within_error.',
-                  'Total is the sum of region maxima and serial remainder. Any required unknown makes its region and total unknown.']})
+                  'Total sums exclusive region resource maxima plus declared additive overheads. Any required unknown makes its region and total unknown.']})
     if trial_estimates:
         record['trials'] = trial_estimates
         record['summary'] = 'median_whole_call_seconds'
@@ -470,6 +488,9 @@ def estimate(args):
         record['baseline'] = {'id': baseline['id'], 'sha256': artifacts.digest(baseline)}
         if seconds is not None and seconds > 0 and baseline['seconds'] is not None:
             record['ratio'] = baseline['seconds'] / seconds
+    from swdb.analytic_extensions import finalize_estimate
+    record = finalize_estimate(record, store=store, protocol=protocol,
+        characterization=characterization, target_description=target)
     writer.commit(args.records, new=[record])
     return record
 
