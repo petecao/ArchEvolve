@@ -1,64 +1,63 @@
 # Map: Analytic speed estimates and main-database compatibility
 
-Created: 2026-10-06 15:45 ET
-Updated: 2026-10-06 17:45 ET (ticket 01 resolved; design committed); 2026-10-06 17:25 ET (grilling rounds 1–4: tickets 23–25 added; 01, 03–09, 11, 15, 16, 24 revised)
+Created: 2026-10-06 ET
+Updated: 2026-10-06 16:11 ET (tickets regenerated as 22 vertical slices, approved by Yan-Ru; ticket 01 kept); 2026-10-06 16:01 ET (ticket 01 resolved; design committed as `6c691e6`)
 **Type:** ticket map
 **Status:** ready-for-agent (implementation starts on Yan-Ru's go-ahead)
 **Spec:** [spec.md](spec.md)
 
-Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (Yan-Ru decides first); needs-info (waits on LANL access). Every implementation ticket is blocked by 01. Ticket 07 runs on mbit10 under the standing approval of 2026-10-05.
+Each ticket is a vertical slice: it delivers something runnable and checkable on its own, from format to command to tests. Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (Yan-Ru decides first); needs-info (waits on LANL access). Ticket 07 runs on mbit10 under the standing approval of 2026-10-05.
 
-## Phase 0: record the design
+## A. Prefactor and groundwork
 
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
 | 01 | [Yan-Ru reviews the design and approves the design-session commit](issues/01-review-and-commit-design.md) | resolved | — | about 20 min of reading |
+| 02 | [Prefactor: one access layer for record reads](issues/02-one-access-layer.md) | ready-for-agent | 01 | 3–4 h |
+| 03 | [Crosswalk v0 from the slides](issues/03-crosswalk-v0.md) | ready-for-agent | 01 | 1 h |
 
-## Phase 1: estimator foundations (Mac, except 07)
-
-| # | Ticket | Status | Blocked by | Time |
-|---|---|---|---|---|
-| 02 | [Prefactor: evidence basis `estimated` and the estimate record shape](issues/02-estimated-basis-and-estimate-records.md) | ready-for-agent | 01 | 1–2 h |
-| 03 | [Workload characterization format v1 and `swdb characterize` from existing records](issues/03-workload-characterization-format.md) | ready-for-agent | 02 | 3–4 h |
-| 04 | [LLVM static pass: operation counts and access-shape classification per loop](issues/04-llvm-static-pass.md) | ready-for-agent | 03 | 1–2 days |
-| 05 | [Dynamic counts and live address-stream counting from an instrumented native run](issues/05-dynamic-counts.md) | ready-for-agent | 04 | 1 day |
-| 06 | [Target descriptions for mbit10, DX100 and MAPLE](issues/06-target-descriptions.md) | ready-for-agent | 02 | 3–4 h |
-| 07 | [mbit10 microbenchmarks: effective bandwidth by access shape](issues/07-mbit10-bandwidth-microbenchmarks.md) | ready-for-agent | 06 | 2–3 h plus about 1 h of lane time |
-| 08 | [Estimator v1: mechanism models, per-region report and the estimate protocol](issues/08-estimator-v1.md) | ready-for-agent | 03, 06 | 1–2 days |
-| 09 | [Estimation agent role: an LLM fills unknown parameters only](issues/09-estimation-agent-role.md) | ready-for-agent | 08 | 4–6 h |
-
-## Phase 2: ArchEvolve-mode wiring and validation
+## B. The CPU path (first runnable version)
 
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
-| 10 | [ArchEvolve-mode guard: no gem5 runs, no gem5 numbers](issues/10-archevolve-mode-gem5-guard.md) | ready-for-agent | 02 | 2–3 h |
-| 11 | [ArchEvolve-mode DX100 evaluation: functional-target correctness plus estimate](issues/11-archevolve-mode-dx100-estimate.md) | ready-for-agent | 08, 10 | 1 day |
-| 12 | [CPU validation: estimates against existing native mbit10 timings](issues/12-cpu-validation.md) | ready-for-agent | 05, 07, 08 | 4–6 h |
-| 13 | [DX100 sanity check against the DX100 paper's reported numbers](issues/13-dx100-reported-sanity-check.md) | ready-for-agent | 11 | 2 h |
-| 23 | [Generality check: MAPLE and PageRank with no estimator code change](issues/23-generality-check-maple-pagerank.md) | ready-for-agent | 06, 08, 05 | 1 day |
-| 24 | [Show Scott the address-stream counting approach](issues/24-show-scott-counting.md) | ready-for-human | 08 | about 15 min |
-| 25 | [XSBench as the bridge kernel to the main database](issues/25-xsbench-bridge-kernel.md) | needs-triage | 23 | 1–2 days |
+| 04 | [First runnable version: estimate a streaming loop on the mbit10 CPU](issues/04-first-runnable-estimate.md) | ready-for-agent | 01 | 1.5–2 days |
+| 05 | [Indirect accesses and the BFS baseline on the CPU](issues/05-indirect-and-bfs-baseline.md) | ready-for-agent | 04 | 1.5–2 days |
+| 06 | [Estimate protocols and the gem5 refusal](issues/06-estimate-protocols-and-gem5-refusal.md) | ready-for-agent | 04 | 3–4 h |
+| 07 | [Measured mbit10 parameters](issues/07-measured-mbit10-parameters.md) | ready-for-agent | 04 | 2–3 h plus about 1 h of lane time (mbit10) |
+| 08 | [Peter's feature reports as an input](issues/08-peter-feature-reports-input.md) | ready-for-agent | 05 | 3–4 h |
 
-## Phase 3: Extensa mode
+## C. DX100 and ArchEvolve mode
 
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
-| 14 | [Extensa flow A: a paired estimate for every candidate](issues/14-extensa-paired-estimates.md) | ready-for-agent | 08 | 4–6 h |
-| 15 | [Agreement report from flow-A campaigns](issues/15-agreement-report.md) | ready-for-agent | 14 | 3–4 h plus campaign lane time |
-| 16 | [Yan-Ru decides whether Extensa switches to screening (flow B)](issues/16-decide-flow-b.md) | needs-triage | 15 | about 15 min |
-| 17 | [Extensa flow B: screening by estimate](issues/17-extensa-screening.md) | needs-triage | 16 | 1 day |
+| 09 | [DX100 estimate](issues/09-dx100-estimate.md) | ready-for-agent | 05 | 1.5–2 days |
+| 10 | [The estimation role fills unknowns](issues/10-estimation-role.md) | ready-for-agent | 09 | 4–6 h |
+| 11 | [CPU error check and paired estimates in ArchEvolve mode](issues/11-cpu-error-check-and-paired-estimates.md) | ready-for-agent | 05, 06, 07 | 4–6 h |
+| 12 | [ArchEvolve-mode DX100 evaluation without gem5](issues/12-archevolve-dx100-evaluation.md) | ready-for-agent | 06, 09 | 1 day |
+| 13 | [DX100 sanity check against the paper](issues/13-dx100-sanity-check.md) | ready-for-agent | 10 | 2 h |
 
-## Phase 4: main-database compatibility
+## D. Generality, Scott, Extensa
 
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
-| 18 | [Crosswalk v0 from the slides, every row unverified](issues/18-crosswalk-v0.md) | ready-for-agent | 01 | 1 h |
-| 19 | [Prefactor: one access layer for record reads](issues/19-one-access-layer.md) | ready-for-agent | 01 | 3–4 h |
-| 20 | [Ask LANL for read access to the kernels repo](issues/20-ask-lanl-for-access.md) | ready-for-human | 01 | about 10 min, when Yan-Ru decides |
-| 21 | [`swdb import-main`: read the main database, keep its IDs](issues/21-import-main.md) | needs-info | 20, 18, 19 | 1 day |
-| 22 | [Export through the main database's ingest inputs, with a round-trip test](issues/22-export-and-round-trip.md) | needs-info | 21 | 1 day |
+| 14 | [Generality: MAPLE and PageRank](issues/14-generality-maple-pagerank.md) | ready-for-agent | 05, 09, 10 | 1 day |
+| 15 | [Show Scott the counting approach](issues/15-show-scott-counting.md) | ready-for-human | 09 | about 15 min |
+| 16 | [Extensa flow A: blind paired estimates](issues/16-extensa-blind-paired-estimates.md) | ready-for-agent | 06, 09 | 4–6 h |
+| 17 | [Agreement report](issues/17-agreement-report.md) | ready-for-agent | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
+| 18 | [Decide on flow B](issues/18-decide-flow-b.md) | ready-for-human | 17 | about 15 min |
+
+## E. Later or blocked
+
+| # | Ticket | Status | Blocked by | Time |
+|---|---|---|---|---|
+| 19 | [Flow B screening](issues/19-flow-b-screening.md) | needs-triage | 18 | 1 day |
+| 20 | [XSBench as the bridge kernel](issues/20-xsbench-bridge-kernel.md) | needs-triage | 14 | 1–2 days |
+| 21 | [Ask LANL for access](issues/21-ask-lanl-for-access.md) | ready-for-human | — | about 10 min, when Yan-Ru decides |
+| 22 | [`swdb import-main`: read the main database](issues/22-import-main.md) | needs-info | 02, 03, 21 | 1 day |
+| 23 | [Export and round-trip test](issues/23-export-and-round-trip.md) | needs-info | 22 | 1 day |
 
 ## Context pointers
 
-- 2026-10-06: design inputs are [lanl-db-notes.md](lanl-db-notes.md) and [three-way-scan-analytic-evaluators.md](three-way-scan-analytic-evaluators.md); decisions D1–D15 in the spec.
-- 2026-10-06 17:45 ET: ticket 01 resolved; Yan-Ru confirmed D8–D34 and the estimator workflow and approved the design-session commit. [01](issues/01-review-and-commit-design.md), [spec](spec.md)
+- 2026-10-06: design inputs are [lanl-db-notes.md](lanl-db-notes.md) and [three-way-scan-analytic-evaluators.md](three-way-scan-analytic-evaluators.md); decisions D1–D34 in the spec.
+- 2026-10-06 16:01 ET: ticket 01 resolved; Yan-Ru confirmed D8–D34 and the estimator workflow and approved the design-session commit. [01](issues/01-review-and-commit-design.md), [spec](spec.md)
+- 2026-10-06 16:11 ET: the 24 layer-by-layer tickets 02–25 were replaced by 22 vertical slices (02–23), approved by Yan-Ru; the first runnable version is [04](issues/04-first-runnable-estimate.md).
