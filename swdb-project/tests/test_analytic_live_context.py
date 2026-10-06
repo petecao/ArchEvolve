@@ -139,3 +139,22 @@ def test_registered_cxx11_build_contract_keeps_live_objects(records,tmp_path,llv
     memory=next(r for r in data['regions'] if r['id']=='fixture.loads')['memory_service_counts']
     assert memory['lifetime_line_union']['value']==5
     assert memory['unknown_object_requests']['value']==0
+
+
+def test_count_receipt_retains_compiler_and_loaded_runtime_without_general_environment(records,tmp_path,llvm22,monkeypatch):
+    monkeypatch.setenv('KMP_BLOCKTIME','17')
+    monkeypatch.setenv('SWDB_PRIVATE_TEST_VALUE','must-not-be-serialized')
+    data=characterize_lifetimes(records,tmp_path,llvm22)
+    runtime=data['observation_contract']['native_runtime']
+    assert runtime['environment']['OMP_NUM_THREADS']=='1'
+    assert runtime['environment']['OMP_DYNAMIC']=='FALSE'
+    assert runtime['environment']['KMP_BLOCKTIME']=='17'
+    assert 'SWDB_PRIVATE_TEST_VALUE' not in runtime['environment']
+    assert 'clang version 22.' in runtime['compiler_version']
+    assert len(runtime['compiler_sha256'])==64
+    assert runtime['observation_method']=='process_loaded_images'
+    assert runtime['loaded_libraries']
+    assert all(set(library)=={'path','sha256'} for library in runtime['loaded_libraries'].values())
+    assert 'must-not-be-serialized' not in json.dumps(runtime)
+    checked=records.validate()
+    assert checked.returncode==0,checked.stdout+checked.stderr

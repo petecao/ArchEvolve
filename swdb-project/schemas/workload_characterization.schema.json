@@ -433,6 +433,69 @@
         },
         "call_abi": {
           "const": "swdb.call.v2"
+        },
+        "native_runtime": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "compiler_version": {
+              "type": "string"
+            },
+            "compiler_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "environment": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "loaded_libraries": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ]
+              }
+            },
+            "observation_method": {
+              "const": "process_loaded_images"
+            },
+            "scope": {
+              "const": "counted_instrumented_binary"
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "compiler_version",
+            "compiler_sha256",
+            "environment",
+            "loaded_libraries",
+            "observation_method",
+            "scope",
+            "missing"
+          ]
         }
       },
       "required": [
