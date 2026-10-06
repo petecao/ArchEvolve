@@ -26,9 +26,11 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m swdb certify contract.bfs_read_offload \
   --records records --library library \
   --runs-dir /data/yanruj/EvolveSWDB_runs/lanl-functional-bfs-source-20261006-a1/bfs-functional-read-offload-20261006-a1/strict-certification \
   --command-version 1.6 --tile-sizes 16384,1024 --threads 4 --sources 0 \
-  --mode archevolve --format json
+  --mode archevolve
 ```
 
 Candidate 1.6 is the strict current default, including the improved knob spelling and `_Pragma` controls. Both tile sizes and four worker threads in each run are required. A certificate is accepted only after the new candidate/source/current-library/procedure hashes match, every positive matrix cell passes, every negative control is rejected with its named attributed check, and the record store validates. Keep raw runs on mbit10 and export compact metadata only. Functional certification establishes finite strict-model correctness; counting and analytic estimation remain separate ticket 09 work, with no native speedup claim.
 
 The prerequisite disposition and RED→GREEN procedure evidence are in `09-certification-fingerprint-redeclaration.{md,json}`. Local source-only public add → fixture-package → submit passed, with 590 copied-store records valid and all 584 original record files unchanged. The stale body-pin check refused before writes. Two CLI-option failures remain retained as fresh source-only attempts; the corrected attempt used fresh IDs. Exact evidence is in `09-functional-bfs-source-local-smoke.json`; it does not replace the pending remote strict matrix.
+
+The first remote strict invocation (a1) stopped at argument parsing: `certify` rejects `--format json` and emits its compact JSON result by default. The corrected recipe omits that flag. Preserve the original failed argv/stdout/stderr and source receipt; a retry records the corrected argv separately while retaining the same verified candidate pins. Local public-parser RED→GREEN evidence is in `09-certify-argv-repair.json`; its intercepted dispatch does not execute certification.
