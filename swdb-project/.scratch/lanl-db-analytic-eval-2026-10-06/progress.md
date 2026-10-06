@@ -1,6 +1,6 @@
 # Implementation progress
 
-Updated: 2026-10-06 16:35 ET
+Updated: 2026-10-06 16:46 ET
 
 Integration: `codex/lanl-analytic-eval`; review base: `2c50e5fb8671e08050921bee06920f92fd153bdd` (`yanrujhou_main`). Yan-Ru amended startup settings commit `fb842a8` to this replacement during startup. Owned branches are rebased so the removed IDE files stay removed. Final delivery merges and pushes `yanrujhou_main`.
 
@@ -8,9 +8,10 @@ Agent assignments: tickets 02–14, 16–17. Human gates 15, 18, 21 stay human-o
 
 | Ticket | Agent | Branch | State |
 |---|---|---|---|
-| 02 | `/root/ticket02` | `codex/lanl-ticket02` | Access layer |
-| 03 | `/root/ticket03` | `codex/lanl-ticket03` | Resolved and merged; now merger |
-| 04 | `/root/ticket04` | `codex/lanl-ticket04` | LLVM characterizer and streaming estimate |
+| 02–04 | Existing implementers | Merged | Resolved; integration86b2a9a; combined smoke11passed/553valid |
+| 05 | `/root/ticket02` | `codex/lanl-ticket05` | Indirect shapes and full per-trial BFS/BC ROI counts |
+| 06 | `/root/ticket04` | `codex/lanl-ticket06` | Frozen estimate protocols and recursive team gem5 refusal |
+| 07 | `/root/ticket03` | `codex/lanl-ticket07` | CPU microbenchmarks and measured target descriptions |
 
 Managed worktrees: `/Users/yanrujhou/.codex/worktrees/lanl-*/ArchEvolve`. Parent owns integration. Inspect liveness before reassigning. File writes and Git metadata there need sandbox escalation, covered by the user's implementation authorization.
 
@@ -29,3 +30,5 @@ Requested30min heartbeat `lanl-analytic-evaluator-progress` ACTIVE. Inspect tick
 2026-10-06 16:26 ET: official LLVM22 install completed16:23ET with lane exit0 and lease releaseg463. Toolchain bin path above verified. The owned verified compressed archive was removed to recover1.9GB; installation source/digest retained in preflight. Bulky campaign output will use `/data/yanruj/EvolveSWDB_runs/` (59GiBfree at latest snapshot). Primary native BFS/BC profiles for g16/g22 and1/2/4/8/16threads exist under records/profiles and can support CPU error checks after strict native/mode/input/ROI filtering. Historical timings cannot become blind pairs. Parent exploration pointers for subsequent agents: `/private/tmp/lanl-analytic-exploration-20261006.md`.
 
 2026-10-06 16:35 ET: ticket03 merged at `b36cb58`:25slide-grounded mappings/19extensions, all unverified;553records valid;139regression tests passed/1existing skip; merged smoke9passed. Tickets02/04 finishing necessary regression checks. Baseline query/validation/campaign checks95passed. Both socket and legacy leases released16:32ET; load1.16, `/data1`28GiB/`/data`59GiB free; preserve unrelated node1CPU process. Official Linux LLVM22 uses static `opt` with exported LLVM symbols, so plugin linking must support that distribution as well as Mac shared LLVM; ticket04 implements the choice before remote load verification. Remote OpenMP runtime is `lib/x86_64-unknown-linux-gnu/libomp.so`. Existing DX100 source/build available at `/data1/yanruj/DX100-bfs-e4fc4af` (commit `e4fc4afdf894f295442cef3604667a469fab8e62`); do not reuse historical timings as blind evidence.
+
+2026-10-06 16:46 ET: first three slices fast-forwarded/pushed to `yanrujhou_main` at `86b2a9af732555b2ac2071a2afaf38062d920293` and remote Git source synchronized. Review remains pending after the entire assigned set. Primary remote clone has no owned evaluation running except the current smoke; preserve untracked retention lock. Remote smokea1 stopped before counting because governor file absent (lane0g465,exit1,lease released); preserved. New smokea2 runs under node0/tmux `swdb-lanl-llvm-smoke-20261006-a2`,1200s timeout, raw `/data/yanruj/EvolveSWDB_runs/lanl-analytic-llvm-smoke-20261006-a2`, leaseg466. It explicitly records unavailable controls; fixture labels/rates are artificial plumbing evidence, not measured CPU performance. Read exit-code/completed/summary and lease before subsequent source sync. Next30min status table due17:12ET; last table16:42ET. All agents responsive.
