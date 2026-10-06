@@ -60,3 +60,24 @@ def test_unresolved_paired_subtraction_keeps_unknown_cost_without_clamping(recor
     assert service['parameter']['value'] is None and service['parameter']['basis'] == 'unknown'
     assert service['seconds_per_event']['min'] == pytest.approx(-.01)
     assert 'subtraction' in service['missing'][0]
+
+
+def test_portable_service_runner_is_bounded_and_imports_only_as_fixture(records, tmp_path):
+    output = tmp_path / 'services'
+    result = run_swdb('cpu-service-calibrate', '--records', records.path, '--output', output,
+        '--fixture', '--repetitions', '3', '--min-trial-s', '.002', '--max-wall-s', '60')
+    assert result.returncode == 0, result.stdout + result.stderr
+    data = json.loads((output / 'receipt.json').read_text())
+    assert data['evidence_kind'] == 'fixture' and data['threads'] == 1
+    assert data['services'][0]['id'] == 'clock.now'
+    assert len(data['services'][0]['trials']) == 3
+    assert all(t['events'] > 0 and t['gross_seconds'] > 0 and t['driver_seconds'] > 0
+               for t in data['services'][0]['trials'])
+    imported = run_swdb('import-cpu-service-calibration', '--records', records.path,
+        '--receipt', output / 'receipt.json', '--id', 'fixture.runner.service', '--fixture', '--format', 'json')
+    assert imported.returncode == 0, imported.stdout + imported.stderr
+    parameter = json.loads(imported.stdout)['services'][0]['parameter']
+    assert parameter['basis'] in {'reported', 'unknown'}
+    excessive = run_swdb('cpu-service-calibrate', '--records', records.path,
+        '--output', tmp_path / 'unbounded', '--fixture', '--max-wall-s', '901')
+    assert excessive.returncode != 0 and not (tmp_path / 'unbounded').exists()

@@ -4,6 +4,11 @@ Paired elapsed subtraction retains all inputs; unresolved service work stays unk
 """
 import copy
 import math
+import json
+import platform
+import shutil
+import socket
+import time
 from pathlib import Path
 
 from yaml import YAMLError
@@ -20,6 +25,16 @@ def identity(data):
 
 
 def register_cli(commands):
+    run = commands.add_parser('cpu-service-calibrate', help='bounded independent native service/driver timing, never application timing')
+    run.add_argument('--records', type=Path, default=paths.RECORDS)
+    run.add_argument('--output', type=Path, required=True)
+    run.add_argument('--fixture', action='store_true')
+    run.add_argument('--compiler', default='c++')
+    run.add_argument('--repetitions', type=int, default=7)
+    run.add_argument('--min-trial-s', type=float, default=.05)
+    run.add_argument('--max-wall-s', type=float, default=900)
+    run.add_argument('--format', choices=['yaml', 'json'], default='json')
+    run.set_defaults(cpu_service_calibration_handler=calibrate)
     sub = commands.add_parser('import-cpu-service-calibration', help='retain independently timed native service costs and their paired driver inputs')
     sub.add_argument('--records', type=Path, default=paths.RECORDS)
     sub.add_argument('--receipt', type=Path, required=True)
@@ -102,3 +117,69 @@ def validate_record(record, ctx):
             yield Problem(record.rel, 'evidence_kind', 'native service import requires counted matching ABI/runtime evidence')
     except (Failure, ValueError, KeyError, TypeError) as exc:
         yield Problem(record.rel, 'services', str(exc))
+
+
+def calibrate(args):
+    from swdb.cpu_calibration import _command
+    if not args.fixture:
+        raise Failure('native service timing requires finalized matching source-count/runtime evidence; portable check needs --fixture')
+    if not 3 <= args.repetitions <= 11 or not math.isfinite(args.max_wall_s) or not 0 < args.max_wall_s <= 900 or not math.isfinite(args.min_trial_s) or not 0 < args.min_trial_s <= .2:
+        raise Failure('service timing exceeds repetitions 3–11, wall 900s or per-trial 0.2s caps')
+    output = args.output.resolve()
+    if output.exists():
+        raise Failure('service output must be a new external folder')
+    if output.is_relative_to(paths.HOME.resolve()):
+        raise Failure('service raw output must stay outside the project')
+    output.mkdir(parents=True)
+    deadline = time.monotonic() + args.max_wall_s
+    def command(argv):
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise Failure('service timing reached its wall budget')
+        return _command(argv, timeout=remaining)
+    source = Path(__file__).parent / 'native'
+    for name in ('CpuServiceTimer.cpp', 'CpuServiceWork.h'):
+        shutil.copy2(source / name, output / name)
+    binary = output / 'service-timer'
+    flags = ['-O3', '-std=c++17']
+    compiler = command([args.compiler, '--version']).stdout.strip()
+    build = command([args.compiler, *flags, output / 'CpuServiceTimer.cpp', '-o', binary])
+    (output / 'build.stdout').write_text(build.stdout)
+    (output / 'build.stderr').write_text(build.stderr)
+    n = 128
+    while True:
+        pilot = json.loads(command([binary, n, 'service_first']).stdout)
+        (output / 'pilot.json').write_text(json.dumps(pilot))
+        if min(pilot['gross_seconds'], pilot['driver_seconds']) >= args.min_trial_s:
+            break
+        if n >= 134217728:
+            raise Failure('service pilot could not resolve both paired durations within its work cap')
+        n = min(2 * n, 134217728)
+    trials = []
+    for i in range(args.repetitions):
+        order = 'service_first' if i % 2 == 0 else 'driver_first'
+        trial = json.loads(command([binary, n, order]).stdout)
+        trials.append(trial)
+        (output / 'partial-trials.json').write_text(json.dumps(trials))
+    raw = {'format': 'swdb.cpu-service-calibration.v1', 'evidence_kind': 'fixture',
+        'machine': 'mbit10', 'threads': 1,
+        'context': {'compiler_version': compiler, 'flags': flags,
+            'host': socket.gethostname(), 'architecture': platform.machine(),
+            'source_sha256': {name: artifacts.file_hash(output / name) for name in ('CpuServiceTimer.cpp', 'CpuServiceWork.h')},
+            'binary_sha256': artifacts.file_hash(binary), 'instrumented_timer': False},
+        'settings': {'repetitions': args.repetitions, 'min_trial_s': args.min_trial_s,
+            'max_wall_s': args.max_wall_s, 'resident_payload_bytes': 0,
+            'raw_output_cap_bytes': 25 * 1024**2, 'iteration_cap': 134217728},
+        'services': [{'id': 'clock.now', 'unit': 'seconds/call',
+            'event_definition': 'One system_clock::now per service iteration; matched conditional-loop driver, checksum consumption and return. Effective constructed service difference, not physical instruction latency.',
+            'scope': {'worker_scope': 'serial', 'cache_state': 'warm',
+                'runtime': 'current C++ standard library; portable contract only'},
+            'denominator': {'level': 'source_normalized_work', 'basis': 'reported',
+                'proof': 'Portable clock-loop construction; separate native counting proof is required.'},
+            'trials': trials}]}
+    if sum(p.stat().st_size for p in output.rglob('*') if p.is_file()) > 25 * 1024**2:
+        raise Failure('service raw output reached its 25MiB cap')
+    raw['identity_sha256'] = identity(raw)
+    (output / 'receipt.json').write_text(json.dumps(raw, indent=2))
+    return {'receipt': str(output / 'receipt.json'), 'receipt_sha256': raw['identity_sha256'],
+            'evidence_kind': 'fixture', 'services': 1}

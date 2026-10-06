@@ -8,7 +8,14 @@ application timings. The cost is paired elapsed difference divided by the counte
 work; raw subtraction values and spread remain visible. Any nonpositive residual
 keeps the parameter unknown instead of clamping it to zero.
 
-The current public tracer admits only an explicitly labeled hand fixture with
+The portable runner times an independent clock-call loop and a matched driver. It
+uses a pilot to select bounded work, alternates measurement order, retains every
+trial, and consumes returned checksums outside timing. Compilation, pilot and
+trials share the wall budget. Raw output stays outside the project; repetitions
+are capped at11, wall time at900s and output at25MiB. The runner currently requires
+`--fixture`, so its host timings cannot become native calibration.
+
+The importer admits only an explicitly labeled fixture with
 `--fixture`; its parameter basis is `reported`. Native import remains refused until
 matching source-count, compiler/runtime and socket-lane evidence is implemented.
 The receipt format is `swdb.cpu-service-calibration.v1`, with `machine`, `threads`,
@@ -17,6 +24,9 @@ Each service names its unit, event definition, execution scope and denominator,
 and retains paired `events`, `gross_seconds`, `driver_seconds` and order per trial.
 
 ```sh
+python3 -m swdb cpu-service-calibrate --records "$COPIED_RECORDS" \
+  --output "$EXTERNAL_SERVICE_OUTPUT" --fixture --repetitions 3 \
+  --min-trial-s 0.002 --max-wall-s 60 --format json
 python3 -m swdb import-cpu-service-calibration --records "$COPIED_RECORDS" \
   --receipt "$FIXTURE_RECEIPT" --id fixture.service.cost --fixture --format json
 python3 -m swdb validate --records "$COPIED_RECORDS"
