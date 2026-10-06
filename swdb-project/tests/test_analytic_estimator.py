@@ -20,11 +20,16 @@ def copied_records(tmp_path):
 
 def test_estimated_fact_validates_without_changing_existing_records(copied_records):
     path = copied_records / 'inputs' / 'kron-g16-k16.yaml'
-    data = yaml.safe_load(path.read_text())
+    original = path.read_bytes()
+    data = yaml.safe_load(original)
+    # Existing application inputs are frozen by real count/protocol receipts.
+    # Test fact-basis admission on a new unbound input without weakening those pins.
+    data['id'] = 'fixture.estimated-input'
     data['properties']['num_nodes']['basis'] = 'estimated'
-    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    (copied_records / 'inputs/fixture.estimated-input.yaml').write_text(yaml.safe_dump(data, sort_keys=False))
     result = run_swdb('validate', '--records', copied_records)
     assert result.returncode == 0, result.stderr + result.stdout
+    assert path.read_bytes() == original
 
 
 @pytest.fixture

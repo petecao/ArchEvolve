@@ -577,6 +577,12 @@
       "items": {
         "type": "object"
       }
+    },
+    "reported_inputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/reported_input"
+      }
     }
   },
   "required": [
@@ -597,5 +603,154 @@
     "identity_sha256",
     "coverage",
     "binding"
-  ]
+  ],
+  "$defs": {
+    "reported_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "basis",
+        "source_report",
+        "base_characterization",
+        "features",
+        "conflicts",
+        "redactions",
+        "scope",
+        "array_aliases"
+      ],
+      "properties": {
+        "basis": {
+          "const": "reported"
+        },
+        "source_report": {
+          "type": "object",
+          "required": [
+            "path",
+            "sha256",
+            "filename_version",
+            "schema_version",
+            "sanitized_sha256",
+            "sanitizer_version"
+          ],
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "filename_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "schema_version": {
+              "type": "string"
+            },
+            "sanitized_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "sanitizer_version": {
+              "const": "swdb.feature-report-sanitizer.v1"
+            }
+          },
+          "additionalProperties": false
+        },
+        "base_characterization": {
+          "type": "object",
+          "required": [
+            "id",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "features": {
+          "type": "object"
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "redactions": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "scope": {
+          "type": "object"
+        },
+        "array_aliases": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "methodology": {
+          "$ref": "#/$defs/reported_document"
+        },
+        "methodology_text": {
+          "$ref": "#/$defs/reported_document"
+        },
+        "manifest": {
+          "$ref": "#/$defs/reported_document"
+        }
+      }
+    },
+    "reported_document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "sanitized_sha256",
+        "sanitizer_version",
+        "features",
+        "redactions",
+        "basis"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "sanitized_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "sanitizer_version": {
+          "const": "swdb.feature-report-sanitizer.v1"
+        },
+        "features": {
+          "type": "object"
+        },
+        "redactions": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "basis": {
+          "const": "reported"
+        }
+      }
+    }
+  }
 }
