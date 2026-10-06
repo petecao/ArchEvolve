@@ -1,6 +1,6 @@
 # Implementation progress
 
-Updated: 2026-10-06 16:20 ET
+Updated: 2026-10-06 16:35 ET
 
 Integration: `codex/lanl-analytic-eval`; review base: `2c50e5fb8671e08050921bee06920f92fd153bdd` (`yanrujhou_main`). Yan-Ru amended startup settings commit `fb842a8` to this replacement during startup. Owned branches are rebased so the removed IDE files stay removed. Final delivery merges and pushes `yanrujhou_main`.
 
@@ -9,7 +9,7 @@ Agent assignments: tickets 02–14, 16–17. Human gates 15, 18, 21 stay human-o
 | Ticket | Agent | Branch | State |
 |---|---|---|---|
 | 02 | `/root/ticket02` | `codex/lanl-ticket02` | Access layer |
-| 03 | `/root/ticket03` | `codex/lanl-ticket03` | Crosswalk from actual slides8–9 |
+| 03 | `/root/ticket03` | `codex/lanl-ticket03` | Resolved and merged; now merger |
 | 04 | `/root/ticket04` | `codex/lanl-ticket04` | LLVM characterizer and streaming estimate |
 
 Managed worktrees: `/Users/yanrujhou/.codex/worktrees/lanl-*/ArchEvolve`. Parent owns integration. Inspect liveness before reassigning. File writes and Git metadata there need sandbox escalation, covered by the user's implementation authorization.
@@ -27,3 +27,5 @@ Local Python: `/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3` (pytest9.0.3
 Requested30min heartbeat `lanl-analytic-evaluator-progress` ACTIVE. Inspect tickets, agents and remote live state; report evaluation tables every30min. Pause only after all assigned agent implementation/evaluation/review/fixes/tracker/sync work completes. Never repeat completed evaluations on resume.
 
 2026-10-06 16:26 ET: official LLVM22 install completed16:23ET with lane exit0 and lease releaseg463. Toolchain bin path above verified. The owned verified compressed archive was removed to recover1.9GB; installation source/digest retained in preflight. Bulky campaign output will use `/data/yanruj/EvolveSWDB_runs/` (59GiBfree at latest snapshot). Primary native BFS/BC profiles for g16/g22 and1/2/4/8/16threads exist under records/profiles and can support CPU error checks after strict native/mode/input/ROI filtering. Historical timings cannot become blind pairs. Parent exploration pointers for subsequent agents: `/private/tmp/lanl-analytic-exploration-20261006.md`.
+
+2026-10-06 16:35 ET: ticket03 merged at `b36cb58`:25slide-grounded mappings/19extensions, all unverified;553records valid;139regression tests passed/1existing skip; merged smoke9passed. Tickets02/04 finishing necessary regression checks. Baseline query/validation/campaign checks95passed. Both socket and legacy leases released16:32ET; load1.16, `/data1`28GiB/`/data`59GiB free; preserve unrelated node1CPU process. Official Linux LLVM22 uses static `opt` with exported LLVM symbols, so plugin linking must support that distribution as well as Mac shared LLVM; ticket04 implements the choice before remote load verification. Remote OpenMP runtime is `lib/x86_64-unknown-linux-gnu/libomp.so`. Existing DX100 source/build available at `/data1/yanruj/DX100-bfs-e4fc4af` (commit `e4fc4afdf894f295442cef3604667a469fab8e62`); do not reuse historical timings as blind evidence.
