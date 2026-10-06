@@ -140,8 +140,8 @@ create a fresh binding instead of editing it:
 ```sh
 python3 -m swdb bind-cpu-calibration --records "$COPIED_RECORDS" \
   --target-description mbit10.cpu.lanl20261006a2.t4 \
-  --id-prefix mbit10.cpu.lanl20261006a2.bound \
-  --count-equivalence .scratch/lanl-db-analytic-eval-2026-10-06/evidence/cpu-count-equivalence-mbit10-20261006-a1.json
+  --id-prefix mbit10.cpu.lanl20261006a2.v2 \
+  --count-equivalence .scratch/lanl-db-analytic-eval-2026-10-06/evidence/cpu-count-equivalence-mbit10-20261006-a2.json
 ```
 
 Repeat `--target-description` for other T values from the same intended version.
@@ -154,3 +154,32 @@ validation points and coefficients match exactly; this never pools native timing
 Changed numerators recompute constructed-work rates from the unchanged trials in a
 fresh version. Original a1/a2 descriptions stay unchanged. The public freeze must
 resolve and pin the new calibration record; the ADR 0013 guard is retained.
+
+
+The completed campaign's [bound-calibration receipt](../../.scratch/lanl-db-analytic-eval-2026-10-06/evidence/bound-calibration-fixture-mbit10-20261006-a1.json)
+pins the final corrected-v2 proof, all five fresh target versions, typed native
+calibration records and the actual T1 stream fixture. Seven trials/cell retain
+spread; native a1 and a2 contexts are not pooled. The a2 stream-only aggregate rate
+and inferred effective requests per worker are:
+
+| T | Useful stream GB/s (decimal) | Dependent seconds/load | Effective requests/thread (inferred) |
+|---|---|---|---|
+|1|15.0715|9.4149508e-8|10.5333|
+|2|25.1918|8.8465306e-8|10.7836|
+|4|36.1323|8.7040395e-8|11.3717|
+|8|45.8879|8.7422160e-8|7.8826|
+|16|58.0234|9.0175053e-8|4.2190|
+
+Consume a target only with matching proven worker scope. The T1 fixture's canonical
+target hash is `a5d6c34b6d1d4be0c90a3ade95f9941ae64c9b5e76270aa26889db8cf8a499d2`;
+its estimate is `lanl.bound-v2.fixture.20261006.estimate`, labeled `contract_fixture`.
+Use explicit `--counting-pipeline source-normalized-v2`, `--threads 1`, and matching
+`fixture.stream.v1` ROI when repeating the 17-element public stream check. Freeze a
+fresh protocol after Python/model changes; the current receipt pins the combined
+`b5acc909` implementation bundle. Its known bounds verify binding, not a native CPU
+error band. The T4 application reports preserve incomplete totals.
+
+Warm/cold cache stream throughput cannot supply cache-resident dependent-load
+latency, arbitrary store/RMW service or fresh-allocation first-touch cost. Additional
+independent generic service measurements and declared residency scenarios need
+fresh target versions; they belong to ticket 11.
