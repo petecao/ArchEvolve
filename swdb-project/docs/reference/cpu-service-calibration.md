@@ -160,3 +160,16 @@ data uses the timed budget; every other file uses the build budget. A failure
 retains partial sealed point records and emits no admitted proof/timing receipt.
 Final JSON receipt sizes are checked before publication too. This change neither pools a1
 with a2 nor removes duplicate sealed compiler artifacts.
+
+### Exact allocator bins in a target description
+
+The `native_service_costs` selector may select exact `known_length_bins` for
+`_Znam`/`_Znwm` and exact `allocation_lifetime_size_bins` for `_ZdaPv`/`_ZdlPv`.
+Each selection declares `unit: seconds/call`, `bins: [{bytes, parameter}]`, and
+`scope_assumption: {regime: fresh_process_repeated_allocate_free_batches,
+transfer_basis: inferred}`. Every executed byte bin at that exact source site
+must have a known independently measured parameter; its scoped counts must sum
+to the full opaque-site count. Unknown lengths, lifetimes, rates, or partial
+coverage retain the opaque call and null its cost. The allocator regime cannot
+cover bulk copies or other ABIs. This explicitly inferred state transfer does
+not establish physical cache state, page faults, or payload initialization cost.
