@@ -1368,3 +1368,6 @@ def register_cli(commands, paths_module):
                      help="run setup and the per-class gem5 baselines (no provider call), then pause")
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
     sub.set_defaults(extensa_handler=run_cli)
+    # Ticket 80 (C17, 2026-10-05 ET): copy candidate artifacts and team claims to the team store.
+    from swdb import campaign_export
+    campaign_export.register_cli(commands, paths_module)
