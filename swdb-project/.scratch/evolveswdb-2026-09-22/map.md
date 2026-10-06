@@ -2,7 +2,7 @@
 
 Created: 2026-09-22
 Updated: 2026-09-22
-Spec: `spec.md` (ready-for-agent). Glossary and ADRs: SW Database `CONTEXT.md` and
+Spec: `spec.md` (ready-for-agent). Glossary and ADRs: SW Database `GLOSSARY.md` and
 `docs/adr/` (in `MemAcc/ArchEvolve/SW_Database/` until ticket 01 moves them).
 
 | # | Ticket | Blocked by | Status |

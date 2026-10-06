@@ -23,5 +23,5 @@ python3 -m swdb find --shape ranged_indirect
 python3 -m swdb strategies --pattern gapbs-pr-jacobi/gather-contrib
 ```
 
-See [CONTEXT.md](CONTEXT.md) for terminology and [ADRs](docs/adr/) for decisions.
+See [GLOSSARY.md](GLOSSARY.md) for terminology and [ADRs](docs/adr/) for decisions.
 Development uses [local Markdown tickets](docs/agents/issue-tracker.md).

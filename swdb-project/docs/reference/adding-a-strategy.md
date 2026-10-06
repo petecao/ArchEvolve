@@ -6,7 +6,7 @@ Created: 2026-09-23
 
 A procedure for a collaborator (or the SW Ensemble Agent) who wants to record a new
 technique or a new intrinsic. The full field reference is [format-v0.3.md](format-v0.3.md),
-sections 11 and 12. The words are in [CONTEXT.md](../../CONTEXT.md), and the identity rule is
+sections 11 and 12. The words are in [GLOSSARY.md](../../GLOSSARY.md), and the identity rule is
 [ADR 0004](../adr/0004-optimization-strategy-is-a-record-identified-by-its-effect.md).
 
 ## A strategy

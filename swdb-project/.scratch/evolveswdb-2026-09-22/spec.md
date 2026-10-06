@@ -4,7 +4,7 @@
 - Status: ready-for-agent
 - Owner: Yan-Ru Jhou
 - Repo: private GitHub `ruchou/EvolveSWDB` (empty at creation)
-- Glossary: `CONTEXT.md` of the SW Database. ADRs 0001–0003 in its `docs/adr/`.
+- Glossary: `GLOSSARY.md` of the SW Database. ADRs 0001–0003 in its `docs/adr/`.
   Until the repo exists, both live under `MemAcc/ArchEvolve/SW_Database/`.
 - Supersedes: format proposal v0.1 (`FORMAT_PROPOSAL.md`, and the shared doc
   "SW Database Format Proposal"). Where they disagree, this spec wins.

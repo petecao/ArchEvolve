@@ -67,7 +67,7 @@ def check(name,call):
  try: call();results[name]="allowed"
  except OSError as e: results[name]="blocked:"+str(e.errno)
 check("inside_read",lambda:pathlib.Path("probe.cc").read_text())
-check("outside_read",lambda:pathlib.Path("/data1/yanruj/ArchEvolve/swdb-project/CONTEXT.md").read_text())
+check("outside_read",lambda:pathlib.Path("/data1/yanruj/ArchEvolve/swdb-project/GLOSSARY.md").read_text())
 check("outside_write",lambda:pathlib.Path("../forbidden.txt").write_text("no"))
 check("outside_tcp",lambda:socket.create_connection(("1.1.1.1",80),5))
 check("allowed_tcp",lambda:socket.create_connection(("1.1.1.1",443),5))

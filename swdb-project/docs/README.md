@@ -30,4 +30,4 @@ Installation, exercises, and experiments are optional and outside these budgets.
 
 Shell examples and plain paths in current guides are relative to
 `ArchEvolve/swdb-project/`. From the ArchEvolve root, run `cd swdb-project` first.
-Use the [glossary](../CONTEXT.md) for terms and [ADRs](adr/) for design decisions.
+Use the [glossary](../GLOSSARY.md) for terms and [ADRs](adr/) for design decisions.

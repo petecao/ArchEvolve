@@ -7,7 +7,7 @@ Updated: 2026-09-23
 A step-by-step procedure for a collaborator who brings a new application (or a new kernel
 of gapbs). You need the repo, Python 3.12 with PyYAML and jsonschema, and the source of
 the application. The full field reference is [format-v0.3.md](format-v0.3.md); the words
-used here are defined in [CONTEXT.md](../../CONTEXT.md). Model records to copy from:
+used here are defined in [GLOSSARY.md](../../GLOSSARY.md). Model records to copy from:
 `records/kernels/gapbs-pr.yaml`, `records/implementations/gapbs-pr-gs.yaml` (baseline),
 `records/implementations/gapbs-pr-jacobi.yaml` (non-baseline, code stored next to it).
 

@@ -4,7 +4,7 @@
 - Updated: 2026-09-24
 - Status: resolved (all seven tickets; see `map.md`)
 - Owner: Yan-Ru Jhou
-- Glossary: `CONTEXT.md` (Optimization strategy, Strategy effect, Intrinsic; update kind
+- Glossary: `GLOSSARY.md` (Optimization strategy, Strategy effect, Intrinsic; update kind
   `prefetch`). Decisions: ADR 0001 (kernel identity), ADR 0002 (YAML master copy),
   ADR 0003 (access pattern as chain of steps), ADR 0004 (strategy identity).
 - Source: grilling session of 2026-09-23 (Q1–Q16, all recommendations accepted) and the

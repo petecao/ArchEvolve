@@ -6,7 +6,7 @@ Local work for this task lives in `/Users/jvgrewal/Desktop/ArchEvolve`. Run comm
 
 ## Software database (`swdb-project/`)
 
-Added 2026-09-29 ET. Yan-Ru's EvolveSWDB repository now lives in [`swdb-project/`](swdb-project/README.md), imported with `git subtree` so its full history is kept. It holds the kernel records, schemas, vocabularies, profiling scripts, and the `swdb` tool. Its own rules ([AGENTS.md](swdb-project/AGENTS.md), [CONTEXT.md](swdb-project/CONTEXT.md), [ADRs](swdb-project/docs/adr/)) apply inside that folder only.
+Added 2026-09-29 ET. Yan-Ru's EvolveSWDB repository now lives in [`swdb-project/`](swdb-project/README.md), imported with `git subtree` so its full history is kept. It holds the kernel records, schemas, vocabularies, profiling scripts, and the `swdb` tool. Its own rules ([AGENTS.md](swdb-project/AGENTS.md), [GLOSSARY.md](swdb-project/GLOSSARY.md), [ADRs](swdb-project/docs/adr/)) apply inside that folder only.
 
 ```sh
 cd swdb-project && python3 -m pytest -q

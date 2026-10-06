@@ -16,7 +16,7 @@ D1's not-ported list is imported or copied (`tests/test_extensa_machinery.py` ch
 
 Upstream wording is kept on purpose in ported files whose logic is unchanged (for example
 "oracle", "harness" or "campaign" used alone), so they stay comparable with their MemAcc source;
-SWDB's own prose follows `CONTEXT.md`.
+SWDB's own prose follows `GLOSSARY.md`.
 
 `plan_rollback` and `apply_rollback` in `swdb/extensa/search.py` are ported from
 `refiner/a5/search.py` but no SWDB code calls them (only `tests/test_extensa_machinery.py`): an

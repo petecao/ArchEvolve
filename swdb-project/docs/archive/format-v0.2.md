@@ -7,7 +7,7 @@ Navigation updated: 2026-09-28 (Eastern Time).
 - Status: enforced. `swdb validate` checks every rule on this page; the schemas in
   `schemas/` and the vocabularies in `vocab/` are the machine-readable form. Supersedes
   [format proposal v0.1](format-proposal-v0.1.md).
-- Words: [CONTEXT.md](../../CONTEXT.md). Decisions: [ADR 0001](../adr/0001-kernel-identity-is-its-correctness-check.md)
+- Words: [GLOSSARY.md](../../GLOSSARY.md). Decisions: [ADR 0001](../adr/0001-kernel-identity-is-its-correctness-check.md)
   (kernel identity), [ADR 0002](../adr/0002-yaml-in-git-is-the-master-copy-sqlite-is-generated.md)
   (YAML master copy), [ADR 0003](../adr/0003-access-pattern-is-a-chain-of-steps.md) (chains of steps).
 

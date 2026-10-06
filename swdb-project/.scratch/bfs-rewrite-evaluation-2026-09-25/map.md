@@ -2311,7 +2311,7 @@ do not override the subsequent authorization and execution evidence.
 - 2026-09-25: The user approved publication of 21 vertical-slice tickets. One file per ticket records exact blockers, externally observable acceptance, verification, and the execution hold. No ticket was started, claimed, or resolved.
 
 - 2026-09-25: Requirements synthesized from the design discussion; both BFS starting implementations, both proposal routes, both graph families, native and DX100 evaluation, ROI priority, and future hardware/software co-design are retained.
-- 2026-09-25: [Glossary](../../CONTEXT.md) distinguishes kernel, implementation, region, candidate artifact, rewrite proposal, hardware target, ROI, and comparison baseline.
+- 2026-09-25: [Glossary](../../GLOSSARY.md) distinguishes kernel, implementation, region, candidate artifact, rewrite proposal, hardware target, ROI, and comparison baseline.
 - 2026-09-25: [ADR 0005](../../docs/adr/0005-kernel-identity-spans-sources-and-comparisons-name-their-baseline.md) records shared semantic kernel identity across source applications and explicit comparison baselines. It supersedes ADR 0004's implicit ancestry-based comparison rule; the code has not yet implemented this design.
 - 2026-09-25: The user confirmed the full public SWDB workflow as the primary test boundary. Existing subprocess CLI tests supply the prior art; no new HTTP service or internal-module test boundary is mandated.
 - 2026-09-25: Spec refinement completed with 60 user stories, 15 implementation decisions, 20 observable acceptance criteria, and explicit gates for pilot settings. This is documentation readiness, not completed functionality or performance evidence.

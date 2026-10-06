@@ -2,7 +2,7 @@
 
 Created: 2026-09-23
 Updated: 2026-09-24
-Spec: `spec.md` (ready-for-agent). Glossary: `CONTEXT.md`. Decision: ADR 0004.
+Spec: `spec.md` (ready-for-agent). Glossary: `GLOSSARY.md`. Decision: ADR 0004.
 
 | # | Ticket | Blocked by | Status |
 |---|---|---|---|
