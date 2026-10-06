@@ -73,6 +73,9 @@ def check(record, ctx):
     if kind in {"workload_characterization", "target_description", "estimate"}:
         from swdb.analytic import validate_record
         yield from validate_record(record, ctx)
+        if kind == "workload_characterization":
+            from swdb.feature_reports import validate_record as validate_reported
+            yield from validate_reported(record, ctx)
     elif kind == "cpu_calibration":
         from swdb.cpu_calibration_records import validate_record
         yield from validate_record(record, ctx)

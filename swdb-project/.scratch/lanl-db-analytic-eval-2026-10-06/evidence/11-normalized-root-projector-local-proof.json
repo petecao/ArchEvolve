@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-06 ET",
+  "scope": "static compiler fixtures; no application execution or empirical counts/timings",
+  "llvm_version": "22.1.8",
+  "projector_sha256": "8a8d1d13a9ae21623e8473c235e060a2137c307e15e0abb878f0af714bc30e48",
+  "fixtures": [
+    {
+      "optimization": "O0",
+      "access_sites_cross_checked": 27,
+      "call_sites_cross_checked": 8,
+      "root_classes": [
+        "alloca",
+        "argument",
+        "global_declaration",
+        "global_definition",
+        "loaded_pointer"
+      ],
+      "input_ir_unchanged": true,
+      "extent_lifetime_caller_abi_bulk_contracts_checked": true
+    },
+    {
+      "optimization": "O1",
+      "access_sites_cross_checked": 22,
+      "call_sites_cross_checked": 6,
+      "root_classes": [
+        "alloca",
+        "argument",
+        "call_result",
+        "global_declaration",
+        "global_definition",
+        "loaded_pointer"
+      ],
+      "input_ir_unchanged": true,
+      "extent_lifetime_caller_abi_bulk_contracts_checked": true
+    }
+  ],
+  "negative_checks": {
+    "changed_source_map_exit": 2,
+    "missing_requested_site_exit": 2,
+    "no_refused_output_written": true
+  },
+  "fixture_sha256": "04c6703b1476c212c1a6ea54459a2137c2d6cbd70dfe7c0e8bdeac79c0c02141",
+  "smoke_driver_sha256": "eae3101c338fa654de0341710251e4386a81962f81e0c273e5fe0a281acc1112",
+  "local_raw_directory": "/private/tmp/lanl-root-projector-static-proof-20261006-a2"
+}

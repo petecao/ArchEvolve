@@ -252,6 +252,8 @@ def main(argv=None):
 
     from swdb import analytic
     analytic.register_cli(commands)
+    from swdb import feature_reports
+    feature_reports.register_cli(commands)
     from swdb import cpu_calibration
     cpu_calibration.register_cli(commands)
     from swdb import cpu_service_calibration
