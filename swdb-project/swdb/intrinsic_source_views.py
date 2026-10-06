@@ -8,7 +8,7 @@ def source_file(reference):
     roots={'library':paths.HOME/'library','project':paths.HOME,'repository':paths.HOME.parent}
     root=roots.get(reference.get('root'))
     if root is None:raise Failure('unsupported shipped source root')
-    relative=reference.get('path','')
+    relative=artifacts.relative_path(reference.get('path',''))
     file=(root/relative).resolve()
     if not relative or not file.is_relative_to(root.resolve()) or not file.is_file():
         raise Failure('shipped source must be an available safe relative path')
@@ -21,6 +21,12 @@ def problems(intrinsic):
     view=intrinsic.get('source_view')
     if view is None:return []
     issues=[]
+    if view.get('format')!='swdb.intrinsic-source-view.v1' or view.get('backend')!='functional_source' or view.get('evidence_scope')!='functional_source_semantics':
+        issues.append('source view must retain functional source semantics')
+    if intrinsic.get('id')!=intrinsic.get('name','').lstrip('_')+'.'+view.get('variant',''):
+        issues.append('intrinsic source view variant identity differs')
+    if set(view.get('compile_defines',[])) & set(view.get('compile_undefines',[])):
+        issues.append('source view compile definitions contradict undefined macros')
     try:
         file=source_file(view['source'])
         if not re.search(r'\b'+re.escape(intrinsic['name'])+r'\s*\(',file.read_text()):

@@ -586,6 +586,50 @@
         },
         "host_counting_policy": {
           "const": "exclusive_host_outside_guarded_functional_commands"
+        },
+        "normative_bindings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "format",
+            "records",
+            "library_entries",
+            "compiled_views"
+          ],
+          "properties": {
+            "format": {
+              "const": "swdb.functional-source-bindings.v1"
+            },
+            "records": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "library_entries": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "compiled_views": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "intrinsic",
+                  "intrinsic_sha256",
+                  "source_view_sha256",
+                  "source",
+                  "backend",
+                  "compile_defines",
+                  "evidence_scope"
+                ]
+              }
+            }
+          }
         }
       },
       "required": [

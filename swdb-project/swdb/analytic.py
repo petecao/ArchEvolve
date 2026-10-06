@@ -277,7 +277,7 @@ def characterize(args):
         from swdb.archevolve import require_team_safe
         requested_target=_load(store,args.target_description,'target_description')
         require_team_safe(store,requested_target,command='characterize')
-        live_contract=prepare(store,requested_target,source,fixture=args.fixture)
+        live_contract=prepare(store,requested_target,source,fixture=args.fixture,compile_flags=args.build_flag+args.toolchain_flag)
     # The counting command never mutates source or evaluator files. It only emits IR and
     # a separate counted binary. Flags governing the build still enter the recorded identity.
     forbidden = ('-o', '-emit-llvm', '-fpass-plugin', '-Xclang', '-flto', '-g0')
@@ -470,6 +470,8 @@ def characterize(args):
         observed_descriptors={site['descriptor'] for site in static.get('semantic_sites',[])}
         semantic_missing=counts.get('semantic_missing',[])
         if observed_descriptors!=set(range(len(command_specs))):semantic_missing=semantic_missing+['semantic_command_binding']
+        if live_contract.get('normative_bindings') is not None:
+            record['observation_contract']['normative_bindings']=live_contract['normative_bindings']
         record['observation_contract'].update(level='functional_semantic_access',
             functional_observation=live_contract['functional_observation'],
             requested_target_description_sha256=live_contract['target_description_sha256'],
@@ -540,6 +542,9 @@ def estimate(args):
     store = Store(args.records)
     characterization = _load(store, args.characterization, 'workload_characterization')
     target = _load(store, args.target_description, 'target_description')
+    from swdb.offload_observation import binding_problems
+    issues=binding_problems(characterization,store)
+    if issues:raise Failure('functional source binding: '+'; '.join(issues))
     from swdb.archevolve import require_team_safe
     from swdb.estimate_protocol import bind
     require_team_safe(store, characterization, target, args.protocol, command='estimate')
@@ -685,6 +690,9 @@ def validate_record(record, ctx):
     from swdb.problems import Problem
     for field, reason in _payload_problems(record.data):
         yield Problem(record.rel, field, reason)
+    if record.kind == 'workload_characterization':
+        from swdb.offload_observation import binding_problems
+        for reason in binding_problems(record.data,ctx.store):yield Problem(record.rel,'observation_contract.normative_bindings',reason)
     if record.kind == 'workload_characterization' and record.data.get('binding', {}).get('state') == 'verified':
         from swdb import analytic_binding
         for reason in analytic_binding.verify_binding(record.data, ctx.store):
