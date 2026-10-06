@@ -466,7 +466,7 @@ _Avoid_: claim (alone), fact (for an unconfirmed value)
 
 **Basis**:
 The stated source of a recorded fact: measured on the machine, simulated by a
-model of the machine, read from code, reported by a person, inferred, or unknown.
+model of the machine, read from code, reported by a person, inferred, analytically estimated, or unknown.
 Unknown never means false.
 _Avoid_: confidence, provenance (alone)
 

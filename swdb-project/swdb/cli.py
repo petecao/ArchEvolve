@@ -250,6 +250,9 @@ def main(argv=None):
     certification.register_cli(commands)
     retention.register_cli(commands)
 
+    from swdb import analytic
+    analytic.register_cli(commands)
+
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -274,6 +277,9 @@ def _dispatch(args):
     records = getattr(args, "records", None)
     if records is not None and not records.is_dir():
         raise UsageError(f"records folder not found: {records}")
+    if hasattr(args, "analytic_handler"):
+        _emit(args.analytic_handler(args), args.format)
+        return 0
     if hasattr(args, "_annotation_handler"):
         _emit(args._annotation_handler(args), args.format)
         return 0

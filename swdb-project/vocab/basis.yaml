@@ -1,6 +1,9 @@
+# Updated: 2026-10-06 ET.
 name: basis
 description: The stated source of a recorded fact; unknown never means false.
 values:
+  - value: estimated
+    meaning: Analytic performance estimate from a workload characterization and target description; distinct from inference and execution.
   - value: measured
     meaning: Measured by running code on a real machine (timers, counts taken from the run).
   - value: simulated

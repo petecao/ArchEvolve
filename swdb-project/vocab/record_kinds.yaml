@@ -1,6 +1,6 @@
 name: record_kinds
 description: The kinds of record the database holds; each has its own schema.
-# Updated: 2026-10-05 (Eastern Time): review covers candidate promotion and attribution corrections.
+# Updated: 2026-10-06 ET: characterization, target description and estimate formats.
 values:
   - value: application
     meaning: A program that contains kernels, from one source at one version.
@@ -55,3 +55,10 @@ values:
 
   - value: campaign_summary
     meaning: One Extensa campaign's inputs, candidate artifacts, verdicts, budgets used and stop reason, written once at stop.
+
+  - value: workload_characterization
+    meaning: Source-normalized static and native dynamic workload counts for one source snapshot and input.
+  - value: target_description
+    meaning: Versioned hardware mechanism parameters with their basis and source.
+  - value: estimate
+    meaning: Analytic bounds in seconds, kept separately from execution evaluations.

@@ -1,6 +1,6 @@
 # Reference
 
-Updated: 2026-09-30 (Eastern Time).
+Updated: 2026-10-06 ET.
 
 Use the [tutorial](../tutorial/README.md) first. Open these documents when you need
 exact fields, invariants, or a target-specific procedure. Navigation was updated
@@ -15,6 +15,7 @@ original paths and context.
 
 | Task | Reference |
 |---|---|
+| Characterize source and estimate time | [Analytic formats and commands](format-v0.4-analytic.md) |
 | Write catalog records | [Format 0.3](format-v0.3.md), [format 0.4 additions](format-v0.4.md) |
 | Add source, loops, access patterns, inputs | [Application checklist](adding-an-application.md) |
 | Add a strategy or intrinsic | [Strategy checklist](adding-a-strategy.md) |

@@ -20,7 +20,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
-| 04 | [First runnable version: estimate a streaming loop on the mbit10 CPU](issues/04-first-runnable-estimate.md) | ready-for-agent | 01 | 1.5–2 days |
+| 04 | [First runnable version: estimate a streaming loop on the mbit10 CPU](issues/04-first-runnable-estimate.md) | resolved | 01 | 1.5–2 days |
 | 05 | [Indirect accesses and the BFS baseline on the CPU](issues/05-indirect-and-bfs-baseline.md) | ready-for-agent | 04 | 1.5–2 days |
 | 06 | [Estimate protocols and the gem5 refusal](issues/06-estimate-protocols-and-gem5-refusal.md) | ready-for-agent | 04 | 3–4 h |
 | 07 | [Measured mbit10 parameters](issues/07-measured-mbit10-parameters.md) | ready-for-agent | 04 | 2–3 h plus about 1 h of lane time (mbit10) |
@@ -68,5 +68,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   [`swdb.access`](../../swdb/access.py) owns record/index I/O; existing query APIs remain.
   [Interface contract](../../docs/reference/database.md#record-and-query-access-interface),
   [query regressions](../../tests/test_query_index.py), and the ticket Answer record the
-  15 identical old/new outputs and the regression results (171 distinct passes, one
-  existing data-dependent skip; freshness case rerun with one stable package version).
+  15 identical old/new outputs and the regression results: broad run 170 passed,
+  one existing data-dependent skip, and one live-source fingerprint artifact; the
+  exact affected case passed in a fresh process (1 passed).
+- 2026-10-06 ET: ticket [04](issues/04-first-runnable-estimate.md) resolved: LLVM source counting and streaming estimates, [portable format and commands](../../docs/reference/format-v0.4-analytic.md); implementation `191fd8d`, 101-pass/1-skip regression batch plus the static-distribution test. Application/protocol binding remains explicit work for 05–06; measured mbit10 parameters for 07.
