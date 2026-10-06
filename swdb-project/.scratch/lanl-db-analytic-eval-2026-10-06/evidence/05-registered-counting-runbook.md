@@ -10,11 +10,11 @@ five independent source selections/trials, matching the registered `-g16 -k16 -n
 workload (`-i1` for BC), with exact `gapbs.trial_lambda.v1` timing-boundary hooks.
 
 ```sh
-python3 -m swdb characterize --records /data1/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/records --adapter registered-gapbs --implementation gapbs-bfs-do --input kron-g16-k16 --threads 4 --trials 5 --llvm-bin /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 --run-library-path /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib --timeout-s 1800 --output /data1/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs-counted --id bfs.kron-g16.t4.characterization --format json > /data1/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs-characterization.json
+python3 -m swdb characterize --records /data1/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/records --adapter registered-gapbs --implementation gapbs-bfs-do --input kron-g16-k16 --threads 4 --trials 5 --llvm-bin /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 --run-library-path /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu --timeout-s 1800 --output /data1/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs-counted --id bfs.kron-g16.t4.characterization --format json > /data1/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs-characterization.json
 ```
 
 ```sh
-python3 -m swdb characterize --records /data1/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/records --adapter registered-gapbs --implementation gapbs-bc-brandes --input kron-g16-k16 --threads 4 --trials 5 --llvm-bin /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 --run-library-path /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib --timeout-s 1800 --output /data1/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc-counted --id bc.kron-g16.t4.characterization --format json > /data1/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc-characterization.json
+python3 -m swdb characterize --records /data1/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/records --adapter registered-gapbs --implementation gapbs-bc-brandes --input kron-g16-k16 --threads 4 --trials 5 --llvm-bin /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 --run-library-path /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu --timeout-s 1800 --output /data1/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc-counted --id bc.kron-g16.t4.characterization --format json > /data1/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc-characterization.json
 ```
 
 These characterizations retain all 13 BFS / 20 BC handwritten pattern comparisons,
@@ -37,3 +37,9 @@ trial identities, target/protocol hashes, validation result, all pattern compari
 per-region bounds/missing facts, and executed external-call inventory (known byte sizes
 or explicit null). Do not copy raw traces or compiled ARM files. Keep ticket 05 claimed
 until actual mbit10 reports and their acceptance evidence are captured.
+
+Linux libomp was verified in `LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu`;
+plain `lib/` does not contain it. Parent may dispatch raw output through the authorized
+`/data` overflow symlink/volume instead of the illustrative `/data1` prefix above.
+The shared fixture numerator rerun must explicitly pass
+`--counting-pipeline source-normalized-v2`; registered runs always use v2.

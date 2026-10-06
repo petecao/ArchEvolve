@@ -25,6 +25,8 @@ from swdb.store import Store
 
 VERSION = 'swdb.analytic.v1'
 CLASSES = ('integer', 'floating_point', 'branch', 'atomic')
+PIPELINES = {'source-normalized-v1': 'mem2reg,loop-simplify',
+             'source-normalized-v2': 'function(sroa,mem2reg),cgscc(inline),function(loop-simplify)'}
 
 
 def register_cli(commands):
@@ -36,6 +38,7 @@ def register_cli(commands):
     subject.add_argument('--candidate')
     sub.add_argument('--input', required=True)
     sub.add_argument('--adapter', choices=['registered-gapbs'], help='verify registered GAPBS source/input/trial-lambda binding')
+    sub.add_argument('--counting-pipeline', choices=tuple(PIPELINES), help='fixed source normalization recipe; fixtures default v1, registered adapter requires v2')
     sub.add_argument('--trials', type=int, default=5, help='registered GAPBS trial count; preserve each invocation separately')
     sub.add_argument('--roi', help='declared timing ROI identity; recorded but not verified by this slice')
     sub.add_argument('--threads', type=int, default=1, help='explicit counted workload thread configuration')
@@ -279,7 +282,8 @@ def characterize(args):
     if adapter:
         gate_env = dict(os.environ, SWDB_ROI_PATH=adapter['roi_path'], SWDB_ROI_LINE=str(adapter['roi_line']))
         _run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-bind-roi', raw, '-o', bound_ir], env=gate_env, timeout=args.timeout_s)
-    pipeline = 'function(sroa,mem2reg),cgscc(inline),function(loop-simplify)' if adapter else 'mem2reg,loop-simplify'
+    pipeline_version = args.counting_pipeline or ('source-normalized-v2' if adapter else 'source-normalized-v1')
+    pipeline = PIPELINES[pipeline_version]
     _run([llvm / 'opt', '-passes=' + pipeline, bound_ir if adapter else raw, '-o', normalized], timeout=args.timeout_s)
     env = dict(os.environ)
     env['SWDB_SUBJECT'] = subject
@@ -318,8 +322,9 @@ def characterize(args):
             raise Failure('counted run lacks the registered trial sequence')
         for index, observed in enumerate(counts['trials']):
             trial_regions, trial_calls = _counted_regions(static, observed)
+            called_regions = {c['region'] for c in trial_calls if c['execution_count']['value']}
             trials.append({'position': index, 'sources': observed.get('sources', []),
-                'regions': [r for r in trial_regions if any(v['value'] for v in r['operation_counts'].values()) or any(a['element_count']['value'] for a in r['access_patterns']) or r['dynamic_counts']['loop_iterations']['value']],
+                'regions': [r for r in trial_regions if any(v['value'] for v in r['operation_counts'].values()) or any(a['element_count']['value'] for a in r['access_patterns']) or r['dynamic_counts']['loop_iterations']['value'] or r['id'] in called_regions],
                 'unmodeled_calls': [c for c in trial_calls if c['execution_count']['value']]})
         if any(len(t['sources']) != 1 for t in trials):
             raise Failure('counted trial lacks its exact GAPBS source selection')
@@ -337,7 +342,7 @@ def characterize(args):
         'host': {'machine': socket.gethostname(), 'architecture': platform.machine(), 'system': platform.platform()},
         'toolchain': {'llvm_version': version, 'llvm_bin': str(llvm), 'compiler_flags': toolchain_flags, 'plugin_linkage': plugin_linkage, 'run_library_paths': run_library_paths},
         'counting': {'level': 'source_normalized_ir', 'passes': [pipeline],
-            'pipeline_version': 'source-normalized-v2' if adapter else 'source-normalized-v1',
+            'pipeline_version': pipeline_version,
             'summary': 'per_trial_then_median_time' if adapter else 'single_run',
             'native_runs': 1, 'basis': 'measured', 'vector_multiplicity': 'instrumented before vectorization and unrolling; existing fixed vectors counted by lane',
             'operation_definition': 'Normalized IR arithmetic/comparison operations; FMA counts two floating-point operations, branches count terminator executions; address and cast instructions excluded.',

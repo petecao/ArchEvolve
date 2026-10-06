@@ -18,6 +18,8 @@ ADAPTER='registered-gapbs.v1'
 def prepare(store,args,subject,input_record):
     if args.candidate or args.fixture:
         raise Failure('registered-gapbs requires a registered baseline implementation, not a candidate/fixture')
+    if args.counting_pipeline not in (None,'source-normalized-v2'):
+        raise Failure('registered-gapbs requires source-normalized-v2 counting pipeline')
     context=store.source_context(subject)
     if context['application']!='gapbs' or subject['function'] not in ('DOBFS','Brandes'):
         raise Failure('registered-gapbs currently supports the registered GAPBS DOBFS and Brandes baselines')

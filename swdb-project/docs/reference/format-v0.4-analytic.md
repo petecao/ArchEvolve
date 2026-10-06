@@ -286,3 +286,11 @@ source/binary/count hashes, and the extracted counted payload. Merely changing
 `binding.state` to `verified` is refused. Fresh execution verifies available registered
 source and raw artifacts. Historical validation checks the compact receipt and available
 registered source, without fetching or requiring a remote raw-output directory.
+
+`--counting-pipeline source-normalized-v1|source-normalized-v2` selects one fixed
+normalization recipe for a fixture. The default fixture recipe remains v1
+(`mem2reg,loop-simplify`); v2 uses the same SROA/inlining recipe as registered
+application runs. Registered adapters require v2 and refuse v1. This allows shared
+calibration kernels to test v2 numerator equivalence without silently counting v1.
+A trial region with executed calls is retained even if it has no arithmetic, memory
+access or loop-entry events, so a call-only required cost cannot disappear.

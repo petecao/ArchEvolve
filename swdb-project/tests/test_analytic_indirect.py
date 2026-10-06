@@ -63,6 +63,9 @@ def test_registered_gapbs_counts_trial_lambda_and_workers(tmp_path,llvm22,implem
     assert data['coverage']['whole_timed_call'] is True
     assert len(data['trials'])==3
     assert all(len(t['sources'])==1 for t in data['trials'])
+    for trial in data['trials']:
+        observed_ids={r['id'] for r in trial['regions']}
+        assert all(c['region'] in observed_ids for c in trial['unmodeled_calls'])
     assert data['counting']['summary']=='per_trial_then_median_time'
     assert any('.omp_outlined' in r['source_location']['llvm_function'] for r in data['regions'])
     if implementation=='gapbs-bfs-do':
@@ -110,3 +113,33 @@ def test_worker_measurement_distinguishes_sparse_execution_from_team_size(tmp_pa
     assert loop['active_workers']['value']==1
     assert loop['worker_context']['team_sizes']==[4]
     assert sum(a['element_count']['value'] for a in loop['access_patterns'] if a['update_kind']=='write')==3
+
+
+def test_fixture_v2_pipeline_preserves_independent_stream_counts(tmp_path,llvm22):
+    records=tmp_path/'records'
+    shutil.copytree(REPO/'records',records)
+    fixture=REPO/'tests/fixtures/analytic'
+    result=run_swdb('characterize','--records',records,'--source',fixture/'stream.cpp',
+        '--implementation','gapbs-bfs-do','--input','kron-g16-k16','--function','stream',
+        '--region-map',fixture/'regions.json','--run-arg','17','--fixture',
+        '--counting-pipeline','source-normalized-v2','--id','fixture.stream.v2','--llvm-bin',llvm22,
+        '--output',tmp_path/'counted','--format','json')
+    assert result.returncode==0,result.stderr+result.stdout
+    data=json.loads(result.stdout)
+    assert data['counting']['pipeline_version']=='source-normalized-v2'
+    assert data['counting']['passes']==['function(sroa,mem2reg),cgscc(inline),function(loop-simplify)']
+    region=next(r for r in data['regions'] if r['id']=='fixture.stream')
+    assert region['dynamic_counts']['loop_iterations']['value']==17
+    assert region['operation_counts']['floating_point']['value']==34
+    assert sorted(a['element_count']['value'] for a in region['access_patterns'])==[17,17]
+    assert sorted(a['bytes_accessed']['value'] for a in region['access_patterns'])==[68,68]
+
+
+def test_registered_adapter_refuses_v1_pipeline(tmp_path):
+    records=tmp_path/'records'
+    shutil.copytree(REPO/'records',records)
+    result=run_swdb('characterize','--records',records,'--adapter','registered-gapbs',
+        '--implementation','gapbs-bfs-do','--input','kron-g16-k16',
+        '--counting-pipeline','source-normalized-v1','--id','invalid.pipeline')
+    assert result.returncode==1
+    assert 'requires source-normalized-v2' in result.stderr
