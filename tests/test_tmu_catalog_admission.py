@@ -24,7 +24,11 @@ class TMUCatalogAdmissionTests(unittest.TestCase):
         cls.design = next(d for d in cls.catalog["designs"] if d["id"] == DESIGN)
 
     def test_admission_preserves_the_exact_independently_reviewed_record(self):
-        self.assertEqual(self.design, self.proposal["designs"][0])
+        original = deepcopy(self.proposal["designs"][0])
+        for annotation in original.get("internal_mechanisms", []):
+            self.assertIn(annotation, self.design.get("internal_mechanisms", []))
+        original["internal_mechanisms"] = self.design["internal_mechanisms"]
+        self.assertEqual(self.design, original)
         for field in ("sources", "claims"):
             for key, value in self.proposal[field].items():
                 self.assertEqual(self.catalog[field][key], value)

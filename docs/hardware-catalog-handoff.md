@@ -2,7 +2,7 @@
 
 Eric supplies the hardware knowledge. Josh owns architecture selection/composition and its implementation; Peter derives the software specification; Yan-Ru rewrites the benchmark.
 
-The catalog is now the offline pipeline's default. Data revision 0.1.9 contains ten records and 46 operations, including scoped TMU, COBRA and AXI-Pack mappings. The [current internal-mechanism handoff](mechanism-handoff-2026-10-06/README.md) includes the expanded MAPLE contract and an executable association scaffold. Implementations and hardware performance remain unverified.
+The catalog is now the offline pipeline's default. Data revision 0.1.10 contains ten records and 46 operations, including scoped TMU, COBRA and AXI-Pack mappings. The [current internal-mechanism handoff](mechanism-handoff-2026-10-06/README.md) includes the expanded MAPLE contract and an executable association scaffold. Implementations and hardware performance remain unverified.
 
 ## What is here
 

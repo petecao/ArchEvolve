@@ -33,6 +33,16 @@ class MechanismHandoffPublicationTests(unittest.TestCase):
                            execution_role=role, require_old_value=old_value)
             self.assertEqual(query_catalog(self.baseline, **request), query_catalog(self.catalog, **request))
 
+    def test_tmu_mechanism_completion_preserves_known_and_unknown_scope(self):
+        design = next(d for d in self.catalog["designs"] if d["id"] == "tmu-micro2023-fig8-spmv")
+        self.assertEqual(len(design["internal_mechanisms"]), 16)
+        by_id = {m["id"]: m for m in design["internal_mechanisms"]}
+        self.assertEqual(by_id["hierarchical-cacheline-arbiter"]["status"], "described")
+        for key in ("physical-request-coalescing", "physical-response-tag-association", "host-chunk-ready-consumed-finalpartial-abi"):
+            self.assertEqual(by_id[key]["status"], "unknown")
+        for operation in ("write", "read_modify_write", "reduce"):
+            self.assertFalse(query_catalog(self.catalog, design_id=design["id"], operation=operation)["matches"])
+
     def test_thirteen_maple_fields_preserve_target_coalescing_unknown(self):
         design = next(d for d in self.catalog["designs"] if d["id"] == "maple-isca2022")
         additions = [m for m in design["internal_mechanisms"] if m["id"].startswith("integration-maple-")]

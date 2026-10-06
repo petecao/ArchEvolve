@@ -1,5 +1,5 @@
 catalog_id: archevolve-hardware
-revision: 0.1.9
+revision: 0.1.10
 format: hardware-catalog-v0.1
 status: research_reviewed_prototype
 project_selections:
@@ -1926,6 +1926,17 @@ claims:
     evidence_kind: code_inspection
     limitations:
     - Exact reviewed source edition only; no simulator, RTL equivalence or performance acceptance.
+  axi24-issue-decision:
+    source_refs:
+    - axi-pack-coalescer
+    locator: PDF p2, §II-B, Fig2b, request watcher/CSHR issue and metadata paragraphs
+    statement: One active CSHR accepts hits in parallel. Pending misses cause its current wide access and hitmap/offset
+      metadata to issue; misses determine next tag. After all window requests coalesce, the regulator advances;
+      a watchdog can issue the current block when no new window arrives.
+    evidence_kind: paper_specification
+    limitations:
+    - Publication mechanism only; public realization/commit, concrete ID lifetime, backpressure and complete transaction
+      ABI remain independently unbound.
 mechanism_families:
 - id: queue-latency-tolerance
   name: Queue-backed asynchronous access
@@ -5604,6 +5615,130 @@ designs:
     and evidence limits.
   - read/execute applies only to required operand supply. General gather, pointer chase, TMU arithmetic and stores
     gain no support.
+  internal_mechanisms:
+  - id: tu-circular-stream-storage
+    kind: buffering
+    status: described
+    description: Each TU has equal-sized circular data streams advanced together. fite stalls when streams are full,
+      preserves parent element ordinal association, and emits iteration/end control tokens. No physical response-tag/slot
+      protocol follows from logical queue association.
+    claim_refs:
+    - tmu-tu
+  - id: lane-shared-queue-allocation
+    kind: buffering
+    status: described
+    description: TUs in one lane share storage. Configuration allocates the same stream count and size to TUs within
+      a layer, with shorter leftward queues and more storage for rightward parallel loops; an analytical sizing
+      model uses estimated nnzs per fiber. This is not a complete legal sizing domain.
+    claim_refs:
+    - tmu-sizing
+  - id: operand-event-double-buffer
+    kind: buffering
+    status: described
+    description: TG output construction and the thread-private outQ are double-buffered so the CPU handles a full
+      chunk while the TMU supplies another. The chunk size, last partial-chunk transfer and consumption/reuse handshake
+      are not specified.
+    claim_refs:
+    - tmu-outq
+  - id: physical-request-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: serialized-callback-construction
+    kind: reordering
+    status: described
+    description: TG output FSM construction is serialized across groups, with wait-for-previous/next states preserving
+      CPU callback/operand sequence while traversal and merging can proceed independently. This does not assert
+      memory-response FIFO or global memory order.
+    claim_refs:
+    - tmu-outq
+  - id: hierarchical-cacheline-arbiter
+    kind: issue_policy
+    status: described
+    description: Issue cacheline-granularity accesses by prioritizing leftmost outer-loop layers, selecting TUs
+      round-robin within a layer, then streams in configuration order and requests in each queue in order. No general
+      fairness bound, CAM duplicate suppression or response ordering is established.
+    claim_refs:
+    - tmu-arbiter
+  - id: parent-valid-stream-dependencies
+    kind: dependency_tracking
+    status: described
+    description: fbeg waits for valid parent bounds; fite generates streams from the corresponding parent element.
+      In Fig8 row-pointer heads initialize two offset0/1 stride2 lanes; column indexes feed dependent b lookups
+      while nnz values remain aligned by element ordinal.
+    claim_refs:
+    - tmu-tu
+    - tmu-fig8
+    - tmu-traversal
+  - id: active-lane-head-and-lockstep
+    kind: dependency_tracking
+    status: described
+    description: TG considers a lane active only under its parent predicate and gite waits for valid active heads.
+      Fig8 LockStep consumes active unfinished lanes and emits end when all finish. General conjunctive/disjunctive
+      modes are source context only, not new operations admitted for this mapping. Padding/msk validity and empty/odd-row
+      handling remain requirements.
+    claim_refs:
+    - tmu-merges
+    - tmu-fig8
+  - id: cpu-owned-spmv-callback-pipeline
+    kind: other
+    status: described
+    description: Fig8 GITE produces ri with paired nnz and vector values; GEND produces re. CPU ri performs multiply/vector
+      reduction/accumulation; CPU re writes the row result and resets sum. Hardware operand supply is neither generic
+      standalone gather execution nor TMU arithmetic/scatter. Numerical order/equivalence belongs to the CPU mapping.
+    claim_refs:
+    - tmu-cpu
+    - tmu-fig8
+  - id: row-event-and-full-chunk-delivery
+    kind: completion
+    status: described
+    description: GEND supplies the mapped row-end callback and a full outQ chunk becomes CPU work while the alternate
+      chunk fills. This logical supply boundary does not establish final-partial delivery, consumed acknowledgment,
+      CPU output visibility or all outstanding physical-request drain.
+    claim_refs:
+    - tmu-outq
+    - tmu-fig8
+  - id: private-cache-translation-route
+    kind: other
+    status: described
+    description: Traversal uses coherent read-only data from LLC; thread-private outQ is injected into the core
+      private L2. Virtual addresses use host L2 TLB/MMU; missing translation interrupts the core and the MMU signals
+      retry. The stated no-shared-read-write-data regime does not cover arbitrary aliases/concurrent mutation.
+    claim_refs:
+    - tmu-integration
+  - id: quiesce-context-state
+    kind: completion
+    status: described
+    description: Context switching quiesces TMU and saves/restores initial configuration, ite stream heads, outQ
+      base/write offset and other control registers. Exact request cancellation, response drain, exception sequencing
+      and replay protocol are not established.
+    claim_refs:
+    - tmu-integration
+  - id: evaluated-resource-reference-only
+    kind: buffering
+    status: described
+    description: Table5 reports8 lanes,4 TGs with mergers,2KB per-lane storage and128 outstanding requests for the
+      evaluated system. Fig8 instead illustrates2 lanes. These values remain fixed references, not legal capacity
+      ranges, a selected new geometry or a bit-width ABI.
+    claim_refs:
+    - tmu-reference
+    - tmu-fig8
+  - id: physical-response-tag-association
+    kind: dependency_tracking
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: host-chunk-ready-consumed-finalpartial-abi
+    kind: completion
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: concrete-operand-width-and-register-encoding
+    kind: other
+    status: unknown
+    description: null
+    claim_refs: []
 - id: cobra-hpca2022-tuple-binning
   name: COBRA HPCA 2022 required tuple-binning mapping
   revision: paper-2022-base-cobra-proposal-1
@@ -6022,6 +6157,24 @@ designs:
       partial lines using tuple counters. All remaining tuples must reach bins before Accumulate.
     claim_refs:
     - cobra-flush
+  - id: bin-phase-initialization-dependencies
+    kind: dependency_tracking
+    status: described
+    description: bininit establishes per-level reserved/used ways, unique-index domain, tuple size and bin range
+      before binupdate selects a C-Buffer. Per-thread bin counts/starting offsets and an unnamed LLC offset initialization
+      instruction supply memory destinations. Full-buffer offset advances and residual binflush must complete before
+      software Accumulate consumes bins; no destination-update executor or generic FP reorder permission is implied.
+    claim_refs:
+    - cobra-init
+    - cobra-insert
+    - cobra-memory-bins
+    - cobra-flush
+    - cobra-phase-boundary
+  - id: memory-request-duplicate-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
   performance_hypotheses:
   - id: software-binning-bottleneck
     description: Hardware buffering may lower tuple-materialization latency when software buffer locality and management
@@ -6226,6 +6379,17 @@ designs:
     status: unknown
     description: null
     claim_refs: []
+  - id: single-cshr-wide-request-issue
+    kind: issue_policy
+    status: described
+    description: The single active CSHR accepts matching valid window entries and retains tag/hitmap/offset metadata.
+      Pending misses cause its current wide block to issue and metadata to enqueue, while misses select the next
+      tag. Completion of a window allows another window; a separate watchdog issues a pending block if no new window
+      arrives. Metadata backpressure and exact transaction/ID reuse need concrete implementation binding.
+    claim_refs:
+    - axi24-issue-decision
+    - axi24-window
+    - axi24-progress
   limitations:
   - Only the DATE2024 paper-scoped mapping; not DATE2023 direct vector-register integration.
   - Parameter domains, translations/coherence, final partial/drain, faults and result lifetime remain open.

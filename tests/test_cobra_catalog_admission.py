@@ -29,7 +29,11 @@ class COBRACatalogAdmissionTests(unittest.TestCase):
         cls.baseline["designs"] = [d for d in cls.catalog["designs"] if d["id"] != DESIGN]
 
     def test_admitted_record_and_original_designs_are_preserved(self):
-        self.assertEqual(self.design, self.addition["designs"][0])
+        original = deepcopy(self.addition["designs"][0])
+        for annotation in original.get("internal_mechanisms", []):
+            self.assertIn(annotation, self.design.get("internal_mechanisms", []))
+        original["internal_mechanisms"] = self.design["internal_mechanisms"]
+        self.assertEqual(self.design, original)
         for field in ("sources", "claims"):
             for key, value in self.addition[field].items():
                 self.assertEqual(self.catalog[field][key], value)
