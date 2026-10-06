@@ -40,7 +40,13 @@ def _plugin(verifier):
     return kernels.by_gem5_checker(verifier) or kernels.BFS
 
 
-def observe_output(log, store, workload_id, source, plugin=None):
+def observe_output(log, store, workload_id, source, plugin=None, race=True):
+    """Frontier sizes and, with `race`, the parent-gather race result of one execution's stdout.
+
+    Ticket 80 (C16, 2026-10-05 ET): a new execution record of a kernel without the race companion (BC,
+    `race_companion` False) is observed with `race=False` and carries no `parent_gather_race`; records written
+    before keep theirs, and every reader that re-derives a result uses only the frontier sizes or (BFS only)
+    the race result."""
     plugin = plugin or kernels.BFS
     prefix = plugin.frontier_prefix
     frontiers, probes = [], []
@@ -50,7 +56,7 @@ def observe_output(log, store, workload_id, source, plugin=None):
                 found = re.fullmatch(re.escape(prefix) + r' (\d+) elements\n?', line)
                 _need(found is not None, f'{prefix[:-1]} frontier line differs from exact text')
                 frontiers.append({'count': int(found[1]), 'line': number})
-            if line.startswith('SWDB cas_fail_negative_hint='):
+            if race and line.startswith('SWDB cas_fail_negative_hint='):
                 found = PROBE.fullmatch(line)
                 _need(found is not None, 'parent-gather probe line differs from exact text')
                 probes.append({'cas_negative_hint_failures': int(found[1]), 'l3_violations': int(found[2]), 'line': number})
@@ -60,11 +66,13 @@ def observe_output(log, store, workload_id, source, plugin=None):
     if len(probes) == 1:
         outcome = 'refuted' if probes[0]['l3_violations'] > 0 else 'observed' if probes[0]['cas_negative_hint_failures'] > 0 else 'inconclusive'
     output = {'path': str(log), 'sha256': artifacts.file_hash(log)}
-    return {'frontier_sizes': {'state': 'passed' if sizes == expected else 'failed',
-                'observed': sizes, 'oracle': expected, 'lines': frontiers, 'output': output,
-                'basis': 'trusted original-adjacency BFS per-depth counts'},
-            'parent_gather_race': {'outcome': outcome, 'probes': probes, 'output': output,
-                'scope': 'finite diagnostic execution; observed means race exercised without an L3 violation'}}
+    result = {'frontier_sizes': {'state': 'passed' if sizes == expected else 'failed',
+                  'observed': sizes, 'oracle': expected, 'lines': frontiers, 'output': output,
+                  'basis': 'trusted original-adjacency BFS per-depth counts'}}
+    if race:
+        result['parent_gather_race'] = {'outcome': outcome, 'probes': probes, 'output': output,
+            'scope': 'finite diagnostic execution; observed means race exercised without an L3 violation'}
+    return result
 
 
 def validate_frontier(evaluation, check, store):

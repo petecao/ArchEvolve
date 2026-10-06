@@ -1,4 +1,10 @@
-"""Observed MAA coverage inside an exact statistics tick interval. Updated: 2026-09-27."""
+"""Observed MAA coverage inside an exact statistics tick interval. Updated: 2026-09-27.
+
+Updated 2026-10-05 ET (ticket 80, spec review C16): a new execution record whose kernel plug-in names its result
+otherwise than "parent" (BC: "score") takes its competing-update labels from the plug-in and records
+`context.coverage_labels` (`LABELS_V2`). Records without that field keep the BFS labels, so every existing
+record, BFS or BC, revalidates unchanged.
+"""
 
 import gzip
 import hashlib
@@ -13,6 +19,27 @@ from swdb.cli import Failure
 TRANSPORT = 'gem5-gzip.v1'
 TRACE_NAME = 'roi-debug.trace.gz'
 TRACE_FORMAT = 'swdb.dx100.debug-trace.v1'
+#: Ticket 80 (C16): the label version a new non-BFS execution record carries in `context.coverage_labels`.
+LABELS_V2 = 'swdb.dx100.coverage-labels.v2'
+
+
+def labels(plugin=None, version=None):
+    """The competing-update case key, storage key and result noun of a coverage result.
+
+    Without a version (every record before ticket 80, and every BFS record) these are BFS's labels. Under
+    `LABELS_V2` they come from the kernel plug-in's `result_noun`."""
+    noun = 'parent'
+    if version == LABELS_V2:
+        noun = getattr(plugin, 'result_noun', None) or 'parent'
+    elif version is not None:
+        raise Failure(f'unknown coverage label version {version!r}')
+    return {'case': f'competing_{noun}_updates', 'storage': f'{noun}_storage', 'noun': noun}
+
+
+def labels_version(plugin):
+    """The label version a NEW execution record of this plug-in records: None for a result named "parent"
+    (BFS records stay unchanged), `LABELS_V2` for any other result noun."""
+    return None if (getattr(plugin, 'result_noun', None) or 'parent') == 'parent' else LABELS_V2
 
 
 def _deadline(deadline):
@@ -122,7 +149,8 @@ def validate_trace(evaluation, deadline=None, store=None):
         actual = observe(log, intervals[0]['values'], context['configuration']['tile_elements'],
                          trace=reference, deadline=deadline,
                          read_only=evaluation.get('request', {}).get('verification', {}).get('read_only', False),
-                         plugin=kernels.by_gem5_checker(context.get('verifier')))
+                         plugin=kernels.by_gem5_checker(context.get('verifier')),
+                         label_version=context.get('coverage_labels'))
         checks = evaluation.get('correctness', {}).get('checks', [])
         if len(checks) != 1 or any(artifacts.digest(value) != artifacts.digest(checks[0].get('coverage', {}).get(key))
                                    for key, value in actual.items()):
@@ -130,12 +158,15 @@ def validate_trace(evaluation, deadline=None, store=None):
     return reference
 
 
-def observe(log, values, tile_elements, *, trace=None, deadline=None, read_only=False, plugin=None):
+def observe(log, values, tile_elements, *, trace=None, deadline=None, read_only=False, plugin=None,
+            label_version=None):
     # Ticket 39 (2026-10-03 ET): the result-storage marker and the read-only
     # instruction-mix rule come from the checker's kernel plug-in (BFS default).
+    # Ticket 80 (C16): `label_version` selects the result labels (absent: BFS's, as recorded before).
     from swdb import kernels
     plugin = plugin or kernels.BFS
     marker = plugin.gem5_storage_marker
+    names = labels(plugin, label_version)
     try:
         end = int(values["finalTick"])
         start = end - int(values["simTicks"])
@@ -144,7 +175,7 @@ def observe(log, values, tile_elements, *, trace=None, deadline=None, read_only=
     except (KeyError, ValueError):
         return {"state": "unobserved", "reason": "exact finalTick/simTicks interval is unavailable",
                 "completed_trace_units": {}, "full_tiles": "unobserved", "tail_tiles": "unobserved",
-                "competing_parent_updates": "unobserved"}
+                names['case']: "unobserved"}
     units, tile_sizes, current, blocks, stores, collisions = {}, {}, {}, {}, {}, {}
     parent_storage = None
     truncated = False
@@ -225,7 +256,7 @@ def observe(log, values, tile_elements, *, trace=None, deadline=None, read_only=
     tail = sum(count for size, count in tile_sizes.items() if 0 < size < tile_elements)
     result = {"state": "observed", "tick_interval": [start, end], "completed_trace_units": units,
         "address_space_contract": {"model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
-            "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+            "instruction_baseAddr": f"guest virtual; compared only with returned {names['noun']}.data()",
             "recvData_addr": "translated physical cache line; compared only with other physical words",
             "source_evidence": [
                 {"path": "src/mem/MAA/IF.cc", "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561", "lines": [38, 63]},
@@ -233,10 +264,11 @@ def observe(log, values, tile_elements, *, trace=None, deadline=None, read_only=
         "range_output_tile_sizes": {str(size): count for size, count in tile_sizes.items()},
         "full_tiles": {"state": "observed" if full else "unobserved", "count": full, "capacity": tile_elements},
         "tail_tiles": {"state": "observed" if tail else "unobserved", "count": tail, "capacity": tile_elements},
-        "competing_parent_updates": {"state": "observed" if parent_collisions.get("count", 0) else "unobserved",
+        names['case']: {"state": "observed" if parent_collisions.get("count", 0) else "unobserved",
             "count": parent_collisions.get("count", 0), "samples": parent_collisions.get("samples", []),
-            "parent_storage": parent_storage, "target_tracking_truncated": truncated,
-            "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."},
+            names['storage']: parent_storage, "target_tracking_truncated": truncated,
+            "definition": "Different signed32 vector-store values observed at the same physical word, from "
+                          f"instructions whose virtual base is the returned {names['noun']} array."},
         "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded."}
     if trace is not None:
         result['debug_trace'] = trace_identity

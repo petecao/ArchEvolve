@@ -3,7 +3,8 @@
 Navigation updated: 2026-09-28 (Eastern Time).
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-10-03 (Eastern Time)
+Updated: 2026-10-05 22:30 (Eastern Time): BC coverage labels and no BC race result in new records (ticket 80);
+2026-10-03 (Eastern Time)
 
 Format 0.4 adds source ownership and workflow records. Existing 0.2 and 0.3 records
 retain their meaning; see [source identity](bfs-source-identity.md). The envelope's
@@ -153,6 +154,15 @@ sets `parent_gather_diagnostic: true` (`SWDB_DXC_DIAGNOSTIC`), and exact stdout
 `SWDB cas_fail_negative_hint=N l3_violations=N` derives observed/refuted/inconclusive
 L3 outcomes. Comparison requires observed L3 and the exact timed binary's passed
 v2 correctness and frontier checks.
+
+Added 2026-10-05 (Eastern Time), ticket 80 (spec review C16): a new gem5 execution record of a kernel whose
+plug-in names its result other than `parent` (BC: `score`) records `context.coverage_labels:
+swdb.dx100.coverage-labels.v2`, and its coverage takes the plug-in's labels: `competing_score_updates` with
+`score_storage`, and "returned score" in the definition and address-space texts. A read-only record of a kernel
+without the race companion (BC) carries no `parent_gather_race`, and its `read-only-coverage.json` omits it.
+Records without `coverage_labels` (every record before this date, and every BFS record) keep the BFS labels and
+revalidate unchanged; BFS records are byte-identical to before. `competing_score_updates` is not an accelerator
+case a protocol can require (`required_accelerator_cases` names `competing_parent_updates` only).
 
 ## Provider roles and statement claims (2026-10-03)
 
