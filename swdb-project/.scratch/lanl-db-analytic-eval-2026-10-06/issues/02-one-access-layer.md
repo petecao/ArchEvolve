@@ -1,8 +1,9 @@
 # 02 — Prefactor: one access layer for record reads
 
 Created: 2026-10-06
+Updated: 2026-10-06 ET (ticket claimed)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 01
 **Spec:** `../spec.md`
 **Time estimate:** 3–4 h
