@@ -156,39 +156,42 @@ def _lop(version, summary, extra_python, extra_checkout, library, digest):
                             _LOP + extra_python + extra_checkout, library, digest, process_split=version == '1.2')
 
 
+# 2026-10-06 ET: re-declared after JSON attribution serialization (bb7673f) and shared
+# record-reader/hash delegation (bb11cb1); procedure decisions and evaluator files are unchanged.
+# Evidence: .scratch/lanl-db-analytic-eval-2026-10-06/evidence/09-certification-fingerprint-redeclaration.md.
 PROCEDURES = MappingProxyType({
     CANDIDATE: MappingProxyType({
         '1.3': _candidate('1.3', 'ticket 70: evaluator records on a descriptor, faults in a separate seam object per '
                           'control, evaluator scan', 'swdb.certification:certify_candidate', 'evaluator_1_3', None,
                           'v1', (), _DX100_1_3,
-                          'adb57a16acb2af6ce3af92ffb7af4ae22ac1a83d5e5c3e9d187f3f35388f1011'),
+                          '705e697df88b273ef1223e37d95631661b1ba0ca4e98524b4e1dd6729d0122d3'),
         '1.4': _candidate('1.4', 'ticket 76: one binary per tile size, blinded run plan, random order, attributed '
                           'rejections, slide-window seam witness', 'swdb.certification_blinding:certify_candidate',
                           'evaluator_1_4', None, 'v1', _BLINDING, _DX100_1_4,
-                          '98a697d62d23d9cdc37768da01cea8ba7b737c93dda9a1752493d28810039d0c'),
+                          'b8df5f5cc24e2bb54ee33eb9d609dfdea4009741b00c94de0582b4d71f429515'),
         '1.5': _candidate('1.5', 'ticket 78: 1.4 with record-keeping in a separate evaluator process; DX100 '
                           'directive rule', 'swdb.certification_process:certify_candidate', 'evaluator_1_4',
                           'dx100_knob_defaults', 'v1', _BLINDING + _PROCESS, _DX100_1_5,
-                          'eba9c0d2556e0bbe0dfa1a9d49385266f86500f6b6eb8e89aacc0aaadd638cda'),
+                          'a25e817ea05e512c5cc6686623ee5d69c80ae527f606c91e75566c00062f988e'),
         '1.6': _candidate('1.6', '2026-10-05 review fixes: 1.5 with knob_range reading every declared knob spelling '
                           'the candidate uses (unverified when none is used, never the default) and the '
                           'schedule_out_of_range control also mutating _Pragma forms',
                           'swdb.certification_process:certify_candidate', 'evaluator_1_4', 'dx100_knob_defaults',
                           'v2', _BLINDING + _PROCESS, _DX100_1_5,
-                          '114c6434430d21d0d93043588500d0c467f98def89762b3e6f7b9e8644e26ea3'),
+                          '309d9cd5140bbb5bf87408ed5f1a4fba40271275704294003be8444829f61311'),
     }),
     NATIVE: MappingProxyType({
         '1.3': _native('1.3', 'ticket 75: native-CPU profile under 1.3 isolation (a seam object per fault)',
                        'swdb.certification_native:certify_native', 'evaluator_1_3', 'profile.harness', (), _NATIVE_1_3,
-                       '399799d84479d83249723a088c677ab526e218a2f1005afdb3ed02a0c14bb248'),
+                       '6c3f478005dc25462f495211e7c5a626803b21f720524b0048e4673e5b0025dd'),
         '1.4': _native('1.4', 'ticket 75 after ticket 76: one binary per build, blinded plan, attributed rejections',
                        'swdb.certification_native:certify_native_v14', 'evaluator_1_4', 'profile.harness_v14',
                        _BLINDING, _NATIVE_1_4,
-                       '700d68f398f6d848dac56e2f68910e49f1e2ceab25c99c58ea47bcec8f81762f'),
+                       'a5d54c7eb50169bd6a686e265750f7a10804bec311a399b9af1a1c47b133f78b'),
         '1.5': _native('1.5', 'ticket 78: native 1.4 with record-keeping in a separate evaluator process',
                        'swdb.certification_process:certify_native', 'evaluator_1_4',
                        'dx100/certification/v1_5/bfs_driver.inc', _BLINDING + _PROCESS, _NATIVE_1_5,
-                       '642d2fe2bdb743f0d065b1f2bb00d2ff80db35257751f1ca15d2f25ab9ddeddd'),
+                       'fe72f415409327e00a78fe41fece2b2d7c8705c708ffc90928286dee2740d0c2'),
     }),
     LIBRARY_OPERATION: MappingProxyType({
         '1.0': _lop('1.0', 'tickets 49-51: the ported two-binary harness; a control abort classified from a '
@@ -213,7 +216,7 @@ PROCEDURES = MappingProxyType({
                                 '76); calibration control rule of 2026-10-04 (8040609)',
                                 'swdb.certification:evaluate_trusted', 'simulated', None, None, None, None,
                                 ('swdb/certification.py',), _STRICT,
-                                'd21e4dfd19584334d8626185784072ee6f2830ba397fbd8e6216f463d3436cd3'),
+                                '4ab5d22c2d46d672ae19a87f4426919ebb509fe45497bfd1b51515aa4eb76974'),
     }),
 })
 
