@@ -721,6 +721,8 @@ class Campaign:
                 if block.get("isolation") is not None:
                     self.state.setdefault("pilot_isolation", {}).setdefault(cls, {})[role] = block["isolation"]
                 self._spent("evaluation", started)
+                # Ticket 80 (C8): an A/A block's runs are compared runs; prune their bulky output (ADR 0011).
+                self._prune(block.get("evaluations") or [])
         unstable = [cls for cls in self.classes if failed.get(cls)]
         self.state["pilot"] = {"spreads_by_class_and_role": spreads, "passed": not unstable,
                                "unstable_classes": unstable}
@@ -1230,9 +1232,28 @@ class Campaign:
             row["source_policy"] = definition["source_policy"]
         return row
 
+    def _prune_baselines(self):
+        """Ticket 80 (C8, 2026-10-05 ET): a shared per-class baseline (gem5) serves every comparison of the
+        campaign, so its bulky output is pruned when the campaign stops, never earlier, unless a team claim cites
+        it (ADR 0011). An aggregate's component runs are pruned with it. A paused campaign keeps them."""
+        if not self.state["baselines"]:
+            return
+        from swdb import retention
+        from swdb.store import Store
+        try:
+            store = Store(self.store_dir)
+            ids = set()
+            for eid in self.state["baselines"].values():
+                ids |= {eid} | retention.execution_ids(store, eid)
+            self._prune(sorted(ids))
+        except (Failure, OSError) as exc:        # the summary is written whatever pruning does
+            note = f"baseline pruning at stop failed: {type(exc).__name__}: {exc}"[:1000]
+            self.state["stop_detail"] = "; ".join(filter(None, [self.state.get("stop_detail"), note]))
+
     def _finish(self):
         from swdb import writer
         self.adapter.release_lane()
+        self._prune_baselines()
         reason = self.ledger.stop()[0] or S.StopReason.MAX_ITERATIONS
         summary = self.summary(reason)
         workflow.persist(self.store_dir, copy.deepcopy(summary), create=True)

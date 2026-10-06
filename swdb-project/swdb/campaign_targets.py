@@ -1083,8 +1083,11 @@ class Gem5Adapter(TargetAdapter):
         if not result or result.get("decision", {}).get("state") in {None, "rejected"}:
             raise Refused("evaluation_failed", "The comparison rejected the retained evidence.", ["comparison"])
         ratio = result["metrics"]["roi_speedup"]
+        # Ticket 80 (C8, 2026-10-05 ET): the companion runs this comparison accepted are compared runs too, so
+        # the loop prunes their bulky output right after it (ADR 0011). The class baseline is pruned at stop.
         return {"comparison": result["id"], "ratio": ratio, "lower": ratio, "upper": ratio, "spreads": [0.0],
-                "evaluations": [observed["id"]], "baseline_evaluation": baseline_evaluation,
+                "evaluations": [observed["id"], *(jobs["companions"][name] for name in sorted(jobs["companions"]))],
+                "baseline_evaluation": baseline_evaluation,
                 "state": (result.get("decision") or {}).get("state")}
 
 

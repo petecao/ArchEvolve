@@ -1,6 +1,6 @@
-"""Ticket 80: Extensa campaign budgets (spec review C5, C6).
+"""Ticket 80: Extensa campaign budgets and pruning (spec review C5, C6, C8).
 
-Created: 2026-10-05 ET. Every number comes from a contract fixture and is never evidence.
+Created: 2026-10-05 ET. Every number comes from a contract fixture or a fixture runner and is never evidence.
 """
 
 import time
@@ -10,7 +10,10 @@ from pathlib import Path
 import pytest
 
 from swdb import campaign
-from testkit.extensa import GEM5, campaign_file, fixture_file, provider, replay, rewrite, run
+from testkit.extensa import (GEM5, campaign_file, campaign_store, fixture_file, knob_rows, provider, records_of,
+                             replay, rewrite, run)
+from testkit.extensa_targets import CONTRACT as READ, FakeHost, FakeRunner, gem5_campaign, inside_patch
+from testkit.extensa_targets import run as run_target
 
 FIXTURES = Path(__file__).parent / "fixtures" / "provider_capacity"
 CAPACITY = replay(stdout=FIXTURES / "a7-call4.stdout.txt")
@@ -74,3 +77,48 @@ def test_a_guard_retry_wait_is_charged_too(campaign_team):
     with pytest.raises(campaign.Stop) as stopped:
         loop._wait(30, "guard retry wait")
     assert stopped.value.reason.value == "lane_hours"
+
+
+# --- C8: companion runs and class baselines are pruned -------------------------------------------
+
+def test_gem5_class_baselines_are_pruned_at_stop_unless_a_team_claim_cites_them(campaign_team):
+    path = campaign_file(campaign_team, cid=GEM5, target="dx100_gem5", budgets={"provider_calls_setup": 0})
+    fx = fixture_file(campaign_team, claim_runs=[f"{GEM5}.baseline.uniform_random"])
+    summary = run(campaign_team, path, fx, provider(campaign_team, {}))
+    store = campaign_store(campaign_team, GEM5)
+    runs = store.parent / "runs"
+    kron = runs / f"{GEM5}.baseline.kronecker.fork_scalar_tdstep"
+    uniform = runs / f"{GEM5}.baseline.uniform_random.fork_scalar_tdstep"
+    assert not (kron / "debug.trace.gz").exists() and not (kron / "cpt.1" / "payload.bin").exists()
+    assert (kron / "correctness.json").exists()                       # compact evidence stays
+    assert (uniform / "debug.trace.gz").exists()                      # cited by a team claim
+    prunes = [r for r in records_of(store, "retentions") if r["event"] == "prune"]
+    assert kron.name in {r["evaluation"] for r in prunes} and uniform.name not in {r["evaluation"] for r in prunes}
+    assert all(r["mode"] == "extensa" and r["campaign"] == GEM5 for r in prunes)
+    assert sorted(summary["retentions"]) == sorted(r["id"] for r in prunes)
+    assert uniform.name in summary["baselines"][0]["evaluation_ids_by_class"].values()
+
+
+def test_gem5_companion_runs_are_pruned_right_after_their_comparison(repo_team, base_source, monkeypatch):
+    pruned = []
+    original = campaign.Campaign._prune
+
+    def recording(self, ids):
+        pruned.append(list(ids))
+        return original(self, ids)
+    monkeypatch.setattr(campaign.Campaign, "_prune", recording)
+    # a Kronecker-only knob makes the two classes' trees differ, so each class has its own companions
+    config = provider(repo_team, {"rewriting": [{"patch": inside_patch(base_source), "contracts": [READ],
+                                                 "knobs": knob_rows({"kronecker": {"frontier_threshold": 32}}),
+                                                 "unresolved": []}]})
+    runner = FakeRunner({"kronecker": 1.4, "uniform_random": 1.02})
+    _, summary = run_target(repo_team, gem5_campaign(repo_team, max_iterations=1), config, runner, FakeHost())
+    rows = summary["iterations"][0]["candidates"]
+    assert [r["level"] for r in rows] == ["certified", "certified"] and rows[0]["id"] != rows[1]["id"]
+    for row in rows:
+        companions = [f"{row['id']}.companion.{name}.evaluation" for name in ("diagnostic", "timed")]
+        (call,) = [ids for ids in pruned if companions[0] in ids]
+        assert call == [f"{row['id']}.evaluation", *companions]       # the observed run, then its companions
+    # the class baselines serve every comparison, so they are pruned once, at stop
+    assert pruned[-1] == sorted(f"extensa-gem5-bfs-20261004-f1.baseline.{cls}.aggregate"
+                                for cls in ("kronecker", "uniform_random"))
