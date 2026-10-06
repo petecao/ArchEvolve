@@ -22,6 +22,7 @@ The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 
 ## Results and handoff
 
 - **[Peter's intrinsic handoff](docs/peter-intrinsics-handoff.md)**: current images, operation contracts, and source requirements.
+- **[Hardware behavior and acceleration mechanisms](docs/hardware-behavior-handoff.md)**: October 6 response to Peter, with separate source-scoped DX100/MAPLE sheets and automatic behavior output for future packages.
 - **[MAPLE/DX100 handoff](docs/maple-dx100-handoff.md)**: the selected second fetcher, known internal mechanisms, diagrams and typed/mapping gaps.
 - [Validated v0.1.9 mechanism-rich BFS comparison](runs/bfs-mechanisms-v0.1.9/README.md).
 - [Earlier focused BFS comparison](runs/bfs-maple-comparison-v0.1/README.md).

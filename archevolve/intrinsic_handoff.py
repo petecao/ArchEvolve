@@ -194,6 +194,9 @@ def build_handoff_artifacts(request, request_digest):
             "context.mmd": render_workload_context(request, candidate),
             "mechanisms.mmd": render_mechanisms(candidate),
         }
+        from archevolve.hardware_behavior import build_behavior_artifacts
+        files.update(build_behavior_artifacts(request, candidate))
+        files["README.md"] += "\n[How the accelerator works and its observable semantics](hardware-behavior.md) · [Behavior YAML](hardware-behavior.yaml)\n"
         structure = render_structure(candidate)
         if structure is not None:
             files["structure.mmd"] = structure
