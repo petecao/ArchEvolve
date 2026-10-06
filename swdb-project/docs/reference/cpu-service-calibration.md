@@ -195,3 +195,20 @@ trials remain in their dependency records. Consumption requires the pinned
 characterization hash in the model context, so another workload cannot silently
 inherit the original context admission. This binding contributes no application
 timing or error-band evidence.
+
+### Conditional logical memory service
+
+`memory_service_scenario` selects `scenario: resident_serial_constructed_requests`,
+`transfer_basis: inferred`, `object_scope: logical_requests_and_bounded_referent_views`,
+`domain: host`, `worker_scope: serial_T1`, and the exact `characterization_sha256`.
+Its `requests` list maps each executed `{update_kind, element_bytes}` to a
+`seconds/request` parameter. All known scoped logical requests must sum to the
+retained useful-byte count; every executed cell needs its own supported cost.
+Missing costs preserve the known compute bound and null the total. Partial
+allocation-relative unions do not become cache-residency or page-fault evidence:
+the model retains unknown object and bounded-view facts and supplies a conditional
+resident scenario only. It covers no opaque callee or separate first-touch cost.
+The model composes as a mechanism bound with compute, avoiding a second additive
+charge for the same constructed instructions. Native rates are pending independent
+counted service/driver and elapsed receipts; the public hand fixtures are reported
+contracts only.

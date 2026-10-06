@@ -77,9 +77,9 @@ def native_service_costs(region, mechanism, *, context=None):
 
 
 
-def _rate(mechanism,name):
+def _rate(mechanism,name,unit='seconds/call'):
     fact=mechanism['parameters'].get(name,{})
-    return None if fact.get('basis')=='unknown' else parameter(mechanism,name,'seconds/call')
+    return None if fact.get('basis')=='unknown' else parameter(mechanism,name,unit)
 
 
 def _shape_parameters(selection):
@@ -126,5 +126,49 @@ def _shape_cost(region,call,selection,parameters,mechanism):
 
 
 def memory_service_scenario(region, mechanism, *, context=None):
-    return bound('memory_service_scenario', None, 'unsupported memory service scenario',
-        mechanism['parameters'], ['memory_service_scenario.not_implemented'])
+    selector=mechanism.get('selector',{})
+    allowed={'domain','worker_scope','scenario','transfer_basis','object_scope','characterization_sha256','requests'}
+    missing=['selector.'+k for k in sorted(set(selector)-allowed)]
+    required={'domain':'host','worker_scope':'serial_T1','scenario':'resident_serial_constructed_requests',
+        'transfer_basis':'inferred','object_scope':'logical_requests_and_bounded_referent_views'}
+    if any(selector.get(k)!=v for k,v in required.items()):missing.append('memory_scenario.explicit_supported_transfer')
+    pin=selector.get('characterization_sha256')
+    if not pin or not isinstance(context,dict) or context.get('characterization_sha256')!=pin:
+        missing.append('memory_scenario.characterization_sha256')
+    rates={}
+    selected=selector.get('requests')
+    if not isinstance(selected,list):selected=[];missing.append('selector.requests')
+    for item in selected:
+        if not isinstance(item,dict) or set(item)!={'update_kind','element_bytes','parameter'} or not isinstance(item.get('update_kind'),str) or type(item.get('element_bytes')) is not int or item['element_bytes']<=0 or not isinstance(item.get('parameter'),str):
+            missing.append('selector.exact_request_cells');continue
+        key=(item['update_kind'],item['element_bytes'])
+        if key in rates:missing.append('selector.duplicate_request_cell')
+        rates[key]=item['parameter']
+    observed=region.get('memory_service_counts',{})
+    if observed.get('format')!='swdb.memory-service-counts.v1' or observed.get('scope') not in ('per_run','per_trial'):
+        missing.append('memory_service_counts.format_scope')
+    rows=observed.get('requests_by_update_kind',{})
+    inputs=[];seconds=0.;useful_bytes=0;executed=0;seen=set()
+    for kind,items in rows.items():
+        for item in items:
+            width=item.get('element_bytes');fact=item.get('requests',{});count=fact.get('value')
+            if type(width) is not int or width<=0 or type(count) is not int or count<0 or fact.get('basis')=='unknown' or fact.get('scope')!=observed.get('scope'):
+                missing.append('memory_service_counts.known_scoped_requests');continue
+            key=(kind,width)
+            if key in seen:missing.append('memory_service_counts.duplicate_request_cell')
+            seen.add(key);executed+=count;useful_bytes+=count*width
+            rate=_rate(mechanism,rates[key],'seconds/request') if key in rates else None
+            inputs.append({'update_kind':kind,'element_bytes':width,'requests':fact,'seconds_per_request':rate})
+            if count and rate is None:missing.append('memory_scenario.cell.'+kind+'.'+str(width))
+            elif count:seconds+=count*rate
+    if useful_bytes!=observed.get('useful_bytes',{}).get('value') or observed.get('useful_bytes',{}).get('basis')=='unknown':
+        missing.append('memory_service_counts.complete_useful_byte_sum')
+    if executed:missing.extend(_serial(region,context))
+    if not math.isfinite(seconds):missing.append('memory_scenario.finite_seconds')
+    return bound('memory_service_scenario',None if missing else seconds,
+        'sum(exact logical source requests * independently constructed resident serial seconds/request)',
+        {'requests':inputs,'useful_bytes':useful_bytes,'unknown_object_requests':observed.get('unknown_object_requests'),
+         'object_scope_counts':observed.get('object_scope_counts'),'physical_residency_known':False},sorted(set(missing)),
+        ['Residency/dependence transfer from constructed cells is explicitly inferred; this is a conditional service scenario.',
+         'Logical source requests and bounded referent views do not establish full allocation identity, physical cache misses, first-touch faults or page residency.',
+         'This mechanism supplies no opaque-call coverage or separate first-touch service. Unsupported executed update-kind/width cells remain unknown.'])
