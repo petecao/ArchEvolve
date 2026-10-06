@@ -53,6 +53,7 @@ def register_cli(commands):
     sub.add_argument('--output', type=Path, help='new folder for compiled pass, IR, counts and run output (default a temporary folder)')
     sub.add_argument('--timeout-s', type=float, default=600)
     sub.add_argument('--fixture', action='store_true', help='label a hand-counted contract fixture, never application evidence')
+    sub.add_argument('--object-scopes', action='store_true', help='observe bounded source objects and function-scoped ABI referent views; no residency claim')
     sub.add_argument('--state-budget', type=int, default=524288, help='maximum transient logical observation entries; overflow preserves named unknowns')
     sub.add_argument('--target-description', help='frozen description for generic functional-command and allocation-relative logical window counts')
     sub.add_argument('--format', choices=['yaml', 'json'], default='yaml')
@@ -356,6 +357,7 @@ def characterize(args):
     env['SWDB_REGION_MAP'] = str(args.region_map.resolve()) if args.region_map else ''
     env['SWDB_ANALYSIS_OUTPUT'] = str(output / 'optimized.json')
     env['SWDB_INSTRUMENT'] = '0'
+    if args.object_scopes:env['SWDB_OBJECT_SCOPES']='1'
     _run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-characterize', optimized, '-disable-output'], env=env, timeout=args.timeout_s)
     env['SWDB_ANALYSIS_OUTPUT'] = str(output / 'source.json')
     env['SWDB_INSTRUMENT'] = '1'
@@ -465,6 +467,13 @@ def characterize(args):
             'observer_isolation':'thread_local_reentrancy_guard',
             'runtime_bundle_sha256':artifacts.digest({name:_sha(llvm_src/name)
                 for name in ('CountingRuntime.cpp','LiveObjects.hpp','LogicalCommands.hpp')})}
+    if args.object_scopes:
+        record['observation_contract']['object_scope_contract']={
+            'format':'swdb.object-scopes.v1','abi':'swdb.object-scope.v1',
+            'full_objects':['heap','source_alloca'],'bounded_views':[],
+            'retirement':'frame_exit',
+            'observer_sha256':_sha(llvm_src/'ObjectScopes.hpp'),
+            'runtime_sha256':_sha(llvm_src/'ObjectScopeRuntime.hpp')}
     if live_contract:
         command_specs=live_contract['functional_observation']['commands']
         observed_descriptors={site['descriptor'] for site in static.get('semantic_sites',[])}

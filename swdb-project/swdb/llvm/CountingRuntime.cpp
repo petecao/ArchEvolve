@@ -137,6 +137,7 @@ struct Counts {
   }
 };
 Counts &counts(){static Counts value;return value;}
+#include "ObjectScopeRuntime.hpp"
 extern "C" void __swdb_begin(){if(observerEntered)return;ObserverScope isolation;auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);c.clear();c.active=true;}
 extern "C" void __swdb_end(){if(observerEntered)return;ObserverScope isolation;auto &c=counts();c.active=false;std::lock_guard<std::mutex> lock(c.mutex);if(c.command_depth)c.semantic_missing.insert("command_crosses_roi");c.trials.push_back(c.snapshot());}
 extern "C" void __swdb_source(uint64_t source){if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.sources.push_back(source);}

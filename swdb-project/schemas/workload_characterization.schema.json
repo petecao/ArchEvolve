@@ -586,6 +586,50 @@
         },
         "host_counting_policy": {
           "const": "exclusive_host_outside_guarded_functional_commands"
+        },
+        "object_scope_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "format": {
+              "const": "swdb.object-scopes.v1"
+            },
+            "abi": {
+              "const": "swdb.object-scope.v1"
+            },
+            "full_objects": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "bounded_views": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "retirement": {
+              "type": "string"
+            },
+            "observer_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "runtime_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "format",
+            "abi",
+            "full_objects",
+            "bounded_views",
+            "retirement",
+            "observer_sha256",
+            "runtime_sha256"
+          ]
         }
       },
       "required": [
