@@ -95,3 +95,9 @@ This is the instrumented count binary's identity; it does not certify a separate
 native timing binary. A library unavailable as a regular file (for example a
 macOS shared-cache image) keeps its hash null and a named missing fact. Historical
 receipts without this optional field keep their prior identity and unknown scope.
+
+Every observer entry and serializer uses a thread-local reentrancy guard. C++
+weak-ODR helpers linked from the instrumented application can therefore serve the
+runtime without recursing into its locked counters or charging observer work.
+The guard affects that observer thread only; other application workers retain
+normal accounting. The counted contract names this isolation policy.

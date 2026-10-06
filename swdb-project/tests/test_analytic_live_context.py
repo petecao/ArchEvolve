@@ -158,3 +158,43 @@ def test_count_receipt_retains_compiler_and_loaded_runtime_without_general_envir
     assert 'must-not-be-serialized' not in json.dumps(runtime)
     checked=records.validate()
     assert checked.returncode==0,checked.stdout+checked.stderr
+
+
+def test_observer_shared_cpp_helpers_do_not_reenter_or_charge_the_observer(records,tmp_path,llvm22):
+    records.add_stub()
+    result=run_swdb('characterize','--records',records.path,
+        '--source',REPO/'tests/fixtures/analytic/observer_isolation.cpp',
+        '--implementation','stub-impl','--input','tiny-sym','--roi','fixture.observer.v1',
+        '--id','fixture.observer','--llvm-bin',llvm22,'--output',tmp_path/'counted',
+        '--timeout-s','10','--build-flag=-std=c++11','--fixture','--format','json')
+    assert result.returncode==0,result.stderr+result.stdout
+    data=json.loads(result.stdout)
+    assert len(data['trials'])==1
+    assert (tmp_path/'counted/stdout.txt').read_text()=='fixture-output\n'
+    assert data['observation_contract']['observer_isolation']=='thread_local_reentrancy_guard'
+
+
+def test_original_gapbs_trial_driver_keeps_five_count_snapshots_with_observer_isolation(records,tmp_path,llvm22):
+    records.copy_repo()
+    graph=records.read('inputs/kron-g16-k16.yaml')
+    graph.update(id='fixture.observer.kron.g4',name='Small observer regression input')
+    graph['generator']['arguments']='-g 4 -k 2';graph['properties']={}
+    records.write('inputs/fixture.observer.kron.g4.yaml',graph)
+    result=run_swdb('characterize','--records',records.path,'--adapter','registered-gapbs',
+        '--implementation','gapbs-bfs-do','--input',graph['id'],'--threads','1','--trials','5',
+        '--id','fixture.registered.observer','--llvm-bin',llvm22,
+        '--run-library-path',llvm22.parent/'lib','--output',tmp_path/'counted',
+        '--timeout-s','30','--format','json')
+    assert result.returncode==0,result.stderr+result.stdout
+    data=json.loads(result.stdout)
+    assert len(data['trials'])==5 and data['binding']['state']=='verified'
+    assert all(len(trial['sources'])==1 for trial in data['trials'])
+    assert data['observation_contract']['observer_isolation']=='thread_local_reentrancy_guard'
+    assert data['observation_contract']['native_runtime']['environment']['OMP_DYNAMIC']=='FALSE'
+    # The runtime contract is part of the registered payload seal, not a loose annotation.
+    data['observation_contract']['native_runtime']['environment']['OMP_DYNAMIC']='TRUE'
+    data.pop('identity_sha256');data['identity_sha256']=digest(data)
+    records.write('workload_characterizations/fixture.registered.observer.yaml',data)
+    checked=records.validate()
+    assert checked.returncode==1
+    assert 'counted_payload_sha256' in checked.stdout+checked.stderr

@@ -36,6 +36,15 @@ std::string loadedImages(){
 #ifdef _OPENMP
 #include <omp.h>
 #endif
+// Weak ODR helpers can resolve to the instrumented application translation unit.
+// Isolate every observer entry and serializer from source callbacks, without
+// suppressing another thread's legitimate application work.
+thread_local bool observerEntered=false;
+struct ObserverScope {
+  bool previous;
+  ObserverScope():previous(observerEntered){observerEntered=true;}
+  ~ObserverScope(){observerEntered=previous;}
+};
 uint64_t workers(){
 #ifdef _OPENMP
 return omp_get_num_threads();
@@ -88,6 +97,7 @@ struct Counts {
     active_workers[region].insert(token);team_sizes[region].insert(workers());
   }
   std::string snapshot() {
+    ObserverScope isolation;
     std::ostringstream out;out<<"{\"trips\":{";bool first=true;
     for(auto &p:trips){if(!first)out<<',';first=false;out<<'"'<<p.first<<"\":"<<p.second;}
     out<<"},\"operations\":{";first=true;
@@ -113,34 +123,37 @@ struct Counts {
       }out<<'}';
     }out<<"}}";return out.str();
   }
-  ~Counts(){const char *path=std::getenv("SWDB_COUNTS_OUTPUT");if(!path)return;
+  ~Counts(){ObserverScope isolation;const char *path=std::getenv("SWDB_COUNTS_OUTPUT");if(!path)return;
     std::ofstream out(path);std::string root=trials.empty()?snapshot():trials.front();root.pop_back();out<<root<<",\"trials\":[";
     bool first=true;for(auto &trial:trials){if(!first)out<<',';first=false;out<<trial;}out<<"],\"loaded_images\":"<<loadedImages()<<"}\n";
   }
 };
 Counts &counts(){static Counts value;return value;}
-extern "C" void __swdb_begin(){auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);c.clear();c.active=true;}
-extern "C" void __swdb_end(){auto &c=counts();c.active=false;std::lock_guard<std::mutex> lock(c.mutex);c.trials.push_back(c.snapshot());}
-extern "C" void __swdb_source(uint64_t source){auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.sources.push_back(source);}
-extern "C" void __swdb_trip(uint32_t region,uint64_t n){auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.trips[region]+=n;if(n)c.observe(region);}
-extern "C" void __swdb_op(uint32_t region,uint32_t kind,uint64_t n){auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.ops[region][kind]+=n;c.observe(region);}
-extern "C" void __swdb_access(uint32_t site,uint32_t region,uint64_t address,uint64_t n,uint64_t bytes){
-  auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.observe(region);auto &a=c.accesses[site];a.elements+=n;a.bytes+=n*bytes;
+extern "C" void __swdb_begin(){if(observerEntered)return;ObserverScope isolation;auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);c.clear();c.active=true;}
+extern "C" void __swdb_end(){if(observerEntered)return;ObserverScope isolation;auto &c=counts();c.active=false;std::lock_guard<std::mutex> lock(c.mutex);c.trials.push_back(c.snapshot());}
+extern "C" void __swdb_source(uint64_t source){if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.sources.push_back(source);}
+extern "C" void __swdb_trip(uint32_t region,uint64_t n){if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.trips[region]+=n;if(n)c.observe(region);}
+extern "C" void __swdb_op(uint32_t region,uint32_t kind,uint64_t n){if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.ops[region][kind]+=n;c.observe(region);}
+void recordAccess(Counts &c,uint32_t site,uint32_t region,uint64_t address,uint64_t n,uint64_t bytes){
+  c.observe(region);auto &a=c.accesses[site];a.elements+=n;a.bytes+=n*bytes;
   a.footprint.add(address,address+n*bytes);c.footprints[region].add(address,address+n*bytes);
   if(address<a.lo)a.lo=address;if(address+n*bytes>a.hi)a.hi=address+n*bytes;
 }
-extern "C" void __swdb_call(uint32_t site,uint64_t size,uint32_t known,uint32_t region){auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.calls[site]++;c.observe(region);if(known)c.sizes[site]+=size;}
-
-extern "C" void __swdb_allocate(uint64_t address,uint64_t size,uint32_t known){auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);c.registry.allocate(address,size,known);}
-extern "C" void __swdb_release(uint64_t address){auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);c.registry.release(address);}
-extern "C" void __swdb_reallocate(uint64_t old,uint64_t address,uint64_t size,uint32_t known){auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);c.registry.reallocate(old,address,size,known);}
-extern "C" void __swdb_access_v2(uint32_t site,uint32_t region,uint64_t address,uint64_t n,uint64_t width,uint32_t update){
-  auto &c=counts();{std::lock_guard<std::mutex> lock(c.mutex);c.registry.observe(region,address,n,width,update,c.active);}
-  __swdb_access(site,region,address,n,width);
+extern "C" void __swdb_access(uint32_t site,uint32_t region,uint64_t address,uint64_t n,uint64_t bytes){
+  if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;
+  std::lock_guard<std::mutex> lock(c.mutex);recordAccess(c,site,region,address,n,bytes);
 }
-
+extern "C" void __swdb_call(uint32_t site,uint64_t size,uint32_t known,uint32_t region){if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.calls[site]++;c.observe(region);if(known)c.sizes[site]+=size;}
+extern "C" void __swdb_allocate(uint64_t address,uint64_t size,uint32_t known){if(observerEntered)return;ObserverScope isolation;auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);c.registry.allocate(address,size,known);}
+extern "C" void __swdb_release(uint64_t address){if(observerEntered)return;ObserverScope isolation;auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);c.registry.release(address);}
+extern "C" void __swdb_reallocate(uint64_t old,uint64_t address,uint64_t size,uint32_t known){if(observerEntered)return;ObserverScope isolation;auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);c.registry.reallocate(old,address,size,known);}
+extern "C" void __swdb_access_v2(uint32_t site,uint32_t region,uint64_t address,uint64_t n,uint64_t width,uint32_t update){
+  if(observerEntered)return;ObserverScope isolation;auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);
+  c.registry.observe(region,address,n,width,update,c.active);
+  if(c.active)recordAccess(c,site,region,address,n,width);
+}
 extern "C" void __swdb_call_v2(uint32_t site,uint64_t size,uint32_t known,uint32_t region,uint64_t pointer,uint32_t action){
-  auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);
+  if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);
   c.calls[site]++;c.observe(region);if(known)c.sizes[site]+=size;
   auto &shape=c.call_shapes[site];
   auto add=[&](std::map<uint64_t,uint64_t> &bins,uint64_t bytes,uint64_t &unknown){
