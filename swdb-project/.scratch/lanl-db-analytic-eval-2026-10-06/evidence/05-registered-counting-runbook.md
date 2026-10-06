@@ -103,3 +103,35 @@ helper. Exact formula inputs are in `trials[].regions[].bounds[].inputs`. The ov
 time is the median of complete per-trial region sums; region medians do not generally
 sum to that overall median. Existing raw helper reports and estimate IDs/hashes stay
 unchanged; metadata wrappers may add these interpretation labels.
+
+
+## Completed registered g16 reports (2026-10-06 ET)
+
+Actual corrected count metadata: `eaa56d0`, source `cda8f2d`.
+Actual bound-target/frozen-estimate metadata: `68df1dd`, execution source `b5acc909`.
+The [per-region receipt](registered-estimates-mbit10-20261006-a2.json) contains BFS
+27 and BC 31 observed regions, five independent trial estimates each, 229/277
+zero-only region IDs, all 129/165 unmapped loops and all 13/20 handwritten
+comparisons with mismatch reasons. Whole-call seconds and ratios remain null.
+The [target/fixture receipt](bound-calibration-fixture-mbit10-20261006-a1.json)
+records the positive T1 contract-fixture estimate, canonical record byte hashes,
+measured target versions, remote lane provenance and 584-record validation.
+
+The estimates ran on `mbit10` node0, generation 473, from 21:52:50Z to 22:01:24Z;
+exit status zero. Raw output stays at
+`/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1`.
+Receipt `file_sha256` values for application inputs are the original raw JSON byte
+hashes, while `new_records[].file_sha256` covers exported canonical YAML bytes.
+Canonical identities and frozen protocol/target/bundle hashes were verified
+locally, including every compact per-trial bound against its persisted estimate.
+The regenerated formatter's aggregate/trial input-scope labels passed a CLI smoke;
+no frozen estimator source or existing estimate identity changed.
+
+Application-call coverage is still incomplete: BFS/BC retain 13/18 executed
+opaque runtime symbol families, unknown memory services and unsupported aggregate
+T4 transfer to serial/partial worker scopes. These are explicit unknown bounds,
+not zero costs. The report exports executed call counts, known/unknown sizes,
+compiler semantic accounting and per-region distinct-worker/team facts for
+subsequent CPU/DX100 work. It does not certify accuracy against protected historical
+native timing ROIs; that relation and complete-call CPU error checking remain
+separate acceptance work in ticket 11.

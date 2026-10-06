@@ -21,7 +21,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
 | 04 | [First runnable version: estimate a streaming loop on the mbit10 CPU](issues/04-first-runnable-estimate.md) | resolved | 01 | 1.5–2 days |
-| 05 | [Indirect accesses and the BFS baseline on the CPU](issues/05-indirect-and-bfs-baseline.md) | claimed | 04 | 1.5–2 days |
+| 05 | [Indirect accesses and the BFS baseline on the CPU](issues/05-indirect-and-bfs-baseline.md) | resolved | 04 | 1.5–2 days |
 | 06 | [Estimate protocols and the gem5 refusal](issues/06-estimate-protocols-and-gem5-refusal.md) | resolved | 04 | 3–4 h |
 | 07 | [Measured mbit10 parameters](issues/07-measured-mbit10-parameters.md) | claimed | 04 | 2–3 h plus about 1 h of lane time (mbit10) |
 | 08 | [Peter's feature reports as an input](issues/08-peter-feature-reports-input.md) | ready-for-agent | 05 | 3–4 h |
@@ -80,11 +80,11 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   553 historical records valid, and Extensa/LLVM broad regression evidence in the ticket.
 
 
-- 2026-10-06 ET: [ticket 05](issues/05-indirect-and-bfs-baseline.md) remains claimed.
-  Indirect hand fixtures and registered BFS/BC counts are implemented; actual a1
-  receipts compare all 13/20 handwritten patterns with **0/13 and 0/20 direct matches**,
-  explicit reasons, and all unmapped loops retained. Corrected intrinsic accounting
-  source `cda8f2d` passed focused regressions and 555-record validation. Corrected
-  mbit10 counts and frozen per-region estimates are still being completed; the
-  [runbook](evidence/05-registered-counting-runbook.md) records exact commands and
-  semantic/evidence limits. No whole-call CPU agreement is claimed.
+- 2026-10-06 ET: [ticket 05](issues/05-indirect-and-bfs-baseline.md#answer) resolved.
+  Registered g16 BFS/BC counts and frozen estimates retain five trials each, 27/31
+  observed per-region reports, all 129/165 unmapped loops, and explicit reasons for
+  **0/13 and 0/20 direct handwritten matches**. Whole-call seconds/ratios remain
+  unknown for unsupported runtime/memory/worker-rate costs; no CPU agreement is
+  claimed. Sources `cda8f2d` (counts) / `b5acc909` (estimates), actual metadata
+  `68df1dd`, final 584-record validation and 7-test combined compatibility evidence
+  are linked from the Answer and [runbook](evidence/05-registered-counting-runbook.md).
