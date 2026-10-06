@@ -1,5 +1,6 @@
 """Extensa campaign fixtures: a seeded team store, campaign and fixture files, and the fixture
 provider. Created 2026-10-05 ET (code review T1/T2), moved from tests/test_extensa_campaign.py.
+Updated 2026-10-05 ET (ticket 80): the provider log also keeps each call's REGIONS.json.
 
 Every provider here is an external_fixture; every number comes from the fixture file and is
 labeled contract_fixture, never evidence. `campaign_team` (renamed from `team`) is the seeded
@@ -151,7 +152,8 @@ role = ('repair' if Path('CERTIFICATION.json').exists() else 'rewriting' if Path
         else 'synthesis' if Path('TARGET.json').exists() else 'profiling' if Path('source').exists() else 'testgen')
 i = counts.get(role, 0); counts[role] = i + 1; state.write_text(json.dumps(counts))
 with open({str(team['root'] / 'provider-log.jsonl')!r}, 'a') as log:
-    log.write(json.dumps({{'role': role, 'files': sorted(str(p) for p in Path('.').rglob('*') if p.is_file())}}) + '\\n')
+    log.write(json.dumps({{'role': role, 'files': sorted(str(p) for p in Path('.').rglob('*') if p.is_file()),
+                          'regions': json.loads(Path('REGIONS.json').read_text()) if Path('REGIONS.json').exists() else None}}) + '\\n')
 items = plan[role]; item = items[min(i, len(items) - 1)]
 if isinstance(item, dict) and {REPLAY!r} in item:
     directive = item[{REPLAY!r}]

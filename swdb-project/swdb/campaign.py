@@ -80,6 +80,14 @@ GUARD_RETRY_S = 30
 TEST_GENERATION_WIRED = False
 TEST_GENERATION_REASON = ("no certify command version accepts generated differential-test inputs yet; the call "
                           "is not made and not charged until one does (ticket 80)")
+#: Ticket 80 (C15, 2026-10-05 ET; agent-decided under Yan-Ru's delegation, revisable): site-finder entry kinds
+#: kept out of REGIONS.json, with the reason recorded in the iteration's `site_finder.excluded`. Native campaign
+#: a8's iteration 2 named `operation.gather_staging_executor` from REGIONS.json and was refused.
+EXCLUDED_ENTRY_KINDS = {
+    "library_operation": ("library operations are not yet usable in candidate artifacts: no target adapter puts "
+                          "their headers in the rewrite workspace or the candidate build, and a candidate may name "
+                          "only the campaign's rewrite contracts; excluded from REGIONS.json until supported "
+                          "(ticket 80)")}
 
 
 def guard_retry_s():
@@ -782,9 +790,15 @@ class Campaign:
         if not result["regions"]:
             raise Stop("infrastructure_failure", "the site finder chose no region: " + "; ".join(
                 f"{r['entry']}: {r['reason']}" for r in result["rejected"])[:2000])
+        # Ticket 80 (C15): only entry kinds a candidate artifact can apply reach REGIONS.json; the others are
+        # recorded with their reason. The region itself stays (an edit there without a contract is uncertified).
+        row["site_finder"]["excluded"] = [
+            {"entry": a["entry"], "kind": a["kind"], "region": r["id"], "reason": EXCLUDED_ENTRY_KINDS[a["kind"]]}
+            for r in result["regions"] for a in r["applications"] if a["kind"] in EXCLUDED_ENTRY_KINDS]
         self.current_regions = [{"id": r["id"], "source": r["source"], "statements": r["statements"],
                                  "applications": [{"entry": a["entry"], "contract": a["contract"], "kind": a["kind"]}
-                                                  for a in r["applications"]]} for r in result["regions"]]
+                                                  for a in r["applications"] if a["kind"] not in EXCLUDED_ENTRY_KINDS]}
+                                for r in result["regions"]]
         self.applied_contracts = {a["contract"] for r in result["regions"] for a in r["applications"] if a["contract"]}
         return site_finder.region_rows(result)
 
