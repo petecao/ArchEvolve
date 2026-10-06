@@ -2,7 +2,7 @@
 
 Created: 2026-10-03
 **Type:** task
-**Status:** ready-for-human
+**Status:** wontfix
 **Blocked by:** 29
 **Spec:** `../spec.md`
 
@@ -21,3 +21,5 @@ Created: 2026-10-03
 - 2026-10-03 19:00 ET: exact final plain/HTML multipart payload passes independent Standards and Spec reviews with zero findings; seven links bind pushed publication0a495f4 and exact Git lines. Exact-subject Sent precheck found zero matches. Automatic approval review rejected the send of non-public evaluation results/repository evidence to Peter because it requires direct trusted approval specific to this exact payload and petepc@umich.edu. No message is confirmed sent and no team claim is recorded; both acceptance boxes remain open. Preserve the exact rejection and payload hashes; do not retry or switch transport. Ticket37 remains human-owned. [Reviewed summary](../drafts/outgoing-2026-10-03/30-first-gem5-result.md); [exact blocked receipt](../drafts/outgoing-2026-10-03/send-receipt-30-blocked.json).
 
 - 2026-10-03 19:36 ET: Yan-Ru instructed the agent not to send messages and took ownership of all communication with Josh, Peter and Eric. Agent scope is draft preparation only. The reviewed first-result plain/HTML draft is complete and unsent; approval request is superseded by this instruction, with no retry, mailbox search or delivery claim. Both original send/team-claim acceptance boxes stay unchecked as human work. Historical blocked receipt and prepared payload hashes remain preserved.
+
+- 2026-10-06 17:25 ET: closed as wontfix by Yan-Ru's decision D31 in the [analytic-estimates spec](../../lanl-db-analytic-eval-2026-10-06/spec.md): under [ADR 0013](../../../docs/adr/0013-archevolve-mode-estimates-speed.md) ArchEvolve mode cites no gem5 number, so this result is not sent as a team claim. The draft, records and receipts stay as history; Yan-Ru may use the result in research.

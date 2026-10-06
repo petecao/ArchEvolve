@@ -1,11 +1,12 @@
-# ArchEvolve — Software Database
+# EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-06 16:45 ET (grilling: mechanism model, target description); 2026-10-06 16:05 ET (retitled: EvolveSWDB is the research database); 2026-10-06 15:30 ET (design session: estimator, estimate, workload characterization, paired estimate, screening, functional-target correctness; databases group); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
 measured, which implementations exist, and which optimization strategies can
-change them. Glossary only — no implementation detail, no status.
+change them. LANL's main database fills that role for the team; EvolveSWDB is the
+research database. Glossary only — no implementation detail, no status.
 
 ## Language
 
@@ -300,8 +301,8 @@ _Avoid_: host (when referring to the system being simulated)
 
 **Evaluator**:
 The Software Database stage that builds a candidate artifact or baseline implementation, runs it
-on a hardware target, applies the kernel's correctness check, and measures it under a frozen
-protocol. Comparisons and selection take performance numbers only from it, in both modes.
+on a hardware target, applies the kernel's correctness check, and measures or estimates its speed
+under a frozen protocol. Comparisons and selection take performance numbers only from it, in both modes.
 _Avoid_: launcher, harness, benchmark runner
 
 **Frozen protocol**:
@@ -312,6 +313,46 @@ _Avoid_: config, benchmark setup
 **Team protocol**:
 A frozen protocol written in ArchEvolve mode; only comparisons under it count as team results.
 _Avoid_: ArchEvolve-mode protocol (as a second name)
+
+**Estimator**:
+The evaluator stage that estimates how long code takes on a hardware target from its workload
+characterization and the target's parameters, without running the code on that target.
+_Avoid_: simulator, predictor, performance model (alone)
+
+**Estimate**:
+A time or speed ratio produced by the estimator, with basis estimated; never a measurement and
+never a simulation result.
+_Avoid_: prediction, projection, simulated result
+
+**Workload characterization**:
+The per-region description of what code does on one input that the estimator reads: access
+patterns, operation counts, dynamic counts and accelerator calls.
+_Avoid_: workload view (the retired HW format), feature report, profile (alone)
+
+**Mechanism model**:
+The estimator's model of one hardware behavior, such as reordering requests within a window or
+fetching through a queue, reused by every hardware target that has that behavior.
+_Avoid_: mechanism family (the hardware catalog's classification), component model
+
+**Target description**:
+The mechanism models and parameter values, each with its basis, that describe one hardware target
+to the estimator.
+_Avoid_: parameter sheet, hardware config
+
+**Paired estimate**:
+An estimate made for a candidate artifact that is also timed, kept to measure how well estimates
+agree with timing.
+_Avoid_: shadow estimate, ride-along estimate
+
+**Screening**:
+Using estimates to choose which candidate artifacts of an Extensa iteration are timed; the others
+are kept with their estimates but not timed.
+_Avoid_: filtering, pruning (which means deleting raw output)
+
+**Functional-target correctness**:
+The kernel's correctness check passing on the strict layer of an accelerator's functional model,
+used where the hardware target cannot run the code; it is never correctness on the hardware target.
+_Avoid_: functional correctness (alone), simulated correctness
 
 **Comparison baseline**:
 The explicitly selected implementation and evaluation evidence against which a
@@ -433,6 +474,21 @@ _Avoid_: confidence, provenance (alone)
 How full the data fed to a kernel is (mostly zeros versus full; scattered versus
 clustered indices), independent of the storage format.
 _Avoid_: sparse format, dense format
+
+### Databases
+
+**Main database**:
+LANL's kernel database, which fills ArchEvolve's Software Database role for the team.
+_Avoid_: LANL DB (in prose), bootstrap database
+
+**Research database**:
+EvolveSWDB's own records, kept for Yan-Ru's research and compatible with the main database.
+_Avoid_: our database, local database, preliminary database
+
+**Crosswalk**:
+The table that maps each main-database table and field to a research-database record kind and
+field, or marks it as having no counterpart.
+_Avoid_: schema mapping (alone), adapter (which is code)
 
 ### Legacy identifiers
 
